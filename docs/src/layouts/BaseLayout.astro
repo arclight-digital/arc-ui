@@ -1,0 +1,56 @@
+---
+import { ViewTransitions } from 'astro:transitions';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = 'ARC UI — ARC Reactive Components', description = 'A component library built on Lit Web Components. A custom code generator produces native bindings for React, Vue, Svelte, Angular, Solid, and Preact.' } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <meta name="theme-color" content="#030307" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="ARC UI" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <script is:inline>
+      (function(){
+        var t=localStorage.getItem('arc-theme')||'auto';
+        document.documentElement.setAttribute('data-theme',t);
+        document.addEventListener('astro:after-swap',function(){
+          var t=localStorage.getItem('arc-theme')||'auto';
+          document.documentElement.setAttribute('data-theme',t);
+        });
+      })();
+    </script>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32x32.png" sizes="32x32" type="image/png" />
+    <link rel="icon" href="/favicon-16x16.png" sizes="16x16" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="preload" href="/fonts/hostgrotesk-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link href="/fonts/fonts.css" rel="stylesheet" />
+    <ViewTransitions />
+    <script>
+      import '@arclux/arc-ui';
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  @import '../styles/global.css';
+</style>

@@ -1,0 +1,1235 @@
+---
+import DocsLayout from '../layouts/DocsLayout.astro';
+
+const headings = [
+  { id: 'colors', label: 'Colors' },
+  { id: 'typography', label: 'Typography' },
+  { id: 'spacing', label: 'Spacing & Radii' },
+  { id: 'effects', label: 'Effects' },
+  { id: 'preview', label: 'Preview' },
+  { id: 'output', label: 'Output' },
+];
+---
+
+<DocsLayout
+  title="Theme Synthesizer"
+  description="Generate a custom tokens.css for your ARC UI theme."
+  activeSlug="theme-synthesizer"
+  headings={headings}
+  breadcrumbs={[{ label: 'Theme Synthesizer' }]}
+>
+  <div class="synth-page">
+    <div class="synth-header">
+      <h1 class="page-title">Theme Synthesizer</h1>
+      <p class="page-desc">
+        Tweak every design token, preview it live, and export a drop-in <code>tokens.css</code> for your project.
+      </p>
+      <div class="synth-header__actions">
+        <arc-button id="btn-reset" variant="ghost" size="sm">Reset to Defaults</arc-button>
+        <arc-button id="btn-copy" variant="secondary" size="sm">Copy CSS</arc-button>
+        <arc-button id="btn-download" variant="primary" size="sm">Download tokens.css</arc-button>
+      </div>
+    </div>
+
+    <!-- ── COLORS ── -->
+    <section id="colors">
+      <h2 class="docs-heading">Colors</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <div class="synth-group">
+        <h3 class="synth-group__title">Backgrounds</h3>
+        <div class="synth-controls">
+          <div class="synth-color-row" data-token="--bg-deep">
+            <input type="color" class="synth-picker" />
+            <div class="synth-color-info">
+              <code class="synth-token-name">--bg-deep</code>
+              <span class="synth-token-value"></span>
+            </div>
+            <div class="synth-swatch-preview"></div>
+          </div>
+          <div class="synth-color-row" data-token="--bg-surface">
+            <input type="color" class="synth-picker" />
+            <div class="synth-color-info">
+              <code class="synth-token-name">--bg-surface</code>
+              <span class="synth-token-value"></span>
+            </div>
+            <div class="synth-swatch-preview"></div>
+          </div>
+          <div class="synth-color-row" data-token="--bg-card">
+            <input type="color" class="synth-picker" />
+            <div class="synth-color-info">
+              <code class="synth-token-name">--bg-card</code>
+              <span class="synth-token-value"></span>
+            </div>
+            <div class="synth-swatch-preview"></div>
+          </div>
+          <div class="synth-color-row" data-token="--bg-elevated">
+            <input type="color" class="synth-picker" />
+            <div class="synth-color-info">
+              <code class="synth-token-name">--bg-elevated</code>
+              <span class="synth-token-value"></span>
+            </div>
+            <div class="synth-swatch-preview"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="synth-group">
+        <h3 class="synth-group__title">Text</h3>
+        <div class="synth-controls">
+          <div class="synth-color-row" data-token="--text-primary">
+            <input type="color" class="synth-picker" />
+            <div class="synth-color-info">
+              <code class="synth-token-name">--text-primary</code>
+              <span class="synth-token-value"></span>
+            </div>
+            <div class="synth-swatch-preview"></div>
+          </div>
+          <div class="synth-color-row" data-token="--text-secondary">
+            <input type="color" class="synth-picker" />
+            <div class="synth-color-info">
+              <code class="synth-token-name">--text-secondary</code>
+              <span class="synth-token-value"></span>
+            </div>
+            <div class="synth-swatch-preview"></div>
+          </div>
+          <div class="synth-color-row" data-token="--text-muted">
+            <input type="color" class="synth-picker" />
+            <div class="synth-color-info">
+              <code class="synth-token-name">--text-muted</code>
+              <span class="synth-token-value"></span>
+            </div>
+            <div class="synth-swatch-preview"></div>
+          </div>
+          <div class="synth-color-row" data-token="--text-ghost">
+            <input type="color" class="synth-picker" />
+            <div class="synth-color-info">
+              <code class="synth-token-name">--text-ghost</code>
+              <span class="synth-token-value"></span>
+            </div>
+            <div class="synth-swatch-preview"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="synth-group">
+        <h3 class="synth-group__title">Borders</h3>
+        <div class="synth-controls">
+          <div class="synth-color-row" data-token="--border-subtle">
+            <input type="color" class="synth-picker" />
+            <div class="synth-color-info">
+              <code class="synth-token-name">--border-subtle</code>
+              <span class="synth-token-value"></span>
+            </div>
+            <div class="synth-swatch-preview"></div>
+          </div>
+          <div class="synth-color-row" data-token="--border-default">
+            <input type="color" class="synth-picker" />
+            <div class="synth-color-info">
+              <code class="synth-token-name">--border-default</code>
+              <span class="synth-token-value"></span>
+            </div>
+            <div class="synth-swatch-preview"></div>
+          </div>
+          <div class="synth-color-row" data-token="--border-bright">
+            <input type="color" class="synth-picker" />
+            <div class="synth-color-info">
+              <code class="synth-token-name">--border-bright</code>
+              <span class="synth-token-value"></span>
+            </div>
+            <div class="synth-swatch-preview"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="synth-group">
+        <h3 class="synth-group__title">Accents</h3>
+        <div class="synth-controls">
+          <div class="synth-color-row" data-token="--accent-primary">
+            <input type="color" class="synth-picker" />
+            <div class="synth-color-info">
+              <code class="synth-token-name">--accent-primary</code>
+              <span class="synth-token-value"></span>
+            </div>
+            <div class="synth-swatch-preview"></div>
+          </div>
+          <div class="synth-color-row" data-token="--accent-secondary">
+            <input type="color" class="synth-picker" />
+            <div class="synth-color-info">
+              <code class="synth-token-name">--accent-secondary</code>
+              <span class="synth-token-value"></span>
+            </div>
+            <div class="synth-swatch-preview"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="synth-group">
+        <h3 class="synth-group__title">Feedback</h3>
+        <div class="synth-controls">
+          <div class="synth-color-row" data-token="--color-success">
+            <input type="color" class="synth-picker" />
+            <div class="synth-color-info">
+              <code class="synth-token-name">--color-success</code>
+              <span class="synth-token-value"></span>
+            </div>
+            <div class="synth-swatch-preview"></div>
+          </div>
+          <div class="synth-color-row" data-token="--color-warning">
+            <input type="color" class="synth-picker" />
+            <div class="synth-color-info">
+              <code class="synth-token-name">--color-warning</code>
+              <span class="synth-token-value"></span>
+            </div>
+            <div class="synth-swatch-preview"></div>
+          </div>
+          <div class="synth-color-row" data-token="--color-error">
+            <input type="color" class="synth-picker" />
+            <div class="synth-color-info">
+              <code class="synth-token-name">--color-error</code>
+              <span class="synth-token-value"></span>
+            </div>
+            <div class="synth-swatch-preview"></div>
+          </div>
+          <div class="synth-color-row" data-token="--color-info">
+            <input type="color" class="synth-picker" />
+            <div class="synth-color-info">
+              <code class="synth-token-name">--color-info</code>
+              <span class="synth-token-value"></span>
+            </div>
+            <div class="synth-swatch-preview"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── TYPOGRAPHY ── -->
+    <section id="typography">
+      <h2 class="docs-heading">Typography</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <div class="synth-group">
+        <h3 class="synth-group__title">Font Families</h3>
+        <div class="synth-controls synth-controls--stack">
+          <div class="synth-text-row" data-token="--font-body">
+            <label class="synth-label">Body</label>
+            <input type="text" class="synth-text-input" />
+            <span class="synth-font-preview" style="font-family: var(--font-body)">The quick brown fox</span>
+          </div>
+          <div class="synth-text-row" data-token="--font-accent">
+            <label class="synth-label">Accent</label>
+            <input type="text" class="synth-text-input" />
+            <span class="synth-font-preview" style="font-family: var(--font-accent); text-transform: uppercase; letter-spacing: 2px; font-size: 13px;">SECTION HEADING</span>
+          </div>
+          <div class="synth-text-row" data-token="--font-mono">
+            <label class="synth-label">Mono</label>
+            <input type="text" class="synth-text-input" />
+            <span class="synth-font-preview" style="font-family: var(--font-mono); font-size: 13px;">const x = 42;</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="synth-group">
+        <h3 class="synth-group__title">Scale</h3>
+        <div class="synth-controls synth-controls--stack">
+          <div class="synth-range-row" data-token="--body-size" data-unit="px" data-min="12" data-max="20" data-step="1" data-default="15">
+            <label class="synth-label">Body Size</label>
+            <input type="range" class="synth-range" />
+            <span class="synth-range-value"></span>
+          </div>
+          <div class="synth-range-row" data-token="--heading-size" data-unit="px" data-min="18" data-max="36" data-step="1" data-default="24">
+            <label class="synth-label">Heading Size</label>
+            <input type="range" class="synth-range" />
+            <span class="synth-range-value"></span>
+          </div>
+          <div class="synth-range-row" data-token="--body-lh" data-unit="" data-min="1.2" data-max="2.2" data-step="0.1" data-default="1.7">
+            <label class="synth-label">Body Line Height</label>
+            <input type="range" class="synth-range" />
+            <span class="synth-range-value"></span>
+          </div>
+          <div class="synth-range-row" data-token="--code-size" data-unit="px" data-min="11" data-max="18" data-step="1" data-default="13">
+            <label class="synth-label">Code Size</label>
+            <input type="range" class="synth-range" />
+            <span class="synth-range-value"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SPACING & RADII ── -->
+    <section id="spacing">
+      <h2 class="docs-heading">Spacing & Radii</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <div class="synth-group">
+        <h3 class="synth-group__title">Spacing Scale</h3>
+        <div class="synth-controls synth-controls--stack">
+          <div class="synth-range-row" data-token="--space-xs" data-unit="px" data-min="2" data-max="8" data-step="1" data-default="4">
+            <label class="synth-label">XS</label>
+            <input type="range" class="synth-range" />
+            <span class="synth-range-value"></span>
+            <div class="synth-space-bar"></div>
+          </div>
+          <div class="synth-range-row" data-token="--space-sm" data-unit="px" data-min="4" data-max="16" data-step="1" data-default="8">
+            <label class="synth-label">SM</label>
+            <input type="range" class="synth-range" />
+            <span class="synth-range-value"></span>
+            <div class="synth-space-bar"></div>
+          </div>
+          <div class="synth-range-row" data-token="--space-md" data-unit="px" data-min="8" data-max="32" data-step="1" data-default="16">
+            <label class="synth-label">MD</label>
+            <input type="range" class="synth-range" />
+            <span class="synth-range-value"></span>
+            <div class="synth-space-bar"></div>
+          </div>
+          <div class="synth-range-row" data-token="--space-lg" data-unit="px" data-min="16" data-max="48" data-step="1" data-default="24">
+            <label class="synth-label">LG</label>
+            <input type="range" class="synth-range" />
+            <span class="synth-range-value"></span>
+            <div class="synth-space-bar"></div>
+          </div>
+          <div class="synth-range-row" data-token="--space-xl" data-unit="px" data-min="24" data-max="80" data-step="2" data-default="40">
+            <label class="synth-label">XL</label>
+            <input type="range" class="synth-range" />
+            <span class="synth-range-value"></span>
+            <div class="synth-space-bar"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="synth-group">
+        <h3 class="synth-group__title">Border Radius</h3>
+        <div class="synth-controls synth-controls--stack">
+          <div class="synth-range-row" data-token="--radius-sm" data-unit="px" data-min="0" data-max="12" data-step="1" data-default="4">
+            <label class="synth-label">SM</label>
+            <input type="range" class="synth-range" />
+            <span class="synth-range-value"></span>
+            <div class="synth-radius-preview"></div>
+          </div>
+          <div class="synth-range-row" data-token="--radius-md" data-unit="px" data-min="0" data-max="24" data-step="1" data-default="10">
+            <label class="synth-label">MD</label>
+            <input type="range" class="synth-range" />
+            <span class="synth-range-value"></span>
+            <div class="synth-radius-preview"></div>
+          </div>
+          <div class="synth-range-row" data-token="--radius-lg" data-unit="px" data-min="0" data-max="32" data-step="1" data-default="14">
+            <label class="synth-label">LG</label>
+            <input type="range" class="synth-range" />
+            <span class="synth-range-value"></span>
+            <div class="synth-radius-preview"></div>
+          </div>
+          <div class="synth-range-row" data-token="--radius-xl" data-unit="px" data-min="0" data-max="40" data-step="1" data-default="20">
+            <label class="synth-label">XL</label>
+            <input type="range" class="synth-range" />
+            <span class="synth-range-value"></span>
+            <div class="synth-radius-preview"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── EFFECTS ── -->
+    <section id="effects">
+      <h2 class="docs-heading">Effects</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <div class="synth-group">
+        <h3 class="synth-group__title">Transitions</h3>
+        <div class="synth-controls synth-controls--stack">
+          <div class="synth-range-row" data-token="--transition-fast" data-unit="ms" data-min="50" data-max="300" data-step="10" data-default="120" data-suffix=" ease">
+            <label class="synth-label">Fast</label>
+            <input type="range" class="synth-range" />
+            <span class="synth-range-value"></span>
+          </div>
+          <div class="synth-range-row" data-token="--transition-base" data-unit="ms" data-min="100" data-max="500" data-step="10" data-default="200" data-suffix=" ease">
+            <label class="synth-label">Base</label>
+            <input type="range" class="synth-range" />
+            <span class="synth-range-value"></span>
+          </div>
+          <div class="synth-range-row" data-token="--transition-slow" data-unit="ms" data-min="200" data-max="800" data-step="10" data-default="400" data-suffix=" ease">
+            <label class="synth-label">Slow</label>
+            <input type="range" class="synth-range" />
+            <span class="synth-range-value"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="synth-group">
+        <h3 class="synth-group__title">Layout</h3>
+        <div class="synth-controls synth-controls--stack">
+          <div class="synth-range-row" data-token="--max-width" data-unit="px" data-min="800" data-max="1600" data-step="20" data-default="1120">
+            <label class="synth-label">Max Width</label>
+            <input type="range" class="synth-range" />
+            <span class="synth-range-value"></span>
+          </div>
+          <div class="synth-range-row" data-token="--nav-height" data-unit="px" data-min="48" data-max="96" data-step="4" data-default="64">
+            <label class="synth-label">Nav Height</label>
+            <input type="range" class="synth-range" />
+            <span class="synth-range-value"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── LIVE PREVIEW ── -->
+    <section id="preview">
+      <h2 class="docs-heading">Live Preview</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <p class="synth-preview-hint">These components update in real time as you change tokens above.</p>
+
+      <div class="synth-preview-grid">
+        <div class="synth-preview-card">
+          <h4 class="synth-preview-card__title">Buttons</h4>
+          <div class="synth-preview-card__body">
+            <arc-button variant="primary" size="sm">Primary</arc-button>
+            <arc-button variant="secondary" size="sm">Secondary</arc-button>
+            <arc-button variant="ghost" size="sm">Ghost</arc-button>
+          </div>
+        </div>
+
+        <div class="synth-preview-card">
+          <h4 class="synth-preview-card__title">Inputs</h4>
+          <div class="synth-preview-card__body synth-preview-card__body--stack">
+            <arc-input label="Email" placeholder="you@example.com" size="sm"></arc-input>
+            <arc-toggle label="Notifications"></arc-toggle>
+          </div>
+        </div>
+
+        <div class="synth-preview-card">
+          <h4 class="synth-preview-card__title">Feedback</h4>
+          <div class="synth-preview-card__body synth-preview-card__body--stack">
+            <arc-alert variant="info" size="sm">Info message</arc-alert>
+            <arc-alert variant="success" size="sm">Success</arc-alert>
+            <arc-alert variant="error" size="sm">Error</arc-alert>
+          </div>
+        </div>
+
+        <div class="synth-preview-card">
+          <h4 class="synth-preview-card__title">Content</h4>
+          <div class="synth-preview-card__body synth-preview-card__body--stack">
+            <div class="synth-type-preview">
+              <span style="font-size: var(--heading-size); font-weight: var(--heading-weight);">Heading</span>
+              <span style="font-size: var(--body-size); color: var(--text-secondary); line-height: var(--body-lh);">Body text with secondary color. The quick brown fox jumps over the lazy dog.</span>
+              <code style="font-family: var(--font-mono); font-size: var(--code-size); color: var(--accent-primary);">const theme = 'custom';</code>
+            </div>
+          </div>
+        </div>
+
+        <div class="synth-preview-card">
+          <h4 class="synth-preview-card__title">Badges & Tags</h4>
+          <div class="synth-preview-card__body">
+            <arc-badge variant="default">Default</arc-badge>
+            <arc-badge variant="primary">Primary</arc-badge>
+            <arc-badge variant="success">Success</arc-badge>
+            <arc-badge variant="warning">Warning</arc-badge>
+            <arc-badge variant="error">Error</arc-badge>
+          </div>
+        </div>
+
+        <div class="synth-preview-card">
+          <h4 class="synth-preview-card__title">Card</h4>
+          <div class="synth-preview-card__body">
+            <arc-card style="width: 100%;">
+              <span slot="heading">Sample Card</span>
+              <p style="color: var(--text-secondary); font-size: 13px; margin: 0;">This card uses your custom tokens for background, border, and radius.</p>
+            </arc-card>
+          </div>
+        </div>
+
+        <div class="synth-preview-card synth-preview-card--wide">
+          <h4 class="synth-preview-card__title">Progress & Divider</h4>
+          <div class="synth-preview-card__body synth-preview-card__body--stack">
+            <arc-progress value="65" label="Progress"></arc-progress>
+            <arc-divider></arc-divider>
+            <div style="display: flex; gap: var(--space-md); align-items: center;">
+              <arc-spinner size="sm"></arc-spinner>
+              <span style="color: var(--text-muted); font-size: 13px;">Loading...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── OUTPUT ── -->
+    <section id="output">
+      <h2 class="docs-heading">Output</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <p class="synth-output-hint">
+        Copy this into your project as <code>tokens.css</code> to override ARC UI defaults.
+      </p>
+      <arc-callout variant="info">
+        This generates dark-theme overrides only. For light-theme customization,
+        wrap your overrides in <code>[data-theme="light"]</code>.
+      </arc-callout>
+      <div class="synth-output-wrap">
+        <div class="synth-output-toolbar">
+          <span class="synth-output-filename">tokens.css</span>
+          <arc-copy-button id="output-copy"></arc-copy-button>
+        </div>
+        <pre class="synth-output-code" id="css-output"><code></code></pre>
+      </div>
+    </section>
+  </div>
+</DocsLayout>
+
+<script>
+  import '@arclux/arc-ui';
+
+  /* ── Default token values (dark theme baseline) ── */
+  const DEFAULTS = {
+    // Colors
+    '--bg-deep':        '#030307',
+    '--bg-surface':     '#0a0a0f',
+    '--bg-card':        '#0d0d12',
+    '--bg-elevated':    '#111116',
+    '--text-primary':   '#e8e8ec',
+    '--text-secondary': '#8a8a96',
+    '--text-muted':     '#7c7c89',
+    '--text-ghost':     '#6b6b80',
+    '--border-subtle':  '#18181e',
+    '--border-default': '#222229',
+    '--border-bright':  '#333340',
+    '--accent-primary':    '#4d7ef7',
+    '--accent-secondary':  '#8b5cf6',
+    '--color-success':  '#34d399',
+    '--color-warning':  '#f59e0b',
+    '--color-error':    '#ef4444',
+    '--color-info':     '#3b82f6',
+    // Typography
+    '--font-body':    "'Host Grotesk', system-ui, sans-serif",
+    '--font-accent':  "'Tektur', system-ui, sans-serif",
+    '--font-mono':    "'JetBrains Mono', ui-monospace, monospace",
+    '--body-size':    '15',
+    '--heading-size': '24',
+    '--body-lh':      '1.7',
+    '--code-size':    '13',
+    // Spacing
+    '--space-xs': '4',
+    '--space-sm': '8',
+    '--space-md': '16',
+    '--space-lg': '24',
+    '--space-xl': '40',
+    // Radii
+    '--radius-sm': '4',
+    '--radius-md': '10',
+    '--radius-lg': '14',
+    '--radius-xl': '20',
+    // Transitions
+    '--transition-fast': '120',
+    '--transition-base': '200',
+    '--transition-slow': '400',
+    // Layout
+    '--max-width':  '1120',
+    '--nav-height': '64',
+  };
+
+  const COLOR_TOKENS = [
+    '--bg-deep', '--bg-surface', '--bg-card', '--bg-elevated',
+    '--text-primary', '--text-secondary', '--text-muted', '--text-ghost',
+    '--border-subtle', '--border-default', '--border-bright',
+    '--accent-primary', '--accent-secondary',
+    '--color-success', '--color-warning', '--color-error', '--color-info',
+  ];
+
+  const FONT_TOKENS = ['--font-body', '--font-accent', '--font-mono'];
+
+  const RANGE_TOKENS = [
+    '--body-size', '--heading-size', '--body-lh', '--code-size',
+    '--space-xs', '--space-sm', '--space-md', '--space-lg', '--space-xl',
+    '--radius-sm', '--radius-md', '--radius-lg', '--radius-xl',
+    '--transition-fast', '--transition-base', '--transition-slow',
+    '--max-width', '--nav-height',
+  ];
+
+  let state = { ...DEFAULTS };
+
+  /* ── Helpers ── */
+  function hexToRgb(hex) {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return { r, g, b };
+  }
+
+  function rgbToHex(r, g, b) {
+    return '#' + [r, g, b].map(c => c.toString(16).padStart(2, '0')).join('');
+  }
+
+  function parseRgbString(str) {
+    const m = str.match(/rgb\(\s*(\d+),\s*(\d+),\s*(\d+)\s*\)/);
+    if (m) return { r: +m[1], g: +m[2], b: +m[3] };
+    return null;
+  }
+
+  /*
+   * Inject overrides via a <style> element instead of inline styles.
+   * Using :root:root doubles specificity so it beats both :root and
+   * [data-theme="light"] selectors in tokens.css, without breaking
+   * theme switching (inline styles would override everything).
+   */
+  function getStyleEl() {
+    let el = document.getElementById('synth-overrides');
+    if (!el) {
+      el = document.createElement('style');
+      el.id = 'synth-overrides';
+      document.head.appendChild(el);
+    }
+    return el;
+  }
+
+  function applyTokens() {
+    const lines = [':root:root {'];
+
+    COLOR_TOKENS.forEach(token => {
+      const { r, g, b } = hexToRgb(state[token]);
+      lines.push(`  ${token}: rgb(${r}, ${g}, ${b});`);
+      lines.push(`  ${token}-rgb: ${r}, ${g}, ${b};`);
+    });
+
+    FONT_TOKENS.forEach(token => {
+      lines.push(`  ${token}: ${state[token]};`);
+    });
+
+    RANGE_TOKENS.forEach(token => {
+      const row = document.querySelector(`[data-token="${token}"]`);
+      if (!row) return;
+      const unit = row.dataset.unit || '';
+      const suffix = row.dataset.suffix || '';
+      lines.push(`  ${token}: ${state[token]}${unit}${suffix};`);
+    });
+
+    // Derived tokens
+    const ab = hexToRgb(state['--accent-primary']);
+    const av = hexToRgb(state['--accent-secondary']);
+    const tp = hexToRgb(state['--text-primary']);
+    const tm = hexToRgb(state['--text-muted']);
+
+    lines.push(`  --accent-primary-subtle: rgba(${ab.r},${ab.g},${ab.b}, 0.06);`);
+    lines.push(`  --accent-primary-border: rgba(${ab.r},${ab.g},${ab.b}, 0.12);`);
+    lines.push(`  --accent-primary-glow: rgba(${ab.r},${ab.g},${ab.b}, 0.2);`);
+    lines.push(`  --accent-primary-ring: rgba(${ab.r},${ab.g},${ab.b}, 0.15);`);
+    lines.push(`  --accent-secondary-subtle: rgba(${av.r},${av.g},${av.b}, 0.06);`);
+    lines.push(`  --accent-secondary-border: rgba(${av.r},${av.g},${av.b}, 0.12);`);
+    lines.push(`  --accent-secondary-glow: rgba(${av.r},${av.g},${av.b}, 0.2);`);
+
+    lines.push(`  --gradient-accent-text: linear-gradient(90deg, rgb(${ab.r},${ab.g},${ab.b}), rgb(${av.r},${av.g},${av.b}));`);
+    lines.push(`  --gradient-display-text: linear-gradient(135deg, rgb(${tp.r},${tp.g},${tp.b}) 0%, rgb(${tm.r},${tm.g},${tm.b}) 100%);`);
+
+    lines.push(`  --glow-primary: 0 0 8px rgba(${ab.r},${ab.g},${ab.b},0.9), 0 0 20px rgba(${ab.r},${ab.g},${ab.b},0.5), 0 0 44px rgba(${ab.r},${ab.g},${ab.b},0.25);`);
+    lines.push(`  --glow-secondary: 0 0 8px rgba(${av.r},${av.g},${av.b},0.9), 0 0 20px rgba(${av.r},${av.g},${av.b},0.5), 0 0 44px rgba(${av.r},${av.g},${av.b},0.25);`);
+    lines.push(`  --glow-line-gradient: linear-gradient(90deg, transparent, rgb(${ab.r},${ab.g},${ab.b}), rgb(${av.r},${av.g},${av.b}), transparent);`);
+
+    lines.push(`  --focus-ring: 0 0 0 2px var(--bg-deep), 0 0 0 4px rgb(${ab.r},${ab.g},${ab.b});`);
+    lines.push(`  --focus-glow: var(--focus-ring), 0 0 16px rgba(${ab.r},${ab.g},${ab.b},0.3);`);
+
+    lines.push('}');
+
+    getStyleEl().textContent = lines.join('\n');
+
+    updateOutput();
+    updateUI();
+  }
+
+  /* ── Update all input controls to reflect state ── */
+  function updateUI() {
+    // Color rows
+    document.querySelectorAll('.synth-color-row').forEach(row => {
+      const token = row.dataset.token;
+      const picker = row.querySelector('.synth-picker');
+      const valueEl = row.querySelector('.synth-token-value');
+      const preview = row.querySelector('.synth-swatch-preview');
+      if (!token || !picker) return;
+
+      picker.value = state[token];
+      const { r, g, b } = hexToRgb(state[token]);
+      const rgbStr = `rgb(${r}, ${g}, ${b})`;
+      if (valueEl) valueEl.textContent = rgbStr;
+      if (preview) preview.style.background = state[token];
+    });
+
+    // Font rows
+    document.querySelectorAll('.synth-text-row').forEach(row => {
+      const token = row.dataset.token;
+      const input = row.querySelector('.synth-text-input');
+      if (!token || !input) return;
+      input.value = state[token];
+    });
+
+    // Range rows
+    document.querySelectorAll('.synth-range-row').forEach(row => {
+      const token = row.dataset.token;
+      const range = row.querySelector('.synth-range');
+      const valueEl = row.querySelector('.synth-range-value');
+      const spaceBar = row.querySelector('.synth-space-bar');
+      const radiusPreview = row.querySelector('.synth-radius-preview');
+      if (!token || !range) return;
+
+      range.min = row.dataset.min;
+      range.max = row.dataset.max;
+      range.step = row.dataset.step;
+      range.value = state[token];
+
+      const unit = row.dataset.unit || '';
+      if (valueEl) valueEl.textContent = state[token] + unit;
+      if (spaceBar) spaceBar.style.width = state[token] + 'px';
+      if (radiusPreview) radiusPreview.style.borderRadius = state[token] + 'px';
+    });
+  }
+
+  /* ── Generate CSS output ── */
+  function updateOutput() {
+    const lines = [':root {'];
+
+    lines.push('  /* Backgrounds */');
+    ['--bg-deep', '--bg-surface', '--bg-card', '--bg-elevated'].forEach(t => {
+      const { r, g, b } = hexToRgb(state[t]);
+      lines.push(`  ${t}: rgb(${r}, ${g}, ${b});`);
+    });
+
+    lines.push('');
+    lines.push('  /* Text */');
+    ['--text-primary', '--text-secondary', '--text-muted', '--text-ghost'].forEach(t => {
+      const { r, g, b } = hexToRgb(state[t]);
+      lines.push(`  ${t}: rgb(${r}, ${g}, ${b});`);
+    });
+
+    lines.push('');
+    lines.push('  /* Borders */');
+    ['--border-subtle', '--border-default', '--border-bright'].forEach(t => {
+      const { r, g, b } = hexToRgb(state[t]);
+      lines.push(`  ${t}: rgb(${r}, ${g}, ${b});`);
+    });
+
+    lines.push('');
+    lines.push('  /* Accent */');
+    ['--accent-primary', '--accent-secondary'].forEach(t => {
+      const { r, g, b } = hexToRgb(state[t]);
+      lines.push(`  ${t}: rgb(${r}, ${g}, ${b});`);
+    });
+
+    // RGB channels
+    lines.push('');
+    lines.push('  /* RGB channels */');
+    const ab = hexToRgb(state['--accent-primary']);
+    const av = hexToRgb(state['--accent-secondary']);
+    const tp = hexToRgb(state['--text-primary']);
+    const tm = hexToRgb(state['--text-muted']);
+    lines.push(`  --accent-primary-rgb: ${ab.r}, ${ab.g}, ${ab.b};`);
+    lines.push(`  --accent-secondary-rgb: ${av.r}, ${av.g}, ${av.b};`);
+    lines.push(`  --text-primary-rgb: ${tp.r}, ${tp.g}, ${tp.b};`);
+    lines.push(`  --text-muted-rgb: ${tm.r}, ${tm.g}, ${tm.b};`);
+
+    lines.push('');
+    lines.push('  /* Feedback */');
+    ['--color-success', '--color-warning', '--color-error', '--color-info'].forEach(t => {
+      const { r, g, b } = hexToRgb(state[t]);
+      lines.push(`  ${t}: rgb(${r}, ${g}, ${b});`);
+      lines.push(`  ${t}-rgb: ${r}, ${g}, ${b};`);
+    });
+
+    lines.push('');
+    lines.push('  /* Typography */');
+    FONT_TOKENS.forEach(t => {
+      lines.push(`  ${t}: ${state[t]};`);
+    });
+    lines.push(`  --body-size: ${state['--body-size']}px;`);
+    lines.push(`  --heading-size: ${state['--heading-size']}px;`);
+    lines.push(`  --body-lh: ${state['--body-lh']};`);
+    lines.push(`  --code-size: ${state['--code-size']}px;`);
+
+    lines.push('');
+    lines.push('  /* Spacing */');
+    ['--space-xs', '--space-sm', '--space-md', '--space-lg', '--space-xl'].forEach(t => {
+      lines.push(`  ${t}: ${state[t]}px;`);
+    });
+
+    lines.push('');
+    lines.push('  /* Radii */');
+    ['--radius-sm', '--radius-md', '--radius-lg', '--radius-xl'].forEach(t => {
+      lines.push(`  ${t}: ${state[t]}px;`);
+    });
+
+    lines.push('');
+    lines.push('  /* Transitions */');
+    lines.push(`  --transition-fast: ${state['--transition-fast']}ms ease;`);
+    lines.push(`  --transition-base: ${state['--transition-base']}ms ease;`);
+    lines.push(`  --transition-slow: ${state['--transition-slow']}ms ease;`);
+
+    lines.push('');
+    lines.push('  /* Layout */');
+    lines.push(`  --max-width: ${state['--max-width']}px;`);
+    lines.push(`  --nav-height: ${state['--nav-height']}px;`);
+
+    // Derived tokens
+    lines.push('');
+    lines.push('  /* Derived */');
+    lines.push(`  --accent-primary-subtle: rgba(${ab.r}, ${ab.g}, ${ab.b}, 0.06);`);
+    lines.push(`  --accent-primary-border: rgba(${ab.r}, ${ab.g}, ${ab.b}, 0.12);`);
+    lines.push(`  --accent-primary-glow: rgba(${ab.r}, ${ab.g}, ${ab.b}, 0.2);`);
+    lines.push(`  --accent-secondary-subtle: rgba(${av.r}, ${av.g}, ${av.b}, 0.06);`);
+    lines.push(`  --accent-secondary-border: rgba(${av.r}, ${av.g}, ${av.b}, 0.12);`);
+    lines.push(`  --gradient-accent-text: linear-gradient(90deg, rgb(${ab.r}, ${ab.g}, ${ab.b}), rgb(${av.r}, ${av.g}, ${av.b}));`);
+    lines.push(`  --gradient-display-text: linear-gradient(135deg, rgb(${tp.r}, ${tp.g}, ${tp.b}) 0%, rgb(${tm.r}, ${tm.g}, ${tm.b}) 100%);`);
+    lines.push(`  --focus-ring: 0 0 0 2px var(--bg-deep), 0 0 0 4px var(--accent-primary);`);
+    lines.push(`  --focus-glow: var(--focus-ring), 0 0 16px rgba(${ab.r}, ${ab.g}, ${ab.b}, 0.3);`);
+
+    lines.push('');
+    lines.push('  /* Glows */');
+    lines.push(`  --glow-primary: 0 0 8px rgba(${ab.r}, ${ab.g}, ${ab.b}, 0.9), 0 0 20px rgba(${ab.r}, ${ab.g}, ${ab.b}, 0.5), 0 0 44px rgba(${ab.r}, ${ab.g}, ${ab.b}, 0.25);`);
+    lines.push(`  --glow-secondary: 0 0 8px rgba(${av.r}, ${av.g}, ${av.b}, 0.9), 0 0 20px rgba(${av.r}, ${av.g}, ${av.b}, 0.5), 0 0 44px rgba(${av.r}, ${av.g}, ${av.b}, 0.25);`);
+    lines.push(`  --glow-line-gradient: linear-gradient(90deg, transparent, rgb(${ab.r}, ${ab.g}, ${ab.b}), rgb(${av.r}, ${av.g}, ${av.b}), transparent);`);
+    lines.push(`  --accent-primary-ring: rgba(${ab.r}, ${ab.g}, ${ab.b}, 0.15);`);
+    lines.push(`  --accent-secondary-glow: rgba(${av.r}, ${av.g}, ${av.b}, 0.2);`);
+
+    lines.push('}');
+
+    const css = lines.join('\n');
+    const outputEl = document.getElementById('css-output');
+    if (outputEl) {
+      outputEl.querySelector('code').textContent = css;
+    }
+
+    // Update copy button value
+    const copyBtn = document.getElementById('output-copy');
+    if (copyBtn) copyBtn.setAttribute('value', css);
+  }
+
+  /* ── Event binding ── */
+  function init() {
+    // Color pickers
+    document.querySelectorAll('.synth-color-row').forEach(row => {
+      const token = row.dataset.token;
+      const picker = row.querySelector('.synth-picker');
+      if (!token || !picker) return;
+
+      picker.addEventListener('input', () => {
+        state[token] = picker.value;
+        applyTokens();
+      });
+    });
+
+    // Font inputs
+    document.querySelectorAll('.synth-text-row').forEach(row => {
+      const token = row.dataset.token;
+      const input = row.querySelector('.synth-text-input');
+      if (!token || !input) return;
+
+      input.addEventListener('input', () => {
+        state[token] = input.value;
+        applyTokens();
+      });
+    });
+
+    // Range inputs
+    document.querySelectorAll('.synth-range-row').forEach(row => {
+      const token = row.dataset.token;
+      const range = row.querySelector('.synth-range');
+      if (!token || !range) return;
+
+      range.addEventListener('input', () => {
+        state[token] = range.value;
+        applyTokens();
+      });
+    });
+
+    // Reset — remove injected style so tokens.css takes over, then re-read computed values
+    document.getElementById('btn-reset')?.addEventListener('click', () => {
+      const styleEl = document.getElementById('synth-overrides');
+      if (styleEl) styleEl.textContent = '';
+      readCurrentValues();
+      updateOutput();
+      updateUI();
+    });
+
+    // Copy
+    document.getElementById('btn-copy')?.addEventListener('click', async () => {
+      const code = document.querySelector('#css-output code')?.textContent || '';
+      await navigator.clipboard.writeText(code);
+      const btn = document.getElementById('btn-copy');
+      if (btn) {
+        const orig = btn.textContent;
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = orig; }, 1500);
+      }
+    });
+
+    // Download
+    document.getElementById('btn-download')?.addEventListener('click', () => {
+      const code = document.querySelector('#css-output code')?.textContent || '';
+      const blob = new Blob([code], { type: 'text/css' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'tokens.css';
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    // Read current computed values from the page to init state
+    readCurrentValues();
+    updateOutput();
+    updateUI();
+  }
+
+  function readCurrentValues() {
+    const computed = getComputedStyle(document.documentElement);
+
+    COLOR_TOKENS.forEach(token => {
+      const raw = computed.getPropertyValue(token).trim();
+      const parsed = parseRgbString(raw);
+      if (parsed) {
+        state[token] = rgbToHex(parsed.r, parsed.g, parsed.b);
+      }
+    });
+
+    FONT_TOKENS.forEach(token => {
+      const raw = computed.getPropertyValue(token).trim();
+      if (raw) state[token] = raw;
+    });
+
+    // Range tokens — extract numeric part
+    RANGE_TOKENS.forEach(token => {
+      const raw = computed.getPropertyValue(token).trim();
+      const num = parseFloat(raw);
+      if (!isNaN(num)) state[token] = String(num);
+    });
+  }
+
+  init();
+  document.addEventListener('astro:page-load', init);
+</script>
+
+<style>
+  .page-desc code {
+    font-size: var(--text-sm);
+    background: var(--bg-surface);
+    padding: 1px 6px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .synth-header__actions {
+    display: flex;
+    gap: var(--space-sm);
+    margin-top: var(--space-sm);
+    flex-wrap: wrap;
+  }
+
+  /* ── Groups ── */
+  .synth-group {
+    margin-bottom: var(--space-xl);
+  }
+
+  .synth-group__title {
+    font-family: var(--font-accent);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-ghost);
+    margin-bottom: var(--space-md);
+  }
+
+  .synth-controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: var(--space-sm);
+  }
+
+  .synth-controls--stack {
+    grid-template-columns: 1fr;
+  }
+
+  /* ── Color rows ── */
+  .synth-color-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    transition: border-color var(--transition-fast);
+  }
+
+  .synth-color-row:hover {
+    border-color: var(--border-bright);
+  }
+
+  .synth-picker {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 36px;
+    height: 36px;
+    border: 2px solid var(--border-default);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    background: none;
+    padding: 0;
+    flex-shrink: 0;
+  }
+
+  .synth-picker::-webkit-color-swatch-wrapper { padding: 0; }
+  .synth-picker::-webkit-color-swatch {
+    border: none;
+    border-radius: 2px;
+  }
+  .synth-picker::-moz-color-swatch {
+    border: none;
+    border-radius: 2px;
+  }
+
+  .synth-color-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .synth-token-name {
+    font-size: var(--text-xs);
+    background: none;
+    padding: 0;
+    border: none;
+    color: var(--text-primary);
+  }
+
+  .synth-token-value {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-ghost);
+  }
+
+  .synth-swatch-preview {
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-subtle);
+    flex-shrink: 0;
+  }
+
+  /* ── Text rows ── */
+  .synth-text-row {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: var(--space-sm);
+    align-items: center;
+    padding: var(--space-sm) 0;
+  }
+
+  .synth-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+  }
+
+  .synth-text-input {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    background: var(--bg-card);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    padding: var(--space-xs) var(--space-sm);
+    outline: none;
+    transition: border-color var(--transition-fast);
+  }
+
+  .synth-text-input:focus {
+    border-color: var(--accent-primary);
+  }
+
+  .synth-font-preview {
+    grid-column: 1 / -1;
+    color: var(--text-secondary);
+    padding: var(--space-xs) 0;
+  }
+
+  /* ── Range rows ── */
+  .synth-range-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 60px;
+    gap: var(--space-sm);
+    align-items: center;
+    padding: var(--space-xs) 0;
+  }
+
+  .synth-range {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    background: var(--border-default);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .synth-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: var(--radius-full);
+    background: var(--accent-primary);
+    border: 2px solid var(--bg-deep);
+    box-shadow: 0 0 8px rgba(var(--accent-primary-rgb), 0.4);
+    cursor: pointer;
+  }
+
+  .synth-range::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: var(--radius-full);
+    background: var(--accent-primary);
+    border: 2px solid var(--bg-deep);
+    box-shadow: 0 0 8px rgba(var(--accent-primary-rgb), 0.4);
+    cursor: pointer;
+  }
+
+  .synth-range-value {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    text-align: right;
+  }
+
+  .synth-space-bar {
+    grid-column: 2 / -1;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--gradient-accent-text);
+    transition: width 100ms ease;
+    max-width: 100%;
+  }
+
+  .synth-radius-preview {
+    width: 40px;
+    height: 40px;
+    background: var(--accent-primary-subtle);
+    border: 2px solid var(--accent-primary);
+    transition: border-radius 100ms ease;
+    grid-column: 3;
+  }
+
+  /* ── Preview ── */
+  .synth-preview-hint {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    margin-bottom: var(--space-md);
+  }
+
+  .synth-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-md);
+  }
+
+  .synth-preview-card {
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md);
+    background: var(--bg-card);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-base);
+  }
+
+  .synth-preview-card:hover {
+    border-color: var(--border-default);
+    box-shadow: var(--glow-card-hover);
+  }
+
+  .synth-preview-card--wide {
+    grid-column: 1 / -1;
+  }
+
+  .synth-preview-card__title {
+    font-family: var(--font-accent);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-ghost);
+    margin-bottom: var(--space-md);
+  }
+
+  .synth-preview-card__body {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .synth-preview-card__body--stack {
+    flex-direction: column;
+  }
+
+  .synth-type-preview {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  /* ── Output ── */
+  .synth-output-hint {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    margin-bottom: var(--space-md);
+  }
+
+  arc-callout {
+    margin-bottom: var(--space-md);
+  }
+
+  .synth-output-hint code {
+    font-size: var(--text-xs);
+    background: var(--bg-surface);
+    padding: 1px 6px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .synth-output-wrap {
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .synth-output-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-sm) var(--space-md);
+    background: var(--bg-elevated);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .synth-output-filename {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+  }
+
+  .synth-output-code {
+    margin: 0;
+    padding: var(--space-md);
+    overflow-x: auto;
+    background: var(--bg-deep);
+    max-height: 500px;
+    overflow-y: auto;
+  }
+
+  .synth-output-code code {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    line-height: 1.8;
+    color: var(--text-secondary);
+    white-space: pre;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .synth-controls { grid-template-columns: 1fr; }
+    .synth-preview-grid { grid-template-columns: 1fr; }
+    .synth-range-row { grid-template-columns: 60px 1fr 50px; }
+    .synth-text-row { grid-template-columns: 60px 1fr; }
+  }
+</style>

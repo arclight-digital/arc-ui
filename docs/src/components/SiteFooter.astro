@@ -1,0 +1,210 @@
+<footer class="site-footer theme-fixed">
+  <arc-divider></arc-divider>
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <div class="site-footer__title">
+        <span class="site-footer__name">ARC UI</span>
+        <span class="site-footer__by">by</span>
+        <a href="https://arclight.build" class="site-footer__arclight">
+          <svg class="site-footer__arclight-logo" viewBox="-20 -20 746 524" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="28" height="20">
+            <path d="M11.279,472.672c0,0 141.849,-226.994 341.667,-226.994c199.818,0 341.667,226.994 341.667,226.994" stroke="currentColor" stroke-width="22.56" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+            <circle cx="352.946" cy="89.535" r="89.535" fill="currentColor" fill-opacity="0.14"></circle>
+            <circle cx="352.946" cy="89.535" r="34.829" fill="currentColor"></circle>
+          </svg>
+          <span class="site-footer__arclight-word">Arclight</span>
+        </a>
+      </div>
+      <p class="site-footer__tagline">AI-accelerated software, engineered with precision.</p>
+    </div>
+    <div class="site-footer__columns">
+      <div class="site-footer__col">
+        <h4 class="site-footer__col-title">ARC UI</h4>
+        <ul class="site-footer__col-links">
+          <li><a href="/getting-started">Getting Started</a></li>
+          <li><a href="/components">Components</a></li>
+          <li><a href="/tokens">Design Tokens</a></li>
+          <li><a href="/theme-synthesizer">Theme Synthesizer</a></li>
+          <li><a href="https://github.com/Arclight-Digital/arc-ui">GitHub</a></li>
+          <li><a href="https://www.npmjs.com/package/@arclux/arc-ui">npm</a></li>
+        </ul>
+      </div>
+      <div class="site-footer__col">
+        <h4 class="site-footer__col-title">Arclight</h4>
+        <ul class="site-footer__col-links">
+          <li><a href="https://arclight.build">arclight.build</a></li>
+          <li><a href="https://github.com/Arclight-Digital">GitHub</a></li>
+          <li><a href="mailto:hello@arclight.build">hello@arclight.build</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="site-footer__bottom">
+    <p>&copy; 2026 Arclight Digital, LLC. All rights reserved.</p>
+    <p class="site-footer__ai-disclosure">Documentation generated with AI assistance and reviewed by humans. Found an issue? <a href="https://github.com/Arclight-Digital/arc-ui/issues">Open a GitHub issue</a>.</p>
+    <a href="https://arclight.build/privacy" class="site-footer__privacy">Privacy Policy</a>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--bg-deep);
+  }
+
+  .site-footer__inner {
+    max-width: 1200px;
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2xl);
+    padding: var(--space-2xl) var(--space-lg) var(--space-xl);
+  }
+
+  .site-footer__brand {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .site-footer__title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-family: var(--font-body);
+  }
+
+  .site-footer__name {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    background: var(--gradient-accent-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .site-footer__by {
+    font-size: var(--text-sm);
+    color: var(--text-ghost);
+    font-weight: 300;
+  }
+
+  .site-footer__arclight {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: opacity var(--transition-fast);
+  }
+
+  .site-footer__arclight:hover { opacity: 0.8; }
+
+  .site-footer__arclight-word {
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-primary);
+  }
+
+  .site-footer__arclight-logo {
+    flex-shrink: 0;
+  }
+
+  .site-footer__tagline {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    line-height: 1.6;
+    max-width: 320px;
+    font-style: italic;
+    font-weight: 300;
+  }
+
+  .site-footer__columns {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xl);
+  }
+
+  .site-footer__col-title {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--space-md);
+  }
+
+  .site-footer__col-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .site-footer__col-links a {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .site-footer__col-links a:hover {
+    color: var(--text-primary);
+  }
+
+  .site-footer__bottom {
+    max-width: 1200px;
+    margin-inline: auto;
+    padding: var(--space-md) var(--space-lg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border-subtle);
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    color: var(--text-ghost);
+  }
+
+  .site-footer__ai-disclosure {
+    color: var(--text-ghost);
+  }
+
+  .site-footer__ai-disclosure a {
+    color: var(--text-ghost);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .site-footer__ai-disclosure a:hover {
+    color: var(--text-secondary);
+  }
+
+  .site-footer__privacy {
+    color: var(--text-ghost);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .site-footer__privacy:hover {
+    color: var(--text-secondary);
+  }
+
+  @media (max-width: 768px) {
+    .site-footer__inner {
+      grid-template-columns: 1fr;
+    }
+    .site-footer__brand { align-items: center; text-align: center; }
+    .site-footer__title { justify-content: center; }
+    .site-footer__tagline { max-width: none; }
+    .site-footer__columns { grid-template-columns: repeat(2, 1fr); }
+    .site-footer__bottom { flex-direction: column; gap: var(--space-xs); text-align: center; }
+  }
+
+  @media (max-width: 480px) {
+    .site-footer__columns { grid-template-columns: 1fr; }
+  }
+</style>

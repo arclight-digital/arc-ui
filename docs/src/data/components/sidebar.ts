@@ -1,0 +1,259 @@
+import type { ComponentDef } from './_types';
+
+export const sidebar: ComponentDef = {
+    name: 'Sidebar',
+    slug: 'sidebar',
+    tag: 'arc-sidebar',
+    tier: 'navigation',
+    interactivity: 'hybrid',
+    description: 'Collapsible navigation sidebar with grouped sections, heading labels, and active link highlighting. Ideal for documentation sites, admin panels, and any layout that needs persistent vertical navigation.',
+
+    overview: `Sidebar provides a structured vertical navigation panel that organises links into collapsible, headed sections. It is the standard way to present multi-level navigation in documentation sites, admin dashboards, settings panels, and any application where the user needs to move between many related pages without losing context.
+
+Each SidebarSection groups links under an optional heading, creating a clear visual hierarchy that mirrors your information architecture. The active prop on SidebarLink highlights the current page, giving users an immediate sense of where they are within the navigation tree. Sections can be expanded or collapsed to keep long navigation lists manageable.
+
+Sidebar is designed to sit inside an AppShell or PageLayout, typically occupying the left rail. It reads the full viewport height by default and scrolls independently of the main content area, so deep navigation trees remain accessible even on long pages. Pair it with TopBar for a complete application chrome.`,
+
+    features: [
+      'Collapsible sections with heading labels for grouped navigation',
+      'Active link highlighting to indicate the current page',
+      'Independent scroll region for deep navigation trees',
+      'Composable with SidebarSection and SidebarLink sub-components',
+      'Keyboard navigable with focus-visible indicators on every link',
+      'Designed to integrate with AppShell and PageLayout for full-page chrome',
+      'Responsive-ready — pairs with Drawer for mobile breakpoints',
+      'Token-driven theming for background, border, and active-link colors',
+    ],
+
+    guidelines: {
+      do: [
+        'Group related links under a SidebarSection with a descriptive heading',
+        'Set the active prop on the link that matches the current route',
+        'Keep section headings short — one to three words that name the category',
+        'Place the Sidebar inside an AppShell or PageLayout for consistent layout',
+        'Use a Drawer to present the Sidebar on narrow viewports',
+        'Order sections by importance or frequency of use, most common first',
+      ],
+      dont: [
+        'Nest Sidebars inside each other — use sections and indentation instead',
+        'Mark more than one link as active at the same time',
+        'Use Sidebar for top-level site-wide navigation — prefer TopBar for that role',
+        'Add more than eight to ten links per section; split large groups into sub-sections',
+        'Omit headings on sections — unlabelled groups make navigation harder to scan',
+        'Place actions (buttons, toggles) inside the Sidebar — it is for navigation links only',
+      ],
+    },
+
+    previewHtml: `<div style="width:100%;max-width:280px;height:280px;border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden">
+  <arc-sidebar active="#theming" glow style="position:static;height:100%">
+    <arc-sidebar-section heading="Guide">
+      <arc-sidebar-link href="#getting-started">Getting Started</arc-sidebar-link>
+      <arc-sidebar-link href="#tokens">Design Tokens</arc-sidebar-link>
+      <arc-sidebar-link href="#theming">Theming</arc-sidebar-link>
+    </arc-sidebar-section>
+    <arc-sidebar-section heading="Components" collapsible open>
+      <arc-sidebar-link href="#button">Button</arc-sidebar-link>
+      <arc-sidebar-link href="#card">Card</arc-sidebar-link>
+      <arc-sidebar-link href="#modal">Modal</arc-sidebar-link>
+    </arc-sidebar-section>
+    <arc-sidebar-section heading="Feedback" collapsible>
+      <arc-sidebar-link href="#alert">Alert</arc-sidebar-link>
+      <arc-sidebar-link href="#toast">Toast</arc-sidebar-link>
+    </arc-sidebar-section>
+  </arc-sidebar>
+</div>`,
+
+    props: [],
+    events: [
+      { name: 'arc-navigate', description: 'Fired when a sidebar link is clicked' },
+    ],
+
+    tabs: [
+      {
+        label: 'Web Component',
+        lang: 'html',
+        code: `<script type="module" src="@arclux/arc-ui"></script>
+
+<arc-sidebar>
+  <arc-sidebar-section heading="Guide">
+    <arc-sidebar-link href="/getting-started">Getting Started</arc-sidebar-link>
+    <arc-sidebar-link href="/tokens">Design Tokens</arc-sidebar-link>
+    <arc-sidebar-link href="/theming" active>Theming</arc-sidebar-link>
+  </arc-sidebar-section>
+  <arc-sidebar-section heading="Components">
+    <arc-sidebar-link href="/components/button">Button</arc-sidebar-link>
+    <arc-sidebar-link href="/components/card">Card</arc-sidebar-link>
+    <arc-sidebar-link href="/components/modal">Modal</arc-sidebar-link>
+  </arc-sidebar-section>
+</arc-sidebar>`,
+      },
+      {
+        label: 'React',
+        lang: 'tsx',
+        code: `import { Sidebar, SidebarSection, SidebarLink } from '@arclux/arc-ui-react';
+
+export function DocsSidebar() {
+  return (
+    <Sidebar>
+      <SidebarSection heading="Guide">
+        <SidebarLink href="/getting-started">Getting Started</SidebarLink>
+        <SidebarLink href="/tokens">Design Tokens</SidebarLink>
+        <SidebarLink href="/theming" active>Theming</SidebarLink>
+      </SidebarSection>
+      <SidebarSection heading="Components">
+        <SidebarLink href="/components/button">Button</SidebarLink>
+        <SidebarLink href="/components/card">Card</SidebarLink>
+        <SidebarLink href="/components/modal">Modal</SidebarLink>
+      </SidebarSection>
+    </Sidebar>
+  );
+}`,
+      },
+      {
+        label: 'Vue',
+        lang: 'html',
+        code: `<script setup>
+import { Sidebar, SidebarSection, SidebarLink } from '@arclux/arc-ui-vue';
+</script>
+
+<template>
+  <Sidebar>
+    <SidebarSection heading="Guide">
+      <SidebarLink href="/getting-started">Getting Started</SidebarLink>
+      <SidebarLink href="/tokens">Design Tokens</SidebarLink>
+      <SidebarLink href="/theming" active>Theming</SidebarLink>
+    </SidebarSection>
+    <SidebarSection heading="Components">
+      <SidebarLink href="/components/button">Button</SidebarLink>
+      <SidebarLink href="/components/card">Card</SidebarLink>
+      <SidebarLink href="/components/modal">Modal</SidebarLink>
+    </SidebarSection>
+  </Sidebar>
+</template>`,
+      },
+      {
+        label: 'Svelte',
+        lang: 'html',
+        code: `<script>
+  import { Sidebar, SidebarSection, SidebarLink } from '@arclux/arc-ui-svelte';
+</script>
+
+<Sidebar>
+  <SidebarSection heading="Guide">
+    <SidebarLink href="/getting-started">Getting Started</SidebarLink>
+    <SidebarLink href="/tokens">Design Tokens</SidebarLink>
+    <SidebarLink href="/theming" active>Theming</SidebarLink>
+  </SidebarSection>
+  <SidebarSection heading="Components">
+    <SidebarLink href="/components/button">Button</SidebarLink>
+    <SidebarLink href="/components/card">Card</SidebarLink>
+    <SidebarLink href="/components/modal">Modal</SidebarLink>
+  </SidebarSection>
+</Sidebar>`,
+      },
+      {
+        label: 'Angular',
+        lang: 'ts',
+        code: `import { Component } from '@angular/core';
+import { Sidebar, SidebarSection, SidebarLink } from '@arclux/arc-ui-angular';
+
+@Component({
+  imports: [Sidebar, SidebarSection, SidebarLink],
+  template: \`
+    <Sidebar>
+      <SidebarSection heading="Guide">
+        <SidebarLink href="/getting-started">Getting Started</SidebarLink>
+        <SidebarLink href="/tokens">Design Tokens</SidebarLink>
+        <SidebarLink href="/theming" active>Theming</SidebarLink>
+      </SidebarSection>
+      <SidebarSection heading="Components">
+        <SidebarLink href="/components/button">Button</SidebarLink>
+        <SidebarLink href="/components/card">Card</SidebarLink>
+        <SidebarLink href="/components/modal">Modal</SidebarLink>
+      </SidebarSection>
+    </Sidebar>
+  \`,
+})
+export class DocsSidebarComponent {}`,
+      },
+      {
+        label: 'Solid',
+        lang: 'tsx',
+        code: `import { Sidebar, SidebarSection, SidebarLink } from '@arclux/arc-ui-solid';
+
+export function DocsSidebar() {
+  return (
+    <Sidebar>
+      <SidebarSection heading="Guide">
+        <SidebarLink href="/getting-started">Getting Started</SidebarLink>
+        <SidebarLink href="/tokens">Design Tokens</SidebarLink>
+        <SidebarLink href="/theming" active>Theming</SidebarLink>
+      </SidebarSection>
+      <SidebarSection heading="Components">
+        <SidebarLink href="/components/button">Button</SidebarLink>
+        <SidebarLink href="/components/card">Card</SidebarLink>
+        <SidebarLink href="/components/modal">Modal</SidebarLink>
+      </SidebarSection>
+    </Sidebar>
+  );
+}`,
+      },
+      {
+        label: 'Preact',
+        lang: 'tsx',
+        code: `import { Sidebar, SidebarSection, SidebarLink } from '@arclux/arc-ui-preact';
+
+export function DocsSidebar() {
+  return (
+    <Sidebar>
+      <SidebarSection heading="Guide">
+        <SidebarLink href="/getting-started">Getting Started</SidebarLink>
+        <SidebarLink href="/tokens">Design Tokens</SidebarLink>
+        <SidebarLink href="/theming" active>Theming</SidebarLink>
+      </SidebarSection>
+      <SidebarSection heading="Components">
+        <SidebarLink href="/components/button">Button</SidebarLink>
+        <SidebarLink href="/components/card">Card</SidebarLink>
+        <SidebarLink href="/components/modal">Modal</SidebarLink>
+      </SidebarSection>
+    </Sidebar>
+  );
+}`,
+      },
+      {
+        label: 'HTML',
+        lang: 'html',
+        code: `<arc-sidebar>
+  <arc-sidebar-section heading="Guide">
+    <arc-sidebar-link href="/getting-started">Getting Started</arc-sidebar-link>
+    <arc-sidebar-link href="/tokens">Design Tokens</arc-sidebar-link>
+    <arc-sidebar-link href="/theming" active>Theming</arc-sidebar-link>
+  </arc-sidebar-section>
+  <arc-sidebar-section heading="Components">
+    <arc-sidebar-link href="/components/button">Button</arc-sidebar-link>
+    <arc-sidebar-link href="/components/card">Card</arc-sidebar-link>
+    <arc-sidebar-link href="/components/modal">Modal</arc-sidebar-link>
+  </arc-sidebar-section>
+</arc-sidebar>`,
+      },
+    ],
+    subComponents: [
+      {
+        name: 'SidebarSection',
+        tag: 'arc-sidebar-section',
+        description: 'A collapsible group within a Sidebar. Each section renders an optional heading label above its child links, creating a visual and semantic grouping that mirrors your information architecture.',
+        props: [
+          { name: 'heading', type: 'string', description: 'Text label displayed above the group of links. Keep it short (one to three words) so the sidebar stays scannable. When omitted, links render without a heading divider.' },
+        ],
+      },
+      {
+        name: 'SidebarLink',
+        tag: 'arc-sidebar-link',
+        description: 'A navigation link rendered inside a SidebarSection. Supports an active state to indicate the current page and provides focus-visible styling for keyboard navigation.',
+        props: [
+          { name: 'href', type: 'string', description: 'Destination URL for the link. Can be an absolute path, relative path, or hash anchor. The link renders as a standard anchor element for full accessibility and SEO.' },
+          { name: 'active', type: 'boolean', default: 'false', description: 'When true, applies a highlighted style (accent-colored text and a left-edge indicator) to signal that this link corresponds to the currently viewed page. Only one link should be active at a time.' },
+        ],
+      },
+    ],
+  };

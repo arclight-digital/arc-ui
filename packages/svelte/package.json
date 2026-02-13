@@ -1,0 +1,71 @@
+{
+  "name": "@arclux/arc-ui-svelte",
+  "version": "1.0.0",
+  "description": "Svelte 5 wrappers for ARC UI Web Components.",
+  "type": "module",
+  "main": "src/index.ts",
+  "module": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./content": {
+      "types": "./src/content/index.ts",
+      "default": "./src/content/index.ts"
+    },
+    "./input": {
+      "types": "./src/input/index.ts",
+      "default": "./src/input/index.ts"
+    },
+    "./feedback": {
+      "types": "./src/feedback/index.ts",
+      "default": "./src/feedback/index.ts"
+    },
+    "./navigation": {
+      "types": "./src/navigation/index.ts",
+      "default": "./src/navigation/index.ts"
+    },
+    "./layout": {
+      "types": "./src/layout/index.ts",
+      "default": "./src/layout/index.ts"
+    },
+    "./shared": {
+      "types": "./src/shared/index.ts",
+      "default": "./src/shared/index.ts"
+    }
+  },
+  "files": [
+    "src/"
+  ],
+  "scripts": {
+    "build": "echo 'Consumed directly via workspace \u2014 no build step required'"
+  },
+  "sideEffects": false,
+  "peerDependencies": {
+    "svelte": ">=5.0.0"
+  },
+  "dependencies": {
+    "@arclux/arc-ui": "workspace:*"
+  },
+  "license": "MIT",
+  "keywords": [
+    "svelte",
+    "web-components",
+    "design-system",
+    "arclight"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arclight-digital/arc-ui",
+    "directory": "packages/svelte"
+  },
+  "homepage": "https://arcui.dev",
+  "bugs": {
+    "url": "https://github.com/arclight-digital/arc-ui/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

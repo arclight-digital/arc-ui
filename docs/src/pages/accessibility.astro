@@ -1,0 +1,319 @@
+---
+import { Code } from 'astro:components';
+import DocsLayout from '../layouts/DocsLayout.astro';
+
+const headings = [
+  { id: 'overview', label: 'Overview' },
+  { id: 'aria', label: 'ARIA Attributes' },
+  { id: 'keyboard', label: 'Keyboard Navigation' },
+  { id: 'focus', label: 'Focus Management' },
+  { id: 'screen-readers', label: 'Screen Readers' },
+  { id: 'color-contrast', label: 'Color & Contrast' },
+  { id: 'reduced-motion', label: 'Reduced Motion' },
+];
+---
+
+<DocsLayout
+  title="Accessibility"
+  description="Accessibility features and best practices in ARC UI."
+  activeSlug="accessibility"
+  headings={headings}
+  breadcrumbs={[{ label: 'Accessibility' }]}
+>
+  <div class="a11y-page">
+    <h1 class="page-title">Accessibility</h1>
+    <p class="page-desc">
+      ARC UI targets WCAG 2.1 Level AA compliance. Components ship with semantic HTML,
+      keyboard support, and ARIA attributes built in.
+    </p>
+
+    <section id="overview">
+      <h2 class="docs-heading">Overview</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <p class="docs-text">
+        Accessibility is a core design principle in ARC UI. Every component is built to be
+        usable by everyone, including people who use assistive technologies, keyboards, or
+        alternative input devices.
+      </p>
+      <ul class="docs-list">
+        <li>Semantic HTML elements and ARIA roles where needed</li>
+        <li>Full keyboard navigation for all interactive components</li>
+        <li>Visible focus indicators with configurable styles</li>
+        <li>Sufficient color contrast ratios</li>
+        <li>Reduced motion support via <code>prefers-reduced-motion</code></li>
+      </ul>
+    </section>
+
+    <section id="aria">
+      <h2 class="docs-heading">ARIA Attributes</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <p class="docs-text">
+        ARC UI components use appropriate ARIA roles and attributes automatically. For example,
+        <code>arc-modal</code> uses <code>role="dialog"</code> and manages <code>aria-modal</code>,
+        while <code>arc-tabs</code> uses <code>role="tablist"</code>, <code>role="tab"</code>,
+        and <code>role="tabpanel"</code>.
+      </p>
+      <p class="docs-text">
+        You can pass additional ARIA attributes through to the underlying element:
+      </p>
+      <div class="docs-code"><Code code={`<!-- Labels -->
+<arc-button aria-label="Close dialog">
+  <arc-icon name="x"></arc-icon>
+</arc-button>
+
+<!-- Descriptions -->
+<arc-input
+  label="Password"
+  aria-describedby="pw-hint"
+></arc-input>
+<span id="pw-hint">Must be at least 8 characters</span>
+
+<!-- Live regions -->
+<arc-alert aria-live="polite" variant="success">
+  Changes saved successfully
+</arc-alert>`} lang="html" theme="css-variables" /></div>
+    </section>
+
+    <section id="keyboard">
+      <h2 class="docs-heading">Keyboard Navigation</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <p class="docs-text">
+        All interactive components support keyboard navigation. Here are the key bindings
+        by component type:
+      </p>
+      <div class="token-table-wrap">
+        <table class="token-table">
+          <thead>
+            <tr><th>Component</th><th>Keys</th><th>Action</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Button</td><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Activate</td></tr>
+            <tr><td>Modal</td><td><kbd>Escape</kbd></td><td>Close</td></tr>
+            <tr><td>Tabs</td><td><kbd>Arrow Left/Right</kbd></td><td>Switch tab</td></tr>
+            <tr><td>Accordion</td><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Toggle panel</td></tr>
+            <tr><td>Select</td><td><kbd>Arrow Up/Down</kbd></td><td>Navigate options</td></tr>
+            <tr><td>Select</td><td><kbd>Enter</kbd></td><td>Select option</td></tr>
+            <tr><td>Select</td><td><kbd>Escape</kbd></td><td>Close dropdown</td></tr>
+            <tr><td>Toggle</td><td><kbd>Space</kbd></td><td>Toggle on/off</td></tr>
+            <tr><td>Checkbox</td><td><kbd>Space</kbd></td><td>Toggle checked</td></tr>
+            <tr><td>Drawer</td><td><kbd>Escape</kbd></td><td>Close</td></tr>
+            <tr><td>Tooltip</td><td><kbd>Escape</kbd></td><td>Dismiss</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="focus">
+      <h2 class="docs-heading">Focus Management</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <p class="docs-text">
+        ARC UI provides two focus indicator styles via design tokens:
+      </p>
+      <div class="focus-demo-row">
+        <button class="focus-card focus-card--ring">
+          <code>--focus-ring</code>
+          <span class="focus-card__hint">Solid ring outline</span>
+        </button>
+        <button class="focus-card focus-card--glow">
+          <code>--focus-glow</code>
+          <span class="focus-card__hint">Ring + ambient glow</span>
+        </button>
+      </div>
+      <p class="docs-text">
+        Focus is only shown on keyboard navigation (via <code>:focus-visible</code>), not on
+        mouse clicks. Overlay components like <code>arc-modal</code> and <code>arc-drawer</code>
+        trap focus within the dialog while open, preventing users from tabbing to background content.
+      </p>
+      <div class="docs-code"><Code code={`/* Customize focus styles globally */
+:root {
+  --focus-ring: 0 0 0 2px var(--bg-deep),
+                0 0 0 4px var(--accent-primary);
+  --focus-glow: var(--focus-ring),
+                0 0 16px rgba(77, 126, 247, 0.3);
+}`} lang="css" theme="css-variables" /></div>
+    </section>
+
+    <section id="screen-readers">
+      <h2 class="docs-heading">Screen Readers</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <p class="docs-text">
+        ARC UI uses Shadow DOM for style encapsulation. While Shadow DOM can create challenges
+        for screen readers, we follow these patterns to ensure compatibility:
+      </p>
+      <ul class="docs-list">
+        <li>
+          <strong>Slotted content</strong> remains in the light DOM, so screen readers can
+          access it directly.
+        </li>
+        <li>
+          <strong>ARIA attributes</strong> set on the host element are reflected into the
+          shadow root where needed.
+        </li>
+        <li>
+          <strong>Labels</strong> use the <code>label</code> attribute or <code>aria-label</code>
+          to ensure elements are announced correctly.
+        </li>
+      </ul>
+      <div class="docs-code"><Code code={`<!-- Use slot for screen-reader-accessible content -->
+<arc-card>
+  <span slot="heading">Account Settings</span>
+  <p>Manage your profile and preferences.</p>
+</arc-card>
+
+<!-- Use label attribute for form elements -->
+<arc-input label="Email address"></arc-input>
+<arc-select label="Country">
+  <option value="us">United States</option>
+  <option value="uk">United Kingdom</option>
+</arc-select>`} lang="html" theme="css-variables" /></div>
+    </section>
+
+    <section id="color-contrast">
+      <h2 class="docs-heading">Color & Contrast</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <p class="docs-text">
+        ARC UI's color tokens are designed to meet WCAG AA contrast requirements:
+      </p>
+      <ul class="docs-list">
+        <li>
+          <strong>Text on backgrounds:</strong> <code>--text-primary</code> on <code>--bg-deep</code>
+          achieves a contrast ratio above 15:1.
+        </li>
+        <li>
+          <strong>Muted text:</strong> <code>--text-muted</code> meets the 4.5:1 ratio for
+          normal text.
+        </li>
+        <li>
+          <strong>Feedback colors:</strong> <code>--color-success</code>, <code>--color-warning</code>,
+          <code>--color-error</code>, and <code>--color-info</code> are tuned for sufficient
+          contrast in both dark and light modes.
+        </li>
+        <li>
+          <strong>Interactive states:</strong> Focus indicators use high-contrast accent colors
+          with glow effects for enhanced visibility.
+        </li>
+      </ul>
+      <arc-callout variant="warning">When customizing themes, verify that your color overrides maintain sufficient contrast ratios. Use the <a href="/theme-synthesizer">Theme Synthesizer</a> to preview and test your custom themes for accessibility.</arc-callout>
+    </section>
+
+    <section id="reduced-motion">
+      <h2 class="docs-heading">Reduced Motion</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <p class="docs-text">
+        ARC UI respects the <code>prefers-reduced-motion</code> media query. When enabled,
+        transitions and animations are minimized or disabled:
+      </p>
+      <div class="docs-code"><Code code={`/* Built into ARC UI components */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}`} lang="css" theme="css-variables" /></div>
+      <p class="docs-text">
+        This affects all component transitions (hover effects, drawer slides, modal fades, etc.)
+        without changing functionality. Users can still interact with every component — only
+        the motion is removed.
+      </p>
+    </section>
+  </div>
+</DocsLayout>
+
+<script>
+  import '@arclux/arc-ui';
+</script>
+
+<style>
+  /* Token table */
+  .token-table-wrap {
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    overflow-x: auto;
+    margin-bottom: var(--space-md);
+  }
+
+  .token-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+  }
+
+  .token-table th {
+    text-align: left;
+    font-family: var(--font-accent);
+    font-size: var(--text-xs);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-ghost);
+    font-weight: 600;
+    padding: var(--space-sm) var(--space-md);
+    border-bottom: 1px solid var(--border-subtle);
+    background: var(--bg-elevated);
+  }
+
+  .token-table td {
+    padding: var(--space-sm) var(--space-md);
+    border-bottom: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+  }
+
+  .token-table kbd {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    background: var(--bg-elevated);
+    padding: var(--space-xs);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-default);
+    box-shadow: 0 1px 0 var(--border-default);
+  }
+
+  /* Focus demos */
+  .focus-demo-row {
+    display: flex;
+    gap: var(--space-lg);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-md);
+  }
+
+  .focus-card {
+    width: 180px;
+    height: 90px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    background: var(--bg-card);
+    cursor: pointer;
+    outline: none;
+    transition: box-shadow var(--transition-base), border-color var(--transition-fast);
+    font-family: inherit;
+    color: inherit;
+  }
+
+  .focus-card code {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+  }
+
+  .focus-card__hint {
+    font-size: var(--text-xs);
+    color: var(--text-ghost);
+  }
+
+  .focus-card--ring:focus-visible {
+    box-shadow: var(--focus-ring);
+    border-color: var(--accent-primary);
+  }
+
+  .focus-card--glow:focus-visible {
+    box-shadow: var(--focus-glow);
+    border-color: var(--accent-primary);
+  }
+
+</style>

@@ -1,0 +1,728 @@
+---
+import { Code } from 'astro:components';
+import DocsLayout from '../layouts/DocsLayout.astro';
+import { components } from '../data/components/index';
+import fs from 'node:fs';
+
+const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components/package.json', import.meta.url), 'utf-8'));
+const componentCount = components.length;
+
+const headings = [
+  { id: 'overview', label: 'Overview' },
+  { id: 'installation', label: 'Installation' },
+  { id: 'quick-start', label: 'Quick Start' },
+  { id: 'frameworks', label: 'Framework Setup' },
+  { id: 'theming', label: 'Theming' },
+  { id: 'design-tokens', label: 'Design Tokens' },
+  { id: 'typescript', label: 'TypeScript' },
+  { id: 'next-steps', label: 'Next Steps' },
+];
+---
+
+<DocsLayout
+  title="Getting Started"
+  description="Install and use ARC UI in your project."
+  activeSlug="getting-started"
+  headings={headings}
+  breadcrumbs={[{ label: 'Getting Started' }]}
+>
+  <div class="getting-started">
+    <h1 class="page-title">Getting Started</h1>
+    <p class="page-desc">
+      Everything you need to start building with ARC UI — from installation to your first component.
+    </p>
+
+    <!-- Overview -->
+    <section id="overview">
+      <h2 class="docs-heading">Overview</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <p class="docs-text">
+        ARC UI is a component library built on <strong>Lit Web Components</strong>.
+        Every component works natively in the browser. We built a custom code generator
+        called <strong>Prism</strong> that reads the Lit source and automatically produces
+        idiomatic bindings for React, Vue, Svelte, Angular, Solid, and Preact — all from
+        a single component definition.
+      </p>
+
+      <div class="overview-stats">
+        <div class="overview-stat">
+          <span class="overview-stat__value">{componentCount}</span>
+          <span class="overview-stat__label">Components</span>
+        </div>
+        <div class="overview-stat">
+          <span class="overview-stat__value">7</span>
+          <span class="overview-stat__label">Frameworks</span>
+        </div>
+        <div class="overview-stat">
+          <span class="overview-stat__value">0</span>
+          <span class="overview-stat__label">Runtime deps</span>
+        </div>
+        <div class="overview-stat">
+          <span class="overview-stat__value">A11y</span>
+          <span class="overview-stat__label">Built-in</span>
+        </div>
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature-item">
+          <arc-icon name="paint-brush" size="md" class="feature-item__icon"></arc-icon>
+          <div>
+            <strong>Design Token System</strong>
+            <span>100+ CSS custom properties for colors, spacing, typography, shadows, and motion — fully customizable.</span>
+          </div>
+        </div>
+        <div class="feature-item">
+          <arc-icon name="moon" size="md" class="feature-item__icon"></arc-icon>
+          <div>
+            <strong>Dark &amp; Light Themes</strong>
+            <span>Ships with dark and light modes. Toggle with a single attribute, or follow OS preference.</span>
+          </div>
+        </div>
+        <div class="feature-item">
+          <arc-icon name="keyboard" size="md" class="feature-item__icon"></arc-icon>
+          <div>
+            <strong>Accessible</strong>
+            <span>ARIA roles, keyboard navigation, focus management, and reduced-motion support built into every component.</span>
+          </div>
+        </div>
+        <div class="feature-item">
+          <arc-icon name="lightning" size="md" class="feature-item__icon"></arc-icon>
+          <div>
+            <strong>Lightweight</strong>
+            <span>No runtime dependencies beyond Lit. Tree-shakeable — only ship what you use.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Installation -->
+    <section id="installation">
+      <h2 class="docs-heading">Installation</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <div class="install-tabs">
+        <div class="install-option">
+          <span class="install-label">npm</span>
+          <div class="docs-code"><Code code="npm install @arclux/arc-ui lit" lang="bash" theme="css-variables" /></div>
+        </div>
+        <div class="install-option">
+          <span class="install-label">pnpm</span>
+          <div class="docs-code"><Code code="pnpm add @arclux/arc-ui lit" lang="bash" theme="css-variables" /></div>
+        </div>
+        <div class="install-option">
+          <span class="install-label">yarn</span>
+          <div class="docs-code"><Code code="yarn add @arclux/arc-ui lit" lang="bash" theme="css-variables" /></div>
+        </div>
+      </div>
+
+      <arc-callout variant="info" style="margin-top:var(--space-sm)">
+        <strong>CDN:</strong> No build step? Add a single script tag instead — see <a href="#frameworks">Framework Setup</a> below.
+      </arc-callout>
+    </section>
+
+    <!-- Quick Start -->
+    <section id="quick-start">
+      <h2 class="docs-heading">Quick Start</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <p class="docs-text">
+        Import the library to register all components, then use them in your markup:
+      </p>
+
+      <div class="step">
+        <span class="step__number">1</span>
+        <div class="step__content">
+          <strong>Register components</strong>
+          <div class="docs-code"><Code code="import '@arclux/arc-ui';" lang="js" theme="css-variables" /></div>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="step__number">2</span>
+        <div class="step__content">
+          <strong>Use in HTML</strong>
+          <div class="docs-code"><Code code={`<arc-button variant="primary">Get Started</arc-button>
+
+<arc-card>
+  <h3 slot="header">Welcome</h3>
+  <p>Build beautiful interfaces with zero configuration.</p>
+  <arc-button slot="footer" variant="ghost" size="sm">
+    Learn more
+  </arc-button>
+</arc-card>
+
+<arc-input label="Email" placeholder="you@example.com">
+</arc-input>
+
+<arc-toggle label="Dark mode"></arc-toggle>`} lang="html" theme="css-variables" /></div>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="step__number">3</span>
+        <div class="step__content">
+          <strong>See it live</strong>
+          <div class="quick-demo">
+            <arc-button variant="primary">Get Started</arc-button>
+            <arc-badge variant="primary">v{pkg.version}</arc-badge>
+            <arc-toggle label="Dark mode"></arc-toggle>
+          </div>
+        </div>
+      </div>
+
+      <arc-callout variant="tip" style="margin-top:var(--space-sm)">
+        That's it — no config files, no build plugins, no providers to wrap your app in.
+        Web components work everywhere.
+      </arc-callout>
+    </section>
+
+    <!-- Framework Setup -->
+    <section id="frameworks">
+      <h2 class="docs-heading">Framework Setup</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <p class="docs-text">
+        ARC UI works with any framework out of the box. We built a custom code generator
+        called Prism that reads the Lit source and produces a native wrapper package for
+        each framework — typed props, idiomatic events, and tree-shakeable imports, all
+        from a single component definition.
+      </p>
+
+      <div class="framework-grid">
+        <!-- React -->
+        <div class="framework-card">
+          <div class="framework-card__header">
+            <strong>React</strong>
+          </div>
+          <div class="docs-code"><Code code="npm install @arclux/arc-ui-react" lang="bash" theme="css-variables" /></div>
+          <div class="docs-code"><Code code={`import { Button, Card } from '@arclux/arc-ui-react';
+
+function App() {
+  return (
+    <Card>
+      <h3>Hello</h3>
+      <Button variant="primary" onArcClick={handleClick}>
+        Click Me
+      </Button>
+    </Card>
+  );
+}`} lang="jsx" theme="css-variables" /></div>
+        </div>
+
+        <!-- Vue -->
+        <div class="framework-card">
+          <div class="framework-card__header">
+            <strong>Vue</strong>
+          </div>
+          <div class="docs-code"><Code code="npm install @arclux/arc-ui-vue" lang="bash" theme="css-variables" /></div>
+          <div class="docs-code"><Code code={`<script setup>
+import { ArcButton, ArcCard } from '@arclux/arc-ui-vue';
+</script>
+
+<template>
+  <ArcCard>
+    <h3>Hello</h3>
+    <ArcButton variant="primary" @arc-click="handleClick">
+      Click Me
+    </ArcButton>
+  </ArcCard>
+</template>`} lang="vue" theme="css-variables" /></div>
+        </div>
+
+        <!-- Svelte -->
+        <div class="framework-card">
+          <div class="framework-card__header">
+            <strong>Svelte</strong>
+          </div>
+          <div class="docs-code"><Code code="npm install @arclux/arc-ui-svelte" lang="bash" theme="css-variables" /></div>
+          <div class="docs-code"><Code code={`<script>
+  import { ArcButton, ArcCard } from '@arclux/arc-ui-svelte';
+</script>
+
+<ArcCard>
+  <h3>Hello</h3>
+  <ArcButton variant="primary" on:arc-click={handleClick}>
+    Click Me
+  </ArcButton>
+</ArcCard>`} lang="svelte" theme="css-variables" /></div>
+        </div>
+
+        <!-- Vanilla / CDN -->
+        <div class="framework-card">
+          <div class="framework-card__header">
+            <strong>CDN / Vanilla JS</strong>
+          </div>
+          <p class="docs-text">No build step required. Add a script tag and go:</p>
+          <div class="docs-code"><Code code={`<script type="module"
+  src="https://unpkg.com/@arclux/arc-ui">
+</script>
+
+<arc-button variant="primary">Click Me</arc-button>`} lang="html" theme="css-variables" /></div>
+        </div>
+      </div>
+
+      <p class="docs-text" style="margin-top:var(--space-md)">
+        Our Prism generator also produces wrappers for <strong>Angular</strong>, <strong>Solid</strong>, and <strong>Preact</strong>.
+        See the <a href="/frameworks">Frameworks</a> guide for complete setup instructions.
+      </p>
+    </section>
+
+    <!-- Theming -->
+    <section id="theming">
+      <h2 class="docs-heading">Theming</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <p class="docs-text">
+        ARC UI ships with dark and light themes. Toggle between them with the <code>data-theme</code> attribute
+        on any element — typically the <code>&lt;html&gt;</code> or <code>&lt;body&gt;</code> tag.
+      </p>
+
+      <div class="theme-examples">
+        <div class="theme-example">
+          <span class="theme-example__label">Dark (default)</span>
+          <div class="docs-code"><Code code={`<html data-theme="dark">`} lang="html" theme="css-variables" /></div>
+        </div>
+        <div class="theme-example">
+          <span class="theme-example__label">Light</span>
+          <div class="docs-code"><Code code={`<html data-theme="light">`} lang="html" theme="css-variables" /></div>
+        </div>
+        <div class="theme-example">
+          <span class="theme-example__label">Auto (OS preference)</span>
+          <div class="docs-code"><Code code={`<script>
+  const theme = window.matchMedia('(prefers-color-scheme: light)').matches
+    ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', theme);
+</script>`} lang="html" theme="css-variables" /></div>
+        </div>
+      </div>
+
+      <p class="docs-text">
+        Create fully custom themes by overriding design tokens. Use the
+        <a href="/theme-synthesizer">Theme Synthesizer</a> to generate a custom theme visually.
+      </p>
+    </section>
+
+    <!-- Design Tokens -->
+    <section id="design-tokens">
+      <h2 class="docs-heading">Design Tokens</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <p class="docs-text">
+        ARC UI's visual language is driven by 100+ CSS custom properties. Import the tokens stylesheet
+        to use them in your own CSS:
+      </p>
+
+      <div class="docs-code"><Code code="@import '@arclux/arc-ui/tokens.css';" lang="css" theme="css-variables" /></div>
+
+      <p class="docs-text">Then reference tokens in your styles:</p>
+
+      <div class="docs-code"><Code code={`.my-component {
+  color: var(--text-primary);
+  background: var(--bg-card);
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  box-shadow: var(--shadow-md);
+}`} lang="css" theme="css-variables" /></div>
+
+      <div class="token-preview">
+        <div class="token-category">
+          <span class="token-category__label">Colors</span>
+          <div class="token-chips">
+            <span class="token-chip" style="background:var(--accent-primary)"></span>
+            <span class="token-chip" style="background:var(--accent-secondary)"></span>
+            <span class="token-chip" style="background:var(--color-success)"></span>
+            <span class="token-chip" style="background:var(--color-warning)"></span>
+            <span class="token-chip" style="background:var(--color-error)"></span>
+            <span class="token-chip" style="background:var(--color-info)"></span>
+          </div>
+        </div>
+        <div class="token-category">
+          <span class="token-category__label">Spacing</span>
+          <code class="token-mono">--space-xs · sm · md · lg · xl · 2xl</code>
+        </div>
+        <div class="token-category">
+          <span class="token-category__label">Radii</span>
+          <code class="token-mono">--radius-xs · sm · md · lg · xl · full</code>
+        </div>
+        <div class="token-category">
+          <span class="token-category__label">Shadows</span>
+          <code class="token-mono">--shadow-xs · sm · md · lg · xl</code>
+        </div>
+      </div>
+
+      <p class="docs-text">
+        See the full <a href="/tokens">Design Tokens</a> reference for every available token.
+      </p>
+    </section>
+
+    <!-- TypeScript -->
+    <section id="typescript">
+      <h2 class="docs-heading">TypeScript</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <p class="docs-text">
+        Our Prism code generator produces full TypeScript definitions for every framework wrapper.
+        For web components in TypeScript projects, add the type declarations:
+      </p>
+
+      <div class="docs-code"><Code code={`// tsconfig.json
+{
+  "compilerOptions": {
+    "types": ["@arclux/arc-ui/types"]
+  }
+}`} lang="json" theme="css-variables" /></div>
+
+      <p class="docs-text">
+        This gives you autocomplete and type checking for all <code>arc-*</code> elements
+        in JSX and template literals.
+      </p>
+    </section>
+
+    <!-- Next Steps -->
+    <section id="next-steps">
+      <h2 class="docs-heading">Next Steps</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <div class="next-grid">
+        <a href="/components" class="next-card">
+          <arc-icon name="squares-four" size="md" class="next-card__icon"></arc-icon>
+          <div>
+            <strong>Browse Components</strong>
+            <span>Explore all {componentCount} components with live demos and API docs.</span>
+          </div>
+        </a>
+        <a href="/tokens" class="next-card">
+          <arc-icon name="palette" size="md" class="next-card__icon"></arc-icon>
+          <div>
+            <strong>Design Tokens</strong>
+            <span>Full reference for colors, spacing, typography, shadows, and more.</span>
+          </div>
+        </a>
+        <a href="/theming" class="next-card">
+          <arc-icon name="paint-brush" size="md" class="next-card__icon"></arc-icon>
+          <div>
+            <strong>Theming Guide</strong>
+            <span>Learn how to customize themes and create your own.</span>
+          </div>
+        </a>
+        <a href="/theme-synthesizer" class="next-card">
+          <arc-icon name="sliders" size="md" class="next-card__icon"></arc-icon>
+          <div>
+            <strong>Theme Synthesizer</strong>
+            <span>Visually build a custom theme with live preview.</span>
+          </div>
+        </a>
+      </div>
+    </section>
+  </div>
+</DocsLayout>
+
+<script>
+  import '@arclux/arc-ui';
+</script>
+
+<style>
+  /* Overview stats */
+  .overview-stats {
+    display: flex;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-lg);
+    flex-wrap: wrap;
+  }
+
+  .overview-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: var(--space-md) var(--space-lg);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+    min-width: 100px;
+  }
+
+  .overview-stat__value {
+    font-size: 28px; /* Keep 28px */
+    font-weight: 700;
+    background: var(--gradient-accent-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .overview-stat__label {
+    font-family: var(--font-accent);
+    font-size: var(--text-xs);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* Feature grid */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--space-md);
+    margin-bottom: var(--space-md);
+  }
+
+  .feature-item {
+    display: flex;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+  }
+
+  .feature-item__icon {
+    color: var(--accent-primary);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .feature-item strong {
+    display: block;
+    font-size: var(--text-sm);
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .feature-item span {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* Install tabs */
+  .install-tabs {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+  }
+
+  .install-option {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+  }
+
+  .install-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--text-muted);
+    min-width: 48px;
+    padding-top: 10px;
+    text-align: right;
+  }
+
+  .install-option .docs-code {
+    flex: 1;
+    margin-bottom: 0;
+  }
+
+  /* Steps */
+  .step {
+    display: flex;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+  }
+
+  .step__number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--accent-primary);
+    color: var(--text-primary);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .step__content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .step__content strong {
+    font-size: var(--text-md);
+    color: var(--text-primary);
+  }
+
+  .step__content .docs-code {
+    margin-bottom: 0;
+  }
+
+  /* Quick demo */
+  .quick-demo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+    flex-wrap: wrap;
+  }
+
+  /* Framework grid */
+  .framework-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-md);
+    margin-bottom: var(--space-md);
+  }
+
+  .framework-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding: var(--space-lg);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+    min-width: 0;
+  }
+
+  .framework-card__header {
+    font-size: var(--text-md);
+    margin-bottom: var(--space-xs);
+  }
+
+  .framework-card__header strong {
+    color: var(--text-primary);
+  }
+
+  .framework-card .docs-code {
+    margin-bottom: 0;
+  }
+
+  .framework-card .docs-text {
+    margin-bottom: var(--space-xs);
+  }
+
+  /* Theme examples */
+  .theme-examples {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    margin-bottom: var(--space-md);
+  }
+
+  .theme-example__label {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--space-xs);
+    display: block;
+  }
+
+  .theme-example .docs-code {
+    margin-bottom: 0;
+  }
+
+  /* Token preview */
+  .token-preview {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-md);
+  }
+
+  .token-category {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .token-category__label {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--text-muted);
+    min-width: 64px;
+  }
+
+  .token-chips {
+    display: flex;
+    gap: 6px;
+  }
+
+  .token-chip {
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-default);
+  }
+
+  .token-mono {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+  }
+
+  /* Next steps grid */
+  .next-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--space-md);
+  }
+
+  .next-card {
+    display: flex;
+    gap: var(--space-sm);
+    padding: var(--space-lg);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .next-card:hover {
+    border-color: var(--accent-primary);
+    box-shadow: var(--glow-blue);
+  }
+
+  .next-card__icon {
+    color: var(--accent-primary);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .next-card strong {
+    display: block;
+    font-size: var(--text-sm);
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .next-card span {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  @media (max-width: 768px) {
+    .overview-stats { gap: var(--space-sm); }
+    .overview-stat { min-width: 80px; padding: var(--space-sm) var(--space-md); }
+    .overview-stat__value { font-size: 22px; }
+    .framework-grid { grid-template-columns: 1fr; }
+    .install-option { flex-direction: column; gap: var(--space-xs); }
+    .install-label { text-align: left; min-width: unset; padding-top: 0; }
+  }
+</style>

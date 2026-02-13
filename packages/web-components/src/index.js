@@ -1,0 +1,9 @@
+// ARC UI — Web Components
+// Re-exports from all tiers
+
+export { ArcAccordion, ArcAccordionItem, ArcAnimatedNumber, ArcAspectRatio, ArcAvatar, ArcAvatarGroup, ArcBadge, ArcCallout, ArcCard, ArcCarousel, ArcCodeBlock, ArcCollapsible, ArcColorSwatch, ArcColumn, ArcDataTable, ArcDivider, ArcEmptyState, ArcFeatureCard, ArcHighlight, ArcIcon, ArcIconLibrary, iconRegistry, ArcInfiniteScroll, ArcKbd, ArcMarkdown, ArcMarquee, ArcMeter, ArcScrollArea, ArcSkeleton, ArcSpinner, ArcStack, ArcStat, ArcStep, ArcStepper, ArcTable, ArcTag, ArcText, ArcTimeline, ArcTimelineItem, ArcTruncate, ArcValueCard } from './content/index.js';
+export { ArcButton, ArcCalendar, ArcCheckbox, ArcChip, ArcColorPicker, ArcCombobox, ArcCopyButton, ArcDatePicker, ArcFileUpload, ArcForm, ArcIconButton, ArcInput, ArcMultiSelect, ArcNumberInput, ArcOtpInput, ArcPinInput, ArcRadio, ArcRadioGroup, ArcRating, ArcSearch, ArcSegmentedControl, ArcSelect, ArcSlider, ArcSortableList, ArcSuggestion, ArcTextarea, ArcThemeToggle, ArcToggle } from './input/index.js';
+export { ArcAlert, ArcCommandItem, ArcCommandPalette, ArcContextMenu, ArcDialog, ArcDropdownMenu, ArcHoverCard, ArcModal, ArcNotificationPanel, ArcPopover, ArcProgress, ArcSheet, ArcToast, ArcTooltip } from './feedback/index.js';
+export { ArcBreadcrumb, ArcBreadcrumbItem, ArcDrawer, ArcFooter, ArcLink, ArcNavItem, ArcNavigationMenu, ArcPagination, ArcScrollSpy, ArcScrollToTop, ArcSidebar, ArcSidebarLink, ArcSidebarSection, ArcSpyLink, ArcTab, ArcTabs, ArcTopBar, ArcTreeItem, ArcTreeView } from './navigation/index.js';
+export { ArcAppShell, ArcAuthShell, ArcContainer, ArcDashboardGrid, ArcPageHeader, ArcPageLayout, ArcResizable, ArcSection, ArcSettingsLayout, ArcSplitPane, ArcStatusBar, ArcToolbar } from './layout/index.js';
+export { ArcOption, ArcMenuItem, ArcMenuDivider } from './shared/index.js';

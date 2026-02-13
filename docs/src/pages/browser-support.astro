@@ -1,0 +1,185 @@
+---
+import DocsLayout from '../layouts/DocsLayout.astro';
+
+const headings = [
+  { id: 'overview', label: 'Overview' },
+  { id: 'browsers', label: 'Supported Browsers' },
+  { id: 'web-components', label: 'Web Components' },
+  { id: 'polyfills', label: 'Polyfills' },
+  { id: 'node', label: 'Node.js' },
+];
+---
+
+<DocsLayout
+  title="Browser Support"
+  description="Browser compatibility and polyfill guidance for ARC UI."
+  activeSlug="browser-support"
+  headings={headings}
+  breadcrumbs={[{ label: 'Browser Support' }]}
+>
+  <div class="browser-page">
+    <h1 class="page-title">Browser Support</h1>
+    <p class="page-desc">
+      ARC UI targets modern evergreen browsers. All components use native Web Components APIs
+      (Custom Elements v1 and Shadow DOM v1).
+    </p>
+
+    <section id="overview">
+      <h2 class="docs-heading">Overview</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <p class="docs-text">
+        ARC UI is built on <strong>Lit 3</strong>, which compiles to standard JavaScript modules. No
+        transpilation to ES5 or legacy module formats is provided. The library ships as ESM-only
+        (<code>type: "module"</code>).
+      </p>
+    </section>
+
+    <section id="browsers">
+      <h2 class="docs-heading">Supported Browsers</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <div class="browser-grid">
+        <arc-card>
+          <div class="browser-name">Chrome / Edge</div>
+          <div class="browser-version">90+</div>
+          <div class="browser-note">Full support including all CSS features</div>
+        </arc-card>
+        <arc-card>
+          <div class="browser-name">Firefox</div>
+          <div class="browser-version">100+</div>
+          <div class="browser-note">Full support</div>
+        </arc-card>
+        <arc-card>
+          <div class="browser-name">Safari / iOS Safari</div>
+          <div class="browser-version">15.4+</div>
+          <div class="browser-note">Full support (Shadow DOM, Custom Elements, Constructable Stylesheets)</div>
+        </arc-card>
+        <arc-card>
+          <div class="browser-name">Samsung Internet</div>
+          <div class="browser-version">15+</div>
+          <div class="browser-note">Full support (Chromium-based)</div>
+        </arc-card>
+      </div>
+
+      <arc-callout variant="info" style="margin-top:var(--space-md)">
+        <strong>Internet Explorer is not supported.</strong> Web Components APIs are not available in IE11 and
+        no polyfill is provided.
+      </arc-callout>
+    </section>
+
+    <section id="web-components">
+      <h2 class="docs-heading">Web Components APIs</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <p class="docs-text">ARC UI relies on the following browser APIs:</p>
+
+      <div class="api-table-wrap">
+        <table class="api-table">
+          <thead>
+            <tr><th>API</th><th>Chrome</th><th>Firefox</th><th>Safari</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Custom Elements v1</td><td>67+</td><td>63+</td><td>10.1+</td><td>Core component registration</td></tr>
+            <tr><td>Shadow DOM v1</td><td>53+</td><td>63+</td><td>10+</td><td>Style encapsulation</td></tr>
+            <tr><td>ES Modules</td><td>61+</td><td>60+</td><td>10.1+</td><td>Import/export syntax</td></tr>
+            <tr><td>Constructable Stylesheets</td><td>73+</td><td>101+</td><td>16.4+</td><td>Used by Lit for style sharing</td></tr>
+            <tr><td>CSS Custom Properties</td><td>49+</td><td>31+</td><td>9.1+</td><td>Design token system</td></tr>
+            <tr><td>IntersectionObserver</td><td>51+</td><td>55+</td><td>12.1+</td><td>Infinite scroll, scroll spy</td></tr>
+            <tr><td>Clipboard API</td><td>66+</td><td>63+</td><td>13.1+</td><td>Copy button (code blocks)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="polyfills">
+      <h2 class="docs-heading">Polyfills</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <p class="docs-text">
+        For evergreen browsers, <strong>no polyfills are required</strong>. If you need to support
+        older browsers, the <a href="https://github.com/webcomponents/polyfills" target="_blank" rel="noopener">@webcomponents/webcomponentsjs</a>
+        polyfill bundle provides Custom Elements and Shadow DOM support. Load it before any ARC UI imports:
+      </p>
+      <arc-code-block
+        language="html"
+        code='<script src="https://unpkg.com/@webcomponents/webcomponentsjs@2/webcomponents-bundle.js"><\/script>'
+      ></arc-code-block>
+      <arc-callout variant="warning" style="margin-top:var(--space-sm)">
+        The polyfill adds approximately 15 KB (gzipped) and may degrade performance.
+        We recommend targeting evergreen browsers instead.
+      </arc-callout>
+    </section>
+
+    <section id="node">
+      <h2 class="docs-heading">Node.js</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <p class="docs-text">
+        The build tooling and development server require <strong>Node.js 24+</strong> (LTS Krypton)
+        and <strong>pnpm 10+</strong>. These are enforced via the <code>engines</code> field in
+        <code>package.json</code>.
+      </p>
+    </section>
+  </div>
+</DocsLayout>
+
+<style>
+  .browser-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--space-md);
+    margin-bottom: var(--space-md);
+  }
+
+  .browser-name {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--space-xs);
+  }
+
+  .browser-version {
+    font-family: var(--font-mono);
+    font-size: var(--text-lg);
+    color: var(--accent-primary);
+    margin-bottom: var(--space-xs);
+  }
+
+  .browser-note {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+  }
+
+  .api-table-wrap {
+    overflow-x: auto;
+    margin-bottom: var(--space-md);
+  }
+
+  .api-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+  }
+
+  .api-table th,
+  .api-table td {
+    padding: var(--space-sm) var(--space-md);
+    text-align: left;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .api-table th {
+    font-family: var(--font-accent);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background: var(--bg-surface);
+  }
+
+  .api-table td {
+    color: var(--text-secondary);
+  }
+
+  .api-table td:first-child {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+</style>

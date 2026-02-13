@@ -1,0 +1,211 @@
+---
+import { Code } from 'astro:components';
+
+interface CodeTab {
+  label: string;
+  lang: string;
+  code: string;
+}
+
+interface Props {
+  name: string;
+  description: string;
+  tabs: CodeTab[];
+  props?: Array<{ name: string; type: string; default?: string; description: string }>;
+  /** When true, only renders code tabs — no header, preview, or API table. */
+  codeOnly?: boolean;
+}
+
+const { name, description, tabs, props: propDocs, codeOnly = false } = Astro.props;
+const id = name.toLowerCase().replace(/\s+/g, '-');
+---
+
+<section class:list={['showcase', { 'showcase--code-only': codeOnly }]} id={codeOnly ? undefined : id}>
+  {!codeOnly && (
+    <div class="showcase__header">
+      <h2 class="showcase__name">{name}</h2>
+      <p class="showcase__desc">{description}</p>
+    </div>
+  )}
+
+  {!codeOnly && (
+    <div class="showcase__preview">
+      <slot />
+    </div>
+  )}
+
+  <div class="showcase__code-area">
+    <arc-tabs>
+      {tabs.map((tab) => (
+        <arc-tab label={tab.label}>
+          <div class="showcase__code-wrap">
+            <arc-copy-button value={tab.code}></arc-copy-button>
+            <Code code={tab.code} lang={tab.lang === 'html' ? 'html' : tab.lang === 'css' ? 'css' : tab.lang === 'jsx' || tab.lang === 'tsx' ? 'tsx' : 'js'} theme="css-variables" />
+          </div>
+        </arc-tab>
+      ))}
+    </arc-tabs>
+  </div>
+
+  {!codeOnly && propDocs && propDocs.length > 0 && (
+    <div class="showcase__api">
+      <h3 class="showcase__api-title">API</h3>
+      <div class="showcase__table-wrap">
+        <table class="showcase__table">
+          <thead>
+            <tr>
+              <th>Prop</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            {propDocs.map((p) => (
+              <tr>
+                <td><code>{p.name}</code></td>
+                <td><code>{p.type}</code></td>
+                <td>{p.default ? <code>{p.default}</code> : '—'}</td>
+                <td>{p.description}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )}
+</section>
+
+<style>
+  .showcase {
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    background: var(--bg-card);
+  }
+
+  .showcase__header {
+    padding: var(--space-lg);
+    border-bottom: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+
+  .showcase__name {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    margin-bottom: var(--space-xs);
+  }
+
+  .showcase__desc {
+    color: var(--text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .showcase__preview {
+    padding: var(--space-xl);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    align-items: center;
+    background: var(--bg-deep);
+    border-bottom: 1px solid var(--border-subtle);
+    min-height: 100px;
+    overflow: visible;
+    position: relative;
+  }
+
+  /* Code-only mode: no border-bottom since no API section follows */
+  .showcase--code-only .showcase__code-area {
+    border-bottom: none;
+  }
+
+  .showcase__code-area {
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .showcase__code-area arc-tab {
+    margin: calc(-1 * var(--space-lg)) 0;
+  }
+
+  .showcase__code-wrap {
+    position: relative;
+  }
+
+  .showcase__code-wrap arc-copy-button {
+    position: absolute;
+    top: var(--space-sm);
+    right: var(--space-sm);
+    z-index: 1;
+  }
+
+  .showcase__code-wrap pre {
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    background: var(--bg-surface);
+    padding: var(--space-md) var(--space-lg);
+    font-size: var(--text-sm);
+    position: static;
+  }
+
+  .showcase__code-wrap pre::before {
+    display: none;
+  }
+
+  .showcase__api {
+    padding: var(--space-lg);
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  }
+
+  .showcase__api-title {
+    font-family: var(--font-accent);
+    font-size: var(--section-title-size);
+    letter-spacing: var(--section-title-spacing);
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: var(--section-title-weight);
+    margin-bottom: var(--space-md);
+  }
+
+  .showcase__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+  }
+
+  .showcase__table th {
+    text-align: left;
+    font-family: var(--font-accent);
+    font-size: var(--text-xs);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-ghost);
+    font-weight: 600;
+    padding: var(--space-sm) var(--space-md);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .showcase__table td {
+    padding: var(--space-sm) var(--space-md);
+    border-bottom: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    vertical-align: top;
+  }
+
+  .showcase__table code {
+    font-size: var(--text-xs);
+    background: var(--bg-surface);
+    padding: 1px 6px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .showcase__table-wrap {
+    overflow-x: auto;
+  }
+
+  @media (max-width: 768px) {
+    .showcase__preview { padding: var(--space-md); }
+    .showcase__code-wrap pre { padding: var(--space-sm) var(--space-md); font-size: var(--text-xs); }
+    .showcase__api { padding: var(--space-md); }
+  }
+</style>

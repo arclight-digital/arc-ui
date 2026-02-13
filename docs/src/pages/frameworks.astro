@@ -1,0 +1,217 @@
+---
+import { Code } from 'astro:components';
+import DocsLayout from '../layouts/DocsLayout.astro';
+
+const headings = [
+  { id: 'overview', label: 'Overview' },
+  { id: 'react', label: 'React' },
+  { id: 'vue', label: 'Vue' },
+  { id: 'svelte', label: 'Svelte' },
+  { id: 'angular', label: 'Angular' },
+  { id: 'solid', label: 'Solid' },
+  { id: 'preact', label: 'Preact' },
+  { id: 'vanilla', label: 'Vanilla JS / CDN' },
+];
+---
+
+<DocsLayout
+  title="Frameworks"
+  description="Use ARC UI with React, Vue, Svelte, Angular, Solid, Preact, or vanilla JS."
+  activeSlug="frameworks"
+  headings={headings}
+  breadcrumbs={[{ label: 'Frameworks' }]}
+>
+  <div class="frameworks-page">
+    <h1 class="page-title">Framework Guides</h1>
+    <p class="page-desc">
+      ARC UI is built on Lit Web Components. We built a custom code generator called Prism
+      that reads the Lit source and produces typed, idiomatic bindings for every major framework.
+    </p>
+
+    <section id="overview">
+      <h2 class="docs-heading">Overview</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <p class="docs-text">
+        ARC UI follows a <strong>write-once, run-everywhere</strong> architecture. The core
+        <code>@arclux/arc-ui</code> package contains Lit-based custom elements that work in
+        any environment. We built a custom code generator called <strong>Prism</strong> that
+        parses any Lit web component and produces framework-native wrappers, giving you:
+      </p>
+      <ul class="docs-list">
+        <li>Proper event binding (e.g., React's synthetic events)</li>
+        <li>TypeScript type definitions</li>
+        <li>Idiomatic imports for each framework</li>
+        <li>SSR compatibility where supported</li>
+      </ul>
+      <p class="docs-text">
+        Every framework package re-exports the same components — choose the one that matches your stack.
+      </p>
+    </section>
+
+    <section id="react">
+      <h2 class="docs-heading">React</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <arc-badge variant="primary">@arclux/arc-ui-react</arc-badge>
+      <p class="docs-text">Install the React wrapper package:</p>
+      <div class="docs-code"><Code code="npm install @arclux/arc-ui-react" lang="bash" theme="css-variables" /></div>
+      <p class="docs-text">Import and use components:</p>
+      <div class="docs-code"><Code code={`import { Button, Card, Input } from '@arclux/arc-ui-react';
+
+function App() {
+  return (
+    <Card>
+      <span slot="heading">Sign In</span>
+      <Input label="Email" placeholder="you@example.com" />
+      <Button variant="primary" onClick={() => console.log('clicked')}>
+        Submit
+      </Button>
+    </Card>
+  );
+}`} lang="jsx" theme="css-variables" /></div>
+      <p class="docs-text">
+        React wrappers use <code>@lit/react</code> <code>createComponent</code> under the hood,
+        which handles event binding and ref forwarding automatically.
+      </p>
+    </section>
+
+    <section id="vue">
+      <h2 class="docs-heading">Vue</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <arc-badge variant="primary">@arclux/arc-ui-vue</arc-badge>
+      <p class="docs-text">Install the Vue wrapper package:</p>
+      <div class="docs-code"><Code code="npm install @arclux/arc-ui-vue" lang="bash" theme="css-variables" /></div>
+      <p class="docs-text">Use in your Vue components:</p>
+      <div class="docs-code"><Code code={`<script setup>
+import { ArcButton, ArcCard } from '@arclux/arc-ui-vue';
+</script>
+
+<template>
+  <ArcCard>
+    <template #heading>Hello Vue</template>
+    <ArcButton variant="primary" @click="handleClick">
+      Click Me
+    </ArcButton>
+  </ArcCard>
+</template>`} lang="vue" theme="css-variables" /></div>
+    </section>
+
+    <section id="svelte">
+      <h2 class="docs-heading">Svelte</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <arc-badge variant="primary">@arclux/arc-ui-svelte</arc-badge>
+      <p class="docs-text">Install the Svelte wrapper package:</p>
+      <div class="docs-code"><Code code="npm install @arclux/arc-ui-svelte" lang="bash" theme="css-variables" /></div>
+      <p class="docs-text">Use in your Svelte components:</p>
+      <div class="docs-code"><Code code={`<script>
+  import { ArcButton, ArcCard } from '@arclux/arc-ui-svelte';
+</script>
+
+<ArcCard>
+  <span slot="heading">Hello Svelte</span>
+  <ArcButton variant="primary" on:click={() => console.log('clicked')}>
+    Click Me
+  </ArcButton>
+</ArcCard>`} lang="svelte" theme="css-variables" /></div>
+    </section>
+
+    <section id="angular">
+      <h2 class="docs-heading">Angular</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <arc-badge variant="primary">@arclux/arc-ui-angular</arc-badge>
+      <p class="docs-text">Install the Angular wrapper package:</p>
+      <div class="docs-code"><Code code="npm install @arclux/arc-ui-angular" lang="bash" theme="css-variables" /></div>
+      <p class="docs-text">Add the module to your app and use components:</p>
+      <div class="docs-code"><Code code={`// app.module.ts
+import { ArcUiModule } from '@arclux/arc-ui-angular';
+
+@NgModule({
+  imports: [ArcUiModule],
+})
+export class AppModule {}
+
+// In your template:
+// <arc-button variant="primary" (click)="handleClick()">
+//   Click Me
+// </arc-button>`} lang="typescript" theme="css-variables" /></div>
+    </section>
+
+    <section id="solid">
+      <h2 class="docs-heading">Solid</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <arc-badge variant="primary">@arclux/arc-ui-solid</arc-badge>
+      <p class="docs-text">Install the Solid wrapper package:</p>
+      <div class="docs-code"><Code code="npm install @arclux/arc-ui-solid" lang="bash" theme="css-variables" /></div>
+      <p class="docs-text">Use in your Solid components:</p>
+      <div class="docs-code"><Code code={`import { ArcButton, ArcCard } from '@arclux/arc-ui-solid';
+
+function App() {
+  return (
+    <ArcCard>
+      <span slot="heading">Hello Solid</span>
+      <ArcButton variant="primary" onClick={() => console.log('clicked')}>
+        Click Me
+      </ArcButton>
+    </ArcCard>
+  );
+}`} lang="jsx" theme="css-variables" /></div>
+    </section>
+
+    <section id="preact">
+      <h2 class="docs-heading">Preact</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <arc-badge variant="primary">@arclux/arc-ui-preact</arc-badge>
+      <p class="docs-text">Install the Preact wrapper package:</p>
+      <div class="docs-code"><Code code="npm install @arclux/arc-ui-preact" lang="bash" theme="css-variables" /></div>
+      <p class="docs-text">Use in your Preact components:</p>
+      <div class="docs-code"><Code code={`import { ArcButton, ArcCard } from '@arclux/arc-ui-preact';
+
+function App() {
+  return (
+    <ArcCard>
+      <span slot="heading">Hello Preact</span>
+      <ArcButton variant="primary" onClick={() => console.log('clicked')}>
+        Click Me
+      </ArcButton>
+    </ArcCard>
+  );
+}`} lang="jsx" theme="css-variables" /></div>
+    </section>
+
+    <section id="vanilla">
+      <h2 class="docs-heading">Vanilla JS / CDN</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <p class="docs-text">
+        No framework? No problem. Use the core web component package directly:
+      </p>
+      <div class="docs-code"><Code code="npm install @arclux/arc-ui lit" lang="bash" theme="css-variables" /></div>
+      <div class="docs-code"><Code code={`import '@arclux/arc-ui';`} lang="js" theme="css-variables" /></div>
+      <p class="docs-text">Or load via CDN with no build step:</p>
+      <div class="docs-code"><Code code={`<script type="module"
+  src="https://unpkg.com/@arclux/arc-ui">
+</script>
+
+<arc-button variant="primary">Click Me</arc-button>
+<arc-card>
+  <span slot="heading">Hello World</span>
+  <p>Pure HTML, no framework needed.</p>
+</arc-card>`} lang="html" theme="css-variables" /></div>
+      <arc-callout variant="tip">For projects that can't use JavaScript, ARC UI also provides standalone CSS files.</arc-callout>
+      <p class="docs-text">
+        Import the bundle or individual component styles:
+      </p>
+      <div class="docs-code"><Code code={`<!-- Full bundle -->
+<link rel="stylesheet" href="https://unpkg.com/@arclux/arc-ui-html/css/arc-ui.css">
+
+<!-- Individual component -->
+<link rel="stylesheet" href="https://unpkg.com/@arclux/arc-ui-html/css/button.css">
+
+<button class="arc-button arc-button--primary">Click Me</button>`} lang="html" theme="css-variables" /></div>
+    </section>
+  </div>
+</DocsLayout>
+
+<script>
+  import '@arclux/arc-ui';
+</script>
+
+<style></style>

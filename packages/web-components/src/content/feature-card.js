@@ -1,0 +1,142 @@
+import { LitElement, html, css } from 'lit';
+import { tokenStyles } from '../shared-styles.js';
+
+export class ArcFeatureCard extends LitElement {
+  static properties = {
+    icon:        { type: String },
+    heading:     { type: String },
+    description: { type: String },
+    href:        { type: String },
+  };
+
+  static styles = [
+    tokenStyles,
+    css`
+      :host { display: block; height: 100%; }
+
+      .card {
+        position: relative;
+        border-radius: var(--radius-lg);
+        height: 100%;
+        padding: 1px;
+        background: var(--border-subtle);
+        transition: background var(--transition-slow);
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .card:hover {
+        background: linear-gradient(135deg, rgba(var(--accent-primary-rgb),0.3), rgba(var(--accent-secondary-rgb),0.15), var(--border-default));
+      }
+
+      .card__inner {
+        position: relative;
+        background: var(--bg-card);
+        border-radius: calc(var(--radius-lg) - 1px);
+        padding: var(--space-xl) var(--space-lg);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-md);
+        flex: 1;
+        transition: box-shadow var(--transition-slow);
+        z-index: 1;
+      }
+
+      .card:hover .card__inner {
+        box-shadow: inset 0 1px 0 var(--bg-hover), var(--glow-card-hover);
+      }
+
+      .card__icon {
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--radius-md);
+        background: var(--accent-primary-subtle);
+        border: 1px solid var(--accent-primary-border);
+        color: var(--accent-primary);
+        font-size: 20px; /* icon size, not text */
+        transition: box-shadow var(--transition-slow), border-color var(--transition-slow), transform var(--transition-slow);
+      }
+
+      .card:hover .card__icon {
+        border-color: rgba(var(--accent-primary-rgb),0.3);
+        box-shadow: 0 0 20px var(--accent-primary-glow), 0 0 6px var(--accent-primary-border);
+        transform: translateY(-2px);
+      }
+
+      .card__title {
+        font-size: 17px; /* heading size, keep hardcoded */
+        font-weight: 600;
+        color: var(--text-primary);
+        transition: color var(--transition-slow);
+        margin: 0;
+      }
+
+      .card:hover .card__title { color: var(--text-primary); }
+
+      .card__desc {
+        color: var(--text-secondary);
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        line-height: 1.7;
+        flex: 1;
+        margin: 0;
+      }
+
+      .card__rule {
+        width: 32px;
+        height: 1px;
+        background: linear-gradient(90deg, var(--accent-primary), transparent);
+        opacity: 0;
+        transition: opacity var(--transition-slow), width var(--transition-slow);
+      }
+
+      .card:hover .card__rule { opacity: 0.5; width: 48px; }
+
+      .card:focus-visible { outline: none; box-shadow: var(--focus-glow); border-radius: var(--radius-lg); }
+
+      @media (max-width: 768px) {
+        .card__inner { padding: var(--space-lg) var(--space-md); }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        :host *,
+        :host *::before,
+        :host *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    `,
+  ];
+
+  constructor() {
+    super();
+    this.icon = '';
+    this.heading = '';
+    this.description = '';
+    this.href = '';
+  }
+
+  render() {
+    const inner = html`
+      <div class="card__inner" part="inner">
+        <div class="card__icon" part="icon"><slot name="icon">${this.icon}</slot></div>
+        <h3 class="card__title" part="title">${this.heading}</h3>
+        <p class="card__desc" part="description">${this.description}</p>
+        <span class="card__rule"></span>
+      </div>
+    `;
+
+    if (this.href) {
+      return html`<a class="card" href=${this.href} part="card">${inner}</a>`;
+    }
+    return html`<div class="card" part="card">${inner}</div>`;
+  }
+}
+
+customElements.define('arc-feature-card', ArcFeatureCard);

@@ -1,0 +1,751 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import ComponentShowcase from '../../components/ComponentShowcase.astro';
+import { components } from '../../data/components/index';
+
+export function getStaticPaths() {
+  return components.map((c) => ({
+    params: { slug: c.slug },
+    props: { component: c },
+  }));
+}
+
+const { component } = Astro.props;
+
+const tierColors: Record<string, string> = {
+  layout: 'default',
+  navigation: 'blue',
+  content: 'default',
+  input: 'violet',
+  feedback: 'blue',
+};
+
+const interactivityColors: Record<string, string> = {
+  static: 'default',
+  hybrid: 'blue',
+  interactive: 'violet',
+};
+
+const interactivityNotes: Record<string, string> = {
+  interactive: 'This component requires JavaScript. No pure HTML/CSS version is available — use the Web Component directly or a framework wrapper.',
+  hybrid: 'Layout and styling work without JavaScript via the HTML/CSS versions. Interactive features like events and state management require the Web Component or a framework wrapper.',
+};
+
+const headings = [
+  ...(component.overview ? [{ id: 'overview', label: 'Overview' }] : []),
+  ...(component.guidelines ? [{ id: 'guidelines', label: 'Guidelines' }] : []),
+  ...(component.features ? [{ id: 'features', label: 'Features' }] : []),
+  { id: 'preview', label: 'Preview' },
+  { id: 'usage', label: 'Usage' },
+  ...(component.props.length > 0 ? [{ id: 'api', label: 'API' }] : []),
+  ...((component.events ?? []).length > 0 ? [{ id: 'events', label: 'Events' }] : []),
+  ...(component.subComponents ?? []).map((sub: any) => ({
+    id: sub.tag,
+    label: sub.name,
+  })),
+];
+---
+
+<DocsLayout
+  title={component.name}
+  description={component.description}
+  activeSlug={component.slug}
+  headings={headings}
+  breadcrumbs={[{ label: 'Components', href: '/components' }, { label: component.name }]}
+>
+  <div class="component-page">
+    <!-- Header -->
+    <div class="component-page__header">
+      <div class="component-page__meta">
+        <h1 class="component-page__title">{component.name}</h1>
+        <arc-badge variant={tierColors[component.tier]}>{component.tier}</arc-badge>
+        <arc-badge variant={interactivityColors[component.interactivity]}>{component.interactivity}</arc-badge>
+        {component.status === 'beta' && <arc-badge variant="primary">beta</arc-badge>}
+        {component.status === 'experimental' && <arc-badge variant="secondary">experimental</arc-badge>}
+      </div>
+      <p class="component-page__desc">{component.description}</p>
+      <code class="component-page__tag">&lt;{component.tag}&gt;</code>
+    </div>
+
+    {/* Overview */}
+    {component.overview && (
+      <section id="overview">
+        <h2 class="docs-heading">Overview</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+        <div class="component-page__overview">
+          <arc-markdown content={component.overview}></arc-markdown>
+        </div>
+      </section>
+    )}
+
+    {/* Guidelines */}
+    {component.guidelines && (
+      <section id="guidelines">
+        <h2 class="docs-heading">Guidelines</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+        <div class="component-page__guidelines">
+          <arc-card>
+            <h3 class="guidelines__heading">When to use</h3>
+            <ul class="guidelines__list guidelines__list--do">
+              {component.guidelines.do.map((item: string) => <li>{item}</li>)}
+            </ul>
+          </arc-card>
+          {component.guidelines.dont && component.guidelines.dont.length > 0 && (
+            <arc-card>
+              <h3 class="guidelines__heading">When not to use</h3>
+              <ul class="guidelines__list guidelines__list--dont">
+                {component.guidelines.dont.map((item: string) => <li>{item}</li>)}
+              </ul>
+            </arc-card>
+          )}
+        </div>
+      </section>
+    )}
+
+    {/* Features */}
+    {component.features && (
+      <section id="features">
+        <h2 class="docs-heading">Features</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+        <ul class="component-page__features">
+          {component.features.map((f: string) => <li>{f}</li>)}
+        </ul>
+      </section>
+    )}
+
+    <!-- Preview -->
+    <section id="preview">
+      <h2 class="docs-heading">Preview</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <div class="component-page__preview">
+        {component.replayable && (
+          <button class="preview-replay" aria-label="Replay animation" data-preview-replay>
+            <svg viewBox="0 0 16 16" width="14" height="14" fill="none" aria-hidden="true">
+              <path d="M2 8a6 6 0 0 1 10.2-4.3L11 5h4V1l-1.6 1.6A7.5 7.5 0 0 0 .5 8h1.5Zm12 0a6 6 0 0 1-10.2 4.3L5 11H1v4l1.6-1.6A7.5 7.5 0 0 0 15.5 8H14Z" fill="currentColor"/>
+            </svg>
+            Replay
+          </button>
+        )}
+        {component.previewHtml ? (
+          <div class="live-preview" data-component={component.tag} data-has-html {...(component.previewSetup ? { 'data-setup': component.previewSetup } : {})} set:html={component.previewHtml} />
+        ) : (
+          <div class="live-preview" data-component={component.tag}></div>
+        )}
+      </div>
+    </section>
+
+    <!-- Usage / Code Tabs -->
+    <section id="usage">
+      <h2 class="docs-heading">Usage</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      {interactivityNotes[component.interactivity] && (
+        <div class="interactivity-note" data-level={component.interactivity}>
+          <p>{interactivityNotes[component.interactivity]}</p>
+        </div>
+      )}
+      <ComponentShowcase
+        name={component.name}
+        description={component.description}
+        tabs={component.tabs}
+        codeOnly
+      />
+    </section>
+
+    <!-- API Table -->
+    {component.props.length > 0 && (
+      <section id="api">
+        <h2 class="docs-heading">API</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+        <div class="component-page__api">
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Prop</th>
+                <th>Type</th>
+                <th>Default</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              {component.props.map((p) => (
+                <tr>
+                  <td><code>{p.name}</code></td>
+                  <td><code>{p.type}</code></td>
+                  <td>{p.default ? <code>{p.default}</code> : '—'}</td>
+                  <td>{p.description}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    )}
+
+    {/* Events */}
+    {(component.events ?? []).length > 0 && (
+      <section id="events">
+        <h2 class="docs-heading">Events</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+        <div class="component-page__api">
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Event</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              {component.events.map((ev) => (
+                <tr>
+                  <td><code>{ev.name}</code></td>
+                  <td>{ev.description}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    )}
+
+    {/* Sub-components */}
+    {component.subComponents?.map((sub: any) => (
+      <section id={sub.tag}>
+        <h2 class="docs-heading">{sub.name}</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+        <code class="component-page__tag">&lt;{sub.tag}&gt;</code>
+        <p class="component-page__desc" style="margin-top:var(--space-sm)">{sub.description}</p>
+        {sub.props.length > 0 && (
+          <div class="component-page__api" style="margin-top:var(--space-md)">
+            <table class="api-table">
+              <thead>
+                <tr>
+                  <th>Prop</th>
+                  <th>Type</th>
+                  <th>Default</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                {sub.props.map((p: any) => (
+                  <tr>
+                    <td><code>{p.name}</code></td>
+                    <td><code>{p.type}</code></td>
+                    <td>{p.default ? <code>{p.default}</code> : '—'}</td>
+                    <td>{p.description}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </section>
+    ))}
+  </div>
+</DocsLayout>
+
+<!-- Client-side: register WCs and populate live previews -->
+<script>
+  import '@arclux/arc-ui';
+  import { iconRegistry } from '@arclux/arc-ui';
+
+  // Expose to previewSetup scripts (which run via new Function, outside module scope)
+  (window as any).__arcIconRegistry = iconRegistry;
+
+  function initShowcase() {
+    runPreviewSetup();
+  }
+
+  function runPreviewSetup() {
+    // Run any previewSetup scripts embedded as data attributes
+    document.querySelectorAll('.live-preview[data-setup]').forEach((el) => {
+      try { new Function('el', el.getAttribute('data-setup')!)(el); } catch (err) { console.error('[previewSetup]', err); }
+    });
+  }
+
+  /* populatePreviews removed — all components define previewHtml in data */
+
+  function initReplay() {
+    document.querySelectorAll<HTMLButtonElement>('[data-preview-replay]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const preview = btn.closest('.component-page__preview')?.querySelector('.live-preview');
+        if (!preview) return;
+        const html = preview.innerHTML;
+        preview.innerHTML = '';
+        // Force a reflow so the browser treats re-inserted nodes as new
+        void preview.offsetHeight;
+        preview.innerHTML = html;
+        runPreviewSetup();
+      });
+    });
+  }
+
+  /** Prevent links inside live previews from navigating */
+  function disablePreviewLinks() {
+    document.querySelectorAll('.live-preview').forEach((preview) => {
+      // Block all click navigation: light-DOM <a> tags and shadow-DOM anchors
+      preview.addEventListener('click', (e) => {
+        const path = e.composedPath() as Element[];
+        for (const el of path) {
+          if (el === preview) break;
+          if (el instanceof HTMLAnchorElement && el.href) {
+            e.preventDefault();
+            return;
+          }
+        }
+      });
+      // Block arc-navigate events from WC-internal links
+      preview.addEventListener('arc-navigate', (e) => {
+        e.stopPropagation();
+      });
+    });
+  }
+
+  initShowcase();
+  initReplay();
+  disablePreviewLinks();
+  document.addEventListener('astro:page-load', () => { initShowcase(); initReplay(); disablePreviewLinks(); });
+</script>
+
+<style>
+  .component-page__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .component-page__meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .component-page__title {
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    background: var(--gradient-display-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .component-page__desc {
+    color: var(--text-secondary);
+    font-size: var(--text-md);
+    max-width: 50%;
+    text-wrap: balance;
+  }
+
+  .component-page__tag {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--accent-secondary);
+    background: var(--bg-surface);
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-subtle);
+    align-self: flex-start;
+    transition: box-shadow var(--transition-fast);
+  }
+
+  .component-page__tag:hover {
+    box-shadow: 0 0 12px rgba(var(--accent-secondary-rgb), 0.15);
+  }
+
+  .docs-heading {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    margin-bottom: var(--space-xs);
+  }
+
+
+  .component-page__preview {
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    background: var(--bg-deep);
+    padding: var(--space-xl);
+    min-height: 100px;
+    position: relative;
+    box-shadow: inset 0 1px 0 var(--bg-hover);
+    transition: box-shadow var(--transition-base), border-color var(--transition-base);
+  }
+
+  .preview-replay {
+    position: absolute;
+    top: var(--space-sm);
+    right: var(--space-sm);
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--font-accent);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-ghost);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+  }
+
+  .preview-replay:hover {
+    color: var(--accent-primary);
+    border-color: var(--accent-primary-border);
+    background: var(--accent-primary-subtle);
+  }
+
+  .preview-replay:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-glow);
+  }
+
+  .preview-replay svg {
+    transition: transform 300ms var(--ease-out-expo);
+  }
+
+  .preview-replay:active svg {
+    transform: rotate(-360deg);
+  }
+
+  .component-page__preview::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--glow-line-gradient);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    opacity: 0.6;
+  }
+
+  .component-page__preview:hover {
+    box-shadow: var(--glow-card-hover), inset 0 1px 0 var(--bg-hover);
+  }
+
+  .component-page__preview .live-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    align-items: center;
+    position: relative;
+    min-height: 60px;
+    min-width: 0;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: visible;
+    padding-bottom: var(--space-xs);
+  }
+
+  .component-page__preview .live-preview:empty {
+    overflow: hidden;
+  }
+
+  .component-page__preview .live-preview:empty::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(77,126,247,0.04) 20%,
+      rgba(139,92,246,0.06) 50%,
+      rgba(77,126,247,0.04) 80%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    border-radius: var(--radius-md);
+    animation: skeleton-sweep-bg 1.5s ease-in-out infinite;
+  }
+
+  .component-page__preview .live-preview:empty::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--border-default);
+    border-top-color: var(--accent-primary);
+    border-radius: 50%;
+    animation: skeleton-spin 0.8s linear infinite;
+  }
+
+  @keyframes skeleton-sweep-bg {
+    0%   { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+
+  @keyframes skeleton-spin {
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  .component-page__api {
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    overflow-x: auto;
+    position: relative;
+  }
+
+  .component-page__api::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--glow-line-gradient);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    opacity: 0.4;
+    z-index: 1;
+  }
+
+  .api-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+  }
+
+  .api-table th {
+    text-align: left;
+    font-family: var(--font-accent);
+    font-size: var(--text-xs);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-ghost);
+    font-weight: 600;
+    padding: var(--space-sm) var(--space-md);
+    border-bottom: 1px solid var(--border-subtle);
+    background: var(--bg-elevated);
+  }
+
+  .api-table td {
+    padding: var(--space-sm) var(--space-md);
+    border-bottom: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    vertical-align: top;
+  }
+
+  .api-table code {
+    font-size: var(--text-xs);
+    background: var(--bg-surface);
+    padding: 1px 6px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-subtle);
+  }
+
+  /* ── Overview ── */
+  .component-page__overview {
+    max-width: 640px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .component-page__overview p {
+    color: var(--text-secondary);
+    font-size: var(--text-md);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* ── Guidelines ── */
+  .component-page__guidelines {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+  }
+
+  @media (max-width: 640px) {
+    .component-page__guidelines { grid-template-columns: 1fr; }
+  }
+
+  .guidelines__heading {
+    font-family: var(--font-accent);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin: 0 0 var(--space-md);
+    color: var(--text-ghost);
+  }
+
+  .guidelines__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .guidelines__list li {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    line-height: 1.6;
+    padding-left: 24px;
+    position: relative;
+  }
+
+  .guidelines__list--do li::before {
+    content: '\2713';
+    position: absolute;
+    left: 0;
+    color: var(--accent-primary);
+    font-weight: 600;
+  }
+
+  .guidelines__list--dont li::before {
+    content: '\2717';
+    position: absolute;
+    left: 0;
+    color: var(--text-ghost);
+    font-weight: 600;
+  }
+
+  /* ── Features ── */
+  .component-page__features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-sm) var(--space-lg);
+    max-width: 640px;
+  }
+
+  .component-page__features li {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    line-height: 1.6;
+    padding-left: 24px;
+    position: relative;
+  }
+
+  .component-page__features li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gradient-accent-text);
+  }
+
+  .interactivity-note {
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: var(--text-secondary);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-surface);
+    margin-bottom: var(--space-md);
+  }
+
+  .interactivity-note[data-level="interactive"] {
+    border-color: rgba(var(--accent-secondary-rgb), 0.25);
+    background: rgba(var(--accent-secondary-rgb), 0.04);
+  }
+
+  .interactivity-note[data-level="hybrid"] {
+    border-color: rgba(var(--accent-primary-rgb), 0.25);
+    background: rgba(var(--accent-primary-rgb), 0.04);
+  }
+
+  .interactivity-note p {
+    margin: 0;
+  }
+
+  /* ── Icon Browser (global — dynamically injected) ── */
+  :global(.icon-browser) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    width: 100%;
+  }
+
+  :global(.icon-browser__controls) {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  :global(.icon-browser__toggle) {
+    display: flex;
+    gap: 4px;
+  }
+
+  :global(.icon-browser__count) {
+    font-family: var(--font-accent);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: var(--text-ghost);
+    text-transform: uppercase;
+  }
+
+  :global(.icon-browser__grid) {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+    gap: 2px;
+    max-height: 520px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-default) transparent;
+  }
+
+  :global(.icon-tile) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 6px 10px;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    color: var(--text-secondary);
+    font-family: inherit;
+    transition: background 150ms, border-color 150ms, box-shadow 150ms;
+  }
+
+  :global(.icon-tile:hover) {
+    background: var(--bg-surface);
+    border-color: var(--border-default);
+  }
+
+  :global(.icon-tile:active) {
+    border-color: var(--accent-primary-border);
+    box-shadow: 0 0 0 2px rgba(var(--accent-primary-rgb), 0.12);
+  }
+
+  :global(.icon-tile__name) {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-ghost);
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+    line-height: 1.2;
+  }
+
+  @media (max-width: 768px) {
+    .component-page__title { font-size: var(--text-xl); }
+    .component-page__desc { max-width: 100%; }
+    .component-page__features { grid-template-columns: 1fr; }
+    .component-page__preview { padding: var(--space-md); }
+    :global(.icon-browser__grid) {
+      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    }
+  }
+</style>

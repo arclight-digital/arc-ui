@@ -1,0 +1,17 @@
+---
+interface Props {
+  headings: Array<{ id: string; label: string }>;
+}
+
+const { headings } = Astro.props;
+---
+
+{headings.length > 0 && (
+  <nav class="toc" aria-label="On this page">
+    <arc-scroll-spy id="docs-toc">
+      {headings.map((h) => (
+        <arc-spy-link target={h.id}>{h.label}</arc-spy-link>
+      ))}
+    </arc-scroll-spy>
+  </nav>
+)}

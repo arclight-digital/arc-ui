@@ -1,0 +1,187 @@
+import { LitElement, html, css } from 'lit';
+import { tokenStyles } from '../shared-styles.js';
+
+export class ArcAlert extends LitElement {
+  static properties = {
+    variant:     { type: String, reflect: true },
+    dismissible: { type: Boolean },
+    heading:     { type: String },
+  };
+
+  static styles = [
+    tokenStyles,
+    css`
+      :host { display: block; }
+
+      .alert {
+        position: relative;
+        display: flex;
+        gap: var(--space-md);
+        padding: var(--space-lg);
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border-subtle);
+        background: var(--bg-card);
+        overflow: hidden;
+      }
+
+      /* Top gradient rule */
+      .alert::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: var(--gradient-divider);
+      }
+
+      :host([variant="info"]) .alert::before {
+        background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+        box-shadow: 0 0 12px rgba(var(--accent-primary-rgb), 0.15);
+      }
+      :host([variant="success"]) .alert::before {
+        background: linear-gradient(90deg, transparent, var(--color-success), transparent);
+        box-shadow: 0 0 12px rgba(var(--color-success-rgb), 0.15);
+      }
+      :host([variant="warning"]) .alert::before {
+        background: linear-gradient(90deg, transparent, var(--color-warning), transparent);
+        box-shadow: 0 0 12px rgba(var(--color-warning-rgb), 0.15);
+      }
+      :host([variant="error"]) .alert::before {
+        background: linear-gradient(90deg, transparent, var(--color-error), transparent);
+        box-shadow: 0 0 12px rgba(var(--color-error-rgb), 0.15);
+      }
+
+      .alert__icon-wrap {
+        flex-shrink: 0;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--radius-md);
+        font-size: var(--text-md);
+        transition: box-shadow var(--transition-base);
+      }
+
+      :host([variant="info"]) .alert__icon-wrap {
+        background: rgba(var(--accent-primary-rgb), 0.08);
+        border: 1px solid rgba(var(--accent-primary-rgb), 0.15);
+        color: var(--accent-primary);
+        box-shadow: 0 0 16px rgba(var(--accent-primary-rgb), 0.1);
+      }
+      :host([variant="success"]) .alert__icon-wrap {
+        background: rgba(var(--color-success-rgb), 0.08);
+        border: 1px solid rgba(var(--color-success-rgb), 0.15);
+        color: var(--color-success);
+        box-shadow: 0 0 16px rgba(var(--color-success-rgb), 0.1);
+      }
+      :host([variant="warning"]) .alert__icon-wrap {
+        background: rgba(var(--color-warning-rgb), 0.08);
+        border: 1px solid rgba(var(--color-warning-rgb), 0.15);
+        color: var(--color-warning);
+        box-shadow: 0 0 16px rgba(var(--color-warning-rgb), 0.1);
+      }
+      :host([variant="error"]) .alert__icon-wrap {
+        background: rgba(var(--color-error-rgb), 0.08);
+        border: 1px solid rgba(var(--color-error-rgb), 0.15);
+        color: var(--color-error);
+        box-shadow: 0 0 16px rgba(var(--color-error-rgb), 0.1);
+      }
+
+      .alert__body { flex: 1; min-width: 0; }
+
+      .alert__heading {
+        font-family: var(--font-body);
+        font-weight: 600;
+        font-size: var(--text-md);
+        color: var(--text-primary);
+        margin: 0 0 var(--space-xs);
+      }
+
+      .alert__content {
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        line-height: 1.6;
+        color: var(--text-secondary);
+      }
+
+      .alert__dismiss {
+        position: absolute;
+        top: var(--space-sm);
+        right: var(--space-sm);
+        background: none;
+        border: none;
+        color: var(--text-ghost);
+        cursor: pointer;
+        font-size: var(--text-md);
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--radius-sm);
+        transition: color var(--transition-fast), background var(--transition-fast);
+        line-height: 1;
+      }
+
+      .alert__dismiss:hover {
+        color: var(--text-primary);
+        background: var(--bg-hover);
+      }
+
+      .alert__dismiss:focus-visible {
+        outline: none;
+        box-shadow: var(--focus-ring);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        :host *,
+        :host *::before,
+        :host *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    `,
+  ];
+
+  constructor() {
+    super();
+    this.variant = 'info';
+    this.dismissible = false;
+    this.heading = '';
+  }
+
+  _getIcon() {
+    switch (this.variant) {
+      case 'success': return '\u2713';
+      case 'warning': return '\u26A0';
+      case 'error':   return '\u2717';
+      default:        return '\u2139';
+    }
+  }
+
+  _dismiss() {
+    this.dispatchEvent(new CustomEvent('arc-dismiss', { bubbles: true, composed: true }));
+    this.style.display = 'none';
+  }
+
+  render() {
+    return html`
+      <div class="alert" role="alert" part="alert">
+        <div class="alert__icon-wrap" part="icon">${this._getIcon()}</div>
+        <div class="alert__body">
+          ${this.heading ? html`<p class="alert__heading" part="heading">${this.heading}</p>` : ''}
+          <div class="alert__content" part="content"><slot></slot></div>
+        </div>
+        ${this.dismissible ? html`
+          <button class="alert__dismiss" aria-label="Dismiss" @click=${this._dismiss} part="dismiss">&times;</button>
+        ` : ''}
+      </div>
+    `;
+  }
+}
+
+customElements.define('arc-alert', ArcAlert);

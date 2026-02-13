@@ -1,0 +1,125 @@
+/* Shared documentation page styles — imported via DocsLayout */
+
+.page-title {
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  background: var(--gradient-display-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: var(--space-xs);
+}
+
+.page-desc {
+  color: var(--text-secondary);
+  font-size: var(--text-md);
+  max-width: 640px;
+  margin-bottom: var(--space-md);
+  line-height: 1.6;
+}
+
+.docs-heading {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+}
+
+.docs-text {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  margin-bottom: var(--space-sm);
+  max-width: 640px;
+}
+
+.docs-text a {
+  color: var(--accent-primary);
+  text-decoration: none;
+}
+
+.docs-text a:hover {
+  text-decoration: underline;
+}
+
+.docs-text code {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  background: var(--bg-surface);
+  padding: var(--space-xs);
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--border-default);
+}
+
+.docs-text strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.docs-code {
+  margin-bottom: var(--space-sm);
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.docs-list {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  line-height: 1.8;
+  margin-bottom: var(--space-sm);
+  max-width: 640px;
+  padding-left: var(--space-lg);
+}
+
+.docs-list code {
+  font-size: var(--text-sm);
+  background: var(--bg-surface);
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+}
+
+/* Page wrapper — shared flex column for all docs pages */
+.getting-started,
+.a11y-page,
+.theming-page,
+.tokens-page,
+.frameworks-page,
+.synth-page,
+.components-index,
+.component-page,
+.changelog-page,
+.browser-page,
+.contributing-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+/* Section dividers */
+section {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  scroll-margin-top: calc(var(--space-xl) + 60px);
+}
+
+section + section {
+  position: relative;
+  padding-top: var(--space-lg);
+}
+
+section + section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--gradient-divider-glow);
+}
+
+@media (max-width: 768px) {
+  .page-title { font-size: var(--text-xl); }
+  .docs-heading { font-size: var(--text-lg); }
+}

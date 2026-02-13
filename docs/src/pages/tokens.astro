@@ -1,0 +1,861 @@
+---
+import DocsLayout from '../layouts/DocsLayout.astro';
+
+const headings = [
+  { id: 'colors', label: 'Colors' },
+  { id: 'spacing', label: 'Spacing' },
+  { id: 'typography', label: 'Typography' },
+  { id: 'borders', label: 'Borders & Radius' },
+  { id: 'shadows', label: 'Shadows' },
+  { id: 'z-index', label: 'Z-Index' },
+  { id: 'breakpoints', label: 'Breakpoints' },
+  { id: 'opacity', label: 'Opacity' },
+  { id: 'motion', label: 'Motion' },
+  { id: 'display-text', label: 'Display & Text Sizing' },
+  { id: 'glows', label: 'Glows' },
+  { id: 'gradients', label: 'Gradients' },
+  { id: 'focus', label: 'Focus' },
+  { id: 'transitions', label: 'Transitions' },
+  { id: 'utility', label: 'Utility' },
+];
+
+const colorTokens = [
+  { name: 'bg-deep', value: 'rgb(3, 3, 7)' },
+  { name: 'bg-surface', value: 'rgb(10, 10, 15)' },
+  { name: 'bg-base', value: 'rgb(10, 10, 15)' },
+  { name: 'bg-card', value: 'rgb(13, 13, 18)' },
+  { name: 'bg-elevated', value: 'rgb(17, 17, 22)' },
+  { name: 'text-primary', value: 'rgb(232, 232, 236)' },
+  { name: 'text-secondary', value: 'rgb(138, 138, 150)' },
+  { name: 'text-muted', value: 'rgb(124, 124, 137)' },
+  { name: 'text-ghost', value: 'rgb(107, 107, 128)' },
+  { name: 'border-subtle', value: 'rgb(24, 24, 30)' },
+  { name: 'border-default', value: 'rgb(34, 34, 41)' },
+  { name: 'border-bright', value: 'rgb(51, 51, 64)' },
+  { name: 'accent-primary', value: 'rgb(77, 126, 247)', accent: true },
+  { name: 'accent-secondary', value: 'rgb(139, 92, 246)', accent: true },
+  { name: 'color-success', value: 'rgb(52, 211, 153)', accent: true },
+  { name: 'color-warning', value: 'rgb(245, 158, 11)', accent: true },
+  { name: 'color-error', value: 'rgb(239, 68, 68)', accent: true },
+  { name: 'color-info', value: 'rgb(59, 130, 246)', accent: true },
+];
+
+const spacingTokens = [
+  { name: 'xs', value: '4px' },
+  { name: 'sm', value: '8px' },
+  { name: 'md', value: '16px' },
+  { name: 'lg', value: '24px' },
+  { name: 'xl', value: '40px' },
+  { name: '2xl', value: '64px' },
+  { name: '3xl', value: '96px' },
+];
+---
+
+<DocsLayout
+  title="Design Tokens"
+  description="ARC UI design tokens reference: colors, spacing, typography, and more."
+  activeSlug="tokens"
+  headings={headings}
+  breadcrumbs={[{ label: 'Tokens' }]}
+>
+  <div class="tokens-page">
+    <h1 class="page-title">Design Tokens</h1>
+    <p class="page-desc">
+      CSS custom properties that power every ARC UI component. Import
+      <code>@arclux/arc-ui/tokens.css</code> to use them in your own styles.
+    </p>
+
+    <!-- Colors -->
+    <section id="colors">
+      <h2 class="docs-heading">Colors</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <div class="tokens-grid">
+        {colorTokens.map((t) => (
+          <div class:list={['token-swatch', { 'token-swatch--accent': t.accent }]} style={`--swatch: ${t.value}`} data-var={`var(--${t.name})`}>
+            <span class="token-swatch__var">--{t.name}</span>
+            <span class="token-swatch__color">{t.value}</span>
+            <span class="token-swatch__name">{t.name}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Spacing -->
+    <section id="spacing">
+      <h2 class="docs-heading">Spacing</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <div class="spacing-grid">
+        {spacingTokens.map((s) => (
+          <div class="spacing-item">
+            <div class="spacing-bar" style={`width: ${s.value}`}></div>
+            <span class="spacing-label">--space-{s.name}</span>
+            <span class="spacing-value">{s.value}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Typography -->
+    <section id="typography">
+      <h2 class="docs-heading">Typography</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <div class="type-samples">
+        <div class="type-row">
+          <span class="type-label">font-body</span>
+          <span class="type-sample" style="font-family: 'Host Grotesk', system-ui, sans-serif; font-size: 16px;">Host Grotesk — The quick brown fox jumps over the lazy dog</span>
+        </div>
+        <div class="type-row">
+          <span class="type-label">font-accent</span>
+          <span class="type-sample" style="font-family: 'Tektur', system-ui, sans-serif; font-size: 16px; letter-spacing: 2px; text-transform: uppercase;">Tektur — The quick brown fox</span>
+        </div>
+        <div class="type-row">
+          <span class="type-label">font-mono</span>
+          <span class="type-sample" style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px;">JetBrains Mono — const x = 42;</span>
+        </div>
+      </div>
+
+      <div class="token-table-wrap">
+        <table class="token-table">
+          <thead>
+            <tr><th>Token</th><th>Value</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>--body-size</code></td><td>clamp(15px, 1.2vw, 16px)</td></tr>
+            <tr><td><code>--body-lh</code></td><td>1.7</td></tr>
+            <tr><td><code>--body-weight</code></td><td>500</td></tr>
+            <tr><td><code>--heading-size</code></td><td>clamp(22px, 2.5vw, 26px)</td></tr>
+            <tr><td><code>--heading-weight</code></td><td>500</td></tr>
+            <tr><td><code>--code-size</code></td><td>13px</td></tr>
+            <tr><td><code>--code-lh</code></td><td>1.8</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Borders & Radius -->
+    <section id="borders">
+      <h2 class="docs-heading">Borders & Radius</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <div class="token-table-wrap">
+        <table class="token-table">
+          <thead>
+            <tr><th>Token</th><th>Value</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>--radius-sm</code></td><td>4px</td></tr>
+            <tr><td><code>--radius-md</code></td><td>10px</td></tr>
+            <tr><td><code>--radius-lg</code></td><td>14px</td></tr>
+            <tr><td><code>--radius-xl</code></td><td>20px</td></tr>
+            <tr><td><code>--radius-full</code></td><td>9999px</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Shadows -->
+    <section id="shadows">
+      <h2 class="docs-heading">Shadows</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <div class="shadow-samples">
+        <div class="shadow-card" style="box-shadow: var(--shadow-xs)">
+          <span class="shadow-label">--shadow-xs</span>
+          <span class="shadow-value">0 1px 2px</span>
+        </div>
+        <div class="shadow-card" style="box-shadow: var(--shadow-sm)">
+          <span class="shadow-label">--shadow-sm</span>
+          <span class="shadow-value">0 2px 4px</span>
+        </div>
+        <div class="shadow-card" style="box-shadow: var(--shadow-md)">
+          <span class="shadow-label">--shadow-md</span>
+          <span class="shadow-value">0 4px 12px</span>
+        </div>
+        <div class="shadow-card" style="box-shadow: var(--shadow-lg)">
+          <span class="shadow-label">--shadow-lg</span>
+          <span class="shadow-value">0 8px 24px</span>
+        </div>
+        <div class="shadow-card" style="box-shadow: var(--shadow-xl)">
+          <span class="shadow-label">--shadow-xl</span>
+          <span class="shadow-value">0 16px 48px</span>
+        </div>
+        <div class="shadow-card" style="box-shadow: var(--shadow-overlay)">
+          <span class="shadow-label">--shadow-overlay</span>
+          <span class="shadow-value">0 8px 32px</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Z-Index -->
+    <section id="z-index">
+      <h2 class="docs-heading">Z-Index</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <div class="token-table-wrap">
+        <table class="token-table">
+          <thead>
+            <tr><th>Token</th><th>Value</th><th>Usage</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>--z-base</code></td><td>0</td><td>Default stacking</td></tr>
+            <tr><td><code>--z-dropdown</code></td><td>100</td><td>Dropdown menus</td></tr>
+            <tr><td><code>--z-sticky</code></td><td>200</td><td>Sticky headers</td></tr>
+            <tr><td><code>--z-drawer</code></td><td>300</td><td>Side drawers</td></tr>
+            <tr><td><code>--z-modal</code></td><td>400</td><td>Modal dialogs</td></tr>
+            <tr><td><code>--z-popover</code></td><td>500</td><td>Popovers</td></tr>
+            <tr><td><code>--z-toast</code></td><td>600</td><td>Toast notifications</td></tr>
+            <tr><td><code>--z-tooltip</code></td><td>700</td><td>Tooltips</td></tr>
+            <tr><td><code>--z-max</code></td><td>9999</td><td>Emergency override</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Breakpoints -->
+    <section id="breakpoints">
+      <h2 class="docs-heading">Breakpoints</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <div class="token-table-wrap">
+        <table class="token-table">
+          <thead>
+            <tr><th>Token</th><th>Value</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>--breakpoint-xs</code></td><td>480px</td></tr>
+            <tr><td><code>--breakpoint-sm</code></td><td>640px</td></tr>
+            <tr><td><code>--breakpoint-md</code></td><td>768px</td></tr>
+            <tr><td><code>--breakpoint-lg</code></td><td>1024px</td></tr>
+            <tr><td><code>--breakpoint-xl</code></td><td>1280px</td></tr>
+            <tr><td><code>--breakpoint-2xl</code></td><td>1536px</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Opacity -->
+    <section id="opacity">
+      <h2 class="docs-heading">Opacity</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <div class="token-table-wrap">
+        <table class="token-table">
+          <thead>
+            <tr><th>Token</th><th>Value</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>--opacity-disabled</code></td><td>0.5</td></tr>
+            <tr><td><code>--opacity-muted</code></td><td>0.6</td></tr>
+            <tr><td><code>--opacity-hover</code></td><td>0.8</td></tr>
+            <tr><td><code>--opacity-visible</code></td><td>1</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="opacity-samples">
+        <div class="opacity-card" style="opacity: var(--opacity-disabled)">
+          <span class="opacity-label">disabled (0.5)</span>
+        </div>
+        <div class="opacity-card" style="opacity: var(--opacity-muted)">
+          <span class="opacity-label">muted (0.6)</span>
+        </div>
+        <div class="opacity-card" style="opacity: var(--opacity-hover)">
+          <span class="opacity-label">hover (0.8)</span>
+        </div>
+        <div class="opacity-card" style="opacity: var(--opacity-visible)">
+          <span class="opacity-label">visible (1)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Motion -->
+    <section id="motion">
+      <h2 class="docs-heading">Motion</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <div class="token-table-wrap">
+        <table class="token-table">
+          <thead>
+            <tr><th>Token</th><th>Value</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>--ease-out-expo</code></td><td>cubic-bezier(0.16, 1, 0.3, 1)</td></tr>
+            <tr><td><code>--ease-in-out</code></td><td>cubic-bezier(0.4, 0, 0.2, 1)</td></tr>
+            <tr><td><code>--duration-enter</code></td><td>500ms</td></tr>
+            <tr><td><code>--duration-exit</code></td><td>300ms</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Display & Text Sizing -->
+    <section id="display-text">
+      <h2 class="docs-heading">Display & Text Sizing</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <div class="token-table-wrap">
+        <table class="token-table">
+          <thead>
+            <tr><th>Token</th><th>Value</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>--display-xl-size</code></td><td>clamp(36px, 5vw, 52px)</td></tr>
+            <tr><td><code>--display-xl-weight</code></td><td>500</td></tr>
+            <tr><td><code>--display-xl-spacing</code></td><td>-1px</td></tr>
+            <tr><td><code>--text-3xl</code></td><td>clamp(28px, 3vw, 36px)</td></tr>
+            <tr><td><code>--text-lg</code></td><td>clamp(18px, 1.5vw, 20px)</td></tr>
+            <tr><td><code>--wordmark-size</code></td><td>clamp(20px, 2.5vw, 28px)</td></tr>
+            <tr><td><code>--wordmark-weight</code></td><td>500</td></tr>
+            <tr><td><code>--wordmark-spacing</code></td><td>clamp(8px, 1.2vw, 14px)</td></tr>
+            <tr><td><code>--section-title-size</code></td><td>12px</td></tr>
+            <tr><td><code>--section-title-weight</code></td><td>600</td></tr>
+            <tr><td><code>--section-title-spacing</code></td><td>4px</td></tr>
+            <tr><td><code>--ui-accent-size</code></td><td>16px</td></tr>
+            <tr><td><code>--ui-accent-weight</code></td><td>600</td></tr>
+            <tr><td><code>--ui-accent-spacing</code></td><td>1px</td></tr>
+            <tr><td><code>--label-inline-size</code></td><td>10px</td></tr>
+            <tr><td><code>--label-inline-spacing</code></td><td>3px</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Glows -->
+    <section id="glows">
+      <h2 class="docs-heading">Glows</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <div class="glow-samples">
+        <div class="glow-card" style="box-shadow: var(--glow-primary)">
+          <span class="glow-label">--glow-primary</span>
+        </div>
+        <div class="glow-card" style="box-shadow: var(--glow-secondary)">
+          <span class="glow-label">--glow-secondary</span>
+        </div>
+        <div class="glow-card" style="box-shadow: var(--glow-white)">
+          <span class="glow-label">--glow-white</span>
+        </div>
+        <div class="glow-card" style="box-shadow: var(--focus-glow)">
+          <span class="glow-label">--focus-glow</span>
+        </div>
+      </div>
+
+      <h3 class="subsection-heading">Glow Lines</h3>
+      <div class="glow-line-samples">
+        <div class="glow-line-item">
+          <div class="glow-line-bar" style="background: var(--glow-line-white)"></div>
+          <code>--glow-line-white</code>
+        </div>
+        <div class="glow-line-item">
+          <div class="glow-line-bar" style="background: var(--glow-line-blue)"></div>
+          <code>--glow-line-blue</code>
+        </div>
+        <div class="glow-line-item">
+          <div class="glow-line-bar" style="background: var(--glow-line-gradient)"></div>
+          <code>--glow-line-gradient</code>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gradients -->
+    <section id="gradients">
+      <h2 class="docs-heading">Gradients</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <div class="gradient-samples">
+        <div class="gradient-bar">
+          <div class="gradient-bar__preview" style="background: var(--gradient-display-text)"></div>
+          <div class="gradient-bar__info">
+            <code>--gradient-display-text</code>
+            <span class="gradient-bar__desc">Primary &rarr; muted text fade</span>
+          </div>
+        </div>
+        <div class="gradient-bar">
+          <div class="gradient-bar__preview" style="background: var(--gradient-accent-text)"></div>
+          <div class="gradient-bar__info">
+            <code>--gradient-accent-text</code>
+            <span class="gradient-bar__desc">Blue &rarr; violet accent</span>
+          </div>
+        </div>
+        <div class="gradient-bar">
+          <div class="gradient-bar__preview" style="background: var(--gradient-divider)"></div>
+          <div class="gradient-bar__info">
+            <code>--gradient-divider</code>
+            <span class="gradient-bar__desc">Subtle content separator</span>
+          </div>
+        </div>
+        <div class="gradient-bar">
+          <div class="gradient-bar__preview" style="background: var(--gradient-divider-glow)"></div>
+          <div class="gradient-bar__info">
+            <code>--gradient-divider-glow</code>
+            <span class="gradient-bar__desc">Accent-tinted divider glow</span>
+          </div>
+        </div>
+        <div class="gradient-bar">
+          <div class="gradient-bar__preview" style="background: var(--gradient-border-glow)"></div>
+          <div class="gradient-bar__info">
+            <code>--gradient-border-glow</code>
+            <span class="gradient-bar__desc">Subtle border glow effect</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Focus -->
+    <section id="focus">
+      <h2 class="docs-heading">Focus</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <p class="focus-desc">Tab to these cards to see focus styles in action.</p>
+      <div class="focus-samples">
+        <button class="focus-demo focus-demo--ring">
+          <code>--focus-ring</code>
+          <span class="focus-demo__hint">Tab to focus</span>
+        </button>
+        <button class="focus-demo focus-demo--glow">
+          <code>--focus-glow</code>
+          <span class="focus-demo__hint">Tab to focus</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Transitions -->
+    <section id="transitions">
+      <h2 class="docs-heading">Transitions</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <div class="token-table-wrap">
+        <table class="token-table">
+          <thead>
+            <tr><th>Token</th><th>Value</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>--transition-fast</code></td><td>120ms ease</td></tr>
+            <tr><td><code>--transition-base</code></td><td>200ms ease</td></tr>
+            <tr><td><code>--transition-slow</code></td><td>400ms ease</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Utility -->
+    <section id="utility">
+      <h2 class="docs-heading">Utility</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <div class="token-table-wrap">
+        <table class="token-table">
+          <thead>
+            <tr><th>Token</th><th>Value</th><th>Usage</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>--bg-hover</code></td><td>rgba(255, 255, 255, 0.04)</td><td>Hover background tint</td></tr>
+            <tr><td><code>--bg-base</code></td><td>rgb(10, 10, 15)</td><td>Page base background</td></tr>
+            <tr><td><code>--overlay-backdrop</code></td><td>rgba(0, 0, 0, 0.6)</td><td>Modal/drawer overlay</td></tr>
+            <tr><td><code>--max-width</code></td><td>1120px</td><td>Content max width</td></tr>
+            <tr><td><code>--max-width-sm</code></td><td>720px</td><td>Narrow content max width</td></tr>
+            <tr><td><code>--nav-height</code></td><td>64px</td><td>Navigation bar height</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</DocsLayout>
+
+<script>
+  import '@arclux/arc-ui';
+
+  function initSwatches() {
+    document.querySelectorAll('.token-swatch').forEach((swatch) => {
+      swatch.addEventListener('click', async () => {
+        const cssVar = (swatch as HTMLElement).dataset.var || '';
+        await navigator.clipboard.writeText(cssVar);
+        const name = swatch.querySelector('.token-swatch__name') as HTMLElement;
+        if (name) {
+          const orig = name.textContent;
+          name.textContent = 'Copied!';
+          setTimeout(() => { name.textContent = orig; }, 1000);
+        }
+      });
+    });
+  }
+  initSwatches();
+  document.addEventListener('astro:page-load', initSwatches);
+</script>
+
+<style>
+  .page-desc code {
+    font-size: var(--text-sm);
+    background: var(--bg-surface);
+    padding: 1px 6px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .subsection-heading {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-top: var(--space-lg);
+    margin-bottom: var(--space-md);
+  }
+
+  /* Color swatches */
+  .tokens-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: var(--space-md);
+  }
+
+  .token-swatch {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding: var(--space-md);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-base);
+  }
+  .token-swatch:hover {
+    border-color: var(--border-bright);
+    box-shadow: 0 0 8px color-mix(in srgb, var(--swatch) 15%, transparent);
+  }
+
+  .token-swatch::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    background: var(--swatch);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .token-swatch--accent::before {
+    box-shadow: 0 0 16px color-mix(in srgb, var(--swatch) 30%, transparent);
+  }
+
+  .token-swatch__var {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-primary);
+    word-break: break-all;
+  }
+
+  .token-swatch__color {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+  }
+
+  .token-swatch__name {
+    font-family: var(--font-accent);
+    font-size: var(--text-xs);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-ghost);
+  }
+
+  /* Spacing */
+  .spacing-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .spacing-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .spacing-bar {
+    height: 8px;
+    border-radius: var(--radius-sm);
+    background: var(--gradient-accent-text);
+    min-width: 4px;
+    filter: drop-shadow(0 0 4px rgba(var(--accent-primary-rgb), 0.3));
+  }
+
+  .spacing-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    min-width: 120px;
+  }
+
+  .spacing-value {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-ghost);
+  }
+
+  /* Type samples */
+  .type-samples {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-xl);
+  }
+
+  .type-row {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .type-label {
+    font-family: var(--font-accent);
+    font-size: var(--text-xs);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-ghost);
+  }
+
+  .type-sample {
+    color: var(--text-primary);
+  }
+
+  /* Token table */
+  .token-table-wrap {
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    overflow-x: auto;
+  }
+
+  .token-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+  }
+
+  .token-table th {
+    text-align: left;
+    font-family: var(--font-accent);
+    font-size: var(--text-xs);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-ghost);
+    font-weight: 600;
+    padding: var(--space-sm) var(--space-md);
+    border-bottom: 1px solid var(--border-subtle);
+    background: var(--bg-elevated);
+  }
+
+  .token-table td {
+    padding: var(--space-sm) var(--space-md);
+    border-bottom: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+  }
+
+  .token-table code {
+    font-size: var(--text-xs);
+    background: var(--bg-surface);
+    padding: 1px 6px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-subtle);
+  }
+
+  /* Shadow samples */
+  .shadow-samples {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .shadow-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    height: 100px;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    background: var(--bg-card);
+    transition: transform var(--transition-base);
+  }
+
+  .shadow-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .shadow-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-primary);
+  }
+
+  .shadow-value {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-ghost);
+  }
+
+  /* Opacity samples */
+  .opacity-samples {
+    display: flex;
+    gap: var(--space-lg);
+    flex-wrap: wrap;
+    margin-top: var(--space-md);
+  }
+
+  .opacity-card {
+    width: 120px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent-primary);
+    border-radius: var(--radius-md);
+  }
+
+  .opacity-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: white;
+  }
+
+  /* Glow samples */
+  .glow-samples {
+    display: flex;
+    gap: var(--space-lg);
+    flex-wrap: wrap;
+  }
+
+  .glow-card {
+    width: 160px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    background: var(--bg-card);
+    transition: box-shadow var(--transition-base), transform var(--transition-base);
+  }
+
+  .glow-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .glow-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+  }
+
+  /* Glow line samples */
+  .glow-line-samples {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .glow-line-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .glow-line-bar {
+    width: 100%;
+    height: 3px;
+    border-radius: 2px;
+  }
+
+  .glow-line-item code {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+  }
+
+  /* Gradient samples */
+  .gradient-samples {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .gradient-bar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .gradient-bar__preview {
+    width: 100%;
+    height: 12px;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .gradient-bar__info {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .gradient-bar__info code {
+    font-size: var(--text-xs);
+    background: var(--bg-surface);
+    padding: 1px 6px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .gradient-bar__desc {
+    font-size: var(--text-xs);
+    color: var(--text-ghost);
+  }
+
+  /* Focus demos */
+  .focus-desc {
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    margin-bottom: var(--space-md);
+  }
+
+  .focus-samples {
+    display: flex;
+    gap: var(--space-lg);
+    flex-wrap: wrap;
+  }
+
+  .focus-demo {
+    width: 180px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    background: var(--bg-card);
+    cursor: pointer;
+    outline: none;
+    transition: box-shadow var(--transition-base), border-color var(--transition-fast);
+    font-family: inherit;
+    color: inherit;
+  }
+
+  .focus-demo code {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+  }
+
+  .focus-demo__hint {
+    font-size: var(--text-xs);
+    color: var(--text-ghost);
+  }
+
+  .focus-demo--ring:focus-visible {
+    box-shadow: var(--focus-ring);
+    border-color: var(--accent-primary);
+  }
+
+  .focus-demo--glow:focus-visible {
+    box-shadow: var(--focus-glow);
+    border-color: var(--accent-primary);
+  }
+
+  section {
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (max-width: 768px) {
+    .tokens-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+    .spacing-label { min-width: 80px; font-size: var(--text-xs); }
+    .glow-card { width: 120px; height: 60px; }
+    .shadow-samples { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+  }
+</style>

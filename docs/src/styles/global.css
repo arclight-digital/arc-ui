@@ -1,0 +1,253 @@
+/* ============================================================
+   ARC UI Demo — Global Styles
+   Imports the canonical design tokens from the shared source.
+   ============================================================ */
+
+@import '../../../shared/tokens.css';
+
+/* ── Demo site theme: blue-teal (overrides violet → teal) ── */
+/* Only base tokens need overriding — compound tokens cascade via var() */
+:root {
+  --accent-secondary:        rgb(20, 184, 166);
+  --accent-secondary-rgb:    20, 184, 166;
+
+  /* Demo-specific: 3-stop gradient with midpoint accent */
+  --gradient-display-text:   linear-gradient(135deg, rgb(232, 232, 236) 0%, rgb(77, 126, 247) 50%, rgb(20, 184, 166) 100%);
+  /* Demo-specific: wider ellipse ambient layout */
+  --gradient-ambient:        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(var(--accent-primary-rgb), 0.08), transparent 70%),
+                              radial-gradient(ellipse 60% 50% at 80% 50%, rgba(var(--accent-secondary-rgb), 0.04), transparent 60%);
+}
+
+[data-theme="light"] {
+  --accent-secondary:        rgb(13, 148, 136);
+  --accent-secondary-rgb:    13, 148, 136;
+
+  --gradient-display-text:   linear-gradient(135deg, rgb(30, 30, 40) 0%, rgb(55, 105, 235) 50%, rgb(13, 148, 136) 100%);
+  --gradient-ambient:        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(var(--accent-primary-rgb), 0.08), transparent 70%),
+                              radial-gradient(ellipse 60% 50% at 80% 50%, rgba(var(--accent-secondary-rgb), 0.04), transparent 60%);
+}
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-default) transparent;
+  overflow-x: clip;
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: var(--body-weight);
+  font-size: var(--body-size);
+  line-height: var(--body-lh);
+  color: var(--text-secondary);
+  background-color: var(--bg-deep);
+  min-height: 100dvh;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: var(--gradient-ambient), var(--gradient-page-ambient);
+  pointer-events: none;
+  z-index: -1;
+}
+
+a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+a:hover { color: var(--accent-secondary); }
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+img, svg { display: block; max-width: 100%; }
+
+::selection {
+  background: rgba(var(--accent-primary-rgb), 0.35);
+  color: var(--text-primary);
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-default); border-radius: var(--radius-full); }
+::-webkit-scrollbar-thumb:hover { background: var(--border-bright); }
+
+code, pre {
+  font-family: var(--font-mono);
+  font-size: var(--code-size);
+  line-height: var(--code-lh);
+}
+
+pre {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  overflow-x: auto;
+  max-width: 100%;
+  position: relative;
+  transition: border-color var(--transition-fast);
+}
+
+pre::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--glow-line-gradient);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  opacity: 0.5;
+}
+
+pre:hover {
+  border-color: var(--border-default);
+}
+
+code { color: var(--accent-secondary); } /* teal via demo override */
+pre code { color: var(--text-secondary); }
+
+/* ── Shiki / Astro Code theme — maps to design tokens ── */
+:root {
+  --astro-code-color-text: var(--text-secondary);
+  --astro-code-color-background: var(--bg-surface);
+  --astro-code-foreground: var(--text-secondary);
+  --astro-code-background: var(--bg-surface);
+  --astro-code-token-constant: #e8e8ec;
+  --astro-code-token-string: #14b8a6;
+  --astro-code-token-string-expression: #14b8a6;
+  --astro-code-token-comment: #6b6b80;
+  --astro-code-token-keyword: #4d7ef7;
+  --astro-code-token-parameter: #e8e8ec;
+  --astro-code-token-function: #e8e8ec;
+  --astro-code-token-punctuation: #7c7c89;
+  --astro-code-token-link: #4d7ef7;
+}
+
+/* Light mode code theme */
+[data-theme="light"] {
+  --astro-code-color-text: #374151;
+  --astro-code-foreground: #374151;
+  --astro-code-token-constant: #1e293b;
+  --astro-code-token-string: #0d7377;
+  --astro-code-token-string-expression: #0d7377;
+  --astro-code-token-comment: #94a3b8;
+  --astro-code-token-keyword: #3b5fc2;
+  --astro-code-token-parameter: #1e293b;
+  --astro-code-token-function: #6e42c1;
+  --astro-code-token-punctuation: #64748b;
+  --astro-code-token-link: #3b5fc2;
+}
+
+@media (prefers-color-scheme: light) {
+  [data-theme="auto"] {
+    --astro-code-color-text: #374151;
+    --astro-code-foreground: #374151;
+    --astro-code-token-constant: #1e293b;
+    --astro-code-token-string: #0d7377;
+    --astro-code-token-string-expression: #0d7377;
+    --astro-code-token-comment: #94a3b8;
+    --astro-code-token-keyword: #3b5fc2;
+    --astro-code-token-parameter: #1e293b;
+    --astro-code-token-function: #6e42c1;
+    --astro-code-token-punctuation: #64748b;
+    --astro-code-token-link: #3b5fc2;
+  }
+}
+
+/* Override Shiki-generated pre backgrounds to match our token */
+pre.astro-code {
+  background: var(--bg-surface) !important;
+}
+
+/* ── Scroll offset for fixed header ── */
+[id] {
+  scroll-margin-top: calc(var(--nav-height, 64px) + var(--space-lg));
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-glow);
+}
+
+/* ── Prevent FOUC for custom elements ──
+   Hide all arc-* elements until their JS has loaded and
+   customElements.define() runs. :defined flips the moment the
+   element upgrades, so there's zero visible flash. */
+[class*="arc-"]:not(:defined),
+:is(arc-accordion, arc-accordion-item, arc-alert, arc-app-shell,
+    arc-animated-number, arc-aspect-ratio, arc-auth-shell, arc-avatar,
+    arc-avatar-group, arc-badge, arc-breadcrumb, arc-breadcrumb-item,
+    arc-button, arc-calendar, arc-callout, arc-card, arc-carousel,
+    arc-checkbox, arc-chip, arc-code-block, arc-collapsible,
+    arc-color-picker, arc-color-swatch, arc-column, arc-combobox,
+    arc-command-palette, arc-command-item, arc-container, arc-context-menu,
+    arc-copy-button, arc-dashboard-grid, arc-data-table, arc-date-picker,
+    arc-dialog, arc-divider, arc-drawer, arc-dropdown-menu,
+    arc-empty-state, arc-feature-card, arc-file-upload, arc-footer,
+    arc-form, arc-highlight, arc-hover-card, arc-icon, arc-icon-button,
+    arc-infinite-scroll, arc-input, arc-kbd, arc-link, arc-marquee,
+    arc-meter, arc-modal, arc-multi-select, arc-navigation-menu,
+    arc-nav-item, arc-notification-panel, arc-number-input, arc-otp-input,
+    arc-page-header, arc-page-layout, arc-pagination, arc-pin-input,
+    arc-popover, arc-progress, arc-radio, arc-radio-group, arc-rating,
+    arc-resizable, arc-scroll-area, arc-scroll-spy, arc-search,
+    arc-section, arc-segmented-control, arc-select, arc-settings-layout,
+    arc-sheet, arc-sidebar, arc-sidebar-section, arc-sidebar-link,
+    arc-skeleton, arc-slider, arc-sortable-list, arc-spinner,
+    arc-split-pane, arc-spy-link, arc-stack, arc-stat, arc-status-bar,
+    arc-step, arc-stepper, arc-suggestion, arc-tab, arc-table, arc-tabs,
+    arc-tag, arc-text, arc-textarea, arc-theme-toggle, arc-timeline,
+    arc-timeline-item, arc-toast, arc-toggle, arc-toolbar, arc-tooltip,
+    arc-top-bar, arc-tree-item, arc-tree-view, arc-truncate,
+    arc-value-card, arc-markdown, arc-scroll-to-top):not(:defined) {
+  opacity: 0;
+  transition: opacity 150ms ease;
+}
+
+/* Layout-critical elements: reserve space while hidden to prevent shift */
+arc-top-bar:not(:defined) {
+  display: block;
+  height: var(--nav-height, 64px);
+}
+
+arc-top-bar[fixed]:not(:defined) {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+arc-sidebar:not(:defined) {
+  display: block;
+}
+
+arc-icon:not(:defined) {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  html { scroll-behavior: auto; }
+}

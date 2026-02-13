@@ -1,0 +1,71 @@
+{
+  "name": "@arclux/arc-ui-vue",
+  "version": "1.0.0",
+  "description": "Vue 3 wrappers for ARC UI Web Components.",
+  "type": "module",
+  "main": "src/index.ts",
+  "module": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./content": {
+      "types": "./src/content/index.ts",
+      "default": "./src/content/index.ts"
+    },
+    "./input": {
+      "types": "./src/input/index.ts",
+      "default": "./src/input/index.ts"
+    },
+    "./feedback": {
+      "types": "./src/feedback/index.ts",
+      "default": "./src/feedback/index.ts"
+    },
+    "./navigation": {
+      "types": "./src/navigation/index.ts",
+      "default": "./src/navigation/index.ts"
+    },
+    "./layout": {
+      "types": "./src/layout/index.ts",
+      "default": "./src/layout/index.ts"
+    },
+    "./shared": {
+      "types": "./src/shared/index.ts",
+      "default": "./src/shared/index.ts"
+    }
+  },
+  "files": [
+    "src/"
+  ],
+  "scripts": {
+    "build": "echo 'Consumed directly via workspace \u2014 no build step required'"
+  },
+  "sideEffects": false,
+  "peerDependencies": {
+    "vue": ">=3.3.0"
+  },
+  "dependencies": {
+    "@arclux/arc-ui": "workspace:*"
+  },
+  "license": "MIT",
+  "keywords": [
+    "vue",
+    "web-components",
+    "design-system",
+    "arclight"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arclight-digital/arc-ui",
+    "directory": "packages/vue"
+  },
+  "homepage": "https://arcui.dev",
+  "bugs": {
+    "url": "https://github.com/arclight-digital/arc-ui/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

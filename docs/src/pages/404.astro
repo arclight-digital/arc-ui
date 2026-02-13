@@ -1,0 +1,83 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="404 — Page Not Found — ARC UI">
+  <div class="not-found">
+    <div class="not-found__content">
+      <h1 class="not-found__code">404</h1>
+      <p class="not-found__message">This page doesn't exist.</p>
+      <div class="not-found__actions">
+        <a href="/" class="not-found__link">Home</a>
+        <a href="/components" class="not-found__link not-found__link--secondary">Components</a>
+        <a href="/getting-started" class="not-found__link not-found__link--secondary">Getting Started</a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .not-found {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: var(--space-xl);
+    text-align: center;
+  }
+
+  .not-found__code {
+    font-size: clamp(80px, 15vw, 160px);
+    font-weight: 700;
+    background: var(--gradient-display-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin: 0 0 var(--space-sm);
+  }
+
+  .not-found__message {
+    font-size: var(--text-lg);
+    color: var(--text-secondary);
+    margin: 0 0 var(--space-xl);
+  }
+
+  .not-found__actions {
+    display: flex;
+    gap: var(--space-sm);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .not-found__link {
+    display: inline-block;
+    font-family: var(--font-accent);
+    font-weight: 600;
+    font-size: var(--text-sm);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 10px 24px;
+    border-radius: var(--radius-md);
+    background: var(--accent-primary);
+    color: var(--text-primary);
+    transition: box-shadow var(--transition-fast);
+  }
+
+  .not-found__link:hover {
+    box-shadow: 0 0 20px rgba(var(--accent-primary-rgb), 0.4);
+  }
+
+  .not-found__link--secondary {
+    background: transparent;
+    border: 1px solid var(--border-default);
+    color: var(--text-secondary);
+  }
+
+  .not-found__link--secondary:hover {
+    border-color: var(--border-bright);
+    color: var(--text-primary);
+    box-shadow: none;
+  }
+</style>

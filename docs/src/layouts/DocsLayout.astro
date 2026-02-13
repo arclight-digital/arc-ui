@@ -1,0 +1,132 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import SidebarNav from '../components/SidebarNav.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+import Wordmark from '../components/Wordmark.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import fs from 'node:fs';
+import '../styles/docs.css';
+
+const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components/package.json', import.meta.url), 'utf-8'));
+
+interface Props {
+  title: string;
+  description?: string;
+  activeSlug?: string;
+  headings?: Array<{ id: string; label: string }>;
+  breadcrumbs?: Array<{ label: string; href?: string }>;
+}
+
+const {
+  title,
+  description,
+  activeSlug,
+  headings = [],
+  breadcrumbs = [],
+} = Astro.props;
+---
+
+<BaseLayout title={`${title} — ARC UI`} description={description}>
+  <arc-app-shell>
+    <!-- Top Bar -->
+    <arc-top-bar slot="topbar" fixed class="theme-fixed">
+      <div slot="logo">
+        <Wordmark />
+      </div>
+      <arc-navigation-menu slot="center">
+        <arc-nav-item href="/getting-started" active={!activeSlug || activeSlug === 'getting-started' || activeSlug === 'theming' || activeSlug === 'frameworks' || activeSlug === 'accessibility' || undefined}>Docs</arc-nav-item>
+        <arc-nav-item href="/components" active={activeSlug === 'components' || Astro.url.pathname.startsWith('/components') || undefined}>Components</arc-nav-item>
+        <arc-nav-item href="/tokens" active={activeSlug === 'tokens' || undefined}>Tokens</arc-nav-item>
+        <arc-nav-item href="/theme-synthesizer" active={activeSlug === 'theme-synthesizer' || undefined}>Synthesizer</arc-nav-item>
+      </arc-navigation-menu>
+      <div slot="actions" class="topbar-actions">
+        <arc-badge variant="primary" class="topbar-version">v{pkg.version}</arc-badge>
+        <arc-theme-toggle icon-only></arc-theme-toggle>
+        <arc-icon-button href="https://github.com/Arclight-Digital/arc-ui" name="github-logo" label="GitHub" variant="ghost" size="sm"></arc-icon-button>
+      </div>
+    </arc-top-bar>
+
+    <!-- Sidebar -->
+    <SidebarNav activeSlug={activeSlug} />
+
+    <!-- Table of Contents -->
+    <div slot="toc">
+      {headings.length > 0 && (
+        <TableOfContents headings={headings} />
+      )}
+    </div>
+
+    <!-- Main Content -->
+    {breadcrumbs.length > 1 && (
+      <arc-breadcrumb>
+        {breadcrumbs.map((crumb) => (
+          <arc-breadcrumb-item href={crumb.href || ''}>{crumb.label}</arc-breadcrumb-item>
+        ))}
+      </arc-breadcrumb>
+    )}
+    <div class="docs-content">
+      <slot />
+    </div>
+  </arc-app-shell>
+
+  <SiteFooter />
+  <arc-scroll-to-top></arc-scroll-to-top>
+</BaseLayout>
+
+<script>
+  async function initNavigation() {
+    const { navigate } = await import('astro:transitions/client');
+    document.addEventListener('arc-navigate', (e: any) => {
+      const href = e.detail?.href;
+      if (href) {
+        e.preventDefault();  // tell the component to suppress native <a> navigation
+        navigate(href);      // use Astro view transitions instead
+      }
+    });
+  }
+
+  let _sidebarScrollTop = 0;
+
+  function saveSidebarScroll() {
+    const shell = document.querySelector('arc-app-shell');
+    if (!shell || !shell.shadowRoot) return;
+    const sidebarSlot = shell.shadowRoot.querySelector('.shell__sidebar');
+    if (sidebarSlot) _sidebarScrollTop = sidebarSlot.scrollTop;
+  }
+
+  function restoreSidebarScroll() {
+    requestAnimationFrame(() => {
+      const shell = document.querySelector('arc-app-shell');
+      if (!shell || !shell.shadowRoot) return;
+      const sidebarSlot = shell.shadowRoot.querySelector('.shell__sidebar');
+      if (sidebarSlot) sidebarSlot.scrollTop = _sidebarScrollTop;
+    });
+  }
+
+  initNavigation();
+  document.addEventListener('astro:page-load', initNavigation);
+  document.addEventListener('astro:before-preparation', saveSidebarScroll);
+  document.addEventListener('astro:after-swap', restoreSidebarScroll);
+</script>
+
+<style>
+  .topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  /* ── Main content area ── */
+  arc-app-shell::part(content) {
+    position: relative;
+  }
+
+  .docs-content {
+    contain: inline-size;
+  }
+
+  /* Breadcrumbs */
+  arc-breadcrumb {
+    margin-bottom: var(--space-lg);
+  }
+</style>

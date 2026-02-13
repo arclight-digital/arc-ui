@@ -1,0 +1,23 @@
+{
+  "name": "arc-ui-docs",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@arclux/arc-ui": "workspace:*",
+    "@arclux/arc-ui-svelte": "workspace:*",
+    "@arclux/arc-ui-vue": "workspace:*",
+    "astro": "^5.17.1",
+    "lit": "^3.3.0",
+    "satori": "^0.19.2",
+    "sharp": "^0.34.5"
+  },
+  "devDependencies": {
+    "wrangler": "^4.65.0"
+  }
+}

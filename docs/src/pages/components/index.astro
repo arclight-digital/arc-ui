@@ -1,0 +1,252 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import { components } from '../../data/components/index';
+
+const tiers = [
+  { key: 'layout', label: 'Layout', desc: 'Page scaffolding, structural containers, and shells' },
+  { key: 'navigation', label: 'Navigation', desc: 'Wayfinding, menus, and page-level navigation' },
+  { key: 'content', label: 'Content', desc: 'Presentational atoms and display components' },
+  { key: 'input', label: 'Input', desc: 'Form controls, buttons, and user data entry' },
+  { key: 'feedback', label: 'Feedback', desc: 'Alerts, overlays, and responses to user actions' },
+] as const;
+
+const byTier = Object.fromEntries(
+  tiers.map(t => [t.key, components.filter(c => c.tier === t.key)])
+);
+
+const tierBadgeVariant: Record<string, string> = {
+  layout: 'default',
+  navigation: 'blue',
+  content: 'default',
+  input: 'violet',
+  feedback: 'blue',
+};
+---
+
+<DocsLayout title="Components" description="Browse all ARC UI components." activeSlug="components">
+  <div class="components-index">
+    <h1 class="components-index__title">Components</h1>
+    <p class="components-index__desc">
+      Browse all {components.length} components across five categories: layout, navigation, content, input, and feedback.
+    </p>
+
+    <div class="components-search">
+      <arc-input id="component-search" placeholder="Search components..." size="md"></arc-input>
+      <span class="components-search__count" id="search-count"></span>
+    </div>
+
+    {tiers.map((tier) => (
+      <section class="tier-section" data-tier={tier.key}>
+        <div class="tier-section__header">
+          <arc-badge variant={tierBadgeVariant[tier.key]}>{tier.label}</arc-badge>
+          <span class="tier-section__desc">{tier.desc}</span>
+        </div>
+        <div class="components-grid">
+          {byTier[tier.key].map((c) => (
+            <a href={`/components/${c.slug}`} class="component-card" data-name={c.name.toLowerCase()} data-tag={c.tag} data-tier={tier.key} data-interactivity={c.interactivity}>
+              <h3 class="component-card__name">{c.name}</h3>
+              <p class="component-card__desc">{c.description}</p>
+              <code class="component-card__tag">&lt;{c.tag}&gt;</code>
+              <span class="component-card__interactivity">{c.interactivity}</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
+</DocsLayout>
+
+<script>
+  import '@arclux/arc-ui';
+
+  function initSearch() {
+    const searchEl = document.getElementById('component-search') as any;
+    const countEl = document.getElementById('search-count');
+    if (!searchEl || !countEl) return;
+
+    const cards = document.querySelectorAll('.component-card') as NodeListOf<HTMLElement>;
+    const sections = document.querySelectorAll('.tier-section') as NodeListOf<HTMLElement>;
+    const total = cards.length;
+
+    function filter(query: string) {
+      const q = query.toLowerCase().trim();
+      let visible = 0;
+
+      cards.forEach((card) => {
+        const name = card.dataset.name || '';
+        const tag = card.dataset.tag || '';
+        const desc = card.querySelector('.component-card__desc')?.textContent?.toLowerCase() || '';
+        const match = !q || name.includes(q) || tag.includes(q) || desc.includes(q);
+        card.style.display = match ? '' : 'none';
+        if (match) visible++;
+      });
+
+      sections.forEach((section) => {
+        const hasVisible = Array.from(section.querySelectorAll('.component-card')).some(
+          (c) => (c as HTMLElement).style.display !== 'none'
+        );
+        section.style.display = hasVisible ? '' : 'none';
+      });
+
+      countEl.textContent = q ? `${visible} of ${total} components` : '';
+    }
+
+    searchEl.addEventListener('arc-input', (e: any) => filter(e.detail?.value || ''));
+    searchEl.addEventListener('input', (e: any) => filter(e.target?.value || searchEl.value || ''));
+  }
+
+  initSearch();
+  document.addEventListener('astro:page-load', initSearch);
+</script>
+
+<style>
+  .components-index__title {
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    background: var(--gradient-display-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .components-index__desc {
+    color: var(--text-secondary);
+    font-size: var(--text-md);
+    margin-top: calc(-1 * var(--space-lg));
+  }
+
+  .components-search {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    margin-top: calc(-1 * var(--space-lg));
+  }
+
+  .components-search__count {
+    font-family: var(--font-accent);
+    font-size: var(--text-xs);
+    letter-spacing: 1px;
+    color: var(--text-ghost);
+    text-transform: uppercase;
+    min-height: 16px;
+  }
+
+  .tier-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .tier-section__header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding-bottom: var(--space-sm);
+    border-bottom: none;
+    position: relative;
+  }
+
+  .tier-section__header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--gradient-divider-glow);
+  }
+
+  .tier-section__desc {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+  }
+
+  .components-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-md);
+  }
+
+  .component-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding: var(--space-lg);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    background: var(--bg-card);
+    text-decoration: none;
+    transition: border-color var(--transition-fast), background var(--transition-fast), box-shadow var(--transition-base), transform var(--transition-base);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .component-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--glow-line-gradient);
+    opacity: 0.4;
+    transition: opacity var(--transition-fast);
+  }
+
+  .component-card:hover {
+    border-color: var(--accent-primary-border);
+    background: var(--bg-elevated);
+    box-shadow: var(--glow-card-hover);
+    transform: translateY(-2px);
+  }
+
+  .component-card:hover::before {
+    opacity: 0.8;
+  }
+
+  /* Per-tier hover tinting */
+  .tier-section[data-tier="input"] .component-card:hover {
+    border-color: var(--accent-secondary-border);
+    box-shadow: 0 0 20px rgba(var(--accent-secondary-rgb), 0.08), 0 0 40px rgba(var(--accent-secondary-rgb), 0.04);
+  }
+
+  .tier-section[data-tier="feedback"] .component-card:hover,
+  .tier-section[data-tier="navigation"] .component-card:hover {
+    border-color: var(--accent-primary-border);
+    box-shadow: 0 0 20px rgba(var(--accent-primary-rgb), 0.06), 0 0 30px rgba(var(--accent-secondary-rgb), 0.04);
+  }
+
+  .component-card__name {
+    font-size: var(--text-md);
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .component-card__desc {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    line-height: 1.5;
+    flex: 1;
+  }
+
+  .component-card__tag {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--accent-secondary);
+    margin-top: var(--space-xs);
+  }
+
+  .component-card__interactivity {
+    font-family: var(--font-accent);
+    font-size: var(--text-xs);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-ghost);
+    margin-top: 2px;
+  }
+
+  @media (max-width: 768px) {
+    .components-index__title { font-size: var(--text-xl); }
+    .components-grid { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,459 @@
+/* ============================================================
+   Arclight Design Tokens — CSS Custom Properties
+   Canonical source: shared/tokens.js (JS) + shared/tokens.css (CSS)
+   ============================================================ */
+
+:root {
+  /* ── Backgrounds ── */
+  --bg-deep:      rgb(3, 3, 7);
+  --bg-surface:   rgb(10, 10, 15);
+  --bg-base:      rgb(10, 10, 15);
+  --bg-card:      rgb(13, 13, 18);
+  --bg-elevated:  rgb(17, 17, 22);
+
+  /* ── Text ── */
+  --text-primary:   rgb(232, 232, 236);
+  --text-secondary: rgb(138, 138, 150);
+  --text-muted:     rgb(124, 124, 137);
+  --text-ghost:     rgb(107, 107, 128);
+
+  /* ── Borders ── */
+  --border-subtle:  rgb(24, 24, 30);
+  --border-default: rgb(34, 34, 41);
+  --border-bright:  rgb(51, 51, 64);
+
+  /* ── Accent ── */
+  --accent-primary:   rgb(77, 126, 247);
+  --accent-secondary: rgb(139, 92, 246);
+
+  /* RGB channels (for alpha compositing) */
+  --accent-primary-rgb:   77, 126, 247;
+  --accent-secondary-rgb: 139, 92, 246;
+  --text-primary-rgb:  232, 232, 236;
+  --text-muted-rgb:    124, 124, 137;
+  --color-error-rgb:   239, 68, 68;
+  --white-rgb:         255, 255, 255;
+  --black-rgb:         0, 0, 0;
+
+  /* Accent alpha variants */
+  --accent-primary-subtle:   rgba(var(--accent-primary-rgb), 0.06);
+  --accent-primary-border:   rgba(var(--accent-primary-rgb), 0.12);
+  --accent-primary-glow:     rgba(var(--accent-primary-rgb), 0.2);
+  --accent-primary-ring:     rgba(var(--accent-primary-rgb), 0.15);
+  --accent-secondary-subtle: rgba(var(--accent-secondary-rgb), 0.06);
+  --accent-secondary-border: rgba(var(--accent-secondary-rgb), 0.12);
+  --accent-secondary-glow:   rgba(var(--accent-secondary-rgb), 0.2);
+
+  /* Feedback */
+  --color-success:      rgb(52, 211, 153);
+  --color-success-rgb:  52, 211, 153;
+  --color-error:        rgb(239, 68, 68);
+  --color-error-subtle: rgba(var(--color-error-rgb), 0.1);
+  --color-warning:      rgb(245, 158, 11);
+  --color-warning-rgb:  245, 158, 11;
+  --color-warning-subtle: rgba(245, 158, 11, 0.1);
+  --color-info:         rgb(59, 130, 246);
+  --color-info-rgb:     59, 130, 246;
+  --color-info-subtle:  rgba(59, 130, 246, 0.1);
+
+  /* ── Shadows ── */
+  --shadow-xs:      0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-sm:      0 2px 4px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.15);
+  --shadow-md:      0 4px 12px rgba(0, 0, 0, 0.25), 0 2px 4px rgba(0, 0, 0, 0.15);
+  --shadow-lg:      0 8px 24px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0, 0, 0, 0.15);
+  --shadow-xl:      0 16px 48px rgba(0, 0, 0, 0.35), 0 8px 16px rgba(0, 0, 0, 0.15);
+  --shadow-overlay: 0 8px 32px rgba(0, 0, 0, 0.4);
+
+  /* ── Z-Index ── */
+  --z-base:      0;
+  --z-dropdown:  100;
+  --z-sticky:    200;
+  --z-drawer:    300;
+  --z-modal:     400;
+  --z-popover:   500;
+  --z-toast:     600;
+  --z-tooltip:   700;
+  --z-max:       9999;
+
+  /* ── Breakpoints ── */
+  --breakpoint-xs:  480px;
+  --breakpoint-sm:  640px;
+  --breakpoint-md:  768px;
+  --breakpoint-lg:  1024px;
+  --breakpoint-xl:  1280px;
+  --breakpoint-2xl: 1536px;
+
+  /* ── Opacity ── */
+  --opacity-disabled: 0.5;
+  --opacity-muted:    0.6;
+  --opacity-hover:    0.8;
+  --opacity-visible:  1;
+
+  /* ── Typography ── */
+  --font-body:    'Host Grotesk', system-ui, sans-serif;
+  --font-accent:  'Tektur', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, monospace;
+
+  --display-xl-size:    var(--text-3xl);
+  --display-xl-weight:  500;
+  --display-xl-spacing: -1px;
+
+  --heading-size:   var(--text-xl);
+  --heading-weight: 500;
+
+  /* ── Type scale ── */
+  --text-xs:  12px;   /* uppercase labels, badges, counters — decorative only */
+  --text-sm:  14px;   /* minimum readable size — captions, hints, metadata */
+  --text-md:  15px;   /* body text */
+  --text-lg:  clamp(18px, 1.5vw, 20px);
+  --text-xl:  clamp(22px, 2.5vw, 26px);
+  --text-2xl: clamp(28px, 3vw, 36px);
+  --text-3xl: clamp(36px, 5vw, 52px);
+
+  --body-size:   var(--text-md);
+  --body-weight: 500;
+  --body-lh:     1.7;
+
+  --wordmark-size:    clamp(20px, 2.5vw, 28px);
+  --wordmark-weight:  500;
+  --wordmark-spacing: clamp(8px, 1.2vw, 14px);
+
+  --section-title-size:    var(--text-xs);
+  --section-title-weight:  600;
+  --section-title-spacing: 4px;
+
+  --ui-accent-size:    16px;
+  --ui-accent-weight:  600;
+  --ui-accent-spacing: 1px;
+
+  --code-size: var(--text-sm);
+  --code-lh:   1.8;
+
+  --label-inline-size:    var(--text-xs);
+  --label-inline-spacing: 3px;
+
+  /* ── Interactive ── */
+  --touch-min:   24px;
+  --touch-pad:   4px;
+
+  /* ── Spacing ── */
+  --space-xs:  4px;
+  --space-sm:  8px;
+  --space-md:  16px;
+  --space-lg:  24px;
+  --space-xl:  40px;
+  --space-2xl: 64px;
+  --space-3xl: 96px;
+  --space-4xl: 128px;
+
+  /* ── Radii ── */
+  --radius-sm:   4px;
+  --radius-md:   10px;
+  --radius-lg:   14px;
+  --radius-xl:   20px;
+  --radius-full: 9999px;
+
+  /* ── Transitions ── */
+  --transition-fast: 120ms ease;
+  --transition-base: 200ms ease;
+  --transition-slow: 400ms ease;
+
+  /* ── Motion ── */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out:   cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-enter: 500ms;
+  --duration-exit:  300ms;
+
+  /* ── Gradients ── */
+  --gradient-display-text: linear-gradient(135deg, rgb(232, 232, 236) 0%, rgb(124, 124, 137) 100%);
+  --gradient-accent-text:  linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+  --gradient-divider:      linear-gradient(90deg, transparent, var(--border-subtle), transparent);
+  --gradient-divider-glow: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.2), rgba(var(--accent-secondary-rgb),0.12), transparent);
+  --gradient-page-ambient: radial-gradient(ellipse, rgba(var(--white-rgb),0.015) 0%, transparent 70%);
+
+  /* ── Glow ── */
+  --glow-white:
+    0 0 6px rgba(var(--text-primary-rgb),0.6),
+    0 0 18px rgba(var(--text-primary-rgb),0.25),
+    0 0 40px rgba(var(--text-primary-rgb),0.1);
+
+  --glow-primary:
+    0 0 8px rgba(var(--accent-primary-rgb),0.9),
+    0 0 20px rgba(var(--accent-primary-rgb),0.5),
+    0 0 44px rgba(var(--accent-primary-rgb),0.25),
+    0 0 80px rgba(var(--accent-primary-rgb),0.1);
+
+  --glow-secondary:
+    0 0 8px rgba(var(--accent-secondary-rgb),0.9),
+    0 0 20px rgba(var(--accent-secondary-rgb),0.4),
+    0 0 40px rgba(var(--accent-secondary-rgb),0.15);
+
+  --glow-line-white:    linear-gradient(90deg, transparent, rgba(var(--text-primary-rgb),0.35), transparent);
+  --glow-line-blue:     linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.7), transparent);
+  --glow-line-gradient: linear-gradient(90deg, transparent, var(--accent-primary), var(--accent-secondary), transparent);
+
+  /* ── Card / Ambient Glow ── */
+  --glow-card-hover:  0 0 20px rgba(var(--accent-primary-rgb),0.08), 0 0 40px rgba(var(--accent-secondary-rgb),0.04);
+  --gradient-border-glow: linear-gradient(135deg, rgba(var(--accent-primary-rgb),0.15), rgba(var(--accent-secondary-rgb),0.1), rgba(var(--accent-primary-rgb),0.05));
+  --gradient-ambient: radial-gradient(circle at 15% 85%, rgba(var(--accent-primary-rgb),0.04) 0%, transparent 50%),
+                      radial-gradient(circle at 85% 15%, rgba(var(--accent-secondary-rgb),0.03) 0%, transparent 50%);
+
+  /* ── Focus ── */
+  --focus-ring: 0 0 0 1px rgba(var(--accent-primary-rgb),0.25);
+  --focus-glow: 0 0 0 1px rgba(var(--accent-primary-rgb),0.2), 0 0 6px rgba(var(--accent-primary-rgb),0.35), 0 0 16px rgba(var(--accent-primary-rgb),0.2), 0 0 40px rgba(var(--accent-secondary-rgb),0.12);
+
+  /* ── Layout ── */
+  --max-width:    1120px;
+  --max-width-sm: 720px;
+  --nav-height:   64px;
+
+  /* ── Utility ── */
+  --bg-hover:         rgba(var(--white-rgb), 0.04);
+  --overlay-backdrop: rgba(var(--black-rgb), 0.6);
+}
+
+/* Touch devices — larger tap targets */
+@media (pointer: coarse) {
+  :root {
+    --touch-min: 36px;
+    --touch-pad: 8px;
+  }
+}
+
+/* ============================================================
+   Light Theme Overrides
+   ============================================================ */
+[data-theme="light"] {
+  /* Backgrounds */
+  --bg-deep:      rgb(242, 242, 248);
+  --bg-surface:   rgb(248, 248, 252);
+  --bg-base:      rgb(244, 244, 250);
+  --bg-card:      rgb(248, 248, 252);
+  --bg-elevated:  rgb(238, 238, 246);
+
+  /* Text — softened for less contrast */
+  --text-primary:   rgb(35, 35, 55);
+  --text-secondary: rgb(85, 88, 108);
+  --text-muted:     rgb(115, 118, 140);
+  --text-ghost:     rgb(150, 152, 172);
+
+  /* Borders */
+  --border-subtle:  rgb(230, 232, 238);
+  --border-default: rgb(210, 214, 222);
+  --border-bright:  rgb(190, 195, 205);
+
+  /* Accent — stronger blue for light mode */
+  --accent-primary:   rgb(55, 105, 235);
+  --accent-secondary: rgb(120, 70, 230);
+
+  /* RGB channels */
+  --accent-primary-rgb:   55, 105, 235;
+  --accent-secondary-rgb: 120, 70, 230;
+  --text-primary-rgb:  35, 35, 55;
+  --text-muted-rgb:    115, 118, 140;
+  --white-rgb:         255, 255, 255;
+  --black-rgb:         0, 0, 0;
+
+  /* Accent alpha variants */
+  --accent-primary-subtle:   rgba(var(--accent-primary-rgb), 0.06);
+  --accent-primary-border:   rgba(var(--accent-primary-rgb), 0.12);
+  --accent-primary-glow:     rgba(var(--accent-primary-rgb), 0.2);
+  --accent-primary-ring:     rgba(var(--accent-primary-rgb), 0.15);
+  --accent-secondary-subtle: rgba(var(--accent-secondary-rgb), 0.06);
+  --accent-secondary-border: rgba(var(--accent-secondary-rgb), 0.12);
+  --accent-secondary-glow:   rgba(var(--accent-secondary-rgb), 0.2);
+
+  /* Shadows — colored instead of black, keeps the glow aesthetic */
+  --shadow-xs:      0 1px 2px rgba(55,105,235,0.06);
+  --shadow-sm:      0 2px 4px rgba(55,105,235,0.08), 0 1px 2px rgba(120,70,230,0.04);
+  --shadow-md:      0 4px 12px rgba(55,105,235,0.1), 0 2px 4px rgba(120,70,230,0.05);
+  --shadow-lg:      0 8px 24px rgba(55,105,235,0.12), 0 4px 8px rgba(120,70,230,0.06);
+  --shadow-xl:      0 16px 48px rgba(55,105,235,0.14), 0 8px 16px rgba(120,70,230,0.07);
+  --shadow-overlay: 0 4px 24px rgba(55,105,235,0.1), 0 8px 48px rgba(120,70,230,0.06);
+
+  /* Gradients */
+  --gradient-display-text: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-primary) 100%);
+  --gradient-divider:      linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.2), transparent);
+  --gradient-divider-glow: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.35), rgba(var(--accent-secondary-rgb),0.25), transparent);
+  --gradient-page-ambient: radial-gradient(ellipse, rgba(var(--accent-primary-rgb),0.06) 0%, transparent 70%);
+
+  /* Glows — colored, not grey. Same energy as dark mode but on light surfaces */
+  --glow-primary:
+    0 0 8px rgba(var(--accent-primary-rgb),0.5),
+    0 0 24px rgba(var(--accent-primary-rgb),0.2),
+    0 0 48px rgba(var(--accent-primary-rgb),0.08);
+  --glow-secondary:
+    0 0 8px rgba(var(--accent-secondary-rgb),0.5),
+    0 0 24px rgba(var(--accent-secondary-rgb),0.2),
+    0 0 48px rgba(var(--accent-secondary-rgb),0.08);
+  --glow-white:
+    0 0 8px rgba(var(--accent-primary-rgb),0.15),
+    0 0 20px rgba(var(--accent-secondary-rgb),0.08);
+  --glow-line-white:    linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.15), transparent);
+  --glow-line-blue:     linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.6), transparent);
+  --glow-card-hover:
+    0 0 20px rgba(var(--accent-primary-rgb),0.12),
+    0 0 40px rgba(var(--accent-secondary-rgb),0.06);
+  --gradient-border-glow: linear-gradient(135deg, rgba(var(--accent-primary-rgb),0.2), rgba(var(--accent-secondary-rgb),0.15), rgba(var(--accent-primary-rgb),0.08));
+  --gradient-ambient:
+    radial-gradient(circle at 15% 85%, rgba(var(--accent-primary-rgb),0.07) 0%, transparent 50%),
+    radial-gradient(circle at 85% 15%, rgba(var(--accent-secondary-rgb),0.05) 0%, transparent 50%);
+
+  /* Focus — soft layered glow */
+  --focus-ring: 0 0 0 1px rgba(var(--accent-primary-rgb),0.25);
+  --focus-glow: 0 0 0 1px rgba(var(--accent-primary-rgb),0.2), 0 0 6px rgba(var(--accent-primary-rgb),0.35), 0 0 16px rgba(var(--accent-primary-rgb),0.2), 0 0 40px rgba(var(--accent-secondary-rgb),0.12);
+
+  /* Utility */
+  --bg-hover:         rgba(55, 105, 235, 0.04);
+  --overlay-backdrop: rgba(20, 20, 40, 0.25);
+}
+
+/* Auto mode — respects OS preference */
+@media (prefers-color-scheme: light) {
+  [data-theme="auto"] {
+    --bg-deep:      rgb(242, 242, 248);
+    --bg-surface:   rgb(248, 248, 252);
+    --bg-base:      rgb(244, 244, 250);
+    --bg-card:      rgb(248, 248, 252);
+    --bg-elevated:  rgb(238, 238, 246);
+
+    --text-primary:   rgb(35, 35, 55);
+    --text-secondary: rgb(85, 88, 108);
+    --text-muted:     rgb(115, 118, 140);
+    --text-ghost:     rgb(150, 152, 172);
+
+    --border-subtle:  rgb(230, 232, 238);
+    --border-default: rgb(210, 214, 222);
+    --border-bright:  rgb(190, 195, 205);
+
+    --accent-primary:   rgb(55, 105, 235);
+    --accent-secondary: rgb(120, 70, 230);
+    --accent-primary-rgb:   55, 105, 235;
+    --accent-secondary-rgb: 120, 70, 230;
+    --text-primary-rgb:  35, 35, 55;
+    --text-muted-rgb:    115, 118, 140;
+    --white-rgb:         255, 255, 255;
+    --black-rgb:         0, 0, 0;
+
+    --accent-primary-subtle:   rgba(var(--accent-primary-rgb), 0.06);
+    --accent-primary-border:   rgba(var(--accent-primary-rgb), 0.12);
+    --accent-primary-glow:     rgba(var(--accent-primary-rgb), 0.2);
+    --accent-primary-ring:     rgba(var(--accent-primary-rgb), 0.15);
+    --accent-secondary-subtle: rgba(var(--accent-secondary-rgb), 0.06);
+    --accent-secondary-border: rgba(var(--accent-secondary-rgb), 0.12);
+    --accent-secondary-glow:   rgba(var(--accent-secondary-rgb), 0.2);
+
+    --shadow-xs:      0 1px 2px rgba(55,105,235,0.06);
+    --shadow-sm:      0 2px 4px rgba(55,105,235,0.08), 0 1px 2px rgba(120,70,230,0.04);
+    --shadow-md:      0 4px 12px rgba(55,105,235,0.1), 0 2px 4px rgba(120,70,230,0.05);
+    --shadow-lg:      0 8px 24px rgba(55,105,235,0.12), 0 4px 8px rgba(120,70,230,0.06);
+    --shadow-xl:      0 16px 48px rgba(55,105,235,0.14), 0 8px 16px rgba(120,70,230,0.07);
+    --shadow-overlay: 0 4px 24px rgba(55,105,235,0.1), 0 8px 48px rgba(120,70,230,0.06);
+
+    --gradient-display-text: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-primary) 100%);
+    --gradient-divider:      linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.2), transparent);
+    --gradient-divider-glow: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.35), rgba(var(--accent-secondary-rgb),0.25), transparent);
+    --gradient-page-ambient: radial-gradient(ellipse, rgba(var(--accent-primary-rgb),0.06) 0%, transparent 70%);
+
+    --glow-primary:
+      0 0 8px rgba(var(--accent-primary-rgb),0.5),
+      0 0 24px rgba(var(--accent-primary-rgb),0.2),
+      0 0 48px rgba(var(--accent-primary-rgb),0.08);
+    --glow-secondary:
+      0 0 8px rgba(var(--accent-secondary-rgb),0.5),
+      0 0 24px rgba(var(--accent-secondary-rgb),0.2),
+      0 0 48px rgba(var(--accent-secondary-rgb),0.08);
+    --glow-white:
+      0 0 8px rgba(var(--accent-primary-rgb),0.15),
+      0 0 20px rgba(var(--accent-secondary-rgb),0.08);
+    --glow-line-white:    linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.15), transparent);
+    --glow-line-blue:     linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.6), transparent);
+    --glow-card-hover:
+      0 0 20px rgba(var(--accent-primary-rgb),0.12),
+      0 0 40px rgba(var(--accent-secondary-rgb),0.06);
+    --gradient-border-glow: linear-gradient(135deg, rgba(var(--accent-primary-rgb),0.2), rgba(var(--accent-secondary-rgb),0.15), rgba(var(--accent-primary-rgb),0.08));
+    --gradient-ambient:
+      radial-gradient(circle at 15% 85%, rgba(var(--accent-primary-rgb),0.07) 0%, transparent 50%),
+      radial-gradient(circle at 85% 15%, rgba(var(--accent-secondary-rgb),0.05) 0%, transparent 50%);
+
+    --focus-ring: 0 0 0 1px rgba(var(--accent-primary-rgb),0.25);
+    --focus-glow: 0 0 0 1px rgba(var(--accent-primary-rgb),0.2), 0 0 6px rgba(var(--accent-primary-rgb),0.35), 0 0 16px rgba(var(--accent-primary-rgb),0.2), 0 0 40px rgba(var(--accent-secondary-rgb),0.12);
+
+    --bg-hover:         rgba(55, 105, 235, 0.04);
+    --overlay-backdrop: rgba(20, 20, 40, 0.25);
+  }
+}
+
+/* ============================================================
+   Fixed Dark — always-dark regions (nav, footer)
+   Dark mode: near-black (matches page)
+   Light mode: deep royal blue
+   ============================================================ */
+.theme-fixed {
+  --bg-deep:      rgb(3, 3, 7);
+  --bg-surface:   rgb(10, 10, 15);
+  --bg-base:      rgb(10, 10, 15);
+  --bg-card:      rgb(13, 13, 18);
+  --bg-elevated:  rgb(17, 17, 22);
+
+  --text-primary:   rgb(232, 232, 236);
+  --text-secondary: rgb(138, 138, 150);
+  --text-muted:     rgb(124, 124, 137);
+  --text-ghost:     rgb(107, 107, 128);
+
+  --border-subtle:  rgb(24, 24, 30);
+  --border-default: rgb(34, 34, 41);
+  --border-bright:  rgb(51, 51, 64);
+
+  --accent-primary:   rgb(77, 126, 247);
+  --accent-secondary: rgb(139, 92, 246);
+  --accent-primary-rgb:   77, 126, 247;
+  --accent-secondary-rgb: 139, 92, 246;
+  --text-primary-rgb:  232, 232, 236;
+  --text-muted-rgb:    124, 124, 137;
+  --white-rgb:         255, 255, 255;
+  --black-rgb:         0, 0, 0;
+
+  --gradient-display-text: linear-gradient(135deg, rgb(232, 232, 236) 0%, rgb(124, 124, 137) 100%);
+  --gradient-divider:      linear-gradient(90deg, transparent, var(--border-subtle), transparent);
+
+  --shadow-overlay: 0 8px 32px rgba(0, 0, 0, 0.4);
+
+  --bg-hover:         rgba(var(--white-rgb), 0.04);
+  --overlay-backdrop: rgba(var(--black-rgb), 0.6);
+}
+
+/* Light mode: nav/footer become deep royal blue */
+[data-theme="light"] .theme-fixed {
+  --bg-deep:      rgb(12, 12, 52);
+  --bg-surface:   rgb(16, 16, 62);
+  --bg-base:      rgb(16, 16, 62);
+  --bg-card:      rgb(20, 20, 70);
+  --bg-elevated:  rgb(26, 26, 80);
+
+  --text-secondary: rgb(160, 165, 195);
+  --text-muted:     rgb(135, 140, 175);
+  --text-ghost:     rgb(110, 115, 155);
+
+  --border-subtle:  rgb(30, 30, 78);
+  --border-default: rgb(42, 42, 92);
+  --border-bright:  rgb(56, 56, 108);
+}
+
+@media (prefers-color-scheme: light) {
+  [data-theme="auto"] .theme-fixed {
+    --bg-deep:      rgb(12, 12, 52);
+    --bg-surface:   rgb(16, 16, 62);
+    --bg-base:      rgb(16, 16, 62);
+    --bg-card:      rgb(20, 20, 70);
+    --bg-elevated:  rgb(26, 26, 80);
+
+    --text-secondary: rgb(160, 165, 195);
+    --text-muted:     rgb(135, 140, 175);
+    --text-ghost:     rgb(110, 115, 155);
+
+    --border-subtle:  rgb(30, 30, 78);
+    --border-default: rgb(42, 42, 92);
+    --border-bright:  rgb(56, 56, 108);
+  }
+}

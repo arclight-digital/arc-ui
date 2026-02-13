@@ -1,0 +1,73 @@
+{
+  "name": "@arclux/arc-ui-react",
+  "version": "1.0.0",
+  "description": "React wrappers for ARC UI Web Components.",
+  "type": "module",
+  "main": "src/index.ts",
+  "module": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./content": {
+      "types": "./src/content/index.ts",
+      "default": "./src/content/index.ts"
+    },
+    "./input": {
+      "types": "./src/input/index.ts",
+      "default": "./src/input/index.ts"
+    },
+    "./feedback": {
+      "types": "./src/feedback/index.ts",
+      "default": "./src/feedback/index.ts"
+    },
+    "./navigation": {
+      "types": "./src/navigation/index.ts",
+      "default": "./src/navigation/index.ts"
+    },
+    "./layout": {
+      "types": "./src/layout/index.ts",
+      "default": "./src/layout/index.ts"
+    },
+    "./shared": {
+      "types": "./src/shared/index.ts",
+      "default": "./src/shared/index.ts"
+    }
+  },
+  "files": [
+    "src/"
+  ],
+  "scripts": {
+    "build": "echo 'Consumed directly via workspace \u2014 no build step required'"
+  },
+  "sideEffects": false,
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "dependencies": {
+    "@arclux/arc-ui": "workspace:*",
+    "@lit/react": "^1.0.8"
+  },
+  "license": "MIT",
+  "keywords": [
+    "react",
+    "web-components",
+    "design-system",
+    "arclight"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arclight-digital/arc-ui",
+    "directory": "packages/react"
+  },
+  "homepage": "https://arcui.dev",
+  "bugs": {
+    "url": "https://github.com/arclight-digital/arc-ui/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
