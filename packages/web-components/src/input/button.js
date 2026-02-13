@@ -3,11 +3,13 @@ import { tokenStyles } from '../shared-styles.js';
 
 export class ArcButton extends LitElement {
   static properties = {
-    variant:  { type: String, reflect: true },
-    size:     { type: String, reflect: true },
-    href:     { type: String },
-    disabled: { type: Boolean, reflect: true },
-    type:     { type: String },
+    variant:    { type: String, reflect: true },
+    size:       { type: String, reflect: true },
+    href:       { type: String },
+    disabled:   { type: Boolean, reflect: true },
+    type:       { type: String },
+    _hasPrefix: { state: true },
+    _hasSuffix: { state: true },
   };
 
   static styles = [
@@ -95,6 +97,21 @@ export class ArcButton extends LitElement {
       /* Disabled */
       :host([disabled]) .btn { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
 
+      /* Prefix / Suffix */
+      .btn__prefix,
+      .btn__suffix {
+        display: inline-flex;
+        align-items: center;
+      }
+
+      .btn__prefix--empty,
+      .btn__suffix--empty { display: none; }
+
+      ::slotted([slot="prefix"]),
+      ::slotted([slot="suffix"]) {
+        display: flex;
+      }
+
       @media (prefers-reduced-motion: reduce) {
         :host *,
         :host *::before,
@@ -114,13 +131,35 @@ export class ArcButton extends LitElement {
     this.href = '';
     this.disabled = false;
     this.type = 'button';
+    this._hasPrefix = false;
+    this._hasSuffix = false;
+  }
+
+  _onPrefixSlotChange(e) {
+    this._hasPrefix = e.target.assignedNodes({ flatten: true }).length > 0;
+  }
+
+  _onSuffixSlotChange(e) {
+    this._hasSuffix = e.target.assignedNodes({ flatten: true }).length > 0;
+  }
+
+  _renderContent() {
+    return html`
+      <span class="btn__prefix ${this._hasPrefix ? '' : 'btn__prefix--empty'}">
+        <slot name="prefix" @slotchange=${this._onPrefixSlotChange}></slot>
+      </span>
+      <slot></slot>
+      <span class="btn__suffix ${this._hasSuffix ? '' : 'btn__suffix--empty'}">
+        <slot name="suffix" @slotchange=${this._onSuffixSlotChange}></slot>
+      </span>
+    `;
   }
 
   render() {
     if (this.href) {
-      return html`<a class="btn" href=${this.href} part="button"><slot></slot></a>`;
+      return html`<a class="btn" href=${this.href} part="button">${this._renderContent()}</a>`;
     }
-    return html`<button class="btn" type=${this.type} ?disabled=${this.disabled} part="button"><slot></slot></button>`;
+    return html`<button class="btn" type=${this.type} ?disabled=${this.disabled} part="button">${this._renderContent()}</button>`;
   }
 }
 

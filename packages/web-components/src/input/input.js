@@ -16,6 +16,8 @@ export class ArcInput extends LitElement {
     required:    { type: Boolean },
     multiline:   { type: Boolean },
     rows:        { type: Number },
+    _hasPrefix:  { state: true },
+    _hasSuffix:  { state: true },
   };
 
   static styles = [
@@ -38,15 +40,12 @@ export class ArcInput extends LitElement {
         color: var(--text-muted);
       }
 
-      .input-group__field {
-        font-family: var(--font-body);
-        font-size: var(--body-size);
-        font-weight: 300;
-        color: var(--text-primary);
+      .input-group__wrapper {
+        display: flex;
+        align-items: center;
         background: var(--bg-surface);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-md);
-        padding: var(--space-sm) var(--space-md);
         transition:
           border-color var(--transition-fast),
           box-shadow var(--transition-fast),
@@ -55,17 +54,53 @@ export class ArcInput extends LitElement {
         width: 100%;
       }
 
-      textarea.input-group__field { resize: vertical; }
-
-      .input-group__field::placeholder { color: var(--text-ghost); }
-      .input-group__field:hover:not(:focus) { border-color: var(--border-bright); }
-      .input-group__field:focus {
-        outline: none;
+      .input-group__wrapper:hover:not(:focus-within) { border-color: var(--border-bright); }
+      .input-group__wrapper:focus-within {
         border-color: rgba(var(--accent-primary-rgb), 0.4);
         box-shadow: var(--focus-glow);
         background: var(--bg-card);
       }
-      .input-group__field:disabled { opacity: 0.4; cursor: not-allowed; }
+
+      :host([disabled]) .input-group__wrapper { opacity: 0.4; cursor: not-allowed; }
+
+      .input-group__field {
+        font-family: var(--font-body);
+        font-size: var(--body-size);
+        font-weight: 300;
+        color: var(--text-primary);
+        background: transparent;
+        border: none;
+        padding: var(--space-sm) var(--space-md);
+        box-sizing: border-box;
+        width: 100%;
+        min-width: 0;
+      }
+
+      .input-group__field:focus { outline: none; }
+      .input-group__field::placeholder { color: var(--text-ghost); }
+      .input-group__field:disabled { cursor: not-allowed; }
+
+      textarea.input-group__field { resize: vertical; }
+
+      .input-group__prefix,
+      .input-group__suffix {
+        display: flex;
+        align-items: center;
+        color: var(--text-muted);
+        flex-shrink: 0;
+      }
+
+      .input-group__prefix { padding-left: var(--space-md); }
+      .input-group__suffix { padding-right: var(--space-md); }
+
+      .input-group__prefix--empty,
+      .input-group__suffix--empty { display: none; }
+
+      ::slotted([slot="prefix"]),
+      ::slotted([slot="suffix"]) {
+        width: 20px;
+        height: 20px;
+      }
 
       @media (prefers-reduced-motion: reduce) {
         :host *,
@@ -92,6 +127,8 @@ export class ArcInput extends LitElement {
     this.multiline = false;
     this.rows = 5;
     this._fieldId = `arc-input-${++inputIdCounter}`;
+    this._hasPrefix = false;
+    this._hasSuffix = false;
   }
 
   updated(changed) {
@@ -110,6 +147,14 @@ export class ArcInput extends LitElement {
     this.value = e.target.value;
     this._internals.setFormValue(this.value);
     this.dispatchEvent(new CustomEvent('arc-change', { detail: { value: this.value }, bubbles: true, composed: true }));
+  }
+
+  _onPrefixSlotChange(e) {
+    this._hasPrefix = e.target.assignedNodes({ flatten: true }).length > 0;
+  }
+
+  _onSuffixSlotChange(e) {
+    this._hasSuffix = e.target.assignedNodes({ flatten: true }).length > 0;
   }
 
   render() {
@@ -149,7 +194,15 @@ export class ArcInput extends LitElement {
     return html`
       <div class="input-group">
         ${this.label ? html`<label class="input-group__label" for=${id} part="label">${this.label}</label>` : ''}
-        ${field}
+        <div class="input-group__wrapper" part="wrapper">
+          <div class="input-group__prefix ${this._hasPrefix ? '' : 'input-group__prefix--empty'}" part="prefix">
+            <slot name="prefix" @slotchange=${this._onPrefixSlotChange}></slot>
+          </div>
+          ${field}
+          <div class="input-group__suffix ${this._hasSuffix ? '' : 'input-group__suffix--empty'}" part="suffix">
+            <slot name="suffix" @slotchange=${this._onSuffixSlotChange}></slot>
+          </div>
+        </div>
       </div>
     `;
   }

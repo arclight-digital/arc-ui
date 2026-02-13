@@ -7,14 +7,15 @@ export interface TagProps {
   variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
   removable?: boolean;
   disabled?: boolean;
+  color?: string;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Tag: Component<TagProps> = (props) => {
-  const [local, rest] = splitProps(props, ['variant', 'removable', 'disabled', 'children']);
+  const [local, rest] = splitProps(props, ['variant', 'removable', 'disabled', 'color', 'children']);
   return (
-    <arc-tag variant={local.variant} removable={local.removable} disabled={local.disabled} {...rest}>
+    <arc-tag variant={local.variant} removable={local.removable} disabled={local.disabled} color={local.color} {...rest}>
       {local.children}
     </arc-tag>
   );

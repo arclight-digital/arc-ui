@@ -9,13 +9,15 @@
     href?: string;
     disabled?: boolean;
     type?: string;
+    _hasPrefix?: string;
+    _hasSuffix?: string;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { variant = 'primary', size = 'md', href = '', disabled = false, type = 'button', children, ...rest }: Props = $props();
+  let { variant = 'primary', size = 'md', href = '', disabled = false, type = 'button', _hasPrefix = false, _hasSuffix = false, children, ...rest }: Props = $props();
 </script>
 
-<arc-button {variant} {size} {href} {disabled} {type} {...rest}>
+<arc-button {variant} {size} {href} {disabled} {type} {_hasPrefix} {_hasSuffix} {...rest}>
   {@render children?.()}
 </arc-button>

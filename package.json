@@ -2,7 +2,7 @@
   "name": "arc-ui-monorepo",
   "private": true,
   "type": "module",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "ARC UI — Arc Reusable Components. A framework-agnostic design system built with Lit Web Components.",
   "engines": {
     "node": ">=24.0.0",

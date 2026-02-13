@@ -7,12 +7,13 @@ export interface TagProps {
   variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
   removable?: boolean;
   disabled?: boolean;
+  color?: string;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const Tag: FunctionComponent<TagProps> = ({ variant, removable, disabled, children, ...rest }) => (
-  <arc-tag variant={variant} removable={removable} disabled={disabled} {...rest}>
+export const Tag: FunctionComponent<TagProps> = ({ variant, removable, disabled, color, children, ...rest }) => (
+  <arc-tag variant={variant} removable={removable} disabled={disabled} color={color} {...rest}>
     {children}
   </arc-tag>
 );

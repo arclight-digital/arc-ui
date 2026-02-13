@@ -8,10 +8,12 @@ withDefaults(defineProps<{
   variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
   removable?: boolean;
   disabled?: boolean;
+  color?: string;
 }>(), {
   variant: 'default',
   removable: false,
   disabled: false,
+  color: '',
 });
 
 defineEmits<{
@@ -24,6 +26,7 @@ defineEmits<{
     :variant="variant"
     :removable="removable"
     :disabled="disabled"
+    :color="color"
   >
     <slot />
   </arc-tag>

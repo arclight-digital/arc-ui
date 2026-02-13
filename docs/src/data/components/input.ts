@@ -12,12 +12,15 @@ export const input: ComponentDef = {
 
 Use Input whenever you need to collect freeform text from a user: names, emails, passwords, search queries, or longer messages. The \`multiline\` prop switches the underlying element to a \`<textarea>\` for multi-row content without changing the component interface, so forms stay uniform whether a field needs one line or twenty.
 
+Input supports \`prefix\` and \`suffix\` slots for placing icons, labels, or other inline elements inside the field box. This is useful for search icons, unit labels, clear buttons, or any adornment that should appear visually attached to the input.
+
 Input is designed to work seamlessly with the Form component. Wrap a set of Inputs inside a Form to get coordinated validation, submission handling, and error summary. Each Input exposes \`name\`, \`required\`, and \`type\` props that Form reads automatically, so you rarely need extra wiring.`,
 
     features: [
       'Integrated label rendered above the field with automatic `for`/`id` association',
       'Multiple input types: text, email, tel, url, and password',
       'Multiline mode converts to a resizable textarea with a single boolean prop',
+      'Prefix and suffix slots for icons or inline adornments inside the field box',
       'Placeholder text with accessible contrast ratios',
       'Required-field indicator with built-in validation message',
       'Disabled state that greys out the field and blocks interaction',
@@ -31,6 +34,8 @@ Input is designed to work seamlessly with the Form component. Wrap a set of Inpu
         'Use the most specific `type` available (e.g. `email` for email addresses) to trigger the correct mobile keyboard',
         'Set `placeholder` to show an example value, not as a replacement for the label',
         'Use `multiline` for any field that may need more than one line of text',
+        'Use the `prefix` slot for search icons or currency symbols that contextualise the input',
+        'Use the `suffix` slot for unit labels, clear buttons, or status indicators',
         'Group related Inputs inside a Form component for coordinated validation',
         'Mark required fields with the `required` prop so validation is handled automatically',
       ],
@@ -44,7 +49,9 @@ Input is designed to work seamlessly with the Form component. Wrap a set of Inpu
     },
 
     previewHtml: `<div style="display:flex; flex-direction:column; width:100%; max-width:400px; gap:16px;">
-  <arc-input label="Name" name="name" placeholder="Jane Doe" required></arc-input>
+  <arc-input label="Search" name="search" placeholder="Search components...">
+    <svg slot="prefix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd"/></svg>
+  </arc-input>
   <arc-input label="Email" name="email" type="email" placeholder="jane@example.com" required></arc-input>
   <arc-input label="Message" name="message" multiline placeholder="How can we help?" required></arc-input>
 </div>`,
@@ -67,11 +74,17 @@ Input is designed to work seamlessly with the Form component. Wrap a set of Inpu
       {
         label: 'Web Component',
         lang: 'html',
-        code: `<div style="display:flex; flex-direction:column; width:100%; max-width:400px; gap:16px;">
+        code: `<!-- Basic form fields -->
+<div style="display:flex; flex-direction:column; width:100%; max-width:400px; gap:16px;">
   <arc-input label="Name" name="name" placeholder="Jane Doe" required></arc-input>
   <arc-input label="Email" name="email" type="email" placeholder="jane@example.com" required></arc-input>
   <arc-input label="Message" name="message" multiline placeholder="How can we help?" required></arc-input>
-</div>`,
+</div>
+
+<!-- With prefix icon (search) -->
+<arc-input label="Search" placeholder="Search...">
+  <svg slot="prefix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd"/></svg>
+</arc-input>`,
       },
       {
         label: 'React',
@@ -82,7 +95,12 @@ Input is designed to work seamlessly with the Form component. Wrap a set of Inpu
   <Input label="Name" name="name" placeholder="Jane Doe" required />
   <Input label="Email" name="email" type="email" placeholder="jane@example.com" required />
   <Input label="Message" name="message" multiline placeholder="How can we help?" required />
-</div>`,
+</div>
+
+{/* With prefix icon */}
+<Input label="Search" placeholder="Search...">
+  <svg slot="prefix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20"><path fillRule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clipRule="evenodd"/></svg>
+</Input>`,
       },
       {
         label: 'Vue',

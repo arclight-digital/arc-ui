@@ -3,6 +3,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 import { components } from '../../data/components/index';
 
 const headings = [
+  { id: 'v1-2-0', label: 'v1.2.0' },
   { id: 'v1-1-0', label: 'v1.1.0' },
   { id: 'v1-0-0', label: 'v1.0.0' },
   { id: 'components', label: 'Components' },
@@ -28,6 +29,18 @@ const byTier = Object.fromEntries(
     <p class="page-desc">
       Release history for ARC UI. All packages are versioned together.
     </p>
+
+    <section id="v1-2-0">
+      <h2 class="docs-heading">v1.2.0 — Component Enhancements</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <h3 class="tier-heading">Enhancements</h3>
+      <ul class="docs-list">
+        <li><strong>Input</strong> — Added <code>prefix</code> and <code>suffix</code> slots for placing icons or inline adornments inside the field box. The input/textarea is now wrapped in a flex container that holds the border and focus styles.</li>
+        <li><strong>Tag</strong> — Added <code>color</code> prop accepting an RGB triplet (e.g. <code>"77, 126, 247"</code>) for custom category colours. Overrides variant colours for border, text, background, and hover glow.</li>
+        <li><strong>Button</strong> — Added <code>prefix</code> and <code>suffix</code> slots for icons alongside the button label. Both <code>&lt;button&gt;</code> and <code>&lt;a&gt;</code> render paths support slots.</li>
+      </ul>
+    </section>
 
     <section id="v1-1-0">
       <h2 class="docs-heading">v1.1.0 — New Components &amp; Enhancements</h2>

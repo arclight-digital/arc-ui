@@ -7,13 +7,14 @@
     variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
     removable?: boolean;
     disabled?: boolean;
+    color?: string;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { variant = 'default', removable = false, disabled = false, children, ...rest }: Props = $props();
+  let { variant = 'default', removable = false, disabled = false, color = '', children, ...rest }: Props = $props();
 </script>
 
-<arc-tag {variant} {removable} {disabled} {...rest}>
+<arc-tag {variant} {removable} {disabled} {color} {...rest}>
   {@render children?.()}
 </arc-tag>

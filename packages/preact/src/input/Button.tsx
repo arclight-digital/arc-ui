@@ -9,12 +9,14 @@ export interface ButtonProps {
   href?: string;
   disabled?: boolean;
   type?: string;
+  _hasPrefix?: string;
+  _hasSuffix?: string;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const Button: FunctionComponent<ButtonProps> = ({ variant, size, href, disabled, type, children, ...rest }) => (
-  <arc-button variant={variant} size={size} href={href} disabled={disabled} type={type} {...rest}>
+export const Button: FunctionComponent<ButtonProps> = ({ variant, size, href, disabled, type, _hasPrefix, _hasSuffix, children, ...rest }) => (
+  <arc-button variant={variant} size={size} href={href} disabled={disabled} type={type} _hasPrefix={_hasPrefix} _hasSuffix={_hasSuffix} {...rest}>
     {children}
   </arc-button>
 );

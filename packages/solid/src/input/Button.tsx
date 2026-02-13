@@ -9,14 +9,16 @@ export interface ButtonProps {
   href?: string;
   disabled?: boolean;
   type?: string;
+  _hasPrefix?: string;
+  _hasSuffix?: string;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Button: Component<ButtonProps> = (props) => {
-  const [local, rest] = splitProps(props, ['variant', 'size', 'href', 'disabled', 'type', 'children']);
+  const [local, rest] = splitProps(props, ['variant', 'size', 'href', 'disabled', 'type', '_hasPrefix', '_hasSuffix', 'children']);
   return (
-    <arc-button variant={local.variant} size={local.size} href={local.href} disabled={local.disabled} type={local.type} {...rest}>
+    <arc-button variant={local.variant} size={local.size} href={local.href} disabled={local.disabled} type={local.type} _hasPrefix={local._hasPrefix} _hasSuffix={local._hasSuffix} {...rest}>
       {local.children}
     </arc-button>
   );

@@ -10,12 +10,16 @@ withDefaults(defineProps<{
   href?: string;
   disabled?: boolean;
   type?: string;
+  _hasPrefix?: string;
+  _hasSuffix?: string;
 }>(), {
   variant: 'primary',
   size: 'md',
   href: '',
   disabled: false,
   type: 'button',
+  _hasPrefix: false,
+  _hasSuffix: false,
 });
 </script>
 
@@ -26,6 +30,8 @@ withDefaults(defineProps<{
     :href="href"
     :disabled="disabled"
     :type="type"
+    :_hasPrefix="_hasPrefix"
+    :_hasSuffix="_hasSuffix"
   >
     <slot />
   </arc-button>

@@ -14,6 +14,8 @@ withDefaults(defineProps<{
   required?: boolean;
   multiline?: boolean;
   rows?: number;
+  _hasPrefix?: string;
+  _hasSuffix?: string;
 }>(), {
   type: 'text',
   name: '',
@@ -24,6 +26,8 @@ withDefaults(defineProps<{
   required: false,
   multiline: false,
   rows: 5,
+  _hasPrefix: false,
+  _hasSuffix: false,
 });
 
 defineEmits<{
@@ -43,6 +47,8 @@ defineEmits<{
     :required="required"
     :multiline="multiline"
     :rows="rows"
+    :_hasPrefix="_hasPrefix"
+    :_hasSuffix="_hasSuffix"
   >
     <slot />
   </arc-input>

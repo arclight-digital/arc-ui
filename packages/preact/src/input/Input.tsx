@@ -13,12 +13,14 @@ export interface InputProps {
   required?: boolean;
   multiline?: boolean;
   rows?: number;
+  _hasPrefix?: string;
+  _hasSuffix?: string;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const Input: FunctionComponent<InputProps> = ({ type, name, label, placeholder, value, disabled, required, multiline, rows, children, ...rest }) => (
-  <arc-input type={type} name={name} label={label} placeholder={placeholder} value={value} disabled={disabled} required={required} multiline={multiline} rows={rows} {...rest}>
+export const Input: FunctionComponent<InputProps> = ({ type, name, label, placeholder, value, disabled, required, multiline, rows, _hasPrefix, _hasSuffix, children, ...rest }) => (
+  <arc-input type={type} name={name} label={label} placeholder={placeholder} value={value} disabled={disabled} required={required} multiline={multiline} rows={rows} _hasPrefix={_hasPrefix} _hasSuffix={_hasSuffix} {...rest}>
     {children}
   </arc-input>
 );

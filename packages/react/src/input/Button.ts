@@ -10,6 +10,8 @@ export interface ButtonProps {
   href?: string;
   disabled?: boolean;
   type?: string;
+  _hasPrefix?: string;
+  _hasSuffix?: string;
   className?: string;
   children?: React.ReactNode;
   onClick?: (e: Event) => void;

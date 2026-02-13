@@ -6,9 +6,11 @@ export const button: ComponentDef = {
     tag: 'arc-button',
     tier: 'input',
     interactivity: 'hybrid',
-    description: 'Primary call-to-action element with three visual variants that map to action hierarchy. Renders as an anchor when given an href, making it ideal for navigation-driven actions across landing pages, toolbars, and forms.',
+    description: 'Primary call-to-action element with three visual variants that map to action hierarchy. Supports prefix and suffix slots for icons. Renders as an anchor when given an href, making it ideal for navigation-driven actions across landing pages, toolbars, and forms.',
 
     overview: `Button is the primary CTA element in ARC UI. Its three variants — primary, secondary, and ghost — map directly to a clear action hierarchy: primary draws the eye to the single most important action, secondary offers a visible but lower-emphasis alternative, and ghost provides a minimal, unobtrusive option for tertiary actions.
+
+The \`prefix\` and \`suffix\` slots allow you to place icons or other inline elements alongside the button label. This is useful for adding a search icon, an arrow indicator, an RSS icon, or any visual cue that reinforces the button's action.
 
 Because Button renders as an \`<a>\` element when an \`href\` is provided, it is inherently accessible for navigation. This makes it the right choice for landing-page hero rows, pricing CTAs, documentation links, and any context where the action takes the user somewhere rather than triggering in-page logic. When no href is set, it behaves as a standard button element for form submissions and interactive triggers.
 
@@ -17,6 +19,7 @@ Three size presets — sm, md, and lg — let you scale buttons to their context
     features: [
       'Three variants (primary, secondary, ghost) for clear action hierarchy',
       'Three size presets (sm, md, lg) scaled for context',
+      'Prefix and suffix slots for icons or inline elements alongside the label',
       'Renders as <a> with href for accessible navigation',
       'Neon glow hover effect on primary variant',
       'Focus-visible ring for keyboard accessibility',
@@ -29,6 +32,7 @@ Three size presets — sm, md, and lg — let you scale buttons to their context
       do: [
         'Use primary for the single most important action on the page',
         'Pair primary with secondary or ghost to create a clear visual hierarchy',
+        'Use the `prefix` slot for leading icons and `suffix` for trailing arrows or indicators',
         'Use the lg size for hero sections and above-the-fold CTAs',
         'Provide an href when the button navigates to another page or section',
         'Keep button labels short and action-oriented (e.g. "Get Started", "View Docs")',
@@ -44,7 +48,10 @@ Three size presets — sm, md, and lg — let you scale buttons to their context
 
     previewHtml: `<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
   <arc-button variant="primary" size="lg">Get Started</arc-button>
-  <arc-button variant="secondary">View Docs</arc-button>
+  <arc-button variant="secondary">
+    <svg slot="prefix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z"/></svg>
+    Bookmark
+  </arc-button>
   <arc-button variant="ghost">Learn More</arc-button>
 </div>`,
 
@@ -73,7 +80,6 @@ Three size presets — sm, md, and lg — let you scale buttons to their context
         description: 'When true, dims the button and prevents all pointer and keyboard interaction. Applies reduced opacity and removes hover/focus effects. Consider pairing with a tooltip that explains why the action is unavailable.',
       },
     ],
-
     tabs: [
       {
         label: 'Web Component',
@@ -84,7 +90,13 @@ Three size presets — sm, md, and lg — let you scale buttons to their context
   <arc-button variant="primary" size="lg" href="/docs/getting-started">Get Started</arc-button>
   <arc-button variant="secondary" href="/docs/components">View Docs</arc-button>
   <arc-button variant="ghost" href="/docs/tokens">Learn More</arc-button>
-</div>`,
+</div>
+
+<!-- With prefix icon -->
+<arc-button variant="secondary">
+  <svg slot="prefix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z"/></svg>
+  Bookmark
+</arc-button>`,
       },
       {
         label: 'React',
@@ -99,7 +111,13 @@ export function HeroActions() {
       <Button variant="ghost" href="/docs/tokens">Learn More</Button>
     </div>
   );
-}`,
+}
+
+{/* With prefix icon */}
+<Button variant="secondary">
+  <svg slot="prefix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z"/></svg>
+  Bookmark
+</Button>`,
       },
       {
         label: 'Vue',

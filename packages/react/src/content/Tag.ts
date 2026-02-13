@@ -8,6 +8,7 @@ export interface TagProps {
   variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
   removable?: boolean;
   disabled?: boolean;
+  color?: string;
   className?: string;
   children?: React.ReactNode;
   onArcRemove?: (e: CustomEvent) => void;

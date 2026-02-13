@@ -83,6 +83,21 @@
       /* Disabled */
       .arc-button[disabled] .btn { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
 
+      /* Prefix / Suffix */
+      .arc-button .btn__prefix,
+      .arc-button .btn__suffix {
+        display: inline-flex;
+        align-items: center;
+      }
+
+      .arc-button .btn__prefix--empty,
+      .arc-button .btn__suffix--empty { display: none; }
+
+      ::slotted([slot="prefix"]),
+      ::slotted([slot="suffix"]) {
+        display: flex;
+      }
+
       @media (prefers-reduced-motion: reduce) {
         .arc-button *,
         .arc-button *::before,

@@ -6,6 +6,7 @@ export class ArcTag extends LitElement {
     variant:   { type: String, reflect: true },
     removable: { type: Boolean, reflect: true },
     disabled:  { type: Boolean, reflect: true },
+    color:     { type: String },
   };
 
   static styles = [
@@ -120,6 +121,7 @@ export class ArcTag extends LitElement {
     this.variant = 'default';
     this.removable = false;
     this.disabled = false;
+    this.color = '';
   }
 
   _remove(e) {
@@ -132,8 +134,15 @@ export class ArcTag extends LitElement {
   }
 
   render() {
+    const colorStyle = this.color
+      ? `border-color: rgba(${this.color}, 0.2); color: rgb(${this.color}); background: rgba(${this.color}, 0.06);`
+      : '';
+
     return html`
-      <span class="tag" part="tag">
+      <span class="tag" part="tag" style=${colorStyle}
+        @mouseenter=${this.color ? (e) => { e.currentTarget.style.boxShadow = `0 0 12px rgba(${this.color}, 0.15)`; } : null}
+        @mouseleave=${this.color ? (e) => { e.currentTarget.style.boxShadow = ''; } : null}
+      >
         <span class="tag__label" part="label"><slot></slot></span>
         ${this.removable ? html`
           <button

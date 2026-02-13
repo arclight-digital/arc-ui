@@ -13,14 +13,16 @@ export interface InputProps {
   required?: boolean;
   multiline?: boolean;
   rows?: number;
+  _hasPrefix?: string;
+  _hasSuffix?: string;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Input: Component<InputProps> = (props) => {
-  const [local, rest] = splitProps(props, ['type', 'name', 'label', 'placeholder', 'value', 'disabled', 'required', 'multiline', 'rows', 'children']);
+  const [local, rest] = splitProps(props, ['type', 'name', 'label', 'placeholder', 'value', 'disabled', 'required', 'multiline', 'rows', '_hasPrefix', '_hasSuffix', 'children']);
   return (
-    <arc-input type={local.type} name={local.name} label={local.label} placeholder={local.placeholder} value={local.value} disabled={local.disabled} required={local.required} multiline={local.multiline} rows={local.rows} {...rest}>
+    <arc-input type={local.type} name={local.name} label={local.label} placeholder={local.placeholder} value={local.value} disabled={local.disabled} required={local.required} multiline={local.multiline} rows={local.rows} _hasPrefix={local._hasPrefix} _hasSuffix={local._hasSuffix} {...rest}>
       {local.children}
     </arc-input>
   );
