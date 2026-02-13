@@ -87,3 +87,6 @@ export type { TagProps } from './Tag.js';
 
 export { Truncate } from './Truncate.js';
 export type { TruncateProps } from './Truncate.js';
+
+export { CtaBanner } from './CtaBanner.js';
+export type { CtaBannerProps } from './CtaBanner.js';

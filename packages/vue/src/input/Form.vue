@@ -8,15 +8,24 @@ withDefaults(defineProps<{
   action?: string;
   method?: string;
   novalidate?: boolean;
+  loading?: boolean;
+  disabled?: boolean;
+  errorSummary?: boolean;
+  _errors?: string;
 }>(), {
   action: '',
   method: '',
   novalidate: false,
+  loading: false,
+  disabled: false,
+  errorSummary: true,
+  _errors: () => ([]),
 });
 
 defineEmits<{
   'arc-invalid': [event: CustomEvent];
   'arc-submit': [event: CustomEvent];
+  'arc-reset': [event: CustomEvent];
 }>();
 </script>
 
@@ -25,6 +34,10 @@ defineEmits<{
     :action="action"
     :method="method"
     :novalidate="novalidate"
+    :loading="loading"
+    :disabled="disabled"
+    :errorSummary="errorSummary"
+    :_errors="_errors"
   >
     <slot />
   </arc-form>

@@ -65,6 +65,7 @@ All ARC UI form controls (Input, Textarea, Select, Checkbox, Toggle, RadioGroup)
     events: [
       { name: 'arc-submit', description: 'Fired on valid form submission with serialized form data' },
       { name: 'arc-invalid', description: 'Fired when validation fails, with error details' },
+      { name: 'arc-reset', description: 'Fired when the form is reset via the .reset() method' },
     ],
 
     tabs: [

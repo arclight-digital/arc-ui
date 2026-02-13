@@ -1,8 +1,9 @@
 ---
-import DocsLayout from '../layouts/DocsLayout.astro';
-import { components } from '../data/components/index';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import { components } from '../../data/components/index';
 
 const headings = [
+  { id: 'v1-1-0', label: 'v1.1.0' },
   { id: 'v1-0-0', label: 'v1.0.0' },
   { id: 'components', label: 'Components' },
   { id: 'frameworks', label: 'Framework Wrappers' },
@@ -27,6 +28,32 @@ const byTier = Object.fromEntries(
     <p class="page-desc">
       Release history for ARC UI. All packages are versioned together.
     </p>
+
+    <section id="v1-1-0">
+      <h2 class="docs-heading">v1.1.0 — New Components &amp; Enhancements</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <h3 class="tier-heading">New Component</h3>
+      <ul class="docs-list">
+        <li><strong>CTA Banner</strong> (<code>arc-cta-banner</code>) — Full-width call-to-action banner with gradient background, eyebrow text, headline, and actions slot. Replaces inline CSS patterns on landing pages.</li>
+      </ul>
+
+      <h3 class="tier-heading">Enhancements</h3>
+      <ul class="docs-list">
+        <li><strong>Card</strong> — Added <code>footer</code> slot for action buttons, links, or metadata. Hides automatically when empty.</li>
+        <li><strong>PageHeader</strong> — Replaced semantic slots (<code>breadcrumb</code>, <code>actions</code>, <code>tabs</code>) with positional slots (<code>above</code>, <code>aside</code>, <code>below</code>). Added <code>border</code> prop to opt-in to the bottom border (now off by default).</li>
+        <li><strong>Form</strong> — Added <code>loading</code> prop to prevent double-submit, <code>disabled</code> prop that propagates to all child controls, <code>error-summary</code> with rendered error list, <code>formData</code> in event detail, and <code>arc-reset</code> event.</li>
+        <li><strong>NavItem</strong> — Added <code>muted</code> prop for subdued navigation items that render with lighter text and no border. Supported in both desktop and mobile views.</li>
+      </ul>
+
+      <h3 class="tier-heading">Docs</h3>
+      <ul class="docs-list">
+        <li>Homepage CTA section now uses <code>arc-cta-banner</code>, removing ~50 lines of inline CSS.</li>
+        <li>Fixed navigation menu preview dropdown overflow and hover bleed.</li>
+        <li>Fixed container preview overflow by using simulated layout.</li>
+        <li>Dashboard grid preview: labels now use accent font (Tektur), numbers use body font (Host Grotesk).</li>
+      </ul>
+    </section>
 
     <section id="v1-0-0">
       <h2 class="docs-heading">v1.0.0 — Initial Release</h2>
@@ -82,7 +109,7 @@ const byTier = Object.fromEntries(
       <p class="docs-text">
         The v1.0 token set includes 90+ CSS custom properties covering color, typography, spacing,
         shadows, gradients, glows, z-index, breakpoints, motion, and focus styles. Both dark and
-        light themes are fully defined. See the <a href="/tokens">Tokens</a> page for the full reference.
+        light themes are fully defined. See the <a href="/docs/tokens">Tokens</a> page for the full reference.
       </p>
     </section>
   </div>

@@ -6,14 +6,17 @@ defineOptions({ name: 'Card' });
 
 withDefaults(defineProps<{
   href?: string;
+  _hasFooter?: string;
 }>(), {
   href: '',
+  _hasFooter: false,
 });
 </script>
 
 <template>
   <arc-card
     :href="href"
+    :_hasFooter="_hasFooter"
   >
     <slot />
   </arc-card>

@@ -7,14 +7,18 @@ export interface FormProps {
   action?: string;
   method?: string;
   novalidate?: boolean;
+  loading?: boolean;
+  disabled?: boolean;
+  errorSummary?: boolean;
+  _errors?: string;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Form: Component<FormProps> = (props) => {
-  const [local, rest] = splitProps(props, ['action', 'method', 'novalidate', 'children']);
+  const [local, rest] = splitProps(props, ['action', 'method', 'novalidate', 'loading', 'disabled', 'errorSummary', '_errors', 'children']);
   return (
-    <arc-form action={local.action} method={local.method} novalidate={local.novalidate} {...rest}>
+    <arc-form action={local.action} method={local.method} novalidate={local.novalidate} loading={local.loading} disabled={local.disabled} errorSummary={local.errorSummary} _errors={local._errors} {...rest}>
       {local.children}
     </arc-form>
   );

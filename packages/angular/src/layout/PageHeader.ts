@@ -7,9 +7,10 @@ import '@arclux/arc-ui';
   selector: 'arc-page-header',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-page-header [attr.heading]="heading" [attr.description]="description"><ng-content /></arc-page-header>`,
+  template: `<arc-page-header [attr.heading]="heading" [attr.description]="description" [border]="border"><ng-content /></arc-page-header>`,
 })
 export class PageHeader {
   @Input() heading: string = '';
   @Input() description: string = '';
+  @Input() border: boolean = false;
 }

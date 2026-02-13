@@ -1,6 +1,6 @@
 ---
-import DocsLayout from '../../layouts/DocsLayout.astro';
-import { components } from '../../data/components/index';
+import DocsLayout from '../../../layouts/DocsLayout.astro';
+import { components } from '../../../data/components/index';
 
 const tiers = [
   { key: 'layout', label: 'Layout', desc: 'Page scaffolding, structural containers, and shells' },
@@ -43,7 +43,7 @@ const tierBadgeVariant: Record<string, string> = {
         </div>
         <div class="components-grid">
           {byTier[tier.key].map((c) => (
-            <a href={`/components/${c.slug}`} class="component-card" data-name={c.name.toLowerCase()} data-tag={c.tag} data-tier={tier.key} data-interactivity={c.interactivity}>
+            <a href={`/docs/components/${c.slug}`} class="component-card" data-name={c.name.toLowerCase()} data-tag={c.tag} data-tier={tier.key} data-interactivity={c.interactivity}>
               <h3 class="component-card__name">{c.name}</h3>
               <p class="component-card__desc">{c.description}</p>
               <code class="component-card__tag">&lt;{c.tag}&gt;</code>

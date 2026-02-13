@@ -8,10 +8,15 @@ export interface FormProps {
   action?: string;
   method?: string;
   novalidate?: boolean;
+  loading?: boolean;
+  disabled?: boolean;
+  errorSummary?: boolean;
+  _errors?: string;
   className?: string;
   children?: React.ReactNode;
   onArcInvalid?: (e: CustomEvent) => void;
   onArcSubmit?: (e: CustomEvent) => void;
+  onArcReset?: (e: CustomEvent) => void;
 }
 
 export const Form = createComponent({
@@ -21,5 +26,6 @@ export const Form = createComponent({
   events: {
     onArcInvalid: 'arc-invalid' as EventName<CustomEvent>,
     onArcSubmit: 'arc-submit' as EventName<CustomEvent>,
+    onArcReset: 'arc-reset' as EventName<CustomEvent>,
   },
 });

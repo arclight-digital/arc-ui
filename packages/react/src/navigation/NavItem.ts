@@ -7,6 +7,7 @@ import { ArcNavItem } from '@arclux/arc-ui';
 export interface NavItemProps {
   href?: string;
   active?: boolean;
+  muted?: boolean;
   description?: string;
   className?: string;
   children?: React.ReactNode;

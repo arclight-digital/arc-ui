@@ -26,23 +26,23 @@ const activeTier = activeSlug
 /* Build active href for the sidebar component */
 const activeHref = activeSlug
   ? (components.find(c => c.slug === activeSlug)
-      ? `/components/${activeSlug}`
-      : `/${activeSlug}`)
+      ? `/docs/components/${activeSlug}`
+      : `/docs/${activeSlug}`)
   : '';
 ---
 
 <arc-sidebar slot="sidebar" active={activeHref} glow>
   <arc-sidebar-section heading="Guide">
-    <arc-sidebar-link href="/getting-started" active={activeSlug === 'getting-started' || undefined}>Getting Started</arc-sidebar-link>
-    <arc-sidebar-link href="/frameworks" active={activeSlug === 'frameworks' || undefined}>Frameworks</arc-sidebar-link>
-    <arc-sidebar-link href="/tokens" active={activeSlug === 'tokens' || undefined}>Design Tokens</arc-sidebar-link>
-    <arc-sidebar-link href="/theming" active={activeSlug === 'theming' || undefined}>Theming</arc-sidebar-link>
-    <arc-sidebar-link href="/theme-synthesizer" active={activeSlug === 'theme-synthesizer' || undefined}>Theme Synthesizer</arc-sidebar-link>
-    <arc-sidebar-link href="/accessibility" active={activeSlug === 'accessibility' || undefined}>Accessibility</arc-sidebar-link>
-    <arc-sidebar-link href="/browser-support" active={activeSlug === 'browser-support' || undefined}>Browser Support</arc-sidebar-link>
-    <arc-sidebar-link href="/changelog" active={activeSlug === 'changelog' || undefined}>Changelog</arc-sidebar-link>
-    <arc-sidebar-link href="/contributing" active={activeSlug === 'contributing' || undefined}>Contributing</arc-sidebar-link>
-    <arc-sidebar-link href="/components" active={activeSlug === 'components' || undefined}>All Components</arc-sidebar-link>
+    <arc-sidebar-link href="/docs/getting-started" active={activeSlug === 'getting-started' || undefined}>Getting Started</arc-sidebar-link>
+    <arc-sidebar-link href="/docs/frameworks" active={activeSlug === 'frameworks' || undefined}>Frameworks</arc-sidebar-link>
+    <arc-sidebar-link href="/docs/tokens" active={activeSlug === 'tokens' || undefined}>Design Tokens</arc-sidebar-link>
+    <arc-sidebar-link href="/docs/theming" active={activeSlug === 'theming' || undefined}>Theming</arc-sidebar-link>
+    <arc-sidebar-link href="/docs/theme-synthesizer" active={activeSlug === 'theme-synthesizer' || undefined}>Theme Synthesizer</arc-sidebar-link>
+    <arc-sidebar-link href="/docs/accessibility" active={activeSlug === 'accessibility' || undefined}>Accessibility</arc-sidebar-link>
+    <arc-sidebar-link href="/docs/browser-support" active={activeSlug === 'browser-support' || undefined}>Browser Support</arc-sidebar-link>
+    <arc-sidebar-link href="/docs/changelog" active={activeSlug === 'changelog' || undefined}>Changelog</arc-sidebar-link>
+    <arc-sidebar-link href="/docs/contributing" active={activeSlug === 'contributing' || undefined}>Contributing</arc-sidebar-link>
+    <arc-sidebar-link href="/docs/components" active={activeSlug === 'components' || undefined}>All Components</arc-sidebar-link>
   </arc-sidebar-section>
 
   {tiers.map((tier) => (
@@ -53,7 +53,7 @@ const activeHref = activeSlug
     >
       {byTier[tier.key].map((c) => (
         <arc-sidebar-link
-          href={`/components/${c.slug}`}
+          href={`/docs/components/${c.slug}`}
           active={activeSlug === c.slug || undefined}
         >{c.name}</arc-sidebar-link>
       ))}

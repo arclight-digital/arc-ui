@@ -8,10 +8,13 @@
 
       .arc-page-header .page-header {
         padding: var(--space-lg) 0 var(--space-md);
+      }
+
+      .arc-page-header[border] .page-header {
         border-bottom: 1px solid var(--border-subtle);
       }
 
-      .arc-page-header .page-header__breadcrumb {
+      .arc-page-header .page-header__above {
         margin-bottom: var(--space-sm);
       }
 
@@ -26,13 +29,13 @@
       .arc-page-header .page-header__heading {
         margin: 0;
         font-family: var(--font-body);
-        font-size: 28px; /* size-variant, keep hardcoded */
+        font-size: 28px;
         font-weight: 700;
         color: var(--text-primary);
         line-height: 1.2;
       }
 
-      .arc-page-header .page-header__actions {
+      .arc-page-header .page-header__aside {
         display: flex;
         align-items: center;
         gap: var(--space-sm);
@@ -46,7 +49,7 @@
         line-height: 1.5;
       }
 
-      .arc-page-header .page-header__tabs {
+      .arc-page-header .page-header__below {
         margin-top: var(--space-md);
       }
 

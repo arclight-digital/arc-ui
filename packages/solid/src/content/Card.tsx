@@ -5,14 +5,15 @@ import '@arclux/arc-ui';
 
 export interface CardProps {
   href?: string;
+  _hasFooter?: string;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Card: Component<CardProps> = (props) => {
-  const [local, rest] = splitProps(props, ['href', 'children']);
+  const [local, rest] = splitProps(props, ['href', '_hasFooter', 'children']);
   return (
-    <arc-card href={local.href} {...rest}>
+    <arc-card href={local.href} _hasFooter={local._hasFooter} {...rest}>
       {local.children}
     </arc-card>
   );

@@ -105,9 +105,9 @@ Footer ships with two boolean props that cover the most common layout tweaks. Th
   <div>
     <p><strong>Product</strong></p>
     <ul>
-      <li><a href="/components">Components</a></li>
-      <li><a href="/tokens">Tokens</a></li>
-      <li><a href="/changelog">Changelog</a></li>
+      <li><a href="/docs/components">Components</a></li>
+      <li><a href="/docs/tokens">Tokens</a></li>
+      <li><a href="/docs/changelog">Changelog</a></li>
     </ul>
   </div>
   <div>
@@ -143,9 +143,9 @@ export function SiteFooter() {
       <div>
         <p><strong>Product</strong></p>
         <ul>
-          <li><a href="/components">Components</a></li>
-          <li><a href="/tokens">Tokens</a></li>
-          <li><a href="/changelog">Changelog</a></li>
+          <li><a href="/docs/components">Components</a></li>
+          <li><a href="/docs/tokens">Tokens</a></li>
+          <li><a href="/docs/changelog">Changelog</a></li>
         </ul>
       </div>
       <div>
@@ -184,9 +184,9 @@ import { Footer } from '@arclux/arc-ui-vue';
     <div>
       <p><strong>Product</strong></p>
       <ul>
-        <li><a href="/components">Components</a></li>
-        <li><a href="/tokens">Tokens</a></li>
-        <li><a href="/changelog">Changelog</a></li>
+        <li><a href="/docs/components">Components</a></li>
+        <li><a href="/docs/tokens">Tokens</a></li>
+        <li><a href="/docs/changelog">Changelog</a></li>
       </ul>
     </div>
     <div>
@@ -223,9 +223,9 @@ import { Footer } from '@arclux/arc-ui-vue';
   <div>
     <p><strong>Product</strong></p>
     <ul>
-      <li><a href="/components">Components</a></li>
-      <li><a href="/tokens">Tokens</a></li>
-      <li><a href="/changelog">Changelog</a></li>
+      <li><a href="/docs/components">Components</a></li>
+      <li><a href="/docs/tokens">Tokens</a></li>
+      <li><a href="/docs/changelog">Changelog</a></li>
     </ul>
   </div>
   <div>
@@ -263,9 +263,9 @@ import { Footer } from '@arclux/arc-ui-angular';
       <div>
         <p><strong>Product</strong></p>
         <ul>
-          <li><a href="/components">Components</a></li>
-          <li><a href="/tokens">Tokens</a></li>
-          <li><a href="/changelog">Changelog</a></li>
+          <li><a href="/docs/components">Components</a></li>
+          <li><a href="/docs/tokens">Tokens</a></li>
+          <li><a href="/docs/changelog">Changelog</a></li>
         </ul>
       </div>
       <div>
@@ -304,9 +304,9 @@ export function SiteFooter() {
       <div>
         <p><strong>Product</strong></p>
         <ul>
-          <li><a href="/components">Components</a></li>
-          <li><a href="/tokens">Tokens</a></li>
-          <li><a href="/changelog">Changelog</a></li>
+          <li><a href="/docs/components">Components</a></li>
+          <li><a href="/docs/tokens">Tokens</a></li>
+          <li><a href="/docs/changelog">Changelog</a></li>
         </ul>
       </div>
       <div>
@@ -344,9 +344,9 @@ export function SiteFooter() {
       <div>
         <p><strong>Product</strong></p>
         <ul>
-          <li><a href="/components">Components</a></li>
-          <li><a href="/tokens">Tokens</a></li>
-          <li><a href="/changelog">Changelog</a></li>
+          <li><a href="/docs/components">Components</a></li>
+          <li><a href="/docs/tokens">Tokens</a></li>
+          <li><a href="/docs/changelog">Changelog</a></li>
         </ul>
       </div>
       <div>
@@ -382,9 +382,9 @@ export function SiteFooter() {
     <div>
       <p><strong>Product</strong></p>
       <ul>
-        <li><a href="/components">Components</a></li>
-        <li><a href="/tokens">Tokens</a></li>
-        <li><a href="/changelog">Changelog</a></li>
+        <li><a href="/docs/components">Components</a></li>
+        <li><a href="/docs/tokens">Tokens</a></li>
+        <li><a href="/docs/changelog">Changelog</a></li>
       </ul>
     </div>
     <div>
@@ -423,9 +423,9 @@ export function SiteFooter() {
     <div>
       <p style="margin: 0 0 12px; font-weight: 600; color: rgb(232, 232, 236); font-size: 13px; text-transform: uppercase; letter-spacing: 1px">Product</p>
       <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; font-size: 14px">
-        <li><a href="/components" style="color: rgb(138, 138, 150); text-decoration: none">Components</a></li>
-        <li><a href="/tokens" style="color: rgb(138, 138, 150); text-decoration: none">Tokens</a></li>
-        <li><a href="/changelog" style="color: rgb(138, 138, 150); text-decoration: none">Changelog</a></li>
+        <li><a href="/docs/components" style="color: rgb(138, 138, 150); text-decoration: none">Components</a></li>
+        <li><a href="/docs/tokens" style="color: rgb(138, 138, 150); text-decoration: none">Tokens</a></li>
+        <li><a href="/docs/changelog" style="color: rgb(138, 138, 150); text-decoration: none">Changelog</a></li>
       </ul>
     </div>
     <div>

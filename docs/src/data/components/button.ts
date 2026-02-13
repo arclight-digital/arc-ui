@@ -81,9 +81,9 @@ Three size presets — sm, md, and lg — let you scale buttons to their context
         code: `<script type="module" src="@arclux/arc-ui"></script>
 
 <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-  <arc-button variant="primary" size="lg" href="/getting-started">Get Started</arc-button>
-  <arc-button variant="secondary" href="/components">View Docs</arc-button>
-  <arc-button variant="ghost" href="/tokens">Learn More</arc-button>
+  <arc-button variant="primary" size="lg" href="/docs/getting-started">Get Started</arc-button>
+  <arc-button variant="secondary" href="/docs/components">View Docs</arc-button>
+  <arc-button variant="ghost" href="/docs/tokens">Learn More</arc-button>
 </div>`,
       },
       {
@@ -94,9 +94,9 @@ Three size presets — sm, md, and lg — let you scale buttons to their context
 export function HeroActions() {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
-      <Button variant="primary" size="lg" href="/getting-started">Get Started</Button>
-      <Button variant="secondary" href="/components">View Docs</Button>
-      <Button variant="ghost" href="/tokens">Learn More</Button>
+      <Button variant="primary" size="lg" href="/docs/getting-started">Get Started</Button>
+      <Button variant="secondary" href="/docs/components">View Docs</Button>
+      <Button variant="ghost" href="/docs/tokens">Learn More</Button>
     </div>
   );
 }`,
@@ -110,9 +110,9 @@ import { Button } from '@arclux/arc-ui-vue';
 
 <template>
   <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-    <Button variant="primary" size="lg" href="/getting-started">Get Started</Button>
-    <Button variant="secondary" href="/components">View Docs</Button>
-    <Button variant="ghost" href="/tokens">Learn More</Button>
+    <Button variant="primary" size="lg" href="/docs/getting-started">Get Started</Button>
+    <Button variant="secondary" href="/docs/components">View Docs</Button>
+    <Button variant="ghost" href="/docs/tokens">Learn More</Button>
   </div>
 </template>`,
       },
@@ -124,9 +124,9 @@ import { Button } from '@arclux/arc-ui-vue';
 </script>
 
 <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-  <Button variant="primary" size="lg" href="/getting-started">Get Started</Button>
-  <Button variant="secondary" href="/components">View Docs</Button>
-  <Button variant="ghost" href="/tokens">Learn More</Button>
+  <Button variant="primary" size="lg" href="/docs/getting-started">Get Started</Button>
+  <Button variant="secondary" href="/docs/components">View Docs</Button>
+  <Button variant="ghost" href="/docs/tokens">Learn More</Button>
 </div>`,
       },
       {
@@ -139,9 +139,9 @@ import { Button } from '@arclux/arc-ui-angular';
   imports: [Button],
   template: \`
     <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-      <Button variant="primary" size="lg" href="/getting-started">Get Started</Button>
-      <Button variant="secondary" href="/components">View Docs</Button>
-      <Button variant="ghost" href="/tokens">Learn More</Button>
+      <Button variant="primary" size="lg" href="/docs/getting-started">Get Started</Button>
+      <Button variant="secondary" href="/docs/components">View Docs</Button>
+      <Button variant="ghost" href="/docs/tokens">Learn More</Button>
     </div>
   \`,
 })
@@ -155,9 +155,9 @@ export class HeroActionsComponent {}`,
 export function HeroActions() {
   return (
     <div style={{ display: 'flex', 'align-items': 'center', gap: '12px', 'flex-wrap': 'wrap' }}>
-      <Button variant="primary" size="lg" href="/getting-started">Get Started</Button>
-      <Button variant="secondary" href="/components">View Docs</Button>
-      <Button variant="ghost" href="/tokens">Learn More</Button>
+      <Button variant="primary" size="lg" href="/docs/getting-started">Get Started</Button>
+      <Button variant="secondary" href="/docs/components">View Docs</Button>
+      <Button variant="ghost" href="/docs/tokens">Learn More</Button>
     </div>
   );
 }`,
@@ -170,9 +170,9 @@ export function HeroActions() {
 export function HeroActions() {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
-      <Button variant="primary" size="lg" href="/getting-started">Get Started</Button>
-      <Button variant="secondary" href="/components">View Docs</Button>
-      <Button variant="ghost" href="/tokens">Learn More</Button>
+      <Button variant="primary" size="lg" href="/docs/getting-started">Get Started</Button>
+      <Button variant="secondary" href="/docs/components">View Docs</Button>
+      <Button variant="ghost" href="/docs/tokens">Learn More</Button>
     </div>
   );
 }`,

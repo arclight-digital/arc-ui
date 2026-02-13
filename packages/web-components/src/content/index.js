@@ -15,6 +15,7 @@ export { ArcCodeBlock } from './code-block.js';
 export { ArcCollapsible } from './collapsible.js';
 export { ArcColorSwatch } from './color-swatch.js';
 export { ArcColumn } from './column.js';
+export { ArcCtaBanner } from './cta-banner.js';
 export { ArcDataTable } from './data-table.js';
 export { ArcDivider } from './divider.js';
 export { ArcEmptyState } from './empty-state.js';

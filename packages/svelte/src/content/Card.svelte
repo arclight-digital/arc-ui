@@ -5,13 +5,14 @@
 
   interface Props {
     href?: string;
+    _hasFooter?: string;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { href = '', children, ...rest }: Props = $props();
+  let { href = '', _hasFooter = false, children, ...rest }: Props = $props();
 </script>
 
-<arc-card {href} {...rest}>
+<arc-card {href} {_hasFooter} {...rest}>
   {@render children?.()}
 </arc-card>

@@ -35,3 +35,4 @@ export { default as DataTable } from './DataTable.svelte';
 export { default as InfiniteScroll } from './InfiniteScroll.svelte';
 export { default as Tag } from './Tag.svelte';
 export { default as Truncate } from './Truncate.svelte';
+export { default as CtaBanner } from './CtaBanner.svelte';

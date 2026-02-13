@@ -7,12 +7,17 @@ import '@arclux/arc-ui';
   selector: 'arc-form',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-form [attr.action]="action" [attr.method]="method" [novalidate]="novalidate" (arc-invalid)="arcInvalid.emit($event)" (arc-submit)="arcSubmit.emit($event)"><ng-content /></arc-form>`,
+  template: `<arc-form [attr.action]="action" [attr.method]="method" [novalidate]="novalidate" [loading]="loading" [disabled]="disabled" [errorSummary]="errorSummary" [attr._errors]="_errors" (arc-invalid)="arcInvalid.emit($event)" (arc-submit)="arcSubmit.emit($event)" (arc-reset)="arcReset.emit($event)"><ng-content /></arc-form>`,
 })
 export class Form {
   @Input() action: string = '';
   @Input() method: string = '';
   @Input() novalidate: boolean = false;
+  @Input() loading: boolean = false;
+  @Input() disabled: boolean = false;
+  @Input() errorSummary: boolean = true;
+  @Input() _errors: string = [];
   @Output() arcInvalid = new EventEmitter<CustomEvent>();
   @Output() arcSubmit = new EventEmitter<CustomEvent>();
+  @Output() arcReset = new EventEmitter<CustomEvent>();
 }

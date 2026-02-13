@@ -255,3 +255,6 @@ export type { MenuItemProps } from './shared/MenuItem.js';
 
 export { Option } from './shared/Option.js';
 export type { OptionProps } from './shared/Option.js';
+
+export { CtaBanner } from './content/CtaBanner.js';
+export type { CtaBannerProps } from './content/CtaBanner.js';

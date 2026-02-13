@@ -5,12 +5,13 @@ import '@arclux/arc-ui';
 
 export interface CardProps {
   href?: string;
+  _hasFooter?: string;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const Card: FunctionComponent<CardProps> = ({ href, children, ...rest }) => (
-  <arc-card href={href} {...rest}>
+export const Card: FunctionComponent<CardProps> = ({ href, _hasFooter, children, ...rest }) => (
+  <arc-card href={href} _hasFooter={_hasFooter} {...rest}>
     {children}
   </arc-card>
 );

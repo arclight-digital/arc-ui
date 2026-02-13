@@ -117,3 +117,6 @@ export type { TruncateProps } from './Truncate.js';
 
 export { ValueCard } from './ValueCard.js';
 export type { ValueCardProps } from './ValueCard.js';
+
+export { CtaBanner } from './CtaBanner.js';
+export type { CtaBannerProps } from './CtaBanner.js';

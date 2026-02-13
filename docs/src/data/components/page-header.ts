@@ -1,62 +1,58 @@
 import type { ComponentDef } from './_types';
 
+const previewMarkup = `<arc-page-header heading="Team Settings" description="Manage roles, permissions, and invitations for your team." border>
+    <arc-breadcrumb slot="above">
+      <arc-breadcrumb-item href="/">Home</arc-breadcrumb-item>
+      <arc-breadcrumb-item href="/settings">Settings</arc-breadcrumb-item>
+      <arc-breadcrumb-item>Team</arc-breadcrumb-item>
+    </arc-breadcrumb>
+    <arc-button slot="aside" variant="primary" size="sm">Invite Member</arc-button>
+  </arc-page-header>`;
+
 export const pageHeader: ComponentDef = {
     name: 'Page Header',
     slug: 'page-header',
     tag: 'arc-page-header',
     tier: 'layout',
     interactivity: 'static',
-    description: 'Page title area with breadcrumb, description, and action slots. Provides a consistent top-of-page landmark that orients users with wayfinding context and surfaces the primary page-level action.',
+    description: 'Page title area with positional slots for composing breadcrumbs, actions, tabs, or any content around a heading and description.',
 
-    overview: `PageHeader is the topmost landmark on any content page. It anchors the user by combining a breadcrumb trail, a prominent heading, an optional description, and a right-aligned action area into a single, predictable layout. Every settings screen, detail view, and dashboard in your application should use PageHeader so users always know where they are and what they can do.
+    overview: `PageHeader is the topmost landmark on any content page. It anchors the user by combining a prominent heading, an optional description, and four positional slots into a single, predictable layout. Every settings screen, detail view, and dashboard in your application should use PageHeader so users always know where they are and what they can do.
 
-The component exposes four named slots — breadcrumb, actions, tabs, and default content — so you can compose it with any combination of navigation, buttons, tab strips, or supplementary content without touching the internal layout. The heading and description are set via properties, keeping the most common usage to a single self-closing tag with slotted children.
+The component exposes four positional slots — \`above\` (renders above the heading row), \`aside\` (renders to the right of the heading), \`below\` (renders between the description and default content), and the default slot (renders at the bottom). This design is intentionally unopinionated: put breadcrumbs in \`above\`, action buttons in \`aside\`, a tab strip in \`below\`, or use them for anything else your layout requires.
 
-Because PageHeader renders a semantic \`<h1>\` for its heading, it establishes the document outline automatically. Pair it with Breadcrumb for full wayfinding, or drop in a Tabs strip to create sub-navigation within the page. The bottom border provides a clean visual separator from the page body below.`,
+Because PageHeader renders a semantic \`<h1>\` for its heading, it establishes the document outline automatically. The \`border\` prop adds a clean bottom border when you want a visual separator from the page body below.`,
 
     features: [
       'Semantic <h1> heading that establishes the document outline',
-      'Breadcrumb slot for hierarchical wayfinding above the title',
-      'Right-aligned actions slot for primary page-level buttons',
+      'Four positional slots: above, aside, below, and default content',
       'Optional description text for additional page context',
-      'Tabs slot for in-page sub-navigation below the title row',
-      'Default content slot for supplementary elements',
-      'Bottom border separator between header and page body',
+      'Border prop for optional bottom border separator',
       'Responsive title row that wraps gracefully on narrow viewports',
       'CSS custom property theming via design tokens',
-      'Shadow DOM parts (base, breadcrumb, heading, actions, description, tabs, content) for targeted styling',
+      'Shadow DOM parts (base, above, title-row, heading, aside, description, below, content) for targeted styling',
     ],
 
     guidelines: {
       do: [
         'Use one PageHeader per page to maintain a single <h1> document landmark',
         'Always populate the heading prop — it is the primary orientation cue for the page',
-        'Place a Breadcrumb component in the breadcrumb slot on pages more than one level deep',
-        'Put the single most important page-level action in the actions slot (e.g. "Invite Member", "Create Report")',
+        'Place breadcrumbs in the above slot on pages more than one level deep',
+        'Put the primary page-level action in the aside slot (e.g. "Invite Member", "Create Report")',
         'Keep the description to one or two short sentences that clarify what the page contains',
-        'Use the tabs slot when the page has distinct sub-views (e.g. General, Security, Billing)',
+        'Use the below slot for tab strips or secondary controls between the heading and main content',
       ],
       dont: [
         'Nest multiple PageHeaders on the same page — this creates duplicate <h1> elements and confuses assistive technology',
         'Use PageHeader as a section divider inside a scrolling page; use Section or Divider instead',
-        'Overload the actions slot with more than two or three buttons — move overflow actions into a DropdownMenu',
-        'Omit the breadcrumb slot on deeply nested pages; users lose spatial context without it',
+        'Overload the aside slot with more than two or three buttons — move overflow actions into a DropdownMenu',
         'Place lengthy paragraph text in the description — keep it concise and scannable',
         'Hard-code colors or font sizes on slotted children; rely on the token system for consistency',
       ],
     },
 
     previewHtml: `<div style="width:100%;padding:0 var(--space-lg);background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-md);box-sizing:border-box">
-  <arc-page-header heading="Team Settings" description="Manage roles, permissions, and invitations for your team.">
-    <arc-breadcrumb slot="breadcrumb">
-      <arc-breadcrumb-item href="/">Home</arc-breadcrumb-item>
-      <arc-breadcrumb-item href="/settings">Settings</arc-breadcrumb-item>
-      <arc-breadcrumb-item>Team</arc-breadcrumb-item>
-    </arc-breadcrumb>
-    <div slot="actions">
-      <arc-button variant="primary" size="sm">Invite Member</arc-button>
-    </div>
-  </arc-page-header>
+  ${previewMarkup}
 </div>`,
 
     props: [
@@ -72,21 +68,25 @@ Because PageHeader renders a semantic \`<h1>\` for its heading, it establishes t
         default: "''",
         description: 'Optional supporting text displayed below the title row. Use it to provide a one-line summary of what the page contains or what action the user should take. When empty, the description paragraph is not rendered.',
       },
+      {
+        name: 'border',
+        type: 'boolean',
+        default: 'false',
+        description: 'When set, renders a subtle bottom border below the header to visually separate it from page content.',
+      },
     ],
 
     tabs: [
       {
         label: 'Web Component',
         lang: 'html',
-        code: `<arc-page-header heading="Team Settings" description="Manage roles, permissions, and invitations for your team.">
-  <arc-breadcrumb slot="breadcrumb">
+        code: `<arc-page-header heading="Team Settings" description="Manage roles, permissions, and invitations for your team." border>
+  <arc-breadcrumb slot="above">
     <arc-breadcrumb-item href="/">Home</arc-breadcrumb-item>
     <arc-breadcrumb-item href="/settings">Settings</arc-breadcrumb-item>
     <arc-breadcrumb-item>Team</arc-breadcrumb-item>
   </arc-breadcrumb>
-  <div slot="actions">
-    <arc-button variant="primary" size="sm">Invite Member</arc-button>
-  </div>
+  <arc-button slot="aside" variant="primary" size="sm">Invite Member</arc-button>
 </arc-page-header>`,
       },
       {
@@ -96,15 +96,13 @@ Because PageHeader renders a semantic \`<h1>\` for its heading, it establishes t
 
 export function TeamSettings() {
   return (
-    <PageHeader heading="Team Settings" description="Manage roles, permissions, and invitations for your team.">
-      <Breadcrumb slot="breadcrumb">
+    <PageHeader heading="Team Settings" description="Manage roles, permissions, and invitations for your team." border>
+      <Breadcrumb slot="above">
         <BreadcrumbItem href="/">Home</BreadcrumbItem>
         <BreadcrumbItem href="/settings">Settings</BreadcrumbItem>
         <BreadcrumbItem>Team</BreadcrumbItem>
       </Breadcrumb>
-      <div slot="actions">
-        <Button variant="primary" size="sm">Invite Member</Button>
-      </div>
+      <Button slot="aside" variant="primary" size="sm">Invite Member</Button>
     </PageHeader>
   );
 }`,
@@ -117,15 +115,13 @@ import { Breadcrumb, BreadcrumbItem, Button, PageHeader } from '@arclux/arc-ui-v
 </script>
 
 <template>
-  <PageHeader heading="Team Settings" description="Manage roles, permissions, and invitations for your team.">
-    <Breadcrumb slot="breadcrumb">
+  <PageHeader heading="Team Settings" description="Manage roles, permissions, and invitations for your team." border>
+    <Breadcrumb slot="above">
       <BreadcrumbItem href="/">Home</BreadcrumbItem>
       <BreadcrumbItem href="/settings">Settings</BreadcrumbItem>
       <BreadcrumbItem>Team</BreadcrumbItem>
     </Breadcrumb>
-    <div slot="actions">
-      <Button variant="primary" size="sm">Invite Member</Button>
-    </div>
+    <Button slot="aside" variant="primary" size="sm">Invite Member</Button>
   </PageHeader>
 </template>`,
       },
@@ -136,15 +132,13 @@ import { Breadcrumb, BreadcrumbItem, Button, PageHeader } from '@arclux/arc-ui-v
   import { Breadcrumb, BreadcrumbItem, Button, PageHeader } from '@arclux/arc-ui-svelte';
 </script>
 
-<PageHeader heading="Team Settings" description="Manage roles, permissions, and invitations for your team.">
-  <Breadcrumb slot="breadcrumb">
+<PageHeader heading="Team Settings" description="Manage roles, permissions, and invitations for your team." border>
+  <Breadcrumb slot="above">
     <BreadcrumbItem href="/">Home</BreadcrumbItem>
     <BreadcrumbItem href="/settings">Settings</BreadcrumbItem>
     <BreadcrumbItem>Team</BreadcrumbItem>
   </Breadcrumb>
-  <div slot="actions">
-    <Button variant="primary" size="sm">Invite Member</Button>
-  </div>
+  <Button slot="aside" variant="primary" size="sm">Invite Member</Button>
 </PageHeader>`,
       },
       {
@@ -156,15 +150,13 @@ import { Breadcrumb, BreadcrumbItem, Button, PageHeader } from '@arclux/arc-ui-a
 @Component({
   imports: [Breadcrumb, BreadcrumbItem, Button, PageHeader],
   template: \`
-    <PageHeader heading="Team Settings" description="Manage roles, permissions, and invitations for your team.">
-      <Breadcrumb slot="breadcrumb">
+    <PageHeader heading="Team Settings" description="Manage roles, permissions, and invitations for your team." border>
+      <Breadcrumb slot="above">
         <BreadcrumbItem href="/">Home</BreadcrumbItem>
         <BreadcrumbItem href="/settings">Settings</BreadcrumbItem>
         <BreadcrumbItem>Team</BreadcrumbItem>
       </Breadcrumb>
-      <div slot="actions">
-        <Button variant="primary" size="sm">Invite Member</Button>
-      </div>
+      <Button slot="aside" variant="primary" size="sm">Invite Member</Button>
     </PageHeader>
   \`,
 })
@@ -177,15 +169,13 @@ export class TeamSettingsComponent {}`,
 
 export function TeamSettings() {
   return (
-    <PageHeader heading="Team Settings" description="Manage roles, permissions, and invitations for your team.">
-      <Breadcrumb slot="breadcrumb">
+    <PageHeader heading="Team Settings" description="Manage roles, permissions, and invitations for your team." border>
+      <Breadcrumb slot="above">
         <BreadcrumbItem href="/">Home</BreadcrumbItem>
         <BreadcrumbItem href="/settings">Settings</BreadcrumbItem>
         <BreadcrumbItem>Team</BreadcrumbItem>
       </Breadcrumb>
-      <div slot="actions">
-        <Button variant="primary" size="sm">Invite Member</Button>
-      </div>
+      <Button slot="aside" variant="primary" size="sm">Invite Member</Button>
     </PageHeader>
   );
 }`,
@@ -197,15 +187,13 @@ export function TeamSettings() {
 
 export function TeamSettings() {
   return (
-    <PageHeader heading="Team Settings" description="Manage roles, permissions, and invitations for your team.">
-      <Breadcrumb slot="breadcrumb">
+    <PageHeader heading="Team Settings" description="Manage roles, permissions, and invitations for your team." border>
+      <Breadcrumb slot="above">
         <BreadcrumbItem href="/">Home</BreadcrumbItem>
         <BreadcrumbItem href="/settings">Settings</BreadcrumbItem>
         <BreadcrumbItem>Team</BreadcrumbItem>
       </Breadcrumb>
-      <div slot="actions">
-        <Button variant="primary" size="sm">Invite Member</Button>
-      </div>
+      <Button slot="aside" variant="primary" size="sm">Invite Member</Button>
     </PageHeader>
   );
 }`,
@@ -214,7 +202,7 @@ export function TeamSettings() {
 <!-- arc-page-header — requires page-header.css + tokens.css (or arc-ui.css) -->
 <div class="arc-page-header">
   <div class="page-header">
-   <div class="page-header__breadcrumb">
+   <div class="page-header__above">
     <nav class="arc-breadcrumb" aria-label="Breadcrumb">
       <ol class="breadcrumb__list">
         <li class="breadcrumb__item"><a href="/">Home</a><span class="breadcrumb__separator" aria-hidden="true">/</span></li>
@@ -225,7 +213,7 @@ export function TeamSettings() {
    </div>
    <div class="page-header__title-row">
    <h1 class="page-header__heading">Team Settings</h1>
-   <div class="page-header__actions">
+   <div class="page-header__aside">
     <a class="btn btn--primary btn--sm" href="#">Invite Member</a>
    </div>
    </div>
@@ -246,7 +234,7 @@ export function TeamSettings() {
     </nav>
    </div>
    <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap">
-   <h1 style="margin: 0; font-family: 'Tektur', system-ui, sans-serif; font-size: 28px; font-weight: 700; color: rgb(232, 232, 236); line-height: 1.2">Team Settings</h1>
+   <h1 style="margin: 0; font-size: 28px; font-weight: 700; color: rgb(232, 232, 236); line-height: 1.2">Team Settings</h1>
    <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0">
     <a href="#" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: 'Tektur', system-ui, sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; border: 1px solid transparent; border-radius: 10px; cursor: pointer; text-decoration: none; white-space: nowrap; padding: 6px 14px; font-size: 13px; background: rgb(77, 126, 247); color: rgb(232, 232, 236)">Invite Member</a>
    </div>

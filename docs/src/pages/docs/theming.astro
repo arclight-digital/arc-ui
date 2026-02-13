@@ -1,6 +1,6 @@
 ---
 import { Code } from 'astro:components';
-import DocsLayout from '../layouts/DocsLayout.astro';
+import DocsLayout from '../../layouts/DocsLayout.astro';
 
 const headings = [
   { id: 'how-themes-work', label: 'How Themes Work' },
@@ -154,19 +154,19 @@ document.documentElement.setAttribute('data-theme', saved);`} lang="js" theme="c
   --accent-primary-border: rgba(var(--accent-primary-rgb), 0.12);
   --accent-primary-glow:   rgba(var(--accent-primary-rgb), 0.2);
 }`} lang="css" theme="css-variables" /></div>
-      <arc-callout variant="info">When overriding accent or background tokens, verify that your custom values maintain sufficient contrast ratios (4.5:1 for text, 3:1 for UI elements). Use the <a href="/theme-synthesizer">Theme Synthesizer</a> to interactively build a custom theme and export the CSS.</arc-callout>
+      <arc-callout variant="info">When overriding accent or background tokens, verify that your custom values maintain sufficient contrast ratios (4.5:1 for text, 3:1 for UI elements). Use the <a href="/docs/theme-synthesizer">Theme Synthesizer</a> to interactively build a custom theme and export the CSS.</arc-callout>
     </section>
 
     <section id="synthesizer">
       <h2 class="docs-heading">Theme Synthesizer</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        The <a href="/theme-synthesizer">Theme Synthesizer</a> is an interactive tool that lets
+        The <a href="/docs/theme-synthesizer">Theme Synthesizer</a> is an interactive tool that lets
         you tweak every design token, preview the result in real time, and download a ready-to-use
         <code>tokens.css</code> file.
       </p>
       <div class="synth-cta">
-        <a href="/theme-synthesizer">
+        <a href="/docs/theme-synthesizer">
           <arc-button variant="primary">Open Theme Synthesizer</arc-button>
         </a>
       </div>

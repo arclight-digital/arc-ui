@@ -6,12 +6,13 @@ import '@arclux/arc-ui';
 export interface PageHeaderProps {
   heading?: string;
   description?: string;
+  border?: boolean;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const PageHeader: FunctionComponent<PageHeaderProps> = ({ heading, description, children, ...rest }) => (
-  <arc-page-header heading={heading} description={description} {...rest}>
+export const PageHeader: FunctionComponent<PageHeaderProps> = ({ heading, description, border, children, ...rest }) => (
+  <arc-page-header heading={heading} description={description} border={border} {...rest}>
     {children}
   </arc-page-header>
 );

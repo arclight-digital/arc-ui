@@ -76,14 +76,14 @@ Sidebar is designed to sit inside an AppShell or PageLayout, typically occupying
 
 <arc-sidebar>
   <arc-sidebar-section heading="Guide">
-    <arc-sidebar-link href="/getting-started">Getting Started</arc-sidebar-link>
-    <arc-sidebar-link href="/tokens">Design Tokens</arc-sidebar-link>
-    <arc-sidebar-link href="/theming" active>Theming</arc-sidebar-link>
+    <arc-sidebar-link href="/docs/getting-started">Getting Started</arc-sidebar-link>
+    <arc-sidebar-link href="/docs/tokens">Design Tokens</arc-sidebar-link>
+    <arc-sidebar-link href="/docs/theming" active>Theming</arc-sidebar-link>
   </arc-sidebar-section>
   <arc-sidebar-section heading="Components">
-    <arc-sidebar-link href="/components/button">Button</arc-sidebar-link>
-    <arc-sidebar-link href="/components/card">Card</arc-sidebar-link>
-    <arc-sidebar-link href="/components/modal">Modal</arc-sidebar-link>
+    <arc-sidebar-link href="/docs/components/button">Button</arc-sidebar-link>
+    <arc-sidebar-link href="/docs/components/card">Card</arc-sidebar-link>
+    <arc-sidebar-link href="/docs/components/modal">Modal</arc-sidebar-link>
   </arc-sidebar-section>
 </arc-sidebar>`,
       },
@@ -96,14 +96,14 @@ export function DocsSidebar() {
   return (
     <Sidebar>
       <SidebarSection heading="Guide">
-        <SidebarLink href="/getting-started">Getting Started</SidebarLink>
-        <SidebarLink href="/tokens">Design Tokens</SidebarLink>
-        <SidebarLink href="/theming" active>Theming</SidebarLink>
+        <SidebarLink href="/docs/getting-started">Getting Started</SidebarLink>
+        <SidebarLink href="/docs/tokens">Design Tokens</SidebarLink>
+        <SidebarLink href="/docs/theming" active>Theming</SidebarLink>
       </SidebarSection>
       <SidebarSection heading="Components">
-        <SidebarLink href="/components/button">Button</SidebarLink>
-        <SidebarLink href="/components/card">Card</SidebarLink>
-        <SidebarLink href="/components/modal">Modal</SidebarLink>
+        <SidebarLink href="/docs/components/button">Button</SidebarLink>
+        <SidebarLink href="/docs/components/card">Card</SidebarLink>
+        <SidebarLink href="/docs/components/modal">Modal</SidebarLink>
       </SidebarSection>
     </Sidebar>
   );
@@ -119,14 +119,14 @@ import { Sidebar, SidebarSection, SidebarLink } from '@arclux/arc-ui-vue';
 <template>
   <Sidebar>
     <SidebarSection heading="Guide">
-      <SidebarLink href="/getting-started">Getting Started</SidebarLink>
-      <SidebarLink href="/tokens">Design Tokens</SidebarLink>
-      <SidebarLink href="/theming" active>Theming</SidebarLink>
+      <SidebarLink href="/docs/getting-started">Getting Started</SidebarLink>
+      <SidebarLink href="/docs/tokens">Design Tokens</SidebarLink>
+      <SidebarLink href="/docs/theming" active>Theming</SidebarLink>
     </SidebarSection>
     <SidebarSection heading="Components">
-      <SidebarLink href="/components/button">Button</SidebarLink>
-      <SidebarLink href="/components/card">Card</SidebarLink>
-      <SidebarLink href="/components/modal">Modal</SidebarLink>
+      <SidebarLink href="/docs/components/button">Button</SidebarLink>
+      <SidebarLink href="/docs/components/card">Card</SidebarLink>
+      <SidebarLink href="/docs/components/modal">Modal</SidebarLink>
     </SidebarSection>
   </Sidebar>
 </template>`,
@@ -140,14 +140,14 @@ import { Sidebar, SidebarSection, SidebarLink } from '@arclux/arc-ui-vue';
 
 <Sidebar>
   <SidebarSection heading="Guide">
-    <SidebarLink href="/getting-started">Getting Started</SidebarLink>
-    <SidebarLink href="/tokens">Design Tokens</SidebarLink>
-    <SidebarLink href="/theming" active>Theming</SidebarLink>
+    <SidebarLink href="/docs/getting-started">Getting Started</SidebarLink>
+    <SidebarLink href="/docs/tokens">Design Tokens</SidebarLink>
+    <SidebarLink href="/docs/theming" active>Theming</SidebarLink>
   </SidebarSection>
   <SidebarSection heading="Components">
-    <SidebarLink href="/components/button">Button</SidebarLink>
-    <SidebarLink href="/components/card">Card</SidebarLink>
-    <SidebarLink href="/components/modal">Modal</SidebarLink>
+    <SidebarLink href="/docs/components/button">Button</SidebarLink>
+    <SidebarLink href="/docs/components/card">Card</SidebarLink>
+    <SidebarLink href="/docs/components/modal">Modal</SidebarLink>
   </SidebarSection>
 </Sidebar>`,
       },
@@ -162,14 +162,14 @@ import { Sidebar, SidebarSection, SidebarLink } from '@arclux/arc-ui-angular';
   template: \`
     <Sidebar>
       <SidebarSection heading="Guide">
-        <SidebarLink href="/getting-started">Getting Started</SidebarLink>
-        <SidebarLink href="/tokens">Design Tokens</SidebarLink>
-        <SidebarLink href="/theming" active>Theming</SidebarLink>
+        <SidebarLink href="/docs/getting-started">Getting Started</SidebarLink>
+        <SidebarLink href="/docs/tokens">Design Tokens</SidebarLink>
+        <SidebarLink href="/docs/theming" active>Theming</SidebarLink>
       </SidebarSection>
       <SidebarSection heading="Components">
-        <SidebarLink href="/components/button">Button</SidebarLink>
-        <SidebarLink href="/components/card">Card</SidebarLink>
-        <SidebarLink href="/components/modal">Modal</SidebarLink>
+        <SidebarLink href="/docs/components/button">Button</SidebarLink>
+        <SidebarLink href="/docs/components/card">Card</SidebarLink>
+        <SidebarLink href="/docs/components/modal">Modal</SidebarLink>
       </SidebarSection>
     </Sidebar>
   \`,
@@ -185,14 +185,14 @@ export function DocsSidebar() {
   return (
     <Sidebar>
       <SidebarSection heading="Guide">
-        <SidebarLink href="/getting-started">Getting Started</SidebarLink>
-        <SidebarLink href="/tokens">Design Tokens</SidebarLink>
-        <SidebarLink href="/theming" active>Theming</SidebarLink>
+        <SidebarLink href="/docs/getting-started">Getting Started</SidebarLink>
+        <SidebarLink href="/docs/tokens">Design Tokens</SidebarLink>
+        <SidebarLink href="/docs/theming" active>Theming</SidebarLink>
       </SidebarSection>
       <SidebarSection heading="Components">
-        <SidebarLink href="/components/button">Button</SidebarLink>
-        <SidebarLink href="/components/card">Card</SidebarLink>
-        <SidebarLink href="/components/modal">Modal</SidebarLink>
+        <SidebarLink href="/docs/components/button">Button</SidebarLink>
+        <SidebarLink href="/docs/components/card">Card</SidebarLink>
+        <SidebarLink href="/docs/components/modal">Modal</SidebarLink>
       </SidebarSection>
     </Sidebar>
   );
@@ -207,14 +207,14 @@ export function DocsSidebar() {
   return (
     <Sidebar>
       <SidebarSection heading="Guide">
-        <SidebarLink href="/getting-started">Getting Started</SidebarLink>
-        <SidebarLink href="/tokens">Design Tokens</SidebarLink>
-        <SidebarLink href="/theming" active>Theming</SidebarLink>
+        <SidebarLink href="/docs/getting-started">Getting Started</SidebarLink>
+        <SidebarLink href="/docs/tokens">Design Tokens</SidebarLink>
+        <SidebarLink href="/docs/theming" active>Theming</SidebarLink>
       </SidebarSection>
       <SidebarSection heading="Components">
-        <SidebarLink href="/components/button">Button</SidebarLink>
-        <SidebarLink href="/components/card">Card</SidebarLink>
-        <SidebarLink href="/components/modal">Modal</SidebarLink>
+        <SidebarLink href="/docs/components/button">Button</SidebarLink>
+        <SidebarLink href="/docs/components/card">Card</SidebarLink>
+        <SidebarLink href="/docs/components/modal">Modal</SidebarLink>
       </SidebarSection>
     </Sidebar>
   );
@@ -225,14 +225,14 @@ export function DocsSidebar() {
         lang: 'html',
         code: `<arc-sidebar>
   <arc-sidebar-section heading="Guide">
-    <arc-sidebar-link href="/getting-started">Getting Started</arc-sidebar-link>
-    <arc-sidebar-link href="/tokens">Design Tokens</arc-sidebar-link>
-    <arc-sidebar-link href="/theming" active>Theming</arc-sidebar-link>
+    <arc-sidebar-link href="/docs/getting-started">Getting Started</arc-sidebar-link>
+    <arc-sidebar-link href="/docs/tokens">Design Tokens</arc-sidebar-link>
+    <arc-sidebar-link href="/docs/theming" active>Theming</arc-sidebar-link>
   </arc-sidebar-section>
   <arc-sidebar-section heading="Components">
-    <arc-sidebar-link href="/components/button">Button</arc-sidebar-link>
-    <arc-sidebar-link href="/components/card">Card</arc-sidebar-link>
-    <arc-sidebar-link href="/components/modal">Modal</arc-sidebar-link>
+    <arc-sidebar-link href="/docs/components/button">Button</arc-sidebar-link>
+    <arc-sidebar-link href="/docs/components/card">Card</arc-sidebar-link>
+    <arc-sidebar-link href="/docs/components/modal">Modal</arc-sidebar-link>
   </arc-sidebar-section>
 </arc-sidebar>`,
       },

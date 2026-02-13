@@ -33,6 +33,7 @@ import { combobox } from './combobox';
 import { commandPalette } from './command-palette';
 import { contextMenu } from './context-menu';
 import { copyButton } from './copy-button';
+import { ctaBanner } from './cta-banner';
 import { dashboardGrid } from './dashboard-grid';
 import { dataTable } from './data-table';
 import { datePicker } from './date-picker';
@@ -136,6 +137,7 @@ export const components: ComponentDef[] = [
   commandPalette,
   contextMenu,
   copyButton,
+  ctaBanner,
   dashboardGrid,
   dataTable,
   datePicker,

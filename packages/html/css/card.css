@@ -26,6 +26,8 @@
         padding: var(--space-xl) var(--space-lg);
         flex: 1;
         min-height: 0;
+        display: flex;
+        flex-direction: column;
         transition: box-shadow var(--transition-slow);
       }
 
@@ -34,6 +36,18 @@
       }
 
       .arc-card .card:focus-visible { outline: none; box-shadow: var(--focus-glow); border-radius: var(--radius-lg); }
+
+      .arc-card .card__body {
+        flex: 1;
+      }
+
+      .arc-card .card__footer {
+        margin-top: var(--space-md);
+      }
+
+      .arc-card .card__footer--empty {
+        display: none;
+      }
 
       @media (max-width: 768px) {
         .arc-card .card__inner { padding: var(--space-lg) var(--space-md); }

@@ -42,25 +42,11 @@ The \`min-column-width\` attribute controls the minimum width of each column in 
       ],
     },
 
-    previewHtml: `<div style="width:100%;border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden;background:var(--bg-surface)">
-  <arc-dashboard-grid columns="3" gap="var(--space-md)">
-    <div style="background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius-md);padding:var(--space-lg)">
-      <div style="font-size:12px;color:var(--text-muted);font-family:var(--font-body);margin-bottom:4px">Revenue</div>
-      <div style="font-size:24px;font-weight:700;font-family:var(--font-accent);color:var(--text-primary)">$45,231</div>
-      <div style="font-size:12px;color:var(--accent-green);margin-top:4px">+12.5% from last month</div>
-    </div>
-    <div style="background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius-md);padding:var(--space-lg)">
-      <div style="font-size:12px;color:var(--text-muted);font-family:var(--font-body);margin-bottom:4px">Active Users</div>
-      <div style="font-size:24px;font-weight:700;font-family:var(--font-accent);color:var(--text-primary)">2,345</div>
-      <div style="font-size:12px;color:var(--accent-green);margin-top:4px">+8.2% from last week</div>
-    </div>
-    <div style="background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius-md);padding:var(--space-lg)">
-      <div style="font-size:12px;color:var(--text-muted);font-family:var(--font-body);margin-bottom:4px">Uptime</div>
-      <div style="font-size:24px;font-weight:700;font-family:var(--font-accent);color:var(--text-primary)">99.98%</div>
-      <div style="font-size:12px;color:var(--text-muted);margin-top:4px">Last 30 days</div>
-    </div>
-  </arc-dashboard-grid>
-</div>`,
+    previewHtml: `<arc-dashboard-grid columns="3" gap="var(--space-md)">
+  <arc-card><arc-stat value="$45,231" label="Revenue"></arc-stat></arc-card>
+  <arc-card><arc-stat value="2,345" label="Active Users"></arc-stat></arc-card>
+  <arc-card><arc-stat value="99.98%" label="Uptime"></arc-stat></arc-card>
+</arc-dashboard-grid>`,
 
     props: [
       { name: 'columns', type: 'number', default: '3', description: 'Number of columns when using explicit column mode. When this attribute is set on the element, the grid switches from auto-fill to a fixed repeat(N, 1fr) layout.' },

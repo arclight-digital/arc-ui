@@ -30,10 +30,10 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
         <Wordmark />
       </div>
       <arc-navigation-menu slot="center">
-        <arc-nav-item href="/getting-started">Docs</arc-nav-item>
-        <arc-nav-item href="/components">Components</arc-nav-item>
-        <arc-nav-item href="/tokens">Tokens</arc-nav-item>
-        <arc-nav-item href="/theme-synthesizer">Synthesizer</arc-nav-item>
+        <arc-nav-item href="/docs/getting-started">Docs</arc-nav-item>
+        <arc-nav-item href="/docs/components">Components</arc-nav-item>
+        <arc-nav-item href="/docs/tokens">Tokens</arc-nav-item>
+        <arc-nav-item href="/docs/theme-synthesizer">Synthesizer</arc-nav-item>
       </arc-navigation-menu>
       <div slot="actions" class="topbar-actions">
         <arc-badge variant="primary" class="topbar-version">v{pkg.version}</arc-badge>
@@ -71,11 +71,11 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
         <arc-copy-button value="npm install @arclux/arc-ui lit"></arc-copy-button>
       </div>
       <div class="hero__actions">
-        <arc-button href="/getting-started" variant="primary" size="md">
+        <arc-button href="/docs/getting-started" variant="primary" size="md">
           Get Started
           <svg slot="suffix" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </arc-button>
-        <arc-button href="/components" variant="secondary" size="md">Explore Components</arc-button>
+        <arc-button href="/docs/components" variant="secondary" size="md">Explore Components</arc-button>
       </div>
       <div class="hero__accent-line"></div>
     </div>
@@ -85,28 +85,12 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
     <arc-divider></arc-divider>
     <!-- Stats -->
     <section class="stats">
-      <div class="stats__inner">
-        <div class="stats__card reveal">
-          <span class="stats__number">{components.length}</span>
-          <span class="stats__label">Components</span>
-          <span class="stats__detail">Production-ready, tested, accessible</span>
-        </div>
-        <div class="stats__card reveal">
-          <span class="stats__number">7</span>
-          <span class="stats__label">Frameworks</span>
-          <span class="stats__detail">React, Vue, Svelte, Angular, Solid, Preact, Vanilla</span>
-        </div>
-        <div class="stats__card reveal">
-          <span class="stats__number">0</span>
-          <span class="stats__label">Dependencies</span>
-          <span class="stats__detail">Beyond the Lit runtime</span>
-        </div>
-        <div class="stats__card reveal">
-          <span class="stats__number">2</span>
-          <span class="stats__label">Themes</span>
-          <span class="stats__detail">Dark &amp; light with auto mode</span>
-        </div>
-      </div>
+      <arc-dashboard-grid columns="4" gap="var(--space-md)" style="max-width:var(--max-width);margin-inline:auto;padding-inline:var(--space-lg)">
+        <arc-card class="reveal"><arc-stat value={`${components.length}`} label="Components"></arc-stat></arc-card>
+        <arc-card class="reveal"><arc-stat value="7" label="Frameworks"></arc-stat></arc-card>
+        <arc-card class="reveal"><arc-stat value="0" label="Dependencies"></arc-stat></arc-card>
+        <arc-card class="reveal"><arc-stat value="2" label="Themes"></arc-stat></arc-card>
+      </arc-dashboard-grid>
     </section>
 
     <!-- Features -->
@@ -119,53 +103,29 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
         </div>
 
         <div class="features__grid">
-          <div class="feature-card reveal">
-            <div class="feature-card__icon-wrap">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-            <h3 class="feature-card__title">Web Components First</h3>
-            <p class="feature-card__desc">Built on Lit, running on web standards. No proprietary abstractions — just custom elements that work everywhere.</p>
-          </div>
+          <arc-feature-card heading="Web Components First" description="Built on Lit, running on web standards. No proprietary abstractions — just custom elements that work everywhere." class="reveal">
+            <svg slot="icon" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </arc-feature-card>
 
-          <div class="feature-card reveal">
-            <div class="feature-card__icon-wrap feature-card__icon-wrap--violet">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><line x1="4" y1="22" x2="4" y2="15" stroke="currentColor" stroke-width="1.5"/></svg>
-            </div>
-            <h3 class="feature-card__title">Every Framework</h3>
-            <p class="feature-card__desc">React, Vue, Svelte, Angular, Solid, Preact — we built a custom code generator (Prism) that turns Lit components into typed, native wrappers for each framework.</p>
-          </div>
+          <arc-feature-card heading="Every Framework" description="React, Vue, Svelte, Angular, Solid, Preact — we built a custom code generator (Prism) that turns Lit components into typed, native wrappers for each framework." class="reveal">
+            <svg slot="icon" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><line x1="4" y1="22" x2="4" y2="15" stroke="currentColor" stroke-width="1.5"/></svg>
+          </arc-feature-card>
 
-          <div class="feature-card reveal">
-            <div class="feature-card__icon-wrap">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-            <h3 class="feature-card__title">Zero Config Theming</h3>
-            <p class="feature-card__desc">Dark mode, light mode, auto mode. Override any token with CSS custom properties. Ship a custom theme in minutes.</p>
-          </div>
+          <arc-feature-card heading="Zero Config Theming" description="Dark mode, light mode, auto mode. Override any token with CSS custom properties. Ship a custom theme in minutes." class="reveal">
+            <svg slot="icon" width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </arc-feature-card>
 
-          <div class="feature-card reveal">
-            <div class="feature-card__icon-wrap feature-card__icon-wrap--violet">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-            <h3 class="feature-card__title">No Dependencies</h3>
-            <p class="feature-card__desc">Only Lit runtime. No bloated dependency trees, no version conflicts, no supply chain risk. Just your components.</p>
-          </div>
+          <arc-feature-card heading="No Dependencies" description="Only Lit runtime. No bloated dependency trees, no version conflicts, no supply chain risk. Just your components." class="reveal">
+            <svg slot="icon" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </arc-feature-card>
 
-          <div class="feature-card reveal">
-            <div class="feature-card__icon-wrap">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="2" y="3" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M8 21h8M12 17v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-            </div>
-            <h3 class="feature-card__title">Standalone CSS</h3>
-            <p class="feature-card__desc">Need zero JS? Use the HTML/CSS package for pure class-based components — perfect for server-rendered pages.</p>
-          </div>
+          <arc-feature-card heading="Standalone CSS" description="Need zero JS? Use the HTML/CSS package for pure class-based components — perfect for server-rendered pages." class="reveal">
+            <svg slot="icon" width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="2" y="3" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M8 21h8M12 17v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </arc-feature-card>
 
-          <div class="feature-card reveal">
-            <div class="feature-card__icon-wrap feature-card__icon-wrap--violet">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-            <h3 class="feature-card__title">Accessible</h3>
-            <p class="feature-card__desc">WCAG 2.1 AA. ARIA roles, keyboard navigation, focus management, and reduced motion — all built in.</p>
-          </div>
+          <arc-feature-card heading="Accessible" description="WCAG 2.1 AA. ARIA roles, keyboard navigation, focus management, and reduced motion — all built in." class="reveal">
+            <svg slot="icon" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </arc-feature-card>
         </div>
       </div>
     </section>
@@ -297,39 +257,32 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
       <div class="frameworks-strip__inner">
         <span class="section-label">Works With</span>
         <div class="frameworks-strip__logos">
-          <div class="framework-chip">React</div>
-          <div class="framework-chip">Vue</div>
-          <div class="framework-chip">Svelte</div>
-          <div class="framework-chip">Angular</div>
-          <div class="framework-chip">Solid</div>
-          <div class="framework-chip">Preact</div>
-          <div class="framework-chip">Vanilla JS</div>
+          <arc-tag>React</arc-tag>
+          <arc-tag>Vue</arc-tag>
+          <arc-tag>Svelte</arc-tag>
+          <arc-tag>Angular</arc-tag>
+          <arc-tag>Solid</arc-tag>
+          <arc-tag>Preact</arc-tag>
+          <arc-tag>Vanilla JS</arc-tag>
         </div>
       </div>
     </section>
 
     <!-- CTA -->
-    <section class="cta-section">
-      <div class="cta-section__bg"></div>
-      <div class="cta-section__inner reveal">
-        <span class="section-label">Ready to build?</span>
-        <h2 class="cta-section__title">Start shipping with ARC UI.</h2>
-        <p class="cta-section__desc">
-          Install in seconds. Build in minutes. Ship production-ready interfaces that look
-          incredible out of the box.
-        </p>
-        <div class="cta-section__actions">
-          <arc-button href="/getting-started" variant="primary" size="md">
-            Get Started
-            <svg slot="suffix" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </arc-button>
-          <arc-button href="https://github.com/Arclight-Digital/arc-ui" variant="secondary" size="md">
-            <svg slot="prefix" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-            View on GitHub
-          </arc-button>
-        </div>
-      </div>
-    </section>
+    <arc-cta-banner eyebrow="Ready to build?" headline="Start shipping with ARC UI." class="reveal">
+      <p>
+        Install in seconds. Build in minutes. Ship production-ready interfaces that look
+        incredible out of the box.
+      </p>
+      <arc-button slot="actions" href="/docs/getting-started" variant="primary" size="md">
+        Get Started
+        <svg slot="suffix" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </arc-button>
+      <arc-button slot="actions" href="https://github.com/Arclight-Digital/arc-ui" variant="secondary" size="md">
+        <svg slot="prefix" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        View on GitHub
+      </arc-button>
+    </arc-cta-banner>
 
     <SiteFooter />
   </main>
@@ -700,81 +653,15 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
     line-height: 1.7;
   }
 
-  /* ── Stats Strip ── */
   /* ── Stats ── */
   .stats {
     position: relative;
     padding: var(--space-3xl) 0;
   }
 
-  .stats__inner {
-    max-width: var(--max-width);
-    margin-inline: auto;
-    padding-inline: var(--space-lg);
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-md);
-  }
-
-  .stats__card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: var(--space-xs);
-    padding: var(--space-xl) var(--space-md);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-lg);
-    background: var(--bg-card);
-    transition: border-color var(--transition-base), box-shadow var(--transition-base);
-    overflow: hidden;
-  }
-
-  .stats__card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at 50% 0%, rgba(var(--accent-primary-rgb), 0.06), transparent 70%);
-    pointer-events: none;
-  }
-
-  .stats__card:hover {
-    border-color: var(--accent-primary-border);
-    box-shadow: 0 0 30px rgba(var(--accent-primary-rgb), 0.08);
-  }
-
-  .stats__number {
-    font-size: clamp(40px, 5vw, 56px);
-    font-weight: 600;
-    letter-spacing: -2px;
-    line-height: 1;
-    background: var(--gradient-display-text);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .stats__label {
-    font-family: var(--font-accent);
-    font-size: var(--text-xs);
-    font-weight: 600;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--text-primary);
-    margin-top: var(--space-xs);
-  }
-
-  .stats__detail {
-    font-size: var(--text-xs);
-    color: var(--text-ghost);
-    line-height: 1.4;
-    max-width: 180px;
-  }
-
   /* ── Features ── */
   .features {
-    padding: var(--space-4xl) 0;
+    padding: 0 0 var(--space-4xl);
     position: relative;
   }
 
@@ -797,67 +684,6 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
     gap: var(--space-lg);
   }
 
-  .feature-card {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-    padding: var(--space-xl);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-lg);
-    background: var(--bg-card);
-    position: relative;
-    overflow: hidden;
-    transition: border-color var(--transition-fast), box-shadow var(--transition-base), transform var(--transition-base);
-  }
-
-  .feature-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: var(--glow-line-gradient);
-    opacity: 0;
-    transition: opacity var(--transition-fast);
-  }
-
-  .feature-card:hover {
-    border-color: var(--accent-primary-border);
-    box-shadow: 0 0 30px rgba(var(--accent-primary-rgb),0.08), 0 0 60px rgba(var(--accent-secondary-rgb),0.04);
-    transform: translateY(-2px);
-  }
-
-  .feature-card:hover::before { opacity: 0.7; }
-
-  .feature-card__icon-wrap {
-    width: 44px;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: var(--radius-md);
-    background: var(--accent-primary-subtle);
-    color: var(--accent-primary);
-    border: 1px solid var(--accent-primary-border);
-  }
-
-  .feature-card__icon-wrap--violet {
-    background: var(--accent-secondary-subtle);
-    color: var(--accent-secondary);
-    border-color: var(--accent-secondary-border);
-  }
-
-  .feature-card__title {
-    font-size: 17px; /* Keep 17px */
-    font-weight: 600;
-  }
-
-  .feature-card__desc {
-    color: var(--text-muted);
-    font-size: var(--text-sm);
-    line-height: 1.6;
-  }
 
   /* ── Showcase ── */
   .showcase-section {
@@ -1054,76 +880,6 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
     justify-content: center;
   }
 
-  .framework-chip {
-    font-family: var(--font-mono);
-    font-size: var(--text-sm);
-    color: var(--text-secondary);
-    padding: var(--space-xs) var(--space-md);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-full);
-    background: var(--bg-card);
-    transition: border-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-base);
-    cursor: default;
-  }
-
-  .framework-chip:hover {
-    border-color: var(--accent-primary-border);
-    color: var(--accent-primary);
-    transform: translateY(-1px);
-    box-shadow: 0 0 16px rgba(var(--accent-primary-rgb),0.1);
-  }
-
-  /* ── CTA Section ── */
-  .cta-section {
-    position: relative;
-    padding: var(--space-4xl) 0;
-    overflow: hidden;
-  }
-
-  .cta-section__bg {
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse at 30% 50%, rgba(var(--accent-primary-rgb),0.1), transparent 60%),
-      radial-gradient(ellipse at 70% 50%, rgba(var(--accent-secondary-rgb),0.08), transparent 60%);
-    pointer-events: none;
-  }
-
-  .cta-section__inner {
-    position: relative;
-    max-width: var(--max-width);
-    margin-inline: auto;
-    padding: var(--space-2xl) var(--space-lg);
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-md);
-  }
-
-  .cta-section__title {
-    font-size: clamp(28px, 4vw, 40px);
-    font-weight: 500;
-    letter-spacing: -1px;
-    background: var(--gradient-display-text);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .cta-section__desc {
-    color: var(--text-secondary);
-    font-size: var(--text-md);
-    max-width: 480px;
-    text-wrap: balance;
-    line-height: 1.7;
-  }
-
-  .cta-section__actions {
-    display: flex;
-    gap: var(--space-md);
-    margin-top: var(--space-sm);
-  }
 
   /* ── Responsive ── */
   @media (max-width: 900px) {
@@ -1140,15 +896,12 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
     .hero__actions { flex-direction: column; align-items: center; }
     .hero__install { flex-direction: row; }
     .stats { padding: var(--space-xl) 0; }
-    .stats__inner { grid-template-columns: repeat(2, 1fr); }
     .features { padding: var(--space-xl) 0; }
     .features__grid { grid-template-columns: 1fr; }
     .showcase-section { padding: var(--space-xl) 0; }
     .showcase-grid { grid-template-columns: 1fr; }
     .code-section { padding: var(--space-xl) 0; }
     .frameworks-strip { padding: var(--space-lg) 0; }
-    .cta-section { padding: var(--space-xl) 0; }
-    .cta-section__actions { flex-direction: column; align-items: center; }
   }
 
   @media (max-width: 480px) {

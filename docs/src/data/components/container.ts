@@ -41,18 +41,17 @@ Container exposes a \`container\` CSS part on the inner wrapper, so you can targ
       ],
     },
 
-    previewHtml: `<div style="width:100%;border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden;background:var(--bg-surface)">
-  <arc-container>
+    previewHtml: `<div style="width:100%;display:flex;flex-direction:column;gap:var(--space-md)">
+  <div style="width:100%;margin-inline:auto;padding-inline:var(--space-lg);box-sizing:border-box">
     <div style="background:rgba(77,126,247,0.08);border:1px dashed var(--accent-primary);border-radius:var(--radius-sm);padding:var(--space-lg);text-align:center;color:var(--text-secondary);font-size:14px;font-family:var(--font-body)">
-      Default container (max-width: 1120px)
+      Default container — max-width: var(--max-width)
     </div>
-  </arc-container>
-  <div style="height:var(--space-md)"></div>
-  <arc-container narrow>
-    <div style="background:rgba(77,126,247,0.08);border:1px dashed var(--accent-primary);border-radius:var(--radius-sm);padding:var(--space-lg);text-align:center;color:var(--text-secondary);font-size:14px;font-family:var(--font-body)">
-      Narrow container (max-width: 720px)
+  </div>
+  <div style="width:65%;margin-inline:auto;padding-inline:var(--space-lg);box-sizing:border-box">
+    <div style="background:rgba(139,92,246,0.08);border:1px dashed var(--accent-secondary);border-radius:var(--radius-sm);padding:var(--space-lg);text-align:center;color:var(--text-secondary);font-size:14px;font-family:var(--font-body)">
+      Narrow container — max-width: var(--max-width-sm)
     </div>
-  </arc-container>
+  </div>
 </div>`,
 
     props: [

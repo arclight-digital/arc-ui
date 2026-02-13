@@ -7,9 +7,11 @@ defineOptions({ name: 'PageHeader' });
 withDefaults(defineProps<{
   heading?: string;
   description?: string;
+  border?: boolean;
 }>(), {
   heading: '',
   description: '',
+  border: false,
 });
 </script>
 
@@ -17,6 +19,7 @@ withDefaults(defineProps<{
   <arc-page-header
     :heading="heading"
     :description="description"
+    :border="border"
   >
     <slot />
   </arc-page-header>

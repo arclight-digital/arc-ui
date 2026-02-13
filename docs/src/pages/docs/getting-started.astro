@@ -1,10 +1,10 @@
 ---
 import { Code } from 'astro:components';
-import DocsLayout from '../layouts/DocsLayout.astro';
-import { components } from '../data/components/index';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import { components } from '../../data/components/index';
 import fs from 'node:fs';
 
-const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components/package.json', import.meta.url), 'utf-8'));
+const pkg = JSON.parse(fs.readFileSync(new URL('../../../../packages/web-components/package.json', import.meta.url), 'utf-8'));
 const componentCount = components.length;
 
 const headings = [
@@ -45,53 +45,25 @@ const headings = [
       </p>
 
       <div class="overview-stats">
-        <div class="overview-stat">
-          <span class="overview-stat__value">{componentCount}</span>
-          <span class="overview-stat__label">Components</span>
-        </div>
-        <div class="overview-stat">
-          <span class="overview-stat__value">7</span>
-          <span class="overview-stat__label">Frameworks</span>
-        </div>
-        <div class="overview-stat">
-          <span class="overview-stat__value">0</span>
-          <span class="overview-stat__label">Runtime deps</span>
-        </div>
-        <div class="overview-stat">
-          <span class="overview-stat__value">A11y</span>
-          <span class="overview-stat__label">Built-in</span>
-        </div>
+        <arc-stat value={`${componentCount}`} label="Components"></arc-stat>
+        <arc-stat value="7" label="Frameworks"></arc-stat>
+        <arc-stat value="0" label="Runtime deps"></arc-stat>
+        <arc-stat value="A11y" label="Built-in"></arc-stat>
       </div>
 
       <div class="feature-grid">
-        <div class="feature-item">
-          <arc-icon name="paint-brush" size="md" class="feature-item__icon"></arc-icon>
-          <div>
-            <strong>Design Token System</strong>
-            <span>100+ CSS custom properties for colors, spacing, typography, shadows, and motion — fully customizable.</span>
-          </div>
-        </div>
-        <div class="feature-item">
-          <arc-icon name="moon" size="md" class="feature-item__icon"></arc-icon>
-          <div>
-            <strong>Dark &amp; Light Themes</strong>
-            <span>Ships with dark and light modes. Toggle with a single attribute, or follow OS preference.</span>
-          </div>
-        </div>
-        <div class="feature-item">
-          <arc-icon name="keyboard" size="md" class="feature-item__icon"></arc-icon>
-          <div>
-            <strong>Accessible</strong>
-            <span>ARIA roles, keyboard navigation, focus management, and reduced-motion support built into every component.</span>
-          </div>
-        </div>
-        <div class="feature-item">
-          <arc-icon name="lightning" size="md" class="feature-item__icon"></arc-icon>
-          <div>
-            <strong>Lightweight</strong>
-            <span>No runtime dependencies beyond Lit. Tree-shakeable — only ship what you use.</span>
-          </div>
-        </div>
+        <arc-feature-card heading="Design Token System" description="100+ CSS custom properties for colors, spacing, typography, shadows, and motion — fully customizable.">
+          <arc-icon slot="icon" name="paint-brush" size="md"></arc-icon>
+        </arc-feature-card>
+        <arc-feature-card heading="Dark & Light Themes" description="Ships with dark and light modes. Toggle with a single attribute, or follow OS preference.">
+          <arc-icon slot="icon" name="moon" size="md"></arc-icon>
+        </arc-feature-card>
+        <arc-feature-card heading="Accessible" description="ARIA roles, keyboard navigation, focus management, and reduced-motion support built into every component.">
+          <arc-icon slot="icon" name="keyboard" size="md"></arc-icon>
+        </arc-feature-card>
+        <arc-feature-card heading="Lightweight" description="No runtime dependencies beyond Lit. Tree-shakeable — only ship what you use.">
+          <arc-icon slot="icon" name="lightning" size="md"></arc-icon>
+        </arc-feature-card>
       </div>
     </section>
 
@@ -263,7 +235,7 @@ import { ArcButton, ArcCard } from '@arclux/arc-ui-vue';
 
       <p class="docs-text" style="margin-top:var(--space-md)">
         Our Prism generator also produces wrappers for <strong>Angular</strong>, <strong>Solid</strong>, and <strong>Preact</strong>.
-        See the <a href="/frameworks">Frameworks</a> guide for complete setup instructions.
+        See the <a href="/docs/frameworks">Frameworks</a> guide for complete setup instructions.
       </p>
     </section>
 
@@ -298,7 +270,7 @@ import { ArcButton, ArcCard } from '@arclux/arc-ui-vue';
 
       <p class="docs-text">
         Create fully custom themes by overriding design tokens. Use the
-        <a href="/theme-synthesizer">Theme Synthesizer</a> to generate a custom theme visually.
+        <a href="/docs/theme-synthesizer">Theme Synthesizer</a> to generate a custom theme visually.
       </p>
     </section>
 
@@ -352,7 +324,7 @@ import { ArcButton, ArcCard } from '@arclux/arc-ui-vue';
       </div>
 
       <p class="docs-text">
-        See the full <a href="/tokens">Design Tokens</a> reference for every available token.
+        See the full <a href="/docs/tokens">Design Tokens</a> reference for every available token.
       </p>
     </section>
 
@@ -385,34 +357,18 @@ import { ArcButton, ArcCard } from '@arclux/arc-ui-vue';
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
 
       <div class="next-grid">
-        <a href="/components" class="next-card">
-          <arc-icon name="squares-four" size="md" class="next-card__icon"></arc-icon>
-          <div>
-            <strong>Browse Components</strong>
-            <span>Explore all {componentCount} components with live demos and API docs.</span>
-          </div>
-        </a>
-        <a href="/tokens" class="next-card">
-          <arc-icon name="palette" size="md" class="next-card__icon"></arc-icon>
-          <div>
-            <strong>Design Tokens</strong>
-            <span>Full reference for colors, spacing, typography, shadows, and more.</span>
-          </div>
-        </a>
-        <a href="/theming" class="next-card">
-          <arc-icon name="paint-brush" size="md" class="next-card__icon"></arc-icon>
-          <div>
-            <strong>Theming Guide</strong>
-            <span>Learn how to customize themes and create your own.</span>
-          </div>
-        </a>
-        <a href="/theme-synthesizer" class="next-card">
-          <arc-icon name="sliders" size="md" class="next-card__icon"></arc-icon>
-          <div>
-            <strong>Theme Synthesizer</strong>
-            <span>Visually build a custom theme with live preview.</span>
-          </div>
-        </a>
+        <arc-feature-card heading="Browse Components" description={`Explore all ${componentCount} components with live demos and API docs.`} href="/docs/components">
+          <arc-icon slot="icon" name="squares-four" size="md"></arc-icon>
+        </arc-feature-card>
+        <arc-feature-card heading="Design Tokens" description="Full reference for colors, spacing, typography, shadows, and more." href="/docs/tokens">
+          <arc-icon slot="icon" name="palette" size="md"></arc-icon>
+        </arc-feature-card>
+        <arc-feature-card heading="Theming Guide" description="Learn how to customize themes and create your own." href="/docs/theming">
+          <arc-icon slot="icon" name="paint-brush" size="md"></arc-icon>
+        </arc-feature-card>
+        <arc-feature-card heading="Theme Synthesizer" description="Visually build a custom theme with live preview." href="/docs/theme-synthesizer">
+          <arc-icon slot="icon" name="sliders" size="md"></arc-icon>
+        </arc-feature-card>
       </div>
     </section>
   </div>
@@ -431,69 +387,12 @@ import { ArcButton, ArcCard } from '@arclux/arc-ui-vue';
     flex-wrap: wrap;
   }
 
-  .overview-stat {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    padding: var(--space-md) var(--space-lg);
-    background: var(--bg-surface);
-    border: 1px solid var(--border-default);
-    border-radius: var(--radius-md);
-    min-width: 100px;
-  }
-
-  .overview-stat__value {
-    font-size: 28px; /* Keep 28px */
-    font-weight: 700;
-    background: var(--gradient-accent-text);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .overview-stat__label {
-    font-family: var(--font-accent);
-    font-size: var(--text-xs);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text-muted);
-  }
-
   /* Feature grid */
   .feature-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: var(--space-md);
     margin-bottom: var(--space-md);
-  }
-
-  .feature-item {
-    display: flex;
-    gap: var(--space-sm);
-    padding: var(--space-md);
-    background: var(--bg-surface);
-    border: 1px solid var(--border-default);
-    border-radius: var(--radius-md);
-  }
-
-  .feature-item__icon {
-    color: var(--accent-primary);
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-
-  .feature-item strong {
-    display: block;
-    font-size: var(--text-sm);
-    color: var(--text-primary);
-    margin-bottom: 4px;
-  }
-
-  .feature-item span {
-    font-size: var(--text-sm);
-    color: var(--text-muted);
-    line-height: 1.5;
   }
 
   /* Install tabs */
@@ -682,45 +581,8 @@ import { ArcButton, ArcCard } from '@arclux/arc-ui-vue';
     gap: var(--space-md);
   }
 
-  .next-card {
-    display: flex;
-    gap: var(--space-sm);
-    padding: var(--space-lg);
-    background: var(--bg-surface);
-    border: 1px solid var(--border-default);
-    border-radius: var(--radius-md);
-    text-decoration: none;
-    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
-  }
-
-  .next-card:hover {
-    border-color: var(--accent-primary);
-    box-shadow: var(--glow-blue);
-  }
-
-  .next-card__icon {
-    color: var(--accent-primary);
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-
-  .next-card strong {
-    display: block;
-    font-size: var(--text-sm);
-    color: var(--text-primary);
-    margin-bottom: 4px;
-  }
-
-  .next-card span {
-    font-size: var(--text-sm);
-    color: var(--text-muted);
-    line-height: 1.5;
-  }
-
   @media (max-width: 768px) {
     .overview-stats { gap: var(--space-sm); }
-    .overview-stat { min-width: 80px; padding: var(--space-sm) var(--space-md); }
-    .overview-stat__value { font-size: 22px; }
     .framework-grid { grid-template-columns: 1fr; }
     .install-option { flex-direction: column; gap: var(--space-xs); }
     .install-label { text-align: left; min-width: unset; padding-top: 0; }

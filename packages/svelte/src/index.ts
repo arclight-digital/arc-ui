@@ -114,3 +114,4 @@ export { default as Truncate } from './reactive/Truncate.svelte';
 export { default as MenuDivider } from './shared/MenuDivider.svelte';
 export { default as MenuItem } from './shared/MenuItem.svelte';
 export { default as Option } from './shared/Option.svelte';
+export { default as CtaBanner } from './content/CtaBanner.svelte';

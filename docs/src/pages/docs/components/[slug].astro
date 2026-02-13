@@ -1,7 +1,7 @@
 ---
-import DocsLayout from '../../layouts/DocsLayout.astro';
-import ComponentShowcase from '../../components/ComponentShowcase.astro';
-import { components } from '../../data/components/index';
+import DocsLayout from '../../../layouts/DocsLayout.astro';
+import ComponentShowcase from '../../../components/ComponentShowcase.astro';
+import { components } from '../../../data/components/index';
 
 export function getStaticPaths() {
   return components.map((c) => ({
@@ -51,21 +51,23 @@ const headings = [
   description={component.description}
   activeSlug={component.slug}
   headings={headings}
-  breadcrumbs={[{ label: 'Components', href: '/components' }, { label: component.name }]}
+  breadcrumbs={[{ label: 'Components', href: '/docs/components' }, { label: component.name }]}
 >
   <div class="component-page">
     <!-- Header -->
-    <div class="component-page__header">
-      <div class="component-page__meta">
-        <h1 class="component-page__title">{component.name}</h1>
+    <arc-page-header heading={component.name} description={component.description}>
+      <arc-breadcrumb slot="above">
+        <arc-breadcrumb-item href="/docs/components">Components</arc-breadcrumb-item>
+        <arc-breadcrumb-item>{component.name}</arc-breadcrumb-item>
+      </arc-breadcrumb>
+      <div slot="aside" class="component-page__badges">
         <arc-badge variant={tierColors[component.tier]}>{component.tier}</arc-badge>
         <arc-badge variant={interactivityColors[component.interactivity]}>{component.interactivity}</arc-badge>
         {component.status === 'beta' && <arc-badge variant="primary">beta</arc-badge>}
         {component.status === 'experimental' && <arc-badge variant="secondary">experimental</arc-badge>}
       </div>
-      <p class="component-page__desc">{component.description}</p>
       <code class="component-page__tag">&lt;{component.tag}&gt;</code>
-    </div>
+    </arc-page-header>
 
     {/* Overview */}
     {component.overview && (
@@ -307,19 +309,7 @@ const headings = [
 </script>
 
 <style>
-  .component-page__header {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-  }
-
-  .component-page__meta {
-    display: flex;
-    align-items: center;
-    gap: var(--space-md);
-  }
-
-  .component-page__title {
+  arc-page-header::part(heading) {
     font-size: var(--text-2xl);
     font-weight: 600;
     background: var(--gradient-display-text);
@@ -328,11 +318,18 @@ const headings = [
     background-clip: text;
   }
 
-  .component-page__desc {
-    color: var(--text-secondary);
-    font-size: var(--text-md);
+  arc-page-header::part(title-row) {
+    justify-content: flex-start;
+  }
+
+  arc-page-header::part(description) {
     max-width: 50%;
     text-wrap: balance;
+  }
+
+  .component-page__badges {
+    display: flex;
+    gap: var(--space-xs);
   }
 
   .component-page__tag {
@@ -740,8 +737,8 @@ const headings = [
   }
 
   @media (max-width: 768px) {
-    .component-page__title { font-size: var(--text-xl); }
-    .component-page__desc { max-width: 100%; }
+    arc-page-header::part(heading) { font-size: var(--text-xl); }
+    arc-page-header::part(description) { max-width: 100%; }
     .component-page__features { grid-template-columns: 1fr; }
     .component-page__preview { padding: var(--space-md); }
     :global(.icon-browser__grid) {

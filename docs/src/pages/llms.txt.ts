@@ -104,9 +104,9 @@ ${componentsByTier.join('\n\n')}
 
 - [Full component reference with props, events, and examples](/llms-full.txt)
 - [Documentation site](https://arcui.dev)
-- [Component pages](https://arcui.dev/components/)
-- [Theming guide](https://arcui.dev/theming/)
-- [Token reference](https://arcui.dev/tokens/)
+- [Component pages](https://arcui.dev/docs/components/)
+- [Theming guide](https://arcui.dev/docs/theming/)
+- [Token reference](https://arcui.dev/docs/tokens/)
 `;
 
   return new Response(body, {

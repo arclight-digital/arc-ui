@@ -6,14 +6,15 @@ import '@arclux/arc-ui';
 export interface PageHeaderProps {
   heading?: string;
   description?: string;
+  border?: boolean;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const PageHeader: Component<PageHeaderProps> = (props) => {
-  const [local, rest] = splitProps(props, ['heading', 'description', 'children']);
+  const [local, rest] = splitProps(props, ['heading', 'description', 'border', 'children']);
   return (
-    <arc-page-header heading={local.heading} description={local.description} {...rest}>
+    <arc-page-header heading={local.heading} description={local.description} border={local.border} {...rest}>
       {local.children}
     </arc-page-header>
   );

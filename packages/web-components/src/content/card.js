@@ -4,6 +4,7 @@ import { tokenStyles } from '../shared-styles.js';
 export class ArcCard extends LitElement {
   static properties = {
     href: { type: String },
+    _hasFooter: { state: true },
   };
 
   static styles = [
@@ -34,6 +35,8 @@ export class ArcCard extends LitElement {
         padding: var(--space-xl) var(--space-lg);
         flex: 1;
         min-height: 0;
+        display: flex;
+        flex-direction: column;
         transition: box-shadow var(--transition-slow);
       }
 
@@ -42,6 +45,18 @@ export class ArcCard extends LitElement {
       }
 
       .card:focus-visible { outline: none; box-shadow: var(--focus-glow); border-radius: var(--radius-lg); }
+
+      .card__body {
+        flex: 1;
+      }
+
+      .card__footer {
+        margin-top: var(--space-md);
+      }
+
+      .card__footer--empty {
+        display: none;
+      }
 
       @media (max-width: 768px) {
         .card__inner { padding: var(--space-lg) var(--space-md); }
@@ -62,13 +77,25 @@ export class ArcCard extends LitElement {
   constructor() {
     super();
     this.href = '';
+    this._hasFooter = false;
+  }
+
+  _onFooterSlotChange(e) {
+    this._hasFooter = e.target.assignedNodes({ flatten: true }).length > 0;
   }
 
   render() {
+    const content = html`
+      <div class="card__body" part="body"><slot></slot></div>
+      <div class="card__footer ${this._hasFooter ? '' : 'card__footer--empty'}" part="footer">
+        <slot name="footer" @slotchange=${this._onFooterSlotChange}></slot>
+      </div>
+    `;
+
     if (this.href) {
-      return html`<a class="card" href=${this.href} part="card"><div class="card__inner" part="inner"><slot></slot></div></a>`;
+      return html`<a class="card" href=${this.href} part="card"><div class="card__inner" part="inner">${content}</div></a>`;
     }
-    return html`<div class="card" part="card"><div class="card__inner" part="inner"><slot></slot></div></div>`;
+    return html`<div class="card" part="card"><div class="card__inner" part="inner">${content}</div></div>`;
   }
 }
 

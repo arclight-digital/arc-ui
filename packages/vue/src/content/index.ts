@@ -35,3 +35,4 @@ export { default as DataTable } from './DataTable.vue';
 export { default as InfiniteScroll } from './InfiniteScroll.vue';
 export { default as Tag } from './Tag.vue';
 export { default as Truncate } from './Truncate.vue';
+export { default as CtaBanner } from './CtaBanner.vue';

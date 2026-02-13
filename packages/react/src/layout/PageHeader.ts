@@ -7,6 +7,7 @@ import { ArcPageHeader } from '@arclux/arc-ui';
 export interface PageHeaderProps {
   heading?: string;
   description?: string;
+  border?: boolean;
   className?: string;
   children?: React.ReactNode;
 }

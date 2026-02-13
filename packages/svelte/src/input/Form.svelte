@@ -7,13 +7,17 @@
     action?: string;
     method?: string;
     novalidate?: boolean;
+    loading?: boolean;
+    disabled?: boolean;
+    errorSummary?: boolean;
+    _errors?: string;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { action = '', method = '', novalidate = false, children, ...rest }: Props = $props();
+  let { action = '', method = '', novalidate = false, loading = false, disabled = false, errorSummary = true, _errors = [], children, ...rest }: Props = $props();
 </script>
 
-<arc-form {action} {method} {novalidate} {...rest}>
+<arc-form {action} {method} {novalidate} {loading} {disabled} {errorSummary} {_errors} {...rest}>
   {@render children?.()}
 </arc-form>

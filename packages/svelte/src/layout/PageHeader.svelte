@@ -6,13 +6,14 @@
   interface Props {
     heading?: string;
     description?: string;
+    border?: boolean;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { heading = '', description = '', children, ...rest }: Props = $props();
+  let { heading = '', description = '', border = false, children, ...rest }: Props = $props();
 </script>
 
-<arc-page-header {heading} {description} {...rest}>
+<arc-page-header {heading} {description} {border} {...rest}>
   {@render children?.()}
 </arc-page-header>

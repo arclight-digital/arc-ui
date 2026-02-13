@@ -7,6 +7,7 @@ export class ArcNavItem extends LitElement {
   static properties = {
     href:        { type: String, reflect: true },
     active:      { type: Boolean, reflect: true },
+    muted:       { type: Boolean, reflect: true },
     description: { type: String },
   };
 
@@ -18,6 +19,7 @@ export class ArcNavItem extends LitElement {
     super();
     this.href = '';
     this.active = false;
+    this.muted = false;
     this.description = '';
   }
 

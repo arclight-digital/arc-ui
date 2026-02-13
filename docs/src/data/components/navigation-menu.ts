@@ -61,7 +61,7 @@ Keyboard support is built in from the start. Arrow keys move between top-level i
       ],
     },
 
-    previewHtml: `<div style="width:100%;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-md);padding:var(--space-lg) 0">
+    previewHtml: `<div style="width:100%;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-md);padding:var(--space-lg) 0;min-height:280px">
   ${previewMarkup}
 </div>`,
 
@@ -245,6 +245,12 @@ export function SiteNav() {
             type: 'boolean',
             default: 'false',
             description: 'Highlights the item with an accent-coloured bottom border to indicate the current route. Set this on the top-level NavItem that corresponds to the active page.',
+          },
+          {
+            name: 'muted',
+            type: 'boolean',
+            default: 'false',
+            description: 'Renders the item in a subdued style with lighter text and no border. Use for secondary navigation links like "Blog" or "Changelog" that should not compete with primary items for attention.',
           },
           {
             name: 'description',

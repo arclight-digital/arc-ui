@@ -7,12 +7,16 @@ export interface FormProps {
   action?: string;
   method?: string;
   novalidate?: boolean;
+  loading?: boolean;
+  disabled?: boolean;
+  errorSummary?: boolean;
+  _errors?: string;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const Form: FunctionComponent<FormProps> = ({ action, method, novalidate, children, ...rest }) => (
-  <arc-form action={action} method={method} novalidate={novalidate} {...rest}>
+export const Form: FunctionComponent<FormProps> = ({ action, method, novalidate, loading, disabled, errorSummary, _errors, children, ...rest }) => (
+  <arc-form action={action} method={method} novalidate={novalidate} loading={loading} disabled={disabled} errorSummary={errorSummary} _errors={_errors} {...rest}>
     {children}
   </arc-form>
 );

@@ -114,3 +114,4 @@ export { Truncate } from './reactive/Truncate.js';
 export { MenuDivider } from './shared/MenuDivider.js';
 export { MenuItem } from './shared/MenuItem.js';
 export { Option } from './shared/Option.js';
+export { CtaBanner } from './content/CtaBanner.js';

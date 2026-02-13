@@ -34,10 +34,10 @@ const {
         <Wordmark />
       </div>
       <arc-navigation-menu slot="center">
-        <arc-nav-item href="/getting-started" active={!activeSlug || activeSlug === 'getting-started' || activeSlug === 'theming' || activeSlug === 'frameworks' || activeSlug === 'accessibility' || undefined}>Docs</arc-nav-item>
-        <arc-nav-item href="/components" active={activeSlug === 'components' || Astro.url.pathname.startsWith('/components') || undefined}>Components</arc-nav-item>
-        <arc-nav-item href="/tokens" active={activeSlug === 'tokens' || undefined}>Tokens</arc-nav-item>
-        <arc-nav-item href="/theme-synthesizer" active={activeSlug === 'theme-synthesizer' || undefined}>Synthesizer</arc-nav-item>
+        <arc-nav-item href="/docs/getting-started" active={!activeSlug || activeSlug === 'getting-started' || activeSlug === 'theming' || activeSlug === 'frameworks' || activeSlug === 'accessibility' || undefined}>Docs</arc-nav-item>
+        <arc-nav-item href="/docs/components" active={activeSlug === 'components' || Astro.url.pathname.startsWith('/docs/components') || undefined}>Components</arc-nav-item>
+        <arc-nav-item href="/docs/tokens" active={activeSlug === 'tokens' || undefined}>Tokens</arc-nav-item>
+        <arc-nav-item href="/docs/theme-synthesizer" active={activeSlug === 'theme-synthesizer' || undefined}>Synthesizer</arc-nav-item>
       </arc-navigation-menu>
       <div slot="actions" class="topbar-actions">
         <arc-badge variant="primary" class="topbar-version">v{pkg.version}</arc-badge>
@@ -57,13 +57,6 @@ const {
     </div>
 
     <!-- Main Content -->
-    {breadcrumbs.length > 1 && (
-      <arc-breadcrumb>
-        {breadcrumbs.map((crumb) => (
-          <arc-breadcrumb-item href={crumb.href || ''}>{crumb.label}</arc-breadcrumb-item>
-        ))}
-      </arc-breadcrumb>
-    )}
     <div class="docs-content">
       <slot />
     </div>
@@ -125,8 +118,4 @@ const {
     contain: inline-size;
   }
 
-  /* Breadcrumbs */
-  arc-breadcrumb {
-    margin-bottom: var(--space-lg);
-  }
 </style>
