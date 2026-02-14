@@ -6,13 +6,15 @@
   interface Props {
     value?: string;
     label?: string;
+    trend?: 'up' | 'down' | 'neutral';
+    change?: string;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { value = '', label = '', children, ...rest }: Props = $props();
+  let { value = '', label = '', trend = '', change = '', children, ...rest }: Props = $props();
 </script>
 
-<arc-stat {value} {label} {...rest}>
+<arc-stat {value} {label} {trend} {change} {...rest}>
   {@render children?.()}
 </arc-stat>

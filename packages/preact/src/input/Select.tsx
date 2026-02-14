@@ -9,14 +9,16 @@ export interface SelectProps {
   label?: string;
   name?: string;
   disabled?: boolean;
+  size?: 'sm' | 'lg';
+  error?: string;
   open?: boolean;
   _options?: string;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const Select: FunctionComponent<SelectProps> = ({ value, placeholder, label, name, disabled, open, _options, children, ...rest }) => (
-  <arc-select value={value} placeholder={placeholder} label={label} name={name} disabled={disabled} open={open} _options={_options} {...rest}>
+export const Select: FunctionComponent<SelectProps> = ({ value, placeholder, label, name, disabled, size, error, open, _options, children, ...rest }) => (
+  <arc-select value={value} placeholder={placeholder} label={label} name={name} disabled={disabled} size={size} error={error} open={open} _options={_options} {...rest}>
     {children}
   </arc-select>
 );

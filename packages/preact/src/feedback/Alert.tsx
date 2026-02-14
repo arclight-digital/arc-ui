@@ -5,14 +5,15 @@ import '@arclux/arc-ui';
 
 export interface AlertProps {
   variant?: string;
+  compact?: boolean;
   dismissible?: boolean;
   heading?: string;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const Alert: FunctionComponent<AlertProps> = ({ variant, dismissible, heading, children, ...rest }) => (
-  <arc-alert variant={variant} dismissible={dismissible} heading={heading} {...rest}>
+export const Alert: FunctionComponent<AlertProps> = ({ variant, compact, dismissible, heading, children, ...rest }) => (
+  <arc-alert variant={variant} compact={compact} dismissible={dismissible} heading={heading} {...rest}>
     {children}
   </arc-alert>
 );

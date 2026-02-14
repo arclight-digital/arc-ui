@@ -11,6 +11,8 @@ export interface InputProps {
   value?: string;
   disabled?: boolean;
   required?: boolean;
+  error?: string;
+  size?: 'sm' | 'lg';
   multiline?: boolean;
   rows?: number;
   _hasPrefix?: string;
@@ -19,8 +21,8 @@ export interface InputProps {
   [key: string]: unknown;
 }
 
-export const Input: FunctionComponent<InputProps> = ({ type, name, label, placeholder, value, disabled, required, multiline, rows, _hasPrefix, _hasSuffix, children, ...rest }) => (
-  <arc-input type={type} name={name} label={label} placeholder={placeholder} value={value} disabled={disabled} required={required} multiline={multiline} rows={rows} _hasPrefix={_hasPrefix} _hasSuffix={_hasSuffix} {...rest}>
+export const Input: FunctionComponent<InputProps> = ({ type, name, label, placeholder, value, disabled, required, error, size, multiline, rows, _hasPrefix, _hasSuffix, children, ...rest }) => (
+  <arc-input type={type} name={name} label={label} placeholder={placeholder} value={value} disabled={disabled} required={required} error={error} size={size} multiline={multiline} rows={rows} _hasPrefix={_hasPrefix} _hasSuffix={_hasSuffix} {...rest}>
     {children}
   </arc-input>
 );

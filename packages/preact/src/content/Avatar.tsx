@@ -7,12 +7,14 @@ export interface AvatarProps {
   src?: string;
   name?: string;
   size?: 'sm' | 'md' | 'lg';
+  shape?: 'square' | 'rounded';
+  status?: 'online' | 'offline' | 'busy' | 'away';
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const Avatar: FunctionComponent<AvatarProps> = ({ src, name, size, children, ...rest }) => (
-  <arc-avatar src={src} name={name} size={size} {...rest}>
+export const Avatar: FunctionComponent<AvatarProps> = ({ src, name, size, shape, status, children, ...rest }) => (
+  <arc-avatar src={src} name={name} size={size} shape={shape} status={status} {...rest}>
     {children}
   </arc-avatar>
 );

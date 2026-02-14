@@ -6,6 +6,7 @@ import { ArcAlert } from '@arclux/arc-ui';
 
 export interface AlertProps {
   variant?: string;
+  compact?: boolean;
   dismissible?: boolean;
   heading?: string;
   className?: string;

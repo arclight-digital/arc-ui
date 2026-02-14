@@ -10,12 +10,14 @@ withDefaults(defineProps<{
   menuOpen?: boolean;
   mobileMenu?: string;
   menuPosition?: string;
+  navAlign?: string;
 }>(), {
   heading: '',
   fixed: false,
   menuOpen: false,
   mobileMenu: 'sidebar',
   menuPosition: 'left',
+  navAlign: 'center',
 });
 </script>
 
@@ -26,6 +28,7 @@ withDefaults(defineProps<{
     :menuOpen="menuOpen"
     :mobileMenu="mobileMenu"
     :menuPosition="menuPosition"
+    :navAlign="navAlign"
   >
     <slot />
   </arc-top-bar>

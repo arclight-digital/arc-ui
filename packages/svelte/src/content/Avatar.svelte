@@ -7,13 +7,15 @@
     src?: string;
     name?: string;
     size?: 'sm' | 'md' | 'lg';
+    shape?: 'square' | 'rounded';
+    status?: 'online' | 'offline' | 'busy' | 'away';
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { src = '', name = '', size = 'md', children, ...rest }: Props = $props();
+  let { src = '', name = '', size = 'md', shape = 'circle', status = '', children, ...rest }: Props = $props();
 </script>
 
-<arc-avatar {src} {name} {size} {...rest}>
+<arc-avatar {src} {name} {size} {shape} {status} {...rest}>
   {@render children?.()}
 </arc-avatar>

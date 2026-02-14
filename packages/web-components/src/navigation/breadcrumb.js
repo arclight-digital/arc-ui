@@ -4,7 +4,8 @@ import './breadcrumb-item.js';
 
 export class ArcBreadcrumb extends LitElement {
   static properties = {
-    _items: { state: true },
+    separator: { type: String },
+    _items:    { state: true },
   };
 
   static styles = [
@@ -82,6 +83,7 @@ export class ArcBreadcrumb extends LitElement {
 
   constructor() {
     super();
+    this.separator = '/';
     this._items = [];
   }
 
@@ -115,7 +117,7 @@ export class ArcBreadcrumb extends LitElement {
                       ? html`<a class="breadcrumb__link" href=${item.href} part="link">${item.label}</a>`
                       : html`<button class="breadcrumb__link" @click=${() => this._handleClick(item.href)} part="link">${item.label}</button>`
                     }
-                    <span class="breadcrumb__separator" aria-hidden="true" part="separator">/</span>
+                    <span class="breadcrumb__separator" aria-hidden="true" part="separator">${this.separator}</span>
                   `
               }
             </span>

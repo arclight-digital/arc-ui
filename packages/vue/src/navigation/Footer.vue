@@ -7,9 +7,11 @@ defineOptions({ name: 'Footer' });
 withDefaults(defineProps<{
   compact?: boolean;
   border?: boolean;
+  align?: 'center';
 }>(), {
   compact: false,
   border: true,
+  align: 'left',
 });
 </script>
 
@@ -17,6 +19,7 @@ withDefaults(defineProps<{
   <arc-footer
     :compact="compact"
     :border="border"
+    :align="align"
   >
     <slot />
   </arc-footer>

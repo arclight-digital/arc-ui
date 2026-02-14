@@ -4,15 +4,16 @@ import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui';
 
 export interface BreadcrumbProps {
+  separator?: string;
   _items?: string;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Breadcrumb: Component<BreadcrumbProps> = (props) => {
-  const [local, rest] = splitProps(props, ['_items', 'children']);
+  const [local, rest] = splitProps(props, ['separator', '_items', 'children']);
   return (
-    <arc-breadcrumb _items={local._items} {...rest}>
+    <arc-breadcrumb separator={local.separator} _items={local._items} {...rest}>
       {local.children}
     </arc-breadcrumb>
   );

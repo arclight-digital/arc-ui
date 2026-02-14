@@ -7,12 +7,14 @@ defineOptions({ name: 'Sidebar' });
 withDefaults(defineProps<{
   active?: string;
   collapsed?: boolean;
+  position?: 'right';
   width?: string;
   glow?: boolean;
   _sections?: string;
 }>(), {
   active: '',
   collapsed: false,
+  position: 'left',
   width: '260px',
   glow: false,
   _sections: () => ([]),
@@ -23,6 +25,7 @@ withDefaults(defineProps<{
   <arc-sidebar
     :active="active"
     :collapsed="collapsed"
+    :position="position"
     :width="width"
     :glow="glow"
     :_sections="_sections"

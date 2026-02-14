@@ -10,6 +10,14 @@
         padding-inline: var(--space-lg);
       }
 
-      .arc-container[narrow] .container {
-        max-width: var(--max-width-sm);
-      }
+      .arc-container[narrow] .container,
+      .arc-container[data-size="sm"] .container { max-width: var(--max-width-sm); }
+      .arc-container[data-size="md"] .container { max-width: var(--max-width); }
+      .arc-container[data-size="lg"] .container { max-width: 1400px; }
+      .arc-container[data-size="xl"] .container { max-width: 1600px; }
+      .arc-container[data-size="full"] .container { max-width: none; }
+
+      /* Padding variants */
+      .arc-container[data-padding="none"] .container { padding-inline: 0; }
+      .arc-container[data-padding="sm"] .container { padding-inline: var(--space-sm); }
+      .arc-container[data-padding="lg"] .container { padding-inline: var(--space-xl); }

@@ -11,6 +11,8 @@ export class ArcSelect extends LitElement {
     label:       { type: String },
     name:        { type: String },
     disabled:    { type: Boolean, reflect: true },
+    size:        { type: String, reflect: true },
+    error:       { type: String },
     open:        { type: Boolean, reflect: true },
     _options:    { state: true },
   };
@@ -113,6 +115,29 @@ export class ArcSelect extends LitElement {
         color: var(--accent-primary);
       }
 
+      /* Sizes */
+      :host([size="sm"]) .select__trigger { padding: var(--space-xs) var(--space-sm); font-size: var(--text-sm); }
+      :host([size="sm"]) .select__label { font-size: calc(var(--label-inline-size) - 1px); }
+      :host([size="lg"]) .select__trigger { padding: var(--space-md) var(--space-lg); font-size: var(--text-md); }
+
+      /* Error state */
+      .select--error .select__trigger {
+        border-color: var(--color-error);
+      }
+
+      .select--error .select__trigger:focus-visible,
+      :host([open]) .select--error .select__trigger {
+        border-color: var(--color-error);
+        box-shadow: 0 0 0 2px var(--bg-deep), 0 0 0 4px var(--color-error), 0 0 16px rgba(var(--color-error-rgb), 0.2);
+      }
+
+      .select__error {
+        font-size: var(--text-xs);
+        color: var(--color-error);
+        line-height: 1.4;
+        margin-top: var(--space-xs);
+      }
+
       .select__slot-host { display: none; }
 
       @media (prefers-reduced-motion: reduce) {
@@ -135,6 +160,8 @@ export class ArcSelect extends LitElement {
     this.label = '';
     this.name = '';
     this.disabled = false;
+    this.size = 'md';
+    this.error = '';
     this.open = false;
     this._options = [];
     this._handleOutsideClick = this._handleOutsideClick.bind(this);
@@ -226,8 +253,10 @@ export class ArcSelect extends LitElement {
   render() {
     const display = this._selectedLabel;
 
+    const hasError = !!this.error;
+
     return html`
-      <div class="select" part="select">
+      <div class="select ${hasError ? 'select--error' : ''}" part="select">
         <div class="select__slot-host">
           <slot @slotchange=${this._onSlotChange}></slot>
         </div>
@@ -259,6 +288,7 @@ export class ArcSelect extends LitElement {
             >${opt.label}</button>
           `)}
         </div>
+        ${hasError ? html`<span class="select__error" role="alert" part="error">${this.error}</span>` : ''}
       </div>
     `;
   }

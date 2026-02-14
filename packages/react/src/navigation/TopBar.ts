@@ -10,6 +10,7 @@ export interface TopBarProps {
   menuOpen?: boolean;
   mobileMenu?: string;
   menuPosition?: string;
+  navAlign?: string;
   className?: string;
   children?: React.ReactNode;
 }

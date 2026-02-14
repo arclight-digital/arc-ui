@@ -8,12 +8,14 @@ withDefaults(defineProps<{
   value?: string;
   name?: string;
   disabled?: boolean;
+  size?: 'sm' | 'lg';
   orientation?: 'horizontal';
   _radios?: string;
 }>(), {
   value: '',
   name: '',
   disabled: false,
+  size: 'md',
   orientation: 'vertical',
   _radios: () => ([]),
 });
@@ -28,6 +30,7 @@ defineEmits<{
     :value="value"
     :name="name"
     :disabled="disabled"
+    :size="size"
     :orientation="orientation"
     :_radios="_radios"
   >

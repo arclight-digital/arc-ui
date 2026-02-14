@@ -5,6 +5,7 @@ import '@arclux/arc-ui';
 
 export interface AlertProps {
   variant?: string;
+  compact?: boolean;
   dismissible?: boolean;
   heading?: string;
   children?: JSX.Element;
@@ -12,9 +13,9 @@ export interface AlertProps {
 }
 
 export const Alert: Component<AlertProps> = (props) => {
-  const [local, rest] = splitProps(props, ['variant', 'dismissible', 'heading', 'children']);
+  const [local, rest] = splitProps(props, ['variant', 'compact', 'dismissible', 'heading', 'children']);
   return (
-    <arc-alert variant={local.variant} dismissible={local.dismissible} heading={local.heading} {...rest}>
+    <arc-alert variant={local.variant} compact={local.compact} dismissible={local.dismissible} heading={local.heading} {...rest}>
       {local.children}
     </arc-alert>
   );

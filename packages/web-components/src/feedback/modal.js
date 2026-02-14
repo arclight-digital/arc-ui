@@ -3,10 +3,11 @@ import { tokenStyles } from '../shared-styles.js';
 
 export class ArcModal extends LitElement {
   static properties = {
-    open:     { type: Boolean, reflect: true },
-    heading:  { type: String },
-    size:     { type: String, reflect: true },
-    closable: { type: Boolean },
+    open:       { type: Boolean, reflect: true },
+    heading:    { type: String },
+    size:       { type: String, reflect: true },
+    fullscreen: { type: Boolean, reflect: true },
+    closable:   { type: Boolean },
   };
 
   static styles = [
@@ -57,6 +58,19 @@ export class ArcModal extends LitElement {
       :host(:not([size])) .modal__dialog,
       :host([size="md"]) .modal__dialog { max-width: 560px; }
       :host([size="lg"]) .modal__dialog { max-width: 720px; }
+
+      :host([fullscreen]) .modal__dialog {
+        max-width: none;
+        max-height: none;
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+        border: none;
+      }
+
+      :host([fullscreen]) .modal__backdrop {
+        padding: 0;
+      }
 
       .modal__header {
         display: flex;
@@ -127,6 +141,7 @@ export class ArcModal extends LitElement {
     this.open = false;
     this.heading = '';
     this.size = 'md';
+    this.fullscreen = false;
     this.closable = true;
     this._handleKeydown = this._handleKeydown.bind(this);
   }

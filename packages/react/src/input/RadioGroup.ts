@@ -8,6 +8,7 @@ export interface RadioGroupProps {
   value?: string;
   name?: string;
   disabled?: boolean;
+  size?: 'sm' | 'lg';
   orientation?: 'horizontal';
   _radios?: string;
   className?: string;

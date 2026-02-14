@@ -6,9 +6,13 @@ defineOptions({ name: 'Card' });
 
 withDefaults(defineProps<{
   href?: string;
+  padding?: 'none' | 'sm' | 'lg';
+  interactive?: boolean;
   _hasFooter?: string;
 }>(), {
   href: '',
+  padding: 'md',
+  interactive: false,
   _hasFooter: false,
 });
 </script>
@@ -16,6 +20,8 @@ withDefaults(defineProps<{
 <template>
   <arc-card
     :href="href"
+    :padding="padding"
+    :interactive="interactive"
     :_hasFooter="_hasFooter"
   >
     <slot />

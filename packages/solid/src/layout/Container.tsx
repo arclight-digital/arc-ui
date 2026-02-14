@@ -5,14 +5,16 @@ import '@arclux/arc-ui';
 
 export interface ContainerProps {
   narrow?: boolean;
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
+  padding?: 'none' | 'sm' | 'lg';
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Container: Component<ContainerProps> = (props) => {
-  const [local, rest] = splitProps(props, ['narrow', 'children']);
+  const [local, rest] = splitProps(props, ['narrow', 'size', 'padding', 'children']);
   return (
-    <arc-container narrow={local.narrow} {...rest}>
+    <arc-container narrow={local.narrow} size={local.size} padding={local.padding} {...rest}>
       {local.children}
     </arc-container>
   );

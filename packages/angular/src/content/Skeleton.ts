@@ -7,10 +7,11 @@ import '@arclux/arc-ui';
   selector: 'arc-skeleton',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-skeleton [attr.variant]="variant" [attr.width]="width" [attr.height]="height"><ng-content /></arc-skeleton>`,
+  template: `<arc-skeleton [attr.variant]="variant" [attr.width]="width" [attr.height]="height" [attr.count]="count"><ng-content /></arc-skeleton>`,
 })
 export class Skeleton {
   @Input() variant: 'text' | 'circle' | 'rect' = 'text';
   @Input() width: string = '';
   @Input() height: string = '';
+  @Input() count: number = 1;
 }

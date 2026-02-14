@@ -8,10 +8,14 @@ withDefaults(defineProps<{
   src?: string;
   name?: string;
   size?: 'sm' | 'md' | 'lg';
+  shape?: 'square' | 'rounded';
+  status?: 'online' | 'offline' | 'busy' | 'away';
 }>(), {
   src: '',
   name: '',
   size: 'md',
+  shape: 'circle',
+  status: '',
 });
 </script>
 
@@ -20,6 +24,8 @@ withDefaults(defineProps<{
     :src="src"
     :name="name"
     :size="size"
+    :shape="shape"
+    :status="status"
   >
     <slot />
   </arc-avatar>

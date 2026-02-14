@@ -5,6 +5,7 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcBreadcrumb } from '@arclux/arc-ui';
 
 export interface BreadcrumbProps {
+  separator?: string;
   _items?: string;
   className?: string;
   children?: React.ReactNode;

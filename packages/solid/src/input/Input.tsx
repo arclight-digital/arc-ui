@@ -11,6 +11,8 @@ export interface InputProps {
   value?: string;
   disabled?: boolean;
   required?: boolean;
+  error?: string;
+  size?: 'sm' | 'lg';
   multiline?: boolean;
   rows?: number;
   _hasPrefix?: string;
@@ -20,9 +22,9 @@ export interface InputProps {
 }
 
 export const Input: Component<InputProps> = (props) => {
-  const [local, rest] = splitProps(props, ['type', 'name', 'label', 'placeholder', 'value', 'disabled', 'required', 'multiline', 'rows', '_hasPrefix', '_hasSuffix', 'children']);
+  const [local, rest] = splitProps(props, ['type', 'name', 'label', 'placeholder', 'value', 'disabled', 'required', 'error', 'size', 'multiline', 'rows', '_hasPrefix', '_hasSuffix', 'children']);
   return (
-    <arc-input type={local.type} name={local.name} label={local.label} placeholder={local.placeholder} value={local.value} disabled={local.disabled} required={local.required} multiline={local.multiline} rows={local.rows} _hasPrefix={local._hasPrefix} _hasSuffix={local._hasSuffix} {...rest}>
+    <arc-input type={local.type} name={local.name} label={local.label} placeholder={local.placeholder} value={local.value} disabled={local.disabled} required={local.required} error={local.error} size={local.size} multiline={local.multiline} rows={local.rows} _hasPrefix={local._hasPrefix} _hasSuffix={local._hasSuffix} {...rest}>
       {local.children}
     </arc-input>
   );

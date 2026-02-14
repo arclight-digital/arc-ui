@@ -6,6 +6,7 @@ import { getStatusIcon } from '../status-utils.js';
 export class ArcAlert extends LitElement {
   static properties = {
     variant:     { type: String, reflect: true },
+    compact:     { type: Boolean, reflect: true },
     dismissible: { type: Boolean },
     heading:     { type: String },
   };
@@ -72,6 +73,12 @@ export class ArcAlert extends LitElement {
         color: var(--text-secondary);
       }
 
+      /* Compact variant */
+      :host([compact]) .alert { padding: var(--space-sm) var(--space-md); gap: var(--space-sm); }
+      :host([compact]) .alert__icon-wrap { width: 24px; height: 24px; font-size: var(--text-sm); }
+      :host([compact]) .alert__heading { font-size: var(--text-sm); margin-bottom: 2px; }
+      :host([compact]) .alert__content { font-size: var(--text-xs); }
+
       .alert__dismiss {
         position: absolute;
         top: var(--space-sm);
@@ -116,6 +123,7 @@ export class ArcAlert extends LitElement {
   constructor() {
     super();
     this.variant = 'info';
+    this.compact = false;
     this.dismissible = false;
     this.heading = '';
   }

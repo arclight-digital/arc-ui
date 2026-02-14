@@ -5,15 +5,16 @@ import '@arclux/arc-ui';
 
 export interface BadgeProps {
   variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';
+  size?: 'sm' | 'lg';
   color?: string;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Badge: Component<BadgeProps> = (props) => {
-  const [local, rest] = splitProps(props, ['variant', 'color', 'children']);
+  const [local, rest] = splitProps(props, ['variant', 'size', 'color', 'children']);
   return (
-    <arc-badge variant={local.variant} color={local.color} {...rest}>
+    <arc-badge variant={local.variant} size={local.size} color={local.color} {...rest}>
       {local.children}
     </arc-badge>
   );

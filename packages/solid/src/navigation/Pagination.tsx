@@ -7,14 +7,15 @@ export interface PaginationProps {
   total?: number;
   current?: number;
   siblings?: number;
+  compact?: boolean;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Pagination: Component<PaginationProps> = (props) => {
-  const [local, rest] = splitProps(props, ['total', 'current', 'siblings', 'children']);
+  const [local, rest] = splitProps(props, ['total', 'current', 'siblings', 'compact', 'children']);
   return (
-    <arc-pagination total={local.total} current={local.current} siblings={local.siblings} {...rest}>
+    <arc-pagination total={local.total} current={local.current} siblings={local.siblings} compact={local.compact} {...rest}>
       {local.children}
     </arc-pagination>
   );

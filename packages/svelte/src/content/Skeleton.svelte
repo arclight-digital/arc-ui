@@ -7,13 +7,14 @@
     variant?: 'text' | 'circle' | 'rect';
     width?: string;
     height?: string;
+    count?: number;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { variant = 'text', width = '', height = '', children, ...rest }: Props = $props();
+  let { variant = 'text', width = '', height = '', count = 1, children, ...rest }: Props = $props();
 </script>
 
-<arc-skeleton {variant} {width} {height} {...rest}>
+<arc-skeleton {variant} {width} {height} {count} {...rest}>
   {@render children?.()}
 </arc-skeleton>

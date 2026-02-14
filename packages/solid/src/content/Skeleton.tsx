@@ -7,14 +7,15 @@ export interface SkeletonProps {
   variant?: 'text' | 'circle' | 'rect';
   width?: string;
   height?: string;
+  count?: number;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Skeleton: Component<SkeletonProps> = (props) => {
-  const [local, rest] = splitProps(props, ['variant', 'width', 'height', 'children']);
+  const [local, rest] = splitProps(props, ['variant', 'width', 'height', 'count', 'children']);
   return (
-    <arc-skeleton variant={local.variant} width={local.width} height={local.height} {...rest}>
+    <arc-skeleton variant={local.variant} width={local.width} height={local.height} count={local.count} {...rest}>
       {local.children}
     </arc-skeleton>
   );

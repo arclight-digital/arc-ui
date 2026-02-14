@@ -5,15 +5,16 @@
 
   interface Props {
     variant?: string;
+    compact?: boolean;
     dismissible?: boolean;
     heading?: string;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { variant = 'info', dismissible = false, heading = '', children, ...rest }: Props = $props();
+  let { variant = 'info', compact = false, dismissible = false, heading = '', children, ...rest }: Props = $props();
 </script>
 
-<arc-alert {variant} {dismissible} {heading} {...rest}>
+<arc-alert {variant} {compact} {dismissible} {heading} {...rest}>
   {@render children?.()}
 </arc-alert>

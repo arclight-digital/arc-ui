@@ -12,14 +12,16 @@
     disabled?: boolean;
     readonly?: boolean;
     resize?: 'none' | 'vertical' | 'horizontal' | 'both';
+    size?: 'sm' | 'lg';
+    autoResize?: boolean;
     error?: string;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { value = '', placeholder = '', label = '', rows = 4, maxlength = 0, disabled = false, readonly = false, resize = 'vertical', error = '', children, ...rest }: Props = $props();
+  let { value = '', placeholder = '', label = '', rows = 4, maxlength = 0, disabled = false, readonly = false, resize = 'vertical', size = 'md', autoResize = false, error = '', children, ...rest }: Props = $props();
 </script>
 
-<arc-textarea {value} {placeholder} {label} {rows} {maxlength} {disabled} {readonly} {resize} {error} {...rest}>
+<arc-textarea {value} {placeholder} {label} {rows} {maxlength} {disabled} {readonly} {resize} {size} {autoResize} {error} {...rest}>
   {@render children?.()}
 </arc-textarea>

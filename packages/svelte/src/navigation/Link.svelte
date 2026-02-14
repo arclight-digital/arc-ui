@@ -6,15 +6,16 @@
   interface Props {
     href?: string;
     variant?: 'muted' | 'nav';
+    underline?: 'always' | 'never';
     active?: boolean;
     external?: boolean;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { href = '', variant = 'default', active = false, external = false, children, ...rest }: Props = $props();
+  let { href = '', variant = 'default', underline = 'hover', active = false, external = false, children, ...rest }: Props = $props();
 </script>
 
-<arc-link {href} {variant} {active} {external} {...rest}>
+<arc-link {href} {variant} {underline} {active} {external} {...rest}>
   {@render children?.()}
 </arc-link>

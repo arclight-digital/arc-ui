@@ -5,6 +5,7 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcAccordion } from '@arclux/arc-ui';
 
 export interface AccordionProps {
+  multiple?: boolean;
   _items?: string;
   _openItems?: string;
   className?: string;

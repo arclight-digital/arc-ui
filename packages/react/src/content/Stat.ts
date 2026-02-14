@@ -7,6 +7,8 @@ import { ArcStat } from '@arclux/arc-ui';
 export interface StatProps {
   value?: string;
   label?: string;
+  trend?: 'up' | 'down' | 'neutral';
+  change?: string;
   className?: string;
   children?: React.ReactNode;
 }

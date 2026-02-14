@@ -9,13 +9,14 @@
     menuOpen?: boolean;
     mobileMenu?: string;
     menuPosition?: string;
+    navAlign?: string;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { heading = '', fixed = false, menuOpen = false, mobileMenu = 'sidebar', menuPosition = 'left', children, ...rest }: Props = $props();
+  let { heading = '', fixed = false, menuOpen = false, mobileMenu = 'sidebar', menuPosition = 'left', navAlign = 'center', children, ...rest }: Props = $props();
 </script>
 
-<arc-top-bar {heading} {fixed} {menuOpen} {mobileMenu} {menuPosition} {...rest}>
+<arc-top-bar {heading} {fixed} {menuOpen} {mobileMenu} {menuPosition} {navAlign} {...rest}>
   {@render children?.()}
 </arc-top-bar>

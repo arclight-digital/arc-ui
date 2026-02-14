@@ -4,6 +4,7 @@ import { tokenStyles } from '../shared-styles.js';
 export class ArcBadge extends LitElement {
   static properties = {
     variant: { type: String, reflect: true },
+    size:    { type: String, reflect: true },
     color:   { type: String },
   };
 
@@ -74,6 +75,10 @@ export class ArcBadge extends LitElement {
       :host([variant="error"]:hover) .badge { box-shadow: 0 0 12px rgba(var(--color-error-rgb), 0.15); }
       :host([variant="info"]:hover) .badge { box-shadow: 0 0 12px rgba(var(--color-info-rgb), 0.15); }
 
+      /* Sizes */
+      :host([size="sm"]) .badge { font-size: calc(var(--text-xs) - 1px); padding: 2px var(--space-xs); }
+      :host([size="lg"]) .badge { font-size: var(--text-sm); padding: var(--space-sm) var(--space-md); }
+
       @media (prefers-reduced-motion: reduce) {
         :host *,
         :host *::before,
@@ -89,6 +94,7 @@ export class ArcBadge extends LitElement {
   constructor() {
     super();
     this.variant = 'default';
+    this.size = 'md';
     this.color = '';
   }
 

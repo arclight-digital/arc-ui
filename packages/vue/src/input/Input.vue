@@ -12,6 +12,8 @@ withDefaults(defineProps<{
   value?: string;
   disabled?: boolean;
   required?: boolean;
+  error?: string;
+  size?: 'sm' | 'lg';
   multiline?: boolean;
   rows?: number;
   _hasPrefix?: string;
@@ -24,6 +26,8 @@ withDefaults(defineProps<{
   value: '',
   disabled: false,
   required: false,
+  error: '',
+  size: 'md',
   multiline: false,
   rows: 5,
   _hasPrefix: false,
@@ -45,6 +49,8 @@ defineEmits<{
     :value="value"
     :disabled="disabled"
     :required="required"
+    :error="error"
+    :size="size"
     :multiline="multiline"
     :rows="rows"
     :_hasPrefix="_hasPrefix"

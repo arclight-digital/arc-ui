@@ -7,6 +7,7 @@ import { ArcSidebar } from '@arclux/arc-ui';
 export interface SidebarProps {
   active?: string;
   collapsed?: boolean;
+  position?: 'right';
   width?: string;
   glow?: boolean;
   _sections?: string;

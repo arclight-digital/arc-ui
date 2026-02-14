@@ -9,15 +9,17 @@
     label?: string;
     name?: string;
     disabled?: boolean;
+    size?: 'sm' | 'lg';
+    error?: string;
     open?: boolean;
     _options?: string;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { value = '', placeholder = 'Select...', label = '', name = '', disabled = false, open = false, _options = [], children, ...rest }: Props = $props();
+  let { value = '', placeholder = 'Select...', label = '', name = '', disabled = false, size = 'md', error = '', open = false, _options = [], children, ...rest }: Props = $props();
 </script>
 
-<arc-select {value} {placeholder} {label} {name} {disabled} {open} {_options} {...rest}>
+<arc-select {value} {placeholder} {label} {name} {disabled} {size} {error} {open} {_options} {...rest}>
   {@render children?.()}
 </arc-select>

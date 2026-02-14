@@ -7,12 +7,13 @@ import '@arclux/arc-ui';
   selector: 'arc-progress',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-progress [attr.value]="value" [attr.variant]="variant" [attr.size]="size" [indeterminate]="indeterminate" [attr.label]="label"><ng-content /></arc-progress>`,
+  template: `<arc-progress [attr.value]="value" [attr.variant]="variant" [attr.size]="size" [indeterminate]="indeterminate" [showValue]="showValue" [attr.label]="label"><ng-content /></arc-progress>`,
 })
 export class Progress {
   @Input() value: number = 0;
   @Input() variant: string = 'bar';
   @Input() size: 'sm' | 'md' | 'lg' = 'md';
   @Input() indeterminate: boolean = false;
+  @Input() showValue: boolean = false;
   @Input() label: string = '';
 }

@@ -9,6 +9,7 @@ export interface ButtonProps {
   size?: 'sm' | 'md' | 'lg';
   href?: string;
   disabled?: boolean;
+  loading?: boolean;
   type?: string;
   _hasPrefix?: string;
   _hasSuffix?: string;

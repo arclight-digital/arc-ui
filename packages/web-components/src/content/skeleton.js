@@ -6,6 +6,7 @@ export class ArcSkeleton extends LitElement {
     variant: { type: String, reflect: true },
     width:   { type: String },
     height:  { type: String },
+    count:   { type: Number },
   };
 
   static styles = [
@@ -43,6 +44,12 @@ export class ArcSkeleton extends LitElement {
         border-radius: var(--radius-md);
       }
 
+      .skeleton-group {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-sm);
+      }
+
       @media (prefers-reduced-motion: reduce) {
         :host *,
         :host *::before,
@@ -60,24 +67,28 @@ export class ArcSkeleton extends LitElement {
     this.variant = 'text';
     this.width = '';
     this.height = '';
+    this.count = 1;
   }
 
-  render() {
+  _renderOne() {
     const styles = [
       this.width ? `width:${this.width}` : '',
       this.height ? `height:${this.height}` : '',
       this.variant === 'circle' && !this.height && this.width ? `height:${this.width}` : '',
     ].filter(Boolean).join(';');
 
+    return html`<div class="skeleton" part="skeleton" style=${styles}></div>`;
+  }
+
+  render() {
+    const n = Math.max(1, this.count);
+    if (n === 1) {
+      return html`<div role="status" aria-label="Loading" aria-busy="true">${this._renderOne()}</div>`;
+    }
     return html`
-      <div
-        class="skeleton"
-        part="skeleton"
-        role="status"
-        aria-label="Loading"
-        aria-busy="true"
-        style=${styles}
-      ></div>
+      <div class="skeleton-group" role="status" aria-label="Loading" aria-busy="true">
+        ${Array.from({ length: n }, () => this._renderOne())}
+      </div>
     `;
   }
 }

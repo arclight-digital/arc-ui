@@ -33,6 +33,12 @@
         border-radius: var(--radius-md);
       }
 
+      .arc-skeleton .skeleton-group {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-sm);
+      }
+
       @media (prefers-reduced-motion: reduce) {
         .arc-skeleton *,
         .arc-skeleton *::before,

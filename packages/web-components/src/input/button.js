@@ -8,6 +8,7 @@ export class ArcButton extends LitElement {
     size:       { type: String, reflect: true },
     href:       { type: String },
     disabled:   { type: Boolean, reflect: true },
+    loading:    { type: Boolean, reflect: true },
     type:       { type: String },
     _hasPrefix: { state: true },
     _hasSuffix: { state: true },
@@ -18,7 +19,27 @@ export class ArcButton extends LitElement {
     buttonVariantStyles,
     css`
       :host { display: inline-flex; }
-      :host([disabled]) { pointer-events: none; }
+      :host([disabled]),
+      :host([loading]) { pointer-events: none; }
+
+      :host([loading]) .btn { opacity: 0.7; }
+
+      .btn__spinner {
+        display: none;
+        width: 14px;
+        height: 14px;
+        border: 2px solid currentColor;
+        border-top-color: transparent;
+        border-radius: var(--radius-full);
+        animation: arc-btn-spin 600ms linear infinite;
+      }
+
+      :host([loading]) .btn__spinner { display: inline-block; }
+      :host([loading]) .btn__label { opacity: 0.6; }
+
+      @keyframes arc-btn-spin {
+        to { transform: rotate(360deg); }
+      }
 
       .btn {
         display: inline-flex;
@@ -103,6 +124,7 @@ export class ArcButton extends LitElement {
     this.size = 'md';
     this.href = '';
     this.disabled = false;
+    this.loading = false;
     this.type = 'button';
     this._hasPrefix = false;
     this._hasSuffix = false;
@@ -118,10 +140,11 @@ export class ArcButton extends LitElement {
 
   _renderContent() {
     return html`
+      ${this.loading ? html`<span class="btn__spinner" aria-hidden="true"></span>` : ''}
       <span class="btn__prefix ${this._hasPrefix ? '' : 'btn__prefix--empty'}">
         <slot name="prefix" @slotchange=${this._onPrefixSlotChange}></slot>
       </span>
-      <slot></slot>
+      <span class="btn__label"><slot></slot></span>
       <span class="btn__suffix ${this._hasSuffix ? '' : 'btn__suffix--empty'}">
         <slot name="suffix" @slotchange=${this._onSuffixSlotChange}></slot>
       </span>
@@ -132,7 +155,7 @@ export class ArcButton extends LitElement {
     if (this.href) {
       return html`<a class="btn" href=${this.href} part="button">${this._renderContent()}</a>`;
     }
-    return html`<button class="btn" type=${this.type} ?disabled=${this.disabled} part="button">${this._renderContent()}</button>`;
+    return html`<button class="btn" type=${this.type} ?disabled=${this.disabled || this.loading} aria-busy=${this.loading ? 'true' : 'false'} part="button">${this._renderContent()}</button>`;
   }
 }
 

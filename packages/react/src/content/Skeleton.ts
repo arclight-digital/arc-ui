@@ -8,6 +8,7 @@ export interface SkeletonProps {
   variant?: 'text' | 'circle' | 'rect';
   width?: string;
   height?: string;
+  count?: number;
   className?: string;
   children?: React.ReactNode;
 }

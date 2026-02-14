@@ -8,10 +8,12 @@ withDefaults(defineProps<{
   variant?: 'text' | 'circle' | 'rect';
   width?: string;
   height?: string;
+  count?: number;
 }>(), {
   variant: 'text',
   width: '',
   height: '',
+  count: 1,
 });
 </script>
 
@@ -20,6 +22,7 @@ withDefaults(defineProps<{
     :variant="variant"
     :width="width"
     :height="height"
+    :count="count"
   >
     <slot />
   </arc-skeleton>

@@ -7,6 +7,7 @@ export interface CheckboxProps {
   checked?: boolean;
   indeterminate?: boolean;
   disabled?: boolean;
+  size?: 'sm' | 'lg';
   label?: string;
   name?: string;
   value?: string;
@@ -14,8 +15,8 @@ export interface CheckboxProps {
   [key: string]: unknown;
 }
 
-export const Checkbox: FunctionComponent<CheckboxProps> = ({ checked, indeterminate, disabled, label, name, value, children, ...rest }) => (
-  <arc-checkbox checked={checked} indeterminate={indeterminate} disabled={disabled} label={label} name={name} value={value} {...rest}>
+export const Checkbox: FunctionComponent<CheckboxProps> = ({ checked, indeterminate, disabled, size, label, name, value, children, ...rest }) => (
+  <arc-checkbox checked={checked} indeterminate={indeterminate} disabled={disabled} size={size} label={label} name={name} value={value} {...rest}>
     {children}
   </arc-checkbox>
 );

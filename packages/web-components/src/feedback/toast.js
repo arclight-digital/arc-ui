@@ -110,6 +110,26 @@ export class ArcToast extends LitElement {
 
       .toast__dismiss:hover { color: var(--text-primary); }
 
+      .toast__action {
+        background: none;
+        border: none;
+        color: var(--_status-color);
+        cursor: pointer;
+        font-family: var(--font-accent);
+        font-size: var(--text-xs);
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        padding: var(--space-xs) var(--space-sm);
+        border-radius: var(--radius-sm);
+        transition: background var(--transition-fast);
+        white-space: nowrap;
+      }
+
+      .toast__action:hover {
+        background: rgba(var(--_status-rgb), 0.1);
+      }
+
       .toast.is-exiting {
         animation: toast-out 200ms ease-in forwards;
       }
@@ -145,14 +165,19 @@ export class ArcToast extends LitElement {
     this._counter = 0;
   }
 
-  show({ message, variant = 'info', duration }) {
+  show({ message, variant = 'info', duration, action, actionLabel, persistent = false }) {
     const id = ++this._counter;
     const dur = duration ?? this.duration;
-    this._toasts = [...this._toasts, { id, message, variant }];
+    this._toasts = [...this._toasts, { id, message, variant, action, actionLabel }];
 
-    if (dur > 0) {
+    if (!persistent && dur > 0) {
       setTimeout(() => this._dismiss(id), dur);
     }
+  }
+
+  _handleAction(toast) {
+    if (toast.action) toast.action();
+    this._dismiss(toast.id);
   }
 
   _dismiss(id) {
@@ -183,6 +208,9 @@ export class ArcToast extends LitElement {
           <div class="toast" style=${statusStyle(t.variant)} data-toast-id=${t.id} part="toast">
             <span class="toast__icon" aria-hidden="true">${getStatusIcon(t.variant)}</span>
             <span class="toast__message">${t.message}</span>
+            ${t.actionLabel ? html`
+              <button class="toast__action" @click=${() => this._handleAction(t)} part="action">${t.actionLabel}</button>
+            ` : ''}
             <button class="toast__dismiss" @click=${() => this._dismiss(t.id)} aria-label="Dismiss">&times;</button>
           </div>
         `)}

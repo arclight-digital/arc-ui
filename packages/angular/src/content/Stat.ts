@@ -7,9 +7,11 @@ import '@arclux/arc-ui';
   selector: 'arc-stat',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-stat [attr.value]="value" [attr.label]="label"><ng-content /></arc-stat>`,
+  template: `<arc-stat [attr.value]="value" [attr.label]="label" [attr.trend]="trend" [attr.change]="change"><ng-content /></arc-stat>`,
 })
 export class Stat {
   @Input() value: string = '';
   @Input() label: string = '';
+  @Input() trend: 'up' | 'down' | 'neutral' = '';
+  @Input() change: string = '';
 }

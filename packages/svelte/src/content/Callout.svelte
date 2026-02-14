@@ -5,13 +5,15 @@
 
   interface Props {
     variant?: string;
+    dismissible?: boolean;
+    _dismissed?: string;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { variant = 'info', children, ...rest }: Props = $props();
+  let { variant = 'info', dismissible = false, _dismissed = false, children, ...rest }: Props = $props();
 </script>
 
-<arc-callout {variant} {...rest}>
+<arc-callout {variant} {dismissible} {_dismissed} {...rest}>
   {@render children?.()}
 </arc-callout>

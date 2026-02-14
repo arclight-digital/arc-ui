@@ -9,6 +9,8 @@ export interface SelectProps {
   label?: string;
   name?: string;
   disabled?: boolean;
+  size?: 'sm' | 'lg';
+  error?: string;
   open?: boolean;
   _options?: string;
   children?: JSX.Element;
@@ -16,9 +18,9 @@ export interface SelectProps {
 }
 
 export const Select: Component<SelectProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'placeholder', 'label', 'name', 'disabled', 'open', '_options', 'children']);
+  const [local, rest] = splitProps(props, ['value', 'placeholder', 'label', 'name', 'disabled', 'size', 'error', 'open', '_options', 'children']);
   return (
-    <arc-select value={local.value} placeholder={local.placeholder} label={local.label} name={local.name} disabled={local.disabled} open={local.open} _options={local._options} {...rest}>
+    <arc-select value={local.value} placeholder={local.placeholder} label={local.label} name={local.name} disabled={local.disabled} size={local.size} error={local.error} open={local.open} _options={local._options} {...rest}>
       {local.children}
     </arc-select>
   );

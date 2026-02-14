@@ -3,9 +3,10 @@ import { tokenStyles } from '../shared-styles.js';
 
 export class ArcDivider extends LitElement {
   static properties = {
-    variant: { type: String, reflect: true },
-    align: { type: String, reflect: true },
+    variant:  { type: String, reflect: true },
+    align:    { type: String, reflect: true },
     vertical: { type: Boolean, reflect: true },
+    label:    { type: String },
   };
 
   static styles = [
@@ -128,6 +129,33 @@ export class ArcDivider extends LitElement {
         background: linear-gradient(180deg, transparent, rgba(var(--text-primary-rgb),0.35), transparent);
       }
 
+      /* Labeled divider */
+      .divider--labeled {
+        display: flex;
+        align-items: center;
+        gap: var(--space-md);
+        height: auto;
+        background: none !important;
+        box-shadow: none !important;
+      }
+
+      .divider__line {
+        flex: 1;
+        height: 1px;
+        background: var(--gradient-divider);
+      }
+
+      .divider__label {
+        font-family: var(--font-accent);
+        font-size: var(--text-xs);
+        font-weight: 600;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
       @keyframes divider-shimmer {
         0%, 100% { background-position: 200% 0; }
         50% { background-position: -100% 0; }
@@ -143,9 +171,19 @@ export class ArcDivider extends LitElement {
     super();
     this.variant = 'subtle';
     this.vertical = false;
+    this.label = '';
   }
 
   render() {
+    if (this.label && !this.vertical) {
+      return html`
+        <div class="divider divider--labeled" role="separator" part="divider">
+          <span class="divider__line" part="line"></span>
+          <span class="divider__label" part="label">${this.label}</span>
+          <span class="divider__line" part="line"></span>
+        </div>
+      `;
+    }
     return html`<div class="divider" role="separator" aria-orientation=${this.vertical ? 'vertical' : 'horizontal'} part="divider"></div>`;
   }
 }

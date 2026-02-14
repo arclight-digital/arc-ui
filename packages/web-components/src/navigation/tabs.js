@@ -7,6 +7,8 @@ export class ArcTabs extends LitElement {
     /** @deprecated Use <arc-tab> children instead */
     items:    { type: Array },
     selected: { type: Number, reflect: true },
+    align:    { type: String, reflect: true },
+    variant:  { type: String, reflect: true },
     _tabs:    { state: true },
   };
 
@@ -23,6 +25,10 @@ export class ArcTabs extends LitElement {
         overflow-y: hidden;
       }
 
+      /* Alignment */
+      :host([align="center"]) .tabs__list { justify-content: center; }
+      :host([align="end"]) .tabs__list { justify-content: flex-end; }
+
       .tabs__tab {
         font-family: var(--font-accent);
         font-weight: 600;
@@ -37,7 +43,7 @@ export class ArcTabs extends LitElement {
         cursor: pointer;
         border-bottom: 2px solid transparent;
         margin-bottom: -1px;
-        transition: color var(--transition-fast), border-color var(--transition-fast);
+        transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
         white-space: nowrap;
       }
 
@@ -45,6 +51,27 @@ export class ArcTabs extends LitElement {
       .tabs__tab[aria-selected="true"] {
         color: var(--accent-primary);
         border-bottom-color: var(--accent-primary);
+      }
+
+      /* Pills variant */
+      :host([variant="pills"]) .tabs__list {
+        border-bottom: none;
+        gap: var(--space-xs);
+      }
+
+      :host([variant="pills"]) .tabs__tab {
+        border-bottom: none;
+        margin-bottom: 0;
+        border-radius: var(--radius-sm);
+      }
+
+      :host([variant="pills"]) .tabs__tab:hover {
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      :host([variant="pills"]) .tabs__tab[aria-selected="true"] {
+        background: rgba(var(--accent-primary-rgb), 0.1);
+        color: var(--accent-primary);
       }
       .tabs__tab:focus-visible {
         outline: none;
@@ -82,6 +109,8 @@ export class ArcTabs extends LitElement {
     super();
     this.items = [];
     this.selected = 0;
+    this.align = 'start';
+    this.variant = 'underline';
     this._tabs = [];
   }
 

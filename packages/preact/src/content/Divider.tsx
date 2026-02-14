@@ -7,12 +7,13 @@ export interface DividerProps {
   variant?: 'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient';
   align?: 'left' | 'right';
   vertical?: boolean;
+  label?: string;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const Divider: FunctionComponent<DividerProps> = ({ variant, align, vertical, children, ...rest }) => (
-  <arc-divider variant={variant} align={align} vertical={vertical} {...rest}>
+export const Divider: FunctionComponent<DividerProps> = ({ variant, align, vertical, label, children, ...rest }) => (
+  <arc-divider variant={variant} align={align} vertical={vertical} label={label} {...rest}>
     {children}
   </arc-divider>
 );

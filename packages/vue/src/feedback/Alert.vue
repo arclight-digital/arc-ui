@@ -6,10 +6,12 @@ defineOptions({ name: 'Alert' });
 
 withDefaults(defineProps<{
   variant?: string;
+  compact?: boolean;
   dismissible?: boolean;
   heading?: string;
 }>(), {
   variant: 'info',
+  compact: false,
   dismissible: false,
   heading: '',
 });
@@ -22,6 +24,7 @@ defineEmits<{
 <template>
   <arc-alert
     :variant="variant"
+    :compact="compact"
     :dismissible="dismissible"
     :heading="heading"
   >

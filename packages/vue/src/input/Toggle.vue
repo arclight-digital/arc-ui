@@ -7,11 +7,13 @@ defineOptions({ name: 'Toggle' });
 withDefaults(defineProps<{
   checked?: boolean;
   disabled?: boolean;
+  size?: 'sm' | 'lg';
   label?: string;
   name?: string;
 }>(), {
   checked: false,
   disabled: false,
+  size: 'md',
   label: '',
   name: '',
 });
@@ -25,6 +27,7 @@ defineEmits<{
   <arc-toggle
     :checked="checked"
     :disabled="disabled"
+    :size="size"
     :label="label"
     :name="name"
   >

@@ -8,6 +8,7 @@ withDefaults(defineProps<{
   checked?: boolean;
   indeterminate?: boolean;
   disabled?: boolean;
+  size?: 'sm' | 'lg';
   label?: string;
   name?: string;
   value?: string;
@@ -15,6 +16,7 @@ withDefaults(defineProps<{
   checked: false,
   indeterminate: false,
   disabled: false,
+  size: 'md',
   label: '',
   name: '',
   value: '',
@@ -30,6 +32,7 @@ defineEmits<{
     :checked="checked"
     :indeterminate="indeterminate"
     :disabled="disabled"
+    :size="size"
     :label="label"
     :name="name"
     :value="value"

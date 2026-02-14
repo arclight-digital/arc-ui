@@ -7,8 +7,10 @@ import '@arclux/arc-ui';
   selector: 'arc-container',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-container [narrow]="narrow"><ng-content /></arc-container>`,
+  template: `<arc-container [narrow]="narrow" [attr.size]="size" [attr.padding]="padding"><ng-content /></arc-container>`,
 })
 export class Container {
   @Input() narrow: boolean = false;
+  @Input() size: 'sm' | 'md' | 'lg' | 'xl' | 'full' = 'md';
+  @Input() padding: 'none' | 'sm' | 'lg' = 'md';
 }

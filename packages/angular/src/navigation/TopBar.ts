@@ -7,7 +7,7 @@ import '@arclux/arc-ui';
   selector: 'arc-top-bar',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-top-bar [attr.heading]="heading" [fixed]="fixed" [menuOpen]="menuOpen" [attr.mobileMenu]="mobileMenu" [attr.menuPosition]="menuPosition"><ng-content /></arc-top-bar>`,
+  template: `<arc-top-bar [attr.heading]="heading" [fixed]="fixed" [menuOpen]="menuOpen" [attr.mobileMenu]="mobileMenu" [attr.menuPosition]="menuPosition" [attr.navAlign]="navAlign"><ng-content /></arc-top-bar>`,
 })
 export class TopBar {
   @Input() heading: string = '';
@@ -15,4 +15,5 @@ export class TopBar {
   @Input() menuOpen: boolean = false;
   @Input() mobileMenu: string = 'sidebar';
   @Input() menuPosition: string = 'left';
+  @Input() navAlign: string = 'center';
 }

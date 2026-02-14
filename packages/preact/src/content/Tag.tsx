@@ -5,6 +5,7 @@ import '@arclux/arc-ui';
 
 export interface TagProps {
   variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
+  size?: 'sm' | 'lg';
   removable?: boolean;
   disabled?: boolean;
   color?: string;
@@ -12,8 +13,8 @@ export interface TagProps {
   [key: string]: unknown;
 }
 
-export const Tag: FunctionComponent<TagProps> = ({ variant, removable, disabled, color, children, ...rest }) => (
-  <arc-tag variant={variant} removable={removable} disabled={disabled} color={color} {...rest}>
+export const Tag: FunctionComponent<TagProps> = ({ variant, size, removable, disabled, color, children, ...rest }) => (
+  <arc-tag variant={variant} size={size} removable={removable} disabled={disabled} color={color} {...rest}>
     {children}
   </arc-tag>
 );

@@ -6,13 +6,15 @@ import '@arclux/arc-ui';
 export interface TabsProps {
   items?: unknown[];
   selected?: number;
+  align?: 'center' | 'end';
+  variant?: 'pills';
   _tabs?: string;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const Tabs: FunctionComponent<TabsProps> = ({ items, selected, _tabs, children, ...rest }) => (
-  <arc-tabs items={items} selected={selected} _tabs={_tabs} {...rest}>
+export const Tabs: FunctionComponent<TabsProps> = ({ items, selected, align, variant, _tabs, children, ...rest }) => (
+  <arc-tabs items={items} selected={selected} align={align} variant={variant} _tabs={_tabs} {...rest}>
     {children}
   </arc-tabs>
 );

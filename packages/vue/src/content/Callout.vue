@@ -6,14 +6,24 @@ defineOptions({ name: 'Callout' });
 
 withDefaults(defineProps<{
   variant?: string;
+  dismissible?: boolean;
+  _dismissed?: string;
 }>(), {
   variant: 'info',
+  dismissible: false,
+  _dismissed: false,
 });
+
+defineEmits<{
+  'arc-dismiss': [event: CustomEvent];
+}>();
 </script>
 
 <template>
   <arc-callout
     :variant="variant"
+    :dismissible="dismissible"
+    :_dismissed="_dismissed"
   >
     <slot />
   </arc-callout>

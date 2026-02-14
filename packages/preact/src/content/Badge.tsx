@@ -5,13 +5,14 @@ import '@arclux/arc-ui';
 
 export interface BadgeProps {
   variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';
+  size?: 'sm' | 'lg';
   color?: string;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const Badge: FunctionComponent<BadgeProps> = ({ variant, color, children, ...rest }) => (
-  <arc-badge variant={variant} color={color} {...rest}>
+export const Badge: FunctionComponent<BadgeProps> = ({ variant, size, color, children, ...rest }) => (
+  <arc-badge variant={variant} size={size} color={color} {...rest}>
     {children}
   </arc-badge>
 );

@@ -4,8 +4,10 @@ import { cardHoverStyles } from '../card-styles.js';
 
 export class ArcCard extends LitElement {
   static properties = {
-    href: { type: String },
-    _hasFooter: { state: true },
+    href:        { type: String },
+    padding:     { type: String, reflect: true },
+    interactive: { type: Boolean, reflect: true },
+    _hasFooter:  { state: true },
   };
 
   static styles = [
@@ -16,17 +18,24 @@ export class ArcCard extends LitElement {
 
       .card { height: 100%; }
 
-      /* Suppress hover effect when no href */
-      :host(:not([href])) .card:hover {
+      /* Suppress hover effect when no href and not interactive */
+      :host(:not([href]):not([interactive])) .card:hover {
         background: var(--border-subtle);
       }
-      :host(:not([href])) .card:hover .card__inner {
+      :host(:not([href]):not([interactive])) .card:hover .card__inner {
         box-shadow: none;
       }
+
+      :host([interactive]) .card { cursor: pointer; }
 
       .card__inner {
         padding: var(--space-xl) var(--space-lg);
       }
+
+      /* Padding variants */
+      :host([padding="none"]) .card__inner { padding: 0; }
+      :host([padding="sm"]) .card__inner { padding: var(--space-md) var(--space-sm); }
+      :host([padding="lg"]) .card__inner { padding: var(--space-2xl) var(--space-xl); }
 
       .card__body {
         flex: 1;
@@ -59,6 +68,8 @@ export class ArcCard extends LitElement {
   constructor() {
     super();
     this.href = '';
+    this.padding = 'md';
+    this.interactive = false;
     this._hasFooter = false;
   }
 

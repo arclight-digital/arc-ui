@@ -7,14 +7,15 @@ export interface RadioGroupProps {
   value?: string;
   name?: string;
   disabled?: boolean;
+  size?: 'sm' | 'lg';
   orientation?: 'horizontal';
   _radios?: string;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const RadioGroup: FunctionComponent<RadioGroupProps> = ({ value, name, disabled, orientation, _radios, children, ...rest }) => (
-  <arc-radio-group value={value} name={name} disabled={disabled} orientation={orientation} _radios={_radios} {...rest}>
+export const RadioGroup: FunctionComponent<RadioGroupProps> = ({ value, name, disabled, size, orientation, _radios, children, ...rest }) => (
+  <arc-radio-group value={value} name={name} disabled={disabled} size={size} orientation={orientation} _radios={_radios} {...rest}>
     {children}
   </arc-radio-group>
 );

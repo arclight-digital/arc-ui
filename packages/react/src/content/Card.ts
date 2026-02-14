@@ -6,6 +6,8 @@ import { ArcCard } from '@arclux/arc-ui';
 
 export interface CardProps {
   href?: string;
+  padding?: 'none' | 'sm' | 'lg';
+  interactive?: boolean;
   _hasFooter?: string;
   className?: string;
   children?: React.ReactNode;

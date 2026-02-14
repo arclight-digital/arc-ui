@@ -6,14 +6,15 @@ import '@arclux/arc-ui';
 export interface ToggleProps {
   checked?: boolean;
   disabled?: boolean;
+  size?: 'sm' | 'lg';
   label?: string;
   name?: string;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const Toggle: FunctionComponent<ToggleProps> = ({ checked, disabled, label, name, children, ...rest }) => (
-  <arc-toggle checked={checked} disabled={disabled} label={label} name={name} {...rest}>
+export const Toggle: FunctionComponent<ToggleProps> = ({ checked, disabled, size, label, name, children, ...rest }) => (
+  <arc-toggle checked={checked} disabled={disabled} size={size} label={label} name={name} {...rest}>
     {children}
   </arc-toggle>
 );

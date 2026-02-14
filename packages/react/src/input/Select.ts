@@ -10,6 +10,8 @@ export interface SelectProps {
   label?: string;
   name?: string;
   disabled?: boolean;
+  size?: 'sm' | 'lg';
+  error?: string;
   open?: boolean;
   _options?: string;
   className?: string;

@@ -4,14 +4,15 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
+    separator?: string;
     _items?: string;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { _items = [], children, ...rest }: Props = $props();
+  let { separator = '/', _items = [], children, ...rest }: Props = $props();
 </script>
 
-<arc-breadcrumb {_items} {...rest}>
+<arc-breadcrumb {separator} {_items} {...rest}>
   {@render children?.()}
 </arc-breadcrumb>

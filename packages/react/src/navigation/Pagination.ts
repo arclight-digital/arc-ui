@@ -8,6 +8,7 @@ export interface PaginationProps {
   total?: number;
   current?: number;
   siblings?: number;
+  compact?: boolean;
   className?: string;
   children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;

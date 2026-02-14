@@ -9,6 +9,7 @@ export class ArcRadioGroup extends LitElement {
     value:       { type: String, reflect: true },
     name:        { type: String },
     disabled:    { type: Boolean, reflect: true },
+    size:        { type: String, reflect: true },
     orientation: { type: String, reflect: true },
     _radios:     { state: true },
   };
@@ -84,6 +85,14 @@ export class ArcRadioGroup extends LitElement {
         box-shadow: var(--focus-glow);
       }
 
+      /* Sizes */
+      :host([size="sm"]) .radio__circle { width: 14px; height: 14px; }
+      :host([size="sm"]) .radio__dot { width: 6px; height: 6px; }
+      :host([size="sm"]) .radio__label { font-size: var(--text-sm); }
+      :host([size="lg"]) .radio__circle { width: 22px; height: 22px; }
+      :host([size="lg"]) .radio__dot { width: 10px; height: 10px; }
+      :host([size="lg"]) .radio__label { font-size: var(--text-md); }
+
       .radio-group__slot-host { display: none; }
 
       @media (prefers-reduced-motion: reduce) {
@@ -104,6 +113,7 @@ export class ArcRadioGroup extends LitElement {
     this.value = '';
     this.name = '';
     this.disabled = false;
+    this.size = 'md';
     this.orientation = 'vertical';
     this._radios = [];
   }

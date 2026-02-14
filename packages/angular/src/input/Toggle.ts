@@ -7,11 +7,12 @@ import '@arclux/arc-ui';
   selector: 'arc-toggle',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-toggle [checked]="checked" [disabled]="disabled" [attr.label]="label" [attr.name]="name" (arc-change)="arcChange.emit($event)"><ng-content /></arc-toggle>`,
+  template: `<arc-toggle [checked]="checked" [disabled]="disabled" [attr.size]="size" [attr.label]="label" [attr.name]="name" (arc-change)="arcChange.emit($event)"><ng-content /></arc-toggle>`,
 })
 export class Toggle {
   @Input() checked: boolean = false;
   @Input() disabled: boolean = false;
+  @Input() size: 'sm' | 'lg' = 'md';
   @Input() label: string = '';
   @Input() name: string = '';
   @Output() arcChange = new EventEmitter<CustomEvent>();

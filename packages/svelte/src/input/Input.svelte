@@ -11,6 +11,8 @@
     value?: string;
     disabled?: boolean;
     required?: boolean;
+    error?: string;
+    size?: 'sm' | 'lg';
     multiline?: boolean;
     rows?: number;
     _hasPrefix?: string;
@@ -19,9 +21,9 @@
     [key: string]: unknown;
   }
 
-  let { type = 'text', name = '', label = '', placeholder = '', value = '', disabled = false, required = false, multiline = false, rows = 5, _hasPrefix = false, _hasSuffix = false, children, ...rest }: Props = $props();
+  let { type = 'text', name = '', label = '', placeholder = '', value = '', disabled = false, required = false, error = '', size = 'md', multiline = false, rows = 5, _hasPrefix = false, _hasSuffix = false, children, ...rest }: Props = $props();
 </script>
 
-<arc-input {type} {name} {label} {placeholder} {value} {disabled} {required} {multiline} {rows} {_hasPrefix} {_hasSuffix} {...rest}>
+<arc-input {type} {name} {label} {placeholder} {value} {disabled} {required} {error} {size} {multiline} {rows} {_hasPrefix} {_hasSuffix} {...rest}>
   {@render children?.()}
 </arc-input>

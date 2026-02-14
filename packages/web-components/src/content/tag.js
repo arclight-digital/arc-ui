@@ -4,6 +4,7 @@ import { tokenStyles } from '../shared-styles.js';
 export class ArcTag extends LitElement {
   static properties = {
     variant:   { type: String, reflect: true },
+    size:      { type: String, reflect: true },
     removable: { type: Boolean, reflect: true },
     disabled:  { type: Boolean, reflect: true },
     color:     { type: String },
@@ -70,6 +71,10 @@ export class ArcTag extends LitElement {
       :host([variant="warning"]) .tag:hover { box-shadow: 0 0 12px rgba(var(--color-warning-rgb), 0.15); }
       :host([variant="danger"]) .tag:hover { box-shadow: 0 0 12px rgba(var(--color-error-rgb), 0.15); }
 
+      /* Sizes */
+      :host([size="sm"]) .tag { font-size: calc(var(--text-xs) - 1px); padding: 2px var(--space-sm); letter-spacing: 1.5px; }
+      :host([size="lg"]) .tag { font-size: var(--text-sm); padding: var(--space-sm) var(--space-lg); }
+
       .tag__label {
         display: inline-flex;
         align-items: center;
@@ -118,6 +123,7 @@ export class ArcTag extends LitElement {
   constructor() {
     super();
     this.variant = 'default';
+    this.size = 'md';
     this.removable = false;
     this.disabled = false;
     this.color = '';

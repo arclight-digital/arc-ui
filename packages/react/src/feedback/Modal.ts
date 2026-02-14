@@ -8,6 +8,7 @@ export interface ModalProps {
   open?: boolean;
   heading?: string;
   size?: 'sm' | 'md' | 'lg';
+  fullscreen?: boolean;
   closable?: boolean;
   className?: string;
   children?: React.ReactNode;

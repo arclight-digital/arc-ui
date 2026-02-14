@@ -13,6 +13,8 @@ export class ArcTextarea extends LitElement {
     disabled:    { type: Boolean, reflect: true },
     readonly:    { type: Boolean, reflect: true },
     resize:      { type: String, reflect: true },
+    size:        { type: String, reflect: true },
+    autoResize:  { type: Boolean, attribute: 'auto-resize', reflect: true },
     error:       { type: String },
   };
 
@@ -51,6 +53,13 @@ export class ArcTextarea extends LitElement {
         width: 100%;
         box-sizing: border-box;
       }
+
+      /* Sizes */
+      :host([size="sm"]) textarea { font-size: var(--text-xs); padding: var(--space-xs) var(--space-sm); }
+      :host([size="sm"]) label { font-size: calc(var(--text-xs) - 1px); }
+      :host([size="lg"]) textarea { font-size: var(--text-md); padding: var(--space-md) var(--space-lg); }
+
+      :host([auto-resize]) textarea { resize: none; overflow: hidden; }
 
       :host([resize="none"]) textarea { resize: none; }
       :host([resize="vertical"]) textarea { resize: vertical; }
@@ -132,23 +141,36 @@ export class ArcTextarea extends LitElement {
     this.disabled = false;
     this.readonly = false;
     this.resize = 'vertical';
+    this.size = 'md';
+    this.autoResize = false;
     this.error = '';
-  }
-
-  updated(changed) {
-    if (changed.has('value')) {
-      this._internals.setFormValue(this.value);
-    }
   }
 
   _onInput(e) {
     this.value = e.target.value;
     this._internals.setFormValue(this.value);
+    if (this.autoResize) this._autoGrow(e.target);
     this.dispatchEvent(new CustomEvent('arc-input', {
       detail: { value: this.value },
       bubbles: true,
       composed: true,
     }));
+  }
+
+  _autoGrow(el) {
+    el.style.height = 'auto';
+    el.style.height = el.scrollHeight + 'px';
+  }
+
+  updated(changed) {
+    super.updated?.(changed);
+    if (changed.has('value')) {
+      this._internals.setFormValue(this.value);
+    }
+    if (this.autoResize && (changed.has('value') || changed.has('autoResize'))) {
+      const ta = this.shadowRoot?.querySelector('textarea');
+      if (ta) this._autoGrow(ta);
+    }
   }
 
   _onChange(e) {

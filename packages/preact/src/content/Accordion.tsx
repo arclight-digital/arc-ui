@@ -4,14 +4,15 @@ import { type FunctionComponent } from 'preact';
 import '@arclux/arc-ui';
 
 export interface AccordionProps {
+  multiple?: boolean;
   _items?: string;
   _openItems?: string;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const Accordion: FunctionComponent<AccordionProps> = ({ _items, _openItems, children, ...rest }) => (
-  <arc-accordion _items={_items} _openItems={_openItems} {...rest}>
+export const Accordion: FunctionComponent<AccordionProps> = ({ multiple, _items, _openItems, children, ...rest }) => (
+  <arc-accordion multiple={multiple} _items={_items} _openItems={_openItems} {...rest}>
     {children}
   </arc-accordion>
 );

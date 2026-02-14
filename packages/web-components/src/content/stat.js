@@ -3,8 +3,10 @@ import { tokenStyles } from '../shared-styles.js';
 
 export class ArcStat extends LitElement {
   static properties = {
-    value: { type: String },
-    label: { type: String },
+    value:  { type: String },
+    label:  { type: String },
+    trend:  { type: String, reflect: true },
+    change: { type: String },
   };
 
   static styles = [
@@ -49,6 +51,25 @@ export class ArcStat extends LitElement {
         text-transform: uppercase;
         color: var(--text-muted);
       }
+
+      .stat__trend {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        font-weight: 500;
+        margin-top: var(--space-xs);
+      }
+
+      :host([trend="up"]) .stat__trend { color: var(--color-success); }
+      :host([trend="down"]) .stat__trend { color: var(--color-error); }
+      :host([trend="neutral"]) .stat__trend { color: var(--text-muted); }
+
+      .stat__trend-arrow {
+        width: 12px;
+        height: 12px;
+      }
     `,
   ];
 
@@ -56,14 +77,26 @@ export class ArcStat extends LitElement {
     super();
     this.value = '';
     this.label = '';
+    this.trend = '';
+    this.change = '';
   }
 
   render() {
+    const arrowUp = html`<svg class="stat__trend-arrow" viewBox="0 0 16 16" fill="currentColor"><path d="M8 3.5l4.5 5H3.5z"/></svg>`;
+    const arrowDown = html`<svg class="stat__trend-arrow" viewBox="0 0 16 16" fill="currentColor"><path d="M8 12.5l4.5-5H3.5z"/></svg>`;
+    const dash = html`<svg class="stat__trend-arrow" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="7" width="10" height="2" rx="1"/></svg>`;
+
     return html`
       <div class="stat" part="stat">
         <span class="stat__value" part="value">${this.value}</span>
         <span class="stat__rule"></span>
         <span class="stat__label" part="label">${this.label}</span>
+        ${this.trend ? html`
+          <span class="stat__trend" part="trend">
+            ${this.trend === 'up' ? arrowUp : this.trend === 'down' ? arrowDown : dash}
+            ${this.change || ''}
+          </span>
+        ` : ''}
       </div>
     `;
   }

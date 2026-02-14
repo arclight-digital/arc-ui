@@ -8,10 +8,12 @@ withDefaults(defineProps<{
   total?: number;
   current?: number;
   siblings?: number;
+  compact?: boolean;
 }>(), {
   total: 1,
   current: 1,
   siblings: 1,
+  compact: false,
 });
 
 defineEmits<{
@@ -24,6 +26,7 @@ defineEmits<{
     :total="total"
     :current="current"
     :siblings="siblings"
+    :compact="compact"
   >
     <slot />
   </arc-pagination>

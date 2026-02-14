@@ -5,13 +5,15 @@
 
   interface Props {
     narrow?: boolean;
+    size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
+    padding?: 'none' | 'sm' | 'lg';
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { narrow = false, children, ...rest }: Props = $props();
+  let { narrow = false, size = 'md', padding = 'md', children, ...rest }: Props = $props();
 </script>
 
-<arc-container {narrow} {...rest}>
+<arc-container {narrow} {size} {padding} {...rest}>
   {@render children?.()}
 </arc-container>

@@ -9,14 +9,15 @@ export interface TopBarProps {
   menuOpen?: boolean;
   mobileMenu?: string;
   menuPosition?: string;
+  navAlign?: string;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const TopBar: Component<TopBarProps> = (props) => {
-  const [local, rest] = splitProps(props, ['heading', 'fixed', 'menuOpen', 'mobileMenu', 'menuPosition', 'children']);
+  const [local, rest] = splitProps(props, ['heading', 'fixed', 'menuOpen', 'mobileMenu', 'menuPosition', 'navAlign', 'children']);
   return (
-    <arc-top-bar heading={local.heading} fixed={local.fixed} menuOpen={local.menuOpen} mobileMenu={local.mobileMenu} menuPosition={local.menuPosition} {...rest}>
+    <arc-top-bar heading={local.heading} fixed={local.fixed} menuOpen={local.menuOpen} mobileMenu={local.mobileMenu} menuPosition={local.menuPosition} navAlign={local.navAlign} {...rest}>
       {local.children}
     </arc-top-bar>
   );

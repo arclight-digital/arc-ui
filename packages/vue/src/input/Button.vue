@@ -9,6 +9,7 @@ withDefaults(defineProps<{
   size?: 'sm' | 'md' | 'lg';
   href?: string;
   disabled?: boolean;
+  loading?: boolean;
   type?: string;
   _hasPrefix?: string;
   _hasSuffix?: string;
@@ -17,6 +18,7 @@ withDefaults(defineProps<{
   size: 'md',
   href: '',
   disabled: false,
+  loading: false,
   type: 'button',
   _hasPrefix: false,
   _hasSuffix: false,
@@ -29,6 +31,7 @@ withDefaults(defineProps<{
     :size="size"
     :href="href"
     :disabled="disabled"
+    :loading="loading"
     :type="type"
     :_hasPrefix="_hasPrefix"
     :_hasSuffix="_hasSuffix"

@@ -6,14 +6,15 @@ import '@arclux/arc-ui';
 export interface LinkProps {
   href?: string;
   variant?: 'muted' | 'nav';
+  underline?: 'always' | 'never';
   active?: boolean;
   external?: boolean;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const Link: FunctionComponent<LinkProps> = ({ href, variant, active, external, children, ...rest }) => (
-  <arc-link href={href} variant={variant} active={active} external={external} {...rest}>
+export const Link: FunctionComponent<LinkProps> = ({ href, variant, underline, active, external, children, ...rest }) => (
+  <arc-link href={href} variant={variant} underline={underline} active={active} external={external} {...rest}>
     {children}
   </arc-link>
 );

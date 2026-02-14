@@ -7,9 +7,10 @@ import '@arclux/arc-ui';
   selector: 'arc-accordion',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-accordion [attr._items]="_items" [attr._openItems]="_openItems"><ng-content /></arc-accordion>`,
+  template: `<arc-accordion [multiple]="multiple" [attr._items]="_items" [attr._openItems]="_openItems"><ng-content /></arc-accordion>`,
 })
 export class Accordion {
+  @Input() multiple: boolean = false;
   @Input() _items: string = [];
   @Input() _openItems: string = 'new Set()';
 }

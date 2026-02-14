@@ -10,6 +10,8 @@ withDefaults(defineProps<{
   label?: string;
   name?: string;
   disabled?: boolean;
+  size?: 'sm' | 'lg';
+  error?: string;
   open?: boolean;
   _options?: string;
 }>(), {
@@ -18,6 +20,8 @@ withDefaults(defineProps<{
   label: '',
   name: '',
   disabled: false,
+  size: 'md',
+  error: '',
   open: false,
   _options: () => ([]),
 });
@@ -34,6 +38,8 @@ defineEmits<{
     :label="label"
     :name="name"
     :disabled="disabled"
+    :size="size"
+    :error="error"
     :open="open"
     :_options="_options"
   >

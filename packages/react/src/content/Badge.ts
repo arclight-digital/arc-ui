@@ -6,6 +6,7 @@ import { ArcBadge } from '@arclux/arc-ui';
 
 export interface BadgeProps {
   variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';
+  size?: 'sm' | 'lg';
   color?: string;
   className?: string;
   children?: React.ReactNode;

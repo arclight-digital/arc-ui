@@ -7,10 +7,11 @@ import '@arclux/arc-ui';
   selector: 'arc-alert',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-alert [attr.variant]="variant" [dismissible]="dismissible" [attr.heading]="heading" (arc-dismiss)="arcDismiss.emit($event)"><ng-content /></arc-alert>`,
+  template: `<arc-alert [attr.variant]="variant" [compact]="compact" [dismissible]="dismissible" [attr.heading]="heading" (arc-dismiss)="arcDismiss.emit($event)"><ng-content /></arc-alert>`,
 })
 export class Alert {
   @Input() variant: string = 'info';
+  @Input() compact: boolean = false;
   @Input() dismissible: boolean = false;
   @Input() heading: string = '';
   @Output() arcDismiss = new EventEmitter<CustomEvent>();

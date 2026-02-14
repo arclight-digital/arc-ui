@@ -9,12 +9,13 @@ export interface TopBarProps {
   menuOpen?: boolean;
   mobileMenu?: string;
   menuPosition?: string;
+  navAlign?: string;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const TopBar: FunctionComponent<TopBarProps> = ({ heading, fixed, menuOpen, mobileMenu, menuPosition, children, ...rest }) => (
-  <arc-top-bar heading={heading} fixed={fixed} menuOpen={menuOpen} mobileMenu={mobileMenu} menuPosition={menuPosition} {...rest}>
+export const TopBar: FunctionComponent<TopBarProps> = ({ heading, fixed, menuOpen, mobileMenu, menuPosition, navAlign, children, ...rest }) => (
+  <arc-top-bar heading={heading} fixed={fixed} menuOpen={menuOpen} mobileMenu={mobileMenu} menuPosition={menuPosition} navAlign={navAlign} {...rest}>
     {children}
   </arc-top-bar>
 );

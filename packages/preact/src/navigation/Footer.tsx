@@ -6,12 +6,13 @@ import '@arclux/arc-ui';
 export interface FooterProps {
   compact?: boolean;
   border?: boolean;
+  align?: 'center';
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const Footer: FunctionComponent<FooterProps> = ({ compact, border, children, ...rest }) => (
-  <arc-footer compact={compact} border={border} {...rest}>
+export const Footer: FunctionComponent<FooterProps> = ({ compact, border, align, children, ...rest }) => (
+  <arc-footer compact={compact} border={border} align={align} {...rest}>
     {children}
   </arc-footer>
 );

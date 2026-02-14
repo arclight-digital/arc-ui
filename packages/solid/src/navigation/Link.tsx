@@ -6,6 +6,7 @@ import '@arclux/arc-ui';
 export interface LinkProps {
   href?: string;
   variant?: 'muted' | 'nav';
+  underline?: 'always' | 'never';
   active?: boolean;
   external?: boolean;
   children?: JSX.Element;
@@ -13,9 +14,9 @@ export interface LinkProps {
 }
 
 export const Link: Component<LinkProps> = (props) => {
-  const [local, rest] = splitProps(props, ['href', 'variant', 'active', 'external', 'children']);
+  const [local, rest] = splitProps(props, ['href', 'variant', 'underline', 'active', 'external', 'children']);
   return (
-    <arc-link href={local.href} variant={local.variant} active={local.active} external={local.external} {...rest}>
+    <arc-link href={local.href} variant={local.variant} underline={local.underline} active={local.active} external={local.external} {...rest}>
       {local.children}
     </arc-link>
   );

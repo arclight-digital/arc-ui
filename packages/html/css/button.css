@@ -2,7 +2,27 @@
 
 /* arc-button */
 .arc-button { display: inline-flex; }
-      .arc-button[disabled] { pointer-events: none; }
+      .arc-button[disabled],
+      .arc-button[loading] { pointer-events: none; }
+
+      .arc-button[loading] .btn { opacity: 0.7; }
+
+      .arc-button .btn__spinner {
+        display: none;
+        width: 14px;
+        height: 14px;
+        border: 2px solid currentColor;
+        border-top-color: transparent;
+        border-radius: var(--radius-full);
+        animation: arc-btn-spin 600ms linear infinite;
+      }
+
+      .arc-button[loading] .btn__spinner { display: inline-block; }
+      .arc-button[loading] .btn__label { opacity: 0.6; }
+
+      @keyframes arc-btn-spin {
+        to { transform: rotate(360deg); }
+      }
 
       .arc-button .btn {
         display: inline-flex;

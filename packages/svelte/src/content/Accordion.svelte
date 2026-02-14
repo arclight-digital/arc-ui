@@ -4,15 +4,16 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
+    multiple?: boolean;
     _items?: string;
     _openItems?: string;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { _items = [], _openItems = new Set(), children, ...rest }: Props = $props();
+  let { multiple = false, _items = [], _openItems = new Set(), children, ...rest }: Props = $props();
 </script>
 
-<arc-accordion {_items} {_openItems} {...rest}>
+<arc-accordion {multiple} {_items} {_openItems} {...rest}>
   {@render children?.()}
 </arc-accordion>

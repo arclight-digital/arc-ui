@@ -8,11 +8,13 @@ withDefaults(defineProps<{
   open?: boolean;
   heading?: string;
   size?: 'sm' | 'md' | 'lg';
+  fullscreen?: boolean;
   closable?: boolean;
 }>(), {
   open: false,
   heading: '',
   size: 'md',
+  fullscreen: false,
   closable: true,
 });
 
@@ -27,6 +29,7 @@ defineEmits<{
     :open="open"
     :heading="heading"
     :size="size"
+    :fullscreen="fullscreen"
     :closable="closable"
   >
     <slot />

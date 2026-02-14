@@ -7,6 +7,7 @@ import { ArcToggle } from '@arclux/arc-ui';
 export interface ToggleProps {
   checked?: boolean;
   disabled?: boolean;
+  size?: 'sm' | 'lg';
   label?: string;
   name?: string;
   className?: string;

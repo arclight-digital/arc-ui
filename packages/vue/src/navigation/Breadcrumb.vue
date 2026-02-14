@@ -5,8 +5,10 @@ import '@arclux/arc-ui';
 defineOptions({ name: 'Breadcrumb' });
 
 withDefaults(defineProps<{
+  separator?: string;
   _items?: string;
 }>(), {
+  separator: '/',
   _items: () => ([]),
 });
 
@@ -17,6 +19,7 @@ defineEmits<{
 
 <template>
   <arc-breadcrumb
+    :separator="separator"
     :_items="_items"
   >
     <slot />

@@ -7,6 +7,7 @@ export class ArcProgress extends LitElement {
     variant:       { type: String, reflect: true },
     size:          { type: String, reflect: true },
     indeterminate: { type: Boolean, reflect: true },
+    showValue:     { type: Boolean, attribute: 'show-value', reflect: true },
     label:         { type: String },
   };
 
@@ -84,6 +85,19 @@ export class ArcProgress extends LitElement {
         animation: spinner-dash 1.4s ease-in-out infinite;
       }
 
+      .progress__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: var(--space-xs);
+      }
+
+      .progress__value {
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        color: var(--text-muted);
+      }
+
       @keyframes progress-indeterminate {
         0%   { transform: translateX(-100%); }
         100% { transform: translateX(400%); }
@@ -115,6 +129,7 @@ export class ArcProgress extends LitElement {
     this.variant = 'bar';
     this.size = 'md';
     this.indeterminate = false;
+    this.showValue = false;
     this.label = '';
   }
 
@@ -143,9 +158,16 @@ export class ArcProgress extends LitElement {
       `;
     }
 
+    const hasHeader = this.label || (this.showValue && !this.indeterminate);
+
     return html`
       <div part="progress">
-        ${this.label ? html`<span class="progress__label" part="label">${this.label}</span>` : ''}
+        ${hasHeader ? html`
+          <div class="progress__header">
+            ${this.label ? html`<span class="progress__label" style="margin-bottom:0" part="label">${this.label}</span>` : html`<span></span>`}
+            ${this.showValue && !this.indeterminate ? html`<span class="progress__value" part="value">${clampedValue}%</span>` : ''}
+          </div>
+        ` : ''}
         <div
           class="progress__track"
           role="progressbar"

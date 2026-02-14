@@ -8,6 +8,7 @@ export interface ButtonProps {
   size?: 'sm' | 'md' | 'lg';
   href?: string;
   disabled?: boolean;
+  loading?: boolean;
   type?: string;
   _hasPrefix?: string;
   _hasSuffix?: string;
@@ -15,8 +16,8 @@ export interface ButtonProps {
   [key: string]: unknown;
 }
 
-export const Button: FunctionComponent<ButtonProps> = ({ variant, size, href, disabled, type, _hasPrefix, _hasSuffix, children, ...rest }) => (
-  <arc-button variant={variant} size={size} href={href} disabled={disabled} type={type} _hasPrefix={_hasPrefix} _hasSuffix={_hasSuffix} {...rest}>
+export const Button: FunctionComponent<ButtonProps> = ({ variant, size, href, disabled, loading, type, _hasPrefix, _hasSuffix, children, ...rest }) => (
+  <arc-button variant={variant} size={size} href={href} disabled={disabled} loading={loading} type={type} _hasPrefix={_hasPrefix} _hasSuffix={_hasSuffix} {...rest}>
     {children}
   </arc-button>
 );

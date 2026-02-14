@@ -7,10 +7,11 @@ import '@arclux/arc-ui';
   selector: 'arc-divider',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-divider [attr.variant]="variant" [attr.align]="align" [vertical]="vertical"><ng-content /></arc-divider>`,
+  template: `<arc-divider [attr.variant]="variant" [attr.align]="align" [vertical]="vertical" [attr.label]="label"><ng-content /></arc-divider>`,
 })
 export class Divider {
   @Input() variant: 'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient' = 'subtle';
   @Input() align?: 'left' | 'right';
   @Input() vertical: boolean = false;
+  @Input() label: string = '';
 }

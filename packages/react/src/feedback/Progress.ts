@@ -9,6 +9,7 @@ export interface ProgressProps {
   variant?: string;
   size?: 'sm' | 'md' | 'lg';
   indeterminate?: boolean;
+  showValue?: boolean;
   label?: string;
   className?: string;
   children?: React.ReactNode;

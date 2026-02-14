@@ -4,7 +4,8 @@ import { tokenStyles } from '../shared-styles.js';
 export class ArcFooter extends LitElement {
   static properties = {
     compact: { type: Boolean, reflect: true },
-    border: { type: Boolean, reflect: true },
+    border:  { type: Boolean, reflect: true },
+    align:   { type: String, reflect: true },
   };
 
   static styles = [
@@ -61,6 +62,12 @@ export class ArcFooter extends LitElement {
         margin-bottom: var(--space-sm);
       }
 
+      /* Center alignment */
+      :host([align="center"]) .footer { text-align: center; }
+      :host([align="center"]) .footer__columns { justify-items: center; }
+      :host([align="center"]) .footer__social { justify-content: center; }
+      :host([align="center"]) .footer__legal { text-align: center; }
+
       .footer__legal {
         padding-top: var(--space-md);
         border-top: 1px solid var(--border-subtle);
@@ -74,6 +81,7 @@ export class ArcFooter extends LitElement {
     super();
     this.compact = false;
     this.border = true;
+    this.align = 'left';
   }
 
   render() {

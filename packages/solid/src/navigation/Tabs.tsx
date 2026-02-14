@@ -6,15 +6,17 @@ import '@arclux/arc-ui';
 export interface TabsProps {
   items?: unknown[];
   selected?: number;
+  align?: 'center' | 'end';
+  variant?: 'pills';
   _tabs?: string;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Tabs: Component<TabsProps> = (props) => {
-  const [local, rest] = splitProps(props, ['items', 'selected', '_tabs', 'children']);
+  const [local, rest] = splitProps(props, ['items', 'selected', 'align', 'variant', '_tabs', 'children']);
   return (
-    <arc-tabs items={local.items} selected={local.selected} _tabs={local._tabs} {...rest}>
+    <arc-tabs items={local.items} selected={local.selected} align={local.align} variant={local.variant} _tabs={local._tabs} {...rest}>
       {local.children}
     </arc-tabs>
   );

@@ -7,13 +7,14 @@
     variant?: 'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient';
     align?: 'left' | 'right';
     vertical?: boolean;
+    label?: string;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { variant = 'subtle', align, vertical = false, children, ...rest }: Props = $props();
+  let { variant = 'subtle', align, vertical = false, label = '', children, ...rest }: Props = $props();
 </script>
 
-<arc-divider {variant} {align} {vertical} {...rest}>
+<arc-divider {variant} {align} {vertical} {label} {...rest}>
   {@render children?.()}
 </arc-divider>

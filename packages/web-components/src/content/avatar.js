@@ -3,15 +3,17 @@ import { tokenStyles } from '../shared-styles.js';
 
 export class ArcAvatar extends LitElement {
   static properties = {
-    src:  { type: String },
-    name: { type: String, reflect: true },
-    size: { type: String, reflect: true },
+    src:    { type: String },
+    name:   { type: String, reflect: true },
+    size:   { type: String, reflect: true },
+    shape:  { type: String, reflect: true },
+    status: { type: String, reflect: true },
   };
 
   static styles = [
     tokenStyles,
     css`
-      :host { display: inline-flex; }
+      :host { display: inline-flex; position: relative; }
 
       .avatar {
         display: inline-flex;
@@ -48,9 +50,35 @@ export class ArcAvatar extends LitElement {
         user-select: none;
       }
 
+      /* Shape variants */
+      :host([shape="square"]) .avatar,
+      :host([shape="square"]) .avatar__img { border-radius: var(--radius-md); }
+      :host([shape="rounded"]) .avatar,
+      :host([shape="rounded"]) .avatar__img { border-radius: var(--radius-lg); }
+
       :host([size="sm"]) .avatar__initials { font-size: var(--text-xs); }
       :host([size="md"]) .avatar__initials { font-size: var(--text-sm); }
       :host([size="lg"]) .avatar__initials { font-size: var(--text-lg); }
+
+      /* Status indicator */
+      .avatar__status {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 10px;
+        height: 10px;
+        border-radius: var(--radius-full);
+        border: 2px solid var(--bg-deep);
+        box-sizing: border-box;
+      }
+
+      :host([size="sm"]) .avatar__status { width: 8px; height: 8px; }
+      :host([size="lg"]) .avatar__status { width: 14px; height: 14px; border-width: 3px; }
+
+      :host([status="online"]) .avatar__status { background: var(--color-success); }
+      :host([status="offline"]) .avatar__status { background: var(--text-ghost); }
+      :host([status="busy"]) .avatar__status { background: var(--color-error); }
+      :host([status="away"]) .avatar__status { background: var(--color-warning); }
 
       @media (prefers-reduced-motion: reduce) {
         :host *,
@@ -69,6 +97,8 @@ export class ArcAvatar extends LitElement {
     this.src = '';
     this.name = '';
     this.size = 'md';
+    this.shape = 'circle';
+    this.status = '';
   }
 
   /** @private */
@@ -85,6 +115,7 @@ export class ArcAvatar extends LitElement {
       <div class="avatar" part="avatar" role="img" aria-label=${this.name || 'Avatar'}>
         ${content}
       </div>
+      ${this.status ? html`<span class="avatar__status" part="status" aria-label=${this.status}></span>` : ''}
     `;
   }
 }

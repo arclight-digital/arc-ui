@@ -7,10 +7,12 @@ import '@arclux/arc-ui';
   selector: 'arc-avatar',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-avatar [attr.src]="src" [attr.name]="name" [attr.size]="size"><ng-content /></arc-avatar>`,
+  template: `<arc-avatar [attr.src]="src" [attr.name]="name" [attr.size]="size" [attr.shape]="shape" [attr.status]="status"><ng-content /></arc-avatar>`,
 })
 export class Avatar {
   @Input() src: string = '';
   @Input() name: string = '';
   @Input() size: 'sm' | 'md' | 'lg' = 'md';
+  @Input() shape: 'square' | 'rounded' = 'circle';
+  @Input() status: 'online' | 'offline' | 'busy' | 'away' = '';
 }

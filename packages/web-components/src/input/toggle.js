@@ -7,6 +7,7 @@ export class ArcToggle extends LitElement {
   static properties = {
     checked:  { type: Boolean, reflect: true },
     disabled: { type: Boolean, reflect: true },
+    size:     { type: String, reflect: true },
     label:    { type: String },
     name:     { type: String },
   };
@@ -80,6 +81,15 @@ export class ArcToggle extends LitElement {
           0 0 16px rgba(var(--accent-primary-rgb), 0.3);
       }
 
+      /* Sizes */
+      :host([size="sm"]) .toggle__track { width: 34px; height: 18px; }
+      :host([size="sm"]) .toggle__thumb { width: 12px; height: 12px; top: 2px; left: 2px; }
+      :host([size="sm"][checked]) .toggle__thumb { transform: translateX(16px); }
+      :host([size="sm"]) .toggle__label { font-size: var(--text-sm); }
+      :host([size="lg"]) .toggle__track { width: 56px; height: 30px; }
+      :host([size="lg"]) .toggle__thumb { width: 22px; height: 22px; top: 3px; left: 3px; }
+      :host([size="lg"][checked]) .toggle__thumb { transform: translateX(26px); }
+
       .toggle__label {
         font-family: var(--font-body);
         font-size: var(--body-size);
@@ -115,6 +125,7 @@ export class ArcToggle extends LitElement {
     this._internals = this.attachInternals();
     this.checked = false;
     this.disabled = false;
+    this.size = 'md';
     this.label = '';
     this.name = '';
   }

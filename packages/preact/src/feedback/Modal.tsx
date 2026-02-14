@@ -7,13 +7,14 @@ export interface ModalProps {
   open?: boolean;
   heading?: string;
   size?: 'sm' | 'md' | 'lg';
+  fullscreen?: boolean;
   closable?: boolean;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const Modal: FunctionComponent<ModalProps> = ({ open, heading, size, closable, children, ...rest }) => (
-  <arc-modal open={open} heading={heading} size={size} closable={closable} {...rest}>
+export const Modal: FunctionComponent<ModalProps> = ({ open, heading, size, fullscreen, closable, children, ...rest }) => (
+  <arc-modal open={open} heading={heading} size={size} fullscreen={fullscreen} closable={closable} {...rest}>
     {children}
   </arc-modal>
 );

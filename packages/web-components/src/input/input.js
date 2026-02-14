@@ -14,6 +14,8 @@ export class ArcInput extends LitElement {
     value:       { type: String },
     disabled:    { type: Boolean, reflect: true },
     required:    { type: Boolean },
+    error:       { type: String },
+    size:        { type: String, reflect: true },
     multiline:   { type: Boolean },
     rows:        { type: Number },
     _hasPrefix:  { state: true },
@@ -62,6 +64,27 @@ export class ArcInput extends LitElement {
       }
 
       :host([disabled]) .input-group__wrapper { opacity: 0.4; cursor: not-allowed; }
+
+      /* Error state */
+      .input-group--error .input-group__wrapper {
+        border-color: var(--color-error);
+      }
+
+      .input-group--error .input-group__wrapper:focus-within {
+        border-color: var(--color-error);
+        box-shadow: 0 0 0 2px var(--bg-deep), 0 0 0 4px var(--color-error), 0 0 16px rgba(var(--color-error-rgb), 0.2);
+      }
+
+      .input-group__error {
+        font-size: var(--text-xs);
+        color: var(--color-error);
+        line-height: 1.4;
+      }
+
+      /* Sizes */
+      :host([size="sm"]) .input-group__field { padding: var(--space-xs) var(--space-sm); font-size: var(--text-sm); }
+      :host([size="sm"]) .input-group__label { font-size: calc(var(--label-inline-size) - 1px); }
+      :host([size="lg"]) .input-group__field { padding: var(--space-md) var(--space-lg); font-size: var(--text-md); }
 
       .input-group__field {
         font-family: var(--font-body);
@@ -124,6 +147,8 @@ export class ArcInput extends LitElement {
     this.value = '';
     this.disabled = false;
     this.required = false;
+    this.error = '';
+    this.size = 'md';
     this.multiline = false;
     this.rows = 5;
     this._fieldId = `arc-input-${++inputIdCounter}`;
@@ -191,8 +216,10 @@ export class ArcInput extends LitElement {
           part="field"
         />`;
 
+    const hasError = !!this.error;
+
     return html`
-      <div class="input-group">
+      <div class="input-group ${hasError ? 'input-group--error' : ''}">
         ${this.label ? html`<label class="input-group__label" for=${id} part="label">${this.label}</label>` : ''}
         <div class="input-group__wrapper" part="wrapper">
           <div class="input-group__prefix ${this._hasPrefix ? '' : 'input-group__prefix--empty'}" part="prefix">
@@ -203,6 +230,7 @@ export class ArcInput extends LitElement {
             <slot name="suffix" @slotchange=${this._onSuffixSlotChange}></slot>
           </div>
         </div>
+        ${hasError ? html`<span class="input-group__error" role="alert" part="error">${this.error}</span>` : ''}
       </div>
     `;
   }

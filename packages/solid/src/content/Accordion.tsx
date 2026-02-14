@@ -4,6 +4,7 @@ import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui';
 
 export interface AccordionProps {
+  multiple?: boolean;
   _items?: string;
   _openItems?: string;
   children?: JSX.Element;
@@ -11,9 +12,9 @@ export interface AccordionProps {
 }
 
 export const Accordion: Component<AccordionProps> = (props) => {
-  const [local, rest] = splitProps(props, ['_items', '_openItems', 'children']);
+  const [local, rest] = splitProps(props, ['multiple', '_items', '_openItems', 'children']);
   return (
-    <arc-accordion _items={local._items} _openItems={local._openItems} {...rest}>
+    <arc-accordion multiple={local.multiple} _items={local._items} _openItems={local._openItems} {...rest}>
       {local.children}
     </arc-accordion>
   );

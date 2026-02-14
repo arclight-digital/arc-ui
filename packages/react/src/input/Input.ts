@@ -12,6 +12,8 @@ export interface InputProps {
   value?: string;
   disabled?: boolean;
   required?: boolean;
+  error?: string;
+  size?: 'sm' | 'lg';
   multiline?: boolean;
   rows?: number;
   _hasPrefix?: string;

@@ -6,6 +6,7 @@ import { ArcTag } from '@arclux/arc-ui';
 
 export interface TagProps {
   variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
+  size?: 'sm' | 'lg';
   removable?: boolean;
   disabled?: boolean;
   color?: string;

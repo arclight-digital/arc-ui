@@ -4,13 +4,14 @@ import { type FunctionComponent } from 'preact';
 import '@arclux/arc-ui';
 
 export interface BreadcrumbProps {
+  separator?: string;
   _items?: string;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const Breadcrumb: FunctionComponent<BreadcrumbProps> = ({ _items, children, ...rest }) => (
-  <arc-breadcrumb _items={_items} {...rest}>
+export const Breadcrumb: FunctionComponent<BreadcrumbProps> = ({ separator, _items, children, ...rest }) => (
+  <arc-breadcrumb separator={separator} _items={_items} {...rest}>
     {children}
   </arc-breadcrumb>
 );

@@ -5,12 +5,14 @@ import '@arclux/arc-ui';
 
 export interface ContainerProps {
   narrow?: boolean;
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
+  padding?: 'none' | 'sm' | 'lg';
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const Container: FunctionComponent<ContainerProps> = ({ narrow, children, ...rest }) => (
-  <arc-container narrow={narrow} {...rest}>
+export const Container: FunctionComponent<ContainerProps> = ({ narrow, size, padding, children, ...rest }) => (
+  <arc-container narrow={narrow} size={size} padding={padding} {...rest}>
     {children}
   </arc-container>
 );

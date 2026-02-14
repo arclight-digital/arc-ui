@@ -7,6 +7,7 @@ export interface RadioGroupProps {
   value?: string;
   name?: string;
   disabled?: boolean;
+  size?: 'sm' | 'lg';
   orientation?: 'horizontal';
   _radios?: string;
   children?: JSX.Element;
@@ -14,9 +15,9 @@ export interface RadioGroupProps {
 }
 
 export const RadioGroup: Component<RadioGroupProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'name', 'disabled', 'orientation', '_radios', 'children']);
+  const [local, rest] = splitProps(props, ['value', 'name', 'disabled', 'size', 'orientation', '_radios', 'children']);
   return (
-    <arc-radio-group value={local.value} name={local.name} disabled={local.disabled} orientation={local.orientation} _radios={local._radios} {...rest}>
+    <arc-radio-group value={local.value} name={local.name} disabled={local.disabled} size={local.size} orientation={local.orientation} _radios={local._radios} {...rest}>
       {local.children}
     </arc-radio-group>
   );

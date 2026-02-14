@@ -7,14 +7,15 @@
     open?: boolean;
     heading?: string;
     size?: 'sm' | 'md' | 'lg';
+    fullscreen?: boolean;
     closable?: boolean;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { open = false, heading = '', size = 'md', closable = true, children, ...rest }: Props = $props();
+  let { open = false, heading = '', size = 'md', fullscreen = false, closable = true, children, ...rest }: Props = $props();
 </script>
 
-<arc-modal {open} {heading} {size} {closable} {...rest}>
+<arc-modal {open} {heading} {size} {fullscreen} {closable} {...rest}>
   {@render children?.()}
 </arc-modal>

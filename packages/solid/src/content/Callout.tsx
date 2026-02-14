@@ -5,14 +5,16 @@ import '@arclux/arc-ui';
 
 export interface CalloutProps {
   variant?: string;
+  dismissible?: boolean;
+  _dismissed?: string;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Callout: Component<CalloutProps> = (props) => {
-  const [local, rest] = splitProps(props, ['variant', 'children']);
+  const [local, rest] = splitProps(props, ['variant', 'dismissible', '_dismissed', 'children']);
   return (
-    <arc-callout variant={local.variant} {...rest}>
+    <arc-callout variant={local.variant} dismissible={local.dismissible} _dismissed={local._dismissed} {...rest}>
       {local.children}
     </arc-callout>
   );

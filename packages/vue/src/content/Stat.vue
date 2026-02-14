@@ -7,9 +7,13 @@ defineOptions({ name: 'Stat' });
 withDefaults(defineProps<{
   value?: string;
   label?: string;
+  trend?: 'up' | 'down' | 'neutral';
+  change?: string;
 }>(), {
   value: '',
   label: '',
+  trend: '',
+  change: '',
 });
 </script>
 
@@ -17,6 +21,8 @@ withDefaults(defineProps<{
   <arc-stat
     :value="value"
     :label="label"
+    :trend="trend"
+    :change="change"
   >
     <slot />
   </arc-stat>

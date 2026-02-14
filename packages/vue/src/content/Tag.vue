@@ -6,11 +6,13 @@ defineOptions({ name: 'Tag' });
 
 withDefaults(defineProps<{
   variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
+  size?: 'sm' | 'lg';
   removable?: boolean;
   disabled?: boolean;
   color?: string;
 }>(), {
   variant: 'default',
+  size: 'md',
   removable: false,
   disabled: false,
   color: '',
@@ -24,6 +26,7 @@ defineEmits<{
 <template>
   <arc-tag
     :variant="variant"
+    :size="size"
     :removable="removable"
     :disabled="disabled"
     :color="color"

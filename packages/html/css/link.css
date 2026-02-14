@@ -25,6 +25,15 @@
         text-underline-offset: 3px;
       }
 
+      /* Underline variants */
+      .arc-link[data-underline="always"] .link {
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+      .arc-link[data-underline="never"] .link:hover {
+        text-decoration: none;
+      }
+
       .arc-link[data-variant="muted"] .link {
         color: var(--text-muted);
       }

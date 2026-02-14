@@ -5,17 +5,24 @@
 
       .arc-card .card { height: 100%; }
 
-      /* Suppress hover effect when no href */
-      .arc-card:not([data-href]) .card:hover {
+      /* Suppress hover effect when no href and not interactive */
+      .arc-card(:not([href]):not([interactive])) .card:hover {
         background: var(--border-subtle);
       }
-      .arc-card:not([data-href]) .card:hover .card__inner {
+      .arc-card(:not([href]):not([interactive])) .card:hover .card__inner {
         box-shadow: none;
       }
+
+      .arc-card[interactive] .card { cursor: pointer; }
 
       .arc-card .card__inner {
         padding: var(--space-xl) var(--space-lg);
       }
+
+      /* Padding variants */
+      .arc-card[data-padding="none"] .card__inner { padding: 0; }
+      .arc-card[data-padding="sm"] .card__inner { padding: var(--space-md) var(--space-sm); }
+      .arc-card[data-padding="lg"] .card__inner { padding: var(--space-2xl) var(--space-xl); }
 
       .arc-card .card__body {
         flex: 1;

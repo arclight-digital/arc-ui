@@ -8,6 +8,7 @@ export interface DividerProps {
   variant?: 'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient';
   align?: 'left' | 'right';
   vertical?: boolean;
+  label?: string;
   className?: string;
   children?: React.ReactNode;
 }

@@ -118,6 +118,33 @@
         background: linear-gradient(180deg, transparent, rgba(var(--text-primary-rgb),0.35), transparent);
       }
 
+      /* Labeled divider */
+      .arc-divider .divider--labeled {
+        display: flex;
+        align-items: center;
+        gap: var(--space-md);
+        height: auto;
+        background: none !important;
+        box-shadow: none !important;
+      }
+
+      .arc-divider .divider__line {
+        flex: 1;
+        height: 1px;
+        background: var(--gradient-divider);
+      }
+
+      .arc-divider .divider__label {
+        font-family: var(--font-accent);
+        font-size: var(--text-xs);
+        font-weight: 600;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
       @keyframes divider-shimmer {
         0%, 100% { background-position: 200% 0; }
         50% { background-position: -100% 0; }

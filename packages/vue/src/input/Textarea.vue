@@ -13,6 +13,8 @@ withDefaults(defineProps<{
   disabled?: boolean;
   readonly?: boolean;
   resize?: 'none' | 'vertical' | 'horizontal' | 'both';
+  size?: 'sm' | 'lg';
+  autoResize?: boolean;
   error?: string;
 }>(), {
   value: '',
@@ -23,6 +25,8 @@ withDefaults(defineProps<{
   disabled: false,
   readonly: false,
   resize: 'vertical',
+  size: 'md',
+  autoResize: false,
   error: '',
 });
 
@@ -42,6 +46,8 @@ defineEmits<{
     :disabled="disabled"
     :readonly="readonly"
     :resize="resize"
+    :size="size"
+    :autoResize="autoResize"
     :error="error"
   >
     <slot />

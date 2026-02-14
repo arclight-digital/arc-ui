@@ -8,14 +8,15 @@
     variant?: string;
     size?: 'sm' | 'md' | 'lg';
     indeterminate?: boolean;
+    showValue?: boolean;
     label?: string;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { value = 0, variant = 'bar', size = 'md', indeterminate = false, label = '', children, ...rest }: Props = $props();
+  let { value = 0, variant = 'bar', size = 'md', indeterminate = false, showValue = false, label = '', children, ...rest }: Props = $props();
 </script>
 
-<arc-progress {value} {variant} {size} {indeterminate} {label} {...rest}>
+<arc-progress {value} {variant} {size} {indeterminate} {showValue} {label} {...rest}>
   {@render children?.()}
 </arc-progress>

@@ -6,6 +6,8 @@ import { ArcContainer } from '@arclux/arc-ui';
 
 export interface ContainerProps {
   narrow?: boolean;
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
+  padding?: 'none' | 'sm' | 'lg';
   className?: string;
   children?: React.ReactNode;
 }

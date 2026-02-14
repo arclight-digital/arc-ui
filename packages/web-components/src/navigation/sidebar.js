@@ -7,6 +7,7 @@ export class ArcSidebar extends LitElement {
   static properties = {
     active:    { type: String, reflect: true },
     collapsed: { type: Boolean, reflect: true },
+    position:  { type: String, reflect: true },
     width:     { type: String },
     glow:      { type: Boolean, reflect: true },
     _sections: { state: true },
@@ -55,7 +56,7 @@ export class ArcSidebar extends LitElement {
         pointer-events: none;
       }
 
-      /* Border line — solid default */
+      /* Border line — solid default (right edge) */
       .sidebar::after {
         content: '';
         position: absolute;
@@ -64,6 +65,22 @@ export class ArcSidebar extends LitElement {
         bottom: 0;
         width: 1px;
         background: var(--border-subtle);
+      }
+
+      /* Right position — border on left edge */
+      :host([position="right"]) .sidebar::after {
+        right: auto;
+        left: 0;
+      }
+
+      :host([position="right"][glow]) .sidebar::before {
+        right: auto;
+        left: 0;
+        background: radial-gradient(
+          ellipse at 0% 10%,
+          rgba(var(--accent-primary-rgb), 0.03),
+          transparent 60%
+        );
       }
 
       /* Glow border variant */
@@ -247,6 +264,7 @@ export class ArcSidebar extends LitElement {
     super();
     this.active = '';
     this.collapsed = false;
+    this.position = 'left';
     this.width = '260px';
     this.glow = false;
     this._sections = [];

@@ -6,14 +6,20 @@ defineOptions({ name: 'Container' });
 
 withDefaults(defineProps<{
   narrow?: boolean;
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
+  padding?: 'none' | 'sm' | 'lg';
 }>(), {
   narrow: false,
+  size: 'md',
+  padding: 'md',
 });
 </script>
 
 <template>
   <arc-container
     :narrow="narrow"
+    :size="size"
+    :padding="padding"
   >
     <slot />
   </arc-container>

@@ -6,14 +6,16 @@
   interface Props {
     items?: unknown[];
     selected?: number;
+    align?: 'center' | 'end';
+    variant?: 'pills';
     _tabs?: string;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { items = [], selected = 0, _tabs = [], children, ...rest }: Props = $props();
+  let { items = [], selected = 0, align = 'start', variant = 'underline', _tabs = [], children, ...rest }: Props = $props();
 </script>
 
-<arc-tabs {items} {selected} {_tabs} {...rest}>
+<arc-tabs {items} {selected} {align} {variant} {_tabs} {...rest}>
   {@render children?.()}
 </arc-tabs>

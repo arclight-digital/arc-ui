@@ -65,6 +65,10 @@
       .arc-badge[data-variant="error"]:hover .badge { box-shadow: 0 0 12px rgba(var(--color-error-rgb), 0.15); }
       .arc-badge[data-variant="info"]:hover .badge { box-shadow: 0 0 12px rgba(var(--color-info-rgb), 0.15); }
 
+      /* Sizes */
+      .arc-badge[data-size="sm"] .badge { font-size: calc(var(--text-xs) - 1px); padding: 2px var(--space-xs); }
+      .arc-badge[data-size="lg"] .badge { font-size: var(--text-sm); padding: var(--space-sm) var(--space-md); }
+
       @media (prefers-reduced-motion: reduce) {
         .arc-badge *,
         .arc-badge *::before,

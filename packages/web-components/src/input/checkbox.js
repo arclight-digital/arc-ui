@@ -8,6 +8,7 @@ export class ArcCheckbox extends LitElement {
     checked:       { type: Boolean, reflect: true },
     indeterminate: { type: Boolean, reflect: true },
     disabled:      { type: Boolean, reflect: true },
+    size:          { type: String, reflect: true },
     label:         { type: String },
     name:          { type: String },
     value:         { type: String },
@@ -77,6 +78,14 @@ export class ArcCheckbox extends LitElement {
         user-select: none;
       }
 
+      /* Sizes */
+      :host([size="sm"]) .checkbox__box { width: 14px; height: 14px; }
+      :host([size="sm"]) .checkbox__icon { width: 10px; height: 10px; }
+      :host([size="sm"]) .checkbox__label { font-size: var(--text-sm); }
+      :host([size="lg"]) .checkbox__box { width: 22px; height: 22px; }
+      :host([size="lg"]) .checkbox__icon { width: 14px; height: 14px; }
+      :host([size="lg"]) .checkbox__label { font-size: var(--text-md); }
+
       .checkbox__box:focus-visible {
         outline: none;
         box-shadow: var(--focus-glow);
@@ -100,6 +109,7 @@ export class ArcCheckbox extends LitElement {
     this.checked = false;
     this.indeterminate = false;
     this.disabled = false;
+    this.size = 'md';
     this.label = '';
     this.name = '';
     this.value = '';

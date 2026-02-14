@@ -7,12 +7,13 @@ export interface PaginationProps {
   total?: number;
   current?: number;
   siblings?: number;
+  compact?: boolean;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const Pagination: FunctionComponent<PaginationProps> = ({ total, current, siblings, children, ...rest }) => (
-  <arc-pagination total={total} current={current} siblings={siblings} {...rest}>
+export const Pagination: FunctionComponent<PaginationProps> = ({ total, current, siblings, compact, children, ...rest }) => (
+  <arc-pagination total={total} current={current} siblings={siblings} compact={compact} {...rest}>
     {children}
   </arc-pagination>
 );

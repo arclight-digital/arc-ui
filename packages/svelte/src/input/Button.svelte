@@ -8,6 +8,7 @@
     size?: 'sm' | 'md' | 'lg';
     href?: string;
     disabled?: boolean;
+    loading?: boolean;
     type?: string;
     _hasPrefix?: string;
     _hasSuffix?: string;
@@ -15,9 +16,9 @@
     [key: string]: unknown;
   }
 
-  let { variant = 'primary', size = 'md', href = '', disabled = false, type = 'button', _hasPrefix = false, _hasSuffix = false, children, ...rest }: Props = $props();
+  let { variant = 'primary', size = 'md', href = '', disabled = false, loading = false, type = 'button', _hasPrefix = false, _hasSuffix = false, children, ...rest }: Props = $props();
 </script>
 
-<arc-button {variant} {size} {href} {disabled} {type} {_hasPrefix} {_hasSuffix} {...rest}>
+<arc-button {variant} {size} {href} {disabled} {loading} {type} {_hasPrefix} {_hasSuffix} {...rest}>
   {@render children?.()}
 </arc-button>

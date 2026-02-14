@@ -3,10 +3,11 @@ import { tokenStyles } from '../shared-styles.js';
 
 export class ArcLink extends LitElement {
   static properties = {
-    href:     { type: String },
-    variant:  { type: String, reflect: true },
-    active:   { type: Boolean, reflect: true },
-    external: { type: Boolean },
+    href:      { type: String },
+    variant:   { type: String, reflect: true },
+    underline: { type: String, reflect: true },
+    active:    { type: Boolean, reflect: true },
+    external:  { type: Boolean },
   };
 
   static styles = [
@@ -34,6 +35,15 @@ export class ArcLink extends LitElement {
       .link:hover {
         text-decoration: underline;
         text-underline-offset: 3px;
+      }
+
+      /* Underline variants */
+      :host([underline="always"]) .link {
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+      :host([underline="never"]) .link:hover {
+        text-decoration: none;
       }
 
       :host([variant="muted"]) .link {
@@ -90,6 +100,7 @@ export class ArcLink extends LitElement {
     super();
     this.href = '';
     this.variant = 'default';
+    this.underline = 'hover';
     this.active = false;
     this.external = false;
   }

@@ -9,12 +9,14 @@ withDefaults(defineProps<{
   variant?: string;
   size?: 'sm' | 'md' | 'lg';
   indeterminate?: boolean;
+  showValue?: boolean;
   label?: string;
 }>(), {
   value: 0,
   variant: 'bar',
   size: 'md',
   indeterminate: false,
+  showValue: false,
   label: '',
 });
 </script>
@@ -25,6 +27,7 @@ withDefaults(defineProps<{
     :variant="variant"
     :size="size"
     :indeterminate="indeterminate"
+    :showValue="showValue"
     :label="label"
   >
     <slot />

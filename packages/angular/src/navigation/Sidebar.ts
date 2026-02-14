@@ -7,11 +7,12 @@ import '@arclux/arc-ui';
   selector: 'arc-sidebar',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-sidebar [attr.active]="active" [collapsed]="collapsed" [attr.width]="width" [glow]="glow" [attr._sections]="_sections"><ng-content /></arc-sidebar>`,
+  template: `<arc-sidebar [attr.active]="active" [collapsed]="collapsed" [attr.position]="position" [attr.width]="width" [glow]="glow" [attr._sections]="_sections"><ng-content /></arc-sidebar>`,
 })
 export class Sidebar {
   @Input() active: string = '';
   @Input() collapsed: boolean = false;
+  @Input() position: 'right' = 'left';
   @Input() width: string = '260px';
   @Input() glow: boolean = false;
   @Input() _sections: string = [];

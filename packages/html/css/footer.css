@@ -52,6 +52,12 @@
         margin-bottom: var(--space-sm);
       }
 
+      /* Center alignment */
+      .arc-footer[data-align="center"] .footer { text-align: center; }
+      .arc-footer[data-align="center"] .footer__columns { justify-items: center; }
+      .arc-footer[data-align="center"] .footer__social { justify-content: center; }
+      .arc-footer[data-align="center"] .footer__legal { text-align: center; }
+
       .arc-footer .footer__legal {
         padding-top: var(--space-md);
         border-top: 1px solid var(--border-subtle);

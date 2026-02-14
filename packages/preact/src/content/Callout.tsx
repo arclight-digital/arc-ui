@@ -5,12 +5,14 @@ import '@arclux/arc-ui';
 
 export interface CalloutProps {
   variant?: string;
+  dismissible?: boolean;
+  _dismissed?: string;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const Callout: FunctionComponent<CalloutProps> = ({ variant, children, ...rest }) => (
-  <arc-callout variant={variant} {...rest}>
+export const Callout: FunctionComponent<CalloutProps> = ({ variant, dismissible, _dismissed, children, ...rest }) => (
+  <arc-callout variant={variant} dismissible={dismissible} _dismissed={_dismissed} {...rest}>
     {children}
   </arc-callout>
 );

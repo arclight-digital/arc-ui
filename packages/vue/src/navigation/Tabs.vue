@@ -7,10 +7,14 @@ defineOptions({ name: 'Tabs' });
 withDefaults(defineProps<{
   items?: unknown[];
   selected?: number;
+  align?: 'center' | 'end';
+  variant?: 'pills';
   _tabs?: string;
 }>(), {
   items: () => ([]),
   selected: 0,
+  align: 'start',
+  variant: 'underline',
   _tabs: () => ([]),
 });
 
@@ -23,6 +27,8 @@ defineEmits<{
   <arc-tabs
     :items="items"
     :selected="selected"
+    :align="align"
+    :variant="variant"
     :_tabs="_tabs"
   >
     <slot />

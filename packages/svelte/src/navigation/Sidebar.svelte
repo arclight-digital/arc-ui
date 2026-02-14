@@ -6,6 +6,7 @@
   interface Props {
     active?: string;
     collapsed?: boolean;
+    position?: 'right';
     width?: string;
     glow?: boolean;
     _sections?: string;
@@ -13,9 +14,9 @@
     [key: string]: unknown;
   }
 
-  let { active = '', collapsed = false, width = '260px', glow = false, _sections = [], children, ...rest }: Props = $props();
+  let { active = '', collapsed = false, position = 'left', width = '260px', glow = false, _sections = [], children, ...rest }: Props = $props();
 </script>
 
-<arc-sidebar {active} {collapsed} {width} {glow} {_sections} {...rest}>
+<arc-sidebar {active} {collapsed} {position} {width} {glow} {_sections} {...rest}>
   {@render children?.()}
 </arc-sidebar>

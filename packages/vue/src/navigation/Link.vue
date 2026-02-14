@@ -7,11 +7,13 @@ defineOptions({ name: 'Link' });
 withDefaults(defineProps<{
   href?: string;
   variant?: 'muted' | 'nav';
+  underline?: 'always' | 'never';
   active?: boolean;
   external?: boolean;
 }>(), {
   href: '',
   variant: 'default',
+  underline: 'hover',
   active: false,
   external: false,
 });
@@ -21,6 +23,7 @@ withDefaults(defineProps<{
   <arc-link
     :href="href"
     :variant="variant"
+    :underline="underline"
     :active="active"
     :external="external"
   >

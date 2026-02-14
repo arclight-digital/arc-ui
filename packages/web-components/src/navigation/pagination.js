@@ -6,6 +6,7 @@ export class ArcPagination extends LitElement {
     total:    { type: Number },
     current:  { type: Number, reflect: true },
     siblings: { type: Number },
+    compact:  { type: Boolean, reflect: true },
   };
 
   static styles = [
@@ -61,6 +62,15 @@ export class ArcPagination extends LitElement {
         box-shadow: 0 0 12px rgba(var(--accent-primary-rgb), 0.4);
       }
 
+      /* Compact: show current/total between prev/next */
+      .pagination__compact-label {
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        color: var(--text-muted);
+        padding: 0 var(--space-sm);
+        white-space: nowrap;
+      }
+
       .pagination__ellipsis {
         display: inline-flex;
         align-items: center;
@@ -89,6 +99,7 @@ export class ArcPagination extends LitElement {
     this.total = 1;
     this.current = 1;
     this.siblings = 1;
+    this.compact = false;
   }
 
   _getPageRange() {
@@ -138,21 +149,32 @@ export class ArcPagination extends LitElement {
 
   render() {
     const pages = this._getPageRange();
+    const prevBtn = html`
+      <button class="pagination__btn" @click=${this._prev} ?disabled=${this.current <= 1} aria-label="Previous page" part="prev">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+          <path d="M10.78 3.22a.75.75 0 010 1.06L7.06 8l3.72 3.72a.75.75 0 11-1.06 1.06l-4.25-4.25a.75.75 0 010-1.06l4.25-4.25a.75.75 0 011.06 0z"/>
+        </svg>
+      </button>`;
+    const nextBtn = html`
+      <button class="pagination__btn" @click=${this._next} ?disabled=${this.current >= this.total} aria-label="Next page" part="next">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+          <path d="M5.22 12.78a.75.75 0 010-1.06L8.94 8 5.22 4.28a.75.75 0 011.06-1.06l4.25 4.25a.75.75 0 010 1.06l-4.25 4.25a.75.75 0 01-1.06 0z"/>
+        </svg>
+      </button>`;
+
+    if (this.compact) {
+      return html`
+        <nav class="pagination" role="navigation" aria-label="Pagination" part="pagination">
+          ${prevBtn}
+          <span class="pagination__compact-label" part="label">${this.current} / ${this.total}</span>
+          ${nextBtn}
+        </nav>
+      `;
+    }
 
     return html`
       <nav class="pagination" role="navigation" aria-label="Pagination" part="pagination">
-        <button
-          class="pagination__btn"
-          @click=${this._prev}
-          ?disabled=${this.current <= 1}
-          aria-label="Previous page"
-          part="prev"
-        >
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-            <path d="M10.78 3.22a.75.75 0 010 1.06L7.06 8l3.72 3.72a.75.75 0 11-1.06 1.06l-4.25-4.25a.75.75 0 010-1.06l4.25-4.25a.75.75 0 011.06 0z"/>
-          </svg>
-        </button>
-
+        ${prevBtn}
         ${pages.map(page =>
           page === '...'
             ? html`<span class="pagination__ellipsis" part="ellipsis" aria-hidden="true">&hellip;</span>`
@@ -166,18 +188,7 @@ export class ArcPagination extends LitElement {
               >${page}</button>
             `
         )}
-
-        <button
-          class="pagination__btn"
-          @click=${this._next}
-          ?disabled=${this.current >= this.total}
-          aria-label="Next page"
-          part="next"
-        >
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-            <path d="M5.22 12.78a.75.75 0 010-1.06L8.94 8 5.22 4.28a.75.75 0 011.06-1.06l4.25 4.25a.75.75 0 010 1.06l-4.25 4.25a.75.75 0 01-1.06 0z"/>
-          </svg>
-        </button>
+        ${nextBtn}
       </nav>
     `;
   }

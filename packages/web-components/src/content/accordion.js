@@ -4,6 +4,7 @@ import './accordion-item.js';
 
 export class ArcAccordion extends LitElement {
   static properties = {
+    multiple:   { type: Boolean, reflect: true },
     _items:     { state: true },
     _openItems: { state: true },
   };
@@ -98,6 +99,7 @@ export class ArcAccordion extends LitElement {
 
   constructor() {
     super();
+    this.multiple = false;
     this._items = [];
     this._openItems = new Set();
   }
@@ -112,6 +114,7 @@ export class ArcAccordion extends LitElement {
     if (next.has(index)) {
       next.delete(index);
     } else {
+      if (!this.multiple) next.clear();
       next.add(index);
     }
     this._openItems = next;

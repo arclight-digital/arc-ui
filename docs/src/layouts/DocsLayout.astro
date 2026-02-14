@@ -29,12 +29,12 @@ const {
 <BaseLayout title={`${title} — ARC UI`} description={description}>
   <arc-app-shell>
     <!-- Top Bar -->
-    <arc-top-bar slot="topbar" fixed class="theme-fixed">
+    <arc-top-bar slot="topbar" fixed nav-align="left" class="theme-fixed">
       <div slot="logo">
         <Wordmark />
       </div>
       <arc-navigation-menu slot="center">
-        <arc-nav-item href="/docs/getting-started" active={!activeSlug || activeSlug === 'getting-started' || activeSlug === 'theming' || activeSlug === 'frameworks' || activeSlug === 'accessibility' || undefined}>Docs</arc-nav-item>
+        <arc-nav-item href="/docs/getting-started" active={!activeSlug || !['components', 'tokens', 'theme-synthesizer'].includes(activeSlug) && !Astro.url.pathname.startsWith('/docs/components') || undefined}>Docs</arc-nav-item>
         <arc-nav-item href="/docs/components" active={activeSlug === 'components' || Astro.url.pathname.startsWith('/docs/components') || undefined}>Components</arc-nav-item>
         <arc-nav-item href="/docs/tokens" active={activeSlug === 'tokens' || undefined}>Tokens</arc-nav-item>
         <arc-nav-item href="/docs/theme-synthesizer" active={activeSlug === 'theme-synthesizer' || undefined}>Synthesizer</arc-nav-item>

@@ -6,15 +6,16 @@
   interface Props {
     checked?: boolean;
     disabled?: boolean;
+    size?: 'sm' | 'lg';
     label?: string;
     name?: string;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { checked = false, disabled = false, label = '', name = '', children, ...rest }: Props = $props();
+  let { checked = false, disabled = false, size = 'md', label = '', name = '', children, ...rest }: Props = $props();
 </script>
 
-<arc-toggle {checked} {disabled} {label} {name} {...rest}>
+<arc-toggle {checked} {disabled} {size} {label} {name} {...rest}>
   {@render children?.()}
 </arc-toggle>

@@ -6,6 +6,7 @@ import '@arclux/arc-ui';
 export interface SidebarProps {
   active?: string;
   collapsed?: boolean;
+  position?: 'right';
   width?: string;
   glow?: boolean;
   _sections?: string;
@@ -14,9 +15,9 @@ export interface SidebarProps {
 }
 
 export const Sidebar: Component<SidebarProps> = (props) => {
-  const [local, rest] = splitProps(props, ['active', 'collapsed', 'width', 'glow', '_sections', 'children']);
+  const [local, rest] = splitProps(props, ['active', 'collapsed', 'position', 'width', 'glow', '_sections', 'children']);
   return (
-    <arc-sidebar active={local.active} collapsed={local.collapsed} width={local.width} glow={local.glow} _sections={local._sections} {...rest}>
+    <arc-sidebar active={local.active} collapsed={local.collapsed} position={local.position} width={local.width} glow={local.glow} _sections={local._sections} {...rest}>
       {local.children}
     </arc-sidebar>
   );

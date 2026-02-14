@@ -8,9 +8,11 @@ withDefaults(defineProps<{
   variant?: 'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient';
   align?: 'left' | 'right';
   vertical?: boolean;
+  label?: string;
 }>(), {
   variant: 'subtle',
   vertical: false,
+  label: '',
 });
 </script>
 
@@ -19,6 +21,7 @@ withDefaults(defineProps<{
     :variant="variant"
     :align="align"
     :vertical="vertical"
+    :label="label"
   >
     <slot />
   </arc-divider>

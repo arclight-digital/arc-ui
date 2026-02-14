@@ -6,12 +6,14 @@ import '@arclux/arc-ui';
 export interface StatProps {
   value?: string;
   label?: string;
+  trend?: 'up' | 'down' | 'neutral';
+  change?: string;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const Stat: FunctionComponent<StatProps> = ({ value, label, children, ...rest }) => (
-  <arc-stat value={value} label={label} {...rest}>
+export const Stat: FunctionComponent<StatProps> = ({ value, label, trend, change, children, ...rest }) => (
+  <arc-stat value={value} label={label} trend={trend} change={change} {...rest}>
     {children}
   </arc-stat>
 );

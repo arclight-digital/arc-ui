@@ -5,9 +5,11 @@ import '@arclux/arc-ui';
 defineOptions({ name: 'Accordion' });
 
 withDefaults(defineProps<{
+  multiple?: boolean;
   _items?: string;
   _openItems?: string;
 }>(), {
+  multiple: false,
   _items: () => ([]),
   _openItems: 'new Set()',
 });
@@ -15,6 +17,7 @@ withDefaults(defineProps<{
 
 <template>
   <arc-accordion
+    :multiple="multiple"
     :_items="_items"
     :_openItems="_openItems"
   >

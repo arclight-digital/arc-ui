@@ -7,12 +7,13 @@ import '@arclux/arc-ui';
   selector: 'arc-radio-group',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-radio-group [attr.value]="value" [attr.name]="name" [disabled]="disabled" [attr.orientation]="orientation" [attr._radios]="_radios" (arc-change)="arcChange.emit($event)"><ng-content /></arc-radio-group>`,
+  template: `<arc-radio-group [attr.value]="value" [attr.name]="name" [disabled]="disabled" [attr.size]="size" [attr.orientation]="orientation" [attr._radios]="_radios" (arc-change)="arcChange.emit($event)"><ng-content /></arc-radio-group>`,
 })
 export class RadioGroup {
   @Input() value: string = '';
   @Input() name: string = '';
   @Input() disabled: boolean = false;
+  @Input() size: 'sm' | 'lg' = 'md';
   @Input() orientation: 'horizontal' = 'vertical';
   @Input() _radios: string = [];
   @Output() arcChange = new EventEmitter<CustomEvent>();

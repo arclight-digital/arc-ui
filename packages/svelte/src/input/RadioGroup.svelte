@@ -7,15 +7,16 @@
     value?: string;
     name?: string;
     disabled?: boolean;
+    size?: 'sm' | 'lg';
     orientation?: 'horizontal';
     _radios?: string;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { value = '', name = '', disabled = false, orientation = 'vertical', _radios = [], children, ...rest }: Props = $props();
+  let { value = '', name = '', disabled = false, size = 'md', orientation = 'vertical', _radios = [], children, ...rest }: Props = $props();
 </script>
 
-<arc-radio-group {value} {name} {disabled} {orientation} {_radios} {...rest}>
+<arc-radio-group {value} {name} {disabled} {size} {orientation} {_radios} {...rest}>
   {@render children?.()}
 </arc-radio-group>

@@ -7,7 +7,7 @@ import '@arclux/arc-ui';
   selector: 'arc-input',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-input [attr.type]="type" [attr.name]="name" [attr.label]="label" [attr.placeholder]="placeholder" [attr.value]="value" [disabled]="disabled" [required]="required" [multiline]="multiline" [attr.rows]="rows" [attr._hasPrefix]="_hasPrefix" [attr._hasSuffix]="_hasSuffix" (arc-input)="arcInput.emit($event)" (arc-change)="arcChange.emit($event)"><ng-content /></arc-input>`,
+  template: `<arc-input [attr.type]="type" [attr.name]="name" [attr.label]="label" [attr.placeholder]="placeholder" [attr.value]="value" [disabled]="disabled" [required]="required" [attr.error]="error" [attr.size]="size" [multiline]="multiline" [attr.rows]="rows" [attr._hasPrefix]="_hasPrefix" [attr._hasSuffix]="_hasSuffix" (arc-input)="arcInput.emit($event)" (arc-change)="arcChange.emit($event)"><ng-content /></arc-input>`,
 })
 export class Input {
   @Input() type: string = 'text';
@@ -17,6 +17,8 @@ export class Input {
   @Input() value: string = '';
   @Input() disabled: boolean = false;
   @Input() required: boolean = false;
+  @Input() error: string = '';
+  @Input() size: 'sm' | 'lg' = 'md';
   @Input() multiline: boolean = false;
   @Input() rows: number = 5;
   @Input() _hasPrefix: string = false;

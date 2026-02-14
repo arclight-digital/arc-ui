@@ -13,6 +13,8 @@ export interface TextareaProps {
   disabled?: boolean;
   readonly?: boolean;
   resize?: 'none' | 'vertical' | 'horizontal' | 'both';
+  size?: 'sm' | 'lg';
+  autoResize?: boolean;
   error?: string;
   className?: string;
   children?: React.ReactNode;

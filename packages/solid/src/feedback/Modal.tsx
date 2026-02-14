@@ -7,15 +7,16 @@ export interface ModalProps {
   open?: boolean;
   heading?: string;
   size?: 'sm' | 'md' | 'lg';
+  fullscreen?: boolean;
   closable?: boolean;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Modal: Component<ModalProps> = (props) => {
-  const [local, rest] = splitProps(props, ['open', 'heading', 'size', 'closable', 'children']);
+  const [local, rest] = splitProps(props, ['open', 'heading', 'size', 'fullscreen', 'closable', 'children']);
   return (
-    <arc-modal open={local.open} heading={local.heading} size={local.size} closable={local.closable} {...rest}>
+    <arc-modal open={local.open} heading={local.heading} size={local.size} fullscreen={local.fullscreen} closable={local.closable} {...rest}>
       {local.children}
     </arc-modal>
   );

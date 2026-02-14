@@ -11,6 +11,7 @@ export class ArcTopBar extends LitElement {
     menuOpen:     { type: Boolean, attribute: 'menu-open', reflect: true },
     mobileMenu:   { type: String, attribute: 'mobile-menu' },
     menuPosition: { type: String, attribute: 'menu-position' },
+    navAlign:     { type: String, attribute: 'nav-align' },
   };
 
   static styles = [
@@ -185,6 +186,7 @@ export class ArcTopBar extends LitElement {
     this.menuOpen = false;
     this.mobileMenu = 'sidebar';
     this.menuPosition = 'left';
+    this.navAlign = 'center';
     this._onExternalToggle = this._onExternalToggle.bind(this);
     this._onScroll = this._onScroll.bind(this);
   }
@@ -210,6 +212,12 @@ export class ArcTopBar extends LitElement {
     if (this.mobileMenu !== 'nav') return;
     if (e.target === this) return;
     this.menuOpen = e.detail?.value ?? !this.menuOpen;
+  }
+
+  get _navJustify() {
+    if (this.navAlign === 'left') return 'flex-start';
+    if (this.navAlign === 'right') return 'flex-end';
+    return 'center';
   }
 
   _toggleMenu() {
@@ -252,7 +260,7 @@ export class ArcTopBar extends LitElement {
             ${this.heading ? html`<span class="topbar__heading">${this.heading}</span>` : ''}
             <slot name="subtitle"></slot>
           </a>
-          <div class="topbar__center" part="center">
+          <div class="topbar__center" part="center" style="justify-content:${this._navJustify}">
             <slot name="center"></slot>
           </div>
           <div class="topbar__actions" part="actions">

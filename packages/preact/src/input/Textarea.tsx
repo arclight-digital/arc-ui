@@ -12,13 +12,15 @@ export interface TextareaProps {
   disabled?: boolean;
   readonly?: boolean;
   resize?: 'none' | 'vertical' | 'horizontal' | 'both';
+  size?: 'sm' | 'lg';
+  autoResize?: boolean;
   error?: string;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const Textarea: FunctionComponent<TextareaProps> = ({ value, placeholder, label, rows, maxlength, disabled, readonly, resize, error, children, ...rest }) => (
-  <arc-textarea value={value} placeholder={placeholder} label={label} rows={rows} maxlength={maxlength} disabled={disabled} readonly={readonly} resize={resize} error={error} {...rest}>
+export const Textarea: FunctionComponent<TextareaProps> = ({ value, placeholder, label, rows, maxlength, disabled, readonly, resize, size, autoResize, error, children, ...rest }) => (
+  <arc-textarea value={value} placeholder={placeholder} label={label} rows={rows} maxlength={maxlength} disabled={disabled} readonly={readonly} resize={resize} size={size} autoResize={autoResize} error={error} {...rest}>
     {children}
   </arc-textarea>
 );

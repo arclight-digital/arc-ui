@@ -74,13 +74,28 @@ export class ArcNavigationMenu extends LitElement {
       .nav__trigger--muted {
         color: var(--text-muted);
         font-weight: 500;
+        background: transparent;
         border-color: transparent;
       }
 
-      .nav__trigger--muted:hover {
-        color: var(--text-secondary);
-        background: transparent;
+      .nav__trigger--muted:hover,
+      .nav__trigger--muted.nav__trigger--open {
+        color: var(--text-primary);
+        background: rgba(255, 255, 255, 0.12);
         border-color: transparent;
+        box-shadow: 0 0 12px rgba(255, 255, 255, 0.06);
+      }
+
+      .nav__trigger--muted.nav__trigger--active {
+        color: var(--text-primary);
+        background: rgba(var(--accent-primary-rgb), 0.08);
+        border-color: transparent;
+        box-shadow: 0 0 12px rgba(var(--accent-primary-rgb), 0.1);
+      }
+
+      .nav__trigger--muted.nav__trigger--active:hover {
+        background: rgba(var(--accent-primary-rgb), 0.12);
+        box-shadow: 0 0 16px rgba(var(--accent-primary-rgb), 0.14);
       }
 
       .nav__trigger:focus-visible {
@@ -311,7 +326,17 @@ export class ArcNavigationMenu extends LitElement {
       }
 
       .mobile-trigger--muted:hover {
-        color: var(--text-secondary);
+        color: var(--text-primary);
+        background: rgba(255, 255, 255, 0.12);
+      }
+
+      .mobile-trigger--muted.mobile-trigger--active {
+        color: var(--text-primary);
+        background: rgba(var(--accent-primary-rgb), 0.08);
+      }
+
+      .mobile-trigger--muted.mobile-trigger--active:hover {
+        background: rgba(var(--accent-primary-rgb), 0.12);
       }
 
       .mobile-chevron {

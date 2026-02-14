@@ -6,12 +6,18 @@ import { ArcCallout } from '@arclux/arc-ui';
 
 export interface CalloutProps {
   variant?: string;
+  dismissible?: boolean;
+  _dismissed?: string;
   className?: string;
   children?: React.ReactNode;
+  onArcDismiss?: (e: CustomEvent) => void;
 }
 
 export const Callout = createComponent({
   tagName: 'arc-callout',
   elementClass: ArcCallout,
   react: React,
+  events: {
+    onArcDismiss: 'arc-dismiss' as EventName<CustomEvent>,
+  },
 });

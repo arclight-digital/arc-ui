@@ -7,6 +7,7 @@
     checked?: boolean;
     indeterminate?: boolean;
     disabled?: boolean;
+    size?: 'sm' | 'lg';
     label?: string;
     name?: string;
     value?: string;
@@ -14,9 +15,9 @@
     [key: string]: unknown;
   }
 
-  let { checked = false, indeterminate = false, disabled = false, label = '', name = '', value = '', children, ...rest }: Props = $props();
+  let { checked = false, indeterminate = false, disabled = false, size = 'md', label = '', name = '', value = '', children, ...rest }: Props = $props();
 </script>
 
-<arc-checkbox {checked} {indeterminate} {disabled} {label} {name} {value} {...rest}>
+<arc-checkbox {checked} {indeterminate} {disabled} {size} {label} {name} {value} {...rest}>
   {@render children?.()}
 </arc-checkbox>

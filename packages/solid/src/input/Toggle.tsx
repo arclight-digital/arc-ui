@@ -6,6 +6,7 @@ import '@arclux/arc-ui';
 export interface ToggleProps {
   checked?: boolean;
   disabled?: boolean;
+  size?: 'sm' | 'lg';
   label?: string;
   name?: string;
   children?: JSX.Element;
@@ -13,9 +14,9 @@ export interface ToggleProps {
 }
 
 export const Toggle: Component<ToggleProps> = (props) => {
-  const [local, rest] = splitProps(props, ['checked', 'disabled', 'label', 'name', 'children']);
+  const [local, rest] = splitProps(props, ['checked', 'disabled', 'size', 'label', 'name', 'children']);
   return (
-    <arc-toggle checked={local.checked} disabled={local.disabled} label={local.label} name={local.name} {...rest}>
+    <arc-toggle checked={local.checked} disabled={local.disabled} size={local.size} label={local.label} name={local.name} {...rest}>
       {local.children}
     </arc-toggle>
   );
