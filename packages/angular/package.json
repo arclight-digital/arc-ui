@@ -1,6 +1,6 @@
 {
   "name": "@arclux/arc-ui-angular",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Angular standalone component wrappers for ARC UI Web Components.",
   "type": "module",
   "main": "src/index.ts",

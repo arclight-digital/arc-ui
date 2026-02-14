@@ -3,6 +3,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 import { components } from '../../data/components/index';
 
 const headings = [
+  { id: 'v1-4-0', label: 'v1.4.0' },
   { id: 'v1-3-0', label: 'v1.3.0' },
   { id: 'v1-2-0', label: 'v1.2.0' },
   { id: 'v1-1-0', label: 'v1.1.0' },
@@ -30,6 +31,32 @@ const byTier = Object.fromEntries(
     <p class="page-desc">
       Release history for ARC UI. All packages are versioned together.
     </p>
+
+    <section id="v1-4-0">
+      <h2 class="docs-heading">v1.4.0 — Component Composition &amp; Token Infrastructure</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <h3 class="tier-heading">Refactors</h3>
+      <ul class="docs-list">
+        <li><strong>Shared style modules</strong> — Extracted reusable style sheets into composable modules that multiple components import:
+          <ul class="docs-list" style="margin-top:var(--space-xs)">
+            <li><code>button-styles.js</code> — variant styles (secondary, ghost, focus, disabled) shared by Button, IconButton, and Chip</li>
+            <li><code>card-styles.js</code> — hover glow and gradient border shared by Card and FeatureCard</li>
+            <li><code>status-styles.js</code> — status color CSS custom properties shared by Alert, Callout, and Toast</li>
+            <li><code>status-utils.js</code> — status icon resolver shared by Alert, Callout, and Toast</li>
+          </ul>
+        </li>
+        <li><strong>Callout</strong> — Now uses status color tokens for border and background tinting instead of neutral card styling. Icon color matches the variant.</li>
+        <li><strong>TopBar</strong> — Added inner content wrapper to separate backdrop/border from flex layout, exposing a <code>content</code> CSS part.</li>
+      </ul>
+
+      <h3 class="tier-heading">Infrastructure</h3>
+      <ul class="docs-list">
+        <li><strong>Token single source of truth</strong> — <code>shared/tokens.js</code> is now the sole source. <code>tokens.css</code> is generated from it. <code>pnpm generate</code> runs token generation then Prism.</li>
+        <li><strong>Fixed focus-glow drift</strong> — Shadow DOM fallbacks had different <code>--focus-ring</code> and <code>--focus-glow</code> values than the CSS file. Both now derive from <code>tokens.focus</code>.</li>
+        <li><strong>Light theme completeness</strong> — <code>lightTokens</code> now includes gradient, glow-line, and utility overrides that were previously only in hand-maintained CSS.</li>
+      </ul>
+    </section>
 
     <section id="v1-3-0">
       <h2 class="docs-heading">v1.3.0 — Visual Refinements</h2>

@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { statusVars } from '../status-styles.js';
 import './icon.js';
 
 export class ArcCallout extends LitElement {
@@ -9,6 +10,7 @@ export class ArcCallout extends LitElement {
 
   static styles = [
     tokenStyles,
+    statusVars,
     css`
       :host { display: block; }
 
@@ -18,8 +20,8 @@ export class ArcCallout extends LitElement {
         gap: var(--space-sm);
         padding: var(--space-md) var(--space-lg);
         border-radius: var(--radius-md);
-        border: 1px solid var(--border-default);
-        background: var(--bg-card);
+        border: 1px solid rgba(var(--_status-rgb), 0.12);
+        background: rgba(var(--_status-rgb), 0.04);
         font-family: var(--font-body);
         font-size: var(--text-sm);
         line-height: 1.7;
@@ -36,6 +38,7 @@ export class ArcCallout extends LitElement {
         flex-shrink: 0;
         display: flex;
         align-items: center;
+        color: var(--_status-color);
       }
 
       .callout__label {
@@ -44,43 +47,12 @@ export class ArcCallout extends LitElement {
         font-weight: 600;
         letter-spacing: 1.5px;
         text-transform: uppercase;
+        color: var(--_status-color);
       }
 
       .callout__content {
         min-width: 0;
       }
-
-      /* ── Info ── */
-      :host([variant="info"]) .callout {
-        border-color: rgba(var(--accent-primary-rgb), 0.12);
-        background: rgba(var(--accent-primary-rgb), 0.04);
-      }
-      :host([variant="info"]) .callout__icon { color: var(--accent-primary); }
-      :host([variant="info"]) .callout__label { color: var(--accent-primary); }
-
-      /* ── Warning ── */
-      :host([variant="warning"]) .callout {
-        border-color: rgba(var(--color-warning-rgb), 0.15);
-        background: rgba(var(--color-warning-rgb), 0.04);
-      }
-      :host([variant="warning"]) .callout__icon { color: var(--color-warning); }
-      :host([variant="warning"]) .callout__label { color: var(--color-warning); }
-
-      /* ── Tip ── */
-      :host([variant="tip"]) .callout {
-        border-color: rgba(var(--color-success-rgb), 0.15);
-        background: rgba(var(--color-success-rgb), 0.04);
-      }
-      :host([variant="tip"]) .callout__icon { color: var(--color-success); }
-      :host([variant="tip"]) .callout__label { color: var(--color-success); }
-
-      /* ── Danger ── */
-      :host([variant="danger"]) .callout {
-        border-color: rgba(var(--color-error-rgb), 0.15);
-        background: rgba(var(--color-error-rgb), 0.04);
-      }
-      :host([variant="danger"]) .callout__icon { color: var(--color-error); }
-      :host([variant="danger"]) .callout__label { color: var(--color-error); }
 
       @media (prefers-reduced-motion: reduce) {
         :host *,

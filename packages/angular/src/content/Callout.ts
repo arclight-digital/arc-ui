@@ -10,5 +10,5 @@ import '@arclux/arc-ui';
   template: `<arc-callout [attr.variant]="variant"><ng-content /></arc-callout>`,
 })
 export class Callout {
-  @Input() variant: 'info' | 'warning' | 'tip' | 'danger' = 'info';
+  @Input() variant: string = 'info';
 }

@@ -31,15 +31,19 @@ export class ArcTopBar extends LitElement {
 
       .topbar {
         position: relative;
-        display: flex;
-        align-items: center;
         height: var(--nav-height);
         padding: 0 var(--space-lg);
         background: color-mix(in srgb, var(--bg-deep) 85%, transparent);
         backdrop-filter: blur(12px) saturate(130%);
         -webkit-backdrop-filter: blur(12px) saturate(130%);
         border-bottom: 1px solid var(--border-subtle);
+      }
+
+      .topbar__content {
+        display: flex;
+        align-items: center;
         gap: var(--space-md);
+        height: 100%;
       }
 
       .topbar__glow {
@@ -241,19 +245,21 @@ export class ArcTopBar extends LitElement {
 
     return html`
       <header class="topbar" part="topbar">
-        ${menuLeft ? this._renderMenuButton() : ''}
-        <a class="topbar__brand" href="/" part="brand">
-          <slot name="logo"></slot>
-          ${this.heading ? html`<span class="topbar__heading">${this.heading}</span>` : ''}
-          <slot name="subtitle"></slot>
-        </a>
-        <div class="topbar__center" part="center">
-          <slot name="center"></slot>
+        <div class="topbar__content" part="content">
+          ${menuLeft ? this._renderMenuButton() : ''}
+          <a class="topbar__brand" href="/" part="brand">
+            <slot name="logo"></slot>
+            ${this.heading ? html`<span class="topbar__heading">${this.heading}</span>` : ''}
+            <slot name="subtitle"></slot>
+          </a>
+          <div class="topbar__center" part="center">
+            <slot name="center"></slot>
+          </div>
+          <div class="topbar__actions" part="actions">
+            <slot name="actions"></slot>
+          </div>
+          ${!menuLeft ? this._renderMenuButton() : ''}
         </div>
-        <div class="topbar__actions" part="actions">
-          <slot name="actions"></slot>
-        </div>
-        ${!menuLeft ? this._renderMenuButton() : ''}
         <div class="topbar__glow"></div>
       </header>
     `;

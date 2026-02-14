@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { buttonVariantStyles } from '../button-styles.js';
 
 export class ArcButton extends LitElement {
   static properties = {
@@ -14,6 +15,7 @@ export class ArcButton extends LitElement {
 
   static styles = [
     tokenStyles,
+    buttonVariantStyles,
     css`
       :host { display: inline-flex; }
       :host([disabled]) { pointer-events: none; }
@@ -48,54 +50,25 @@ export class ArcButton extends LitElement {
       :host([size="md"]) .btn { font-size: var(--text-xs); padding: var(--space-sm) var(--space-lg); }
       :host([size="lg"]) .btn { font-size: var(--text-xs); padding: var(--space-md) var(--space-xl); letter-spacing: 3px; }
 
-      /* Primary */
-      :host(:not([variant])) .btn,
-      :host([variant="primary"]) .btn {
+      /* Default → primary */
+      :host(:not([variant])) .btn {
         background: var(--accent-primary);
         color: var(--bg-deep);
         border-color: var(--accent-primary);
       }
-      :host(:not([variant])) .btn:hover,
-      :host([variant="primary"]) .btn:hover { box-shadow: var(--glow-primary); }
+      :host(:not([variant])) .btn:hover { box-shadow: var(--glow-primary); }
+
+      /* :active scale */
       :host(:not([variant])) .btn:active,
       :host([variant="primary"]) .btn:active { transform: scale(0.97); box-shadow: 0 0 8px rgba(var(--accent-primary-rgb),0.5); }
-
-      /* Secondary */
-      :host([variant="secondary"]) .btn {
-        background: transparent;
-        color: var(--text-primary);
-        border-color: var(--border-default);
-      }
-      :host([variant="secondary"]) .btn:hover {
-        border-color: var(--accent-primary);
-        color: var(--accent-primary);
-        box-shadow: 0 0 20px var(--accent-primary-ring);
-      }
       :host([variant="secondary"]) .btn:active {
         transform: scale(0.97);
         background: rgba(var(--accent-primary-rgb),0.05);
-      }
-
-      /* Ghost */
-      :host([variant="ghost"]) .btn {
-        background: transparent;
-        color: var(--text-muted);
-        border-color: transparent;
-      }
-      :host([variant="ghost"]) .btn:hover {
-        color: var(--text-primary);
-        background: var(--bg-hover);
       }
       :host([variant="ghost"]) .btn:active {
         transform: scale(0.97);
         background: var(--bg-elevated);
       }
-
-      /* Focus */
-      .btn:focus-visible { outline: none; box-shadow: var(--focus-glow); }
-
-      /* Disabled */
-      :host([disabled]) .btn { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
 
       /* Prefix / Suffix */
       .btn__prefix,

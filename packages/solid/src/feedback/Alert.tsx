@@ -4,7 +4,7 @@ import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui';
 
 export interface AlertProps {
-  variant?: 'info' | 'success' | 'warning' | 'error';
+  variant?: string;
   dismissible?: boolean;
   heading?: string;
   children?: JSX.Element;

@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { buttonVariantStyles } from '../button-styles.js';
 import '../content/icon.js';
 
 export class ArcIconButton extends LitElement {
@@ -16,6 +17,7 @@ export class ArcIconButton extends LitElement {
 
   static styles = [
     tokenStyles,
+    buttonVariantStyles,
     css`
       :host { display: inline-flex; }
       :host([disabled]) { pointer-events: none; }
@@ -69,59 +71,41 @@ export class ArcIconButton extends LitElement {
       :host([size="md"]) .btn--has-text { padding: var(--space-xs) var(--space-sm); font-size: var(--text-xs); }
       :host([size="lg"]) .btn--has-text { padding: var(--space-sm) var(--space-md); font-size: var(--text-xs); }
 
-      /* Ghost (default) */
-      :host(:not([variant])) .btn,
-      :host([variant="ghost"]) .btn {
+      /* Default → ghost */
+      :host(:not([variant])) .btn {
         background: transparent;
         color: var(--text-muted);
         border-color: transparent;
       }
-      :host(:not([variant])) .btn:hover,
-      :host([variant="ghost"]) .btn:hover {
+      :host(:not([variant])) .btn:hover {
         color: var(--text-primary);
         background: var(--bg-hover);
       }
+
+      /* :active scale */
       :host(:not([variant])) .btn:active,
       :host([variant="ghost"]) .btn:active {
         transform: scale(0.93);
         background: var(--bg-elevated);
       }
-
-      /* Secondary */
-      :host([variant="secondary"]) .btn {
-        background: transparent;
-        color: var(--text-secondary);
-        border-color: var(--border-default);
-      }
-      :host([variant="secondary"]) .btn:hover {
-        border-color: var(--accent-primary);
-        color: var(--accent-primary);
-        box-shadow: 0 0 16px var(--accent-primary-ring);
-      }
       :host([variant="secondary"]) .btn:active {
         transform: scale(0.93);
         background: rgba(var(--accent-primary-rgb), 0.05);
-      }
-
-      /* Primary */
-      :host([variant="primary"]) .btn {
-        background: var(--accent-primary);
-        color: var(--bg-deep);
-        border-color: var(--accent-primary);
-      }
-      :host([variant="primary"]) .btn:hover {
-        box-shadow: var(--glow-primary);
       }
       :host([variant="primary"]) .btn:active {
         transform: scale(0.93);
         box-shadow: 0 0 8px rgba(var(--accent-primary-rgb), 0.5);
       }
 
-      /* Focus */
-      .btn:focus-visible { outline: none; box-shadow: var(--focus-glow); }
+      /* IconButton secondary uses text-secondary instead of text-primary */
+      :host([variant="secondary"]) .btn {
+        color: var(--text-secondary);
+      }
 
-      /* Disabled */
-      :host([disabled]) .btn { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+      /* IconButton secondary hover uses smaller glow */
+      :host([variant="secondary"]) .btn:hover {
+        box-shadow: 0 0 16px var(--accent-primary-ring);
+      }
 
       @media (prefers-reduced-motion: reduce) {
         :host *,

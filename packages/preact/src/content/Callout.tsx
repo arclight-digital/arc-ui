@@ -4,7 +4,7 @@ import { type FunctionComponent } from 'preact';
 import '@arclux/arc-ui';
 
 export interface CalloutProps {
-  variant?: 'info' | 'warning' | 'tip' | 'danger';
+  variant?: string;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }

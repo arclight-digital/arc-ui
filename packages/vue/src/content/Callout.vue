@@ -5,7 +5,7 @@ import '@arclux/arc-ui';
 defineOptions({ name: 'Callout' });
 
 withDefaults(defineProps<{
-  variant?: 'info' | 'warning' | 'tip' | 'danger';
+  variant?: string;
 }>(), {
   variant: 'info',
 });

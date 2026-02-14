@@ -373,8 +373,8 @@ export const cssVariables = `
   --gradient-ambient: radial-gradient(circle at 15% 85%, rgba(var(--accent-primary-rgb),0.04) 0%, transparent 50%),
                       radial-gradient(circle at 85% 15%, rgba(var(--accent-secondary-rgb),0.03) 0%, transparent 50%);
 
-  --focus-ring: 0 0 0 2px var(--bg-deep), 0 0 0 4px var(--accent-primary);
-  --focus-glow: 0 0 0 2px var(--bg-deep), 0 0 0 4px var(--accent-primary), 0 0 16px rgba(var(--accent-primary-rgb),0.3);
+  --focus-ring: ${tokens.focus.ring};
+  --focus-glow: ${tokens.focus.glow};
 
   --max-width: ${tokens.layout.maxWidth};
   --max-width-sm: ${tokens.layout.maxWidthSm};
@@ -424,6 +424,22 @@ export const lightTokens = {
     xl:      '0 16px 48px rgba(var(--accent-primary-rgb),0.14), 0 8px 16px rgba(var(--accent-secondary-rgb),0.07)',
     overlay: '0 4px 24px rgba(var(--accent-primary-rgb),0.1), 0 8px 48px rgba(var(--accent-secondary-rgb),0.06)',
   },
+  gradient: {
+    displayText: 'linear-gradient(135deg, var(--text-primary) 0%, var(--accent-primary) 100%)',
+    divider: 'linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.2), transparent)',
+    dividerGlow: 'linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.35), rgba(var(--accent-secondary-rgb),0.25), transparent)',
+    pageAmbient: 'radial-gradient(ellipse, rgba(var(--accent-primary-rgb),0.06) 0%, transparent 70%)',
+    borderGlow: 'linear-gradient(135deg, rgba(var(--accent-primary-rgb),0.2), rgba(var(--accent-secondary-rgb),0.15), rgba(var(--accent-primary-rgb),0.08))',
+    ambient: 'radial-gradient(circle at 15% 85%, rgba(var(--accent-primary-rgb),0.07) 0%, transparent 50%),\n    radial-gradient(circle at 85% 15%, rgba(var(--accent-secondary-rgb),0.05) 0%, transparent 50%)',
+  },
+  glowLine: {
+    white: 'linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.15), transparent)',
+    blue: 'linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.6), transparent)',
+  },
+  utility: {
+    bgHover: 'rgba(55, 105, 235, 0.04)',
+    overlayBackdrop: 'rgba(20, 20, 40, 0.25)',
+  },
 };
 
 /** Fixed dark tokens for nav/footer regions */
@@ -441,7 +457,158 @@ export const fixedDarkTokens = {
     borderSubtle:  'rgb(24, 24, 30)',
     borderDefault: 'rgb(34, 34, 41)',
     borderBright:  'rgb(51, 51, 64)',
+    accentBlue:   'rgb(77, 126, 247)',
+    accentViolet: 'rgb(139, 92, 246)',
+  },
+  rgb: {
+    accentBlue:   '77, 126, 247',
+    accentViolet: '139, 92, 246',
+    textPrimary:  '232, 232, 236',
+    textMuted:    '124, 124, 137',
+    white:        '255, 255, 255',
+    black:        '0, 0, 0',
+  },
+  gradient: {
+    displayText: 'linear-gradient(135deg, rgb(232, 232, 236) 0%, rgb(124, 124, 137) 100%)',
+    divider: 'linear-gradient(90deg, transparent, var(--border-subtle), transparent)',
+  },
+  shadow: {
+    overlay: '0 8px 32px rgba(0, 0, 0, 0.4)',
+  },
+  utility: {
+    bgHover: 'rgba(var(--white-rgb), 0.04)',
+    overlayBackdrop: 'rgba(var(--black-rgb), 0.6)',
   },
 };
+
+/** Light-mode fixed dark tokens (deep royal blue for nav/footer) */
+export const lightFixedTokens = {
+  color: {
+    bgDeep:      'rgb(12, 12, 52)',
+    bgSurface:   'rgb(16, 16, 62)',
+    bgBase:      'rgb(16, 16, 62)',
+    bgCard:      'rgb(20, 20, 70)',
+    bgElevated:  'rgb(26, 26, 80)',
+    textSecondary: 'rgb(160, 165, 195)',
+    textMuted:     'rgb(135, 140, 175)',
+    textGhost:     'rgb(110, 115, 155)',
+    borderSubtle:  'rgb(30, 30, 78)',
+    borderDefault: 'rgb(42, 42, 92)',
+    borderBright:  'rgb(56, 56, 108)',
+  },
+};
+
+/* ── CSS Generator ── */
+
+const colorVarMap = {
+  bgDeep: '--bg-deep', bgSurface: '--bg-surface', bgBase: '--bg-base',
+  bgCard: '--bg-card', bgElevated: '--bg-elevated',
+  textPrimary: '--text-primary', textSecondary: '--text-secondary',
+  textMuted: '--text-muted', textGhost: '--text-ghost',
+  borderSubtle: '--border-subtle', borderDefault: '--border-default',
+  borderBright: '--border-bright',
+  accentBlue: '--accent-primary', accentViolet: '--accent-secondary',
+};
+
+const rgbVarMap = {
+  accentBlue: '--accent-primary-rgb', accentViolet: '--accent-secondary-rgb',
+  textPrimary: '--text-primary-rgb', textMuted: '--text-muted-rgb',
+  white: '--white-rgb', black: '--black-rgb',
+};
+
+const shadowVarMap = {
+  xs: '--shadow-xs', sm: '--shadow-sm', md: '--shadow-md',
+  lg: '--shadow-lg', xl: '--shadow-xl', overlay: '--shadow-overlay',
+};
+
+const gradientVarMap = {
+  displayText: '--gradient-display-text', divider: '--gradient-divider',
+  dividerGlow: '--gradient-divider-glow', pageAmbient: '--gradient-page-ambient',
+  borderGlow: '--gradient-border-glow', ambient: '--gradient-ambient',
+};
+
+function renderOverrides(t, indent = '  ') {
+  const lines = [];
+  const add = (name, val) => lines.push(`${indent}${name}: ${val};`);
+
+  if (t.color) for (const [k, v] of Object.entries(t.color)) if (colorVarMap[k]) add(colorVarMap[k], v);
+  if (t.rgb)   for (const [k, v] of Object.entries(t.rgb))   if (rgbVarMap[k])   add(rgbVarMap[k], v);
+  if (t.shadow) for (const [k, v] of Object.entries(t.shadow)) if (shadowVarMap[k]) add(shadowVarMap[k], v);
+
+  if (t.gradient) for (const [k, v] of Object.entries(t.gradient)) if (gradientVarMap[k]) add(gradientVarMap[k], v);
+
+  if (t.glow) {
+    if (t.glow.blue)   add('--glow-primary', t.glow.blue);
+    if (t.glow.violet) add('--glow-secondary', t.glow.violet);
+    if (t.glow.white)  add('--glow-white', t.glow.white);
+  }
+  if (t.glowCard?.hover) add('--glow-card-hover', t.glowCard.hover);
+
+  if (t.glowLine) {
+    if (t.glowLine.white) add('--glow-line-white', t.glowLine.white);
+    if (t.glowLine.blue)  add('--glow-line-blue', t.glowLine.blue);
+  }
+
+  if (t.utility) {
+    if (t.utility.bgHover)          add('--bg-hover', t.utility.bgHover);
+    if (t.utility.overlayBackdrop)  add('--overlay-backdrop', t.utility.overlayBackdrop);
+  }
+
+  return lines.join('\n');
+}
+
+/** Generate the full tokens.css content from JS data */
+export function generateTokensCSS() {
+  const touchBlock = [
+    '@media (pointer: coarse) {',
+    '  :root {',
+    `    --touch-min: ${tokens.touch.mobileMin};`,
+    `    --touch-pad: ${tokens.touch.mobilePad};`,
+    '  }',
+    '}',
+  ].join('\n');
+
+  const lightVars = renderOverrides(lightTokens);
+  const lightVarsNested = renderOverrides(lightTokens, '    ');
+  const fixedVars = renderOverrides(fixedDarkTokens);
+  const fixedVarsNested = renderOverrides(fixedDarkTokens, '    ');
+  const lightFixedVars = renderOverrides(lightFixedTokens);
+  const lightFixedVarsNested = renderOverrides(lightFixedTokens, '    ');
+
+  return `/* Generated from shared/tokens.js — do not edit by hand */
+
+:root {
+${cssVariables}
+}
+
+${touchBlock}
+
+/* Light Theme Overrides */
+[data-theme="light"] {
+${lightVars}
+}
+
+@media (prefers-color-scheme: light) {
+  [data-theme="auto"] {
+${lightVarsNested}
+  }
+}
+
+/* Fixed Dark — always-dark regions (nav, footer) */
+.theme-fixed {
+${fixedVars}
+}
+
+[data-theme="light"] .theme-fixed {
+${lightFixedVars}
+}
+
+@media (prefers-color-scheme: light) {
+  [data-theme="auto"] .theme-fixed {
+${lightFixedVarsNested}
+  }
+}
+`;
+}
 
 export default tokens;

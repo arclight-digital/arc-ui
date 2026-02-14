@@ -104,8 +104,9 @@ const headings = [
       <div class="step">
         <span class="step__number">1</span>
         <div class="step__content">
-          <strong>Register components</strong>
-          <div class="docs-code"><Code code="import '@arclux/arc-ui';" lang="js" theme="css-variables" /></div>
+          <strong>Import tokens &amp; register components</strong>
+          <div class="docs-code"><Code code={`import '@arclux/arc-ui/tokens.css';
+import '@arclux/arc-ui';`} lang="js" theme="css-variables" /></div>
         </div>
       </div>
 
@@ -167,7 +168,8 @@ const headings = [
             <strong>React</strong>
           </div>
           <div class="docs-code"><Code code="npm install @arclux/arc-ui-react" lang="bash" theme="css-variables" /></div>
-          <div class="docs-code"><Code code={`import { Button, Card } from '@arclux/arc-ui-react';
+          <div class="docs-code"><Code code={`import '@arclux/arc-ui/tokens.css';
+import { Button, Card } from '@arclux/arc-ui-react';
 
 function App() {
   return (
@@ -188,6 +190,7 @@ function App() {
           </div>
           <div class="docs-code"><Code code="npm install @arclux/arc-ui-vue" lang="bash" theme="css-variables" /></div>
           <div class="docs-code"><Code code={`<script setup>
+import '@arclux/arc-ui/tokens.css';
 import { ArcButton, ArcCard } from '@arclux/arc-ui-vue';
 </script>
 
@@ -208,6 +211,7 @@ import { ArcButton, ArcCard } from '@arclux/arc-ui-vue';
           </div>
           <div class="docs-code"><Code code="npm install @arclux/arc-ui-svelte" lang="bash" theme="css-variables" /></div>
           <div class="docs-code"><Code code={`<script>
+  import '@arclux/arc-ui/tokens.css';
   import { ArcButton, ArcCard } from '@arclux/arc-ui-svelte';
 </script>
 
@@ -225,7 +229,9 @@ import { ArcButton, ArcCard } from '@arclux/arc-ui-vue';
             <strong>CDN / Vanilla JS</strong>
           </div>
           <p class="docs-text">No build step required. Add a script tag and go:</p>
-          <div class="docs-code"><Code code={`<script type="module"
+          <div class="docs-code"><Code code={`<link rel="stylesheet"
+  href="https://unpkg.com/@arclux/arc-ui/tokens.css">
+<script type="module"
   src="https://unpkg.com/@arclux/arc-ui">
 </script>
 

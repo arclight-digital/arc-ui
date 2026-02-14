@@ -5,7 +5,7 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcCallout } from '@arclux/arc-ui';
 
 export interface CalloutProps {
-  variant?: 'info' | 'warning' | 'tip' | 'danger';
+  variant?: string;
   className?: string;
   children?: React.ReactNode;
 }

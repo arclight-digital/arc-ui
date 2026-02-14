@@ -1,5 +1,18 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { getStatusIcon } from '../status-utils.js';
+
+/** Returns inline style string setting --_status-color/rgb for a given variant */
+function statusStyle(variant) {
+  const map = {
+    info:    { color: 'var(--accent-primary)',  rgb: 'var(--accent-primary-rgb)' },
+    success: { color: 'var(--color-success)',   rgb: 'var(--color-success-rgb)' },
+    warning: { color: 'var(--color-warning)',   rgb: 'var(--color-warning-rgb)' },
+    error:   { color: 'var(--color-error)',     rgb: 'var(--color-error-rgb)' },
+  };
+  const v = map[variant] || map.info;
+  return `--_status-color:${v.color};--_status-rgb:${v.rgb}`;
+}
 
 export class ArcToast extends LitElement {
   static properties = {
@@ -71,32 +84,15 @@ export class ArcToast extends LitElement {
         left: 0;
         right: 0;
         height: 2px;
-        background: var(--gradient-divider);
-      }
-
-      .toast--info::after {
-        background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
-      }
-      .toast--success::after {
-        background: linear-gradient(90deg, transparent, var(--color-success), transparent);
-      }
-      .toast--warning::after {
-        background: linear-gradient(90deg, transparent, var(--color-warning), transparent);
-      }
-      .toast--error::after {
-        background: linear-gradient(90deg, transparent, var(--color-error), transparent);
+        background: linear-gradient(90deg, transparent, var(--_status-color), transparent);
       }
 
       .toast__icon {
         font-size: var(--text-sm);
         flex-shrink: 0;
         line-height: 1;
+        color: var(--_status-color);
       }
-
-      .toast--info .toast__icon    { color: var(--accent-primary); }
-      .toast--success .toast__icon { color: var(--color-success); }
-      .toast--warning .toast__icon { color: var(--color-warning); }
-      .toast--error .toast__icon   { color: var(--color-error); }
 
       .toast__message { flex: 1; }
 
@@ -149,15 +145,6 @@ export class ArcToast extends LitElement {
     this._counter = 0;
   }
 
-  _getIcon(variant) {
-    switch (variant) {
-      case 'success': return '\u2713';
-      case 'warning': return '\u26A0';
-      case 'error':   return '\u2717';
-      default:        return '\u2139';
-    }
-  }
-
   show({ message, variant = 'info', duration }) {
     const id = ++this._counter;
     const dur = duration ?? this.duration;
@@ -193,8 +180,8 @@ export class ArcToast extends LitElement {
     return html`
       <div class="toast-container" role="status" aria-live="polite" aria-atomic="false" part="container">
         ${this._toasts.map(t => html`
-          <div class="toast toast--${t.variant}" data-toast-id=${t.id} part="toast">
-            <span class="toast__icon" aria-hidden="true">${this._getIcon(t.variant)}</span>
+          <div class="toast" style=${statusStyle(t.variant)} data-toast-id=${t.id} part="toast">
+            <span class="toast__icon" aria-hidden="true">${getStatusIcon(t.variant)}</span>
             <span class="toast__message">${t.message}</span>
             <button class="toast__dismiss" @click=${() => this._dismiss(t.id)} aria-label="Dismiss">&times;</button>
           </div>

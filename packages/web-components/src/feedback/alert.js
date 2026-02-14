@@ -1,5 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { statusVars } from '../status-styles.js';
+import { getStatusIcon } from '../status-utils.js';
 
 export class ArcAlert extends LitElement {
   static properties = {
@@ -10,6 +12,7 @@ export class ArcAlert extends LitElement {
 
   static styles = [
     tokenStyles,
+    statusVars,
     css`
       :host { display: block; }
 
@@ -32,24 +35,8 @@ export class ArcAlert extends LitElement {
         left: 0;
         right: 0;
         height: 2px;
-        background: var(--gradient-divider);
-      }
-
-      :host([variant="info"]) .alert::before {
-        background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
-        box-shadow: 0 0 12px rgba(var(--accent-primary-rgb), 0.15);
-      }
-      :host([variant="success"]) .alert::before {
-        background: linear-gradient(90deg, transparent, var(--color-success), transparent);
-        box-shadow: 0 0 12px rgba(var(--color-success-rgb), 0.15);
-      }
-      :host([variant="warning"]) .alert::before {
-        background: linear-gradient(90deg, transparent, var(--color-warning), transparent);
-        box-shadow: 0 0 12px rgba(var(--color-warning-rgb), 0.15);
-      }
-      :host([variant="error"]) .alert::before {
-        background: linear-gradient(90deg, transparent, var(--color-error), transparent);
-        box-shadow: 0 0 12px rgba(var(--color-error-rgb), 0.15);
+        background: linear-gradient(90deg, transparent, var(--_status-color), transparent);
+        box-shadow: 0 0 12px rgba(var(--_status-rgb), 0.15);
       }
 
       .alert__icon-wrap {
@@ -62,31 +49,10 @@ export class ArcAlert extends LitElement {
         border-radius: var(--radius-md);
         font-size: var(--text-md);
         transition: box-shadow var(--transition-base);
-      }
-
-      :host([variant="info"]) .alert__icon-wrap {
-        background: rgba(var(--accent-primary-rgb), 0.08);
-        border: 1px solid rgba(var(--accent-primary-rgb), 0.15);
-        color: var(--accent-primary);
-        box-shadow: 0 0 16px rgba(var(--accent-primary-rgb), 0.1);
-      }
-      :host([variant="success"]) .alert__icon-wrap {
-        background: rgba(var(--color-success-rgb), 0.08);
-        border: 1px solid rgba(var(--color-success-rgb), 0.15);
-        color: var(--color-success);
-        box-shadow: 0 0 16px rgba(var(--color-success-rgb), 0.1);
-      }
-      :host([variant="warning"]) .alert__icon-wrap {
-        background: rgba(var(--color-warning-rgb), 0.08);
-        border: 1px solid rgba(var(--color-warning-rgb), 0.15);
-        color: var(--color-warning);
-        box-shadow: 0 0 16px rgba(var(--color-warning-rgb), 0.1);
-      }
-      :host([variant="error"]) .alert__icon-wrap {
-        background: rgba(var(--color-error-rgb), 0.08);
-        border: 1px solid rgba(var(--color-error-rgb), 0.15);
-        color: var(--color-error);
-        box-shadow: 0 0 16px rgba(var(--color-error-rgb), 0.1);
+        background: rgba(var(--_status-rgb), 0.08);
+        border: 1px solid rgba(var(--_status-rgb), 0.15);
+        color: var(--_status-color);
+        box-shadow: 0 0 16px rgba(var(--_status-rgb), 0.1);
       }
 
       .alert__body { flex: 1; min-width: 0; }
@@ -154,15 +120,6 @@ export class ArcAlert extends LitElement {
     this.heading = '';
   }
 
-  _getIcon() {
-    switch (this.variant) {
-      case 'success': return '\u2713';
-      case 'warning': return '\u26A0';
-      case 'error':   return '\u2717';
-      default:        return '\u2139';
-    }
-  }
-
   _dismiss() {
     this.dispatchEvent(new CustomEvent('arc-dismiss', { bubbles: true, composed: true }));
     this.style.display = 'none';
@@ -171,7 +128,7 @@ export class ArcAlert extends LitElement {
   render() {
     return html`
       <div class="alert" role="alert" part="alert">
-        <div class="alert__icon-wrap" part="icon">${this._getIcon()}</div>
+        <div class="alert__icon-wrap" part="icon">${getStatusIcon(this.variant)}</div>
         <div class="alert__body">
           ${this.heading ? html`<p class="alert__heading" part="heading">${this.heading}</p>` : ''}
           <div class="alert__content" part="content"><slot></slot></div>

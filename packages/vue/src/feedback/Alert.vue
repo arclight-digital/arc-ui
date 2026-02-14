@@ -5,7 +5,7 @@ import '@arclux/arc-ui';
 defineOptions({ name: 'Alert' });
 
 withDefaults(defineProps<{
-  variant?: 'info' | 'success' | 'warning' | 'error';
+  variant?: string;
   dismissible?: boolean;
   heading?: string;
 }>(), {

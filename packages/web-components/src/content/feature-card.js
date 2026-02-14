@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { cardHoverStyles } from '../card-styles.js';
 
 export class ArcFeatureCard extends LitElement {
   static properties = {
@@ -11,40 +12,16 @@ export class ArcFeatureCard extends LitElement {
 
   static styles = [
     tokenStyles,
+    cardHoverStyles,
     css`
       :host { display: block; height: 100%; }
 
-      .card {
-        position: relative;
-        border-radius: var(--radius-lg);
-        height: 100%;
-        padding: 1px;
-        background: var(--border-subtle);
-        transition: background var(--transition-slow);
-        text-decoration: none;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .card:hover {
-        background: linear-gradient(135deg, rgba(var(--accent-primary-rgb),0.3), rgba(var(--accent-secondary-rgb),0.15), var(--border-default));
-      }
+      .card { height: 100%; }
 
       .card__inner {
-        position: relative;
-        background: var(--bg-card);
-        border-radius: calc(var(--radius-lg) - 1px);
         padding: var(--space-xl) var(--space-lg);
-        display: flex;
-        flex-direction: column;
         gap: var(--space-md);
-        flex: 1;
-        transition: box-shadow var(--transition-slow);
         z-index: 1;
-      }
-
-      .card:hover .card__inner {
-        box-shadow: inset 0 1px 0 var(--bg-hover), var(--glow-card-hover);
       }
 
       .card__icon {
@@ -95,8 +72,6 @@ export class ArcFeatureCard extends LitElement {
       }
 
       .card:hover .card__rule { opacity: 0.5; width: 48px; }
-
-      .card:focus-visible { outline: none; box-shadow: var(--focus-glow); border-radius: var(--radius-lg); }
 
       @media (max-width: 768px) {
         .card__inner { padding: var(--space-lg) var(--space-md); }

@@ -53,59 +53,41 @@
       .arc-icon-button[data-size="md"] .btn--has-text { padding: var(--space-xs) var(--space-sm); font-size: var(--text-xs); }
       .arc-icon-button[data-size="lg"] .btn--has-text { padding: var(--space-sm) var(--space-md); font-size: var(--text-xs); }
 
-      /* Ghost (default) */
-      .arc-icon-button:not([data-variant]) .btn,
-      .arc-icon-button[data-variant="ghost"] .btn {
+      /* Default → ghost */
+      .arc-icon-button:not([data-variant]) .btn {
         background: transparent;
         color: var(--text-muted);
         border-color: transparent;
       }
-      .arc-icon-button:not([data-variant]) .btn:hover,
-      .arc-icon-button[data-variant="ghost"] .btn:hover {
+      .arc-icon-button:not([data-variant]) .btn:hover {
         color: var(--text-primary);
         background: var(--bg-hover);
       }
+
+      /* :active scale */
       .arc-icon-button:not([data-variant]) .btn:active,
       .arc-icon-button[data-variant="ghost"] .btn:active {
         transform: scale(0.93);
         background: var(--bg-elevated);
       }
-
-      /* Secondary */
-      .arc-icon-button[data-variant="secondary"] .btn {
-        background: transparent;
-        color: var(--text-secondary);
-        border-color: var(--border-default);
-      }
-      .arc-icon-button[data-variant="secondary"] .btn:hover {
-        border-color: var(--accent-primary);
-        color: var(--accent-primary);
-        box-shadow: 0 0 16px var(--accent-primary-ring);
-      }
       .arc-icon-button[data-variant="secondary"] .btn:active {
         transform: scale(0.93);
         background: rgba(var(--accent-primary-rgb), 0.05);
-      }
-
-      /* Primary */
-      .arc-icon-button[data-variant="primary"] .btn {
-        background: var(--accent-primary);
-        color: var(--bg-deep);
-        border-color: var(--accent-primary);
-      }
-      .arc-icon-button[data-variant="primary"] .btn:hover {
-        box-shadow: var(--glow-primary);
       }
       .arc-icon-button[data-variant="primary"] .btn:active {
         transform: scale(0.93);
         box-shadow: 0 0 8px rgba(var(--accent-primary-rgb), 0.5);
       }
 
-      /* Focus */
-      .arc-icon-button .btn:focus-visible { outline: none; box-shadow: var(--focus-glow); }
+      /* IconButton secondary uses text-secondary instead of text-primary */
+      .arc-icon-button[data-variant="secondary"] .btn {
+        color: var(--text-secondary);
+      }
 
-      /* Disabled */
-      .arc-icon-button[disabled] .btn { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+      /* IconButton secondary hover uses smaller glow */
+      .arc-icon-button[data-variant="secondary"] .btn:hover {
+        box-shadow: 0 0 16px var(--accent-primary-ring);
+      }
 
       @media (prefers-reduced-motion: reduce) {
         .arc-icon-button *,

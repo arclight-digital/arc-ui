@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import '../content/tag.js';
 
 export class ArcChip extends LitElement {
   static properties = {
@@ -11,56 +12,15 @@ export class ArcChip extends LitElement {
   static styles = [
     tokenStyles,
     css`
-      :host { display: inline-flex; }
-      :host([disabled]) { pointer-events: none; opacity: 0.4; }
-
-      .chip {
+      :host {
         display: inline-flex;
-        align-items: center;
-        gap: var(--space-xs);
-        font-family: var(--font-accent);
-        font-weight: 600;
-        font-size: var(--text-xs);
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        color: var(--text-muted);
-        padding: calc(var(--space-xs) + 2px) var(--space-md);
-        border: 1px solid var(--border-default);
-        border-radius: var(--radius-full);
-        background: var(--bg-hover);
         cursor: pointer;
         user-select: none;
-        transition:
-          background var(--transition-base),
-          border-color var(--transition-base),
-          color var(--transition-base),
-          box-shadow var(--transition-base);
-        line-height: 1.4;
-        outline: none;
       }
+      :host([disabled]) { pointer-events: none; }
 
-      .chip:hover {
-        border-color: var(--border-bright);
-        background: var(--bg-elevated);
-      }
-
-      :host([selected]) .chip {
-        border-color: var(--accent-primary);
-        color: var(--accent-primary);
-        background: var(--accent-primary-subtle);
-        box-shadow: 0 0 12px rgba(var(--accent-primary-rgb), 0.15);
-      }
-
-      :host([selected]) .chip:hover {
-        box-shadow: 0 0 16px rgba(var(--accent-primary-rgb), 0.25);
-      }
-
-      .chip:focus-visible {
-        box-shadow: var(--focus-glow);
-      }
-
-      :host([selected]) .chip:focus-visible {
-        box-shadow: var(--focus-glow), 0 0 12px rgba(var(--accent-primary-rgb), 0.15);
+      arc-tag {
+        pointer-events: none;
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -101,8 +61,10 @@ export class ArcChip extends LitElement {
 
   render() {
     return html`
-      <span
-        class="chip"
+      <arc-tag
+        variant=${this.selected ? 'primary' : 'default'}
+        ?disabled=${this.disabled}
+        exportparts="tag: chip, label"
         role="option"
         aria-selected=${this.selected ? 'true' : 'false'}
         aria-disabled=${this.disabled ? 'true' : 'false'}
@@ -112,7 +74,7 @@ export class ArcChip extends LitElement {
         part="chip"
       >
         <slot></slot>
-      </span>
+      </arc-tag>
     `;
   }
 }

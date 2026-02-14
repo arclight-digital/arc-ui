@@ -4,7 +4,7 @@ import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui';
 
 export interface CalloutProps {
-  variant?: 'info' | 'warning' | 'tip' | 'danger';
+  variant?: string;
   children?: JSX.Element;
   [key: string]: unknown;
 }

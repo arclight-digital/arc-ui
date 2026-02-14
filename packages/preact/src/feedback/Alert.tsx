@@ -4,7 +4,7 @@ import { type FunctionComponent } from 'preact';
 import '@arclux/arc-ui';
 
 export interface AlertProps {
-  variant?: 'info' | 'success' | 'warning' | 'error';
+  variant?: string;
   dismissible?: boolean;
   heading?: string;
   children?: preact.ComponentChildren;

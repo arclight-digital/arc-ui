@@ -16,6 +16,11 @@ export const tokenStyles = css`
     --font-accent: 'Tektur', system-ui, sans-serif;
     --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
+    --text-xs: 12px;
+    --text-sm: 14px;
+    --text-md: 15px;
+    --text-xl: clamp(22px, 2.5vw, 26px);
+
     --display-xl-size: clamp(36px, 5vw, 52px);
     --display-xl-weight: 500;
     --display-xl-spacing: -1px;
@@ -63,6 +68,9 @@ export const tokenStyles = css`
     --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
     --duration-enter: 500ms;
     --duration-exit: 300ms;
+
+    --focus-ring: 0 0 0 1px rgba(var(--accent-primary-rgb), 0.25);
+    --focus-glow: 0 0 0 1px rgba(var(--accent-primary-rgb), 0.2), 0 0 6px rgba(var(--accent-primary-rgb), 0.35), 0 0 16px rgba(var(--accent-primary-rgb), 0.2), 0 0 40px rgba(var(--accent-secondary-rgb), 0.12);
 
     --touch-min: 24px;
     --touch-pad: 4px;
