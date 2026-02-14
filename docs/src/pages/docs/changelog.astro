@@ -3,6 +3,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 import { components } from '../../data/components/index';
 
 const headings = [
+  { id: 'v1-5-1', label: 'v1.5.1' },
   { id: 'v1-5-0', label: 'v1.5.0' },
   { id: 'v1-4-0', label: 'v1.4.0' },
   { id: 'v1-3-0', label: 'v1.3.0' },
@@ -32,6 +33,17 @@ const byTier = Object.fromEntries(
     <p class="page-desc">
       Release history for ARC UI. All packages are versioned together.
     </p>
+
+    <section id="v1-5-1">
+      <h2 class="docs-heading">v1.5.1 — Bug Fixes</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <h3 class="tier-heading">Bug Fixes</h3>
+      <ul class="docs-list">
+        <li><strong>Shadow DOM CSS reset</strong> — Added a universal reset (<code>margin: 0; padding: 0; box-sizing: border-box</code>) to the shared style module injected into every component. Consumer CSS resets (<code>* &lbrace; margin: 0 &rbrace;</code>) cannot cross shadow DOM boundaries, so browser user-agent defaults (e.g. <code>h2 &lbrace; margin: 0.83em 0 &rbrace;</code>) were leaking into component internals.</li>
+        <li><strong>Boolean prop reflection</strong> — 11 boolean properties were missing <code>reflect: true</code>, preventing them from syncing back to HTML attributes when set via JavaScript. Affected props: Alert <code>dismissible</code>, Modal <code>closable</code>, Input <code>required</code> / <code>multiline</code>, DataTable <code>sortable</code> / <code>selectable</code>, ScrollToTop <code>smooth</code>, Form <code>novalidate</code> / <code>error-summary</code>, Link <code>external</code>, FileUpload <code>multiple</code>.</li>
+      </ul>
+    </section>
 
     <section id="v1-5-0">
       <h2 class="docs-heading">v1.5.0 — Utility Props Sweep</h2>

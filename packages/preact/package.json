@@ -1,6 +1,6 @@
 {
   "name": "@arclux/arc-ui-preact",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Preact wrappers for ARC UI Web Components.",
   "type": "module",
   "main": "src/index.ts",
