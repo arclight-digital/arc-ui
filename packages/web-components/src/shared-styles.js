@@ -18,6 +18,8 @@ export const tokenStyles = css`
   }
 
   :host {
+    transition: opacity 150ms ease;
+
     --font-body: 'Host Grotesk', system-ui, sans-serif;
     --font-accent: 'Tektur', system-ui, sans-serif;
     --font-mono: 'JetBrains Mono', ui-monospace, monospace;

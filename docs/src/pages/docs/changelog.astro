@@ -44,17 +44,21 @@ const byTier = Object.fromEntries(
     </p>
 
     <section id="v1-8-3">
-      <h2 class="docs-heading">v1.8.3 — Rename tokens.css → base.css, FOUC Fix</h2>
+      <h2 class="docs-heading">v1.8.3 — Rename tokens.css → base.css, FOUC Prevention</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
 
       <h3 class="tier-heading">Breaking Changes</h3>
       <ul class="docs-list">
-        <li><strong>Renamed <code>tokens.css</code> → <code>base.css</code></strong> — The stylesheet now includes FOUC prevention, theme overrides, and touch media queries — not just tokens. Update imports from <code>@arclux/arc-ui/tokens.css</code> to <code>@arclux/arc-ui/base.css</code>.</li>
+        <li><strong>Renamed <code>tokens.css</code> → <code>base.css</code></strong> — The stylesheet contains design tokens, theme overrides, and touch media queries. Update imports from <code>@arclux/arc-ui/tokens.css</code> to <code>@arclux/arc-ui/base.css</code>.</li>
       </ul>
 
       <h3 class="tier-heading">New</h3>
       <ul class="docs-list">
-        <li><strong>FOUC prevention</strong> — <code>base.css</code> includes <code>:not(:defined) {'{'} visibility: hidden; {'}'}</code> to hide unregistered web components until their JS loads, preventing a flash of unstyled content.</li>
+        <li><strong>FOUC prevention</strong> — <code>base.css</code> adds <code>:not(:defined) {'{'} opacity: 0 {'}'}</code> and each component's <code>:host</code> includes <code>transition: opacity 150ms ease</code>, so unregistered elements are hidden and fade in smoothly when their JS loads.</li>
+      </ul>
+
+      <h3 class="tier-heading">Infrastructure</h3>
+      <ul class="docs-list">
         <li><strong>Prism 1.2.2</strong> — Updated <code>@arclux/prism</code> with renamed <code>baseCSS</code> config key.</li>
       </ul>
     </section>

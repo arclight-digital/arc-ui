@@ -577,9 +577,10 @@ export function generateTokensCSS() {
 
   return `/* Generated from shared/tokens.js — do not edit by hand */
 
-/* Prevent FOUC for unregistered web components */
+/* Prevent FOUC — hide custom elements until registered.
+   Fade-in transition provided by :host styles in each component. */
 :not(:defined) {
-  visibility: hidden;
+  opacity: 0;
 }
 
 :root {

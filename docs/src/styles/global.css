@@ -185,42 +185,7 @@ pre.astro-code {
   box-shadow: var(--focus-glow);
 }
 
-/* ── Prevent FOUC for custom elements ──
-   Hide all arc-* elements until their JS has loaded and
-   customElements.define() runs. :defined flips the moment the
-   element upgrades, so there's zero visible flash. */
-[class*="arc-"]:not(:defined),
-:is(arc-accordion, arc-accordion-item, arc-alert, arc-app-shell,
-    arc-animated-number, arc-aspect-ratio, arc-auth-shell, arc-avatar,
-    arc-avatar-group, arc-badge, arc-breadcrumb, arc-breadcrumb-item,
-    arc-button, arc-calendar, arc-callout, arc-card, arc-carousel,
-    arc-checkbox, arc-chip, arc-code-block, arc-collapsible,
-    arc-color-picker, arc-color-swatch, arc-column, arc-combobox,
-    arc-command-palette, arc-command-item, arc-container, arc-context-menu,
-    arc-copy-button, arc-dashboard-grid, arc-data-table, arc-date-picker,
-    arc-dialog, arc-divider, arc-drawer, arc-dropdown-menu,
-    arc-empty-state, arc-feature-card, arc-file-upload, arc-footer,
-    arc-form, arc-highlight, arc-hover-card, arc-icon, arc-icon-button,
-    arc-infinite-scroll, arc-input, arc-kbd, arc-link, arc-marquee,
-    arc-meter, arc-modal, arc-multi-select, arc-navigation-menu,
-    arc-nav-item, arc-notification-panel, arc-number-input, arc-otp-input,
-    arc-page-header, arc-page-layout, arc-pagination, arc-pin-input,
-    arc-popover, arc-progress, arc-radio, arc-radio-group, arc-rating,
-    arc-resizable, arc-scroll-area, arc-scroll-spy, arc-search,
-    arc-section, arc-segmented-control, arc-select, arc-settings-layout,
-    arc-sheet, arc-sidebar, arc-sidebar-section, arc-sidebar-link,
-    arc-skeleton, arc-slider, arc-sortable-list, arc-spinner,
-    arc-split-pane, arc-spy-link, arc-stack, arc-stat, arc-status-bar,
-    arc-step, arc-stepper, arc-suggestion, arc-tab, arc-table, arc-tabs,
-    arc-tag, arc-text, arc-textarea, arc-theme-toggle, arc-timeline,
-    arc-timeline-item, arc-toast, arc-toggle, arc-toolbar, arc-tooltip,
-    arc-top-bar, arc-tree-item, arc-tree-view, arc-truncate,
-    arc-value-card, arc-markdown, arc-scroll-to-top):not(:defined) {
-  opacity: 0;
-  transition: opacity 150ms ease;
-}
-
-/* Layout-critical elements: reserve space while hidden to prevent shift */
+/* Layout-critical elements: reserve space before JS upgrades them */
 arc-top-bar:not(:defined) {
   display: block;
   height: var(--nav-height, 64px);
