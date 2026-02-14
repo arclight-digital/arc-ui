@@ -85,6 +85,12 @@ Three size presets — sm, md, and lg — let you scale buttons to their context
         default: 'false',
         description: 'Shows a spinner and disables the button. Use for async operations like form submission or API calls.',
       },
+      {
+        name: 'type',
+        type: "'button' | 'submit' | 'reset'",
+        default: "'button'",
+        description: 'Sets the HTML button type attribute. Use `submit` inside forms to trigger native form submission, or `reset` to clear form fields. Only applies when no `href` is set (link buttons ignore this).',
+      },
     ],
     tabs: [
       {

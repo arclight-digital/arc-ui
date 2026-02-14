@@ -3,6 +3,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 import { components } from '../../data/components/index';
 
 const headings = [
+  { id: 'v1-6-0', label: 'v1.6.0' },
   { id: 'v1-5-2', label: 'v1.5.2' },
   { id: 'v1-5-1', label: 'v1.5.1' },
   { id: 'v1-5-0', label: 'v1.5.0' },
@@ -34,6 +35,29 @@ const byTier = Object.fromEntries(
     <p class="page-desc">
       Release history for ARC UI. All packages are versioned together.
     </p>
+
+    <section id="v1-6-0">
+      <h2 class="docs-heading">v1.6.0 — New Component Props</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <p class="docs-text">
+        New props across six components — semantic status variants for Badge, layout controls for Divider, and form-critical props for Input, Button, and Select.
+      </p>
+
+      <h3 class="tier-heading">New Props</h3>
+      <ul class="docs-list">
+        <li><strong>Badge</strong> — Added <code>success</code>, <code>warning</code>, <code>error</code>, and <code>info</code> semantic variants. Added <code>color</code> prop for custom RGB colors.</li>
+        <li><strong>Divider</strong> — Added <code>align</code> prop (left/right) for asymmetric gradient origins and <code>vertical</code> prop for inline separators.</li>
+        <li><strong>Input</strong> — Added <code>value</code> prop for controlled-component patterns and <code>rows</code> prop for multiline textarea height.</li>
+        <li><strong>Button</strong> — Added <code>type</code> prop (button/submit/reset) for native form submission behavior.</li>
+        <li><strong>Select</strong> — Added <code>open</code> prop for programmatic dropdown control.</li>
+      </ul>
+
+      <h3 class="tier-heading">Fixes</h3>
+      <ul class="docs-list">
+        <li><strong>Accordion</strong> — Removed incorrect <code>items</code> prop from docs that never existed in the component.</li>
+      </ul>
+    </section>
 
     <section id="v1-5-2">
       <h2 class="docs-heading">v1.5.2 — Bug Fixes</h2>

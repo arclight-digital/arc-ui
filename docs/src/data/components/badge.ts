@@ -43,23 +43,32 @@ Because Badge is a static content element with no interactive behavior, it rende
     },
 
     previewHtml: `<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-  <arc-badge>Active</arc-badge>
-  <arc-badge variant="primary">Pending Review</arc-badge>
-  <arc-badge variant="secondary">Archived</arc-badge>
+  <arc-badge>Default</arc-badge>
+  <arc-badge variant="primary">Primary</arc-badge>
+  <arc-badge variant="secondary">Secondary</arc-badge>
+  <arc-badge variant="success">Success</arc-badge>
+  <arc-badge variant="warning">Warning</arc-badge>
+  <arc-badge variant="error">Error</arc-badge>
+  <arc-badge variant="info">Info</arc-badge>
 </div>`,
 
     props: [
       {
         name: 'variant',
-        type: "'default' | 'primary' | 'secondary'",
+        type: "'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'",
         default: "'default'",
-        description: 'Controls the badge color scheme. Default renders a neutral gray border and text suited for general-purpose labels. Primary adds an informational tint with a subtle glow on hover, ideal for active or in-progress states. Secondary provides a third color lane for categories like "Archived" or "Featured" that need visual separation from default and primary.',
+        description: 'Controls the badge color scheme. Default renders a neutral gray. Primary and secondary use the accent token colors. Success, warning, error, and info map to the corresponding semantic color tokens for status-oriented labels.',
       },
       {
         name: 'size',
         type: "'sm' | 'md' | 'lg'",
         default: "'md'",
         description: "Controls the badge size. Options: 'sm', 'md', 'lg'.",
+      },
+      {
+        name: 'color',
+        type: 'string',
+        description: 'Custom RGB color value (e.g. `"255, 100, 50"`) that overrides the variant color. Sets the border, text, background tint, and hover glow to the specified color.',
       },
     ],
 
@@ -70,10 +79,17 @@ Because Badge is a static content element with no interactive behavior, it rende
         code: `<script type="module" src="@arclux/arc-ui"></script>
 
 <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-  <arc-badge>Active</arc-badge>
-  <arc-badge variant="primary">Pending Review</arc-badge>
-  <arc-badge variant="secondary">Archived</arc-badge>
-</div>`,
+  <arc-badge>Default</arc-badge>
+  <arc-badge variant="primary">Primary</arc-badge>
+  <arc-badge variant="secondary">Secondary</arc-badge>
+  <arc-badge variant="success">Deployed</arc-badge>
+  <arc-badge variant="warning">Pending</arc-badge>
+  <arc-badge variant="error">Failed</arc-badge>
+  <arc-badge variant="info">New</arc-badge>
+</div>
+
+<!-- Custom color -->
+<arc-badge color="255, 165, 0">Custom</arc-badge>`,
       },
       {
         label: 'React',
@@ -83,9 +99,13 @@ Because Badge is a static content element with no interactive behavior, it rende
 export function ProjectStatus() {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
-      <Badge>Active</Badge>
-      <Badge variant="primary">Pending Review</Badge>
-      <Badge variant="secondary">Archived</Badge>
+      <Badge>Default</Badge>
+      <Badge variant="primary">Primary</Badge>
+      <Badge variant="secondary">Secondary</Badge>
+      <Badge variant="success">Deployed</Badge>
+      <Badge variant="warning">Pending</Badge>
+      <Badge variant="error">Failed</Badge>
+      <Badge variant="info">New</Badge>
     </div>
   );
 }`,
@@ -99,9 +119,13 @@ import { Badge } from '@arclux/arc-ui-vue';
 
 <template>
   <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-    <Badge>Active</Badge>
-    <Badge variant="primary">Pending Review</Badge>
-    <Badge variant="secondary">Archived</Badge>
+    <Badge>Default</Badge>
+    <Badge variant="primary">Primary</Badge>
+    <Badge variant="secondary">Secondary</Badge>
+    <Badge variant="success">Deployed</Badge>
+    <Badge variant="warning">Pending</Badge>
+    <Badge variant="error">Failed</Badge>
+    <Badge variant="info">New</Badge>
   </div>
 </template>`,
       },
@@ -113,9 +137,13 @@ import { Badge } from '@arclux/arc-ui-vue';
 </script>
 
 <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-  <Badge>Active</Badge>
-  <Badge variant="primary">Pending Review</Badge>
-  <Badge variant="secondary">Archived</Badge>
+  <Badge>Default</Badge>
+  <Badge variant="primary">Primary</Badge>
+  <Badge variant="secondary">Secondary</Badge>
+  <Badge variant="success">Deployed</Badge>
+  <Badge variant="warning">Pending</Badge>
+  <Badge variant="error">Failed</Badge>
+  <Badge variant="info">New</Badge>
 </div>`,
       },
       {
@@ -128,9 +156,13 @@ import { Badge } from '@arclux/arc-ui-angular';
   imports: [Badge],
   template: \`
     <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-      <Badge>Active</Badge>
-      <Badge variant="primary">Pending Review</Badge>
-      <Badge variant="secondary">Archived</Badge>
+      <Badge>Default</Badge>
+      <Badge variant="primary">Primary</Badge>
+      <Badge variant="secondary">Secondary</Badge>
+      <Badge variant="success">Deployed</Badge>
+      <Badge variant="warning">Pending</Badge>
+      <Badge variant="error">Failed</Badge>
+      <Badge variant="info">New</Badge>
     </div>
   \`,
 })
@@ -144,9 +176,13 @@ export class ProjectStatusComponent {}`,
 export function ProjectStatus() {
   return (
     <div style={{ display: 'flex', 'align-items': 'center', gap: '12px', 'flex-wrap': 'wrap' }}>
-      <Badge>Active</Badge>
-      <Badge variant="primary">Pending Review</Badge>
-      <Badge variant="secondary">Archived</Badge>
+      <Badge>Default</Badge>
+      <Badge variant="primary">Primary</Badge>
+      <Badge variant="secondary">Secondary</Badge>
+      <Badge variant="success">Deployed</Badge>
+      <Badge variant="warning">Pending</Badge>
+      <Badge variant="error">Failed</Badge>
+      <Badge variant="info">New</Badge>
     </div>
   );
 }`,
@@ -159,9 +195,13 @@ export function ProjectStatus() {
 export function ProjectStatus() {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
-      <Badge>Active</Badge>
-      <Badge variant="primary">Pending Review</Badge>
-      <Badge variant="secondary">Archived</Badge>
+      <Badge>Default</Badge>
+      <Badge variant="primary">Primary</Badge>
+      <Badge variant="secondary">Secondary</Badge>
+      <Badge variant="success">Deployed</Badge>
+      <Badge variant="warning">Pending</Badge>
+      <Badge variant="error">Failed</Badge>
+      <Badge variant="info">New</Badge>
     </div>
   );
 }`,

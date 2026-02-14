@@ -66,12 +66,6 @@ The component is fully accessible out of the box: trigger buttons carry \`aria-e
 
   props: [
     {
-      name: 'items',
-      type: 'Array<{ question: string; answer: string }>',
-      description:
-        'Legacy programmatic API. An array of question/answer objects rendered as accordion items. Prefer using declarative <arc-accordion-item> children instead.',
-    },
-    {
       name: 'multiple',
       type: 'boolean',
       default: 'false',

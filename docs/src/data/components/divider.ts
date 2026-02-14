@@ -45,10 +45,19 @@ Divider renders a single \`<div>\` with \`role="separator"\` for proper accessib
   <arc-divider variant="line-white"></arc-divider>
   <arc-divider variant="line-primary"></arc-divider>
   <arc-divider variant="line-gradient"></arc-divider>
+  <arc-divider label="OR"></arc-divider>
+  <arc-divider variant="glow" align="left"></arc-divider>
+  <div style="display: flex; align-items: center; gap: 16px; height: 40px;">
+    <span style="color: var(--text-secondary)">Left</span>
+    <arc-divider vertical variant="line-primary"></arc-divider>
+    <span style="color: var(--text-secondary)">Right</span>
+  </div>
 </div>`,
 
     props: [
       { name: 'variant', type: "'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient'", default: "'subtle'", description: 'Visual style' },
+      { name: 'align', type: "'left' | 'right'", description: 'Shifts the gradient origin so it fades from one edge instead of both. Useful for asymmetric layouts where the divider should visually connect to content on one side.' },
+      { name: 'vertical', type: 'boolean', default: 'false', description: 'Renders the divider as a vertical line. Switches to `inline-flex` display and rotates gradient directions to run top-to-bottom. Use inside flex rows to separate inline content.' },
       { name: 'label', type: 'string', default: "''", description: 'Text displayed in the center of the divider, splitting it into two lines. Common use: \'OR\' between form options. Only applies to horizontal dividers.' },
     ],
     tabs: [
@@ -57,7 +66,20 @@ Divider renders a single \`<div>\` with \`role="separator"\` for proper accessib
         lang: 'html',
         code: `<arc-divider></arc-divider>
 <arc-divider variant="glow"></arc-divider>
-<arc-divider variant="line-gradient"></arc-divider>`,
+<arc-divider variant="line-gradient"></arc-divider>
+
+<!-- Labeled divider -->
+<arc-divider label="OR"></arc-divider>
+
+<!-- Left-aligned gradient -->
+<arc-divider variant="glow" align="left"></arc-divider>
+
+<!-- Vertical divider between inline elements -->
+<div style="display: flex; align-items: center; gap: 16px; height: 40px;">
+  <span>Section A</span>
+  <arc-divider vertical variant="line-primary"></arc-divider>
+  <span>Section B</span>
+</div>`,
       },
       {
         label: 'React',
@@ -66,7 +88,20 @@ Divider renders a single \`<div>\` with \`role="separator"\` for proper accessib
 
 <Divider />
 <Divider variant="glow" />
-<Divider variant="line-gradient" />`,
+<Divider variant="line-gradient" />
+
+{/* Labeled */}
+<Divider label="OR" />
+
+{/* Left-aligned */}
+<Divider variant="glow" align="left" />
+
+{/* Vertical */}
+<div style={{ display: 'flex', alignItems: 'center', gap: 16, height: 40 }}>
+  <span>Section A</span>
+  <Divider vertical variant="line-primary" />
+  <span>Section B</span>
+</div>`,
       },
       
       {

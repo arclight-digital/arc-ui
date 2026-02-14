@@ -62,6 +62,7 @@ Use Select any time you need a single-choice dropdown in a form: assigning a tea
       { name: 'name', type: 'string', description: 'Form field name submitted with the selected value. Required for native form integration via ElementInternals.' },
       { name: 'disabled', type: 'boolean', default: 'false', description: 'When true, the select trigger becomes non-interactive: it cannot be opened, focused via keyboard, or clicked. The component renders with reduced opacity to visually convey the unavailable state.' },
       { name: 'error', type: 'string', default: "''", description: 'Error message displayed below the select. When set, the trigger border turns red.' },
+      { name: 'open', type: 'boolean', default: 'false', description: 'Controls whether the dropdown is visible. Set programmatically to open or close the dropdown. Automatically set to `false` when an option is selected or the user clicks outside.' },
     ],
     events: [
       { name: 'arc-change', description: 'Fired when the selected option changes' },
