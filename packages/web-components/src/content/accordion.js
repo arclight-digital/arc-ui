@@ -55,10 +55,13 @@ export class ArcAccordion extends LitElement {
 
       .accordion__chevron {
         color: var(--text-muted);
-        font-size: var(--text-sm);
+        width: 18px;
+        height: 18px;
         transition: transform 300ms ease;
         flex-shrink: 0;
-        display: inline-block;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
       }
 
       .accordion__trigger[aria-expanded="true"] .accordion__chevron {
@@ -136,7 +139,9 @@ export class ArcAccordion extends LitElement {
                 @click=${() => this._toggle(i)}
               >
                 <span>${item.question}</span>
-                <span class="accordion__chevron">&#9662;</span>
+                <svg class="accordion__chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
               </button>
               <div class="accordion__content ${isOpen ? 'is-open' : ''}">
                 <div class="accordion__body">
