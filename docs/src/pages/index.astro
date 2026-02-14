@@ -321,6 +321,8 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
     function resize() {
       const rect = canvas.parentElement!.getBoundingClientRect();
       const dpr = Math.min(window.devicePixelRatio, 2);
+      const oldW = width;
+      const oldH = height;
       width = rect.width;
       height = rect.height;
       canvas.width = width * dpr;
@@ -328,6 +330,16 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
       canvas.style.width = width + 'px';
       canvas.style.height = height + 'px';
       ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      // Rescale existing particles instead of regenerating
+      if (oldW && oldH && particles.length) {
+        const sx = width / oldW;
+        const sy = height / oldH;
+        for (const p of particles) {
+          p.x *= sx;
+          p.y *= sy;
+        }
+      }
     }
 
     function spawn() {
@@ -396,10 +408,7 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
     spawn();
     draw();
 
-    window.addEventListener('resize', () => {
-      resize();
-      spawn();
-    });
+    window.addEventListener('resize', resize);
 
     // Cleanup on navigation
     document.addEventListener('astro:before-swap', () => {
