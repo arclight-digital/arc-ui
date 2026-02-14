@@ -1,13 +1,10 @@
 import { LitElement, html, css } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { createHighlighterCore } from 'shiki/core';
-import { createJavaScriptRegexEngine } from 'shiki/engine/javascript';
-import { arcDark, arcLight } from './shiki-themes.js';
 import { tokenStyles } from '../shared-styles.js';
 import '../input/copy-button.js';
 import '../layout/status-bar.js';
 
-/* ── Shared Shiki highlighter (singleton, lazy lang loading) ── */
+/* ── Shared Shiki highlighter (singleton, lazy — loaded on first use) ── */
 let _hlReady;
 const _loadedLangs = new Set();
 
@@ -61,11 +58,18 @@ const LANG_IMPORT = {
 
 async function getHL(lang) {
   if (!_hlReady) {
-    _hlReady = createHighlighterCore({
-      themes: [arcDark, arcLight],
-      langs: [],
-      engine: createJavaScriptRegexEngine(),
-    });
+    _hlReady = (async () => {
+      const [{ createHighlighterCore }, { createJavaScriptRegexEngine }, { arcDark, arcLight }] = await Promise.all([
+        import('shiki/core'),
+        import('shiki/engine/javascript'),
+        import('./shiki-themes.js'),
+      ]);
+      return createHighlighterCore({
+        themes: [arcDark, arcLight],
+        langs: [],
+        engine: createJavaScriptRegexEngine(),
+      });
+    })();
   }
   const hl = await _hlReady;
   if (!_loadedLangs.has(lang)) {
