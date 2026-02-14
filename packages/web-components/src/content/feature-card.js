@@ -20,7 +20,7 @@ export class ArcFeatureCard extends LitElement {
       .card { height: 100%; }
 
       .card__inner {
-        padding: var(--space-xl) var(--space-lg);
+        padding: var(--space-lg);
         gap: var(--space-md);
         z-index: 1;
       }
@@ -104,7 +104,7 @@ export class ArcFeatureCard extends LitElement {
       .card:hover .card__rule { opacity: 0.5; width: 48px; }
 
       @media (max-width: 768px) {
-        .card__inner { padding: var(--space-lg) var(--space-md); }
+        .card__inner { padding: var(--space-md); }
       }
 
       @media (prefers-reduced-motion: reduce) {

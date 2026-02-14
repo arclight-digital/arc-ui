@@ -24,7 +24,7 @@ export class ArcFileUpload extends LitElement {
         align-items: center;
         justify-content: center;
         gap: var(--space-sm);
-        padding: var(--space-xl) var(--space-lg);
+        padding: var(--space-lg);
         border: 2px dashed var(--border-default);
         border-radius: var(--radius-lg);
         background: var(--bg-surface);

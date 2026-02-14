@@ -16,13 +16,13 @@
       .arc-card[interactive] .card { cursor: pointer; }
 
       .arc-card .card__inner {
-        padding: var(--space-xl) var(--space-lg);
+        padding: var(--space-lg);
       }
 
       /* Padding variants */
       .arc-card[data-padding="none"] .card__inner { padding: 0; }
-      .arc-card[data-padding="sm"] .card__inner { padding: var(--space-md) var(--space-sm); }
-      .arc-card[data-padding="lg"] .card__inner { padding: var(--space-2xl) var(--space-xl); }
+      .arc-card[data-padding="sm"] .card__inner { padding: var(--space-sm); }
+      .arc-card[data-padding="lg"] .card__inner { padding: var(--space-xl); }
 
       .arc-card .card__body {
         flex: 1;
