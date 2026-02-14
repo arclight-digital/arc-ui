@@ -3,6 +3,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 import { components } from '../../data/components/index';
 
 const headings = [
+  { id: 'v1-8-2', label: 'v1.8.2' },
   { id: 'v1-8-1', label: 'v1.8.1' },
   { id: 'v1-8-0', label: 'v1.8.0' },
   { id: 'v1-7-2', label: 'v1.7.2' },
@@ -40,6 +41,25 @@ const byTier = Object.fromEntries(
     <p class="page-desc">
       Release history for ARC UI. All packages are versioned together.
     </p>
+
+    <section id="v1-8-2">
+      <h2 class="docs-heading">v1.8.2 — Missing Subpath Exports</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <p class="docs-text">
+        Adds missing per-component subpath exports and removes unused tier-level exports.
+      </p>
+
+      <h3 class="tier-heading">Bug Fixes</h3>
+      <ul class="docs-list">
+        <li><strong>Missing subpath exports</strong> — Added <code>./cta-banner</code> and <code>./input</code> to <code>package.json</code> exports so <code>import '@arclux/arc-ui/cta-banner'</code> and <code>import '@arclux/arc-ui/input'</code> resolve correctly for tree-shaking.</li>
+      </ul>
+
+      <h3 class="tier-heading">Cleanup</h3>
+      <ul class="docs-list">
+        <li><strong>Removed tier exports</strong> — Dropped <code>./content</code>, <code>./feedback</code>, <code>./navigation</code>, <code>./layout</code>, and <code>./shared</code> tier-level subpath exports. Use per-component imports (<code>@arclux/arc-ui/button</code>) or the barrel (<code>@arclux/arc-ui</code>) instead.</li>
+      </ul>
+    </section>
 
     <section id="v1-8-1">
       <h2 class="docs-heading">v1.8.1 — Tree-Shaking Bugfix</h2>

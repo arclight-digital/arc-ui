@@ -1,6 +1,6 @@
 {
   "name": "@arclux/arc-ui",
-  "version": "1.8.1",
+  "version": "1.8.2",
   "description": "ARC UI — Lit Web Components implementing the Arclight design system.",
   "type": "module",
   "main": "src/index.js",
@@ -12,27 +12,6 @@
       "default": "./src/index.js"
     },
     "./register": "./src/register.js",
-    "./content": {
-      "types": "./types/index.d.ts",
-      "default": "./src/content/index.js"
-    },
-    "./input": "./src/input/input.js",
-    "./feedback": {
-      "types": "./types/index.d.ts",
-      "default": "./src/feedback/index.js"
-    },
-    "./navigation": {
-      "types": "./types/index.d.ts",
-      "default": "./src/navigation/index.js"
-    },
-    "./layout": {
-      "types": "./types/index.d.ts",
-      "default": "./src/layout/index.js"
-    },
-    "./shared": {
-      "types": "./types/index.d.ts",
-      "default": "./src/shared/index.js"
-    },
     "./accordion": "./src/content/accordion.register.js",
     "./accordion-item": "./src/content/accordion-item.register.js",
     "./animated-number": "./src/content/animated-number.register.js",
@@ -47,6 +26,7 @@
     "./collapsible": "./src/content/collapsible.register.js",
     "./color-swatch": "./src/content/color-swatch.register.js",
     "./column": "./src/content/column.register.js",
+    "./cta-banner": "./src/content/cta-banner.register.js",
     "./data-table": "./src/content/data-table.register.js",
     "./divider": "./src/content/divider.register.js",
     "./empty-state": "./src/content/empty-state.register.js",
@@ -85,6 +65,7 @@
     "./file-upload": "./src/input/file-upload.register.js",
     "./form": "./src/input/form.register.js",
     "./icon-button": "./src/input/icon-button.register.js",
+    "./input": "./src/input/input.register.js",
     "./multi-select": "./src/input/multi-select.register.js",
     "./number-input": "./src/input/number-input.register.js",
     "./otp-input": "./src/input/otp-input.register.js",
