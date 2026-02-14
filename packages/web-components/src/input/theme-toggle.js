@@ -28,7 +28,7 @@ export class ArcThemeToggle extends LitElement {
         border-radius: var(--radius-sm);
         color: var(--text-muted);
         cursor: pointer;
-        padding: var(--touch-pad);
+        padding: var(--space-sm);
         min-width: 90px;
         min-height: var(--touch-min);
         transition:
