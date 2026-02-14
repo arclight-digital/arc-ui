@@ -7,7 +7,7 @@ import { tokenStyles } from '../shared-styles.js';
 export class ArcScrollToTop extends LitElement {
   static properties = {
     threshold: { type: Number },
-    smooth:    { type: Boolean },
+    smooth:    { type: Boolean, reflect: true },
     position:  { type: String, reflect: true },
     offset:    { type: String },
     _visible:  { state: true },

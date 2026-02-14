@@ -5,8 +5,8 @@ import './column.js';
 export class ArcDataTable extends LitElement {
   static properties = {
     rows:          { type: Array },
-    sortable:      { type: Boolean },
-    selectable:    { type: Boolean },
+    sortable:      { type: Boolean, reflect: true },
+    selectable:    { type: Boolean, reflect: true },
     sortColumn:    { type: String, attribute: 'sort-column' },
     sortDirection: { type: String, reflect: true, attribute: 'sort-direction' },
     _columns:      { state: true },

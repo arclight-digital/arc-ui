@@ -7,7 +7,7 @@ export class ArcModal extends LitElement {
     heading:    { type: String },
     size:       { type: String, reflect: true },
     fullscreen: { type: Boolean, reflect: true },
-    closable:   { type: Boolean },
+    closable:   { type: Boolean, reflect: true },
   };
 
   static styles = [

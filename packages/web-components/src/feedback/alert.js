@@ -7,7 +7,7 @@ export class ArcAlert extends LitElement {
   static properties = {
     variant:     { type: String, reflect: true },
     compact:     { type: Boolean, reflect: true },
-    dismissible: { type: Boolean },
+    dismissible: { type: Boolean, reflect: true },
     heading:     { type: String },
   };
 

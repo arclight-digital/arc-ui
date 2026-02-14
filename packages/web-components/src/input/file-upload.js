@@ -4,7 +4,7 @@ import { tokenStyles } from '../shared-styles.js';
 export class ArcFileUpload extends LitElement {
   static properties = {
     accept:    { type: String },
-    multiple:  { type: Boolean },
+    multiple:  { type: Boolean, reflect: true },
     maxSize:   { type: Number, attribute: 'max-size' },
     disabled:  { type: Boolean, reflect: true },
     _files:    { state: true },

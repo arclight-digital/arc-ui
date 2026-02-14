@@ -5,10 +5,10 @@ export class ArcForm extends LitElement {
   static properties = {
     action:       { type: String },
     method:       { type: String },
-    novalidate:   { type: Boolean },
+    novalidate:   { type: Boolean, reflect: true },
     loading:      { type: Boolean, reflect: true },
     disabled:     { type: Boolean, reflect: true },
-    errorSummary: { type: Boolean, attribute: 'error-summary' },
+    errorSummary: { type: Boolean, reflect: true, attribute: 'error-summary' },
     _errors:      { state: true },
   };
 

@@ -7,7 +7,7 @@ export class ArcLink extends LitElement {
     variant:   { type: String, reflect: true },
     underline: { type: String, reflect: true },
     active:    { type: Boolean, reflect: true },
-    external:  { type: Boolean },
+    external:  { type: Boolean, reflect: true },
   };
 
   static styles = [

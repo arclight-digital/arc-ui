@@ -11,6 +11,12 @@ import { css } from 'lit';
  * as fallback defaults.
  */
 export const tokenStyles = css`
+  *, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
   :host {
     --font-body: 'Host Grotesk', system-ui, sans-serif;
     --font-accent: 'Tektur', system-ui, sans-serif;
