@@ -16,5 +16,8 @@ dist/
 # OS
 Thumbs.db
 
+# Claude Code
+CLAUDE.md
+
 # Build artifacts
 *.tgz
