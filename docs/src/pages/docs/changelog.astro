@@ -3,6 +3,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 import { components } from '../../data/components/index';
 
 const headings = [
+  { id: 'v1-9-2', label: 'v1.9.2' },
   { id: 'v1-9-1', label: 'v1.9.1' },
   { id: 'v1-9-0', label: 'v1.9.0' },
   { id: 'v1-8-6', label: 'v1.8.6' },
@@ -47,6 +48,16 @@ const byTier = Object.fromEntries(
     <p class="page-desc">
       Release history for ARC UI. All packages are versioned together.
     </p>
+
+    <section id="v1-9-2">
+      <h2 class="docs-heading">v1.9.2 — Top Bar Container Alignment</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <h3 class="tier-heading">Bug Fixes</h3>
+      <ul class="docs-list">
+        <li><strong>Top bar content alignment</strong> — <code>arc-top-bar</code> now uses the same centering strategy as <code>arc-container</code> (<code>max-width</code> + <code>margin-inline: auto</code> + <code>padding-inline</code>) so nav content aligns pixel-perfect with page content at every viewport width. Consumers no longer need <code>::part(topbar)</code> padding overrides.</li>
+      </ul>
+    </section>
 
     <section id="v1-9-1">
       <h2 class="docs-heading">v1.9.1 — Fix Icon Loading in Production Builds</h2>

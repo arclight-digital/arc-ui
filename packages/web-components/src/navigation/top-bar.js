@@ -36,7 +36,6 @@ export class ArcTopBar extends LitElement {
       .topbar {
         position: relative;
         height: var(--nav-height);
-        padding: 0 var(--space-lg);
         background: color-mix(in srgb, var(--bg-deep) 85%, transparent);
         backdrop-filter: blur(12px) saturate(130%);
         -webkit-backdrop-filter: blur(12px) saturate(130%);
@@ -48,6 +47,9 @@ export class ArcTopBar extends LitElement {
         align-items: center;
         gap: var(--space-md);
         height: 100%;
+        max-width: var(--max-width);
+        margin-inline: auto;
+        padding-inline: var(--space-lg);
       }
 
       .topbar__glow {

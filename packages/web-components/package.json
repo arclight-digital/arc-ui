@@ -1,6 +1,6 @@
 {
   "name": "@arclux/arc-ui",
-  "version": "1.9.1",
+  "version": "1.9.2",
   "description": "ARC UI — Lit Web Components implementing the Arclight design system.",
   "type": "module",
   "main": "src/index.js",
