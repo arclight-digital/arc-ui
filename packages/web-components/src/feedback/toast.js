@@ -14,6 +14,9 @@ function statusStyle(variant) {
   return `--_status-color:${v.color};--_status-rgb:${v.rgb}`;
 }
 
+/**
+ * @tag arc-toast
+ */
 export class ArcToast extends LitElement {
   static properties = {
     position: { type: String, reflect: true },
@@ -218,5 +221,3 @@ export class ArcToast extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-toast', ArcToast);

@@ -1,5 +1,8 @@
 import { LitElement, html, css } from 'lit';
 
+/**
+ * @tag arc-command-item
+ */
 export class ArcCommandItem extends LitElement {
   static properties = {
     shortcut: { type: String, reflect: true },
@@ -24,5 +27,3 @@ export class ArcCommandItem extends LitElement {
     return html`<slot></slot>`;
   }
 }
-
-customElements.define('arc-command-item', ArcCommandItem);

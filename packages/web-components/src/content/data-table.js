@@ -1,7 +1,10 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import './column.js';
 
+/**
+ * @tag arc-data-table
+ * @requires arc-column
+ */
 export class ArcDataTable extends LitElement {
   static properties = {
     rows:          { type: Array },
@@ -328,5 +331,3 @@ export class ArcDataTable extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-data-table', ArcDataTable);

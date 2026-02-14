@@ -1,6 +1,9 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-form
+ */
 export class ArcForm extends LitElement {
   static properties = {
     action:       { type: String },
@@ -263,5 +266,3 @@ export class ArcForm extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-form', ArcForm);

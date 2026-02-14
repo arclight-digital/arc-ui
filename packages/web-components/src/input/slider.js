@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-slider
+ */
 export class ArcSlider extends LitElement {
   static properties = {
     value:    { type: Number, reflect: true },
@@ -213,5 +216,3 @@ export class ArcSlider extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-slider', ArcSlider);

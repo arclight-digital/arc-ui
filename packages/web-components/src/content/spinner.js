@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-spinner
+ */
 export class ArcSpinner extends LitElement {
   static properties = {
     size:    { type: String, reflect: true },
@@ -73,5 +76,3 @@ export class ArcSpinner extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-spinner', ArcSpinner);

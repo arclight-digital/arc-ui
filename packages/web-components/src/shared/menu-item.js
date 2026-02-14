@@ -1,5 +1,8 @@
 import { LitElement, html, css } from 'lit';
 
+/**
+ * @tag arc-menu-item
+ */
 export class ArcMenuItem extends LitElement {
   static properties = {
     shortcut: { type: String, reflect: true },
@@ -26,5 +29,3 @@ export class ArcMenuItem extends LitElement {
     return html`<slot></slot>`;
   }
 }
-
-customElements.define('arc-menu-item', ArcMenuItem);

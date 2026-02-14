@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-marquee
+ */
 export class ArcMarquee extends LitElement {
   static properties = {
     speed:            { type: Number },
@@ -162,5 +165,3 @@ export class ArcMarquee extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-marquee', ArcMarquee);

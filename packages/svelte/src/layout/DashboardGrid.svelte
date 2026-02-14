@@ -11,7 +11,7 @@
     [key: string]: unknown;
   }
 
-  let { columns = 3, gap = 'var(--space-lg)', minColumnWidth = '280px', children, ...rest }: Props = $props();
+  let { columns = 0, gap = 'var(--space-lg)', minColumnWidth = '280px', children, ...rest }: Props = $props();
 </script>
 
 <arc-dashboard-grid {columns} {gap} {minColumnWidth} {...rest}>

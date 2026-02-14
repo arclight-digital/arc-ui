@@ -90,3 +90,6 @@ export type { TruncateProps } from './Truncate.js';
 
 export { CtaBanner } from './CtaBanner.js';
 export type { CtaBannerProps } from './CtaBanner.js';
+
+export { IconLibrary } from './IconLibrary.js';
+export type { IconLibraryProps } from './IconLibrary.js';

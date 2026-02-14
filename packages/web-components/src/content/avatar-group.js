@@ -4,6 +4,9 @@ import { tokenStyles } from '../shared-styles.js';
 /**
  * @arc-prism hybrid — stacked layout works without JS; overflow "+N" counter requires JS
  */
+/**
+ * @tag arc-avatar-group
+ */
 export class ArcAvatarGroup extends LitElement {
   static properties = {
     max:     { type: Number },
@@ -97,5 +100,3 @@ export class ArcAvatarGroup extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-avatar-group', ArcAvatarGroup);

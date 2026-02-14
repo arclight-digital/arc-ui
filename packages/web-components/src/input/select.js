@@ -2,6 +2,9 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import '../shared/option.js';
 
+/**
+ * @tag arc-select
+ */
 export class ArcSelect extends LitElement {
   static formAssociated = true;
 
@@ -293,5 +296,3 @@ export class ArcSelect extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-select', ArcSelect);

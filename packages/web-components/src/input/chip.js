@@ -2,6 +2,9 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import '../content/tag.js';
 
+/**
+ * @tag arc-chip
+ */
 export class ArcChip extends LitElement {
   static properties = {
     selected: { type: Boolean, reflect: true },
@@ -78,5 +81,3 @@ export class ArcChip extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-chip', ArcChip);

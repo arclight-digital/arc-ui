@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-scroll-area
+ */
 export class ArcScrollArea extends LitElement {
   static properties = {
     maxHeight:    { type: String, attribute: 'max-height', reflect: true },
@@ -103,5 +106,3 @@ export class ArcScrollArea extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-scroll-area', ArcScrollArea);

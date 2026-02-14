@@ -1,6 +1,9 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-pin-input
+ */
 export class ArcPinInput extends LitElement {
   static properties = {
     length:    { type: Number },
@@ -290,5 +293,3 @@ export class ArcPinInput extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-pin-input', ArcPinInput);

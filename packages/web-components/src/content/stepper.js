@@ -1,7 +1,10 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import './step.js';
 
+/**
+ * @tag arc-stepper
+ * @requires arc-step
+ */
 export class ArcStepper extends LitElement {
   static properties = {
     active: { type: Number, reflect: true },
@@ -198,5 +201,3 @@ export class ArcStepper extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-stepper', ArcStepper);

@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-split-pane
+ */
 export class ArcSplitPane extends LitElement {
   static properties = {
     orientation: { type: String, reflect: true },
@@ -168,5 +171,3 @@ export class ArcSplitPane extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-split-pane', ArcSplitPane);

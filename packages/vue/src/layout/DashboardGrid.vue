@@ -9,7 +9,7 @@ withDefaults(defineProps<{
   gap?: string;
   minColumnWidth?: string;
 }>(), {
-  columns: 3,
+  columns: 0,
   gap: 'var(--space-lg)',
   minColumnWidth: '280px',
 });

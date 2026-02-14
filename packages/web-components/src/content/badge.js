@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-badge
+ */
 export class ArcBadge extends LitElement {
   static properties = {
     variant: { type: String, reflect: true },
@@ -109,5 +112,3 @@ export class ArcBadge extends LitElement {
     ><slot></slot></span>`;
   }
 }
-
-customElements.define('arc-badge', ArcBadge);

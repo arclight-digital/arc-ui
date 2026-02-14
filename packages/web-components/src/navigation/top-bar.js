@@ -4,6 +4,9 @@ import { tokenStyles } from '../shared-styles.js';
 /**
  * @arc-prism hybrid — display works without JS; mobile menu toggle requires JS
  */
+/**
+ * @tag arc-top-bar
+ */
 export class ArcTopBar extends LitElement {
   static properties = {
     heading:      { type: String },
@@ -273,5 +276,3 @@ export class ArcTopBar extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-top-bar', ArcTopBar);

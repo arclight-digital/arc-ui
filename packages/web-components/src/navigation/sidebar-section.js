@@ -3,6 +3,9 @@ import { LitElement, html, css } from 'lit';
 /**
  * @arc-prism interactive — sidebar section, child of arc-sidebar
  */
+/**
+ * @tag arc-sidebar-section
+ */
 export class ArcSidebarSection extends LitElement {
   static properties = {
     heading:     { type: String, reflect: true },
@@ -41,5 +44,3 @@ export class ArcSidebarSection extends LitElement {
     return html`<slot></slot>`;
   }
 }
-
-customElements.define('arc-sidebar-section', ArcSidebarSection);

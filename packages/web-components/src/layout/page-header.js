@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-page-header
+ */
 export class ArcPageHeader extends LitElement {
   static properties = {
     heading: { type: String },
@@ -101,5 +104,3 @@ export class ArcPageHeader extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-page-header', ArcPageHeader);

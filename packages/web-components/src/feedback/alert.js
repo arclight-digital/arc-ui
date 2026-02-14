@@ -3,6 +3,9 @@ import { tokenStyles } from '../shared-styles.js';
 import { statusVars } from '../status-styles.js';
 import { getStatusIcon } from '../status-utils.js';
 
+/**
+ * @tag arc-alert
+ */
 export class ArcAlert extends LitElement {
   static properties = {
     variant:     { type: String, reflect: true },
@@ -148,5 +151,3 @@ export class ArcAlert extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-alert', ArcAlert);

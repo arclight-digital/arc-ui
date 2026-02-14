@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-page-layout
+ */
 export class ArcPageLayout extends LitElement {
   static properties = {
     layout: { type: String, reflect: true },
@@ -108,5 +111,3 @@ export class ArcPageLayout extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-page-layout', ArcPageLayout);

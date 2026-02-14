@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-popover
+ */
 export class ArcPopover extends LitElement {
   static properties = {
     open:     { type: Boolean, reflect: true },
@@ -180,5 +183,3 @@ export class ArcPopover extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-popover', ArcPopover);

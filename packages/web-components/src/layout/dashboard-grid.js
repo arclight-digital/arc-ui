@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-dashboard-grid
+ */
 export class ArcDashboardGrid extends LitElement {
   static properties = {
     columns: { type: Number },
@@ -20,34 +23,32 @@ export class ArcDashboardGrid extends LitElement {
         display: grid;
         grid-template-columns: repeat(
           auto-fill,
-          minmax(var(--min-col, 280px), 1fr)
+          minmax(min(var(--min-col, 280px), 100%), 1fr)
         );
         gap: var(--gap, var(--space-lg));
         padding: var(--space-lg);
-      }
-
-      :host([data-explicit-columns]) .dashboard-grid {
-        grid-template-columns: repeat(var(--columns, 3), 1fr);
       }
     `,
   ];
 
   constructor() {
     super();
-    this.columns = 3;
+    this.columns = 0;
     this.gap = 'var(--space-lg)';
     this.minColumnWidth = '280px';
-    this._explicitColumns = false;
   }
 
-  updated(changedProperties) {
-    this.style.setProperty('--min-col', this.minColumnWidth);
-    this.style.setProperty('--columns', this.columns);
-    this.style.setProperty('--gap', this.gap);
+  updated() {
+    // When explicit columns are set, use max() of the absolute minimum and
+    // the column-derived minimum. On wide viewports the column fraction is
+    // larger, capping at N columns. On narrow viewports the absolute minimum
+    // wins, forcing items to wrap.
+    const minCol = this.columns > 0
+      ? `max(${this.minColumnWidth}, (100% - ${this.columns - 1} * ${this.gap}) / ${this.columns})`
+      : this.minColumnWidth;
 
-    if (changedProperties.has('columns') && this.hasAttribute('columns')) {
-      this.setAttribute('data-explicit-columns', '');
-    }
+    this.style.setProperty('--min-col', minCol);
+    this.style.setProperty('--gap', this.gap);
   }
 
   render() {
@@ -58,5 +59,3 @@ export class ArcDashboardGrid extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-dashboard-grid', ArcDashboardGrid);

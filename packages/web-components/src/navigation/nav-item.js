@@ -3,6 +3,9 @@ import { LitElement, html, css } from 'lit';
 /**
  * @arc-prism interactive — nav item, child of arc-navigation-menu
  */
+/**
+ * @tag arc-nav-item
+ */
 export class ArcNavItem extends LitElement {
   static properties = {
     href:        { type: String, reflect: true },
@@ -44,5 +47,3 @@ export class ArcNavItem extends LitElement {
     return html`<slot></slot>`;
   }
 }
-
-customElements.define('arc-nav-item', ArcNavItem);

@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-segmented-control
+ */
 export class ArcSegmentedControl extends LitElement {
   static properties = {
     value:    { type: String, reflect: true },
@@ -170,5 +173,3 @@ export class ArcSegmentedControl extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-segmented-control', ArcSegmentedControl);

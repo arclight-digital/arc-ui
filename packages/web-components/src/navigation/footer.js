@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-footer
+ */
 export class ArcFooter extends LitElement {
   static properties = {
     compact: { type: Boolean, reflect: true },
@@ -103,5 +106,3 @@ export class ArcFooter extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-footer', ArcFooter);

@@ -1,5 +1,8 @@
 import { LitElement, html, css } from 'lit';
 
+/**
+ * @tag arc-spy-link
+ */
 export class ArcSpyLink extends LitElement {
   static properties = {
     target: { type: String, reflect: true },
@@ -22,5 +25,3 @@ export class ArcSpyLink extends LitElement {
     return html`<slot></slot>`;
   }
 }
-
-customElements.define('arc-spy-link', ArcSpyLink);

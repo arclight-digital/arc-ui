@@ -1,5 +1,8 @@
 import { LitElement, html, css } from 'lit';
 
+/**
+ * @tag arc-timeline-item
+ */
 export class ArcTimelineItem extends LitElement {
   static properties = {
     heading: { type: String, reflect: true },
@@ -25,5 +28,3 @@ export class ArcTimelineItem extends LitElement {
     return html`<slot></slot>`;
   }
 }
-
-customElements.define('arc-timeline-item', ArcTimelineItem);

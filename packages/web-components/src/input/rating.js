@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-rating
+ */
 export class ArcRating extends LitElement {
   static properties = {
     value:    { type: Number, reflect: true },
@@ -191,5 +194,3 @@ export class ArcRating extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-rating', ArcRating);

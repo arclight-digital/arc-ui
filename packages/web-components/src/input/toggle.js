@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-toggle
+ */
 export class ArcToggle extends LitElement {
   static formAssociated = true;
 
@@ -173,5 +176,3 @@ export class ArcToggle extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-toggle', ArcToggle);

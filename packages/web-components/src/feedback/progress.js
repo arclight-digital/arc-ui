@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-progress
+ */
 export class ArcProgress extends LitElement {
   static properties = {
     value:         { type: Number },
@@ -187,5 +190,3 @@ export class ArcProgress extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-progress', ArcProgress);

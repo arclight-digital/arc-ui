@@ -1,5 +1,8 @@
 import { LitElement, html, css } from 'lit';
 
+/**
+ * @tag arc-step
+ */
 export class ArcStep extends LitElement {
   static properties = {
     label: { type: String, reflect: true },
@@ -18,5 +21,3 @@ export class ArcStep extends LitElement {
     return html`<slot></slot>`;
   }
 }
-
-customElements.define('arc-step', ArcStep);

@@ -2,6 +2,9 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { buttonVariantStyles } from '../button-styles.js';
 
+/**
+ * @tag arc-button
+ */
 export class ArcButton extends LitElement {
   static properties = {
     variant:    { type: String, reflect: true },
@@ -158,5 +161,3 @@ export class ArcButton extends LitElement {
     return html`<button class="btn" type=${this.type} ?disabled=${this.disabled || this.loading} aria-busy=${this.loading ? 'true' : 'false'} part="button">${this._renderContent()}</button>`;
   }
 }
-
-customElements.define('arc-button', ArcButton);

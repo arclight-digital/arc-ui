@@ -3,6 +3,9 @@ import { tokenStyles } from '../shared-styles.js';
 
 let numberInputIdCounter = 0;
 
+/**
+ * @tag arc-number-input
+ */
 export class ArcNumberInput extends LitElement {
   static properties = {
     value:    { type: Number, reflect: true },
@@ -235,5 +238,3 @@ export class ArcNumberInput extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-number-input', ArcNumberInput);

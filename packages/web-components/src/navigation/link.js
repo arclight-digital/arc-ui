@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-link
+ */
 export class ArcLink extends LitElement {
   static properties = {
     href:      { type: String },
@@ -127,5 +130,3 @@ export class ArcLink extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-link', ArcLink);

@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-auth-shell
+ */
 export class ArcAuthShell extends LitElement {
   static properties = {
     variant: { type: String, reflect: true },
@@ -149,5 +152,3 @@ export class ArcAuthShell extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-auth-shell', ArcAuthShell);

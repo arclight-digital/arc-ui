@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-settings-layout
+ */
 export class ArcSettingsLayout extends LitElement {
   static properties = {
     navPosition: { type: String, reflect: true, attribute: 'nav-position' },
@@ -87,5 +90,3 @@ export class ArcSettingsLayout extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-settings-layout', ArcSettingsLayout);

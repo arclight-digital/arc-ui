@@ -22,6 +22,9 @@ function sanitizeSvg(svgStr) {
   return svg.cloneNode(true);
 }
 
+/**
+ * @tag arc-icon
+ */
 export class ArcIcon extends LitElement {
   static properties = {
     name:  { type: String, reflect: true },
@@ -91,5 +94,3 @@ export class ArcIcon extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-icon', ArcIcon);

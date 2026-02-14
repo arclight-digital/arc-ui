@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-theme-toggle
+ */
 export class ArcThemeToggle extends LitElement {
   static properties = {
     theme:    { type: String, reflect: true },
@@ -192,5 +195,3 @@ export class ArcThemeToggle extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-theme-toggle', ArcThemeToggle);

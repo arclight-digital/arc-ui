@@ -2,6 +2,9 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { cardHoverStyles } from '../card-styles.js';
 
+/**
+ * @tag arc-card
+ */
 export class ArcCard extends LitElement {
   static properties = {
     href:        { type: String },
@@ -91,5 +94,3 @@ export class ArcCard extends LitElement {
     return html`<div class="card" part="card"><div class="card__inner" part="inner">${content}</div></div>`;
   }
 }
-
-customElements.define('arc-card', ArcCard);

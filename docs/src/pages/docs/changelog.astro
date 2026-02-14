@@ -3,6 +3,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 import { components } from '../../data/components/index';
 
 const headings = [
+  { id: 'v1-8-0', label: 'v1.8.0' },
   { id: 'v1-7-2', label: 'v1.7.2' },
   { id: 'v1-7-1', label: 'v1.7.1' },
   { id: 'v1-7-0', label: 'v1.7.0' },
@@ -38,6 +39,46 @@ const byTier = Object.fromEntries(
     <p class="page-desc">
       Release history for ARC UI. All packages are versioned together.
     </p>
+
+    <section id="v1-8-0">
+      <h2 class="docs-heading">v1.8.0 — Tree-Shakeable Components</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <p class="docs-text">
+        Component source files are now side-effect-free, enabling bundlers to tree-shake unused components.
+        Registration is handled by generated <code>.register.js</code> files.
+      </p>
+
+      <h3 class="tier-heading">Breaking Changes</h3>
+      <ul class="docs-list">
+        <li><strong>No auto-registration</strong> — <code>import '@arclux/arc-ui'</code> no longer registers custom elements as a side effect. Named imports still work and are now tree-shakeable. If you relied on the side-effect registration, switch to <code>import '@arclux/arc-ui/register'</code>.</li>
+      </ul>
+
+      <h3 class="tier-heading">New Consumer API</h3>
+      <ul class="docs-list">
+        <li><code>import {'{'} ArcButton {'}'} from '@arclux/arc-ui'</code> — tree-shakeable class import, no side effects. Bundlers drop unused components.</li>
+        <li><code>import '@arclux/arc-ui/register'</code> — registers all components (replaces bare side-effect import).</li>
+        <li><code>import '@arclux/arc-ui/button'</code> — single component, auto-registered with its dependencies.</li>
+      </ul>
+
+      <h3 class="tier-heading">Infrastructure</h3>
+      <ul class="docs-list">
+        <li><strong>Side-effect-free sources</strong> — Removed <code>customElements.define()</code> from all 117 component source files. Added <code>@tag</code> and <code>@requires</code> JSDoc annotations for metadata.</li>
+        <li><strong>Registration generator</strong> — New <code>scripts/generate-registrations.js</code> produces per-component <code>.register.js</code> files and a top-level <code>register.js</code> during <code>pnpm generate</code>.</li>
+        <li><strong>sideEffects</strong> — <code>package.json</code> now declares <code>"sideEffects": ["./src/*/*.register.js", "./src/register.js"]</code> so bundlers can drop unused modules.</li>
+        <li><strong>Prism v1.2.1</strong> — Parser extracts tag names from <code>@tag</code> JSDoc with fallback to <code>customElements.define()</code>. Ignore patterns support leading wildcards.</li>
+      </ul>
+
+      <h3 class="tier-heading">Docs</h3>
+      <ul class="docs-list">
+        <li><strong>Homepage live demo</strong> — Expanded from 5 showcase cards to 10, covering buttons, badges &amp; tags, inputs, feedback, toggles &amp; checks, rating &amp; slider, navigation (tabs + breadcrumb), data (avatars + stepper), accordion, and controls (segmented control + pagination).</li>
+      </ul>
+
+      <h3 class="tier-heading">Bug Fixes</h3>
+      <ul class="docs-list">
+        <li><strong>Dashboard Grid</strong> — Fixed non-responsive layout when explicit <code>columns</code> attribute is set. The grid now uses <code>auto-fill</code> with a derived minimum column width so it wraps naturally on narrow viewports instead of forcing a fixed column count.</li>
+      </ul>
+    </section>
 
     <section id="v1-7-2">
       <h2 class="docs-heading">v1.7.2 — Themeable Syntax Highlighting</h2>

@@ -115,3 +115,4 @@ export { default as MenuDivider } from './shared/MenuDivider.vue';
 export { default as MenuItem } from './shared/MenuItem.vue';
 export { default as Option } from './shared/Option.vue';
 export { default as CtaBanner } from './content/CtaBanner.vue';
+export { default as IconLibrary } from './content/IconLibrary.vue';

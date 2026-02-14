@@ -3,6 +3,9 @@ import { tokenStyles } from '../shared-styles.js';
 
 let inputIdCounter = 0;
 
+/**
+ * @tag arc-input
+ */
 export class ArcInput extends LitElement {
   static formAssociated = true;
 
@@ -235,5 +238,3 @@ export class ArcInput extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-input', ArcInput);

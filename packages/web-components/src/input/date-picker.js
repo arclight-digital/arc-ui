@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-date-picker
+ */
 export class ArcDatePicker extends LitElement {
   static properties = {
     value:       { type: String },
@@ -530,5 +533,3 @@ export class ArcDatePicker extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-date-picker', ArcDatePicker);

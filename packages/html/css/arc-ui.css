@@ -2664,14 +2664,10 @@
         display: grid;
         grid-template-columns: repeat(
           auto-fill,
-          minmax(var(--min-col, 280px), 1fr)
+          minmax(min(var(--min-col, 280px), 100%), 1fr)
         );
         gap: var(--gap, var(--space-lg));
         padding: var(--space-lg);
-      }
-
-      .arc-dashboard-grid[data-explicit-columns] .dashboard-grid {
-        grid-template-columns: repeat(var(--columns, 3), 1fr);
       }
 
 /* arc-page-header */

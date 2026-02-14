@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-divider
+ */
 export class ArcDivider extends LitElement {
   static properties = {
     variant:  { type: String, reflect: true },
@@ -187,5 +190,3 @@ export class ArcDivider extends LitElement {
     return html`<div class="divider" role="separator" aria-orientation=${this.vertical ? 'vertical' : 'horizontal'} part="divider"></div>`;
   }
 }
-
-customElements.define('arc-divider', ArcDivider);

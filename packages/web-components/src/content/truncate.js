@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-truncate
+ */
 export class ArcTruncate extends LitElement {
   static properties = {
     lines:    { type: Number, reflect: true },
@@ -157,5 +160,3 @@ export class ArcTruncate extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-truncate', ArcTruncate);

@@ -1,8 +1,11 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import './sidebar-section.js';
-import './sidebar-link.js';
 
+/**
+ * @tag arc-sidebar
+ * @requires arc-sidebar-section
+ * @requires arc-sidebar-link
+ */
 export class ArcSidebar extends LitElement {
   static properties = {
     active:    { type: String, reflect: true },
@@ -28,7 +31,6 @@ export class ArcSidebar extends LitElement {
       }
 
       :host([collapsed]) { width: 0; overflow: hidden; }
-
 
       .sidebar {
         display: flex;
@@ -350,5 +352,3 @@ export class ArcSidebar extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-sidebar', ArcSidebar);

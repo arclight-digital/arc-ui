@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-app-shell
+ */
 export class ArcAppShell extends LitElement {
   static properties = {
     sidebarOpen:  { type: Boolean, reflect: true, attribute: 'sidebar-open' },
@@ -262,5 +265,3 @@ export class ArcAppShell extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-app-shell', ArcAppShell);

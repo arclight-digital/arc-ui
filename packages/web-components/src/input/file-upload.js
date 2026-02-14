@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-file-upload
+ */
 export class ArcFileUpload extends LitElement {
   static properties = {
     accept:    { type: String },
@@ -329,5 +332,3 @@ export class ArcFileUpload extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-file-upload', ArcFileUpload);

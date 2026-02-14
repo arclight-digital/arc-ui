@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-avatar
+ */
 export class ArcAvatar extends LitElement {
   static properties = {
     src:    { type: String },
@@ -119,5 +122,3 @@ export class ArcAvatar extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-avatar', ArcAvatar);

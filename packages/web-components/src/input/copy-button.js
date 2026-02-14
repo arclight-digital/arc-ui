@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-copy-button
+ */
 export class ArcCopyButton extends LitElement {
   static properties = {
     value:    { type: String },
@@ -138,5 +141,3 @@ export class ArcCopyButton extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-copy-button', ArcCopyButton);

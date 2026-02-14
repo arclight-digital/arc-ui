@@ -4,6 +4,9 @@ import { tokenStyles } from '../shared-styles.js';
 /**
  * @arc-prism interactive
  */
+/**
+ * @tag arc-scroll-to-top
+ */
 export class ArcScrollToTop extends LitElement {
   static properties = {
     threshold: { type: Number },
@@ -159,5 +162,3 @@ export class ArcScrollToTop extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-scroll-to-top', ArcScrollToTop);

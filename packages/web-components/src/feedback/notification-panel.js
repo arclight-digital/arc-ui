@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-notification-panel
+ */
 export class ArcNotificationPanel extends LitElement {
   static properties = {
     open: { type: Boolean, reflect: true },
@@ -192,5 +195,3 @@ export class ArcNotificationPanel extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-notification-panel', ArcNotificationPanel);

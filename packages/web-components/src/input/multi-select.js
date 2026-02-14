@@ -2,6 +2,9 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import '../shared/option.js';
 
+/**
+ * @tag arc-multi-select
+ */
 export class ArcMultiSelect extends LitElement {
   static properties = {
     value:        { type: Array },
@@ -388,5 +391,3 @@ export class ArcMultiSelect extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-multi-select', ArcMultiSelect);

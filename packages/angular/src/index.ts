@@ -115,3 +115,4 @@ export { MenuDivider } from './shared/MenuDivider.js';
 export { MenuItem } from './shared/MenuItem.js';
 export { Option } from './shared/Option.js';
 export { CtaBanner } from './content/CtaBanner.js';
+export { IconLibrary } from './content/IconLibrary.js';

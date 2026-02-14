@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-stack
+ */
 export class ArcStack extends LitElement {
   static properties = {
     direction: { type: String, reflect: true },
@@ -64,5 +67,3 @@ export class ArcStack extends LitElement {
     return html`<slot></slot>`;
   }
 }
-
-customElements.define('arc-stack', ArcStack);

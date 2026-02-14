@@ -4,6 +4,9 @@ import '../shared/menu-item.js';
 import '../shared/menu-divider.js';
 import '../content/icon.js';
 
+/**
+ * @tag arc-context-menu
+ */
 export class ArcContextMenu extends LitElement {
   static properties = {
     open:           { type: Boolean, reflect: true },
@@ -295,5 +298,3 @@ export class ArcContextMenu extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-context-menu', ArcContextMenu);

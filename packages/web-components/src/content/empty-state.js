@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-empty-state
+ */
 export class ArcEmptyState extends LitElement {
   static properties = {
     heading:     { type: String },
@@ -74,5 +77,3 @@ export class ArcEmptyState extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-empty-state', ArcEmptyState);

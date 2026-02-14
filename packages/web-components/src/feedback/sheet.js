@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-sheet
+ */
 export class ArcSheet extends LitElement {
   static properties = {
     open:    { type: Boolean, reflect: true },
@@ -245,5 +248,3 @@ export class ArcSheet extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-sheet', ArcSheet);

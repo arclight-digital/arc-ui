@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-carousel
+ */
 export class ArcCarousel extends LitElement {
   static properties = {
     autoPlay:   { type: Boolean, attribute: 'auto-play', reflect: true },
@@ -296,5 +299,3 @@ export class ArcCarousel extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-carousel', ArcCarousel);

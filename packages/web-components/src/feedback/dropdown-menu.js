@@ -3,6 +3,9 @@ import { tokenStyles } from '../shared-styles.js';
 import '../shared/menu-item.js';
 import '../shared/menu-divider.js';
 
+/**
+ * @tag arc-dropdown-menu
+ */
 export class ArcDropdownMenu extends LitElement {
   static properties = {
     open:          { type: Boolean, reflect: true },
@@ -255,5 +258,3 @@ export class ArcDropdownMenu extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-dropdown-menu', ArcDropdownMenu);

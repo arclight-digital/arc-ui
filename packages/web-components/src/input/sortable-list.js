@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-sortable-list
+ */
 export class ArcSortableList extends LitElement {
   static properties = {
     disabled:      { type: Boolean, reflect: true },
@@ -341,5 +344,3 @@ export class ArcSortableList extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-sortable-list', ArcSortableList);

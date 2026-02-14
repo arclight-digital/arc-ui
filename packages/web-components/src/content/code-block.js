@@ -89,6 +89,9 @@ async function getHL(lang) {
 /**
  * @arc-prism hybrid — display works without JS; copy-to-clipboard requires JS
  */
+/**
+ * @tag arc-code-block
+ */
 export class ArcCodeBlock extends LitElement {
   static properties = {
     language: { type: String, reflect: true },
@@ -362,5 +365,3 @@ export class ArcCodeBlock extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-code-block', ArcCodeBlock);

@@ -1,5 +1,8 @@
 import { LitElement, html, css } from 'lit';
 
+/**
+ * @tag arc-sidebar-link
+ */
 export class ArcSidebarLink extends LitElement {
   static properties = {
     href:   { type: String, reflect: true },
@@ -24,5 +27,3 @@ export class ArcSidebarLink extends LitElement {
     return html`<slot></slot>`;
   }
 }
-
-customElements.define('arc-sidebar-link', ArcSidebarLink);

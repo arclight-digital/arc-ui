@@ -1,5 +1,8 @@
 import { LitElement, html, css } from 'lit';
 
+/**
+ * @tag arc-radio
+ */
 export class ArcRadio extends LitElement {
   static properties = {
     value:    { type: String, reflect: true },
@@ -24,5 +27,3 @@ export class ArcRadio extends LitElement {
     return html`<slot></slot>`;
   }
 }
-
-customElements.define('arc-radio', ArcRadio);

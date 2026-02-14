@@ -1,6 +1,9 @@
 import { LitElement } from 'lit';
 import { iconRegistry } from './icon-registry.js';
 
+/**
+ * @tag arc-icon-library
+ */
 export class ArcIconLibrary extends LitElement {
   static properties = {
     name: { type: String, reflect: true },
@@ -26,5 +29,3 @@ export class ArcIconLibrary extends LitElement {
     return undefined;
   }
 }
-
-customElements.define('arc-icon-library', ArcIconLibrary);

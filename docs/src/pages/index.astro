@@ -85,7 +85,7 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
     <arc-divider></arc-divider>
     <!-- Stats -->
     <section class="stats">
-      <arc-dashboard-grid columns="4" gap="var(--space-md)" style="max-width:var(--max-width);margin-inline:auto;padding-inline:var(--space-lg)">
+      <arc-dashboard-grid columns="4" min-column-width="140px" gap="var(--space-md)" style="max-width:var(--max-width);margin-inline:auto;padding-inline:var(--space-lg)">
         <arc-card class="reveal"><arc-stat value={`${components.length}`} label="Components"></arc-stat></arc-card>
         <arc-card class="reveal"><arc-stat value="7" label="Frameworks"></arc-stat></arc-card>
         <arc-card class="reveal"><arc-stat value="0" label="Dependencies"></arc-stat></arc-card>
@@ -140,28 +140,33 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
         </div>
 
         <div class="showcase-grid">
+          <!-- 1. Buttons -->
           <div class="showcase-card reveal">
             <span class="showcase-card__label">Buttons</span>
             <div class="showcase-card__body">
               <arc-button variant="primary" size="sm">Primary</arc-button>
               <arc-button variant="secondary" size="sm">Secondary</arc-button>
               <arc-button variant="ghost" size="sm">Ghost</arc-button>
+              <arc-button variant="outline" size="sm">Outline</arc-button>
+              <arc-button variant="link" size="sm">Link</arc-button>
             </div>
           </div>
 
+          <!-- 2. Badges + Tags -->
           <div class="showcase-card reveal">
-            <span class="showcase-card__label">Badges</span>
+            <span class="showcase-card__label">Badges &amp; Tags</span>
             <div class="showcase-card__body">
-              <arc-badge>Default</arc-badge>
               <arc-badge variant="primary">Primary</arc-badge>
-              <arc-badge variant="secondary">Secondary</arc-badge>
               <arc-badge variant="success">Success</arc-badge>
               <arc-badge variant="warning">Warning</arc-badge>
               <arc-badge variant="error">Error</arc-badge>
-              <arc-badge variant="info">Info</arc-badge>
+              <arc-tag>React</arc-tag>
+              <arc-tag>Vue</arc-tag>
+              <arc-tag>Svelte</arc-tag>
             </div>
           </div>
 
+          <!-- 3. Inputs -->
           <div class="showcase-card reveal">
             <span class="showcase-card__label">Inputs</span>
             <div class="showcase-card__body showcase-card__body--stack">
@@ -171,9 +176,11 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
                 <arc-option value="vue">Vue</arc-option>
                 <arc-option value="svelte">Svelte</arc-option>
               </arc-select>
+              <arc-slider label="Volume" value="65" size="sm"></arc-slider>
             </div>
           </div>
 
+          <!-- 4. Feedback -->
           <div class="showcase-card reveal">
             <span class="showcase-card__label">Feedback</span>
             <div class="showcase-card__body showcase-card__body--stack">
@@ -183,25 +190,84 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
             </div>
           </div>
 
-          <div class="showcase-card showcase-card--wide reveal">
-            <span class="showcase-card__label">Card + Toggle</span>
-            <div class="showcase-card__body">
-              <arc-card style="flex: 1; min-width: 200px;">
-                <span slot="heading">Notification Settings</span>
-                <div style="display: flex; flex-direction: column; gap: var(--space-sm);">
-                  <arc-toggle label="Email notifications" checked></arc-toggle>
-                  <arc-toggle label="Push notifications"></arc-toggle>
-                  <arc-toggle label="SMS alerts"></arc-toggle>
-                </div>
-              </arc-card>
-              <arc-card style="flex: 1; min-width: 200px;">
-                <span slot="heading">Quick Actions</span>
-                <div style="display: flex; flex-direction: column; gap: var(--space-sm);">
-                  <arc-checkbox label="Enable dark mode" checked></arc-checkbox>
-                  <arc-checkbox label="Show tooltips" checked></arc-checkbox>
-                  <arc-checkbox label="Auto-save drafts"></arc-checkbox>
-                </div>
-              </arc-card>
+          <!-- 5. Toggles & Checks -->
+          <div class="showcase-card reveal">
+            <span class="showcase-card__label">Toggles &amp; Checks</span>
+            <div class="showcase-card__body showcase-card__body--stack">
+              <arc-toggle label="Email notifications" checked></arc-toggle>
+              <arc-toggle label="Push notifications"></arc-toggle>
+              <arc-checkbox label="Enable dark mode" checked></arc-checkbox>
+              <arc-checkbox label="Auto-save drafts"></arc-checkbox>
+            </div>
+          </div>
+
+          <!-- 6. Rating & Slider -->
+          <div class="showcase-card reveal">
+            <span class="showcase-card__label">Rating &amp; Slider</span>
+            <div class="showcase-card__body showcase-card__body--stack">
+              <arc-rating value="4" label="Rating"></arc-rating>
+              <arc-slider label="Brightness" value="80" size="sm"></arc-slider>
+            </div>
+          </div>
+
+          <!-- 7. Navigation -->
+          <div class="showcase-card reveal">
+            <span class="showcase-card__label">Navigation</span>
+            <div class="showcase-card__body showcase-card__body--stack">
+              <arc-tabs variant="underline" selected="0">
+                <arc-tab label="Overview">Overview content</arc-tab>
+                <arc-tab label="Settings">Settings content</arc-tab>
+                <arc-tab label="Activity">Activity content</arc-tab>
+              </arc-tabs>
+              <arc-breadcrumb>
+                <arc-breadcrumb-item href="#">Home</arc-breadcrumb-item>
+                <arc-breadcrumb-item href="#">Docs</arc-breadcrumb-item>
+                <arc-breadcrumb-item>Components</arc-breadcrumb-item>
+              </arc-breadcrumb>
+            </div>
+          </div>
+
+          <!-- 8. Data -->
+          <div class="showcase-card reveal">
+            <span class="showcase-card__label">Data</span>
+            <div class="showcase-card__body showcase-card__body--stack">
+              <arc-avatar-group>
+                <arc-avatar initials="AB" size="sm"></arc-avatar>
+                <arc-avatar initials="CD" size="sm"></arc-avatar>
+                <arc-avatar initials="EF" size="sm"></arc-avatar>
+                <arc-avatar initials="GH" size="sm"></arc-avatar>
+                <arc-avatar initials="+3" size="sm"></arc-avatar>
+              </arc-avatar-group>
+              <arc-stepper active="1">
+                <arc-step label="Order placed"></arc-step>
+                <arc-step label="Processing"></arc-step>
+                <arc-step label="Shipped"></arc-step>
+              </arc-stepper>
+            </div>
+          </div>
+
+          <!-- 9. Accordion -->
+          <div class="showcase-card reveal">
+            <span class="showcase-card__label">Accordion</span>
+            <div class="showcase-card__body showcase-card__body--stack" style="padding:0;">
+              <arc-accordion>
+                <arc-accordion-item question="Getting Started">Install with npm or use the CDN for instant setup.</arc-accordion-item>
+                <arc-accordion-item question="Theming">Override CSS custom properties to match your brand.</arc-accordion-item>
+                <arc-accordion-item question="Accessibility">WCAG 2.1 AA compliant with full keyboard support.</arc-accordion-item>
+              </arc-accordion>
+            </div>
+          </div>
+
+          <!-- 10. Segmented + Pagination -->
+          <div class="showcase-card reveal">
+            <span class="showcase-card__label">Controls</span>
+            <div class="showcase-card__body showcase-card__body--stack">
+              <arc-segmented-control value="week">
+                <arc-option value="day">Day</arc-option>
+                <arc-option value="week">Week</arc-option>
+                <arc-option value="month">Month</arc-option>
+              </arc-segmented-control>
+              <arc-pagination total="5" current="2"></arc-pagination>
             </div>
           </div>
         </div>
@@ -727,7 +793,7 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
 
   .showcase-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
     gap: var(--space-md);
   }
 
@@ -736,15 +802,18 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
     border-radius: var(--radius-lg);
     background: var(--bg-card);
     transition: border-color var(--transition-fast), box-shadow var(--transition-base);
+    overflow: visible;
+    min-width: 0;
+    position: relative;
+  }
+
+  .showcase-card:focus-within {
+    z-index: 10;
   }
 
   .showcase-card:hover {
     border-color: var(--border-default);
     box-shadow: var(--glow-card-hover);
-  }
-
-  .showcase-card--wide {
-    grid-column: 1 / -1;
   }
 
   .showcase-card__label {

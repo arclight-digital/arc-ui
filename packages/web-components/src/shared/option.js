@@ -1,5 +1,8 @@
 import { LitElement, html, css } from 'lit';
 
+/**
+ * @tag arc-option
+ */
 export class ArcOption extends LitElement {
   static properties = {
     value:    { type: String, reflect: true },
@@ -27,5 +30,3 @@ export class ArcOption extends LitElement {
     return html`<slot></slot>`;
   }
 }
-
-customElements.define('arc-option', ArcOption);

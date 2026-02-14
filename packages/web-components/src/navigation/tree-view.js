@@ -1,7 +1,10 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import './tree-item.js';
 
+/**
+ * @tag arc-tree-view
+ * @requires arc-tree-item
+ */
 export class ArcTreeView extends LitElement {
   static properties = {
     _items:    { state: true },
@@ -251,5 +254,3 @@ export class ArcTreeView extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-tree-view', ArcTreeView);

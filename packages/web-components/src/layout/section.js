@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-section
+ */
 export class ArcSection extends LitElement {
   static properties = {
     label: { type: String },
@@ -50,5 +53,3 @@ export class ArcSection extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-section', ArcSection);

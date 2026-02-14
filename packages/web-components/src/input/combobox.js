@@ -2,6 +2,9 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import '../shared/option.js';
 
+/**
+ * @tag arc-combobox
+ */
 export class ArcCombobox extends LitElement {
   static properties = {
     value:        { type: String, reflect: true },
@@ -291,5 +294,3 @@ export class ArcCombobox extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-combobox', ArcCombobox);

@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-checkbox
+ */
 export class ArcCheckbox extends LitElement {
   static formAssociated = true;
 
@@ -74,7 +77,8 @@ export class ArcCheckbox extends LitElement {
       .checkbox__label {
         font-family: var(--font-body);
         font-size: var(--body-size);
-        color: var(--text-secondary);
+        font-weight: 400;
+        color: var(--text-muted);
         user-select: none;
       }
 
@@ -165,5 +169,3 @@ export class ArcCheckbox extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-checkbox', ArcCheckbox);

@@ -1,6 +1,9 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-highlight
+ */
 export class ArcHighlight extends LitElement {
   static properties = {
     text:          { type: String },
@@ -59,5 +62,3 @@ export class ArcHighlight extends LitElement {
     )}</span>`;
   }
 }
-
-customElements.define('arc-highlight', ArcHighlight);

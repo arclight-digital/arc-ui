@@ -119,6 +119,9 @@ function inlineMarkdown(text) {
 /**
  * @arc-prism static — renders Markdown content as styled HTML
  */
+/**
+ * @tag arc-markdown
+ */
 export class ArcMarkdown extends LitElement {
   static properties = {
     content: { type: String },
@@ -290,5 +293,3 @@ export class ArcMarkdown extends LitElement {
     if (!this.content) this.requestUpdate();
   }
 }
-
-customElements.define('arc-markdown', ArcMarkdown);

@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-animated-number
+ */
 export class ArcAnimatedNumber extends LitElement {
   static properties = {
     value:    { type: Number, reflect: true },
@@ -156,5 +159,3 @@ export class ArcAnimatedNumber extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-animated-number', ArcAnimatedNumber);

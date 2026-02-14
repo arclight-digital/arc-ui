@@ -1,7 +1,10 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import './tab.js';
 
+/**
+ * @tag arc-tabs
+ * @requires arc-tab
+ */
 export class ArcTabs extends LitElement {
   static properties = {
     /** @deprecated Use <arc-tab> children instead */
@@ -227,5 +230,3 @@ export class ArcTabs extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-tabs', ArcTabs);

@@ -1,7 +1,10 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import './radio.js';
 
+/**
+ * @tag arc-radio-group
+ * @requires arc-radio
+ */
 export class ArcRadioGroup extends LitElement {
   static formAssociated = true;
 
@@ -183,5 +186,3 @@ export class ArcRadioGroup extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-radio-group', ArcRadioGroup);

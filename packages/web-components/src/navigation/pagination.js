@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-pagination
+ */
 export class ArcPagination extends LitElement {
   static properties = {
     total:    { type: Number },
@@ -193,5 +196,3 @@ export class ArcPagination extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-pagination', ArcPagination);

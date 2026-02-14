@@ -3,6 +3,9 @@ import { LitElement, html, css } from 'lit';
 /**
  * @arc-prism interactive — tab panel, child of arc-tabs
  */
+/**
+ * @tag arc-tab
+ */
 export class ArcTab extends LitElement {
   static properties = {
     label: { type: String, reflect: true },
@@ -22,5 +25,3 @@ export class ArcTab extends LitElement {
     return html`<slot></slot>`;
   }
 }
-
-customElements.define('arc-tab', ArcTab);

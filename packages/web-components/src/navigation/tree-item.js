@@ -3,6 +3,9 @@ import { LitElement, html, css } from 'lit';
 /**
  * @arc-prism interactive — tree item, child of arc-tree-view
  */
+/**
+ * @tag arc-tree-item
+ */
 export class ArcTreeItem extends LitElement {
   static properties = {
     label:    { type: String, reflect: true },
@@ -34,5 +37,3 @@ export class ArcTreeItem extends LitElement {
     return html`<slot></slot>`;
   }
 }
-
-customElements.define('arc-tree-item', ArcTreeItem);

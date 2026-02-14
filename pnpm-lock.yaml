@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@arclux/prism':
-        specifier: ^1.0.1
-        version: 1.0.1
+        specifier: ^1.2.1
+        version: 1.2.1
       '@phosphor-icons/core':
         specifier: ^2.1.1
         version: 2.1.1
@@ -144,8 +144,8 @@ packages:
       zone.js:
         optional: true
 
-  '@arclux/prism@1.0.1':
-    resolution: {integrity: sha512-cprWFK0VOigkDD7ckD0imoMZ+MFs44GWghQauyz7oJWSiU63xbxQPr38g4f8x6/lRCWsfPiogmFYLet2iypD7Q==}
+  '@arclux/prism@1.2.1':
+    resolution: {integrity: sha512-rR30nEeCJrXBMze+Bk8vXUcHk4wcK+vmd8vcbpmRvKl0XXOAqwiLp5BEtWjRi5exC9wb3iPF7GTYKGOxAezQnA==}
     engines: {node: '>=22'}
     hasBin: true
 
@@ -2480,7 +2480,7 @@ snapshots:
       rxjs: 7.8.2
       tslib: 2.8.1
 
-  '@arclux/prism@1.0.1':
+  '@arclux/prism@1.2.1':
     dependencies:
       chokidar: 4.0.3
 

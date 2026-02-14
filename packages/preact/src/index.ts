@@ -258,3 +258,6 @@ export type { OptionProps } from './shared/Option.js';
 
 export { CtaBanner } from './content/CtaBanner.js';
 export type { CtaBannerProps } from './content/CtaBanner.js';
+
+export { IconLibrary } from './content/IconLibrary.js';
+export type { IconLibraryProps } from './content/IconLibrary.js';

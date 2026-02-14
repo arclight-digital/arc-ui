@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-container
+ */
 export class ArcContainer extends LitElement {
   static properties = {
     narrow:  { type: Boolean, reflect: true },
@@ -45,5 +48,3 @@ export class ArcContainer extends LitElement {
     return html`<div class="container" part="container"><slot></slot></div>`;
   }
 }
-
-customElements.define('arc-container', ArcContainer);

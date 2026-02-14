@@ -1,7 +1,10 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import './breadcrumb-item.js';
 
+/**
+ * @tag arc-breadcrumb
+ * @requires arc-breadcrumb-item
+ */
 export class ArcBreadcrumb extends LitElement {
   static properties = {
     separator: { type: String },
@@ -127,5 +130,3 @@ export class ArcBreadcrumb extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-breadcrumb', ArcBreadcrumb);

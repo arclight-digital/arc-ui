@@ -1,5 +1,8 @@
 import { LitElement, html, css } from 'lit';
 
+/**
+ * @tag arc-breadcrumb-item
+ */
 export class ArcBreadcrumbItem extends LitElement {
   static properties = {
     href: { type: String, reflect: true },
@@ -22,5 +25,3 @@ export class ArcBreadcrumbItem extends LitElement {
     return html`<slot></slot>`;
   }
 }
-
-customElements.define('arc-breadcrumb-item', ArcBreadcrumbItem);

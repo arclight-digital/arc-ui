@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-table
+ */
 export class ArcTable extends LitElement {
   static properties = {
     columns: { type: Array },
@@ -130,5 +133,3 @@ export class ArcTable extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-table', ArcTable);

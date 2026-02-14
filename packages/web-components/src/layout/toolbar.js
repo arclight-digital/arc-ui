@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-toolbar
+ */
 export class ArcToolbar extends LitElement {
   static properties = {
     sticky: { type: Boolean, reflect: true },
@@ -88,5 +91,3 @@ export class ArcToolbar extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-toolbar', ArcToolbar);

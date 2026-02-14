@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-color-swatch
+ */
 export class ArcColorSwatch extends LitElement {
   static properties = {
     color: { type: String },
@@ -82,5 +85,3 @@ export class ArcColorSwatch extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-color-swatch', ArcColorSwatch);

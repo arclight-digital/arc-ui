@@ -1,8 +1,11 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import './command-item.js';
 import '../content/icon.js';
 
+/**
+ * @tag arc-command-palette
+ * @requires arc-command-item
+ */
 export class ArcCommandPalette extends LitElement {
   static properties = {
     open:          { type: Boolean, reflect: true },
@@ -342,5 +345,3 @@ export class ArcCommandPalette extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-command-palette', ArcCommandPalette);

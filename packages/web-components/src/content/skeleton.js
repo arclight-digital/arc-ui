@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-skeleton
+ */
 export class ArcSkeleton extends LitElement {
   static properties = {
     variant: { type: String, reflect: true },
@@ -92,5 +95,3 @@ export class ArcSkeleton extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-skeleton', ArcSkeleton);

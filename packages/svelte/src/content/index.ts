@@ -36,3 +36,4 @@ export { default as InfiniteScroll } from './InfiniteScroll.svelte';
 export { default as Tag } from './Tag.svelte';
 export { default as Truncate } from './Truncate.svelte';
 export { default as CtaBanner } from './CtaBanner.svelte';
+export { default as IconLibrary } from './IconLibrary.svelte';

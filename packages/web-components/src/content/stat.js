@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-stat
+ */
 export class ArcStat extends LitElement {
   static properties = {
     value:  { type: String },
@@ -101,5 +104,3 @@ export class ArcStat extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-stat', ArcStat);

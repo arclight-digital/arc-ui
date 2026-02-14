@@ -1,5 +1,8 @@
 import { LitElement, html, css } from 'lit';
 
+/**
+ * @tag arc-column
+ */
 export class ArcColumn extends LitElement {
   static properties = {
     key:      { type: String, reflect: true },
@@ -24,5 +27,3 @@ export class ArcColumn extends LitElement {
     return html`<slot></slot>`;
   }
 }
-
-customElements.define('arc-column', ArcColumn);

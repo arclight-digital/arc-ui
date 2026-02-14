@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-tooltip
+ */
 export class ArcTooltip extends LitElement {
   static properties = {
     content:   { type: String },
@@ -185,5 +188,3 @@ export class ArcTooltip extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-tooltip', ArcTooltip);

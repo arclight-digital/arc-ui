@@ -1,7 +1,10 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import './spy-link.js';
 
+/**
+ * @tag arc-scroll-spy
+ * @requires arc-spy-link
+ */
 export class ArcScrollSpy extends LitElement {
   static properties = {
     active:  { type: String, reflect: true },
@@ -194,5 +197,3 @@ export class ArcScrollSpy extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-scroll-spy', ArcScrollSpy);

@@ -2,6 +2,9 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import '../content/spinner.js';
 
+/**
+ * @tag arc-infinite-scroll
+ */
 export class ArcInfiniteScroll extends LitElement {
   static properties = {
     threshold: { type: Number },
@@ -140,5 +143,3 @@ export class ArcInfiniteScroll extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-infinite-scroll', ArcInfiniteScroll);

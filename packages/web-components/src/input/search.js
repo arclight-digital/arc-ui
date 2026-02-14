@@ -1,7 +1,10 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import './suggestion.js';
 
+/**
+ * @tag arc-search
+ * @requires arc-suggestion
+ */
 export class ArcSearch extends LitElement {
   static properties = {
     value:        { type: String },
@@ -367,5 +370,3 @@ export class ArcSearch extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-search', ArcSearch);

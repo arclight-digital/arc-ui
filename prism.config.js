@@ -4,7 +4,7 @@ export default {
   // Tier directories to scan (maps to output subdirectories)
   tiers: ['content', 'input', 'navigation', 'layout', 'feedback', 'shared'],
   // Ignore patterns
-  ignore: ['**/shared-styles.js', '**/index.js', '**/icon-registry.js', '**/icon-library.js', '**/icons/**'],
+  ignore: ['**/shared-styles.js', '**/index.js', '**/icon-registry.js', '**/icon-library.js', '**/icons/**', '**/*.register.js', '**/register.js'],
 
   // React output
   react: {

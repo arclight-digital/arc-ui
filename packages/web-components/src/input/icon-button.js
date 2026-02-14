@@ -3,6 +3,9 @@ import { tokenStyles } from '../shared-styles.js';
 import { buttonVariantStyles } from '../button-styles.js';
 import '../content/icon.js';
 
+/**
+ * @tag arc-icon-button
+ */
 export class ArcIconButton extends LitElement {
   static properties = {
     name:     { type: String, reflect: true },
@@ -159,5 +162,3 @@ export class ArcIconButton extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-icon-button', ArcIconButton);

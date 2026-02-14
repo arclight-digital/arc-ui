@@ -1,5 +1,8 @@
 import { LitElement, html, css } from 'lit';
 
+/**
+ * @tag arc-accordion-item
+ */
 export class ArcAccordionItem extends LitElement {
   static properties = {
     question: { type: String, reflect: true },
@@ -23,5 +26,3 @@ export class ArcAccordionItem extends LitElement {
     return html`<slot></slot>`;
   }
 }
-
-customElements.define('arc-accordion-item', ArcAccordionItem);

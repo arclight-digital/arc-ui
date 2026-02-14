@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-value-card
+ */
 export class ArcValueCard extends LitElement {
   static properties = {
     icon:        { type: String },
@@ -90,5 +93,3 @@ export class ArcValueCard extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-value-card', ArcValueCard);

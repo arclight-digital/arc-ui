@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-kbd
+ */
 export class ArcKbd extends LitElement {
   static properties = {};
 
@@ -36,5 +39,3 @@ export class ArcKbd extends LitElement {
     return html`<kbd class="kbd" part="kbd"><slot></slot></kbd>`;
   }
 }
-
-customElements.define('arc-kbd', ArcKbd);

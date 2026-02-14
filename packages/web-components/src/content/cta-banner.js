@@ -4,6 +4,9 @@ import { tokenStyles } from '../shared-styles.js';
 /**
  * @arc-prism content — call-to-action banner with gradient background
  */
+/**
+ * @tag arc-cta-banner
+ */
 export class ArcCtaBanner extends LitElement {
   static properties = {
     eyebrow:    { type: String },
@@ -122,5 +125,3 @@ export class ArcCtaBanner extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-cta-banner', ArcCtaBanner);

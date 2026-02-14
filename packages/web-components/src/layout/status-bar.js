@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-status-bar
+ */
 export class ArcStatusBar extends LitElement {
   static properties = {
     position: { type: String, reflect: true },
@@ -80,5 +83,3 @@ export class ArcStatusBar extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-status-bar', ArcStatusBar);

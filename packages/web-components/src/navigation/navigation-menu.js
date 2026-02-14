@@ -1,7 +1,10 @@
 import { LitElement, html, css, render as litRender } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import './nav-item.js';
 
+/**
+ * @tag arc-navigation-menu
+ * @requires arc-nav-item
+ */
 export class ArcNavigationMenu extends LitElement {
   static properties = {
     _items:              { state: true },
@@ -772,5 +775,3 @@ export class ArcNavigationMenu extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-navigation-menu', ArcNavigationMenu);

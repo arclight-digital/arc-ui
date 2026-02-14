@@ -10,7 +10,7 @@ import '@arclux/arc-ui';
   template: `<arc-dashboard-grid [attr.columns]="columns" [attr.gap]="gap" [attr.minColumnWidth]="minColumnWidth"><ng-content /></arc-dashboard-grid>`,
 })
 export class DashboardGrid {
-  @Input() columns: number = 3;
+  @Input() columns: number = 0;
   @Input() gap: string = 'var(--space-lg)';
   @Input() minColumnWidth: string = '280px';
 }

@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-text
+ */
 export class ArcText extends LitElement {
   static properties = {
     variant: { type: String, reflect: true },
@@ -107,5 +110,3 @@ export class ArcText extends LitElement {
     }
   }
 }
-
-customElements.define('arc-text', ArcText);

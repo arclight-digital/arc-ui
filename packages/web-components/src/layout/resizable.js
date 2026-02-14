@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-resizable
+ */
 export class ArcResizable extends LitElement {
   static properties = {
     direction: { type: String, reflect: true },
@@ -217,5 +220,3 @@ export class ArcResizable extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-resizable', ArcResizable);

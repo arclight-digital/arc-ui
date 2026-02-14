@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-otp-input
+ */
 export class ArcOtpInput extends LitElement {
   static properties = {
     length:   { type: Number, reflect: true },
@@ -217,5 +220,3 @@ export class ArcOtpInput extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-otp-input', ArcOtpInput);

@@ -1,7 +1,10 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import './accordion-item.js';
 
+/**
+ * @tag arc-accordion
+ * @requires arc-accordion-item
+ */
 export class ArcAccordion extends LitElement {
   static properties = {
     multiple:   { type: Boolean, reflect: true },
@@ -155,5 +158,3 @@ export class ArcAccordion extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-accordion', ArcAccordion);

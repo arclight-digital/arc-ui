@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-calendar
+ */
 export class ArcCalendar extends LitElement {
   static properties = {
     value:  { type: String },
@@ -336,5 +339,3 @@ export class ArcCalendar extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-calendar', ArcCalendar);

@@ -1,7 +1,10 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import './timeline-item.js';
 
+/**
+ * @tag arc-timeline
+ * @requires arc-timeline-item
+ */
 export class ArcTimeline extends LitElement {
   static properties = {
     _items: { state: true },
@@ -166,5 +169,3 @@ export class ArcTimeline extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-timeline', ArcTimeline);

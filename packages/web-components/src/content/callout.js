@@ -1,8 +1,11 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { statusVars } from '../status-styles.js';
-import './icon.js';
 
+/**
+ * @tag arc-callout
+ * @requires arc-icon
+ */
 export class ArcCallout extends LitElement {
   static properties = {
     variant:     { type: String, reflect: true },
@@ -158,5 +161,3 @@ export class ArcCallout extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-callout', ArcCallout);

@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-hover-card
+ */
 export class ArcHoverCard extends LitElement {
   static properties = {
     position:   { type: String, reflect: true },
@@ -182,5 +185,3 @@ export class ArcHoverCard extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-hover-card', ArcHoverCard);

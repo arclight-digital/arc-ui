@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-meter
+ */
 export class ArcMeter extends LitElement {
   static properties = {
     value:   { type: Number, reflect: true },
@@ -163,5 +166,3 @@ export class ArcMeter extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-meter', ArcMeter);

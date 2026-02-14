@@ -1,5 +1,8 @@
 import { LitElement, html, css } from 'lit';
 
+/**
+ * @tag arc-suggestion
+ */
 export class ArcSuggestion extends LitElement {
   static properties = {
     value: { type: String, reflect: true },
@@ -22,5 +25,3 @@ export class ArcSuggestion extends LitElement {
     return html`<slot></slot>`;
   }
 }
-
-customElements.define('arc-suggestion', ArcSuggestion);

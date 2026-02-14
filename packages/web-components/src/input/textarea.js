@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
+/**
+ * @tag arc-textarea
+ */
 export class ArcTextarea extends LitElement {
   static formAssociated = true;
 
@@ -221,5 +224,3 @@ export class ArcTextarea extends LitElement {
     `;
   }
 }
-
-customElements.define('arc-textarea', ArcTextarea);

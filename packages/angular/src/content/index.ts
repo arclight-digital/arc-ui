@@ -36,3 +36,4 @@ export { InfiniteScroll } from './InfiniteScroll.js';
 export { Tag } from './Tag.js';
 export { Truncate } from './Truncate.js';
 export { CtaBanner } from './CtaBanner.js';
+export { IconLibrary } from './IconLibrary.js';
