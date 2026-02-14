@@ -8,6 +8,7 @@ export interface IconProps {
   name?: string;
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   label?: string;
+  _svgContent?: string;
   className?: string;
   children?: React.ReactNode;
 }

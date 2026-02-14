@@ -30,6 +30,7 @@ export class ArcIcon extends LitElement {
     name:  { type: String, reflect: true },
     size:  { type: String, reflect: true },
     label: { type: String },
+    _svgContent: { state: true },
   };
 
   static styles = [
@@ -76,11 +77,28 @@ export class ArcIcon extends LitElement {
     this.name = '';
     this.size = 'sm';
     this.label = '';
+    this._svgContent = null;
+  }
+
+  updated(changed) {
+    if (changed.has('name')) this._loadIcon();
+  }
+
+  async _loadIcon() {
+    if (!this.name) {
+      this._svgContent = null;
+      return;
+    }
+    const currentName = this.name;
+    const svg = await iconRegistry.get(this.name);
+    // Guard against stale responses (name changed while loading)
+    if (this.name === currentName) {
+      this._svgContent = svg;
+    }
   }
 
   render() {
-    const svgStr = this.name ? iconRegistry.get(this.name) : null;
-    const svgNode = svgStr ? sanitizeSvg(svgStr) : null;
+    const svgNode = this._svgContent ? sanitizeSvg(this._svgContent) : null;
     return html`
       <span
         class="icon"

@@ -8,10 +8,12 @@ withDefaults(defineProps<{
   name?: string;
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   label?: string;
+  _svgContent?: string;
 }>(), {
   name: '',
   size: 'sm',
   label: '',
+  _svgContent: 'null',
 });
 </script>
 
@@ -20,6 +22,7 @@ withDefaults(defineProps<{
     :name="name"
     :size="size"
     :label="label"
+    :_svgContent="_svgContent"
   >
     <slot />
   </arc-icon>

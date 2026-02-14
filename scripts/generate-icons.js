@@ -3,12 +3,13 @@
  * Generates vendored icon modules from upstream libraries.
  * Run: node scripts/generate-icons.js
  *
- * Outputs:
- *   packages/web-components/src/icons/lucide.js    (~1,900 icons)
- *   packages/web-components/src/icons/phosphor.js   (~1,500 icons)
- *   packages/web-components/src/icons/lucide.d.ts   (type declarations)
- *   packages/web-components/src/icons/phosphor.d.ts  (type declarations)
- *   packages/web-components/src/icons/types.d.ts     (combined IconName type)
+ * Outputs per library (phosphor, lucide):
+ *   packages/web-components/src/icons/{lib}.js          — monolithic re-export (full library opt-in)
+ *   packages/web-components/src/icons/{lib}.d.ts        — type declarations for monolithic
+ *   packages/web-components/src/icons/{lib}/{name}.js   — per-icon module (~500 bytes each)
+ *   packages/web-components/src/icons/{lib}/_manifest.js — array of all icon names
+ *   packages/web-components/src/icons/{lib}/_manifest.d.ts
+ *   packages/web-components/src/icons/types.d.ts        — combined IconName type
  */
 import { createRequire } from 'node:module';
 import { writeFileSync, mkdirSync, readFileSync, readdirSync } from 'node:fs';
@@ -27,6 +28,10 @@ function toKebab(str) {
     .toLowerCase();
 }
 
+function toPascal(kebab) {
+  return kebab.replace(/(^|-)([a-z0-9])/g, (_, _sep, ch) => ch.toUpperCase());
+}
+
 function cleanSvg(svg) {
   return svg
     .replace(/\s+width="\d+"/, '')
@@ -42,20 +47,75 @@ function writeIconModule(name, label, entries) {
   entries.sort(([a], [b]) => a.localeCompare(b));
   const names = entries.map(([n]) => n);
 
-  // JS module
-  const lines = entries.map(
-    ([n, svg]) => `  '${n}': '${svg.replace(/'/g, "\\'")}'`,
-  );
-  const source = `// Auto-generated from ${label} — do not edit manually.\n// Run: node scripts/generate-icons.js\nconst icons = {\n${lines.join(',\n')}\n};\nexport default icons;\n`;
+  // --- Per-icon files ---
+  const perIconDir = resolve(outDir, name);
+  mkdirSync(perIconDir, { recursive: true });
+
+  for (const [iconName, svg] of entries) {
+    const escaped = svg.replace(/'/g, "\\'");
+    const perIconSource = `// Auto-generated — do not edit manually.\nexport default '${escaped}';\n`;
+    writeFileSync(resolve(perIconDir, `${iconName}.js`), perIconSource);
+  }
+
+  // --- Manifest (array of all names) ---
+  const manifestSource = [
+    `// Auto-generated — do not edit manually.`,
+    `export default ${JSON.stringify(names)};`,
+    ``,
+  ].join('\n');
+  writeFileSync(resolve(perIconDir, '_manifest.js'), manifestSource);
+
+  const manifestDts = [
+    `// Auto-generated — do not edit manually.`,
+    `declare const names: string[];`,
+    `export default names;`,
+    ``,
+  ].join('\n');
+  writeFileSync(resolve(perIconDir, '_manifest.d.ts'), manifestDts);
+
+  // --- Monolithic JS module (full library opt-in) ---
+  const namedExports = entries.map(([n, svg]) => {
+    const pascal = toPascal(n);
+    return `export const ${pascal} = '${svg.replace(/'/g, "\\'")}';`;
+  });
+  const defaultEntries = entries.map(([n]) => {
+    const pascal = toPascal(n);
+    return `  '${n}': ${pascal}`;
+  });
+  const source = [
+    `// Auto-generated from ${label} — do not edit manually.`,
+    `// Run: node scripts/generate-icons.js`,
+    ``,
+    ...namedExports,
+    ``,
+    `const icons = {`,
+    defaultEntries.join(',\n'),
+    `};`,
+    `export default icons;`,
+    ``,
+  ].join('\n');
   writeFileSync(resolve(outDir, `${name}.js`), source);
 
-  // Type declaration
+  // --- Type declaration for monolithic ---
   const typeName = name.charAt(0).toUpperCase() + name.slice(1) + 'IconName';
   const unionMembers = names.map((n) => `  | '${n}'`).join('\n');
-  const dts = `// Auto-generated — do not edit manually.\nexport type ${typeName} =\n${unionMembers};\n\ndeclare const icons: Record<${typeName}, string>;\nexport default icons;\n`;
+  const namedExportTypes = entries
+    .map(([n]) => `export declare const ${toPascal(n)}: string;`)
+    .join('\n');
+  const dts = [
+    `// Auto-generated — do not edit manually.`,
+    `export type ${typeName} =`,
+    `${unionMembers};`,
+    ``,
+    namedExportTypes,
+    ``,
+    `declare const icons: Record<${typeName}, string>;`,
+    `export default icons;`,
+    ``,
+  ].join('\n');
   writeFileSync(resolve(outDir, `${name}.d.ts`), dts);
 
-  console.log(`  ${name}: ${entries.length} icons`);
+  console.log(`  ${name}: ${entries.length} icons (${entries.length} per-icon files + manifest)`);
   return { typeName, names };
 }
 

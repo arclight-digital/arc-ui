@@ -7,14 +7,15 @@ export interface IconProps {
   name?: string;
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   label?: string;
+  _svgContent?: string;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Icon: Component<IconProps> = (props) => {
-  const [local, rest] = splitProps(props, ['name', 'size', 'label', 'children']);
+  const [local, rest] = splitProps(props, ['name', 'size', 'label', '_svgContent', 'children']);
   return (
-    <arc-icon name={local.name} size={local.size} label={local.label} {...rest}>
+    <arc-icon name={local.name} size={local.size} label={local.label} _svgContent={local._svgContent} {...rest}>
       {local.children}
     </arc-icon>
   );

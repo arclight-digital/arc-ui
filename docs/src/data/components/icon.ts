@@ -8,7 +8,9 @@ export const icon: ComponentDef = {
     interactivity: 'static',
     description: 'Renders icons from Phosphor (1,500+) or Lucide (1,900+) by name, with one-line library switching and custom icon registration.',
 
-    overview: `Icon renders SVG icons from a centralized icon registry by name. When the \`name\` property is set, the component looks up the corresponding SVG string in the registry, parses it through a DOMParser-based sanitizer that strips all \`<script>\` elements and \`on*\` event handler attributes, and injects the cleaned SVG into the shadow DOM. Parsed SVGs are cached in a module-level Map for efficient re-renders.
+    overview: `Icon renders SVG icons from a centralized icon registry by name. When the \`name\` property is set, the component dynamically imports the matching icon file, parses it through a DOMParser-based sanitizer that strips all \`<script>\` elements and \`on*\` event handler attributes, and injects the cleaned SVG into the shadow DOM. Parsed SVGs are cached in a module-level Map for efficient re-renders.
+
+**Icons are loaded per-icon on demand.** Each of the 3,400+ icons is its own module (~500 bytes). When \`<arc-icon name="star">\` renders, only \`star.js\` is fetched — not the entire library. This means importing \`arc-icon\` adds **0KB** of icon data to your bundle upfront, and each icon you actually use costs only ~500 bytes. Bundlers automatically tree-shake unused icons out of production builds.
 
 ARC UI ships with two icon libraries built in. **Phosphor Icons** (phosphoricons.com) is the default — a flexible, consistent set of over 1,500 icons with a clean filled style that works well at all sizes. **Lucide** (lucide.dev) is also bundled as an alternative — a community fork of Feather Icons with over 1,900 stroke-based icons that pair well with lighter UI styles. Use the icon browser below to explore both libraries and click any icon to copy its name.
 
@@ -17,7 +19,7 @@ To switch libraries globally, use the \`iconRegistry\` API or the declarative \`
 \`\`\`js
 // JavaScript API
 import { iconRegistry } from '@arclux/arc-ui';
-iconRegistry.use('lucide'); // switch all icons to Lucide
+iconRegistry.use('lucide'); // switch all icons to Lucide (no data loaded until icons render)
 \`\`\`
 
 \`\`\`html
@@ -25,7 +27,7 @@ iconRegistry.use('lucide'); // switch all icons to Lucide
 <arc-icon-library name="lucide"></arc-icon-library>
 \`\`\`
 
-You can also register custom icons on top of the active library. Custom icons are merged into the current set, so you can mix library icons with your own brand marks:
+You can also register custom icons on top of the active library. Custom icons are merged into the current set, so you can mix library icons with your own brand marks. Custom icons registered via \`set()\` resolve instantly with no network request:
 
 \`\`\`js
 iconRegistry.set({
@@ -34,14 +36,22 @@ iconRegistry.set({
 });
 \`\`\`
 
+If you need the full icon library as a single import (e.g. for an icon picker), you can still opt in:
+
+\`\`\`js
+import phosphor from '@arclux/arc-ui/icons/phosphor'; // loads all ~1,500 icons
+import lucide from '@arclux/arc-ui/icons/lucide';     // loads all ~1,900 icons
+\`\`\`
+
 Five size presets — xs (12px), sm (16px), md (20px), lg (24px), and xl (32px) — control the rendered dimensions. The component inherits color from its parent via \`currentColor\`, so icon color naturally follows the surrounding text or container styling. When no matching name is found in the registry, the component falls back to rendering its default slot, allowing you to pass inline SVGs or custom content directly.
 
 The \`label\` property controls accessibility behavior: when a label is provided, the icon wrapper receives \`role="img"\` and \`aria-label\` with the given text; when omitted, the icon is marked as \`role="presentation"\` with \`aria-hidden="true"\`, hiding it from assistive technology. This two-mode approach ensures decorative icons stay silent while meaningful icons are properly announced.`,
 
     features: [
+      'Per-icon lazy loading — only icons you use are fetched (~500 bytes each), 0KB upfront',
       'Two built-in icon packs: Phosphor (1,500+ filled) and Lucide (1,900+ stroke-based)',
       'One-line library switching via iconRegistry.use() or <arc-icon-library>',
-      'Custom icon registration — merge your own SVGs on top of any library',
+      'Custom icon registration — merge your own SVGs on top of any library (renders instantly)',
       'Five size presets: xs (12px), sm (16px), md (20px), lg (24px), xl (32px)',
       'Inherits color via currentColor for natural parent-driven styling',
       'Slot fallback when no registry name matches, allowing inline SVG passthrough',
@@ -93,7 +103,7 @@ The \`label\` property controls accessibility behavior: when a label is provided
 </div>`,
 
     previewSetup: `
-      (function() {
+      (async function() {
         var browser = el.querySelector('.icon-browser');
         if (!browser || browser.dataset.init) return;
         browser.dataset.init = '1';
@@ -101,8 +111,8 @@ The \`label\` property controls accessibility behavior: when a label is provided
         var iconRegistry = window.__arcIconRegistry;
         if (!iconRegistry) return;
         var packs = {
-          phosphor: iconRegistry.list('phosphor'),
-          lucide:   iconRegistry.list('lucide'),
+          phosphor: await iconRegistry.list('phosphor'),
+          lucide:   await iconRegistry.list('lucide'),
         };
 
         var activePack = 'phosphor';
@@ -215,17 +225,17 @@ The \`label\` property controls accessibility behavior: when a label is provided
 // Switch all icons to Lucide
 iconRegistry.use('lucide');
 
-// List all available icon names
-const names = iconRegistry.list();          // active library
-const phosphor = iconRegistry.list('phosphor'); // specific library
+// List all available icon names (async — loads manifest lazily)
+const names = await iconRegistry.list();          // active library
+const phosphor = await iconRegistry.list('phosphor'); // specific library
 
 // Register custom icons (merged on top of active library)
 iconRegistry.set({
   'my-logo': '<svg viewBox="0 0 24 24">...</svg>',
 });
 
-// Look up an icon by name
-const svg = iconRegistry.get('star'); // returns SVG string or null`,
+// Look up an icon by name (async — loads single icon lazily)
+const svg = await iconRegistry.get('star'); // returns SVG string or null`,
       },
       {
         label: 'React',

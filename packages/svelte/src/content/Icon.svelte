@@ -7,13 +7,14 @@
     name?: string;
     size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
     label?: string;
+    _svgContent?: string;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { name = '', size = 'sm', label = '', children, ...rest }: Props = $props();
+  let { name = '', size = 'sm', label = '', _svgContent = null, children, ...rest }: Props = $props();
 </script>
 
-<arc-icon {name} {size} {label} {...rest}>
+<arc-icon {name} {size} {label} {_svgContent} {...rest}>
   {@render children?.()}
 </arc-icon>

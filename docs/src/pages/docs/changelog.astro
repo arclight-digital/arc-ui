@@ -3,6 +3,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 import { components } from '../../data/components/index';
 
 const headings = [
+  { id: 'v1-9-0', label: 'v1.9.0' },
   { id: 'v1-8-6', label: 'v1.8.6' },
   { id: 'v1-8-5', label: 'v1.8.5' },
   { id: 'v1-8-4', label: 'v1.8.4' },
@@ -45,6 +46,36 @@ const byTier = Object.fromEntries(
     <p class="page-desc">
       Release history for ARC UI. All packages are versioned together.
     </p>
+
+    <section id="v1-9-0">
+      <h2 class="docs-heading">v1.9.0 — Per-Icon Lazy Loading</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <p class="docs-text">
+        Icons are now loaded on demand — each icon is its own ~500-byte module, dynamically imported when first used. Previously, importing <code>arc-icon</code> eagerly pulled in both Phosphor (817KB) and Lucide (736KB) regardless of how many icons you actually used. Now, <strong>0KB of icon data is loaded upfront</strong>, and only the icons your app renders are fetched.
+      </p>
+
+      <h3 class="tier-heading">New</h3>
+      <ul class="docs-list">
+        <li><strong>Per-icon lazy loading</strong> — <code>&lt;arc-icon name="star"&gt;</code> dynamically imports only <code>star.js</code> (~500 bytes), not the entire library. Bundlers tree-shake unused icons automatically.</li>
+        <li><strong>Per-icon subpath exports</strong> — Individual icons are available via <code>@arclux/arc-ui/icons/phosphor/star</code> and <code>@arclux/arc-ui/icons/lucide/arrow-right</code> for direct static imports.</li>
+        <li><strong>Full-library opt-in</strong> — <code>import icons from '@arclux/arc-ui/icons/phosphor'</code> still works for use cases that need all icons (e.g. icon pickers).</li>
+      </ul>
+
+      <h3 class="tier-heading">Breaking Changes</h3>
+      <ul class="docs-list">
+        <li><strong><code>iconRegistry.get()</code> is now async</strong> — Returns a <code>Promise&lt;string | null&gt;</code> instead of a string. This only affects code that calls <code>get()</code> directly; <code>&lt;arc-icon&gt;</code> handles this internally.</li>
+        <li><strong><code>iconRegistry.list()</code> is now async</strong> — Returns a <code>Promise&lt;string[]&gt;</code>. Update any direct callers to <code>await</code> the result.</li>
+      </ul>
+
+      <h3 class="tier-heading">Bundle Impact</h3>
+      <ul class="docs-list">
+        <li><strong>0 icons used</strong> — Before: +1.6MB. After: +0KB.</li>
+        <li><strong>1 icon used</strong> — Before: +1.6MB. After: ~500 bytes (lazy).</li>
+        <li><strong>10 icons used</strong> — Before: +1.6MB. After: ~5KB (lazy).</li>
+        <li><strong>Full library (explicit import)</strong> — Before: +1.6MB. After: +817KB (opt-in).</li>
+      </ul>
+    </section>
 
     <section id="v1-8-6">
       <h2 class="docs-heading">v1.8.6 — Theme Toggle Icon-Only Size Fix</h2>

@@ -7,12 +7,13 @@ export interface IconProps {
   name?: string;
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   label?: string;
+  _svgContent?: string;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const Icon: FunctionComponent<IconProps> = ({ name, size, label, children, ...rest }) => (
-  <arc-icon name={name} size={size} label={label} {...rest}>
+export const Icon: FunctionComponent<IconProps> = ({ name, size, label, _svgContent, children, ...rest }) => (
+  <arc-icon name={name} size={size} label={label} _svgContent={_svgContent} {...rest}>
     {children}
   </arc-icon>
 );
