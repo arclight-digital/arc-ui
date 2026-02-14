@@ -3,6 +3,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 import { components } from '../../data/components/index';
 
 const headings = [
+  { id: 'v1-7-0', label: 'v1.7.0' },
   { id: 'v1-6-0', label: 'v1.6.0' },
   { id: 'v1-5-2', label: 'v1.5.2' },
   { id: 'v1-5-1', label: 'v1.5.1' },
@@ -35,6 +36,47 @@ const byTier = Object.fromEntries(
     <p class="page-desc">
       Release history for ARC UI. All packages are versioned together.
     </p>
+
+    <section id="v1-7-0">
+      <h2 class="docs-heading">v1.7.0 — Code Block Variants</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <p class="docs-text">
+        Code Block gains three visual variants and built-in Shiki syntax highlighting.
+      </p>
+
+      <h3 class="tier-heading">New Props</h3>
+      <ul class="docs-list">
+        <li><strong>NavItem</strong> — Replaced <code>muted</code> boolean with a <code>variant</code> prop (<code>default</code> | <code>primary</code> | <code>muted</code>). The new <code>primary</code> variant renders accent-colored text and border in the resting state with a stronger glow on hover and active.</li>
+        <li><strong>Code Block</strong> — Added <code>variant</code> prop with three modes:
+          <ul class="docs-list" style="margin-top:var(--space-xs)">
+            <li><code>default</code> — Header bar with filename (left) and language label (top-right), no status bar footer.</li>
+            <li><code>window</code> — macOS-style title bar with colored traffic-light orbs, centered filename, elevated shadow, and status bar footer with language + line count.</li>
+            <li><code>basic</code> — Minimal: no header, no footer, compact padding, inline copy button. Ideal for single-line snippets.</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h3 class="tier-heading">Enhancements</h3>
+      <ul class="docs-list">
+        <li><strong>Code Block</strong> — Integrated <a href="https://shiki.style">Shiki</a> syntax highlighting using fine-grained imports (<code>shiki/core</code> + <code>shiki/engine/javascript</code>) — no WASM, tree-shakable, with lazy per-language loading from <code>@shikijs/langs</code>.</li>
+        <li><strong>Code Block</strong> — Custom <code>arc-dark</code> and <code>arc-light</code> syntax themes derived from the design token palette. Keywords use accent blue, strings use success green, constants use accent violet, and all colors cascade from <code>shared/tokens.js</code>.</li>
+        <li><strong>Code Block</strong> — Dual-theme support via CSS <code>light-dark()</code> — syntax colors switch automatically with the site theme, no re-render needed.</li>
+        <li><strong>Code Block</strong> — <code>filename</code> prop now reflects to the HTML attribute.</li>
+        <li><strong>Code Block</strong> — Default variant moved language label from the status bar into the header bar (top-right) and removed the status bar footer for a cleaner look.</li>
+        <li><strong>Code Block</strong> — Copy button repositioned inside the code body so it sits in the same spot across default and window variants.</li>
+      </ul>
+
+      <h3 class="tier-heading">Infrastructure</h3>
+      <ul class="docs-list">
+        <li><strong>Tokens</strong> — Added <code>color-scheme: dark</code> / <code>color-scheme: light</code> to the generated token CSS, enabling the CSS <code>light-dark()</code> function across all components.</li>
+      </ul>
+
+      <h3 class="tier-heading">Fixes</h3>
+      <ul class="docs-list">
+        <li><strong>Copy Button</strong> — Replaced hardcoded dark backdrop (<code>rgba(black, 0.6)</code>) with theme-aware <code>--bg-elevated</code> token so the button renders correctly in light mode.</li>
+      </ul>
+    </section>
 
     <section id="v1-6-0">
       <h2 class="docs-heading">v1.6.0 — New Component Props</h2>

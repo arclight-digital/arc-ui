@@ -8,17 +8,14 @@ export interface CodeBlockProps {
   language?: string;
   filename?: string;
   code?: string;
-  _copied?: string;
+  variant?: 'window' | 'basic';
+  _highlightedHtml?: string;
   className?: string;
   children?: React.ReactNode;
-  onClick?: (e: Event) => void;
 }
 
 export const CodeBlock = createComponent({
   tagName: 'arc-code-block',
   elementClass: ArcCodeBlock,
   react: React,
-  events: {
-    onClick: 'click' as EventName<Event>,
-  },
 });

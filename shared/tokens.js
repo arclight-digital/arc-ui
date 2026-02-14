@@ -578,6 +578,7 @@ export function generateTokensCSS() {
   return `/* Generated from shared/tokens.js — do not edit by hand */
 
 :root {
+  color-scheme: dark;
 ${cssVariables}
 }
 
@@ -585,11 +586,13 @@ ${touchBlock}
 
 /* Light Theme Overrides */
 [data-theme="light"] {
+  color-scheme: light;
 ${lightVars}
 }
 
 @media (prefers-color-scheme: light) {
   [data-theme="auto"] {
+    color-scheme: light;
 ${lightVarsNested}
   }
 }

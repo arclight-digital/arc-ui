@@ -6,14 +6,14 @@ import '@arclux/arc-ui';
 export interface NavItemProps {
   href?: string;
   active?: boolean;
-  muted?: boolean;
+  variant?: string;
   description?: string;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const NavItem: FunctionComponent<NavItemProps> = ({ href, active, muted, description, children, ...rest }) => (
-  <arc-nav-item href={href} active={active} muted={muted} description={description} {...rest}>
+export const NavItem: FunctionComponent<NavItemProps> = ({ href, active, variant, description, children, ...rest }) => (
+  <arc-nav-item href={href} active={active} variant={variant} description={description} {...rest}>
     {children}
   </arc-nav-item>
 );

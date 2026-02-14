@@ -13,8 +13,8 @@ const previewMarkup = `<arc-navigation-menu>
   </arc-nav-item>
   <arc-nav-item href="#">Pricing</arc-nav-item>
   <arc-nav-item href="#">Docs</arc-nav-item>
-  <arc-nav-item href="#" muted>Blog</arc-nav-item>
-  <arc-nav-item href="#" muted active>Changelog</arc-nav-item>
+  <arc-nav-item href="#" variant="muted">Blog</arc-nav-item>
+  <arc-nav-item href="#" variant="muted" active>Changelog</arc-nav-item>
 </arc-navigation-menu>`;
 
 export const navigationMenu: ComponentDef = {
@@ -249,10 +249,10 @@ export function SiteNav() {
             description: 'Highlights the item with an accent-coloured bottom border to indicate the current route. Set this on the top-level NavItem that corresponds to the active page.',
           },
           {
-            name: 'muted',
-            type: 'boolean',
-            default: 'false',
-            description: 'Renders the item in a subdued style with lighter text and no border. Use for secondary navigation links like "Blog" or "Changelog" that should not compete with primary items for attention.',
+            name: 'variant',
+            type: "'default' | 'primary' | 'muted'",
+            default: "'default'",
+            description: 'Visual style variant. `default` shows a subtle border and muted text with accent glow on active. `primary` uses accent-colored text and border in the resting state with a stronger glow on hover/active. `muted` renders a subdued style with no border and lighter text — ideal for secondary links like "Blog" or "Changelog".',
           },
           {
             name: 'description',

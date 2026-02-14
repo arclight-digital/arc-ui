@@ -6,15 +6,15 @@
   interface Props {
     href?: string;
     active?: boolean;
-    muted?: boolean;
+    variant?: string;
     description?: string;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { href = '', active = false, muted = false, description = '', children, ...rest }: Props = $props();
+  let { href = '', active = false, variant = 'default', description = '', children, ...rest }: Props = $props();
 </script>
 
-<arc-nav-item {href} {active} {muted} {description} {...rest}>
+<arc-nav-item {href} {active} {variant} {description} {...rest}>
   {@render children?.()}
 </arc-nav-item>

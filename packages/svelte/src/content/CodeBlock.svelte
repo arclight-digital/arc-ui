@@ -7,14 +7,15 @@
     language?: string;
     filename?: string;
     code?: string;
-    _copied?: string;
+    variant?: 'window' | 'basic';
+    _highlightedHtml?: string;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { language = '', filename = '', code = '', _copied = false, children, ...rest }: Props = $props();
+  let { language = '', filename = '', code = '', variant = 'default', _highlightedHtml = '', children, ...rest }: Props = $props();
 </script>
 
-<arc-code-block {language} {filename} {code} {_copied} {...rest}>
+<arc-code-block {language} {filename} {code} {variant} {_highlightedHtml} {...rest}>
   {@render children?.()}
 </arc-code-block>

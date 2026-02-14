@@ -3,6 +3,7 @@
 /* Design Tokens */
 :root {
 
+  color-scheme: dark;
 
   --bg-deep: rgb(3, 3, 7);
   --bg-surface: rgb(10, 10, 15);
@@ -463,6 +464,7 @@
 .arc-code-block { display: block; }
 
       .arc-code-block .code-block {
+        position: relative;
         background: var(--bg-surface);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-lg);
@@ -485,43 +487,46 @@
       }
 
       .arc-code-block .code-block__lang {
-        font-family: var(--font-accent);
+        font-family: var(--font-mono);
         font-size: var(--text-xs);
-        letter-spacing: 2px;
-        text-transform: uppercase;
         color: var(--text-ghost);
-      }
-
-      .arc-code-block .code-block__copy {
-        display: flex;
-        align-items: center;
-        gap: var(--space-xs);
-        background: none;
-        border: 1px solid var(--border-default);
-        border-radius: var(--radius-sm);
-        color: var(--text-muted);
-        font-family: var(--font-accent);
-        font-size: var(--text-xs);
-        letter-spacing: 1px;
         text-transform: uppercase;
-        padding: var(--space-xs) var(--space-sm);
-        cursor: pointer;
-        transition: color var(--transition-fast), border-color var(--transition-fast);
-      }
-
-      .arc-code-block .code-block__copy:hover {
-        color: var(--text-primary);
-        border-color: var(--border-bright);
-      }
-
-      .arc-code-block .code-block__copy[data-copied] {
-        color: var(--color-success);
-        border-color: var(--color-success);
+        letter-spacing: 1px;
       }
 
       .arc-code-block .code-block__body {
+        position: relative;
         padding: var(--space-md);
+        padding-right: calc(var(--space-md) + 80px);
         overflow-x: auto;
+      }
+
+      /* Shiki dual-theme: pick dark or light via inherited color-scheme */
+      .arc-code-block .code-block__body span {
+        color: light-dark(var(--shiki-light), var(--shiki-dark));
+      }
+
+      .arc-code-block .code-block__copy {
+        position: absolute;
+        top: var(--space-sm);
+        right: var(--space-sm);
+        z-index: 1;
+      }
+
+      .arc-code-block .code-block__body pre {
+        margin: 0;
+        background: transparent !important;
+        font-family: var(--font-mono);
+        font-size: var(--code-size);
+        line-height: var(--code-lh);
+        white-space: pre;
+        tab-size: 2;
+      }
+
+      .arc-code-block .code-block__body pre code {
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
       }
 
       .arc-code-block .code-block__pre {
@@ -532,6 +537,70 @@
         color: var(--text-primary);
         white-space: pre;
         tab-size: 2;
+      }
+
+      arc-status-bar {
+        border-radius: 0;
+      }
+
+      arc-status-bar::part(base) {
+        border-top-color: var(--border-subtle);
+      }
+
+      /* — Window variant — */
+      .arc-code-block[data-variant="window"] .code-block {
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+      }
+
+      .arc-code-block .code-block__titlebar {
+        display: flex;
+        align-items: center;
+        padding: var(--space-sm) var(--space-md);
+        border-bottom: 1px solid var(--border-subtle);
+        background: var(--bg-surface);
+        position: relative;
+      }
+
+      .arc-code-block .code-block__orbs {
+        display: flex;
+        gap: 8px;
+      }
+
+      .arc-code-block .code-block__orb {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+      }
+
+      .arc-code-block .code-block__orb--close    { background: #ff5f57; }
+      .arc-code-block .code-block__orb--minimize { background: #febc2e; }
+      .arc-code-block .code-block__orb--maximize { background: #28c840; }
+
+      .arc-code-block .code-block__titlebar-filename {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        color: var(--text-muted);
+      }
+
+      /* — Basic variant — */
+      .arc-code-block[data-variant="basic"] .code-block__body {
+        padding: var(--space-sm);
+        padding-right: var(--space-sm);
+      }
+
+      .arc-code-block[data-variant="basic"] .code-block__copy {
+        position: static;
+        float: right;
+        margin-left: var(--space-sm);
+      }
+
+      .arc-code-block .code-block__meta {
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        color: var(--text-ghost);
       }
 
       @media (prefers-reduced-motion: reduce) {

@@ -8,12 +8,14 @@ withDefaults(defineProps<{
   language?: string;
   filename?: string;
   code?: string;
-  _copied?: string;
+  variant?: 'window' | 'basic';
+  _highlightedHtml?: string;
 }>(), {
   language: '',
   filename: '',
   code: '',
-  _copied: false,
+  variant: 'default',
+  _highlightedHtml: '',
 });
 </script>
 
@@ -22,7 +24,8 @@ withDefaults(defineProps<{
     :language="language"
     :filename="filename"
     :code="code"
-    :_copied="_copied"
+    :variant="variant"
+    :_highlightedHtml="_highlightedHtml"
   >
     <slot />
   </arc-code-block>

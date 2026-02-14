@@ -19,9 +19,7 @@ export class ArcCopyButton extends LitElement {
         align-items: center;
         justify-content: center;
         gap: var(--space-xs);
-        background: rgba(var(--black-rgb), 0.6);
-        -webkit-backdrop-filter: blur(8px);
-        backdrop-filter: blur(8px);
+        background: var(--copy-btn-bg, var(--bg-elevated));
         border: 1px solid var(--border-default);
         border-radius: var(--radius-sm);
         color: var(--text-muted);

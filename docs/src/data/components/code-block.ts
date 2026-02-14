@@ -42,9 +42,23 @@ CodeBlock is marked as a hybrid component: the code display works without JavaSc
       ],
     },
 
-    previewHtml: `<arc-code-block language="js" filename="app.js" code="import { Button, Card } from '@arclux/arc-ui';\n\nconst app = document.querySelector('#app');\nconsole.log('ARC UI loaded');"></arc-code-block>`,
+    previewHtml: `<div style="display: flex; flex-direction: column; gap: 24px;">
+  <div>
+    <arc-text variant="label" style="margin-bottom: 8px; display: block;">Default</arc-text>
+    <arc-code-block language="js" filename="app.js" code="import { Button, Card } from '@arclux/arc-ui';\n\nfunction init(config = {}) {\n  const app = document.querySelector('#app');\n  const { theme = 'dark', debug = false } = config;\n\n  if (debug) {\n    console.log('ARC UI loaded', { theme });\n  }\n\n  return app;\n}"></arc-code-block>
+  </div>
+  <div>
+    <arc-text variant="label" style="margin-bottom: 8px; display: block;">Window</arc-text>
+    <arc-code-block variant="window" language="js" filename="app.js" code="import { Button, Card } from '@arclux/arc-ui';\n\nfunction init(config = {}) {\n  const app = document.querySelector('#app');\n  const { theme = 'dark', debug = false } = config;\n\n  if (debug) {\n    console.log('ARC UI loaded', { theme });\n  }\n\n  return app;\n}"></arc-code-block>
+  </div>
+  <div>
+    <arc-text variant="label" style="margin-bottom: 8px; display: block;">Basic</arc-text>
+    <arc-code-block variant="basic" language="js" code="npm install @arclux/arc-ui"></arc-code-block>
+  </div>
+</div>`,
 
     props: [
+      { name: 'variant', type: "'default' | 'window' | 'basic'", default: "'default'", description: 'Visual variant. `default` shows the standard layout with optional filename header and status bar. `window` adds a macOS-style title bar with colored orbs and centered filename. `basic` strips all chrome for a compact, minimal display.' },
       { name: 'language', type: 'string', default: "''", description: 'Programming language identifier (e.g. `js`, `css`, `html`). Displayed in uppercase in the header bar.' },
       { name: 'filename', type: 'string', default: "''", description: 'Optional filename displayed in the header in monospace font. When empty, the header shows only the language.' },
       { name: 'code', type: 'string', default: "''", description: 'Code content to display. Used as the `<pre><code>` content and copied to clipboard when the copy button is clicked.' },

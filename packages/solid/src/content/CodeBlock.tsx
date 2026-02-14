@@ -7,15 +7,16 @@ export interface CodeBlockProps {
   language?: string;
   filename?: string;
   code?: string;
-  _copied?: string;
+  variant?: 'window' | 'basic';
+  _highlightedHtml?: string;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const CodeBlock: Component<CodeBlockProps> = (props) => {
-  const [local, rest] = splitProps(props, ['language', 'filename', 'code', '_copied', 'children']);
+  const [local, rest] = splitProps(props, ['language', 'filename', 'code', 'variant', '_highlightedHtml', 'children']);
   return (
-    <arc-code-block language={local.language} filename={local.filename} code={local.code} _copied={local._copied} {...rest}>
+    <arc-code-block language={local.language} filename={local.filename} code={local.code} variant={local.variant} _highlightedHtml={local._highlightedHtml} {...rest}>
       {local.children}
     </arc-code-block>
   );

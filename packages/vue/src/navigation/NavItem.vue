@@ -7,12 +7,12 @@ defineOptions({ name: 'NavItem' });
 withDefaults(defineProps<{
   href?: string;
   active?: boolean;
-  muted?: boolean;
+  variant?: string;
   description?: string;
 }>(), {
   href: '',
   active: false,
-  muted: false,
+  variant: 'default',
   description: '',
 });
 </script>
@@ -21,7 +21,7 @@ withDefaults(defineProps<{
   <arc-nav-item
     :href="href"
     :active="active"
-    :muted="muted"
+    :variant="variant"
     :description="description"
   >
     <slot />

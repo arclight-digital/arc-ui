@@ -7,11 +7,12 @@ import '@arclux/arc-ui';
   selector: 'arc-code-block',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-code-block [attr.language]="language" [attr.filename]="filename" [attr.code]="code" [attr._copied]="_copied"><ng-content /></arc-code-block>`,
+  template: `<arc-code-block [attr.language]="language" [attr.filename]="filename" [attr.code]="code" [attr.variant]="variant" [attr._highlightedHtml]="_highlightedHtml"><ng-content /></arc-code-block>`,
 })
 export class CodeBlock {
   @Input() language: string = '';
   @Input() filename: string = '';
   @Input() code: string = '';
-  @Input() _copied: string = false;
+  @Input() variant: 'window' | 'basic' = 'default';
+  @Input() _highlightedHtml: string = '';
 }

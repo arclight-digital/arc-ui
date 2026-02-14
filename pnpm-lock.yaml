@@ -119,9 +119,15 @@ importers:
 
   packages/web-components:
     dependencies:
+      '@shikijs/langs':
+        specifier: ^3.22.0
+        version: 3.22.0
       lit:
         specifier: ^3.3.0
         version: 3.3.2
+      shiki:
+        specifier: ^3.0.0
+        version: 3.22.0
 
 packages:
 

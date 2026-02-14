@@ -7,13 +7,14 @@ export interface CodeBlockProps {
   language?: string;
   filename?: string;
   code?: string;
-  _copied?: string;
+  variant?: 'window' | 'basic';
+  _highlightedHtml?: string;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const CodeBlock: FunctionComponent<CodeBlockProps> = ({ language, filename, code, _copied, children, ...rest }) => (
-  <arc-code-block language={language} filename={filename} code={code} _copied={_copied} {...rest}>
+export const CodeBlock: FunctionComponent<CodeBlockProps> = ({ language, filename, code, variant, _highlightedHtml, children, ...rest }) => (
+  <arc-code-block language={language} filename={filename} code={code} variant={variant} _highlightedHtml={_highlightedHtml} {...rest}>
     {children}
   </arc-code-block>
 );

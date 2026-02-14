@@ -1,6 +1,7 @@
 /* Generated from shared/tokens.js — do not edit by hand */
 
 :root {
+  color-scheme: dark;
 
   --bg-deep: rgb(3, 3, 7);
   --bg-surface: rgb(10, 10, 15);
@@ -177,6 +178,7 @@
 
 /* Light Theme Overrides */
 [data-theme="light"] {
+  color-scheme: light;
   --bg-deep: rgb(242, 242, 248);
   --bg-surface: rgb(248, 248, 252);
   --bg-base: rgb(244, 244, 250);
@@ -220,6 +222,7 @@
 
 @media (prefers-color-scheme: light) {
   [data-theme="auto"] {
+    color-scheme: light;
     --bg-deep: rgb(242, 242, 248);
     --bg-surface: rgb(248, 248, 252);
     --bg-base: rgb(244, 244, 250);

@@ -98,6 +98,32 @@ export class ArcNavigationMenu extends LitElement {
         box-shadow: 0 0 16px rgba(var(--accent-primary-rgb), 0.14);
       }
 
+      .nav__trigger--primary {
+        color: var(--accent-primary);
+        border-color: rgba(var(--accent-primary-rgb), 0.2);
+        background: rgba(var(--accent-primary-rgb), 0.04);
+      }
+
+      .nav__trigger--primary:hover,
+      .nav__trigger--primary.nav__trigger--open {
+        color: var(--accent-primary);
+        background: rgba(var(--accent-primary-rgb), 0.1);
+        border-color: rgba(var(--accent-primary-rgb), 0.4);
+        box-shadow: 0 0 12px rgba(var(--accent-primary-rgb), 0.12);
+      }
+
+      .nav__trigger--primary.nav__trigger--active {
+        color: var(--accent-primary);
+        background: rgba(var(--accent-primary-rgb), 0.1);
+        border-color: rgba(var(--accent-primary-rgb), 0.5);
+        box-shadow: inset 0 0 10px rgba(var(--accent-primary-rgb), 0.1), 0 0 14px rgba(var(--accent-primary-rgb), 0.15);
+      }
+
+      .nav__trigger--primary.nav__trigger--active:hover {
+        border-color: rgba(var(--accent-primary-rgb), 0.6);
+        box-shadow: inset 0 0 12px rgba(var(--accent-primary-rgb), 0.12), 0 0 18px rgba(var(--accent-primary-rgb), 0.2);
+      }
+
       .nav__trigger:focus-visible {
         outline: none;
         box-shadow: var(--focus-glow);
@@ -337,6 +363,24 @@ export class ArcNavigationMenu extends LitElement {
 
       .mobile-trigger--muted.mobile-trigger--active:hover {
         background: rgba(var(--accent-primary-rgb), 0.12);
+      }
+
+      .mobile-trigger--primary {
+        color: var(--accent-primary);
+      }
+
+      .mobile-trigger--primary:hover {
+        color: var(--accent-primary);
+        background: rgba(var(--accent-primary-rgb), 0.1);
+      }
+
+      .mobile-trigger--primary.mobile-trigger--active {
+        color: var(--accent-primary);
+        background: rgba(var(--accent-primary-rgb), 0.1);
+      }
+
+      .mobile-trigger--primary.mobile-trigger--active:hover {
+        background: rgba(var(--accent-primary-rgb), 0.14);
       }
 
       .mobile-chevron {
@@ -614,7 +658,7 @@ export class ArcNavigationMenu extends LitElement {
             >
               ${hasChildren ? html`
                 <button
-                  class="nav__trigger nav__trigger--has-children ${isOpen ? 'nav__trigger--open' : ''} ${item.active ? 'nav__trigger--active' : ''} ${item.muted ? 'nav__trigger--muted' : ''}"
+                  class="nav__trigger nav__trigger--has-children ${isOpen ? 'nav__trigger--open' : ''} ${item.active ? 'nav__trigger--active' : ''} ${item.variant && item.variant !== 'default' ? `nav__trigger--${item.variant}` : ''}"
                   @click=${(e) => this._handleTriggerClick(e, item, i)}
                   aria-expanded=${String(isOpen)}
                   aria-haspopup="true"
@@ -627,7 +671,7 @@ export class ArcNavigationMenu extends LitElement {
                 </button>
               ` : html`
                 <a
-                  class="nav__trigger ${item.active ? 'nav__trigger--active' : ''} ${item.muted ? 'nav__trigger--muted' : ''}"
+                  class="nav__trigger ${item.active ? 'nav__trigger--active' : ''} ${item.variant && item.variant !== 'default' ? `nav__trigger--${item.variant}` : ''}"
                   href=${item.href}
                   @click=${(e) => this._handleTriggerClick(e, item, i)}
                   part="trigger"
@@ -688,7 +732,7 @@ export class ArcNavigationMenu extends LitElement {
               <li class="mobile-item" style="animation-delay: ${i * 60}ms">
                 ${hasChildren ? html`
                   <button
-                    class="mobile-trigger ${item.active ? 'mobile-trigger--active' : ''} ${item.muted ? 'mobile-trigger--muted' : ''}"
+                    class="mobile-trigger ${item.active ? 'mobile-trigger--active' : ''} ${item.variant && item.variant !== 'default' ? `mobile-trigger--${item.variant}` : ''}"
                     @click=${() => this._toggleMobileDropdown(i)}
                     aria-expanded=${String(isExpanded)}
                   >
@@ -713,7 +757,7 @@ export class ArcNavigationMenu extends LitElement {
                   </div>
                 ` : html`
                   <a
-                    class="mobile-trigger ${item.active ? 'mobile-trigger--active' : ''} ${item.muted ? 'mobile-trigger--muted' : ''}"
+                    class="mobile-trigger ${item.active ? 'mobile-trigger--active' : ''} ${item.variant && item.variant !== 'default' ? `mobile-trigger--${item.variant}` : ''}"
                     href=${item.href}
                     @click=${(e) => this._handleMobileTriggerClick(e, item, i)}
                   >
