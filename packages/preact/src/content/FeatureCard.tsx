@@ -8,12 +8,13 @@ export interface FeatureCardProps {
   heading?: string;
   description?: string;
   href?: string;
+  action?: string;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const FeatureCard: FunctionComponent<FeatureCardProps> = ({ icon, heading, description, href, children, ...rest }) => (
-  <arc-feature-card icon={icon} heading={heading} description={description} href={href} {...rest}>
+export const FeatureCard: FunctionComponent<FeatureCardProps> = ({ icon, heading, description, href, action, children, ...rest }) => (
+  <arc-feature-card icon={icon} heading={heading} description={description} href={href} action={action} {...rest}>
     {children}
   </arc-feature-card>
 );

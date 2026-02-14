@@ -9,11 +9,13 @@ withDefaults(defineProps<{
   heading?: string;
   description?: string;
   href?: string;
+  action?: string;
 }>(), {
   icon: '',
   heading: '',
   description: '',
   href: '',
+  action: '',
 });
 </script>
 
@@ -23,6 +25,7 @@ withDefaults(defineProps<{
     :heading="heading"
     :description="description"
     :href="href"
+    :action="action"
   >
     <slot />
   </arc-feature-card>

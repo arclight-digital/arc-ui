@@ -9,6 +9,7 @@ export interface FeatureCardProps {
   heading?: string;
   description?: string;
   href?: string;
+  action?: string;
   className?: string;
   children?: React.ReactNode;
 }

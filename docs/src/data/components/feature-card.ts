@@ -43,8 +43,8 @@ The icon slot accepts custom content (SVG icons, emoji, or any markup) via the \
     },
 
     previewHtml: `<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 720px;">
-  <arc-feature-card icon="&#9889;" heading="Performance" description="Optimised builds for lightning-fast load times."></arc-feature-card>
-  <arc-feature-card icon="&#9881;" heading="Themeable" description="Design tokens let you customise every detail." href="#"></arc-feature-card>
+  <arc-feature-card icon="&#9889;" heading="Performance" description="Optimised builds for lightning-fast load times." href="#" action="Learn more"></arc-feature-card>
+  <arc-feature-card icon="&#9881;" heading="Themeable" description="Design tokens let you customise every detail." href="#" action="Customize"></arc-feature-card>
   <arc-feature-card icon="&#9878;" heading="Accessible" description="WCAG-compliant focus and keyboard support."></arc-feature-card>
 </div>`,
 
@@ -53,6 +53,7 @@ The icon slot accepts custom content (SVG icons, emoji, or any markup) via the \
       { name: 'heading', type: 'string', description: 'Card title' },
       { name: 'description', type: 'string', description: 'Card body text' },
       { name: 'href', type: 'string', description: 'Makes the card a link' },
+      { name: 'action', type: 'string', description: 'Action label (e.g. "Learn more") shown at the bottom of the card when href is set. Hidden when empty or when no href is provided.' },
     ],
     tabs: [
       {

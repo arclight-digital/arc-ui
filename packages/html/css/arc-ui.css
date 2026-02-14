@@ -910,6 +910,35 @@
         margin: 0;
       }
 
+      .arc-feature-card .card__action {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-family: var(--font-accent);
+        font-size: var(--text-xs);
+        font-weight: 600;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: var(--text-ghost);
+        transition: color var(--transition-fast), gap var(--transition-fast);
+      }
+
+      .arc-feature-card .card:hover .card__action {
+        color: var(--accent-primary);
+        gap: 10px;
+      }
+
+      .arc-feature-card .card__action-arrow {
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        transition: transform var(--transition-fast);
+      }
+
+      .arc-feature-card .card:hover .card__action-arrow {
+        transform: translateX(2px);
+      }
+
       .arc-feature-card .card__rule {
         width: 32px;
         height: 1px;

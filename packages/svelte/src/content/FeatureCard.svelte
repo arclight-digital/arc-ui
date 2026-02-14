@@ -8,13 +8,14 @@
     heading?: string;
     description?: string;
     href?: string;
+    action?: string;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { icon = '', heading = '', description = '', href = '', children, ...rest }: Props = $props();
+  let { icon = '', heading = '', description = '', href = '', action = '', children, ...rest }: Props = $props();
 </script>
 
-<arc-feature-card {icon} {heading} {description} {href} {...rest}>
+<arc-feature-card {icon} {heading} {description} {href} {action} {...rest}>
   {@render children?.()}
 </arc-feature-card>

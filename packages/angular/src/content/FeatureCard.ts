@@ -7,11 +7,12 @@ import '@arclux/arc-ui';
   selector: 'arc-feature-card',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-feature-card [attr.icon]="icon" [attr.heading]="heading" [attr.description]="description" [attr.href]="href"><ng-content /></arc-feature-card>`,
+  template: `<arc-feature-card [attr.icon]="icon" [attr.heading]="heading" [attr.description]="description" [attr.href]="href" [attr.action]="action"><ng-content /></arc-feature-card>`,
 })
 export class FeatureCard {
   @Input() icon: string = '';
   @Input() heading: string = '';
   @Input() description: string = '';
   @Input() href: string = '';
+  @Input() action: string = '';
 }
