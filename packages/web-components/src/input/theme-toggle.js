@@ -39,9 +39,11 @@ export class ArcThemeToggle extends LitElement {
       }
 
       :host([icon-only]) .theme-toggle {
+        width: 36px;
+        height: 36px;
         min-width: var(--touch-min);
         min-height: var(--touch-min);
-        padding: var(--touch-pad);
+        padding: 0;
         border-radius: var(--radius-full);
       }
 

@@ -3,6 +3,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 import { components } from '../../data/components/index';
 
 const headings = [
+  { id: 'v1-8-6', label: 'v1.8.6' },
   { id: 'v1-8-5', label: 'v1.8.5' },
   { id: 'v1-8-4', label: 'v1.8.4' },
   { id: 'v1-8-3', label: 'v1.8.3' },
@@ -45,13 +46,23 @@ const byTier = Object.fromEntries(
       Release history for ARC UI. All packages are versioned together.
     </p>
 
+    <section id="v1-8-6">
+      <h2 class="docs-heading">v1.8.6 — Theme Toggle Icon-Only Size Fix</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <h3 class="tier-heading">Bug Fixes</h3>
+      <ul class="docs-list">
+        <li><strong>Theme toggle icon-only size</strong> — No, <em>actually</em> fixed this time. Restored 36px dimensions to match <code>arc-icon-button</code>, with <code>--touch-min</code> as a floor for mobile.</li>
+      </ul>
+    </section>
+
     <section id="v1-8-5">
       <h2 class="docs-heading">v1.8.5 — Theme Toggle Padding Fix</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
 
       <h3 class="tier-heading">Bug Fixes</h3>
       <ul class="docs-list">
-        <li><strong>Theme toggle padding</strong> — Restored desktop padding on the standard (non-icon-only) <code>arc-theme-toggle</code> variant, which was inadvertently reduced in v1.8.4.</li>
+        <li><strong>Theme toggle padding</strong> — Restored desktop padding on <code>arc-theme-toggle</code> after v1.8.4 got a little too enthusiastic with the touch target tokens.</li>
       </ul>
     </section>
 
