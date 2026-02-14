@@ -98,7 +98,7 @@ const headings = [
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
 
       <p class="docs-text">
-        Import the library to register all components, then use them in your markup:
+        Import the registration entry point to register all components, then use them in your markup:
       </p>
 
       <div class="step">
@@ -106,7 +106,16 @@ const headings = [
         <div class="step__content">
           <strong>Import tokens &amp; register components</strong>
           <div class="docs-code"><Code code={`import '@arclux/arc-ui/tokens.css';
-import '@arclux/arc-ui';`} lang="js" theme="css-variables" /></div>
+import '@arclux/arc-ui/register';`} lang="js" theme="css-variables" /></div>
+
+          <arc-callout variant="info" style="margin-top:var(--space-xs)">
+            <strong>Import patterns:</strong>
+            <ul style="margin:var(--space-xs) 0 0;padding-left:var(--space-md)">
+              <li><code>import '@arclux/arc-ui/register'</code> — register all components (simplest)</li>
+              <li><code>import '@arclux/arc-ui/button'</code> — register one component + deps (tree-shakeable)</li>
+              <li><code>import {'{'} ArcButton {'}'} from '@arclux/arc-ui'</code> — named class export (registers all components — not tree-shakeable)</li>
+            </ul>
+          </arc-callout>
         </div>
       </div>
 
@@ -232,7 +241,7 @@ import { ArcButton, ArcCard } from '@arclux/arc-ui-vue';
           <div class="docs-code"><Code code={`<link rel="stylesheet"
   href="https://unpkg.com/@arclux/arc-ui/tokens.css">
 <script type="module"
-  src="https://unpkg.com/@arclux/arc-ui">
+  src="https://unpkg.com/@arclux/arc-ui/register">
 </script>
 
 <arc-button variant="primary">Click Me</arc-button>`} lang="html" theme="css-variables" /></div>

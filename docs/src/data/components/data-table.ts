@@ -118,7 +118,8 @@ if (dt) dt.rows = [
 </div>
 
 <script type="module">
-  import '@arclux/arc-ui';
+  import '@arclux/arc-ui/data-table';
+  import '@arclux/arc-ui/column';
 
   const dt = document.querySelector('#demo-dt-preview');
   dt.rows = [

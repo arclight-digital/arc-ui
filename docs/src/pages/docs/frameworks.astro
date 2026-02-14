@@ -184,10 +184,11 @@ function App() {
         No framework? No problem. Use the core web component package directly:
       </p>
       <div class="docs-code"><Code code="npm install @arclux/arc-ui lit" lang="bash" theme="css-variables" /></div>
-      <div class="docs-code"><Code code={`import '@arclux/arc-ui';`} lang="js" theme="css-variables" /></div>
+      <div class="docs-code"><Code code={`import '@arclux/arc-ui/button';
+import '@arclux/arc-ui/card';`} lang="js" theme="css-variables" /></div>
       <p class="docs-text">Or load via CDN with no build step:</p>
       <div class="docs-code"><Code code={`<script type="module"
-  src="https://unpkg.com/@arclux/arc-ui">
+  src="https://unpkg.com/@arclux/arc-ui/register">
 </script>
 
 <arc-button variant="primary">Click Me</arc-button>

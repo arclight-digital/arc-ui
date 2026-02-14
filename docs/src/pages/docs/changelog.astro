@@ -3,6 +3,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 import { components } from '../../data/components/index';
 
 const headings = [
+  { id: 'v1-8-1', label: 'v1.8.1' },
   { id: 'v1-8-0', label: 'v1.8.0' },
   { id: 'v1-7-2', label: 'v1.7.2' },
   { id: 'v1-7-1', label: 'v1.7.1' },
@@ -40,6 +41,28 @@ const byTier = Object.fromEntries(
       Release history for ARC UI. All packages are versioned together.
     </p>
 
+    <section id="v1-8-1">
+      <h2 class="docs-heading">v1.8.1 — Tree-Shaking Bugfix</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <p class="docs-text">
+        Fixes named barrel imports like <code>import {'{'} ArcButton {'}'} from '@arclux/arc-ui'</code>
+        being tree-shaken away by Vite/Rollup, causing components to silently not render.
+      </p>
+
+      <h3 class="tier-heading">Bug Fixes</h3>
+      <ul class="docs-list">
+        <li><strong>Barrel now registers components</strong> — Tier index files (<code>content/index.js</code>, <code>input/index.js</code>, etc.) now re-export from <code>.register.js</code> files instead of pure class files. This means named imports through the barrel correctly call <code>customElements.define()</code> and are preserved by bundlers via the <code>sideEffects</code> field.</li>
+        <li><strong>Stale docs imports</strong> — Fixed several docs pages still showing the pre-v1.8.0 <code>import '@arclux/arc-ui'</code> pattern which no longer registers components. Updated getting-started, frameworks, and data-table examples to use <code>import '@arclux/arc-ui/register'</code> or per-component imports.</li>
+        <li><strong>CDN script tags</strong> — Fixed CDN <code>&lt;script&gt;</code> examples in getting-started and frameworks pages to point to <code>@arclux/arc-ui/register</code> instead of the bare entry point.</li>
+      </ul>
+
+      <h3 class="tier-heading">Docs</h3>
+      <ul class="docs-list">
+        <li><strong>Import patterns callout</strong> — Getting-started page now documents the three import patterns and their tree-shaking trade-offs.</li>
+      </ul>
+    </section>
+
     <section id="v1-8-0">
       <h2 class="docs-heading">v1.8.0 — Tree-Shakeable Components</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
@@ -56,7 +79,7 @@ const byTier = Object.fromEntries(
 
       <h3 class="tier-heading">New Consumer API</h3>
       <ul class="docs-list">
-        <li><code>import {'{'} ArcButton {'}'} from '@arclux/arc-ui'</code> — tree-shakeable class import, no side effects. Bundlers drop unused components.</li>
+        <li><code>import {'{'} ArcButton {'}'} from '@arclux/arc-ui'</code> — named class import. Registers all components via the barrel (not tree-shakeable). Fixed in v1.8.1 to actually call <code>customElements.define()</code>.</li>
         <li><code>import '@arclux/arc-ui/register'</code> — registers all components (replaces bare side-effect import).</li>
         <li><code>import '@arclux/arc-ui/button'</code> — single component, auto-registered with its dependencies.</li>
       </ul>
