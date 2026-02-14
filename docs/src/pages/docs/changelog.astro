@@ -3,6 +3,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 import { components } from '../../data/components/index';
 
 const headings = [
+  { id: 'v1-7-2', label: 'v1.7.2' },
   { id: 'v1-7-1', label: 'v1.7.1' },
   { id: 'v1-7-0', label: 'v1.7.0' },
   { id: 'v1-6-0', label: 'v1.6.0' },
@@ -38,6 +39,22 @@ const byTier = Object.fromEntries(
       Release history for ARC UI. All packages are versioned together.
     </p>
 
+    <section id="v1-7-2">
+      <h2 class="docs-heading">v1.7.2 — Themeable Syntax Highlighting</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <h3 class="tier-heading">Enhancements</h3>
+      <ul class="docs-list">
+        <li><strong>Code Block</strong> — Switched from baked hex Shiki themes to a CSS custom-properties theme. Syntax colors now derive from design tokens (<code>--accent-primary</code>, <code>--accent-secondary</code>, <code>--color-success</code>, etc.) so consumers can override them alongside the rest of the palette.</li>
+        <li><strong>Code Block</strong> — Shiki core and regex engine are now lazy-loaded on first use, removing ~600KB from the initial bundle.</li>
+      </ul>
+
+      <h3 class="tier-heading">Infrastructure</h3>
+      <ul class="docs-list">
+        <li>Removed 9 redundant per-page <code>import '@arclux/arc-ui'</code> script tags — BaseLayout already loads the library globally.</li>
+      </ul>
+    </section>
+
     <section id="v1-7-1">
       <h2 class="docs-heading">v1.7.1 — Token Consolidation</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
@@ -45,7 +62,7 @@ const byTier = Object.fromEntries(
       <h3 class="tier-heading">Infrastructure</h3>
       <ul class="docs-list">
         <li><strong>Single source of truth</strong> — Removed the duplicate <code>tokens.js</code> from the web-components package. <code>shared/tokens.js</code> is now the only token file.</li>
-        <li><strong>Code Block</strong> — Shiki syntax themes are now baked into a generated <code>shiki-themes.js</code> file at build time, eliminating the cross-package runtime import that broke external consumers.</li>
+        <li><strong>Code Block</strong> — Fixed cross-package runtime import of <code>shared/tokens.js</code> that broke external consumers.</li>
       </ul>
     </section>
 

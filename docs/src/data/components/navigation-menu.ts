@@ -11,7 +11,7 @@ const previewMarkup = `<arc-navigation-menu>
     <arc-nav-item href="#" description="Unified observability stack">Platform Teams</arc-nav-item>
     <arc-nav-item href="#" description="SOC 2 and HIPAA compliance">Enterprise</arc-nav-item>
   </arc-nav-item>
-  <arc-nav-item href="#">Pricing</arc-nav-item>
+  <arc-nav-item href="#" variant="primary">Pricing</arc-nav-item>
   <arc-nav-item href="#">Docs</arc-nav-item>
   <arc-nav-item href="#" variant="muted">Blog</arc-nav-item>
   <arc-nav-item href="#" variant="muted" active>Changelog</arc-nav-item>

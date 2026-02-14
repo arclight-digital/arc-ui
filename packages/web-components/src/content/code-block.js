@@ -59,13 +59,18 @@ const LANG_IMPORT = {
 async function getHL(lang) {
   if (!_hlReady) {
     _hlReady = (async () => {
-      const [{ createHighlighterCore }, { createJavaScriptRegexEngine }, { arcDark, arcLight }] = await Promise.all([
+      const [{ createHighlighterCore, createCssVariablesTheme }, { createJavaScriptRegexEngine }] = await Promise.all([
         import('shiki/core'),
         import('shiki/engine/javascript'),
-        import('./shiki-themes.js'),
       ]);
+      const theme = createCssVariablesTheme({
+        name: 'arc-tokens',
+        variablePrefix: '--shiki-',
+        variableDefaults: {},
+        fontStyle: true,
+      });
       return createHighlighterCore({
-        themes: [arcDark, arcLight],
+        themes: [theme],
         langs: [],
         engine: createJavaScriptRegexEngine(),
       });
@@ -136,9 +141,21 @@ export class ArcCodeBlock extends LitElement {
         overflow-x: auto;
       }
 
-      /* Shiki dual-theme: pick dark or light via inherited color-scheme */
-      .code-block__body span {
-        color: light-dark(var(--shiki-light), var(--shiki-dark));
+      /* Shiki CSS-variables theme — map --shiki-* to design tokens.
+         Consumers override --accent-primary, --color-success, etc. and
+         syntax colors follow automatically. */
+      .code-block {
+        --shiki-foreground: var(--text-secondary);
+        --shiki-background: var(--bg-surface);
+        --shiki-token-comment: var(--text-ghost);
+        --shiki-token-keyword: var(--accent-primary);
+        --shiki-token-string: var(--color-success);
+        --shiki-token-constant: var(--accent-secondary);
+        --shiki-token-function: var(--text-primary);
+        --shiki-token-parameter: var(--text-secondary);
+        --shiki-token-string-expression: var(--color-success);
+        --shiki-token-punctuation: var(--text-muted);
+        --shiki-token-link: var(--accent-primary);
       }
 
       .code-block__copy {
@@ -275,8 +292,7 @@ export class ArcCodeBlock extends LitElement {
       if (!hl) { this._highlightedHtml = ''; return; }
       this._highlightedHtml = hl.codeToHtml(this.code, {
         lang: this.language,
-        themes: { dark: 'arc-dark', light: 'arc-light' },
-        defaultColor: false,
+        theme: 'arc-tokens',
       });
     } catch {
       this._highlightedHtml = '';

@@ -41,9 +41,21 @@
         overflow-x: auto;
       }
 
-      /* Shiki dual-theme: pick dark or light via inherited color-scheme */
-      .arc-code-block .code-block__body span {
-        color: light-dark(var(--shiki-light), var(--shiki-dark));
+      /* Shiki CSS-variables theme — map --shiki-* to design tokens.
+         Consumers override --accent-primary, --color-success, etc. and
+         syntax colors follow automatically. */
+      .arc-code-block .code-block {
+        --shiki-foreground: var(--text-secondary);
+        --shiki-background: var(--bg-surface);
+        --shiki-token-comment: var(--text-ghost);
+        --shiki-token-keyword: var(--accent-primary);
+        --shiki-token-string: var(--color-success);
+        --shiki-token-constant: var(--accent-secondary);
+        --shiki-token-function: var(--text-primary);
+        --shiki-token-parameter: var(--text-secondary);
+        --shiki-token-string-expression: var(--color-success);
+        --shiki-token-punctuation: var(--text-muted);
+        --shiki-token-link: var(--accent-primary);
       }
 
       .arc-code-block .code-block__copy {
