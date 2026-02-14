@@ -90,8 +90,8 @@ export const tokenStyles = css`
 
   @media (pointer: coarse) {
     :host {
-      --touch-min: 42px;
-      --touch-pad: 10px;
+      --touch-min: 36px;
+      --touch-pad: 8px;
     }
   }
 `;

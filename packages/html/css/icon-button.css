@@ -40,6 +40,7 @@
       }
 
       /* Sizes — icon-only */
+      .arc-icon-button .btn:not(.btn--has-text) { min-width: var(--touch-min); min-height: var(--touch-min); }
       .arc-icon-button[data-size="xs"] .btn:not(.btn--has-text) { width: 28px; height: 28px; border-radius: var(--radius-sm); }
       .arc-icon-button[data-size="sm"] .btn:not(.btn--has-text) { width: 32px; height: 32px; }
       .arc-icon-button:not([data-size]) .btn:not(.btn--has-text),
@@ -47,6 +48,7 @@
       .arc-icon-button[data-size="lg"] .btn:not(.btn--has-text) { width: 44px; height: 44px; }
 
       /* Sizes — with text */
+      .arc-icon-button .btn--has-text { min-height: var(--touch-min); }
       .arc-icon-button[data-size="xs"] .btn--has-text { padding: var(--space-xs) var(--space-sm); font-size: var(--text-xs); }
       .arc-icon-button[data-size="sm"] .btn--has-text { padding: calc(var(--space-xs) + 2px) calc(var(--space-sm) + 2px); font-size: var(--text-xs); }
       .arc-icon-button:not([data-size]) .btn--has-text,

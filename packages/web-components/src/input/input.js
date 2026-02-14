@@ -48,6 +48,7 @@ export class ArcInput extends LitElement {
       .input-group__wrapper {
         display: flex;
         align-items: center;
+        min-height: var(--touch-min);
         background: var(--bg-surface);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-md);

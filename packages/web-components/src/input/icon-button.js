@@ -61,6 +61,7 @@ export class ArcIconButton extends LitElement {
       }
 
       /* Sizes — icon-only */
+      .btn:not(.btn--has-text) { min-width: var(--touch-min); min-height: var(--touch-min); }
       :host([size="xs"]) .btn:not(.btn--has-text) { width: 28px; height: 28px; border-radius: var(--radius-sm); }
       :host([size="sm"]) .btn:not(.btn--has-text) { width: 32px; height: 32px; }
       :host(:not([size])) .btn:not(.btn--has-text),
@@ -68,6 +69,7 @@ export class ArcIconButton extends LitElement {
       :host([size="lg"]) .btn:not(.btn--has-text) { width: 44px; height: 44px; }
 
       /* Sizes — with text */
+      .btn--has-text { min-height: var(--touch-min); }
       :host([size="xs"]) .btn--has-text { padding: var(--space-xs) var(--space-sm); font-size: var(--text-xs); }
       :host([size="sm"]) .btn--has-text { padding: calc(var(--space-xs) + 2px) calc(var(--space-sm) + 2px); font-size: var(--text-xs); }
       :host(:not([size])) .btn--has-text,

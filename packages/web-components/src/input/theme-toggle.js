@@ -28,8 +28,9 @@ export class ArcThemeToggle extends LitElement {
         border-radius: var(--radius-sm);
         color: var(--text-muted);
         cursor: pointer;
-        padding: var(--space-sm);
+        padding: var(--touch-pad);
         min-width: 90px;
+        min-height: var(--touch-min);
         transition:
           background var(--transition-fast),
           border-color var(--transition-fast),
@@ -38,11 +39,10 @@ export class ArcThemeToggle extends LitElement {
       }
 
       :host([icon-only]) .theme-toggle {
-        min-width: 0;
-        padding: calc(var(--space-xs) + 2px);
+        min-width: var(--touch-min);
+        min-height: var(--touch-min);
+        padding: var(--touch-pad);
         border-radius: var(--radius-full);
-        width: 36px;
-        height: 36px;
       }
 
       .theme-toggle:hover {

@@ -42,6 +42,7 @@ export class ArcSelect extends LitElement {
         align-items: center;
         justify-content: space-between;
         width: 100%;
+        min-height: var(--touch-min);
         padding: var(--space-sm) var(--space-md);
         font-family: var(--font-body);
         font-size: var(--body-size);
@@ -96,7 +97,8 @@ export class ArcSelect extends LitElement {
       .select__option {
         display: block;
         width: 100%;
-        padding: var(--space-sm) var(--space-md);
+        min-height: var(--touch-min);
+        padding: var(--touch-pad) var(--space-md);
         font-family: var(--font-body);
         font-size: var(--body-size);
         color: var(--text-secondary);

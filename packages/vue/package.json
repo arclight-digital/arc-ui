@@ -1,6 +1,6 @@
 {
   "name": "@arclux/arc-ui-vue",
-  "version": "1.8.3",
+  "version": "1.8.4",
   "description": "Vue 3 wrappers for ARC UI Web Components.",
   "type": "module",
   "main": "src/index.ts",

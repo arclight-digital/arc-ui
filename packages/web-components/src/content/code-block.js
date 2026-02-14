@@ -242,14 +242,23 @@ export class ArcCodeBlock extends LitElement {
 
       /* — Basic variant — */
       :host([variant="basic"]) .code-block__body {
+        display: flex;
+        align-items: center;
         padding: var(--space-sm);
         padding-right: var(--space-sm);
       }
 
+      :host([variant="basic"]) .code-block__body pre,
+      :host([variant="basic"]) .code-block__body .shiki {
+        flex: 1;
+        min-width: 0;
+      }
+
       :host([variant="basic"]) .code-block__copy {
         position: static;
-        float: right;
+        flex-shrink: 0;
         margin-left: var(--space-sm);
+        order: 1;
       }
 
       .code-block__meta {

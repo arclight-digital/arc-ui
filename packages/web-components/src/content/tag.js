@@ -29,7 +29,8 @@ export class ArcTag extends LitElement {
         letter-spacing: 2px;
         text-transform: uppercase;
         color: var(--text-muted);
-        padding: var(--space-sm) calc(var(--space-sm) + var(--space-xs));
+        min-height: var(--touch-min);
+        padding: var(--touch-pad) calc(var(--space-sm) + var(--space-xs));
         border: 1px solid var(--border-default);
         border-radius: var(--radius-full);
         background: var(--bg-hover);
@@ -91,11 +92,9 @@ export class ArcTag extends LitElement {
         border: none;
         color: inherit;
         cursor: pointer;
-        padding: var(--space-xs);
+        padding: var(--touch-pad);
+        margin: calc(var(--touch-pad) * -1);
         margin-left: var(--space-xs);
-        width: 24px;
-        height: 24px;
-        min-width: 24px;
         border-radius: var(--radius-full);
         opacity: 0.6;
         transition: opacity var(--transition-fast), background var(--transition-fast);

@@ -3,6 +3,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 import { components } from '../../data/components/index';
 
 const headings = [
+  { id: 'v1-8-4', label: 'v1.8.4' },
   { id: 'v1-8-3', label: 'v1.8.3' },
   { id: 'v1-8-2', label: 'v1.8.2' },
   { id: 'v1-8-1', label: 'v1.8.1' },
@@ -42,6 +43,22 @@ const byTier = Object.fromEntries(
     <p class="page-desc">
       Release history for ARC UI. All packages are versioned together.
     </p>
+
+    <section id="v1-8-4">
+      <h2 class="docs-heading">v1.8.4 — Mobile Touch Targets, Code Block Fix</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <h3 class="tier-heading">Improvements</h3>
+      <ul class="docs-list">
+        <li><strong>Mobile touch targets</strong> — 8 interactive components now scale up on touch devices via <code>--touch-min</code> / <code>--touch-pad</code> tokens: <code>arc-icon-button</code>, <code>arc-toggle</code>, <code>arc-input</code>, <code>arc-select</code>, <code>arc-pagination</code>, <code>arc-theme-toggle</code>, <code>arc-tag</code>, and <code>arc-chip</code>.</li>
+        <li><strong>Touch token tuning</strong> — Mobile touch targets set to 36px min-height / 8px padding (up from 24px/4px desktop defaults).</li>
+      </ul>
+
+      <h3 class="tier-heading">Bug Fixes</h3>
+      <ul class="docs-list">
+        <li><strong>Code block basic variant</strong> — Single-line code now vertically centers alongside the copy button instead of sitting at the top.</li>
+      </ul>
+    </section>
 
     <section id="v1-8-3">
       <h2 class="docs-heading">v1.8.3 — Rename tokens.css → base.css, FOUC Prevention</h2>

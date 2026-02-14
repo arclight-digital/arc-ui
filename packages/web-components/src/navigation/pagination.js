@@ -28,8 +28,8 @@ export class ArcPagination extends LitElement {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        min-width: 32px;
-        height: 32px;
+        min-width: var(--touch-min);
+        min-height: var(--touch-min);
         padding: 0 var(--space-sm);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-sm);
@@ -78,8 +78,8 @@ export class ArcPagination extends LitElement {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        min-width: 32px;
-        height: 32px;
+        min-width: var(--touch-min);
+        min-height: var(--touch-min);
         color: var(--text-muted);
         font-size: var(--text-sm);
         user-select: none;

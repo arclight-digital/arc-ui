@@ -26,6 +26,7 @@ export class ArcToggle extends LitElement {
         align-items: center;
         gap: var(--space-sm);
         cursor: pointer;
+        min-height: var(--touch-min);
       }
 
       .toggle__track {
