@@ -24,7 +24,8 @@
     "format:check": "prettier --check 'packages/*/src/**/*.{js,ts,css}' 'shared/**/*.{js,css}'",
     "docs:build": "pnpm --filter arc-ui-docs run build",
     "docs:deploy": "cd docs && pnpm wrangler pages deploy",
-    "bump-versions": "node scripts/bump-versions.js"
+    "bump-versions": "node scripts/bump-versions.js",
+    "publish-all": "pnpm -r publish --access public"
   },
   "license": "MIT",
   "devDependencies": {
