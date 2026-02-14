@@ -58,6 +58,8 @@ Transitions between panels are handled with a crossfade animation driven by CSS,
   props: [
     { name: 'items', type: 'Array<{ label: string; content: string }>', description: 'Array of tab objects. Each entry defines a tab button label and the HTML or plain-text content rendered in its associated panel. The array order determines the visual left-to-right tab order.' },
     { name: 'selected', type: 'number', default: '0', description: 'Zero-based index of the currently active tab. Changing this value programmatically switches the visible panel and updates ARIA attributes. Out-of-range values are clamped to the nearest valid index.' },
+    { name: 'align', type: "'start' | 'center' | 'end'", default: "'start'", description: "Aligns the tab list. Options: 'start', 'center', 'end'." },
+    { name: 'variant', type: "'underline' | 'pills'", default: "'underline'", description: "Visual style of the tabs. Options: 'underline', 'pills'." },
   ],
   events: [
     { name: 'arc-change', description: 'Fired when the active tab changes' },
@@ -160,4 +162,6 @@ export default function TabsDemo() {
       ],
     },
   ],
+
+  seeAlso: ["accordion","segmented-control"],
 };

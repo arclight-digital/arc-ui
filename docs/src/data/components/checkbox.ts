@@ -76,6 +76,12 @@ Every checkbox includes a built-in label, a form-compatible name/value pair, and
         description: 'Visible text rendered beside the checkbox. Clicking the label toggles the checkbox, matching native HTML behaviour. Keep labels short, affirmative, and action-oriented for the best readability.',
       },
       {
+        name: 'size',
+        type: 'string',
+        default: "'md'",
+        description: "Controls the checkbox size. Options: 'sm', 'md', 'lg'.",
+      },
+      {
         name: 'name',
         type: 'string',
         description: 'The form field name submitted when the checkbox lives inside a <form>. Required for native form submission and useful for serializing checkbox group values on the server.',
@@ -211,4 +217,6 @@ export function OnboardingChecklist() {
 </div>`,
       },
     ],
-  };
+  
+  seeAlso: ["toggle","radio-group","form"],
+};

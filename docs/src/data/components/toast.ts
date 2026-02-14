@@ -240,4 +240,6 @@ export function NotificationDemo() {
 }`,
       },
     ],
-  };
+  
+  seeAlso: ["alert","notification-panel"],
+};

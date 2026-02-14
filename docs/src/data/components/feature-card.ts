@@ -175,4 +175,6 @@ export class MyComponent {}`,
    </a>
 </div>` }
     ],
-  };
+  
+  seeAlso: ["card","value-card","cta-banner"],
+};

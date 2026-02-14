@@ -113,4 +113,6 @@ export class MyComponent {}`,
 <Calendar></Calendar>`,
       },
     ],
-  };
+  
+  seeAlso: ["date-picker"],
+};

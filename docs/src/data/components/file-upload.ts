@@ -151,4 +151,6 @@ export class MyComponent {}`,
 <FileUpload accept="image/*" multiple></FileUpload>`,
       },
     ],
-  };
+  
+  seeAlso: ["input","button","progress"],
+};

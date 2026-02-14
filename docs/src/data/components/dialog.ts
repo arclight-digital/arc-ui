@@ -237,4 +237,6 @@ function App() {
 }`,
       },
     ],
-  };
+  
+  seeAlso: ["modal","alert","sheet"],
+};

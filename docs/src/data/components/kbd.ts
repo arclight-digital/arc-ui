@@ -117,4 +117,6 @@ Press <Kbd>Ctrl</Kbd> + <Kbd>C</Kbd> to copy.`,
   <kbd style="display: inline-flex; align-items: center; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; line-height: 1; color: rgb(138, 138, 150); background: rgb(17, 17, 22); border: 1px solid rgb(34, 34, 41); border-bottom-width: 2px; border-radius: 4px; padding: 2px 6px; white-space: nowrap; user-select: none; vertical-align: baseline">Kbd</kbd>
 </span>` }
     ],
-  };
+  
+  seeAlso: ["code-block","tooltip"],
+};

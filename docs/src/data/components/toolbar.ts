@@ -185,4 +185,6 @@ export class MyComponent {}`,
    </div>
 </div>` }
     ],
-  };
+  
+  seeAlso: ["button","icon-button","segmented-control"],
+};

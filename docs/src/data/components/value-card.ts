@@ -161,4 +161,6 @@ export class MyComponent {}`,
    </div>
 </div>` }
     ],
-  };
+  
+  seeAlso: ["card","feature-card","stat"],
+};

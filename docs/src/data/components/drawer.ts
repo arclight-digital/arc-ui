@@ -254,4 +254,6 @@ function MobileNav() {
 }`,
       },
     ],
-  };
+  
+  seeAlso: ["modal","sheet","sidebar"],
+};

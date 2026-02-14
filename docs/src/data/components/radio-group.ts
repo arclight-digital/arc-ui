@@ -71,6 +71,12 @@ RadioGroup supports both vertical and horizontal orientations. Vertical is the d
         default: "'vertical'",
         description: 'Controls the layout direction of the radio options. Vertical stacks options top-to-bottom and maps Arrow Up/Down to navigation. Horizontal places options in a row and maps Arrow Left/Right.',
       },
+      {
+        name: 'size',
+        type: 'string',
+        default: "'md'",
+        description: "Controls the radio button and label size. Options: 'sm', 'md', 'lg'.",
+      },
     ],
     events: [
       { name: 'arc-change', description: 'Fired when the selected radio value changes' },
@@ -242,4 +248,6 @@ function NotificationPreference() {
         ],
       },
     ],
-  };
+  
+  seeAlso: ["select","segmented-control","checkbox"],
+};

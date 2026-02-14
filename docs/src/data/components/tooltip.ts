@@ -287,4 +287,6 @@ export function ActionBar() {
 </span>`,
       },
     ],
-  };
+  
+  seeAlso: ["hover-card","popover"],
+};

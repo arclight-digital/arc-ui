@@ -166,4 +166,6 @@ export class MyComponent {}`,
 </arc-segmented-control>`,
       },
     ],
-  };
+  
+  seeAlso: ["tabs","radio-group","chip"],
+};

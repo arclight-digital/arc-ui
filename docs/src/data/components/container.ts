@@ -56,6 +56,8 @@ Container exposes a \`container\` CSS part on the inner wrapper, so you can targ
 
     props: [
       { name: 'narrow', type: 'boolean', default: 'false', description: 'Use the narrow max-width (720px vs 1120px)' },
+      { name: 'size', type: 'string', default: "'md'", description: "Controls the maximum width. Options: 'sm', 'md', 'lg', 'xl', 'full'." },
+      { name: 'padding', type: 'string', default: "'md'", description: "Controls inline padding. Options: 'none', 'sm', 'md', 'lg'." },
     ],
     tabs: [
       {
@@ -168,4 +170,6 @@ export class MyComponent {}`,
   <div style="width: 100%; max-width: 1120px; margin-inline: auto; padding-inline: 24px">Container</div>
 </div>` }
     ],
-  };
+  
+  seeAlso: ["section","stack","page-layout"],
+};

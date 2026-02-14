@@ -31,6 +31,18 @@ const interactivityNotes: Record<string, string> = {
   hybrid: 'Layout and styling work without JavaScript via the HTML/CSS versions. Interactive features like events and state management require the Web Component or a framework wrapper.',
 };
 
+// Resolve seeAlso slugs to component data or guide links
+const seeAlsoItems = (component.seeAlso ?? []).map((ref: string) => {
+  if (ref.startsWith('/')) {
+    // Guide path — extract label from last segment
+    const label = ref.split('/').pop()!.replace(/-/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase());
+    return { type: 'guide' as const, href: ref, label };
+  }
+  const match = components.find((c) => c.slug === ref);
+  if (match) return { type: 'component' as const, href: `/docs/components/${match.slug}`, label: match.name, description: match.description };
+  return { type: 'component' as const, href: `/docs/components/${ref}`, label: ref.replace(/-/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase()), description: '' };
+});
+
 const headings = [
   ...(component.overview ? [{ id: 'overview', label: 'Overview' }] : []),
   ...(component.guidelines ? [{ id: 'guidelines', label: 'Guidelines' }] : []),
@@ -242,6 +254,25 @@ const headings = [
         )}
       </section>
     ))}
+
+    {/* See Also */}
+    {seeAlsoItems.length > 0 && (
+      <section id="see-also">
+        <h2 class="docs-heading">See Also</h2>
+        <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+        <ul class="see-also__list">
+          {seeAlsoItems.map((item: any) => (
+            <li>
+              <a href={item.href} class="see-also__link">
+                <span class="see-also__name">{item.label}</span>
+                {item.description && <span class="see-also__desc">{item.description}</span>}
+                {item.type === 'guide' && <span class="see-also__badge">Guide</span>}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
   </div>
 </DocsLayout>
 
@@ -734,6 +765,59 @@ const headings = [
     white-space: nowrap;
     max-width: 100%;
     line-height: 1.2;
+  }
+
+  /* ── See Also ── */
+  .see-also__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .see-also__link {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-sm);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    transition: background var(--transition-fast);
+  }
+
+  .see-also__link:hover {
+    background: var(--bg-surface);
+  }
+
+  .see-also__name {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--accent-primary);
+    white-space: nowrap;
+  }
+
+  .see-also__desc {
+    font-size: var(--text-xs);
+    color: var(--text-ghost);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .see-also__badge {
+    font-family: var(--font-accent);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-ghost);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 1px 6px;
+    white-space: nowrap;
   }
 
   @media (max-width: 768px) {

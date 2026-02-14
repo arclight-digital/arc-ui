@@ -79,6 +79,12 @@ Three size presets — sm, md, and lg — let you scale buttons to their context
         default: 'false',
         description: 'When true, dims the button and prevents all pointer and keyboard interaction. Applies reduced opacity and removes hover/focus effects. Consider pairing with a tooltip that explains why the action is unavailable.',
       },
+      {
+        name: 'loading',
+        type: 'boolean',
+        default: 'false',
+        description: 'Shows a spinner and disables the button. Use for async operations like form submission or API calls.',
+      },
     ],
     tabs: [
       {
@@ -230,4 +236,6 @@ export function HeroActions() {
 </span>`,
       },
     ],
-  };
+  
+  seeAlso: ["icon-button","chip","link"],
+};

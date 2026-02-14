@@ -149,4 +149,6 @@ export class MyComponent {}`,
 </MultiSelect>`,
       },
     ],
-  };
+  
+  seeAlso: ["select","combobox","chip","tag"],
+};

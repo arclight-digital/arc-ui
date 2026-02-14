@@ -121,4 +121,6 @@ export class MyComponent {}`,
         code: `<arc-otp-input length="6" type="number"></arc-otp-input>`,
       },
     ],
-  };
+  
+  seeAlso: ["pin-input","input"],
+};

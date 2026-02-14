@@ -55,6 +55,12 @@ Because Badge is a static content element with no interactive behavior, it rende
         default: "'default'",
         description: 'Controls the badge color scheme. Default renders a neutral gray border and text suited for general-purpose labels. Primary adds an informational tint with a subtle glow on hover, ideal for active or in-progress states. Secondary provides a third color lane for categories like "Archived" or "Featured" that need visual separation from default and primary.',
       },
+      {
+        name: 'size',
+        type: "'sm' | 'md' | 'lg'",
+        default: "'md'",
+        description: "Controls the badge size. Options: 'sm', 'md', 'lg'.",
+      },
     ],
 
     tabs: [
@@ -184,4 +190,6 @@ export function ProjectStatus() {
 </span>`,
       },
     ],
-  };
+  
+  seeAlso: ["tag","chip","avatar"],
+};

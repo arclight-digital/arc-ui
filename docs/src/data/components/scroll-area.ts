@@ -140,4 +140,6 @@ export class MyComponent {}`,
 </ScrollArea>`,
       },
     ],
-  };
+  
+  seeAlso: ["infinite-scroll","scroll-to-top"],
+};

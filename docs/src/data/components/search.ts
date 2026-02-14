@@ -155,4 +155,6 @@ export class MyComponent {}`,
         ],
       },
     ],
-  };
+  
+  seeAlso: ["combobox","command-palette","input"],
+};

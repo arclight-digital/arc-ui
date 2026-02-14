@@ -351,4 +351,6 @@ export function SignInPage() {
    </div>
 </div>` }
     ],
-  };
+  
+  seeAlso: ["app-shell","form"],
+};

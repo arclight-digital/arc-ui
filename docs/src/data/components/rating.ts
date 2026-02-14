@@ -121,4 +121,6 @@ export class MyComponent {}`,
         code: `<arc-rating value="3" max="5"></arc-rating>`,
       },
     ],
-  };
+  
+  seeAlso: ["slider","icon"],
+};

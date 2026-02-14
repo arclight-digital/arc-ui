@@ -156,4 +156,6 @@ export class MyComponent {}`,
    </section>
 </div>` }
     ],
-  };
+  
+  seeAlso: ["container","divider","page-layout"],
+};

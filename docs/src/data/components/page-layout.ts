@@ -279,4 +279,6 @@ export function DashboardPage() {
    </div>
 </div>` }
     ],
-  };
+  
+  seeAlso: ["app-shell","container","section","page-header"],
+};

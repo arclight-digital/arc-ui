@@ -176,4 +176,6 @@ export class MyComponent {}`,
    </div>
 </div>` }
     ],
-  };
+  
+  seeAlso: ["top-bar","footer","badge"],
+};

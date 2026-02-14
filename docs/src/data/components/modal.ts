@@ -69,6 +69,7 @@ The component ships with three width presets (sm/md/lg) and a smooth slide-up en
       { name: 'heading', type: 'string', description: 'Text displayed in the modal header bar. Automatically linked to the dialog via `aria-labelledby` for screen-reader accessibility. Keep it short and action-oriented (e.g. "Delete Project" rather than "Are you sure?").' },
       { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Controls the maximum width of the dialog panel. `sm` (400px) is ideal for simple confirmations, `md` (560px) for standard forms, and `lg` (720px) for content-heavy dialogs with tables or multi-column layouts.' },
       { name: 'closable', type: 'boolean', default: 'true', description: 'When `true`, renders the built-in X close button and allows dismissal via Escape key and backdrop click. Set to `false` for critical decision modals where the user must explicitly choose an action from the footer buttons.' },
+      { name: 'fullscreen', type: 'boolean', default: 'false', description: 'Makes the modal fill the entire viewport. Useful for mobile forms or complex workflows.' },
     ],
     events: [
       { name: 'arc-open', description: 'Fired when the modal opens' },
@@ -253,4 +254,6 @@ function EditProfileModal() {
 }`,
       },
     ],
-  };
+  
+  seeAlso: ["drawer","sheet","dialog"],
+};

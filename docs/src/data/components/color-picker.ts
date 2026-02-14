@@ -168,4 +168,6 @@ export class MyComponent {
 />`,
       },
     ],
-  };
+  
+  seeAlso: ["color-swatch","input"],
+};

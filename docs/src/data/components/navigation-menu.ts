@@ -13,6 +13,8 @@ const previewMarkup = `<arc-navigation-menu>
   </arc-nav-item>
   <arc-nav-item href="#">Pricing</arc-nav-item>
   <arc-nav-item href="#">Docs</arc-nav-item>
+  <arc-nav-item href="#" muted>Blog</arc-nav-item>
+  <arc-nav-item href="#" muted active>Changelog</arc-nav-item>
 </arc-navigation-menu>`;
 
 export const navigationMenu: ComponentDef = {
@@ -260,4 +262,6 @@ export function SiteNav() {
         ],
       },
     ],
-  };
+  
+  seeAlso: ["sidebar","top-bar","breadcrumb","tabs"],
+};

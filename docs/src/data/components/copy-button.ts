@@ -113,4 +113,6 @@ export class MyComponent {}`,
 <CopyButton value="npm install @arclux/arc-ui"></CopyButton>`,
       },
     ],
-  };
+  
+  seeAlso: ["code-block","icon-button","tooltip"],
+};

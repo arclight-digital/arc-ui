@@ -243,4 +243,6 @@ export function TeamSettings() {
    </div>
 </div>` }
     ],
-  };
+  
+  seeAlso: ["breadcrumb","page-layout"],
+};

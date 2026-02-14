@@ -145,4 +145,6 @@ export function Docs() {
 }`,
       },
     ],
-  };
+  
+  seeAlso: ["text","code-block","highlight"],
+};

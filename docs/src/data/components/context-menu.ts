@@ -153,4 +153,6 @@ export class MyComponent {}`,
 </ContextMenu>`,
       },
     ],
-  };
+  
+  seeAlso: ["dropdown-menu","popover"],
+};

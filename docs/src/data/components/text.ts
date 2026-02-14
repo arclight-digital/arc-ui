@@ -160,4 +160,6 @@ export class MyComponent {}`,
   <p>Text</p>
 </div>` }
     ],
-  };
+  
+  seeAlso: ["markdown","highlight","truncate"],
+};

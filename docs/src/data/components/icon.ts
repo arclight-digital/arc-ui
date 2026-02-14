@@ -319,4 +319,6 @@ export class MyComponent {}`,
    </span>
 </span>` }
     ],
-  };
+  
+  seeAlso: ["icon-button","badge"],
+};

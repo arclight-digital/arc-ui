@@ -165,4 +165,6 @@ import { Button } from '@arclux/arc-ui';
    </div>
 </div>` }
     ],
-  };
+  
+  seeAlso: ["copy-button","kbd","highlight"],
+};

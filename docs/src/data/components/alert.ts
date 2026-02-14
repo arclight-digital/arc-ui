@@ -62,6 +62,12 @@ Alerts support an optional heading for a scannable summary and a dismiss button 
         type: 'string',
         description: 'Optional bold heading rendered above the body slot. Use it for a scannable one-line summary so users can quickly gauge the alert\'s importance before reading the full message.',
       },
+      {
+        name: 'compact',
+        type: 'boolean',
+        default: 'false',
+        description: 'Reduces padding and font sizes for inline or space-constrained usage.',
+      },
     ],
     events: [
       { name: 'arc-dismiss', description: 'Fired when a dismissible alert is closed' },
@@ -150,4 +156,6 @@ export class MyComponent {}`,
 </arc-alert>`,
       },
     ],
-  };
+  
+  seeAlso: ["callout","toast","dialog"],
+};

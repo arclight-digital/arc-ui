@@ -204,4 +204,6 @@ export class MyComponent {}`,
    </div>
 </div>` }
     ],
-  };
+  
+  seeAlso: ["app-shell","sidebar","tabs","form"],
+};

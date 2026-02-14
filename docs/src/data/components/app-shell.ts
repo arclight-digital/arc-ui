@@ -282,4 +282,6 @@ export function DashboardLayout({ children }: { children: ComponentChildren }) {
 </div>`,
       },
     ],
-  };
+  
+  seeAlso: ["page-layout","sidebar","top-bar","footer","auth-shell"],
+};

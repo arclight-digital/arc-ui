@@ -52,7 +52,9 @@ Breadcrumbs work best alongside a primary navigation element like a sidebar or t
   </arc-breadcrumb>
 </div>`,
 
-  props: [],
+  props: [
+    { name: 'separator', type: 'string', default: "'/'", description: "Character used as the separator between breadcrumb items. Common options: '/', '>', '•'." },
+  ],
   events: [
     { name: 'arc-navigate', description: 'Fired when a breadcrumb item is clicked' },
   ],
@@ -183,4 +185,6 @@ export default function BreadcrumbDemo() {
       ],
     },
   ],
+
+  seeAlso: ["pagination","navigation-menu","link"],
 };

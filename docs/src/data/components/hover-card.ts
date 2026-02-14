@@ -143,4 +143,6 @@ export class MyComponent {}`,
 </HoverCard>`,
       },
     ],
-  };
+  
+  seeAlso: ["tooltip","popover","card"],
+};

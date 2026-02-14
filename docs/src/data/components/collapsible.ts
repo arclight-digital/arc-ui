@@ -137,4 +137,6 @@ export class MyComponent {}`,
 </arc-collapsible>`,
       },
     ],
-  };
+  
+  seeAlso: ["accordion","tree-view"],
+};

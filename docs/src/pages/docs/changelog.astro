@@ -3,6 +3,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 import { components } from '../../data/components/index';
 
 const headings = [
+  { id: 'v1-5-0', label: 'v1.5.0' },
   { id: 'v1-4-0', label: 'v1.4.0' },
   { id: 'v1-3-0', label: 'v1.3.0' },
   { id: 'v1-2-0', label: 'v1.2.0' },
@@ -31,6 +32,67 @@ const byTier = Object.fromEntries(
     <p class="page-desc">
       Release history for ARC UI. All packages are versioned together.
     </p>
+
+    <section id="v1-5-0">
+      <h2 class="docs-heading">v1.5.0 — Utility Props Sweep</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <p class="docs-text">
+        A comprehensive pass adding utility props across the entire component library.
+        Most additions are pure CSS — no breaking changes.
+      </p>
+
+      <h3 class="tier-heading">New Props — High Impact</h3>
+      <ul class="docs-list">
+        <li><strong>Button</strong> — <code>loading</code> prop shows a spinner and disables the button for async operations.</li>
+        <li><strong>Input</strong> — <code>error</code> prop for inline validation messages with red border styling. <code>size</code> prop (sm/md/lg).</li>
+        <li><strong>Card</strong> — <code>padding</code> prop (none/sm/md/lg) and <code>interactive</code> boolean for clickable cards without href.</li>
+        <li><strong>Tabs</strong> — <code>align</code> prop (start/center/end) and <code>variant</code> prop (underline/pills).</li>
+        <li><strong>Avatar</strong> — <code>status</code> indicator dot (online/offline/busy/away) and <code>shape</code> prop (circle/square/rounded).</li>
+        <li><strong>Badge / Tag</strong> — <code>size</code> prop (sm/md/lg) for both components.</li>
+        <li><strong>Container</strong> — <code>size</code> prop (sm/md/lg/xl/full) for max-width control. <code>padding</code> prop (none/sm/md/lg).</li>
+        <li><strong>Breadcrumb</strong> — <code>separator</code> prop for custom separator characters (/, >, •).</li>
+        <li><strong>TopBar</strong> — <code>nav-align</code> prop (left/center/right) to pin navigation within the center slot.</li>
+      </ul>
+
+      <h3 class="tier-heading">New Props — Form Controls</h3>
+      <ul class="docs-list">
+        <li><strong>Checkbox / Toggle / RadioGroup</strong> — <code>size</code> prop (sm/md/lg) for all three.</li>
+        <li><strong>Select</strong> — <code>size</code> prop (sm/md/lg) and <code>error</code> prop for validation state.</li>
+        <li><strong>Textarea</strong> — <code>size</code> prop (sm/md/lg) and <code>auto-resize</code> boolean that grows the textarea to fit content.</li>
+      </ul>
+
+      <h3 class="tier-heading">New Props — Content &amp; Navigation</h3>
+      <ul class="docs-list">
+        <li><strong>Divider</strong> — <code>label</code> prop for labeled dividers (e.g. "OR" between form sections).</li>
+        <li><strong>Stat</strong> — <code>trend</code> prop (up/down/neutral) with arrow indicator and <code>change</code> prop for percentage display.</li>
+        <li><strong>Callout</strong> — <code>dismissible</code> boolean adds a close button and fires <code>arc-dismiss</code>.</li>
+        <li><strong>Link</strong> — <code>underline</code> prop (hover/always/never) for fine-grained underline control.</li>
+        <li><strong>Progress</strong> — <code>show-value</code> boolean displays the current percentage.</li>
+        <li><strong>Sidebar</strong> — <code>position</code> prop (left/right) moves the border to the opposite edge.</li>
+        <li><strong>Footer</strong> — <code>align</code> prop (left/center) for centered footer layouts.</li>
+      </ul>
+
+      <h3 class="tier-heading">New Props — Feedback &amp; Layout</h3>
+      <ul class="docs-list">
+        <li><strong>Modal</strong> — <code>fullscreen</code> boolean for full-viewport modals on mobile.</li>
+        <li><strong>Alert</strong> — <code>compact</code> boolean reduces padding and font sizes for inline use.</li>
+        <li><strong>Toast</strong> — <code>show()</code> now accepts <code>actionLabel</code>, <code>action</code> callback, and <code>persistent</code> to prevent auto-dismiss.</li>
+        <li><strong>Accordion</strong> — <code>multiple</code> boolean allows multiple panels open simultaneously.</li>
+        <li><strong>Skeleton</strong> — <code>count</code> prop renders multiple stacked skeleton items.</li>
+        <li><strong>Pagination</strong> — <code>compact</code> boolean shows only prev/next with a "current / total" label.</li>
+      </ul>
+
+      <h3 class="tier-heading">Navigation Menu</h3>
+      <ul class="docs-list">
+        <li><strong>Muted nav style</strong> — Reworked muted nav items: transparent background by default, white text on hover with soft glowing white pill, faint primary glowing pill for active state.</li>
+      </ul>
+
+      <h3 class="tier-heading">Docs</h3>
+      <ul class="docs-list">
+        <li><strong>See Also links</strong> — Every component page now shows a "See Also" section linking to related components and guide pages. Guide pages also cross-link to each other. Helps users discover related components and navigate between docs naturally.</li>
+      </ul>
+    </section>
 
     <section id="v1-4-0">
       <h2 class="docs-heading">v1.4.0 — Component Composition &amp; Token Infrastructure</h2>

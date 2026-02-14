@@ -148,4 +148,6 @@ export class MyComponent {}`,
 </Combobox>`,
       },
     ],
-  };
+  
+  seeAlso: ["select","multi-select","search","command-palette"],
+};

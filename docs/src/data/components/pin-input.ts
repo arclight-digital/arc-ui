@@ -156,4 +156,6 @@ export class MyComponent {
 />`,
       },
     ],
-  };
+  
+  seeAlso: ["otp-input","input"],
+};

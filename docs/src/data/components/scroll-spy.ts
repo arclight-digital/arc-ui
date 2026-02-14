@@ -152,4 +152,6 @@ export class MyComponent {}`,
         ],
       },
     ],
-  };
+  
+  seeAlso: ["scroll-to-top","tabs","navigation-menu"],
+};

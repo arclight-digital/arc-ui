@@ -161,4 +161,6 @@ export class MyComponent {}`,
         ],
       },
     ],
-  };
+  
+  seeAlso: ["combobox","search","dropdown-menu"],
+};

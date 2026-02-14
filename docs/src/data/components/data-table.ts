@@ -289,4 +289,6 @@ export function EmployeeDirectory() {
         ],
       },
     ],
-  };
+  
+  seeAlso: ["table","pagination","sortable-list"],
+};

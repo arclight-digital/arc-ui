@@ -165,4 +165,6 @@ export class MyComponent {}`,
    </div>
 </span>` }
     ],
-  };
+  
+  seeAlso: ["avatar","badge"],
+};

@@ -163,4 +163,6 @@ export class MyComponent {}`,
         ],
       },
     ],
-  };
+  
+  seeAlso: ["stepper","progress"],
+};

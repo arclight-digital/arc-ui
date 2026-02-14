@@ -63,7 +63,9 @@ Sidebar is designed to sit inside an AppShell or PageLayout, typically occupying
   </arc-sidebar>
 </div>`,
 
-    props: [],
+    props: [
+      { name: 'position', type: 'string', default: "'left'", description: "Controls which side the sidebar appears on. Options: 'left', 'right'. Moves the border line to the opposite edge." },
+    ],
     events: [
       { name: 'arc-navigate', description: 'Fired when a sidebar link is clicked' },
     ],
@@ -256,4 +258,6 @@ export function DocsSidebar() {
         ],
       },
     ],
-  };
+  
+  seeAlso: ["navigation-menu","drawer","app-shell","top-bar"],
+};

@@ -269,4 +269,6 @@ function BorderRadiusTool() {
 }`,
       },
     ],
-  };
+  
+  seeAlso: ["number-input","input","rating"],
+};

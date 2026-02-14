@@ -31,4 +31,6 @@ export interface ComponentDef {
   previewSetup?: string;
   /** Show a replay button on the preview to re-trigger one-shot animations */
   replayable?: boolean;
+  /** Related component slugs or guide paths (e.g. ['icon-button', '/docs/theming']) */
+  seeAlso?: string[];
 }

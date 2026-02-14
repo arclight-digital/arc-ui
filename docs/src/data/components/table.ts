@@ -151,4 +151,6 @@ const rows = [
 <Table striped columns={columns} rows={rows} />`,
       },
     ],
-  };
+  
+  seeAlso: ["data-table","pagination"],
+};

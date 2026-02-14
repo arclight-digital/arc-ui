@@ -140,4 +140,6 @@ const [query, setQuery] = useState('');
 <Highlight text="The quick brown fox" query={query} />`,
       },
     ],
-  };
+  
+  seeAlso: ["text","code-block","search"],
+};

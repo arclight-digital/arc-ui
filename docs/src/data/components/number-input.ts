@@ -123,4 +123,6 @@ export class MyComponent {}`,
         code: `<arc-number-input label="Quantity" value="3" min="1" max="99" step="1"></arc-number-input>`,
       },
     ],
-  };
+  
+  seeAlso: ["input","slider"],
+};

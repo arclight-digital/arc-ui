@@ -91,6 +91,12 @@ Footer ships with two boolean props that cover the most common layout tweaks. Th
         default: 'true',
         description: 'Renders a subtle top border on the footer to visually separate it from the page content above. Enabled by default; disable it only when the footer sits against a dark background where the border would be redundant.',
       },
+      {
+        name: 'align',
+        type: 'string',
+        default: "'left'",
+        description: "Controls footer content alignment. Options: 'left', 'center'.",
+      },
     ],
 
     tabs: [
@@ -454,4 +460,6 @@ export function SiteFooter() {
    </footer>
 </div>` }
     ],
-  };
+  
+  seeAlso: ["top-bar","sidebar","app-shell","link"],
+};

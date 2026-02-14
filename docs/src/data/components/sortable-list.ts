@@ -160,4 +160,6 @@ export class MyComponent {
 </SortableList>`,
       },
     ],
-  };
+  
+  seeAlso: ["data-table","tree-view"],
+};

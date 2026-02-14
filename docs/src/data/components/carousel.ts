@@ -159,4 +159,6 @@ export class MyComponent {}`,
 </arc-carousel>`,
       },
     ],
-  };
+  
+  seeAlso: ["tabs","marquee"],
+};

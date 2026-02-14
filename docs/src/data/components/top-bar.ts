@@ -84,6 +84,12 @@ Use TopBar whenever your application needs a consistent, recognizable header. It
         default: 'false',
         description: 'Reflects whether the mobile hamburger menu is open. Toggling this value updates the aria-expanded attribute on the menu button. Typically managed by AppShell in response to the arc-toggle event rather than set directly.',
       },
+      {
+        name: 'nav-align',
+        type: 'string',
+        default: "'center'",
+        description: "Controls the alignment of content in the center slot. Options: 'left', 'center', 'right'. Pulls nav toward the brand or actions without reordering DOM.",
+      },
     ],
     events: [
       { name: 'arc-toggle', description: 'Fired when the mobile menu toggle is clicked' },
@@ -322,4 +328,6 @@ export function AppHeader() {
    </header>
 </div>` }
     ],
-  };
+  
+  seeAlso: ["sidebar","navigation-menu","footer","app-shell"],
+};

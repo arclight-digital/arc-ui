@@ -312,4 +312,6 @@ function ContactForm() {
 </form>`,
       },
     ],
-  };
+  
+  seeAlso: ["input","select","checkbox","toggle","textarea","button"],
+};

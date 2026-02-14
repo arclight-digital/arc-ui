@@ -239,4 +239,6 @@ function MediaControls() {
 }`,
       },
     ],
-  };
+  
+  seeAlso: ["button","copy-button","tooltip"],
+};

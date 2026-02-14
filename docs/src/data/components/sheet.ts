@@ -401,4 +401,6 @@ function FilterSheet() {
 }`,
       },
     ],
-  };
+  
+  seeAlso: ["drawer","modal","sidebar"],
+};

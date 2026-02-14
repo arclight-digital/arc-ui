@@ -160,4 +160,6 @@ export function PageCTA() {
         code: previewMarkup,
       },
     ],
-  };
+  
+  seeAlso: ["callout","feature-card","button"],
+};

@@ -117,4 +117,6 @@ export class MyComponent {}`,
 <ThemeToggle></ThemeToggle>`,
       },
     ],
-  };
+  
+  seeAlso: ["/docs/theming"],
+};

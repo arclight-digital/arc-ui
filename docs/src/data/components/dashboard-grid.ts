@@ -160,4 +160,6 @@ export class MyComponent {}`,
    </div>
 </div>` }
     ],
-  };
+  
+  seeAlso: ["card","stat","resizable"],
+};

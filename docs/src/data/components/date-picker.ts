@@ -117,4 +117,6 @@ export class MyComponent {}`,
 <DatePicker label="Select Date" placeholder="Choose a date"></DatePicker>`,
       },
     ],
-  };
+  
+  seeAlso: ["calendar","input"],
+};

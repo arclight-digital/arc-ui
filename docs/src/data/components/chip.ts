@@ -141,4 +141,6 @@ export class MyComponent {}`,
 <arc-chip value="svelte">Svelte</arc-chip>`,
       },
     ],
-  };
+  
+  seeAlso: ["tag","badge","segmented-control","multi-select"],
+};

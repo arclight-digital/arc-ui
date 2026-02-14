@@ -174,4 +174,6 @@ export class MyComponent {}`,
 />`,
       },
     ],
-  };
+  
+  seeAlso: ["progress","stat"],
+};

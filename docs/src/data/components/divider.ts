@@ -49,6 +49,7 @@ Divider renders a single \`<div>\` with \`role="separator"\` for proper accessib
 
     props: [
       { name: 'variant', type: "'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient'", default: "'subtle'", description: 'Visual style' },
+      { name: 'label', type: 'string', default: "''", description: 'Text displayed in the center of the divider, splitting it into two lines. Common use: \'OR\' between form options. Only applies to horizontal dividers.' },
     ],
     tabs: [
       {
@@ -142,4 +143,6 @@ export class MyComponent {}`,
   <div class="divider" style="width: 100%; height: 1px" role="separator"></div>
 </div>` }
     ],
-  };
+  
+  seeAlso: ["section"],
+};

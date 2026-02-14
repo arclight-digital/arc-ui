@@ -145,4 +145,6 @@ export class MyComponent {}`,
    ></div>
 </span>` }
     ],
-  };
+  
+  seeAlso: ["skeleton","progress"],
+};

@@ -47,6 +47,7 @@ Pagination follows the WAI-ARIA pattern for navigation landmarks with \`role="na
       { name: 'total', type: 'number', default: '1', description: 'Total number of pages.' },
       { name: 'current', type: 'number', default: '1', description: 'The currently active page number (1-based). Reflected as an attribute.' },
       { name: 'siblings', type: 'number', default: '1', description: 'Number of page buttons to show on each side of the current page before ellipsis truncation kicks in.' },
+      { name: 'compact', type: 'boolean', default: 'false', description: "Shows only previous/next buttons with a 'current / total' label. Hides individual page numbers." },
     ],
     events: [
       { name: 'arc-change', description: 'Fired when the current page changes' },
@@ -113,4 +114,6 @@ export class MyComponent {}`,
 <Pagination total="10" current="3" siblings="1"></Pagination>`,
       },
     ],
-  };
+  
+  seeAlso: ["data-table","breadcrumb","infinite-scroll"],
+};

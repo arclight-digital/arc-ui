@@ -152,4 +152,6 @@ export class MyComponent {}`,
 </SplitPane>`,
       },
     ],
-  };
+  
+  seeAlso: ["resizable","dashboard-grid"],
+};

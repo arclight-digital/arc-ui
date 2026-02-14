@@ -149,4 +149,6 @@ export function Layout({ children }) {
 }`,
       },
     ],
-  };
+  
+  seeAlso: ["scroll-spy","scroll-area"],
+};

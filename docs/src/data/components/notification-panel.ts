@@ -318,4 +318,6 @@ function AppHeader() {
 }`,
       },
     ],
-  };
+  
+  seeAlso: ["toast","alert","badge"],
+};

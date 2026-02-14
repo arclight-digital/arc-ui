@@ -149,4 +149,6 @@ useEffect(() => { setRevenue(12847); }, []);
 <AnimatedNumber value={revenue} prefix="$" duration={1500} />`,
       },
     ],
-  };
+  
+  seeAlso: ["stat","number-input"],
+};

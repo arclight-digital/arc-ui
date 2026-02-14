@@ -141,4 +141,6 @@ export class MyComponent {}`,
 </Popover>`,
       },
     ],
-  };
+  
+  seeAlso: ["tooltip","hover-card","dropdown-menu"],
+};

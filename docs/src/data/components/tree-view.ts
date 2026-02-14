@@ -172,4 +172,6 @@ export class MyComponent {}`,
         ],
       },
     ],
-  };
+  
+  seeAlso: ["accordion","sidebar","collapsible"],
+};

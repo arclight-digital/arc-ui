@@ -269,4 +269,6 @@ async function loadMore() {
 </InfiniteScroll>`,
       },
     ],
-  };
+  
+  seeAlso: ["pagination","scroll-area"],
+};

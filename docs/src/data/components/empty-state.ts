@@ -148,4 +148,6 @@ export class MyComponent {}`,
    </div>
 </div>` }
     ],
-  };
+  
+  seeAlso: ["button","icon","cta-banner"],
+};

@@ -139,4 +139,6 @@ export class MyComponent {}`,
 </Resizable>`,
       },
     ],
-  };
+  
+  seeAlso: ["split-pane","dashboard-grid"],
+};

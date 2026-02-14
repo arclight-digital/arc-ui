@@ -132,4 +132,6 @@ export class MyComponent {
 </Truncate>`,
       },
     ],
-  };
+  
+  seeAlso: ["text","tooltip"],
+};

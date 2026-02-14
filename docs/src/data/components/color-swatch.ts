@@ -151,4 +151,6 @@ export class MyComponent {}`,
    </div>
 </span>` }
     ],
-  };
+  
+  seeAlso: ["color-picker"],
+};

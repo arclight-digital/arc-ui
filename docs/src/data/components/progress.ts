@@ -80,6 +80,12 @@ Both variants support an indeterminate mode for operations whose total duration 
         type: 'string',
         description: 'Accessible label text applied as aria-label on the underlying progressbar role element. This is the only way screen readers can convey the purpose of the indicator. Always provide a meaningful label such as "Uploading report.pdf" rather than a generic "Loading".',
       },
+      {
+        name: 'show-value',
+        type: 'boolean',
+        default: 'false',
+        description: 'Displays the current percentage value next to the label.',
+      },
     ],
 
     tabs: [
@@ -234,4 +240,6 @@ export function FileUploadStatus() {
 </div>`,
       },
     ],
-  };
+  
+  seeAlso: ["meter","spinner","skeleton"],
+};

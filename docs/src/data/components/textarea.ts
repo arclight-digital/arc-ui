@@ -66,6 +66,8 @@ When a \`maxlength\` is set, a live character counter appears below the field an
       { name: 'disabled', type: 'boolean', default: 'false', description: 'Prevents user interaction and applies a muted visual treatment at 40% opacity. The field value is excluded from form submission when disabled.' },
       { name: 'readonly', type: 'boolean', default: 'false', description: 'Allows the user to select and copy text but prevents editing. The field has a subtle background change to indicate its read-only state.' },
       { name: 'error', type: 'string', description: 'Error message string. When non-empty, the textarea border turns red and the message is displayed below the field with `role="alert"` for screen reader announcement.' },
+      { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: "Controls the textarea size. Options: 'sm', 'md', 'lg'." },
+      { name: 'auto-resize', type: 'boolean', default: 'false', description: 'Automatically grows the textarea height to fit its content. Disables manual resize when enabled.' },
     ],
     events: [
       { name: 'arc-input', description: 'Fired on each keystroke with { value } detail' },
@@ -195,4 +197,6 @@ export class SupportFormComponent {}`,
 </div>`,
       },
     ],
-  };
+  
+  seeAlso: ["input","form"],
+};
