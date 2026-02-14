@@ -34,7 +34,7 @@ packages/
   html/             # Standalone HTML/CSS (auto-generated)
   prism-generator/  # Code generator that produces framework bindings
 demo/               # Astro documentation site
-shared/             # Design tokens (tokens.css, tokens.js)
+shared/             # Design tokens (base.css, tokens.js)
 ```
 
 ## Development Workflow
@@ -60,7 +60,7 @@ node src/cli.js
 - **React wrappers**: `ComponentName` (no Arc prefix)
 - **Events**: `arc-event-name` with `bubbles: true, composed: true`
 - **Styles**: All components import `tokenStyles` from `../shared-styles.js`
-- **Tokens**: Use design tokens from `shared/tokens.css` — never hardcode colors, spacing, or fonts
+- **Tokens**: Use design tokens from `shared/base.css` — never hardcode colors, spacing, or fonts
 
 ### Pull Requests
 

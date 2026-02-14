@@ -3,7 +3,7 @@
    Imports the canonical design tokens from the shared source.
    ============================================================ */
 
-@import '../../../shared/tokens.css';
+@import '../../../shared/base.css';
 
 /* ── Demo site theme: blue-teal (overrides violet → teal) ── */
 /* Only base tokens need overriding — compound tokens cascade via var() */

@@ -577,6 +577,11 @@ export function generateTokensCSS() {
 
   return `/* Generated from shared/tokens.js — do not edit by hand */
 
+/* Prevent FOUC for unregistered web components */
+:not(:defined) {
+  visibility: hidden;
+}
+
 :root {
   color-scheme: dark;
 ${cssVariables}

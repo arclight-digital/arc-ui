@@ -16,7 +16,7 @@ export default {
   // HTML/CSS output
   html: {
     outDir: 'packages/html/examples',
-    tokensCSS: 'shared/tokens.css',
+    baseCSS: 'shared/base.css',
     tokensJS: 'shared/tokens.js',
     inlineVariant: true,
   },
@@ -24,7 +24,7 @@ export default {
   // Standalone CSS output
   css: {
     outDir: 'packages/html/css',
-    tokensCSS: 'shared/tokens.css',
+    baseCSS: 'shared/base.css',
   },
 
   // Vue 3 output

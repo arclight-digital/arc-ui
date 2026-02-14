@@ -3,7 +3,7 @@ import { components } from '../data/components/index';
 import fs from 'node:fs';
 
 const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components/package.json', import.meta.url), 'utf-8'));
-const tokensCss = fs.readFileSync(new URL('../../../shared/tokens.css', import.meta.url), 'utf-8');
+const tokensCss = fs.readFileSync(new URL('../../../shared/base.css', import.meta.url), 'utf-8');
 
 export const prerender = true;
 
@@ -155,7 +155,7 @@ export const GET: APIRoute = async () => {
     'Layout',
   ];
 
-  // Extract all CSS custom properties from tokens.css
+  // Extract all CSS custom properties from base.css
   const allTokens: string[] = [];
   const varRegex = /--([\w-]+)\s*:/g;
   let m;

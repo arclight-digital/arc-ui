@@ -13,7 +13,7 @@ const headings = [
 
 <DocsLayout
   title="Theme Synthesizer"
-  description="Generate a custom tokens.css for your ARC UI theme."
+  description="Generate a custom base.css for your ARC UI theme."
   activeSlug="theme-synthesizer"
   headings={headings}
   breadcrumbs={[{ label: 'Theme Synthesizer' }]}
@@ -22,12 +22,12 @@ const headings = [
     <div class="synth-header">
       <h1 class="page-title">Theme Synthesizer</h1>
       <p class="page-desc">
-        Tweak every design token, preview it live, and export a drop-in <code>tokens.css</code> for your project.
+        Tweak every design token, preview it live, and export a drop-in <code>base.css</code> for your project.
       </p>
       <div class="synth-header__actions">
         <arc-button id="btn-reset" variant="ghost" size="sm">Reset to Defaults</arc-button>
         <arc-button id="btn-copy" variant="secondary" size="sm">Copy CSS</arc-button>
-        <arc-button id="btn-download" variant="primary" size="sm">Download tokens.css</arc-button>
+        <arc-button id="btn-download" variant="primary" size="sm">Download base.css</arc-button>
       </div>
     </div>
 
@@ -455,7 +455,7 @@ const headings = [
       <h2 class="docs-heading">Output</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="synth-output-hint">
-        Copy this into your project as <code>tokens.css</code> to override ARC UI defaults.
+        Copy this into your project as <code>base.css</code> to override ARC UI defaults.
       </p>
       <arc-callout variant="info">
         This generates dark-theme overrides only. For light-theme customization,
@@ -463,7 +463,7 @@ const headings = [
       </arc-callout>
       <div class="synth-output-wrap">
         <div class="synth-output-toolbar">
-          <span class="synth-output-filename">tokens.css</span>
+          <span class="synth-output-filename">base.css</span>
           <arc-copy-button id="output-copy"></arc-copy-button>
         </div>
         <pre class="synth-output-code" id="css-output"><code></code></pre>
@@ -571,7 +571,7 @@ const headings = [
   /*
    * Inject overrides via a <style> element instead of inline styles.
    * Using :root:root doubles specificity so it beats both :root and
-   * [data-theme="light"] selectors in tokens.css, without breaking
+   * [data-theme="light"] selectors in base.css, without breaking
    * theme switching (inline styles would override everything).
    */
   function getStyleEl() {
@@ -839,7 +839,7 @@ const headings = [
       });
     });
 
-    // Reset — remove injected style so tokens.css takes over, then re-read computed values
+    // Reset — remove injected style so base.css takes over, then re-read computed values
     document.getElementById('btn-reset')?.addEventListener('click', () => {
       const styleEl = document.getElementById('synth-overrides');
       if (styleEl) styleEl.textContent = '';
@@ -867,7 +867,7 @@ const headings = [
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'tokens.css';
+      a.download = 'base.css';
       a.click();
       URL.revokeObjectURL(url);
     });

@@ -105,7 +105,7 @@ const headings = [
         <span class="step__number">1</span>
         <div class="step__content">
           <strong>Import tokens &amp; register components</strong>
-          <div class="docs-code"><Code code={`import '@arclux/arc-ui/tokens.css';
+          <div class="docs-code"><Code code={`import '@arclux/arc-ui/base.css';
 import '@arclux/arc-ui/register';`} lang="js" theme="css-variables" /></div>
 
           <arc-callout variant="info" style="margin-top:var(--space-xs)">
@@ -177,7 +177,7 @@ import '@arclux/arc-ui/register';`} lang="js" theme="css-variables" /></div>
             <strong>React</strong>
           </div>
           <div class="docs-code"><Code code="npm install @arclux/arc-ui-react" lang="bash" theme="css-variables" /></div>
-          <div class="docs-code"><Code code={`import '@arclux/arc-ui/tokens.css';
+          <div class="docs-code"><Code code={`import '@arclux/arc-ui/base.css';
 import { Button, Card } from '@arclux/arc-ui-react';
 
 function App() {
@@ -199,7 +199,7 @@ function App() {
           </div>
           <div class="docs-code"><Code code="npm install @arclux/arc-ui-vue" lang="bash" theme="css-variables" /></div>
           <div class="docs-code"><Code code={`<script setup>
-import '@arclux/arc-ui/tokens.css';
+import '@arclux/arc-ui/base.css';
 import { ArcButton, ArcCard } from '@arclux/arc-ui-vue';
 </script>
 
@@ -220,7 +220,7 @@ import { ArcButton, ArcCard } from '@arclux/arc-ui-vue';
           </div>
           <div class="docs-code"><Code code="npm install @arclux/arc-ui-svelte" lang="bash" theme="css-variables" /></div>
           <div class="docs-code"><Code code={`<script>
-  import '@arclux/arc-ui/tokens.css';
+  import '@arclux/arc-ui/base.css';
   import { ArcButton, ArcCard } from '@arclux/arc-ui-svelte';
 </script>
 
@@ -239,7 +239,7 @@ import { ArcButton, ArcCard } from '@arclux/arc-ui-vue';
           </div>
           <p class="docs-text">No build step required. Add a script tag and go:</p>
           <div class="docs-code"><Code code={`<link rel="stylesheet"
-  href="https://unpkg.com/@arclux/arc-ui/tokens.css">
+  href="https://unpkg.com/@arclux/arc-ui/base.css">
 <script type="module"
   src="https://unpkg.com/@arclux/arc-ui/register">
 </script>
@@ -299,7 +299,7 @@ import { ArcButton, ArcCard } from '@arclux/arc-ui-vue';
         to use them in your own CSS:
       </p>
 
-      <div class="docs-code"><Code code="@import '@arclux/arc-ui/tokens.css';" lang="css" theme="css-variables" /></div>
+      <div class="docs-code"><Code code="@import '@arclux/arc-ui/base.css';" lang="css" theme="css-variables" /></div>
 
       <p class="docs-text">Then reference tokens in your styles:</p>
 

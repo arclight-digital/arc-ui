@@ -230,7 +230,7 @@ function ContactForm() {
       {
         label: 'HTML',
         lang: 'html',
-        code: `<!-- arc-form — requires form.css + tokens.css -->
+        code: `<!-- arc-form — requires form.css + base.css -->
 <form class="arc-form" action="/api/contact" method="POST">
   <div class="arc-field">
     <label for="name">Name</label>

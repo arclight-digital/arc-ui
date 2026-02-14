@@ -279,7 +279,7 @@ ARC UI is a monorepo powered by [pnpm workspaces](https://pnpm.io/workspaces).
 arc-ui/
   shared/
     tokens.js              # Design tokens (JS source)
-    tokens.css             # Design tokens (CSS source)
+    base.css             # Design tokens (CSS source)
   packages/
     web-components/        # Lit source -- the single source of truth
     react/                 # Generated React wrappers

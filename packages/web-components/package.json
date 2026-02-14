@@ -1,6 +1,6 @@
 {
   "name": "@arclux/arc-ui",
-  "version": "1.8.2",
+  "version": "1.8.3",
   "description": "ARC UI — Lit Web Components implementing the Arclight design system.",
   "type": "module",
   "main": "src/index.js",
@@ -131,7 +131,7 @@
     "./menu-item": "./src/shared/menu-item.register.js",
     "./menu-divider": "./src/shared/menu-divider.register.js",
     "./tokens": "./src/tokens.js",
-    "./tokens.css": "./src/tokens.css",
+    "./base.css": "./src/base.css",
     "./icons/phosphor": "./src/icons/phosphor.js",
     "./icons/lucide": "./src/icons/lucide.js",
     "./icons/types": "./src/icons/types.d.ts"
