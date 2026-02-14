@@ -6,14 +6,17 @@ defineOptions({ name: 'Badge' });
 
 withDefaults(defineProps<{
   variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';
+  color?: string;
 }>(), {
   variant: 'default',
+  color: '',
 });
 </script>
 
 <template>
   <arc-badge
     :variant="variant"
+    :color="color"
   >
     <slot />
   </arc-badge>

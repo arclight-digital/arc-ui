@@ -352,11 +352,11 @@
         display: inline-flex;
         align-items: center;
         gap: var(--space-xs);
-        font-family: var(--font-accent);
-        font-weight: 600;
+        font-family: var(--font-mono);
+        font-weight: 500;
         font-size: var(--text-xs);
-        letter-spacing: 2px;
-        text-transform: uppercase;
+        letter-spacing: normal;
+        text-transform: none;
         color: var(--text-muted);
         padding: var(--space-xs) var(--space-sm);
         border: 1px solid var(--border-default);

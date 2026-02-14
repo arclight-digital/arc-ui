@@ -1,7 +1,7 @@
 {
   "name": "@arclux/arc-ui",
-  "version": "1.2.0",
-  "description": "ARC UI \u2014 Lit Web Components implementing the Arclight design system.",
+  "version": "1.3.0",
+  "description": "ARC UI — Lit Web Components implementing the Arclight design system.",
   "type": "module",
   "main": "src/index.js",
   "module": "src/index.js",
@@ -158,7 +158,7 @@
     "types/"
   ],
   "scripts": {
-    "build": "echo 'No build step \u2014 plain JS modules'"
+    "build": "echo 'No build step — plain JS modules'"
   },
   "sideEffects": true,
   "dependencies": {

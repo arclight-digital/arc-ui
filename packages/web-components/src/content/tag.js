@@ -25,13 +25,12 @@ export class ArcTag extends LitElement {
         letter-spacing: 2px;
         text-transform: uppercase;
         color: var(--text-muted);
-        padding: var(--space-xs) calc(var(--space-sm) + var(--space-xs));
+        padding: var(--space-sm) calc(var(--space-sm) + var(--space-xs));
         border: 1px solid var(--border-default);
         border-radius: var(--radius-full);
         background: var(--bg-hover);
         transition: box-shadow var(--transition-base), border-color var(--transition-base);
         line-height: 1.4;
-        min-height: var(--touch-min);
       }
 
       :host([variant="primary"]) .tag {

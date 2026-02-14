@@ -7,8 +7,9 @@ import '@arclux/arc-ui';
   selector: 'arc-badge',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-badge [attr.variant]="variant"><ng-content /></arc-badge>`,
+  template: `<arc-badge [attr.variant]="variant" [attr.color]="color"><ng-content /></arc-badge>`,
 })
 export class Badge {
   @Input() variant: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info' = 'default';
+  @Input() color: string = '';
 }

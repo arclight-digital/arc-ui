@@ -2,7 +2,7 @@
   "name": "arc-ui-monorepo",
   "private": true,
   "type": "module",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "ARC UI — Arc Reusable Components. A framework-agnostic design system built with Lit Web Components.",
   "engines": {
     "node": ">=24.0.0",
@@ -23,7 +23,8 @@
     "format": "prettier --write 'packages/*/src/**/*.{js,ts,css}' 'shared/**/*.{js,css}'",
     "format:check": "prettier --check 'packages/*/src/**/*.{js,ts,css}' 'shared/**/*.{js,css}'",
     "docs:build": "pnpm --filter arc-ui-docs run build",
-    "docs:deploy": "cd docs && pnpm wrangler pages deploy"
+    "docs:deploy": "cd docs && pnpm wrangler pages deploy",
+    "bump-versions": "node scripts/bump-versions.js"
   },
   "license": "MIT",
   "devDependencies": {

@@ -4,6 +4,7 @@ import { tokenStyles } from '../shared-styles.js';
 export class ArcBadge extends LitElement {
   static properties = {
     variant: { type: String, reflect: true },
+    color:   { type: String },
   };
 
   static styles = [
@@ -15,11 +16,11 @@ export class ArcBadge extends LitElement {
         display: inline-flex;
         align-items: center;
         gap: var(--space-xs);
-        font-family: var(--font-accent);
-        font-weight: 600;
+        font-family: var(--font-mono);
+        font-weight: 500;
         font-size: var(--text-xs);
-        letter-spacing: 2px;
-        text-transform: uppercase;
+        letter-spacing: normal;
+        text-transform: none;
         color: var(--text-muted);
         padding: var(--space-xs) var(--space-sm);
         border: 1px solid var(--border-default);
@@ -88,10 +89,18 @@ export class ArcBadge extends LitElement {
   constructor() {
     super();
     this.variant = 'default';
+    this.color = '';
   }
 
   render() {
-    return html`<span class="badge" part="badge"><slot></slot></span>`;
+    const colorStyle = this.color
+      ? `border-color: rgba(${this.color}, 0.2); color: rgb(${this.color}); background: rgba(${this.color}, 0.06);`
+      : '';
+
+    return html`<span class="badge" part="badge" style=${colorStyle}
+      @mouseenter=${this.color ? (e) => { e.currentTarget.style.boxShadow = `0 0 12px rgba(${this.color}, 0.15)`; } : null}
+      @mouseleave=${this.color ? (e) => { e.currentTarget.style.boxShadow = ''; } : null}
+    ><slot></slot></span>`;
   }
 }
 

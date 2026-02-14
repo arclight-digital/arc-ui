@@ -5,13 +5,14 @@
 
   interface Props {
     variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';
+    color?: string;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { variant = 'default', children, ...rest }: Props = $props();
+  let { variant = 'default', color = '', children, ...rest }: Props = $props();
 </script>
 
-<arc-badge {variant} {...rest}>
+<arc-badge {variant} {color} {...rest}>
   {@render children?.()}
 </arc-badge>

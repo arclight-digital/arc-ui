@@ -81,11 +81,11 @@ export class ArcToggle extends LitElement {
       }
 
       .toggle__label {
-        font-family: var(--font-accent);
-        font-size: var(--text-xs);
-        font-weight: 600;
-        letter-spacing: 1px;
-        text-transform: uppercase;
+        font-family: var(--font-body);
+        font-size: var(--body-size);
+        font-weight: 400;
+        letter-spacing: normal;
+        text-transform: none;
         color: var(--text-muted);
         user-select: none;
       }

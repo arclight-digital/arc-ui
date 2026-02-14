@@ -13,17 +13,17 @@ export function getStaticPaths() {
 const { component } = Astro.props;
 
 const tierColors: Record<string, string> = {
-  layout: 'default',
-  navigation: 'blue',
-  content: 'default',
-  input: 'violet',
-  feedback: 'blue',
+  layout: '100, 180, 120',
+  navigation: '77, 126, 247',
+  content: '140, 140, 150',
+  input: '180, 90, 255',
+  feedback: '247, 170, 50',
 };
 
 const interactivityColors: Record<string, string> = {
-  static: 'default',
-  hybrid: 'blue',
-  interactive: 'violet',
+  static: '140, 140, 150',
+  hybrid: '77, 126, 247',
+  interactive: '180, 90, 255',
 };
 
 const interactivityNotes: Record<string, string> = {
@@ -61,8 +61,8 @@ const headings = [
         <arc-breadcrumb-item>{component.name}</arc-breadcrumb-item>
       </arc-breadcrumb>
       <div slot="aside" class="component-page__badges">
-        <arc-badge variant={tierColors[component.tier]}>{component.tier}</arc-badge>
-        <arc-badge variant={interactivityColors[component.interactivity]}>{component.interactivity}</arc-badge>
+        <arc-tag color={tierColors[component.tier]}>{component.tier}</arc-tag>
+        <arc-tag color={interactivityColors[component.interactivity]}>{component.interactivity}</arc-tag>
         {component.status === 'beta' && <arc-badge variant="primary">beta</arc-badge>}
         {component.status === 'experimental' && <arc-badge variant="secondary">experimental</arc-badge>}
       </div>
