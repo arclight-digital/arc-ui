@@ -3,6 +3,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 import { components } from '../../data/components/index';
 
 const headings = [
+  { id: 'v1-9-1', label: 'v1.9.1' },
   { id: 'v1-9-0', label: 'v1.9.0' },
   { id: 'v1-8-6', label: 'v1.8.6' },
   { id: 'v1-8-5', label: 'v1.8.5' },
@@ -46,6 +47,16 @@ const byTier = Object.fromEntries(
     <p class="page-desc">
       Release history for ARC UI. All packages are versioned together.
     </p>
+
+    <section id="v1-9-1">
+      <h2 class="docs-heading">v1.9.1 — Fix Icon Loading in Production Builds</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <h3 class="tier-heading">Bug Fixes</h3>
+      <ul class="docs-list">
+        <li><strong>Icons broken in production</strong> — v1.9.0's dynamic imports used template literal paths that Vite/Rollup can't resolve from <code>node_modules</code>, causing 404s in production builds. Replaced with generated resolver maps containing static <code>import()</code> paths per icon, which bundlers can analyze and chunk correctly.</li>
+      </ul>
+    </section>
 
     <section id="v1-9-0">
       <h2 class="docs-heading">v1.9.0 — Per-Icon Lazy Loading</h2>

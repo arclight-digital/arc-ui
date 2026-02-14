@@ -57,6 +57,20 @@ function writeIconModule(name, label, entries) {
     writeFileSync(resolve(perIconDir, `${iconName}.js`), perIconSource);
   }
 
+  // --- Resolver (static import() per icon — Vite/Rollup can analyze these) ---
+  const resolverEntries = entries.map(([iconName]) =>
+    `  '${iconName}': () => import('./${iconName}.js')`
+  );
+  const resolverSource = [
+    `// Auto-generated — do not edit manually.`,
+    `// Each entry is a static import path so bundlers can create chunks per icon.`,
+    `export default {`,
+    resolverEntries.join(',\n'),
+    `};`,
+    ``,
+  ].join('\n');
+  writeFileSync(resolve(perIconDir, '_resolver.js'), resolverSource);
+
   // --- Manifest (array of all names) ---
   const manifestSource = [
     `// Auto-generated — do not edit manually.`,
