@@ -6,11 +6,12 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcAvatar extends LitElement {
   static properties = {
-    src:    { type: String },
-    name:   { type: String, reflect: true },
-    size:   { type: String, reflect: true },
-    shape:  { type: String, reflect: true },
-    status: { type: String, reflect: true },
+    src:       { type: String },
+    name:      { type: String, reflect: true },
+    size:      { type: String, reflect: true },
+    shape:     { type: String, reflect: true },
+    status:    { type: String, reflect: true },
+    _imgState: { state: true },
   };
 
   static styles = [
@@ -27,6 +28,7 @@ export class ArcAvatar extends LitElement {
         overflow: hidden;
         background: var(--bg-elevated);
         transition: border-color var(--transition-base), box-shadow var(--transition-base);
+        position: relative;
       }
 
       .avatar:hover {
@@ -43,6 +45,32 @@ export class ArcAvatar extends LitElement {
         height: 100%;
         object-fit: cover;
         border-radius: var(--radius-full);
+        opacity: 0;
+        transition: opacity var(--transition-slow);
+      }
+
+      .avatar__img.loaded { opacity: 1; }
+
+      .avatar__shimmer {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          90deg,
+          var(--bg-elevated) 25%,
+          var(--border-subtle) 37%,
+          var(--bg-elevated) 63%
+        );
+        background-size: 200% 100%;
+        animation: avatar-shimmer 1.8s ease-in-out infinite;
+        border-radius: inherit;
+        transition: opacity var(--transition-slow);
+      }
+
+      .avatar__shimmer--hidden { opacity: 0; pointer-events: none; }
+
+      @keyframes avatar-shimmer {
+        0%   { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
       }
 
       .avatar__initials {
@@ -84,13 +112,8 @@ export class ArcAvatar extends LitElement {
       :host([status="away"]) .avatar__status { background: var(--color-warning); }
 
       @media (prefers-reduced-motion: reduce) {
-        :host *,
-        :host *::before,
-        :host *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
+        .avatar__shimmer { animation: none; }
+        .avatar__img { transition: none; }
       }
     `,
   ];
@@ -102,6 +125,13 @@ export class ArcAvatar extends LitElement {
     this.size = 'md';
     this.shape = 'circle';
     this.status = '';
+    this._imgState = 'loading';
+  }
+
+  updated(changed) {
+    if (changed.has('src') && this.src) {
+      this._imgState = 'loading';
+    }
   }
 
   /** @private */
@@ -109,9 +139,28 @@ export class ArcAvatar extends LitElement {
     return this.name ? this.name.charAt(0).toUpperCase() : '?';
   }
 
+  _onImgLoad() {
+    this._imgState = 'loaded';
+  }
+
+  _onImgError() {
+    this._imgState = 'error';
+  }
+
   render() {
-    const content = this.src
-      ? html`<img class="avatar__img" part="img" src=${this.src} alt=${this.name || 'Avatar'} />`
+    const showImg = this.src && this._imgState !== 'error';
+
+    const content = showImg
+      ? html`
+        <div class="avatar__shimmer ${this._imgState === 'loaded' ? 'avatar__shimmer--hidden' : ''}" aria-hidden="true"></div>
+        <img
+          class="avatar__img ${this._imgState === 'loaded' ? 'loaded' : ''}"
+          part="img"
+          src=${this.src}
+          alt=${this.name || 'Avatar'}
+          @load=${this._onImgLoad}
+          @error=${this._onImgError}
+        />`
       : html`<span class="avatar__initials" part="initials">${this._getInitials()}</span>`;
 
     return html`

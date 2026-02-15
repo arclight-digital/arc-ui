@@ -22,7 +22,7 @@ The component fires an \`arc-toggle\` event with an \`open\` boolean in the deta
       'ARIA `aria-expanded` on the trigger button and `role="region"` on the content area',
       'Fires `arc-toggle` event with `{ open: boolean }` detail on every state change',
       'Keyboard support: Enter and Space toggle the disclosure from the heading button',
-      'Respects `prefers-reduced-motion` by disabling all transitions',
+      'Respects `prefers-reduced-motion` by disabling all transitions'
     ],
 
     guidelines: {
@@ -31,14 +31,14 @@ The component fires an \`arc-toggle\` event with an \`open\` boolean in the deta
         'Provide a clear, descriptive `heading` so users know what the hidden content contains',
         'Set `open` declaratively when the content should be visible on initial render',
         'Use multiple Collapsibles in a stack for FAQ-style sections without mutual exclusion',
-        'Listen to `arc-toggle` to persist the open/closed state across sessions if needed',
+        'Listen to `arc-toggle` to persist the open/closed state across sessions if needed'
       ],
       dont: [
         'Do not use Collapsible for primary content that users must see -- keep it visible instead',
         'Do not nest Collapsibles more than one level deep -- it creates confusing disclosure hierarchies',
         'Do not use Collapsible when you need only-one-open-at-a-time behaviour -- use Accordion instead',
         'Do not leave the `heading` empty -- the trigger button needs visible text for usability and accessibility',
-        'Avoid placing very tall content inside a Collapsible without a scrollable wrapper -- it can push the page layout significantly',
+        'Avoid placing very tall content inside a Collapsible without a scrollable wrapper -- it can push the page layout significantly'
       ],
     },
 
@@ -48,21 +48,21 @@ The component fires an \`arc-toggle\` event with an \`open\` boolean in the deta
 
     props: [
       { name: 'open', type: 'boolean', default: 'false', description: 'Controls whether the content is visible. Reflected as an attribute and toggleable by clicking the heading.' },
-      { name: 'heading', type: 'string', default: "''", description: 'Text displayed in the clickable trigger row. Also used as the ARIA label for the content region.' },
+      { name: 'heading', type: 'string', default: "''", description: 'Text displayed in the clickable trigger row. Also used as the ARIA label for the content region.' }
     ],
     events: [
-      { name: 'arc-toggle', description: 'Fired when the collapsible expands or collapses' },
+      { name: 'arc-toggle', description: 'Fired when the collapsible expands or collapses' }
     ],
 
     tabs: [
-      {
+    {
         label: 'Web Component',
         lang: 'html',
         code: `<arc-collapsible heading="More Details">
   <p>Hidden content revealed on click.</p>
 </arc-collapsible>`,
       },
-      {
+    {
         label: 'React',
         lang: 'tsx',
         code: `import { Collapsible } from '@arclux/arc-ui-react';
@@ -71,7 +71,7 @@ The component fires an \`arc-toggle\` event with an \`open\` boolean in the deta
   <p>Hidden content revealed on click.</p>
 </Collapsible>`,
       },
-      {
+    {
         label: 'Vue',
         lang: 'html',
         code: `<script setup>
@@ -84,7 +84,7 @@ import { Collapsible } from '@arclux/arc-ui-vue';
   </Collapsible>
 </template>`,
       },
-      {
+    {
         label: 'Svelte',
         lang: 'html',
         code: `<script>
@@ -95,7 +95,7 @@ import { Collapsible } from '@arclux/arc-ui-vue';
   <p>Hidden content revealed on click.</p>
 </Collapsible>`,
       },
-      {
+    {
         label: 'Angular',
         lang: 'ts',
         code: `import { Component } from '@angular/core';
@@ -111,7 +111,7 @@ import { Collapsible } from '@arclux/arc-ui-angular';
 })
 export class MyComponent {}`,
       },
-      {
+    {
         label: 'Solid',
         lang: 'tsx',
         code: `import { Collapsible } from '@arclux/arc-ui-solid';
@@ -120,7 +120,7 @@ export class MyComponent {}`,
   <p>Hidden content revealed on click.</p>
 </Collapsible>`,
       },
-      {
+    {
         label: 'Preact',
         lang: 'tsx',
         code: `import { Collapsible } from '@arclux/arc-ui-preact';
@@ -129,14 +129,7 @@ export class MyComponent {}`,
   <p>Hidden content revealed on click.</p>
 </Collapsible>`,
       },
-      {
-        label: 'HTML',
-        lang: 'html',
-        code: `<arc-collapsible heading="More Details">
-  <p>Hidden content revealed on click.</p>
-</arc-collapsible>`,
-      },
-    ],
+  ],
   
   seeAlso: ["accordion","tree-view"],
 };

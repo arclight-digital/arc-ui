@@ -22,7 +22,7 @@ Positioning is controlled by the \`position\` prop, which accepts \`top-right\` 
       'Smooth opacity and translateY transition on open and close',
       'arc-open and arc-close custom events for state synchronization',
       'Shadow DOM parts (trigger, panel, header, body, footer) for targeted styling',
-      'z-index: 1000 overlay stacking for reliable layering above page content',
+      'z-index: 1000 overlay stacking for reliable layering above page content'
     ],
 
     guidelines: {
@@ -31,45 +31,47 @@ Positioning is controlled by the \`position\` prop, which accepts \`top-right\` 
         'Use the header slot for a title like "Notifications" and an optional unread count',
         'Use the footer slot for a "View all notifications" link or "Mark all as read" action',
         'Set max-height to prevent the panel from exceeding viewport bounds on mobile',
-        'Listen for arc-open to lazy-load or refresh notification data',
+        'Listen for arc-open to lazy-load or refresh notification data'
       ],
       dont: [
         'Use NotificationPanel for generic dropdown menus -- use DropdownMenu or Select instead',
         'Place complex interactive forms inside the panel -- keep it to a list of actionable items',
         'Forget to handle the arc-close event if you need to clean up or reset scroll position',
         'Set position to top-left when the trigger is on the left edge of the screen -- the panel may overflow',
-        'Nest NotificationPanel inside another popover or modal -- stacking contexts will conflict',
+        'Nest NotificationPanel inside another popover or modal -- stacking contexts will conflict'
       ],
     },
 
-    previewHtml: `<arc-notification-panel position="top-left">
-  <div slot="trigger" style="position:relative;display:inline-block;">
-    <arc-icon-button name="bell" variant="ghost" size="sm" label="Notifications"></arc-icon-button>
-    <span style="position:absolute;top:2px;right:2px;width:8px;height:8px;border-radius:50%;background:var(--color-error);pointer-events:none;"></span>
-  </div>
-  <div slot="header" style="font-weight:600;font-size:14px;color:var(--text-primary);font-family:var(--font-body)">Notifications</div>
-  <div style="padding:var(--space-sm) var(--space-md);display:flex;flex-direction:column;gap:var(--space-sm)">
-    <div style="padding:var(--space-sm);border-radius:var(--radius-sm);background:rgba(77,126,247,0.06);font-size:13px;color:var(--text-secondary);font-family:var(--font-body)">
-      <strong style="color:var(--text-primary)">Deploy succeeded</strong><br/>Production build completed in 42s
+    previewHtml: `<div style="height:320px;display:flex;align-items:flex-start;justify-content:flex-start;padding-top:var(--space-md)">
+  <arc-notification-panel position="top-left">
+    <div slot="trigger" style="position:relative;display:inline-block;">
+      <arc-icon-button name="bell" variant="ghost" size="sm" label="Notifications"></arc-icon-button>
+      <span style="position:absolute;top:2px;right:2px;width:8px;height:8px;border-radius:50%;background:var(--color-error);pointer-events:none;"></span>
     </div>
-    <div style="padding:var(--space-sm);border-radius:var(--radius-sm);font-size:13px;color:var(--text-secondary);font-family:var(--font-body)">
-      <strong style="color:var(--text-primary)">New comment</strong><br/>Alice commented on PR #128
+    <div slot="header" style="font-weight:600;font-size:14px;color:var(--text-primary);font-family:var(--font-body)">Notifications</div>
+    <div style="padding:var(--space-sm);display:flex;flex-direction:column;gap:var(--space-sm)">
+      <div style="padding:var(--space-sm);border-radius:var(--radius-sm);background:rgba(77,126,247,0.06);font-size:13px;color:var(--text-secondary);font-family:var(--font-body)">
+        <strong style="color:var(--text-primary)">Deploy succeeded</strong><br/>Production build completed in 42s
+      </div>
+      <div style="padding:var(--space-sm);border-radius:var(--radius-sm);font-size:13px;color:var(--text-secondary);font-family:var(--font-body)">
+        <strong style="color:var(--text-primary)">New comment</strong><br/>Alice commented on PR #128
+      </div>
     </div>
-  </div>
-  <div slot="footer" style="text-align:center;font-size:13px"><a href="#" style="color:var(--accent-primary);text-decoration:none">View all notifications</a></div>
-</arc-notification-panel>`,
+    <div slot="footer" style="text-align:center;font-size:13px"><a href="#" style="color:var(--accent-primary);text-decoration:none">View all notifications</a></div>
+  </arc-notification-panel>
+</div>`,
 
     props: [
       { name: 'open', type: 'boolean', default: 'false', description: 'Controls whether the notification panel is visible. Toggle this programmatically or let the built-in trigger click handler manage it.' },
       { name: 'position', type: "'top-right' | 'top-left'", default: "'top-right'", description: 'Horizontal alignment of the panel relative to the trigger element. Use top-right when the trigger is near the right edge of the viewport.' },
-      { name: 'max-height', type: 'string', default: "'400px'", description: 'Maximum height of the scrollable body area. Prevents long notification lists from overflowing the viewport.' },
+      { name: 'max-height', type: 'string', default: "'400px'", description: 'Maximum height of the scrollable body area. Prevents long notification lists from overflowing the viewport.' }
     ],
     events: [
       { name: 'arc-open', description: 'Fired when the notification panel opens' },
-      { name: 'arc-close', description: 'Fired when the notification panel closes' },
+      { name: 'arc-close', description: 'Fired when the notification panel closes' }
     ],
     tabs: [
-      {
+    {
         label: 'Web Component',
         lang: 'html',
         code: `<arc-notification-panel position="top-right">
@@ -123,7 +125,7 @@ Positioning is controlled by the \`position\` prop, which accepts \`top-right\` 
   panel.addEventListener('arc-close', () => console.log('closed'));
 </script>`,
       },
-      {
+    {
         label: 'React',
         lang: 'tsx',
         code: `import { NotificationPanel, IconButton, Icon, Badge, Link } from '@arclux/arc-ui-react';
@@ -160,7 +162,7 @@ function AppHeader() {
   );
 }`,
       },
-      {
+    {
         label: 'Vue',
         lang: 'html',
         code: `<script setup>
@@ -193,7 +195,7 @@ import { NotificationPanel, IconButton, Icon, Badge, Link } from '@arclux/arc-ui
   </NotificationPanel>
 </template>`,
       },
-      {
+    {
         label: 'Svelte',
         lang: 'html',
         code: `<script>
@@ -224,7 +226,7 @@ import { NotificationPanel, IconButton, Icon, Badge, Link } from '@arclux/arc-ui
   </div>
 </NotificationPanel>`,
       },
-      {
+    {
         label: 'Angular',
         lang: 'ts',
         code: `import { Component } from '@angular/core';
@@ -257,7 +259,7 @@ import { NotificationPanel, IconButton, Icon, Badge, Link } from '@arclux/arc-ui
 })
 export class AppHeaderComponent {}`,
       },
-      {
+    {
         label: 'Solid',
         lang: 'tsx',
         code: `import { NotificationPanel, IconButton, Icon, Badge, Link } from '@arclux/arc-ui-solid';
@@ -287,7 +289,7 @@ function AppHeader() {
   );
 }`,
       },
-      {
+    {
         label: 'Preact',
         lang: 'tsx',
         code: `import { NotificationPanel, IconButton, Icon, Badge, Link } from '@arclux/arc-ui-preact';
@@ -317,7 +319,7 @@ function AppHeader() {
   );
 }`,
       },
-    ],
-  
+  ],
+
   seeAlso: ["toast","alert","badge"],
 };

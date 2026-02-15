@@ -236,6 +236,18 @@ function NotificationPreference() {
   );
 }`,
       },
+      {
+        label: 'HTML',
+        lang: 'html',
+        code: `<!-- arc-radio-group is interactive — requires JS -->
+<arc-radio-group></arc-radio-group>`,
+      },
+      {
+        label: 'HTML (Inline)',
+        lang: 'html',
+        code: `<!-- arc-radio-group is interactive — requires JS -->
+<arc-radio-group></arc-radio-group>`,
+      },
     ],
     subComponents: [
       {

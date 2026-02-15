@@ -8,7 +8,7 @@ withDefaults(defineProps<{
   open?: boolean;
   heading?: string;
   message?: string;
-  variant?: 'danger';
+  variant?: string;
 }>(), {
   open: false,
   heading: '',

@@ -5,15 +5,14 @@
 
   interface Props {
     open?: boolean;
-    _focusedIndex?: string;
     _children?: string;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { open = false, _focusedIndex = -1, _children = [], children, ...rest }: Props = $props();
+  let { open = false, _children = [], children, ...rest }: Props = $props();
 </script>
 
-<arc-dropdown-menu {open} {_focusedIndex} {_children} {...rest}>
+<arc-dropdown-menu {open} {_children} {...rest}>
   {@render children?.()}
 </arc-dropdown-menu>

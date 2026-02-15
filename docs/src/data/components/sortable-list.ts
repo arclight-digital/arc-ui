@@ -22,7 +22,7 @@ The component fires a single \`arc-change\` event after every reorder, providing
       'Dragged items fade to 50% opacity with an elevated box shadow for clear visual feedback',
       'Fires `arc-change` with `detail.order` containing the new index mapping after every reorder',
       'ARIA attributes including `role="listbox"`, `role="option"`, and `aria-grabbed` for accessibility',
-      'Disabled state at 40% opacity with pointer events blocked',
+      'Disabled state at 40% opacity with pointer events blocked'
     ],
 
     guidelines: {
@@ -31,14 +31,14 @@ The component fires a single \`arc-change\` event after every reorder, providing
         'Listen for `arc-change` to persist the new order back to your data store',
         'Use Sortable List for short to medium lists (under ~50 items) where manual ordering matters',
         'Provide clear, distinguishable text content for each item so users can identify what they are reordering',
-        'Test keyboard reordering to ensure your application handles the order array correctly',
+        'Test keyboard reordering to ensure your application handles the order array correctly'
       ],
       dont: [
         'Do not nest interactive elements (buttons, links) inside list items -- they conflict with drag handles and keyboard interaction',
         'Do not use Sortable List for very long lists where search or filtering would be more efficient than manual reordering',
         'Do not rely solely on the visual grip dots to communicate draggability -- ensure items have descriptive labels for screen readers',
         'Do not place multiple Sortable Lists adjacent without clear visual separation between them',
-        'Avoid using Sortable List for single-item lists -- there is nothing to reorder',
+        'Avoid using Sortable List for single-item lists -- there is nothing to reorder'
       ],
     },
 
@@ -50,13 +50,13 @@ The component fires a single \`arc-change\` event after every reorder, providing
 </arc-sortable-list>`,
 
     props: [
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables all interaction, reducing opacity to 40% and blocking pointer events.' },
+      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables all interaction, reducing opacity to 40% and blocking pointer events.' }
     ],
     events: [
-      { name: 'arc-change', description: 'Fired when items are reordered, with updated order in detail' },
+      { name: 'arc-change', description: 'Fired when items are reordered, with updated order in detail' }
     ],
     tabs: [
-      {
+    {
         label: 'Web Component',
         lang: 'html',
         code: `<arc-sortable-list>
@@ -72,7 +72,7 @@ The component fires a single \`arc-change\` event after every reorder, providing
     });
 </script>`,
       },
-      {
+    {
         label: 'React',
         lang: 'tsx',
         code: `import { SortableList } from '@arclux/arc-ui-react';
@@ -83,7 +83,7 @@ The component fires a single \`arc-change\` event after every reorder, providing
   <div>Third item</div>
 </SortableList>`,
       },
-      {
+    {
         label: 'Vue',
         lang: 'html',
         code: `<script setup>
@@ -102,7 +102,7 @@ function onReorder(e) {
   </SortableList>
 </template>`,
       },
-      {
+    {
         label: 'Svelte',
         lang: 'html',
         code: `<script>
@@ -115,7 +115,7 @@ function onReorder(e) {
   <div>Third item</div>
 </SortableList>`,
       },
-      {
+    {
         label: 'Angular',
         lang: 'ts',
         code: `import { Component } from '@angular/core';
@@ -137,7 +137,7 @@ export class MyComponent {
   }
 }`,
       },
-      {
+    {
         label: 'Solid',
         lang: 'tsx',
         code: `import { SortableList } from '@arclux/arc-ui-solid';
@@ -148,7 +148,7 @@ export class MyComponent {
   <div>Third item</div>
 </SortableList>`,
       },
-      {
+    {
         label: 'Preact',
         lang: 'tsx',
         code: `import { SortableList } from '@arclux/arc-ui-preact';
@@ -159,7 +159,7 @@ export class MyComponent {
   <div>Third item</div>
 </SortableList>`,
       },
-    ],
+  ],
   
   seeAlso: ["data-table","tree-view"],
 };

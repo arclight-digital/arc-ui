@@ -22,7 +22,7 @@ Pin Input fires \`arc-change\` on every character entry or deletion, providing t
       'Configurable `type` validation: `"number"`, `"alphanumeric"`, or `"text"`',
       'Mask mode via `mask` prop for obscuring sensitive codes with dots',
       'Visual separator dashes between groups via the `separator` prop (e.g. every 3 boxes)',
-      'Dual events: `arc-change` on every keystroke, `arc-complete` when all boxes are filled',
+      'Dual events: `arc-change` on every keystroke, `arc-complete` when all boxes are filled'
     ],
 
     guidelines: {
@@ -31,14 +31,14 @@ Pin Input fires \`arc-change\` on every character entry or deletion, providing t
         'Use `type="number"` for numeric-only codes and set `inputmode="numeric"` for mobile keyboards',
         'Enable `mask` for sensitive codes like passwords or security PINs',
         'Listen for `arc-complete` to auto-submit or validate once the full code is entered',
-        'Provide a `label` so users understand what code they are entering',
+        'Provide a `label` so users understand what code they are entering'
       ],
       dont: [
         'Do not use Pin Input for general text entry -- it is designed exclusively for fixed-length codes',
         'Do not set `length` higher than ~8 -- long codes are better handled with a standard text input',
         'Do not omit the `label` prop when the pin input is used standalone without surrounding context',
         'Do not use `separator` values that produce uneven groups at the end (e.g. `separator="4"` on a 6-digit code)',
-        'Avoid placing Pin Input in very narrow containers -- each box needs at least 42px width plus gaps',
+        'Avoid placing Pin Input in very narrow containers -- each box needs at least 42px width plus gaps'
       ],
     },
 
@@ -51,10 +51,14 @@ Pin Input fires \`arc-change\` on every character entry or deletion, providing t
       { name: 'mask', type: 'boolean', default: 'false', description: 'When true, obscures entered characters with dots for sensitive codes.' },
       { name: 'separator', type: 'number', default: '0', description: 'Inserts a visual dash separator every N boxes. Set to 0 to disable separators.' },
       { name: 'label', type: 'string', default: "''", description: 'Label text displayed above the input boxes in uppercase accent font.' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables all boxes, reducing opacity to 40% and blocking input.' },
+      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables all boxes, reducing opacity to 40% and blocking input.' }
+    ],
+    events: [
+      { name: 'arc-change', description: 'Fired on every character entry or deletion. `event.detail.value` contains the current partial value.' },
+      { name: 'arc-complete', description: 'Fired when all boxes are filled. `event.detail.value` contains the full value string.' }
     ],
     tabs: [
-      {
+    {
         label: 'Web Component',
         lang: 'html',
         code: `<arc-pin-input label="OTP Code" length="6" separator="3"></arc-pin-input>
@@ -66,7 +70,7 @@ Pin Input fires \`arc-change\` on every character entry or deletion, providing t
     });
 </script>`,
       },
-      {
+    {
         label: 'React',
         lang: 'tsx',
         code: `import { PinInput } from '@arclux/arc-ui-react';
@@ -78,7 +82,7 @@ Pin Input fires \`arc-change\` on every character entry or deletion, providing t
   onArcComplete={(e) => console.log('Code:', e.detail.value)}
 />`,
       },
-      {
+    {
         label: 'Vue',
         lang: 'html',
         code: `<script setup>
@@ -94,7 +98,7 @@ import { PinInput } from '@arclux/arc-ui-vue';
   />
 </template>`,
       },
-      {
+    {
         label: 'Svelte',
         lang: 'html',
         code: `<script>
@@ -108,7 +112,7 @@ import { PinInput } from '@arclux/arc-ui-vue';
   on:arc-complete={(e) => console.log('Code:', e.detail.value)}
 />`,
       },
-      {
+    {
         label: 'Angular',
         lang: 'ts',
         code: `import { Component } from '@angular/core';
@@ -131,7 +135,7 @@ export class MyComponent {
   }
 }`,
       },
-      {
+    {
         label: 'Solid',
         lang: 'tsx',
         code: `import { PinInput } from '@arclux/arc-ui-solid';
@@ -143,7 +147,7 @@ export class MyComponent {
   onArcComplete={(e) => console.log('Code:', e.detail.value)}
 />`,
       },
-      {
+    {
         label: 'Preact',
         lang: 'tsx',
         code: `import { PinInput } from '@arclux/arc-ui-preact';
@@ -155,7 +159,7 @@ export class MyComponent {
   onArcComplete={(e) => console.log('Code:', e.detail.value)}
 />`,
       },
-    ],
+  ],
   
   seeAlso: ["otp-input","input"],
 };

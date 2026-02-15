@@ -8,12 +8,11 @@ export interface DialogProps {
   open?: boolean;
   heading?: string;
   message?: string;
-  variant?: 'danger';
+  variant?: string;
   className?: string;
   children?: React.ReactNode;
   onArcConfirm?: (e: CustomEvent) => void;
   onArcCancel?: (e: CustomEvent) => void;
-  onClick?: (e: Event) => void;
 }
 
 export const Dialog = createComponent({
@@ -23,6 +22,5 @@ export const Dialog = createComponent({
   events: {
     onArcConfirm: 'arc-confirm' as EventName<CustomEvent>,
     onArcCancel: 'arc-cancel' as EventName<CustomEvent>,
-    onClick: 'click' as EventName<Event>,
   },
 });

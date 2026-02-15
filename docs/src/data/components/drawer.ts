@@ -24,7 +24,7 @@ Choose Drawer over Modal when the supplementary content is navigation-oriented, 
       'Fires `arc-close` custom event on any dismiss action for state synchronization',
       'Max-width capped at 85vw so the drawer never fully obscures the page',
       'CSS custom property theming via `--bg-surface`, `--border-subtle`, and `--text-primary`',
-      'Accessible with `role="dialog"`, `aria-modal="true"`, and `aria-label` from heading',
+      'Accessible with `role="dialog"`, `aria-modal="true"`, and `aria-label` from heading'
     ],
 
     guidelines: {
@@ -34,7 +34,7 @@ Choose Drawer over Modal when the supplementary content is navigation-oriented, 
         'Provide a clear, short heading that tells the user what the panel contains',
         'Keep the drawer width reasonable — the default 300px works for most navigation use cases',
         'Use `position="right"` for detail views and contextual information panels',
-        'Always listen for the `arc-close` event to keep your open state in sync',
+        'Always listen for the `arc-close` event to keep your open state in sync'
       ],
       dont: [
         'Do not use a Drawer for critical confirmations — use Modal instead',
@@ -42,7 +42,7 @@ Choose Drawer over Modal when the supplementary content is navigation-oriented, 
         'Do not put complex multi-step forms in a Drawer — consider a full page or Modal',
         'Do not auto-open a Drawer on page load without a clear user-initiated trigger',
         'Do not remove the backdrop — users expect click-outside-to-close behavior',
-        'Do not place unrelated content in the drawer heading area — keep it for the title and close button',
+        'Do not place unrelated content in the drawer heading area — keep it for the title and close button'
       ],
     },
 
@@ -89,10 +89,10 @@ Choose Drawer over Modal when the supplementary content is navigation-oriented, 
     props: [
       { name: 'open', type: 'boolean', default: 'false', description: 'Controls the visible state of the drawer. Set to `true` to slide the panel into view and activate the backdrop; set to `false` to run the exit animation, remove the backdrop, and restore body scroll.' },
       { name: 'heading', type: 'string', default: "''", description: 'Text displayed in the drawer header bar. Also used as the `aria-label` for the dialog panel, ensuring screen readers announce the panel purpose when it opens.' },
-      { name: 'position', type: "'left' | 'right'", default: "'left'", description: 'Which edge of the viewport the drawer slides in from. Use `left` for primary navigation menus and `right` for contextual detail panels, filter sidebars, or settings trays.' },
+      { name: 'position', type: "'left' | 'right'", default: "'left'", description: 'Which edge of the viewport the drawer slides in from. Use `left` for primary navigation menus and `right` for contextual detail panels, filter sidebars, or settings trays.' }
     ],
     events: [
-      { name: 'arc-close', description: 'Fired when the drawer closes via backdrop click or escape key' },
+      { name: 'arc-close', description: 'Fired when the drawer closes via backdrop click or escape key' }
     ],
 
     tabs: [
@@ -252,7 +252,7 @@ function MobileNav() {
     </>
   );
 }`,
-      },
+      }
     ],
   
   seeAlso: ["modal","sheet","sidebar"],

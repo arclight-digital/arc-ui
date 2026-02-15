@@ -268,6 +268,18 @@ function BorderRadiusTool() {
   );
 }`,
       },
+      {
+        label: 'HTML',
+        lang: 'html',
+        code: `<!-- arc-slider is interactive — requires JS -->
+<arc-slider></arc-slider>`,
+      },
+      {
+        label: 'HTML (Inline)',
+        lang: 'html',
+        code: `<!-- arc-slider is interactive — requires JS -->
+<arc-slider></arc-slider>`,
+      },
     ],
   
   seeAlso: ["number-input","input","rating"],

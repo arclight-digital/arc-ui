@@ -279,6 +279,19 @@ export default function FAQ() {
   </arc-accordion-item>
 </arc-accordion>`,
     },
+    {
+      label: 'HTML (Inline)',
+      lang: 'html',
+      code: `<!-- arc-accordion is hybrid — CSS handles layout, JS handles expand/collapse -->
+<arc-accordion>
+  <arc-accordion-item question="What is ARC UI?">
+    A framework-agnostic component library.
+  </arc-accordion-item>
+  <arc-accordion-item question="How do I theme components?">
+    Override the CSS custom-property tokens.
+  </arc-accordion-item>
+</arc-accordion>`,
+    },
   ],
 
   seeAlso: ["collapsible","tabs"],

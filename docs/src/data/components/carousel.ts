@@ -23,7 +23,7 @@ When \`loop\` is enabled (the default), navigating past the last slide wraps to 
       'Loop mode wraps navigation at the edges; non-loop mode disables arrows at boundaries',
       'Keyboard navigation: left/right arrow keys move between slides',
       'Respects `prefers-reduced-motion` by disabling auto-play and using instant scroll',
-      'Fires `arc-change` with `{ index }` in the event detail on every slide change',
+      'Fires `arc-change` with `{ index }` in the event detail on every slide change'
     ],
 
     guidelines: {
@@ -32,14 +32,14 @@ When \`loop\` is enabled (the default), navigating past the last slide wraps to 
         'Provide meaningful content in each slide -- avoid empty or placeholder slides',
         'Set `auto-play` only when the content is supplementary and not time-sensitive',
         'Include at least 2 slides -- a single slide makes the navigation controls meaningless',
-        'Use the `arc-change` event to synchronise external indicators or captions with the current slide',
+        'Use the `arc-change` event to synchronise external indicators or captions with the current slide'
       ],
       dont: [
         'Do not use Carousel for critical content that users must see -- some users never advance past the first slide',
         'Do not set `interval` below 3000ms -- slides change too fast to read or interact with',
         'Do not place form inputs inside carousel slides -- the scrolling behaviour conflicts with input focus',
         'Do not hide navigation arrows and dots simultaneously -- the user needs at least one way to navigate',
-        'Avoid nesting a Carousel inside another Carousel -- the scroll-snapping conflicts are unpredictable',
+        'Avoid nesting a Carousel inside another Carousel -- the scroll-snapping conflicts are unpredictable'
       ],
     },
 
@@ -54,14 +54,14 @@ When \`loop\` is enabled (the default), navigating past the last slide wraps to 
       { name: 'interval', type: 'number', default: '5000', description: 'Auto-play interval in milliseconds between slide transitions.' },
       { name: 'loop', type: 'boolean', default: 'true', description: 'Enables wrapping at the edges so the last slide connects to the first and vice versa.' },
       { name: 'show-dots', type: 'boolean', default: 'true', description: 'Shows dot indicators below the viewport for direct slide navigation.' },
-      { name: 'show-arrows', type: 'boolean', default: 'true', description: 'Shows previous/next arrow buttons on the left and right edges of the viewport.' },
+      { name: 'show-arrows', type: 'boolean', default: 'true', description: 'Shows previous/next arrow buttons on the left and right edges of the viewport.' }
     ],
     events: [
-      { name: 'arc-change', description: 'Fired when the active slide changes' },
+      { name: 'arc-change', description: 'Fired when the active slide changes' }
     ],
 
     tabs: [
-      {
+    {
         label: 'Web Component',
         lang: 'html',
         code: `<arc-carousel show-arrows show-dots loop>
@@ -70,7 +70,7 @@ When \`loop\` is enabled (the default), navigating past the last slide wraps to 
   <img src="/slide-3.jpg" alt="Slide 3" />
 </arc-carousel>`,
       },
-      {
+    {
         label: 'React',
         lang: 'tsx',
         code: `import { Carousel } from '@arclux/arc-ui-react';
@@ -81,7 +81,7 @@ When \`loop\` is enabled (the default), navigating past the last slide wraps to 
   <img src="/slide-3.jpg" alt="Slide 3" />
 </Carousel>`,
       },
-      {
+    {
         label: 'Vue',
         lang: 'html',
         code: `<script setup>
@@ -96,7 +96,7 @@ import { Carousel } from '@arclux/arc-ui-vue';
   </Carousel>
 </template>`,
       },
-      {
+    {
         label: 'Svelte',
         lang: 'html',
         code: `<script>
@@ -109,7 +109,7 @@ import { Carousel } from '@arclux/arc-ui-vue';
   <img src="/slide-3.jpg" alt="Slide 3" />
 </Carousel>`,
       },
-      {
+    {
         label: 'Angular',
         lang: 'ts',
         code: `import { Component } from '@angular/core';
@@ -127,7 +127,7 @@ import { Carousel } from '@arclux/arc-ui-angular';
 })
 export class MyComponent {}`,
       },
-      {
+    {
         label: 'Solid',
         lang: 'tsx',
         code: `import { Carousel } from '@arclux/arc-ui-solid';
@@ -138,7 +138,7 @@ export class MyComponent {}`,
   <img src="/slide-3.jpg" alt="Slide 3" />
 </Carousel>`,
       },
-      {
+    {
         label: 'Preact',
         lang: 'tsx',
         code: `import { Carousel } from '@arclux/arc-ui-preact';
@@ -149,16 +149,7 @@ export class MyComponent {}`,
   <img src="/slide-3.jpg" alt="Slide 3" />
 </Carousel>`,
       },
-      {
-        label: 'HTML',
-        lang: 'html',
-        code: `<arc-carousel show-arrows show-dots loop>
-  <img src="/slide-1.jpg" alt="Slide 1" />
-  <img src="/slide-2.jpg" alt="Slide 2" />
-  <img src="/slide-3.jpg" alt="Slide 3" />
-</arc-carousel>`,
-      },
-    ],
+  ],
   
   seeAlso: ["tabs","marquee"],
 };

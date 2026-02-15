@@ -22,7 +22,7 @@ When an item is selected -- by clicking or pressing Enter -- the palette dispatc
       'Keyboard shortcut hints displayed next to each command item in monospace',
       'Footer bar showing navigation key bindings for discoverability',
       'Backdrop overlay with click-to-close and body scroll locking',
-      'arc-select and arc-close custom events for integration with application logic',
+      'arc-select and arc-close custom events for integration with application logic'
     ],
 
     guidelines: {
@@ -31,14 +31,14 @@ When an item is selected -- by clicking or pressing Enter -- the palette dispatc
         'Provide concise, action-oriented labels on each <arc-command-item> (e.g., "Open File", "Toggle Theme")',
         'Include shortcut hints on items that have associated keyboard bindings for discoverability',
         'Close the palette programmatically after handling the arc-select event to confirm the action ran',
-        'Keep the command list under 20-30 items; for larger sets, rely on the search filter',
+        'Keep the command list under 20-30 items; for larger sets, rely on the search filter'
       ],
       dont: [
         'Use CommandPalette as a generic search bar -- it is designed for discrete actions, not content search',
         'Leave the palette open after an item is selected; it should always close to return focus to the app',
         'Put nested interactive components like forms or modals inside command items',
         'Omit the label attribute on <arc-command-item> -- the filter and display both depend on it',
-        'Override the body scroll lock behavior, as this prevents jarring background movement',
+        'Override the body scroll lock behavior, as this prevents jarring background movement'
       ],
     },
 
@@ -54,14 +54,14 @@ When an item is selected -- by clicking or pressing Enter -- the palette dispatc
 
     props: [
       { name: 'open', type: 'boolean', default: 'false', description: 'Controls whether the palette is visible. When set to true, the dialog animates in, the search input auto-focuses, and body scroll is locked. Set to false to close.' },
-      { name: 'placeholder', type: 'string', default: "'Type a command...'", description: 'Placeholder text displayed in the search input when the query is empty.' },
+      { name: 'placeholder', type: 'string', default: "'Type a command...'", description: 'Placeholder text displayed in the search input when the query is empty.' }
     ],
     events: [
       { name: 'arc-select', description: 'Fired when a command item is selected' },
-      { name: 'arc-close', description: 'Fired when the palette closes' },
+      { name: 'arc-close', description: 'Fired when the palette closes' }
     ],
     tabs: [
-      {
+    {
         label: 'Web Component',
         lang: 'html',
         code: `<arc-button onclick="document.querySelector('#palette').open = true">Open Palette</arc-button>
@@ -70,7 +70,7 @@ When an item is selected -- by clicking or pressing Enter -- the palette dispatc
   <arc-command-item shortcut="⌘S">Save File</arc-command-item>
 </arc-command-palette>`,
       },
-      {
+    {
         label: 'React',
         lang: 'tsx',
         code: `import { Button, CommandItem, CommandPalette } from '@arclux/arc-ui-react';
@@ -81,7 +81,7 @@ When an item is selected -- by clicking or pressing Enter -- the palette dispatc
   <CommandItem shortcut="⌘S">Save File</CommandItem>
 </CommandPalette>`,
       },
-      {
+    {
         label: 'Vue',
         lang: 'html',
         code: `<script setup>
@@ -96,7 +96,7 @@ import { Button, CommandItem, CommandPalette } from '@arclux/arc-ui-vue';
   </CommandPalette>
 </template>`,
       },
-      {
+    {
         label: 'Svelte',
         lang: 'html',
         code: `<script>
@@ -109,7 +109,7 @@ import { Button, CommandItem, CommandPalette } from '@arclux/arc-ui-vue';
   <CommandItem shortcut="⌘S">Save File</CommandItem>
 </CommandPalette>`,
       },
-      {
+    {
         label: 'Angular',
         lang: 'ts',
         code: `import { Component } from '@angular/core';
@@ -127,7 +127,7 @@ import { Button, CommandItem, CommandPalette } from '@arclux/arc-ui-angular';
 })
 export class MyComponent {}`,
       },
-      {
+    {
         label: 'Solid',
         lang: 'tsx',
         code: `import { Button, CommandItem, CommandPalette } from '@arclux/arc-ui-solid';
@@ -138,7 +138,7 @@ export class MyComponent {}`,
   <CommandItem shortcut="⌘S">Save File</CommandItem>
 </CommandPalette>`,
       },
-      {
+    {
         label: 'Preact',
         lang: 'tsx',
         code: `import { Button, CommandItem, CommandPalette } from '@arclux/arc-ui-preact';
@@ -149,7 +149,7 @@ export class MyComponent {}`,
   <CommandItem shortcut="⌘S">Save File</CommandItem>
 </CommandPalette>`,
       },
-    ],
+  ],
     subComponents: [
       {
         name: 'CommandItem',
@@ -157,9 +157,9 @@ export class MyComponent {}`,
         description: 'Action item inside a CommandPalette.',
         props: [
           { name: 'shortcut', type: 'string', description: 'Keyboard shortcut hint' },
-          { name: 'disabled', type: 'boolean', default: 'false', description: 'Disable the item' },
+          { name: 'disabled', type: 'boolean', default: 'false', description: 'Disable the item' }
         ],
-      },
+      }
     ],
   
   seeAlso: ["combobox","search","dropdown-menu"],

@@ -22,7 +22,7 @@ CopyButton dispatches an \`arc-copy\` event on successful copy, carrying the cop
       'Focus-visible ring via var(--focus-glow) for keyboard accessibility',
       'Hover state with elevated border and background color shift',
       'Graceful fallback when the Clipboard API is unavailable (non-secure contexts)',
-      'Compact inline-flex layout that fits naturally next to code blocks and input fields',
+      'Compact inline-flex layout that fits naturally next to code blocks and input fields'
     ],
 
     guidelines: {
@@ -31,14 +31,14 @@ CopyButton dispatches an \`arc-copy\` event on successful copy, carrying the cop
         'Set the value property to the exact string the user expects to paste, not a formatted or truncated version',
         'Use the arc-copy event to trigger a toast or analytics event confirming the copy action',
         'Ensure the page is served over HTTPS so the Clipboard API is available',
-        'Use the disabled attribute when the value is not yet available (e.g., while loading)',
+        'Use the disabled attribute when the value is not yet available (e.g., while loading)'
       ],
       dont: [
         'Use CopyButton for general-purpose actions -- it is specifically designed for clipboard copy',
         'Set the value to empty string and expect the button to be useful; always provide meaningful content',
         'Override the 2-second confirmation timeout -- it is calibrated for comfortable visual feedback',
         'Nest CopyButton inside another button or interactive element, as this creates invalid HTML nesting',
-        'Rely solely on the confirmation state for feedback; pair with a toast for users who look away',
+        'Rely solely on the confirmation state for feedback; pair with a toast for users who look away'
       ],
     },
 
@@ -49,22 +49,25 @@ CopyButton dispatches an \`arc-copy\` event on successful copy, carrying the cop
 
     props: [
       { name: 'value', type: 'string', default: "''", description: 'The text string to copy to the clipboard when the button is clicked.' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the button, preventing clicks and reducing visual opacity.' },
+      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the button, preventing clicks and reducing visual opacity.' }
+    ],
+    events: [
+      { name: 'arc-copy', description: 'Fired when text is successfully copied to the clipboard. `event.detail.value` contains the copied string.' }
     ],
     tabs: [
-      {
+    {
         label: 'Web Component',
         lang: 'html',
         code: `<arc-copy-button value="npm install @arclux/arc-ui"></arc-copy-button>`,
       },
-      {
+    {
         label: 'React',
         lang: 'tsx',
         code: `import { CopyButton } from '@arclux/arc-ui-react';
 
 <CopyButton value="npm install @arclux/arc-ui"></CopyButton>`,
       },
-      {
+    {
         label: 'Vue',
         lang: 'html',
         code: `<script setup>
@@ -75,7 +78,7 @@ import { CopyButton } from '@arclux/arc-ui-vue';
   <CopyButton value="npm install @arclux/arc-ui"></CopyButton>
 </template>`,
       },
-      {
+    {
         label: 'Svelte',
         lang: 'html',
         code: `<script>
@@ -84,7 +87,7 @@ import { CopyButton } from '@arclux/arc-ui-vue';
 
 <CopyButton value="npm install @arclux/arc-ui"></CopyButton>`,
       },
-      {
+    {
         label: 'Angular',
         lang: 'ts',
         code: `import { Component } from '@angular/core';
@@ -98,21 +101,21 @@ import { CopyButton } from '@arclux/arc-ui-angular';
 })
 export class MyComponent {}`,
       },
-      {
+    {
         label: 'Solid',
         lang: 'tsx',
         code: `import { CopyButton } from '@arclux/arc-ui-solid';
 
 <CopyButton value="npm install @arclux/arc-ui"></CopyButton>`,
       },
-      {
+    {
         label: 'Preact',
         lang: 'tsx',
         code: `import { CopyButton } from '@arclux/arc-ui-preact';
 
 <CopyButton value="npm install @arclux/arc-ui"></CopyButton>`,
       },
-    ],
+  ],
   
   seeAlso: ["code-block","icon-button","tooltip"],
 };

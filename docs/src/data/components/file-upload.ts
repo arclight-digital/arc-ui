@@ -22,7 +22,7 @@ The component dispatches an \`arc-change\` event whenever the file list changes 
       'Multiple file selection mode that appends files across interactions',
       'Styled file list showing name, formatted size, and a remove button per file',
       'arc-change event on every file list mutation and arc-remove event on individual file removal',
-      'Keyboard accessible: Enter and Space activate the file picker from the focused dropzone',
+      'Keyboard accessible: Enter and Space activate the file picker from the focused dropzone'
     ],
 
     guidelines: {
@@ -31,14 +31,14 @@ The component dispatches an \`arc-change\` event whenever the file list changes 
         'Set max-size to prevent oversized uploads before they reach the server',
         'Use the multiple attribute when the use case requires batch uploads (e.g., photo galleries)',
         'Listen to arc-change to sync the file list with your form state or upload handler',
-        'Display the upload zone at a reasonable width so the hint text and file list are readable',
+        'Display the upload zone at a reasonable width so the hint text and file list are readable'
       ],
       dont: [
         'Use FileUpload as a general file manager -- it handles selection, not uploading or progress',
         'Set max-size to 0 and expect it to enforce a limit; 0 means no limit',
         'Forget to handle the arc-change event -- without it, selected files are not captured by your application',
         'Place FileUpload inside a container with overflow: hidden, as the error message may be clipped',
-        'Disable the component without explaining why uploads are unavailable',
+        'Disable the component without explaining why uploads are unavailable'
       ],
     },
 
@@ -48,14 +48,14 @@ The component dispatches an \`arc-change\` event whenever the file list changes 
       { name: 'accept', type: 'string', default: "''", description: 'Comma-separated list of accepted file types, passed directly to the native file input accept attribute. Examples: "image/*", ".pdf,.docx", "audio/mp3".' },
       { name: 'multiple', type: 'boolean', default: 'false', description: 'When true, allows selecting multiple files. Each drop or browse interaction appends to the existing file list rather than replacing it.' },
       { name: 'max-size', type: 'number', default: '0', description: 'Maximum file size in bytes. Files exceeding this limit are rejected with an inline error message. Set to 0 for no limit.' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the dropzone, preventing drag-and-drop and click interactions. Reduces opacity to 0.4.' },
+      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the dropzone, preventing drag-and-drop and click interactions. Reduces opacity to 0.4.' }
     ],
     events: [
       { name: 'arc-change', description: 'Fired when files are added or dropped' },
-      { name: 'arc-remove', description: 'Fired when a file is removed from the list' },
+      { name: 'arc-remove', description: 'Fired when a file is removed from the list' }
     ],
     tabs: [
-      {
+    {
         label: 'Web Component',
         lang: 'html',
         code: `<arc-file-upload id="uploader" accept="image/*" multiple></arc-file-upload>
@@ -80,7 +80,7 @@ The component dispatches an \`arc-change\` event whenever the file list changes 
   });
 </script>`,
       },
-      {
+    {
         label: 'React',
         lang: 'tsx',
         code: `import { FileUpload } from '@arclux/arc-ui-react';
@@ -102,7 +102,7 @@ function Upload() {
   );
 }`,
       },
-      {
+    {
         label: 'Vue',
         lang: 'html',
         code: `<script setup>
@@ -113,7 +113,7 @@ import { FileUpload } from '@arclux/arc-ui-vue';
   <FileUpload accept="image/*" multiple></FileUpload>
 </template>`,
       },
-      {
+    {
         label: 'Svelte',
         lang: 'html',
         code: `<script>
@@ -122,7 +122,7 @@ import { FileUpload } from '@arclux/arc-ui-vue';
 
 <FileUpload accept="image/*" multiple></FileUpload>`,
       },
-      {
+    {
         label: 'Angular',
         lang: 'ts',
         code: `import { Component } from '@angular/core';
@@ -136,21 +136,21 @@ import { FileUpload } from '@arclux/arc-ui-angular';
 })
 export class MyComponent {}`,
       },
-      {
+    {
         label: 'Solid',
         lang: 'tsx',
         code: `import { FileUpload } from '@arclux/arc-ui-solid';
 
 <FileUpload accept="image/*" multiple></FileUpload>`,
       },
-      {
+    {
         label: 'Preact',
         lang: 'tsx',
         code: `import { FileUpload } from '@arclux/arc-ui-preact';
 
 <FileUpload accept="image/*" multiple></FileUpload>`,
       },
-    ],
+  ],
   
   seeAlso: ["input","button","progress"],
 };

@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { positionStyles } from '../shared/position-styles.js';
 
 /**
  * @tag arc-popover
@@ -50,45 +51,6 @@ export class ArcPopover extends LitElement {
         pointer-events: auto;
       }
 
-      /* Positions */
-      :host(:not([position])) .popover__panel,
-      :host([position="bottom"]) .popover__panel {
-        top: calc(100% + var(--space-sm));
-        left: 50%;
-        transform: translateX(-50%) scale(0.95);
-      }
-      :host([open]:not([position])) .popover__panel,
-      :host([open][position="bottom"]) .popover__panel {
-        transform: translateX(-50%) scale(1);
-      }
-
-      :host([position="top"]) .popover__panel {
-        bottom: calc(100% + var(--space-sm));
-        left: 50%;
-        transform: translateX(-50%) scale(0.95);
-      }
-      :host([open][position="top"]) .popover__panel {
-        transform: translateX(-50%) scale(1);
-      }
-
-      :host([position="left"]) .popover__panel {
-        right: calc(100% + var(--space-sm));
-        top: 50%;
-        transform: translateY(-50%) scale(0.95);
-      }
-      :host([open][position="left"]) .popover__panel {
-        transform: translateY(-50%) scale(1);
-      }
-
-      :host([position="right"]) .popover__panel {
-        left: calc(100% + var(--space-sm));
-        top: 50%;
-        transform: translateY(-50%) scale(0.95);
-      }
-      :host([open][position="right"]) .popover__panel {
-        transform: translateY(-50%) scale(1);
-      }
-
       @media (prefers-reduced-motion: reduce) {
         :host *,
         :host *::before,
@@ -99,6 +61,7 @@ export class ArcPopover extends LitElement {
         }
       }
     `,
+    positionStyles('popover__panel'),
   ];
 
   constructor() {

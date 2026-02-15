@@ -22,7 +22,7 @@ Chip fires an \`arc-change\` event on every toggle, including both the \`value\`
       'ARIA `option` role with `aria-selected` and `aria-disabled` for accessible group patterns',
       'Fires `arc-change` with `{ value, selected }` detail on every toggle interaction',
       'Keyboard toggle via Enter and Space with automatic tabindex management',
-      'Disabled state at 40% opacity with pointer events blocked',
+      'Disabled state at 40% opacity with pointer events blocked'
     ],
 
     guidelines: {
@@ -31,14 +31,14 @@ Chip fires an \`arc-change\` event on every toggle, including both the \`value\`
         'Set a unique `value` on each chip for programmatic identification distinct from the label',
         'Group related chips together and listen to `arc-change` on each to maintain a selection set',
         'Keep chip labels short -- one or two words -- to preserve the compact pill appearance',
-        'Combine with a clear/reset action when using chips as active filters',
+        'Combine with a clear/reset action when using chips as active filters'
       ],
       dont: [
         'Do not use Chip for mutually exclusive choices -- use Segmented Control or Radio Group instead',
         'Do not place long sentences inside a Chip -- it breaks the compact pill layout',
         'Do not use Chip as a navigation element -- it is an input control, not a link',
         'Do not nest interactive elements (buttons, links) inside the chip slot',
-        'Avoid using chips without `value` props in a group -- the change event needs identifiers to be useful',
+        'Avoid using chips without `value` props in a group -- the change event needs identifiers to be useful'
       ],
     },
 
@@ -52,21 +52,21 @@ Chip fires an \`arc-change\` event on every toggle, including both the \`value\`
     props: [
       { name: 'selected', type: 'boolean', default: 'false', description: 'Whether the chip is currently selected. Reflected as an attribute and toggled on click or keypress.' },
       { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables interaction, reducing opacity to 40% and blocking pointer events.' },
-      { name: 'value', type: 'string', default: "''", description: 'Machine-readable identifier for this chip, included in the `arc-change` event detail.' },
+      { name: 'value', type: 'string', default: "''", description: 'Machine-readable identifier for this chip, included in the `arc-change` event detail.' }
     ],
     events: [
-      { name: 'arc-change', description: 'Fired when the chip selected state changes' },
+      { name: 'arc-change', description: 'Fired when the chip selected state changes' }
     ],
 
     tabs: [
-      {
+    {
         label: 'Web Component',
         lang: 'html',
         code: `<arc-chip value="react" selected>React</arc-chip>
 <arc-chip value="vue">Vue</arc-chip>
 <arc-chip value="svelte">Svelte</arc-chip>`,
       },
-      {
+    {
         label: 'React',
         lang: 'tsx',
         code: `import { Chip } from '@arclux/arc-ui-react';
@@ -75,7 +75,7 @@ Chip fires an \`arc-change\` event on every toggle, including both the \`value\`
 <Chip value="vue">Vue</Chip>
 <Chip value="svelte">Svelte</Chip>`,
       },
-      {
+    {
         label: 'Vue',
         lang: 'html',
         code: `<script setup>
@@ -88,7 +88,7 @@ import { Chip } from '@arclux/arc-ui-vue';
   <Chip value="svelte">Svelte</Chip>
 </template>`,
       },
-      {
+    {
         label: 'Svelte',
         lang: 'html',
         code: `<script>
@@ -99,7 +99,7 @@ import { Chip } from '@arclux/arc-ui-vue';
 <Chip value="vue">Vue</Chip>
 <Chip value="svelte">Svelte</Chip>`,
       },
-      {
+    {
         label: 'Angular',
         lang: 'ts',
         code: `import { Component } from '@angular/core';
@@ -115,7 +115,7 @@ import { Chip } from '@arclux/arc-ui-angular';
 })
 export class MyComponent {}`,
       },
-      {
+    {
         label: 'Solid',
         lang: 'tsx',
         code: `import { Chip } from '@arclux/arc-ui-solid';
@@ -124,7 +124,7 @@ export class MyComponent {}`,
 <Chip value="vue">Vue</Chip>
 <Chip value="svelte">Svelte</Chip>`,
       },
-      {
+    {
         label: 'Preact',
         lang: 'tsx',
         code: `import { Chip } from '@arclux/arc-ui-preact';
@@ -133,14 +133,7 @@ export class MyComponent {}`,
 <Chip value="vue">Vue</Chip>
 <Chip value="svelte">Svelte</Chip>`,
       },
-      {
-        label: 'HTML',
-        lang: 'html',
-        code: `<arc-chip value="react" selected>React</arc-chip>
-<arc-chip value="vue">Vue</arc-chip>
-<arc-chip value="svelte">Svelte</arc-chip>`,
-      },
-    ],
+  ],
   
   seeAlso: ["tag","badge","segmented-control","multi-select"],
 };

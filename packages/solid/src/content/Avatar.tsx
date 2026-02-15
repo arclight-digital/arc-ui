@@ -9,14 +9,15 @@ export interface AvatarProps {
   size?: 'sm' | 'md' | 'lg';
   shape?: 'square' | 'rounded';
   status?: 'online' | 'offline' | 'busy' | 'away';
+  _imgState?: string;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Avatar: Component<AvatarProps> = (props) => {
-  const [local, rest] = splitProps(props, ['src', 'name', 'size', 'shape', 'status', 'children']);
+  const [local, rest] = splitProps(props, ['src', 'name', 'size', 'shape', 'status', '_imgState', 'children']);
   return (
-    <arc-avatar src={local.src} name={local.name} size={local.size} shape={local.shape} status={local.status} {...rest}>
+    <arc-avatar src={local.src} name={local.name} size={local.size} shape={local.shape} status={local.status} _imgState={local._imgState} {...rest}>
       {local.children}
     </arc-avatar>
   );

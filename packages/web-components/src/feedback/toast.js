@@ -67,7 +67,7 @@ export class ArcToast extends LitElement {
         display: flex;
         align-items: center;
         gap: var(--space-sm);
-        padding: var(--space-sm) var(--space-md);
+        padding: var(--space-sm);
         border-radius: var(--radius-md);
         background: var(--bg-elevated);
         border: 1px solid var(--border-default);
@@ -99,39 +99,6 @@ export class ArcToast extends LitElement {
 
       .toast__message { flex: 1; }
 
-      .toast__dismiss {
-        background: none;
-        border: none;
-        color: var(--text-ghost);
-        cursor: pointer;
-        font-size: var(--text-sm);
-        padding: var(--space-xs);
-        border-radius: var(--radius-sm);
-        transition: color var(--transition-fast);
-        line-height: 1;
-      }
-
-      .toast__dismiss:hover { color: var(--text-primary); }
-
-      .toast__action {
-        background: none;
-        border: none;
-        color: var(--_status-color);
-        cursor: pointer;
-        font-family: var(--font-accent);
-        font-size: var(--text-xs);
-        font-weight: 600;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-        padding: var(--space-xs) var(--space-sm);
-        border-radius: var(--radius-sm);
-        transition: background var(--transition-fast);
-        white-space: nowrap;
-      }
-
-      .toast__action:hover {
-        background: rgba(var(--_status-rgb), 0.1);
-      }
 
       .toast.is-exiting {
         animation: toast-out 200ms ease-in forwards;
@@ -212,9 +179,9 @@ export class ArcToast extends LitElement {
             <span class="toast__icon" aria-hidden="true">${getStatusIcon(t.variant)}</span>
             <span class="toast__message">${t.message}</span>
             ${t.actionLabel ? html`
-              <button class="toast__action" @click=${() => this._handleAction(t)} part="action">${t.actionLabel}</button>
+              <arc-button variant="ghost" size="sm" @click=${() => this._handleAction(t)} part="action">${t.actionLabel}</arc-button>
             ` : ''}
-            <button class="toast__dismiss" @click=${() => this._dismiss(t.id)} aria-label="Dismiss">&times;</button>
+            <arc-icon-button name="x" label="Dismiss" variant="ghost" size="sm" @click=${() => this._dismiss(t.id)} part="dismiss"></arc-icon-button>
           </div>
         `)}
       </div>

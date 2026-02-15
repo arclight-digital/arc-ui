@@ -22,7 +22,7 @@ Suggestions are provided declaratively with \`<arc-suggestion>\` elements, each 
       'Full keyboard navigation: ArrowUp/Down through suggestions, Enter to select or submit, Escape to close',
       'Three event types: `arc-input` (keystrokes), `arc-change` (submit), `arc-select` (suggestion picked)',
       'Automatic outside-click dismissal of the suggestion dropdown',
-      'Accessible `role="searchbox"` with `aria-expanded` and `role="listbox"` for suggestions',
+      'Accessible `role="searchbox"` with `aria-expanded` and `role="listbox"` for suggestions'
     ],
 
     guidelines: {
@@ -31,14 +31,14 @@ Suggestions are provided declaratively with \`<arc-suggestion>\` elements, each 
         'Use `placeholder` to describe what the user can search for, e.g. "Search components..."',
         'Set `loading` to true while fetching results to give the user visual feedback',
         'Provide `<arc-suggestion>` elements for common or recent queries to speed up discovery',
-        'Listen to `arc-input` for debounced live search, and `arc-change` for explicit submission',
+        'Listen to `arc-input` for debounced live search, and `arc-change` for explicit submission'
       ],
       dont: [
         'Do not use Search for generic text input -- use Input or Textarea for non-search fields',
         'Do not populate suggestions with hundreds of items -- keep the list to 8-10 for usability',
         'Do not rely solely on the clear button for resetting -- also handle programmatic value clearing',
         'Do not use `loading` without actually fetching data -- it misleads users about system activity',
-        'Avoid placing Search inside a container with `overflow: hidden` that would clip the suggestion dropdown',
+        'Avoid placing Search inside a container with `overflow: hidden` that would clip the suggestion dropdown'
       ],
     },
 
@@ -54,16 +54,16 @@ Suggestions are provided declaratively with \`<arc-suggestion>\` elements, each 
       { name: 'placeholder', type: 'string', default: "'Search...'", description: 'Hint text displayed when the input is empty.' },
       { name: 'label', type: 'string', default: "''", description: 'Accessible label for the search field. Rendered visually above the input when provided.' },
       { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the input, reducing opacity and blocking interaction.' },
-      { name: 'loading', type: 'boolean', default: 'false', description: 'Shows a spinning indicator in place of the clear button to signal in-progress loading.' },
+      { name: 'loading', type: 'boolean', default: 'false', description: 'Shows a spinning indicator in place of the clear button to signal in-progress loading.' }
     ],
     events: [
       { name: 'arc-input', description: 'Fired on each keystroke in the search field' },
       { name: 'arc-clear', description: 'Fired when the clear button is clicked' },
       { name: 'arc-change', description: 'Fired when the search value changes on blur' },
-      { name: 'arc-select', description: 'Fired when a suggestion is selected' },
+      { name: 'arc-select', description: 'Fired when a suggestion is selected' }
     ],
     tabs: [
-      {
+    {
         label: 'Web Component',
         lang: 'html',
         code: `<arc-search label="Search" placeholder="Search docs...">
@@ -71,7 +71,7 @@ Suggestions are provided declaratively with \`<arc-suggestion>\` elements, each 
   <arc-suggestion value="components">Components</arc-suggestion>
 </arc-search>`,
       },
-      {
+    {
         label: 'React',
         lang: 'tsx',
         code: `import { Search, Suggestion } from '@arclux/arc-ui-react';
@@ -81,7 +81,7 @@ Suggestions are provided declaratively with \`<arc-suggestion>\` elements, each 
   <Suggestion value="components">Components</Suggestion>
 </Search>`,
       },
-      {
+    {
         label: 'Vue',
         lang: 'html',
         code: `<script setup>
@@ -95,7 +95,7 @@ import { Search, Suggestion } from '@arclux/arc-ui-vue';
   </Search>
 </template>`,
       },
-      {
+    {
         label: 'Svelte',
         lang: 'html',
         code: `<script>
@@ -107,7 +107,7 @@ import { Search, Suggestion } from '@arclux/arc-ui-vue';
   <Suggestion value="components">Components</Suggestion>
 </Search>`,
       },
-      {
+    {
         label: 'Angular',
         lang: 'ts',
         code: `import { Component } from '@angular/core';
@@ -124,7 +124,7 @@ import { Search, Suggestion } from '@arclux/arc-ui-angular';
 })
 export class MyComponent {}`,
       },
-      {
+    {
         label: 'Solid',
         lang: 'tsx',
         code: `import { Search, Suggestion } from '@arclux/arc-ui-solid';
@@ -134,7 +134,7 @@ export class MyComponent {}`,
   <Suggestion value="components">Components</Suggestion>
 </Search>`,
       },
-      {
+    {
         label: 'Preact',
         lang: 'tsx',
         code: `import { Search, Suggestion } from '@arclux/arc-ui-preact';
@@ -144,16 +144,16 @@ export class MyComponent {}`,
   <Suggestion value="components">Components</Suggestion>
 </Search>`,
       },
-    ],
+  ],
     subComponents: [
       {
         name: 'Suggestion',
         tag: 'arc-suggestion',
         description: 'Autocomplete suggestion item inside a Search component.',
         props: [
-          { name: 'value', type: 'string', description: 'Suggestion value' },
+          { name: 'value', type: 'string', description: 'Suggestion value' }
         ],
-      },
+      }
     ],
   
   seeAlso: ["combobox","command-palette","input"],

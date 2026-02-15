@@ -22,7 +22,7 @@ The card supports four positions -- \`bottom\` (default), \`top\`, \`left\`, and
       'Scale and opacity entrance animation using ARC design token transition timing',
       'Escape key dismissal for keyboard accessibility',
       'Focus-in and focus-out support so keyboard users can trigger the card via tab navigation',
-      'arc-open and arc-close custom events for tracking card visibility state',
+      'arc-open and arc-close custom events for tracking card visibility state'
     ],
 
     guidelines: {
@@ -31,37 +31,39 @@ The card supports four positions -- \`bottom\` (default), \`top\`, \`left\`, and
         'Keep card content concise -- a heading, a few lines of text, and optionally a link or action',
         'Set position to avoid clipping against viewport edges; "top" works well for triggers near the bottom of the page',
         'Increase open-delay for triggers in dense layouts to prevent accidental activation during quick mouse traversal',
-        'Test with keyboard navigation to ensure the card is accessible via focus-in on the trigger',
+        'Test with keyboard navigation to ensure the card is accessible via focus-in on the trigger'
       ],
       dont: [
         'Use HoverCard for critical information that the user must see -- hover is not discoverable on touch devices',
         'Place complex interactive forms inside the card; use a Popover or Modal for those use cases',
         'Set open-delay to 0, as this causes cards to flash on every accidental hover',
         'Nest a HoverCard inside another HoverCard -- the stacking and delay logic will conflict',
-        'Forget the content slot; without it, the card renders as an empty floating panel',
+        'Forget the content slot; without it, the card renders as an empty floating panel'
       ],
     },
 
-    previewHtml: `<arc-hover-card position="bottom">
-  <arc-button variant="secondary">Hover for details</arc-button>
-  <div slot="content" style="display:flex; flex-direction:column; gap:8px; min-width:220px;">
-    <strong style="color:var(--text-primary); font-size:14px;">Alice Chen</strong>
-    <span style="color:var(--text-secondary); font-size:13px;">Senior Engineer @ Arclight</span>
-    <span style="color:var(--text-muted); font-size:12px;">San Francisco, CA</span>
-  </div>
-</arc-hover-card>`,
+    previewHtml: `<div style="height:200px;display:flex;align-items:flex-start;justify-content:center;padding-top:var(--space-md)">
+  <arc-hover-card position="bottom">
+    <arc-button variant="secondary">Hover for details</arc-button>
+    <div slot="content" style="display:flex; flex-direction:column; gap:8px; min-width:220px;">
+      <strong style="color:var(--text-primary); font-size:14px;">Alice Chen</strong>
+      <span style="color:var(--text-secondary); font-size:13px;">Senior Engineer @ Arclight</span>
+      <span style="color:var(--text-muted); font-size:12px;">San Francisco, CA</span>
+    </div>
+  </arc-hover-card>
+</div>`,
 
     props: [
       { name: 'position', type: "'bottom' | 'top' | 'left' | 'right'", default: "'bottom'", description: 'Controls which side of the trigger the card appears on. The card is centered along the perpendicular axis using CSS transforms.' },
       { name: 'open-delay', type: 'number', default: '400', description: 'Milliseconds to wait after hover/focus before showing the card. Prevents accidental activation during fast cursor movement.' },
-      { name: 'close-delay', type: 'number', default: '300', description: 'Milliseconds to wait after the cursor leaves the trigger before hiding the card. Moving into the card cancels this timer.' },
+      { name: 'close-delay', type: 'number', default: '300', description: 'Milliseconds to wait after the cursor leaves the trigger before hiding the card. Moving into the card cancels this timer.' }
     ],
     events: [
       { name: 'arc-open', description: 'Fired when the hover card becomes visible' },
-      { name: 'arc-close', description: 'Fired when the hover card hides' },
+      { name: 'arc-close', description: 'Fired when the hover card hides' }
     ],
     tabs: [
-      {
+    {
         label: 'Web Component',
         lang: 'html',
         code: `<arc-hover-card>
@@ -69,7 +71,7 @@ The card supports four positions -- \`bottom\` (default), \`top\`, \`left\`, and
   <div slot="content">Additional details on hover.</div>
 </arc-hover-card>`,
       },
-      {
+    {
         label: 'React',
         lang: 'tsx',
         code: `import { Button, HoverCard } from '@arclux/arc-ui-react';
@@ -79,7 +81,7 @@ The card supports four positions -- \`bottom\` (default), \`top\`, \`left\`, and
   <div slot="content">Additional details on hover.</div>
 </HoverCard>`,
       },
-      {
+    {
         label: 'Vue',
         lang: 'html',
         code: `<script setup>
@@ -93,7 +95,7 @@ import { Button, HoverCard } from '@arclux/arc-ui-vue';
   </HoverCard>
 </template>`,
       },
-      {
+    {
         label: 'Svelte',
         lang: 'html',
         code: `<script>
@@ -105,7 +107,7 @@ import { Button, HoverCard } from '@arclux/arc-ui-vue';
   <div slot="content">Additional details on hover.</div>
 </HoverCard>`,
       },
-      {
+    {
         label: 'Angular',
         lang: 'ts',
         code: `import { Component } from '@angular/core';
@@ -122,7 +124,7 @@ import { Button, HoverCard } from '@arclux/arc-ui-angular';
 })
 export class MyComponent {}`,
       },
-      {
+    {
         label: 'Solid',
         lang: 'tsx',
         code: `import { Button, HoverCard } from '@arclux/arc-ui-solid';
@@ -132,7 +134,7 @@ export class MyComponent {}`,
   <div slot="content">Additional details on hover.</div>
 </HoverCard>`,
       },
-      {
+    {
         label: 'Preact',
         lang: 'tsx',
         code: `import { Button, HoverCard } from '@arclux/arc-ui-preact';
@@ -142,7 +144,7 @@ export class MyComponent {}`,
   <div slot="content">Additional details on hover.</div>
 </HoverCard>`,
       },
-    ],
-  
+  ],
+
   seeAlso: ["tooltip","popover","card"],
 };

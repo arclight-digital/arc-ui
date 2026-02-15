@@ -8,7 +8,6 @@ export interface CommandPaletteProps {
   open?: boolean;
   placeholder?: string;
   _query?: string;
-  _focusedIndex?: string;
   _items?: string;
   className?: string;
   children?: React.ReactNode;

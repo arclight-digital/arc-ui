@@ -11,7 +11,6 @@ export interface DrawerProps {
   className?: string;
   children?: React.ReactNode;
   onArcClose?: (e: CustomEvent) => void;
-  onClick?: (e: Event) => void;
 }
 
 export const Drawer = createComponent({
@@ -20,6 +19,5 @@ export const Drawer = createComponent({
   react: React,
   events: {
     onArcClose: 'arc-close' as EventName<CustomEvent>,
-    onClick: 'click' as EventName<Event>,
   },
 });

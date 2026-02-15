@@ -123,3 +123,18 @@ export type { CtaBannerProps } from './CtaBanner.js';
 
 export { IconLibrary } from './IconLibrary.js';
 export type { IconLibraryProps } from './IconLibrary.js';
+
+export { Image } from './Image.js';
+export type { ImageProps } from './Image.js';
+
+export { ListItem } from './ListItem.js';
+export type { ListItemProps } from './ListItem.js';
+
+export { ScrollIndicator } from './ScrollIndicator.js';
+export type { ScrollIndicatorProps } from './ScrollIndicator.js';
+
+export { Separator } from './Separator.js';
+export type { SeparatorProps } from './Separator.js';
+
+export { VirtualList } from './VirtualList.js';
+export type { VirtualListProps } from './VirtualList.js';

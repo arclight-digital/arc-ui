@@ -22,7 +22,7 @@ Sheet manages focus trapping and scroll locking automatically. When opened, it l
       'Named slots for `header` and `footer` allow full customisation of chrome areas',
       'Automatic scroll locking on `document.body` when open, restored on close',
       'Escape key dismissal with focus auto-moved to the close button on open',
-      'Fires `arc-open` and `arc-close` custom events for lifecycle synchronisation',
+      'Fires `arc-open` and `arc-close` custom events for lifecycle synchronisation'
     ],
 
     guidelines: {
@@ -31,14 +31,14 @@ Sheet manages focus trapping and scroll locking automatically. When opened, it l
         'Use the right sheet for desktop detail panes, settings forms, or property inspectors',
         'Provide a descriptive `heading` so screen readers announce the dialog purpose via `aria-label`',
         'Listen to `arc-close` to reset your local open state and perform any necessary cleanup',
-        'Populate the `footer` slot with primary and secondary action buttons for task-oriented sheets',
+        'Populate the `footer` slot with primary and secondary action buttons for task-oriented sheets'
       ],
       dont: [
         'Do not nest a Sheet inside another Sheet -- use a Modal for layered overlays instead',
         'Do not use Sheet for brief confirmations or alerts -- use Modal or Toast for those patterns',
         'Do not set both `side="bottom"` and `side="right"` -- only one placement is active at a time',
         'Do not place critical navigation inside a Sheet -- it is dismissible and should contain optional content',
-        'Avoid overloading the sheet body with too many form fields -- consider a full page for complex forms',
+        'Avoid overloading the sheet body with too many form fields -- consider a full page for complex forms'
       ],
     },
 
@@ -114,15 +114,15 @@ Sheet manages focus trapping and scroll locking automatically. When opened, it l
     props: [
       { name: 'open', type: 'boolean', default: 'false', description: 'Controls whether the sheet is visible. Reflected as an attribute and toggleable programmatically.' },
       { name: 'side', type: "'bottom' | 'right'", default: "'bottom'", description: 'Which edge the panel slides in from. Bottom sheets have a max-height of 80vh; right sheets are 400px wide.' },
-      { name: 'heading', type: 'string', default: "''", description: 'Text displayed in the header row. Also used as the `aria-label` for the dialog panel.' },
+      { name: 'heading', type: 'string', default: "''", description: 'Text displayed in the header row. Also used as the `aria-label` for the dialog panel.' }
     ],
     events: [
       { name: 'arc-open', description: 'Fired when the sheet opens' },
-      { name: 'arc-close', description: 'Fired when the sheet closes' },
+      { name: 'arc-close', description: 'Fired when the sheet closes' }
     ],
 
     tabs: [
-      {
+    {
         label: 'Web Component',
         lang: 'html',
         code: `<!-- Bottom sheet for filters -->
@@ -172,7 +172,7 @@ Sheet manages focus trapping and scroll locking automatically. When opened, it l
   });
 </script>`,
       },
-      {
+    {
         label: 'React',
         lang: 'tsx',
         code: `import { Sheet, Button, Chip, Select, Badge } from '@arclux/arc-ui-react';
@@ -230,7 +230,7 @@ function DetailSheet() {
   );
 }`,
       },
-      {
+    {
         label: 'Vue',
         lang: 'html',
         code: `<script setup>
@@ -277,7 +277,7 @@ const detailsOpen = ref(false);
   </Sheet>
 </template>`,
       },
-      {
+    {
         label: 'Svelte',
         lang: 'html',
         code: `<script>
@@ -313,7 +313,7 @@ const detailsOpen = ref(false);
   </div>
 </Sheet>`,
       },
-      {
+    {
         label: 'Angular',
         lang: 'ts',
         code: `import { Component } from '@angular/core';
@@ -342,7 +342,7 @@ export class FilterComponent {
   filtersOpen = false;
 }`,
       },
-      {
+    {
         label: 'Solid',
         lang: 'tsx',
         code: `import { createSignal } from 'solid-js';
@@ -371,7 +371,7 @@ function FilterSheet() {
   );
 }`,
       },
-      {
+    {
         label: 'Preact',
         lang: 'tsx',
         code: `import { useState } from 'preact/hooks';
@@ -400,7 +400,7 @@ function FilterSheet() {
   );
 }`,
       },
-    ],
-  
+  ],
+
   seeAlso: ["drawer","modal","sidebar"],
 };

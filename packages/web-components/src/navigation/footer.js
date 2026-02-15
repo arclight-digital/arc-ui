@@ -27,11 +27,11 @@ export class ArcFooter extends LitElement {
       }
 
       .footer {
-        padding: var(--space-2xl) var(--space-xl) var(--space-xl);
+        padding: var(--space-xl);
       }
 
       :host([compact]) .footer {
-        padding: var(--space-lg) var(--space-md) var(--space-md);
+        padding: var(--space-md);
       }
 
       .footer__brand {

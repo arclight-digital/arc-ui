@@ -47,9 +47,6 @@ export class ArcTopBar extends LitElement {
         align-items: center;
         gap: var(--space-md);
         height: 100%;
-        max-width: var(--max-width);
-        margin-inline: auto;
-        padding-inline: var(--space-lg);
       }
 
       .topbar__glow {

@@ -6,11 +6,9 @@ defineOptions({ name: 'DropdownMenu' });
 
 withDefaults(defineProps<{
   open?: boolean;
-  _focusedIndex?: string;
   _children?: string;
 }>(), {
   open: false,
-  _focusedIndex: -1,
   _children: () => ([]),
 });
 
@@ -23,7 +21,6 @@ defineEmits<{
 <template>
   <arc-dropdown-menu
     :open="open"
-    :_focusedIndex="_focusedIndex"
     :_children="_children"
   >
     <slot />

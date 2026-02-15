@@ -216,7 +216,7 @@ export class ArcMarkdown extends LitElement {
 
       .markdown blockquote {
         margin: 0 0 var(--space-md) 0;
-        padding: var(--space-sm) var(--space-md);
+        padding: var(--space-sm);
         background: var(--bg-card);
         border: 1px solid var(--border-subtle);
         border-radius: var(--radius-md);

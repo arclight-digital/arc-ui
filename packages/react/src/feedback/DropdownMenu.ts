@@ -6,7 +6,6 @@ import { ArcDropdownMenu } from '@arclux/arc-ui';
 
 export interface DropdownMenuProps {
   open?: boolean;
-  _focusedIndex?: string;
   _children?: string;
   className?: string;
   children?: React.ReactNode;

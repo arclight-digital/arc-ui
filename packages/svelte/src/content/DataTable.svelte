@@ -9,15 +9,19 @@
     selectable?: boolean;
     sortColumn?: string;
     sortDirection?: string;
+    virtual?: boolean;
+    rowHeight?: number;
     _columns?: string;
     _selectedRows?: string;
+    _startIndex?: string;
+    _visibleCount?: string;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { rows = [], sortable = false, selectable = false, sortColumn = '', sortDirection = 'asc', _columns = [], _selectedRows = new Set(), children, ...rest }: Props = $props();
+  let { rows = [], sortable = false, selectable = false, sortColumn = '', sortDirection = 'asc', virtual = false, rowHeight = 40, _columns = [], _selectedRows = new Set(), _startIndex = 0, _visibleCount = 0, children, ...rest }: Props = $props();
 </script>
 
-<arc-data-table {rows} {sortable} {selectable} {sortColumn} {sortDirection} {_columns} {_selectedRows} {...rest}>
+<arc-data-table {rows} {sortable} {selectable} {sortColumn} {sortDirection} {virtual} {rowHeight} {_columns} {_selectedRows} {_startIndex} {_visibleCount} {...rest}>
   {@render children?.()}
 </arc-data-table>

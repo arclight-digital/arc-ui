@@ -35,7 +35,7 @@ export class ArcAccordion extends LitElement {
         justify-content: space-between;
         gap: var(--space-md);
         width: 100%;
-        padding: var(--space-lg) var(--space-xl);
+        padding: var(--space-lg);
         cursor: pointer;
         font-family: var(--font-body);
         font-size: var(--text-md);
@@ -85,7 +85,7 @@ export class ArcAccordion extends LitElement {
         font-family: var(--font-body);
         font-size: var(--text-sm);
         line-height: 1.75;
-        padding: var(--space-xs) var(--space-lg) var(--space-md);
+        padding: var(--space-md);
         margin: 0;
       }
 

@@ -9,16 +9,20 @@ export interface DataTableProps {
   selectable?: boolean;
   sortColumn?: string;
   sortDirection?: string;
+  virtual?: boolean;
+  rowHeight?: number;
   _columns?: string;
   _selectedRows?: string;
+  _startIndex?: string;
+  _visibleCount?: string;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const DataTable: Component<DataTableProps> = (props) => {
-  const [local, rest] = splitProps(props, ['rows', 'sortable', 'selectable', 'sortColumn', 'sortDirection', '_columns', '_selectedRows', 'children']);
+  const [local, rest] = splitProps(props, ['rows', 'sortable', 'selectable', 'sortColumn', 'sortDirection', 'virtual', 'rowHeight', '_columns', '_selectedRows', '_startIndex', '_visibleCount', 'children']);
   return (
-    <arc-data-table rows={local.rows} sortable={local.sortable} selectable={local.selectable} sortColumn={local.sortColumn} sortDirection={local.sortDirection} _columns={local._columns} _selectedRows={local._selectedRows} {...rest}>
+    <arc-data-table rows={local.rows} sortable={local.sortable} selectable={local.selectable} sortColumn={local.sortColumn} sortDirection={local.sortDirection} virtual={local.virtual} rowHeight={local.rowHeight} _columns={local._columns} _selectedRows={local._selectedRows} _startIndex={local._startIndex} _visibleCount={local._visibleCount} {...rest}>
       {local.children}
     </arc-data-table>
   );

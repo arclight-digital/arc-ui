@@ -5,7 +5,7 @@
 
   interface Props {
     open?: boolean;
-    position?: 'bottom' | 'top' | 'left' | 'right';
+    position?: string;
     trigger?: string;
     children?: Snippet;
     [key: string]: unknown;

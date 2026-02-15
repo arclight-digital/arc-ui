@@ -22,7 +22,7 @@ MultiSelect fires an \`arc-change\` event whenever the selection changes, with t
       'Declarative options via `<arc-option>` child elements with `value` and `label` attributes',
       'Automatic outside-click dismissal of the dropdown panel',
       'Focus glow on the control using the shared `--focus-glow` design token',
-      '"No results found" empty state when the filter query matches no options',
+      '"No results found" empty state when the filter query matches no options'
     ],
 
     guidelines: {
@@ -31,14 +31,14 @@ MultiSelect fires an \`arc-change\` event whenever the selection changes, with t
         'Use a descriptive `placeholder` to hint at expected input, such as "Choose languages..."',
         'Keep option labels concise so they display well as tags inside the control',
         'Listen to `arc-change` to react to selection changes and keep external state in sync',
-        'Pre-populate the `value` array when editing existing records to show current selections',
+        'Pre-populate the `value` array when editing existing records to show current selections'
       ],
       dont: [
         'Do not use MultiSelect when only a single value is needed -- use Select instead',
         'Do not provide more than ~50 options without also considering server-side filtering via arc-change',
         'Do not use extremely long option labels -- they will overflow the tag chips and the dropdown',
         'Do not set both `disabled` and a pre-selected `value` without a clear visual explanation of why editing is blocked',
-        'Avoid nesting MultiSelect inside a popover or modal without testing z-index stacking for the dropdown',
+        'Avoid nesting MultiSelect inside a popover or modal without testing z-index stacking for the dropdown'
       ],
     },
 
@@ -54,13 +54,13 @@ MultiSelect fires an \`arc-change\` event whenever the selection changes, with t
       { name: 'value', type: 'string[]', default: '[]', description: 'Array of selected option values. Updated when items are toggled and emitted via `arc-change`.' },
       { name: 'label', type: 'string', default: "''", description: 'Visible label rendered above the control in a small uppercase style.' },
       { name: 'placeholder', type: 'string', default: "''", description: 'Hint text shown inside the control when no items are selected and the input is empty.' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the control, preventing interaction and reducing opacity to 50%.' },
+      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the control, preventing interaction and reducing opacity to 50%.' }
     ],
     events: [
-      { name: 'arc-change', description: 'Fired when the selected values change' },
+      { name: 'arc-change', description: 'Fired when the selected values change' }
     ],
     tabs: [
-      {
+    {
         label: 'Web Component',
         lang: 'html',
         code: `<arc-multi-select label="Languages" placeholder="Choose...">
@@ -69,7 +69,7 @@ MultiSelect fires an \`arc-change\` event whenever the selection changes, with t
   <arc-option value="py">Python</arc-option>
 </arc-multi-select>`,
       },
-      {
+    {
         label: 'React',
         lang: 'tsx',
         code: `import { MultiSelect, Option } from '@arclux/arc-ui-react';
@@ -80,7 +80,7 @@ MultiSelect fires an \`arc-change\` event whenever the selection changes, with t
   <Option value="py">Python</Option>
 </MultiSelect>`,
       },
-      {
+    {
         label: 'Vue',
         lang: 'html',
         code: `<script setup>
@@ -95,7 +95,7 @@ import { MultiSelect, Option } from '@arclux/arc-ui-vue';
   </MultiSelect>
 </template>`,
       },
-      {
+    {
         label: 'Svelte',
         lang: 'html',
         code: `<script>
@@ -108,7 +108,7 @@ import { MultiSelect, Option } from '@arclux/arc-ui-vue';
   <Option value="py">Python</Option>
 </MultiSelect>`,
       },
-      {
+    {
         label: 'Angular',
         lang: 'ts',
         code: `import { Component } from '@angular/core';
@@ -126,7 +126,7 @@ import { MultiSelect, Option } from '@arclux/arc-ui-angular';
 })
 export class MyComponent {}`,
       },
-      {
+    {
         label: 'Solid',
         lang: 'tsx',
         code: `import { MultiSelect, Option } from '@arclux/arc-ui-solid';
@@ -137,7 +137,7 @@ export class MyComponent {}`,
   <Option value="py">Python</Option>
 </MultiSelect>`,
       },
-      {
+    {
         label: 'Preact',
         lang: 'tsx',
         code: `import { MultiSelect, Option } from '@arclux/arc-ui-preact';
@@ -148,7 +148,7 @@ export class MyComponent {}`,
   <Option value="py">Python</Option>
 </MultiSelect>`,
       },
-    ],
+  ],
   
   seeAlso: ["select","combobox","chip","tag"],
 };

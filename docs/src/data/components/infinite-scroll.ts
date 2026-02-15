@@ -22,7 +22,7 @@ When all data has been loaded, set the \`finished\` prop to \`true\`. The sentin
       'End-of-list state via `finished` prop -- removes the sentinel and shows "No more items" text',
       'ARIA `role="feed"` and `aria-busy` for accessible loading communication',
       'Observer automatically disconnects and reconnects when `finished` or `disabled` change',
-      'Disabled state at 40% opacity with pointer events blocked',
+      'Disabled state at 40% opacity with pointer events blocked'
     ],
 
     guidelines: {
@@ -31,14 +31,14 @@ When all data has been loaded, set the \`finished\` prop to \`true\`. The sentin
         'Set `finished` to `true` when the API indicates no more pages remain, so the observer disconnects',
         'Use a reasonable `threshold` (100-300px) so content loads before users hit the bottom and see a gap',
         'Place Infinite Scroll inside a scrollable parent or let the page itself be the scroll container',
-        'Append new items as direct children of the component -- they render in the default slot',
+        'Append new items as direct children of the component -- they render in the default slot'
       ],
       dont: [
         'Do not leave `loading` as `true` indefinitely -- this blocks further load events and leaves the spinner visible',
         'Do not use Infinite Scroll for small, fixed datasets -- standard pagination or a simple list is more appropriate',
         'Do not set `threshold` to 0 -- the user will see a flash of empty space before content loads',
         'Do not nest multiple Infinite Scroll components -- their observers may conflict',
-        'Avoid using Infinite Scroll without providing a way to reach footer content, since it pushes the footer down continuously',
+        'Avoid using Infinite Scroll without providing a way to reach footer content, since it pushes the footer down continuously'
       ],
     },
 
@@ -65,7 +65,7 @@ When all data has been loaded, set the \`finished\` prop to \`true\`. The sentin
         'Morbi tincidunt augue interdum velit euismod in pellentesque massa.',
         'Amet risus nullam eget felis eget nunc lobortis mattis.',
         'Egestas fringilla phasellus faucibus scelerisque eleifend donec pretium vulputate.',
-        'Consequat nisl vel pretium lectus quam id leo in vitae.',
+        'Consequat nisl vel pretium lectus quam id leo in vitae.'
       ];
       var feed = document.getElementById('demo-infinite');
       var batch = 0;
@@ -94,10 +94,10 @@ When all data has been loaded, set the \`finished\` prop to \`true\`. The sentin
       { name: 'threshold', type: 'number', default: '200', description: 'Distance in pixels from the bottom of the content at which `arc-load-more` fires. Controls how eagerly new data is requested.' },
       { name: 'loading', type: 'boolean', default: 'false', description: 'When true, displays a spinner in the footer and suppresses additional `arc-load-more` events.' },
       { name: 'finished', type: 'boolean', default: 'false', description: 'When true, disconnects the observer and displays "No more items" text in the footer.' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the component, disconnects the observer, and reduces opacity to 40%.' },
+      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the component, disconnects the observer, and reduces opacity to 40%.' }
     ],
     events: [
-      { name: 'arc-load-more', description: 'Fired when the scroll sentinel enters the viewport, signaling more content should load' },
+      { name: 'arc-load-more', description: 'Fired when the scroll sentinel enters the viewport, signaling more content should load' }
     ],
     tabs: [
       {
@@ -267,7 +267,7 @@ async function loadMore() {
 <InfiniteScroll loading={loading} finished={finished} onArcLoadMore={loadMore}>
   {items.map(item => <div key={item.id}>{item.name}</div>)}
 </InfiniteScroll>`,
-      },
+      }
     ],
   
   seeAlso: ["pagination","scroll-area"],

@@ -26,7 +26,7 @@ Row selection adds a checkbox column to the left of the table. A "select all" ch
       'arc-sort, arc-row-select, and arc-select-all custom events',
       'Accessible ARIA attributes: aria-sort on headers, aria-label on checkboxes',
       'Configurable column widths via the width attribute',
-      'CSS custom property theming via ARC design tokens',
+      'CSS custom property theming via ARC design tokens'
     ],
 
     guidelines: {
@@ -36,7 +36,7 @@ Row selection adds a checkbox column to the left of the table. A "select all" ch
         'Provide meaningful column labels that describe the data clearly',
         'Use the selectable attribute when users need to perform bulk actions on rows',
         'Set explicit column widths on columns that should remain fixed (e.g., status badges)',
-        'Listen to arc-sort events to implement server-side sorting for large datasets',
+        'Listen to arc-sort events to implement server-side sorting for large datasets'
       ],
       dont: [
         'Use DataTable for layout purposes — it is designed for data display, not page structure',
@@ -44,7 +44,7 @@ Row selection adds a checkbox column to the left of the table. A "select all" ch
         'Make every column sortable by default — this creates unnecessary cognitive load',
         'Nest complex interactive components (modals, drawers) inside table cells',
         'Forget to set a key attribute on each arc-column — the table cannot render data without it',
-        'Use DataTable for very small datasets (2-3 items) where a simple list would suffice',
+        'Use DataTable for very small datasets (2-3 items) where a simple list would suffice'
       ],
     },
 
@@ -63,7 +63,7 @@ if (dt) dt.rows = [
   { name: 'Bob Martinez', role: 'Product Designer', department: 'Design', status: 'Active' },
   { name: 'Charlie Kim', role: 'Engineering Manager', department: 'Engineering', status: 'Away' },
   { name: 'Diana Patel', role: 'Frontend Developer', department: 'Engineering', status: 'Active' },
-  { name: 'Eve Johnson', role: 'UX Researcher', department: 'Design', status: 'Active' },
+  { name: 'Eve Johnson', role: 'UX Researcher', department: 'Design', status: 'Active' }
 ];`,
 
     props: [
@@ -97,11 +97,23 @@ if (dt) dt.rows = [
         default: "'asc'",
         description: 'The current sort direction. Works in tandem with `sort-column` to control the initial sort state. Reflected as an attribute so it can be read from the DOM or targeted with CSS selectors.',
       },
+      {
+        name: 'virtual',
+        type: 'boolean',
+        default: 'false',
+        description: 'Enables virtual scrolling for large datasets. When true, only the visible rows plus an overscan buffer are rendered in the DOM, keeping performance constant regardless of row count.',
+      },
+      {
+        name: 'row-height',
+        type: 'number',
+        default: '40',
+        description: 'Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations.',
+      }
     ],
     events: [
       { name: 'arc-sort', description: 'Fired when a sortable column header is clicked' },
       { name: 'arc-select-all', description: 'Fired when the select-all checkbox is toggled' },
-      { name: 'arc-row-select', description: 'Fired when an individual row checkbox is toggled' },
+      { name: 'arc-row-select', description: 'Fired when an individual row checkbox is toggled' }
     ],
 
     tabs: [
@@ -127,7 +139,7 @@ if (dt) dt.rows = [
     { name: 'Bob Martinez', role: 'Product Designer', department: 'Design', status: 'Active' },
     { name: 'Charlie Kim', role: 'Engineering Manager', department: 'Engineering', status: 'Away' },
     { name: 'Diana Patel', role: 'Frontend Developer', department: 'Engineering', status: 'Active' },
-    { name: 'Eve Johnson', role: 'UX Researcher', department: 'Design', status: 'Active' },
+    { name: 'Eve Johnson', role: 'UX Researcher', department: 'Design', status: 'Active' }
   ];
 </script>`,
       },
@@ -141,7 +153,7 @@ const employees = [
   { name: 'Bob Martinez', role: 'Product Designer', department: 'Design', status: 'Active' },
   { name: 'Charlie Kim', role: 'Engineering Manager', department: 'Engineering', status: 'Away' },
   { name: 'Diana Patel', role: 'Frontend Developer', department: 'Engineering', status: 'Active' },
-  { name: 'Eve Johnson', role: 'UX Researcher', department: 'Design', status: 'Active' },
+  { name: 'Eve Johnson', role: 'UX Researcher', department: 'Design', status: 'Active' }
 ];
 
 export function EmployeeDirectory() {
@@ -166,7 +178,7 @@ const employees = [
   { name: 'Bob Martinez', role: 'Product Designer', department: 'Design', status: 'Active' },
   { name: 'Charlie Kim', role: 'Engineering Manager', department: 'Engineering', status: 'Away' },
   { name: 'Diana Patel', role: 'Frontend Developer', department: 'Engineering', status: 'Active' },
-  { name: 'Eve Johnson', role: 'UX Researcher', department: 'Design', status: 'Active' },
+  { name: 'Eve Johnson', role: 'UX Researcher', department: 'Design', status: 'Active' }
 ];
 </script>
 
@@ -190,7 +202,7 @@ const employees = [
     { name: 'Bob Martinez', role: 'Product Designer', department: 'Design', status: 'Active' },
     { name: 'Charlie Kim', role: 'Engineering Manager', department: 'Engineering', status: 'Away' },
     { name: 'Diana Patel', role: 'Frontend Developer', department: 'Engineering', status: 'Active' },
-    { name: 'Eve Johnson', role: 'UX Researcher', department: 'Design', status: 'Active' },
+    { name: 'Eve Johnson', role: 'UX Researcher', department: 'Design', status: 'Active' }
   ];
 </script>
 
@@ -224,7 +236,7 @@ export class EmployeeDirectoryComponent {
     { name: 'Bob Martinez', role: 'Product Designer', department: 'Design', status: 'Active' },
     { name: 'Charlie Kim', role: 'Engineering Manager', department: 'Engineering', status: 'Away' },
     { name: 'Diana Patel', role: 'Frontend Developer', department: 'Engineering', status: 'Active' },
-    { name: 'Eve Johnson', role: 'UX Researcher', department: 'Design', status: 'Active' },
+    { name: 'Eve Johnson', role: 'UX Researcher', department: 'Design', status: 'Active' }
   ];
 }`,
       },
@@ -238,7 +250,7 @@ const employees = [
   { name: 'Bob Martinez', role: 'Product Designer', department: 'Design', status: 'Active' },
   { name: 'Charlie Kim', role: 'Engineering Manager', department: 'Engineering', status: 'Away' },
   { name: 'Diana Patel', role: 'Frontend Developer', department: 'Engineering', status: 'Active' },
-  { name: 'Eve Johnson', role: 'UX Researcher', department: 'Design', status: 'Active' },
+  { name: 'Eve Johnson', role: 'UX Researcher', department: 'Design', status: 'Active' }
 ];
 
 export function EmployeeDirectory() {
@@ -262,7 +274,7 @@ const employees = [
   { name: 'Bob Martinez', role: 'Product Designer', department: 'Design', status: 'Active' },
   { name: 'Charlie Kim', role: 'Engineering Manager', department: 'Engineering', status: 'Away' },
   { name: 'Diana Patel', role: 'Frontend Developer', department: 'Engineering', status: 'Active' },
-  { name: 'Eve Johnson', role: 'UX Researcher', department: 'Design', status: 'Active' },
+  { name: 'Eve Johnson', role: 'UX Researcher', department: 'Design', status: 'Active' }
 ];
 
 export function EmployeeDirectory() {
@@ -275,7 +287,7 @@ export function EmployeeDirectory() {
     </DataTable>
   );
 }`,
-      },
+      }
     ],
     subComponents: [
       {
@@ -286,9 +298,9 @@ export function EmployeeDirectory() {
           { name: 'key', type: 'string', description: 'The property name on each row object whose value should be displayed in this column. Must match a key present in the objects passed to the parent DataTable\'s `rows` array.' },
           { name: 'label', type: 'string', description: 'The human-readable header text displayed in the table\'s `<th>` element. This is what users see at the top of the column.' },
           { name: 'sortable', type: 'boolean', default: 'false', description: 'When true (and the parent DataTable also has `sortable`), clicking this column\'s header toggles ascending/descending sort on the corresponding data field. A sort indicator arrow appears next to the label.' },
-          { name: 'width', type: 'string', description: 'Sets a fixed CSS width on the column (e.g., "100px", "20%"). Useful for constraining narrow columns like status badges or actions so they do not stretch unnecessarily.' },
+          { name: 'width', type: 'string', description: 'Sets a fixed CSS width on the column (e.g., "100px", "20%"). Useful for constraining narrow columns like status badges or actions so they do not stretch unnecessarily.' }
         ],
-      },
+      }
     ],
   
   seeAlso: ["table","pagination","sortable-list"],

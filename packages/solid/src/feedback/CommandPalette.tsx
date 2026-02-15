@@ -7,16 +7,15 @@ export interface CommandPaletteProps {
   open?: boolean;
   placeholder?: string;
   _query?: string;
-  _focusedIndex?: string;
   _items?: string;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const CommandPalette: Component<CommandPaletteProps> = (props) => {
-  const [local, rest] = splitProps(props, ['open', 'placeholder', '_query', '_focusedIndex', '_items', 'children']);
+  const [local, rest] = splitProps(props, ['open', 'placeholder', '_query', '_items', 'children']);
   return (
-    <arc-command-palette open={local.open} placeholder={local.placeholder} _query={local._query} _focusedIndex={local._focusedIndex} _items={local._items} {...rest}>
+    <arc-command-palette open={local.open} placeholder={local.placeholder} _query={local._query} _items={local._items} {...rest}>
       {local.children}
     </arc-command-palette>
   );

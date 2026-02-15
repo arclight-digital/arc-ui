@@ -20,7 +20,7 @@ The component fires an \`arc-toggle\` event with \`{ expanded }\` detail when to
       'ResizeObserver for responsive re-measurement on container resize',
       'Configurable line count via lines attribute',
       'Reflected expanded attribute for CSS-based conditional styling',
-      'Show more / Show less toggle with accent-primary styling',
+      'Show more / Show less toggle with accent-primary styling'
     ],
 
     guidelines: {
@@ -28,13 +28,13 @@ The component fires an \`arc-toggle\` event with \`{ expanded }\` detail when to
         'Use for long descriptions, comments, or bio text that would dominate the layout',
         'Set lines="2" or lines="3" for card descriptions and list item summaries',
         'Use in combination with cards or list items to keep uniform heights',
-        'Test with varying content lengths to ensure the toggle appears correctly',
+        'Test with varying content lengths to ensure the toggle appears correctly'
       ],
       dont: [
         'Use Truncate for single-line text — use CSS text-overflow: ellipsis instead',
         'Set lines to 1 — the clamping behavior is designed for multi-line content',
         'Truncate interactive content like forms or buttons — only use for text',
-        'Nest Truncate components — expanding one inside another creates confusing behavior',
+        'Nest Truncate components — expanding one inside another creates confusing behavior'
       ],
     },
 
@@ -44,10 +44,10 @@ The component fires an \`arc-toggle\` event with \`{ expanded }\` detail when to
 
     props: [
       { name: 'lines', type: 'number', default: '3', description: 'Maximum number of visible lines before clamping' },
-      { name: 'expanded', type: 'boolean', default: 'false', description: 'Whether the text is fully expanded' },
+      { name: 'expanded', type: 'boolean', default: 'false', description: 'Whether the text is fully expanded' }
     ],
     events: [
-      { name: 'arc-toggle', description: 'Fired when expand/collapse toggle is clicked, with { expanded } detail' },
+      { name: 'arc-toggle', description: 'Fired when expand/collapse toggle is clicked, with { expanded } detail' }
     ],
     tabs: [
       {
@@ -130,7 +130,7 @@ export class MyComponent {
 <Truncate lines={3}>
   Lorem ipsum dolor sit amet...
 </Truncate>`,
-      },
+      }
     ],
   
   seeAlso: ["text","tooltip"],

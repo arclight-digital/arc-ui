@@ -56,7 +56,7 @@ Connecting lines between steps change colour based on completion state — blue 
       {
         label: 'Web Component',
         lang: 'html',
-        code: `<arc-stepper current="1">
+        code: `<arc-stepper active="1">
   <arc-step label="Account"></arc-step>
   <arc-step label="Profile"></arc-step>
   <arc-step label="Review"></arc-step>
@@ -67,7 +67,7 @@ Connecting lines between steps change colour based on completion state — blue 
         lang: 'tsx',
         code: `import { Step, Stepper } from '@arclux/arc-ui-react';
 
-<Stepper current="1">
+<Stepper active="1">
   <Step label="Account"></Step>
   <Step label="Profile"></Step>
   <Step label="Review"></Step>
@@ -81,7 +81,7 @@ import { Step, Stepper } from '@arclux/arc-ui-vue';
 </script>
 
 <template>
-  <Stepper current="1">
+  <Stepper active="1">
     <Step label="Account"></Step>
     <Step label="Profile"></Step>
     <Step label="Review"></Step>
@@ -95,7 +95,7 @@ import { Step, Stepper } from '@arclux/arc-ui-vue';
   import { Step, Stepper } from '@arclux/arc-ui-svelte';
 </script>
 
-<Stepper current="1">
+<Stepper active="1">
   <Step label="Account"></Step>
   <Step label="Profile"></Step>
   <Step label="Review"></Step>
@@ -110,7 +110,7 @@ import { Step, Stepper } from '@arclux/arc-ui-angular';
 @Component({
   imports: [Step, Stepper],
   template: \`
-    <Stepper current="1">
+    <Stepper active="1">
       <Step label="Account"></Step>
       <Step label="Profile"></Step>
       <Step label="Review"></Step>
@@ -124,7 +124,7 @@ export class MyComponent {}`,
         lang: 'tsx',
         code: `import { Step, Stepper } from '@arclux/arc-ui-solid';
 
-<Stepper current="1">
+<Stepper active="1">
   <Step label="Account"></Step>
   <Step label="Profile"></Step>
   <Step label="Review"></Step>
@@ -135,7 +135,7 @@ export class MyComponent {}`,
         lang: 'tsx',
         code: `import { Step, Stepper } from '@arclux/arc-ui-preact';
 
-<Stepper current="1">
+<Stepper active="1">
   <Step label="Account"></Step>
   <Step label="Profile"></Step>
   <Step label="Review"></Step>

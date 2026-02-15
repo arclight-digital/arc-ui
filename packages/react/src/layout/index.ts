@@ -36,3 +36,30 @@ export type { StatusBarProps } from './StatusBar.js';
 
 export { Toolbar } from './Toolbar.js';
 export type { ToolbarProps } from './Toolbar.js';
+
+export { AspectGrid } from './AspectGrid.js';
+export type { AspectGridProps } from './AspectGrid.js';
+
+export { Center } from './Center.js';
+export type { CenterProps } from './Center.js';
+
+export { Cluster } from './Cluster.js';
+export type { ClusterProps } from './Cluster.js';
+
+export { Dock } from './Dock.js';
+export type { DockProps } from './Dock.js';
+
+export { FloatBar } from './FloatBar.js';
+export type { FloatBarProps } from './FloatBar.js';
+
+export { Inset } from './Inset.js';
+export type { InsetProps } from './Inset.js';
+
+export { Masonry } from './Masonry.js';
+export type { MasonryProps } from './Masonry.js';
+
+export { ResponsiveSwitcher } from './ResponsiveSwitcher.js';
+export type { ResponsiveSwitcherProps } from './ResponsiveSwitcher.js';
+
+export { Sticky } from './Sticky.js';
+export type { StickyProps } from './Sticky.js';

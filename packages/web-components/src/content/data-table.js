@@ -12,8 +12,12 @@ export class ArcDataTable extends LitElement {
     selectable:    { type: Boolean, reflect: true },
     sortColumn:    { type: String, attribute: 'sort-column' },
     sortDirection: { type: String, reflect: true, attribute: 'sort-direction' },
+    virtual:       { type: Boolean, reflect: true },
+    rowHeight:     { type: Number, attribute: 'row-height' },
     _columns:      { state: true },
     _selectedRows: { state: true },
+    _startIndex:   { state: true },
+    _visibleCount: { state: true },
   };
 
   static styles = [
@@ -25,6 +29,11 @@ export class ArcDataTable extends LitElement {
         overflow-x: auto;
         border: 1px solid var(--border-subtle);
         border-radius: var(--radius-md);
+      }
+
+      :host([virtual]) .table-wrapper {
+        overflow-y: auto;
+        max-height: var(--table-max-height, 600px);
       }
 
       table {
@@ -153,6 +162,9 @@ export class ArcDataTable extends LitElement {
         font-style: italic;
       }
 
+      /* Virtual spacer rows */
+      .spacer td { padding: 0; border: none; background: none; }
+
       .data-table__slot-host { display: none; }
 
       @media (prefers-reduced-motion: reduce) {
@@ -174,13 +186,86 @@ export class ArcDataTable extends LitElement {
     this.selectable = false;
     this.sortColumn = '';
     this.sortDirection = 'asc';
+    this.virtual = false;
+    this.rowHeight = 40;
     this._columns = [];
     this._selectedRows = new Set();
+    this._startIndex = 0;
+    this._visibleCount = 0;
+    this._rafId = null;
+    this._onScroll = this._onScroll.bind(this);
   }
 
   _onSlotChange(e) {
     this._columns = e.target.assignedElements({ flatten: true })
       .filter(el => el.tagName === 'ARC-COLUMN');
+  }
+
+  firstUpdated() {
+    if (this.virtual) this._attachScrollListener();
+  }
+
+  updated(changed) {
+    if (changed.has('virtual')) {
+      if (this.virtual) {
+        this._attachScrollListener();
+        this._recalcVirtual();
+      } else {
+        this._detachScrollListener();
+      }
+    }
+    if (changed.has('rows') && this.virtual) {
+      this._recalcVirtual();
+    }
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this._detachScrollListener();
+  }
+
+  _attachScrollListener() {
+    this.updateComplete.then(() => {
+      const wrapper = this.shadowRoot.querySelector('.table-wrapper');
+      if (wrapper) {
+        wrapper.addEventListener('scroll', this._onScroll, { passive: true });
+        this._recalcVirtual();
+      }
+    });
+  }
+
+  _detachScrollListener() {
+    if (this._rafId) {
+      cancelAnimationFrame(this._rafId);
+      this._rafId = null;
+    }
+    const wrapper = this.shadowRoot?.querySelector('.table-wrapper');
+    wrapper?.removeEventListener('scroll', this._onScroll);
+  }
+
+  _onScroll() {
+    if (this._rafId) return;
+    this._rafId = requestAnimationFrame(() => {
+      this._rafId = null;
+      this._recalcVirtual();
+    });
+  }
+
+  _recalcVirtual() {
+    const wrapper = this.shadowRoot?.querySelector('.table-wrapper');
+    if (!wrapper) return;
+
+    const scrollTop = wrapper.scrollTop;
+    const viewHeight = wrapper.clientHeight;
+    const total = this._sortedRows.length;
+    const overscan = 5;
+
+    const rawStart = Math.floor(scrollTop / this.rowHeight);
+    const rawVisible = Math.ceil(viewHeight / this.rowHeight);
+
+    this._startIndex = Math.max(0, rawStart - overscan);
+    const endIndex = Math.min(total, rawStart + rawVisible + overscan);
+    this._visibleCount = endIndex - this._startIndex;
   }
 
   _handleSort(column) {
@@ -268,6 +353,55 @@ export class ArcDataTable extends LitElement {
     return html`<span class="sort-indicator" aria-hidden="true">${this.sortDirection === 'asc' ? '\u2191' : '\u2193'}</span>`;
   }
 
+  _renderRows(rows) {
+    if (rows.length === 0) {
+      return html`
+        <tr>
+          <td class="empty-state" colspan=${this._columns.length + (this.selectable ? 1 : 0)}>
+            No data available
+          </td>
+        </tr>
+      `;
+    }
+
+    if (this.virtual) {
+      const total = rows.length;
+      const colCount = this._columns.length + (this.selectable ? 1 : 0);
+      const topHeight = this._startIndex * this.rowHeight;
+      const endIndex = this._startIndex + this._visibleCount;
+      const bottomHeight = (total - endIndex) * this.rowHeight;
+      const visibleRows = rows.slice(this._startIndex, endIndex);
+
+      return html`
+        ${topHeight > 0 ? html`<tr class="spacer"><td colspan=${colCount} style="height:${topHeight}px"></td></tr>` : ''}
+        ${visibleRows.map((row, i) => this._renderRow(row, this._startIndex + i))}
+        ${bottomHeight > 0 ? html`<tr class="spacer"><td colspan=${colCount} style="height:${bottomHeight}px"></td></tr>` : ''}
+      `;
+    }
+
+    return rows.map((row, i) => this._renderRow(row, i));
+  }
+
+  _renderRow(row, i) {
+    return html`
+      <tr class="${this._selectedRows.has(i) ? 'selected' : ''}" part="row">
+        ${this.selectable ? html`
+          <td class="checkbox-cell">
+            <input
+              type="checkbox"
+              aria-label="Select row ${i + 1}"
+              .checked=${this._selectedRows.has(i)}
+              @change=${(e) => this._handleRowSelect(e, row, i)}
+            />
+          </td>
+        ` : ''}
+        ${this._columns.map(col => html`
+          <td part="cell">${row[col.key] ?? ''}</td>
+        `)}
+      </tr>
+    `;
+  }
+
   render() {
     const rows = this._sortedRows;
 
@@ -302,29 +436,7 @@ export class ArcDataTable extends LitElement {
             </tr>
           </thead>
           <tbody part="body">
-            ${rows.length === 0 ? html`
-              <tr>
-                <td class="empty-state" colspan=${this._columns.length + (this.selectable ? 1 : 0)}>
-                  No data available
-                </td>
-              </tr>
-            ` : rows.map((row, i) => html`
-              <tr class="${this._selectedRows.has(i) ? 'selected' : ''}" part="row">
-                ${this.selectable ? html`
-                  <td class="checkbox-cell">
-                    <input
-                      type="checkbox"
-                      aria-label="Select row ${i + 1}"
-                      .checked=${this._selectedRows.has(i)}
-                      @change=${(e) => this._handleRowSelect(e, row, i)}
-                    />
-                  </td>
-                ` : ''}
-                ${this._columns.map(col => html`
-                  <td part="cell">${row[col.key] ?? ''}</td>
-                `)}
-              </tr>
-            `)}
+            ${this._renderRows(rows)}
           </tbody>
         </table>
       </div>

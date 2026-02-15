@@ -7,15 +7,14 @@
     open?: boolean;
     placeholder?: string;
     _query?: string;
-    _focusedIndex?: string;
     _items?: string;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { open = false, placeholder = 'Type a command...', _query = '', _focusedIndex = 0, _items = [], children, ...rest }: Props = $props();
+  let { open = false, placeholder = 'Type a command...', _query = '', _items = [], children, ...rest }: Props = $props();
 </script>
 
-<arc-command-palette {open} {placeholder} {_query} {_focusedIndex} {_items} {...rest}>
+<arc-command-palette {open} {placeholder} {_query} {_items} {...rest}>
   {@render children?.()}
 </arc-command-palette>

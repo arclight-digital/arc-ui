@@ -25,7 +25,7 @@ Four built-in variants — info, success, warning, and error — apply a colored
       'aria-live="polite" container for screen-reader announcements',
       'Respects prefers-reduced-motion — disables animations when set',
       'Responsive full-width layout on viewports under 640 px',
-      'arc-dismiss event fires when a toast is removed',
+      'arc-dismiss event fires when a toast is removed'
     ],
 
     guidelines: {
@@ -35,7 +35,7 @@ Four built-in variants — info, success, warning, and error — apply a colored
         'Keep messages short — one sentence or less — so users can read them before auto-dismiss',
         'Use the error variant for failures that need acknowledgment but not a blocking dialog',
         'Set duration to 0 for critical messages that the user must dismiss manually',
-        'Pair with form submissions and async operations to provide immediate feedback',
+        'Pair with form submissions and async operations to provide immediate feedback'
       ],
       dont: [
         'Create multiple <arc-toast> elements on the same page — use one shared instance',
@@ -43,7 +43,7 @@ Four built-in variants — info, success, warning, and error — apply a colored
         'Display sensitive data (passwords, tokens) in a toast — they are visible to anyone nearby',
         'Set very short durations (under 2 000 ms); users may not have time to read the message',
         'Rely solely on color to convey meaning — the icon and message text must stand on their own',
-        'Fire toasts in rapid succession for batch operations; summarize into a single notification',
+        'Fire toasts in rapid succession for batch operations; summarize into a single notification'
       ],
     },
 
@@ -71,14 +71,14 @@ Four built-in variants — info, success, warning, and error — apply a colored
         type: 'number',
         default: '4000',
         description: 'Time in milliseconds before a toast auto-dismisses. Applies as the default for every show() call but can be overridden per-toast via the duration option in the show() payload. Set to 0 to disable auto-dismiss entirely, requiring the user to click the close button.',
-      },
+      }
     ],
     events: [
-      { name: 'arc-dismiss', description: 'Fired when a toast notification is dismissed' },
+      { name: 'arc-dismiss', description: 'Fired when a toast notification is dismissed' }
     ],
 
     tabs: [
-      {
+    {
         label: 'Web Component',
         lang: 'html',
         code: `<script type="module" src="@arclux/arc-ui"></script>
@@ -100,7 +100,7 @@ Four built-in variants — info, success, warning, and error — apply a colored
   </arc-button>
 </div>`,
       },
-      {
+    {
         label: 'React',
         lang: 'tsx',
         code: `import { Toast, Button } from '@arclux/arc-ui-react';
@@ -125,7 +125,7 @@ export function NotificationDemo() {
   );
 }`,
       },
-      {
+    {
         label: 'Vue',
         lang: 'html',
         code: `<script setup>
@@ -145,7 +145,7 @@ const showError   = () => toaster.value?.show({ message: 'Something went wrong.'
   </div>
 </template>`,
       },
-      {
+    {
         label: 'Svelte',
         lang: 'html',
         code: `<script>
@@ -162,7 +162,7 @@ const showError   = () => toaster.value?.show({ message: 'Something went wrong.'
   <Button variant="secondary" on:click={showError}>Error</Button>
 </div>`,
       },
-      {
+    {
         label: 'Angular',
         lang: 'ts',
         code: `import { Component, ViewChild, ElementRef } from '@angular/core';
@@ -189,7 +189,7 @@ export class NotificationDemoComponent {
   }
 }`,
       },
-      {
+    {
         label: 'Solid',
         lang: 'tsx',
         code: `import { Button, Toast } from '@arclux/arc-ui-solid';
@@ -214,7 +214,7 @@ export function NotificationDemo() {
   );
 }`,
       },
-      {
+    {
         label: 'Preact',
         lang: 'tsx',
         code: `import { Button, Toast } from '@arclux/arc-ui-preact';
@@ -239,7 +239,7 @@ export function NotificationDemo() {
   );
 }`,
       },
-    ],
-  
+  ],
+
   seeAlso: ["alert","notification-panel"],
 };

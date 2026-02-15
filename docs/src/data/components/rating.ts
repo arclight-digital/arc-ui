@@ -22,7 +22,7 @@ Rating supports both \`disabled\` and \`readonly\` modes. Disabled reduces opaci
       'Full keyboard navigation: Arrow keys step the value, Home/End jump to min/max',
       'Separate `disabled` (dimmed, no interaction) and `readonly` (full appearance, no interaction) modes',
       'Single tab stop for the entire star group, with internal arrow-key navigation',
-      'Fires `arc-change` on click or keyboard selection with `{ value }` in the event detail',
+      'Fires `arc-change` on click or keyboard selection with `{ value }` in the event detail'
     ],
 
     guidelines: {
@@ -31,14 +31,14 @@ Rating supports both \`disabled\` and \`readonly\` modes. Disabled reduces opaci
         'Set `readonly` when displaying an existing rating that the user should not change',
         'Pair Rating with a numeric label or text description (e.g. "4 out of 5") for added clarity',
         'Use the default `max="5"` for most use cases -- it is the most universally understood scale',
-        'Listen to `arc-change` to update your form state or submit the rating value',
+        'Listen to `arc-change` to update your form state or submit the rating value'
       ],
       dont: [
         'Do not use Rating for binary choices -- use Toggle or Checkbox instead',
         'Do not set `max` higher than 10 -- too many stars become hard to distinguish at a glance',
         'Do not use Rating for precise numeric input -- use Slider or Number Input for exact values',
         'Do not rely on colour alone to distinguish filled and unfilled states -- the SVG fill style also differs',
-        'Avoid placing Rating components too close together without labels -- users may confuse which rating applies to which item',
+        'Avoid placing Rating components too close together without labels -- users may confuse which rating applies to which item'
       ],
     },
 
@@ -48,26 +48,26 @@ Rating supports both \`disabled\` and \`readonly\` modes. Disabled reduces opaci
       { name: 'value', type: 'number', default: '0', description: 'Current rating value. Reflected as an attribute and updated on user interaction.' },
       { name: 'max', type: 'number', default: '5', description: 'Maximum number of stars to render. Determines the upper bound of the rating scale.' },
       { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables interaction, reducing opacity to 40% and blocking pointer events.' },
-      { name: 'readonly', type: 'boolean', default: 'false', description: 'Prevents interaction while maintaining full visual appearance. Useful for displaying existing ratings.' },
+      { name: 'readonly', type: 'boolean', default: 'false', description: 'Prevents interaction while maintaining full visual appearance. Useful for displaying existing ratings.' }
     ],
     events: [
-      { name: 'arc-change', description: 'Fired when the rating value changes' },
+      { name: 'arc-change', description: 'Fired when the rating value changes' }
     ],
 
     tabs: [
-      {
+    {
         label: 'Web Component',
         lang: 'html',
         code: `<arc-rating value="3" max="5"></arc-rating>`,
       },
-      {
+    {
         label: 'React',
         lang: 'tsx',
         code: `import { Rating } from '@arclux/arc-ui-react';
 
 <Rating value={3} max={5} />`,
       },
-      {
+    {
         label: 'Vue',
         lang: 'html',
         code: `<script setup>
@@ -78,7 +78,7 @@ import { Rating } from '@arclux/arc-ui-vue';
   <Rating :value="3" :max="5" />
 </template>`,
       },
-      {
+    {
         label: 'Svelte',
         lang: 'html',
         code: `<script>
@@ -87,7 +87,7 @@ import { Rating } from '@arclux/arc-ui-vue';
 
 <Rating value={3} max={5} />`,
       },
-      {
+    {
         label: 'Angular',
         lang: 'ts',
         code: `import { Component } from '@angular/core';
@@ -101,26 +101,21 @@ import { Rating } from '@arclux/arc-ui-angular';
 })
 export class MyComponent {}`,
       },
-      {
+    {
         label: 'Solid',
         lang: 'tsx',
         code: `import { Rating } from '@arclux/arc-ui-solid';
 
 <Rating value={3} max={5} />`,
       },
-      {
+    {
         label: 'Preact',
         lang: 'tsx',
         code: `import { Rating } from '@arclux/arc-ui-preact';
 
 <Rating value={3} max={5} />`,
       },
-      {
-        label: 'HTML',
-        lang: 'html',
-        code: `<arc-rating value="3" max="5"></arc-rating>`,
-      },
-    ],
+  ],
   
   seeAlso: ["slider","icon"],
 };

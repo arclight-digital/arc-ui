@@ -22,7 +22,7 @@ Full keyboard navigation is supported: arrow keys move a focus ring through the 
       'Min/max date constraints via ISO date strings that disable out-of-range days',
       'Arrow key navigation through the grid with automatic month transitions at boundaries',
       'Outside-month day cells shown at 30% opacity to fill the 6-row grid consistently',
-      'Two events: `arc-change` on date selection and `arc-navigate` on month/year changes',
+      'Two events: `arc-change` on date selection and `arc-navigate` on month/year changes'
     ],
 
     guidelines: {
@@ -31,14 +31,14 @@ Full keyboard navigation is supported: arrow keys move a focus ring through the 
         'Use `arc-navigate` to lazy-load events or availability data when the user changes months',
         'Pair Calendar with a text input or DatePicker wrapper for combined typed and visual date entry',
         'Pre-set `month` and `year` to the month containing the initial `value` so the selection is visible on load',
-        'Provide sufficient container width (280px minimum) so the grid cells are comfortably clickable',
+        'Provide sufficient container width (280px minimum) so the grid cells are comfortably clickable'
       ],
       dont: [
         'Do not use Calendar for time selection -- it handles dates only',
         'Do not set `min` greater than `max` -- the component will disable all days',
         'Do not use Calendar for date range selection (two dates) -- it supports single date selection only',
         'Do not override the monospace font on day cells -- it ensures uniform column alignment',
-        'Avoid placing Calendar in extremely narrow containers below 280px -- the grid cells become too small for touch targets',
+        'Avoid placing Calendar in extremely narrow containers below 280px -- the grid cells become too small for touch targets'
       ],
     },
 
@@ -49,22 +49,26 @@ Full keyboard navigation is supported: arrow keys move a focus ring through the 
       { name: 'min', type: 'string', default: "''", description: 'Minimum selectable date as an ISO string. Days before this date are disabled.' },
       { name: 'max', type: 'string', default: "''", description: 'Maximum selectable date as an ISO string. Days after this date are disabled.' },
       { name: 'month', type: 'number', description: 'The currently displayed month (0-based, 0=January). Defaults to the current month.' },
-      { name: 'year', type: 'number', description: 'The currently displayed year. Defaults to the current year.' },
+      { name: 'year', type: 'number', description: 'The currently displayed year. Defaults to the current year.' }
+    ],
+    events: [
+      { name: 'arc-change', description: 'Fired when a date is selected. `event.detail.value` contains the ISO date string (YYYY-MM-DD).' },
+      { name: 'arc-navigate', description: 'Fired when the visible month or year changes via the navigation buttons.' }
     ],
     tabs: [
-      {
+    {
         label: 'Web Component',
         lang: 'html',
         code: `<arc-calendar></arc-calendar>`,
       },
-      {
+    {
         label: 'React',
         lang: 'tsx',
         code: `import { Calendar } from '@arclux/arc-ui-react';
 
 <Calendar></Calendar>`,
       },
-      {
+    {
         label: 'Vue',
         lang: 'html',
         code: `<script setup>
@@ -75,7 +79,7 @@ import { Calendar } from '@arclux/arc-ui-vue';
   <Calendar></Calendar>
 </template>`,
       },
-      {
+    {
         label: 'Svelte',
         lang: 'html',
         code: `<script>
@@ -84,7 +88,7 @@ import { Calendar } from '@arclux/arc-ui-vue';
 
 <Calendar></Calendar>`,
       },
-      {
+    {
         label: 'Angular',
         lang: 'ts',
         code: `import { Component } from '@angular/core';
@@ -98,21 +102,21 @@ import { Calendar } from '@arclux/arc-ui-angular';
 })
 export class MyComponent {}`,
       },
-      {
+    {
         label: 'Solid',
         lang: 'tsx',
         code: `import { Calendar } from '@arclux/arc-ui-solid';
 
 <Calendar></Calendar>`,
       },
-      {
+    {
         label: 'Preact',
         lang: 'tsx',
         code: `import { Calendar } from '@arclux/arc-ui-preact';
 
 <Calendar></Calendar>`,
       },
-    ],
+  ],
   
   seeAlso: ["date-picker"],
 };

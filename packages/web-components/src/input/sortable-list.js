@@ -30,7 +30,7 @@ export class ArcSortableList extends LitElement {
         display: flex;
         align-items: center;
         gap: var(--space-sm);
-        padding: var(--space-sm) var(--space-md);
+        padding: var(--space-sm);
         background: var(--bg-card, var(--bg-surface));
         border: 1px solid var(--border-subtle);
         border-radius: var(--radius-md);

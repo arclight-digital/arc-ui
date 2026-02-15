@@ -37,3 +37,8 @@ export { default as Tag } from './Tag.vue';
 export { default as Truncate } from './Truncate.vue';
 export { default as CtaBanner } from './CtaBanner.vue';
 export { default as IconLibrary } from './IconLibrary.vue';
+export { default as Image } from './Image.vue';
+export { default as ListItem } from './ListItem.vue';
+export { default as ScrollIndicator } from './ScrollIndicator.vue';
+export { default as Separator } from './Separator.vue';
+export { default as VirtualList } from './VirtualList.vue';

@@ -7,11 +7,10 @@ import '@arclux/arc-ui';
   selector: 'arc-dropdown-menu',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-dropdown-menu [open]="open" [attr._focusedIndex]="_focusedIndex" [attr._children]="_children" (arc-close)="arcClose.emit($event)" (arc-select)="arcSelect.emit($event)"><ng-content /></arc-dropdown-menu>`,
+  template: `<arc-dropdown-menu [open]="open" [attr._children]="_children" (arc-close)="arcClose.emit($event)" (arc-select)="arcSelect.emit($event)"><ng-content /></arc-dropdown-menu>`,
 })
 export class DropdownMenu {
   @Input() open: boolean = false;
-  @Input() _focusedIndex: string = -1;
   @Input() _children: string = [];
   @Output() arcClose = new EventEmitter<CustomEvent>();
   @Output() arcSelect = new EventEmitter<CustomEvent>();

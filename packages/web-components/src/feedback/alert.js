@@ -82,34 +82,6 @@ export class ArcAlert extends LitElement {
       :host([compact]) .alert__heading { font-size: var(--text-sm); margin-bottom: 2px; }
       :host([compact]) .alert__content { font-size: var(--text-xs); }
 
-      .alert__dismiss {
-        position: absolute;
-        top: var(--space-sm);
-        right: var(--space-sm);
-        background: none;
-        border: none;
-        color: var(--text-ghost);
-        cursor: pointer;
-        font-size: var(--text-md);
-        width: 32px;
-        height: 32px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: var(--radius-sm);
-        transition: color var(--transition-fast), background var(--transition-fast);
-        line-height: 1;
-      }
-
-      .alert__dismiss:hover {
-        color: var(--text-primary);
-        background: var(--bg-hover);
-      }
-
-      .alert__dismiss:focus-visible {
-        outline: none;
-        box-shadow: var(--focus-ring);
-      }
 
       @media (prefers-reduced-motion: reduce) {
         :host *,
@@ -145,7 +117,7 @@ export class ArcAlert extends LitElement {
           <div class="alert__content" part="content"><slot></slot></div>
         </div>
         ${this.dismissible ? html`
-          <button class="alert__dismiss" aria-label="Dismiss" @click=${this._dismiss} part="dismiss">&times;</button>
+          <arc-icon-button name="x" label="Dismiss" variant="ghost" size="sm" @click=${this._dismiss} part="dismiss"></arc-icon-button>
         ` : ''}
       </div>
     `;

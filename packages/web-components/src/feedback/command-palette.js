@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { MenuKeyboardController } from '../shared/menu-keyboard.js';
 import '../content/icon.js';
 
 /**
@@ -11,7 +12,6 @@ export class ArcCommandPalette extends LitElement {
     open:          { type: Boolean, reflect: true },
     placeholder:   { type: String },
     _query:        { state: true },
-    _focusedIndex: { state: true },
     _items:        { state: true },
   };
 
@@ -68,7 +68,7 @@ export class ArcCommandPalette extends LitElement {
         display: flex;
         align-items: center;
         gap: var(--space-sm);
-        padding: var(--space-md) var(--space-lg);
+        padding: var(--space-md);
         border-bottom: 1px solid var(--border-default);
       }
 
@@ -113,7 +113,7 @@ export class ArcCommandPalette extends LitElement {
         align-items: center;
         gap: var(--space-sm);
         width: 100%;
-        padding: var(--space-sm) var(--space-lg);
+        padding: var(--space-sm);
         border: none;
         background: transparent;
         color: var(--text-secondary);
@@ -151,7 +151,7 @@ export class ArcCommandPalette extends LitElement {
         display: flex;
         align-items: center;
         gap: var(--space-md);
-        padding: var(--space-sm) var(--space-lg);
+        padding: var(--space-sm);
         border-top: 1px solid var(--border-default);
         font-family: var(--font-mono);
         font-size: var(--text-xs);
@@ -188,9 +188,12 @@ export class ArcCommandPalette extends LitElement {
     this.open = false;
     this.placeholder = 'Type a command...';
     this._query = '';
-    this._focusedIndex = 0;
     this._items = [];
-    this._onKeyDown = this._onKeyDown.bind(this);
+    this._menuKb = new MenuKeyboardController(this, {
+      getItemCount: () => this._filteredItems.length,
+      onSelect: (i) => this._selectItem(this._filteredItems[i]),
+      onClose: () => this._close(),
+    });
   }
 
   _onSlotChange(e) {
@@ -210,15 +213,16 @@ export class ArcCommandPalette extends LitElement {
     if (changed.has('open')) {
       if (this.open) {
         this._query = '';
-        this._focusedIndex = 0;
-        document.addEventListener('keydown', this._onKeyDown);
+        this._menuKb.reset();
+        this._menuKb.focusedIndex = 0;
+        this._menuKb.attach();
         document.body.style.overflow = 'hidden';
         this.updateComplete.then(() => {
           const input = this.shadowRoot.querySelector('.palette__input');
           if (input) input.focus();
         });
       } else {
-        document.removeEventListener('keydown', this._onKeyDown);
+        this._menuKb.detach();
         document.body.style.overflow = '';
       }
     }
@@ -226,44 +230,12 @@ export class ArcCommandPalette extends LitElement {
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    document.removeEventListener('keydown', this._onKeyDown);
     document.body.style.overflow = '';
-  }
-
-  _onKeyDown(e) {
-    if (!this.open) return;
-
-    const filtered = this._filteredItems;
-
-    switch (e.key) {
-      case 'ArrowDown':
-        e.preventDefault();
-        this._focusedIndex = this._focusedIndex < filtered.length - 1
-          ? this._focusedIndex + 1
-          : 0;
-        break;
-      case 'ArrowUp':
-        e.preventDefault();
-        this._focusedIndex = this._focusedIndex > 0
-          ? this._focusedIndex - 1
-          : filtered.length - 1;
-        break;
-      case 'Enter':
-        e.preventDefault();
-        if (filtered.length > 0 && this._focusedIndex >= 0) {
-          this._selectItem(filtered[this._focusedIndex]);
-        }
-        break;
-      case 'Escape':
-        e.preventDefault();
-        this._close();
-        break;
-    }
   }
 
   _onInput(e) {
     this._query = e.target.value;
-    this._focusedIndex = 0;
+    this._menuKb.focusedIndex = 0;
   }
 
   _selectItem(item) {
@@ -322,12 +294,12 @@ export class ArcCommandPalette extends LitElement {
         <div class="palette__results" role="listbox" part="results">
           ${filtered.map((item, i) => html`
             <button
-              class="palette__item ${i === this._focusedIndex ? 'is-focused' : ''}"
+              class="palette__item ${i === this._menuKb.focusedIndex ? 'is-focused' : ''}"
               role="option"
-              aria-selected=${i === this._focusedIndex ? 'true' : 'false'}
+              aria-selected=${i === this._menuKb.focusedIndex ? 'true' : 'false'}
               tabindex="-1"
               @click=${() => this._selectItem(item)}
-              @mouseenter=${() => { this._focusedIndex = i; }}
+              @mouseenter=${() => { this._menuKb.focusedIndex = i; }}
               part="item"
             >
               ${item.icon ? html`<arc-icon name=${item.icon} size="16" class="palette__item-icon" aria-hidden="true"></arc-icon>` : ''}

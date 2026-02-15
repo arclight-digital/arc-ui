@@ -21,7 +21,7 @@ Pagination follows the WAI-ARIA pattern for navigation landmarks with \`role="na
       'Active page highlighted with accent-primary background and a subtle box-shadow glow',
       'Accessible navigation landmark with `role="navigation"` and `aria-current="page"` on the active button',
       'Hover and focus-visible states with border brightening and focus glow ring',
-      'Fires `arc-change` with the new page number on every navigation action',
+      'Fires `arc-change` with the new page number on every navigation action'
     ],
 
     guidelines: {
@@ -30,14 +30,14 @@ Pagination follows the WAI-ARIA pattern for navigation landmarks with \`role="na
         'Use `siblings="1"` for compact layouts or `siblings="2"` when space allows for easier scanning',
         'Listen to `arc-change` and update your data source to load the corresponding page',
         'Place Pagination below or adjacent to the content it controls for clear spatial association',
-        'Combine with a page-size selector when users should control how many items appear per page',
+        'Combine with a page-size selector when users should control how many items appear per page'
       ],
       dont: [
         'Do not use Pagination for fewer than 3 pages -- inline previous/next links are simpler',
         'Do not set `current` to a value outside the 1..total range -- the component clamps internally but the intent is unclear',
         'Do not nest Pagination inside other interactive controls like buttons or links',
         'Do not use Pagination to navigate between unrelated sections -- use Tabs instead',
-        'Avoid hiding the component when there is only one page -- instead disable or show a single page indicator so users understand the data scope',
+        'Avoid hiding the component when there is only one page -- instead disable or show a single page indicator so users understand the data scope'
       ],
     },
 
@@ -47,10 +47,10 @@ Pagination follows the WAI-ARIA pattern for navigation landmarks with \`role="na
       { name: 'total', type: 'number', default: '1', description: 'Total number of pages.' },
       { name: 'current', type: 'number', default: '1', description: 'The currently active page number (1-based). Reflected as an attribute.' },
       { name: 'siblings', type: 'number', default: '1', description: 'Number of page buttons to show on each side of the current page before ellipsis truncation kicks in.' },
-      { name: 'compact', type: 'boolean', default: 'false', description: "Shows only previous/next buttons with a 'current / total' label. Hides individual page numbers." },
+      { name: 'compact', type: 'boolean', default: 'false', description: "Shows only previous/next buttons with a 'current / total' label. Hides individual page numbers." }
     ],
     events: [
-      { name: 'arc-change', description: 'Fired when the current page changes' },
+      { name: 'arc-change', description: 'Fired when the current page changes' }
     ],
     tabs: [
       {
@@ -112,7 +112,7 @@ export class MyComponent {}`,
         code: `import { Pagination } from '@arclux/arc-ui-preact';
 
 <Pagination total="10" current="3" siblings="1"></Pagination>`,
-      },
+      }
     ],
   
   seeAlso: ["data-table","breadcrumb","infinite-scroll"],

@@ -6,7 +6,7 @@ defineOptions({ name: 'Popover' });
 
 withDefaults(defineProps<{
   open?: boolean;
-  position?: 'bottom' | 'top' | 'left' | 'right';
+  position?: string;
   trigger?: string;
 }>(), {
   open: false,

@@ -8,13 +8,11 @@ withDefaults(defineProps<{
   open?: boolean;
   placeholder?: string;
   _query?: string;
-  _focusedIndex?: string;
   _items?: string;
 }>(), {
   open: false,
   placeholder: 'Type a command...',
   _query: '',
-  _focusedIndex: 0,
   _items: () => ([]),
 });
 
@@ -29,7 +27,6 @@ defineEmits<{
     :open="open"
     :placeholder="placeholder"
     :_query="_query"
-    :_focusedIndex="_focusedIndex"
     :_items="_items"
   >
     <slot />

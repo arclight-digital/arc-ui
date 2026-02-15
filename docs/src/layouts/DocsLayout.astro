@@ -27,6 +27,7 @@ const {
 ---
 
 <BaseLayout title={`${title} — ARC UI`} description={description}>
+  <arc-skip-link target="#main-content">Skip to content</arc-skip-link>
   <arc-app-shell>
     <!-- Top Bar -->
     <arc-top-bar slot="topbar" fixed nav-align="left" class="theme-fixed">
@@ -57,7 +58,7 @@ const {
     </div>
 
     <!-- Main Content -->
-    <div class="docs-content">
+    <div id="main-content" class="docs-content" tabindex="-1">
       <slot />
     </div>
   </arc-app-shell>
@@ -116,6 +117,8 @@ const {
 
   .docs-content {
     contain: inline-size;
+    outline: none;
+    box-shadow: none;
   }
 
 </style>

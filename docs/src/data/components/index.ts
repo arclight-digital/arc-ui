@@ -97,6 +97,45 @@ import { highlight } from './highlight';
 import { animatedNumber } from './animated-number';
 import { markdown } from './markdown';
 import { scrollToTop } from './scroll-to-top';
+import { separator } from './separator';
+import { image } from './image';
+import { scrollIndicator } from './scroll-indicator';
+import { list } from './list';
+import { virtualList } from './virtual-list';
+import { label } from './label';
+import { fieldset } from './fieldset';
+import { switchGroup } from './switch-group';
+import { buttonGroup } from './button-group';
+import { inputGroup } from './input-group';
+import { hotkey } from './hotkey';
+import { dock } from './dock';
+import { masonry } from './masonry';
+import { floatBar } from './float-bar';
+import { aspectGrid } from './aspect-grid';
+import { inset } from './inset';
+import { sticky } from './sticky';
+import { responsiveSwitcher } from './responsive-switcher';
+import { cluster } from './cluster';
+import { center } from './center';
+import { commandBar } from './command-bar';
+import { stepperNav } from './stepper-nav';
+import { bottomNav } from './bottom-nav';
+import { skipLink } from './skip-link';
+import { anchorNav } from './anchor-nav';
+import { speedDial } from './speed-dial';
+import { breadcrumbMenu } from './breadcrumb-menu';
+import { rail } from './rail';
+import { pageIndicator } from './page-indicator';
+import { snackbar } from './snackbar';
+import { banner } from './banner';
+import { spotlight } from './spotlight';
+import { guidedTour } from './guided-tour';
+import { inlineMessage } from './inline-message';
+import { confirm } from './confirm';
+import { loadingOverlay } from './loading-overlay';
+import { connectionStatus } from './connection-status';
+import { announcement } from './announcement';
+import { progressToast } from './progress-toast';
 import type { ComponentDef } from './_types';
 
 export type { ComponentDef } from './_types';
@@ -201,4 +240,43 @@ export const components: ComponentDef[] = [
   animatedNumber,
   markdown,
   scrollToTop,
+  separator,
+  image,
+  scrollIndicator,
+  list,
+  virtualList,
+  label,
+  fieldset,
+  switchGroup,
+  buttonGroup,
+  inputGroup,
+  hotkey,
+  dock,
+  masonry,
+  floatBar,
+  aspectGrid,
+  inset,
+  sticky,
+  responsiveSwitcher,
+  cluster,
+  center,
+  commandBar,
+  stepperNav,
+  bottomNav,
+  skipLink,
+  anchorNav,
+  speedDial,
+  breadcrumbMenu,
+  rail,
+  pageIndicator,
+  snackbar,
+  banner,
+  spotlight,
+  guidedTour,
+  inlineMessage,
+  confirm,
+  loadingOverlay,
+  connectionStatus,
+  announcement,
+  progressToast,
 ];

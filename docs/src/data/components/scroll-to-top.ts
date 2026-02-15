@@ -21,7 +21,7 @@ Accessibility is built in: the button has \`aria-label="Scroll to top"\` and pro
       'Configurable corner placement: bottom-right or bottom-left',
       'Configurable edge offset via CSS length values',
       'Circular button with chevron-up icon, fully token-styled',
-      'Accessible: aria-label, focus-visible glow, keyboard operable',
+      'Accessible: aria-label, focus-visible glow, keyboard operable'
     ],
 
     guidelines: {
@@ -29,13 +29,13 @@ Accessibility is built in: the button has \`aria-label="Scroll to top"\` and pro
         'Place once at the page level, outside scrolling containers',
         'Use on long pages where scrolling back to the top is common',
         'Adjust the threshold for pages with different scroll depths',
-        'Pair with ScrollSpy for complete scroll navigation',
+        'Pair with ScrollSpy for complete scroll navigation'
       ],
       dont: [
         'Place inside a scrollable container — it listens to window scroll',
         'Add multiple ScrollToTop instances on the same page',
         'Set the threshold too low — the button should appear after meaningful scrolling',
-        'Override the aria-label without providing an equivalent accessible name',
+        'Override the aria-label without providing an equivalent accessible name'
       ],
     },
 
@@ -50,7 +50,7 @@ Accessibility is built in: the button has \`aria-label="Scroll to top"\` and pro
       { name: 'threshold', type: 'number', default: '300', description: 'Scroll distance in pixels before the button becomes visible.' },
       { name: 'smooth', type: 'boolean', default: 'true', description: 'Use smooth scrolling animation. Falls back to instant when prefers-reduced-motion is set.' },
       { name: 'position', type: 'string', default: 'bottom-right', description: 'Corner placement: "bottom-right" or "bottom-left".' },
-      { name: 'offset', type: 'string', default: 'var(--space-lg)', description: 'Distance from viewport edges. Accepts any CSS length value.' },
+      { name: 'offset', type: 'string', default: 'var(--space-lg)', description: 'Distance from viewport edges. Accepts any CSS length value.' }
     ],
     events: [],
     tabs: [
@@ -147,7 +147,7 @@ export function Layout({ children }) {
     </>
   );
 }`,
-      },
+      }
     ],
   
   seeAlso: ["scroll-spy","scroll-area"],

@@ -10,6 +10,7 @@ export interface AvatarProps {
   size?: 'sm' | 'md' | 'lg';
   shape?: 'square' | 'rounded';
   status?: 'online' | 'offline' | 'busy' | 'away';
+  _imgState?: string;
   className?: string;
   children?: React.ReactNode;
 }

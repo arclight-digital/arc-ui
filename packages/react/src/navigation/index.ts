@@ -57,3 +57,30 @@ export type { TreeItemProps } from './TreeItem.js';
 
 export { TreeView } from './TreeView.js';
 export type { TreeViewProps } from './TreeView.js';
+
+export { AnchorNav } from './AnchorNav.js';
+export type { AnchorNavProps } from './AnchorNav.js';
+
+export { BottomNav } from './BottomNav.js';
+export type { BottomNavProps } from './BottomNav.js';
+
+export { BreadcrumbMenu } from './BreadcrumbMenu.js';
+export type { BreadcrumbMenuProps } from './BreadcrumbMenu.js';
+
+export { CommandBar } from './CommandBar.js';
+export type { CommandBarProps } from './CommandBar.js';
+
+export { PageIndicator } from './PageIndicator.js';
+export type { PageIndicatorProps } from './PageIndicator.js';
+
+export { Rail } from './Rail.js';
+export type { RailProps } from './Rail.js';
+
+export { SkipLink } from './SkipLink.js';
+export type { SkipLinkProps } from './SkipLink.js';
+
+export { SpeedDial } from './SpeedDial.js';
+export type { SpeedDialProps } from './SpeedDial.js';
+
+export { StepperNav } from './StepperNav.js';
+export type { StepperNavProps } from './StepperNav.js';

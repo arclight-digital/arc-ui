@@ -79,7 +79,7 @@ export class ArcNotificationPanel extends LitElement {
         align-items: center;
         justify-content: space-between;
         border-bottom: 1px solid var(--border-subtle);
-        padding: var(--space-md) var(--space-lg);
+        padding: var(--space-md);
         font-family: var(--font-body);
         font-weight: 600;
         font-size: var(--text-sm);
@@ -111,7 +111,7 @@ export class ArcNotificationPanel extends LitElement {
       /* ---- Footer ---- */
       .footer {
         border-top: 1px solid var(--border-subtle);
-        padding: var(--space-sm) var(--space-lg);
+        padding: var(--space-sm);
         text-align: center;
       }
 

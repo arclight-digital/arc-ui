@@ -28,7 +28,7 @@ export class ArcCollapsible extends LitElement {
         justify-content: space-between;
         gap: var(--space-md);
         width: 100%;
-        padding: var(--space-md) var(--space-lg);
+        padding: var(--space-md);
         cursor: pointer;
         font-family: var(--font-body);
         font-size: var(--body-size);

@@ -238,6 +238,12 @@ export function DocsSidebar() {
   </arc-sidebar-section>
 </arc-sidebar>`,
       },
+      {
+        label: 'HTML (Inline)',
+        lang: 'html',
+        code: `<!-- arc-sidebar is hybrid — CSS handles layout, JS enhances interactivity -->
+<arc-sidebar></arc-sidebar>`,
+      },
     ],
     subComponents: [
       {

@@ -37,3 +37,8 @@ export { default as Tag } from './Tag.svelte';
 export { default as Truncate } from './Truncate.svelte';
 export { default as CtaBanner } from './CtaBanner.svelte';
 export { default as IconLibrary } from './IconLibrary.svelte';
+export { default as Image } from './Image.svelte';
+export { default as ListItem } from './ListItem.svelte';
+export { default as ScrollIndicator } from './ScrollIndicator.svelte';
+export { default as Separator } from './Separator.svelte';
+export { default as VirtualList } from './VirtualList.svelte';

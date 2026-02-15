@@ -7,7 +7,7 @@ export interface DialogProps {
   open?: boolean;
   heading?: string;
   message?: string;
-  variant?: 'danger';
+  variant?: string;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }

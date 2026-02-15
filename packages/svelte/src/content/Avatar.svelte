@@ -9,13 +9,14 @@
     size?: 'sm' | 'md' | 'lg';
     shape?: 'square' | 'rounded';
     status?: 'online' | 'offline' | 'busy' | 'away';
+    _imgState?: string;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { src = '', name = '', size = 'md', shape = 'circle', status = '', children, ...rest }: Props = $props();
+  let { src = '', name = '', size = 'md', shape = 'circle', status = '', _imgState = 'loading', children, ...rest }: Props = $props();
 </script>
 
-<arc-avatar {src} {name} {size} {shape} {status} {...rest}>
+<arc-avatar {src} {name} {size} {shape} {status} {_imgState} {...rest}>
   {@render children?.()}
 </arc-avatar>

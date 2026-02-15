@@ -37,3 +37,8 @@ export { Tag } from './Tag.js';
 export { Truncate } from './Truncate.js';
 export { CtaBanner } from './CtaBanner.js';
 export { IconLibrary } from './IconLibrary.js';
+export { Image } from './Image.js';
+export { ListItem } from './ListItem.js';
+export { ScrollIndicator } from './ScrollIndicator.js';
+export { Separator } from './Separator.js';
+export { VirtualList } from './VirtualList.js';

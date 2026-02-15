@@ -23,7 +23,7 @@ export class ArcStat extends LitElement {
         align-items: center;
         gap: var(--space-sm);
         text-align: center;
-        padding: var(--space-lg) var(--space-md);
+        padding: var(--space-lg);
       }
 
       .stat__value {

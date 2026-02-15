@@ -3,6 +3,7 @@ import { tokenStyles } from '../shared-styles.js';
 import '../shared/menu-item.js';
 import '../shared/menu-divider.js';
 import '../content/icon.js';
+import '../content/separator.js';
 
 /**
  * @tag arc-context-menu
@@ -107,9 +108,7 @@ export class ArcContextMenu extends LitElement {
         font-family: var(--font-mono);
       }
 
-      .divider {
-        height: 1px;
-        background: var(--border-subtle);
+      arc-separator {
         margin: var(--space-xs) 0;
       }
 
@@ -275,7 +274,7 @@ export class ArcContextMenu extends LitElement {
       >
         ${this._children.map((child, i) => {
           if (child.tagName === 'ARC-MENU-DIVIDER') {
-            return html`<div class="divider" role="separator"></div>`;
+            return html`<arc-separator part="divider"></arc-separator>`;
           }
 
           return html`

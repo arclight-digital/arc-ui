@@ -22,7 +22,7 @@ When a date is selected, the component dispatches an \`arc-change\` event with t
       'Today highlight with an inset border ring for orientation',
       'Previous/next month navigation arrows in the calendar header',
       'Escape key and outside-click dismissal with focus restoration to the input',
-      'Animated dropdown entrance with prefers-reduced-motion support',
+      'Animated dropdown entrance with prefers-reduced-motion support'
     ],
 
     guidelines: {
@@ -31,14 +31,14 @@ When a date is selected, the component dispatches an \`arc-change\` event with t
         'Provide a descriptive label like "Start Date" or "Date of Birth" for accessibility',
         'Use the ISO string value for form submission and API communication, not the display format',
         'Listen to arc-change to capture the selected date and validate it against business rules',
-        'Set the initial value property when editing an existing record so the calendar opens to the correct month',
+        'Set the initial value property when editing an existing record so the calendar opens to the correct month'
       ],
       dont: [
         'Use DatePicker for date ranges -- use two DatePicker instances with coordinated min/max instead',
         'Allow the user to type directly into the input; it is read-only by design to ensure valid date formats',
         'Set min greater than max, as this will disable all dates and make the picker unusable',
         'Forget to handle the arc-change event -- without it, the selected date is not captured',
-        'Place DatePicker inside a container with overflow: hidden, as the calendar dropdown will be clipped',
+        'Place DatePicker inside a container with overflow: hidden, as the calendar dropdown will be clipped'
       ],
     },
 
@@ -50,25 +50,25 @@ When a date is selected, the component dispatches an \`arc-change\` event with t
       { name: 'max', type: 'string', default: "''", description: 'Maximum selectable date as an ISO string. Dates after this are visually dimmed and non-interactive.' },
       { name: 'placeholder', type: 'string', default: "'Select date'", description: 'Placeholder text displayed in the input when no date is selected.' },
       { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the date picker, reducing opacity and preventing the calendar from opening.' },
-      { name: 'label', type: 'string', default: "''", description: 'Label text rendered above the input in uppercase accent font styling.' },
+      { name: 'label', type: 'string', default: "''", description: 'Label text rendered above the input in uppercase accent font styling.' }
     ],
     events: [
-      { name: 'arc-change', description: 'Fired when a date is selected' },
+      { name: 'arc-change', description: 'Fired when a date is selected' }
     ],
     tabs: [
-      {
+    {
         label: 'Web Component',
         lang: 'html',
         code: `<arc-date-picker label="Select Date" placeholder="Choose a date"></arc-date-picker>`,
       },
-      {
+    {
         label: 'React',
         lang: 'tsx',
         code: `import { DatePicker } from '@arclux/arc-ui-react';
 
 <DatePicker label="Select Date" placeholder="Choose a date"></DatePicker>`,
       },
-      {
+    {
         label: 'Vue',
         lang: 'html',
         code: `<script setup>
@@ -79,7 +79,7 @@ import { DatePicker } from '@arclux/arc-ui-vue';
   <DatePicker label="Select Date" placeholder="Choose a date"></DatePicker>
 </template>`,
       },
-      {
+    {
         label: 'Svelte',
         lang: 'html',
         code: `<script>
@@ -88,7 +88,7 @@ import { DatePicker } from '@arclux/arc-ui-vue';
 
 <DatePicker label="Select Date" placeholder="Choose a date"></DatePicker>`,
       },
-      {
+    {
         label: 'Angular',
         lang: 'ts',
         code: `import { Component } from '@angular/core';
@@ -102,21 +102,21 @@ import { DatePicker } from '@arclux/arc-ui-angular';
 })
 export class MyComponent {}`,
       },
-      {
+    {
         label: 'Solid',
         lang: 'tsx',
         code: `import { DatePicker } from '@arclux/arc-ui-solid';
 
 <DatePicker label="Select Date" placeholder="Choose a date"></DatePicker>`,
       },
-      {
+    {
         label: 'Preact',
         lang: 'tsx',
         code: `import { DatePicker } from '@arclux/arc-ui-preact';
 
 <DatePicker label="Select Date" placeholder="Choose a date"></DatePicker>`,
       },
-    ],
+  ],
   
   seeAlso: ["calendar","input"],
 };

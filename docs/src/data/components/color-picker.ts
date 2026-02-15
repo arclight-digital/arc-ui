@@ -22,7 +22,7 @@ Color Picker performs all HSL-to-hex conversion internally. It fires \`arc-chang
       'Internal HSL-to-hex and hex-to-HSL conversion -- all values emitted as hex strings',
       'Hex input validates on blur; invalid values revert to the current color',
       'Touch-friendly pointer events with `setPointerCapture` for smooth mobile dragging',
-      'Disabled state at 40% opacity with pointer events blocked',
+      'Disabled state at 40% opacity with pointer events blocked'
     ],
 
     guidelines: {
@@ -31,14 +31,14 @@ Color Picker performs all HSL-to-hex conversion internally. It fires \`arc-chang
         'Pass a `presets` array for brand palettes or commonly used colors to speed up selection',
         'Use the `value` prop to set an initial color in 6-digit hex format (e.g. `#4d7ef7`)',
         'Listen for `arc-change` to update your application state in real time as the user picks',
-        'Place the picker inside a popover or dropdown if horizontal space is constrained',
+        'Place the picker inside a popover or dropdown if horizontal space is constrained'
       ],
       dont: [
         'Do not pass 3-digit hex shorthand (e.g. `#f00`) -- the component expects the full 6-digit format',
         'Do not use Color Picker when the user only needs to choose from a fixed set of options -- use a select or radio group instead',
         'Do not provide more than ~20 preset swatches -- the row wraps and can become visually overwhelming',
         'Do not rely on color alone to convey meaning -- pair with labels or icons for accessibility',
-        'Avoid placing the picker in very narrow containers under 260px wide -- the area and slider need room',
+        'Avoid placing the picker in very narrow containers under 260px wide -- the area and slider need room'
       ],
     },
 
@@ -53,10 +53,13 @@ Color Picker performs all HSL-to-hex conversion internally. It fires \`arc-chang
       { name: 'value', type: 'string', default: "'#4d7ef7'", description: 'Current color as a 6-digit hex string (e.g. `#4d7ef7`). Reflected as an attribute.' },
       { name: 'presets', type: 'string[]', default: '[]', description: 'Array of hex color strings to display as quick-select swatches below the hex input.' },
       { name: 'label', type: 'string', default: "''", description: 'Label text displayed above the picker in uppercase accent font.' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables all interaction, reducing opacity to 40% and blocking pointer events.' },
+      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables all interaction, reducing opacity to 40% and blocking pointer events.' }
+    ],
+    events: [
+      { name: 'arc-change', description: 'Fired when the color changes via any input method. `event.detail.value` contains the hex string.' }
     ],
     tabs: [
-      {
+    {
         label: 'Web Component',
         lang: 'html',
         code: `<arc-color-picker
@@ -72,7 +75,7 @@ Color Picker performs all HSL-to-hex conversion internally. It fires \`arc-chang
   });
 </script>`,
       },
-      {
+    {
         label: 'React',
         lang: 'tsx',
         code: `import { ColorPicker } from '@arclux/arc-ui-react';
@@ -84,7 +87,7 @@ Color Picker performs all HSL-to-hex conversion internally. It fires \`arc-chang
   onArcChange={(e) => console.log(e.detail.value)}
 />`,
       },
-      {
+    {
         label: 'Vue',
         lang: 'html',
         code: `<script setup>
@@ -102,7 +105,7 @@ const presets = ['#4d7ef7', '#22c55e', '#ef4444', '#eab308'];
   />
 </template>`,
       },
-      {
+    {
         label: 'Svelte',
         lang: 'html',
         code: `<script>
@@ -118,7 +121,7 @@ const presets = ['#4d7ef7', '#22c55e', '#ef4444', '#eab308'];
   on:arc-change={(e) => console.log(e.detail.value)}
 />`,
       },
-      {
+    {
         label: 'Angular',
         lang: 'ts',
         code: `import { Component } from '@angular/core';
@@ -143,7 +146,7 @@ export class MyComponent {
   }
 }`,
       },
-      {
+    {
         label: 'Solid',
         lang: 'tsx',
         code: `import { ColorPicker } from '@arclux/arc-ui-solid';
@@ -155,7 +158,7 @@ export class MyComponent {
   onArcChange={(e) => console.log(e.detail.value)}
 />`,
       },
-      {
+    {
         label: 'Preact',
         lang: 'tsx',
         code: `import { ColorPicker } from '@arclux/arc-ui-preact';
@@ -167,7 +170,7 @@ export class MyComponent {
   onArcChange={(e) => console.log(e.detail.value)}
 />`,
       },
-    ],
+  ],
   
   seeAlso: ["color-swatch","input"],
 };

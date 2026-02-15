@@ -230,6 +230,12 @@ export function SiteNav() {
         lang: 'html',
         code: `${previewMarkup}`,
       },
+      {
+        label: 'HTML (Inline)',
+        lang: 'html',
+        code: `<!-- arc-navigation-menu is hybrid — CSS handles layout, JS enhances interactivity -->
+<arc-navigation-menu></arc-navigation-menu>`,
+      },
     ],
     subComponents: [
       {

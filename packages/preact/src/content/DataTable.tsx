@@ -9,14 +9,18 @@ export interface DataTableProps {
   selectable?: boolean;
   sortColumn?: string;
   sortDirection?: string;
+  virtual?: boolean;
+  rowHeight?: number;
   _columns?: string;
   _selectedRows?: string;
+  _startIndex?: string;
+  _visibleCount?: string;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const DataTable: FunctionComponent<DataTableProps> = ({ rows, sortable, selectable, sortColumn, sortDirection, _columns, _selectedRows, children, ...rest }) => (
-  <arc-data-table rows={rows} sortable={sortable} selectable={selectable} sortColumn={sortColumn} sortDirection={sortDirection} _columns={_columns} _selectedRows={_selectedRows} {...rest}>
+export const DataTable: FunctionComponent<DataTableProps> = ({ rows, sortable, selectable, sortColumn, sortDirection, virtual, rowHeight, _columns, _selectedRows, _startIndex, _visibleCount, children, ...rest }) => (
+  <arc-data-table rows={rows} sortable={sortable} selectable={selectable} sortColumn={sortColumn} sortDirection={sortDirection} virtual={virtual} rowHeight={rowHeight} _columns={_columns} _selectedRows={_selectedRows} _startIndex={_startIndex} _visibleCount={_visibleCount} {...rest}>
     {children}
   </arc-data-table>
 );

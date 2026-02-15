@@ -12,6 +12,7 @@
         overflow: hidden;
         background: var(--bg-elevated);
         transition: border-color var(--transition-base), box-shadow var(--transition-base);
+        position: relative;
       }
 
       .arc-avatar .avatar:hover {
@@ -28,6 +29,32 @@
         height: 100%;
         object-fit: cover;
         border-radius: var(--radius-full);
+        opacity: 0;
+        transition: opacity var(--transition-slow);
+      }
+
+      .arc-avatar .avatar__img.loaded { opacity: 1; }
+
+      .arc-avatar .avatar__shimmer {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          90deg,
+          var(--bg-elevated) 25%,
+          var(--border-subtle) 37%,
+          var(--bg-elevated) 63%
+        );
+        background-size: 200% 100%;
+        animation: avatar-shimmer 1.8s ease-in-out infinite;
+        border-radius: inherit;
+        transition: opacity var(--transition-slow);
+      }
+
+      .arc-avatar .avatar__shimmer--hidden { opacity: 0; pointer-events: none; }
+
+      @keyframes avatar-shimmer {
+        0%   { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
       }
 
       .arc-avatar .avatar__initials {
@@ -69,11 +96,6 @@
       .arc-avatar[data-status="away"] .avatar__status { background: var(--color-warning); }
 
       @media (prefers-reduced-motion: reduce) {
-        .arc-avatar *,
-        .arc-avatar *::before,
-        .arc-avatar *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
+        .arc-avatar .avatar__shimmer { animation: none; }
+        .arc-avatar .avatar__img { transition: none; }
       }

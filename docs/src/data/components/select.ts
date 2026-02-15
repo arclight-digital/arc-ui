@@ -23,7 +23,7 @@ Use Select any time you need a single-choice dropdown in a form: assigning a tea
       'Disabled state prevents interaction and conveys unavailability visually',
       'Automatic scroll-into-view for the highlighted option in long lists',
       'Works with dynamic option lists — update the options array at any time',
-      'Consistent styling across browsers via Shadow DOM encapsulation',
+      'Consistent styling across browsers via Shadow DOM encapsulation'
     ],
 
     guidelines: {
@@ -33,14 +33,14 @@ Use Select any time you need a single-choice dropdown in a form: assigning a tea
         'Keep option labels concise — ideally under 40 characters',
         'Order options logically (alphabetical, by frequency, or by workflow step)',
         'Pre-select a sensible default when one exists to reduce interaction cost',
-        'Use the disabled state to indicate temporarily unavailable choices (e.g., permissions)',
+        'Use the disabled state to indicate temporarily unavailable choices (e.g., permissions)'
       ],
       dont: [
         'Don\'t use Select for fewer than 3 options — use RadioGroup for better scannability',
         'Don\'t nest selects inside other selects — flatten the hierarchy or use a staged flow',
         'Don\'t rely solely on placeholder text as a label — placeholders disappear once a value is chosen',
         'Don\'t use Select for navigation — use NavigationMenu or tabs for moving between views',
-        'Don\'t disable the component without explaining why — pair disabled state with a tooltip or helper text',
+        'Don\'t disable the component without explaining why — pair disabled state with a tooltip or helper text'
       ],
     },
 
@@ -62,14 +62,14 @@ Use Select any time you need a single-choice dropdown in a form: assigning a tea
       { name: 'name', type: 'string', description: 'Form field name submitted with the selected value. Required for native form integration via ElementInternals.' },
       { name: 'disabled', type: 'boolean', default: 'false', description: 'When true, the select trigger becomes non-interactive: it cannot be opened, focused via keyboard, or clicked. The component renders with reduced opacity to visually convey the unavailable state.' },
       { name: 'error', type: 'string', default: "''", description: 'Error message displayed below the select. When set, the trigger border turns red.' },
-      { name: 'open', type: 'boolean', default: 'false', description: 'Controls whether the dropdown is visible. Set programmatically to open or close the dropdown. Automatically set to `false` when an option is selected or the user clicks outside.' },
+      { name: 'open', type: 'boolean', default: 'false', description: 'Controls whether the dropdown is visible. Set programmatically to open or close the dropdown. Automatically set to `false` when an option is selected or the user clicks outside.' }
     ],
     events: [
-      { name: 'arc-change', description: 'Fired when the selected option changes' },
+      { name: 'arc-change', description: 'Fired when the selected option changes' }
     ],
 
     tabs: [
-      {
+    {
         label: 'Web Component',
         lang: 'html',
         code: `<script type="module" src="@arclux/arc-ui"></script>
@@ -107,7 +107,7 @@ Use Select any time you need a single-choice dropdown in a form: assigning a tea
     });
 </script>`,
       },
-      {
+    {
         label: 'React',
         lang: 'tsx',
         code: `import { Select, Option } from '@arclux/arc-ui-react';
@@ -143,7 +143,7 @@ function StatusPicker() {
   );
 }`,
       },
-      {
+    {
         label: 'Vue',
         lang: 'html',
         code: `<script setup>
@@ -168,7 +168,7 @@ const assignee = ref('');
   </Select>
 </template>`,
       },
-      {
+    {
         label: 'Svelte',
         lang: 'html',
         code: `<script>
@@ -186,7 +186,7 @@ const assignee = ref('');
   <Option value="closed">Closed</Option>
 </Select>`,
       },
-      {
+    {
         label: 'Angular',
         lang: 'ts',
         code: `import { Component } from '@angular/core';
@@ -209,7 +209,7 @@ export class AssignmentComponent {
   assignee = '';
 }`,
       },
-      {
+    {
         label: 'Solid',
         lang: 'tsx',
         code: `import { Select, Option } from '@arclux/arc-ui-solid';
@@ -229,7 +229,7 @@ function CategoryPicker() {
   );
 }`,
       },
-      {
+    {
         label: 'Preact',
         lang: 'tsx',
         code: `import { Select, Option } from '@arclux/arc-ui-preact';
@@ -250,7 +250,7 @@ function LocalePicker() {
   );
 }`,
       },
-    ],
+  ],
     subComponents: [
       {
         name: 'Option',
@@ -258,9 +258,9 @@ function LocalePicker() {
         description: 'Individual option rendered inside a Select or MultiSelect. Each Option provides a value for form submission and displays its text content as the label in the dropdown.',
         props: [
           { name: 'value', type: 'string', description: 'The value submitted when this option is selected. Must be unique within the parent Select.' },
-          { name: 'disabled', type: 'boolean', default: 'false', description: 'When true, dims this option and prevents it from being selected.' },
+          { name: 'disabled', type: 'boolean', default: 'false', description: 'When true, dims this option and prevents it from being selected.' }
         ],
-      },
+      }
     ],
   
   seeAlso: ["combobox","multi-select","radio-group"],

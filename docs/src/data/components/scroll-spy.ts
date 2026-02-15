@@ -22,7 +22,7 @@ Clicking a link triggers a smooth scroll to the target element and immediately u
       'Active link highlighting with accent-primary background and aria-current="true"',
       'Configurable offset prop to account for sticky headers of varying heights',
       'arc-change custom event dispatched when the active section changes',
-      'Thin scrollbar styling for long tables of contents',
+      'Thin scrollbar styling for long tables of contents'
     ],
 
     guidelines: {
@@ -31,14 +31,14 @@ Clicking a link triggers a smooth scroll to the target element and immediately u
         'Give every target section a unique id attribute that matches the spy-link target',
         'Set the offset prop to match the height of your sticky header or TopBar',
         'Listen for the arc-change event to synchronize breadcrumbs, analytics, or URL hash updates',
-        'Keep spy-link labels short -- they should match or abbreviate section headings',
+        'Keep spy-link labels short -- they should match or abbreviate section headings'
       ],
       dont: [
         'Use ScrollSpy for primary site navigation -- it is for in-page section tracking only',
         'Forget to import arc-spy-link; ScrollSpy depends on it to collect its link definitions',
         'Place ScrollSpy inside a scrollable container other than the document -- the observer watches document-level intersections',
         'Add dozens of spy-links to a single ScrollSpy; more than 10-12 links make the list hard to scan',
-        'Omit the target attribute on spy-links -- they will be silently ignored by the observer',
+        'Omit the target attribute on spy-links -- they will be silently ignored by the observer'
       ],
     },
 
@@ -54,10 +54,10 @@ Clicking a link triggers a smooth scroll to the target element and immediately u
 
     props: [
       { name: 'active', type: 'string', default: "''", description: 'The id of the currently active section. Reflects to an attribute and updates automatically as the user scrolls.' },
-      { name: 'offset', type: 'number', default: '80', description: 'Pixel offset from the top of the viewport used in the IntersectionObserver rootMargin. Increase this value to account for taller sticky headers.' },
+      { name: 'offset', type: 'number', default: '80', description: 'Pixel offset from the top of the viewport used in the IntersectionObserver rootMargin. Increase this value to account for taller sticky headers.' }
     ],
     events: [
-      { name: 'arc-change', description: 'Fired when the active spy target changes during scroll' },
+      { name: 'arc-change', description: 'Fired when the active spy target changes during scroll' }
     ],
     tabs: [
       {
@@ -140,7 +140,7 @@ export class MyComponent {}`,
   <SpyLink target="section-1">Section 1</SpyLink>
   <SpyLink target="section-2">Section 2</SpyLink>
 </ScrollSpy>`,
-      },
+      }
     ],
     subComponents: [
       {
@@ -148,9 +148,9 @@ export class MyComponent {}`,
         tag: 'arc-spy-link',
         description: 'Navigation anchor that highlights when its target section is in view.',
         props: [
-          { name: 'target', type: 'string', description: 'ID of the section to observe' },
+          { name: 'target', type: 'string', description: 'ID of the section to observe' }
         ],
-      },
+      }
     ],
   
   seeAlso: ["scroll-to-top","tabs","navigation-menu"],

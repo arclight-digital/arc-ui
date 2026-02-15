@@ -22,7 +22,7 @@ Keyboard navigation follows the WAI-ARIA combobox pattern: Arrow Down/Up move th
       'Visual active highlight and selected-state accent color on the current option',
       'Automatic close on outside click via a document-level event listener',
       'Configurable label, placeholder, and disabled state',
-      '"No results found" empty state when the query matches zero options',
+      '"No results found" empty state when the query matches zero options'
     ],
 
     guidelines: {
@@ -31,14 +31,14 @@ Keyboard navigation follows the WAI-ARIA combobox pattern: Arrow Down/Up move th
         'Provide clear, distinct labels on every <arc-option> so filtering produces meaningful results',
         'Set a descriptive placeholder like "Search countries..." to indicate the field is searchable',
         'Include a label attribute for accessibility -- it renders a visible label above the input',
-        'Listen to arc-change to capture the selected value and sync it with your application state',
+        'Listen to arc-change to capture the selected value and sync it with your application state'
       ],
       dont: [
         'Use Combobox for short lists (under 5 items) where a simple Select is faster',
         'Omit the value attribute on <arc-option> -- the component needs it to track selection',
         'Place non-<arc-option> elements in the default slot; they will be ignored by the filter logic',
         'Rely on Combobox for free-text entry -- it only accepts values from the predefined option set',
-        'Disable the component without providing a visual explanation of why it is unavailable',
+        'Disable the component without providing a visual explanation of why it is unavailable'
       ],
     },
 
@@ -56,10 +56,13 @@ Keyboard navigation follows the WAI-ARIA combobox pattern: Arrow Down/Up move th
       { name: 'value', type: 'string', default: "''", description: 'The currently selected option value. Reflected as an attribute so it can be read from the DOM. Updated automatically when the user selects an option.' },
       { name: 'placeholder', type: 'string', default: "''", description: 'Placeholder text shown in the input when no value is entered.' },
       { name: 'label', type: 'string', default: "''", description: 'Visible label rendered above the input. Also used as the accessible label for the combobox.' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the input and prevents interaction. The host element receives reduced opacity and pointer-events: none.' },
+      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the input and prevents interaction. The host element receives reduced opacity and pointer-events: none.' }
+    ],
+    events: [
+      { name: 'arc-change', description: 'Fired when an option is selected. `event.detail.value` contains the selected option value.' }
     ],
     tabs: [
-      {
+    {
         label: 'Web Component',
         lang: 'html',
         code: `<arc-combobox label="Select Fruit" placeholder="Type to search...">
@@ -68,7 +71,7 @@ Keyboard navigation follows the WAI-ARIA combobox pattern: Arrow Down/Up move th
   <arc-option value="cherry">Cherry</arc-option>
 </arc-combobox>`,
       },
-      {
+    {
         label: 'React',
         lang: 'tsx',
         code: `import { Combobox, Option } from '@arclux/arc-ui-react';
@@ -79,7 +82,7 @@ Keyboard navigation follows the WAI-ARIA combobox pattern: Arrow Down/Up move th
   <Option value="cherry">Cherry</Option>
 </Combobox>`,
       },
-      {
+    {
         label: 'Vue',
         lang: 'html',
         code: `<script setup>
@@ -94,7 +97,7 @@ import { Combobox, Option } from '@arclux/arc-ui-vue';
   </Combobox>
 </template>`,
       },
-      {
+    {
         label: 'Svelte',
         lang: 'html',
         code: `<script>
@@ -107,7 +110,7 @@ import { Combobox, Option } from '@arclux/arc-ui-vue';
   <Option value="cherry">Cherry</Option>
 </Combobox>`,
       },
-      {
+    {
         label: 'Angular',
         lang: 'ts',
         code: `import { Component } from '@angular/core';
@@ -125,7 +128,7 @@ import { Combobox, Option } from '@arclux/arc-ui-angular';
 })
 export class MyComponent {}`,
       },
-      {
+    {
         label: 'Solid',
         lang: 'tsx',
         code: `import { Combobox, Option } from '@arclux/arc-ui-solid';
@@ -136,7 +139,7 @@ export class MyComponent {}`,
   <Option value="cherry">Cherry</Option>
 </Combobox>`,
       },
-      {
+    {
         label: 'Preact',
         lang: 'tsx',
         code: `import { Combobox, Option } from '@arclux/arc-ui-preact';
@@ -147,7 +150,7 @@ export class MyComponent {}`,
   <Option value="cherry">Cherry</Option>
 </Combobox>`,
       },
-    ],
+  ],
   
   seeAlso: ["select","multi-select","search","command-palette"],
 };

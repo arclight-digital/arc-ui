@@ -149,6 +149,12 @@ export default function TabsDemo() {
   document.getElementById('demo-tabs').items = ${tabItems};
 </script>`,
     },
+    {
+      label: 'HTML (Inline)',
+      lang: 'html',
+      code: `<!-- arc-tabs is hybrid — CSS handles layout, JS enhances interactivity -->
+<arc-tabs></arc-tabs>`,
+    },
   ],
 
   subComponents: [

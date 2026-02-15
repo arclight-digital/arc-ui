@@ -22,7 +22,7 @@ Popover uses \`role="dialog"\` on the panel and sets \`aria-haspopup\` and \`ari
       'Named `trigger` slot for the clickable element and default slot for popover content',
       'Fires `arc-open` and `arc-close` events for coordinating external state',
       'Accessible `aria-haspopup`, `aria-expanded`, and `role="dialog"` attributes',
-      'CSS parts `trigger` and `panel` for external style customisation',
+      'CSS parts `trigger` and `panel` for external style customisation'
     ],
 
     guidelines: {
@@ -31,14 +31,14 @@ Popover uses \`role="dialog"\` on the panel and sets \`aria-haspopup\` and \`ari
         'Choose a `position` that keeps the panel visible within the viewport for your layout',
         'Keep popover content concise -- for complex forms, consider a Modal or Drawer instead',
         'Use `arc-close` events to clean up temporary state when the popover dismisses',
-        'Nest interactive content like links, buttons, or small forms inside the default slot',
+        'Nest interactive content like links, buttons, or small forms inside the default slot'
       ],
       dont: [
         'Do not use Popover for critical information that the user must see -- it can be dismissed accidentally',
         'Do not nest a Popover inside another Popover -- stacking z-index and focus management becomes unreliable',
         'Do not place very large content (tables, long lists) inside a popover -- use a Drawer or Modal for that',
         'Do not use Popover as a tooltip -- use the Tooltip component for brief hover-triggered hints',
-        'Avoid placing the trigger inside a scrollable container without testing that the panel remains aligned',
+        'Avoid placing the trigger inside a scrollable container without testing that the panel remains aligned'
       ],
     },
 
@@ -53,13 +53,14 @@ Popover uses \`role="dialog"\` on the panel and sets \`aria-haspopup\` and \`ari
     props: [
       { name: 'open', type: 'boolean', default: 'false', description: 'Whether the popover panel is currently visible. Reflected as an attribute.' },
       { name: 'position', type: "'top' | 'bottom' | 'left' | 'right'", default: "'bottom'", description: 'Placement of the panel relative to the trigger element.' },
-      { name: 'trigger', type: 'string', default: "''", description: 'Reserved for future trigger-mode configuration (click, hover, manual).' },
+      { name: 'trigger', type: 'string', default: "''", description: 'Reserved for future trigger-mode configuration (click, hover, manual).' }
     ],
     events: [
-      { name: 'arc-close', description: 'Fired when the popover closes' },
+      { name: 'arc-open', description: 'Fired when the popover opens.' },
+      { name: 'arc-close', description: 'Fired when the popover closes.' }
     ],
     tabs: [
-      {
+    {
         label: 'Web Component',
         lang: 'html',
         code: `<arc-popover>
@@ -67,7 +68,7 @@ Popover uses \`role="dialog"\` on the panel and sets \`aria-haspopup\` and \`ari
   <div>Popover content here.</div>
 </arc-popover>`,
       },
-      {
+    {
         label: 'React',
         lang: 'tsx',
         code: `import { Popover } from '@arclux/arc-ui-react';
@@ -77,7 +78,7 @@ Popover uses \`role="dialog"\` on the panel and sets \`aria-haspopup\` and \`ari
   <div>Popover content here.</div>
 </Popover>`,
       },
-      {
+    {
         label: 'Vue',
         lang: 'html',
         code: `<script setup>
@@ -91,7 +92,7 @@ import { Popover } from '@arclux/arc-ui-vue';
   </Popover>
 </template>`,
       },
-      {
+    {
         label: 'Svelte',
         lang: 'html',
         code: `<script>
@@ -103,7 +104,7 @@ import { Popover } from '@arclux/arc-ui-vue';
   <div>Popover content here.</div>
 </Popover>`,
       },
-      {
+    {
         label: 'Angular',
         lang: 'ts',
         code: `import { Component } from '@angular/core';
@@ -120,7 +121,7 @@ import { Popover } from '@arclux/arc-ui-angular';
 })
 export class MyComponent {}`,
       },
-      {
+    {
         label: 'Solid',
         lang: 'tsx',
         code: `import { Popover } from '@arclux/arc-ui-solid';
@@ -130,7 +131,7 @@ export class MyComponent {}`,
   <div>Popover content here.</div>
 </Popover>`,
       },
-      {
+    {
         label: 'Preact',
         lang: 'tsx',
         code: `import { Popover } from '@arclux/arc-ui-preact';
@@ -140,7 +141,7 @@ export class MyComponent {}`,
   <div>Popover content here.</div>
 </Popover>`,
       },
-    ],
-  
+  ],
+
   seeAlso: ["tooltip","hover-card","dropdown-menu"],
 };

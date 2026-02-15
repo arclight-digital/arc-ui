@@ -10,12 +10,14 @@ withDefaults(defineProps<{
   size?: 'sm' | 'md' | 'lg';
   shape?: 'square' | 'rounded';
   status?: 'online' | 'offline' | 'busy' | 'away';
+  _imgState?: string;
 }>(), {
   src: '',
   name: '',
   size: 'md',
   shape: 'circle',
   status: '',
+  _imgState: 'loading',
 });
 </script>
 
@@ -26,6 +28,7 @@ withDefaults(defineProps<{
     :size="size"
     :shape="shape"
     :status="status"
+    :_imgState="_imgState"
   >
     <slot />
   </arc-avatar>

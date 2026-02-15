@@ -5,7 +5,7 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcHoverCard } from '@arclux/arc-ui';
 
 export interface HoverCardProps {
-  position?: 'bottom' | 'top' | 'left' | 'right';
+  position?: string;
   openDelay?: number;
   closeDelay?: number;
   _visible?: string;

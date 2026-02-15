@@ -36,7 +36,7 @@ export class ArcSidebar extends LitElement {
         display: flex;
         flex-direction: column;
         gap: var(--space-md);
-        padding: var(--space-xl) var(--space-lg);
+        padding: var(--space-lg);
         min-height: 100%;
         position: relative;
         box-sizing: border-box;
@@ -109,7 +109,7 @@ export class ArcSidebar extends LitElement {
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-        padding: var(--space-xs) var(--space-sm);
+        padding: var(--space-sm);
         margin-bottom: var(--space-xs);
       }
 

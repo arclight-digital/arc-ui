@@ -5,7 +5,7 @@ import '@arclux/arc-ui';
 
 export interface PopoverProps {
   open?: boolean;
-  position?: 'bottom' | 'top' | 'left' | 'right';
+  position?: string;
   trigger?: string;
   children?: preact.ComponentChildren;
   [key: string]: unknown;

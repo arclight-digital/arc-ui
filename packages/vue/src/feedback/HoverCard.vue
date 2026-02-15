@@ -5,7 +5,7 @@ import '@arclux/arc-ui';
 defineOptions({ name: 'HoverCard' });
 
 withDefaults(defineProps<{
-  position?: 'bottom' | 'top' | 'left' | 'right';
+  position?: string;
   openDelay?: number;
   closeDelay?: number;
   _visible?: string;

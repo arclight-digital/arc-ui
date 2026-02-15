@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { positionStyles } from '../shared/position-styles.js';
 
 /**
  * @tag arc-hover-card
@@ -46,45 +47,6 @@ export class ArcHoverCard extends LitElement {
         pointer-events: auto;
       }
 
-      /* Positions */
-      :host(:not([position])) .hovercard__card,
-      :host([position="bottom"]) .hovercard__card {
-        top: calc(100% + var(--space-sm));
-        left: 50%;
-        transform: translateX(-50%) scale(0.96);
-      }
-      :host(:not([position])) .hovercard__card--visible,
-      :host([position="bottom"]) .hovercard__card--visible {
-        transform: translateX(-50%) scale(1);
-      }
-
-      :host([position="top"]) .hovercard__card {
-        bottom: calc(100% + var(--space-sm));
-        left: 50%;
-        transform: translateX(-50%) scale(0.96);
-      }
-      :host([position="top"]) .hovercard__card--visible {
-        transform: translateX(-50%) scale(1);
-      }
-
-      :host([position="left"]) .hovercard__card {
-        right: calc(100% + var(--space-sm));
-        top: 50%;
-        transform: translateY(-50%) scale(0.96);
-      }
-      :host([position="left"]) .hovercard__card--visible {
-        transform: translateY(-50%) scale(1);
-      }
-
-      :host([position="right"]) .hovercard__card {
-        left: calc(100% + var(--space-sm));
-        top: 50%;
-        transform: translateY(-50%) scale(0.96);
-      }
-      :host([position="right"]) .hovercard__card--visible {
-        transform: translateY(-50%) scale(1);
-      }
-
       @media (prefers-reduced-motion: reduce) {
         :host *,
         :host *::before,
@@ -95,6 +57,7 @@ export class ArcHoverCard extends LitElement {
         }
       }
     `,
+    positionStyles('hovercard__card', { scale: 0.96, openCls: 'hovercard__card--visible' }),
   ];
 
   constructor() {

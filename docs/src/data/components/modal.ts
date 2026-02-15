@@ -24,7 +24,7 @@ The component ships with three width presets (sm/md/lg) and a smooth slide-up en
       'Named `footer` slot for action buttons with built-in right-alignment',
       'Closable prop to disable all implicit dismiss paths for critical flows',
       'Fires `arc-close` event when the dialog is dismissed',
-      'Fully accessible with `role="dialog"`, `aria-modal`, and `aria-labelledby`',
+      'Fully accessible with `role="dialog"`, `aria-modal`, and `aria-labelledby`'
     ],
 
     guidelines: {
@@ -34,7 +34,7 @@ The component ships with three width presets (sm/md/lg) and a smooth slide-up en
         'Always include a cancel or dismiss path so users never feel trapped',
         'Place the primary action button last (rightmost) in the footer',
         'Keep modal content concise — long scrolling modals indicate a page is needed instead',
-        'Use the `sm` size for simple content, `md` for forms, and `lg` for tables or multi-column layouts',
+        'Use the `sm` size for simple content, `md` for forms, and `lg` for tables or multi-column layouts'
       ],
       dont: [
         'Do not use Modal for quick binary confirmations — use Dialog instead',
@@ -42,7 +42,7 @@ The component ships with three width presets (sm/md/lg) and a smooth slide-up en
         'Do not use a modal for passive notifications — use Toast or Alert',
         'Do not disable `closable` unless the workflow truly requires an explicit choice',
         'Do not put complex navigation or multi-page flows inside a modal',
-        'Do not auto-open a modal on page load — this is disruptive and hurts accessibility',
+        'Do not auto-open a modal on page load — this is disruptive and hurts accessibility'
       ],
     },
 
@@ -69,15 +69,15 @@ The component ships with three width presets (sm/md/lg) and a smooth slide-up en
       { name: 'heading', type: 'string', description: 'Text displayed in the modal header bar. Automatically linked to the dialog via `aria-labelledby` for screen-reader accessibility. Keep it short and action-oriented (e.g. "Delete Project" rather than "Are you sure?").' },
       { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Controls the maximum width of the dialog panel. `sm` (400px) is ideal for simple confirmations, `md` (560px) for standard forms, and `lg` (720px) for content-heavy dialogs with tables or multi-column layouts.' },
       { name: 'closable', type: 'boolean', default: 'true', description: 'When `true`, renders the built-in X close button and allows dismissal via Escape key and backdrop click. Set to `false` for critical decision modals where the user must explicitly choose an action from the footer buttons.' },
-      { name: 'fullscreen', type: 'boolean', default: 'false', description: 'Makes the modal fill the entire viewport. Useful for mobile forms or complex workflows.' },
+      { name: 'fullscreen', type: 'boolean', default: 'false', description: 'Makes the modal fill the entire viewport. Useful for mobile forms or complex workflows.' }
     ],
     events: [
       { name: 'arc-open', description: 'Fired when the modal opens' },
-      { name: 'arc-close', description: 'Fired when the modal closes' },
+      { name: 'arc-close', description: 'Fired when the modal closes' }
     ],
 
     tabs: [
-      {
+    {
         label: 'Web Component',
         lang: 'html',
         code: `<arc-button id="open-demo-modal" variant="secondary">Edit Profile</arc-button>
@@ -104,7 +104,7 @@ The component ships with three width presets (sm/md/lg) and a smooth slide-up en
   document.querySelector('#confirm-demo-modal').addEventListener('click', () => { modal.open = false; });
 </script>`,
       },
-      {
+    {
         label: 'React',
         lang: 'tsx',
         code: `import { Modal, Button, Input } from '@arclux/arc-ui-react';
@@ -130,7 +130,7 @@ function EditProfileModal() {
   );
 }`,
       },
-      {
+    {
         label: 'Vue',
         lang: 'html',
         code: `<script setup>
@@ -154,7 +154,7 @@ const open = ref(false);
   </Modal>
 </template>`,
       },
-      {
+    {
         label: 'Svelte',
         lang: 'html',
         code: `<script>
@@ -175,7 +175,7 @@ const open = ref(false);
   </div>
 </Modal>`,
       },
-      {
+    {
         label: 'Angular',
         lang: 'ts',
         code: `import { Component } from '@angular/core';
@@ -201,7 +201,7 @@ export class EditProfileComponent {
   open = false;
 }`,
       },
-      {
+    {
         label: 'Solid',
         lang: 'tsx',
         code: `import { createSignal } from 'solid-js';
@@ -227,7 +227,7 @@ function EditProfileModal() {
   );
 }`,
       },
-      {
+    {
         label: 'Preact',
         lang: 'tsx',
         code: `import { useState } from 'preact/hooks';
@@ -253,7 +253,7 @@ function EditProfileModal() {
   );
 }`,
       },
-    ],
-  
+  ],
+
   seeAlso: ["drawer","sheet","dialog"],
 };

@@ -10,7 +10,7 @@ import '@arclux/arc-ui';
   template: `<arc-hover-card [attr.position]="position" [attr.openDelay]="openDelay" [attr.closeDelay]="closeDelay" [attr._visible]="_visible" (arc-open)="arcOpen.emit($event)" (arc-close)="arcClose.emit($event)"><ng-content /></arc-hover-card>`,
 })
 export class HoverCard {
-  @Input() position: 'bottom' | 'top' | 'left' | 'right' = 'bottom';
+  @Input() position: string = 'bottom';
   @Input() openDelay: number = 400;
   @Input() closeDelay: number = 300;
   @Input() _visible: string = false;

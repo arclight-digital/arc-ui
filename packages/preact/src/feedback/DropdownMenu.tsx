@@ -5,14 +5,13 @@ import '@arclux/arc-ui';
 
 export interface DropdownMenuProps {
   open?: boolean;
-  _focusedIndex?: string;
   _children?: string;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const DropdownMenu: FunctionComponent<DropdownMenuProps> = ({ open, _focusedIndex, _children, children, ...rest }) => (
-  <arc-dropdown-menu open={open} _focusedIndex={_focusedIndex} _children={_children} {...rest}>
+export const DropdownMenu: FunctionComponent<DropdownMenuProps> = ({ open, _children, children, ...rest }) => (
+  <arc-dropdown-menu open={open} _children={_children} {...rest}>
     {children}
   </arc-dropdown-menu>
 );

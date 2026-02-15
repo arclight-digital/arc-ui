@@ -7,7 +7,7 @@
     open?: boolean;
     heading?: string;
     message?: string;
-    variant?: 'danger';
+    variant?: string;
     children?: Snippet;
     [key: string]: unknown;
   }

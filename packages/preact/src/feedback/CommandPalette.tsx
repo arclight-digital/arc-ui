@@ -7,14 +7,13 @@ export interface CommandPaletteProps {
   open?: boolean;
   placeholder?: string;
   _query?: string;
-  _focusedIndex?: string;
   _items?: string;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const CommandPalette: FunctionComponent<CommandPaletteProps> = ({ open, placeholder, _query, _focusedIndex, _items, children, ...rest }) => (
-  <arc-command-palette open={open} placeholder={placeholder} _query={_query} _focusedIndex={_focusedIndex} _items={_items} {...rest}>
+export const CommandPalette: FunctionComponent<CommandPaletteProps> = ({ open, placeholder, _query, _items, children, ...rest }) => (
+  <arc-command-palette open={open} placeholder={placeholder} _query={_query} _items={_items} {...rest}>
     {children}
   </arc-command-palette>
 );

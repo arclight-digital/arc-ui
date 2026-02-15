@@ -2,6 +2,7 @@
 // Form controls and user input components
 
 export { ArcButton } from './button.register.js';
+export { ArcButtonGroup } from './button-group.register.js';
 export { ArcCalendar } from './calendar.register.js';
 export { ArcCheckbox } from './checkbox.register.js';
 export { ArcChip } from './chip.register.js';
@@ -9,10 +10,14 @@ export { ArcColorPicker } from './color-picker.register.js';
 export { ArcCombobox } from './combobox.register.js';
 export { ArcCopyButton } from './copy-button.register.js';
 export { ArcDatePicker } from './date-picker.register.js';
+export { ArcFieldset } from './fieldset.register.js';
 export { ArcFileUpload } from './file-upload.register.js';
 export { ArcForm } from './form.register.js';
+export { ArcHotkey } from './hotkey.register.js';
 export { ArcIconButton } from './icon-button.register.js';
 export { ArcInput } from './input.register.js';
+export { ArcInputGroup } from './input-group.register.js';
+export { ArcLabel } from './label.register.js';
 export { ArcMultiSelect } from './multi-select.register.js';
 export { ArcNumberInput } from './number-input.register.js';
 export { ArcOtpInput } from './otp-input.register.js';
@@ -26,6 +31,7 @@ export { ArcSelect } from './select.register.js';
 export { ArcSlider } from './slider.register.js';
 export { ArcSortableList } from './sortable-list.register.js';
 export { ArcSuggestion } from './suggestion.register.js';
+export { ArcSwitchGroup } from './switch-group.register.js';
 export { ArcTextarea } from './textarea.register.js';
 export { ArcThemeToggle } from './theme-toggle.register.js';
 export { ArcToggle } from './toggle.register.js';

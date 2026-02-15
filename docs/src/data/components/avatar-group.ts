@@ -50,7 +50,8 @@ AvatarGroup is marked as a hybrid component: the overlapping layout works in pur
 </arc-avatar-group>`,
 
     props: [
-
+      { name: 'max', type: 'number', default: 'Infinity', description: 'Maximum number of avatars to display. Excess avatars are hidden and a "+N" overflow badge is shown.' },
+      { name: 'overlap', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Overlap density preset. sm = -8px, md = -12px, lg = -16px negative margin between avatars.' },
     ],
     tabs: [
       {

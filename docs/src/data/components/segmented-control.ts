@@ -22,7 +22,7 @@ Segmented Control auto-selects the first option when no initial \`value\` is pro
       'Auto-selects the first option when no `value` attribute is provided',
       'Hover state brightens text and adds a subtle background on non-active options',
       'Disabled state at 40% opacity with pointer events blocked on the entire control',
-      'Respects `prefers-reduced-motion` by disabling transitions',
+      'Respects `prefers-reduced-motion` by disabling transitions'
     ],
 
     guidelines: {
@@ -31,14 +31,14 @@ Segmented Control auto-selects the first option when no initial \`value\` is pro
         'Keep option labels short -- ideally one or two words -- to prevent overflow',
         'Provide a `value` attribute if you need to pre-select an option other than the first',
         'Listen to `arc-change` to react to selection changes in your application logic',
-        'Place the control within a form context or a settings panel where space is limited',
+        'Place the control within a form context or a settings panel where space is limited'
       ],
       dont: [
         'Do not use for more than 5 options -- use Select or RadioGroup instead for longer lists',
         'Do not nest interactive elements inside `<arc-option>` children -- labels should be plain text',
         'Do not use Segmented Control for navigation between views -- use Tabs instead',
         'Do not rely solely on the glow colour to indicate selection -- the component also uses aria-checked for accessibility',
-        'Avoid using it for binary toggles where a Toggle switch would be more semantically appropriate',
+        'Avoid using it for binary toggles where a Toggle switch would be more semantically appropriate'
       ],
     },
 
@@ -50,10 +50,10 @@ Segmented Control auto-selects the first option when no initial \`value\` is pro
 
     props: [
       { name: 'value', type: 'string', default: "''", description: 'The value of the currently selected option. Reflected as an attribute and auto-set to the first option if empty.' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the entire control, reducing opacity to 40% and blocking pointer events.' },
+      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the entire control, reducing opacity to 40% and blocking pointer events.' }
     ],
     events: [
-      { name: 'arc-change', description: 'Fired when the selected segment changes' },
+      { name: 'arc-change', description: 'Fired when the selected segment changes' }
     ],
 
     subComponents: [
@@ -62,13 +62,13 @@ Segmented Control auto-selects the first option when no initial \`value\` is pro
         tag: 'arc-option',
         description: 'Individual option element slotted into the segmented control. The `value` attribute identifies the option and the text content becomes the label.',
         props: [
-          { name: 'value', type: 'string', default: "''", description: 'The value identifier for this option, used to match against the parent control value.' },
+          { name: 'value', type: 'string', default: "''", description: 'The value identifier for this option, used to match against the parent control value.' }
         ],
-      },
+      }
     ],
 
     tabs: [
-      {
+    {
         label: 'Web Component',
         lang: 'html',
         code: `<arc-segmented-control value="monthly">
@@ -77,7 +77,7 @@ Segmented Control auto-selects the first option when no initial \`value\` is pro
   <arc-option value="monthly">Monthly</arc-option>
 </arc-segmented-control>`,
       },
-      {
+    {
         label: 'React',
         lang: 'tsx',
         code: `import { SegmentedControl, Option } from '@arclux/arc-ui-react';
@@ -88,7 +88,7 @@ Segmented Control auto-selects the first option when no initial \`value\` is pro
   <Option value="monthly">Monthly</Option>
 </SegmentedControl>`,
       },
-      {
+    {
         label: 'Vue',
         lang: 'html',
         code: `<script setup>
@@ -103,7 +103,7 @@ import { SegmentedControl, Option } from '@arclux/arc-ui-vue';
   </SegmentedControl>
 </template>`,
       },
-      {
+    {
         label: 'Svelte',
         lang: 'html',
         code: `<script>
@@ -116,7 +116,7 @@ import { SegmentedControl, Option } from '@arclux/arc-ui-vue';
   <Option value="monthly">Monthly</Option>
 </SegmentedControl>`,
       },
-      {
+    {
         label: 'Angular',
         lang: 'ts',
         code: `import { Component } from '@angular/core';
@@ -134,7 +134,7 @@ import { SegmentedControl, Option } from '@arclux/arc-ui-angular';
 })
 export class MyComponent {}`,
       },
-      {
+    {
         label: 'Solid',
         lang: 'tsx',
         code: `import { SegmentedControl, Option } from '@arclux/arc-ui-solid';
@@ -145,7 +145,7 @@ export class MyComponent {}`,
   <Option value="monthly">Monthly</Option>
 </SegmentedControl>`,
       },
-      {
+    {
         label: 'Preact',
         lang: 'tsx',
         code: `import { SegmentedControl, Option } from '@arclux/arc-ui-preact';
@@ -156,16 +156,7 @@ export class MyComponent {}`,
   <Option value="monthly">Monthly</Option>
 </SegmentedControl>`,
       },
-      {
-        label: 'HTML',
-        lang: 'html',
-        code: `<arc-segmented-control value="monthly">
-  <arc-option value="daily">Daily</arc-option>
-  <arc-option value="weekly">Weekly</arc-option>
-  <arc-option value="monthly">Monthly</arc-option>
-</arc-segmented-control>`,
-      },
-    ],
+  ],
   
   seeAlso: ["tabs","radio-group","chip"],
 };

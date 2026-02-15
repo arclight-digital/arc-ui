@@ -151,9 +151,14 @@ export class MyComponent {}`,
       {
         label: 'HTML',
         lang: 'html',
-        code: `<arc-alert variant="success" heading="Deployment complete" dismissible>
-  Your changes are now live on production.
-</arc-alert>`,
+        code: `<!-- arc-alert is interactive — requires JS -->
+<arc-alert></arc-alert>`,
+      },
+      {
+        label: 'HTML (Inline)',
+        lang: 'html',
+        code: `<!-- arc-alert is interactive — requires JS -->
+<arc-alert></arc-alert>`,
       },
     ],
   

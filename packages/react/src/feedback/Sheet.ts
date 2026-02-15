@@ -12,7 +12,6 @@ export interface SheetProps {
   children?: React.ReactNode;
   onArcClose?: (e: CustomEvent) => void;
   onArcOpen?: (e: CustomEvent) => void;
-  onClick?: (e: Event) => void;
 }
 
 export const Sheet = createComponent({
@@ -22,6 +21,5 @@ export const Sheet = createComponent({
   events: {
     onArcClose: 'arc-close' as EventName<CustomEvent>,
     onArcOpen: 'arc-open' as EventName<CustomEvent>,
-    onClick: 'click' as EventName<Event>,
   },
 });

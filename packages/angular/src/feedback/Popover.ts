@@ -11,7 +11,7 @@ import '@arclux/arc-ui';
 })
 export class Popover {
   @Input() open: boolean = false;
-  @Input() position: 'bottom' | 'top' | 'left' | 'right' = 'bottom';
+  @Input() position: string = 'bottom';
   @Input() trigger: string = '';
   @Output() arcClose = new EventEmitter<CustomEvent>();
 }

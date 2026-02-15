@@ -7,13 +7,12 @@ import '@arclux/arc-ui';
   selector: 'arc-command-palette',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-command-palette [open]="open" [attr.placeholder]="placeholder" [attr._query]="_query" [attr._focusedIndex]="_focusedIndex" [attr._items]="_items" (arc-select)="arcSelect.emit($event)" (arc-close)="arcClose.emit($event)"><ng-content /></arc-command-palette>`,
+  template: `<arc-command-palette [open]="open" [attr.placeholder]="placeholder" [attr._query]="_query" [attr._items]="_items" (arc-select)="arcSelect.emit($event)" (arc-close)="arcClose.emit($event)"><ng-content /></arc-command-palette>`,
 })
 export class CommandPalette {
   @Input() open: boolean = false;
   @Input() placeholder: string = 'Type a command...';
   @Input() _query: string = '';
-  @Input() _focusedIndex: string = 0;
   @Input() _items: string = [];
   @Output() arcSelect = new EventEmitter<CustomEvent>();
   @Output() arcClose = new EventEmitter<CustomEvent>();

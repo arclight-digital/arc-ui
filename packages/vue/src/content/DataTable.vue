@@ -10,16 +10,24 @@ withDefaults(defineProps<{
   selectable?: boolean;
   sortColumn?: string;
   sortDirection?: string;
+  virtual?: boolean;
+  rowHeight?: number;
   _columns?: string;
   _selectedRows?: string;
+  _startIndex?: string;
+  _visibleCount?: string;
 }>(), {
   rows: () => ([]),
   sortable: false,
   selectable: false,
   sortColumn: '',
   sortDirection: 'asc',
+  virtual: false,
+  rowHeight: 40,
   _columns: () => ([]),
   _selectedRows: 'new Set()',
+  _startIndex: 0,
+  _visibleCount: 0,
 });
 
 defineEmits<{
@@ -36,8 +44,12 @@ defineEmits<{
     :selectable="selectable"
     :sortColumn="sortColumn"
     :sortDirection="sortDirection"
+    :virtual="virtual"
+    :rowHeight="rowHeight"
     :_columns="_columns"
     :_selectedRows="_selectedRows"
+    :_startIndex="_startIndex"
+    :_visibleCount="_visibleCount"
   >
     <slot />
   </arc-data-table>

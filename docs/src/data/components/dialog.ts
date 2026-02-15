@@ -24,7 +24,7 @@ The component uses \`role="alertdialog"\` with \`aria-modal="true"\` to properly
       'Danger variant with red accent line, glow border, and red confirm button',
       'Escape key and backdrop click trigger cancellation',
       'role="alertdialog" with aria-modal for proper screen reader semantics',
-      'Customizable button labels via confirm-label and cancel-label attributes',
+      'Customizable button labels via confirm-label and cancel-label attributes'
     ],
 
     guidelines: {
@@ -33,14 +33,14 @@ The component uses \`role="alertdialog"\` with \`aria-modal="true"\` to properly
         'Keep the message concise — one or two sentences explaining what will happen',
         'Use variant="danger" when the confirmed action is destructive or irreversible',
         'Use the confirm() promise API for cleaner async flow in your logic',
-        'Set specific button labels: "Discard Changes" is clearer than "Confirm"',
+        'Set specific button labels: "Discard Changes" is clearer than "Confirm"'
       ],
       dont: [
         'Use Dialog for complex forms or rich content — use Modal instead',
         'Stack multiple dialogs — resolve one before opening another',
         'Use Dialog for informational messages — use Alert or Toast instead',
         'Use Dialog for general-purpose overlays — that\'s what Modal is for',
-        'Use variant="danger" for non-destructive confirmations — it creates unnecessary anxiety',
+        'Use variant="danger" for non-destructive confirmations — it creates unnecessary anxiety'
       ],
     },
 
@@ -53,14 +53,14 @@ The component uses \`role="alertdialog"\` with \`aria-modal="true"\` to properly
       { name: 'message', type: 'string', default: "''", description: 'Dialog body message' },
       { name: 'confirm-label', type: 'string', default: "'Confirm'", description: 'Text for the confirm button' },
       { name: 'cancel-label', type: 'string', default: "'Cancel'", description: 'Text for the cancel button' },
-      { name: 'variant', type: "'default' | 'danger'", default: "'default'", description: 'Visual variant — danger adds red accent line, glow border, and red confirm button' },
+      { name: 'variant', type: "'default' | 'danger'", default: "'default'", description: 'Visual variant — danger adds red accent line, glow border, and red confirm button' }
     ],
     events: [
       { name: 'arc-confirm', description: 'Fired when the confirm button is clicked' },
-      { name: 'arc-cancel', description: 'Fired when cancel, escape, or backdrop click occurs' },
+      { name: 'arc-cancel', description: 'Fired when cancel, escape, or backdrop click occurs' }
     ],
     tabs: [
-      {
+    {
         label: 'Web Component',
         lang: 'html',
         code: `<arc-dialog
@@ -78,7 +78,7 @@ The component uses \`role="alertdialog"\` with \`aria-modal="true"\` to properly
   if (confirmed) discardDraft();
 </script>`,
       },
-      {
+    {
         label: 'React',
         lang: 'tsx',
         code: `import { Dialog } from '@arclux/arc-ui-react';
@@ -107,7 +107,7 @@ function App() {
   );
 }`,
       },
-      {
+    {
         label: 'Vue',
         lang: 'html',
         code: `<script setup>
@@ -134,7 +134,7 @@ async function handleDiscard() {
   />
 </template>`,
       },
-      {
+    {
         label: 'Svelte',
         lang: 'html',
         code: `<script>
@@ -157,7 +157,7 @@ async function handleDiscard() {
   variant="danger"
 />`,
       },
-      {
+    {
         label: 'Angular',
         lang: 'ts',
         code: `import { Component, ViewChild, ElementRef } from '@angular/core';
@@ -185,7 +185,7 @@ export class MyComponent {
   }
 }`,
       },
-      {
+    {
         label: 'Solid',
         lang: 'tsx',
         code: `import { Dialog } from '@arclux/arc-ui-solid';
@@ -207,7 +207,7 @@ async function handleDiscard() {
   variant="danger"
 />`,
       },
-      {
+    {
         label: 'Preact',
         lang: 'tsx',
         code: `import { Dialog } from '@arclux/arc-ui-preact';
@@ -236,7 +236,7 @@ function App() {
   );
 }`,
       },
-    ],
-  
+  ],
+
   seeAlso: ["modal","alert","sheet"],
 };

@@ -13,7 +13,7 @@ export class Dialog {
   @Input() open: boolean = false;
   @Input() heading: string = '';
   @Input() message: string = '';
-  @Input() variant: 'danger' = 'default';
+  @Input() variant: string = 'default';
   @Output() arcConfirm = new EventEmitter<CustomEvent>();
   @Output() arcCancel = new EventEmitter<CustomEvent>();
 }

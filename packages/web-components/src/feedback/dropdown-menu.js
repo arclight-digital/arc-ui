@@ -1,7 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { MenuKeyboardController } from '../shared/menu-keyboard.js';
 import '../shared/menu-item.js';
 import '../shared/menu-divider.js';
+import '../content/separator.js';
 
 /**
  * @tag arc-dropdown-menu
@@ -9,7 +11,6 @@ import '../shared/menu-divider.js';
 export class ArcDropdownMenu extends LitElement {
   static properties = {
     open:          { type: Boolean, reflect: true },
-    _focusedIndex: { state: true },
     _children:     { state: true },
   };
 
@@ -91,9 +92,7 @@ export class ArcDropdownMenu extends LitElement {
         opacity: 0.6;
       }
 
-      .dropdown__divider {
-        height: 1px;
-        background: var(--border-default);
+      arc-separator {
         margin: var(--space-xs) 0;
       }
 
@@ -114,10 +113,13 @@ export class ArcDropdownMenu extends LitElement {
   constructor() {
     super();
     this.open = false;
-    this._focusedIndex = -1;
     this._children = [];
     this._onDocumentClick = this._onDocumentClick.bind(this);
-    this._onKeyDown = this._onKeyDown.bind(this);
+    this._menuKb = new MenuKeyboardController(this, {
+      getItemCount: () => this._menuItems.length,
+      onSelect: (i) => this._selectItem(this._menuItems[i], i),
+      onClose: () => this._close(),
+    });
   }
 
   _onSlotChange(e) {
@@ -132,15 +134,14 @@ export class ArcDropdownMenu extends LitElement {
   updated(changed) {
     if (changed.has('open')) {
       if (this.open) {
-        this._focusedIndex = -1;
+        this._menuKb.reset();
         requestAnimationFrame(() => {
           document.addEventListener('click', this._onDocumentClick);
-          document.addEventListener('keydown', this._onKeyDown);
+          this._menuKb.attach();
         });
       } else {
         document.removeEventListener('click', this._onDocumentClick);
-        document.removeEventListener('keydown', this._onKeyDown);
-        this._focusedIndex = -1;
+        this._menuKb.detach();
       }
     }
   }
@@ -148,44 +149,12 @@ export class ArcDropdownMenu extends LitElement {
   disconnectedCallback() {
     super.disconnectedCallback();
     document.removeEventListener('click', this._onDocumentClick);
-    document.removeEventListener('keydown', this._onKeyDown);
   }
 
   _onDocumentClick(e) {
     const path = e.composedPath();
     if (!path.includes(this)) {
       this._close();
-    }
-  }
-
-  _onKeyDown(e) {
-    if (!this.open) return;
-
-    const selectable = this._menuItems;
-
-    switch (e.key) {
-      case 'ArrowDown':
-        e.preventDefault();
-        this._focusedIndex = this._focusedIndex < selectable.length - 1
-          ? this._focusedIndex + 1
-          : 0;
-        break;
-      case 'ArrowUp':
-        e.preventDefault();
-        this._focusedIndex = this._focusedIndex > 0
-          ? this._focusedIndex - 1
-          : selectable.length - 1;
-        break;
-      case 'Enter':
-        e.preventDefault();
-        if (this._focusedIndex >= 0 && this._focusedIndex < selectable.length) {
-          this._selectItem(selectable[this._focusedIndex], this._focusedIndex);
-        }
-        break;
-      case 'Escape':
-        e.preventDefault();
-        this._close();
-        break;
     }
   }
 
@@ -213,18 +182,18 @@ export class ArcDropdownMenu extends LitElement {
 
   _renderChild(child, globalIndex) {
     if (child.tagName === 'ARC-MENU-DIVIDER') {
-      return html`<div class="dropdown__divider" role="separator" part="divider"></div>`;
+      return html`<arc-separator part="divider"></arc-separator>`;
     }
 
     const selectableIndex = this._menuItems.indexOf(child);
 
     return html`
       <button
-        class="dropdown__item ${selectableIndex === this._focusedIndex ? 'is-focused' : ''}"
+        class="dropdown__item ${selectableIndex === this._menuKb.focusedIndex ? 'is-focused' : ''}"
         role="menuitem"
         tabindex="-1"
         @click=${() => this._selectItem(child, globalIndex)}
-        @mouseenter=${() => { this._focusedIndex = selectableIndex; }}
+        @mouseenter=${() => { this._menuKb.focusedIndex = selectableIndex; this.requestUpdate(); }}
         part="item"
       >
         <span class="dropdown__item-label">${child.label || ''}</span>

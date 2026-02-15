@@ -22,7 +22,7 @@ An \`icon-only\` mode is available for compact layouts like toolbars, rendering 
       'Icon-only compact mode via the `icon-only` attribute for toolbar and header usage',
       'Fires `arc-change` with the new theme value on every cycle for external state coordination',
       'Keyboard accessible with Enter and Space key support, plus visible focus ring',
-      'Active-press scale animation (0.95) for tactile click feedback',
+      'Active-press scale animation (0.95) for tactile click feedback'
     ],
 
     guidelines: {
@@ -31,14 +31,14 @@ An \`icon-only\` mode is available for compact layouts like toolbars, rendering 
         'Use `icon-only` in dense layouts like toolbars where space is limited',
         'Listen to `arc-change` if you need to coordinate theme changes with a backend preference API',
         'Ensure your application respects the `data-theme` attribute on the document root for theme switching to work',
-        'Set an initial `data-theme` on the HTML element during SSR to prevent flash-of-wrong-theme',
+        'Set an initial `data-theme` on the HTML element during SSR to prevent flash-of-wrong-theme'
       ],
       dont: [
         'Do not place multiple ThemeToggle instances on the same page -- they will compete for localStorage and document attributes',
         'Do not override the localStorage key `arc-theme` from external code without also updating the component',
         'Do not use ThemeToggle for toggling features unrelated to visual theme -- use Toggle for binary settings',
         'Do not hide the component behind a menu -- theme switching should be easily discoverable',
-        'Avoid using ThemeToggle in iframes without ensuring the parent document also applies the theme attribute',
+        'Avoid using ThemeToggle in iframes without ensuring the parent document also applies the theme attribute'
       ],
     },
 
@@ -50,25 +50,25 @@ An \`icon-only\` mode is available for compact layouts like toolbars, rendering 
     props: [
       { name: 'theme', type: "'dark' | 'light' | 'auto'", default: "'auto'", description: 'The current theme mode. Automatically synced to localStorage and the document root `data-theme` attribute.' },
       { name: 'disabled', type: 'boolean', default: 'false', description: 'Prevents cycling and reduces opacity to 40%.' },
-      { name: 'icon-only', type: 'boolean', default: 'false', description: 'Renders the button as a compact circle without the theme name label. Attribute name is `icon-only`.' },
+      { name: 'icon-only', type: 'boolean', default: 'false', description: 'Renders the button as a compact circle without the theme name label. Attribute name is `icon-only`.' }
     ],
     events: [
-      { name: 'arc-change', description: 'Fired when the theme is toggled, with { theme } detail' },
+      { name: 'arc-change', description: 'Fired when the theme is toggled, with { theme } detail' }
     ],
     tabs: [
-      {
+    {
         label: 'Web Component',
         lang: 'html',
         code: `<arc-theme-toggle></arc-theme-toggle>`,
       },
-      {
+    {
         label: 'React',
         lang: 'tsx',
         code: `import { ThemeToggle } from '@arclux/arc-ui-react';
 
 <ThemeToggle></ThemeToggle>`,
       },
-      {
+    {
         label: 'Vue',
         lang: 'html',
         code: `<script setup>
@@ -79,7 +79,7 @@ import { ThemeToggle } from '@arclux/arc-ui-vue';
   <ThemeToggle></ThemeToggle>
 </template>`,
       },
-      {
+    {
         label: 'Svelte',
         lang: 'html',
         code: `<script>
@@ -88,7 +88,7 @@ import { ThemeToggle } from '@arclux/arc-ui-vue';
 
 <ThemeToggle></ThemeToggle>`,
       },
-      {
+    {
         label: 'Angular',
         lang: 'ts',
         code: `import { Component } from '@angular/core';
@@ -102,21 +102,21 @@ import { ThemeToggle } from '@arclux/arc-ui-angular';
 })
 export class MyComponent {}`,
       },
-      {
+    {
         label: 'Solid',
         lang: 'tsx',
         code: `import { ThemeToggle } from '@arclux/arc-ui-solid';
 
 <ThemeToggle></ThemeToggle>`,
       },
-      {
+    {
         label: 'Preact',
         lang: 'tsx',
         code: `import { ThemeToggle } from '@arclux/arc-ui-preact';
 
 <ThemeToggle></ThemeToggle>`,
       },
-    ],
+  ],
   
   seeAlso: ["/docs/theming"],
 };

@@ -1,0 +1,178 @@
+import type { ComponentDef } from './_types';
+
+export const inputGroup: ComponentDef = {
+  name: 'Input Group',
+  slug: 'input-group',
+  tag: 'arc-input-group',
+  tier: 'input',
+  interactivity: 'hybrid',
+  description: 'Combines an input with prefix and suffix addon slots for labels, icons, or buttons attached to the input border.',
+
+  overview: `Input Group wraps an input control with optional prefix and suffix addon areas that appear visually attached to the input. The addons share the input's border and focus glow, creating a single unified control that reads as one element.
+
+Common patterns include protocol prefixes ("https://"), domain suffixes (".com"), currency symbols, unit labels, and action buttons. The component strips border, border-radius, and box-shadow from slotted inputs so the group's outer container provides the unified visual frame.
+
+The focus-within pseudo-class triggers the accent border and glow on the outer container, so the entire group lights up when the inner input receives focus. Three size presets (sm, md, lg) adjust the addon padding and font size to match the input scale.`,
+
+  features: [
+    'Prefix and suffix addon slots for labels, icons, or buttons',
+    'Unified border and focus glow across the entire group',
+    'Automatically strips border/radius/shadow from slotted inputs',
+    'Works with arc-input, arc-select, and native HTML inputs',
+    'Three size presets: sm, md, lg',
+    'Focus-within styling highlights the entire group on input focus',
+    'Exposed CSS parts: group, prefix, content, suffix',
+  ],
+
+  guidelines: {
+    do: [
+      'Use for inputs that need contextual labels like "https://", "$", or ".com"',
+      'Place action buttons (copy, clear, search) in the suffix slot',
+      'Match the group `size` to the slotted input size for alignment',
+    ],
+    dont: [
+      'Put multiple inputs inside a single input group — use one input per group',
+      'Use input group for purely decorative icons — use the input\'s own icon slot if available',
+      'Nest input groups inside each other',
+    ],
+  },
+
+  previewHtml: `<div style="display: flex; flex-direction: column; gap: 16px; max-width: 400px;">
+  <arc-input-group>
+    <span slot="prefix">https://</span>
+    <arc-input placeholder="example.com"></arc-input>
+  </arc-input-group>
+  <arc-input-group>
+    <span slot="prefix">$</span>
+    <arc-input type="number" placeholder="0.00"></arc-input>
+    <span slot="suffix">USD</span>
+  </arc-input-group>
+</div>`,
+
+  props: [
+    { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Controls addon padding and font size.' },
+  ],
+
+  tabs: [
+    {
+      label: 'Web Component',
+      lang: 'html',
+      code: `<!-- URL input with prefix -->
+<arc-input-group>
+  <span slot="prefix">https://</span>
+  <arc-input placeholder="example.com"></arc-input>
+</arc-input-group>
+
+<!-- Currency input with prefix and suffix -->
+<arc-input-group>
+  <span slot="prefix">$</span>
+  <arc-input type="number" placeholder="0.00"></arc-input>
+  <span slot="suffix">USD</span>
+</arc-input-group>`,
+    },
+    {
+      label: 'React',
+      lang: 'tsx',
+      code: `import { InputGroup, Input } from '@arclux/arc-ui-react';
+
+<InputGroup>
+  <span slot="prefix">https://</span>
+  <Input placeholder="example.com" />
+</InputGroup>
+
+<InputGroup>
+  <span slot="prefix">$</span>
+  <Input type="number" placeholder="0.00" />
+  <span slot="suffix">USD</span>
+</InputGroup>`,
+    },
+    {
+      label: 'Vue',
+      lang: 'html',
+      code: `<script setup>
+import { InputGroup, Input } from '@arclux/arc-ui-vue';
+</script>
+
+<template>
+  <InputGroup>
+    <template #prefix>https://</template>
+    <Input placeholder="example.com" />
+  </InputGroup>
+</template>`,
+    },
+    {
+      label: 'Svelte',
+      lang: 'html',
+      code: `<script>
+  import { InputGroup, Input } from '@arclux/arc-ui-svelte';
+</script>
+
+<InputGroup>
+  <span slot="prefix">https://</span>
+  <Input placeholder="example.com" />
+</InputGroup>`,
+    },
+    {
+      label: 'Angular',
+      lang: 'ts',
+      code: `import { Component } from '@angular/core';
+import { InputGroup, Input } from '@arclux/arc-ui-angular';
+
+@Component({
+  imports: [InputGroup, Input],
+  template: \`
+    <InputGroup>
+      <span slot="prefix">https://</span>
+      <Input placeholder="example.com" />
+    </InputGroup>
+  \`,
+})
+export class UrlField {}`,
+    },
+    {
+      label: 'Solid',
+      lang: 'tsx',
+      code: `import { InputGroup, Input } from '@arclux/arc-ui-solid';
+
+<InputGroup>
+  <span slot="prefix">https://</span>
+  <Input placeholder="example.com" />
+</InputGroup>`,
+    },
+    {
+      label: 'Preact',
+      lang: 'tsx',
+      code: `import { InputGroup, Input } from '@arclux/arc-ui-preact';
+
+<InputGroup>
+  <span slot="prefix">https://</span>
+  <Input placeholder="example.com" />
+</InputGroup>`,
+    },
+    {
+      label: 'HTML',
+      lang: 'html',
+      code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
+<!-- arc-input-group — requires input-group.css + base.css (or arc-ui.css) -->
+<div class="arc-input-group">
+  <div class="input-group">
+    <div class="input-group__addon input-group__addon--prefix">https://</div>
+    <div class="input-group__content"><input placeholder="example.com" /></div>
+  </div>
+</div>`,
+    },
+    {
+      label: 'HTML (Inline)',
+      lang: 'html',
+      code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
+<div style="display: flex">
+  <div style="display: flex; align-items: stretch; width: 100%; border-radius: 10px; overflow: hidden; border: 1px solid rgb(42, 42, 52); background: rgb(17, 17, 22)">
+    <div style="display: flex; align-items: center; padding: 0 12px; background: rgb(24, 24, 32); border-right: 1px solid rgb(42, 42, 52); font-size: 14px; color: rgb(124, 124, 137);">https://</div>
+    <div style="flex: 1;"><input placeholder="example.com" style="border: none; background: transparent; width: 100%; padding: 8px 12px; color: inherit;" /></div>
+  </div>
+</div>`,
+    },
+  ],
+
+  seeAlso: ['input', 'label', 'button-group'],
+};

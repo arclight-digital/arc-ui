@@ -10,8 +10,12 @@ export interface DataTableProps {
   selectable?: boolean;
   sortColumn?: string;
   sortDirection?: string;
+  virtual?: boolean;
+  rowHeight?: number;
   _columns?: string;
   _selectedRows?: string;
+  _startIndex?: string;
+  _visibleCount?: string;
   className?: string;
   children?: React.ReactNode;
   onArcSort?: (e: CustomEvent) => void;

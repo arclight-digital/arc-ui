@@ -3,6 +3,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 import { components } from '../../data/components/index';
 
 const headings = [
+  { id: 'v1-10-0', label: 'v1.10.0' },
   { id: 'v1-9-2', label: 'v1.9.2' },
   { id: 'v1-9-1', label: 'v1.9.1' },
   { id: 'v1-9-0', label: 'v1.9.0' },
@@ -48,6 +49,89 @@ const byTier = Object.fromEntries(
     <p class="page-desc">
       Release history for ARC UI. All packages are versioned together.
     </p>
+
+    <section id="v1-10-0">
+      <h2 class="docs-heading">v1.10.0 — The Big Component Update</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <p class="docs-text">
+        40 new components in a single release. Layout primitives, navigation patterns, form helpers,
+        content building blocks, and feedback overlays — basically everything we kept saying
+        "we'll add that later" about. Later is now.
+      </p>
+
+      <h3 class="tier-heading">New Components — Layout</h3>
+      <ul class="docs-list">
+        <li><strong>Center</strong> (<code>arc-center</code>) — Content centering primitive with max-width, intrinsic centering, and text-center modes.</li>
+        <li><strong>Cluster</strong> (<code>arc-cluster</code>) — Flex-wrap primitive for tags, chips, and button groups with token gap spacing.</li>
+        <li><strong>Dock</strong> (<code>arc-dock</code>) — Edge-snapped auto-hide panel with hover-reveal and spring easing.</li>
+        <li><strong>Float Bar</strong> (<code>arc-float-bar</code>) — Floating toolbar anchored to viewport bottom with backdrop blur. For bulk actions and unsaved-changes prompts.</li>
+        <li><strong>Aspect Grid</strong> (<code>arc-aspect-grid</code>) — CSS grid with uniform aspect-ratio cells.</li>
+        <li><strong>Inset</strong> (<code>arc-inset</code>) — Padding primitive with optional negative-margin bleed.</li>
+        <li><strong>Masonry</strong> (<code>arc-masonry</code>) — CSS-columns masonry layout. No JavaScript, just columns and gap.</li>
+        <li><strong>Responsive Switcher</strong> (<code>arc-responsive-switcher</code>) — Container-query layout switcher: row above threshold, column below.</li>
+        <li><strong>Sticky</strong> (<code>arc-sticky</code>) — Sticky wrapper with IntersectionObserver-based stuck detection and <code>arc-stuck</code> event.</li>
+      </ul>
+
+      <h3 class="tier-heading">New Components — Navigation</h3>
+      <ul class="docs-list">
+        <li><strong>Anchor Nav</strong> (<code>arc-anchor-nav</code>) — In-page link bar with IntersectionObserver-driven active state. Horizontal or vertical.</li>
+        <li><strong>Bottom Nav</strong> (<code>arc-bottom-nav</code>) — Mobile bottom navigation bar with icon + label items and backdrop blur.</li>
+        <li><strong>Breadcrumb Menu</strong> (<code>arc-breadcrumb-menu</code>) — Breadcrumb segments that double as dropdown triggers for sibling navigation.</li>
+        <li><strong>Command Bar</strong> (<code>arc-command-bar</code>) — Always-visible search input designed for toolbar placement.</li>
+        <li><strong>Page Indicator</strong> (<code>arc-page-indicator</code>) — Dot-based position indicator for carousels and onboarding flows.</li>
+        <li><strong>Rail</strong> (<code>arc-rail</code>) — Ultra-narrow icon-only vertical navigation strip. Think VS Code activity bar.</li>
+        <li><strong>Skip Link</strong> (<code>arc-skip-link</code>) — Accessible skip-to-content link, invisible until focused.</li>
+        <li><strong>Speed Dial</strong> (<code>arc-speed-dial</code>) — FAB that fans out secondary icon actions with staggered animation.</li>
+        <li><strong>Stepper Nav</strong> (<code>arc-stepper-nav</code>) — Full wizard navigation controller with Back/Next/Skip and validation gates.</li>
+      </ul>
+
+      <h3 class="tier-heading">New Components — Content</h3>
+      <ul class="docs-list">
+        <li><strong>Separator</strong> (<code>arc-separator</code>) — Semantic <code>role="separator"</code> with optional centered label text. Variants: line, dashed, dotted, fade.</li>
+        <li><strong>Image</strong> (<code>arc-image</code>) — Responsive image with loading skeleton shimmer, fade-in transition, and error fallback.</li>
+        <li><strong>Scroll Indicator</strong> (<code>arc-scroll-indicator</code>) — Sticky progress bar showing scroll position. rAF-throttled for smooth performance.</li>
+        <li><strong>List</strong> (<code>arc-list</code>) — Container for list items with keyboard navigation and single/multiple selection.</li>
+        <li><strong>List Item</strong> (<code>arc-list-item</code>) — List item with prefix/suffix/description slots.</li>
+        <li><strong>Virtual List</strong> (<code>arc-virtual-list</code>) — Renders only visible items for 10K+ row datasets.</li>
+      </ul>
+
+      <h3 class="tier-heading">New Components — Input</h3>
+      <ul class="docs-list">
+        <li><strong>Label</strong> (<code>arc-label</code>) — Form label with required indicator, description slot, and tooltip slot.</li>
+        <li><strong>Fieldset</strong> (<code>arc-fieldset</code>) — Form group with native <code>&lt;fieldset&gt;</code> + <code>&lt;legend&gt;</code>, error messages, and card variant.</li>
+        <li><strong>Switch Group</strong> (<code>arc-switch-group</code>) — Groups <code>arc-toggle</code> children with propagated size and disabled.</li>
+        <li><strong>Button Group</strong> (<code>arc-button-group</code>) — Connected button borders with propagated size and variant.</li>
+        <li><strong>Input Group</strong> (<code>arc-input-group</code>) — Prefix/suffix addon slots with connected borders and shared focus glow.</li>
+        <li><strong>Hotkey</strong> (<code>arc-hotkey</code>) — Invisible keyboard shortcut listener with modifier combos and chord sequences.</li>
+      </ul>
+
+      <h3 class="tier-heading">New Components — Feedback</h3>
+      <ul class="docs-list">
+        <li><strong>Announcement</strong> (<code>arc-announcement</code>) — ARIA live-region wrapper for screen-reader announcements. No visual output.</li>
+        <li><strong>Banner</strong> (<code>arc-banner</code>) — Full-width persistent notification strip with status variants and dismiss.</li>
+        <li><strong>Confirm</strong> (<code>arc-confirm</code>) — Programmatic confirmation dialog with static <code>open()</code> returning <code>Promise&lt;boolean&gt;</code>.</li>
+        <li><strong>Connection Status</strong> (<code>arc-connection-status</code>) — Auto online/offline detector with amber pulse animation.</li>
+        <li><strong>Guided Tour</strong> (<code>arc-guided-tour</code>) — Multi-step onboarding overlay composing spotlight + tooltip.</li>
+        <li><strong>Inline Message</strong> (<code>arc-inline-message</code>) — Compact icon + text feedback with status variants.</li>
+        <li><strong>Loading Overlay</strong> (<code>arc-loading-overlay</code>) — Semi-transparent loading cover with centered spinner.</li>
+        <li><strong>Progress Toast</strong> (<code>arc-progress-toast</code>) — Toast with embedded progress bar and imperative show/update/complete API.</li>
+        <li><strong>Snackbar</strong> (<code>arc-snackbar</code>) — Bottom-anchored notification with imperative <code>show()</code> API and action button.</li>
+        <li><strong>Spotlight</strong> (<code>arc-spotlight</code>) — Element-highlighting overlay for onboarding and feature discovery.</li>
+      </ul>
+
+      <h3 class="tier-heading">Enhancements</h3>
+      <ul class="docs-list">
+        <li><strong>Avatar</strong> — Image loading now shows a shimmer skeleton, fades in on load, and falls back to initials on error.</li>
+        <li><strong>Data Table</strong> — New <code>virtual</code> and <code>row-height</code> props enable row virtualization for large datasets.</li>
+        <li><strong>Dropdown Menu</strong> — Internal divider rendering now uses <code>arc-separator</code>.</li>
+        <li><strong>Context Menu</strong> — Internal divider rendering now uses <code>arc-separator</code>.</li>
+      </ul>
+
+      <p class="docs-text" style="margin-top:var(--space-lg);color:var(--text-muted);font-style:italic">
+        See you in v1.10.1 when we inevitably fix half of these.
+      </p>
+    </section>
 
     <section id="v1-9-2">
       <h2 class="docs-heading">v1.9.2 — Top Bar Container Alignment</h2>

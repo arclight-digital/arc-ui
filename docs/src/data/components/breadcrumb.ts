@@ -173,6 +173,12 @@ export default function BreadcrumbDemo() {
   <arc-breadcrumb-item>Settings</arc-breadcrumb-item>
 </arc-breadcrumb>`,
     },
+    {
+      label: 'HTML (Inline)',
+      lang: 'html',
+      code: `<!-- arc-breadcrumb is hybrid — CSS handles layout, JS enhances interactivity -->
+<arc-breadcrumb></arc-breadcrumb>`,
+    },
   ],
 
   subComponents: [

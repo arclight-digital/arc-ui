@@ -14,11 +14,11 @@
       }
 
       .arc-footer .footer {
-        padding: var(--space-2xl) var(--space-xl) var(--space-xl);
+        padding: var(--space-xl);
       }
 
       .arc-footer[compact] .footer {
-        padding: var(--space-lg) var(--space-md) var(--space-md);
+        padding: var(--space-md);
       }
 
       .arc-footer .footer__brand {

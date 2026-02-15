@@ -6,7 +6,7 @@ import { ArcPopover } from '@arclux/arc-ui';
 
 export interface PopoverProps {
   open?: boolean;
-  position?: 'bottom' | 'top' | 'left' | 'right';
+  position?: string;
   trigger?: string;
   className?: string;
   children?: React.ReactNode;

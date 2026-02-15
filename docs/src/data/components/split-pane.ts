@@ -22,7 +22,7 @@ Content is distributed through two named slots: \`primary\` (the region whose si
       'Named primary and secondary slots for clear content assignment',
       'Both panes have overflow: auto for independently scrollable content',
       'User-select disabled during drag to prevent text selection artifacts',
-      'CSS parts (base, primary, handle, secondary) for targeted ::part() styling',
+      'CSS parts (base, primary, handle, secondary) for targeted ::part() styling'
     ],
 
     guidelines: {
@@ -31,14 +31,14 @@ Content is distributed through two named slots: \`primary\` (the region whose si
         'Set min-ratio to at least 0.15 and max-ratio to at most 0.85 to keep both panes usable',
         'Listen for the arc-resize event to save the user preferred ratio to localStorage',
         'Give the SplitPane parent a defined height (e.g. 100vh or flex: 1) so the panes can fill it',
-        'Use orientation="vertical" for top/bottom splits like console panels or diff views',
+        'Use orientation="vertical" for top/bottom splits like console panels or diff views'
       ],
       dont: [
         'Use SplitPane for static two-column layouts; use PageLayout with sidebar-left or sidebar-right instead',
         'Set min-ratio and max-ratio so close that the drag range is negligible',
         'Nest multiple SplitPanes more than two levels deep -- the interaction becomes confusing',
         'Forget to set a height on the SplitPane container; without it the panes collapse to content height',
-        'Place critical controls in the secondary pane if min-ratio could hide it on narrow viewports',
+        'Place critical controls in the secondary pane if min-ratio could hide it on narrow viewports'
       ],
     },
 
@@ -64,10 +64,10 @@ Content is distributed through two named slots: \`primary\` (the region whose si
       { name: 'orientation', type: "'horizontal' | 'vertical'", default: "'horizontal'", description: 'Controls the split direction. Horizontal places panes side by side with a vertical divider. Vertical stacks panes top and bottom with a horizontal divider.' },
       { name: 'ratio', type: 'number', default: '0.5', description: 'The proportion of space allocated to the primary pane, from 0 to 1. A value of 0.4 gives the primary pane 40% of the available width (or height in vertical mode).' },
       { name: 'min-ratio', type: 'number', default: '0.15', description: 'Minimum allowed ratio. The divider cannot be dragged below this value, preventing the primary pane from collapsing.' },
-      { name: 'max-ratio', type: 'number', default: '0.85', description: 'Maximum allowed ratio. The divider cannot be dragged above this value, preventing the secondary pane from collapsing.' },
+      { name: 'max-ratio', type: 'number', default: '0.85', description: 'Maximum allowed ratio. The divider cannot be dragged above this value, preventing the secondary pane from collapsing.' }
     ],
     events: [
-      { name: 'arc-resize', description: 'Fired during divider drag with { ratio } detail' },
+      { name: 'arc-resize', description: 'Fired during divider drag with { ratio } detail' }
     ],
     tabs: [
       {
@@ -150,7 +150,7 @@ export class MyComponent {}`,
   <div slot="primary">Primary pane</div>
   <div slot="secondary">Secondary pane</div>
 </SplitPane>`,
-      },
+      }
     ],
   
   seeAlso: ["resizable","dashboard-grid"],

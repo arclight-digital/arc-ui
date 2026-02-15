@@ -1,10 +1,11 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { OverlayMixin } from '../shared/overlay-mixin.js';
 
 /**
  * @tag arc-drawer
  */
-export class ArcDrawer extends LitElement {
+export class ArcDrawer extends OverlayMixin(LitElement) {
   static properties = {
     open:     { type: Boolean, reflect: true },
     position: { type: String, reflect: true },
@@ -69,7 +70,7 @@ export class ArcDrawer extends LitElement {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: var(--space-md) var(--space-lg);
+        padding: var(--space-lg);
         border-bottom: 1px solid var(--border-subtle);
         flex-shrink: 0;
       }
@@ -83,24 +84,6 @@ export class ArcDrawer extends LitElement {
         color: var(--text-primary);
       }
 
-      .drawer__close {
-        background: none;
-        border: none;
-        color: var(--text-muted);
-        cursor: pointer;
-        width: 32px;
-        height: 32px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: var(--radius-sm);
-        transition: color var(--transition-fast), background var(--transition-fast);
-      }
-
-      .drawer__close:hover {
-        color: var(--text-primary);
-        background: var(--bg-hover);
-      }
 
       .drawer__body {
         flex: 1;
@@ -124,31 +107,6 @@ export class ArcDrawer extends LitElement {
     this.open = false;
     this.position = 'left';
     this.heading = '';
-    this._onKeyDown = this._onKeyDown.bind(this);
-  }
-
-  updated(changed) {
-    if (changed.has('open')) {
-      if (this.open) {
-        document.addEventListener('keydown', this._onKeyDown);
-        document.body.style.overflow = 'hidden';
-      } else {
-        document.removeEventListener('keydown', this._onKeyDown);
-        document.body.style.overflow = '';
-      }
-    }
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    document.removeEventListener('keydown', this._onKeyDown);
-    document.body.style.overflow = '';
-  }
-
-  _onKeyDown(e) {
-    if (e.key === 'Escape') {
-      this._close();
-    }
   }
 
   _close() {
@@ -159,21 +117,13 @@ export class ArcDrawer extends LitElement {
     }));
   }
 
-  _backdropClick() {
-    this._close();
-  }
-
   render() {
     return html`
-      <div class="drawer__backdrop" @click=${this._backdropClick} part="backdrop"></div>
+      <div class="drawer__backdrop" @click=${this._handleBackdropClick} part="backdrop"></div>
       <aside class="drawer__panel" role="dialog" aria-modal="true" aria-label=${this.heading || 'Drawer'} part="panel">
         <div class="drawer__header" part="header">
           <span class="drawer__title" part="title">${this.heading}</span>
-          <button class="drawer__close" @click=${this._close} aria-label="Close" part="close">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-              <path d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z"/>
-            </svg>
-          </button>
+          <arc-icon-button name="x" label="Close" variant="ghost" size="sm" @click=${this._close} part="close"></arc-icon-button>
         </div>
         <div class="drawer__body" part="body">
           <slot></slot>

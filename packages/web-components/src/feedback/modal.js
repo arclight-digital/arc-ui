@@ -79,7 +79,7 @@ export class ArcModal extends LitElement {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: var(--space-lg) var(--space-xl);
+        padding: var(--space-lg);
         border-bottom: 1px solid var(--border-subtle);
       }
 
@@ -90,34 +90,9 @@ export class ArcModal extends LitElement {
         margin: 0;
       }
 
-      .modal__close {
-        background: none;
-        border: none;
-        color: var(--text-ghost);
-        cursor: pointer;
-        font-size: var(--text-md);
-        width: 32px;
-        height: 32px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: var(--radius-sm);
-        transition: color var(--transition-fast), background var(--transition-fast);
-        line-height: 1;
-      }
-
-      .modal__close:hover {
-        color: var(--text-primary);
-        background: var(--bg-hover);
-      }
-
-      .modal__close:focus-visible {
-        outline: none;
-        box-shadow: var(--focus-ring);
-      }
 
       .modal__body {
-        padding: var(--space-lg) var(--space-xl);
+        padding: var(--space-lg);
         color: var(--text-secondary);
         font-size: var(--body-size);
         line-height: var(--body-lh);
@@ -125,7 +100,7 @@ export class ArcModal extends LitElement {
       }
 
       .modal__footer {
-        padding: var(--space-md) var(--space-xl);
+        padding: var(--space-lg);
         border-top: 1px solid var(--border-subtle);
         display: flex;
         justify-content: flex-end;
@@ -226,7 +201,7 @@ export class ArcModal extends LitElement {
               <h2 class="modal__heading">${this.heading}</h2>
             </slot>
             ${this.closable ? html`
-              <button class="modal__close" aria-label="Close" @click=${this._close} part="close">&times;</button>
+              <arc-icon-button name="x" label="Close" variant="ghost" size="sm" @click=${this._close} part="close"></arc-icon-button>
             ` : ''}
           </div>
           <div class="modal__body" part="body">

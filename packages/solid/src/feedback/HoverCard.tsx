@@ -4,7 +4,7 @@ import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui';
 
 export interface HoverCardProps {
-  position?: 'bottom' | 'top' | 'left' | 'right';
+  position?: string;
   openDelay?: number;
   closeDelay?: number;
   _visible?: string;

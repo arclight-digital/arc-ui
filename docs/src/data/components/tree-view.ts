@@ -22,7 +22,7 @@ TreeView supports full keyboard navigation following the WAI-ARIA tree pattern. 
       'Full keyboard navigation: ArrowDown/Up to traverse, ArrowRight/Left to expand/collapse, Enter/Space to select',
       'Proper WAI-ARIA tree roles: `role="tree"`, `role="treeitem"`, `role="group"`, and `aria-expanded`',
       'Branch toggle event (`arc-toggle`) with item details and expanded state for external state management',
-      'CSS parts for `tree`, `group`, `item`, and `row` enabling external style customisation',
+      'CSS parts for `tree`, `group`, `item`, and `row` enabling external style customisation'
     ],
 
     guidelines: {
@@ -31,14 +31,14 @@ TreeView supports full keyboard navigation following the WAI-ARIA tree pattern. 
         'Set `expanded` on top-level branches that should be visible by default for discoverability',
         'Provide meaningful icons to help users scan the tree -- e.g. folder/file emojis for file browsers',
         'Listen to `arc-select` to update the main content area when a tree node is chosen',
-        'Keep tree depth to 3-4 levels maximum for usability -- deeper nesting becomes hard to scan',
+        'Keep tree depth to 3-4 levels maximum for usability -- deeper nesting becomes hard to scan'
       ],
       dont: [
         'Do not use TreeView for flat lists -- use a simple list or navigation menu instead',
         'Do not populate the tree with hundreds of top-level nodes without virtualisation or lazy loading',
         'Do not use TreeView for selection of multiple items simultaneously -- it tracks a single selection',
         'Do not rely solely on icons for meaning -- always include a text label on each tree item',
-        'Avoid extremely long label text -- it truncates with text-overflow ellipsis but is then unreadable',
+        'Avoid extremely long label text -- it truncates with text-overflow ellipsis but is then unreadable'
       ],
     },
 
@@ -61,7 +61,7 @@ TreeView supports full keyboard navigation following the WAI-ARIA tree pattern. 
     ],
     events: [
       { name: 'arc-toggle', description: 'Fired when a tree node is expanded or collapsed' },
-      { name: 'arc-select', description: 'Fired when a tree item is selected' },
+      { name: 'arc-select', description: 'Fired when a tree item is selected' }
     ],
     tabs: [
       {
@@ -158,7 +158,7 @@ export class MyComponent {}`,
   </TreeItem>
   <TreeItem label="package.json" icon="📄"></TreeItem>
 </TreeView>`,
-      },
+      }
     ],
     subComponents: [
       {
@@ -168,9 +168,9 @@ export class MyComponent {}`,
         props: [
           { name: 'label', type: 'string', description: 'Item label text' },
           { name: 'icon', type: 'string', description: 'Icon or emoji' },
-          { name: 'expanded', type: 'boolean', default: 'false', description: 'Expand child items' },
+          { name: 'expanded', type: 'boolean', default: 'false', description: 'Expand child items' }
         ],
-      },
+      }
     ],
   
   seeAlso: ["accordion","sidebar","collapsible"],

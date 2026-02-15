@@ -1,10 +1,11 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { OverlayMixin } from '../shared/overlay-mixin.js';
 
 /**
  * @tag arc-sheet
  */
-export class ArcSheet extends LitElement {
+export class ArcSheet extends OverlayMixin(LitElement) {
   static properties = {
     open:    { type: Boolean, reflect: true },
     side:    { type: String, reflect: true },
@@ -86,7 +87,7 @@ export class ArcSheet extends LitElement {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: var(--space-lg) var(--space-xl);
+        padding: var(--space-lg);
         border-bottom: 1px solid var(--border-subtle);
         flex-shrink: 0;
       }
@@ -99,34 +100,9 @@ export class ArcSheet extends LitElement {
         margin: 0;
       }
 
-      .sheet__close {
-        background: none;
-        border: none;
-        color: var(--text-ghost);
-        cursor: pointer;
-        font-size: var(--text-md);
-        width: 32px;
-        height: 32px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: var(--radius-sm);
-        transition: color var(--transition-fast), background var(--transition-fast);
-        line-height: 1;
-      }
-
-      .sheet__close:hover {
-        color: var(--text-primary);
-        background: var(--bg-hover);
-      }
-
-      .sheet__close:focus-visible {
-        outline: none;
-        box-shadow: var(--focus-ring);
-      }
 
       .sheet__body {
-        padding: var(--space-lg) var(--space-xl);
+        padding: var(--space-lg);
         color: var(--text-secondary);
         font-size: var(--body-size);
         line-height: var(--body-lh);
@@ -135,7 +111,7 @@ export class ArcSheet extends LitElement {
       }
 
       .sheet__footer {
-        padding: var(--space-md) var(--space-xl);
+        padding: var(--space-lg);
         border-top: 1px solid var(--border-subtle);
         display: flex;
         justify-content: flex-end;
@@ -172,19 +148,6 @@ export class ArcSheet extends LitElement {
     this.open = false;
     this.side = 'bottom';
     this.heading = '';
-    this._handleKeydown = this._handleKeydown.bind(this);
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    document.removeEventListener('keydown', this._handleKeydown);
-    document.body.style.overflow = '';
-  }
-
-  _handleKeydown(e) {
-    if (e.key === 'Escape') {
-      this._close();
-    }
   }
 
   _close() {
@@ -192,26 +155,13 @@ export class ArcSheet extends LitElement {
     this.dispatchEvent(new CustomEvent('arc-close', { bubbles: true, composed: true }));
   }
 
-  _backdropClick(e) {
-    if (e.target === e.currentTarget) {
-      this._close();
-    }
-  }
-
   updated(changed) {
-    if (changed.has('open')) {
-      if (this.open) {
-        document.addEventListener('keydown', this._handleKeydown);
-        document.body.style.overflow = 'hidden';
-        this.dispatchEvent(new CustomEvent('arc-open', { bubbles: true, composed: true }));
-        this.updateComplete.then(() => {
-          const closeBtn = this.shadowRoot.querySelector('.sheet__close');
-          closeBtn?.focus();
-        });
-      } else {
-        document.removeEventListener('keydown', this._handleKeydown);
-        document.body.style.overflow = '';
-      }
+    super.updated(changed);
+    if (changed.has('open') && this.open) {
+      this.dispatchEvent(new CustomEvent('arc-open', { bubbles: true, composed: true }));
+      this.updateComplete.then(() => {
+        this.shadowRoot.querySelector('arc-icon-button[part="close"]')?.focus();
+      });
     }
   }
 
@@ -219,7 +169,7 @@ export class ArcSheet extends LitElement {
     return html`
       <div
         class="sheet__backdrop"
-        @click=${this._backdropClick}
+        @click=${this._handleBackdropClick}
         part="backdrop"
       ></div>
       <div
@@ -236,7 +186,7 @@ export class ArcSheet extends LitElement {
           <slot name="header">
             <h2 class="sheet__heading">${this.heading}</h2>
           </slot>
-          <button class="sheet__close" aria-label="Close" @click=${this._close} part="close">&times;</button>
+          <arc-icon-button name="x" label="Close" variant="ghost" size="sm" @click=${this._close} part="close"></arc-icon-button>
         </div>
         <div class="sheet__body" part="body">
           <slot></slot>
