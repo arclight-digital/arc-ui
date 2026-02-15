@@ -15,6 +15,11 @@
 
       .arc-footer .footer {
         padding: var(--space-xl);
+        padding-inline: var(--space-lg);
+      }
+
+      .arc-footer[contained] .footer {
+        padding-inline: 0;
       }
 
       .arc-footer[compact] .footer {

@@ -7,6 +7,7 @@ import { ArcFooter } from '@arclux/arc-ui';
 export interface FooterProps {
   compact?: boolean;
   border?: boolean;
+  contained?: string;
   align?: 'center';
   className?: string;
   children?: React.ReactNode;

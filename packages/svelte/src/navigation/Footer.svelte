@@ -6,14 +6,15 @@
   interface Props {
     compact?: boolean;
     border?: boolean;
+    contained?: string;
     align?: 'center';
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { compact = false, border = true, align = 'left', children, ...rest }: Props = $props();
+  let { compact = false, border = true, contained = null, align = 'left', children, ...rest }: Props = $props();
 </script>
 
-<arc-footer {compact} {border} {align} {...rest}>
+<arc-footer {compact} {border} {contained} {align} {...rest}>
   {@render children?.()}
 </arc-footer>

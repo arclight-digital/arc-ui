@@ -31,6 +31,9 @@
         padding-inline: var(--space-lg);
       }
 
+      arc-container { height: 100%; }
+      arc-container::part(container) { height: 100%; }
+
       .arc-top-bar[contained] .topbar__content {
         padding-inline: 0;
       }

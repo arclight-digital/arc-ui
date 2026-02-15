@@ -2697,6 +2697,11 @@
 
       .arc-footer .footer {
         padding: var(--space-xl);
+        padding-inline: var(--space-lg);
+      }
+
+      .arc-footer[contained] .footer {
+        padding-inline: 0;
       }
 
       .arc-footer[compact] .footer {
@@ -2888,6 +2893,9 @@
         height: 100%;
         padding-inline: var(--space-lg);
       }
+
+      arc-container { height: 100%; }
+      arc-container::part(container) { height: 100%; }
 
       .arc-top-bar[contained] .topbar__content {
         padding-inline: 0;

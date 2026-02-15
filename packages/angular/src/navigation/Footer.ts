@@ -7,10 +7,11 @@ import '@arclux/arc-ui';
   selector: 'arc-footer',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-footer [compact]="compact" [border]="border" [attr.align]="align"><ng-content /></arc-footer>`,
+  template: `<arc-footer [compact]="compact" [border]="border" [attr.contained]="contained" [attr.align]="align"><ng-content /></arc-footer>`,
 })
 export class Footer {
   @Input() compact: boolean = false;
   @Input() border: boolean = true;
+  @Input() contained: string = 'null';
   @Input() align: 'center' = 'left';
 }

@@ -6,15 +6,16 @@ import '@arclux/arc-ui';
 export interface FooterProps {
   compact?: boolean;
   border?: boolean;
+  contained?: string;
   align?: 'center';
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Footer: Component<FooterProps> = (props) => {
-  const [local, rest] = splitProps(props, ['compact', 'border', 'align', 'children']);
+  const [local, rest] = splitProps(props, ['compact', 'border', 'contained', 'align', 'children']);
   return (
-    <arc-footer compact={local.compact} border={local.border} align={local.align} {...rest}>
+    <arc-footer compact={local.compact} border={local.border} contained={local.contained} align={local.align} {...rest}>
       {local.children}
     </arc-footer>
   );

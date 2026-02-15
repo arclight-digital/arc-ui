@@ -1,14 +1,16 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import '../layout/container.register.js';
 
 /**
  * @tag arc-footer
  */
 export class ArcFooter extends LitElement {
   static properties = {
-    compact: { type: Boolean, reflect: true },
-    border:  { type: Boolean, reflect: true },
-    align:   { type: String, reflect: true },
+    compact:   { type: Boolean, reflect: true },
+    border:    { type: Boolean, reflect: true },
+    contained: { type: String, reflect: true },
+    align:     { type: String, reflect: true },
   };
 
   static styles = [
@@ -28,6 +30,11 @@ export class ArcFooter extends LitElement {
 
       .footer {
         padding: var(--space-xl);
+        padding-inline: var(--space-lg);
+      }
+
+      :host([contained]) .footer {
+        padding-inline: 0;
       }
 
       :host([compact]) .footer {
@@ -84,24 +91,41 @@ export class ArcFooter extends LitElement {
     super();
     this.compact = false;
     this.border = true;
+    this.contained = null;
     this.align = 'left';
   }
 
+  get _containerSize() {
+    if (!this.contained && this.contained !== '') return null;
+    const size = this.contained || 'md';
+    return ['sm', 'md', 'lg', 'xl', 'full'].includes(size) ? size : 'md';
+  }
+
+  _renderContent() {
+    return html`
+      <div class="footer__brand" part="brand">
+        <slot name="logo"></slot>
+      </div>
+      <div class="footer__columns" part="columns">
+        <slot></slot>
+      </div>
+      <div class="footer__social" part="social">
+        <slot name="social"></slot>
+      </div>
+      <div class="footer__legal" part="legal">
+        <slot name="legal"></slot>
+      </div>
+    `;
+  }
+
   render() {
+    const size = this._containerSize;
     return html`
       <footer class="footer" part="base">
-        <div class="footer__brand" part="brand">
-          <slot name="logo"></slot>
-        </div>
-        <div class="footer__columns" part="columns">
-          <slot></slot>
-        </div>
-        <div class="footer__social" part="social">
-          <slot name="social"></slot>
-        </div>
-        <div class="footer__legal" part="legal">
-          <slot name="legal"></slot>
-        </div>
+        ${size
+          ? html`<arc-container size=${size}>${this._renderContent()}</arc-container>`
+          : this._renderContent()
+        }
       </footer>
     `;
   }
