@@ -4,7 +4,7 @@ export const list: ComponentDef = {
   name: 'List',
   slug: 'list',
   tag: 'arc-list',
-  tier: 'content',
+  tier: 'data',
   interactivity: 'interactive',
   description: 'Structured list container with optional selection, keyboard navigation, and multiple visual variants. Pairs with arc-list-item for rich content rows.',
 

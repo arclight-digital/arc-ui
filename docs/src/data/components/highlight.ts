@@ -4,7 +4,7 @@ export const highlight: ComponentDef = {
     name: 'Highlight',
     slug: 'highlight',
     tag: 'arc-highlight',
-    tier: 'content',
+    tier: 'typography',
     interactivity: 'static',
     description: 'Text highlighting with search query match markers.',
 

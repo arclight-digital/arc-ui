@@ -4,7 +4,7 @@ export const badge: ComponentDef = {
     name: 'Badge',
     slug: 'badge',
     tag: 'arc-badge',
-    tier: 'content',
+    tier: 'data',
     interactivity: 'static',
     description: 'Compact pill-shaped label for status indicators, category tags, and notification counts. Three color variants let you encode meaning at a glance across dashboards, tables, and card layouts.',
 

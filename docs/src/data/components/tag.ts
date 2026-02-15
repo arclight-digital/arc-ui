@@ -4,7 +4,7 @@ export const tag: ComponentDef = {
     name: 'Tag',
     slug: 'tag',
     tag: 'arc-tag',
-    tier: 'content',
+    tier: 'data',
     interactivity: 'hybrid',
     description: 'Compact pill-shaped label with colour variants, custom colour support, and an optional remove button, for categorisation, filtering, and selection feedback.',
 

@@ -6,7 +6,7 @@ export interface ComponentDef {
   name: string;
   slug: string;
   tag: string;
-  tier: 'layout' | 'navigation' | 'content' | 'input' | 'feedback';
+  tier: 'layout' | 'navigation' | 'content' | 'data' | 'typography' | 'input' | 'feedback';
   interactivity: 'static' | 'hybrid' | 'interactive';
   status?: 'stable' | 'beta' | 'experimental';
   description: string;

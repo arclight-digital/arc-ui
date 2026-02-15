@@ -12,7 +12,7 @@ import { fileURLToPath } from 'node:url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const srcDir = resolve(__dirname, '../packages/web-components/src');
 
-const TIERS = ['content', 'input', 'navigation', 'layout', 'feedback', 'shared'];
+const TIERS = ['content', 'data', 'typography', 'input', 'navigation', 'layout', 'feedback', 'shared'];
 
 // Collect all component files
 const componentFiles = [];

@@ -4,7 +4,6 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
-    items?: unknown[];
     selected?: number;
     align?: 'center' | 'end';
     variant?: 'pills';
@@ -13,9 +12,9 @@
     [key: string]: unknown;
   }
 
-  let { items = [], selected = 0, align = 'start', variant = 'underline', _tabs = [], children, ...rest }: Props = $props();
+  let { selected = 0, align = 'start', variant = 'underline', _tabs = [], children, ...rest }: Props = $props();
 </script>
 
-<arc-tabs {items} {selected} {align} {variant} {_tabs} {...rest}>
+<arc-tabs {selected} {align} {variant} {_tabs} {...rest}>
   {@render children?.()}
 </arc-tabs>

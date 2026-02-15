@@ -4,7 +4,7 @@ export const animatedNumber: ComponentDef = {
     name: 'Animated Number',
     slug: 'animated-number',
     tag: 'arc-animated-number',
-    tier: 'content',
+    tier: 'data',
     interactivity: 'static',
     replayable: true,
     description: 'Smooth count-up/down number animation with formatting options.',

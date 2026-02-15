@@ -4,7 +4,6 @@ import { type FunctionComponent } from 'preact';
 import '@arclux/arc-ui';
 
 export interface TabsProps {
-  items?: unknown[];
   selected?: number;
   align?: 'center' | 'end';
   variant?: 'pills';
@@ -13,8 +12,8 @@ export interface TabsProps {
   [key: string]: unknown;
 }
 
-export const Tabs: FunctionComponent<TabsProps> = ({ items, selected, align, variant, _tabs, children, ...rest }) => (
-  <arc-tabs items={items} selected={selected} align={align} variant={variant} _tabs={_tabs} {...rest}>
+export const Tabs: FunctionComponent<TabsProps> = ({ selected, align, variant, _tabs, children, ...rest }) => (
+  <arc-tabs selected={selected} align={align} variant={variant} _tabs={_tabs} {...rest}>
     {children}
   </arc-tabs>
 );

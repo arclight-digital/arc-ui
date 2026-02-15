@@ -25,13 +25,36 @@ export class ArcScrollSpy extends LitElement {
       }
 
       .scroll-spy__heading {
-        font-family: var(--font-accent);
-        font-weight: var(--section-title-weight);
-        font-size: var(--section-title-size);
-        letter-spacing: var(--section-title-spacing);
-        text-transform: uppercase;
-        color: var(--text-ghost);
+        display: block;
+        width: 100%;
+        text-align: left;
+        cursor: pointer;
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        background: var(--bg-surface);
+        padding: var(--space-sm) var(--space-md);
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border-subtle);
         margin-bottom: var(--space-sm);
+        transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+      }
+
+      .scroll-spy__heading:hover {
+        border-color: var(--border-default);
+        box-shadow: var(--glow-card-hover);
+      }
+
+      .scroll-spy__heading-text {
+        font-family: var(--font-accent);
+        font-weight: 600;
+        font-size: var(--text-xs);
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        background: var(--gradient-accent-text);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
       }
 
       .scroll-spy__list {
@@ -165,6 +188,20 @@ export class ArcScrollSpy extends LitElement {
     });
   }
 
+  _scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Walk up from the host to find the nearest scrollable ancestor
+    // (crosses shadow DOM boundaries via assignedSlot)
+    let el = this.assignedSlot?.parentElement ?? this.parentElement;
+    while (el) {
+      if (el.scrollHeight > el.clientHeight) {
+        el.scrollTo({ top: 0, behavior: 'smooth' });
+        break;
+      }
+      el = el.assignedSlot?.parentElement ?? el.parentElement;
+    }
+  }
+
   _handleClick(target) {
     const el = document.getElementById(target);
     if (el) {
@@ -180,7 +217,7 @@ export class ArcScrollSpy extends LitElement {
         <slot @slotchange=${this._onSlotChange}></slot>
       </div>
       <nav class="scroll-spy" part="scroll-spy" aria-label="Table of contents">
-        <div class="scroll-spy__heading" part="heading">On this page</div>
+        <button class="scroll-spy__heading" part="heading" @click=${this._scrollToTop}><span class="scroll-spy__heading-text">On this page</span></button>
         <ul class="scroll-spy__list" part="list">
           ${this._links.map((link) => html`
             <li class="scroll-spy__item">

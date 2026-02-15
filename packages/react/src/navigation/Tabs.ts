@@ -5,7 +5,6 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcTabs } from '@arclux/arc-ui';
 
 export interface TabsProps {
-  items?: unknown[];
   selected?: number;
   align?: 'center' | 'end';
   variant?: 'pills';

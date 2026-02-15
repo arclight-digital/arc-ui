@@ -4,7 +4,7 @@ export const truncate: ComponentDef = {
     name: 'Truncate',
     slug: 'truncate',
     tag: 'arc-truncate',
-    tier: 'content',
+    tier: 'typography',
     interactivity: 'interactive',
     description: 'Multi-line text clamping with expandable show-more toggle.',
 

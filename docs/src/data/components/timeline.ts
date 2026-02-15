@@ -4,7 +4,7 @@ export const timeline: ComponentDef = {
     name: 'Timeline',
     slug: 'timeline',
     tag: 'arc-timeline',
-    tier: 'content',
+    tier: 'data',
     interactivity: 'static',
     description: 'Vertical timeline with dated events.',
 

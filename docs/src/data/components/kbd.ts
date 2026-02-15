@@ -4,7 +4,7 @@ export const kbd: ComponentDef = {
     name: 'Kbd',
     slug: 'kbd',
     tag: 'arc-kbd',
-    tier: 'content',
+    tier: 'typography',
     interactivity: 'static',
     description: 'Keyboard key indicator styled like a physical key.',
 

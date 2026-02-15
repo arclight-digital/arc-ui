@@ -37,7 +37,7 @@ export class ArcStatusBar extends LitElement {
         gap: var(--space-sm);
       }
 
-      .status-bar__left {
+      .status-bar__start {
         display: flex;
         align-items: center;
         gap: var(--space-sm);
@@ -52,7 +52,7 @@ export class ArcStatusBar extends LitElement {
         justify-content: center;
       }
 
-      .status-bar__right {
+      .status-bar__end {
         display: flex;
         align-items: center;
         gap: var(--space-sm);
@@ -70,14 +70,14 @@ export class ArcStatusBar extends LitElement {
   render() {
     return html`
       <div class="status-bar" part="base" role="status">
-        <div class="status-bar__left" part="left">
-          <slot name="left"></slot>
+        <div class="status-bar__start" part="start">
+          <slot name="start"></slot>
         </div>
         <div class="status-bar__center" part="center">
           <slot></slot>
         </div>
-        <div class="status-bar__right" part="right">
-          <slot name="right"></slot>
+        <div class="status-bar__end" part="end">
+          <slot name="end"></slot>
         </div>
       </div>
     `;

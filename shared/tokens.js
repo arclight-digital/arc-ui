@@ -24,8 +24,8 @@ export const tokens = {
     borderBright:  'rgb(51, 51, 64)',
 
     /* Accent */
-    accentBlue:   'rgb(77, 126, 247)',
-    accentViolet: 'rgb(139, 92, 246)',
+    accentPrimary:   'rgb(77, 126, 247)',
+    accentSecondary: 'rgb(139, 92, 246)',
 
     /* Feedback */
     success: 'rgb(52, 211, 153)',
@@ -36,8 +36,8 @@ export const tokens = {
 
   /* RGB channels (for alpha compositing) */
   rgb: {
-    accentBlue:   '77, 126, 247',
-    accentViolet: '139, 92, 246',
+    accentPrimary:   '77, 126, 247',
+    accentSecondary: '139, 92, 246',
     textPrimary:  '232, 232, 236',
     textMuted:    '124, 124, 137',
     error:        '239, 68, 68',
@@ -201,8 +201,8 @@ export const tokens = {
   /* ── Glow (box-shadow presets) ── */
   glow: {
     white: '0 0 6px rgba(var(--text-primary-rgb),0.6), 0 0 18px rgba(var(--text-primary-rgb),0.25), 0 0 40px rgba(var(--text-primary-rgb),0.1)',
-    blue:  '0 0 8px rgba(var(--accent-primary-rgb),0.9), 0 0 20px rgba(var(--accent-primary-rgb),0.5), 0 0 44px rgba(var(--accent-primary-rgb),0.25), 0 0 80px rgba(var(--accent-primary-rgb),0.1)',
-    violet: '0 0 8px rgba(var(--accent-secondary-rgb),0.9), 0 0 20px rgba(var(--accent-secondary-rgb),0.5), 0 0 44px rgba(var(--accent-secondary-rgb),0.25), 0 0 80px rgba(var(--accent-secondary-rgb),0.1)',
+    primary:   '0 0 8px rgba(var(--accent-primary-rgb),0.9), 0 0 20px rgba(var(--accent-primary-rgb),0.5), 0 0 44px rgba(var(--accent-primary-rgb),0.25), 0 0 80px rgba(var(--accent-primary-rgb),0.1)',
+    secondary: '0 0 8px rgba(var(--accent-secondary-rgb),0.9), 0 0 20px rgba(var(--accent-secondary-rgb),0.5), 0 0 44px rgba(var(--accent-secondary-rgb),0.25), 0 0 80px rgba(var(--accent-secondary-rgb),0.1)',
   },
 
   /* ── Card / Ambient Glow ── */
@@ -234,10 +234,10 @@ export const cssVariables = `
   --border-default: ${tokens.color.borderDefault};
   --border-bright: ${tokens.color.borderBright};
 
-  --accent-primary: ${tokens.color.accentBlue};
-  --accent-secondary: ${tokens.color.accentViolet};
-  --accent-primary-rgb: ${tokens.rgb.accentBlue};
-  --accent-secondary-rgb: ${tokens.rgb.accentViolet};
+  --accent-primary: ${tokens.color.accentPrimary};
+  --accent-secondary: ${tokens.color.accentSecondary};
+  --accent-primary-rgb: ${tokens.rgb.accentPrimary};
+  --accent-secondary-rgb: ${tokens.rgb.accentSecondary};
   --text-primary-rgb: ${tokens.rgb.textPrimary};
   --text-muted-rgb: ${tokens.rgb.textMuted};
   --color-error-rgb: ${tokens.rgb.error};
@@ -399,18 +399,18 @@ export const lightTokens = {
     borderSubtle:  'rgb(230, 232, 238)',
     borderDefault: 'rgb(210, 214, 222)',
     borderBright:  'rgb(190, 195, 205)',
-    accentBlue:   'rgb(55, 105, 235)',
-    accentViolet: 'rgb(120, 70, 230)',
+    accentPrimary:   'rgb(55, 105, 235)',
+    accentSecondary: 'rgb(120, 70, 230)',
   },
   rgb: {
-    accentBlue:   '55, 105, 235',
-    accentViolet: '120, 70, 230',
+    accentPrimary:   '55, 105, 235',
+    accentSecondary: '120, 70, 230',
     textPrimary:  '35, 35, 55',
     textMuted:    '115, 118, 140',
   },
   glow: {
-    blue:  '0 0 8px rgba(var(--accent-primary-rgb),0.5), 0 0 24px rgba(var(--accent-primary-rgb),0.2), 0 0 48px rgba(var(--accent-primary-rgb),0.08)',
-    violet: '0 0 8px rgba(var(--accent-secondary-rgb),0.5), 0 0 24px rgba(var(--accent-secondary-rgb),0.2), 0 0 48px rgba(var(--accent-secondary-rgb),0.08)',
+    primary:   '0 0 8px rgba(var(--accent-primary-rgb),0.5), 0 0 24px rgba(var(--accent-primary-rgb),0.2), 0 0 48px rgba(var(--accent-primary-rgb),0.08)',
+    secondary: '0 0 8px rgba(var(--accent-secondary-rgb),0.5), 0 0 24px rgba(var(--accent-secondary-rgb),0.2), 0 0 48px rgba(var(--accent-secondary-rgb),0.08)',
     white: '0 0 8px rgba(var(--accent-primary-rgb),0.15), 0 0 20px rgba(var(--accent-secondary-rgb),0.08)',
   },
   glowCard: {
@@ -434,7 +434,7 @@ export const lightTokens = {
   },
   glowLine: {
     white: 'linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.15), transparent)',
-    blue: 'linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.6), transparent)',
+    primary: 'linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.6), transparent)',
   },
   utility: {
     bgHover: 'rgba(55, 105, 235, 0.04)',
@@ -457,12 +457,12 @@ export const fixedDarkTokens = {
     borderSubtle:  'rgb(24, 24, 30)',
     borderDefault: 'rgb(34, 34, 41)',
     borderBright:  'rgb(51, 51, 64)',
-    accentBlue:   'rgb(77, 126, 247)',
-    accentViolet: 'rgb(139, 92, 246)',
+    accentPrimary:   'rgb(77, 126, 247)',
+    accentSecondary: 'rgb(139, 92, 246)',
   },
   rgb: {
-    accentBlue:   '77, 126, 247',
-    accentViolet: '139, 92, 246',
+    accentPrimary:   '77, 126, 247',
+    accentSecondary: '139, 92, 246',
     textPrimary:  '232, 232, 236',
     textMuted:    '124, 124, 137',
     white:        '255, 255, 255',
@@ -507,11 +507,11 @@ const colorVarMap = {
   textMuted: '--text-muted', textGhost: '--text-ghost',
   borderSubtle: '--border-subtle', borderDefault: '--border-default',
   borderBright: '--border-bright',
-  accentBlue: '--accent-primary', accentViolet: '--accent-secondary',
+  accentPrimary: '--accent-primary', accentSecondary: '--accent-secondary',
 };
 
 const rgbVarMap = {
-  accentBlue: '--accent-primary-rgb', accentViolet: '--accent-secondary-rgb',
+  accentPrimary: '--accent-primary-rgb', accentSecondary: '--accent-secondary-rgb',
   textPrimary: '--text-primary-rgb', textMuted: '--text-muted-rgb',
   white: '--white-rgb', black: '--black-rgb',
 };
@@ -538,15 +538,15 @@ function renderOverrides(t, indent = '  ') {
   if (t.gradient) for (const [k, v] of Object.entries(t.gradient)) if (gradientVarMap[k]) add(gradientVarMap[k], v);
 
   if (t.glow) {
-    if (t.glow.blue)   add('--glow-primary', t.glow.blue);
-    if (t.glow.violet) add('--glow-secondary', t.glow.violet);
+    if (t.glow.primary)   add('--glow-primary', t.glow.primary);
+    if (t.glow.secondary) add('--glow-secondary', t.glow.secondary);
     if (t.glow.white)  add('--glow-white', t.glow.white);
   }
   if (t.glowCard?.hover) add('--glow-card-hover', t.glowCard.hover);
 
   if (t.glowLine) {
     if (t.glowLine.white) add('--glow-line-white', t.glowLine.white);
-    if (t.glowLine.blue)  add('--glow-line-blue', t.glowLine.blue);
+    if (t.glowLine.primary) add('--glow-line-blue', t.glowLine.primary);
   }
 
   if (t.utility) {

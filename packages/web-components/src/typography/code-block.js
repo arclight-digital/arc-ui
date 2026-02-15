@@ -137,11 +137,15 @@ export class ArcCodeBlock extends LitElement {
         letter-spacing: 1px;
       }
 
-      .code-block__body {
+      .code-block__body-wrap {
         position: relative;
+      }
+
+      .code-block__body {
         padding: var(--space-md);
         padding-right: calc(var(--space-md) + 80px);
         overflow-x: auto;
+        overflow-y: hidden;
       }
 
       /* Shiki CSS-variables theme — map --shiki-* to design tokens.
@@ -166,6 +170,14 @@ export class ArcCodeBlock extends LitElement {
         top: var(--space-sm);
         right: var(--space-sm);
         z-index: 1;
+        border-radius: var(--radius-sm);
+        opacity: 0.75;
+        backdrop-filter: blur(4px);
+        transition: opacity var(--transition-fast);
+      }
+
+      .code-block__copy:hover {
+        opacity: 1;
       }
 
       .code-block__body pre {
@@ -241,24 +253,24 @@ export class ArcCodeBlock extends LitElement {
       }
 
       /* — Basic variant — */
-      :host([variant="basic"]) .code-block__body {
+      :host([variant="basic"]) .code-block__body-wrap {
         display: flex;
         align-items: center;
-        padding: var(--space-sm);
-        padding-right: var(--space-sm);
+        padding: var(--space-xs) var(--space-sm) var(--space-xs) 0;
       }
 
-      :host([variant="basic"]) .code-block__body pre,
-      :host([variant="basic"]) .code-block__body .shiki {
+      :host([variant="basic"]) .code-block__body {
         flex: 1;
         min-width: 0;
+        padding: var(--space-sm);
+        padding-right: var(--space-xs);
       }
 
       :host([variant="basic"]) .code-block__copy {
         position: static;
         flex-shrink: 0;
-        margin-left: var(--space-sm);
         order: 1;
+        margin-left: var(--space-sm);
       }
 
       .code-block__meta {
@@ -349,9 +361,9 @@ export class ArcCodeBlock extends LitElement {
     return html`
       <arc-status-bar part="status-bar">
         ${this.language
-          ? html`<span slot="left" class="code-block__meta" part="lang">${this.language}</span>`
+          ? html`<span slot="start" class="code-block__meta" part="lang">${this.language}</span>`
           : ''}
-        <span slot="right" class="code-block__meta" part="lines">${lines} ${lines === 1 ? 'line' : 'lines'}</span>
+        <span slot="end" class="code-block__meta" part="lines">${lines} ${lines === 1 ? 'line' : 'lines'}</span>
       </arc-status-bar>
     `;
   }
@@ -360,14 +372,16 @@ export class ArcCodeBlock extends LitElement {
     return html`
       <div class="code-block" part="code-block">
         ${this._renderHeader()}
-        <div class="code-block__body" part="body">
+        <div class="code-block__body-wrap">
           <div class="code-block__copy">
             <arc-copy-button .value=${this.code} part="copy"></arc-copy-button>
           </div>
-          ${this._highlightedHtml
-            ? unsafeHTML(this._highlightedHtml)
-            : html`<pre class="code-block__pre" part="pre"><code part="code">${this.code}</code></pre>`
-          }
+          <div class="code-block__body" part="body">
+            ${this._highlightedHtml
+              ? unsafeHTML(this._highlightedHtml)
+              : html`<pre class="code-block__pre" part="pre"><code part="code">${this.code}</code></pre>`
+            }
+          </div>
         </div>
         ${this._renderFooter()}
       </div>

@@ -7,7 +7,7 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
 export const prerender = true;
 
 export const GET: APIRoute = async () => {
-  const tiers = ['layout', 'navigation', 'content', 'input', 'feedback'] as const;
+  const tiers = ['layout', 'navigation', 'content', 'data', 'typography', 'input', 'feedback'] as const;
 
   const componentsByTier = tiers.map((tier) => {
     const items = components.filter((c) => c.tier === tier);
@@ -74,10 +74,12 @@ ARC UI uses a **Prism** code generator. You write Lit web components once, and P
 
 ### Tier System
 
-Components are organized into 5 tiers by responsibility:
+Components are organized into 7 tiers by responsibility:
 - **Layout** — page structure (shells, grids, containers)
 - **Navigation** — wayfinding (tabs, menus, breadcrumbs)
-- **Content** — display (cards, text, badges, tables)
+- **Content** — display (cards, avatars, icons, carousels)
+- **Data** — structured data (tables, lists, badges, meters, stats)
+- **Typography** — text rendering (code blocks, markdown, kbd)
 - **Input** — user interaction (buttons, forms, pickers)
 - **Feedback** — system response (alerts, modals, toasts)
 

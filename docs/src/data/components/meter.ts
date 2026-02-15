@@ -4,7 +4,7 @@ export const meter: ComponentDef = {
     name: 'Meter',
     slug: 'meter',
     tag: 'arc-meter',
-    tier: 'content',
+    tier: 'data',
     interactivity: 'static',
     description: 'Semantic gauge display with color-coded fill zones (success, warning, error) based on configurable low/high/optimum thresholds.',
 

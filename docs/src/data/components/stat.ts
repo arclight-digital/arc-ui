@@ -4,7 +4,7 @@ export const stat: ComponentDef = {
     name: 'Stat',
     slug: 'stat',
     tag: 'arc-stat',
-    tier: 'content',
+    tier: 'data',
     interactivity: 'static',
     description: 'Numeric statistic display with gradient value and label.',
 

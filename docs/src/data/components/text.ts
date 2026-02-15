@@ -4,7 +4,7 @@ export const text: ComponentDef = {
     name: 'Text',
     slug: 'text',
     tag: 'arc-text',
-    tier: 'content',
+    tier: 'typography',
     interactivity: 'static',
     description: 'Typography component with variants matching the arclight type scale.',
 

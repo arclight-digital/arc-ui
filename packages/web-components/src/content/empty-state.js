@@ -71,7 +71,7 @@ export class ArcEmptyState extends LitElement {
         ${this.heading ? html`<h3 class="empty__heading" part="heading">${this.heading}</h3>` : ''}
         ${this.description ? html`<p class="empty__desc" part="description">${this.description}</p>` : ''}
         <div class="empty__actions" part="actions">
-          <slot name="action"></slot>
+          <slot name="actions"></slot>
         </div>
       </div>
     `;

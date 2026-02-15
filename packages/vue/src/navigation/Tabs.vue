@@ -5,13 +5,11 @@ import '@arclux/arc-ui';
 defineOptions({ name: 'Tabs' });
 
 withDefaults(defineProps<{
-  items?: unknown[];
   selected?: number;
   align?: 'center' | 'end';
   variant?: 'pills';
   _tabs?: string;
 }>(), {
-  items: () => ([]),
   selected: 0,
   align: 'start',
   variant: 'underline',
@@ -25,7 +23,6 @@ defineEmits<{
 
 <template>
   <arc-tabs
-    :items="items"
     :selected="selected"
     :align="align"
     :variant="variant"

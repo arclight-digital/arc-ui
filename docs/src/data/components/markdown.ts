@@ -4,7 +4,7 @@ export const markdown: ComponentDef = {
     name: 'Markdown',
     slug: 'markdown',
     tag: 'arc-markdown',
-    tier: 'content',
+    tier: 'typography',
     interactivity: 'static',
     description: 'Renders markdown content as styled HTML with zero dependencies. Supports headings, lists, code blocks, blockquotes, links, images, and inline formatting.',
 

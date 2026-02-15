@@ -4,7 +4,6 @@ import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui';
 
 export interface TabsProps {
-  items?: unknown[];
   selected?: number;
   align?: 'center' | 'end';
   variant?: 'pills';
@@ -14,9 +13,9 @@ export interface TabsProps {
 }
 
 export const Tabs: Component<TabsProps> = (props) => {
-  const [local, rest] = splitProps(props, ['items', 'selected', 'align', 'variant', '_tabs', 'children']);
+  const [local, rest] = splitProps(props, ['selected', 'align', 'variant', '_tabs', 'children']);
   return (
-    <arc-tabs items={local.items} selected={local.selected} align={local.align} variant={local.variant} _tabs={local._tabs} {...rest}>
+    <arc-tabs selected={local.selected} align={local.align} variant={local.variant} _tabs={local._tabs} {...rest}>
       {local.children}
     </arc-tabs>
   );

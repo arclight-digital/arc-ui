@@ -2,7 +2,7 @@ export default {
   // Where to find Lit web components
   components: 'packages/web-components/src',
   // Tier directories to scan (maps to output subdirectories)
-  tiers: ['content', 'input', 'navigation', 'layout', 'feedback', 'shared'],
+  tiers: ['content', 'data', 'typography', 'input', 'navigation', 'layout', 'feedback', 'shared'],
   // Ignore patterns
   ignore: ['**/shared-styles.js', '**/index.js', '**/icon-registry.js', '**/icon-library.js', '**/icons/**', '**/*.register.js', '**/register.js'],
 

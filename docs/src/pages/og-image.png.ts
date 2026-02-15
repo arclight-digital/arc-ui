@@ -10,12 +10,12 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
 export const prerender = true;
 
 // Token-derived colors
-const blue = tokens.color.accentBlue;
-const blueRgb = tokens.rgb.accentBlue;
+const blue = tokens.color.accentPrimary;
+const blueRgb = tokens.rgb.accentPrimary;
 const teal = '#14b8a6';
 const tealRgb = '20,184,166';
-const violet = tokens.color.accentViolet;
-const violetRgb = tokens.rgb.accentViolet;
+const violet = tokens.color.accentSecondary;
+const violetRgb = tokens.rgb.accentSecondary;
 
 // Generate dot grid — brighter near center, fading to edges
 function dotGrid(cols: number, rows: number, spacing: number, offsetX: number, offsetY: number) {

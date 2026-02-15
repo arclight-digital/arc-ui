@@ -71,9 +71,9 @@ export class ArcAppShell extends LitElement {
         position: sticky;
         top: calc(var(--nav-height) + var(--space-xl));
         align-self: flex-start;
-        max-height: calc(100vh - var(--nav-height) - var(--space-2xl));
+        max-height: calc(100vh - var(--nav-height) - 2 * var(--space-xl));
         overflow-y: auto;
-        padding: var(--space-md) var(--space-lg) var(--space-md) 0;
+        padding: 0 var(--space-lg) var(--space-md) 0;
         margin-bottom: var(--space-xl);
         border-left: 1px solid var(--border-subtle);
       }

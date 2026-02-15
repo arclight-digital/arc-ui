@@ -1,11 +1,5 @@
 import type { ComponentDef } from './_types';
 
-const tabItems = `[
-    { label: 'Overview', content: 'ARC UI is a framework-agnostic component library built on web standards. It ships as lightweight Lit-based web components with zero-config wrappers for every major framework.' },
-    { label: 'Features', content: 'Keyboard navigation with arrow keys, automatic ARIA tab/tabpanel roles, smooth crossfade transitions between panels, and lazy rendering for heavy content.' },
-    { label: 'Changelog', content: 'v2.4.0 — Added disabled tab support and improved focus-visible ring styling. v2.3.0 — Introduced smooth crossfade panel transitions.' },
-  ]`;
-
 export const tabs: ComponentDef = {
   name: 'Tabs',
   slug: 'tabs',
@@ -27,7 +21,6 @@ Transitions between panels are handled with a crossfade animation driven by CSS,
     'Disabled tab support — individual tabs can be non-interactive while remaining visible',
     'Programmatic selected index via the `selected` property',
     'Roving tabindex so only the active tab participates in the page Tab order',
-    'Works with dynamic item arrays — add or remove tabs at runtime',
     'Supports rich HTML content inside each panel, not just plain text',
   ],
 
@@ -49,14 +42,14 @@ Transitions between panels are handled with a crossfade animation driven by CSS,
   },
 
   previewHtml: `<div style="width:100%">
-  <arc-tabs id="preview-tabs"></arc-tabs>
-  <script>
-    document.getElementById('preview-tabs').items = ${tabItems};
-  </script>
+  <arc-tabs>
+    <arc-tab label="Overview">ARC UI is a framework-agnostic component library built on web standards. It ships as lightweight Lit-based web components with zero-config wrappers for every major framework.</arc-tab>
+    <arc-tab label="Features">Keyboard navigation with arrow keys, automatic ARIA tab/tabpanel roles, smooth crossfade transitions between panels, and lazy rendering for heavy content.</arc-tab>
+    <arc-tab label="Changelog">v2.4.0 — Added disabled tab support and improved focus-visible ring styling. v2.3.0 — Introduced smooth crossfade panel transitions.</arc-tab>
+  </arc-tabs>
 </div>`,
 
   props: [
-    { name: 'items', type: 'Array<{ label: string; content: string }>', description: 'Array of tab objects. Each entry defines a tab button label and the HTML or plain-text content rendered in its associated panel. The array order determines the visual left-to-right tab order.' },
     { name: 'selected', type: 'number', default: '0', description: 'Zero-based index of the currently active tab. Changing this value programmatically switches the visible panel and updates ARIA attributes. Out-of-range values are clamped to the nearest valid index.' },
     { name: 'align', type: "'start' | 'center' | 'end'", default: "'start'", description: "Aligns the tab list. Options: 'start', 'center', 'end'." },
     { name: 'variant', type: "'underline' | 'pills'", default: "'underline'", description: "Visual style of the tabs. Options: 'underline', 'pills'." },
@@ -69,91 +62,155 @@ Transitions between panels are handled with a crossfade animation driven by CSS,
     {
       label: 'Web Component',
       lang: 'html',
-      code: `<arc-tabs id="demo-tabs"></arc-tabs>
-<script>
-  document.getElementById('demo-tabs').items = ${tabItems};
-</script>`,
+      code: `<arc-tabs>
+  <arc-tab label="Overview">
+    ARC UI is a framework-agnostic component library built on web standards.
+  </arc-tab>
+  <arc-tab label="Features">
+    Keyboard navigation, ARIA roles, smooth transitions, and lazy rendering.
+  </arc-tab>
+  <arc-tab label="Changelog">
+    v2.4.0 — Disabled tab support and improved focus-visible ring styling.
+  </arc-tab>
+</arc-tabs>`,
     },
     {
       label: 'React',
       lang: 'tsx',
-      code: `import { Tabs } from '@arclux/arc-ui-react';
+      code: `import { Tabs, Tab } from '@arclux/arc-ui-react';
 
-<Tabs items={${tabItems}} />`,
+<Tabs>
+  <Tab label="Overview">
+    ARC UI is a framework-agnostic component library built on web standards.
+  </Tab>
+  <Tab label="Features">
+    Keyboard navigation, ARIA roles, smooth transitions, and lazy rendering.
+  </Tab>
+  <Tab label="Changelog">
+    v2.4.0 — Disabled tab support and improved focus-visible ring styling.
+  </Tab>
+</Tabs>`,
     },
     {
       label: 'Vue',
       lang: 'html',
       code: `<script setup>
-import { Tabs } from '@arclux/arc-ui-vue';
-
-const items = ${tabItems};
+import { Tabs, Tab } from '@arclux/arc-ui-vue';
 </script>
 
 <template>
-  <Tabs :items="items" />
+  <Tabs>
+    <Tab label="Overview">
+      ARC UI is a framework-agnostic component library built on web standards.
+    </Tab>
+    <Tab label="Features">
+      Keyboard navigation, ARIA roles, smooth transitions, and lazy rendering.
+    </Tab>
+    <Tab label="Changelog">
+      v2.4.0 — Disabled tab support and improved focus-visible ring styling.
+    </Tab>
+  </Tabs>
 </template>`,
     },
     {
       label: 'Svelte',
       lang: 'html',
       code: `<script>
-  import { Tabs } from '@arclux/arc-ui-svelte';
-
-  const items = ${tabItems};
+  import { Tabs, Tab } from '@arclux/arc-ui-svelte';
 </script>
 
-<Tabs {items} />`,
+<Tabs>
+  <Tab label="Overview">
+    ARC UI is a framework-agnostic component library built on web standards.
+  </Tab>
+  <Tab label="Features">
+    Keyboard navigation, ARIA roles, smooth transitions, and lazy rendering.
+  </Tab>
+  <Tab label="Changelog">
+    v2.4.0 — Disabled tab support and improved focus-visible ring styling.
+  </Tab>
+</Tabs>`,
     },
     {
       label: 'Angular',
       lang: 'ts',
       code: `import { Component } from '@angular/core';
-import { Tabs } from '@arclux/arc-ui-angular';
+import { Tabs, Tab } from '@arclux/arc-ui-angular';
 
 @Component({
-  imports: [Tabs],
-  template: \`<arc-tabs [items]="items"></arc-tabs>\`,
+  imports: [Tabs, Tab],
+  template: \`
+    <arc-tabs>
+      <arc-tab label="Overview">
+        ARC UI is a framework-agnostic component library built on web standards.
+      </arc-tab>
+      <arc-tab label="Features">
+        Keyboard navigation, ARIA roles, smooth transitions, and lazy rendering.
+      </arc-tab>
+      <arc-tab label="Changelog">
+        v2.4.0 — Disabled tab support and improved focus-visible ring styling.
+      </arc-tab>
+    </arc-tabs>
+  \`,
 })
-export class TabsDemoComponent {
-  items = ${tabItems};
-}`,
+export class TabsDemoComponent {}`,
     },
     {
       label: 'Solid',
       lang: 'tsx',
-      code: `import { Tabs } from '@arclux/arc-ui-solid';
-
-const items = ${tabItems};
+      code: `import { Tabs, Tab } from '@arclux/arc-ui-solid';
 
 export default function TabsDemo() {
-  return <Tabs items={items} />;
+  return (
+    <Tabs>
+      <Tab label="Overview">
+        ARC UI is a framework-agnostic component library built on web standards.
+      </Tab>
+      <Tab label="Features">
+        Keyboard navigation, ARIA roles, smooth transitions, and lazy rendering.
+      </Tab>
+      <Tab label="Changelog">
+        v2.4.0 — Disabled tab support and improved focus-visible ring styling.
+      </Tab>
+    </Tabs>
+  );
 }`,
     },
     {
       label: 'Preact',
       lang: 'tsx',
-      code: `import { Tabs } from '@arclux/arc-ui-preact';
-
-const items = ${tabItems};
+      code: `import { Tabs, Tab } from '@arclux/arc-ui-preact';
 
 export default function TabsDemo() {
-  return <Tabs items={items} />;
+  return (
+    <Tabs>
+      <Tab label="Overview">
+        ARC UI is a framework-agnostic component library built on web standards.
+      </Tab>
+      <Tab label="Features">
+        Keyboard navigation, ARIA roles, smooth transitions, and lazy rendering.
+      </Tab>
+      <Tab label="Changelog">
+        v2.4.0 — Disabled tab support and improved focus-visible ring styling.
+      </Tab>
+    </Tabs>
+  );
 }`,
     },
     {
       label: 'HTML',
       lang: 'html',
-      code: `<arc-tabs id="demo-tabs"></arc-tabs>
-<script>
-  document.getElementById('demo-tabs').items = ${tabItems};
-</script>`,
-    },
-    {
-      label: 'HTML (Inline)',
-      lang: 'html',
-      code: `<!-- arc-tabs is hybrid — CSS handles layout, JS enhances interactivity -->
-<arc-tabs></arc-tabs>`,
+      code: `<arc-tabs>
+  <arc-tab label="Overview">
+    ARC UI is a framework-agnostic component library built on web standards.
+  </arc-tab>
+  <arc-tab label="Features">
+    Keyboard navigation, ARIA roles, smooth transitions, and lazy rendering.
+  </arc-tab>
+  <arc-tab label="Changelog">
+    v2.4.0 — Disabled tab support and improved focus-visible ring styling.
+  </arc-tab>
+</arc-tabs>`,
     },
   ],
 

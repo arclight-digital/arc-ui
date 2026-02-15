@@ -7,8 +7,6 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcTabs extends LitElement {
   static properties = {
-    /** @deprecated Use <arc-tab> children instead */
-    items:    { type: Array },
     selected: { type: Number, reflect: true },
     align:    { type: String, reflect: true },
     variant:  { type: String, reflect: true },
@@ -91,11 +89,6 @@ export class ArcTabs extends LitElement {
 
       .tabs__panel[hidden] { display: none; }
 
-      /* Hide the default slot — panels are shown via named wrapping */
-      .tabs__slot-host {
-        display: none;
-      }
-
       @media (prefers-reduced-motion: reduce) {
         :host *,
         :host *::before,
@@ -110,15 +103,10 @@ export class ArcTabs extends LitElement {
 
   constructor() {
     super();
-    this.items = [];
     this.selected = 0;
     this.align = 'start';
     this.variant = 'underline';
     this._tabs = [];
-  }
-
-  get _useSlotted() {
-    return this._tabs.length > 0;
   }
 
   _onSlotChange(e) {
@@ -136,16 +124,10 @@ export class ArcTabs extends LitElement {
   }
 
   _select(index) {
-    const prev = this.selected;
     this.selected = index;
+    this._syncVisibility();
 
-    if (this._useSlotted) {
-      this._syncVisibility();
-    }
-
-    const label = this._useSlotted
-      ? this._tabs[index]?.label
-      : this.items?.[index]?.label;
+    const label = this._tabs[index]?.label;
 
     this.dispatchEvent(new CustomEvent('arc-change', {
       detail: { value: index, label },
@@ -171,61 +153,38 @@ export class ArcTabs extends LitElement {
   }
 
   updated(changed) {
-    if (changed.has('selected') && this._useSlotted) {
+    if (changed.has('selected')) {
       this._syncVisibility();
     }
   }
 
-  _renderTabButtons(labels) {
-    return labels.map((label, i) => html`
-      <button
-        class="tabs__tab"
-        role="tab"
-        aria-selected=${i === this.selected ? 'true' : 'false'}
-        tabindex=${i === this.selected ? '0' : '-1'}
-        id="tab-${i}"
-        aria-controls="panel-${i}"
-        @click=${() => this._select(i)}
-      >${label}</button>
-    `);
-  }
-
   render() {
-    const slotted = this._useSlotted;
-    const items = this.items || [];
-    const labels = slotted
-      ? this._tabs.map(t => t.label)
-      : items.map(t => t.label);
+    const labels = this._tabs.map(t => t.label);
 
     return html`
       <div class="tabs" part="tabs">
         <div class="tabs__list" role="tablist" @keydown=${this._handleKeydown}>
-          ${this._renderTabButtons(labels)}
+          ${labels.map((label, i) => html`
+            <button
+              class="tabs__tab"
+              role="tab"
+              aria-selected=${i === this.selected ? 'true' : 'false'}
+              tabindex=${i === this.selected ? '0' : '-1'}
+              id="tab-${i}"
+              aria-controls="panel-${i}"
+              @click=${() => this._select(i)}
+            >${label}</button>
+          `)}
         </div>
 
-        <!-- Slotted mode: arc-tab children are shown/hidden directly -->
         <div
           class="tabs__panel"
           role="tabpanel"
           id="panel-${this.selected}"
           aria-labelledby="tab-${this.selected}"
-          style="${!slotted && items.length ? 'display:none' : ''}"
         >
           <slot @slotchange=${this._onSlotChange}></slot>
         </div>
-
-        ${!slotted && items.length ? html`
-          <!-- Legacy items mode: render content strings -->
-          ${items.map((item, i) => html`
-            <div
-              class="tabs__panel"
-              role="tabpanel"
-              id="panel-${i}"
-              aria-labelledby="tab-${i}"
-              ?hidden=${i !== this.selected}
-            >${item.content}</div>
-          `)}
-        ` : ''}
       </div>
     `;
   }

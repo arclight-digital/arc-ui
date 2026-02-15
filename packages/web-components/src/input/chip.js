@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import '../content/tag.js';
+import '../data/tag.js';
 
 /**
  * @tag arc-chip

@@ -4,7 +4,7 @@ export const stepper: ComponentDef = {
     name: 'Stepper',
     slug: 'stepper',
     tag: 'arc-stepper',
-    tier: 'content',
+    tier: 'data',
     interactivity: 'static',
     description: 'Step indicator for multi-step workflows.',
 

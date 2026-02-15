@@ -26,7 +26,7 @@
         gap: var(--space-sm);
       }
 
-      .arc-status-bar .status-bar__left {
+      .arc-status-bar .status-bar__start {
         display: flex;
         align-items: center;
         gap: var(--space-sm);
@@ -41,7 +41,7 @@
         justify-content: center;
       }
 
-      .arc-status-bar .status-bar__right {
+      .arc-status-bar .status-bar__end {
         display: flex;
         align-items: center;
         gap: var(--space-sm);

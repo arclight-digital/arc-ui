@@ -4,7 +4,7 @@ export const table: ComponentDef = {
     name: 'Table',
     slug: 'table',
     tag: 'arc-table',
-    tier: 'content',
+    tier: 'data',
     interactivity: 'static',
     description: 'Data-driven table with striped and compact variants, powered by columns and rows props.',
 

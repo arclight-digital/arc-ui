@@ -172,8 +172,9 @@ export declare class ArcTab extends LitElement {
 }
 
 export declare class ArcTabs extends LitElement {
-  items: Array<{ label: string; content: string }>;
   selected: number;
+  align: 'start' | 'center' | 'end';
+  variant: 'underline' | 'pills';
 }
 
 export declare class ArcToggle extends LitElement {

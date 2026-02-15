@@ -4,7 +4,7 @@ export const valueCard: ComponentDef = {
     name: 'Value Card',
     slug: 'value-card',
     tag: 'arc-value-card',
-    tier: 'content',
+    tier: 'data',
     interactivity: 'static',
     description: 'Horizontal card with icon and text, for values or features lists.',
 

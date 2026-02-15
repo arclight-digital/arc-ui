@@ -3,6 +3,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 import { components } from '../../data/components/index';
 
 const headings = [
+  { id: 'v1-10-1', label: 'v1.10.1' },
   { id: 'v1-10-0', label: 'v1.10.0' },
   { id: 'v1-9-2', label: 'v1.9.2' },
   { id: 'v1-9-1', label: 'v1.9.1' },
@@ -31,7 +32,7 @@ const headings = [
   { id: 'tokens', label: 'Design Tokens' },
 ];
 
-const tiers = ['layout', 'navigation', 'content', 'input', 'feedback'];
+const tiers = ['layout', 'navigation', 'content', 'data', 'typography', 'input', 'feedback'];
 const byTier = Object.fromEntries(
   tiers.map(t => [t, components.filter(c => c.tier === t).sort((a, b) => a.name.localeCompare(b.name))])
 );
@@ -49,6 +50,62 @@ const byTier = Object.fromEntries(
     <p class="page-desc">
       Release history for ARC UI. All packages are versioned together.
     </p>
+
+    <section id="v1-10-1">
+      <h2 class="docs-heading">v1.10.1 — Tier Reorganization &amp; API Cleanup</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <p class="docs-text">
+        Splits the overloaded <code>content/</code> tier into three focused categories, removes the last
+        deprecated API, and aligns token naming between JavaScript and CSS.
+      </p>
+
+      <h3 class="tier-heading">Content Tier Split</h3>
+      <ul class="docs-list">
+        <li><strong>New <code>data/</code> tier</strong> (14 components) — Structured data display: animated-number, badge, data-table, list, list-item, meter, stat, step, stepper, table, tag, timeline, timeline-item, value-card.</li>
+        <li><strong>New <code>typography/</code> tier</strong> (6 components) — Text rendering &amp; formatting: code-block, highlight, kbd, markdown, text, truncate.</li>
+        <li><strong><code>content/</code></strong> retains 27 presentational components (accordion, avatar, card, carousel, icon, etc.).</li>
+        <li>All framework wrappers (React, Vue, Svelte, Angular, Solid, Preact) regenerated with new directory structure.</li>
+      </ul>
+
+      <h3 class="tier-heading">Deprecation Removal</h3>
+      <ul class="docs-list">
+        <li><strong>Tabs <code>items</code> property removed</strong> — The deprecated <code>items</code> array prop and its legacy rendering path have been deleted. Use <code>&lt;arc-tab&gt;</code> children exclusively.</li>
+      </ul>
+
+      <h3 class="tier-heading">Token Naming Alignment</h3>
+      <ul class="docs-list">
+        <li>Renamed JS token keys: <code>accentBlue</code> &rarr; <code>accentPrimary</code>, <code>accentViolet</code> &rarr; <code>accentSecondary</code>.</li>
+        <li>Renamed glow keys: <code>glow.blue</code> &rarr; <code>glow.primary</code>, <code>glow.violet</code> &rarr; <code>glow.secondary</code>, <code>glowLine.blue</code> &rarr; <code>glowLine.primary</code>.</li>
+        <li>CSS variable names unchanged (<code>--accent-primary</code>, <code>--accent-secondary</code>) &mdash; JS now matches CSS.</li>
+      </ul>
+
+      <h3 class="tier-heading">Slot Naming Standardization</h3>
+      <ul class="docs-list">
+        <li><strong>Empty State</strong> &mdash; Renamed slot <code>action</code> &rarr; <code>actions</code> (consistent with cta-banner, top-bar, fieldset).</li>
+        <li><strong>Status Bar</strong> &mdash; Renamed slots <code>left</code>/<code>right</code> &rarr; <code>start</code>/<code>end</code> (consistent with toolbar, RTL-friendly).</li>
+      </ul>
+
+      <h3 class="tier-heading">Code Block Improvements</h3>
+      <ul class="docs-list">
+        <li><strong>Fixed copy button scroll</strong> &mdash; Copy button no longer scrolls with code content on horizontal overflow. It stays pinned to the top-right of the code area.</li>
+        <li><strong>Copy button transparency</strong> &mdash; Copy button is now semi-transparent with backdrop blur by default, becoming fully opaque on hover. Code beneath is visible.</li>
+        <li><strong>Basic variant layout</strong> &mdash; Copy button uses inline flex layout so the block grows naturally on mobile instead of overlapping.</li>
+        <li><strong>Fixed window variant footer</strong> &mdash; Status bar metadata (language, line count) now renders correctly after slot rename.</li>
+      </ul>
+
+      <h3 class="tier-heading">Scroll Spy Improvements</h3>
+      <ul class="docs-list">
+        <li><strong>Sticky heading</strong> &mdash; The &ldquo;On this page&rdquo; heading now sticks to the top of the TOC when scrolling through long link lists.</li>
+        <li><strong>Heading redesign</strong> &mdash; Gradient accent text, surface background, border, and glow-on-hover treatment.</li>
+        <li><strong>Scroll to top</strong> &mdash; Clicking the heading smooth-scrolls both the page and the TOC back to the top.</li>
+      </ul>
+
+      <h3 class="tier-heading">Docs Site</h3>
+      <ul class="docs-list">
+        <li><strong>Homepage code blocks</strong> &mdash; Replaced custom hero install and code example markup with native <code>&lt;arc-code-block&gt;</code> components (basic and window variants).</li>
+      </ul>
+    </section>
 
     <section id="v1-10-0">
       <h2 class="docs-heading">v1.10.0 — The Big Component Update</h2>

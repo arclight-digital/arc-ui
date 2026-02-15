@@ -6,30 +6,30 @@ export const statusBar: ComponentDef = {
     tag: 'arc-status-bar',
     tier: 'layout',
     interactivity: 'static',
-    description: 'Bottom status bar with left, center, and right slots.',
+    description: 'Bottom status bar with start, center, and end slots.',
 
     overview: `StatusBar is a compact informational strip designed to sit at the bottom of an application window, mirroring the pattern found in code editors, terminals, and desktop applications. It renders at a fixed 28px height with a monospace font (\`--font-mono\`) and muted text color, providing an unobtrusive surface for status indicators, cursor positions, encoding info, and connection states.
 
-The component uses a three-region flexbox layout with named slots: \`left\` (flex-shrink: 0, anchored to the leading edge), default (centered, flex: 1), and \`right\` (flex-shrink: 0, anchored to the trailing edge via margin-left: auto). This pattern ensures the left and right indicators stay pinned to their edges while center content fills the remaining space.
+The component uses a three-region flexbox layout with named slots: \`start\` (flex-shrink: 0, anchored to the leading edge), default (centered, flex: 1), and \`end\` (flex-shrink: 0, anchored to the trailing edge via margin-left: auto). This pattern ensures the left and right indicators stay pinned to their edges while center content fills the remaining space.
 
 The \`position\` prop controls whether the status bar flows with the page layout (\`static\`, the default) or sticks to the bottom of the viewport (\`fixed\`). Fixed positioning sets \`bottom: 0\`, \`left: 0\`, \`right: 0\` with a z-index of 100, making the bar persistent across scrolling. The bar renders with \`role="status"\` for screen reader announcements of dynamic content changes.`,
 
     features: [
       'Compact 28px height with monospace font for data-dense status information',
-      'Three-slot layout: left (pinned), center (flexible), right (pinned)',
+      'Three-slot layout: start (pinned), center (flexible), end (pinned)',
       'Static or fixed positioning via the position prop',
       'Fixed mode pins to viewport bottom with z-index: 100',
       'role="status" for accessible live-region announcements',
       'Dark background (--bg-deep) with subtle top border for visual separation',
-      'Exposed CSS parts (base, left, center, right) for targeted styling',
+      'Exposed CSS parts (base, start, center, end) for targeted styling',
       'Muted 11px text that stays out of the way of primary content',
     ],
 
     guidelines: {
       do: [
         'Use StatusBar for editor-style applications that need persistent status indicators',
-        'Place cursor position, line numbers, or encoding info in the left slot',
-        'Put connection status, sync state, or version info in the right slot',
+        'Place cursor position, line numbers, or encoding info in the start slot',
+        'Put connection status, sync state, or version info in the end slot',
         'Use the center slot for transient messages like "Saved" or "Building..."',
         'Set position="fixed" when the status bar should persist during scrolling',
       ],
@@ -44,12 +44,12 @@ The \`position\` prop controls whether the status bar flows with the page layout
 
     previewHtml: `<div style="width:100%;border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden;background:var(--bg-surface)">
   <arc-status-bar>
-    <span slot="left" style="display:flex;align-items:center;gap:6px">
+    <span slot="start" style="display:flex;align-items:center;gap:6px">
       <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--accent-green)"></span>
       Ln 24, Col 15
     </span>
     <span>UTF-8 &middot; LF &middot; TypeScript</span>
-    <span slot="right">Spaces: 2 &middot; 100%</span>
+    <span slot="end">Spaces: 2 &middot; 100%</span>
   </arc-status-bar>
 </div>`,
 
@@ -61,9 +61,9 @@ The \`position\` prop controls whether the status bar flows with the page layout
         label: 'Web Component',
         lang: 'html',
         code: `<arc-status-bar>
-  <div slot="left">Ln 24, Col 15</div>
+  <div slot="start">Ln 24, Col 15</div>
   <div>UTF-8</div>
-  <div slot="right">100%</div>
+  <div slot="end">100%</div>
 </arc-status-bar>`,
       },
       {
@@ -72,9 +72,9 @@ The \`position\` prop controls whether the status bar flows with the page layout
         code: `import { StatusBar } from '@arclux/arc-ui-react';
 
 <StatusBar>
-  <div slot="left">Ln 24, Col 15</div>
+  <div slot="start">Ln 24, Col 15</div>
   <div>UTF-8</div>
-  <div slot="right">100%</div>
+  <div slot="end">100%</div>
 </StatusBar>`,
       },
       {
@@ -86,9 +86,9 @@ import { StatusBar } from '@arclux/arc-ui-vue';
 
 <template>
   <StatusBar>
-    <div slot="left">Ln 24, Col 15</div>
+    <div slot="start">Ln 24, Col 15</div>
     <div>UTF-8</div>
-    <div slot="right">100%</div>
+    <div slot="end">100%</div>
   </StatusBar>
 </template>`,
       },
@@ -100,9 +100,9 @@ import { StatusBar } from '@arclux/arc-ui-vue';
 </script>
 
 <StatusBar>
-  <div slot="left">Ln 24, Col 15</div>
+  <div slot="start">Ln 24, Col 15</div>
   <div>UTF-8</div>
-  <div slot="right">100%</div>
+  <div slot="end">100%</div>
 </StatusBar>`,
       },
       {
@@ -115,9 +115,9 @@ import { StatusBar } from '@arclux/arc-ui-angular';
   imports: [StatusBar],
   template: \`
     <StatusBar>
-      <div slot="left">Ln 24, Col 15</div>
+      <div slot="start">Ln 24, Col 15</div>
       <div>UTF-8</div>
-      <div slot="right">100%</div>
+      <div slot="end">100%</div>
     </StatusBar>
   \`,
 })
@@ -129,9 +129,9 @@ export class MyComponent {}`,
         code: `import { StatusBar } from '@arclux/arc-ui-solid';
 
 <StatusBar>
-  <div slot="left">Ln 24, Col 15</div>
+  <div slot="start">Ln 24, Col 15</div>
   <div>UTF-8</div>
-  <div slot="right">100%</div>
+  <div slot="end">100%</div>
 </StatusBar>`,
       },
       {
@@ -140,9 +140,9 @@ export class MyComponent {}`,
         code: `import { StatusBar } from '@arclux/arc-ui-preact';
 
 <StatusBar>
-  <div slot="left">Ln 24, Col 15</div>
+  <div slot="start">Ln 24, Col 15</div>
   <div>UTF-8</div>
-  <div slot="right">100%</div>
+  <div slot="end">100%</div>
 </StatusBar>`,
       },
       { label: 'HTML', lang: 'html', code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->

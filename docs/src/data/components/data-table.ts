@@ -4,7 +4,7 @@ export const dataTable: ComponentDef = {
     name: 'Data Table',
     slug: 'data-table',
     tag: 'arc-data-table',
-    tier: 'content',
+    tier: 'data',
     interactivity: 'interactive',
     description: 'A data-driven table component that renders rows from a JavaScript array. Declarative column definitions via `arc-column` children control which fields appear, their headers, widths, and sort behavior. Built-in support for column sorting, row selection with checkboxes, and an empty-state fallback.',
 

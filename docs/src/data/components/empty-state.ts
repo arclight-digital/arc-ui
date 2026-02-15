@@ -44,7 +44,7 @@ The action slot (named \`action\`) provides a flex container for one or more but
 
     previewHtml: `<arc-empty-state heading="No projects yet" description="Create your first project to get started with ARC UI.">
   <span slot="icon" style="font-size: 40px;">&#128193;</span>
-  <arc-button slot="action" variant="primary" size="sm">Create Project</arc-button>
+  <arc-button slot="actions" variant="primary" size="sm">Create Project</arc-button>
 </arc-empty-state>`,
 
     props: [

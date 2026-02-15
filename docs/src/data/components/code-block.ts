@@ -4,7 +4,7 @@ export const codeBlock: ComponentDef = {
     name: 'Code Block',
     slug: 'code-block',
     tag: 'arc-code-block',
-    tier: 'content',
+    tier: 'typography',
     interactivity: 'hybrid',
     description: 'Syntax-highlighted code display with optional filename and copy button.',
 

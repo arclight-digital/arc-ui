@@ -6,6 +6,8 @@ const tiers = [
   { key: 'layout', label: 'Layout', desc: 'Page scaffolding, structural containers, and shells' },
   { key: 'navigation', label: 'Navigation', desc: 'Wayfinding, menus, and page-level navigation' },
   { key: 'content', label: 'Content', desc: 'Presentational atoms and display components' },
+  { key: 'data', label: 'Data', desc: 'Structured data display — tables, lists, meters, and stats' },
+  { key: 'typography', label: 'Typography', desc: 'Text rendering and formatting components' },
   { key: 'input', label: 'Input', desc: 'Form controls, buttons, and user data entry' },
   { key: 'feedback', label: 'Feedback', desc: 'Alerts, overlays, and responses to user actions' },
 ] as const;
@@ -18,6 +20,8 @@ const tierBadgeVariant: Record<string, string> = {
   layout: 'default',
   navigation: 'blue',
   content: 'default',
+  data: 'blue',
+  typography: 'violet',
   input: 'violet',
   feedback: 'blue',
 };
@@ -27,7 +31,7 @@ const tierBadgeVariant: Record<string, string> = {
   <div class="components-index">
     <h1 class="components-index__title">Components</h1>
     <p class="components-index__desc">
-      Browse all {components.length} components across five categories: layout, navigation, content, input, and feedback.
+      Browse all {components.length} components across seven categories: layout, navigation, content, data, typography, input, and feedback.
     </p>
 
     <div class="components-search">

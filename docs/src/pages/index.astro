@@ -1,5 +1,4 @@
 ---
-import { Code } from 'astro:components';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Wordmark from '../components/Wordmark.astro';
 import SiteFooter from '../components/SiteFooter.astro';
@@ -66,10 +65,7 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
         code generator called Prism that reads Lit source and outputs native bindings for
         React, Vue, Svelte, Angular, Solid, Preact, and vanilla JS — write once, ship everywhere.
       </p>
-      <div class="hero__install">
-        <code class="hero__install-code">npm install @arclux/arc-ui lit</code>
-        <arc-copy-button value="npm install @arclux/arc-ui lit"></arc-copy-button>
-      </div>
+      <arc-code-block variant="basic" language="bash" code="npm install @arclux/arc-ui lit"></arc-code-block>
       <div class="hero__actions">
         <arc-button href="/docs/getting-started" variant="primary" size="md">
           Get Started
@@ -304,16 +300,7 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
           </div>
         </div>
         <div class="code-section__code reveal">
-          <div class="hero-code-block">
-            <div class="hero-code-block__header">
-              <span class="hero-code-block__filename">App.jsx</span>
-              <span class="hero-code-block__lang">JSX</span>
-              <arc-copy-button value={codeExample}></arc-copy-button>
-            </div>
-            <div class="hero-code-block__body">
-              <Code code={codeExample} lang="jsx" theme="css-variables" />
-            </div>
-          </div>
+          <arc-code-block variant="window" filename="App.jsx" language="jsx" code={codeExample}></arc-code-block>
         </div>
       </div>
     </section>
@@ -649,27 +636,6 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
     margin-top: var(--space-sm);
   }
 
-  .hero__install {
-    display: flex;
-    align-items: center;
-    gap: var(--space-xs);
-    background: var(--bg-surface);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-md);
-    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-md);
-    margin-top: var(--space-sm);
-    transition: border-color var(--transition-fast);
-  }
-
-  .hero__install:hover { border-color: var(--border-default); }
-
-  .hero__install-code {
-    font-family: var(--font-mono);
-    font-size: var(--text-sm);
-    color: var(--text-muted);
-    user-select: all;
-  }
-
   .hero__accent-line {
     width: 280px;
     height: 1px;
@@ -885,52 +851,6 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
     min-width: 0;
   }
 
-  .hero-code-block {
-    background: var(--bg-surface);
-    border: 1px solid var(--border-default);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-  }
-
-  .hero-code-block__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: var(--space-sm) var(--space-md);
-    border-bottom: 1px solid var(--border-subtle);
-    background: var(--bg-elevated);
-  }
-
-  .hero-code-block__filename {
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    color: var(--text-muted);
-  }
-
-  .hero-code-block__lang {
-    font-family: var(--font-accent);
-    font-size: 9px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--text-ghost);
-  }
-
-  .hero-code-block__body {
-    overflow-x: auto;
-  }
-
-  .hero-code-block__body pre {
-    margin: 0;
-    border: none;
-    border-radius: 0;
-    background: transparent;
-  }
-
-  .hero-code-block__body pre::before {
-    display: none;
-  }
-
   /* ── Frameworks Strip ── */
   .frameworks-strip {
     border-top: 1px solid var(--border-subtle);
@@ -970,7 +890,6 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
       min-height: auto;
     }
     .hero__actions { flex-direction: column; align-items: center; }
-    .hero__install { flex-direction: row; }
     .stats { padding: var(--space-xl) 0; }
     .features { padding: var(--space-xl) 0; }
     .features__grid { grid-template-columns: 1fr; }
@@ -984,6 +903,5 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
     .hero__headline-top { font-size: 28px; } /* Keep 28px */
     .hero__headline-glow,
     .hero__headline-glow-shadow { font-size: 48px; } /* Keep 48px */
-    .hero__install-code { font-size: var(--text-xs); }
   }
 </style>
