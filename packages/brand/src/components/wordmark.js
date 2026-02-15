@@ -3,10 +3,10 @@ import { tokenStyles } from '../shared-styles.js';
 import { hostGroteskSubsetBase64 } from '../assets/wordmark-font.js';
 
 const SIZES = {
-  sm: { fontSize: '15px', fontWeight: '400', letterSpacing: '6px' },
-  md: { fontSize: '18px', fontWeight: '400', letterSpacing: '9px' },
-  lg: { fontSize: '24px', fontWeight: '400', letterSpacing: '12px' },
-  stacked: { fontSize: '18px', fontWeight: '400', letterSpacing: '8px' },
+  sm: { fontSize: '15px', fontWeight: '500', letterSpacing: '6px' },
+  md: { fontSize: '18px', fontWeight: '500', letterSpacing: '9px' },
+  lg: { fontSize: '24px', fontWeight: '500', letterSpacing: '12px' },
+  stacked: { fontSize: '18px', fontWeight: '500', letterSpacing: '8px' },
 };
 
 // @font-face must be in document scope — shadow DOM won't pick it up.
