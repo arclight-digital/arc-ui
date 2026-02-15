@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arclight Brand Preview</title>
+  <link rel="stylesheet" href="../../shared/base.css">
+  <script type="module">
+    import './src/components/logo.js';
+    import './src/components/wordmark.js';
+    import './src/components/logo-wordmark.js';
+    import './src/components/by-arclight.js';
+    import './src/components/powered-by.js';
+  </script>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background: var(--surface-primary, #0e0e12);
+      color: var(--text-primary, #e8e8ec);
+      margin: 0;
+      padding: 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+    section {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    h2 {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      opacity: 0.5;
+      margin: 0;
+    }
+    .row {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .label {
+      font-size: 12px;
+      opacity: 0.4;
+      min-width: 40px;
+    }
+  </style>
+</head>
+<body>
+  <section>
+    <h2>Logo</h2>
+    <div class="row">
+      <span class="label">sm</span>
+      <arclight-logo size="sm"></arclight-logo>
+    </div>
+    <div class="row">
+      <span class="label">lg</span>
+      <arclight-logo size="lg"></arclight-logo>
+    </div>
+  </section>
+
+  <section>
+    <h2>Wordmark</h2>
+    <div class="row">
+      <span class="label">sm</span>
+      <arclight-wordmark size="sm"></arclight-wordmark>
+    </div>
+    <div class="row">
+      <span class="label">md</span>
+      <arclight-wordmark size="md"></arclight-wordmark>
+    </div>
+    <div class="row">
+      <span class="label">lg</span>
+      <arclight-wordmark size="lg"></arclight-wordmark>
+    </div>
+  </section>
+
+  <section>
+    <h2>Logo + Wordmark</h2>
+    <div class="row">
+      <span class="label">inline</span>
+      <arclight-logo-wordmark layout="inline"></arclight-logo-wordmark>
+    </div>
+    <div class="row">
+      <span class="label">stacked</span>
+      <arclight-logo-wordmark layout="stacked"></arclight-logo-wordmark>
+    </div>
+  </section>
+
+  <section>
+    <h2>By Arclight</h2>
+    <div class="row">
+      <arclight-by></arclight-by>
+    </div>
+  </section>
+
+  <section>
+    <h2>Powered By</h2>
+    <div class="row">
+      <span class="label">sm</span>
+      <arclight-powered-by size="sm"></arclight-powered-by>
+    </div>
+    <div class="row">
+      <span class="label">md</span>
+      <arclight-powered-by size="md"></arclight-powered-by>
+    </div>
+  </section>
+</body>
+</html>

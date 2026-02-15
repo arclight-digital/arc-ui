@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@arclux/arc-ui": "workspace:*",
+    "@arclux/brand": "workspace:*",
     "@arclux/arc-ui-svelte": "workspace:*",
     "@arclux/arc-ui-vue": "workspace:*",
     "astro": "^5.17.1",

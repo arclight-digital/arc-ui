@@ -1,0 +1,28 @@
+{
+  "name": "@arclux/brand",
+  "version": "1.0.0",
+  "description": "Arclight brand components — logo, wordmark, powered-by badge",
+  "type": "module",
+  "main": "src/index.js",
+  "module": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./logo": "./src/components/logo.js",
+    "./wordmark": "./src/components/wordmark.js",
+    "./logo-wordmark": "./src/components/logo-wordmark.js",
+    "./by": "./src/components/by-arclight.js",
+    "./powered-by": "./src/components/powered-by.js"
+  },
+  "files": ["src/"],
+  "sideEffects": false,
+  "peerDependencies": {
+    "lit": "^3.3.0"
+  },
+  "scripts": {
+    "preview": "npx vite --open preview.html"
+  },
+  "dependencies": {},
+  "publishConfig": {
+    "access": "public"
+  }
+}

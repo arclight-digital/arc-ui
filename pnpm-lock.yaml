@@ -38,6 +38,9 @@ importers:
       '@arclux/arc-ui-vue':
         specifier: workspace:*
         version: link:../packages/vue
+      '@arclux/brand':
+        specifier: workspace:*
+        version: link:../packages/brand
       astro:
         specifier: ^5.17.1
         version: 5.17.2(rollup@4.57.1)(typescript@5.9.3)
@@ -63,6 +66,12 @@ importers:
       '@arclux/arc-ui':
         specifier: workspace:*
         version: link:../web-components
+
+  packages/brand:
+    dependencies:
+      lit:
+        specifier: ^3.3.0
+        version: 3.3.2
 
   packages/html: {}
 
