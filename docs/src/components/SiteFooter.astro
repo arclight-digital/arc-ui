@@ -4,15 +4,7 @@
     <div class="site-footer__brand">
       <div class="site-footer__title">
         <span class="site-footer__name">ARC UI</span>
-        <span class="site-footer__by">by</span>
-        <a href="https://arclight.build" class="site-footer__arclight">
-          <svg class="site-footer__arclight-logo" viewBox="-20 -20 746 524" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="28" height="20">
-            <path d="M11.279,472.672c0,0 141.849,-226.994 341.667,-226.994c199.818,0 341.667,226.994 341.667,226.994" stroke="currentColor" stroke-width="22.56" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
-            <circle cx="352.946" cy="89.535" r="89.535" fill="currentColor" fill-opacity="0.14"></circle>
-            <circle cx="352.946" cy="89.535" r="34.829" fill="currentColor"></circle>
-          </svg>
-          <span class="site-footer__arclight-word">Arclight</span>
-        </a>
+        <arclight-by></arclight-by>
       </div>
       <p class="site-footer__tagline">AI-accelerated software, engineered with precision.</p>
     </div>
@@ -80,35 +72,6 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-  }
-
-  .site-footer__by {
-    font-size: var(--text-sm);
-    color: var(--text-ghost);
-    font-weight: 300;
-  }
-
-  .site-footer__arclight {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-xs);
-    color: var(--text-primary);
-    text-decoration: none;
-    transition: opacity var(--transition-fast);
-  }
-
-  .site-footer__arclight:hover { opacity: 0.8; }
-
-  .site-footer__arclight-word {
-    font-size: 18px;
-    font-weight: 500;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text-primary);
-  }
-
-  .site-footer__arclight-logo {
-    flex-shrink: 0;
   }
 
   .site-footer__tagline {
