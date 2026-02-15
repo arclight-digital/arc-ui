@@ -6,6 +6,7 @@ import '@arclux/arc-ui';
 export interface TopBarProps {
   heading?: string;
   fixed?: boolean;
+  contained?: string;
   menuOpen?: boolean;
   mobileMenu?: string;
   menuPosition?: string;
@@ -15,9 +16,9 @@ export interface TopBarProps {
 }
 
 export const TopBar: Component<TopBarProps> = (props) => {
-  const [local, rest] = splitProps(props, ['heading', 'fixed', 'menuOpen', 'mobileMenu', 'menuPosition', 'navAlign', 'children']);
+  const [local, rest] = splitProps(props, ['heading', 'fixed', 'contained', 'menuOpen', 'mobileMenu', 'menuPosition', 'navAlign', 'children']);
   return (
-    <arc-top-bar heading={local.heading} fixed={local.fixed} menuOpen={local.menuOpen} mobileMenu={local.mobileMenu} menuPosition={local.menuPosition} navAlign={local.navAlign} {...rest}>
+    <arc-top-bar heading={local.heading} fixed={local.fixed} contained={local.contained} menuOpen={local.menuOpen} mobileMenu={local.mobileMenu} menuPosition={local.menuPosition} navAlign={local.navAlign} {...rest}>
       {local.children}
     </arc-top-bar>
   );

@@ -3,6 +3,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 import { components } from '../../data/components/index';
 
 const headings = [
+  { id: 'v1-10-2', label: 'v1.10.2' },
   { id: 'v1-10-1', label: 'v1.10.1' },
   { id: 'v1-10-0', label: 'v1.10.0' },
   { id: 'v1-9-2', label: 'v1.9.2' },
@@ -50,6 +51,26 @@ const byTier = Object.fromEntries(
     <p class="page-desc">
       Release history for ARC UI. All packages are versioned together.
     </p>
+
+    <section id="v1-10-2">
+      <h2 class="docs-heading">v1.10.2 — Top Bar Containment &amp; Brand Integration</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <p class="docs-text">
+        Adds a <code>contained</code> layout mode to the top bar and replaces custom footer branding with <code>@arclux/brand</code> components.
+      </p>
+
+      <h3 class="tier-heading">Top Bar</h3>
+      <ul class="docs-list">
+        <li><strong>New <code>contained</code> attribute</strong> — Constrains top-bar content to the same breakpoints as <code>arc-container</code>. Accepts <code>sm</code> (720px), <code>md</code> (1120px, default), <code>lg</code> (1400px), or <code>xl</code> (1600px). The bar background stays full-width.</li>
+        <li><strong>Built-in horizontal padding</strong> — Full-width mode now applies <code>padding-inline: var(--space-lg)</code> to the content area, removing the need for external <code>::part(content)</code> overrides.</li>
+      </ul>
+
+      <h3 class="tier-heading">Docs</h3>
+      <ul class="docs-list">
+        <li><strong>Footer branding</strong> — Replaced the custom inline SVG &ldquo;by Arclight&rdquo; markup with the <code>&lt;arclight-by&gt;</code> component from <code>@arclux/brand</code>.</li>
+      </ul>
+    </section>
 
     <section id="v1-10-1">
       <h2 class="docs-heading">v1.10.1 — Tier Reorganization &amp; API Cleanup</h2>

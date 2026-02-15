@@ -7,6 +7,7 @@ defineOptions({ name: 'TopBar' });
 withDefaults(defineProps<{
   heading?: string;
   fixed?: boolean;
+  contained?: string;
   menuOpen?: boolean;
   mobileMenu?: string;
   menuPosition?: string;
@@ -14,6 +15,7 @@ withDefaults(defineProps<{
 }>(), {
   heading: '',
   fixed: false,
+  contained: 'null',
   menuOpen: false,
   mobileMenu: 'sidebar',
   menuPosition: 'left',
@@ -25,6 +27,7 @@ withDefaults(defineProps<{
   <arc-top-bar
     :heading="heading"
     :fixed="fixed"
+    :contained="contained"
     :menuOpen="menuOpen"
     :mobileMenu="mobileMenu"
     :menuPosition="menuPosition"

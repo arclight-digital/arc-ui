@@ -7,6 +7,7 @@ import { ArcTopBar } from '@arclux/arc-ui';
 export interface TopBarProps {
   heading?: string;
   fixed?: boolean;
+  contained?: string;
   menuOpen?: boolean;
   mobileMenu?: string;
   menuPosition?: string;

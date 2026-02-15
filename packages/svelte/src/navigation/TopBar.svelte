@@ -6,6 +6,7 @@
   interface Props {
     heading?: string;
     fixed?: boolean;
+    contained?: string;
     menuOpen?: boolean;
     mobileMenu?: string;
     menuPosition?: string;
@@ -14,9 +15,9 @@
     [key: string]: unknown;
   }
 
-  let { heading = '', fixed = false, menuOpen = false, mobileMenu = 'sidebar', menuPosition = 'left', navAlign = 'center', children, ...rest }: Props = $props();
+  let { heading = '', fixed = false, contained = null, menuOpen = false, mobileMenu = 'sidebar', menuPosition = 'left', navAlign = 'center', children, ...rest }: Props = $props();
 </script>
 
-<arc-top-bar {heading} {fixed} {menuOpen} {mobileMenu} {menuPosition} {navAlign} {...rest}>
+<arc-top-bar {heading} {fixed} {contained} {menuOpen} {mobileMenu} {menuPosition} {navAlign} {...rest}>
   {@render children?.()}
 </arc-top-bar>

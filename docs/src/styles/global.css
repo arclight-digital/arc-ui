@@ -185,10 +185,6 @@ pre.astro-code {
   box-shadow: var(--focus-glow);
 }
 
-arc-top-bar::part(content) {
-  padding-inline: var(--space-lg);
-}
-
 /* Layout-critical elements: reserve space before JS upgrades them */
 arc-top-bar:not(:defined) {
   display: block;

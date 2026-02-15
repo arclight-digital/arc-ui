@@ -34,11 +34,15 @@
         letter-spacing: 1px;
       }
 
-      .arc-code-block .code-block__body {
+      .arc-code-block .code-block__body-wrap {
         position: relative;
+      }
+
+      .arc-code-block .code-block__body {
         padding: var(--space-md);
         padding-right: calc(var(--space-md) + 80px);
         overflow-x: auto;
+        overflow-y: hidden;
       }
 
       /* Shiki CSS-variables theme — map --shiki-* to design tokens.
@@ -63,6 +67,14 @@
         top: var(--space-sm);
         right: var(--space-sm);
         z-index: 1;
+        border-radius: var(--radius-sm);
+        opacity: 0.75;
+        backdrop-filter: blur(4px);
+        transition: opacity var(--transition-fast);
+      }
+
+      .arc-code-block .code-block__copy:hover {
+        opacity: 1;
       }
 
       .arc-code-block .code-block__body pre {
@@ -138,24 +150,24 @@
       }
 
       /* — Basic variant — */
-      .arc-code-block[data-variant="basic"] .code-block__body {
+      .arc-code-block[data-variant="basic"] .code-block__body-wrap {
         display: flex;
         align-items: center;
-        padding: var(--space-sm);
-        padding-right: var(--space-sm);
+        padding: var(--space-xs) var(--space-sm) var(--space-xs) 0;
       }
 
-      .arc-code-block[data-variant="basic"] .code-block__body pre,
-      .arc-code-block[data-variant="basic"] .code-block__body .shiki {
+      .arc-code-block[data-variant="basic"] .code-block__body {
         flex: 1;
         min-width: 0;
+        padding: var(--space-sm);
+        padding-right: var(--space-xs);
       }
 
       .arc-code-block[data-variant="basic"] .code-block__copy {
         position: static;
         flex-shrink: 0;
-        margin-left: var(--space-sm);
         order: 1;
+        margin-left: var(--space-sm);
       }
 
       .arc-code-block .code-block__meta {

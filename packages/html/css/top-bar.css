@@ -28,6 +28,11 @@
         align-items: center;
         gap: var(--space-md);
         height: 100%;
+        padding-inline: var(--space-lg);
+      }
+
+      .arc-top-bar[contained] .topbar__content {
+        padding-inline: 0;
       }
 
       .arc-top-bar .topbar__glow {

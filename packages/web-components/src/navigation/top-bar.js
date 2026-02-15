@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import '../layout/container.register.js';
 
 /**
  * @arc-prism hybrid — display works without JS; mobile menu toggle requires JS
@@ -11,6 +12,7 @@ export class ArcTopBar extends LitElement {
   static properties = {
     heading:      { type: String },
     fixed:        { type: Boolean, reflect: true },
+    contained:    { type: String, reflect: true },
     menuOpen:     { type: Boolean, attribute: 'menu-open', reflect: true },
     mobileMenu:   { type: String, attribute: 'mobile-menu' },
     menuPosition: { type: String, attribute: 'menu-position' },
@@ -47,6 +49,14 @@ export class ArcTopBar extends LitElement {
         align-items: center;
         gap: var(--space-md);
         height: 100%;
+        padding-inline: var(--space-lg);
+      }
+
+      arc-container { height: 100%; }
+      arc-container::part(container) { height: 100%; }
+
+      :host([contained]) .topbar__content {
+        padding-inline: 0;
       }
 
       .topbar__glow {
@@ -185,6 +195,7 @@ export class ArcTopBar extends LitElement {
     super();
     this.heading = '';
     this.fixed = false;
+    this.contained = null;
     this.menuOpen = false;
     this.mobileMenu = 'sidebar';
     this.menuPosition = 'left';
@@ -250,26 +261,42 @@ export class ArcTopBar extends LitElement {
     `;
   }
 
+  get _containerSize() {
+    if (!this.contained && this.contained !== '') return null;
+    const size = this.contained || 'md';
+    return ['sm', 'md', 'lg', 'xl', 'full'].includes(size) ? size : 'md';
+  }
+
+  _renderContent(menuLeft) {
+    return html`
+      <div class="topbar__content" part="content">
+        ${menuLeft ? this._renderMenuButton() : ''}
+        <a class="topbar__brand" href="/" part="brand">
+          <slot name="logo"></slot>
+          ${this.heading ? html`<span class="topbar__heading">${this.heading}</span>` : ''}
+          <slot name="subtitle"></slot>
+        </a>
+        <div class="topbar__center" part="center" style="justify-content:${this._navJustify}">
+          <slot name="center"></slot>
+        </div>
+        <div class="topbar__actions" part="actions">
+          <slot name="actions"></slot>
+        </div>
+        ${!menuLeft ? this._renderMenuButton() : ''}
+      </div>
+    `;
+  }
+
   render() {
     const menuLeft = this.menuPosition !== 'right';
+    const size = this._containerSize;
 
     return html`
       <header class="topbar" part="topbar">
-        <div class="topbar__content" part="content">
-          ${menuLeft ? this._renderMenuButton() : ''}
-          <a class="topbar__brand" href="/" part="brand">
-            <slot name="logo"></slot>
-            ${this.heading ? html`<span class="topbar__heading">${this.heading}</span>` : ''}
-            <slot name="subtitle"></slot>
-          </a>
-          <div class="topbar__center" part="center" style="justify-content:${this._navJustify}">
-            <slot name="center"></slot>
-          </div>
-          <div class="topbar__actions" part="actions">
-            <slot name="actions"></slot>
-          </div>
-          ${!menuLeft ? this._renderMenuButton() : ''}
-        </div>
+        ${size
+          ? html`<arc-container size=${size}>${this._renderContent(menuLeft)}</arc-container>`
+          : this._renderContent(menuLeft)
+        }
         <div class="topbar__glow"></div>
       </header>
     `;
