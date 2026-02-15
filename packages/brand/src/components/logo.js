@@ -18,6 +18,7 @@ export class ArclightLogo extends LitElement {
         align-items: center;
         justify-content: center;
         line-height: 0;
+        overflow: visible;
         color: var(--text-primary, #e8e8ec);
       }
 
@@ -61,6 +62,7 @@ export class ArclightLogo extends LitElement {
     if (svg) {
       svg.style.height = `${s.height}px`;
       svg.style.width = 'auto';
+      svg.style.overflow = 'visible';
 
       // Tag the pulsing rings — skip the first child (solid dot)
       const circles = svg.querySelector('#Circles');

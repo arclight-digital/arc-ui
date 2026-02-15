@@ -20,6 +20,7 @@ export class ArclightLogoWordmark extends LitElement {
     css`
       :host {
         display: inline-block;
+        line-height: 0;
       }
 
       .lockup, a.lockup {
