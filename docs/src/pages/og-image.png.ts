@@ -60,39 +60,72 @@ function statCard(value: string, label: string, accentColor: string, accentRgb: 
         width: '220px',
         height: '120px',
         borderRadius: tokens.radius.lg,
-        border: `1px solid rgba(${accentRgb}, 0.2)`,
-        background: `linear-gradient(180deg, rgba(${accentRgb}, 0.08) 0%, rgba(${accentRgb}, 0.02) 100%)`,
-        gap: '8px',
+        border: `1px solid rgba(${accentRgb}, 0.25)`,
+        background: `linear-gradient(180deg, rgba(${accentRgb}, 0.1) 0%, rgba(${accentRgb}, 0.03) 100%)`,
+        gap: '6px',
       },
       children: [
         {
           type: 'div' as const,
           props: {
             style: {
-              fontSize: '40px',
+              fontSize: '44px',
               fontWeight: 800,
               fontFamily: 'Host Grotesk',
-              color: accentColor,
+              background: `linear-gradient(135deg, ${accentColor}, rgba(255,255,255,0.9))`,
+              backgroundClip: 'text',
+              color: 'transparent',
               lineHeight: 1,
             },
             children: value,
+          },
+        },
+        // Mini gradient rule
+        {
+          type: 'div' as const,
+          props: {
+            style: {
+              width: '24px',
+              height: '2px',
+              borderRadius: '1px',
+              background: `linear-gradient(90deg, ${accentColor}, rgba(${accentRgb}, 0.3))`,
+            },
           },
         },
         {
           type: 'div' as const,
           props: {
             style: {
-              fontSize: '14px',
+              fontSize: '18px',
               fontWeight: 600,
               fontFamily: 'Tektur',
               letterSpacing: '3px',
-              color: 'rgba(255,255,255,0.35)',
+              color: 'rgba(255,255,255,0.4)',
               textTransform: 'uppercase' as const,
             },
             children: label,
           },
         },
       ],
+    },
+  };
+}
+
+function frameworkPill(name: string) {
+  return {
+    type: 'div' as const,
+    props: {
+      style: {
+        padding: '6px 16px',
+        borderRadius: tokens.radius.md,
+        border: `1px solid rgba(${blueRgb}, 0.15)`,
+        background: `rgba(${blueRgb}, 0.06)`,
+        fontSize: '18px',
+        fontWeight: 500,
+        fontFamily: 'Host Grotesk',
+        color: 'rgba(255,255,255,0.5)',
+      },
+      children: name,
     },
   };
 }
@@ -122,7 +155,7 @@ export const GET: APIRoute = async () => {
           // Dot grid
           ...dots,
 
-          // Ambient glow — blue (top-left) — full-canvas div with offset gradient
+          // Ambient glow — blue (top-left)
           {
             type: 'div',
             props: {
@@ -132,7 +165,7 @@ export const GET: APIRoute = async () => {
                 left: '0',
                 width: '100%',
                 height: '100%',
-                background: `radial-gradient(circle at 10% 10%, rgba(${blueRgb},0.18) 0%, transparent 50%)`,
+                background: `radial-gradient(circle at 10% 10%, rgba(${blueRgb},0.22) 0%, transparent 50%)`,
               },
             },
           },
@@ -146,11 +179,11 @@ export const GET: APIRoute = async () => {
                 left: '0',
                 width: '100%',
                 height: '100%',
-                background: `radial-gradient(circle at 50% 15%, rgba(${violetRgb},0.08) 0%, transparent 45%)`,
+                background: `radial-gradient(circle at 50% 15%, rgba(${violetRgb},0.12) 0%, transparent 45%)`,
               },
             },
           },
-          // Ambient glow — teal (bottom-right) — full-canvas div with offset gradient
+          // Ambient glow — teal (bottom-right)
           {
             type: 'div',
             props: {
@@ -160,11 +193,11 @@ export const GET: APIRoute = async () => {
                 left: '0',
                 width: '100%',
                 height: '100%',
-                background: `radial-gradient(circle at 90% 90%, rgba(${tealRgb},0.15) 0%, transparent 50%)`,
+                background: `radial-gradient(circle at 90% 90%, rgba(${tealRgb},0.18) 0%, transparent 50%)`,
               },
             },
           },
-          // Center spotlight — warm white bloom behind title
+          // Center spotlight — bloom behind title
           {
             type: 'div',
             props: {
@@ -174,11 +207,11 @@ export const GET: APIRoute = async () => {
                 left: '0',
                 width: '100%',
                 height: '100%',
-                background: 'radial-gradient(ellipse at 50% 30%, rgba(255,255,255,0.04) 0%, transparent 45%)',
+                background: 'radial-gradient(ellipse at 50% 30%, rgba(255,255,255,0.05) 0%, transparent 45%)',
               },
             },
           },
-          // Title glow — soft colored bloom behind "ARC UI"
+          // Title glow — strong colored bloom behind "ARC UI"
           {
             type: 'div',
             props: {
@@ -188,7 +221,7 @@ export const GET: APIRoute = async () => {
                 left: '0',
                 width: '100%',
                 height: '100%',
-                background: `radial-gradient(ellipse at 50% 25%, rgba(${blueRgb},0.1) 0%, rgba(${tealRgb},0.05) 30%, transparent 55%)`,
+                background: `radial-gradient(ellipse at 50% 28%, rgba(${blueRgb},0.14) 0%, rgba(${violetRgb},0.06) 30%, transparent 55%)`,
               },
             },
           },
@@ -207,7 +240,21 @@ export const GET: APIRoute = async () => {
               },
             },
           },
-          // Top edge glow — gradient bloom along the top border
+          // Top edge glow
+          {
+            type: 'div',
+            props: {
+              style: {
+                position: 'absolute',
+                top: '0',
+                left: '10%',
+                right: '10%',
+                height: '2px',
+                background: `linear-gradient(90deg, transparent, rgba(${blueRgb},0.6), rgba(${violetRgb},0.4), rgba(${tealRgb},0.5), transparent)`,
+              },
+            },
+          },
+          // Top edge bloom (wider, softer)
           {
             type: 'div',
             props: {
@@ -216,22 +263,22 @@ export const GET: APIRoute = async () => {
                 top: '0',
                 left: '15%',
                 right: '15%',
-                height: '1px',
-                background: `linear-gradient(90deg, transparent, rgba(${blueRgb},0.5), rgba(${violetRgb},0.3), rgba(${tealRgb},0.4), transparent)`,
+                height: '20px',
+                background: `linear-gradient(90deg, transparent, rgba(${blueRgb},0.08), rgba(${violetRgb},0.06), rgba(${tealRgb},0.06), transparent)`,
               },
             },
           },
-          // Bottom edge glow — subtle accent along bottom border
+          // Bottom edge glow
           {
             type: 'div',
             props: {
               style: {
                 position: 'absolute',
                 bottom: '0',
-                left: '20%',
-                right: '20%',
-                height: '1px',
-                background: `linear-gradient(90deg, transparent, rgba(${tealRgb},0.3), rgba(${blueRgb},0.2), transparent)`,
+                left: '15%',
+                right: '15%',
+                height: '2px',
+                background: `linear-gradient(90deg, transparent, rgba(${tealRgb},0.4), rgba(${blueRgb},0.3), transparent)`,
               },
             },
           },
@@ -246,10 +293,56 @@ export const GET: APIRoute = async () => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 zIndex: '1',
-                marginTop: '-160px',
+                marginTop: '-140px',
               },
               children: [
-                // ARC UI
+                // v2.0 pill
+                {
+                  type: 'div',
+                  props: {
+                    style: {
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      padding: '6px 20px 6px 8px',
+                      borderRadius: tokens.radius.full,
+                      border: `1px solid rgba(${blueRgb}, 0.3)`,
+                      background: `rgba(${blueRgb}, 0.08)`,
+                      marginBottom: '14px',
+                    },
+                    children: [
+                      {
+                        type: 'div' as const,
+                        props: {
+                          style: {
+                            padding: '2px 10px',
+                            borderRadius: tokens.radius.full,
+                            background: `linear-gradient(135deg, ${blue}, ${violet})`,
+                            fontSize: '18px',
+                            fontWeight: 700,
+                            fontFamily: 'Host Grotesk',
+                            color: 'white',
+                            letterSpacing: '0.5px',
+                          },
+                          children: 'v2.0',
+                        },
+                      },
+                      {
+                        type: 'div' as const,
+                        props: {
+                          style: {
+                            fontSize: '18px',
+                            fontWeight: 500,
+                            fontFamily: 'Host Grotesk',
+                            color: 'rgba(255,255,255,0.6)',
+                          },
+                          children: 'Components that glow.',
+                        },
+                      },
+                    ],
+                  },
+                },
+                // ARC UI title
                 {
                   type: 'div',
                   props: {
@@ -266,7 +359,7 @@ export const GET: APIRoute = async () => {
                             fontWeight: 800,
                             fontFamily: 'Host Grotesk',
                             letterSpacing: '-4px',
-                            background: `linear-gradient(90deg, ${blue} 0%, ${teal} 100%)`,
+                            background: `linear-gradient(135deg, rgba(255,255,255,0.95) 0%, ${blue} 50%, ${violet} 100%)`,
                             backgroundClip: 'text',
                             color: 'transparent',
                             lineHeight: 1,
@@ -277,15 +370,15 @@ export const GET: APIRoute = async () => {
                     ],
                   },
                 },
-                // Divider — thicker with bloom
+                // Divider — with bloom
                 {
                   type: 'div',
                   props: {
                     style: {
                       position: 'relative' as const,
                       width: '580px',
-                      height: '12px',
-                      marginTop: '20px',
+                      height: '16px',
+                      marginTop: '10px',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -298,9 +391,9 @@ export const GET: APIRoute = async () => {
                           style: {
                             position: 'absolute' as const,
                             width: '100%',
-                            height: '12px',
-                            borderRadius: '6px',
-                            background: `linear-gradient(90deg, transparent, rgba(${blueRgb},0.15), rgba(${tealRgb},0.1), transparent)`,
+                            height: '16px',
+                            borderRadius: '8px',
+                            background: `linear-gradient(90deg, transparent, rgba(${blueRgb},0.18), rgba(${violetRgb},0.12), rgba(${tealRgb},0.1), transparent)`,
                           },
                         },
                       },
@@ -312,27 +405,11 @@ export const GET: APIRoute = async () => {
                             position: 'absolute' as const,
                             width: '100%',
                             height: '2px',
-                            background: `linear-gradient(90deg, transparent, ${blue}, ${teal}, transparent)`,
+                            background: `linear-gradient(90deg, transparent, ${blue}, ${violet}, ${teal}, transparent)`,
                           },
                         },
                       },
                     ],
-                  },
-                },
-                // Tagline
-                {
-                  type: 'div',
-                  props: {
-                    style: {
-                      fontSize: '22px',
-                      fontWeight: 500,
-                      fontFamily: 'Tektur',
-                      letterSpacing: '6px',
-                      color: 'rgba(255,255,255,0.4)',
-                      marginTop: '16px',
-                      textTransform: 'uppercase' as const,
-                    },
-                    children: 'ARC Reactive Components',
                   },
                 },
                 // Description
@@ -340,13 +417,34 @@ export const GET: APIRoute = async () => {
                   type: 'div',
                   props: {
                     style: {
-                      fontSize: '22px',
+                      fontSize: '24px',
                       fontWeight: 400,
                       fontFamily: 'Host Grotesk',
-                      color: tokens.color.textSecondary,
+                      color: 'rgba(255,255,255,0.55)',
+                      marginTop: '10px',
+                      letterSpacing: '0.5px',
+                    },
+                    children: 'One source of truth. Seven framework targets.',
+                  },
+                },
+                // Framework pills row
+                {
+                  type: 'div',
+                  props: {
+                    style: {
+                      display: 'flex',
+                      gap: '8px',
                       marginTop: '10px',
                     },
-                    children: 'Lit Web Components with code generation for every framework',
+                    children: [
+                      frameworkPill('React'),
+                      frameworkPill('Vue'),
+                      frameworkPill('Svelte'),
+                      frameworkPill('Angular'),
+                      frameworkPill('Solid'),
+                      frameworkPill('Preact'),
+                      frameworkPill('HTML'),
+                    ],
                   },
                 },
               ],
@@ -359,16 +457,16 @@ export const GET: APIRoute = async () => {
             props: {
               style: {
                 position: 'absolute',
-                bottom: '80px',
+                bottom: '65px',
                 display: 'flex',
                 gap: '16px',
                 alignItems: 'center',
               },
               children: [
                 statCard(String(components.length), 'Components', blue, blueRgb),
-                statCard('7', 'Frameworks', teal, tealRgb),
-                statCard('0', 'Dependencies', blue, blueRgb),
-                statCard('2', 'Themes', teal, tealRgb),
+                statCard('7', 'Frameworks', violet, violetRgb),
+                statCard('0', 'Dependencies', teal, tealRgb),
+                statCard('160+', 'Tokens', blue, blueRgb),
               ],
             },
           },
@@ -387,7 +485,7 @@ export const GET: APIRoute = async () => {
                 borderRadius: tokens.radius.full,
                 border: `1px solid rgba(${blueRgb},0.3)`,
                 background: `rgba(${blueRgb},0.08)`,
-                fontSize: '16px',
+                fontSize: '18px',
                 fontWeight: 600,
                 fontFamily: 'Host Grotesk',
                 color: blue,
@@ -404,7 +502,7 @@ export const GET: APIRoute = async () => {
                 position: 'absolute',
                 bottom: '18px',
                 left: '24px',
-                fontSize: '16px',
+                fontSize: '18px',
                 fontWeight: 400,
                 fontFamily: 'Host Grotesk',
                 letterSpacing: '1px',
