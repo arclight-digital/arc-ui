@@ -46,10 +46,6 @@ export class ArclightLogoWordmark extends LitElement {
         flex-direction: column;
       }
 
-      :host([layout="stacked"]) arclight-logo {
-        margin-left: -2px;
-      }
-
       :host(:not([layout="stacked"])) arclight-wordmark {
         margin-top: 0.15em;
       }

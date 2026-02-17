@@ -72,6 +72,10 @@ importers:
       lit:
         specifier: ^3.3.0
         version: 3.3.2
+    devDependencies:
+      sharp:
+        specifier: ^0.34.5
+        version: 0.34.5
 
   packages/html: {}
 

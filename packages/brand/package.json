@@ -33,10 +33,13 @@
     "lit": "^3.3.0"
   },
   "scripts": {
-    "preview": "npx vite --open preview.html"
+    "preview": "npx vite --open preview.html",
+    "favicons": "node scripts/generate-favicons.js --dark"
   },
-  "dependencies": {},
   "publishConfig": {
     "access": "public"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.5"
   }
 }

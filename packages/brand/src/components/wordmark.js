@@ -48,6 +48,7 @@ export class ArclightWordmark extends LitElement {
         color: var(--text-primary, #e8e8ec);
         white-space: nowrap;
         user-select: none;
+        margin-right: calc(-1 * var(--_ls));
       }
     `,
   ];
@@ -67,7 +68,7 @@ export class ArclightWordmark extends LitElement {
     return html`
       <span
         class="wordmark"
-        style="font-size: ${s.fontSize}; font-weight: ${s.fontWeight}; letter-spacing: ${s.letterSpacing};"
+        style="font-size: ${s.fontSize}; font-weight: ${s.fontWeight}; letter-spacing: ${s.letterSpacing}; --_ls: ${s.letterSpacing};"
       >ARCLIGHT</span>
     `;
   }

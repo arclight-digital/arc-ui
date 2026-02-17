@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1600">
+<style>
+  :root { --bg: #0f0f1a; --fg: #e8e8ec; --st: #c8c8d8 }
+  
+</style>
+<defs>
+  <linearGradient id="bg-grad" x1="0" y1="0" x2="1600" y2="1600" gradientUnits="userSpaceOnUse">
+    <stop offset="0" stop-color="#0c1e5c"/>
+    <stop offset="0.4" stop-color="#1a2d6e"/>
+    <stop offset="0.7" stop-color="#1a1a3e"/>
+    <stop offset="1" stop-color="#2d1560"/>
+  </linearGradient>
+  <radialGradient id="vignette" cx="800" cy="700" r="850" gradientUnits="userSpaceOnUse">
+    <stop offset="0" stop-color="#000000" stop-opacity="0"/>
+    <stop offset="0.7" stop-color="#000000" stop-opacity="0"/>
+    <stop offset="1" stop-color="#000000" stop-opacity="0.5"/>
+  </radialGradient>
+  <filter id="ambient" x="-50%" y="-50%" width="200%" height="200%">
+    <feGaussianBlur in="SourceGraphic" stdDeviation="80"/>
+  </filter>
+  <filter id="core-glow" x="-100%" y="-100%" width="300%" height="300%">
+    <feGaussianBlur in="SourceGraphic" stdDeviation="40"/>
+  </filter>
+  <filter id="arc-glow" x="-30%" y="-30%" width="160%" height="160%">
+    <feGaussianBlur in="SourceGraphic" stdDeviation="25"/>
+  </filter>
+  <radialGradient id="orb1" cx="800" cy="489.573" r="489.573" gradientUnits="userSpaceOnUse" gradientTransform="translate(200 162.5) scale(0.75)">
+    <stop offset="0" stop-color="#4d7ef7" stop-opacity="0.45"/>
+    <stop offset="0.5" stop-color="#4d7ef7" stop-opacity="0.15"/>
+    <stop offset="1" stop-color="#0f0f1a" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="orb2" cx="800" cy="489.573" r="305.035" gradientUnits="userSpaceOnUse" gradientTransform="translate(200 162.5) scale(0.75)">
+    <stop offset="0" stop-color="#4d7ef7" stop-opacity="0.4"/>
+    <stop offset="0.4" stop-color="#a855f7" stop-opacity="0.15"/>
+    <stop offset="1" stop-color="#0f0f1a" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="core" cx="800" cy="489.573" r="237.318" gradientUnits="userSpaceOnUse" gradientTransform="translate(200 162.5) scale(0.75)">
+    <stop offset="0" stop-color="#ffffff" stop-opacity="1"/>
+    <stop offset="0.3" stop-color="#c8d8ff" stop-opacity="0.95"/>
+    <stop offset="0.65" stop-color="#4d7ef7" stop-opacity="0.9"/>
+    <stop offset="1" stop-color="#6b6ef7" stop-opacity="0.7"/>
+  </radialGradient>
+  <linearGradient id="arc-grad" x1="64" y1="1539" x2="1536" y2="1539" gradientUnits="userSpaceOnUse" gradientTransform="translate(200 162.5) scale(0.75)">
+    <stop offset="0" stop-color="#4d7ef7" stop-opacity="0.6"/>
+    <stop offset="0.5" stop-color="#c8c8d8" stop-opacity="1"/>
+    <stop offset="1" stop-color="#a855f7" stop-opacity="0.6"/>
+  </linearGradient>
+  <linearGradient id="ring1" x1="380" y1="100" x2="1220" y2="920" gradientUnits="userSpaceOnUse" gradientTransform="translate(200 162.5) scale(0.75)">
+    <stop offset="0" stop-color="#4d7ef7" stop-opacity="0.5"/>
+    <stop offset="0.5" stop-color="#5d8af7" stop-opacity="0.3"/>
+    <stop offset="1" stop-color="#a855f7" stop-opacity="0.15"/>
+  </linearGradient>
+  <linearGradient id="ring2" x1="500" y1="200" x2="1100" y2="820" gradientUnits="userSpaceOnUse" gradientTransform="translate(200 162.5) scale(0.75)">
+    <stop offset="0" stop-color="#4d7ef7" stop-opacity="0.5"/>
+    <stop offset="0.5" stop-color="#6b6ef7" stop-opacity="0.3"/>
+    <stop offset="1" stop-color="#a855f7" stop-opacity="0.15"/>
+  </linearGradient>
+</defs>
+<rect width="1600" height="1600" rx="320" fill="url(#bg-grad)"/>
+<rect width="1600" height="1600" rx="320" fill="url(#vignette)"/>
+<g transform="translate(200 162.5) scale(0.75)">
+  <circle cx="800" cy="489.573" r="520" fill="#4d7ef7" opacity="0.22" filter="url(#ambient)"/>
+  <circle cx="800" cy="489.573" r="330" fill="#6b6ef7" opacity="0.14" filter="url(#ambient)"/>
+  <circle cx="800" cy="489.573" r="489.573" fill="url(#orb1)"/>
+  <circle cx="800" cy="489.573" r="489.573" fill="none" stroke="url(#ring1)" stroke-width="12"/>
+  <circle cx="800" cy="489.573" r="305.035" fill="url(#orb2)"/>
+  <circle cx="800" cy="489.573" r="305.035" fill="none" stroke="url(#ring2)" stroke-width="12"/>
+  <circle cx="800" cy="489.573" r="160" fill="#4d7ef7" opacity="0.55" filter="url(#core-glow)"/>
+  <circle cx="800" cy="489.573" r="100" fill="#5d6ef7" opacity="0.35" filter="url(#core-glow)"/>
+  <circle cx="800" cy="489.573" r="237.318" fill="url(#core)"/>
+  <path d="M64.393,1538.856c0,0 305.399,-541.018 735.607,-541.018c430.207,0 735.607,541.018 735.607,541.018" fill="none" stroke="#4d7ef7" stroke-width="206.18" stroke-linecap="round" opacity="0.3" filter="url(#arc-glow)"/>
+  <path d="M64.393,1538.856c0,0 305.399,-541.018 735.607,-541.018c430.207,0 735.607,541.018 735.607,541.018" fill="none" stroke="url(#arc-grad)" stroke-width="206.18" stroke-linecap="round"/>
+</g>
+</svg>
