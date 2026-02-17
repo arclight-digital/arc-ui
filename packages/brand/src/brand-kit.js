@@ -1,4 +1,4 @@
-import { brandColors } from './components/brand-colors.js';
+import { brandColors } from './brand-palette.js';
 
 export { brandColors };
 

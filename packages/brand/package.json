@@ -1,6 +1,6 @@
 {
   "name": "@arclux/brand",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Arclight brand components — logo, wordmark, powered-by badge",
   "type": "module",
   "main": "src/index.js",
@@ -16,6 +16,7 @@
     "./loading": "./src/components/loading.js",
     "./favicon": "./src/components/favicon.js",
     "./watermark": "./src/components/watermark.js",
+    "./palette": "./src/brand-palette.js",
     "./brand-kit": "./src/brand-kit.js",
     "./assets/logo-sm.svg": "./src/assets/svg/logo-sm.svg",
     "./assets/logo-lg.svg": "./src/assets/svg/logo-lg.svg",

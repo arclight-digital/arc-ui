@@ -1,19 +1,7 @@
 import { LitElement } from 'lit';
+import { brandColors } from '../brand-palette.js';
 
-/**
- * Canonical Arclight brand color palette.
- * Import this object when you need the raw hex / RGB values in JS.
- */
-export const brandColors = {
-  primary:      '#4d7ef7',
-  primaryRgb:   '77, 126, 247',
-  secondary:    '#a855f7',
-  secondaryRgb: '168, 85, 247',
-  surface:      '#1a1a2e',
-  deep:         '#0f0f1a',
-  text:         '#e8e8ec',
-  textGhost:    '#6b6b80',
-};
+export { brandColors };
 
 /** Convert camelCase → kebab-case (e.g. primaryRgb → primary-rgb) */
 function toKebab(str) {
