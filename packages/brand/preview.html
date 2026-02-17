@@ -11,6 +11,10 @@
     import './src/components/logo-wordmark.js';
     import './src/components/by-arclight.js';
     import './src/components/powered-by.js';
+    import './src/components/brand-colors.js';
+    import './src/components/loading.js';
+    import './src/components/favicon.js';
+    import './src/components/watermark.js';
   </script>
   <style>
     body {
@@ -105,6 +109,51 @@
     <div class="row">
       <span class="label">md</span>
       <arclight-powered-by size="md"></arclight-powered-by>
+    </div>
+  </section>
+
+  <section>
+    <h2>Brand Colors</h2>
+    <arclight-brand-colors></arclight-brand-colors>
+    <div class="row">
+      <div style="width:40px;height:40px;border-radius:8px;background:var(--arclight-primary)"></div>
+      <span class="label">primary</span>
+      <div style="width:40px;height:40px;border-radius:8px;background:var(--arclight-secondary)"></div>
+      <span class="label">secondary</span>
+      <div style="width:40px;height:40px;border-radius:8px;background:var(--arclight-surface)"></div>
+      <span class="label">surface</span>
+      <div style="width:40px;height:40px;border-radius:8px;background:var(--arclight-deep)"></div>
+      <span class="label">deep</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Loading</h2>
+    <div class="row">
+      <span class="label">sm</span>
+      <arclight-loading size="sm"></arclight-loading>
+    </div>
+    <div class="row">
+      <span class="label">md</span>
+      <arclight-loading size="md" label="Loading..."></arclight-loading>
+    </div>
+  </section>
+
+  <section>
+    <h2>Favicon</h2>
+    <arclight-favicon></arclight-favicon>
+    <p style="font-size:12px;opacity:0.4;">Check the browser tab — favicon should show the Arclight logo.</p>
+  </section>
+
+  <section>
+    <h2>Watermark</h2>
+    <div style="position:relative;min-height:200px;background:var(--bg-deep,#0f0f1a);border-radius:12px;display:flex;align-items:center;justify-content:center;">
+      <arclight-watermark></arclight-watermark>
+      <span style="position:relative;font-size:14px;opacity:0.6;">Content over watermark</span>
+    </div>
+    <div style="position:relative;min-height:200px;background:var(--bg-deep,#0f0f1a);border-radius:12px;display:flex;align-items:center;justify-content:center;">
+      <arclight-watermark position="bottom-right" size="sm" opacity="0.08" animated></arclight-watermark>
+      <span style="position:relative;font-size:14px;opacity:0.6;">Animated, bottom-right</span>
     </div>
   </section>
 </body>
