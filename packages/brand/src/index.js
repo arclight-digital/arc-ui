@@ -3,3 +3,8 @@ export { ArclightWordmark } from './components/wordmark.js';
 export { ArclightLogoWordmark } from './components/logo-wordmark.js';
 export { ArclightBy } from './components/by-arclight.js';
 export { ArclightPoweredBy } from './components/powered-by.js';
+export { ArclightBrandColors, brandColors } from './components/brand-colors.js';
+export { ArclightLoading } from './components/loading.js';
+export { ArclightFavicon } from './components/favicon.js';
+export { ArclightWatermark } from './components/watermark.js';
+export { brandAssets, brandFonts } from './brand-kit.js';

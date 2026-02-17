@@ -11,7 +11,19 @@
     "./wordmark": "./src/components/wordmark.js",
     "./logo-wordmark": "./src/components/logo-wordmark.js",
     "./by": "./src/components/by-arclight.js",
-    "./powered-by": "./src/components/powered-by.js"
+    "./powered-by": "./src/components/powered-by.js",
+    "./brand-colors": "./src/components/brand-colors.js",
+    "./loading": "./src/components/loading.js",
+    "./favicon": "./src/components/favicon.js",
+    "./watermark": "./src/components/watermark.js",
+    "./brand-kit": "./src/brand-kit.js",
+    "./assets/logo-sm.svg": "./src/assets/svg/logo-sm.svg",
+    "./assets/logo-lg.svg": "./src/assets/svg/logo-lg.svg",
+    "./assets/logo-sq-sm.svg": "./src/assets/svg/logo-sq-sm.svg",
+    "./assets/logo-sq-lg.svg": "./src/assets/svg/logo-sq-lg.svg",
+    "./assets/wordmark.svg": "./src/assets/svg/wordmark.svg",
+    "./assets/logo-wordmark-inline.svg": "./src/assets/svg/logo-wordmark-inline.svg",
+    "./assets/logo-wordmark-stacked.svg": "./src/assets/svg/logo-wordmark-stacked.svg"
   },
   "files": [
     "src/"
