@@ -1,8 +1,13 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import { logoSm, logoLg } from '../assets/logo.js';
+import { logoSm, logoLg, logoSqSm, logoSqLg } from '../assets/logo.js';
 
-const SIZES = { sm: { svg: logoSm, height: 28 }, lg: { svg: logoLg, height: 96 } };
+const SIZES = {
+  sm: { svg: logoSm, height: 28 },
+  lg: { svg: logoLg, height: 96 },
+  'sq-sm': { svg: logoSqSm, height: 28 },
+  'sq-lg': { svg: logoSqLg, height: 96 },
+};
 
 /** @tag arclight-logo */
 export class ArclightLogo extends LitElement {
