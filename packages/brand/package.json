@@ -1,6 +1,6 @@
 {
   "name": "@arclux/brand",
-  "version": "2.0.1",
+  "version": "1.1.0",
   "description": "Arclight brand components — logo, wordmark, powered-by badge",
   "type": "module",
   "main": "src/index.js",
