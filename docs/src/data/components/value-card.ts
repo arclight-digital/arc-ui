@@ -47,9 +47,9 @@ Like Feature Card, Value Card exposes an \`icon\` named slot for custom icon con
 </div>`,
 
     props: [
-      { name: 'icon', type: 'string', description: 'Icon text displayed beside content' },
-      { name: 'heading', type: 'string', description: 'Card title' },
-      { name: 'description', type: 'string', description: 'Card body text' },
+      { name: 'icon', type: 'string', default: "''", description: 'Icon text displayed beside content' },
+      { name: 'heading', type: 'string', default: "''", description: 'Card title' },
+      { name: 'description', type: 'string', default: "''", description: 'Card body text' },
     ],
     tabs: [
       {

@@ -32,7 +32,7 @@ export class ArcScrollSpy extends LitElement {
         position: sticky;
         top: 0;
         z-index: 1;
-        background: var(--bg-surface);
+        background: var(--surface-primary);
         padding: var(--space-sm) var(--space-md);
         border-radius: var(--radius-md);
         border: 1px solid var(--border-subtle);
@@ -99,8 +99,13 @@ export class ArcScrollSpy extends LitElement {
 
       .scroll-spy__link[aria-current="true"] {
         color: var(--text-primary);
-        background: rgba(var(--accent-primary-rgb), 0.06);
-        box-shadow: 0 0 12px rgba(var(--accent-primary-rgb), 0.08);
+        background: rgba(var(--interactive-rgb), 0.06);
+        box-shadow: 0 0 12px rgba(var(--interactive-rgb), 0.08);
+      }
+
+      .scroll-spy__link--nested {
+        font-size: var(--text-xs);
+        color: var(--text-ghost);
       }
 
       .scroll-spy__slot-host { display: none; }
@@ -219,16 +224,19 @@ export class ArcScrollSpy extends LitElement {
       <nav class="scroll-spy" part="scroll-spy" aria-label="Table of contents">
         <button class="scroll-spy__heading" part="heading" @click=${this._scrollToTop}><span class="scroll-spy__heading-text">On this page</span></button>
         <ul class="scroll-spy__list" part="list">
-          ${this._links.map((link) => html`
+          ${this._links.map((link) => {
+            const level = link.level || 0;
+            return html`
             <li class="scroll-spy__item">
               <button
-                class="scroll-spy__link"
+                class="scroll-spy__link ${level > 0 ? 'scroll-spy__link--nested' : ''}"
                 aria-current=${this._active === link.target ? 'true' : 'false'}
                 @click=${() => this._handleClick(link.target)}
                 part="link"
+                style=${level > 0 ? `padding-left: ${level * 14 + 8}px` : ''}
               >${link.label}</button>
             </li>
-          `)}
+          `})}
         </ul>
       </nav>
     `;

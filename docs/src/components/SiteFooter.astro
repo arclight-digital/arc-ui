@@ -1,5 +1,5 @@
-<arc-footer border contained class="theme-fixed">
-  <div class="site-footer__brand">
+<arc-footer contained class="theme-fixed site-footer">
+  <div class="site-footer__brand" slot="logo">
     <div class="site-footer__title">
       <span class="site-footer__name">ARC UI</span>
       <arclight-by></arclight-by>
@@ -27,6 +27,27 @@
     </ul>
   </div>
 
+  <div slot="social" class="site-footer__social-row">
+    <arc-icon-button
+      href="https://github.com/Arclight-Digital/arc-ui"
+      target="_blank"
+      variant="ghost"
+      size="sm"
+      label="GitHub"
+      name="github-logo"
+      class="site-footer__social-link"
+    ></arc-icon-button>
+    <arc-icon-button
+      href="https://www.npmjs.com/package/@arclux/arc-ui"
+      target="_blank"
+      variant="ghost"
+      size="sm"
+      label="npm"
+      name="package"
+      class="site-footer__social-link"
+    ></arc-icon-button>
+  </div>
+
   <div slot="legal" class="site-footer__legal-inner">
     <p>&copy; 2026 Arclight Digital, LLC. All rights reserved.</p>
     <p class="site-footer__ai-disclosure">Documentation generated with AI assistance and reviewed by humans. Found an issue? <a href="https://github.com/Arclight-Digital/arc-ui/issues">Open a GitHub issue</a>.</p>
@@ -35,6 +56,59 @@
 </arc-footer>
 
 <style>
+  /* ── Glow divider top border ── */
+  .site-footer {
+    position: relative;
+  }
+
+  .site-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--glow-line-gradient);
+    filter: drop-shadow(0 0 6px rgba(var(--accent-primary-rgb), 0.4));
+  }
+
+  /* ── Ambient gradient background ── */
+  .site-footer::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 60% 50% at 20% 80%, rgba(var(--accent-primary-rgb), 0.05), transparent 70%),
+      radial-gradient(ellipse 50% 40% at 80% 20%, rgba(var(--accent-secondary-rgb), 0.04), transparent 70%);
+    z-index: 0;
+  }
+
+  /* ── Staggered reveal animation ── */
+  @keyframes footer-reveal {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .site-footer {
+    animation: footer-reveal 0.6s ease-out both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 30%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-footer {
+      animation: none;
+    }
+  }
+
+  /* ── Brand section ── */
   .site-footer__brand {
     display: flex;
     flex-direction: column;
@@ -56,6 +130,11 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    transition: filter var(--transition-fast);
+  }
+
+  .site-footer__name:hover {
+    filter: drop-shadow(0 0 8px rgba(var(--accent-primary-rgb), 0.6));
   }
 
   .site-footer__tagline {
@@ -66,8 +145,10 @@
     max-width: 320px;
     font-style: italic;
     font-weight: 300;
+    text-wrap: balance;
   }
 
+  /* ── Column links ── */
   .site-footer__col-title {
     font-family: var(--font-body);
     font-size: var(--text-sm);
@@ -90,11 +171,13 @@
     font-size: var(--text-sm);
     color: var(--text-muted);
     text-decoration: none;
-    transition: color var(--transition-fast);
+    display: inline-block;
+    transition: color var(--transition-fast), transform var(--transition-fast);
   }
 
   .site-footer__col-links a:hover {
-    color: var(--text-primary);
+    color: rgb(var(--accent-primary-rgb));
+    transform: translateX(3px);
   }
 
   .site-footer__col--end {
@@ -102,6 +185,28 @@
     text-align: right;
   }
 
+  .site-footer__col--end .site-footer__col-links a:hover {
+    transform: translateX(-3px);
+  }
+
+  /* ── Social links ── */
+  .site-footer__social-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  .site-footer__social-link {
+    --icon-button-color: var(--text-muted);
+    transition: filter var(--transition-fast);
+  }
+
+  .site-footer__social-link:hover {
+    --icon-button-color: var(--text-primary);
+    filter: drop-shadow(0 0 6px rgba(var(--accent-primary-rgb), 0.4));
+  }
+
+  /* ── Legal section ── */
   .site-footer__legal-inner {
     display: flex;
     justify-content: space-between;
@@ -135,12 +240,15 @@
     color: var(--text-secondary);
   }
 
+  /* ── Mobile ── */
   @media (max-width: 900px) {
     arc-footer::part(columns) { grid-template-columns: 1fr; }
     .site-footer__brand { align-items: center; text-align: center; }
     .site-footer__title { justify-content: center; }
     .site-footer__tagline { max-width: none; }
     .site-footer__col--end { margin-left: 0; text-align: left; }
+    .site-footer__col--end .site-footer__col-links a:hover { transform: translateX(3px); }
+    .site-footer__social-row { justify-content: center; }
     .site-footer__legal-inner { flex-direction: column; gap: var(--space-xs); text-align: center; }
   }
 </style>

@@ -16,7 +16,7 @@ export class ArcRating extends LitElement {
     tokenStyles,
     css`
       :host { display: inline-flex; }
-      :host([disabled]) { pointer-events: none; opacity: 0.4; }
+      :host([disabled]) { pointer-events: none; opacity: 0.5; }
       :host([readonly]) { pointer-events: none; }
 
       .rating {
@@ -29,7 +29,7 @@ export class ArcRating extends LitElement {
       }
 
       .rating:focus-visible {
-        box-shadow: var(--focus-glow);
+        box-shadow: var(--interactive-focus);
       }
 
       .rating__star {
@@ -50,15 +50,15 @@ export class ArcRating extends LitElement {
       }
 
       .rating__star--filled {
-        color: var(--accent-primary);
-        filter: drop-shadow(0 0 4px rgba(var(--accent-primary-rgb), 0.4))
-               drop-shadow(0 0 10px rgba(var(--accent-primary-rgb), 0.2));
+        color: var(--interactive);
+        filter: drop-shadow(0 0 4px rgba(var(--interactive-rgb), 0.4))
+               drop-shadow(0 0 10px rgba(var(--interactive-rgb), 0.2));
       }
 
       .rating__star--hovered {
-        color: var(--accent-primary);
-        filter: drop-shadow(0 0 6px rgba(var(--accent-primary-rgb), 0.5))
-               drop-shadow(0 0 16px rgba(var(--accent-primary-rgb), 0.3));
+        color: var(--interactive);
+        filter: drop-shadow(0 0 6px rgba(var(--interactive-rgb), 0.5))
+               drop-shadow(0 0 16px rgba(var(--interactive-rgb), 0.3));
       }
 
       .rating__star:not(.rating__star--filled):not(.rating__star--hovered):hover {

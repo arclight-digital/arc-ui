@@ -15,12 +15,12 @@ export class ArcSegmentedControl extends LitElement {
     tokenStyles,
     css`
       :host { display: inline-flex; }
-      :host([disabled]) { pointer-events: none; opacity: 0.4; }
+      :host([disabled]) { pointer-events: none; opacity: 0.5; }
 
       .segmented {
         display: inline-flex;
         align-items: center;
-        background: var(--bg-surface);
+        background: var(--surface-primary);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-md);
         padding: 3px; /* cosmetic inset for pill container */
@@ -56,23 +56,23 @@ export class ArcSegmentedControl extends LitElement {
 
       .segmented__option:hover:not(.is-active) {
         color: var(--text-primary);
-        background: var(--bg-hover);
+        background: var(--surface-hover);
       }
 
       .segmented__option.is-active {
-        background: var(--accent-primary);
-        color: var(--bg-deep);
-        border-color: var(--accent-primary);
-        box-shadow: 0 0 12px rgba(var(--accent-primary-rgb), 0.4);
+        background: var(--interactive);
+        color: var(--surface-base);
+        border-color: var(--interactive);
+        box-shadow: 0 0 12px rgba(var(--interactive-rgb), 0.4);
       }
 
       .segmented__option:focus-visible {
         outline: none;
-        box-shadow: var(--focus-glow);
+        box-shadow: var(--interactive-focus);
       }
 
       .segmented__option.is-active:focus-visible {
-        box-shadow: var(--focus-glow), 0 0 12px rgba(var(--accent-primary-rgb), 0.4);
+        box-shadow: var(--interactive-focus), 0 0 12px rgba(var(--interactive-rgb), 0.4);
       }
 
       .segmented__slot-host { display: none; }

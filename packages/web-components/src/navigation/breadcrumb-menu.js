@@ -50,7 +50,7 @@ export class ArcBreadcrumbMenu extends LitElement {
 
       .breadcrumb-menu__link:hover {
         color: var(--text-primary);
-        background: var(--bg-hover);
+        background: var(--surface-hover);
       }
 
       .breadcrumb-menu__link.is-current {
@@ -78,7 +78,7 @@ export class ArcBreadcrumbMenu extends LitElement {
         top: 100%;
         left: 0;
         margin-top: var(--space-xs);
-        background: var(--bg-elevated);
+        background: var(--surface-overlay);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-md);
         box-shadow: var(--shadow-overlay);
@@ -105,7 +105,7 @@ export class ArcBreadcrumbMenu extends LitElement {
       }
 
       .breadcrumb-menu__dropdown-item:hover {
-        background: var(--bg-hover);
+        background: var(--surface-hover);
         color: var(--text-primary);
       }
     `,

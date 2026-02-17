@@ -20,11 +20,11 @@ export class ArcPageHeader extends LitElement {
       }
 
       .page-header {
-        padding: var(--space-lg) 0 var(--space-md);
+        padding: 0 0 var(--space-md);
       }
 
       :host([border]) .page-header {
-        border-bottom: 1px solid var(--border-subtle);
+        border-bottom: 1px solid var(--divider);
       }
 
       .page-header__above {

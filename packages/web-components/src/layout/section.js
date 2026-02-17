@@ -22,7 +22,7 @@ export class ArcSection extends LitElement {
         scroll-margin-top: var(--space-md);
       }
 
-      @media (max-width: 768px) {
+      @media (max-width: 768px) { /* --breakpoint-md */
         .section { padding: var(--space-2xl) var(--space-md); }
       }
 

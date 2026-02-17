@@ -18,7 +18,7 @@ export class ArcSlider extends LitElement {
     tokenStyles,
     css`
       :host { display: block; }
-      :host([disabled]) { pointer-events: none; opacity: 0.4; }
+      :host([disabled]) { pointer-events: none; opacity: 0.5; }
 
       .slider {
         display: flex;
@@ -45,7 +45,7 @@ export class ArcSlider extends LitElement {
       .slider__value {
         font-family: var(--font-mono);
         font-size: var(--code-size);
-        color: var(--accent-primary);
+        color: var(--interactive);
         font-weight: 600;
       }
 
@@ -64,8 +64,8 @@ export class ArcSlider extends LitElement {
         border-radius: var(--radius-full);
         background: linear-gradient(
           to right,
-          var(--accent-primary) 0%,
-          var(--accent-primary) var(--fill-percent, 0%),
+          var(--interactive) 0%,
+          var(--interactive) var(--fill-percent, 0%),
           var(--border-default) var(--fill-percent, 0%),
           var(--border-default) 100%
         );
@@ -78,7 +78,7 @@ export class ArcSlider extends LitElement {
 
       input[type="range"]:hover,
       input[type="range"]:focus {
-        filter: drop-shadow(0 0 6px rgba(var(--accent-primary-rgb), 0.4));
+        filter: drop-shadow(0 0 6px rgba(var(--interactive-rgb), 0.4));
       }
 
       input[type="range"]::-webkit-slider-thumb {
@@ -87,36 +87,36 @@ export class ArcSlider extends LitElement {
         width: 20px;
         height: 20px;
         border-radius: var(--radius-full);
-        background: var(--accent-primary);
-        border: 2px solid var(--bg-surface);
+        background: var(--interactive);
+        border: 2px solid var(--surface-primary);
         cursor: pointer;
         transition: box-shadow var(--transition-fast);
-        box-shadow: 0 0 6px rgba(var(--accent-primary-rgb), 0.3);
+        box-shadow: 0 0 6px rgba(var(--interactive-rgb), 0.3);
       }
 
       input[type="range"]::-moz-range-thumb {
         width: 20px;
         height: 20px;
         border-radius: var(--radius-full);
-        background: var(--accent-primary);
-        border: 2px solid var(--bg-surface);
+        background: var(--interactive);
+        border: 2px solid var(--surface-primary);
         cursor: pointer;
         transition: box-shadow var(--transition-fast);
-        box-shadow: 0 0 6px rgba(var(--accent-primary-rgb), 0.3);
+        box-shadow: 0 0 6px rgba(var(--interactive-rgb), 0.3);
       }
 
       input[type="range"]:hover::-webkit-slider-thumb,
       input[type="range"]:focus::-webkit-slider-thumb {
         box-shadow:
-          0 0 8px rgba(var(--accent-primary-rgb), 0.5),
-          0 0 20px rgba(var(--accent-primary-rgb), 0.25);
+          0 0 8px rgba(var(--interactive-rgb), 0.5),
+          0 0 20px rgba(var(--interactive-rgb), 0.25);
       }
 
       input[type="range"]:hover::-moz-range-thumb,
       input[type="range"]:focus::-moz-range-thumb {
         box-shadow:
-          0 0 8px rgba(var(--accent-primary-rgb), 0.5),
-          0 0 20px rgba(var(--accent-primary-rgb), 0.25);
+          0 0 8px rgba(var(--interactive-rgb), 0.5),
+          0 0 20px rgba(var(--interactive-rgb), 0.25);
       }
 
       input[type="range"]:focus-visible {
@@ -125,16 +125,16 @@ export class ArcSlider extends LitElement {
 
       input[type="range"]:focus-visible::-webkit-slider-thumb {
         box-shadow:
-          0 0 0 1px rgba(var(--accent-primary-rgb), 0.2),
-          0 0 8px rgba(var(--accent-primary-rgb), 0.5),
-          0 0 20px rgba(var(--accent-primary-rgb), 0.25);
+          0 0 0 1px rgba(var(--interactive-rgb), 0.2),
+          0 0 8px rgba(var(--interactive-rgb), 0.5),
+          0 0 20px rgba(var(--interactive-rgb), 0.25);
       }
 
       input[type="range"]:focus-visible::-moz-range-thumb {
         box-shadow:
-          0 0 0 1px rgba(var(--accent-primary-rgb), 0.2),
-          0 0 8px rgba(var(--accent-primary-rgb), 0.5),
-          0 0 20px rgba(var(--accent-primary-rgb), 0.25);
+          0 0 0 1px rgba(var(--interactive-rgb), 0.2),
+          0 0 8px rgba(var(--interactive-rgb), 0.5),
+          0 0 20px rgba(var(--interactive-rgb), 0.25);
       }
 
       input[type="range"]::-moz-range-track {

@@ -20,14 +20,26 @@ export class ArcAccordion extends LitElement {
       .accordion {
         display: flex;
         flex-direction: column;
-        gap: 1px;
-        background: var(--border-subtle);
         border: 1px solid var(--border-subtle);
         border-radius: var(--radius-lg);
         overflow: hidden;
       }
 
-      .accordion__item { background: var(--bg-card); }
+      .accordion__item {
+        background: var(--surface-raised);
+        position: relative;
+      }
+
+      .accordion__item + .accordion__item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: var(--space-md);
+        right: var(--space-md);
+        height: 1px;
+        background: var(--divider-glow);
+        opacity: 0.4;
+      }
 
       .accordion__trigger {
         display: flex;
@@ -44,23 +56,27 @@ export class ArcAccordion extends LitElement {
         background: none;
         border: none;
         text-align: left;
-        transition: background var(--transition-fast);
+        transition: background var(--transition-fast), box-shadow var(--transition-fast), transform var(--ease-out-expo);
         min-height: var(--touch-min);
       }
 
-      .accordion__trigger:hover { background: var(--bg-elevated); }
-      .accordion__trigger[aria-expanded="true"] { background: var(--bg-elevated); }
+      .accordion__trigger:hover {
+        background: var(--surface-overlay);
+        box-shadow: var(--interactive-hover);
+      }
+      .accordion__trigger:active { transform: scale(0.98); }
+      .accordion__trigger[aria-expanded="true"] { background: var(--surface-overlay); }
       .accordion__trigger:focus-visible {
         outline: none;
-        box-shadow: inset 0 0 0 2px var(--accent-primary);
-        background: var(--bg-elevated);
+        box-shadow: inset 0 0 0 2px var(--interactive);
+        background: var(--surface-overlay);
       }
 
       .accordion__chevron {
         color: var(--text-muted);
         width: 18px;
         height: 18px;
-        transition: transform 300ms ease;
+        transition: transform var(--ease-out-expo);
         flex-shrink: 0;
         display: inline-flex;
         align-items: center;
@@ -74,7 +90,7 @@ export class ArcAccordion extends LitElement {
       .accordion__content {
         display: grid;
         grid-template-rows: 0fr;
-        transition: grid-template-rows 300ms ease;
+        transition: grid-template-rows var(--transition-slow);
       }
       .accordion__content.is-open { grid-template-rows: 1fr; }
 

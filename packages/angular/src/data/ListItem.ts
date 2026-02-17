@@ -7,7 +7,7 @@ import '@arclux/arc-ui';
   selector: 'arc-list-item',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-list-item [attr.value]="value" [selected]="selected" [disabled]="disabled" [attr.href]="href" [attr._hasPrefix]="_hasPrefix" [attr._hasSuffix]="_hasSuffix" [attr._hasDescription]="_hasDescription" (arc-item-click)="arcItemClick.emit($event)"><ng-content /></arc-list-item>`,
+  template: `<arc-list-item [attr.value]="value" [selected]="selected" [disabled]="disabled" [attr.href]="href" [attr._hasPrefix]="_hasPrefix" [attr._hasSuffix]="_hasSuffix" [attr._hasDescription]="_hasDescription" (arc-item-select)="arcItemSelect.emit($event)"><ng-content /></arc-list-item>`,
 })
 export class ListItem {
   @Input() value: string = '';
@@ -17,5 +17,5 @@ export class ListItem {
   @Input() _hasPrefix: string = false;
   @Input() _hasSuffix: string = false;
   @Input() _hasDescription: string = false;
-  @Output() arcItemClick = new EventEmitter<CustomEvent>();
+  @Output() arcItemSelect = new EventEmitter<CustomEvent>();
 }

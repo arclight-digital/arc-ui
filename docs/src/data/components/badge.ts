@@ -15,9 +15,9 @@ The three color variants map to distinct semantic roles. Default (neutral gray) 
 Because Badge is a static content element with no interactive behavior, it renders as a simple \`<span>\` and carries no ARIA roles beyond its text content. This keeps the DOM lightweight and ensures badges inside table cells, list items, and cards don't introduce unexpected focus stops or interaction patterns.`,
 
     features: [
-      'Three color variants (default, primary, secondary) for semantic differentiation',
-      'Pill-shaped border radius for a compact, rounded appearance',
-      'Uppercase Tektur type with wide letter-spacing for high legibility at small sizes',
+      'Seven color variants (default, primary, secondary, success, warning, error, info) for semantic differentiation',
+      'Small rounded border radius (--radius-sm) for a compact, rectangular appearance',
+      'Monospace typography (--font-mono) at medium weight for technical readability',
       'Subtle hover effect with border highlight or glow per variant',
       'Lightweight inline-flex layout that flows naturally in text, tables, and flex containers',
       'Transparent background with fine border for dark-theme harmony',

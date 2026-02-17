@@ -10,14 +10,14 @@ export const progressToast: ComponentDef = {
 
     overview: `Progress Toast extends the toast pattern with an embedded progress bar for long-running operations like file uploads, data exports, and batch processing. Unlike standard toast (which auto-dismisses after a timeout), progress toast persists until the operation completes or is cancelled, giving users continuous visual feedback on the operation's progress.
 
-A single \`<arc-progress-toast>\` element acts as the host — place it once in your layout and call its \`show()\` method with a message, initial progress, and optional cancel callback. The method returns an ID that you use to update progress via \`update(id, progress)\` and to signal completion via \`complete(id)\`. Multiple progress toasts can stack vertically, each tracking an independent operation.
+A single \`<arc-progress-toast>\` element acts as the host — place it once in your layout and call its \`show()\` method with a message, initial progress, and optional cancel callback. The method returns an ID that you use to update progress via \`updateToast(id, { progress })\` (optionally including a new \`message\`) and to signal completion via \`complete(id)\`. Multiple progress toasts can stack vertically, each tracking an independent operation.
 
 The component shares the same positioning options and enter/exit animations as toast, so it integrates visually with any existing toast notifications. Each progress toast includes a cancel button that fires an \`arc-cancel\` event with the operation ID, and the \`arc-complete\` event fires when an operation reaches 100%.`,
 
     features: [
       'Imperative show() API — returns an ID for tracking each operation',
       'Embedded progress bar with smooth fill animation',
-      'update(id, progress) method for incremental progress updates',
+      'updateToast(id, { progress, message? }) method for incremental progress updates',
       'complete(id) method to signal completion and trigger auto-dismiss',
       'Cancel button on each toast fires arc-cancel with operation ID',
       'Persists until complete — no auto-dismiss timeout',
@@ -58,7 +58,7 @@ The component shares the same positioning options and enter/exit animations as t
             clearInterval(interval);
             pt.complete(id);
           } else {
-            pt.update(id, Math.min(progress, 99));
+            pt.updateToast(id, { progress: Math.min(progress, 99) });
           }
         }, 400);
       });
@@ -99,7 +99,7 @@ The component shares the same positioning options and enter/exit animations as t
         clearInterval(interval);
         pt.complete(id);
       } else {
-        pt.update(id, progress);
+        pt.updateToast(id, { progress });
       }
     }, 500);
   }
@@ -126,7 +126,7 @@ export function UploadDemo() {
         clearInterval(interval);
         pt.complete(id);
       } else {
-        pt.update(id, progress);
+        pt.updateToast(id, { progress });
       }
     }, 500);
   };
@@ -159,7 +159,7 @@ const startUpload = () => {
       clearInterval(interval);
       el.complete(id);
     } else {
-      el.update(id, progress);
+      el.updateToast(id, { progress });
     }
   }, 500);
 };
@@ -188,7 +188,7 @@ const startUpload = () => {
         clearInterval(interval);
         pt.complete(id);
       } else {
-        pt.update(id, progress);
+        pt.updateToast(id, { progress });
       }
     }, 500);
   };
@@ -224,7 +224,7 @@ export class UploadDemoComponent {
         clearInterval(interval);
         el.complete(id);
       } else {
-        el.update(id, progress);
+        el.updateToast(id, { progress });
       }
     }, 500);
   }
@@ -250,7 +250,7 @@ export function UploadDemo() {
         clearInterval(interval);
         el.complete(id);
       } else {
-        el.update(id, progress);
+        el.updateToast(id, { progress });
       }
     }, 500);
   };
@@ -284,7 +284,7 @@ export function UploadDemo() {
         clearInterval(interval);
         pt.complete(id);
       } else {
-        pt.update(id, progress);
+        pt.updateToast(id, { progress });
       }
     }, 500);
   };

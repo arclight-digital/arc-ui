@@ -10,14 +10,15 @@
         border-radius: var(--radius-full);
         border: 1px solid var(--border-default);
         overflow: hidden;
-        background: var(--bg-elevated);
-        transition: border-color var(--transition-base), box-shadow var(--transition-base);
+        background: var(--surface-overlay);
+        transition: border-color var(--transition-base), box-shadow var(--transition-base), transform var(--transition-base);
         position: relative;
       }
 
       .arc-avatar .avatar:hover {
         border-color: var(--border-bright);
-        box-shadow: 0 0 12px rgba(var(--accent-primary-rgb), 0.15);
+        box-shadow: var(--interactive-hover);
+        transform: scale(1.05);
       }
 
       .arc-avatar[data-size="sm"] .avatar { width: 32px; height: 32px; }
@@ -40,9 +41,9 @@
         inset: 0;
         background: linear-gradient(
           90deg,
-          var(--bg-elevated) 25%,
+          var(--surface-overlay) 25%,
           var(--border-subtle) 37%,
-          var(--bg-elevated) 63%
+          var(--surface-overlay) 63%
         );
         background-size: 200% 100%;
         animation: avatar-shimmer 1.8s ease-in-out infinite;
@@ -55,6 +56,11 @@
       @keyframes avatar-shimmer {
         0%   { background-position: -200% 0; }
         100% { background-position: 200% 0; }
+      }
+
+      @keyframes avatar-pulse {
+        0%, 100% { opacity: 1; }
+        50%      { opacity: 0.7; }
       }
 
       .arc-avatar .avatar__initials {
@@ -83,14 +89,17 @@
         width: 10px;
         height: 10px;
         border-radius: var(--radius-full);
-        border: 2px solid var(--bg-deep);
+        border: 2px solid var(--surface-base);
         box-sizing: border-box;
       }
 
       .arc-avatar[data-size="sm"] .avatar__status { width: 8px; height: 8px; }
       .arc-avatar[data-size="lg"] .avatar__status { width: 14px; height: 14px; border-width: 3px; }
 
-      .arc-avatar[data-status="online"] .avatar__status { background: var(--color-success); }
+      .arc-avatar[data-status="online"] .avatar__status {
+        background: var(--color-success);
+        animation: avatar-pulse 2s ease-in-out infinite;
+      }
       .arc-avatar[data-status="offline"] .avatar__status { background: var(--text-ghost); }
       .arc-avatar[data-status="busy"] .avatar__status { background: var(--color-error); }
       .arc-avatar[data-status="away"] .avatar__status { background: var(--color-warning); }
@@ -98,4 +107,7 @@
       @media (prefers-reduced-motion: reduce) {
         .arc-avatar .avatar__shimmer { animation: none; }
         .arc-avatar .avatar__img { transition: none; }
+        .arc-avatar .avatar { transition: border-color var(--transition-base), box-shadow var(--transition-base); }
+        .arc-avatar .avatar:hover { transform: none; }
+        .arc-avatar[data-status="online"] .avatar__status { animation: none; }
       }

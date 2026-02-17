@@ -31,8 +31,8 @@ export class ArcCommandBar extends LitElement {
       }
 
       .command-bar:focus-within {
-        border-color: var(--accent-primary);
-        box-shadow: var(--focus-glow);
+        border-color: var(--interactive);
+        box-shadow: var(--interactive-focus);
       }
 
       .command-bar__icon {

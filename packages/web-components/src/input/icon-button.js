@@ -38,7 +38,7 @@ export class ArcIconButton extends LitElement {
           border-color var(--transition-base),
           box-shadow var(--transition-base),
           color var(--transition-base),
-          transform var(--transition-fast);
+          transform 120ms var(--ease-out-expo);
         text-decoration: none;
         box-sizing: border-box;
         color: inherit;
@@ -84,22 +84,22 @@ export class ArcIconButton extends LitElement {
       }
       :host(:not([variant])) .btn:hover {
         color: var(--text-primary);
-        background: var(--bg-hover);
+        background: var(--surface-hover);
       }
 
       /* :active scale */
       :host(:not([variant])) .btn:active,
       :host([variant="ghost"]) .btn:active {
         transform: scale(0.93);
-        background: var(--bg-elevated);
+        background: var(--surface-overlay);
       }
       :host([variant="secondary"]) .btn:active {
         transform: scale(0.93);
-        background: rgba(var(--accent-primary-rgb), 0.05);
+        background: rgba(var(--interactive-rgb), 0.05);
       }
       :host([variant="primary"]) .btn:active {
         transform: scale(0.93);
-        box-shadow: 0 0 8px rgba(var(--accent-primary-rgb), 0.5);
+        box-shadow: 0 0 8px rgba(var(--interactive-rgb), 0.5);
       }
 
       /* IconButton secondary uses text-secondary instead of text-primary */

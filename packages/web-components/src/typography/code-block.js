@@ -108,7 +108,7 @@ export class ArcCodeBlock extends LitElement {
 
       .code-block {
         position: relative;
-        background: var(--bg-surface);
+        background: var(--surface-primary);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-lg);
         overflow: hidden;
@@ -119,8 +119,8 @@ export class ArcCodeBlock extends LitElement {
         align-items: center;
         justify-content: space-between;
         padding: var(--space-xs) var(--space-md);
-        border-bottom: 1px solid var(--border-subtle);
-        background: var(--bg-card);
+        border-bottom: 1px solid var(--divider);
+        background: var(--surface-raised);
       }
 
       .code-block__filename {
@@ -153,7 +153,7 @@ export class ArcCodeBlock extends LitElement {
          syntax colors follow automatically. */
       .code-block {
         --shiki-foreground: var(--text-secondary);
-        --shiki-background: var(--bg-surface);
+        --shiki-background: var(--surface-primary);
         --shiki-token-comment: var(--text-ghost);
         --shiki-token-keyword: var(--accent-primary);
         --shiki-token-string: var(--color-success);
@@ -211,7 +211,7 @@ export class ArcCodeBlock extends LitElement {
       }
 
       arc-status-bar::part(base) {
-        border-top-color: var(--border-subtle);
+        border-top-color: var(--divider);
       }
 
       /* — Window variant — */
@@ -223,8 +223,8 @@ export class ArcCodeBlock extends LitElement {
         display: flex;
         align-items: center;
         padding: var(--space-sm) var(--space-md);
-        border-bottom: 1px solid var(--border-subtle);
-        background: var(--bg-surface);
+        border-bottom: 1px solid var(--divider);
+        background: var(--surface-primary);
         position: relative;
       }
 

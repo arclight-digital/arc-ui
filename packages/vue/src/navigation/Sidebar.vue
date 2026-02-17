@@ -15,7 +15,7 @@ withDefaults(defineProps<{
   active: '',
   collapsed: false,
   position: 'left',
-  width: '260px',
+  width: '280px',
   glow: false,
   _sections: () => ([]),
 });

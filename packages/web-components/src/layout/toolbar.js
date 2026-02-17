@@ -30,7 +30,7 @@ export class ArcToolbar extends LitElement {
         align-items: center;
         height: 48px;
         padding: 0 var(--space-md);
-        background: var(--bg-card);
+        background: var(--surface-raised);
         gap: var(--space-sm);
       }
 
@@ -40,7 +40,7 @@ export class ArcToolbar extends LitElement {
       }
 
       :host([border]) .toolbar {
-        border-bottom: 1px solid var(--border-subtle);
+        border-bottom: 1px solid var(--divider);
       }
 
       .toolbar__start {

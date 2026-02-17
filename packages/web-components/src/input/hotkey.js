@@ -1,4 +1,4 @@
-import { LitElement, css } from 'lit';
+import { LitElement, css, nothing } from 'lit';
 
 /**
  * @tag arc-hotkey
@@ -110,7 +110,7 @@ export class ArcHotkey extends LitElement {
         // Full match — fire trigger
         this._chordIndex = 0;
         this._clearChord();
-        this.dispatchEvent(new CustomEvent('arc-trigger', {
+        this.dispatchEvent(new CustomEvent('arc-hotkey-trigger', {
           bubbles: true,
           composed: true,
           detail: { keys: this.keys },
@@ -137,6 +137,6 @@ export class ArcHotkey extends LitElement {
   }
 
   render() {
-    return undefined;
+    return nothing;
   }
 }

@@ -15,7 +15,7 @@ export class ArcThemeToggle extends LitElement {
     tokenStyles,
     css`
       :host { display: inline-flex; }
-      :host([disabled]) { pointer-events: none; opacity: 0.4; }
+      :host([disabled]) { pointer-events: none; opacity: 0.5; }
 
       .theme-toggle {
         position: relative;
@@ -35,7 +35,8 @@ export class ArcThemeToggle extends LitElement {
           background var(--transition-fast),
           border-color var(--transition-fast),
           color var(--transition-fast),
-          box-shadow var(--transition-fast);
+          box-shadow var(--transition-fast),
+          transform 120ms var(--ease-out-expo);
       }
 
       :host([icon-only]) .theme-toggle {
@@ -50,7 +51,7 @@ export class ArcThemeToggle extends LitElement {
       .theme-toggle:hover {
         border-color: var(--border-bright);
         color: var(--text-primary);
-        background: var(--bg-hover);
+        background: var(--surface-hover);
       }
 
       .theme-toggle:active {
@@ -59,7 +60,7 @@ export class ArcThemeToggle extends LitElement {
 
       .theme-toggle:focus-visible {
         outline: none;
-        box-shadow: var(--focus-glow);
+        box-shadow: var(--interactive-focus);
       }
 
       /* ── Icon container ── */
@@ -79,7 +80,7 @@ export class ArcThemeToggle extends LitElement {
         inset: 0;
         opacity: 0;
         transform: scale(0.5) rotate(-90deg);
-        transition: opacity 300ms var(--ease-out-expo), transform 300ms var(--ease-out-expo);
+        transition: opacity var(--transition-slow), transform var(--transition-slow);
       }
 
       .theme-toggle__icon svg.is-active {

@@ -13,7 +13,7 @@
         align-items: center;
         justify-content: center;
         min-height: 100vh;
-        background: var(--bg-surface);
+        background: var(--surface-primary);
         padding: var(--space-xl) var(--space-lg);
         box-sizing: border-box;
       }
@@ -24,7 +24,7 @@
       }
 
       .arc-auth-shell .auth-shell--centered .card {
-        background: var(--bg-card);
+        background: var(--surface-raised);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-lg);
         padding: var(--space-xl);
@@ -53,7 +53,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        background: var(--bg-surface);
+        background: var(--surface-primary);
         padding: var(--space-xl) var(--space-lg);
       }
 
@@ -63,7 +63,7 @@
       }
 
       .arc-auth-shell .auth-shell--split .card {
-        background: var(--bg-card);
+        background: var(--surface-raised);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-lg);
         padding: var(--space-xl);
@@ -83,11 +83,11 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background: var(--bg-deep);
+        background: var(--surface-base);
         padding: var(--space-xl);
       }
 
-      @media (max-width: 768px) {
+      @media (max-width: 768px) { /* --breakpoint-md */
         .arc-auth-shell .auth-shell--split {
           grid-template-columns: 1fr;
         }

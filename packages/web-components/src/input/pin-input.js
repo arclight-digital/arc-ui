@@ -19,7 +19,7 @@ export class ArcPinInput extends LitElement {
     tokenStyles,
     css`
       :host { display: inline-block; }
-      :host([disabled]) { pointer-events: none; opacity: 0.4; }
+      :host([disabled]) { pointer-events: none; opacity: 0.5; }
 
       .pin {
         display: flex;
@@ -59,11 +59,11 @@ export class ArcPinInput extends LitElement {
         font-size: var(--text-lg);
         font-weight: 600;
         color: var(--text-primary);
-        background: var(--bg-card);
+        background: var(--surface-raised);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-md);
         padding: 0;
-        caret-color: var(--accent-primary);
+        caret-color: var(--interactive);
         transition:
           border-color var(--transition-fast),
           box-shadow var(--transition-fast),
@@ -88,19 +88,19 @@ export class ArcPinInput extends LitElement {
 
       .pin__box:focus {
         outline: none;
-        border-color: rgba(var(--accent-primary-rgb), 0.4);
-        box-shadow: var(--focus-glow);
-        background: var(--bg-surface);
+        border-color: rgba(var(--interactive-rgb), 0.4);
+        box-shadow: var(--interactive-focus);
+        background: var(--surface-primary);
       }
 
       .pin__box:focus-visible {
         outline: none;
-        border-color: rgba(var(--accent-primary-rgb), 0.4);
-        box-shadow: var(--focus-glow);
+        border-color: rgba(var(--interactive-rgb), 0.4);
+        box-shadow: var(--interactive-focus);
       }
 
       .pin__box:disabled {
-        opacity: 0.4;
+        opacity: 0.5;
         cursor: not-allowed;
       }
 

@@ -1,0 +1,52 @@
+/**
+ * ARC UI — Minimal Theme Preset
+ * Import AFTER base.css to strip glows, gradients, and depth effects.
+ * Produces a clean, flat aesthetic while preserving layout and spacing.
+ *
+ * Usage:
+ *   @import '@arclux/arc-ui/base.css';
+ *   @import '@arclux/arc-ui/themes/minimal';
+ */
+
+:root {
+  /* ── Kill all glow effects ── */
+  --glow-primary: none;
+  --glow-secondary: none;
+  --glow-white: none;
+  --glow-hover: none;
+  --glow-card-hover: none;
+  --glow-line-white: none;
+  --glow-line-blue: none;
+  --glow-line-gradient: none;
+
+  /* ── Flatten focus to a simple ring ── */
+  --focus-ring: 0 0 0 2px var(--accent-primary);
+  --focus-glow: 0 0 0 2px var(--accent-primary);
+
+  /* ── Semantic: flatten interactive effects ── */
+  --interactive-hover: none;
+  --interactive-active: none;
+  --interactive-focus: 0 0 0 2px var(--interactive);
+  --interactive-focus-ring: 0 0 0 2px var(--interactive);
+  --divider-glow: var(--divider);
+
+  /* ── Remove gradient effects ── */
+  --gradient-divider-glow: var(--gradient-divider);
+  --gradient-border-glow: none;
+  --gradient-ambient: none;
+  --gradient-page-ambient: none;
+  --gradient-accent-text: var(--accent-primary);
+  --gradient-display-text: var(--text-primary);
+
+  /* ── Flatten shadows to subtle depth ── */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.1);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+  --shadow-md: 0 2px 6px rgba(0, 0, 0, 0.14);
+  --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.16);
+  --shadow-xl: 0 8px 24px rgba(0, 0, 0, 0.18);
+  --shadow-overlay: 0 4px 16px rgba(0, 0, 0, 0.2);
+
+  /* ── Simplify radii ── */
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+}

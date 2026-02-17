@@ -50,13 +50,13 @@ export class ArcAnchorNav extends LitElement {
       }
 
       .anchor-nav__link.is-active {
-        color: var(--accent-primary);
-        background: rgba(var(--accent-primary-rgb), 0.08);
+        color: var(--interactive);
+        background: rgba(var(--interactive-rgb), 0.08);
       }
 
       :host(:not([orientation="vertical"])) .anchor-nav__link.is-active {
         background: none;
-        box-shadow: inset 0 -2px 0 var(--accent-primary);
+        box-shadow: inset 0 -2px 0 var(--interactive);
       }
 
       /* Slotted children styling */
@@ -77,13 +77,13 @@ export class ArcAnchorNav extends LitElement {
       }
 
       ::slotted([active]) {
-        color: var(--accent-primary);
-        background: rgba(var(--accent-primary-rgb), 0.08);
+        color: var(--interactive);
+        background: rgba(var(--interactive-rgb), 0.08);
       }
 
       :host(:not([orientation="vertical"])) ::slotted([active]) {
         background: none;
-        box-shadow: inset 0 -2px 0 var(--accent-primary);
+        box-shadow: inset 0 -2px 0 var(--interactive);
       }
     `,
   ];

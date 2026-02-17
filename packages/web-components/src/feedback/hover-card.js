@@ -27,8 +27,8 @@ export class ArcHoverCard extends LitElement {
 
       .hovercard__card {
         position: absolute;
-        z-index: 1000;
-        background: var(--bg-card);
+        z-index: var(--z-dropdown);
+        background: var(--surface-raised);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-lg);
         padding: var(--space-md);

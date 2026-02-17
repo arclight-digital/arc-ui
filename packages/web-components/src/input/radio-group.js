@@ -21,7 +21,7 @@ export class ArcRadioGroup extends LitElement {
     tokenStyles,
     css`
       :host { display: block; }
-      :host([disabled]) { pointer-events: none; opacity: 0.4; }
+      :host([disabled]) { pointer-events: none; opacity: 0.5; }
 
       .radio-group {
         display: flex;
@@ -48,7 +48,7 @@ export class ArcRadioGroup extends LitElement {
         height: 18px;
         border-radius: var(--radius-full);
         border: 1px solid var(--border-bright);
-        background: var(--bg-surface);
+        background: var(--surface-primary);
         transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
         flex-shrink: 0;
         display: flex;
@@ -60,15 +60,20 @@ export class ArcRadioGroup extends LitElement {
         width: 8px;
         height: 8px;
         border-radius: var(--radius-full);
-        background: var(--accent-primary);
+        background: var(--interactive);
         opacity: 0;
         transform: scale(0);
         transition: opacity var(--transition-fast), transform var(--transition-fast);
       }
 
+      .radio:hover .radio__circle {
+        box-shadow: 0 0 8px rgba(var(--interactive-rgb), 0.1);
+        border-color: var(--text-muted);
+      }
+
       .radio[aria-checked="true"] .radio__circle {
-        border-color: var(--accent-primary);
-        box-shadow: 0 0 8px rgba(var(--accent-primary-rgb), 0.3);
+        border-color: var(--interactive);
+        box-shadow: 0 0 8px rgba(var(--interactive-rgb), 0.3);
       }
 
       .radio[aria-checked="true"] .radio__dot {
@@ -85,7 +90,7 @@ export class ArcRadioGroup extends LitElement {
 
       .radio__circle:focus-visible {
         outline: none;
-        box-shadow: var(--focus-glow);
+        box-shadow: var(--interactive-focus);
       }
 
       /* Sizes */

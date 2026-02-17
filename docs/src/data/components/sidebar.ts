@@ -44,7 +44,7 @@ Sidebar is designed to sit inside an AppShell or PageLayout, typically occupying
       ],
     },
 
-    previewHtml: `<div style="width:100%;max-width:280px;height:280px;border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden">
+    previewHtml: `<div style="width:100%;max-width:300px;height:280px;border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden">
   <arc-sidebar active="#theming" glow style="position:static;height:100%">
     <arc-sidebar-section heading="Guide">
       <arc-sidebar-link href="#getting-started">Getting Started</arc-sidebar-link>
@@ -65,6 +65,10 @@ Sidebar is designed to sit inside an AppShell or PageLayout, typically occupying
 
     props: [
       { name: 'position', type: 'string', default: "'left'", description: "Controls which side the sidebar appears on. Options: 'left', 'right'. Moves the border line to the opposite edge." },
+      { name: 'active', type: 'string', default: "''", description: 'The href of the currently active sidebar link. Used to highlight the matching link with accent styling.' },
+      { name: 'collapsed', type: 'boolean', default: 'false', description: 'When true, collapses the sidebar to icon-only mode, hiding labels and reducing width.' },
+      { name: 'width', type: 'string', default: "'280px'", description: 'Width of the sidebar. Accepts any CSS length value.' },
+      { name: 'glow', type: 'boolean', default: 'false', description: 'Enables an accent glow effect on the active sidebar link for enhanced visual emphasis.' },
     ],
     events: [
       { name: 'arc-navigate', description: 'Fired when a sidebar link is clicked' },
@@ -249,9 +253,14 @@ export function DocsSidebar() {
       {
         name: 'SidebarSection',
         tag: 'arc-sidebar-section',
-        description: 'A collapsible group within a Sidebar. Each section renders an optional heading label above its child links, creating a visual and semantic grouping that mirrors your information architecture.',
+        description: 'A collapsible group within a Sidebar. Each section renders an optional heading label above its child links, creating a visual and semantic grouping that mirrors your information architecture. Fires an `arc-toggle` event with `{ open }` detail when the section is expanded or collapsed.',
         props: [
           { name: 'heading', type: 'string', description: 'Text label displayed above the group of links. Keep it short (one to three words) so the sidebar stays scannable. When omitted, links render without a heading divider.' },
+          { name: 'collapsible', type: 'boolean', default: 'false', description: 'When true, the section heading becomes a toggle button that expands/collapses the child links.' },
+          { name: 'open', type: 'boolean', default: 'true', description: 'Controls whether a collapsible section is expanded (true) or collapsed (false). Only relevant when collapsible is true.' },
+        ],
+        events: [
+          { name: 'arc-toggle', description: 'Fired when a collapsible section is expanded or collapsed. Detail contains { open } indicating the new state.' },
         ],
       },
       {
@@ -261,6 +270,7 @@ export function DocsSidebar() {
         props: [
           { name: 'href', type: 'string', description: 'Destination URL for the link. Can be an absolute path, relative path, or hash anchor. The link renders as a standard anchor element for full accessibility and SEO.' },
           { name: 'active', type: 'boolean', default: 'false', description: 'When true, applies a highlighted style (accent-colored text and a left-edge indicator) to signal that this link corresponds to the currently viewed page. Only one link should be active at a time.' },
+          { name: 'level', type: 'number', default: '0', description: 'Nesting depth for visual indentation. Level 0 links render at default size; level 1+ links are indented and use a smaller font size.' },
         ],
       },
     ],

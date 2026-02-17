@@ -32,7 +32,7 @@ export class ArcScrollIndicator extends LitElement {
       .bar {
         height: 2px;
         width: 100%;
-        background: var(--bg-elevated);
+        background: var(--surface-overlay);
         overflow: hidden;
       }
 

@@ -6,6 +6,7 @@ import { ArcSpyLink } from '@arclux/arc-ui';
 
 export interface SpyLinkProps {
   target?: string;
+  level?: number;
   className?: string;
   children?: React.ReactNode;
 }

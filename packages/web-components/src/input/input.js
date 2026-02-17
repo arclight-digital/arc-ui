@@ -49,7 +49,7 @@ export class ArcInput extends LitElement {
         display: flex;
         align-items: center;
         min-height: var(--touch-min);
-        background: var(--bg-surface);
+        background: var(--surface-primary);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-md);
         transition:
@@ -58,16 +58,20 @@ export class ArcInput extends LitElement {
           background var(--transition-fast);
         box-sizing: border-box;
         width: 100%;
+        box-shadow: var(--shadow-inset);
       }
 
-      .input-group__wrapper:hover:not(:focus-within) { border-color: var(--border-bright); }
+      .input-group__wrapper:hover:not(:focus-within) {
+        border-color: var(--border-bright);
+        box-shadow: var(--shadow-inset), var(--interactive-hover);
+      }
       .input-group__wrapper:focus-within {
-        border-color: rgba(var(--accent-primary-rgb), 0.4);
-        box-shadow: var(--focus-glow);
-        background: var(--bg-card);
+        border-color: rgba(var(--interactive-rgb), 0.4);
+        box-shadow: var(--shadow-inset), var(--interactive-focus);
+        background: var(--surface-raised);
       }
 
-      :host([disabled]) .input-group__wrapper { opacity: 0.4; cursor: not-allowed; }
+      :host([disabled]) .input-group__wrapper { opacity: 0.5; cursor: not-allowed; }
 
       /* Error state */
       .input-group--error .input-group__wrapper {
@@ -76,7 +80,7 @@ export class ArcInput extends LitElement {
 
       .input-group--error .input-group__wrapper:focus-within {
         border-color: var(--color-error);
-        box-shadow: 0 0 0 2px var(--bg-deep), 0 0 0 4px var(--color-error), 0 0 16px rgba(var(--color-error-rgb), 0.2);
+        box-shadow: 0 0 0 2px var(--surface-base), 0 0 0 4px var(--color-error), 0 0 16px rgba(var(--color-error-rgb), 0.2);
       }
 
       .input-group__error {

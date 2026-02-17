@@ -21,8 +21,8 @@
         align-items: center;
         height: 28px;
         padding: 0 var(--space-sm);
-        background: var(--bg-deep);
-        border-top: 1px solid var(--border-subtle);
+        background: var(--surface-base);
+        border-top: 1px solid var(--divider);
         gap: var(--space-sm);
       }
 

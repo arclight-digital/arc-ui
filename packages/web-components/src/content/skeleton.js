@@ -25,9 +25,9 @@ export class ArcSkeleton extends LitElement {
       .skeleton {
         background: linear-gradient(
           90deg,
-          var(--bg-elevated) 25%,
-          var(--border-subtle) 37%,
-          var(--bg-elevated) 63%
+          var(--surface-overlay) 25%,
+          rgba(var(--accent-primary-rgb), 0.04) 37%,
+          var(--surface-overlay) 63%
         );
         background-size: 200% 100%;
         animation: shimmer 1.8s ease-in-out infinite;

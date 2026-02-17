@@ -76,7 +76,7 @@ export class ArcSpeedDial extends LitElement {
         width: 40px;
         height: 40px;
         border-radius: 50%;
-        background: var(--bg-elevated);
+        background: var(--surface-overlay);
         border: 1px solid var(--border-subtle);
         box-shadow: var(--shadow-overlay);
         display: flex;
@@ -92,7 +92,7 @@ export class ArcSpeedDial extends LitElement {
       }
 
       .speed-dial__action:hover {
-        background: var(--bg-hover);
+        background: var(--surface-hover);
       }
 
       :host([open]) .speed-dial__action {

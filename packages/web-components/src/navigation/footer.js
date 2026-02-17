@@ -18,14 +18,14 @@ export class ArcFooter extends LitElement {
     css`
       :host {
         display: block;
-        background: var(--bg-deep);
+        background: var(--surface-base);
         color: var(--text-secondary);
         font-family: var(--font-body);
         font-size: var(--body-size);
       }
 
       :host([border]) .footer {
-        border-top: 1px solid var(--border-subtle);
+        border-top: 1px solid var(--divider);
       }
 
       .footer {
@@ -79,10 +79,20 @@ export class ArcFooter extends LitElement {
       :host([align="center"]) .footer__legal { text-align: center; }
 
       .footer__legal {
+        position: relative;
         padding-top: var(--space-md);
-        border-top: 1px solid var(--border-subtle);
         color: var(--text-muted);
         font-size: var(--text-sm);
+      }
+
+      .footer__legal::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: var(--gradient-divider-glow);
       }
     `,
   ];

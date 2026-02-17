@@ -6,21 +6,21 @@ export const dialog: ComponentDef = {
     tag: 'arc-dialog',
     tier: 'feedback',
     interactivity: 'interactive',
-    description: 'Urgent, top-positioned confirmation dialog for interruptive decisions — unsaved changes, session expiry, and discard prompts.',
+    description: 'Small centered confirmation dialog wrapping arc-modal for simple confirm/cancel prompts — unsaved changes, session expiry, and discard decisions.',
 
-    overview: `Dialog is a lightweight, urgent confirmation component that appears at the top of the viewport like a system alert. Unlike Modal, which is a centered overlay with backdrop blur for rich content, Dialog is purpose-built for quick, interruptive "Are you sure?" moments — unsaved changes, session warnings, and discard prompts.
+    overview: `Dialog is a convenience wrapper around \`arc-modal\` configured with \`size="sm"\` and \`closable\`, rendering as a small centered modal with backdrop blur and a slide-up entrance animation. It is purpose-built for simple confirm/cancel prompts — unsaved changes, session warnings, and discard decisions — where a full Modal would be overkill.
 
-Visually, Dialog is designed to feel urgent and minimal: it drops in from the top with a snappy animation, uses a light dimmed backdrop without blur, and features a colored accent line at the top of the card (like Alert and Toast) that color-codes by variant. The \`variant="danger"\` option adds a red accent line and a subtle glow to the card border, reinforcing the severity of the action.
+Because Dialog delegates to arc-modal internally, it inherits all of Modal's accessibility features: focus trapping, Escape key dismissal, and backdrop click handling come for free. The \`variant="danger"\` option adds a red accent line and a subtle glow to the card border, reinforcing the severity of the action.
 
-The component uses \`role="alertdialog"\` with \`aria-modal="true"\` to properly signal its interruptive nature to screen readers. Focus is automatically trapped between the Cancel and Confirm buttons, and the Confirm button receives initial focus on open. Escape key and backdrop clicks both trigger cancellation. The \`confirm()\` method returns a \`Promise<boolean>\` — call \`await dialog.confirm()\` and the promise resolves to \`true\` on confirm or \`false\` on cancel.`,
+The component uses \`role="alertdialog"\` with \`aria-modal="true"\` to properly signal its interruptive nature to screen readers. The \`confirm()\` method returns a \`Promise<boolean>\` — call \`await dialog.confirm()\` and the promise resolves to \`true\` on confirm or \`false\` on cancel. Escape key and backdrop clicks both trigger cancellation.`,
 
     features: [
-      'Top-positioned like a system alert — appears ~15% from the top of the viewport',
-      'Colored accent line at top of card — primary for default, red for danger variant',
-      'Light dimmed backdrop without blur — feels urgent, not heavy',
-      'Snappy drop-in animation (120ms) from slightly above',
+      'Centered modal presentation via arc-modal with size="sm"',
+      'Backdrop with blur effect for focused attention',
+      'Slide-up entrance animation',
+      'Delegates to arc-modal for focus trap and Escape key handling',
+      'Small modal size for compact confirm/cancel prompts',
       'Promise-based confirm() API — returns true on confirm, false on cancel/escape',
-      'Built-in focus trap cycling between Cancel and Confirm buttons',
       'Danger variant with red accent line, glow border, and red confirm button',
       'Escape key and backdrop click trigger cancellation',
       'role="alertdialog" with aria-modal for proper screen reader semantics',

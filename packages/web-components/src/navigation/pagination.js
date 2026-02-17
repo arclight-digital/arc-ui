@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
@@ -38,19 +38,24 @@ export class ArcPagination extends LitElement {
         font-family: var(--font-body);
         font-size: var(--text-sm);
         cursor: pointer;
-        transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast);
+        transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast), transform var(--ease-out-expo);
         user-select: none;
       }
 
       .pagination__btn:hover:not(:disabled):not(.is-active) {
         border-color: var(--border-bright);
         color: var(--text-primary);
-        background: var(--bg-hover);
+        background: var(--surface-hover);
+        box-shadow: var(--interactive-hover);
+      }
+
+      .pagination__btn:active:not(:disabled) {
+        transform: scale(0.93);
       }
 
       .pagination__btn:focus-visible {
         outline: none;
-        box-shadow: var(--focus-glow);
+        box-shadow: var(--interactive-focus);
       }
 
       .pagination__btn:disabled {
@@ -59,10 +64,10 @@ export class ArcPagination extends LitElement {
       }
 
       .pagination__btn.is-active {
-        background: var(--accent-primary);
-        border-color: var(--accent-primary);
+        background: var(--interactive);
+        border-color: var(--interactive);
         color: var(--text-primary);
-        box-shadow: 0 0 12px rgba(var(--accent-primary-rgb), 0.4);
+        box-shadow: 0 0 12px rgba(var(--interactive-rgb), 0.4);
       }
 
       /* Compact: show current/total between prev/next */
@@ -186,7 +191,7 @@ export class ArcPagination extends LitElement {
                 class="pagination__btn ${page === this.current ? 'is-active' : ''}"
                 @click=${() => this._goToPage(page)}
                 aria-label="Page ${page}"
-                aria-current=${page === this.current ? 'page' : 'false'}
+                aria-current=${page === this.current ? 'page' : nothing}
                 part="page"
               >${page}</button>
             `

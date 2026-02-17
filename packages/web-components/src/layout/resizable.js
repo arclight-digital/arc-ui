@@ -65,13 +65,13 @@ export class ArcResizable extends LitElement {
 
       .handle:hover,
       .handle.active {
-        background: var(--accent-primary);
+        background: var(--interactive);
       }
 
       .handle:focus-visible {
         outline: none;
-        background: var(--accent-primary);
-        box-shadow: var(--focus-glow);
+        background: var(--interactive);
+        box-shadow: var(--interactive-focus);
       }
 
       /* Expand hit area for easier grabbing */

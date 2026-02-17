@@ -11,12 +11,12 @@ import { css } from 'lit';
 export const buttonVariantStyles = css`
   /* ── Primary ── */
   :host([variant="primary"]) .btn {
-    background: var(--accent-primary);
-    color: var(--bg-deep);
-    border-color: var(--accent-primary);
+    background: var(--interactive);
+    color: var(--surface-base);
+    border-color: var(--interactive);
   }
   :host([variant="primary"]) .btn:hover {
-    box-shadow: var(--glow-primary);
+    box-shadow: var(--interactive-active);
   }
 
   /* ── Secondary ── */
@@ -26,9 +26,9 @@ export const buttonVariantStyles = css`
     border-color: var(--border-default);
   }
   :host([variant="secondary"]) .btn:hover {
-    border-color: var(--accent-primary);
-    color: var(--accent-primary);
-    box-shadow: 0 0 20px var(--accent-primary-ring);
+    border-color: var(--interactive);
+    color: var(--interactive);
+    box-shadow: 0 0 20px rgba(var(--interactive-rgb), 0.15);
   }
 
   /* ── Ghost ── */
@@ -39,12 +39,12 @@ export const buttonVariantStyles = css`
   }
   :host([variant="ghost"]) .btn:hover {
     color: var(--text-primary);
-    background: var(--bg-hover);
+    background: var(--surface-hover);
   }
 
   /* ── Focus ── */
-  .btn:focus-visible { outline: none; box-shadow: var(--focus-glow); }
+  .btn:focus-visible { outline: none; box-shadow: var(--interactive-focus); }
 
   /* ── Disabled ── */
-  :host([disabled]) .btn { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+  :host([disabled]) .btn { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
 `;

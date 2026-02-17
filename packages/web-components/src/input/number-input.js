@@ -20,7 +20,7 @@ export class ArcNumberInput extends LitElement {
     tokenStyles,
     css`
       :host { display: block; }
-      :host([disabled]) { pointer-events: none; opacity: 0.4; }
+      :host([disabled]) { pointer-events: none; opacity: 0.5; }
 
       .number-input {
         display: flex;
@@ -42,14 +42,14 @@ export class ArcNumberInput extends LitElement {
         align-items: center;
         border: 1px solid var(--border-default);
         border-radius: var(--radius-md);
-        background: var(--bg-surface);
+        background: var(--surface-primary);
         overflow: hidden;
         transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
       }
 
       .number-input__controls:focus-within {
-        border-color: rgba(var(--accent-primary-rgb), 0.4);
-        box-shadow: var(--focus-glow);
+        border-color: rgba(var(--interactive-rgb), 0.4);
+        box-shadow: var(--interactive-focus);
       }
 
       .number-input__btn {
@@ -74,12 +74,12 @@ export class ArcNumberInput extends LitElement {
       }
 
       .number-input__btn:hover:not(:disabled) {
-        background: var(--bg-hover);
+        background: var(--surface-hover);
         color: var(--text-primary);
       }
 
       .number-input__btn:active:not(:disabled) {
-        background: var(--bg-elevated);
+        background: var(--surface-overlay);
       }
 
       .number-input__btn:disabled {
@@ -89,7 +89,7 @@ export class ArcNumberInput extends LitElement {
 
       .number-input__btn:focus-visible {
         outline: none;
-        box-shadow: var(--focus-glow);
+        box-shadow: var(--interactive-focus);
         z-index: 1;
         position: relative;
       }
@@ -103,8 +103,8 @@ export class ArcNumberInput extends LitElement {
         color: var(--text-primary);
         background: transparent;
         border: none;
-        border-left: 1px solid var(--border-subtle);
-        border-right: 1px solid var(--border-subtle);
+        border-left: 1px solid var(--divider);
+        border-right: 1px solid var(--divider);
         padding: var(--space-sm) var(--space-xs);
         box-sizing: border-box;
         -moz-appearance: textfield;
@@ -118,8 +118,8 @@ export class ArcNumberInput extends LitElement {
 
       .number-input__field:focus {
         outline: none;
-        border-color: var(--accent-primary);
-        box-shadow: var(--focus-glow);
+        border-color: var(--interactive);
+        box-shadow: var(--interactive-focus);
       }
 
       @media (prefers-reduced-motion: reduce) {

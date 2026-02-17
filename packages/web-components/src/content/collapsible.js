@@ -18,7 +18,7 @@ export class ArcCollapsible extends LitElement {
       .collapsible {
         border: 1px solid var(--border-subtle);
         border-radius: var(--radius-lg);
-        background: var(--bg-card);
+        background: var(--surface-raised);
         overflow: hidden;
       }
 
@@ -41,13 +41,13 @@ export class ArcCollapsible extends LitElement {
       }
 
       .collapsible__trigger:hover {
-        background: var(--bg-elevated);
+        background: var(--surface-overlay);
       }
 
       .collapsible__trigger:focus-visible {
         outline: none;
-        box-shadow: inset 0 0 0 2px var(--accent-primary);
-        background: var(--bg-elevated);
+        box-shadow: inset 0 0 0 2px var(--interactive);
+        background: var(--surface-overlay);
       }
 
       .collapsible__chevron {
@@ -57,7 +57,7 @@ export class ArcCollapsible extends LitElement {
         color: var(--text-muted);
         font-size: var(--text-xs);
         flex-shrink: 0;
-        transition: transform 300ms ease;
+        transition: transform var(--transition-slow);
         transform: rotate(0deg);
       }
 
@@ -68,7 +68,7 @@ export class ArcCollapsible extends LitElement {
       .collapsible__content {
         display: grid;
         grid-template-rows: 0fr;
-        transition: grid-template-rows 300ms ease;
+        transition: grid-template-rows var(--transition-slow);
       }
 
       :host([open]) .collapsible__content {

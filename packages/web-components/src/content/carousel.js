@@ -57,7 +57,7 @@ export class ArcCarousel extends LitElement {
         height: 40px;
         border-radius: var(--radius-full);
         border: 1px solid var(--border-default);
-        background: var(--bg-surface);
+        background: var(--surface-primary);
         color: var(--text-primary);
         cursor: pointer;
         transition: background var(--transition-fast),
@@ -71,14 +71,14 @@ export class ArcCarousel extends LitElement {
       }
 
       .carousel__arrow:hover {
-        background: var(--bg-elevated);
+        background: var(--surface-overlay);
         border-color: var(--border-bright);
         opacity: 1;
       }
 
       .carousel__arrow:focus-visible {
         outline: none;
-        box-shadow: var(--focus-ring);
+        box-shadow: var(--interactive-focus-ring);
       }
 
       .carousel__arrow--prev { left: var(--space-sm); }
@@ -114,13 +114,13 @@ export class ArcCarousel extends LitElement {
       }
 
       .carousel__dot--active {
-        background: var(--accent-primary);
+        background: var(--interactive);
         transform: scale(1.25);
       }
 
       .carousel__dot:focus-visible {
         outline: none;
-        box-shadow: var(--focus-glow);
+        box-shadow: var(--interactive-focus);
       }
 
       /* Reduced motion */

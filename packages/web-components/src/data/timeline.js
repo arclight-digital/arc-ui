@@ -47,7 +47,7 @@ export class ArcTimeline extends LitElement {
         height: 12px;
         border-radius: var(--radius-full);
         background: var(--accent-primary);
-        border: 2px solid var(--bg-deep);
+        border: 2px solid var(--surface-base);
         box-shadow:
           0 0 0 1px rgba(var(--accent-primary-rgb), 0.3),
           0 0 8px rgba(var(--accent-primary-rgb), 0.25);
@@ -66,7 +66,7 @@ export class ArcTimeline extends LitElement {
 
       .timeline__line {
         position: absolute;
-        top: 16px;
+        top: 12px;
         bottom: calc(-1 * var(--space-xl));
         left: 50%;
         width: 1px;

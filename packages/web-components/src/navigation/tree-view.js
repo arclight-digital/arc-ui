@@ -56,17 +56,17 @@ export class ArcTreeView extends LitElement {
 
       .tree__row:hover {
         color: var(--text-primary);
-        background: rgba(var(--accent-primary-rgb), 0.04);
+        background: rgba(var(--interactive-rgb), 0.04);
       }
 
       .tree__row--selected {
-        color: var(--accent-primary);
-        background: rgba(var(--accent-primary-rgb), 0.1);
+        color: var(--interactive);
+        background: rgba(var(--interactive-rgb), 0.1);
       }
 
       .tree__row:focus-visible {
         outline: none;
-        box-shadow: var(--focus-glow);
+        box-shadow: var(--interactive-focus);
       }
 
       .tree__chevron {
@@ -105,7 +105,7 @@ export class ArcTreeView extends LitElement {
         top: 0;
         bottom: 0;
         width: 1px;
-        background: var(--border-subtle);
+        background: var(--divider);
       }
 
       .tree__slot-host { display: none; }
@@ -184,18 +184,13 @@ export class ArcTreeView extends LitElement {
           this._toggleExpand(item, e);
         }
         break;
-      case 'ArrowDown': {
-        e.preventDefault();
-        const rows = [...this.shadowRoot.querySelectorAll('.tree__row')];
-        const idx = rows.indexOf(e.target);
-        if (idx < rows.length - 1) rows[idx + 1].focus();
-        break;
-      }
+      case 'ArrowDown':
       case 'ArrowUp': {
         e.preventDefault();
         const rows = [...this.shadowRoot.querySelectorAll('.tree__row')];
         const idx = rows.indexOf(e.target);
-        if (idx > 0) rows[idx - 1].focus();
+        if (e.key === 'ArrowDown' && idx < rows.length - 1) rows[idx + 1].focus();
+        if (e.key === 'ArrowUp' && idx > 0) rows[idx - 1].focus();
         break;
       }
       case 'Enter':

@@ -288,5 +288,6 @@ export function ActionBar() {
       },
     ],
   
+  events: [],
   seeAlso: ["hover-card","popover"],
 };

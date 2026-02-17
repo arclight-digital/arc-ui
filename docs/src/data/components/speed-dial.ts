@@ -51,6 +51,7 @@ The component manages its own open/closed state and dispatches \`arc-open\`, \`a
     { name: 'open', type: 'boolean', default: 'false', description: 'Whether the secondary actions are currently visible.' },
     { name: 'direction', type: "'up' | 'down' | 'left' | 'right'", default: "'up'", description: 'The direction in which child actions fan out from the trigger.' },
     { name: 'position', type: "'bottom-right' | 'bottom-left'", default: "'bottom-right'", description: 'Fixed viewport corner where the speed dial is anchored.' },
+    { name: 'items', type: 'Array<{ icon: string, label: string, action?: string }>', default: '[]', description: 'Array of secondary action items to display when the speed dial is open. Each item needs an icon and label.' },
   ],
   events: [
     { name: 'arc-open', description: 'Fired when the speed dial expands.' },

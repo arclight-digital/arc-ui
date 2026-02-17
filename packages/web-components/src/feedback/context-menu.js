@@ -25,15 +25,15 @@ export class ArcContextMenu extends LitElement {
       .backdrop {
         position: fixed;
         inset: 0;
-        z-index: 9998;
+        z-index: var(--z-max);
       }
 
       .menu {
         position: fixed;
-        z-index: 9999;
+        z-index: var(--z-max);
         min-width: 180px;
         max-width: 280px;
-        background: var(--bg-card);
+        background: var(--surface-raised);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-md);
         box-shadow: var(--shadow-overlay);
@@ -69,13 +69,13 @@ export class ArcContextMenu extends LitElement {
 
       .menu-item:hover,
       .menu-item.active {
-        background: var(--bg-elevated);
+        background: var(--surface-hover);
         color: var(--text-primary);
       }
 
       .menu-item:focus-visible {
         outline: none;
-        background: var(--bg-elevated);
+        background: var(--surface-hover);
         color: var(--text-primary);
       }
 

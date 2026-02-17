@@ -69,7 +69,7 @@
         margin-top: var(--space-sm);
       }
 
-      @media (max-width: 768px) {
+      @media (max-width: 768px) { /* --breakpoint-md */
         .arc-cta-banner .cta { padding: var(--space-xl) var(--space-md); }
         .arc-cta-banner .cta__actions { flex-direction: column; align-items: center; }
       }

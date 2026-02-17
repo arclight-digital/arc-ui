@@ -39,7 +39,7 @@ export class ArcLoadingOverlay extends LitElement {
 
       :host([global]) .loading-overlay {
         position: fixed;
-        z-index: 9000;
+        z-index: var(--z-overlay);
       }
 
       .loading-overlay__spinner {

@@ -31,7 +31,7 @@ export class ArcToast extends LitElement {
 
       .toast-container {
         position: fixed;
-        z-index: 2000;
+        z-index: var(--z-toast);
         display: flex;
         flex-direction: column;
         gap: var(--space-sm);
@@ -69,7 +69,7 @@ export class ArcToast extends LitElement {
         gap: var(--space-sm);
         padding: var(--space-sm);
         border-radius: var(--radius-md);
-        background: var(--bg-elevated);
+        background: var(--surface-overlay);
         border: 1px solid var(--border-default);
         box-shadow: var(--shadow-overlay);
         animation: toast-in 300ms var(--ease-out-expo);
@@ -117,7 +117,7 @@ export class ArcToast extends LitElement {
         .toast, .toast.is-exiting { animation: none; }
       }
 
-      @media (max-width: 640px) {
+      @media (max-width: 640px) { /* --breakpoint-sm */
         .toast-container {
           right: var(--space-sm);
           left: var(--space-sm);

@@ -20,7 +20,7 @@ export class ArcDrawer extends OverlayMixin(LitElement) {
       .drawer__backdrop {
         position: fixed;
         inset: 0;
-        z-index: 200;
+        z-index: var(--z-overlay);
         background: var(--overlay-backdrop);
         opacity: 0;
         visibility: hidden;
@@ -38,10 +38,10 @@ export class ArcDrawer extends OverlayMixin(LitElement) {
         position: fixed;
         top: 0;
         bottom: 0;
-        z-index: 201;
+        z-index: var(--z-overlay);
         width: 300px;
         max-width: 85vw;
-        background: var(--bg-surface);
+        background: var(--surface-primary);
         border-right: 1px solid var(--border-subtle);
         display: flex;
         flex-direction: column;
@@ -71,7 +71,7 @@ export class ArcDrawer extends OverlayMixin(LitElement) {
         align-items: center;
         justify-content: space-between;
         padding: var(--space-lg);
-        border-bottom: 1px solid var(--border-subtle);
+        border-bottom: 1px solid var(--divider);
         flex-shrink: 0;
       }
 

@@ -18,7 +18,7 @@ export class ArcSpotlight extends LitElement {
 
       .spotlight__ring {
         position: fixed;
-        z-index: 9999;
+        z-index: var(--z-max);
         border-radius: var(--radius-md);
         box-shadow:
           0 0 0 4000px var(--overlay-backdrop),

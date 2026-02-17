@@ -25,8 +25,8 @@ export const tokenStyles = css`
     --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
     --text-xs: 12px;
-    --text-sm: 14px;
-    --text-md: 15px;
+    --text-sm: 16px;
+    --text-md: 17px;
     --text-xl: clamp(22px, 2.5vw, 26px);
 
     --display-xl-size: clamp(36px, 5vw, 52px);
@@ -36,7 +36,7 @@ export const tokenStyles = css`
     --heading-weight: 500;
     --text-3xl: clamp(28px, 3vw, 36px);
     --text-lg: clamp(18px, 1.5vw, 20px);
-    --body-size: clamp(15px, 1.2vw, 16px);
+    --body-size: 17px;
     --body-weight: 500;
     --body-lh: 1.7;
     --wordmark-size: clamp(20px, 2.5vw, 28px);
@@ -48,7 +48,7 @@ export const tokenStyles = css`
     --ui-accent-size: 16px;
     --ui-accent-weight: 600;
     --ui-accent-spacing: 1px;
-    --code-size: 13px;
+    --code-size: 14px;
     --code-lh: 1.8;
     --label-inline-size: 10px;
     --label-inline-spacing: 3px;
@@ -77,8 +77,32 @@ export const tokenStyles = css`
     --duration-enter: 500ms;
     --duration-exit: 300ms;
 
+    --z-base: 0;
+    --z-dropdown: 1000;
+    --z-tooltip: 1100;
+    --z-overlay: 1200;
+    --z-modal: 1300;
+    --z-toast: 1400;
+    --z-max: 9999;
+
+    --glow-hover: 0 0 12px rgba(var(--accent-primary-rgb), 0.15);
     --focus-ring: 0 0 0 1px rgba(var(--accent-primary-rgb), 0.25);
     --focus-glow: 0 0 0 1px rgba(var(--accent-primary-rgb), 0.2), 0 0 6px rgba(var(--accent-primary-rgb), 0.35), 0 0 16px rgba(var(--accent-primary-rgb), 0.2), 0 0 40px rgba(var(--accent-secondary-rgb), 0.12);
+
+    /* ── Semantic aliases ── */
+    --interactive: var(--accent-primary);
+    --interactive-rgb: var(--accent-primary-rgb);
+    --interactive-hover: var(--glow-hover);
+    --interactive-active: var(--glow-primary);
+    --interactive-focus: var(--focus-glow);
+    --interactive-focus-ring: var(--focus-ring);
+    --interactive-muted: var(--text-ghost);
+    --surface-base: var(--bg-deep);
+    --surface-primary: var(--bg-surface);
+    --surface-raised: var(--bg-card);
+    --surface-overlay: var(--bg-elevated);
+    --surface-hover: var(--bg-hover);
+    --divider: var(--border-subtle);
 
     --touch-min: 24px;
     --touch-pad: 4px;

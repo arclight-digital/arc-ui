@@ -97,6 +97,9 @@ export class ArcMarquee extends LitElement {
   }
 
   _setupResizeObserver() {
+    if (this._resizeObserver) {
+      this._resizeObserver.disconnect();
+    }
     this._resizeObserver = new ResizeObserver(() => this._recalcDuration());
     const group = this.shadowRoot.querySelector('.marquee__group--primary');
     if (group) this._resizeObserver.observe(group);

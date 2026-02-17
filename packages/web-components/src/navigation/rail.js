@@ -27,8 +27,8 @@ export class ArcRail extends LitElement {
         flex-direction: column;
         align-items: center;
         width: 48px;
-        background: var(--bg-surface);
-        border-right: 1px solid var(--border-subtle);
+        background: var(--surface-primary);
+        border-right: 1px solid var(--divider);
         height: 100%;
         padding: var(--space-sm) 0;
         gap: var(--space-xs);
@@ -56,7 +56,7 @@ export class ArcRail extends LitElement {
       }
 
       .rail__item.is-active arc-icon-button {
-        filter: drop-shadow(0 0 8px rgba(var(--accent-primary-rgb), 0.2));
+        filter: drop-shadow(0 0 8px rgba(var(--interactive-rgb), 0.2));
       }
     `,
   ];

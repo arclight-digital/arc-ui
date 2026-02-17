@@ -5,12 +5,13 @@ import '@arclux/arc-ui';
 
 export interface SpyLinkProps {
   target?: string;
+  level?: number;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const SpyLink: FunctionComponent<SpyLinkProps> = ({ target, children, ...rest }) => (
-  <arc-spy-link target={target} {...rest}>
+export const SpyLink: FunctionComponent<SpyLinkProps> = ({ target, level, children, ...rest }) => (
+  <arc-spy-link target={target} level={level} {...rest}>
     {children}
   </arc-spy-link>
 );

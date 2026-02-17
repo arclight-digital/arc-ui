@@ -17,7 +17,7 @@ export class ArcProgressToast extends LitElement {
 
       .progress-toast-container {
         position: fixed;
-        z-index: 2000;
+        z-index: var(--z-toast);
         display: flex;
         flex-direction: column;
         gap: var(--space-sm);
@@ -41,7 +41,7 @@ export class ArcProgressToast extends LitElement {
         pointer-events: auto;
         padding: var(--space-md);
         border-radius: var(--radius-md);
-        background: var(--bg-elevated);
+        background: var(--surface-overlay);
         border: 1px solid var(--border-default);
         box-shadow: var(--shadow-overlay);
         animation: pt-in 300ms var(--ease-out-expo);

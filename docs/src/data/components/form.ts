@@ -57,6 +57,8 @@ All ARC UI form controls (Input, Textarea, Select, Checkbox, Toggle, RadioGroup)
 </arc-form>`,
 
     props: [
+      { name: 'action', type: 'string', default: "''", description: 'Form action URL for native form submission. When set, the form submits to this URL using the browser\'s built-in mechanism.' },
+      { name: 'method', type: 'string', default: "''", description: 'HTTP method for native form submission (GET or POST). Only applies when action is set.' },
       { name: 'novalidate', type: 'boolean', default: 'false', description: 'When true, skips built-in constraint validation on submit. Use this when you need to implement a fully custom validation flow while still leveraging Form for data serialisation.' },
       { name: 'loading', type: 'boolean', default: 'false', description: 'Indicates an asynchronous submission is in progress. Disables the submit button and shows a loading indicator to prevent duplicate requests.' },
       { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the entire form, propagating the disabled state to every child field. Useful for read-only previews or while awaiting permissions.' },

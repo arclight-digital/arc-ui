@@ -59,15 +59,14 @@
   --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0, 0, 0, 0.15);
   --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.35), 0 8px 16px rgba(0, 0, 0, 0.15);
   --shadow-overlay: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --shadow-inset: inset 0 1px 3px rgba(0, 0, 0, 0.25);
 
   --z-base: 0;
-  --z-dropdown: 100;
-  --z-sticky: 200;
-  --z-drawer: 300;
-  --z-modal: 400;
-  --z-popover: 500;
-  --z-toast: 600;
-  --z-tooltip: 700;
+  --z-dropdown: 1000;
+  --z-tooltip: 1100;
+  --z-overlay: 1200;
+  --z-modal: 1300;
+  --z-toast: 1400;
   --z-max: 9999;
 
   --breakpoint-xs: 480px;
@@ -87,8 +86,8 @@
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
   --text-xs: 12px;
-  --text-sm: 14px;
-  --text-md: 15px;
+  --text-sm: 16px;
+  --text-md: 17px;
   --text-lg: clamp(18px, 1.5vw, 20px);
   --text-xl: clamp(22px, 2.5vw, 26px);
   --text-2xl: clamp(28px, 3vw, 36px);
@@ -112,7 +111,7 @@
   --ui-accent-size: 16px;
   --ui-accent-weight: 600;
   --ui-accent-spacing: 1px;
-  --code-size: var(--text-sm);
+  --code-size: 14px;
   --code-lh: 1.8;
   --label-inline-size: var(--text-xs);
   --label-inline-spacing: 3px;
@@ -158,6 +157,7 @@
   --glow-line-blue: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.7), transparent);
   --glow-line-gradient: linear-gradient(90deg, transparent, var(--accent-primary), var(--accent-secondary), transparent);
 
+  --glow-hover: 0 0 12px rgba(var(--accent-primary-rgb), 0.15);
   --glow-card-hover: 0 0 20px rgba(var(--accent-primary-rgb),0.08), 0 0 40px rgba(var(--accent-secondary-rgb),0.04);
   --gradient-border-glow: linear-gradient(135deg, rgba(var(--accent-primary-rgb),0.15), rgba(var(--accent-secondary-rgb),0.1), rgba(var(--accent-primary-rgb),0.05));
   --gradient-ambient: radial-gradient(circle at 15% 85%, rgba(var(--accent-primary-rgb),0.04) 0%, transparent 50%),
@@ -172,6 +172,40 @@
 
   --bg-hover: rgba(255, 255, 255, 0.04);
   --overlay-backdrop: rgba(0, 0, 0, 0.6);
+
+  /* ── Semantic: Interactive ── */
+  --interactive: var(--accent-primary);
+  --interactive-rgb: var(--accent-primary-rgb);
+  --interactive-hover: var(--glow-hover);
+  --interactive-active: var(--glow-primary);
+  --interactive-focus: var(--focus-glow);
+  --interactive-focus-ring: var(--focus-ring);
+  --interactive-muted: var(--text-ghost);
+
+  /* ── Semantic: Surface ── */
+  --surface-base: var(--bg-deep);
+  --surface-primary: var(--bg-surface);
+  --surface-raised: var(--bg-card);
+  --surface-overlay: var(--bg-elevated);
+  --surface-hover: var(--bg-hover);
+
+  /* ── Semantic: Divider ── */
+  --divider: var(--border-subtle);
+  --divider-glow: var(--glow-line-gradient);
+
+  /* ── Semantic: Feedback composites ── */
+  --feedback-error-subtle: var(--color-error-subtle);
+  --feedback-error-border: rgba(var(--color-error-rgb), 0.2);
+  --feedback-error-glow: 0 0 12px rgba(var(--color-error-rgb), 0.15);
+  --feedback-success-subtle: rgba(var(--color-success-rgb), 0.1);
+  --feedback-success-border: rgba(var(--color-success-rgb), 0.2);
+  --feedback-success-glow: 0 0 12px rgba(var(--color-success-rgb), 0.15);
+  --feedback-warning-subtle: var(--color-warning-subtle);
+  --feedback-warning-border: rgba(var(--color-warning-rgb), 0.2);
+  --feedback-warning-glow: 0 0 12px rgba(var(--color-warning-rgb), 0.15);
+  --feedback-info-subtle: var(--color-info-subtle);
+  --feedback-info-border: rgba(var(--color-info-rgb), 0.2);
+  --feedback-info-glow: 0 0 12px rgba(var(--color-info-rgb), 0.15);
 
 }
 

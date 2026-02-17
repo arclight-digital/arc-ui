@@ -157,7 +157,7 @@ export class MyComponent {}`,
         description: 'Action item inside a CommandPalette.',
         props: [
           { name: 'shortcut', type: 'string', description: 'Keyboard shortcut hint' },
-          { name: 'disabled', type: 'boolean', default: 'false', description: 'Disable the item' }
+          { name: 'icon', type: 'string', description: 'Name of the icon to display before the item label.' }
         ],
       }
     ],

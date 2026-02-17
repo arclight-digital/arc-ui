@@ -18,7 +18,7 @@ export class ArcSnackbar extends LitElement {
 
       .snackbar-container {
         position: fixed;
-        z-index: 2000;
+        z-index: var(--z-toast);
         display: flex;
         flex-direction: column;
         gap: var(--space-sm);
@@ -49,7 +49,7 @@ export class ArcSnackbar extends LitElement {
         gap: var(--space-md);
         padding: var(--space-sm);
         border-radius: var(--radius-md);
-        background: var(--bg-surface);
+        background: var(--surface-primary);
         border: 1px solid var(--border-default);
         box-shadow: var(--shadow-overlay);
         font-family: var(--font-body);

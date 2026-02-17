@@ -49,7 +49,7 @@ export class ArcMeter extends LitElement {
         position: relative;
         width: 100%;
         height: 8px;
-        background: var(--bg-elevated);
+        background: var(--surface-overlay);
         border-radius: var(--radius-full);
         overflow: hidden;
       }

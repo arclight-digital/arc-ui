@@ -12,14 +12,17 @@ export const stat: ComponentDef = {
 
 The value font-size uses \`clamp(32px, 4.5vw, 48px)\` to scale responsively between breakpoints, ensuring readability from mobile to desktop without manual media queries. The label uses the Tektur accent font at a small uppercase size with wide letter-spacing, following the system's standard labeling pattern.
 
-Stat is designed for landing-page metrics, dashboard KPI rows, and pricing comparison grids. Place multiple Stats side by side in a flex or grid container to create a metrics row. The exposed CSS parts — "stat", "value", and "label" — allow per-instance styling when you need to customize colors or sizes beyond the defaults.`,
+Stat also supports an optional trend indicator via the \`trend\` and \`change\` props. Setting \`trend\` to "up", "down", or "neutral" renders a coloured arrow below the label, and the \`change\` prop displays accompanying text (typically a percentage like "+12%"). Up trends render in green, down trends in red, and neutral in muted grey, giving users an immediate sense of direction alongside the headline number.
+
+Stat is designed for landing-page metrics, dashboard KPI rows, and pricing comparison grids. Place multiple Stats side by side in a flex or grid container to create a metrics row. The exposed CSS parts — "stat", "value", "label", and "trend" — allow per-instance styling when you need to customize colors or sizes beyond the defaults.`,
 
     features: [
       'Gradient-clipped value text with blue-to-violet fill and dual drop-shadow glow',
       'Responsive font-size using clamp() that scales from 32px to 48px',
       'Decorative gradient rule separator between value and label',
       'Uppercase Tektur-font label with wide letter-spacing',
-      'Three exposed CSS parts (stat, value, label) for external style overrides',
+      'Four exposed CSS parts (stat, value, label, trend) for external style overrides',
+      'Optional trend indicator (up/down/neutral arrow with change text) for at-a-glance direction',
       'Lightweight font-weight 200 for an elegant numeric display',
       'Center-aligned vertical layout with configurable padding via design tokens',
     ],
@@ -41,8 +44,8 @@ Stat is designed for landing-page metrics, dashboard KPI rows, and pricing compa
     },
 
     previewHtml: `<div style="display: flex; gap: 32px; justify-content: center; flex-wrap: wrap;">
-  <arc-stat value="99.9%" label="Uptime"></arc-stat>
-  <arc-stat value="<50ms" label="Latency"></arc-stat>
+  <arc-stat value="99.9%" label="Uptime" trend="up" change="+12%"></arc-stat>
+  <arc-stat value="<50ms" label="Latency" trend="down" change="-8%"></arc-stat>
   <arc-stat value="24/7" label="Support"></arc-stat>
 </div>`,
 

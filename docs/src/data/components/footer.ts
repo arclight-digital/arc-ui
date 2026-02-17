@@ -92,6 +92,12 @@ Footer ships with two boolean props that cover the most common layout tweaks. Th
         description: 'Renders a subtle top border on the footer to visually separate it from the page content above. Enabled by default; disable it only when the footer sits against a dark background where the border would be redundant.',
       },
       {
+        name: 'contained',
+        type: 'string',
+        default: "''",
+        description: 'Sets a max-width containment on the footer content. Accepts any CSS length value or named size token.',
+      },
+      {
         name: 'align',
         type: 'string',
         default: "'left'",

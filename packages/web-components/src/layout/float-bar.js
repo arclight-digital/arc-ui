@@ -21,7 +21,7 @@ export class ArcFloatBar extends LitElement {
         position: fixed;
         left: 50%;
         transform: translateX(-50%) translateY(0);
-        background: var(--bg-elevated);
+        background: var(--surface-overlay);
         backdrop-filter: blur(12px);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-lg);

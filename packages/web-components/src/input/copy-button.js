@@ -15,14 +15,14 @@ export class ArcCopyButton extends LitElement {
     tokenStyles,
     css`
       :host { display: inline-flex; }
-      :host([disabled]) { pointer-events: none; opacity: 0.4; }
+      :host([disabled]) { pointer-events: none; opacity: 0.5; }
 
       .copy-btn {
         display: inline-flex;
         align-items: center;
         justify-content: center;
         gap: var(--space-xs);
-        background: var(--copy-btn-bg, var(--bg-elevated));
+        background: var(--copy-btn-bg, var(--surface-overlay));
         border: 1px solid var(--border-default);
         border-radius: var(--radius-sm);
         color: var(--text-muted);
@@ -42,12 +42,12 @@ export class ArcCopyButton extends LitElement {
       .copy-btn:hover {
         border-color: var(--border-bright);
         color: var(--text-primary);
-        background: var(--bg-hover);
+        background: var(--surface-hover);
       }
 
       .copy-btn:focus-visible {
         outline: none;
-        box-shadow: var(--focus-glow);
+        box-shadow: var(--interactive-focus);
       }
 
       .copy-btn.is-copied {

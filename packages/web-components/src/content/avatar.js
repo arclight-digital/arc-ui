@@ -26,14 +26,15 @@ export class ArcAvatar extends LitElement {
         border-radius: var(--radius-full);
         border: 1px solid var(--border-default);
         overflow: hidden;
-        background: var(--bg-elevated);
-        transition: border-color var(--transition-base), box-shadow var(--transition-base);
+        background: var(--surface-overlay);
+        transition: border-color var(--transition-base), box-shadow var(--transition-base), transform var(--transition-base);
         position: relative;
       }
 
       .avatar:hover {
         border-color: var(--border-bright);
-        box-shadow: 0 0 12px rgba(var(--accent-primary-rgb), 0.15);
+        box-shadow: var(--interactive-hover);
+        transform: scale(1.05);
       }
 
       :host([size="sm"]) .avatar { width: 32px; height: 32px; }
@@ -56,9 +57,9 @@ export class ArcAvatar extends LitElement {
         inset: 0;
         background: linear-gradient(
           90deg,
-          var(--bg-elevated) 25%,
+          var(--surface-overlay) 25%,
           var(--border-subtle) 37%,
-          var(--bg-elevated) 63%
+          var(--surface-overlay) 63%
         );
         background-size: 200% 100%;
         animation: avatar-shimmer 1.8s ease-in-out infinite;
@@ -71,6 +72,11 @@ export class ArcAvatar extends LitElement {
       @keyframes avatar-shimmer {
         0%   { background-position: -200% 0; }
         100% { background-position: 200% 0; }
+      }
+
+      @keyframes avatar-pulse {
+        0%, 100% { opacity: 1; }
+        50%      { opacity: 0.7; }
       }
 
       .avatar__initials {
@@ -99,14 +105,17 @@ export class ArcAvatar extends LitElement {
         width: 10px;
         height: 10px;
         border-radius: var(--radius-full);
-        border: 2px solid var(--bg-deep);
+        border: 2px solid var(--surface-base);
         box-sizing: border-box;
       }
 
       :host([size="sm"]) .avatar__status { width: 8px; height: 8px; }
       :host([size="lg"]) .avatar__status { width: 14px; height: 14px; border-width: 3px; }
 
-      :host([status="online"]) .avatar__status { background: var(--color-success); }
+      :host([status="online"]) .avatar__status {
+        background: var(--color-success);
+        animation: avatar-pulse 2s ease-in-out infinite;
+      }
       :host([status="offline"]) .avatar__status { background: var(--text-ghost); }
       :host([status="busy"]) .avatar__status { background: var(--color-error); }
       :host([status="away"]) .avatar__status { background: var(--color-warning); }
@@ -114,6 +123,9 @@ export class ArcAvatar extends LitElement {
       @media (prefers-reduced-motion: reduce) {
         .avatar__shimmer { animation: none; }
         .avatar__img { transition: none; }
+        .avatar { transition: border-color var(--transition-base), box-shadow var(--transition-base); }
+        .avatar:hover { transform: none; }
+        :host([status="online"]) .avatar__status { animation: none; }
       }
     `,
   ];

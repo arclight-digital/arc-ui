@@ -26,7 +26,7 @@ export class ArcAvatarGroup extends LitElement {
       ::slotted(*) {
         position: relative;
         box-sizing: border-box;
-        box-shadow: 0 0 0 3px var(--bg-deep);
+        box-shadow: 0 0 0 3px var(--surface-base);
         border-radius: var(--radius-full);
         transition: transform var(--transition-fast), box-shadow var(--transition-fast);
       }
@@ -34,7 +34,7 @@ export class ArcAvatarGroup extends LitElement {
       ::slotted(:hover) {
         transform: translateY(-2px) scale(1.08);
         z-index: 100 !important;
-        box-shadow: 0 0 0 3px var(--bg-deep), 0 4px 12px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 0 0 3px var(--surface-base), 0 4px 12px rgba(0, 0, 0, 0.3);
       }
 
       .group__overflow {

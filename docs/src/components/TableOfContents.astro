@@ -1,6 +1,6 @@
 ---
 interface Props {
-  headings: Array<{ id: string; label: string }>;
+  headings: Array<{ id: string; label: string; level?: number }>;
 }
 
 const { headings } = Astro.props;
@@ -10,7 +10,7 @@ const { headings } = Astro.props;
   <nav class="toc" aria-label="On this page">
     <arc-scroll-spy id="docs-toc">
       {headings.map((h) => (
-        <arc-spy-link target={h.id}>{h.label}</arc-spy-link>
+        <arc-spy-link target={h.id} level={h.level ?? 0}>{h.label}</arc-spy-link>
       ))}
     </arc-scroll-spy>
   </nav>

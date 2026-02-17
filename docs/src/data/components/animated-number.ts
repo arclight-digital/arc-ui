@@ -13,7 +13,7 @@ export const animatedNumber: ComponentDef = {
 
 The ease-out-expo easing produces a fast start that decelerates toward the target, which feels natural and draws attention to the final number. Duration defaults to 1000ms but can be adjusted for different contexts — 500ms for small increments in real-time dashboards, 2000ms for dramatic hero reveals on landing pages.
 
-Formatting is built in: \`prefix\` and \`suffix\` strings wrap the number (e.g., "$" and "K"), and \`decimals\` controls fixed decimal places. The component uses \`Intl.NumberFormat\` for locale-aware comma separation, so "1234567" displays as "1,234,567". The animation respects \`prefers-reduced-motion\` by snapping directly to the target value without animation.`,
+Formatting is built in: \`prefix\` and \`suffix\` strings wrap the number (e.g., "$" and "K"), and \`decimals\` controls fixed decimal places. The \`format\` property switches between \`number\`, \`currency\`, and \`percent\` modes, each powered by \`Intl.NumberFormat\` for locale-aware formatting — thousands separators, decimal marks, and grouping all adapt to the configured \`locale\`. The default locale is \`en-US\`, but you can pass any BCP 47 tag (e.g., \`de-DE\`, \`ja-JP\`) for international formatting. The animation respects \`prefers-reduced-motion\` by snapping directly to the target value without animation.`,
 
     features: [
       'Smooth count-up/down animation using requestAnimationFrame',
@@ -21,7 +21,8 @@ Formatting is built in: \`prefix\` and \`suffix\` strings wrap the number (e.g.,
       'Configurable duration from quick updates to dramatic reveals',
       'Prefix and suffix strings for currency, units, and labels',
       'Fixed decimal place control via decimals attribute',
-      'Locale-aware number formatting with Intl.NumberFormat',
+      'Intl.NumberFormat-powered formatting with currency, percent, and number modes',
+      'Configurable locale for international number formatting',
       'Respects prefers-reduced-motion by snapping to final value',
     ],
 
@@ -54,6 +55,8 @@ Formatting is built in: \`prefix\` and \`suffix\` strings wrap the number (e.g.,
       { name: 'prefix', type: 'string', default: "''", description: 'String prepended before the number (e.g., "$")' },
       { name: 'suffix', type: 'string', default: "''", description: 'String appended after the number (e.g., "%")' },
       { name: 'decimals', type: 'number', default: '0', description: 'Number of fixed decimal places' },
+      { name: 'format', type: "'number' | 'currency' | 'percent'", default: "'number'", description: 'Controls how the number is formatted using Intl.NumberFormat. Use currency with a prefix like $ or percent with a suffix like %.' },
+      { name: 'locale', type: 'string', default: "'en-US'", description: 'BCP 47 locale tag passed to Intl.NumberFormat for locale-aware number formatting (thousands separators, decimal marks).' },
     ],
     tabs: [
       {

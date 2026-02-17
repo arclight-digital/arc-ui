@@ -57,7 +57,7 @@
         min-width: 0;
       }
 
-      @media (max-width: 768px) {
+      @media (max-width: 768px) { /* --breakpoint-md */
         .arc-page-layout([layout='sidebar-left']) .page-layout,
         .arc-page-layout([layout='sidebar-right']) .page-layout {
           grid-template-columns: 1fr;

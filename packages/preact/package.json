@@ -1,7 +1,8 @@
 {
   "name": "@arclux/arc-ui-preact",
-  "version": "1.11.0",
+  "version": "2.0.0",
   "description": "Preact wrappers for ARC UI Web Components.",
+  "sideEffects": false,
   "type": "module",
   "main": "src/index.ts",
   "module": "src/index.ts",
@@ -42,7 +43,6 @@
   "scripts": {
     "build": "echo 'Consumed directly via workspace — no build step required'"
   },
-  "sideEffects": false,
   "peerDependencies": {
     "preact": ">=10.19.0"
   },

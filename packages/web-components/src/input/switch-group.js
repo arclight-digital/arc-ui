@@ -20,7 +20,7 @@ export class ArcSwitchGroup extends LitElement {
       }
 
       :host([disabled]) {
-        opacity: 0.4;
+        opacity: 0.5;
         pointer-events: none;
       }
 

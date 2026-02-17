@@ -156,5 +156,25 @@ export class MyComponent {}`,
       },
   ],
 
+  subComponents: [
+    {
+      name: 'MenuItem',
+      tag: 'arc-menu-item',
+      description: 'A single action entry inside the context menu.',
+      props: [
+        { name: 'label', type: 'string', description: 'Display text for the menu item.' },
+        { name: 'shortcut', type: 'string', description: 'Keyboard shortcut hint displayed on the right side.' },
+        { name: 'icon', type: 'string', description: 'Name of the icon to display before the label.' },
+        { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the item, preventing interaction.' },
+      ],
+    },
+    {
+      name: 'MenuDivider',
+      tag: 'arc-menu-divider',
+      description: 'A visual separator between groups of menu items.',
+      props: [],
+    },
+  ],
+
   seeAlso: ["context-menu","popover","select"],
 };

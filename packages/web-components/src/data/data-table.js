@@ -44,7 +44,7 @@ export class ArcDataTable extends LitElement {
       }
 
       thead {
-        background: var(--bg-elevated);
+        background: var(--surface-overlay);
         position: sticky;
         top: 0;
         z-index: 1;
@@ -74,7 +74,7 @@ export class ArcDataTable extends LitElement {
       }
 
       th.sorted {
-        color: var(--accent-primary);
+        color: var(--interactive);
       }
 
       .sort-indicator {
@@ -86,7 +86,7 @@ export class ArcDataTable extends LitElement {
 
       td {
         padding: var(--space-sm) var(--space-md);
-        border-bottom: 1px solid var(--border-subtle);
+        border-bottom: 1px solid var(--divider);
         color: var(--text-secondary);
         line-height: 1.5;
       }
@@ -96,19 +96,19 @@ export class ArcDataTable extends LitElement {
       }
 
       tbody tr:nth-child(odd) {
-        background: var(--bg-surface);
+        background: var(--surface-primary);
       }
 
       tbody tr:nth-child(even) {
-        background: var(--bg-card);
+        background: var(--surface-raised);
       }
 
       tbody tr:hover {
-        background: var(--bg-elevated);
+        background: var(--surface-overlay);
       }
 
       tbody tr.selected {
-        background: rgba(var(--accent-primary-rgb), 0.08);
+        background: rgba(var(--interactive-rgb), 0.08);
       }
 
       .checkbox-cell {
@@ -122,7 +122,7 @@ export class ArcDataTable extends LitElement {
         height: 16px;
         border: 1px solid var(--border-bright);
         border-radius: var(--radius-sm);
-        background: var(--bg-card);
+        background: var(--surface-raised);
         cursor: pointer;
         position: relative;
         vertical-align: middle;
@@ -130,12 +130,12 @@ export class ArcDataTable extends LitElement {
       }
 
       input[type="checkbox"]:hover {
-        border-color: var(--accent-primary);
+        border-color: var(--interactive);
       }
 
       input[type="checkbox"]:checked {
-        background: var(--accent-primary);
-        border-color: var(--accent-primary);
+        background: var(--interactive);
+        border-color: var(--interactive);
       }
 
       input[type="checkbox"]:checked::after {
@@ -152,7 +152,7 @@ export class ArcDataTable extends LitElement {
 
       input[type="checkbox"]:focus-visible {
         outline: none;
-        box-shadow: var(--focus-glow);
+        box-shadow: var(--interactive-focus);
       }
 
       .empty-state {

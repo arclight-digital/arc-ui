@@ -14,7 +14,7 @@
     [key: string]: unknown;
   }
 
-  let { active = '', collapsed = false, position = 'left', width = '260px', glow = false, _sections = [], children, ...rest }: Props = $props();
+  let { active = '', collapsed = false, position = 'left', width = '280px', glow = false, _sections = [], children, ...rest }: Props = $props();
 </script>
 
 <arc-sidebar {active} {collapsed} {position} {width} {glow} {_sections} {...rest}>

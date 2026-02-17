@@ -8,6 +8,7 @@ export interface TabsProps {
   selected?: number;
   align?: 'center' | 'end';
   variant?: 'pills';
+  orientation?: 'vertical';
   _tabs?: string;
   className?: string;
   children?: React.ReactNode;

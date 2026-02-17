@@ -7,10 +7,11 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcTabs extends LitElement {
   static properties = {
-    selected: { type: Number, reflect: true },
-    align:    { type: String, reflect: true },
-    variant:  { type: String, reflect: true },
-    _tabs:    { state: true },
+    selected:    { type: Number, reflect: true },
+    align:       { type: String, reflect: true },
+    variant:     { type: String, reflect: true },
+    orientation: { type: String, reflect: true },
+    _tabs:       { state: true },
   };
 
   static styles = [
@@ -20,7 +21,7 @@ export class ArcTabs extends LitElement {
 
       .tabs__list {
         display: flex;
-        border-bottom: 1px solid var(--border-subtle);
+        border-bottom: 1px solid var(--divider);
         gap: var(--space-xs);
         overflow-x: auto;
         overflow-y: hidden;
@@ -44,14 +45,16 @@ export class ArcTabs extends LitElement {
         cursor: pointer;
         border-bottom: 2px solid transparent;
         margin-bottom: -1px;
-        transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+        transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast), box-shadow var(--transition-fast), transform 150ms var(--ease-out-expo);
         white-space: nowrap;
       }
 
       .tabs__tab:hover { color: var(--text-primary); }
+      .tabs__tab:active { transform: scale(0.95); }
       .tabs__tab[aria-selected="true"] {
-        color: var(--accent-primary);
-        border-bottom-color: var(--accent-primary);
+        color: var(--interactive);
+        border-bottom-color: var(--interactive);
+        box-shadow: 0 2px 12px rgba(var(--interactive-rgb), 0.2);
       }
 
       /* Pills variant */
@@ -71,12 +74,13 @@ export class ArcTabs extends LitElement {
       }
 
       :host([variant="pills"]) .tabs__tab[aria-selected="true"] {
-        background: rgba(var(--accent-primary-rgb), 0.1);
-        color: var(--accent-primary);
+        background: rgba(var(--interactive-rgb), 0.1);
+        color: var(--interactive);
+        box-shadow: var(--interactive-hover);
       }
       .tabs__tab:focus-visible {
         outline: none;
-        box-shadow: var(--focus-ring);
+        box-shadow: var(--interactive-focus-ring);
         border-radius: var(--radius-sm);
       }
 
@@ -88,6 +92,50 @@ export class ArcTabs extends LitElement {
       }
 
       .tabs__panel[hidden] { display: none; }
+
+      /* ── Vertical orientation ── */
+      :host([orientation="vertical"]) .tabs {
+        display: flex;
+        flex-direction: row;
+      }
+
+      :host([orientation="vertical"]) .tabs__list {
+        flex-direction: column;
+        border-bottom: none;
+        border-right: 1px solid var(--divider);
+        overflow-y: auto;
+        overflow-x: hidden;
+        min-width: 180px;
+      }
+
+      :host([orientation="vertical"]) .tabs__tab {
+        border-bottom: none;
+        margin-bottom: 0;
+        border-right: 2px solid transparent;
+        margin-right: -1px;
+        text-align: left;
+      }
+
+      :host([orientation="vertical"]) .tabs__tab[aria-selected="true"] {
+        border-bottom-color: transparent;
+        border-right-color: var(--interactive);
+      }
+
+      :host([orientation="vertical"]) .tabs__panel {
+        padding: 0 0 0 var(--space-lg);
+        flex: 1;
+        min-width: 0;
+      }
+
+      /* Vertical + Pills variant */
+      :host([orientation="vertical"][variant="pills"]) .tabs__list {
+        border-right: none;
+      }
+
+      :host([orientation="vertical"][variant="pills"]) .tabs__tab {
+        border-right: none;
+        margin-right: 0;
+      }
 
       @media (prefers-reduced-motion: reduce) {
         :host *,
@@ -106,6 +154,7 @@ export class ArcTabs extends LitElement {
     this.selected = 0;
     this.align = 'start';
     this.variant = 'underline';
+    this.orientation = 'horizontal';
     this._tabs = [];
   }
 
@@ -141,8 +190,12 @@ export class ArcTabs extends LitElement {
     const current = tabs.indexOf(e.target);
     let next;
 
-    if (e.key === 'ArrowRight') next = (current + 1) % tabs.length;
-    else if (e.key === 'ArrowLeft') next = (current - 1 + tabs.length) % tabs.length;
+    const isVertical = this.orientation === 'vertical';
+    const nextKey = isVertical ? 'ArrowDown' : 'ArrowRight';
+    const prevKey = isVertical ? 'ArrowUp' : 'ArrowLeft';
+
+    if (e.key === nextKey) next = (current + 1) % tabs.length;
+    else if (e.key === prevKey) next = (current - 1 + tabs.length) % tabs.length;
     else if (e.key === 'Home') next = 0;
     else if (e.key === 'End') next = tabs.length - 1;
     else return;
@@ -163,7 +216,7 @@ export class ArcTabs extends LitElement {
 
     return html`
       <div class="tabs" part="tabs">
-        <div class="tabs__list" role="tablist" @keydown=${this._handleKeydown}>
+        <div class="tabs__list" role="tablist" aria-orientation=${this.orientation} @keydown=${this._handleKeydown}>
           ${labels.map((label, i) => html`
             <button
               class="tabs__tab"

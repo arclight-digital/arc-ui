@@ -8,11 +8,13 @@ withDefaults(defineProps<{
   selected?: number;
   align?: 'center' | 'end';
   variant?: 'pills';
+  orientation?: 'vertical';
   _tabs?: string;
 }>(), {
   selected: 0,
   align: 'start',
   variant: 'underline',
+  orientation: 'horizontal',
   _tabs: () => ([]),
 });
 
@@ -26,6 +28,7 @@ defineEmits<{
     :selected="selected"
     :align="align"
     :variant="variant"
+    :orientation="orientation"
     :_tabs="_tabs"
   >
     <slot />

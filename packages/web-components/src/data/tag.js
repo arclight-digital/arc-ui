@@ -17,7 +17,7 @@ export class ArcTag extends LitElement {
     tokenStyles,
     css`
       :host { display: inline-flex; }
-      :host([disabled]) { pointer-events: none; opacity: 0.4; }
+      :host([disabled]) { pointer-events: none; opacity: 0.5; }
 
       .tag {
         display: inline-flex;
@@ -33,7 +33,7 @@ export class ArcTag extends LitElement {
         padding: var(--touch-pad) calc(var(--space-sm) + var(--space-xs));
         border: 1px solid var(--border-default);
         border-radius: var(--radius-full);
-        background: var(--bg-hover);
+        background: var(--surface-hover);
         transition: box-shadow var(--transition-base), border-color var(--transition-base);
         line-height: 1.4;
       }
@@ -69,7 +69,7 @@ export class ArcTag extends LitElement {
       }
 
       .tag:hover { border-color: var(--border-bright); }
-      :host([variant="primary"]) .tag:hover { box-shadow: 0 0 12px rgba(var(--accent-primary-rgb), 0.15); }
+      :host([variant="primary"]) .tag:hover { box-shadow: var(--interactive-hover); }
       :host([variant="secondary"]) .tag:hover { box-shadow: 0 0 12px rgba(var(--accent-secondary-rgb), 0.15); }
       :host([variant="success"]) .tag:hover { box-shadow: 0 0 12px rgba(var(--color-success-rgb), 0.15); }
       :host([variant="warning"]) .tag:hover { box-shadow: 0 0 12px rgba(var(--color-warning-rgb), 0.15); }
@@ -102,12 +102,12 @@ export class ArcTag extends LitElement {
 
       .tag__remove:hover {
         opacity: 1;
-        background: var(--bg-elevated);
+        background: var(--surface-overlay);
       }
 
       .tag__remove:focus-visible {
         outline: none;
-        box-shadow: var(--focus-glow);
+        box-shadow: var(--interactive-focus);
       }
 
       @media (prefers-reduced-motion: reduce) {

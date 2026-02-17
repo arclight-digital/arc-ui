@@ -62,9 +62,9 @@ export class ArcImage extends LitElement {
         inset: 0;
         background: linear-gradient(
           90deg,
-          var(--bg-elevated) 25%,
+          var(--surface-overlay) 25%,
           var(--border-subtle) 37%,
-          var(--bg-elevated) 63%
+          var(--surface-overlay) 63%
         );
         background-size: 200% 100%;
         animation: image-shimmer 1.8s ease-in-out infinite;
@@ -85,7 +85,7 @@ export class ArcImage extends LitElement {
         display: flex;
         align-items: center;
         justify-content: center;
-        background: var(--bg-elevated);
+        background: var(--surface-overlay);
         color: var(--text-muted);
         font-family: var(--font-body);
         font-size: var(--text-sm);

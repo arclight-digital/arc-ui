@@ -23,7 +23,7 @@ export class ArcEmptyState extends LitElement {
         padding: var(--space-2xl) var(--space-xl);
         border: 1px dashed var(--border-default);
         border-radius: var(--radius-lg);
-        background: var(--bg-card);
+        background: var(--surface-raised);
       }
 
       .empty__icon {

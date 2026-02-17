@@ -17,8 +17,8 @@ export class DatePicker {
   @Input() disabled: boolean = false;
   @Input() label: string = '';
   @Input() _open: string = false;
-  @Input() _viewMonth: string = 'today.getMonth()';
-  @Input() _viewYear: string = 'today.getFullYear()';
+  @Input() _viewMonth: string = 'null';
+  @Input() _viewYear: string = 'null';
   @Input() _mode: string = 'days';
   @Output() arcChange = new EventEmitter<CustomEvent>();
 }

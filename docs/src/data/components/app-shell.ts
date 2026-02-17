@@ -80,6 +80,12 @@ Because AppShell is slot-based, it composes freely with other ARC UI primitives.
         default: 'false',
         description: 'Controls whether the sidebar is visible on mobile viewports (below 768 px). On desktop the sidebar is always shown regardless of this attribute. Toggle it from a hamburger button in your TopBar to give mobile users access to navigation.',
       },
+      {
+        name: 'breakpoint',
+        type: 'number',
+        default: '768',
+        description: 'Viewport width in pixels at which the layout switches between mobile and desktop modes.',
+      },
     ],
 
     tabs: [

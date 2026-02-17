@@ -66,7 +66,7 @@ export class ArcSidebar extends LitElement {
         right: 0;
         bottom: 0;
         width: 1px;
-        background: var(--border-subtle);
+        background: var(--divider);
       }
 
       /* Right position — border on left edge */
@@ -136,12 +136,13 @@ export class ArcSidebar extends LitElement {
       }
 
       .sidebar__toggle:hover {
-        background: var(--bg-hover);
+        background: var(--surface-hover);
+        box-shadow: var(--interactive-hover);
       }
 
       .sidebar__toggle:focus-visible {
         outline: none;
-        box-shadow: var(--focus-glow);
+        box-shadow: var(--interactive-focus);
       }
 
       .sidebar__toggle-label {
@@ -164,7 +165,7 @@ export class ArcSidebar extends LitElement {
       .sidebar__chevron {
         color: var(--text-ghost);
         flex-shrink: 0;
-        transition: transform 150ms ease;
+        transition: transform var(--transition-fast);
         -webkit-text-fill-color: unset;
       }
 
@@ -224,28 +225,34 @@ export class ArcSidebar extends LitElement {
       .sidebar__link[aria-current="page"] .sidebar__link-arrow {
         opacity: 1;
         transform: translateX(0);
-        color: var(--accent-primary);
+        color: var(--interactive);
       }
 
       .sidebar__link:hover {
         color: var(--text-primary);
-        background: var(--bg-hover);
+        background: var(--surface-hover);
+        box-shadow: inset 2px 0 6px rgba(var(--interactive-rgb), 0.08);
       }
 
       /* Active link */
       .sidebar__link[aria-current="page"] {
-        color: var(--accent-primary);
+        color: var(--interactive);
         background: var(--accent-primary-subtle);
         font-weight: 500;
       }
 
       :host([glow]) .sidebar__link[aria-current="page"] {
-        box-shadow: inset 6px 0 12px -6px rgba(var(--accent-primary-rgb), 0.15);
+        box-shadow: inset 6px 0 12px -6px rgba(var(--interactive-rgb), 0.15);
       }
 
       .sidebar__link:focus-visible {
         outline: none;
-        box-shadow: var(--focus-glow);
+        box-shadow: var(--interactive-focus);
+      }
+
+      .sidebar__link--nested {
+        font-size: var(--text-xs);
+        color: var(--text-ghost);
       }
 
       .sidebar__slot-host { display: none; }
@@ -267,7 +274,7 @@ export class ArcSidebar extends LitElement {
     this.active = '';
     this.collapsed = false;
     this.position = 'left';
-    this.width = '260px';
+    this.width = '280px';
     this.glow = false;
     this._sections = [];
   }
@@ -330,20 +337,23 @@ export class ArcSidebar extends LitElement {
                 : ''
               }
               <div class="sidebar__links ${!isOpen && isCollapsible ? 'sidebar__links--hidden' : ''}" part="links">
-                ${links.map((link) => html`
+                ${links.map((link) => {
+                  const level = link.level || 0;
+                  return html`
                   <a
-                    class="sidebar__link"
+                    class="sidebar__link ${level > 0 ? 'sidebar__link--nested' : ''}"
                     href=${link.href}
                     aria-current=${(this.active === link.href || link.active) ? 'page' : 'false'}
                     @click=${(e) => this._handleClick(e, link.href)}
                     part="link"
+                    style=${level > 0 ? `padding-left: ${level * 14 + 12}px` : ''}
                   >
                     <span>${link.label}</span>
                     <svg class="sidebar__link-arrow" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true">
                       <path d="M6 4L10 8L6 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                   </a>
-                `)}
+                `})}
               </div>
             </div>
           `;

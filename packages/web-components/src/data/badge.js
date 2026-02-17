@@ -29,7 +29,7 @@ export class ArcBadge extends LitElement {
         padding: var(--space-xs) var(--space-sm);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-sm);
-        background: var(--bg-hover);
+        background: var(--surface-hover);
         transition: box-shadow 200ms ease, border-color 200ms ease;
         line-height: 1.4;
       }
@@ -71,7 +71,7 @@ export class ArcBadge extends LitElement {
       }
 
       :host(:hover) .badge { border-color: var(--border-bright); }
-      :host([variant="primary"]:hover) .badge { box-shadow: 0 0 12px rgba(var(--accent-primary-rgb), 0.15); }
+      :host([variant="primary"]:hover) .badge { box-shadow: var(--interactive-hover); }
       :host([variant="secondary"]:hover) .badge { box-shadow: 0 0 12px rgba(var(--accent-secondary-rgb), 0.15); }
       :host([variant="success"]:hover) .badge { box-shadow: 0 0 12px rgba(var(--color-success-rgb), 0.15); }
       :host([variant="warning"]:hover) .badge { box-shadow: 0 0 12px rgba(var(--color-warning-rgb), 0.15); }

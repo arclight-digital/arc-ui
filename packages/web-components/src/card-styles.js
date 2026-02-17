@@ -25,7 +25,7 @@ export const cardHoverStyles = css`
 
   .card__inner {
     position: relative;
-    background: var(--bg-card);
+    background: var(--surface-raised);
     border-radius: calc(var(--radius-lg) - 1px);
     flex: 1;
     min-height: 0;
@@ -35,8 +35,8 @@ export const cardHoverStyles = css`
   }
 
   .card:hover .card__inner {
-    box-shadow: inset 0 1px 0 var(--bg-hover), var(--glow-card-hover);
+    box-shadow: inset 0 1px 0 var(--surface-hover), var(--glow-card-hover);
   }
 
-  .card:focus-visible { outline: none; box-shadow: var(--focus-glow); border-radius: var(--radius-lg); }
+  .card:focus-visible { outline: none; box-shadow: var(--interactive-focus); border-radius: var(--radius-lg); }
 `;

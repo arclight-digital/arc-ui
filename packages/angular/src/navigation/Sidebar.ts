@@ -13,7 +13,7 @@ export class Sidebar {
   @Input() active: string = '';
   @Input() collapsed: boolean = false;
   @Input() position: 'right' = 'left';
-  @Input() width: string = '260px';
+  @Input() width: string = '280px';
   @Input() glow: boolean = false;
   @Input() _sections: string = [];
 }

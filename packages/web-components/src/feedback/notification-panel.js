@@ -28,11 +28,11 @@ export class ArcNotificationPanel extends LitElement {
       .panel {
         position: absolute;
         top: calc(100% + var(--space-sm));
-        background: var(--bg-card);
+        background: var(--surface-raised);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-lg);
         box-shadow: var(--shadow-overlay);
-        z-index: 1000;
+        z-index: var(--z-dropdown);
         min-width: 340px;
         max-width: 400px;
         display: flex;
@@ -78,7 +78,7 @@ export class ArcNotificationPanel extends LitElement {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        border-bottom: 1px solid var(--border-subtle);
+        border-bottom: 1px solid var(--divider);
         padding: var(--space-md);
         font-family: var(--font-body);
         font-weight: 600;
@@ -110,7 +110,7 @@ export class ArcNotificationPanel extends LitElement {
 
       /* ---- Footer ---- */
       .footer {
-        border-top: 1px solid var(--border-subtle);
+        border-top: 1px solid var(--divider);
         padding: var(--space-sm);
         text-align: center;
       }

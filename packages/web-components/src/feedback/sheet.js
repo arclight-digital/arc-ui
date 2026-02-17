@@ -22,7 +22,7 @@ export class ArcSheet extends OverlayMixin(LitElement) {
         inset: 0;
         background: var(--overlay-backdrop);
         backdrop-filter: blur(4px);
-        z-index: 1000;
+        z-index: var(--z-overlay);
         opacity: 0;
         visibility: hidden;
         transition:
@@ -38,8 +38,8 @@ export class ArcSheet extends OverlayMixin(LitElement) {
 
       .sheet__panel {
         position: fixed;
-        z-index: 1001;
-        background: var(--bg-card);
+        z-index: var(--z-modal);
+        background: var(--surface-raised);
         border: 1px solid var(--border-subtle);
         box-shadow: var(--shadow-overlay);
         display: flex;
@@ -88,7 +88,7 @@ export class ArcSheet extends OverlayMixin(LitElement) {
         align-items: center;
         justify-content: space-between;
         padding: var(--space-lg);
-        border-bottom: 1px solid var(--border-subtle);
+        border-bottom: 1px solid var(--divider);
         flex-shrink: 0;
       }
 
@@ -112,7 +112,7 @@ export class ArcSheet extends OverlayMixin(LitElement) {
 
       .sheet__footer {
         padding: var(--space-lg);
-        border-top: 1px solid var(--border-subtle);
+        border-top: 1px solid var(--divider);
         display: flex;
         justify-content: flex-end;
         gap: var(--space-sm);

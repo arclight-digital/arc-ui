@@ -6,14 +6,17 @@ defineOptions({ name: 'SpyLink' });
 
 withDefaults(defineProps<{
   target?: string;
+  level?: number;
 }>(), {
   target: '',
+  level: 0,
 });
 </script>
 
 <template>
   <arc-spy-link
     :target="target"
+    :level="level"
   >
     <slot />
   </arc-spy-link>

@@ -44,7 +44,7 @@ export class ArcSplitPane extends LitElement {
 
       .split-pane__handle {
         flex-shrink: 0;
-        background: var(--border-subtle);
+        background: var(--divider);
         transition: background 0.15s ease;
         user-select: none;
         touch-action: none;

@@ -148,7 +148,8 @@ export class MyComponent {}`,
         tag: 'arc-spy-link',
         description: 'Navigation anchor that highlights when its target section is in view.',
         props: [
-          { name: 'target', type: 'string', description: 'ID of the section to observe' }
+          { name: 'target', type: 'string', description: 'ID of the section to observe' },
+          { name: 'level', type: 'number', default: '0', description: 'Nesting depth for visual indentation. Level 0 links render at default size; level 1+ links are indented and use a smaller font size.' }
         ],
       }
     ],

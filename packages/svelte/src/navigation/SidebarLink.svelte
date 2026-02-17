@@ -6,13 +6,14 @@
   interface Props {
     href?: string;
     active?: boolean;
+    level?: number;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { href = '', active = false, children, ...rest }: Props = $props();
+  let { href = '', active = false, level = 0, children, ...rest }: Props = $props();
 </script>
 
-<arc-sidebar-link {href} {active} {...rest}>
+<arc-sidebar-link {href} {active} {level} {...rest}>
   {@render children?.()}
 </arc-sidebar-link>

@@ -61,6 +61,7 @@ import { search } from './search';
 import { settingsLayout } from './settings-layout';
 import { sidebar } from './sidebar';
 import { skeleton } from './skeleton';
+import { rangeSlider } from './range-slider';
 import { slider } from './slider';
 import { spinner } from './spinner';
 import { splitPane } from './split-pane';
@@ -136,6 +137,19 @@ import { loadingOverlay } from './loading-overlay';
 import { connectionStatus } from './connection-status';
 import { announcement } from './announcement';
 import { progressToast } from './progress-toast';
+import { diff } from './diff';
+import { keyValue } from './key-value';
+import { countdownTimer } from './countdown-timer';
+import { comparison } from './comparison';
+import { sparkline } from './sparkline';
+import { descriptionList } from './description-list';
+import { blockquote } from './blockquote';
+import { prose } from './prose';
+import { typewriter } from './typewriter';
+import { gradientText } from './gradient-text';
+import { numberFormat } from './number-format';
+import { timeAgo } from './time-ago';
+import { timePicker } from './time-picker';
 import type { ComponentDef } from './_types';
 
 export type { ComponentDef } from './_types';
@@ -204,6 +218,7 @@ export const components: ComponentDef[] = [
   settingsLayout,
   sidebar,
   skeleton,
+  rangeSlider,
   slider,
   spinner,
   splitPane,
@@ -279,4 +294,17 @@ export const components: ComponentDef[] = [
   connectionStatus,
   announcement,
   progressToast,
+  diff,
+  keyValue,
+  countdownTimer,
+  comparison,
+  sparkline,
+  descriptionList,
+  blockquote,
+  prose,
+  typewriter,
+  gradientText,
+  numberFormat,
+  timeAgo,
+  timePicker,
 ];

@@ -7,11 +7,11 @@
       }
 
       .arc-page-header .page-header {
-        padding: var(--space-lg) 0 var(--space-md);
+        padding: 0 0 var(--space-md);
       }
 
       .arc-page-header[border] .page-header {
-        border-bottom: 1px solid var(--border-subtle);
+        border-bottom: 1px solid var(--divider);
       }
 
       .arc-page-header .page-header__above {

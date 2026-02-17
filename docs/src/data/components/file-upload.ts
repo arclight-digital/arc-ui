@@ -64,7 +64,7 @@ The component dispatches an \`arc-change\` event whenever the file list changes 
   const uploader = document.getElementById('uploader');
 
   uploader.addEventListener('arc-change', (e) => {
-    const files = e.detail.files;
+    const files = e.detail.value;
     files.forEach(file => {
       console.log(file.name, file.size, file.type);
     });
@@ -76,7 +76,7 @@ The component dispatches an \`arc-change\` event whenever the file list changes 
   });
 
   uploader.addEventListener('arc-remove', (e) => {
-    console.log('Removed:', e.detail.file.name);
+    console.log('Removed:', e.detail.value.name);
   });
 </script>`,
       },
@@ -87,7 +87,7 @@ The component dispatches an \`arc-change\` event whenever the file list changes 
 
 function Upload() {
   function handleChange(e) {
-    const files = e.detail.files;
+    const files = e.detail.value;
     const form = new FormData();
     files.forEach(f => form.append('files', f));
     fetch('/api/upload', { method: 'POST', body: form });

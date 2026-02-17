@@ -10,7 +10,7 @@ export interface HotkeyProps {
   global?: boolean;
   className?: string;
   children?: React.ReactNode;
-  onArcTrigger?: (e: CustomEvent) => void;
+  onArcHotkeyTrigger?: (e: CustomEvent) => void;
 }
 
 export const Hotkey = createComponent({
@@ -18,6 +18,6 @@ export const Hotkey = createComponent({
   elementClass: ArcHotkey,
   react: React,
   events: {
-    onArcTrigger: 'arc-trigger' as EventName<CustomEvent>,
+    onArcHotkeyTrigger: 'arc-hotkey-trigger' as EventName<CustomEvent>,
   },
 });

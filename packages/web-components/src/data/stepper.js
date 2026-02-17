@@ -62,7 +62,7 @@ export class ArcStepper extends LitElement {
 
       /* Upcoming (default) */
       .step__circle {
-        background: var(--bg-elevated);
+        background: var(--surface-overlay);
         color: var(--text-ghost);
         border: 1px solid var(--border-default);
       }
@@ -73,6 +73,16 @@ export class ArcStepper extends LitElement {
         color: var(--accent-primary);
         border: 2px solid var(--accent-primary);
         box-shadow: 0 0 12px rgba(var(--accent-primary-rgb), 0.25);
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%, 100% {
+          box-shadow: 0 0 12px rgba(var(--accent-primary-rgb), 0.25);
+        }
+        50% {
+          box-shadow: 0 0 12px rgba(var(--accent-primary-rgb), 0.4);
+        }
       }
 
       /* Completed */
@@ -80,6 +90,7 @@ export class ArcStepper extends LitElement {
         background: var(--accent-primary);
         color: var(--text-primary);
         border: 2px solid var(--accent-primary);
+        box-shadow: 0 0 16px rgba(var(--accent-primary-rgb), 0.3);
       }
 
       .step__line {
@@ -143,6 +154,9 @@ export class ArcStepper extends LitElement {
           animation-duration: 0.01ms !important;
           animation-iteration-count: 1 !important;
           transition-duration: 0.01ms !important;
+        }
+        .step--active .step__circle {
+          animation: none !important;
         }
       }
     `,

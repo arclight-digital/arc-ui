@@ -54,7 +54,7 @@ export class ArcDivider extends LitElement {
       }
       :host([variant="line-gradient"]) .divider {
         max-width: 240px;
-        background: var(--glow-line-gradient);
+        background: var(--divider-glow);
         box-shadow: 0 0 10px rgba(var(--accent-primary-rgb),0.25);
       }
 

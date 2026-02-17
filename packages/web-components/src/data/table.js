@@ -35,7 +35,7 @@ export class ArcTable extends LitElement {
       }
 
       thead {
-        background: var(--bg-elevated);
+        background: var(--surface-overlay);
       }
 
       th {
@@ -57,7 +57,7 @@ export class ArcTable extends LitElement {
 
       td {
         padding: var(--space-sm) var(--space-md);
-        border-bottom: 1px solid var(--border-subtle);
+        border-bottom: 1px solid var(--divider);
         color: var(--text-secondary);
         line-height: 1.5;
         font-size: var(--text-sm);
@@ -73,11 +73,11 @@ export class ArcTable extends LitElement {
       }
 
       :host([striped]) tbody tr:nth-child(odd) {
-        background: var(--bg-surface);
+        background: var(--surface-primary);
       }
 
       :host([striped]) tbody tr:nth-child(even) {
-        background: var(--bg-card);
+        background: var(--surface-raised);
       }
 
       tbody tr {
@@ -85,7 +85,7 @@ export class ArcTable extends LitElement {
       }
 
       tbody tr:hover {
-        background: var(--bg-hover);
+        background: var(--surface-hover);
       }
 
       @media (prefers-reduced-motion: reduce) {

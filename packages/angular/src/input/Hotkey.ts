@@ -7,11 +7,11 @@ import '@arclux/arc-ui';
   selector: 'arc-hotkey',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-hotkey [attr.keys]="keys" [disabled]="disabled" [global]="global" (arc-trigger)="arcTrigger.emit($event)"><ng-content /></arc-hotkey>`,
+  template: `<arc-hotkey [attr.keys]="keys" [disabled]="disabled" [global]="global" (arc-hotkey-trigger)="arcHotkeyTrigger.emit($event)"><ng-content /></arc-hotkey>`,
 })
 export class Hotkey {
   @Input() keys: string = '';
   @Input() disabled: boolean = false;
   @Input() global: boolean = false;
-  @Output() arcTrigger = new EventEmitter<CustomEvent>();
+  @Output() arcHotkeyTrigger = new EventEmitter<CustomEvent>();
 }

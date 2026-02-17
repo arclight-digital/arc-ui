@@ -35,7 +35,7 @@ export class ArcFieldset extends LitElement {
       }
 
       :host([variant="card"]) fieldset {
-        background: var(--bg-surface);
+        background: var(--surface-primary);
         box-shadow: var(--shadow-sm, 0 1px 2px rgba(0,0,0,0.05));
       }
 

@@ -18,7 +18,7 @@ export class ArcSortableList extends LitElement {
     tokenStyles,
     css`
       :host { display: block; }
-      :host([disabled]) { pointer-events: none; opacity: 0.4; }
+      :host([disabled]) { pointer-events: none; opacity: 0.5; }
 
       .sortable {
         display: flex;
@@ -31,7 +31,7 @@ export class ArcSortableList extends LitElement {
         align-items: center;
         gap: var(--space-sm);
         padding: var(--space-sm);
-        background: var(--bg-card, var(--bg-surface));
+        background: var(--surface-raised, var(--surface-primary));
         border: 1px solid var(--border-subtle);
         border-radius: var(--radius-md);
         transition: box-shadow var(--transition-fast),
@@ -45,7 +45,7 @@ export class ArcSortableList extends LitElement {
 
       .sortable__item:focus-visible {
         outline: none;
-        box-shadow: var(--focus-ring);
+        box-shadow: var(--interactive-focus-ring);
       }
 
       .sortable__item--dragging {
@@ -54,14 +54,14 @@ export class ArcSortableList extends LitElement {
       }
 
       .sortable__item--kb-selected {
-        border-color: var(--accent-primary);
-        box-shadow: 0 0 0 1px var(--accent-primary);
+        border-color: var(--interactive);
+        box-shadow: 0 0 0 1px var(--interactive);
       }
 
       .sortable__item--kb-moving {
-        border-color: var(--accent-primary);
-        box-shadow: 0 0 0 2px var(--accent-primary), 0 4px 16px rgba(0, 0, 0, 0.12);
-        background: var(--bg-elevated);
+        border-color: var(--interactive);
+        box-shadow: 0 0 0 2px var(--interactive), 0 4px 16px rgba(0, 0, 0, 0.12);
+        background: var(--surface-overlay);
       }
 
       .sortable__item--over-before::before,
@@ -71,7 +71,7 @@ export class ArcSortableList extends LitElement {
         left: var(--space-sm);
         right: var(--space-sm);
         height: 2px;
-        background: var(--accent-primary);
+        background: var(--interactive);
         border-radius: var(--radius-full);
       }
 

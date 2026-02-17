@@ -7,9 +7,11 @@ defineOptions({ name: 'SidebarLink' });
 withDefaults(defineProps<{
   href?: string;
   active?: boolean;
+  level?: number;
 }>(), {
   href: '',
   active: false,
+  level: 0,
 });
 </script>
 
@@ -17,6 +19,7 @@ withDefaults(defineProps<{
   <arc-sidebar-link
     :href="href"
     :active="active"
+    :level="level"
   >
     <slot />
   </arc-sidebar-link>

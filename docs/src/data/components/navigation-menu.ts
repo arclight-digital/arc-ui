@@ -70,6 +70,7 @@ Keyboard support is built in from the start. Arrow keys move between top-level i
     props: [],
     events: [
       { name: 'arc-navigate', description: 'Fired when a navigation item is selected' },
+      { name: 'arc-mobile-menu-toggle', description: 'Dispatched on the document when the mobile hamburger button is clicked. Listen on document to toggle your mobile navigation state.' },
     ],
 
     tabs: [

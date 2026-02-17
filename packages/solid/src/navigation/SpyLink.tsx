@@ -5,14 +5,15 @@ import '@arclux/arc-ui';
 
 export interface SpyLinkProps {
   target?: string;
+  level?: number;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const SpyLink: Component<SpyLinkProps> = (props) => {
-  const [local, rest] = splitProps(props, ['target', 'children']);
+  const [local, rest] = splitProps(props, ['target', 'level', 'children']);
   return (
-    <arc-spy-link target={local.target} {...rest}>
+    <arc-spy-link target={local.target} level={local.level} {...rest}>
       {local.children}
     </arc-spy-link>
   );

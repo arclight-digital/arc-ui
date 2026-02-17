@@ -21,7 +21,7 @@ export class ArcCheckbox extends LitElement {
     tokenStyles,
     css`
       :host { display: inline-flex; }
-      :host([disabled]) { pointer-events: none; opacity: 0.4; }
+      :host([disabled]) { pointer-events: none; opacity: 0.5; }
 
       .checkbox {
         display: inline-flex;
@@ -37,7 +37,7 @@ export class ArcCheckbox extends LitElement {
         height: 18px;
         border-radius: var(--radius-sm);
         border: 1px solid var(--border-bright);
-        background: var(--bg-surface);
+        background: var(--surface-primary);
         transition: background var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
         flex-shrink: 0;
         display: flex;
@@ -45,11 +45,22 @@ export class ArcCheckbox extends LitElement {
         justify-content: center;
       }
 
+      .checkbox__box:hover {
+        border-color: var(--text-muted);
+        box-shadow: 0 0 8px rgba(var(--interactive-rgb), 0.1);
+      }
+
       :host([checked]) .checkbox__box,
       :host([indeterminate]) .checkbox__box {
-        background: var(--accent-primary);
-        border-color: var(--accent-primary);
-        box-shadow: 0 0 8px rgba(var(--accent-primary-rgb), 0.3);
+        background: var(--interactive);
+        border-color: var(--interactive);
+        box-shadow: 0 0 8px rgba(var(--interactive-rgb), 0.3);
+      }
+
+      @keyframes check-pop {
+        0%   { transform: scale(0.5); opacity: 0; }
+        70%  { transform: scale(1.15); opacity: 1; }
+        100% { transform: scale(1); }
       }
 
       .checkbox__icon {
@@ -57,7 +68,7 @@ export class ArcCheckbox extends LitElement {
         width: 12px;
         height: 12px;
         fill: none;
-        stroke: var(--bg-deep);
+        stroke: var(--surface-base);
         stroke-width: 2.5;
         stroke-linecap: round;
         stroke-linejoin: round;
@@ -68,11 +79,10 @@ export class ArcCheckbox extends LitElement {
 
       :host([checked]) .checkbox__icon--check,
       :host([indeterminate]) .checkbox__icon--dash {
+        opacity: 1;
         transform: scale(1);
+        animation: check-pop 200ms var(--ease-out-expo);
       }
-
-      :host([checked]) .checkbox__icon--check,
-      :host([indeterminate]) .checkbox__icon--dash { opacity: 1; }
 
       .checkbox__label {
         font-family: var(--font-body);
@@ -92,7 +102,7 @@ export class ArcCheckbox extends LitElement {
 
       .checkbox__box:focus-visible {
         outline: none;
-        box-shadow: var(--focus-glow);
+        box-shadow: var(--interactive-focus);
       }
 
       @media (prefers-reduced-motion: reduce) {

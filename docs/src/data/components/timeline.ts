@@ -12,7 +12,7 @@ export const timeline: ComponentDef = {
 
 Like Stepper, Timeline uses a declarative child-element API: nest \`<arc-timeline-item>\` elements with \`heading\`, \`date\`, and text content (accessed via the \`description\` getter which reads \`textContent\`). The parent collects children via slotchange and renders the visual timeline, keeping markup readable and data management simple.
 
-The dot marker uses \`--accent-primary\` with a double-ring effect (2px \`--bg-card\` border surrounded by a 1px \`--accent-primary-border\` box shadow) for a polished appearance. The date is rendered in monospace (\`--font-mono\`) at 11px in \`--text-ghost\` colour, giving it a subtle, metadata-like treatment. The timeline renders as a semantic \`<ol>\` with \`role="list"\` for correct ordering and accessibility.`,
+The dot marker uses \`--accent-primary\` with a double-ring effect (2px \`--bg-card\` border surrounded by a 1px \`--accent-primary-border\` box shadow) for a polished appearance. The date is rendered in accent font (\`--font-accent\`) at 11px in \`--text-ghost\` colour, giving it a subtle, metadata-like treatment. The timeline renders as a semantic \`<ol>\` with \`role="list"\` for correct ordering and accessibility.`,
 
     features: [
       'Vertical event sequence with blue dot markers and connecting lines',

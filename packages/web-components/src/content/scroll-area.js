@@ -47,7 +47,7 @@ export class ArcScrollArea extends LitElement {
       }
 
       .scroll-area::-webkit-scrollbar-track {
-        background: var(--bg-elevated);
+        background: var(--surface-overlay);
         border-radius: var(--radius-full);
       }
 
@@ -62,13 +62,13 @@ export class ArcScrollArea extends LitElement {
       }
 
       .scroll-area::-webkit-scrollbar-corner {
-        background: var(--bg-elevated);
+        background: var(--surface-overlay);
       }
 
       /* Firefox scrollbar styling */
       .scroll-area {
         scrollbar-width: thin;
-        scrollbar-color: var(--border-bright) var(--bg-elevated);
+        scrollbar-color: var(--border-bright) var(--surface-overlay);
       }
 
       @media (prefers-reduced-motion: reduce) {

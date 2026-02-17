@@ -10,7 +10,7 @@ export const stepper: ComponentDef = {
 
     overview: `Stepper is a horizontal progress indicator for multi-step workflows like onboarding flows, checkout processes, and setup wizards. It renders numbered circles connected by horizontal lines, with each step in one of three visual states: completed (filled blue with a checkmark), active (blue outlined ring with glow), or upcoming (muted grey). The \`active\` property (zero-indexed) controls which step is current, and all steps before it are automatically marked as completed.
 
-The component uses a declarative child-element API: nest \`<arc-step>\` elements inside the stepper, each with a \`label\` property. The stepper collects these children via slotchange events and renders the visual step indicators. This pattern keeps the markup readable and makes it easy to add or remove steps without managing array data. Each step circle is 32px with the label centered below.
+The component uses a declarative child-element API: nest \`<arc-step>\` elements inside the stepper, each with a \`label\` property. The stepper collects these children via slotchange events and renders the visual step indicators. This pattern keeps the markup readable and makes it easy to add or remove steps without managing array data. Each step circle is 36px with the label centered below.
 
 Connecting lines between steps change colour based on completion state — blue lines indicate completed transitions, while default-coloured lines indicate upcoming transitions. The active step circle has a \`box-shadow\` glow effect using \`--accent-primary-rgb\` to draw the user's eye. The component uses \`role="list"\` with \`role="listitem"\` on each step and \`aria-current="step"\` on the active step for accessibility.`,
 
@@ -185,7 +185,6 @@ export class MyComponent {}`,
         description: 'Individual step within a Stepper.',
         props: [
           { name: 'label', type: 'string', description: 'Step label text' },
-          { name: 'description', type: 'string', description: 'Optional description below the label' },
         ],
       },
     ],

@@ -102,3 +102,9 @@ export type { SwitchGroupProps } from './SwitchGroup.js';
 
 export { Hotkey } from './Hotkey.js';
 export type { HotkeyProps } from './Hotkey.js';
+
+export { RangeSlider } from './RangeSlider.js';
+export type { RangeSliderProps } from './RangeSlider.js';
+
+export { TimePicker } from './TimePicker.js';
+export type { TimePickerProps } from './TimePicker.js';

@@ -7,15 +7,16 @@ export interface TabsProps {
   selected?: number;
   align?: 'center' | 'end';
   variant?: 'pills';
+  orientation?: 'vertical';
   _tabs?: string;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Tabs: Component<TabsProps> = (props) => {
-  const [local, rest] = splitProps(props, ['selected', 'align', 'variant', '_tabs', 'children']);
+  const [local, rest] = splitProps(props, ['selected', 'align', 'variant', 'orientation', '_tabs', 'children']);
   return (
-    <arc-tabs selected={local.selected} align={local.align} variant={local.variant} _tabs={local._tabs} {...rest}>
+    <arc-tabs selected={local.selected} align={local.align} variant={local.variant} orientation={local.orientation} _tabs={local._tabs} {...rest}>
       {local.children}
     </arc-tabs>
   );

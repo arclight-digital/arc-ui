@@ -1,0 +1,131 @@
+/**
+ * ARC UI — High Contrast Theme Preset
+ * Import AFTER base.css for WCAG AAA compliance (7:1+ contrast ratios).
+ * Strengthens borders, brightens text, and widens interactive targets.
+ *
+ * Usage:
+ *   @import '@arclux/arc-ui/base.css';
+ *   @import '@arclux/arc-ui/themes/high-contrast';
+ */
+
+:root {
+  /* ── High-contrast backgrounds ── */
+  --bg-deep: rgb(0, 0, 0);
+  --bg-surface: rgb(5, 5, 8);
+  --bg-base: rgb(5, 5, 8);
+  --bg-card: rgb(10, 10, 14);
+  --bg-elevated: rgb(18, 18, 24);
+
+  /* ── Maximum text contrast (≥ 7:1 on bg-deep) ── */
+  --text-primary: rgb(255, 255, 255);
+  --text-secondary: rgb(200, 200, 210);
+  --text-muted: rgb(170, 170, 185);
+  --text-ghost: rgb(140, 140, 160);
+  --text-primary-rgb: 255, 255, 255;
+  --text-muted-rgb: 170, 170, 185;
+
+  /* ── Stronger borders ── */
+  --border-subtle: rgb(50, 50, 62);
+  --border-default: rgb(70, 70, 85);
+  --border-bright: rgb(100, 100, 118);
+
+  /* ── Brighter accents ── */
+  --accent-primary: rgb(100, 150, 255);
+  --accent-secondary: rgb(165, 120, 255);
+  --accent-primary-rgb: 100, 150, 255;
+  --accent-secondary-rgb: 165, 120, 255;
+
+  /* ── Bold focus rings ── */
+  --focus-ring: 0 0 0 3px var(--accent-primary);
+  --focus-glow: 0 0 0 3px var(--accent-primary), 0 0 0 5px rgba(var(--accent-primary-rgb), 0.4);
+
+  /* ── Semantic: stronger interactive focus ── */
+  --interactive-focus: 0 0 0 3px var(--interactive), 0 0 0 5px rgba(var(--interactive-rgb), 0.4);
+  --interactive-focus-ring: 0 0 0 3px var(--interactive);
+  --feedback-error-glow: 0 0 16px rgba(var(--color-error-rgb), 0.25);
+  --feedback-success-glow: 0 0 16px rgba(var(--color-success-rgb), 0.25);
+  --feedback-warning-glow: 0 0 16px rgba(var(--color-warning-rgb), 0.25);
+  --feedback-info-glow: 0 0 16px rgba(var(--color-info-rgb), 0.25);
+
+  /* ── Larger interactive targets ── */
+  --touch-min: 36px;
+  --touch-pad: 6px;
+
+  /* ── Brighter feedback colors ── */
+  --color-success: rgb(72, 230, 170);
+  --color-error: rgb(255, 90, 90);
+  --color-warning: rgb(255, 180, 30);
+  --color-info: rgb(80, 150, 255);
+  --color-success-rgb: 72, 230, 170;
+  --color-error-rgb: 255, 90, 90;
+  --color-warning-rgb: 255, 180, 30;
+  --color-info-rgb: 80, 150, 255;
+
+  /* ── Stronger hover state ── */
+  --bg-hover: rgba(255, 255, 255, 0.08);
+}
+
+/* ── Light mode high-contrast overrides ── */
+[data-theme="light"] {
+  --bg-deep: rgb(255, 255, 255);
+  --bg-surface: rgb(250, 250, 252);
+  --bg-base: rgb(250, 250, 252);
+  --bg-card: rgb(255, 255, 255);
+  --bg-elevated: rgb(240, 240, 245);
+
+  --text-primary: rgb(0, 0, 0);
+  --text-secondary: rgb(30, 30, 45);
+  --text-muted: rgb(60, 60, 80);
+  --text-ghost: rgb(90, 90, 112);
+  --text-primary-rgb: 0, 0, 0;
+  --text-muted-rgb: 60, 60, 80;
+
+  --border-subtle: rgb(180, 185, 195);
+  --border-default: rgb(150, 155, 170);
+  --border-bright: rgb(120, 125, 145);
+
+  --accent-primary: rgb(20, 70, 200);
+  --accent-secondary: rgb(85, 40, 195);
+  --accent-primary-rgb: 20, 70, 200;
+  --accent-secondary-rgb: 85, 40, 195;
+
+  --color-success: rgb(15, 130, 75);
+  --color-error: rgb(180, 20, 20);
+  --color-warning: rgb(160, 100, 0);
+  --color-info: rgb(15, 80, 195);
+
+  --bg-hover: rgba(0, 0, 0, 0.06);
+}
+
+@media (prefers-color-scheme: light) {
+  [data-theme="auto"] {
+    --bg-deep: rgb(255, 255, 255);
+    --bg-surface: rgb(250, 250, 252);
+    --bg-base: rgb(250, 250, 252);
+    --bg-card: rgb(255, 255, 255);
+    --bg-elevated: rgb(240, 240, 245);
+
+    --text-primary: rgb(0, 0, 0);
+    --text-secondary: rgb(30, 30, 45);
+    --text-muted: rgb(60, 60, 80);
+    --text-ghost: rgb(90, 90, 112);
+    --text-primary-rgb: 0, 0, 0;
+    --text-muted-rgb: 60, 60, 80;
+
+    --border-subtle: rgb(180, 185, 195);
+    --border-default: rgb(150, 155, 170);
+    --border-bright: rgb(120, 125, 145);
+
+    --accent-primary: rgb(20, 70, 200);
+    --accent-secondary: rgb(85, 40, 195);
+    --accent-primary-rgb: 20, 70, 200;
+    --accent-secondary-rgb: 85, 40, 195;
+
+    --color-success: rgb(15, 130, 75);
+    --color-error: rgb(180, 20, 20);
+    --color-warning: rgb(160, 100, 0);
+    --color-info: rgb(15, 80, 195);
+
+    --bg-hover: rgba(0, 0, 0, 0.06);
+  }
+}

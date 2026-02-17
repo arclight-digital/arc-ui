@@ -23,7 +23,7 @@ export class ArcCalendar extends LitElement {
       }
 
       .calendar {
-        background: var(--bg-card);
+        background: var(--surface-raised);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-lg);
         padding: var(--space-md);
@@ -59,13 +59,13 @@ export class ArcCalendar extends LitElement {
       }
 
       .calendar__nav:hover {
-        background: var(--bg-elevated);
+        background: var(--surface-overlay);
         color: var(--text-primary);
       }
 
       .calendar__nav:focus-visible {
         outline: none;
-        box-shadow: var(--focus-glow);
+        box-shadow: var(--interactive-focus);
       }
 
       .calendar__grid {
@@ -103,7 +103,7 @@ export class ArcCalendar extends LitElement {
       }
 
       .calendar__day:hover:not(:disabled) {
-        background: rgba(var(--accent-primary-rgb), 0.1);
+        background: rgba(var(--interactive-rgb), 0.1);
         color: var(--text-primary);
       }
 
@@ -112,7 +112,7 @@ export class ArcCalendar extends LitElement {
       }
 
       .calendar__day--selected {
-        background: var(--accent-primary) !important;
+        background: var(--interactive) !important;
         color: var(--text-primary) !important;
         font-weight: 600;
       }
@@ -129,11 +129,11 @@ export class ArcCalendar extends LitElement {
 
       .calendar__day:focus-visible {
         outline: none;
-        box-shadow: var(--focus-glow);
+        box-shadow: var(--interactive-focus);
       }
 
       .calendar__day--focused {
-        box-shadow: inset 0 0 0 2px var(--accent-primary);
+        box-shadow: inset 0 0 0 2px var(--interactive);
       }
 
       @media (prefers-reduced-motion: reduce) {

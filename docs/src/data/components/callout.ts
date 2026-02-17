@@ -8,16 +8,16 @@ export const callout: ComponentDef = {
     interactivity: 'static',
     description: 'Styled callout box for tips, warnings, and info.',
 
-    overview: `Callout is an inline notification block for documentation and content pages. It draws attention to supplementary information — tips, warnings, important notes, and danger notices — using colour-coded variants that are instantly recognisable. Each variant applies a distinct top border accent, tinted background, and icon colour, so readers can identify the severity at a glance without reading the label.
+    overview: `Callout is an inline notification block for documentation and content pages. It draws attention to supplementary information — tips, warnings, important notes, and danger notices — using colour-coded variants that are instantly recognisable. Each variant applies a distinct border colour, tinted background, and icon colour, so readers can identify the severity at a glance without reading the label.
 
-The component ships with four variants: \`info\` (blue), \`warning\` (yellow/orange), \`tip\` (green), and \`danger\` (red). Each variant sets its own border colour, background tint, and icon colour via the design token system. The default variant is \`info\`. A 2px coloured bar at the top of the callout (rendered via \`::before\`) provides a strong visual anchor that differentiates it from regular card content.
+The component ships with four variants: \`info\` (blue), \`warning\` (yellow/orange), \`tip\` (green), and \`danger\` (red). Each variant sets its own border colour, background tint, and icon colour via the design token system. The default variant is \`info\`. The variant colour is applied through the container's border-color and a subtle background tint, providing a clear visual anchor that differentiates it from regular card content.
 
 The icon slot lets you replace the default emoji icons with custom SVG or icon-font content. The default icon is determined automatically from the variant: info shows an info symbol, warning shows a caution symbol, tip shows a sparkle, and danger shows a stop sign. The default content slot accepts any HTML, making it suitable for rich content including inline code, links, and lists.`,
 
     features: [
       'Four semantic variants: info, warning, tip, and danger with distinct colour schemes',
       'Automatic default icon per variant (info, caution, sparkle, stop) via _getDefaultIcon()',
-      'Coloured 2px top accent bar rendered with ::before pseudo-element',
+      'Variant-coloured border and subtle background tint for visual differentiation',
       'Tinted background using rgba alpha on each variant colour for subtle emphasis',
       'Icon slot for replacing default emoji icons with custom SVG content',
       'Default content slot accepts rich HTML including links, code, and lists',
@@ -52,6 +52,9 @@ The icon slot lets you replace the default emoji icons with custom SVG or icon-f
     props: [
       { name: 'variant', type: "'info' | 'warning' | 'tip' | 'danger'", default: "'info'", description: 'Semantic variant that controls the colour scheme, top accent bar, and default icon' },
       { name: 'dismissible', type: 'boolean', default: 'false', description: 'Shows a close button that removes the callout. Fires an arc-dismiss event on close.' },
+    ],
+    events: [
+      { name: 'arc-dismiss', description: 'Fired when the dismiss button is clicked on a dismissible callout.' },
     ],
     tabs: [
       {

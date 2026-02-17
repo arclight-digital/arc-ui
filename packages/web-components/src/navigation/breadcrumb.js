@@ -37,31 +37,42 @@ export class ArcBreadcrumb extends LitElement {
       .breadcrumb__link {
         color: var(--text-muted);
         text-decoration: none;
-        transition: color var(--transition-fast);
+        transition: all var(--transition-fast);
         background: none;
         border: none;
-        padding: var(--touch-pad) var(--space-xs);
+        padding: 2px 6px;
         cursor: pointer;
         font: inherit;
         font-size: inherit;
         min-height: var(--touch-min);
         display: inline-flex;
         align-items: center;
+        border-radius: var(--radius-xs);
       }
 
       .breadcrumb__link:hover {
         color: var(--text-primary);
+        background: rgba(var(--interactive-rgb), 0.06);
+        box-shadow: 0 0 8px rgba(var(--interactive-rgb), 0.08);
+      }
+
+      .breadcrumb__link:active {
+        transform: scale(0.95);
       }
 
       .breadcrumb__link:focus-visible {
         outline: none;
-        box-shadow: var(--focus-ring);
+        box-shadow: var(--interactive-focus-ring);
         border-radius: var(--radius-xs);
       }
 
       .breadcrumb__current {
         color: var(--text-primary);
         font-weight: 500;
+        padding: var(--touch-pad) var(--space-xs);
+        display: inline-flex;
+        align-items: center;
+        min-height: var(--touch-min);
       }
 
       .breadcrumb__separator {

@@ -178,7 +178,7 @@ export class ArcMarkdown extends LitElement {
       .markdown em { font-style: italic; }
 
       .markdown a {
-        color: var(--accent-primary);
+        color: var(--interactive);
         text-decoration: none;
         transition: color var(--transition-fast);
       }
@@ -191,13 +191,13 @@ export class ArcMarkdown extends LitElement {
         font-family: var(--font-mono);
         font-size: var(--code-size);
         color: var(--accent-secondary);
-        background: var(--bg-surface);
+        background: var(--surface-primary);
         padding: 2px calc(var(--space-xs) + 2px); /* cosmetic 2px vertical for inline code */
         border-radius: var(--radius-sm);
       }
 
       .markdown pre {
-        background: var(--bg-surface);
+        background: var(--surface-primary);
         border: 1px solid var(--border-subtle);
         border-radius: var(--radius-md);
         padding: var(--space-md);
@@ -217,7 +217,7 @@ export class ArcMarkdown extends LitElement {
       .markdown blockquote {
         margin: 0 0 var(--space-md) 0;
         padding: var(--space-sm);
-        background: var(--bg-card);
+        background: var(--surface-raised);
         border: 1px solid var(--border-subtle);
         border-radius: var(--radius-md);
       }
@@ -240,7 +240,7 @@ export class ArcMarkdown extends LitElement {
       .markdown hr {
         border: none;
         height: 1px;
-        background: var(--border-subtle);
+        background: var(--divider);
         margin: var(--space-xl) 0;
       }
 

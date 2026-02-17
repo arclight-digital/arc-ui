@@ -15,7 +15,7 @@ withDefaults(defineProps<{
 });
 
 defineEmits<{
-  'arc-trigger': [event: CustomEvent];
+  'arc-hotkey-trigger': [event: CustomEvent];
 }>();
 </script>
 

@@ -7,9 +7,10 @@ import '@arclux/arc-ui';
   selector: 'arc-sidebar-link',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-sidebar-link [attr.href]="href" [active]="active"><ng-content /></arc-sidebar-link>`,
+  template: `<arc-sidebar-link [attr.href]="href" [active]="active" [attr.level]="level"><ng-content /></arc-sidebar-link>`,
 })
 export class SidebarLink {
   @Input() href: string = '';
   @Input() active: boolean = false;
+  @Input() level: number = 0;
 }

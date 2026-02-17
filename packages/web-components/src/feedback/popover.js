@@ -29,7 +29,7 @@ export class ArcPopover extends LitElement {
         position: absolute;
         z-index: 100;
         min-width: 200px;
-        background: var(--bg-card);
+        background: var(--surface-raised);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-md);
         padding: var(--space-md);

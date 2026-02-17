@@ -19,7 +19,7 @@ export class ArcKbd extends LitElement {
         font-size: var(--text-sm);
         line-height: 1;
         color: var(--text-secondary);
-        background: var(--bg-elevated);
+        background: var(--surface-overlay);
         border: 1px solid var(--border-default);
         border-bottom-width: 2px;
         border-radius: var(--radius-sm);

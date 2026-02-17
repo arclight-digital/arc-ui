@@ -50,22 +50,33 @@ export class ArcCombobox extends LitElement {
         font-family: var(--font-body);
         font-size: var(--text-sm);
         color: var(--text-primary);
-        background: var(--bg-card);
+        background: var(--surface-raised);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-md);
         padding: var(--space-sm) var(--space-md);
         outline: none;
         transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+        box-shadow: var(--shadow-inset);
       }
 
       .combobox__input::placeholder {
         color: var(--text-muted);
       }
 
+      .combobox__input:hover:not(:focus) {
+        border-color: var(--border-bright);
+        box-shadow: var(--shadow-inset), var(--interactive-hover);
+      }
+
       .combobox__input:focus {
         outline: none;
-        border-color: rgba(var(--accent-primary-rgb), 0.4);
-        box-shadow: var(--focus-glow);
+        border-color: rgba(var(--interactive-rgb), 0.4);
+        box-shadow: var(--shadow-inset), var(--interactive-focus);
+      }
+
+      @keyframes dropdown-in {
+        from { opacity: 0; transform: translateY(-4px); }
+        to { opacity: 1; transform: translateY(0); }
       }
 
       .combobox__listbox {
@@ -75,17 +86,26 @@ export class ArcCombobox extends LitElement {
         right: 0;
         max-height: 220px;
         overflow-y: auto;
-        background: var(--bg-card);
+        overflow-x: hidden;
+        background: var(--surface-raised);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-md);
         box-shadow: var(--shadow-overlay);
-        z-index: 1000;
+        z-index: var(--z-dropdown);
         padding: var(--space-xs) 0;
         display: none;
       }
 
       .combobox__listbox--open {
         display: block;
+        animation: dropdown-in var(--transition-fast);
+      }
+
+      .combobox__listbox::before {
+        content: '';
+        display: block;
+        height: 1px;
+        background: var(--divider-glow);
       }
 
       .combobox__option {
@@ -104,16 +124,16 @@ export class ArcCombobox extends LitElement {
 
       .combobox__option:hover,
       .combobox__option--active {
-        background: rgba(var(--accent-primary-rgb), 0.1);
+        background: rgba(var(--interactive-rgb), 0.1);
       }
 
       .combobox__option--selected {
-        color: var(--accent-primary);
+        color: var(--interactive);
       }
 
       .combobox__option:focus-visible {
         outline: none;
-        box-shadow: var(--focus-glow);
+        box-shadow: var(--interactive-focus);
       }
 
       .combobox__empty {

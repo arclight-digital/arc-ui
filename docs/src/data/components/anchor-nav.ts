@@ -52,8 +52,9 @@ AnchorNav supports both orientations out of the box. Vertical mode is best for s
 </div>`,
 
   props: [
-    { name: 'orientation', type: "'vertical' | 'horizontal'", default: "'vertical'", description: 'Layout direction. Vertical renders a column of links; horizontal renders a row.' },
+    { name: 'orientation', type: "'vertical' | 'horizontal'", default: "'horizontal'", description: 'Layout direction. Vertical renders a column of links; horizontal renders a row.' },
     { name: 'value', type: 'string', default: "''", description: 'The value of the currently active link. Controls which item is highlighted.' },
+    { name: 'items', type: 'Array<{ label: string, value: string }>', default: '[]', description: 'Declarative list of items to render. Each object needs a label (display text) and value (identifier). Alternative to slotting children.' },
   ],
   events: [
     { name: 'arc-change', description: 'Fired when a link is selected with detail: { value }.' },
@@ -66,10 +67,10 @@ AnchorNav supports both orientations out of the box. Vertical mode is best for s
       code: `<script type="module" src="@arclux/arc-ui"></script>
 
 <arc-anchor-nav orientation="vertical" value="overview" id="toc">
-  <arc-anchor-nav-item value="overview">Overview</arc-anchor-nav-item>
-  <arc-anchor-nav-item value="installation">Installation</arc-anchor-nav-item>
-  <arc-anchor-nav-item value="theming">Theming</arc-anchor-nav-item>
-  <arc-anchor-nav-item value="api">API Reference</arc-anchor-nav-item>
+  <span value="overview">Overview</span>
+  <span value="installation">Installation</span>
+  <span value="theming">Theming</span>
+  <span value="api">API Reference</span>
 </arc-anchor-nav>
 
 <script>
@@ -81,7 +82,7 @@ AnchorNav supports both orientations out of the box. Vertical mode is best for s
     {
       label: 'React',
       lang: 'tsx',
-      code: `import { AnchorNav, AnchorNavItem } from '@arclux/arc-ui-react';
+      code: `import { AnchorNav } from '@arclux/arc-ui-react';
 
 export function TableOfContents() {
   return (
@@ -90,10 +91,10 @@ export function TableOfContents() {
       value="overview"
       onArcChange={(e) => console.log('active:', e.detail.value)}
     >
-      <AnchorNavItem value="overview">Overview</AnchorNavItem>
-      <AnchorNavItem value="installation">Installation</AnchorNavItem>
-      <AnchorNavItem value="theming">Theming</AnchorNavItem>
-      <AnchorNavItem value="api">API Reference</AnchorNavItem>
+      <span value="overview">Overview</span>
+      <span value="installation">Installation</span>
+      <span value="theming">Theming</span>
+      <span value="api">API Reference</span>
     </AnchorNav>
   );
 }`,
@@ -102,7 +103,7 @@ export function TableOfContents() {
       label: 'Vue',
       lang: 'html',
       code: `<script setup>
-import { AnchorNav, AnchorNavItem } from '@arclux/arc-ui-vue';
+import { AnchorNav } from '@arclux/arc-ui-vue';
 
 function onChange(e) {
   console.log('active:', e.detail.value);
@@ -111,10 +112,10 @@ function onChange(e) {
 
 <template>
   <AnchorNav orientation="vertical" value="overview" @arc-change="onChange">
-    <AnchorNavItem value="overview">Overview</AnchorNavItem>
-    <AnchorNavItem value="installation">Installation</AnchorNavItem>
-    <AnchorNavItem value="theming">Theming</AnchorNavItem>
-    <AnchorNavItem value="api">API Reference</AnchorNavItem>
+    <span value="overview">Overview</span>
+    <span value="installation">Installation</span>
+    <span value="theming">Theming</span>
+    <span value="api">API Reference</span>
   </AnchorNav>
 </template>`,
     },
@@ -122,7 +123,7 @@ function onChange(e) {
       label: 'Svelte',
       lang: 'html',
       code: `<script>
-  import { AnchorNav, AnchorNavItem } from '@arclux/arc-ui-svelte';
+  import { AnchorNav } from '@arclux/arc-ui-svelte';
 </script>
 
 <AnchorNav
@@ -130,30 +131,30 @@ function onChange(e) {
   value="overview"
   on:arc-change={(e) => console.log('active:', e.detail.value)}
 >
-  <AnchorNavItem value="overview">Overview</AnchorNavItem>
-  <AnchorNavItem value="installation">Installation</AnchorNavItem>
-  <AnchorNavItem value="theming">Theming</AnchorNavItem>
-  <AnchorNavItem value="api">API Reference</AnchorNavItem>
+  <span value="overview">Overview</span>
+  <span value="installation">Installation</span>
+  <span value="theming">Theming</span>
+  <span value="api">API Reference</span>
 </AnchorNav>`,
     },
     {
       label: 'Angular',
       lang: 'ts',
       code: `import { Component } from '@angular/core';
-import { AnchorNav, AnchorNavItem } from '@arclux/arc-ui-angular';
+import { AnchorNav } from '@arclux/arc-ui-angular';
 
 @Component({
-  imports: [AnchorNav, AnchorNavItem],
+  imports: [AnchorNav],
   template: \`
     <AnchorNav
       orientation="vertical"
       value="overview"
       (arc-change)="onChange($event)"
     >
-      <AnchorNavItem value="overview">Overview</AnchorNavItem>
-      <AnchorNavItem value="installation">Installation</AnchorNavItem>
-      <AnchorNavItem value="theming">Theming</AnchorNavItem>
-      <AnchorNavItem value="api">API Reference</AnchorNavItem>
+      <span value="overview">Overview</span>
+      <span value="installation">Installation</span>
+      <span value="theming">Theming</span>
+      <span value="api">API Reference</span>
     </AnchorNav>
   \`,
 })
@@ -166,7 +167,7 @@ export class TableOfContentsComponent {
     {
       label: 'Solid',
       lang: 'tsx',
-      code: `import { AnchorNav, AnchorNavItem } from '@arclux/arc-ui-solid';
+      code: `import { AnchorNav } from '@arclux/arc-ui-solid';
 
 export function TableOfContents() {
   return (
@@ -175,10 +176,10 @@ export function TableOfContents() {
       value="overview"
       onArcChange={(e) => console.log('active:', e.detail.value)}
     >
-      <AnchorNavItem value="overview">Overview</AnchorNavItem>
-      <AnchorNavItem value="installation">Installation</AnchorNavItem>
-      <AnchorNavItem value="theming">Theming</AnchorNavItem>
-      <AnchorNavItem value="api">API Reference</AnchorNavItem>
+      <span value="overview">Overview</span>
+      <span value="installation">Installation</span>
+      <span value="theming">Theming</span>
+      <span value="api">API Reference</span>
     </AnchorNav>
   );
 }`,
@@ -186,7 +187,7 @@ export function TableOfContents() {
     {
       label: 'Preact',
       lang: 'tsx',
-      code: `import { AnchorNav, AnchorNavItem } from '@arclux/arc-ui-preact';
+      code: `import { AnchorNav } from '@arclux/arc-ui-preact';
 
 export function TableOfContents() {
   return (
@@ -195,10 +196,10 @@ export function TableOfContents() {
       value="overview"
       onArcChange={(e) => console.log('active:', e.detail.value)}
     >
-      <AnchorNavItem value="overview">Overview</AnchorNavItem>
-      <AnchorNavItem value="installation">Installation</AnchorNavItem>
-      <AnchorNavItem value="theming">Theming</AnchorNavItem>
-      <AnchorNavItem value="api">API Reference</AnchorNavItem>
+      <span value="overview">Overview</span>
+      <span value="installation">Installation</span>
+      <span value="theming">Theming</span>
+      <span value="api">API Reference</span>
     </AnchorNav>
   );
 }`,

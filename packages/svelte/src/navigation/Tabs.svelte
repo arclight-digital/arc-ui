@@ -7,14 +7,15 @@
     selected?: number;
     align?: 'center' | 'end';
     variant?: 'pills';
+    orientation?: 'vertical';
     _tabs?: string;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { selected = 0, align = 'start', variant = 'underline', _tabs = [], children, ...rest }: Props = $props();
+  let { selected = 0, align = 'start', variant = 'underline', orientation = 'horizontal', _tabs = [], children, ...rest }: Props = $props();
 </script>
 
-<arc-tabs {selected} {align} {variant} {_tabs} {...rest}>
+<arc-tabs {selected} {align} {variant} {orientation} {_tabs} {...rest}>
   {@render children?.()}
 </arc-tabs>

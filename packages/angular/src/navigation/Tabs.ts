@@ -7,12 +7,13 @@ import '@arclux/arc-ui';
   selector: 'arc-tabs',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-tabs [attr.selected]="selected" [attr.align]="align" [attr.variant]="variant" [attr._tabs]="_tabs" (arc-change)="arcChange.emit($event)"><ng-content /></arc-tabs>`,
+  template: `<arc-tabs [attr.selected]="selected" [attr.align]="align" [attr.variant]="variant" [attr.orientation]="orientation" [attr._tabs]="_tabs" (arc-change)="arcChange.emit($event)"><ng-content /></arc-tabs>`,
 })
 export class Tabs {
   @Input() selected: number = 0;
   @Input() align: 'center' | 'end' = 'start';
   @Input() variant: 'pills' = 'underline';
+  @Input() orientation: 'vertical' = 'horizontal';
   @Input() _tabs: string = [];
   @Output() arcChange = new EventEmitter<CustomEvent>();
 }

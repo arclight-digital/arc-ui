@@ -19,7 +19,7 @@ export class ArcToggle extends LitElement {
     tokenStyles,
     css`
       :host { display: inline-flex; align-items: center; }
-      :host([disabled]) { pointer-events: none; opacity: 0.4; }
+      :host([disabled]) { pointer-events: none; opacity: 0.5; }
 
       .toggle {
         display: inline-flex;
@@ -34,7 +34,7 @@ export class ArcToggle extends LitElement {
         width: 44px;
         height: 24px;
         border-radius: var(--radius-full);
-        background: var(--bg-elevated);
+        background: var(--surface-overlay);
         border: 1px solid var(--border-bright);
         transition:
           background var(--transition-base),
@@ -48,19 +48,19 @@ export class ArcToggle extends LitElement {
       }
 
       :host([checked]) .toggle__track {
-        background: var(--accent-primary);
+        background: var(--interactive);
         border-color: transparent;
         box-shadow:
-          0 0 8px rgba(var(--accent-primary-rgb), 0.5),
-          0 0 20px rgba(var(--accent-primary-rgb), 0.3),
-          0 0 40px rgba(var(--accent-primary-rgb), 0.15);
+          0 0 8px rgba(var(--interactive-rgb), 0.5),
+          0 0 20px rgba(var(--interactive-rgb), 0.3),
+          0 0 40px rgba(var(--interactive-rgb), 0.15);
       }
 
       :host([checked]) .toggle__track:hover {
         box-shadow:
-          0 0 10px rgba(var(--accent-primary-rgb), 0.6),
-          0 0 28px rgba(var(--accent-primary-rgb), 0.35),
-          0 0 50px rgba(var(--accent-primary-rgb), 0.2);
+          0 0 10px rgba(var(--interactive-rgb), 0.6),
+          0 0 28px rgba(var(--interactive-rgb), 0.35),
+          0 0 50px rgba(var(--interactive-rgb), 0.2);
       }
 
       .toggle__thumb {
@@ -72,7 +72,7 @@ export class ArcToggle extends LitElement {
         border-radius: var(--radius-full);
         background: var(--text-primary);
         transition:
-          transform var(--transition-base),
+          transform 300ms var(--ease-out-expo),
           box-shadow var(--transition-base);
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
       }
@@ -81,8 +81,8 @@ export class ArcToggle extends LitElement {
         transform: translateX(20px);
         box-shadow:
           0 1px 3px rgba(0, 0, 0, 0.2),
-          0 0 8px rgba(var(--accent-primary-rgb), 0.5),
-          0 0 16px rgba(var(--accent-primary-rgb), 0.3);
+          0 0 8px rgba(var(--interactive-rgb), 0.5),
+          0 0 16px rgba(var(--interactive-rgb), 0.3);
       }
 
       /* Sizes */
@@ -106,15 +106,15 @@ export class ArcToggle extends LitElement {
 
       .toggle__track:focus-visible {
         outline: none;
-        box-shadow: var(--focus-glow);
+        box-shadow: var(--interactive-focus);
       }
 
       :host([checked]) .toggle__track:focus-visible {
         box-shadow:
-          0 0 0 1px rgba(var(--accent-primary-rgb), 0.25),
-          0 0 10px rgba(var(--accent-primary-rgb), 0.6),
-          0 0 28px rgba(var(--accent-primary-rgb), 0.35),
-          0 0 50px rgba(var(--accent-primary-rgb), 0.2);
+          0 0 0 1px rgba(var(--interactive-rgb), 0.25),
+          0 0 10px rgba(var(--interactive-rgb), 0.6),
+          0 0 28px rgba(var(--interactive-rgb), 0.35),
+          0 0 50px rgba(var(--interactive-rgb), 0.2);
       }
 
       @media (prefers-reduced-motion: reduce) {

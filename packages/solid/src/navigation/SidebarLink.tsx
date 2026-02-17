@@ -6,14 +6,15 @@ import '@arclux/arc-ui';
 export interface SidebarLinkProps {
   href?: string;
   active?: boolean;
+  level?: number;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const SidebarLink: Component<SidebarLinkProps> = (props) => {
-  const [local, rest] = splitProps(props, ['href', 'active', 'children']);
+  const [local, rest] = splitProps(props, ['href', 'active', 'level', 'children']);
   return (
-    <arc-sidebar-link href={local.href} active={local.active} {...rest}>
+    <arc-sidebar-link href={local.href} active={local.active} level={local.level} {...rest}>
       {local.children}
     </arc-sidebar-link>
   );

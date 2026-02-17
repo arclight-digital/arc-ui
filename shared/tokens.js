@@ -57,8 +57,8 @@ export const tokens = {
 
   fontSize: {
     xs:           '12px',
-    sm:           '14px',
-    md:           '15px',
+    sm:           '16px',
+    md:           '17px',
     lg:           'clamp(18px, 1.5vw, 20px)',
     xl:           'clamp(22px, 2.5vw, 26px)',
     '2xl':        'clamp(28px, 3vw, 36px)',
@@ -69,7 +69,7 @@ export const tokens = {
     wordmark:     'clamp(20px, 2.5vw, 28px)',
     sectionTitle: 'var(--text-xs)',
     uiAccent:     '16px',
-    code:         'var(--text-sm)',
+    code:         '14px',
     labelInline:  'var(--text-xs)',
   },
 
@@ -142,18 +142,17 @@ export const tokens = {
     lg:      '0 8px 24px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0, 0, 0, 0.15)',
     xl:      '0 16px 48px rgba(0, 0, 0, 0.35), 0 8px 16px rgba(0, 0, 0, 0.15)',
     overlay: '0 8px 32px rgba(0, 0, 0, 0.4)',
+    inset:   'inset 0 1px 3px rgba(0, 0, 0, 0.25)',
   },
 
   /* ── Z-Index ── */
   zIndex: {
     base:     0,
-    dropdown: 100,
-    sticky:   200,
-    drawer:   300,
-    modal:    400,
-    popover:  500,
-    toast:    600,
-    tooltip:  700,
+    dropdown: 1000,
+    tooltip:  1100,
+    overlay:  1200,
+    modal:    1300,
+    toast:    1400,
     max:      9999,
   },
 
@@ -204,6 +203,9 @@ export const tokens = {
     primary:   '0 0 8px rgba(var(--accent-primary-rgb),0.9), 0 0 20px rgba(var(--accent-primary-rgb),0.5), 0 0 44px rgba(var(--accent-primary-rgb),0.25), 0 0 80px rgba(var(--accent-primary-rgb),0.1)',
     secondary: '0 0 8px rgba(var(--accent-secondary-rgb),0.9), 0 0 20px rgba(var(--accent-secondary-rgb),0.5), 0 0 44px rgba(var(--accent-secondary-rgb),0.25), 0 0 80px rgba(var(--accent-secondary-rgb),0.1)',
   },
+
+  /* ── Hover Glow ── */
+  glowHover: '0 0 12px rgba(var(--accent-primary-rgb), 0.15)',
 
   /* ── Card / Ambient Glow ── */
   glowCard: {
@@ -269,15 +271,14 @@ export const cssVariables = `
   --shadow-lg: ${tokens.shadow.lg};
   --shadow-xl: ${tokens.shadow.xl};
   --shadow-overlay: ${tokens.shadow.overlay};
+  --shadow-inset: ${tokens.shadow.inset};
 
   --z-base: ${tokens.zIndex.base};
   --z-dropdown: ${tokens.zIndex.dropdown};
-  --z-sticky: ${tokens.zIndex.sticky};
-  --z-drawer: ${tokens.zIndex.drawer};
-  --z-modal: ${tokens.zIndex.modal};
-  --z-popover: ${tokens.zIndex.popover};
-  --z-toast: ${tokens.zIndex.toast};
   --z-tooltip: ${tokens.zIndex.tooltip};
+  --z-overlay: ${tokens.zIndex.overlay};
+  --z-modal: ${tokens.zIndex.modal};
+  --z-toast: ${tokens.zIndex.toast};
   --z-max: ${tokens.zIndex.max};
 
   --breakpoint-xs: ${tokens.breakpoint.xs};
@@ -368,6 +369,7 @@ export const cssVariables = `
   --glow-line-blue: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.7), transparent);
   --glow-line-gradient: linear-gradient(90deg, transparent, var(--accent-primary), var(--accent-secondary), transparent);
 
+  --glow-hover: 0 0 12px rgba(var(--accent-primary-rgb), 0.15);
   --glow-card-hover: 0 0 20px rgba(var(--accent-primary-rgb),0.08), 0 0 40px rgba(var(--accent-secondary-rgb),0.04);
   --gradient-border-glow: linear-gradient(135deg, rgba(var(--accent-primary-rgb),0.15), rgba(var(--accent-secondary-rgb),0.1), rgba(var(--accent-primary-rgb),0.05));
   --gradient-ambient: radial-gradient(circle at 15% 85%, rgba(var(--accent-primary-rgb),0.04) 0%, transparent 50%),
@@ -382,6 +384,40 @@ export const cssVariables = `
 
   --bg-hover: rgba(${tokens.rgb.white}, 0.04);
   --overlay-backdrop: rgba(${tokens.rgb.black}, 0.6);
+
+  /* ── Semantic: Interactive ── */
+  --interactive: var(--accent-primary);
+  --interactive-rgb: var(--accent-primary-rgb);
+  --interactive-hover: var(--glow-hover);
+  --interactive-active: var(--glow-primary);
+  --interactive-focus: var(--focus-glow);
+  --interactive-focus-ring: var(--focus-ring);
+  --interactive-muted: var(--text-ghost);
+
+  /* ── Semantic: Surface ── */
+  --surface-base: var(--bg-deep);
+  --surface-primary: var(--bg-surface);
+  --surface-raised: var(--bg-card);
+  --surface-overlay: var(--bg-elevated);
+  --surface-hover: var(--bg-hover);
+
+  /* ── Semantic: Divider ── */
+  --divider: var(--border-subtle);
+  --divider-glow: var(--glow-line-gradient);
+
+  /* ── Semantic: Feedback composites ── */
+  --feedback-error-subtle: var(--color-error-subtle);
+  --feedback-error-border: rgba(var(--color-error-rgb), 0.2);
+  --feedback-error-glow: 0 0 12px rgba(var(--color-error-rgb), 0.15);
+  --feedback-success-subtle: rgba(var(--color-success-rgb), 0.1);
+  --feedback-success-border: rgba(var(--color-success-rgb), 0.2);
+  --feedback-success-glow: 0 0 12px rgba(var(--color-success-rgb), 0.15);
+  --feedback-warning-subtle: var(--color-warning-subtle);
+  --feedback-warning-border: rgba(var(--color-warning-rgb), 0.2);
+  --feedback-warning-glow: 0 0 12px rgba(var(--color-warning-rgb), 0.15);
+  --feedback-info-subtle: var(--color-info-subtle);
+  --feedback-info-border: rgba(var(--color-info-rgb), 0.2);
+  --feedback-info-glow: 0 0 12px rgba(var(--color-info-rgb), 0.15);
 `;
 
 /** Light theme color overrides */
@@ -519,6 +555,7 @@ const rgbVarMap = {
 const shadowVarMap = {
   xs: '--shadow-xs', sm: '--shadow-sm', md: '--shadow-md',
   lg: '--shadow-lg', xl: '--shadow-xl', overlay: '--shadow-overlay',
+  inset: '--shadow-inset',
 };
 
 const gradientVarMap = {

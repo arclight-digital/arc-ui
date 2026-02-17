@@ -10,7 +10,7 @@ export const topBar: ComponentDef = {
 
     overview: `TopBar is the persistent horizontal header that sits at the top of every page in an ARC UI application. It provides three clearly defined regions — brand, center, and actions — that map to the universal header pattern found in virtually every modern web app: logo on the left, navigation in the middle, and user controls on the right.
 
-The component is designed to work hand-in-hand with AppShell and Sidebar. When nested inside an AppShell via the \`top-bar\` slot, it automatically spans the full viewport width and stays fixed at the top of the page while the content below scrolls. On mobile viewports, a hamburger menu button appears automatically, dispatching an \`arc-toggle\` event that AppShell listens for to open or close the Sidebar overlay.
+The component is designed to work hand-in-hand with AppShell and Sidebar. When nested inside an AppShell via the \`top-bar\` slot, it automatically spans the full viewport width and stays fixed at the top of the page while the content below scrolls. On mobile viewports, a hamburger menu button appears automatically, dispatching an \`arc-sidebar-toggle\` event that AppShell listens for to open or close the Sidebar overlay.
 
 Use TopBar whenever your application needs a consistent, recognizable header. It handles responsive behavior out of the box: the brand slot collapses gracefully, the center slot hides on narrow screens, and the actions slot remains accessible at every breakpoint. The \`fixed\` property pins the bar to the viewport so content scrolls underneath it, which is the recommended default for most dashboard and documentation layouts.`,
 
@@ -18,7 +18,7 @@ Use TopBar whenever your application needs a consistent, recognizable header. It
       'Three named slots (logo, center, actions) for flexible header composition',
       'Fixed positioning mode that pins the bar to the top of the viewport',
       'Built-in responsive hamburger menu button that appears on mobile breakpoints',
-      'Dispatches arc-toggle custom event for Sidebar integration',
+      'Dispatches arc-sidebar-toggle custom event for Sidebar integration',
       'Brand region with accent typography, letter-spacing, and uppercase treatment',
       'Seamless integration with AppShell via the top-bar slot',
       'CSS custom property theming through design tokens (--bg-deep, --border-subtle, --nav-height)',
@@ -34,7 +34,7 @@ Use TopBar whenever your application needs a consistent, recognizable header. It
         'Put primary navigation links in the center slot for desktop layouts',
         'Reserve the actions slot for user-facing controls: avatar, settings, notifications, sign-in',
         'Set the fixed property when the page content is scrollable and the header should stay visible',
-        'Listen for the arc-toggle event to synchronize sidebar open/close state',
+        'Listen for the arc-sidebar-toggle event to synchronize sidebar open/close state',
       ],
       dont: [
         'Stack multiple TopBars on the same page — use one per application shell',
@@ -82,7 +82,7 @@ Use TopBar whenever your application needs a consistent, recognizable header. It
         name: 'menu-open',
         type: 'boolean',
         default: 'false',
-        description: 'Reflects whether the mobile hamburger menu is open. Toggling this value updates the aria-expanded attribute on the menu button. Typically managed by AppShell in response to the arc-toggle event rather than set directly.',
+        description: 'Reflects whether the mobile hamburger menu is open. Toggling this value updates the aria-expanded attribute on the menu button. Typically managed by AppShell in response to the arc-sidebar-toggle event rather than set directly.',
       },
       {
         name: 'nav-align',
@@ -90,9 +90,13 @@ Use TopBar whenever your application needs a consistent, recognizable header. It
         default: "'center'",
         description: "Controls the alignment of content in the center slot. Options: 'left', 'center', 'right'. Pulls nav toward the brand or actions without reordering DOM.",
       },
+      { name: 'contained', type: 'string', default: "''", description: 'Sets a max-width containment on the top bar content area. Accepts any CSS length or named size.' },
+      { name: 'mobile-menu', type: 'string', default: "''", description: 'Controls the mobile menu behavior. When set to a value like "nav", the hamburger toggles an inline navigation panel instead of triggering sidebar toggle.' },
+      { name: 'menu-position', type: 'string', default: "''", description: 'Position of the mobile menu panel when mobile-menu is active.' },
     ],
     events: [
-      { name: 'arc-toggle', description: 'Fired when the mobile menu toggle is clicked' },
+      { name: 'arc-sidebar-toggle', description: 'Fired when the mobile menu toggle is clicked (sidebar mode)' },
+      { name: 'arc-mobile-menu-toggle', description: 'Fired when the mobile hamburger button is clicked and mobile-menu mode is active. Use this to toggle your own mobile navigation panel.' },
     ],
 
     tabs: [

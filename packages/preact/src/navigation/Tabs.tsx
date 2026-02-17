@@ -7,13 +7,14 @@ export interface TabsProps {
   selected?: number;
   align?: 'center' | 'end';
   variant?: 'pills';
+  orientation?: 'vertical';
   _tabs?: string;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const Tabs: FunctionComponent<TabsProps> = ({ selected, align, variant, _tabs, children, ...rest }) => (
-  <arc-tabs selected={selected} align={align} variant={variant} _tabs={_tabs} {...rest}>
+export const Tabs: FunctionComponent<TabsProps> = ({ selected, align, variant, orientation, _tabs, children, ...rest }) => (
+  <arc-tabs selected={selected} align={align} variant={variant} orientation={orientation} _tabs={_tabs} {...rest}>
     {children}
   </arc-tabs>
 );

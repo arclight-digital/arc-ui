@@ -22,7 +22,7 @@ export class ArcDock extends LitElement {
       .dock {
         position: fixed;
         z-index: 100;
-        background: var(--bg-surface);
+        background: var(--surface-primary);
         border: 1px solid var(--border-subtle);
         transition: transform var(--transition-base) var(--ease-out-expo);
         overflow-y: auto;

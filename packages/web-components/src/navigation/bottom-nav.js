@@ -28,9 +28,9 @@ export class ArcBottomNav extends LitElement {
         right: 0;
         z-index: 100;
         display: flex;
-        background: var(--bg-elevated);
+        background: var(--surface-overlay);
         backdrop-filter: blur(12px);
-        border-top: 1px solid var(--border-subtle);
+        border-top: 1px solid var(--divider);
         padding: var(--space-xs) 0;
         padding-bottom: env(safe-area-inset-bottom, 0);
       }
@@ -56,7 +56,7 @@ export class ArcBottomNav extends LitElement {
       }
 
       .bottom-nav__item.is-active {
-        color: var(--accent-primary);
+        color: var(--interactive);
       }
 
       .bottom-nav__item.is-active::after {
@@ -64,8 +64,8 @@ export class ArcBottomNav extends LitElement {
         width: 20px;
         height: 2px;
         border-radius: 1px;
-        background: var(--accent-primary);
-        box-shadow: 0 0 8px rgba(var(--accent-primary-rgb), 0.3);
+        background: var(--interactive);
+        box-shadow: 0 0 8px rgba(var(--interactive-rgb), 0.3);
         margin-top: 2px;
       }
 

@@ -58,20 +58,20 @@ export class ArcNavigationMenu extends LitElement {
       .nav__trigger:hover,
       .nav__trigger--open {
         color: var(--text-primary);
-        background: var(--bg-hover);
+        background: var(--surface-hover);
         border-color: var(--border-default);
       }
 
       .nav__trigger--active {
-        color: var(--accent-primary);
-        background: rgba(var(--accent-primary-rgb), 0.06);
-        border-color: rgba(var(--accent-primary-rgb), 0.3);
-        box-shadow: inset 0 0 8px rgba(var(--accent-primary-rgb), 0.06), 0 0 8px rgba(var(--accent-primary-rgb), 0.08);
+        color: var(--interactive);
+        background: rgba(var(--interactive-rgb), 0.06);
+        border-color: rgba(var(--interactive-rgb), 0.3);
+        box-shadow: inset 0 0 8px rgba(var(--interactive-rgb), 0.06), 0 0 8px rgba(var(--interactive-rgb), 0.08);
       }
 
       .nav__trigger--active:hover {
-        border-color: rgba(var(--accent-primary-rgb), 0.5);
-        box-shadow: inset 0 0 8px rgba(var(--accent-primary-rgb), 0.08), 0 0 12px rgba(var(--accent-primary-rgb), 0.12);
+        border-color: rgba(var(--interactive-rgb), 0.5);
+        box-shadow: inset 0 0 8px rgba(var(--interactive-rgb), 0.08), 0 0 12px rgba(var(--interactive-rgb), 0.12);
       }
 
       .nav__trigger--muted {
@@ -91,45 +91,45 @@ export class ArcNavigationMenu extends LitElement {
 
       .nav__trigger--muted.nav__trigger--active {
         color: var(--text-primary);
-        background: rgba(var(--accent-primary-rgb), 0.08);
+        background: rgba(var(--interactive-rgb), 0.08);
         border-color: transparent;
-        box-shadow: 0 0 12px rgba(var(--accent-primary-rgb), 0.1);
+        box-shadow: 0 0 12px rgba(var(--interactive-rgb), 0.1);
       }
 
       .nav__trigger--muted.nav__trigger--active:hover {
-        background: rgba(var(--accent-primary-rgb), 0.12);
-        box-shadow: 0 0 16px rgba(var(--accent-primary-rgb), 0.14);
+        background: rgba(var(--interactive-rgb), 0.12);
+        box-shadow: 0 0 16px rgba(var(--interactive-rgb), 0.14);
       }
 
       .nav__trigger--primary {
-        color: var(--accent-primary);
-        border-color: rgba(var(--accent-primary-rgb), 0.2);
-        background: rgba(var(--accent-primary-rgb), 0.04);
+        color: var(--interactive);
+        border-color: rgba(var(--interactive-rgb), 0.2);
+        background: rgba(var(--interactive-rgb), 0.04);
       }
 
       .nav__trigger--primary:hover,
       .nav__trigger--primary.nav__trigger--open {
-        color: var(--accent-primary);
-        background: rgba(var(--accent-primary-rgb), 0.1);
-        border-color: rgba(var(--accent-primary-rgb), 0.4);
-        box-shadow: 0 0 12px rgba(var(--accent-primary-rgb), 0.12);
+        color: var(--interactive);
+        background: rgba(var(--interactive-rgb), 0.1);
+        border-color: rgba(var(--interactive-rgb), 0.4);
+        box-shadow: var(--interactive-hover);
       }
 
       .nav__trigger--primary.nav__trigger--active {
-        color: var(--accent-primary);
-        background: rgba(var(--accent-primary-rgb), 0.1);
-        border-color: rgba(var(--accent-primary-rgb), 0.5);
-        box-shadow: inset 0 0 10px rgba(var(--accent-primary-rgb), 0.1), 0 0 14px rgba(var(--accent-primary-rgb), 0.15);
+        color: var(--interactive);
+        background: rgba(var(--interactive-rgb), 0.1);
+        border-color: rgba(var(--interactive-rgb), 0.5);
+        box-shadow: inset 0 0 10px rgba(var(--interactive-rgb), 0.1), 0 0 14px rgba(var(--interactive-rgb), 0.15);
       }
 
       .nav__trigger--primary.nav__trigger--active:hover {
-        border-color: rgba(var(--accent-primary-rgb), 0.6);
-        box-shadow: inset 0 0 12px rgba(var(--accent-primary-rgb), 0.12), 0 0 18px rgba(var(--accent-primary-rgb), 0.2);
+        border-color: rgba(var(--interactive-rgb), 0.6);
+        box-shadow: inset 0 0 12px rgba(var(--interactive-rgb), 0.12), 0 0 18px rgba(var(--interactive-rgb), 0.2);
       }
 
       .nav__trigger:focus-visible {
         outline: none;
-        box-shadow: var(--focus-glow);
+        box-shadow: var(--interactive-focus);
       }
 
       .nav__chevron {
@@ -148,12 +148,12 @@ export class ArcNavigationMenu extends LitElement {
         top: 100%;
         left: 0;
         min-width: 280px;
-        background: var(--bg-card);
+        background: var(--surface-raised);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-md);
         padding: var(--space-sm);
         box-shadow: var(--shadow-overlay);
-        z-index: 1000;
+        z-index: var(--z-dropdown);
         opacity: 0;
         transform: translateY(4px);
         pointer-events: none;
@@ -181,12 +181,12 @@ export class ArcNavigationMenu extends LitElement {
       }
 
       .nav__dropdown-item:hover {
-        background: rgba(var(--accent-primary-rgb), 0.08);
+        background: rgba(var(--interactive-rgb), 0.08);
       }
 
       .nav__dropdown-item:focus-visible {
         outline: none;
-        box-shadow: var(--focus-glow);
+        box-shadow: var(--interactive-focus);
       }
 
       .nav__dropdown-label {
@@ -217,7 +217,7 @@ export class ArcNavigationMenu extends LitElement {
         inset: 0;
         top: var(--nav-height);
         background: var(--overlay-backdrop);
-        z-index: 98;
+        z-index: var(--z-overlay);
       }
 
       .mobile-backdrop--open {
@@ -236,21 +236,21 @@ export class ArcNavigationMenu extends LitElement {
         top: var(--nav-height);
         left: 0;
         right: 0;
-        max-height: 0;
-        overflow: hidden;
+        max-height: calc(100dvh - var(--nav-height));
+        overflow-x: hidden;
+        overflow-y: auto;
         overscroll-behavior: contain;
-        background: color-mix(in srgb, var(--bg-deep) 92%, transparent);
+        background: color-mix(in srgb, var(--surface-base) 92%, transparent);
         backdrop-filter: blur(12px) saturate(130%);
         -webkit-backdrop-filter: blur(12px) saturate(130%);
-        border-bottom: 1px solid var(--border-subtle);
+        border-bottom: 1px solid var(--divider);
         box-shadow: var(--shadow-lg);
-        z-index: 99;
+        z-index: var(--z-overlay);
+        will-change: clip-path, opacity;
       }
 
       .mobile-panel--open {
         display: block;
-        overflow-x: hidden;
-        overflow-y: auto;
         animation: mobile-slide-in var(--duration-enter) var(--ease-out-expo) both;
       }
 
@@ -278,13 +278,13 @@ export class ArcNavigationMenu extends LitElement {
       }
 
       @keyframes mobile-slide-in {
-        from { max-height: 0; opacity: 0; }
-        to { max-height: calc(100dvh - var(--nav-height)); opacity: 1; }
+        from { clip-path: inset(0 0 100% 0); opacity: 0; }
+        to { clip-path: inset(0 0 0 0); opacity: 1; }
       }
 
       @keyframes mobile-slide-out {
-        from { max-height: calc(100dvh - var(--nav-height)); opacity: 1; }
-        to { max-height: 0; opacity: 0; }
+        from { clip-path: inset(0 0 0 0); opacity: 1; }
+        to { clip-path: inset(0 0 100% 0); opacity: 0; }
       }
 
       @keyframes mobile-item-in {
@@ -299,22 +299,19 @@ export class ArcNavigationMenu extends LitElement {
 
       .mobile-glow {
         height: 2px;
-        background: var(--glow-line-gradient);
+        background: var(--divider-glow);
       }
 
       .mobile-list {
         list-style: none;
         margin: 0;
-        padding: var(--space-sm) 0;
+        padding: var(--space-md);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xs);
       }
 
-      .mobile-item {
-        border-bottom: 1px solid var(--border-subtle);
-      }
-
-      .mobile-item:last-child {
-        border-bottom: none;
-      }
+      .mobile-item {}
 
       .mobile-trigger {
         display: flex;
@@ -323,8 +320,9 @@ export class ArcNavigationMenu extends LitElement {
         width: 100%;
         padding: var(--space-md) var(--space-lg);
         min-height: var(--touch-min);
-        background: none;
-        border: none;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-md);
         color: var(--text-primary);
         font-family: var(--font-accent);
         font-size: var(--section-title-size);
@@ -333,57 +331,89 @@ export class ArcNavigationMenu extends LitElement {
         text-transform: uppercase;
         text-decoration: none;
         cursor: pointer;
-        transition: background var(--transition-fast);
+        -webkit-tap-highlight-color: transparent;
+        transition: color var(--transition-fast), background var(--transition-fast),
+          border-color var(--transition-fast), box-shadow var(--transition-fast),
+          transform 80ms ease;
       }
 
       .mobile-trigger:hover {
-        background: var(--bg-hover);
+        color: var(--text-primary);
+        background: var(--surface-hover);
+        border-color: var(--border-default);
+      }
+
+      .mobile-trigger:active {
+        transform: scale(0.98);
+        background: rgba(var(--interactive-rgb), 0.08);
+        border-color: rgba(var(--interactive-rgb), 0.25);
+        transition-duration: 0ms;
       }
 
       .mobile-trigger--active {
-        color: var(--accent-primary);
-        background: rgba(var(--accent-primary-rgb), 0.06);
+        color: var(--interactive);
+        background: rgba(var(--interactive-rgb), 0.06);
+        border-color: rgba(var(--interactive-rgb), 0.3);
+        box-shadow: inset 0 0 8px rgba(var(--interactive-rgb), 0.06),
+          0 0 8px rgba(var(--interactive-rgb), 0.08);
       }
 
       .mobile-trigger--active:hover {
-        background: rgba(var(--accent-primary-rgb), 0.1);
+        border-color: rgba(var(--interactive-rgb), 0.5);
+        box-shadow: inset 0 0 8px rgba(var(--interactive-rgb), 0.08),
+          0 0 12px rgba(var(--interactive-rgb), 0.12);
       }
 
       .mobile-trigger--muted {
         color: var(--text-muted);
         font-weight: 400;
+        border-color: transparent;
+        background: transparent;
       }
 
       .mobile-trigger--muted:hover {
         color: var(--text-primary);
-        background: rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.06);
+        border-color: var(--border-subtle);
       }
 
       .mobile-trigger--muted.mobile-trigger--active {
         color: var(--text-primary);
-        background: rgba(var(--accent-primary-rgb), 0.08);
+        background: rgba(var(--interactive-rgb), 0.06);
+        border-color: rgba(var(--interactive-rgb), 0.2);
+        box-shadow: 0 0 8px rgba(var(--interactive-rgb), 0.08);
       }
 
       .mobile-trigger--muted.mobile-trigger--active:hover {
-        background: rgba(var(--accent-primary-rgb), 0.12);
+        background: rgba(var(--interactive-rgb), 0.1);
+        box-shadow: var(--interactive-hover);
       }
 
       .mobile-trigger--primary {
-        color: var(--accent-primary);
+        color: var(--interactive);
+        border-color: rgba(var(--interactive-rgb), 0.2);
+        background: rgba(var(--interactive-rgb), 0.04);
       }
 
       .mobile-trigger--primary:hover {
-        color: var(--accent-primary);
-        background: rgba(var(--accent-primary-rgb), 0.1);
+        color: var(--interactive);
+        background: rgba(var(--interactive-rgb), 0.1);
+        border-color: rgba(var(--interactive-rgb), 0.4);
+        box-shadow: var(--interactive-hover);
       }
 
       .mobile-trigger--primary.mobile-trigger--active {
-        color: var(--accent-primary);
-        background: rgba(var(--accent-primary-rgb), 0.1);
+        color: var(--interactive);
+        background: rgba(var(--interactive-rgb), 0.1);
+        border-color: rgba(var(--interactive-rgb), 0.5);
+        box-shadow: inset 0 0 10px rgba(var(--interactive-rgb), 0.1),
+          0 0 14px rgba(var(--interactive-rgb), 0.15);
       }
 
       .mobile-trigger--primary.mobile-trigger--active:hover {
-        background: rgba(var(--accent-primary-rgb), 0.14);
+        border-color: rgba(var(--interactive-rgb), 0.6);
+        box-shadow: inset 0 0 12px rgba(var(--interactive-rgb), 0.12),
+          0 0 18px rgba(var(--interactive-rgb), 0.2);
       }
 
       .mobile-chevron {
@@ -398,29 +428,42 @@ export class ArcNavigationMenu extends LitElement {
       }
 
       .mobile-children {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height var(--transition-slow);
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows var(--transition-slow);
       }
 
       .mobile-children--open {
-        max-height: 500px;
+        grid-template-rows: 1fr;
+      }
+
+      .mobile-children__inner {
+        overflow: hidden;
+        padding: 0 var(--space-sm);
       }
 
       .mobile-child {
         display: block;
-        padding: var(--space-sm) var(--space-lg) var(--space-sm) var(--space-xl);
+        padding: var(--space-sm) var(--space-md);
         min-height: var(--touch-min);
         text-decoration: none;
         color: var(--text-primary);
         font-weight: 400;
         font-size: var(--body-size);
-        transition: background var(--transition-fast);
+        border-radius: var(--radius-sm);
+        -webkit-tap-highlight-color: transparent;
+        transition: background var(--transition-fast), transform 80ms ease;
         cursor: pointer;
       }
 
       .mobile-child:hover {
-        background: rgba(var(--accent-primary-rgb), 0.08);
+        background: rgba(var(--interactive-rgb), 0.08);
+      }
+
+      .mobile-child:active {
+        transform: scale(0.98);
+        background: rgba(var(--interactive-rgb), 0.12);
+        transition-duration: 0ms;
       }
 
       .mobile-child-label {
@@ -432,7 +475,7 @@ export class ArcNavigationMenu extends LitElement {
         font-size: var(--text-sm);
         color: var(--text-muted);
         line-height: 1.4;
-        margin-top: 2px; /* cosmetic micro-spacing */
+        margin-top: 2px;
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -455,6 +498,8 @@ export class ArcNavigationMenu extends LitElement {
     this._mobileClosing = false;
     this._mobileExpandedIndex = -1;
     this._closeTimeout = null;
+    this._touchStartY = null;
+    this._panelAtTop = false;
     this._onKeyDown = this._onKeyDown.bind(this);
     this._onMobileToggle = this._onMobileToggle.bind(this);
     this._onResize = this._onResize.bind(this);
@@ -612,6 +657,29 @@ export class ArcNavigationMenu extends LitElement {
     this._closeMobile();
   }
 
+  /* ── Swipe-to-close ── */
+
+  _onPanelTouchStart(e) {
+    if (!this._mobileOpen || this._mobileClosing) return;
+    const panel = this._portalRoot?.querySelector('.mobile-panel');
+    this._touchStartY = e.touches[0].clientY;
+    this._panelAtTop = panel ? panel.scrollTop <= 0 : false;
+  }
+
+  _onPanelTouchEnd(e) {
+    if (this._touchStartY === null || !this._panelAtTop) {
+      this._touchStartY = null;
+      return;
+    }
+    const endY = e.changedTouches[0].clientY;
+    const delta = this._touchStartY - endY;
+    this._touchStartY = null;
+
+    if (delta > 80) {
+      this._closeMobile();
+    }
+  }
+
   updated() {
     super.updated();
     this._renderPortal();
@@ -723,7 +791,12 @@ export class ArcNavigationMenu extends LitElement {
       ></div>
       <div
         class="mobile-panel ${this._mobileOpen && !this._mobileClosing ? 'mobile-panel--open' : ''} ${this._mobileClosing ? 'mobile-panel--closing' : ''}"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Navigation menu"
         @animationend=${this._onPanelAnimEnd}
+        @touchstart=${this._onPanelTouchStart}
+        @touchend=${this._onPanelTouchEnd}
       >
         <div class="mobile-glow"></div>
         <ul class="mobile-list">
@@ -745,18 +818,20 @@ export class ArcNavigationMenu extends LitElement {
                     </svg>
                   </button>
                   <div class="mobile-children ${isExpanded ? 'mobile-children--open' : ''}">
-                    ${item.children.map(child => html`
-                      <a
-                        class="mobile-child"
-                        href=${child.href}
-                        @click=${(e) => this._navigate(e, child.href, child)}
-                      >
-                        <span class="mobile-child-label">${child.label}</span>
-                        ${child.description ? html`
-                          <span class="mobile-child-desc">${child.description}</span>
-                        ` : ''}
-                      </a>
-                    `)}
+                    <div class="mobile-children__inner">
+                      ${item.children.map(child => html`
+                        <a
+                          class="mobile-child"
+                          href=${child.href}
+                          @click=${(e) => this._navigate(e, child.href, child)}
+                        >
+                          <span class="mobile-child-label">${child.label}</span>
+                          ${child.description ? html`
+                            <span class="mobile-child-desc">${child.description}</span>
+                          ` : ''}
+                        </a>
+                      `)}
+                    </div>
                   </div>
                 ` : html`
                   <a

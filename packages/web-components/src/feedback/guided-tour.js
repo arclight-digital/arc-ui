@@ -18,7 +18,7 @@ export class ArcGuidedTour extends LitElement {
 
       .tour__ring {
         position: fixed;
-        z-index: 9999;
+        z-index: var(--z-max);
         border-radius: var(--radius-md);
         box-shadow:
           0 0 0 4000px var(--overlay-backdrop),
@@ -31,8 +31,8 @@ export class ArcGuidedTour extends LitElement {
 
       .tour__tooltip {
         position: fixed;
-        z-index: 10000;
-        background: var(--bg-elevated);
+        z-index: var(--z-max);
+        background: var(--surface-overlay);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-lg);
         box-shadow: var(--shadow-overlay);

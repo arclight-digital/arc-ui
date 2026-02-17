@@ -1,7 +1,8 @@
 {
   "name": "@arclux/arc-ui-vue",
-  "version": "1.11.0",
+  "version": "2.0.0",
   "description": "Vue 3 wrappers for ARC UI Web Components.",
+  "sideEffects": false,
   "type": "module",
   "main": "src/index.ts",
   "module": "src/index.ts",
@@ -42,7 +43,6 @@
   "scripts": {
     "build": "echo 'Consumed directly via workspace — no build step required'"
   },
-  "sideEffects": false,
   "peerDependencies": {
     "vue": ">=3.3.0"
   },

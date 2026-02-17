@@ -21,7 +21,7 @@ export class ArcLink extends LitElement {
       .link {
         font-family: var(--font-body);
         font-size: inherit;
-        color: var(--accent-primary);
+        color: var(--interactive);
         text-decoration: none;
         cursor: pointer;
         transition:
@@ -69,12 +69,12 @@ export class ArcLink extends LitElement {
       }
 
       :host([active]) .link {
-        color: var(--accent-primary);
+        color: var(--interactive);
       }
 
       .link:focus-visible {
         outline: none;
-        box-shadow: var(--focus-ring);
+        box-shadow: var(--interactive-focus-ring);
         border-radius: var(--radius-xs);
       }
 

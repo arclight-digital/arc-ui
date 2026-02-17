@@ -38,10 +38,10 @@ export class ArcTopBar extends LitElement {
       .topbar {
         position: relative;
         height: var(--nav-height);
-        background: color-mix(in srgb, var(--bg-deep) 85%, transparent);
+        background: color-mix(in srgb, var(--surface-base) 85%, transparent);
         backdrop-filter: blur(12px) saturate(130%);
         -webkit-backdrop-filter: blur(12px) saturate(130%);
-        border-bottom: 1px solid var(--border-subtle);
+        border-bottom: 1px solid var(--divider);
       }
 
       .topbar__content {
@@ -125,18 +125,18 @@ export class ArcTopBar extends LitElement {
       }
 
       .topbar__menu-btn:hover {
-        background: var(--bg-hover);
+        background: var(--surface-hover);
         border-color: var(--border-default);
       }
 
       .topbar__menu-btn:focus-visible {
         outline: none;
-        box-shadow: var(--focus-glow);
+        box-shadow: var(--interactive-focus);
       }
 
       .topbar__menu-btn--open {
-        border-color: rgba(var(--accent-primary-rgb), 0.3);
-        background: rgba(var(--accent-primary-rgb), 0.06);
+        border-color: rgba(var(--interactive-rgb), 0.3);
+        background: rgba(var(--interactive-rgb), 0.06);
       }
 
       .topbar__hamburger {
@@ -235,7 +235,7 @@ export class ArcTopBar extends LitElement {
 
   _toggleMenu() {
     this.menuOpen = !this.menuOpen;
-    const eventName = this.mobileMenu === 'nav' ? 'arc-mobile-menu-toggle' : 'arc-toggle';
+    const eventName = this.mobileMenu === 'nav' ? 'arc-mobile-menu-toggle' : 'arc-sidebar-toggle';
     this.dispatchEvent(new CustomEvent(eventName, {
       detail: { value: this.menuOpen },
       bubbles: true,

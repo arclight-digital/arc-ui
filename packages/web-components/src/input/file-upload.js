@@ -19,7 +19,7 @@ export class ArcFileUpload extends LitElement {
     tokenStyles,
     css`
       :host { display: block; font-family: var(--font-body); }
-      :host([disabled]) { opacity: 0.4; pointer-events: none; }
+      :host([disabled]) { opacity: 0.5; pointer-events: none; }
 
       .dropzone {
         display: flex;
@@ -30,7 +30,7 @@ export class ArcFileUpload extends LitElement {
         padding: var(--space-lg);
         border: 2px dashed var(--border-default);
         border-radius: var(--radius-lg);
-        background: var(--bg-surface);
+        background: var(--surface-primary);
         cursor: pointer;
         transition: border-color var(--transition-fast), background var(--transition-fast);
         text-align: center;
@@ -38,18 +38,18 @@ export class ArcFileUpload extends LitElement {
 
       .dropzone:hover {
         border-color: var(--border-bright);
-        background: var(--bg-card);
+        background: var(--surface-raised);
       }
 
       .dropzone.drag-over {
-        border-color: rgba(var(--accent-primary-rgb), 0.4);
-        background: rgba(var(--accent-primary-rgb), 0.05);
-        box-shadow: var(--focus-glow);
+        border-color: rgba(var(--interactive-rgb), 0.4);
+        background: rgba(var(--interactive-rgb), 0.05);
+        box-shadow: var(--interactive-focus);
       }
 
       .dropzone:focus-visible {
         outline: none;
-        box-shadow: var(--focus-glow);
+        box-shadow: var(--interactive-focus);
       }
 
       .upload-icon {
@@ -60,7 +60,7 @@ export class ArcFileUpload extends LitElement {
       }
 
       .drag-over .upload-icon {
-        color: var(--accent-primary);
+        color: var(--interactive);
       }
 
       .upload-text {
@@ -74,7 +74,7 @@ export class ArcFileUpload extends LitElement {
       }
 
       .browse-link {
-        color: var(--accent-primary);
+        color: var(--interactive);
         text-decoration: underline;
         cursor: pointer;
       }
@@ -95,7 +95,7 @@ export class ArcFileUpload extends LitElement {
         align-items: center;
         gap: var(--space-sm);
         padding: var(--space-xs) var(--space-sm);
-        background: var(--bg-card);
+        background: var(--surface-raised);
         border: 1px solid var(--border-subtle);
         border-radius: var(--radius-md);
         font-size: var(--text-sm);
@@ -142,7 +142,7 @@ export class ArcFileUpload extends LitElement {
 
       .file-remove:focus-visible {
         outline: none;
-        box-shadow: var(--focus-glow);
+        box-shadow: var(--interactive-focus);
       }
 
       .error-message {

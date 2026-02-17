@@ -26,19 +26,19 @@ export class ArcInputGroup extends LitElement {
         overflow: hidden;
         border: 1px solid var(--border-default);
         transition: box-shadow var(--transition-fast), border-color var(--transition-fast);
-        background: var(--bg-surface);
+        background: var(--surface-primary);
       }
 
       .input-group:focus-within {
-        border-color: var(--accent-primary);
-        box-shadow: var(--focus-glow);
+        border-color: var(--interactive);
+        box-shadow: var(--interactive-focus);
       }
 
       .input-group__addon {
         display: flex;
         align-items: center;
         padding: 0 var(--space-md);
-        background: var(--bg-elevated);
+        background: var(--surface-overlay);
         border-color: inherit;
         font-family: var(--font-body);
         font-size: var(--text-sm);

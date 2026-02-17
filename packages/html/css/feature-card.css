@@ -89,7 +89,7 @@
 
       .arc-feature-card .card:hover .card__rule { opacity: 0.5; width: 48px; }
 
-      @media (max-width: 768px) {
+      @media (max-width: 768px) { /* --breakpoint-md */
         .arc-feature-card .card__inner { padding: var(--space-md); }
       }
 

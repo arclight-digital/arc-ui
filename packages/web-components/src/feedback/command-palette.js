@@ -23,7 +23,7 @@ export class ArcCommandPalette extends LitElement {
       .palette__backdrop {
         position: fixed;
         inset: 0;
-        z-index: 300;
+        z-index: var(--z-modal);
         background: var(--overlay-backdrop);
         opacity: 0;
         visibility: hidden;
@@ -39,13 +39,13 @@ export class ArcCommandPalette extends LitElement {
 
       .palette__dialog {
         position: fixed;
-        z-index: 301;
+        z-index: var(--z-modal);
         top: 20%;
         left: 50%;
         transform: translateX(-50%) scale(0.95);
         width: 90%;
         max-width: 520px;
-        background: var(--bg-card);
+        background: var(--surface-raised);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-lg);
         box-shadow: var(--shadow-overlay);
@@ -127,7 +127,7 @@ export class ArcCommandPalette extends LitElement {
 
       .palette__item:hover,
       .palette__item.is-focused {
-        background: rgba(var(--accent-primary-rgb), 0.08);
+        background: rgba(var(--interactive-rgb), 0.08);
         color: var(--text-primary);
       }
 
@@ -162,7 +162,7 @@ export class ArcCommandPalette extends LitElement {
         display: inline-flex;
         align-items: center;
         padding: 2px calc(var(--space-xs) + 2px); /* cosmetic 2px vertical for kbd badge */
-        background: var(--bg-hover);
+        background: var(--surface-hover);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-sm);
         font-family: var(--font-mono);

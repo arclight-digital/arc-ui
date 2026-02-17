@@ -14,7 +14,7 @@ export interface ListProps {
   className?: string;
   children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;
-  onArcItemClick?: (e: CustomEvent) => void;
+  onArcItemSelect?: (e: CustomEvent) => void;
 }
 
 export const List = createComponent({
@@ -23,6 +23,6 @@ export const List = createComponent({
   react: React,
   events: {
     onArcChange: 'arc-change' as EventName<CustomEvent>,
-    onArcItemClick: 'arc-item-click' as EventName<CustomEvent>,
+    onArcItemSelect: 'arc-item-select' as EventName<CustomEvent>,
   },
 });

@@ -85,7 +85,7 @@ export class ArcCtaBanner extends LitElement {
         margin-top: var(--space-sm);
       }
 
-      @media (max-width: 768px) {
+      @media (max-width: 768px) { /* --breakpoint-md */
         .cta { padding: var(--space-xl) var(--space-md); }
         .cta__actions { flex-direction: column; align-items: center; }
       }

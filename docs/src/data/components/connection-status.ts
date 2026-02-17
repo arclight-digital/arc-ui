@@ -12,7 +12,7 @@ export const connectionStatus: ComponentDef = {
 
 When the browser goes offline, a warning bar slides down from the top of the viewport with an amber glow pulse animation, informing the user that their connection has been lost. The bar persists until connectivity is restored, at which point it briefly flashes green (success variant) with a "Back online" message before auto-dismissing.
 
-The component fires \`arc-online\` and \`arc-offline\` events so your application can react to connectivity changes — pausing sync operations, queuing mutations for retry, or showing additional UI. The bar uses \`aria-live="assertive"\` because connectivity loss is a critical state change that screen readers should announce immediately.`,
+The component fires \`arc-online\` and \`arc-offline\` events so your application can react to connectivity changes — pausing sync operations, queuing mutations for retry, or showing additional UI. The bar uses \`aria-live="polite"\` so screen readers announce connectivity changes at the next convenient pause, avoiding interruption of active tasks.`,
 
     features: [
       'Automatic online/offline detection via Navigator API',
@@ -21,7 +21,7 @@ The component fires \`arc-online\` and \`arc-offline\` events so your applicatio
       'Zero-configuration — place once, no props required',
       'arc-online and arc-offline events for application-level reactions',
       'Slide-down enter and collapse exit transitions',
-      'aria-live="assertive" for immediate screen-reader announcements',
+      'aria-live="polite" for non-disruptive screen-reader announcements',
       'Full-width bar anchored to the top of the viewport',
       'Respects prefers-reduced-motion — disables glow pulse animation when set',
     ],

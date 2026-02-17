@@ -24,7 +24,7 @@ export class ArcListItem extends LitElement {
 
       :host([disabled]) {
         pointer-events: none;
-        opacity: 0.4;
+        opacity: 0.5;
       }
 
       .item {
@@ -39,7 +39,7 @@ export class ArcListItem extends LitElement {
         text-decoration: none;
         cursor: pointer;
         border-radius: var(--radius-sm);
-        transition: background var(--transition-fast), color var(--transition-fast);
+        transition: background var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast), transform 150ms cubic-bezier(0.16, 1, 0.3, 1);
         border: none;
         background: none;
         width: 100%;
@@ -47,18 +47,24 @@ export class ArcListItem extends LitElement {
       }
 
       .item:hover {
-        background: var(--bg-elevated);
+        background: var(--surface-overlay);
         color: var(--text-primary);
+        box-shadow: var(--interactive-hover);
+      }
+
+      .item:active {
+        transform: scale(0.98);
       }
 
       .item:focus-visible {
         outline: none;
-        box-shadow: var(--focus-glow);
+        box-shadow: var(--interactive-focus);
       }
 
       :host([selected]) .item {
-        background: rgba(var(--accent-primary-rgb), 0.08);
+        background: rgba(var(--interactive-rgb), 0.08);
         color: var(--text-primary);
+        box-shadow: inset 0 0 8px rgba(var(--interactive-rgb), 0.06);
       }
 
       .item__prefix,
@@ -95,7 +101,10 @@ export class ArcListItem extends LitElement {
       ::slotted([slot="suffix"]) { display: flex; }
 
       @media (prefers-reduced-motion: reduce) {
-        .item { transition: none; }
+        .item {
+          transition: none;
+          transform: none !important;
+        }
       }
     `,
   ];
@@ -125,7 +134,7 @@ export class ArcListItem extends LitElement {
 
   _onClick(e) {
     if (this.disabled) return;
-    this.dispatchEvent(new CustomEvent('arc-item-click', {
+    this.dispatchEvent(new CustomEvent('arc-item-select', {
       bubbles: true,
       composed: true,
       detail: { value: this.value },

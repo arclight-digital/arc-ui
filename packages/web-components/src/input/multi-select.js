@@ -48,17 +48,23 @@ export class ArcMultiSelect extends LitElement {
         align-items: center;
         gap: var(--space-xs);
         min-height: 38px;
-        background: var(--bg-card);
+        background: var(--surface-raised);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-md);
         padding: var(--space-xs) var(--space-sm);
         cursor: text;
         transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+        box-shadow: var(--shadow-inset);
+      }
+
+      .ms__control:hover:not(.ms__control--focused) {
+        border-color: var(--border-bright);
+        box-shadow: var(--shadow-inset), var(--interactive-hover);
       }
 
       .ms__control--focused {
-        border-color: rgba(var(--accent-primary-rgb), 0.4);
-        box-shadow: var(--focus-glow);
+        border-color: rgba(var(--interactive-rgb), 0.4);
+        box-shadow: var(--shadow-inset), var(--interactive-focus);
       }
 
       .ms__tag {
@@ -68,7 +74,7 @@ export class ArcMultiSelect extends LitElement {
         font-size: var(--text-xs);
         font-weight: 500;
         color: var(--text-primary);
-        background: var(--bg-elevated);
+        background: var(--surface-overlay);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-full);
         padding: 2px calc(var(--space-xs) + 2px) 2px calc(var(--space-sm) + 2px); /* cosmetic 2px vertical for inline tag */
@@ -94,7 +100,7 @@ export class ArcMultiSelect extends LitElement {
 
       .ms__tag-remove:hover {
         color: var(--text-primary);
-        background: rgba(var(--accent-primary-rgb), 0.1);
+        background: rgba(var(--interactive-rgb), 0.1);
       }
 
       .ms__input {
@@ -113,6 +119,11 @@ export class ArcMultiSelect extends LitElement {
         color: var(--text-muted);
       }
 
+      @keyframes dropdown-in {
+        from { opacity: 0; transform: translateY(-4px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
       .ms__dropdown {
         position: absolute;
         top: calc(100% + var(--space-xs));
@@ -120,17 +131,26 @@ export class ArcMultiSelect extends LitElement {
         right: 0;
         max-height: 220px;
         overflow-y: auto;
-        background: var(--bg-card);
+        overflow-x: hidden;
+        background: var(--surface-raised);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-md);
         box-shadow: var(--shadow-overlay);
-        z-index: 1000;
+        z-index: var(--z-dropdown);
         padding: var(--space-xs) 0;
         display: none;
       }
 
       .ms__dropdown--open {
         display: block;
+        animation: dropdown-in var(--transition-fast);
+      }
+
+      .ms__dropdown::before {
+        content: '';
+        display: block;
+        height: 1px;
+        background: var(--divider-glow);
       }
 
       .ms__option {
@@ -151,19 +171,19 @@ export class ArcMultiSelect extends LitElement {
 
       .ms__option:hover,
       .ms__option--active {
-        background: rgba(var(--accent-primary-rgb), 0.1);
+        background: rgba(var(--interactive-rgb), 0.1);
       }
 
       .ms__option:focus-visible {
         outline: none;
-        box-shadow: var(--focus-glow);
+        box-shadow: var(--interactive-focus);
       }
 
       .ms__check {
         width: 16px;
         height: 16px;
         flex-shrink: 0;
-        color: var(--accent-primary);
+        color: var(--interactive);
         opacity: 0;
       }
 

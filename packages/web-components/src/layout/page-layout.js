@@ -70,7 +70,7 @@ export class ArcPageLayout extends LitElement {
         min-width: 0;
       }
 
-      @media (max-width: 768px) {
+      @media (max-width: 768px) { /* --breakpoint-md */
         :host([layout='sidebar-left']) .page-layout,
         :host([layout='sidebar-right']) .page-layout {
           grid-template-columns: 1fr;

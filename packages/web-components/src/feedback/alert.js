@@ -27,7 +27,7 @@ export class ArcAlert extends LitElement {
         padding: var(--space-lg);
         border-radius: var(--radius-lg);
         border: 1px solid var(--border-subtle);
-        background: var(--bg-card);
+        background: var(--surface-raised);
         overflow: hidden;
       }
 

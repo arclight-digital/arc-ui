@@ -6,6 +6,7 @@ import { LitElement, html, css } from 'lit';
 export class ArcSpyLink extends LitElement {
   static properties = {
     target: { type: String, reflect: true },
+    level:  { type: Number, reflect: true },
   };
 
   static styles = css`
@@ -15,6 +16,7 @@ export class ArcSpyLink extends LitElement {
   constructor() {
     super();
     this.target = '';
+    this.level = 0;
   }
 
   get label() {

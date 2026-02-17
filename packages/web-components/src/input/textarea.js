@@ -25,7 +25,7 @@ export class ArcTextarea extends LitElement {
     tokenStyles,
     css`
       :host { display: block; font-family: var(--font-body); }
-      :host([disabled]) { opacity: 0.4; pointer-events: none; }
+      :host([disabled]) { opacity: 0.5; pointer-events: none; }
 
       .textarea-wrapper {
         display: flex;
@@ -47,7 +47,7 @@ export class ArcTextarea extends LitElement {
         font-size: var(--text-sm);
         line-height: 1.5;
         color: var(--text-primary);
-        background: var(--bg-card);
+        background: var(--surface-raised);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-md);
         padding: var(--space-sm) var(--space-md);
@@ -55,6 +55,7 @@ export class ArcTextarea extends LitElement {
         transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
         width: 100%;
         box-sizing: border-box;
+        box-shadow: var(--shadow-inset);
       }
 
       /* Sizes */
@@ -76,17 +77,18 @@ export class ArcTextarea extends LitElement {
 
       textarea:hover:not(:disabled):not(:read-only):not(:focus) {
         border-color: var(--border-bright);
+        box-shadow: var(--shadow-inset), var(--interactive-hover);
       }
 
       textarea:focus {
         outline: none;
-        border-color: rgba(var(--accent-primary-rgb), 0.4);
-        box-shadow: var(--focus-glow);
+        border-color: rgba(var(--interactive-rgb), 0.4);
+        box-shadow: var(--shadow-inset), var(--interactive-focus);
       }
 
       :host([readonly]) textarea {
         cursor: default;
-        background: var(--bg-surface);
+        background: var(--surface-primary);
       }
 
       .error textarea {
@@ -95,7 +97,7 @@ export class ArcTextarea extends LitElement {
 
       .error textarea:focus {
         outline: none;
-        box-shadow: 0 0 0 2px var(--bg-deep), 0 0 0 4px var(--color-error), 0 0 16px rgba(var(--color-error-rgb), 0.2);
+        box-shadow: 0 0 0 2px var(--surface-base), 0 0 0 4px var(--color-error), 0 0 16px rgba(var(--color-error-rgb), 0.2);
       }
 
       .footer {

@@ -46,13 +46,29 @@ export class ArcCard extends LitElement {
 
       .card__footer {
         margin-top: var(--space-md);
+        position: relative;
+      }
+
+      .card__footer::before {
+        content: '';
+        position: absolute;
+        top: calc(-1 * var(--space-md) / 2);
+        left: var(--space-md);
+        right: var(--space-md);
+        height: 1px;
+        background: var(--divider-glow);
+        opacity: 0.5;
       }
 
       .card__footer--empty {
         display: none;
       }
 
-      @media (max-width: 768px) {
+      .card__footer--empty::before {
+        display: none;
+      }
+
+      @media (max-width: 768px) { /* --breakpoint-md */
         .card__inner { padding: var(--space-lg) var(--space-md); }
       }
 

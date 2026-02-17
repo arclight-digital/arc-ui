@@ -64,7 +64,7 @@ export class ArcSearch extends LitElement {
         font-family: var(--font-body);
         font-size: var(--text-sm);
         color: var(--text-primary);
-        background: var(--bg-card);
+        background: var(--surface-raised);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-md);
         padding: var(--space-sm) var(--space-lg) var(--space-sm) calc(var(--space-sm) + 26px);
@@ -78,8 +78,8 @@ export class ArcSearch extends LitElement {
 
       .search__input:focus {
         outline: none;
-        border-color: rgba(var(--accent-primary-rgb), 0.4);
-        box-shadow: var(--focus-glow);
+        border-color: rgba(var(--interactive-rgb), 0.4);
+        box-shadow: var(--interactive-focus);
       }
 
       .search__clear {
@@ -102,12 +102,12 @@ export class ArcSearch extends LitElement {
 
       .search__clear:hover {
         color: var(--text-primary);
-        background: rgba(var(--accent-primary-rgb), 0.1);
+        background: rgba(var(--interactive-rgb), 0.1);
       }
 
       .search__clear:focus-visible {
         outline: none;
-        box-shadow: var(--focus-glow);
+        box-shadow: var(--interactive-focus);
       }
 
       .search__spinner {
@@ -116,7 +116,7 @@ export class ArcSearch extends LitElement {
         width: 18px;
         height: 18px;
         border: 2px solid var(--border-default);
-        border-top-color: var(--accent-primary);
+        border-top-color: var(--interactive);
         border-radius: var(--radius-full);
         animation: spin 0.7s linear infinite;
       }
@@ -132,11 +132,11 @@ export class ArcSearch extends LitElement {
         right: 0;
         max-height: 220px;
         overflow-y: auto;
-        background: var(--bg-card);
+        background: var(--surface-raised);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-md);
         box-shadow: var(--shadow-overlay);
-        z-index: 1000;
+        z-index: var(--z-dropdown);
         padding: var(--space-xs) 0;
         display: none;
       }
@@ -161,12 +161,12 @@ export class ArcSearch extends LitElement {
 
       .search__suggestion:hover,
       .search__suggestion--active {
-        background: rgba(var(--accent-primary-rgb), 0.1);
+        background: rgba(var(--interactive-rgb), 0.1);
       }
 
       .search__suggestion:focus-visible {
         outline: none;
-        box-shadow: var(--focus-glow);
+        box-shadow: var(--interactive-focus);
       }
 
       .search__slot-host { display: none; }

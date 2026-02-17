@@ -26,8 +26,8 @@ export class ArcSettingsLayout extends LitElement {
 
       .settings-layout--left .nav {
         padding: var(--space-lg);
-        background: var(--bg-card);
-        border-right: 1px solid var(--border-subtle);
+        background: var(--surface-raised);
+        border-right: 1px solid var(--divider);
       }
 
       .settings-layout--left .content {
@@ -44,8 +44,8 @@ export class ArcSettingsLayout extends LitElement {
 
       .settings-layout--top .nav {
         padding: var(--space-lg);
-        background: var(--bg-card);
-        border-bottom: 1px solid var(--border-subtle);
+        background: var(--surface-raised);
+        border-bottom: 1px solid var(--divider);
       }
 
       .settings-layout--top .content {
@@ -53,7 +53,7 @@ export class ArcSettingsLayout extends LitElement {
         flex: 1;
       }
 
-      @media (max-width: 768px) {
+      @media (max-width: 768px) { /* --breakpoint-md */
         .settings-layout--left {
           display: flex;
           flex-direction: column;
@@ -61,7 +61,7 @@ export class ArcSettingsLayout extends LitElement {
 
         .settings-layout--left .nav {
           border-right: none;
-          border-bottom: 1px solid var(--border-subtle);
+          border-bottom: 1px solid var(--divider);
         }
       }
     `,

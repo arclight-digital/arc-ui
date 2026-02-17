@@ -16,7 +16,7 @@ When an \`href\` is provided, IconButton renders as an anchor tag instead of a \
 
     features: [
       'Three visual variants: ghost (default transparent), secondary (bordered with blue glow), and primary (solid accent fill)',
-      'Four sizes -- xs (24px), sm (32px), md (36px), lg (44px) -- with automatic icon size mapping',
+      'Four sizes -- xs (28px), sm (32px), md (36px), lg (44px) -- with automatic icon size mapping',
       'Optional `text` prop that expands the button from a square icon into a labeled action button with uppercase styling',
       'Renders as an `<a>` tag when `href` is provided, enabling accessible navigation links',
       'Active-press animation with `scale(0.93)` transform for tactile feedback',
@@ -55,7 +55,7 @@ When an \`href\` is provided, IconButton renders as an anchor tag instead of a \
       { name: 'name', type: 'string', default: "''", description: 'Name of the arc-icon to render. When empty, the default slot is used for custom icon content.' },
       { name: 'text', type: 'string', default: "''", description: 'Optional text label displayed next to the icon. When provided, the button expands from a square to a wider labeled button with uppercase styling.' },
       { name: 'variant', type: "'ghost' | 'secondary' | 'primary'", default: "'ghost'", description: 'Visual style variant. Ghost is transparent, secondary has a border with glow, primary has a solid accent-primary fill.' },
-      { name: 'size', type: "'xs' | 'sm' | 'md' | 'lg'", default: "'md'", description: 'Button size controlling dimensions and icon scale. Icon-only sizes: xs=24px, sm=32px, md=36px, lg=44px.' },
+      { name: 'size', type: "'xs' | 'sm' | 'md' | 'lg'", default: "'md'", description: 'Button size controlling dimensions and icon scale. Icon-only sizes: xs=28px, sm=32px, md=36px, lg=44px.' },
       { name: 'label', type: 'string', default: "''", description: 'Accessible label for the button. Falls back to `text` if not provided. Required for icon-only usage.' },
       { name: 'href', type: 'string', default: "''", description: 'When set, renders the button as an anchor tag for navigation links.' },
       { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the button, reducing opacity to 40% and blocking pointer events.' },

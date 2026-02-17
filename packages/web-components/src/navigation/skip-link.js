@@ -21,8 +21,8 @@ export class ArcSkipLink extends LitElement {
         top: var(--space-md);
         left: 50%;
         transform: translateX(-50%) translateY(-200%);
-        z-index: 10000;
-        background: var(--accent-primary);
+        z-index: var(--z-max);
+        background: var(--interactive);
         color: white;
         padding: var(--space-xs) var(--space-lg);
         border-radius: var(--radius-full);
@@ -36,7 +36,7 @@ export class ArcSkipLink extends LitElement {
 
       .skip-link:focus-visible {
         transform: translateX(-50%) translateY(0);
-        box-shadow: var(--focus-glow), 0 0 20px rgba(var(--accent-primary-rgb), 0.3);
+        box-shadow: var(--interactive-focus), 0 0 20px rgba(var(--interactive-rgb), 0.3);
         outline: none;
       }
     `,

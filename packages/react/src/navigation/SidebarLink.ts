@@ -7,6 +7,7 @@ import { ArcSidebarLink } from '@arclux/arc-ui';
 export interface SidebarLinkProps {
   href?: string;
   active?: boolean;
+  level?: number;
   className?: string;
   children?: React.ReactNode;
 }

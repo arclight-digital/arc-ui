@@ -23,8 +23,8 @@ withDefaults(defineProps<{
   disabled: false,
   label: '',
   _open: false,
-  _viewMonth: 'today.getMonth()',
-  _viewYear: 'today.getFullYear()',
+  _viewMonth: 'null',
+  _viewYear: 'null',
   _mode: 'days',
 });
 

@@ -49,10 +49,10 @@ The icon slot accepts custom content (SVG icons, emoji, or any markup) via the \
 </div>`,
 
     props: [
-      { name: 'icon', type: 'string', description: 'Icon text or emoji displayed in the icon box' },
-      { name: 'heading', type: 'string', description: 'Card title' },
-      { name: 'description', type: 'string', description: 'Card body text' },
-      { name: 'href', type: 'string', description: 'Makes the card a link' },
+      { name: 'icon', type: 'string', default: "''", description: 'Icon text or emoji displayed in the icon box' },
+      { name: 'heading', type: 'string', default: "''", description: 'Card title' },
+      { name: 'description', type: 'string', default: "''", description: 'Card body text' },
+      { name: 'href', type: 'string', default: "''", description: 'Makes the card a link' },
       { name: 'action', type: 'string', description: 'Action label (e.g. "Learn more") shown at the bottom of the card when href is set. Hidden when empty or when no href is provided.' },
     ],
     tabs: [

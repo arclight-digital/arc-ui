@@ -106,7 +106,7 @@ export class ArcFeatureCard extends LitElement {
 
       .card:hover .card__rule { opacity: 0.5; width: 48px; }
 
-      @media (max-width: 768px) {
+      @media (max-width: 768px) { /* --breakpoint-md */
         .card__inner { padding: var(--space-md); }
       }
 

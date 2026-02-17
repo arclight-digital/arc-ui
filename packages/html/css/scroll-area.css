@@ -35,7 +35,7 @@
       }
 
       .arc-scroll-area .scroll-area::-webkit-scrollbar-track {
-        background: var(--bg-elevated);
+        background: var(--surface-overlay);
         border-radius: var(--radius-full);
       }
 
@@ -50,13 +50,13 @@
       }
 
       .arc-scroll-area .scroll-area::-webkit-scrollbar-corner {
-        background: var(--bg-elevated);
+        background: var(--surface-overlay);
       }
 
       /* Firefox scrollbar styling */
       .arc-scroll-area .scroll-area {
         scrollbar-width: thin;
-        scrollbar-color: var(--border-bright) var(--bg-elevated);
+        scrollbar-color: var(--border-bright) var(--surface-overlay);
       }
 
       @media (prefers-reduced-motion: reduce) {

@@ -24,7 +24,7 @@ export class ArcAuthShell extends LitElement {
         align-items: center;
         justify-content: center;
         min-height: 100vh;
-        background: var(--bg-surface);
+        background: var(--surface-primary);
         padding: var(--space-xl) var(--space-lg);
         box-sizing: border-box;
       }
@@ -35,7 +35,7 @@ export class ArcAuthShell extends LitElement {
       }
 
       .auth-shell--centered .card {
-        background: var(--bg-card);
+        background: var(--surface-raised);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-lg);
         padding: var(--space-xl);
@@ -64,7 +64,7 @@ export class ArcAuthShell extends LitElement {
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        background: var(--bg-surface);
+        background: var(--surface-primary);
         padding: var(--space-xl) var(--space-lg);
       }
 
@@ -74,7 +74,7 @@ export class ArcAuthShell extends LitElement {
       }
 
       .auth-shell--split .card {
-        background: var(--bg-card);
+        background: var(--surface-raised);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-lg);
         padding: var(--space-xl);
@@ -94,11 +94,11 @@ export class ArcAuthShell extends LitElement {
         display: flex;
         align-items: center;
         justify-content: center;
-        background: var(--bg-deep);
+        background: var(--surface-base);
         padding: var(--space-xl);
       }
 
-      @media (max-width: 768px) {
+      @media (max-width: 768px) { /* --breakpoint-md */
         .auth-shell--split {
           grid-template-columns: 1fr;
         }

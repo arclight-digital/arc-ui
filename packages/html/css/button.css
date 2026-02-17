@@ -41,7 +41,7 @@
           border-color var(--transition-base),
           box-shadow var(--transition-base),
           color var(--transition-base),
-          transform var(--transition-fast);
+          transform 120ms var(--ease-out-expo);
         text-decoration: none;
         white-space: nowrap;
         box-sizing: border-box;
@@ -56,22 +56,22 @@
 
       /* Default → primary */
       .arc-button:not([data-variant]) .btn {
-        background: var(--accent-primary);
-        color: var(--bg-deep);
-        border-color: var(--accent-primary);
+        background: var(--interactive);
+        color: var(--surface-base);
+        border-color: var(--interactive);
       }
-      .arc-button:not([data-variant]) .btn:hover { box-shadow: var(--glow-primary); }
+      .arc-button:not([data-variant]) .btn:hover { box-shadow: var(--interactive-active); }
 
       /* :active scale */
       .arc-button:not([data-variant]) .btn:active,
-      .arc-button[data-variant="primary"] .btn:active { transform: scale(0.97); box-shadow: 0 0 8px rgba(var(--accent-primary-rgb),0.5); }
+      .arc-button[data-variant="primary"] .btn:active { transform: scale(0.97); box-shadow: 0 0 8px rgba(var(--interactive-rgb),0.5); }
       .arc-button[data-variant="secondary"] .btn:active {
         transform: scale(0.97);
-        background: rgba(var(--accent-primary-rgb),0.05);
+        background: rgba(var(--interactive-rgb),0.05);
       }
       .arc-button[data-variant="ghost"] .btn:active {
         transform: scale(0.97);
-        background: var(--bg-elevated);
+        background: var(--surface-overlay);
       }
 
       /* Prefix / Suffix */

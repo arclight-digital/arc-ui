@@ -22,14 +22,14 @@ export class ArcColorPicker extends LitElement {
     tokenStyles,
     css`
       :host { display: block; }
-      :host([disabled]) { pointer-events: none; opacity: 0.4; }
+      :host([disabled]) { pointer-events: none; opacity: 0.5; }
 
       .picker {
         display: flex;
         flex-direction: column;
         gap: var(--space-sm);
         padding: var(--space-md);
-        background: var(--bg-card);
+        background: var(--surface-raised);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-md);
         width: 260px;
@@ -123,7 +123,7 @@ export class ArcColorPicker extends LitElement {
         font-family: var(--font-mono);
         font-size: var(--code-size);
         color: var(--text-primary);
-        background: var(--bg-surface);
+        background: var(--surface-primary);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-sm);
         padding: var(--space-xs) var(--space-sm);
@@ -133,8 +133,8 @@ export class ArcColorPicker extends LitElement {
 
       .picker__hex-input:focus {
         outline: none;
-        border-color: var(--accent-primary);
-        box-shadow: var(--focus-glow);
+        border-color: var(--interactive);
+        box-shadow: var(--interactive-focus);
       }
 
       .picker__presets {
@@ -160,7 +160,7 @@ export class ArcColorPicker extends LitElement {
 
       .picker__swatch:focus-visible {
         outline: none;
-        box-shadow: var(--focus-glow);
+        box-shadow: var(--interactive-focus);
       }
 
       .picker__swatch--active {

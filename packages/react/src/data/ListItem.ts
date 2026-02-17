@@ -14,7 +14,7 @@ export interface ListItemProps {
   _hasDescription?: string;
   className?: string;
   children?: React.ReactNode;
-  onArcItemClick?: (e: CustomEvent) => void;
+  onArcItemSelect?: (e: CustomEvent) => void;
 }
 
 export const ListItem = createComponent({
@@ -22,6 +22,6 @@ export const ListItem = createComponent({
   elementClass: ArcListItem,
   react: React,
   events: {
-    onArcItemClick: 'arc-item-click' as EventName<CustomEvent>,
+    onArcItemSelect: 'arc-item-select' as EventName<CustomEvent>,
   },
 });

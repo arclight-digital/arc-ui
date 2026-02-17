@@ -18,7 +18,7 @@
     [key: string]: unknown;
   }
 
-  let { value = '', min = '', max = '', placeholder = 'Select date', disabled = false, label = '', _open = false, _viewMonth = today.getMonth(), _viewYear = today.getFullYear(), _mode = 'days', children, ...rest }: Props = $props();
+  let { value = '', min = '', max = '', placeholder = 'Select date', disabled = false, label = '', _open = false, _viewMonth = null, _viewYear = null, _mode = 'days', children, ...rest }: Props = $props();
 </script>
 
 <arc-date-picker {value} {min} {max} {placeholder} {disabled} {label} {_open} {_viewMonth} {_viewYear} {_mode} {...rest}>

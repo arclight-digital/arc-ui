@@ -18,7 +18,7 @@ export class ArcAppShell extends LitElement {
       :host {
         display: block;
         min-height: 100vh;
-        background: var(--bg-deep);
+        background: var(--surface-base);
         color: var(--text-primary);
       }
 
@@ -43,7 +43,7 @@ export class ArcAppShell extends LitElement {
       /* ── Desktop sidebar ── */
       .shell__sidebar {
         flex-shrink: 0;
-        width: 260px;
+        width: 280px;
         position: sticky;
         top: var(--nav-height);
         height: calc(100vh - var(--nav-height));
@@ -67,7 +67,7 @@ export class ArcAppShell extends LitElement {
       .shell__toc {
         flex: 1;
         min-width: 0;
-        max-width: 260px;
+        max-width: 280px;
         position: sticky;
         top: calc(var(--nav-height) + var(--space-xl));
         align-self: flex-start;
@@ -80,7 +80,7 @@ export class ArcAppShell extends LitElement {
 
       .shell__toc--empty { display: none; }
 
-      @media (max-width: 1280px) {
+      @media (max-width: 1280px) { /* --breakpoint-xl */
         .shell__toc { display: none; }
       }
 
@@ -104,7 +104,7 @@ export class ArcAppShell extends LitElement {
         max-width: 85vw;
         transform: translateX(-100%);
         transition: transform 250ms var(--ease-out-expo);
-        background: var(--bg-surface);
+        background: var(--surface-primary);
         padding-top: var(--nav-height);
         overflow-y: auto;
         overflow-x: hidden;
@@ -175,7 +175,7 @@ export class ArcAppShell extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.addEventListener('arc-toggle', this._onToggle);
+    this.addEventListener('arc-sidebar-toggle', this._onToggle);
     this.addEventListener('arc-navigate', this._onNavigate);
     document.addEventListener('keydown', this._onKeyDown);
     window.addEventListener('resize', this._onResize);
@@ -184,7 +184,7 @@ export class ArcAppShell extends LitElement {
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    this.removeEventListener('arc-toggle', this._onToggle);
+    this.removeEventListener('arc-sidebar-toggle', this._onToggle);
     this.removeEventListener('arc-navigate', this._onNavigate);
     document.removeEventListener('keydown', this._onKeyDown);
     window.removeEventListener('resize', this._onResize);

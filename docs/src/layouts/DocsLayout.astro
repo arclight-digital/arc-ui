@@ -13,7 +13,7 @@ interface Props {
   title: string;
   description?: string;
   activeSlug?: string;
-  headings?: Array<{ id: string; label: string }>;
+  headings?: Array<{ id: string; label: string; level?: number }>;
   breadcrumbs?: Array<{ label: string; href?: string }>;
 }
 

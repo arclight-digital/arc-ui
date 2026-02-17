@@ -24,7 +24,7 @@ export class ArcSelect extends LitElement {
     tokenStyles,
     css`
       :host { display: block; position: relative; }
-      :host([disabled]) { pointer-events: none; opacity: 0.4; }
+      :host([disabled]) { pointer-events: none; opacity: 0.5; }
 
       .select__label {
         display: block;
@@ -47,24 +47,28 @@ export class ArcSelect extends LitElement {
         font-family: var(--font-body);
         font-size: var(--body-size);
         color: var(--text-primary);
-        background: var(--bg-surface);
+        background: var(--surface-primary);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-md);
         cursor: pointer;
         transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
         box-sizing: border-box;
+        box-shadow: var(--shadow-inset);
       }
 
-      .select__trigger:hover:not(:focus-visible) { border-color: var(--border-bright); }
+      .select__trigger:hover:not(:focus-visible) {
+        border-color: var(--border-bright);
+        box-shadow: var(--shadow-inset), var(--interactive-hover);
+      }
       .select__trigger:focus-visible {
         outline: none;
-        border-color: rgba(var(--accent-primary-rgb), 0.4);
-        box-shadow: var(--focus-glow);
+        border-color: rgba(var(--interactive-rgb), 0.4);
+        box-shadow: var(--shadow-inset), var(--interactive-focus);
       }
 
       :host([open]) .select__trigger {
-        border-color: rgba(var(--accent-primary-rgb), 0.4);
-        box-shadow: var(--focus-glow);
+        border-color: rgba(var(--interactive-rgb), 0.4);
+        box-shadow: var(--shadow-inset), var(--interactive-focus);
       }
 
       .select__placeholder { color: var(--text-ghost); }
@@ -72,9 +76,14 @@ export class ArcSelect extends LitElement {
       .select__chevron {
         font-size: var(--text-xs);
         color: var(--text-muted);
-        transition: transform var(--transition-fast);
+        transition: transform var(--transition-fast) var(--ease-out-expo);
       }
       :host([open]) .select__chevron { transform: rotate(180deg); }
+
+      @keyframes dropdown-in {
+        from { opacity: 0; transform: translateY(-4px) scale(0.96); }
+        to { opacity: 1; transform: translateY(0); }
+      }
 
       .select__dropdown {
         position: absolute;
@@ -82,17 +91,28 @@ export class ArcSelect extends LitElement {
         left: 0;
         right: 0;
         margin-top: var(--space-xs);
-        background: var(--bg-elevated);
+        background: var(--surface-overlay);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-md);
         box-shadow: var(--shadow-overlay);
         max-height: 240px;
         overflow-y: auto;
+        overflow-x: hidden;
         z-index: 100;
         display: none;
       }
 
-      :host([open]) .select__dropdown { display: block; }
+      :host([open]) .select__dropdown {
+        display: block;
+        animation: dropdown-in var(--transition-fast);
+      }
+
+      .select__dropdown::before {
+        content: '';
+        display: block;
+        height: 1px;
+        background: var(--divider-glow);
+      }
 
       .select__option {
         display: block;
@@ -111,13 +131,17 @@ export class ArcSelect extends LitElement {
 
       .select__option:hover,
       .select__option:focus-visible {
-        background: rgba(var(--accent-primary-rgb), 0.08);
+        background: rgba(var(--interactive-rgb), 0.08);
         color: var(--text-primary);
         outline: none;
       }
 
+      .select__option:active {
+        transform: scale(0.97);
+      }
+
       .select__option[aria-selected="true"] {
-        color: var(--accent-primary);
+        color: var(--interactive);
       }
 
       /* Sizes */
@@ -133,7 +157,7 @@ export class ArcSelect extends LitElement {
       .select--error .select__trigger:focus-visible,
       :host([open]) .select--error .select__trigger {
         border-color: var(--color-error);
-        box-shadow: 0 0 0 2px var(--bg-deep), 0 0 0 4px var(--color-error), 0 0 16px rgba(var(--color-error-rgb), 0.2);
+        box-shadow: 0 0 0 2px var(--surface-base), 0 0 0 4px var(--color-error), 0 0 16px rgba(var(--color-error-rgb), 0.2);
       }
 
       .select__error {

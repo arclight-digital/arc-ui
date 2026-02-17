@@ -56,7 +56,7 @@ Divider renders a single \`<div>\` with \`role="separator"\` for proper accessib
 
     props: [
       { name: 'variant', type: "'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient'", default: "'subtle'", description: 'Visual style' },
-      { name: 'align', type: "'left' | 'right'", description: 'Shifts the gradient origin so it fades from one edge instead of both. Useful for asymmetric layouts where the divider should visually connect to content on one side.' },
+      { name: 'align', type: "'left' | 'right'", default: "undefined", description: 'Shifts the gradient origin so it fades from one edge instead of both. Useful for asymmetric layouts where the divider should visually connect to content on one side.' },
       { name: 'vertical', type: 'boolean', default: 'false', description: 'Renders the divider as a vertical line. Switches to `inline-flex` display and rotates gradient directions to run top-to-bottom. Use inside flex rows to separate inline content.' },
       { name: 'label', type: 'string', default: "''", description: 'Text displayed in the center of the divider, splitting it into two lines. Common use: \'OR\' between form options. Only applies to horizontal dividers.' },
     ],

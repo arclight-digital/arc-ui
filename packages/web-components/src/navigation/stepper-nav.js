@@ -59,10 +59,10 @@ export class ArcStepperNav extends LitElement {
       }
 
       .stepper-nav__indicator.is-active {
-        background: var(--accent-primary);
+        background: var(--interactive);
         color: white;
-        border-color: var(--accent-primary);
-        box-shadow: 0 0 12px rgba(var(--accent-primary-rgb), 0.3);
+        border-color: var(--interactive);
+        box-shadow: 0 0 12px rgba(var(--interactive-rgb), 0.3);
       }
 
       .stepper-nav__indicator.is-complete {

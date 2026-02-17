@@ -19,7 +19,7 @@ export class ArcInfiniteScroll extends LitElement {
       :host {
         display: block;
       }
-      :host([disabled]) { pointer-events: none; opacity: 0.4; }
+      :host([disabled]) { pointer-events: none; opacity: 0.5; }
 
       .infinite-scroll {
         display: flex;

@@ -23,7 +23,7 @@ withDefaults(defineProps<{
 });
 
 defineEmits<{
-  'arc-item-click': [event: CustomEvent];
+  'arc-item-select': [event: CustomEvent];
 }>();
 </script>
 

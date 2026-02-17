@@ -45,8 +45,8 @@ export class ArcPageIndicator extends LitElement {
       .page-indicator__dot.is-active {
         width: 10px;
         height: 10px;
-        background: var(--accent-primary);
-        box-shadow: 0 0 8px rgba(var(--accent-primary-rgb), 0.4);
+        background: var(--interactive);
+        box-shadow: 0 0 8px rgba(var(--interactive-rgb), 0.4);
       }
     `,
   ];

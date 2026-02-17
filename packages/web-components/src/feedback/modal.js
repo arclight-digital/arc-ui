@@ -23,7 +23,7 @@ export class ArcModal extends LitElement {
         inset: 0;
         background: var(--overlay-backdrop);
         backdrop-filter: blur(4px);
-        z-index: 1000;
+        z-index: var(--z-modal);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -40,7 +40,7 @@ export class ArcModal extends LitElement {
 
       .modal__dialog {
         position: relative;
-        background: var(--bg-card);
+        background: var(--surface-raised);
         border: 1px solid var(--border-subtle);
         border-radius: var(--radius-lg);
         box-shadow: var(--shadow-overlay);
@@ -80,7 +80,18 @@ export class ArcModal extends LitElement {
         align-items: center;
         justify-content: space-between;
         padding: var(--space-lg);
-        border-bottom: 1px solid var(--border-subtle);
+        position: relative;
+      }
+
+      .modal__header::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: var(--space-lg);
+        right: var(--space-lg);
+        height: 1px;
+        background: var(--divider-glow);
+        opacity: 0.5;
       }
 
       .modal__heading {
@@ -101,10 +112,21 @@ export class ArcModal extends LitElement {
 
       .modal__footer {
         padding: var(--space-lg);
-        border-top: 1px solid var(--border-subtle);
+        position: relative;
         display: flex;
         justify-content: flex-end;
         gap: var(--space-sm);
+      }
+
+      .modal__footer::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: var(--space-lg);
+        right: var(--space-lg);
+        height: 1px;
+        background: var(--divider-glow);
+        opacity: 0.5;
       }
 
       @media (prefers-reduced-motion: reduce) {

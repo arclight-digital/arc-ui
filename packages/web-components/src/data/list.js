@@ -37,7 +37,7 @@ export class ArcList extends LitElement {
       }
 
       :host([variant="separated"]) ::slotted(arc-list-item:not(:last-child)) {
-        border-bottom: 1px solid var(--border-subtle);
+        border-bottom: 1px solid var(--divider);
       }
 
       /* Sizes */
@@ -58,12 +58,12 @@ export class ArcList extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.addEventListener('arc-item-click', this._onItemClick);
+    this.addEventListener('arc-item-select', this._onItemClick);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    this.removeEventListener('arc-item-click', this._onItemClick);
+    this.removeEventListener('arc-item-select', this._onItemClick);
   }
 
   _onSlotChange(e) {
@@ -135,7 +135,7 @@ export class ArcList extends LitElement {
       case ' ':
         if (this.selectable && current >= 0) {
           e.preventDefault();
-          items[current].dispatchEvent(new CustomEvent('arc-item-click', {
+          items[current].dispatchEvent(new CustomEvent('arc-item-select', {
             bubbles: true,
             composed: true,
             detail: { value: items[current].value },

@@ -3,6 +3,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 import { components } from '../../data/components/index';
 
 const headings = [
+  { id: 'v2-0-0', label: 'v2.0.0' },
   { id: 'v1-11-0', label: 'v1.11.0' },
   { id: 'v1-10-2', label: 'v1.10.2' },
   { id: 'v1-10-1', label: 'v1.10.1' },
@@ -52,6 +53,185 @@ const byTier = Object.fromEntries(
     <p class="page-desc">
       Release history for ARC UI. All packages are versioned together.
     </p>
+
+    <section id="v2-0-0">
+      <h2 class="docs-heading">v2.0.0 — Design System Overhaul</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <p class="docs-text">
+        A major release adding 14 new components, theme presets, category-level package exports, a type scale overhaul,
+        and a comprehensive quality pass across the entire library. Standardizes token usage, fixes subtle bugs,
+        improves mobile interactions, and brings the full sci-fi luminescence vocabulary to every interactive surface.
+      </p>
+
+      <h3 class="tier-heading">New Data Components</h3>
+      <ul class="docs-list">
+        <li><strong><code>arc-diff</code></strong> &mdash; Line-based text diff viewer with inline and side-by-side modes. Uses a longest-common-subsequence algorithm to highlight added, removed, and unchanged lines with color-coded backgrounds.</li>
+        <li><strong><code>arc-key-value</code></strong> &mdash; Key-value pair list with horizontal and stacked layout modes. Pairs render with uppercase accent-font labels and optional dividers. Hover highlights each pair row.</li>
+        <li><strong><code>arc-countdown-timer</code></strong> &mdash; Live countdown to a target date with segmented day/hour/minute/second cards. Numbers use gradient accent text with tabular-nums alignment. Dispatches <code>arc-expired</code> when the countdown reaches zero.</li>
+        <li><strong><code>arc-comparison</code></strong> &mdash; Multi-column comparison table for pricing tiers and feature matrices. Accepts JSON-driven features and column values. Boolean values render as check/cross icons. Supports a highlighted column with accent styling.</li>
+        <li><strong><code>arc-sparkline</code></strong> &mdash; Tiny inline SVG line or bar chart for embedding metrics in tables, stats, and cards. Supports area fill, custom colors, and a draw-in stroke animation on load.</li>
+        <li><strong><code>arc-description-list</code></strong> &mdash; Structured term/detail pair list in a responsive grid. Supports multi-column layouts with automatic vertical dividers and collapses to a single column below 640px.</li>
+      </ul>
+
+      <h3 class="tier-heading">New Typography Components</h3>
+      <ul class="docs-list">
+        <li><strong><code>arc-blockquote</code></strong> &mdash; Styled pull-quote with a top gradient accent line, decorative opening-quote glyph, and optional citation footer. Supports a default and accent variant with gradient text.</li>
+        <li><strong><code>arc-prose</code></strong> &mdash; Long-form content wrapper that applies typographic rhythm to slotted HTML. Styles headings, paragraphs, lists, links, code blocks, images, and tables with consistent spacing and token-driven typography. Three size variants: sm, md, lg.</li>
+        <li><strong><code>arc-typewriter</code></strong> &mdash; Character-by-character text reveal animation with configurable speed, delay, and looping. Blinking accent-colored cursor fades out on completion. Dispatches <code>arc-complete</code> and exposes a <code>replay()</code> method.</li>
+        <li><strong><code>arc-gradient-text</code></strong> &mdash; Inline text wrapper that applies gradient fills declaratively. Five built-in variants (accent, display, sunset, ocean, custom) plus an animated mode that cycles the gradient position. Includes a subtle drop-shadow glow.</li>
+        <li><strong><code>arc-number-format</code></strong> &mdash; Locale-aware number formatter powered by <code>Intl.NumberFormat</code>. Supports number, currency, percent, and compact notation types with configurable decimals and locale. Uses tabular-nums for column alignment.</li>
+        <li><strong><code>arc-time-ago</code></strong> &mdash; Auto-updating relative time display (&ldquo;3 minutes ago&rdquo;, &ldquo;yesterday&rdquo;). Uses <code>Intl.RelativeTimeFormat</code> with an adaptive update interval that slows as the timestamp ages. Renders a semantic <code>&lt;time&gt;</code> element with a full-date title tooltip.</li>
+      </ul>
+
+      <h3 class="tier-heading">New Input Components</h3>
+      <ul class="docs-list">
+        <li><strong><code>arc-time-picker</code></strong> &mdash; Time selection dropdown with scrollable hour, minute, and AM/PM columns. Supports 12h and 24h display formats, configurable step increments (1/5/15/30 minutes), and min/max time constraints. Matches the DatePicker interaction pattern with keyboard navigation and outside-click dismiss.</li>
+        <li><strong><code>arc-range-slider</code></strong> &mdash; Dual-thumb slider for selecting a value range. Custom-rendered track with pointer-capture drag, snap-to-step, and full keyboard support (ArrowKeys, Home/End). Both thumbs emit <code>arc-input</code> during drag and <code>arc-change</code> on release with <code>&#123; low, high &#125;</code> detail. Same glow effects as the single Slider.</li>
+      </ul>
+
+      <h3 class="tier-heading">Theme Presets</h3>
+      <ul class="docs-list">
+        <li><strong>Minimal theme</strong> (<code>@arclux/arc-ui/themes/minimal</code>) &mdash; Strips all glow effects, gradient backgrounds, and depth shadows. Replaces the sci-fi aesthetic with a clean, flat look while preserving layout and spacing. Import after <code>base.css</code>.</li>
+        <li><strong>High Contrast theme</strong> (<code>@arclux/arc-ui/themes/high-contrast</code>) &mdash; WCAG AAA compliant with 7:1+ contrast ratios. Brightened text, stronger borders, bolder focus rings (3px solid), and larger interactive targets (36px minimum). Includes both dark and light mode overrides.</li>
+      </ul>
+
+      <h3 class="tier-heading">Semantic Token Layer</h3>
+      <p class="docs-text">
+        A new semantic token layer adds ~25 CSS custom properties that describe <em>purpose</em> rather than <em>appearance</em>.
+        All interactive colors now use <code>--interactive</code> (aliased to <code>--accent-primary</code>), all surface
+        backgrounds use <code>--surface-*</code>, and feedback composites (error/success/warning/info borders, glows, and
+        subtle backgrounds) are available as ready-made tokens. The semantic layer is additive &mdash; both old and new token
+        names remain available &mdash; but all ~170 component files have been migrated to the semantic names internally.
+      </p>
+      <ul class="docs-list">
+        <li><strong>Interactive tokens</strong> &mdash; <code>--interactive</code>, <code>--interactive-rgb</code>, <code>--interactive-hover</code>, <code>--interactive-active</code>, <code>--interactive-focus</code>, <code>--interactive-focus-ring</code>, <code>--interactive-muted</code>. Override <code>--interactive</code> at <code>:root</code> to retheme every clickable element at once.</li>
+        <li><strong>Surface tokens</strong> &mdash; <code>--surface-base</code>, <code>--surface-primary</code>, <code>--surface-raised</code>, <code>--surface-overlay</code>, <code>--surface-hover</code>. A clear elevation hierarchy for page background &rarr; content &rarr; cards &rarr; dropdowns.</li>
+        <li><strong>Divider tokens</strong> &mdash; <code>--divider</code> and <code>--divider-glow</code> distinguish separator lines from component edge borders.</li>
+        <li><strong>Feedback composites</strong> &mdash; <code>--feedback-&#123;error,success,warning,info&#125;-&#123;subtle,border,glow&#125;</code>. Pre-composed background, border, and glow values for each feedback level, eliminating manual <code>rgba()</code> composition in components.</li>
+        <li><strong>Theme preset integration</strong> &mdash; Minimal theme overrides flatten <code>--interactive-hover</code>/<code>--interactive-active</code> to <code>none</code> and simplifies <code>--interactive-focus</code> to a 2px ring. High Contrast theme strengthens all <code>--interactive-focus</code> and <code>--feedback-*-glow</code> values.</li>
+      </ul>
+
+      <h3 class="tier-heading">Category Package Exports</h3>
+      <ul class="docs-list">
+        <li><strong>Import by category</strong> &mdash; New package entry points: <code>@arclux/arc-ui/content</code>, <code>/data</code>, <code>/typography</code>, <code>/input</code>, <code>/feedback</code>, <code>/navigation</code>, <code>/layout</code>, <code>/shared</code>. Import an entire tier with a single import statement. Existing per-component imports remain unchanged.</li>
+      </ul>
+
+      <h3 class="tier-heading">Vertical Tabs</h3>
+      <ul class="docs-list">
+        <li><strong>New <code>orientation</code> prop on Tabs</strong> &mdash; <code>arc-tabs</code> now accepts <code>orientation="vertical"</code> to render the tab list as a sidebar column with the panel to the right. Arrow key navigation automatically switches to up/down. Works with both underline and pills variants. Default remains horizontal.</li>
+      </ul>
+
+      <h3 class="tier-heading">Nested TOC &amp; Sidebar Support</h3>
+      <ul class="docs-list">
+        <li><strong>New <code>level</code> prop on SpyLink and SidebarLink</strong> &mdash; Both <code>arc-spy-link</code> and <code>arc-sidebar-link</code> now accept a <code>level</code> number prop (default <code>0</code>) for visual nesting. Links with <code>level &gt; 0</code> render with progressive indentation and a smaller, dimmed font (<code>--text-xs</code> / <code>--text-ghost</code>). Active state highlighting overrides the dimmed color automatically. Zero breaking changes &mdash; existing flat lists default to level 0 and render identically.</li>
+      </ul>
+
+      <h3 class="tier-heading">Typography &amp; Token Changes</h3>
+      <ul class="docs-list">
+        <li><strong>Text size floor raised to 16px</strong> &mdash; <code>--text-sm</code> bumped from 14px to 16px; <code>--text-md</code> and <code>--body-size</code> bumped from 15px to 17px. All body and secondary text across the library is now larger and more readable.</li>
+        <li><strong>Code font size set to 14px</strong> &mdash; <code>--code-size</code> is now a fixed 14px (was 13px). Slightly smaller than body text for clear visual distinction in inline code and code blocks.</li>
+        <li><strong>Sidebar &amp; TOC widened to 280px</strong> &mdash; <code>arc-sidebar</code> default width and <code>arc-app-shell</code> sidebar/TOC columns bumped from 260px to 280px to accommodate the larger text.</li>
+      </ul>
+
+      <h3 class="tier-heading">Visual Elevation</h3>
+      <p class="docs-text">
+        A systematic pass bringing the full sci-fi luminescence vocabulary &mdash; glow lines, entrance animations,
+        inset shadows, and spring easing &mdash; to workhorse components that previously had minimal interaction treatments.
+      </p>
+      <ul class="docs-list">
+        <li><strong>Glow line dividers</strong> &mdash; Card (body/footer), Accordion (between items), Modal (header &amp; footer), and Tooltip (popup top) now use <code>--glow-line-gradient</code> pseudo-element dividers instead of flat <code>border-color</code> separators.</li>
+        <li><strong>Dropdown entrance animations</strong> &mdash; Select, Combobox, and Multi-Select dropdowns now animate in with a 120ms slide-fade (<code>opacity</code> + <code>translateY</code>), matching the Date Picker. Each dropdown also gets a glow-line accent at the top edge. Respects <code>prefers-reduced-motion</code>.</li>
+        <li><strong>Form field hover glow</strong> &mdash; Input, Select, Textarea, Combobox, and Multi-Select now show <code>var(--glow-hover)</code> on hover alongside the existing border-color change. Checkbox unchecked state gains a subtle accent glow on hover.</li>
+        <li><strong>Inset shadow on recessed surfaces</strong> &mdash; New <code>--shadow-inset</code> token (<code>inset 0 1px 3px rgba(0,0,0,0.25)</code>) applied to all form field backgrounds, giving them a pressed-in depth. Combines with glow-hover and focus-glow via comma-separated box-shadows.</li>
+        <li><strong>Checkbox spring-pop</strong> &mdash; Check icon now uses a <code>check-pop</code> keyframe (scale 0.5 &rarr; 1.15 &rarr; 1) with <code>--ease-out-expo</code> instead of a linear scale transition. Respects <code>prefers-reduced-motion</code>.</li>
+        <li><strong>Toggle thumb spring easing</strong> &mdash; Toggle thumb transition uses <code>300ms var(--ease-out-expo)</code> for a natural overshoot feel on slide.</li>
+        <li><strong>Skeleton shimmer accent tint</strong> &mdash; Skeleton shimmer highlight now uses <code>rgba(var(--accent-primary-rgb), 0.04)</code> instead of <code>var(--border-subtle)</code>, giving loading states a faint accent-colored pulse.</li>
+        <li><strong>Active state spring easing</strong> &mdash; Button, Icon Button, and Theme Toggle release transitions now use <code>var(--ease-out-expo)</code> for the transform property, giving the scale-up a springy bounce-back.</li>
+      </ul>
+
+      <h3 class="tier-heading">Interaction Polish</h3>
+      <p class="docs-text">
+        A second visual pass adding hover glows, active press feedback, and pulse animations to 10 components
+        that previously had flat or minimal interaction states. All enhancements are CSS-only and respect
+        <code>prefers-reduced-motion</code>.
+      </p>
+      <ul class="docs-list">
+        <li><strong>Accordion</strong> &mdash; Trigger hover glow, <code>scale(0.98)</code> active press, expo easing on chevron rotation.</li>
+        <li><strong>Tabs</strong> &mdash; Active tab glow on both underline and pills variants, <code>scale(0.95)</code> press, expo transform easing.</li>
+        <li><strong>ListItem</strong> &mdash; Hover glow, <code>scale(0.98)</code> press with expo easing, selected state inset glow.</li>
+        <li><strong>Select</strong> &mdash; Option <code>scale(0.97)</code> active press, expo chevron easing, dropdown zoom-in entrance (<code>scale(0.96)</code> start).</li>
+        <li><strong>Breadcrumb</strong> &mdash; Hover background with accent tint and glow, rounded corners, <code>scale(0.95)</code> press.</li>
+        <li><strong>Pagination</strong> &mdash; Hover glow on inactive pages, <code>scale(0.93)</code> active press, expo transform easing.</li>
+        <li><strong>Radio Group</strong> &mdash; Hover glow on radio circles with subtle border-color shift.</li>
+        <li><strong>Sidebar</strong> &mdash; Section toggle hover glow, link hover inset glow.</li>
+        <li><strong>Stepper</strong> &mdash; Completed step glow, active step pulse animation.</li>
+        <li><strong>Avatar</strong> &mdash; <code>scale(1.05)</code> hover lift, online status pulse animation.</li>
+      </ul>
+
+      <h3 class="tier-heading">Mobile Navigation Menu</h3>
+      <ul class="docs-list">
+        <li><strong>Thematic mobile triggers</strong> &mdash; Mobile menu items are now bordered cards with accent glow, matching the desktop navigation style. Supports default, primary, and muted variants.</li>
+        <li><strong>Tap feedback</strong> &mdash; All mobile triggers and child links show an instant <code>scale(0.98)</code> press state with accent tint on tap.</li>
+        <li><strong>Swipe-to-close</strong> &mdash; Swiping up on the mobile panel (when scrolled to top) dismisses the menu.</li>
+        <li><strong>GPU-accelerated animation</strong> &mdash; Panel open/close animation replaced from <code>max-height</code> to <code>clip-path</code> for smoother performance on mobile devices.</li>
+        <li><strong>Smooth sub-menu expand</strong> &mdash; Replaced the <code>max-height: 500px</code> hack with CSS <code>grid-template-rows: 0fr &rarr; 1fr</code> for properly measured expand/collapse transitions.</li>
+        <li><strong>ARIA improvements</strong> &mdash; Mobile panel now declares <code>role="dialog"</code>, <code>aria-modal="true"</code>, and <code>aria-label</code>.</li>
+      </ul>
+
+      <h3 class="tier-heading">Layout</h3>
+      <ul class="docs-list">
+        <li><strong>Page Header top padding removed</strong> &mdash; <code>arc-page-header</code> no longer adds <code>var(--space-lg)</code> top padding, eliminating the extra margin on component doc pages. The app shell content area already provides consistent top spacing.</li>
+      </ul>
+
+      <h3 class="tier-heading">Bug Fixes</h3>
+      <ul class="docs-list">
+        <li><strong>Sidebar toggle event collision</strong> &mdash; The <code>arc-toggle</code> rename to <code>arc-sidebar-toggle</code> fixes a latent bug where <code>arc-toggle</code> events from nested Collapsible or TreeView components could bubble up and incorrectly trigger the app-shell sidebar.</li>
+        <li><strong>Breadcrumb active item alignment</strong> &mdash; The current (last) breadcrumb item now has matching padding and min-height with link items, fixing a visual offset.</li>
+        <li><strong>Marquee ResizeObserver leak</strong> &mdash; <code>_setupResizeObserver</code> now disconnects any existing observer before creating a new one, preventing duplicate observers.</li>
+        <li><strong>Tree-view keyboard performance</strong> &mdash; Arrow key navigation now queries the DOM once per keypress instead of twice.</li>
+        <li><strong>Pagination aria-current</strong> &mdash; Non-current pages now omit the <code>aria-current</code> attribute entirely instead of setting it to <code>"false"</code>.</li>
+        <li><strong>Hotkey render</strong> &mdash; <code>render()</code> now returns Lit&rsquo;s <code>nothing</code> sentinel instead of <code>undefined</code>.</li>
+        <li><strong>DatePicker lazy init</strong> &mdash; <code>new Date()</code> computation moved from constructor to <code>connectedCallback</code> for lazy initialization.</li>
+        <li><strong>Timeline line gap</strong> &mdash; Fixed a 4px gap between timeline dots and their connecting lines.</li>
+      </ul>
+
+      <h3 class="tier-heading">Style Consistency</h3>
+      <ul class="docs-list">
+        <li><strong>Transition token adoption</strong> &mdash; Replaced hardcoded transition durations in Accordion, Collapsible, Sidebar, DatePicker, and ThemeToggle with <code>var(--transition-fast)</code> or <code>var(--transition-slow)</code>.</li>
+        <li><strong>Hover glow standardization</strong> &mdash; Components that independently defined <code>0 0 12px rgba(accent, 0.15)</code> now reference <code>var(--glow-hover)</code>.</li>
+        <li><strong>Breakpoint documentation</strong> &mdash; Added token-equivalent comments to 9 hardcoded media queries across 8 components.</li>
+      </ul>
+
+      <h3 class="tier-heading">New Tokens</h3>
+      <ul class="docs-list">
+        <li><strong><code>--z-dropdown</code>, <code>--z-tooltip</code>, <code>--z-overlay</code>, <code>--z-modal</code>, <code>--z-toast</code>, <code>--z-max</code></strong> &mdash; Semantic z-index scale. All 22 components with z-index values now reference these tokens instead of hardcoding numbers.</li>
+        <li><strong><code>--glow-hover</code></strong> &mdash; Standardized hover glow (<code>0 0 12px rgba(var(--accent-primary-rgb), 0.15)</code>). Used by Avatar, Tag, Badge, NavigationMenu, and available for consumer use.</li>
+      </ul>
+
+      <h3 class="tier-heading">Breaking Changes</h3>
+      <ul class="docs-list">
+        <li><strong>Text size scale</strong> &mdash; <code>--text-sm</code> is now 16px (was 14px), <code>--text-md</code> is now 17px (was 15px), <code>--code-size</code> is now 14px (was 13px). Components using these tokens will render larger text.</li>
+        <li><strong>Z-index token restructure</strong> &mdash; Replaced the old numeric scale (<code>--z-sticky</code>, <code>--z-drawer</code>, <code>--z-popover</code>, values 100&ndash;700) with a semantic scale: <code>--z-dropdown</code> (1000), <code>--z-tooltip</code> (1100), <code>--z-overlay</code> (1200), <code>--z-modal</code> (1300), <code>--z-toast</code> (1400), <code>--z-max</code> (9999). If you referenced the old token names in your CSS, update them.</li>
+        <li><strong>Disabled opacity standardized to 0.5</strong> &mdash; 25 components previously used <code>opacity: 0.4</code> for disabled states. All now use <code>0.5</code>, matching the <code>--opacity-disabled</code> token. Disabled elements will appear slightly more visible than before.</li>
+        <li><strong>Event renames</strong> &mdash; Three custom events have been renamed for clarity:
+          <ul class="docs-list" style="margin-top:var(--space-xs)">
+            <li><code>arc-trigger</code> &rarr; <code>arc-hotkey-trigger</code> (Hotkey)</li>
+            <li><code>arc-toggle</code> (top-bar/app-shell sidebar) &rarr; <code>arc-sidebar-toggle</code></li>
+            <li><code>arc-item-click</code> &rarr; <code>arc-item-select</code> (List, ListItem)</li>
+          </ul>
+          Note: <code>arc-toggle</code> events from Collapsible, Truncate, TreeView, and SidebarSection are unchanged.
+        </li>
+      </ul>
+
+      <h3 class="tier-heading">Internal</h3>
+      <ul class="docs-list">
+        <li>22 components updated from hardcoded z-index values to semantic tokens.</li>
+        <li>25 components updated from <code>opacity: 0.4</code> to <code>0.5</code> in disabled states.</li>
+        <li>5 components updated from hardcoded transition durations to token references.</li>
+        <li>4 components updated to use <code>var(--glow-hover)</code> instead of inline shadow definitions.</li>
+      </ul>
+    </section>
 
     <section id="v1-11-0">
       <h2 class="docs-heading">v1.11.0 — Footer Containment &amp; Layout Improvements</h2>

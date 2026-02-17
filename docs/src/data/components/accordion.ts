@@ -18,7 +18,7 @@ The component is fully accessible out of the box: trigger buttons carry \`aria-e
 
   features: [
     'Smooth CSS grid-based expand/collapse animation (no JS height calc)',
-    'Multi-open by default — users can expand several items simultaneously',
+    'Single-open by default (set multiple for multi-open)',
     'Declarative content via <arc-accordion-item> children with a question attribute',
     'Slotted answer content supports rich HTML, not just plain text',
     'Accessible: aria-expanded on triggers, keyboard-focusable, visible focus ring',
@@ -85,13 +85,6 @@ The component is fully accessible out of the box: trigger buttons carry \`aria-e
           type: 'string',
           description:
             'The heading text displayed on the trigger button. Should be a concise, scannable label or question.',
-        },
-        {
-          name: 'open',
-          type: 'boolean',
-          default: 'false',
-          description:
-            'Controls whether this item is expanded. When true the body content is visible and the chevron points downward.',
         },
       ],
     },

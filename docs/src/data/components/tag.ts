@@ -23,7 +23,7 @@ When the \`removable\` prop is set, a small close button appears after the label
       'Optional remove button via `removable` prop, firing `arc-remove` on click',
       'Hover glow effect on coloured variants and custom colours using matching box-shadow',
       'Default slot for label content, supporting text, icons, or mixed content',
-      'Disabled state at 40% opacity with pointer events blocked on the entire tag',
+      'Disabled state at 50% opacity with pointer events blocked on the entire tag',
       'Focus-visible ring on the remove button for keyboard accessibility',
       'CSS parts `tag`, `label`, and `remove` for targeted external styling',
     ],

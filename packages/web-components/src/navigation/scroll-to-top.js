@@ -23,7 +23,7 @@ export class ArcScrollToTop extends LitElement {
 
       .scroll-to-top {
         position: fixed;
-        z-index: 1000;
+        z-index: var(--z-dropdown);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -32,7 +32,7 @@ export class ArcScrollToTop extends LitElement {
         padding: 0;
         border: 1px solid var(--border-subtle);
         border-radius: var(--radius-full);
-        background: var(--bg-elevated);
+        background: var(--surface-overlay);
         box-shadow: var(--shadow-md);
         color: var(--text-muted);
         cursor: pointer;
@@ -57,7 +57,7 @@ export class ArcScrollToTop extends LitElement {
       .scroll-to-top:hover {
         background: var(--accent-primary-subtle);
         border-color: var(--accent-primary-border);
-        color: var(--accent-primary);
+        color: var(--interactive);
       }
 
       .scroll-to-top:active {
@@ -70,7 +70,7 @@ export class ArcScrollToTop extends LitElement {
 
       .scroll-to-top:focus-visible {
         outline: none;
-        box-shadow: var(--focus-glow);
+        box-shadow: var(--interactive-focus);
       }
 
       .scroll-to-top svg {

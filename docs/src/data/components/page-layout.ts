@@ -84,7 +84,7 @@ PageLayout collapses gracefully on mobile. At 768px and below, sidebar-left and 
         description: 'Controls the column structure of the page. sidebar-left creates a 240px fixed column on the left for navigation. sidebar-right creates a 300px fixed column on the right for contextual content. centered constrains the main area to max-width with auto margins. wide allows content to stretch the full available width.',
       },
       {
-        name: 'maxWidth',
+        name: 'max-width',
         type: 'string',
         default: "'1120px'",
         description: 'Maximum width of the content area when using the centered layout. Accepts any valid CSS length value. Has no effect on sidebar-left, sidebar-right, or wide layouts. Maps to the --max-width CSS custom property.',

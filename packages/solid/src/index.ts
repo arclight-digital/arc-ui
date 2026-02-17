@@ -381,3 +381,54 @@ export type { SnackbarProps } from './feedback/Snackbar.js';
 
 export { Spotlight } from './feedback/Spotlight.js';
 export type { SpotlightProps } from './feedback/Spotlight.js';
+
+export { ComparisonColumn } from './data/ComparisonColumn.js';
+export type { ComparisonColumnProps } from './data/ComparisonColumn.js';
+
+export { CountdownTimer } from './data/CountdownTimer.js';
+export type { CountdownTimerProps } from './data/CountdownTimer.js';
+
+export { DescriptionItem } from './data/DescriptionItem.js';
+export type { DescriptionItemProps } from './data/DescriptionItem.js';
+
+export { Diff } from './data/Diff.js';
+export type { DiffProps } from './data/Diff.js';
+
+export { KvPair } from './data/KvPair.js';
+export type { KvPairProps } from './data/KvPair.js';
+
+export { Sparkline } from './data/Sparkline.js';
+export type { SparklineProps } from './data/Sparkline.js';
+
+export { Blockquote } from './typography/Blockquote.js';
+export type { BlockquoteProps } from './typography/Blockquote.js';
+
+export { GradientText } from './typography/GradientText.js';
+export type { GradientTextProps } from './typography/GradientText.js';
+
+export { NumberFormat } from './typography/NumberFormat.js';
+export type { NumberFormatProps } from './typography/NumberFormat.js';
+
+export { Prose } from './typography/Prose.js';
+export type { ProseProps } from './typography/Prose.js';
+
+export { TimeAgo } from './typography/TimeAgo.js';
+export type { TimeAgoProps } from './typography/TimeAgo.js';
+
+export { Typewriter } from './typography/Typewriter.js';
+export type { TypewriterProps } from './typography/Typewriter.js';
+
+export { Comparison } from './data/Comparison.js';
+export type { ComparisonProps } from './data/Comparison.js';
+
+export { DescriptionList } from './data/DescriptionList.js';
+export type { DescriptionListProps } from './data/DescriptionList.js';
+
+export { KeyValue } from './data/KeyValue.js';
+export type { KeyValueProps } from './data/KeyValue.js';
+
+export { RangeSlider } from './input/RangeSlider.js';
+export type { RangeSliderProps } from './input/RangeSlider.js';
+
+export { TimePicker } from './input/TimePicker.js';
+export type { TimePickerProps } from './input/TimePicker.js';

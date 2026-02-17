@@ -26,8 +26,8 @@ export class ArcTooltip extends LitElement {
 
       .tooltip__popup {
         position: absolute;
-        z-index: 1000;
-        background: var(--bg-elevated);
+        z-index: var(--z-tooltip);
+        background: var(--surface-overlay);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-sm);
         padding: var(--space-xs) var(--space-sm);
@@ -39,6 +39,17 @@ export class ArcTooltip extends LitElement {
         opacity: 0;
         transition: opacity var(--transition-fast);
         box-shadow: var(--shadow-overlay);
+        overflow: hidden;
+      }
+
+      .tooltip__popup::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: var(--divider-glow);
       }
 
       :host .tooltip__popup.is-visible {
@@ -50,7 +61,7 @@ export class ArcTooltip extends LitElement {
         position: absolute;
         width: 8px;
         height: 8px;
-        background: var(--bg-elevated);
+        background: var(--surface-overlay);
         border: 1px solid var(--border-default);
         transform: rotate(45deg);
       }

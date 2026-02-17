@@ -5,13 +5,14 @@
 
   interface Props {
     target?: string;
+    level?: number;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { target = '', children, ...rest }: Props = $props();
+  let { target = '', level = 0, children, ...rest }: Props = $props();
 </script>
 
-<arc-spy-link {target} {...rest}>
+<arc-spy-link {target} {level} {...rest}>
   {@render children?.()}
 </arc-spy-link>

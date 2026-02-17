@@ -40,7 +40,7 @@ export class ArcTruncate extends LitElement {
         font-size: var(--text-xs);
         letter-spacing: 1px;
         text-transform: uppercase;
-        color: var(--accent-primary);
+        color: var(--interactive);
         transition: color var(--transition-fast);
       }
 
@@ -50,7 +50,7 @@ export class ArcTruncate extends LitElement {
 
       .truncate__toggle:focus-visible {
         outline: none;
-        box-shadow: var(--focus-ring);
+        box-shadow: var(--interactive-focus-ring);
         border-radius: var(--radius-sm);
       }
 

@@ -33,7 +33,7 @@ export class ArcDropdownMenu extends LitElement {
         top: calc(100% + var(--space-xs));
         left: 0;
         min-width: 200px;
-        background: var(--bg-card);
+        background: var(--surface-raised);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-md);
         padding: var(--space-xs) 0;
@@ -73,12 +73,12 @@ export class ArcDropdownMenu extends LitElement {
 
       .dropdown__item:hover,
       .dropdown__item.is-focused {
-        background: var(--bg-hover);
+        background: var(--surface-hover);
         color: var(--text-primary);
       }
 
       .dropdown__item:focus-visible {
-        box-shadow: inset var(--focus-glow);
+        box-shadow: inset var(--interactive-focus);
       }
 
       .dropdown__item-label {

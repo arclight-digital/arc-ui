@@ -61,7 +61,7 @@ export class ArcButton extends LitElement {
           border-color var(--transition-base),
           box-shadow var(--transition-base),
           color var(--transition-base),
-          transform var(--transition-fast);
+          transform 120ms var(--ease-out-expo);
         text-decoration: none;
         white-space: nowrap;
         box-sizing: border-box;
@@ -76,22 +76,22 @@ export class ArcButton extends LitElement {
 
       /* Default → primary */
       :host(:not([variant])) .btn {
-        background: var(--accent-primary);
-        color: var(--bg-deep);
-        border-color: var(--accent-primary);
+        background: var(--interactive);
+        color: var(--surface-base);
+        border-color: var(--interactive);
       }
-      :host(:not([variant])) .btn:hover { box-shadow: var(--glow-primary); }
+      :host(:not([variant])) .btn:hover { box-shadow: var(--interactive-active); }
 
       /* :active scale */
       :host(:not([variant])) .btn:active,
-      :host([variant="primary"]) .btn:active { transform: scale(0.97); box-shadow: 0 0 8px rgba(var(--accent-primary-rgb),0.5); }
+      :host([variant="primary"]) .btn:active { transform: scale(0.97); box-shadow: 0 0 8px rgba(var(--interactive-rgb),0.5); }
       :host([variant="secondary"]) .btn:active {
         transform: scale(0.97);
-        background: rgba(var(--accent-primary-rgb),0.05);
+        background: rgba(var(--interactive-rgb),0.05);
       }
       :host([variant="ghost"]) .btn:active {
         transform: scale(0.97);
-        background: var(--bg-elevated);
+        background: var(--surface-overlay);
       }
 
       /* Prefix / Suffix */

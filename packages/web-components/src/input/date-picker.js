@@ -22,7 +22,7 @@ export class ArcDatePicker extends LitElement {
     tokenStyles,
     css`
       :host { display: inline-block; font-family: var(--font-body); position: relative; }
-      :host([disabled]) { opacity: 0.4; pointer-events: none; }
+      :host([disabled]) { opacity: 0.5; pointer-events: none; }
 
       .wrapper {
         display: flex;
@@ -49,7 +49,7 @@ export class ArcDatePicker extends LitElement {
         font-family: var(--font-body);
         font-size: var(--text-sm);
         color: var(--text-primary);
-        background: var(--bg-card);
+        background: var(--surface-raised);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-md);
         padding: var(--space-sm) var(--space-md);
@@ -63,7 +63,7 @@ export class ArcDatePicker extends LitElement {
 
       input::placeholder { color: var(--text-muted); }
       input:hover:not(:focus) { border-color: var(--border-bright); }
-      input:focus { outline: none; border-color: rgba(var(--accent-primary-rgb), 0.4); box-shadow: var(--focus-glow); }
+      input:focus { outline: none; border-color: rgba(var(--interactive-rgb), 0.4); box-shadow: var(--interactive-focus); }
 
       .calendar-icon {
         position: absolute;
@@ -77,15 +77,15 @@ export class ArcDatePicker extends LitElement {
         position: absolute;
         top: 100%;
         left: 0;
-        z-index: 1000;
+        z-index: var(--z-dropdown);
         margin-top: var(--space-xs);
-        background: var(--bg-card);
+        background: var(--surface-raised);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-lg);
         box-shadow: var(--shadow-overlay);
         padding: var(--space-sm);
         min-width: 280px;
-        animation: dropdown-in 150ms ease-out;
+        animation: dropdown-in var(--transition-fast);
       }
 
       @keyframes dropdown-in {
@@ -117,13 +117,13 @@ export class ArcDatePicker extends LitElement {
       }
 
       .calendar-title:hover {
-        color: var(--accent-primary);
-        background: var(--bg-hover);
+        color: var(--interactive);
+        background: var(--surface-hover);
       }
 
       .calendar-title:focus-visible {
         outline: none;
-        box-shadow: var(--focus-glow);
+        box-shadow: var(--interactive-focus);
       }
 
       .picker-grid {
@@ -151,19 +151,19 @@ export class ArcDatePicker extends LitElement {
       }
 
       .picker-cell:hover {
-        background: var(--bg-elevated);
+        background: var(--surface-overlay);
         color: var(--text-primary);
       }
 
       .picker-cell.current {
-        background: var(--accent-primary);
-        color: var(--bg-deep);
+        background: var(--interactive);
+        color: var(--surface-base);
         font-weight: 600;
       }
 
       .picker-cell:focus-visible {
         outline: none;
-        box-shadow: var(--focus-glow);
+        box-shadow: var(--interactive-focus);
       }
 
       .nav-btn {
@@ -180,12 +180,12 @@ export class ArcDatePicker extends LitElement {
 
       .nav-btn:hover {
         color: var(--text-primary);
-        background: var(--bg-elevated);
+        background: var(--surface-overlay);
       }
 
       .nav-btn:focus-visible {
         outline: none;
-        box-shadow: var(--focus-glow);
+        box-shadow: var(--interactive-focus);
       }
 
       .weekdays {
@@ -228,13 +228,13 @@ export class ArcDatePicker extends LitElement {
       }
 
       .day:hover:not(.disabled):not(.empty) {
-        background: var(--bg-elevated);
+        background: var(--surface-overlay);
         color: var(--text-primary);
       }
 
       .day:focus-visible {
         outline: none;
-        box-shadow: var(--focus-glow);
+        box-shadow: var(--interactive-focus);
       }
 
       .day.today {
@@ -242,7 +242,7 @@ export class ArcDatePicker extends LitElement {
       }
 
       .day.selected {
-        background: var(--accent-primary);
+        background: var(--interactive);
         color: var(--text-primary);
         font-weight: 600;
       }
@@ -283,9 +283,8 @@ export class ArcDatePicker extends LitElement {
     this._open = false;
     this._mode = 'days'; // 'days' | 'months' | 'years'
 
-    const today = new Date();
-    this._viewMonth = today.getMonth();
-    this._viewYear = today.getFullYear();
+    this._viewMonth = null;
+    this._viewYear = null;
 
     this._handleOutsideClick = this._handleOutsideClick.bind(this);
     this._handleEscape = this._handleEscape.bind(this);
@@ -293,6 +292,11 @@ export class ArcDatePicker extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
+    if (this._viewMonth === null || this._viewYear === null) {
+      const today = new Date();
+      this._viewMonth = today.getMonth();
+      this._viewYear = today.getFullYear();
+    }
     document.addEventListener('click', this._handleOutsideClick);
     document.addEventListener('keydown', this._handleEscape);
   }
