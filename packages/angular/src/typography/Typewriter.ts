@@ -7,7 +7,7 @@ import '@arclux/arc-ui';
   selector: 'arc-typewriter',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-typewriter [attr.text]="text" [attr.speed]="speed" [attr.delay]="delay" [cursor]="cursor" [loop]="loop" [attr._displayText]="_displayText" [attr._complete]="_complete" (arc-complete)="arcComplete.emit($event)"><ng-content /></arc-typewriter>`,
+  template: `<arc-typewriter [attr.text]="text" [attr.speed]="speed" [attr.delay]="delay" [cursor]="cursor" [loop]="loop" [nowrap]="nowrap" [attr._displayText]="_displayText" [attr._complete]="_complete" (arc-complete)="arcComplete.emit($event)"><ng-content /></arc-typewriter>`,
 })
 export class Typewriter {
   @Input() text: string = '';
@@ -15,6 +15,7 @@ export class Typewriter {
   @Input() delay: number = 0;
   @Input() cursor: boolean = true;
   @Input() loop: boolean = false;
+  @Input() nowrap: boolean = false;
   @Input() _displayText: string = '';
   @Input() _complete: string = false;
   @Output() arcComplete = new EventEmitter<CustomEvent>();

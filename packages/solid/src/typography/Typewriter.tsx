@@ -9,6 +9,7 @@ export interface TypewriterProps {
   delay?: number;
   cursor?: boolean;
   loop?: boolean;
+  nowrap?: boolean;
   _displayText?: string;
   _complete?: string;
   children?: JSX.Element;
@@ -16,9 +17,9 @@ export interface TypewriterProps {
 }
 
 export const Typewriter: Component<TypewriterProps> = (props) => {
-  const [local, rest] = splitProps(props, ['text', 'speed', 'delay', 'cursor', 'loop', '_displayText', '_complete', 'children']);
+  const [local, rest] = splitProps(props, ['text', 'speed', 'delay', 'cursor', 'loop', 'nowrap', '_displayText', '_complete', 'children']);
   return (
-    <arc-typewriter text={local.text} speed={local.speed} delay={local.delay} cursor={local.cursor} loop={local.loop} _displayText={local._displayText} _complete={local._complete} {...rest}>
+    <arc-typewriter text={local.text} speed={local.speed} delay={local.delay} cursor={local.cursor} loop={local.loop} nowrap={local.nowrap} _displayText={local._displayText} _complete={local._complete} {...rest}>
       {local.children}
     </arc-typewriter>
   );

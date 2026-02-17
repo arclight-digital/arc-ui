@@ -9,15 +9,16 @@
     delay?: number;
     cursor?: boolean;
     loop?: boolean;
+    nowrap?: boolean;
     _displayText?: string;
     _complete?: string;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { text = '', speed = 50, delay = 0, cursor = true, loop = false, _displayText = '', _complete = false, children, ...rest }: Props = $props();
+  let { text = '', speed = 50, delay = 0, cursor = true, loop = false, nowrap = false, _displayText = '', _complete = false, children, ...rest }: Props = $props();
 </script>
 
-<arc-typewriter {text} {speed} {delay} {cursor} {loop} {_displayText} {_complete} {...rest}>
+<arc-typewriter {text} {speed} {delay} {cursor} {loop} {nowrap} {_displayText} {_complete} {...rest}>
   {@render children?.()}
 </arc-typewriter>

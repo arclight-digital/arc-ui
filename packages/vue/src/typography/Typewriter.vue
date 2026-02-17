@@ -10,6 +10,7 @@ withDefaults(defineProps<{
   delay?: number;
   cursor?: boolean;
   loop?: boolean;
+  nowrap?: boolean;
   _displayText?: string;
   _complete?: string;
 }>(), {
@@ -18,6 +19,7 @@ withDefaults(defineProps<{
   delay: 0,
   cursor: true,
   loop: false,
+  nowrap: false,
   _displayText: '',
   _complete: false,
 });
@@ -34,6 +36,7 @@ defineEmits<{
     :delay="delay"
     :cursor="cursor"
     :loop="loop"
+    :nowrap="nowrap"
     :_displayText="_displayText"
     :_complete="_complete"
   >

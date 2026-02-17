@@ -11,6 +11,7 @@ export class ArcTypewriter extends LitElement {
     delay:        { type: Number },
     cursor:       { type: Boolean, reflect: true },
     loop:         { type: Boolean, reflect: true },
+    nowrap:       { type: Boolean, reflect: true },
     'pause-end':  { type: Number, reflect: true, attribute: 'pause-end' },
     _displayText: { state: true },
     _complete:    { state: true },
@@ -26,6 +27,10 @@ export class ArcTypewriter extends LitElement {
       .typewriter {
         font: inherit;
         white-space: pre-wrap;
+      }
+
+      :host([nowrap]) .typewriter {
+        white-space: pre;
       }
 
       :host([cursor]) .typewriter::after {
@@ -68,6 +73,7 @@ export class ArcTypewriter extends LitElement {
     this.speed = 50;
     this.delay = 0;
     this.cursor = true;
+    this.nowrap = false;
     this.loop = false;
     this['pause-end'] = 2000;
     this._displayText = '';

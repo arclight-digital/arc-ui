@@ -10,6 +10,7 @@ export interface TypewriterProps {
   delay?: number;
   cursor?: boolean;
   loop?: boolean;
+  nowrap?: boolean;
   _displayText?: string;
   _complete?: string;
   className?: string;

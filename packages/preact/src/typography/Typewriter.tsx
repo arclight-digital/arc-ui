@@ -9,14 +9,15 @@ export interface TypewriterProps {
   delay?: number;
   cursor?: boolean;
   loop?: boolean;
+  nowrap?: boolean;
   _displayText?: string;
   _complete?: string;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const Typewriter: FunctionComponent<TypewriterProps> = ({ text, speed, delay, cursor, loop, _displayText, _complete, children, ...rest }) => (
-  <arc-typewriter text={text} speed={speed} delay={delay} cursor={cursor} loop={loop} _displayText={_displayText} _complete={_complete} {...rest}>
+export const Typewriter: FunctionComponent<TypewriterProps> = ({ text, speed, delay, cursor, loop, nowrap, _displayText, _complete, children, ...rest }) => (
+  <arc-typewriter text={text} speed={speed} delay={delay} cursor={cursor} loop={loop} nowrap={nowrap} _displayText={_displayText} _complete={_complete} {...rest}>
     {children}
   </arc-typewriter>
 );
