@@ -3,6 +3,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 import { components } from '../../data/components/index';
 
 const headings = [
+  { id: 'v2-1-0', label: 'v2.1.0' },
   { id: 'v2-0-1', label: 'v2.0.1' },
   { id: 'v2-0-0', label: 'v2.0.0' },
   { id: 'v1-11-0', label: 'v1.11.0' },
@@ -54,6 +55,26 @@ const byTier = Object.fromEntries(
     <p class="page-desc">
       Release history for ARC UI. All packages are versioned together.
     </p>
+
+    <section id="v2-1-0">
+      <h2 class="docs-heading">v2.1.0 — Export Namespace Fix</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <p class="docs-text">
+        Resolves a namespace collision where <code>@arclux/arc-ui/input</code> imported the
+        input category barrel instead of the <code>arc-input</code> component.
+      </p>
+
+      <h3 class="tier-heading">Breaking Changes</h3>
+      <ul class="docs-list">
+        <li><strong>Category barrel exports moved</strong> &mdash; Tier barrel imports like <code>@arclux/arc-ui/input</code>, <code>@arclux/arc-ui/content</code>, etc. are now under <code>@arclux/arc-ui/categories/</code> (e.g. <code>@arclux/arc-ui/categories/input</code>). No known consumers were using the old paths.</li>
+      </ul>
+
+      <h3 class="tier-heading">New</h3>
+      <ul class="docs-list">
+        <li><strong><code>@arclux/arc-ui/input</code></strong> &mdash; Now correctly registers the <code>arc-input</code> component, matching the convention used by all other components.</li>
+      </ul>
+    </section>
 
     <section id="v2-0-1">
       <h2 class="docs-heading">v2.0.1 — Export Fixes &amp; Build Pipeline</h2>
