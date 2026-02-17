@@ -1,26 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import { tekturSubsetBase64 } from '../assets/tektur-font.js';
-import { base64ToBlobUrl } from '../assets/blob-url.js';
+import { injectTekturFont } from '../assets/inject-tektur.js';
 import './logo.js';
-
-// @font-face must be in document scope — shadow DOM won't pick it up.
-let fontInjected = false;
-function injectFont() {
-  if (fontInjected) return;
-  fontInjected = true;
-  const url = base64ToBlobUrl(tekturSubsetBase64);
-  const style = document.createElement('style');
-  style.textContent = `
-    @font-face {
-      font-family: 'Tektur Subset';
-      src: url('${url}') format('woff2');
-      font-weight: 400 900;
-      font-display: block;
-    }
-  `;
-  document.head.appendChild(style);
-}
 
 const SIZES = {
   sm: { logoSize: 'sm' },
@@ -87,15 +68,17 @@ export class ArclightLoading extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    if (this.label) {
-      injectFont();
-    }
+    if (this.label) injectTekturFont();
+  }
+
+  updated() {
+    if (this.label) injectTekturFont();
   }
 
   render() {
     const s = SIZES[this.size] || SIZES.md;
     return html`
-      <div class="container">
+      <div class="container" role="status" aria-label="${this.label || 'Loading'}">
         <arclight-logo size="${s.logoSize}"></arclight-logo>
         ${this.label ? html`<span class="label">${this.label}</span>` : null}
       </div>

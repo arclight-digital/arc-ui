@@ -44,6 +44,10 @@ export class ArclightBrandColors extends LitElement {
     this._inject();
   }
 
+  updated() {
+    this._inject();
+  }
+
   /** Idempotently set CSS custom properties on :root */
   _inject() {
     if (_injected.has(this.prefix)) return;

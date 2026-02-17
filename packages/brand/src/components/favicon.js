@@ -5,6 +5,7 @@ const BASE_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1600
 /** @tag arclight-favicon */
 export class ArclightFavicon extends LitElement {
   static properties = {
+    /** When true, locks the favicon to dark-mode colors (disables automatic light-mode adaptation). */
     dark: { type: Boolean, reflect: true },
   };
 
