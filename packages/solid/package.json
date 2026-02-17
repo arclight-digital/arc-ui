@@ -1,6 +1,6 @@
 {
   "name": "@arclux/arc-ui-solid",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Solid wrappers for ARC UI Web Components.",
   "sideEffects": false,
   "type": "module",

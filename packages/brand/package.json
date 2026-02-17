@@ -1,6 +1,6 @@
 {
   "name": "@arclux/brand",
-  "version": "1.0.5",
+  "version": "2.0.1",
   "description": "Arclight brand components — logo, wordmark, powered-by badge",
   "type": "module",
   "main": "src/index.js",
@@ -13,7 +13,9 @@
     "./by": "./src/components/by-arclight.js",
     "./powered-by": "./src/components/powered-by.js"
   },
-  "files": ["src/"],
+  "files": [
+    "src/"
+  ],
   "sideEffects": true,
   "peerDependencies": {
     "lit": "^3.3.0"

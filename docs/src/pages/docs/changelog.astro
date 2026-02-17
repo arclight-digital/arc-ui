@@ -3,6 +3,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 import { components } from '../../data/components/index';
 
 const headings = [
+  { id: 'v2-0-1', label: 'v2.0.1' },
   { id: 'v2-0-0', label: 'v2.0.0' },
   { id: 'v1-11-0', label: 'v1.11.0' },
   { id: 'v1-10-2', label: 'v1.10.2' },
@@ -53,6 +54,27 @@ const byTier = Object.fromEntries(
     <p class="page-desc">
       Release history for ARC UI. All packages are versioned together.
     </p>
+
+    <section id="v2-0-1">
+      <h2 class="docs-heading">v2.0.1 — Export Fixes &amp; Build Pipeline</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <p class="docs-text">
+        Fixes 43 missing package exports and consolidates the build pipeline into a single
+        orchestrator with automatic export syncing so missing exports can never slip through again.
+      </p>
+
+      <h3 class="tier-heading">Bug Fixes</h3>
+      <ul class="docs-list">
+        <li><strong>43 missing package exports</strong> &mdash; The <code>exports</code> map in <code>@arclux/arc-ui</code> was missing entries for all 14 new v2 components and 29 older components. Imports like <code>@arclux/arc-ui/prose</code> now resolve correctly.</li>
+      </ul>
+
+      <h3 class="tier-heading">Infrastructure</h3>
+      <ul class="docs-list">
+        <li><strong>Unified generate pipeline</strong> &mdash; Replaced 5 chained npm scripts with a single <code>scripts/generate.js</code> orchestrator. Runs tokens &rarr; registrations &rarr; brand &rarr; Prism &rarr; exports with per-step timing output and fail-fast error handling.</li>
+        <li><strong>Automatic export syncing</strong> &mdash; New <code>scripts/generate-exports.js</code> scans all <code>.register.js</code> files and adds any missing entries to <code>package.json</code> exports during <code>pnpm generate</code>. Missing exports can no longer slip through.</li>
+      </ul>
+    </section>
 
     <section id="v2-0-0">
       <h2 class="docs-heading">v2.0.0 — Design System Overhaul</h2>
@@ -222,6 +244,17 @@ const byTier = Object.fromEntries(
           </ul>
           Note: <code>arc-toggle</code> events from Collapsible, Truncate, TreeView, and SidebarSection are unchanged.
         </li>
+      </ul>
+
+      <h3 class="tier-heading">Tree-Shaking</h3>
+      <ul class="docs-list">
+        <li><strong><code>sideEffects: false</code></strong> &mdash; Added to all 7 framework packages (React, Vue, Svelte, Angular, Solid, Preact, HTML). Bundlers can now reliably tree-shake unused components from framework wrapper imports.</li>
+      </ul>
+
+      <h3 class="tier-heading">Docs</h3>
+      <ul class="docs-list">
+        <li><strong>Front page overhaul</strong> &mdash; Tabbed code examples (React/Vue/Svelte/HTML), &ldquo;What&rsquo;s New in v2&rdquo; highlight section, animated stat counters, glow-line section dividers, and a Prism visual replacing the bare frameworks strip.</li>
+        <li><strong>OG image refresh</strong> &mdash; Gradient title, framework pills, varied accent stat colors, and tighter layout spacing.</li>
       </ul>
 
       <h3 class="tier-heading">Internal</h3>
