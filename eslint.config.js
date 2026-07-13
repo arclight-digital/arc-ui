@@ -24,21 +24,23 @@ export default [
     },
   },
   {
-    files: ['packages/*/src/**/*.ts'],
-    languageOptions: {
-      ecmaVersion: 2024,
-      sourceType: 'module',
-    },
-    rules: {
-      'no-unused-vars': 'off',
-    },
-  },
-  {
     ignores: [
       '**/node_modules/**',
       '**/dist/**',
       'packages/html/**',
       '.idea/**',
+      // Generated output — kept honest by the CI generate-diff gate, not lint.
+      // (espree can't parse the generated TS wrappers anyway.)
+      'packages/react/src/**',
+      'packages/vue/src/**',
+      'packages/svelte/src/**',
+      'packages/angular/src/**',
+      'packages/solid/src/**',
+      'packages/preact/src/**',
+      'packages/web-components/src/icons/**',
+      'packages/web-components/src/**/*.register.js',
+      'packages/web-components/src/register.js',
+      'packages/web-components/src/base.css',
     ],
   },
 ];

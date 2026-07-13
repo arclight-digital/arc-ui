@@ -97,8 +97,8 @@ for (const [tag, comp] of components) {
     }
   }
 
-  // Define the custom element
-  lines.push(`customElements.define('${tag}', ${comp.className});`);
+  // Define the custom element (guarded so mixed barrel/per-component imports and HMR don't double-define)
+  lines.push(`if (!customElements.get('${tag}')) customElements.define('${tag}', ${comp.className});`);
   lines.push(`export { ${comp.className} };`);
   lines.push('');
 

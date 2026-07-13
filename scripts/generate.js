@@ -9,6 +9,8 @@
  *   3. Brand     — Generate brand assets
  *   4. Prism     — Generate framework wrappers + HTML/CSS
  *   5. Exports   — Sync package.json exports map from register files
+ *   6. Manifest  — custom-elements.json via @custom-elements-manifest/analyzer
+ *   7. Types     — types/index.d.ts generated from the manifest
  *
  * Usage: node scripts/generate.js
  */
@@ -22,6 +24,8 @@ const steps = [
   { name: 'Brand',    cmd: 'node',  args: ['scripts/generate-brand-assets.js'] },
   { name: 'Prism',    cmd: 'npx',   args: ['prism'] },
   { name: 'Exports',  cmd: 'node',  args: ['scripts/generate-exports.js'] },
+  { name: 'Manifest', cmd: 'node',  args: ['scripts/generate-manifest.js'] },
+  { name: 'Types',    cmd: 'node',  args: ['scripts/generate-types.js'] },
 ];
 
 const totalStart = performance.now();

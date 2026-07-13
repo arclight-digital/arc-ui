@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+defaults:
+  run:
+    working-directory: arc-ui
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: arc-ui
+
+      # @arclux/prism is currently a local link (link:../prism) until v1.3.0
+      # is published. Check out the prism repo alongside arc-ui so the link
+      # resolves. Once prism 1.3.0 is on npm and the devDependency is flipped
+      # back to a semver range, this step can be removed.
+      - uses: actions/checkout@v4
+        with:
+          repository: arclight-digital/prism
+          path: prism
+          token: ${{ secrets.PRISM_REPO_TOKEN || github.token }}
+
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: arc-ui/package.json
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: arc-ui/pnpm-lock.yaml
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Generated files match source
+        run: |
+          pnpm generate
+          if ! git diff --quiet; then
+            echo '::error::Generated files are out of date. Run `pnpm generate` and commit the result.'
+            git diff --stat
+            exit 1
+          fi
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Typecheck generated declarations
+        run: ./node_modules/.bin/tsc --noEmit --skipLibCheck --moduleResolution bundler --module esnext --target es2022 packages/web-components/types/index.d.ts

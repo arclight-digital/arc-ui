@@ -6,6 +6,7 @@
   "main": "src/index.js",
   "module": "src/index.js",
   "types": "./types/index.d.ts",
+  "customElements": "custom-elements.json",
   "exports": {
     ".": {
       "types": "./types/index.d.ts",
@@ -37,6 +38,13 @@
     "./callout": "./src/content/callout.register.js",
     "./card": "./src/content/card.register.js",
     "./carousel": "./src/content/carousel.register.js",
+    "./categories/content": "./src/content/index.js",
+    "./categories/data": "./src/data/index.js",
+    "./categories/feedback": "./src/feedback/index.js",
+    "./categories/input": "./src/input/index.js",
+    "./categories/layout": "./src/layout/index.js",
+    "./categories/navigation": "./src/navigation/index.js",
+    "./categories/typography": "./src/typography/index.js",
     "./center": "./src/layout/center.register.js",
     "./checkbox": "./src/input/checkbox.register.js",
     "./chip": "./src/input/chip.register.js",
@@ -187,13 +195,6 @@
     "./value-card": "./src/data/value-card.register.js",
     "./virtual-list": "./src/content/virtual-list.register.js",
     "./input": "./src/input/input.register.js",
-    "./categories/content": "./src/content/index.js",
-    "./categories/data": "./src/data/index.js",
-    "./categories/typography": "./src/typography/index.js",
-    "./categories/input": "./src/input/index.js",
-    "./categories/feedback": "./src/feedback/index.js",
-    "./categories/navigation": "./src/navigation/index.js",
-    "./categories/layout": "./src/layout/index.js",
     "./themes/high-contrast": "./src/themes/high-contrast.css",
     "./themes/minimal": "./src/themes/minimal.css",
     "./tokens": "./src/tokens.js",
@@ -206,7 +207,8 @@
   },
   "files": [
     "src/",
-    "types/"
+    "types/",
+    "custom-elements.json"
   ],
   "scripts": {
     "build": "echo 'No build step — plain JS modules'"

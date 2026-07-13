@@ -16,6 +16,14 @@
       "types": "./src/content/index.ts",
       "default": "./src/content/index.ts"
     },
+    "./data": {
+      "types": "./src/data/index.ts",
+      "default": "./src/data/index.ts"
+    },
+    "./typography": {
+      "types": "./src/typography/index.ts",
+      "default": "./src/typography/index.ts"
+    },
     "./input": {
       "types": "./src/input/index.ts",
       "default": "./src/input/index.ts"
