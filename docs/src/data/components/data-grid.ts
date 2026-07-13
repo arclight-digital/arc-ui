@@ -51,6 +51,7 @@ Keyboard support follows the WAI-ARIA grid pattern: one tab stop for the whole g
     ],
   },
 
+  previewLayout: 'scroll',
   previewHtml: `<div style="width:100%">
   <arc-data-grid id="demo-grid-preview" selectable></arc-data-grid>
 </div>`,

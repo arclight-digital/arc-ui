@@ -141,7 +141,14 @@ const headings = [
           </button>
         )}
         {component.previewHtml ? (
-          <div class="live-preview" data-component={component.tag} data-has-html {...(component.previewSetup ? { 'data-setup': component.previewSetup } : {})} set:html={component.previewHtml} />
+          <div
+            class:list={['live-preview', component.previewLayout && `live-preview--${component.previewLayout}`]}
+            style={component.previewHeight ? `min-height:${component.previewHeight}` : undefined}
+            data-component={component.tag}
+            data-has-html
+            {...(component.previewSetup ? { 'data-setup': component.previewSetup } : {})}
+            set:html={component.previewHtml}
+          />
         ) : (
           <div class="live-preview" data-component={component.tag}></div>
         )}
@@ -450,6 +457,10 @@ const headings = [
     box-shadow: var(--glow-card-hover), inset 0 1px 0 var(--bg-hover);
   }
 
+  /* Default: centered flex, overflow VISIBLE so popups/dropdowns aren't
+     clipped. (overflow-x:auto + overflow-y:visible is an invalid combo — the
+     browser forces both axes to auto, which turned every preview into a
+     scroll container and clipped every select/date-picker/menu panel.) */
   .component-page__preview .live-preview {
     display: flex;
     flex-wrap: wrap;
@@ -459,9 +470,21 @@ const headings = [
     min-height: 60px;
     min-width: 0;
     width: 100%;
-    overflow-x: auto;
-    overflow-y: visible;
+    overflow: visible;
     padding-bottom: var(--space-xs);
+  }
+
+  /* Full-width flow for components that own their layout (charts, calendars) */
+  .component-page__preview .live-preview--block {
+    display: block;
+  }
+
+  /* Wide content (grids, boards, tables) scrolls horizontally inside the
+     preview instead of widening the page. Clips overlays — use only for
+     components that don't open panels past their bounds. */
+  .component-page__preview .live-preview--scroll {
+    display: block;
+    overflow-x: auto;
   }
 
   .component-page__preview .live-preview:empty {

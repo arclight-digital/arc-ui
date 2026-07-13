@@ -44,6 +44,8 @@ Keyboard interaction uses a roving tabindex across day cells: arrows move by day
       ],
     },
 
+    previewLayout: 'block',
+
     previewHtml: `<arc-event-calendar id="demo-event-calendar"></arc-event-calendar>`,
 
     previewSetup: `const cal = el.querySelector('#demo-event-calendar');

@@ -50,6 +50,7 @@ A hover layer ships by default: line and area charts show a vertical crosshair w
     ],
   },
 
+  previewLayout: 'block',
   previewHtml: `<div style="display:grid; gap:24px; width:100%">
   <arc-chart id="demo-chart-bar" type="bar" height="220"></arc-chart>
   <arc-chart id="demo-chart-line" type="line" height="220"></arc-chart>

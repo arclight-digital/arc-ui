@@ -43,6 +43,10 @@ Interaction follows the WAI-ARIA menubar pattern faithfully. The bar exposes a s
       ],
     },
 
+    previewLayout: 'block',
+
+    previewHeight: '380px',
+
     previewHtml: `<div style="display: flex; flex-direction: column; gap: var(--space-md); align-items: flex-start;">
   <arc-menubar id="demo-menubar-preview"></arc-menubar>
   <div style="font-size: var(--text-sm); color: var(--text-muted); font-family: var(--font-mono);">selected: <span id="demo-menubar-out">—</span></div>

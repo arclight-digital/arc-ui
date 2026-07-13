@@ -46,6 +46,8 @@ The component exposes three methods: \`getCrop()\` returns \`{ x, y, width, heig
       ],
     },
 
+    previewLayout: 'block',
+
     previewHtml: `<arc-image-cropper
   src="${demoSrc}"
   aspect="1"

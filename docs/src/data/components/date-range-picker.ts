@@ -44,6 +44,10 @@ An optional \`presets\` array renders a left rail of one-click quick ranges such
       ],
     },
 
+    previewLayout: 'block',
+
+    previewHeight: '560px',
+
     previewHtml: `<arc-date-range-picker
   label="Reporting Period"
   placeholder="Select date range"

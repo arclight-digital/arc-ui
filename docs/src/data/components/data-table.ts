@@ -48,6 +48,8 @@ Row selection adds a checkbox column to the left of the table. A "select all" ch
       ],
     },
 
+    previewLayout: 'scroll',
+
     previewHtml: `<div style="width:100%">
   <arc-data-table id="demo-dt-preview" sortable selectable>
     <arc-column key="name" label="Name" sortable></arc-column>

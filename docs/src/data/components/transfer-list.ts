@@ -45,6 +45,8 @@ The component is form-associated: give it a \`name\` and it submits one form ent
       ],
     },
 
+    previewLayout: 'block',
+
     previewHtml: `<arc-transfer-list
   searchable
   source-label="Available"

@@ -38,6 +38,8 @@ The \`striped\` prop adds alternating row backgrounds for improved scanability, 
       ],
     },
 
+    previewLayout: 'scroll',
+
     previewHtml: `<arc-table striped style="width:100%;"
   columns='["Component", "Tier", "Status"]'
   rows='[["Button","Input","Stable"],["Card","Content","Stable"],["Modal","Feedback","Beta"],["DatePicker","Input","Experimental"]]'

@@ -47,6 +47,7 @@ The keyboard model follows the accepted accessible kanban pattern: each column's
     ],
   },
 
+  previewLayout: 'scroll',
   previewHtml: `<div style="width:100%">
   <arc-kanban id="demo-kanban-preview"></arc-kanban>
 </div>`,
