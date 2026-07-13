@@ -7000,1649 +7000,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/layout/app-shell.js",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ArcAppShell",
-          "members": [
-            {
-              "kind": "field",
-              "name": "sidebarOpen",
-              "privacy": "public",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "attribute": "sidebar-open",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "breakpoint",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "900",
-              "attribute": "breakpoint"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "sidebar-open",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "sidebarOpen"
-            },
-            {
-              "name": "breakpoint",
-              "type": {
-                "text": "number"
-              },
-              "default": "900",
-              "fieldName": "breakpoint"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "arc-app-shell",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ArcAppShell",
-          "declaration": {
-            "name": "ArcAppShell",
-            "module": "src/layout/app-shell.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/layout/aspect-grid.js",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ArcAspectGrid",
-          "members": [
-            {
-              "kind": "field",
-              "name": "columns",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "3",
-              "attribute": "columns",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "ratio",
-              "privacy": "public",
-              "type": {
-                "text": "string"
-              },
-              "default": "'1/1'",
-              "attribute": "ratio",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "gap",
-              "privacy": "public",
-              "type": {
-                "text": "string"
-              },
-              "default": "'md'",
-              "attribute": "gap",
-              "reflects": true
-            }
-          ],
-          "attributes": [
-            {
-              "name": "columns",
-              "type": {
-                "text": "number"
-              },
-              "default": "3",
-              "fieldName": "columns"
-            },
-            {
-              "name": "ratio",
-              "type": {
-                "text": "string"
-              },
-              "default": "'1/1'",
-              "fieldName": "ratio"
-            },
-            {
-              "name": "gap",
-              "type": {
-                "text": "string"
-              },
-              "default": "'md'",
-              "fieldName": "gap"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "arc-aspect-grid",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ArcAspectGrid",
-          "declaration": {
-            "name": "ArcAspectGrid",
-            "module": "src/layout/aspect-grid.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/layout/auth-shell.js",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ArcAuthShell",
-          "members": [
-            {
-              "kind": "field",
-              "name": "variant",
-              "privacy": "public",
-              "type": {
-                "text": "string"
-              },
-              "default": "'centered'",
-              "attribute": "variant",
-              "reflects": true
-            }
-          ],
-          "attributes": [
-            {
-              "name": "variant",
-              "type": {
-                "text": "string"
-              },
-              "default": "'centered'",
-              "fieldName": "variant"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "arc-auth-shell",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ArcAuthShell",
-          "declaration": {
-            "name": "ArcAuthShell",
-            "module": "src/layout/auth-shell.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/layout/center.js",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ArcCenter",
-          "members": [
-            {
-              "kind": "field",
-              "name": "maxWidth",
-              "privacy": "public",
-              "type": {
-                "text": "string"
-              },
-              "default": "'60ch'",
-              "attribute": "max-width",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "intrinsic",
-              "privacy": "public",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "attribute": "intrinsic",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "text",
-              "privacy": "public",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "attribute": "text",
-              "reflects": true
-            }
-          ],
-          "attributes": [
-            {
-              "name": "max-width",
-              "type": {
-                "text": "string"
-              },
-              "default": "'60ch'",
-              "fieldName": "maxWidth"
-            },
-            {
-              "name": "intrinsic",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "intrinsic"
-            },
-            {
-              "name": "text",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "text"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "arc-center",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ArcCenter",
-          "declaration": {
-            "name": "ArcCenter",
-            "module": "src/layout/center.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/layout/cluster.js",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ArcCluster",
-          "members": [
-            {
-              "kind": "field",
-              "name": "gap",
-              "privacy": "public",
-              "type": {
-                "text": "string"
-              },
-              "default": "'sm'",
-              "attribute": "gap",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "align",
-              "privacy": "public",
-              "type": {
-                "text": "string"
-              },
-              "default": "'center'",
-              "attribute": "align",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "justify",
-              "privacy": "public",
-              "type": {
-                "text": "string"
-              },
-              "default": "'start'",
-              "attribute": "justify",
-              "reflects": true
-            }
-          ],
-          "attributes": [
-            {
-              "name": "gap",
-              "type": {
-                "text": "string"
-              },
-              "default": "'sm'",
-              "fieldName": "gap"
-            },
-            {
-              "name": "align",
-              "type": {
-                "text": "string"
-              },
-              "default": "'center'",
-              "fieldName": "align"
-            },
-            {
-              "name": "justify",
-              "type": {
-                "text": "string"
-              },
-              "default": "'start'",
-              "fieldName": "justify"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "arc-cluster",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ArcCluster",
-          "declaration": {
-            "name": "ArcCluster",
-            "module": "src/layout/cluster.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/layout/container.js",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ArcContainer",
-          "members": [
-            {
-              "kind": "field",
-              "name": "narrow",
-              "privacy": "public",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "attribute": "narrow",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "size",
-              "privacy": "public",
-              "type": {
-                "text": "string"
-              },
-              "default": "'md'",
-              "attribute": "size",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "padding",
-              "privacy": "public",
-              "type": {
-                "text": "string"
-              },
-              "default": "'md'",
-              "attribute": "padding",
-              "reflects": true
-            }
-          ],
-          "attributes": [
-            {
-              "name": "narrow",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "narrow"
-            },
-            {
-              "name": "size",
-              "type": {
-                "text": "string"
-              },
-              "default": "'md'",
-              "fieldName": "size"
-            },
-            {
-              "name": "padding",
-              "type": {
-                "text": "string"
-              },
-              "default": "'md'",
-              "fieldName": "padding"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "arc-container",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ArcContainer",
-          "declaration": {
-            "name": "ArcContainer",
-            "module": "src/layout/container.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/layout/dashboard-grid.js",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ArcDashboardGrid",
-          "members": [
-            {
-              "kind": "field",
-              "name": "columns",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "0",
-              "attribute": "columns"
-            },
-            {
-              "kind": "field",
-              "name": "gap",
-              "privacy": "public",
-              "type": {
-                "text": "string"
-              },
-              "default": "'var(--space-lg)'",
-              "attribute": "gap"
-            },
-            {
-              "kind": "field",
-              "name": "minColumnWidth",
-              "privacy": "public",
-              "type": {
-                "text": "string"
-              },
-              "default": "'280px'",
-              "attribute": "min-column-width"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "columns",
-              "type": {
-                "text": "number"
-              },
-              "default": "0",
-              "fieldName": "columns"
-            },
-            {
-              "name": "gap",
-              "type": {
-                "text": "string"
-              },
-              "default": "'var(--space-lg)'",
-              "fieldName": "gap"
-            },
-            {
-              "name": "min-column-width",
-              "type": {
-                "text": "string"
-              },
-              "default": "'280px'",
-              "fieldName": "minColumnWidth"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "arc-dashboard-grid",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ArcDashboardGrid",
-          "declaration": {
-            "name": "ArcDashboardGrid",
-            "module": "src/layout/dashboard-grid.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/layout/dock.js",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ArcDock",
-          "members": [
-            {
-              "kind": "field",
-              "name": "position",
-              "privacy": "public",
-              "type": {
-                "text": "string"
-              },
-              "default": "'bottom'",
-              "attribute": "position",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "autoHide",
-              "privacy": "public",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "attribute": "auto-hide",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "open",
-              "privacy": "public",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "attribute": "open",
-              "reflects": true
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "position",
-              "type": {
-                "text": "string"
-              },
-              "default": "'bottom'",
-              "fieldName": "position"
-            },
-            {
-              "name": "auto-hide",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "autoHide"
-            },
-            {
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "open"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "arc-dock",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ArcDock",
-          "declaration": {
-            "name": "ArcDock",
-            "module": "src/layout/dock.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/layout/float-bar.js",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ArcFloatBar",
-          "members": [
-            {
-              "kind": "field",
-              "name": "open",
-              "privacy": "public",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "attribute": "open",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "position",
-              "privacy": "public",
-              "type": {
-                "text": "string"
-              },
-              "default": "'bottom'",
-              "attribute": "position",
-              "reflects": true
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "open"
-            },
-            {
-              "name": "position",
-              "type": {
-                "text": "string"
-              },
-              "default": "'bottom'",
-              "fieldName": "position"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "arc-float-bar",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ArcFloatBar",
-          "declaration": {
-            "name": "ArcFloatBar",
-            "module": "src/layout/float-bar.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/layout/inset.js",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ArcInset",
-          "members": [
-            {
-              "kind": "field",
-              "name": "space",
-              "privacy": "public",
-              "type": {
-                "text": "string"
-              },
-              "default": "'md'",
-              "attribute": "space",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "bleed",
-              "privacy": "public",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "attribute": "bleed",
-              "reflects": true
-            }
-          ],
-          "attributes": [
-            {
-              "name": "space",
-              "type": {
-                "text": "string"
-              },
-              "default": "'md'",
-              "fieldName": "space"
-            },
-            {
-              "name": "bleed",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "bleed"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "arc-inset",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ArcInset",
-          "declaration": {
-            "name": "ArcInset",
-            "module": "src/layout/inset.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/layout/masonry.js",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ArcMasonry",
-          "members": [
-            {
-              "kind": "field",
-              "name": "columns",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "3",
-              "attribute": "columns",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "gap",
-              "privacy": "public",
-              "type": {
-                "text": "string"
-              },
-              "default": "'md'",
-              "attribute": "gap",
-              "reflects": true
-            }
-          ],
-          "attributes": [
-            {
-              "name": "columns",
-              "type": {
-                "text": "number"
-              },
-              "default": "3",
-              "fieldName": "columns"
-            },
-            {
-              "name": "gap",
-              "type": {
-                "text": "string"
-              },
-              "default": "'md'",
-              "fieldName": "gap"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "arc-masonry",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ArcMasonry",
-          "declaration": {
-            "name": "ArcMasonry",
-            "module": "src/layout/masonry.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/layout/page-header.js",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ArcPageHeader",
-          "members": [
-            {
-              "kind": "field",
-              "name": "heading",
-              "privacy": "public",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "attribute": "heading"
-            },
-            {
-              "kind": "field",
-              "name": "description",
-              "privacy": "public",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "attribute": "description"
-            },
-            {
-              "kind": "field",
-              "name": "border",
-              "privacy": "public",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "attribute": "border",
-              "reflects": true
-            }
-          ],
-          "attributes": [
-            {
-              "name": "heading",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "fieldName": "heading"
-            },
-            {
-              "name": "description",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "fieldName": "description"
-            },
-            {
-              "name": "border",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "border"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "arc-page-header",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ArcPageHeader",
-          "declaration": {
-            "name": "ArcPageHeader",
-            "module": "src/layout/page-header.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/layout/page-layout.js",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ArcPageLayout",
-          "members": [
-            {
-              "kind": "field",
-              "name": "layout",
-              "privacy": "public",
-              "type": {
-                "text": "string"
-              },
-              "default": "'centered'",
-              "attribute": "layout",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "maxWidth",
-              "privacy": "public",
-              "type": {
-                "text": "string"
-              },
-              "default": "'1120px'",
-              "attribute": "max-width"
-            },
-            {
-              "kind": "field",
-              "name": "gap",
-              "privacy": "public",
-              "type": {
-                "text": "string"
-              },
-              "default": "'var(--space-xl)'",
-              "attribute": "gap"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "layout",
-              "type": {
-                "text": "string"
-              },
-              "default": "'centered'",
-              "fieldName": "layout"
-            },
-            {
-              "name": "max-width",
-              "type": {
-                "text": "string"
-              },
-              "default": "'1120px'",
-              "fieldName": "maxWidth"
-            },
-            {
-              "name": "gap",
-              "type": {
-                "text": "string"
-              },
-              "default": "'var(--space-xl)'",
-              "fieldName": "gap"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "arc-page-layout",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ArcPageLayout",
-          "declaration": {
-            "name": "ArcPageLayout",
-            "module": "src/layout/page-layout.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/layout/resizable.js",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ArcResizable",
-          "members": [
-            {
-              "kind": "field",
-              "name": "direction",
-              "privacy": "public",
-              "type": {
-                "text": "string"
-              },
-              "default": "'horizontal'",
-              "attribute": "direction",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "minSize",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "100",
-              "attribute": "min-size"
-            },
-            {
-              "kind": "field",
-              "name": "maxSize",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "Infinity",
-              "attribute": "max-size"
-            },
-            {
-              "kind": "field",
-              "name": "size",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "300",
-              "attribute": "size"
-            }
-          ],
-          "events": [
-            {
-              "name": "arc-resize",
-              "type": {
-                "text": "CustomEvent"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "direction",
-              "type": {
-                "text": "string"
-              },
-              "default": "'horizontal'",
-              "fieldName": "direction"
-            },
-            {
-              "name": "min-size",
-              "type": {
-                "text": "number"
-              },
-              "default": "100",
-              "fieldName": "minSize"
-            },
-            {
-              "name": "max-size",
-              "type": {
-                "text": "number"
-              },
-              "default": "Infinity",
-              "fieldName": "maxSize"
-            },
-            {
-              "name": "size",
-              "type": {
-                "text": "number"
-              },
-              "default": "300",
-              "fieldName": "size"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "arc-resizable",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ArcResizable",
-          "declaration": {
-            "name": "ArcResizable",
-            "module": "src/layout/resizable.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/layout/responsive-switcher.js",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ArcResponsiveSwitcher",
-          "members": [
-            {
-              "kind": "field",
-              "name": "threshold",
-              "privacy": "public",
-              "type": {
-                "text": "string"
-              },
-              "default": "'600px'",
-              "attribute": "threshold",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "gap",
-              "privacy": "public",
-              "type": {
-                "text": "string"
-              },
-              "default": "'md'",
-              "attribute": "gap",
-              "reflects": true
-            }
-          ],
-          "attributes": [
-            {
-              "name": "threshold",
-              "type": {
-                "text": "string"
-              },
-              "default": "'600px'",
-              "fieldName": "threshold"
-            },
-            {
-              "name": "gap",
-              "type": {
-                "text": "string"
-              },
-              "default": "'md'",
-              "fieldName": "gap"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "arc-responsive-switcher",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ArcResponsiveSwitcher",
-          "declaration": {
-            "name": "ArcResponsiveSwitcher",
-            "module": "src/layout/responsive-switcher.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/layout/section.js",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ArcSection",
-          "members": [
-            {
-              "kind": "field",
-              "name": "label",
-              "privacy": "public",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "attribute": "label"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "fieldName": "label"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "arc-section",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ArcSection",
-          "declaration": {
-            "name": "ArcSection",
-            "module": "src/layout/section.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/layout/settings-layout.js",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ArcSettingsLayout",
-          "members": [
-            {
-              "kind": "field",
-              "name": "navPosition",
-              "privacy": "public",
-              "type": {
-                "text": "string"
-              },
-              "default": "'left'",
-              "attribute": "nav-position",
-              "reflects": true
-            }
-          ],
-          "attributes": [
-            {
-              "name": "nav-position",
-              "type": {
-                "text": "string"
-              },
-              "default": "'left'",
-              "fieldName": "navPosition"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "arc-settings-layout",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ArcSettingsLayout",
-          "declaration": {
-            "name": "ArcSettingsLayout",
-            "module": "src/layout/settings-layout.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/layout/split-pane.js",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ArcSplitPane",
-          "members": [
-            {
-              "kind": "field",
-              "name": "orientation",
-              "privacy": "public",
-              "type": {
-                "text": "string"
-              },
-              "default": "'horizontal'",
-              "attribute": "orientation",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "ratio",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "0.5",
-              "attribute": "ratio"
-            },
-            {
-              "kind": "field",
-              "name": "minRatio",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "0.15",
-              "attribute": "min-ratio"
-            },
-            {
-              "kind": "field",
-              "name": "maxRatio",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "0.85",
-              "attribute": "max-ratio"
-            }
-          ],
-          "events": [
-            {
-              "name": "arc-resize",
-              "type": {
-                "text": "CustomEvent"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "orientation",
-              "type": {
-                "text": "string"
-              },
-              "default": "'horizontal'",
-              "fieldName": "orientation"
-            },
-            {
-              "name": "ratio",
-              "type": {
-                "text": "number"
-              },
-              "default": "0.5",
-              "fieldName": "ratio"
-            },
-            {
-              "name": "min-ratio",
-              "type": {
-                "text": "number"
-              },
-              "default": "0.15",
-              "fieldName": "minRatio"
-            },
-            {
-              "name": "max-ratio",
-              "type": {
-                "text": "number"
-              },
-              "default": "0.85",
-              "fieldName": "maxRatio"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "arc-split-pane",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ArcSplitPane",
-          "declaration": {
-            "name": "ArcSplitPane",
-            "module": "src/layout/split-pane.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/layout/status-bar.js",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ArcStatusBar",
-          "members": [
-            {
-              "kind": "field",
-              "name": "position",
-              "privacy": "public",
-              "type": {
-                "text": "string"
-              },
-              "default": "'static'",
-              "attribute": "position",
-              "reflects": true
-            }
-          ],
-          "attributes": [
-            {
-              "name": "position",
-              "type": {
-                "text": "string"
-              },
-              "default": "'static'",
-              "fieldName": "position"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "arc-status-bar",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ArcStatusBar",
-          "declaration": {
-            "name": "ArcStatusBar",
-            "module": "src/layout/status-bar.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/layout/sticky.js",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ArcSticky",
-          "members": [
-            {
-              "kind": "field",
-              "name": "offset",
-              "privacy": "public",
-              "type": {
-                "text": "string"
-              },
-              "default": "'0px'",
-              "attribute": "offset",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "stuck",
-              "privacy": "public",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "attribute": "stuck",
-              "reflects": true
-            }
-          ],
-          "events": [
-            {
-              "name": "arc-stuck",
-              "type": {
-                "text": "CustomEvent"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "offset",
-              "type": {
-                "text": "string"
-              },
-              "default": "'0px'",
-              "fieldName": "offset"
-            },
-            {
-              "name": "stuck",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "stuck"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "arc-sticky",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ArcSticky",
-          "declaration": {
-            "name": "ArcSticky",
-            "module": "src/layout/sticky.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/layout/toolbar.js",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ArcToolbar",
-          "members": [
-            {
-              "kind": "field",
-              "name": "sticky",
-              "privacy": "public",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "attribute": "sticky",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "size",
-              "privacy": "public",
-              "type": {
-                "text": "string"
-              },
-              "default": "'md'",
-              "attribute": "size",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "border",
-              "privacy": "public",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "true",
-              "attribute": "border",
-              "reflects": true
-            }
-          ],
-          "attributes": [
-            {
-              "name": "sticky",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "sticky"
-            },
-            {
-              "name": "size",
-              "type": {
-                "text": "string"
-              },
-              "default": "'md'",
-              "fieldName": "size"
-            },
-            {
-              "name": "border",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "true",
-              "fieldName": "border"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "arc-toolbar",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ArcToolbar",
-          "declaration": {
-            "name": "ArcToolbar",
-            "module": "src/layout/toolbar.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/input/button-group.js",
       "declarations": [
         {
@@ -15165,463 +13522,1643 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/shared/click-outside.js",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "ClickOutsideController — shared reactive controller for dismiss-on-outside-click.\n\nAttaches a single capture-phase pointerdown listener on the document only\nwhile active (call activate()/deactivate() as the overlay opens/closes, or\npass `when` to derive it). Uses composedPath() so clicks inside shadow DOM\nand slotted content are correctly treated as \"inside\".\n\n  this._clickOutside = new ClickOutsideController(this, {\n    onClickOutside: () => this._close(),\n    when: () => this._open,          // optional; defaults to always-on-while-activated\n  });\n  // in updated(): open ? this._clickOutside.activate() : this._clickOutside.deactivate()",
-          "name": "ClickOutsideController",
-          "members": [
-            {
-              "kind": "method",
-              "name": "activate"
-            },
-            {
-              "kind": "method",
-              "name": "deactivate"
-            },
-            {
-              "kind": "method",
-              "name": "hostDisconnected"
-            },
-            {
-              "kind": "field",
-              "name": "host",
-              "default": "host"
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ClickOutsideController",
-          "declaration": {
-            "name": "ClickOutsideController",
-            "module": "src/shared/click-outside.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/shared/focus-trap.js",
-      "declarations": [
-        {
-          "kind": "function",
-          "name": "collectFocusable",
-          "parameters": [
-            {
-              "name": "node"
-            },
-            {
-              "name": "out",
-              "default": "[]"
-            }
-          ],
-          "description": "Collect focusable elements under `node` in composed-tree order.\nWalks into shadow roots and follows slot assignments."
-        },
-        {
-          "kind": "function",
-          "name": "deepActiveElement",
-          "description": "The actually-focused element, descending through nested shadow roots."
-        },
-        {
-          "kind": "function",
-          "name": "trapTabKey",
-          "parameters": [
-            {
-              "name": "e"
-            },
-            {
-              "name": "container"
-            }
-          ],
-          "description": "Handle a Tab keydown so focus cycles within `container`.\nCall from the overlay's keydown handler when open."
-        },
-        {
-          "kind": "function",
-          "name": "focusFirst",
-          "parameters": [
-            {
-              "name": "container"
-            }
-          ],
-          "description": "Focus the first focusable element under `container`, else the container."
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "collectFocusable",
-          "declaration": {
-            "name": "collectFocusable",
-            "module": "src/shared/focus-trap.js"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "deepActiveElement",
-          "declaration": {
-            "name": "deepActiveElement",
-            "module": "src/shared/focus-trap.js"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "trapTabKey",
-          "declaration": {
-            "name": "trapTabKey",
-            "module": "src/shared/focus-trap.js"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "focusFirst",
-          "declaration": {
-            "name": "focusFirst",
-            "module": "src/shared/focus-trap.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/shared/form-control-mixin.js",
-      "declarations": [
-        {
-          "kind": "mixin",
-          "description": "FormControlMixin — standard ElementInternals form participation for input\ncomponents. Gives every consumer:\n\n  - formAssociated + attachInternals (this._internals)\n  - native <form> value submission via _updateFormValue()\n  - formDisabledCallback: <fieldset disabled> / <form disabled> works\n  - formResetCallback: form.reset() restores the initial state\n  - formStateRestoreCallback: bfcache/autofill restore\n  - form/validity/validationMessage/checkValidity/reportValidity passthrough\n\nConsuming components:\n  - call _updateFormValue() whenever their public value changes\n  - override _formValue() when the submitted value isn't `this.value`\n    (e.g. checkbox submits value-when-checked / null)\n  - override _formResetState()/_applyFormState() when reset needs more than\n    restoring `value` (e.g. checked flags, selected arrays)\n  - may call _setValidity(flags, message, anchor) for constraint validation",
-          "name": "FormControlMixin",
-          "members": [
-            {
-              "kind": "field",
-              "name": "formAssociated",
-              "type": {
-                "text": "boolean"
-              },
-              "static": true,
-              "default": "true"
-            },
-            {
-              "kind": "method",
-              "name": "formDisabledCallback",
-              "parameters": [
-                {
-                  "name": "disabled"
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "formResetCallback"
-            },
-            {
-              "kind": "method",
-              "name": "formStateRestoreCallback",
-              "parameters": [
-                {
-                  "name": "state"
-                }
-              ]
-            },
-            {
-              "kind": "field",
-              "name": "form",
-              "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "validity",
-              "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "validationMessage",
-              "readonly": true
-            },
-            {
-              "kind": "method",
-              "name": "checkValidity"
-            },
-            {
-              "kind": "method",
-              "name": "reportValidity"
-            }
-          ],
-          "parameters": [
-            {
-              "name": "superClass"
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "FormControlMixin",
-          "declaration": {
-            "name": "FormControlMixin",
-            "module": "src/shared/form-control-mixin.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/shared/menu-divider.js",
+      "path": "src/layout/app-shell.js",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "ArcMenuDivider",
-          "members": [],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "arc-menu-divider",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ArcMenuDivider",
-          "declaration": {
-            "name": "ArcMenuDivider",
-            "module": "src/shared/menu-divider.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/shared/menu-item.js",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ArcMenuItem",
+          "name": "ArcAppShell",
           "members": [
             {
               "kind": "field",
-              "name": "label",
-              "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "shortcut",
-              "privacy": "public",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "attribute": "shortcut",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "disabled",
+              "name": "sidebarOpen",
               "privacy": "public",
               "type": {
                 "text": "boolean"
               },
               "default": "false",
-              "attribute": "disabled",
+              "attribute": "sidebar-open",
               "reflects": true
             },
             {
               "kind": "field",
-              "name": "icon",
+              "name": "breakpoint",
               "privacy": "public",
               "type": {
-                "text": "string"
+                "text": "number"
               },
-              "default": "''",
-              "attribute": "icon"
+              "default": "900",
+              "attribute": "breakpoint"
             }
           ],
           "attributes": [
             {
-              "name": "shortcut",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "fieldName": "shortcut"
-            },
-            {
-              "name": "disabled",
+              "name": "sidebar-open",
               "type": {
                 "text": "boolean"
               },
               "default": "false",
-              "fieldName": "disabled"
+              "fieldName": "sidebarOpen"
             },
             {
-              "name": "icon",
+              "name": "breakpoint",
               "type": {
-                "text": "string"
+                "text": "number"
               },
-              "default": "''",
-              "fieldName": "icon"
+              "default": "900",
+              "fieldName": "breakpoint"
             }
           ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
-          "tagName": "arc-menu-item",
+          "tagName": "arc-app-shell",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "ArcMenuItem",
+          "name": "ArcAppShell",
           "declaration": {
-            "name": "ArcMenuItem",
-            "module": "src/shared/menu-item.js"
+            "name": "ArcAppShell",
+            "module": "src/layout/app-shell.js"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/shared/option.js",
+      "path": "src/layout/aspect-grid.js",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "ArcOption",
+          "name": "ArcAspectGrid",
           "members": [
             {
               "kind": "field",
-              "name": "label",
-              "description": "Expose text content as label",
-              "readonly": true
+              "name": "columns",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "default": "3",
+              "attribute": "columns",
+              "reflects": true
             },
             {
               "kind": "field",
-              "name": "value",
+              "name": "ratio",
               "privacy": "public",
               "type": {
                 "text": "string"
               },
-              "default": "''",
-              "attribute": "value",
+              "default": "'1/1'",
+              "attribute": "ratio",
               "reflects": true
             },
             {
               "kind": "field",
-              "name": "disabled",
+              "name": "gap",
               "privacy": "public",
               "type": {
-                "text": "boolean"
+                "text": "string"
               },
-              "default": "false",
-              "attribute": "disabled",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "selected",
-              "privacy": "public",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "attribute": "selected",
+              "default": "'md'",
+              "attribute": "gap",
               "reflects": true
             }
           ],
           "attributes": [
             {
-              "name": "value",
+              "name": "columns",
+              "type": {
+                "text": "number"
+              },
+              "default": "3",
+              "fieldName": "columns"
+            },
+            {
+              "name": "ratio",
               "type": {
                 "text": "string"
               },
-              "default": "''",
-              "fieldName": "value"
+              "default": "'1/1'",
+              "fieldName": "ratio"
             },
             {
-              "name": "disabled",
+              "name": "gap",
               "type": {
-                "text": "boolean"
+                "text": "string"
               },
-              "default": "false",
-              "fieldName": "disabled"
-            },
-            {
-              "name": "selected",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "selected"
+              "default": "'md'",
+              "fieldName": "gap"
             }
           ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
-          "tagName": "arc-option",
+          "tagName": "arc-aspect-grid",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "ArcOption",
+          "name": "ArcAspectGrid",
           "declaration": {
-            "name": "ArcOption",
-            "module": "src/shared/option.js"
+            "name": "ArcAspectGrid",
+            "module": "src/layout/aspect-grid.js"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/shared/trigger-aria.js",
+      "path": "src/layout/auth-shell.js",
       "declarations": [
         {
-          "kind": "function",
-          "name": "setTriggerAria",
-          "parameters": [
+          "kind": "class",
+          "description": "",
+          "name": "ArcAuthShell",
+          "members": [
             {
-              "name": "slotEl",
-              "description": "The trigger slot",
+              "kind": "field",
+              "name": "variant",
+              "privacy": "public",
               "type": {
-                "text": "HTMLSlotElement|null"
-              }
-            },
-            {
-              "name": "attrs",
-              "description": "Attribute map; null/undefined/'' removes the attribute",
-              "type": {
-                "text": "Record<string, string|null|undefined>"
-              }
+                "text": "string"
+              },
+              "default": "'centered'",
+              "attribute": "variant",
+              "reflects": true
             }
           ],
-          "description": "Sets (or removes) attributes on the first assigned element of a slot.\nCall on `slotchange` and whenever the forwarded state changes."
+          "attributes": [
+            {
+              "name": "variant",
+              "type": {
+                "text": "string"
+              },
+              "default": "'centered'",
+              "fieldName": "variant"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-auth-shell",
+          "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "setTriggerAria",
+          "name": "ArcAuthShell",
           "declaration": {
-            "name": "setTriggerAria",
-            "module": "src/shared/trigger-aria.js"
+            "name": "ArcAuthShell",
+            "module": "src/layout/auth-shell.js"
           }
-        },
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/layout/center.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ArcCenter",
+          "members": [
+            {
+              "kind": "field",
+              "name": "maxWidth",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'60ch'",
+              "attribute": "max-width",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "intrinsic",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "intrinsic",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "text",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "text",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "max-width",
+              "type": {
+                "text": "string"
+              },
+              "default": "'60ch'",
+              "fieldName": "maxWidth"
+            },
+            {
+              "name": "intrinsic",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "intrinsic"
+            },
+            {
+              "name": "text",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "text"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-center",
+          "customElement": true
+        }
+      ],
+      "exports": [
         {
           "kind": "js",
-          "name": "deepActiveElement",
+          "name": "ArcCenter",
           "declaration": {
-            "name": "deepActiveElement",
-            "module": "./focus-trap.js"
+            "name": "ArcCenter",
+            "module": "src/layout/center.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/layout/cluster.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ArcCluster",
+          "members": [
+            {
+              "kind": "field",
+              "name": "gap",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'sm'",
+              "attribute": "gap",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "align",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'center'",
+              "attribute": "align",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "justify",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'start'",
+              "attribute": "justify",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "gap",
+              "type": {
+                "text": "string"
+              },
+              "default": "'sm'",
+              "fieldName": "gap"
+            },
+            {
+              "name": "align",
+              "type": {
+                "text": "string"
+              },
+              "default": "'center'",
+              "fieldName": "align"
+            },
+            {
+              "name": "justify",
+              "type": {
+                "text": "string"
+              },
+              "default": "'start'",
+              "fieldName": "justify"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-cluster",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcCluster",
+          "declaration": {
+            "name": "ArcCluster",
+            "module": "src/layout/cluster.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/layout/container.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ArcContainer",
+          "members": [
+            {
+              "kind": "field",
+              "name": "narrow",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "narrow",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'md'",
+              "attribute": "size",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "padding",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'md'",
+              "attribute": "padding",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "narrow",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "narrow"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "string"
+              },
+              "default": "'md'",
+              "fieldName": "size"
+            },
+            {
+              "name": "padding",
+              "type": {
+                "text": "string"
+              },
+              "default": "'md'",
+              "fieldName": "padding"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-container",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcContainer",
+          "declaration": {
+            "name": "ArcContainer",
+            "module": "src/layout/container.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/layout/dashboard-grid.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ArcDashboardGrid",
+          "members": [
+            {
+              "kind": "field",
+              "name": "columns",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "attribute": "columns"
+            },
+            {
+              "kind": "field",
+              "name": "gap",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'var(--space-lg)'",
+              "attribute": "gap"
+            },
+            {
+              "kind": "field",
+              "name": "minColumnWidth",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'280px'",
+              "attribute": "min-column-width"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "columns",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "fieldName": "columns"
+            },
+            {
+              "name": "gap",
+              "type": {
+                "text": "string"
+              },
+              "default": "'var(--space-lg)'",
+              "fieldName": "gap"
+            },
+            {
+              "name": "min-column-width",
+              "type": {
+                "text": "string"
+              },
+              "default": "'280px'",
+              "fieldName": "minColumnWidth"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-dashboard-grid",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcDashboardGrid",
+          "declaration": {
+            "name": "ArcDashboardGrid",
+            "module": "src/layout/dashboard-grid.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/layout/dock.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ArcDock",
+          "members": [
+            {
+              "kind": "field",
+              "name": "position",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'bottom'",
+              "attribute": "position",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "autoHide",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "auto-hide",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "open",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "open",
+              "reflects": true
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "position",
+              "type": {
+                "text": "string"
+              },
+              "default": "'bottom'",
+              "fieldName": "position"
+            },
+            {
+              "name": "auto-hide",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "autoHide"
+            },
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "open"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-dock",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcDock",
+          "declaration": {
+            "name": "ArcDock",
+            "module": "src/layout/dock.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/layout/float-bar.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ArcFloatBar",
+          "members": [
+            {
+              "kind": "field",
+              "name": "open",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "open",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "position",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'bottom'",
+              "attribute": "position",
+              "reflects": true
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "open"
+            },
+            {
+              "name": "position",
+              "type": {
+                "text": "string"
+              },
+              "default": "'bottom'",
+              "fieldName": "position"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-float-bar",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcFloatBar",
+          "declaration": {
+            "name": "ArcFloatBar",
+            "module": "src/layout/float-bar.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/layout/inset.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ArcInset",
+          "members": [
+            {
+              "kind": "field",
+              "name": "space",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'md'",
+              "attribute": "space",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "bleed",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "bleed",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "space",
+              "type": {
+                "text": "string"
+              },
+              "default": "'md'",
+              "fieldName": "space"
+            },
+            {
+              "name": "bleed",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "bleed"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-inset",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcInset",
+          "declaration": {
+            "name": "ArcInset",
+            "module": "src/layout/inset.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/layout/masonry.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ArcMasonry",
+          "members": [
+            {
+              "kind": "field",
+              "name": "columns",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "default": "3",
+              "attribute": "columns",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "gap",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'md'",
+              "attribute": "gap",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "columns",
+              "type": {
+                "text": "number"
+              },
+              "default": "3",
+              "fieldName": "columns"
+            },
+            {
+              "name": "gap",
+              "type": {
+                "text": "string"
+              },
+              "default": "'md'",
+              "fieldName": "gap"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-masonry",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcMasonry",
+          "declaration": {
+            "name": "ArcMasonry",
+            "module": "src/layout/masonry.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/layout/page-header.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ArcPageHeader",
+          "members": [
+            {
+              "kind": "field",
+              "name": "heading",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "heading"
+            },
+            {
+              "kind": "field",
+              "name": "description",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "description"
+            },
+            {
+              "kind": "field",
+              "name": "border",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "border",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "heading",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "heading"
+            },
+            {
+              "name": "description",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "description"
+            },
+            {
+              "name": "border",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "border"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-page-header",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcPageHeader",
+          "declaration": {
+            "name": "ArcPageHeader",
+            "module": "src/layout/page-header.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/layout/page-layout.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ArcPageLayout",
+          "members": [
+            {
+              "kind": "field",
+              "name": "layout",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'centered'",
+              "attribute": "layout",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "maxWidth",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'1120px'",
+              "attribute": "max-width"
+            },
+            {
+              "kind": "field",
+              "name": "gap",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'var(--space-xl)'",
+              "attribute": "gap"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "layout",
+              "type": {
+                "text": "string"
+              },
+              "default": "'centered'",
+              "fieldName": "layout"
+            },
+            {
+              "name": "max-width",
+              "type": {
+                "text": "string"
+              },
+              "default": "'1120px'",
+              "fieldName": "maxWidth"
+            },
+            {
+              "name": "gap",
+              "type": {
+                "text": "string"
+              },
+              "default": "'var(--space-xl)'",
+              "fieldName": "gap"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-page-layout",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcPageLayout",
+          "declaration": {
+            "name": "ArcPageLayout",
+            "module": "src/layout/page-layout.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/layout/resizable.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ArcResizable",
+          "members": [
+            {
+              "kind": "field",
+              "name": "direction",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'horizontal'",
+              "attribute": "direction",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "minSize",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "default": "100",
+              "attribute": "min-size"
+            },
+            {
+              "kind": "field",
+              "name": "maxSize",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "default": "Infinity",
+              "attribute": "max-size"
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "default": "300",
+              "attribute": "size"
+            }
+          ],
+          "events": [
+            {
+              "name": "arc-resize",
+              "type": {
+                "text": "CustomEvent"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "direction",
+              "type": {
+                "text": "string"
+              },
+              "default": "'horizontal'",
+              "fieldName": "direction"
+            },
+            {
+              "name": "min-size",
+              "type": {
+                "text": "number"
+              },
+              "default": "100",
+              "fieldName": "minSize"
+            },
+            {
+              "name": "max-size",
+              "type": {
+                "text": "number"
+              },
+              "default": "Infinity",
+              "fieldName": "maxSize"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "number"
+              },
+              "default": "300",
+              "fieldName": "size"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-resizable",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcResizable",
+          "declaration": {
+            "name": "ArcResizable",
+            "module": "src/layout/resizable.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/layout/responsive-switcher.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ArcResponsiveSwitcher",
+          "members": [
+            {
+              "kind": "field",
+              "name": "threshold",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'600px'",
+              "attribute": "threshold",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "gap",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'md'",
+              "attribute": "gap",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "threshold",
+              "type": {
+                "text": "string"
+              },
+              "default": "'600px'",
+              "fieldName": "threshold"
+            },
+            {
+              "name": "gap",
+              "type": {
+                "text": "string"
+              },
+              "default": "'md'",
+              "fieldName": "gap"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-responsive-switcher",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcResponsiveSwitcher",
+          "declaration": {
+            "name": "ArcResponsiveSwitcher",
+            "module": "src/layout/responsive-switcher.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/layout/section.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ArcSection",
+          "members": [
+            {
+              "kind": "field",
+              "name": "label",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "label"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "label"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-section",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcSection",
+          "declaration": {
+            "name": "ArcSection",
+            "module": "src/layout/section.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/layout/settings-layout.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ArcSettingsLayout",
+          "members": [
+            {
+              "kind": "field",
+              "name": "navPosition",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'left'",
+              "attribute": "nav-position",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "nav-position",
+              "type": {
+                "text": "string"
+              },
+              "default": "'left'",
+              "fieldName": "navPosition"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-settings-layout",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcSettingsLayout",
+          "declaration": {
+            "name": "ArcSettingsLayout",
+            "module": "src/layout/settings-layout.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/layout/split-pane.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ArcSplitPane",
+          "members": [
+            {
+              "kind": "field",
+              "name": "orientation",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'horizontal'",
+              "attribute": "orientation",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "ratio",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "default": "0.5",
+              "attribute": "ratio"
+            },
+            {
+              "kind": "field",
+              "name": "minRatio",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "default": "0.15",
+              "attribute": "min-ratio"
+            },
+            {
+              "kind": "field",
+              "name": "maxRatio",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "default": "0.85",
+              "attribute": "max-ratio"
+            }
+          ],
+          "events": [
+            {
+              "name": "arc-resize",
+              "type": {
+                "text": "CustomEvent"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "orientation",
+              "type": {
+                "text": "string"
+              },
+              "default": "'horizontal'",
+              "fieldName": "orientation"
+            },
+            {
+              "name": "ratio",
+              "type": {
+                "text": "number"
+              },
+              "default": "0.5",
+              "fieldName": "ratio"
+            },
+            {
+              "name": "min-ratio",
+              "type": {
+                "text": "number"
+              },
+              "default": "0.15",
+              "fieldName": "minRatio"
+            },
+            {
+              "name": "max-ratio",
+              "type": {
+                "text": "number"
+              },
+              "default": "0.85",
+              "fieldName": "maxRatio"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-split-pane",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcSplitPane",
+          "declaration": {
+            "name": "ArcSplitPane",
+            "module": "src/layout/split-pane.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/layout/status-bar.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ArcStatusBar",
+          "members": [
+            {
+              "kind": "field",
+              "name": "position",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'static'",
+              "attribute": "position",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "position",
+              "type": {
+                "text": "string"
+              },
+              "default": "'static'",
+              "fieldName": "position"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-status-bar",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcStatusBar",
+          "declaration": {
+            "name": "ArcStatusBar",
+            "module": "src/layout/status-bar.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/layout/sticky.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ArcSticky",
+          "members": [
+            {
+              "kind": "field",
+              "name": "offset",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'0px'",
+              "attribute": "offset",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "stuck",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "stuck",
+              "reflects": true
+            }
+          ],
+          "events": [
+            {
+              "name": "arc-stuck",
+              "type": {
+                "text": "CustomEvent"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "offset",
+              "type": {
+                "text": "string"
+              },
+              "default": "'0px'",
+              "fieldName": "offset"
+            },
+            {
+              "name": "stuck",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "stuck"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-sticky",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcSticky",
+          "declaration": {
+            "name": "ArcSticky",
+            "module": "src/layout/sticky.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/layout/toolbar.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ArcToolbar",
+          "members": [
+            {
+              "kind": "field",
+              "name": "sticky",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "sticky",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'md'",
+              "attribute": "size",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "border",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "attribute": "border",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "sticky",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "sticky"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "string"
+              },
+              "default": "'md'",
+              "fieldName": "size"
+            },
+            {
+              "name": "border",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "fieldName": "border"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-toolbar",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcToolbar",
+          "declaration": {
+            "name": "ArcToolbar",
+            "module": "src/layout/toolbar.js"
           }
         }
       ]
@@ -18177,6 +17714,469 @@
           "declaration": {
             "name": "ArcTreeView",
             "module": "src/navigation/tree-view.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/shared/click-outside.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "ClickOutsideController — shared reactive controller for dismiss-on-outside-click.\n\nAttaches a single capture-phase pointerdown listener on the document only\nwhile active (call activate()/deactivate() as the overlay opens/closes, or\npass `when` to derive it). Uses composedPath() so clicks inside shadow DOM\nand slotted content are correctly treated as \"inside\".\n\n  this._clickOutside = new ClickOutsideController(this, {\n    onClickOutside: () => this._close(),\n    when: () => this._open,          // optional; defaults to always-on-while-activated\n  });\n  // in updated(): open ? this._clickOutside.activate() : this._clickOutside.deactivate()",
+          "name": "ClickOutsideController",
+          "members": [
+            {
+              "kind": "method",
+              "name": "activate"
+            },
+            {
+              "kind": "method",
+              "name": "deactivate"
+            },
+            {
+              "kind": "method",
+              "name": "hostDisconnected"
+            },
+            {
+              "kind": "field",
+              "name": "host",
+              "default": "host"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ClickOutsideController",
+          "declaration": {
+            "name": "ClickOutsideController",
+            "module": "src/shared/click-outside.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/shared/focus-trap.js",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "collectFocusable",
+          "parameters": [
+            {
+              "name": "node"
+            },
+            {
+              "name": "out",
+              "default": "[]"
+            }
+          ],
+          "description": "Collect focusable elements under `node` in composed-tree order.\nWalks into shadow roots and follows slot assignments."
+        },
+        {
+          "kind": "function",
+          "name": "deepActiveElement",
+          "description": "The actually-focused element, descending through nested shadow roots."
+        },
+        {
+          "kind": "function",
+          "name": "trapTabKey",
+          "parameters": [
+            {
+              "name": "e"
+            },
+            {
+              "name": "container"
+            }
+          ],
+          "description": "Handle a Tab keydown so focus cycles within `container`.\nCall from the overlay's keydown handler when open."
+        },
+        {
+          "kind": "function",
+          "name": "focusFirst",
+          "parameters": [
+            {
+              "name": "container"
+            }
+          ],
+          "description": "Focus the first focusable element under `container`, else the container."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "collectFocusable",
+          "declaration": {
+            "name": "collectFocusable",
+            "module": "src/shared/focus-trap.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "deepActiveElement",
+          "declaration": {
+            "name": "deepActiveElement",
+            "module": "src/shared/focus-trap.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "trapTabKey",
+          "declaration": {
+            "name": "trapTabKey",
+            "module": "src/shared/focus-trap.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "focusFirst",
+          "declaration": {
+            "name": "focusFirst",
+            "module": "src/shared/focus-trap.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/shared/form-control-mixin.js",
+      "declarations": [
+        {
+          "kind": "mixin",
+          "description": "FormControlMixin — standard ElementInternals form participation for input\ncomponents. Gives every consumer:\n\n  - formAssociated + attachInternals (this._internals)\n  - native <form> value submission via _updateFormValue()\n  - formDisabledCallback: <fieldset disabled> / <form disabled> works\n  - formResetCallback: form.reset() restores the initial state\n  - formStateRestoreCallback: bfcache/autofill restore\n  - form/validity/validationMessage/checkValidity/reportValidity passthrough\n\nConsuming components:\n  - call _updateFormValue() whenever their public value changes\n  - override _formValue() when the submitted value isn't `this.value`\n    (e.g. checkbox submits value-when-checked / null)\n  - override _formResetState()/_applyFormState() when reset needs more than\n    restoring `value` (e.g. checked flags, selected arrays)\n  - may call _setValidity(flags, message, anchor) for constraint validation",
+          "name": "FormControlMixin",
+          "members": [
+            {
+              "kind": "field",
+              "name": "formAssociated",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "true"
+            },
+            {
+              "kind": "method",
+              "name": "formDisabledCallback",
+              "parameters": [
+                {
+                  "name": "disabled"
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "formResetCallback"
+            },
+            {
+              "kind": "method",
+              "name": "formStateRestoreCallback",
+              "parameters": [
+                {
+                  "name": "state"
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "form",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "validity",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "validationMessage",
+              "readonly": true
+            },
+            {
+              "kind": "method",
+              "name": "checkValidity"
+            },
+            {
+              "kind": "method",
+              "name": "reportValidity"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "superClass"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "FormControlMixin",
+          "declaration": {
+            "name": "FormControlMixin",
+            "module": "src/shared/form-control-mixin.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/shared/menu-divider.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ArcMenuDivider",
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-menu-divider",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcMenuDivider",
+          "declaration": {
+            "name": "ArcMenuDivider",
+            "module": "src/shared/menu-divider.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/shared/menu-item.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ArcMenuItem",
+          "members": [
+            {
+              "kind": "field",
+              "name": "label",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "shortcut",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "shortcut",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "icon",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "icon"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "shortcut",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "shortcut"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "icon",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "icon"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-menu-item",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcMenuItem",
+          "declaration": {
+            "name": "ArcMenuItem",
+            "module": "src/shared/menu-item.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/shared/option.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ArcOption",
+          "members": [
+            {
+              "kind": "field",
+              "name": "label",
+              "description": "Expose text content as label",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "value",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "selected",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "selected",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "value",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "value"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "selected",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "selected"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-option",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcOption",
+          "declaration": {
+            "name": "ArcOption",
+            "module": "src/shared/option.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/shared/trigger-aria.js",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "setTriggerAria",
+          "parameters": [
+            {
+              "name": "slotEl",
+              "description": "The trigger slot",
+              "type": {
+                "text": "HTMLSlotElement|null"
+              }
+            },
+            {
+              "name": "attrs",
+              "description": "Attribute map; null/undefined/'' removes the attribute",
+              "type": {
+                "text": "Record<string, string|null|undefined>"
+              }
+            }
+          ],
+          "description": "Sets (or removes) attributes on the first assigned element of a slot.\nCall on `slotchange` and whenever the forwarded state changes."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "setTriggerAria",
+          "declaration": {
+            "name": "setTriggerAria",
+            "module": "src/shared/trigger-aria.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "deepActiveElement",
+          "declaration": {
+            "name": "deepActiveElement",
+            "module": "./focus-trap.js"
           }
         }
       ]

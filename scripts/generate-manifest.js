@@ -23,6 +23,11 @@ execFileSync('pnpm', ['exec', 'custom-elements-manifest', 'analyze'], {
 
 const manifest = JSON.parse(readFileSync(manifestPath, 'utf-8'));
 
+// The analyzer emits modules in filesystem-glob order, which is not stable
+// across machines — sort by path so the output is deterministic (the CI
+// generate-diff gate depends on this).
+manifest.modules.sort((a, b) => (a.path ?? '').localeCompare(b.path ?? ''));
+
 for (const mod of manifest.modules) {
   for (const decl of mod.declarations ?? []) {
     if (decl.members) {
