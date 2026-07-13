@@ -178,7 +178,7 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
         <div class="stat-custom reveal">
           <arc-animated-number class="stat-custom__number" value="0" data-target="0"></arc-animated-number>
           <div class="stat-custom__rule"></div>
-          <span class="stat-custom__label">Dependencies</span>
+          <span class="stat-custom__label">Build Steps</span>
         </div>
         <div class="stat-custom reveal">
           <arc-animated-number class="stat-custom__number" value="0" data-target="160"></arc-animated-number>
@@ -211,7 +211,7 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
             <svg slot="icon" width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </arc-feature-card>
 
-          <arc-feature-card heading="No Dependencies" description="Only Lit runtime. No bloated dependency trees, no version conflicts, no supply chain risk. Just your components." class="reveal">
+          <arc-feature-card heading="Lean by Design" description="One runtime: Lit. Heavier extras — syntax highlighting, QR encoding — load only with the components that use them, and per-component imports keep the rest out of your bundle." class="reveal">
             <svg slot="icon" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </arc-feature-card>
 
