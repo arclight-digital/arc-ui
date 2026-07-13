@@ -22,7 +22,7 @@
     "lint:fix": "eslint --fix 'packages/*/src/**/*.{js,ts}'",
     "format": "prettier --write 'packages/*/src/**/*.{js,ts,css}' 'shared/**/*.{js,css}'",
     "format:check": "prettier --check 'packages/*/src/**/*.{js,ts,css}' 'shared/**/*.{js,css}'",
-    "docs:build": "node scripts/generate-icons.js && pnpm --filter arc-ui-docs run build",
+    "docs:build": "pnpm --filter arc-ui-docs run build",
     "docs:deploy": "cd docs && pnpm wrangler pages deploy",
     "bump-versions": "node scripts/bump-versions.js",
     "publish-all": "pnpm -r publish --access public"
