@@ -3,6 +3,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 import { components } from '../../data/components/index';
 
 const headings = [
+  { id: 'v2-2-0', label: 'v2.2.0' },
   { id: 'v2-1-0', label: 'v2.1.0' },
   { id: 'v2-0-1', label: 'v2.0.1' },
   { id: 'v2-0-0', label: 'v2.0.0' },
@@ -55,6 +56,72 @@ const byTier = Object.fromEntries(
     <p class="page-desc">
       Release history for ARC UI. All packages are versioned together.
     </p>
+
+    <section id="v2-2-0">
+      <h2 class="docs-heading">v2.2.0 — Dashboard Suite, Native Forms &amp; Accessibility Overhaul</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <p class="docs-text">
+        The largest release since 2.0: twelve new components, native form participation across
+        every input, a library-wide accessibility remediation, and a rebuilt distribution
+        pipeline with generated types. Fully backwards compatible — but several components now
+        <em>behave</em> more correctly than before, so review the behavior changes below.
+      </p>
+
+      <h3 class="tier-heading">New Components</h3>
+      <ul class="docs-list">
+        <li><strong>Chart</strong> (data) &mdash; SVG line, area, bar, and donut charts with a colorblind-validated categorical palette (<code>--chart-1</code>&hellip;<code>--chart-6</code>), crosshair tooltips, and a hidden data table for screen readers.</li>
+        <li><strong>Data Grid</strong> (data) &mdash; editable cells, pinned columns, Shift-click multi-sort, row selection, and virtualization with the full APG grid keyboard model.</li>
+        <li><strong>Kanban</strong> (data) &mdash; drag-and-drop board with column limits and a complete keyboard move protocol with live-region announcements.</li>
+        <li><strong>Event Calendar</strong> (data) &mdash; month and week views with event chips, multi-day spans, and overflow handling.</li>
+        <li><strong>Date Range Picker</strong> (input) &mdash; two-panel range selection with hover preview and quick presets.</li>
+        <li><strong>Tag Input</strong> (input) &mdash; free-text tokens with suggestions, paste splitting, and duplicate rejection.</li>
+        <li><strong>Password Input</strong> (input) &mdash; visibility toggle plus an optional four-segment strength meter.</li>
+        <li><strong>Transfer List</strong> (input) &mdash; dual listbox with checked-move controls and per-pane filtering.</li>
+        <li><strong>Image Cropper</strong> (input) &mdash; eight-handle crop rect, zoom, aspect lock, and natural-pixel <code>getCroppedBlob()</code>.</li>
+        <li><strong>Menubar</strong> (navigation) &mdash; desktop-style menus with nested submenus, typeahead, and full APG 2D keyboard navigation.</li>
+        <li><strong>Toast Manager</strong> (feedback) &mdash; queueing, stacking limits, and dedupe over <code>arc-toast</code>, plus a document-level event channel.</li>
+        <li><strong>QR Code</strong> (content) &mdash; theme-aware SVG QR codes with a scan-safe contrast mode.</li>
+        <li><strong>Toolbar</strong> gains opt-in responsive overflow collapse into a &ldquo;More&rdquo; menu.</li>
+      </ul>
+
+      <h3 class="tier-heading">Native Form Participation</h3>
+      <ul class="docs-list">
+        <li>All 17 value-bearing inputs are now form-associated custom elements (ElementInternals): they submit into native <code>&lt;form&gt;</code>/<code>FormData</code>, respond to <code>form.reset()</code> and <code>&lt;fieldset disabled&gt;</code>, and expose <code>checkValidity()</code>/<code>reportValidity()</code>.</li>
+        <li><code>arc-multi-select</code>, <code>arc-transfer-list</code>, and <code>arc-tag-input</code> submit one FormData entry per value, matching <code>&lt;select multiple&gt;</code> semantics.</li>
+        <li><code>arc-form</code> now discovers any form-associated ARC control instead of a fixed six-component list.</li>
+      </ul>
+
+      <h3 class="tier-heading">Accessibility</h3>
+      <ul class="docs-list">
+        <li>Modal, sheet, drawer, and command palette gained composed-tree focus traps that see slotted content, initial-focus handling, and focus restore on close.</li>
+        <li>Dropdown menu, context menu, and command palette implement real focus models (roving tabindex / <code>aria-activedescendant</code>).</li>
+        <li>Tooltip, popover, hover card, and dropdown menu forward ARIA state onto the slotted trigger element where assistive tech can actually see it.</li>
+        <li>Toggle, radio group, and tree view announce correctly (role, name, and keyboard focus now live on the same element).</li>
+        <li>Multi-select reached combobox parity including keyboard tag removal; date picker gained full arrow-key day-grid navigation; time picker went from ~84 tab stops to 3.</li>
+        <li>Data table headers sort by keyboard; accordion panels are programmatically associated; alerts only interrupt for errors and warnings.</li>
+      </ul>
+
+      <h3 class="tier-heading">Fixed</h3>
+      <ul class="docs-list">
+        <li><strong>Security</strong> &mdash; <code>arc-markdown</code> now enforces a URL-scheme allowlist, blocking <code>javascript:</code> link injection.</li>
+        <li><strong>Framework wrappers register reliably</strong> &mdash; every generated wrapper imports its component&rsquo;s register subpath, so tree-shaken production builds can no longer strip element registration, and importing one component no longer pulls in the whole library.</li>
+        <li>Stacked overlays no longer unlock page scroll when the inner one closes (shared reference-counted scroll lock).</li>
+        <li>Typing spaces in the command palette no longer selects the first result.</li>
+        <li>Deterministic table sorting &mdash; mixed number/string columns previously produced a non-transitive comparator that let rows reorder arbitrarily; sort indicators now occupy a fixed-width slot so columns don&rsquo;t shift.</li>
+        <li>Light-mode fixes: navigation and tab hover states were hardcoded white; overlays and shadows now use theme-aware tokens throughout.</li>
+        <li>Internal Lit state properties (e.g. <code>_hasFooter</code>) no longer leak into framework wrapper APIs.</li>
+        <li>Registration is guarded against double <code>customElements.define()</code> crashes; all six wrapper packages gained the missing <code>./data</code> and <code>./typography</code> export subpaths.</li>
+      </ul>
+
+      <h3 class="tier-heading">Tooling</h3>
+      <ul class="docs-list">
+        <li>TypeScript declarations are now generated from source for all 186 elements (previously 93, hand-maintained), including an <code>HTMLElementTagNameMap</code> for tag-name autocompletion.</li>
+        <li>New <code>custom-elements.json</code> manifest ships with the package for IDE and tooling integration.</li>
+        <li>CI now enforces that generated files match source, plus linting and type checks.</li>
+        <li>New design tokens: <code>--chart-1</code> through <code>--chart-6</code>, a categorical data-visualization palette validated for contrast and color-vision deficiency in both themes.</li>
+      </ul>
+    </section>
 
     <section id="v2-1-0">
       <h2 class="docs-heading">v2.1.0 — Export Namespace Fix</h2>

@@ -255,7 +255,18 @@ export class ArcMenubar extends LitElement {
       const key = menu.dataset.menuKey;
       live.add(key);
       if (!this._flip.has(key)) {
-        this._flip.set(key, menu.getBoundingClientRect().right > window.innerWidth - 8);
+        const rect = menu.getBoundingClientRect();
+        let flip = rect.right > window.innerWidth - 8;
+        if (flip) {
+          // Mirror the measured resting offset around the anchor and only
+          // flip when the flipped position actually stays on-screen.
+          const wrap = menu.parentElement.getBoundingClientRect();
+          const flippedLeft = menu.classList.contains('menu--sub')
+            ? wrap.left - (rect.left - wrap.right) - rect.width
+            : wrap.right - (rect.left - wrap.left) - rect.width;
+          flip = flippedLeft >= 8;
+        }
+        this._flip.set(key, flip);
         remeasured = true;
       }
     }
