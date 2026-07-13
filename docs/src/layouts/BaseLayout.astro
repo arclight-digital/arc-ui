@@ -42,7 +42,10 @@ const { title = 'ARC UI — ARC Reactive Components', description = 'A component
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="preload" href="/fonts/hostgrotesk-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link href="/fonts/fonts.css" rel="stylesheet" />
-    <ViewTransitions />
+    {/* fallback="swap": browsers without the View Transitions API (Firefox)
+        get an instant swap instead of Astro's simulated fade-out/fade-in,
+        which reads as a full-page flicker. Native browsers still cross-fade. */}
+    <ViewTransitions fallback="swap" />
     <script>
       import '@arclux/arc-ui/register';
       import '@arclux/brand/by';
@@ -55,4 +58,15 @@ const { title = 'ARC UI — ARC Reactive Components', description = 'A component
 
 <style is:global>
   @import '../styles/global.css';
+
+  /* Firefox's native view-transition cross-fade renders our glassy chrome
+     (backdrop-filter top bar, shadow-DOM-heavy pages) as a visible flicker.
+     -moz-appearance only matches in Firefox, so this skips the fade there —
+     instant swaps — while Chrome/Safari keep the native cross-fade. */
+  @supports (-moz-appearance: none) {
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+      animation: none;
+    }
+  }
 </style>
