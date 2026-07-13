@@ -143,7 +143,11 @@ const headings = [
         {component.previewHtml ? (
           <div
             class:list={['live-preview', component.previewLayout && `live-preview--${component.previewLayout}`]}
-            style={component.previewHeight ? `min-height:${component.previewHeight}` : undefined}
+            style={component.previewHeight
+              ? component.previewLayout === 'frame'
+                ? `--preview-frame-height:${component.previewHeight}`
+                : `min-height:${component.previewHeight}`
+              : undefined}
             data-component={component.tag}
             data-has-html
             {...(component.previewSetup ? { 'data-setup': component.previewSetup } : {})}
@@ -485,6 +489,18 @@ const headings = [
   .component-page__preview .live-preview--scroll {
     display: block;
     overflow-x: auto;
+  }
+
+  /* Full-page shells (app-shell, auth-shell) render inside a fixed-height
+     viewport frame; content beyond it scrolls within, never spills the card.
+     Pair with previewHeight; height (not just min-height) is what contains. */
+  .component-page__preview .live-preview--frame {
+    display: block;
+    overflow: auto;
+    height: var(--preview-frame-height, 480px);
+    min-height: 0;
+    border-radius: var(--radius-md);
+    contain: layout paint;
   }
 
   .component-page__preview .live-preview:empty {

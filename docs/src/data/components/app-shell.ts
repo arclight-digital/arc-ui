@@ -42,7 +42,11 @@ Because AppShell is slot-based, it composes freely with other ARC UI primitives.
       ],
     },
 
-    previewHtml: `<div style="width:100%;height:300px;border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden;position:relative">
+    previewLayout: 'frame',
+
+    previewHeight: '480px',
+
+    previewHtml: `<div style="width:100%;height:100%;border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden;position:relative">
   <arc-app-shell>
     <arc-top-bar slot="topbar" heading="Dashboard"></arc-top-bar>
     <nav slot="sidebar" style="width:200px;padding:var(--space-md);display:flex;flex-direction:column;gap:var(--space-xs);border-right:1px solid var(--border-subtle)">

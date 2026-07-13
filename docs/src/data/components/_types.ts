@@ -30,8 +30,9 @@ export interface ComponentDef {
   previewHtml?: string;
   previewSetup?: string;
   /** Preview layout: 'center' (default, flex-centered), 'block' (full-width flow),
-      'scroll' (full-width with horizontal scrolling for wide content like grids/boards) */
-  previewLayout?: 'center' | 'block' | 'scroll';
+      'scroll' (full-width, horizontal scrolling for wide content like grids/boards),
+      'frame' (fixed-height contained viewport for full-page shells — pairs with previewHeight) */
+  previewLayout?: 'center' | 'block' | 'scroll' | 'frame';
   /** Min-height for the preview area, e.g. '420px' — reserves room for popups/panels */
   previewHeight?: string;
   /** Show a replay button on the preview to re-trigger one-shot animations */

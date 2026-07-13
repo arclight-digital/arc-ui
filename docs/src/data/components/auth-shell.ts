@@ -43,7 +43,10 @@ Both variants are fully responsive. On mobile, the split layout collapses to a s
       ],
     },
 
-    previewHtml: `<div style="width:100%;height:400px;border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden">
+    previewLayout: 'frame',
+    previewHeight: '560px',
+
+    previewHtml: `<div style="width:100%;height:100%;border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden">
   <arc-auth-shell variant="split">
     <div slot="logo" style="font-family: 'Tektur', system-ui, sans-serif; font-size: 22px; font-weight: 700; letter-spacing: 2px; color: var(--text-heading);">ARC UI</div>
     <div style="display: flex; flex-direction: column; gap: 16px;">

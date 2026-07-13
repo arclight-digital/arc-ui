@@ -46,7 +46,11 @@ PageLayout collapses gracefully on mobile. At 768px and below, sidebar-left and 
       ],
     },
 
-    previewHtml: `<div style="width:100%;height:300px;border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden">
+    previewLayout: 'frame',
+
+    previewHeight: '300px',
+
+    previewHtml: `<div style="width:100%;height:100%;border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden">
   <arc-page-layout layout="sidebar-left" gap="0" style="height:100%">
     <nav slot="sidebar" style="background:var(--surface-alt);height:100%;padding:var(--space-md);display:flex;flex-direction:column;gap:var(--space-xs);border-right:1px solid var(--border-subtle)">
       <span style="font-family:var(--font-heading);font-weight:600;font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:var(--space-xs)">Navigation</span>

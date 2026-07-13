@@ -42,7 +42,11 @@ Content is distributed through two named slots: \`primary\` (the region whose si
       ],
     },
 
-    previewHtml: `<div style="width:100%;height:240px;border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden;background:var(--bg-surface)">
+    previewLayout: 'frame',
+
+    previewHeight: '240px',
+
+    previewHtml: `<div style="width:100%;height:100%;border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden;background:var(--bg-surface)">
   <arc-split-pane orientation="horizontal" ratio="0.4" style="height:100%">
     <div slot="primary" style="padding:var(--space-md);font-family:var(--font-body);font-size:13px;color:var(--text-secondary);height:100%;box-sizing:border-box">
       <div style="font-weight:600;color:var(--text-primary);margin-bottom:var(--space-sm)">File Tree</div>
