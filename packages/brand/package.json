@@ -40,6 +40,18 @@
   "publishConfig": {
     "access": "public"
   },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arclight-digital/arc-ui",
+    "directory": "packages/brand"
+  },
+  "keywords": [
+    "web-components",
+    "lit",
+    "brand",
+    "arclight"
+  ],
   "devDependencies": {
     "sharp": "^0.34.5"
   }

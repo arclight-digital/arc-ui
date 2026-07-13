@@ -51,4 +51,4 @@ export class ArclightBrandColors extends LitElement {
   }
 }
 
-customElements.define('arclight-brand-colors', ArclightBrandColors);
+if (!customElements.get('arclight-brand-colors')) customElements.define('arclight-brand-colors', ArclightBrandColors);

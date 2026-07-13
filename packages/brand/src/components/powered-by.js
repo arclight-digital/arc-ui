@@ -76,4 +76,4 @@ export class ArclightPoweredBy extends LitElement {
   }
 }
 
-customElements.define('arclight-powered-by', ArclightPoweredBy);
+if (!customElements.get('arclight-powered-by')) customElements.define('arclight-powered-by', ArclightPoweredBy);

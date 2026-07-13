@@ -135,6 +135,11 @@ export class ArclightWatermark extends LitElement {
         transform-box: fill-box;
         transform-origin: center;
       }
+
+      @media (prefers-reduced-motion: reduce) {
+        :host([animated]) .pulse-out,
+        :host([animated]) .pulse-in { animation: none; }
+      }
     `,
   ];
 
@@ -261,4 +266,4 @@ export class ArclightWatermark extends LitElement {
   }
 }
 
-customElements.define('arclight-watermark', ArclightWatermark);
+if (!customElements.get('arclight-watermark')) customElements.define('arclight-watermark', ArclightWatermark);

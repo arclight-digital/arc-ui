@@ -41,6 +41,10 @@ export class ArclightLoading extends LitElement {
         to { opacity: 1; }
       }
 
+      @media (prefers-reduced-motion: reduce) {
+        :host { animation: none; }
+      }
+
       .container {
         display: flex;
         flex-direction: column;
@@ -86,4 +90,4 @@ export class ArclightLoading extends LitElement {
   }
 }
 
-customElements.define('arclight-loading', ArclightLoading);
+if (!customElements.get('arclight-loading')) customElements.define('arclight-loading', ArclightLoading);

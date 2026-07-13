@@ -70,4 +70,4 @@ export class ArclightBy extends LitElement {
   }
 }
 
-customElements.define('arclight-by', ArclightBy);
+if (!customElements.get('arclight-by')) customElements.define('arclight-by', ArclightBy);

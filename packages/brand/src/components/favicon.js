@@ -64,4 +64,4 @@ export class ArclightFavicon extends LitElement {
   }
 }
 
-customElements.define('arclight-favicon', ArclightFavicon);
+if (!customElements.get('arclight-favicon')) customElements.define('arclight-favicon', ArclightFavicon);

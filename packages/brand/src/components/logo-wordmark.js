@@ -71,4 +71,4 @@ export class ArclightLogoWordmark extends LitElement {
   }
 }
 
-customElements.define('arclight-logo-wordmark', ArclightLogoWordmark);
+if (!customElements.get('arclight-logo-wordmark')) customElements.define('arclight-logo-wordmark', ArclightLogoWordmark);

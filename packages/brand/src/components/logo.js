@@ -48,6 +48,11 @@ export class ArclightLogo extends LitElement {
         transform-box: fill-box;
         transform-origin: center;
       }
+
+      @media (prefers-reduced-motion: reduce) {
+        .pulse-out,
+        .pulse-in { animation: none; }
+      }
 `,
   ];
 
@@ -65,6 +70,8 @@ export class ArclightLogo extends LitElement {
     const s = SIZES[this.size] || SIZES.sm;
     const svg = this.renderRoot.querySelector('svg');
     if (svg) {
+      svg.setAttribute('role', 'img');
+      svg.setAttribute('aria-label', 'Arclight');
       svg.style.height = `${s.height}px`;
       svg.style.width = 'auto';
       svg.style.overflow = 'visible';
@@ -85,4 +92,4 @@ export class ArclightLogo extends LitElement {
   }
 }
 
-customElements.define('arclight-logo', ArclightLogo);
+if (!customElements.get('arclight-logo')) customElements.define('arclight-logo', ArclightLogo);
