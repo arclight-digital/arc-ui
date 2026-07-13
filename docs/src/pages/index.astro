@@ -95,9 +95,9 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
         </span>
       </h1>
       <p class="hero__body">
-        {components.length} dark-first components, written once in Lit and generated natively
-        for React, Vue, Svelte, Angular, Solid, Preact, and plain HTML.
-        Build the whole product — marketing page to dashboard — from one design system.
+        <span class="hero__body-line">{components.length} dark-first components, written once in Lit and generated natively</span>
+        <span class="hero__body-line">for React, Vue, Svelte, Angular, Solid, Preact, and plain HTML.</span>
+        <span class="hero__body-line hero__body-line--kicker">Build the whole product — marketing page to dashboard — from one design system.</span>
       </p>
       <arc-code-block variant="basic" language="bash" code="npm install @arclux/arc-ui lit"></arc-code-block>
       <div class="hero__actions">
@@ -824,11 +824,32 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
 
   .hero__body {
     color: var(--text-secondary);
-    max-width: 560px;
+    max-width: 700px;
     text-align: center;
     text-wrap: balance;
     font-size: var(--text-md);
     line-height: 1.7;
+  }
+
+  .hero__body-line {
+    display: block;
+  }
+
+  .hero__body-line--kicker {
+    margin-top: var(--space-md);
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+  }
+
+  /* Let the deliberate lines re-wrap naturally on narrow screens */
+  @media (max-width: 640px) {
+    .hero__body-line {
+      display: inline;
+    }
+    .hero__body-line--kicker {
+      display: block;
+      margin-top: var(--space-sm);
+    }
   }
 
   .hero__actions {
