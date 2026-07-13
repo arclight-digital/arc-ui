@@ -3,6 +3,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 
 const headings = [
   { id: 'colors', label: 'Colors' },
+  { id: 'charts', label: 'Charts' },
   { id: 'spacing', label: 'Spacing' },
   { id: 'typography', label: 'Typography' },
   { id: 'borders', label: 'Borders & Radius' },
@@ -17,6 +18,15 @@ const headings = [
   { id: 'focus', label: 'Focus' },
   { id: 'transitions', label: 'Transitions' },
   { id: 'utility', label: 'Utility' },
+];
+
+const chartTokens = [
+  { name: 'chart-1', value: '#4d7ef7' },
+  { name: 'chart-2', value: '#ea580c' },
+  { name: 'chart-3', value: '#0d9488' },
+  { name: 'chart-4', value: '#8b5cf6' },
+  { name: 'chart-5', value: '#db2777' },
+  { name: 'chart-6', value: '#65a30d' },
 ];
 
 const colorTokens = [
@@ -72,6 +82,28 @@ const spacingTokens = [
       <div class="tokens-grid">
         {colorTokens.map((t) => (
           <div class:list={['token-swatch', { 'token-swatch--accent': t.accent }]} style={`--swatch: ${t.value}`} data-var={`var(--${t.name})`}>
+            <span class="token-swatch__var">--{t.name}</span>
+            <span class="token-swatch__color">{t.value}</span>
+            <span class="token-swatch__name">{t.name}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section id="charts">
+      <h2 class="docs-heading">Charts</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <p class="docs-text">
+        Categorical series palette for <code>arc-chart</code> and data visualization. Assign hues in
+        fixed order by series position — never cycle or reshuffle them. The set is validated for
+        color-vision-deficiency separation and contrast against <code>--bg-card</code> in both themes
+        (series 1, 4, and 6 shift automatically in light mode). Status colors
+        (<code>--color-success</code>, <code>--color-error</code>, …) are reserved for state and are
+        not part of this palette.
+      </p>
+      <div class="tokens-grid">
+        {chartTokens.map((t) => (
+          <div class="token-swatch token-swatch--accent" style={`--swatch: ${t.value}`} data-var={`var(--${t.name})`}>
             <span class="token-swatch__var">--{t.name}</span>
             <span class="token-swatch__color">{t.value}</span>
             <span class="token-swatch__name">{t.name}</span>

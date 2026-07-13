@@ -629,6 +629,11 @@ const headings = [
     lines.push(`  --focus-ring: 0 0 0 2px var(--bg-deep), 0 0 0 4px rgb(${ab.r},${ab.g},${ab.b});`);
     lines.push(`  --focus-glow: var(--focus-ring), 0 0 16px rgba(${ab.r},${ab.g},${ab.b},0.3);`);
 
+    // Chart series 1 and 4 track the brand accents so arc-chart stays
+    // on-theme; series 2/3/5/6 keep their contrast-validated defaults.
+    lines.push(`  --chart-1: rgb(${ab.r},${ab.g},${ab.b});`);
+    lines.push(`  --chart-4: rgb(${av.r},${av.g},${av.b});`);
+
     lines.push('}');
 
     getStyleEl().textContent = lines.join('\n');
