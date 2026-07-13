@@ -1,12 +1,14 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { FormControlMixin } from '../shared/form-control-mixin.js';
 
 /**
  * @tag arc-date-picker
  */
-export class ArcDatePicker extends LitElement {
+export class ArcDatePicker extends FormControlMixin(LitElement) {
   static properties = {
     value:       { type: String },
+    name:        { type: String, reflect: true },
     min:         { type: String },
     max:         { type: String },
     placeholder: { type: String },
@@ -16,6 +18,7 @@ export class ArcDatePicker extends LitElement {
     _viewMonth:  { state: true },
     _viewYear:   { state: true },
     _mode:       { state: true },
+    _focusedIso: { state: true },
   };
 
   static styles = [
@@ -275,6 +278,7 @@ export class ArcDatePicker extends LitElement {
   constructor() {
     super();
     this.value = '';
+    this.name = '';
     this.min = '';
     this.max = '';
     this.placeholder = 'Select date';
@@ -282,6 +286,7 @@ export class ArcDatePicker extends LitElement {
     this.label = '';
     this._open = false;
     this._mode = 'days'; // 'days' | 'months' | 'years'
+    this._focusedIso = null;
 
     this._viewMonth = null;
     this._viewYear = null;
@@ -325,11 +330,14 @@ export class ArcDatePicker extends LitElement {
     this._open = !this._open;
 
     if (!this._open) this._mode = 'days';
-    if (this._open && this.value) {
-      const d = new Date(this.value + 'T00:00:00');
-      if (!isNaN(d)) {
-        this._viewMonth = d.getMonth();
-        this._viewYear = d.getFullYear();
+    if (this._open) {
+      this._focusedIso = null;
+      if (this.value) {
+        const d = new Date(this.value + 'T00:00:00');
+        if (!isNaN(d)) {
+          this._viewMonth = d.getMonth();
+          this._viewYear = d.getFullYear();
+        }
       }
     }
   }
@@ -460,9 +468,79 @@ export class ArcDatePicker extends LitElement {
     return days;
   }
 
+  /** ISO of the single day button that should be the tab stop (roving tabindex) */
+  _getTabStopIso(days) {
+    if (this._focusedIso && days.some(d => d.iso === this._focusedIso && !d.disabled)) {
+      return this._focusedIso;
+    }
+    const selected = days.find(d => d.selected && !d.disabled);
+    if (selected) return selected.iso;
+    const today = days.find(d => d.today && !d.disabled);
+    if (today) return today.iso;
+    const first = days.find(d => !d.outside && !d.disabled) || days.find(d => !d.disabled);
+    return first ? first.iso : null;
+  }
+
+  /** Human-readable label for a day button, e.g. "July 13, 2026" */
+  _dayAriaLabel(iso) {
+    const [y, m, d] = iso.split('-').map(Number);
+    return `${this._getMonthName(m - 1)} ${d}, ${y}`;
+  }
+
+  _onDaysKeydown(e) {
+    const iso = e.target?.dataset?.iso;
+    if (!iso) return;
+
+    const d = new Date(iso + 'T00:00:00');
+    if (isNaN(d)) return;
+
+    let handled = true;
+    switch (e.key) {
+      case 'ArrowRight': d.setDate(d.getDate() + 1); break;
+      case 'ArrowLeft': d.setDate(d.getDate() - 1); break;
+      case 'ArrowDown': d.setDate(d.getDate() + 7); break;
+      case 'ArrowUp': d.setDate(d.getDate() - 7); break;
+      case 'Home': d.setDate(d.getDate() - d.getDay()); break;
+      case 'End': d.setDate(d.getDate() + (6 - d.getDay())); break;
+      default:
+        handled = false;
+    }
+
+    if (!handled) return;
+    e.preventDefault();
+
+    const nextIso = this._toISO(d.getFullYear(), d.getMonth(), d.getDate());
+    if (this._isDisabledDate(nextIso)) return;
+
+    this._focusedIso = nextIso;
+
+    // Navigate months if the target day is outside the visible month
+    if (d.getMonth() !== this._viewMonth || d.getFullYear() !== this._viewYear) {
+      this._viewMonth = d.getMonth();
+      this._viewYear = d.getFullYear();
+    }
+
+    this.updateComplete.then(() => {
+      this.shadowRoot.querySelector(`.day[data-iso="${nextIso}"]`)?.focus();
+    });
+  }
+
+  updated(changed) {
+    if (changed.has('value')) {
+      this._updateFormValue();
+    }
+    if (changed.has('_open') && this._open && this._mode === 'days') {
+      // Move focus to the roving tab stop when the popup opens
+      this.updateComplete.then(() => {
+        this.shadowRoot.querySelector('.day[tabindex="0"]')?.focus();
+      });
+    }
+  }
+
   render() {
     const weekdays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
     const days = this._buildCalendarDays();
+    const tabStopIso = this._getTabStopIso(days);
 
     return html`
       <div class="wrapper" part="wrapper">
@@ -487,28 +565,29 @@ export class ArcDatePicker extends LitElement {
         ${this._open ? html`
           <div class="dropdown" part="dropdown" role="dialog" aria-label="Date picker">
             <div class="calendar-header">
-              <button class="nav-btn" @click=${this._prev} aria-label="Previous">\u2039</button>
+              <button class="nav-btn" @click=${this._prev} aria-label=${this._mode === 'days' ? 'Previous month' : this._mode === 'months' ? 'Previous year' : 'Previous years'}>\u2039</button>
               <button class="calendar-title" @click=${this._cycleMode}>
                 ${this._mode === 'days' ? `${this._getMonthName(this._viewMonth)} ${this._viewYear}`
                   : this._mode === 'months' ? `${this._viewYear}`
                   : `${this._viewYear - 5} – ${this._viewYear + 6}`}
               </button>
-              <button class="nav-btn" @click=${this._next} aria-label="Next">\u203A</button>
+              <button class="nav-btn" @click=${this._next} aria-label=${this._mode === 'days' ? 'Next month' : this._mode === 'months' ? 'Next year' : 'Next years'}>\u203A</button>
             </div>
 
             ${this._mode === 'days' ? html`
               <div class="weekdays">
                 ${weekdays.map(d => html`<span class="weekday">${d}</span>`)}
               </div>
-              <div class="days" role="grid" aria-label="Calendar">
+              <div class="days" role="group" aria-label="Calendar days" @keydown=${this._onDaysKeydown}>
                 ${days.map(d => html`
                   <button
                     class="day ${d.outside ? 'outside' : ''} ${d.today ? 'today' : ''} ${d.selected ? 'selected' : ''} ${d.disabled ? 'disabled' : ''}"
                     ?disabled=${d.disabled}
+                    tabindex=${d.iso === tabStopIso ? '0' : '-1'}
+                    data-iso=${d.iso}
                     @click=${() => !d.disabled && this._selectDate(d.iso)}
-                    aria-label="${d.iso}"
-                    aria-selected=${d.selected ? 'true' : 'false'}
-                    role="gridcell"
+                    aria-label="${this._dayAriaLabel(d.iso)}"
+                    aria-pressed=${d.selected ? 'true' : 'false'}
                   >${d.day}</button>
                 `)}
               </div>

@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { lockScroll, unlockScroll } from '../shared/scroll-lock.js';
 
 /**
  * @tag arc-app-shell
@@ -134,7 +135,7 @@ export class ArcAppShell extends LitElement {
         position: fixed;
         inset: 0;
         z-index: 97;
-        background: rgba(0, 0, 0, 0.5);
+        background: var(--overlay-backdrop);
         opacity: 0;
         visibility: hidden;
         transition:
@@ -188,7 +189,7 @@ export class ArcAppShell extends LitElement {
     this.removeEventListener('arc-navigate', this._onNavigate);
     document.removeEventListener('keydown', this._onKeyDown);
     window.removeEventListener('resize', this._onResize);
-    document.body.style.overflow = '';
+    unlockScroll(this);
   }
 
   updated(changed) {
@@ -203,7 +204,8 @@ export class ArcAppShell extends LitElement {
     }
     if (changed.has('sidebarOpen')) {
       if (this._mobile) {
-        document.body.style.overflow = this.sidebarOpen ? 'hidden' : '';
+        if (this.sidebarOpen) lockScroll(this);
+        else unlockScroll(this);
       }
     }
   }

@@ -133,6 +133,21 @@ export class ArcToast extends LitElement {
     this.duration = 4000;
     this._toasts = [];
     this._counter = 0;
+    this._timers = new Set();
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    for (const timer of this._timers) clearTimeout(timer);
+    this._timers.clear();
+  }
+
+  _setTimer(fn, ms) {
+    const timer = setTimeout(() => {
+      this._timers.delete(timer);
+      fn();
+    }, ms);
+    this._timers.add(timer);
   }
 
   show({ message, variant = 'info', duration, action, actionLabel, persistent = false }) {
@@ -141,7 +156,7 @@ export class ArcToast extends LitElement {
     this._toasts = [...this._toasts, { id, message, variant, action, actionLabel }];
 
     if (!persistent && dur > 0) {
-      setTimeout(() => this._dismiss(id), dur);
+      this._setTimer(() => this._dismiss(id), dur);
     }
   }
 
@@ -155,7 +170,10 @@ export class ArcToast extends LitElement {
     const el = this.shadowRoot.querySelector(`[data-toast-id="${id}"]`);
     if (el) {
       el.classList.add('is-exiting');
+      let done = false;
       const cleanup = () => {
+        if (done) return;
+        done = true;
         this._toasts = this._toasts.filter(t => t.id !== id);
         this.dispatchEvent(new CustomEvent('arc-dismiss', {
           detail: { id },
@@ -165,7 +183,7 @@ export class ArcToast extends LitElement {
       };
       el.addEventListener('animationend', cleanup, { once: true });
       // Safety fallback if animation doesn't fire (e.g. prefers-reduced-motion)
-      setTimeout(cleanup, 300);
+      this._setTimer(cleanup, 300);
     } else {
       this._toasts = this._toasts.filter(t => t.id !== id);
     }

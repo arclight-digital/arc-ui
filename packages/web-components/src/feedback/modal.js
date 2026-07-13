@@ -1,5 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { lockScroll, unlockScroll } from '../shared/scroll-lock.js';
+import { trapTabKey, focusFirst, deepActiveElement } from '../shared/focus-trap.js';
 
 /**
  * @tag arc-modal
@@ -149,7 +151,7 @@ export class ArcModal extends LitElement {
   disconnectedCallback() {
     super.disconnectedCallback();
     document.removeEventListener('keydown', this._handleKeydown);
-    document.body.style.overflow = '';
+    unlockScroll(this);
   }
 
   _handleKeydown(e) {
@@ -157,22 +159,10 @@ export class ArcModal extends LitElement {
       this._close();
       return;
     }
-    // Focus trap
+    // Focus trap — composed-tree aware, sees slotted body/footer content
     if (e.key === 'Tab') {
-      const focusable = this.shadowRoot.querySelectorAll(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-      );
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      const active = this.shadowRoot.activeElement;
-
-      if (e.shiftKey && (!active || active === first)) {
-        e.preventDefault();
-        last?.focus();
-      } else if (!e.shiftKey && active === last) {
-        e.preventDefault();
-        first?.focus();
-      }
+      const dialog = this.shadowRoot.querySelector('.modal__dialog');
+      if (dialog) trapTabKey(e, dialog);
     }
   }
 
@@ -190,16 +180,21 @@ export class ArcModal extends LitElement {
   updated(changed) {
     if (changed.has('open')) {
       if (this.open) {
+        this._previousFocus = deepActiveElement();
         document.addEventListener('keydown', this._handleKeydown);
-        document.body.style.overflow = 'hidden';
+        lockScroll(this);
         this.dispatchEvent(new CustomEvent('arc-open', { bubbles: true, composed: true }));
         this.updateComplete.then(() => {
-          const closeBtn = this.shadowRoot.querySelector('.modal__close');
-          closeBtn?.focus();
+          const dialog = this.shadowRoot.querySelector('.modal__dialog');
+          if (dialog && !dialog.contains(deepActiveElement())) focusFirst(dialog);
         });
       } else {
         document.removeEventListener('keydown', this._handleKeydown);
-        document.body.style.overflow = '';
+        unlockScroll(this);
+        if (changed.get('open') && this._previousFocus?.isConnected) {
+          this._previousFocus.focus();
+        }
+        this._previousFocus = null;
       }
     }
   }

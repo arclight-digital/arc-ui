@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { MenuKeyboardController } from '../shared/menu-keyboard.js';
+import { setTriggerAria, deepActiveElement } from '../shared/trigger-aria.js';
 import '../shared/menu-item.js';
 import '../shared/menu-divider.js';
 import '../content/separator.js';
@@ -114,6 +115,8 @@ export class ArcDropdownMenu extends LitElement {
     super();
     this.open = false;
     this._children = [];
+    this._openedFrom = null;
+    this._lastFocusedIndex = -1;
     this._onDocumentClick = this._onDocumentClick.bind(this);
     this._menuKb = new MenuKeyboardController(this, {
       getItemCount: () => this._menuItems.length,
@@ -133,7 +136,9 @@ export class ArcDropdownMenu extends LitElement {
 
   updated(changed) {
     if (changed.has('open')) {
+      this._syncTriggerAria();
       if (this.open) {
+        this._openedFrom = deepActiveElement();
         this._menuKb.reset();
         requestAnimationFrame(() => {
           document.addEventListener('click', this._onDocumentClick);
@@ -144,6 +149,14 @@ export class ArcDropdownMenu extends LitElement {
         this._menuKb.detach();
       }
     }
+
+    // Roving focus: move real focus to the highlighted item as the
+    // keyboard controller's index changes.
+    const idx = this.open ? this._menuKb.focusedIndex : -1;
+    if (idx >= 0 && idx !== this._lastFocusedIndex) {
+      this.shadowRoot.querySelector(`#dropdown-item-${idx}`)?.focus();
+    }
+    this._lastFocusedIndex = idx;
   }
 
   disconnectedCallback() {
@@ -154,17 +167,32 @@ export class ArcDropdownMenu extends LitElement {
   _onDocumentClick(e) {
     const path = e.composedPath();
     if (!path.includes(this)) {
-      this._close();
+      // Pointer chose a new target — don't yank focus back
+      this._close(false);
     }
+  }
+
+  _syncTriggerAria() {
+    setTriggerAria(
+      this.shadowRoot.querySelector('slot[name="trigger"]'),
+      {
+        'aria-haspopup': 'menu',
+        'aria-expanded': this.open ? 'true' : 'false',
+      }
+    );
   }
 
   _toggle() {
     this.open = !this.open;
   }
 
-  _close() {
+  _close(restoreFocus = true) {
     if (!this.open) return;
     this.open = false;
+    if (restoreFocus && this._openedFrom && this._openedFrom.isConnected) {
+      this._openedFrom.focus();
+    }
+    this._openedFrom = null;
     this.dispatchEvent(new CustomEvent('arc-close', {
       bubbles: true,
       composed: true,
@@ -189,9 +217,10 @@ export class ArcDropdownMenu extends LitElement {
 
     return html`
       <button
+        id="dropdown-item-${selectableIndex}"
         class="dropdown__item ${selectableIndex === this._menuKb.focusedIndex ? 'is-focused' : ''}"
         role="menuitem"
-        tabindex="-1"
+        tabindex=${selectableIndex === this._menuKb.focusedIndex ? '0' : '-1'}
         @click=${() => this._selectItem(child, globalIndex)}
         @mouseenter=${() => { this._menuKb.focusedIndex = selectableIndex; this.requestUpdate(); }}
         part="item"
@@ -210,11 +239,9 @@ export class ArcDropdownMenu extends LitElement {
       <div
         class="dropdown__trigger"
         @click=${this._toggle}
-        aria-haspopup="menu"
-        aria-expanded=${this.open ? 'true' : 'false'}
         part="trigger"
       >
-        <slot name="trigger"></slot>
+        <slot name="trigger" @slotchange=${this._syncTriggerAria}></slot>
       </div>
       <div
         class="dropdown__panel"

@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { positionStyles } from '../shared/position-styles.js';
+import { setTriggerAria, deepActiveElement } from '../shared/trigger-aria.js';
 
 /**
  * @tag arc-popover
@@ -69,13 +70,16 @@ export class ArcPopover extends LitElement {
     this.open = false;
     this.position = 'bottom';
     this.trigger = '';
+    this._openedFrom = null;
     this._onDocumentClick = this._onDocumentClick.bind(this);
     this._onKeyDown = this._onKeyDown.bind(this);
   }
 
   updated(changed) {
     if (changed.has('open')) {
+      this._syncTriggerAria();
       if (this.open) {
+        this._openedFrom = deepActiveElement();
         // Defer so the opening click doesn't immediately close
         requestAnimationFrame(() => {
           document.addEventListener('click', this._onDocumentClick);
@@ -97,8 +101,19 @@ export class ArcPopover extends LitElement {
   _onDocumentClick(e) {
     const path = e.composedPath();
     if (!path.includes(this)) {
-      this._close();
+      // Pointer chose a new target — don't yank focus back
+      this._close(false);
     }
+  }
+
+  _syncTriggerAria() {
+    setTriggerAria(
+      this.shadowRoot.querySelector('slot[name="trigger"]'),
+      {
+        'aria-haspopup': 'dialog',
+        'aria-expanded': this.open ? 'true' : 'false',
+      }
+    );
   }
 
   _onKeyDown(e) {
@@ -115,9 +130,13 @@ export class ArcPopover extends LitElement {
     }));
   }
 
-  _close() {
+  _close(restoreFocus = true) {
     if (!this.open) return;
     this.open = false;
+    if (restoreFocus && this._openedFrom && this._openedFrom.isConnected) {
+      this._openedFrom.focus();
+    }
+    this._openedFrom = null;
     this.dispatchEvent(new CustomEvent('arc-close', {
       bubbles: true,
       composed: true,
@@ -129,11 +148,9 @@ export class ArcPopover extends LitElement {
       <div
         class="popover__trigger"
         @click=${this._toggle}
-        aria-haspopup="true"
-        aria-expanded=${this.open ? 'true' : 'false'}
         part="trigger"
       >
-        <slot name="trigger"></slot>
+        <slot name="trigger" @slotchange=${this._syncTriggerAria}></slot>
       </div>
       <div
         class="popover__panel"

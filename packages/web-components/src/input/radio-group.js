@@ -1,13 +1,12 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { FormControlMixin } from '../shared/form-control-mixin.js';
 
 /**
  * @tag arc-radio-group
  * @requires arc-radio
  */
-export class ArcRadioGroup extends LitElement {
-  static formAssociated = true;
-
+export class ArcRadioGroup extends FormControlMixin(LitElement) {
   static properties = {
     value:       { type: String, reflect: true },
     name:        { type: String },
@@ -88,8 +87,11 @@ export class ArcRadioGroup extends LitElement {
         user-select: none;
       }
 
-      .radio__circle:focus-visible {
+      .radio:focus-visible {
         outline: none;
+      }
+
+      .radio:focus-visible .radio__circle {
         box-shadow: var(--interactive-focus);
       }
 
@@ -117,7 +119,6 @@ export class ArcRadioGroup extends LitElement {
 
   constructor() {
     super();
-    this._internals = this.attachInternals();
     this.value = '';
     this.name = '';
     this.disabled = false;
@@ -128,7 +129,7 @@ export class ArcRadioGroup extends LitElement {
 
   updated(changed) {
     if (changed.has('value')) {
-      this._internals.setFormValue(this.value);
+      this._updateFormValue();
     }
   }
 
@@ -153,12 +154,17 @@ export class ArcRadioGroup extends LitElement {
 
     if (e.key === 'ArrowDown' || e.key === 'ArrowRight') next = (index + 1) % opts.length;
     else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') next = (index - 1 + opts.length) % opts.length;
+    else if (e.key === ' ') {
+      e.preventDefault();
+      this._select(opts[index].value);
+      return;
+    }
     else return;
 
     e.preventDefault();
     this._select(opts[next].value);
     this.updateComplete.then(() => {
-      const radios = this.shadowRoot.querySelectorAll('.radio__circle');
+      const radios = this.shadowRoot.querySelectorAll('.radio');
       radios[next]?.focus();
     });
   }
@@ -174,14 +180,11 @@ export class ArcRadioGroup extends LitElement {
             class="radio"
             role="radio"
             aria-checked=${opt.value === this.value ? 'true' : 'false'}
+            tabindex=${opt.value === this.value || (!this.value && i === 0) ? '0' : '-1'}
             @click=${() => this._select(opt.value)}
+            @keydown=${(e) => this._handleKeydown(e, i)}
           >
-            <div
-              class="radio__circle"
-              tabindex=${opt.value === this.value || (!this.value && i === 0) ? '0' : '-1'}
-              @keydown=${(e) => this._handleKeydown(e, i)}
-              part="circle"
-            >
+            <div class="radio__circle" part="circle">
               <div class="radio__dot"></div>
             </div>
             <span class="radio__label" part="label">${opt.label}</span>

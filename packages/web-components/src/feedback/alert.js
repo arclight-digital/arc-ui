@@ -110,7 +110,7 @@ export class ArcAlert extends LitElement {
 
   render() {
     return html`
-      <div class="alert" role="alert" part="alert">
+      <div class="alert" role=${this.variant === 'error' || this.variant === 'warning' ? 'alert' : 'status'} part="alert">
         <div class="alert__icon-wrap" part="icon">${getStatusIcon(this.variant)}</div>
         <div class="alert__body">
           ${this.heading ? html`<p class="alert__heading" part="heading">${this.heading}</p>` : ''}

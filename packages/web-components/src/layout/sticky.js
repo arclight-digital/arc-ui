@@ -22,7 +22,7 @@ export class ArcSticky extends LitElement {
       }
 
       :host([stuck]) {
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        box-shadow: var(--shadow-sm);
       }
 
       .sentinel {

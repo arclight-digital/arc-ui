@@ -1,6 +1,8 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { MenuKeyboardController } from '../shared/menu-keyboard.js';
+import { lockScroll, unlockScroll } from '../shared/scroll-lock.js';
+import { trapTabKey, deepActiveElement } from '../shared/focus-trap.js';
 import '../content/icon.js';
 
 /**
@@ -194,6 +196,13 @@ export class ArcCommandPalette extends LitElement {
       onSelect: (i) => this._selectItem(this._filteredItems[i]),
       onClose: () => this._close(),
     });
+    this._onTabKeydown = this._onTabKeydown.bind(this);
+  }
+
+  _onTabKeydown(e) {
+    if (e.key !== 'Tab') return;
+    const dialog = this.shadowRoot.querySelector('.palette__dialog');
+    if (dialog) trapTabKey(e, dialog);
   }
 
   _onSlotChange(e) {
@@ -212,25 +221,33 @@ export class ArcCommandPalette extends LitElement {
   updated(changed) {
     if (changed.has('open')) {
       if (this.open) {
+        this._previousFocus = deepActiveElement();
         this._query = '';
         this._menuKb.reset();
         this._menuKb.focusedIndex = 0;
         this._menuKb.attach();
-        document.body.style.overflow = 'hidden';
+        document.addEventListener('keydown', this._onTabKeydown);
+        lockScroll(this);
         this.updateComplete.then(() => {
           const input = this.shadowRoot.querySelector('.palette__input');
           if (input) input.focus();
         });
       } else {
         this._menuKb.detach();
-        document.body.style.overflow = '';
+        document.removeEventListener('keydown', this._onTabKeydown);
+        unlockScroll(this);
+        if (changed.get('open') && this._previousFocus?.isConnected) {
+          this._previousFocus.focus();
+        }
+        this._previousFocus = null;
       }
     }
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    document.body.style.overflow = '';
+    document.removeEventListener('keydown', this._onTabKeydown);
+    unlockScroll(this);
   }
 
   _onInput(e) {
@@ -286,14 +303,19 @@ export class ArcCommandPalette extends LitElement {
             @input=${this._onInput}
             placeholder=${this.placeholder}
             aria-label="Search commands"
+            role="combobox"
+            aria-expanded="true"
+            aria-controls="palette-results"
+            aria-activedescendant=${this._menuKb.focusedIndex >= 0 && filtered.length > 0 ? `palette-item-${this._menuKb.focusedIndex}` : ''}
             autocomplete="off"
             spellcheck="false"
             part="input"
           />
         </div>
-        <div class="palette__results" role="listbox" part="results">
+        <div class="palette__results" id="palette-results" role="listbox" part="results">
           ${filtered.map((item, i) => html`
             <button
+              id="palette-item-${i}"
               class="palette__item ${i === this._menuKb.focusedIndex ? 'is-focused' : ''}"
               role="option"
               aria-selected=${i === this._menuKb.focusedIndex ? 'true' : 'false'}

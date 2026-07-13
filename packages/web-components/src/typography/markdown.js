@@ -2,14 +2,34 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
- * Sanitize an HTML string by stripping <script> tags and on* event attributes.
+ * Return true if a URL is safe to emit in href/src: relative, or an
+ * allowlisted scheme (http, https, mailto, tel).
+ */
+function isSafeUrl(value) {
+  // Strip control chars/whitespace the browser ignores when parsing the scheme
+  const url = value.replace(/[\u0000-\u0020\u00a0]/g, '').toLowerCase();
+  if (!/^[a-z][a-z0-9+.-]*:/.test(url)) return true;
+  return /^(?:https?|mailto|tel):/.test(url);
+}
+
+/**
+ * Sanitize an HTML string: strip active-content tags, on* event attributes,
+ * and href/src values with non-allowlisted URL schemes (javascript:, data:, …).
  */
 function sanitizeHtml(raw) {
   const doc = new DOMParser().parseFromString(raw, 'text/html');
-  for (const el of doc.querySelectorAll('script')) el.remove();
+  for (const el of doc.querySelectorAll('script, style, iframe, object, embed, link, meta, base, form')) el.remove();
   for (const el of doc.querySelectorAll('*')) {
     for (const attr of [...el.attributes]) {
-      if (attr.name.startsWith('on')) el.removeAttribute(attr.name);
+      const name = attr.name.toLowerCase();
+      if (name.startsWith('on')) {
+        el.removeAttribute(attr.name);
+      } else if ((name === 'href' || name === 'src' || name === 'xlink:href') && !isSafeUrl(attr.value)) {
+        el.removeAttribute(attr.name);
+      }
+    }
+    if (el.tagName === 'A' && el.hasAttribute('href')) {
+      el.setAttribute('rel', 'noopener noreferrer');
     }
   }
   return doc.body.innerHTML;

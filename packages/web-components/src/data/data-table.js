@@ -65,12 +65,33 @@ export class ArcDataTable extends LitElement {
       }
 
       th.sortable {
+        padding: 0;
         cursor: pointer;
         transition: color var(--transition-fast);
       }
 
       th.sortable:hover {
         color: var(--text-primary);
+      }
+
+      .sort-button {
+        display: block;
+        width: 100%;
+        padding: var(--space-sm) var(--space-md);
+        font: inherit;
+        letter-spacing: inherit;
+        text-transform: inherit;
+        text-align: inherit;
+        white-space: inherit;
+        color: inherit;
+        background: none;
+        border: none;
+        cursor: pointer;
+      }
+
+      .sort-button:focus-visible {
+        outline: none;
+        box-shadow: var(--interactive-focus-ring);
       }
 
       th.sorted {
@@ -427,10 +448,13 @@ export class ArcDataTable extends LitElement {
                 <th
                   class="${this.sortable && col.sortable ? 'sortable' : ''} ${this.sortColumn === col.key ? 'sorted' : ''}"
                   style="${col.width ? `width: ${col.width}` : ''}"
-                  @click=${() => this._handleSort(col)}
                   aria-sort=${this.sortColumn === col.key ? (this.sortDirection === 'asc' ? 'ascending' : 'descending') : 'none'}
                 >
-                  ${col.label}${this._renderSortIndicator(col)}
+                  ${this.sortable && col.sortable ? html`
+                    <button class="sort-button" @click=${() => this._handleSort(col)}>
+                      ${col.label}${this._renderSortIndicator(col)}
+                    </button>
+                  ` : html`${col.label}${this._renderSortIndicator(col)}`}
                 </th>
               `)}
             </tr>

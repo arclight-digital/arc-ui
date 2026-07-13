@@ -1,12 +1,11 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { FormControlMixin } from '../shared/form-control-mixin.js';
 
 /**
  * @tag arc-toggle
  */
-export class ArcToggle extends LitElement {
-  static formAssociated = true;
-
+export class ArcToggle extends FormControlMixin(LitElement) {
   static properties = {
     checked:  { type: Boolean, reflect: true },
     disabled: { type: Boolean, reflect: true },
@@ -74,13 +73,13 @@ export class ArcToggle extends LitElement {
         transition:
           transform 300ms var(--ease-out-expo),
           box-shadow var(--transition-base);
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        box-shadow: var(--shadow-xs);
       }
 
       :host([checked]) .toggle__thumb {
         transform: translateX(20px);
         box-shadow:
-          0 1px 3px rgba(0, 0, 0, 0.2),
+          var(--shadow-xs),
           0 0 8px rgba(var(--interactive-rgb), 0.5),
           0 0 16px rgba(var(--interactive-rgb), 0.3);
       }
@@ -126,7 +125,6 @@ export class ArcToggle extends LitElement {
 
   constructor() {
     super();
-    this._internals = this.attachInternals();
     this.checked = false;
     this.disabled = false;
     this.size = 'md';
@@ -134,16 +132,28 @@ export class ArcToggle extends LitElement {
     this.name = '';
   }
 
+  _formValue() {
+    return this.checked ? 'on' : null;
+  }
+
+  _formResetState() {
+    return { checked: this.checked };
+  }
+
+  _applyFormState(state) {
+    this.checked = state.checked;
+  }
+
   updated(changed) {
     if (changed.has('checked')) {
-      this._internals.setFormValue(this.checked ? 'on' : null);
+      this._updateFormValue();
     }
   }
 
   _toggle() {
     if (this.disabled) return;
     this.checked = !this.checked;
-    this._internals.setFormValue(this.checked ? 'on' : null);
+    this._updateFormValue();
     this.dispatchEvent(new CustomEvent('arc-change', {
       detail: { checked: this.checked },
       bubbles: true,
@@ -160,13 +170,13 @@ export class ArcToggle extends LitElement {
 
   render() {
     return html`
-      <label class="toggle" part="toggle">
+      <label class="toggle" part="toggle" @click=${this._toggle}>
         <div
           class="toggle__track"
           role="switch"
           aria-checked=${this.checked ? 'true' : 'false'}
+          aria-label=${this.label || nothing}
           tabindex=${this.disabled ? '-1' : '0'}
-          @click=${this._toggle}
           @keydown=${this._handleKeydown}
           part="track"
         >

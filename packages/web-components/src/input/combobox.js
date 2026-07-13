@@ -1,15 +1,18 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { FormControlMixin } from '../shared/form-control-mixin.js';
+import { ClickOutsideController } from '../shared/click-outside.js';
 import '../shared/option.js';
 
 /**
  * @tag arc-combobox
  */
-export class ArcCombobox extends LitElement {
+export class ArcCombobox extends FormControlMixin(LitElement) {
   static properties = {
     value:        { type: String, reflect: true },
     placeholder:  { type: String },
     label:        { type: String },
+    name:         { type: String, reflect: true },
     disabled:     { type: Boolean, reflect: true },
     _query:       { state: true },
     _open:        { state: true },
@@ -163,34 +166,21 @@ export class ArcCombobox extends LitElement {
     this.value = '';
     this.placeholder = '';
     this.label = '';
+    this.name = '';
     this.disabled = false;
     this._query = '';
     this._open = false;
     this._activeIndex = -1;
     this._options = [];
     this._comboId = `combobox-${++ArcCombobox._idCounter}`;
-    this._onDocClick = this._onDocClick.bind(this);
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-    document.addEventListener('click', this._onDocClick, true);
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    document.removeEventListener('click', this._onDocClick, true);
+    this._clickOutside = new ClickOutsideController(this, {
+      onClickOutside: () => { this._open = false; },
+    });
   }
 
   _onSlotChange(e) {
     this._options = e.target.assignedElements({ flatten: true })
       .filter(el => el.tagName === 'ARC-OPTION');
-  }
-
-  _onDocClick(e) {
-    if (!e.composedPath().includes(this)) {
-      this._open = false;
-    }
   }
 
   get _normalizedItems() {
@@ -251,13 +241,32 @@ export class ArcCombobox extends LitElement {
         this._open = false;
         this._activeIndex = -1;
         break;
+      case 'Home':
+        if (this._open && items.length > 0 && !this._query) {
+          e.preventDefault();
+          this._activeIndex = 0;
+        }
+        break;
+      case 'End':
+        if (this._open && items.length > 0 && !this._query) {
+          e.preventDefault();
+          this._activeIndex = items.length - 1;
+        }
+        break;
     }
   }
 
   updated(changed) {
-    if (changed.has('value') && !this._open) {
-      const item = this._normalizedItems.find(i => i.value === this.value);
-      if (item) this._query = item.label;
+    if (changed.has('value')) {
+      this._updateFormValue();
+      if (!this._open) {
+        const item = this._normalizedItems.find(i => i.value === this.value);
+        if (item) this._query = item.label;
+      }
+    }
+    if (changed.has('_open')) {
+      if (this._open) this._clickOutside.activate();
+      else this._clickOutside.deactivate();
     }
   }
 

@@ -1,13 +1,15 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { FormControlMixin } from '../shared/form-control-mixin.js';
 
 /**
  * @tag arc-pin-input
  */
-export class ArcPinInput extends LitElement {
+export class ArcPinInput extends FormControlMixin(LitElement) {
   static properties = {
     length:    { type: Number },
     value:     { type: String, reflect: true },
+    name:      { type: String, reflect: true },
     disabled:  { type: Boolean, reflect: true },
     mask:      { type: Boolean, reflect: true },
     type:      { type: String, reflect: true },
@@ -124,11 +126,18 @@ export class ArcPinInput extends LitElement {
     super();
     this.length = 4;
     this.value = '';
+    this.name = '';
     this.disabled = false;
     this.mask = false;
     this.type = 'number';
     this.separator = 0;
     this.label = '';
+  }
+
+  updated(changed) {
+    if (changed.has('value')) {
+      this._updateFormValue();
+    }
   }
 
   get _chars() {
@@ -170,6 +179,7 @@ export class ArcPinInput extends LitElement {
   _emitChange() {
     const val = this._buildValue();
     this.value = val;
+    this._updateFormValue();
     this.dispatchEvent(new CustomEvent('arc-change', {
       detail: { value: val },
       bubbles: true,

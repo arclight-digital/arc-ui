@@ -70,7 +70,7 @@ export class ArcTabs extends LitElement {
       }
 
       :host([variant="pills"]) .tabs__tab:hover {
-        background: rgba(255, 255, 255, 0.08);
+        background: rgba(var(--text-primary-rgb), 0.08);
       }
 
       :host([variant="pills"]) .tabs__tab[aria-selected="true"] {

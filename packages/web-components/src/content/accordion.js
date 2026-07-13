@@ -154,7 +154,9 @@ export class ArcAccordion extends LitElement {
             <div class="accordion__item">
               <button
                 class="accordion__trigger"
+                id="accordion-trigger-${i}"
                 aria-expanded=${isOpen ? 'true' : 'false'}
+                aria-controls="accordion-panel-${i}"
                 @click=${() => this._toggle(i)}
               >
                 <span>${item.question}</span>
@@ -162,7 +164,12 @@ export class ArcAccordion extends LitElement {
                   <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </button>
-              <div class="accordion__content ${isOpen ? 'is-open' : ''}">
+              <div
+                class="accordion__content ${isOpen ? 'is-open' : ''}"
+                id="accordion-panel-${i}"
+                role="region"
+                aria-labelledby="accordion-trigger-${i}"
+              >
                 <div class="accordion__body">
                   <p>${item.answer}</p>
                 </div>

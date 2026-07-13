@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { setTriggerAria } from '../shared/trigger-aria.js';
 
 /**
  * @tag arc-tooltip
@@ -163,6 +164,25 @@ export class ArcTooltip extends LitElement {
     }
   }
 
+  updated(changed) {
+    if (changed.has('content')) {
+      this._syncTriggerAria();
+    }
+  }
+
+  /**
+   * The tooltip text lives in this component's shadow root, so an
+   * aria-describedby id reference from the slotted (light-DOM) trigger cannot
+   * cross the shadow boundary. Instead, forward the tooltip text itself as
+   * aria-description on the slotted trigger element.
+   */
+  _syncTriggerAria() {
+    setTriggerAria(
+      this.shadowRoot.querySelector('.tooltip__trigger slot'),
+      { 'aria-description': this.content || null }
+    );
+  }
+
   _show() {
     this._showTimeout = setTimeout(() => {
       this._visible = true;
@@ -182,15 +202,15 @@ export class ArcTooltip extends LitElement {
         @mouseleave=${this._hide}
         @focusin=${this._show}
         @focusout=${this._hide}
-        aria-describedby=${this._tooltipId}
         part="trigger"
       >
-        <slot></slot>
+        <slot @slotchange=${this._syncTriggerAria}></slot>
       </div>
       <div
         class="tooltip__popup ${this._visible ? 'is-visible' : ''}"
         role="tooltip"
         id=${this._tooltipId}
+        aria-hidden=${this._visible ? 'false' : 'true'}
         part="popup"
       >
         ${this.content}

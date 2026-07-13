@@ -7,8 +7,9 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcTreeView extends LitElement {
   static properties = {
-    _items:    { state: true },
-    _selected: { state: true },
+    _items:      { state: true },
+    _selected:   { state: true },
+    _focusedKey: { state: true },
   };
 
   static styles = [
@@ -126,6 +127,7 @@ export class ArcTreeView extends LitElement {
     super();
     this._items = [];
     this._selected = null;
+    this._focusedKey = null;
     this._expandedSet = new Set();
   }
 
@@ -201,7 +203,22 @@ export class ArcTreeView extends LitElement {
     }
   }
 
-  _renderItems(items, level = 0, parentPath = []) {
+  _pathKey(path) {
+    return path.join('\u001F');
+  }
+
+  _collectVisibleKeys(items, parentPath = [], keys = []) {
+    for (const item of items || []) {
+      const path = [...parentPath, item.label];
+      keys.push(this._pathKey(path));
+      if (item.items.length > 0 && this._isExpanded(item)) {
+        this._collectVisibleKeys(item.items, path, keys);
+      }
+    }
+    return keys;
+  }
+
+  _renderItems(items, level = 0, parentPath = [], focusKey = null) {
     return html`
       <ul class="${level === 0 ? 'tree' : 'tree__group'}" role="${level === 0 ? 'tree' : 'group'}" part="${level === 0 ? 'tree' : 'group'}">
         ${(items || []).map((item, idx) => {
@@ -210,14 +227,19 @@ export class ArcTreeView extends LitElement {
           const expanded = this._isExpanded(item);
           const isSelected = this._selected === item.label;
           const path = [...parentPath, item.label];
+          const key = this._pathKey(path);
 
           return html`
-            <li class="tree__item" role="treeitem" aria-expanded=${hasChildren ? String(expanded) : undefined} part="item">
+            <li class="tree__item" role="none" part="item">
               ${level > 0 ? html`<div class="tree__line" style="left: ${level * 16 + 3}px"></div>` : ''}
               <button
                 class="tree__row ${isSelected ? 'tree__row--selected' : ''}"
                 style="padding-left: ${level * 16 + 8}px"
-                tabindex=${level === 0 && idx === 0 ? '0' : '-1'}
+                role="treeitem"
+                aria-expanded=${hasChildren ? String(expanded) : undefined}
+                aria-selected=${isSelected ? 'true' : 'false'}
+                tabindex=${focusKey ? (key === focusKey ? '0' : '-1') : (level === 0 && idx === 0 ? '0' : '-1')}
+                @focus=${() => { this._focusedKey = key; }}
                 @click=${(e) => { this._selectItem(item, path); if (hasChildren) this._toggleExpand(item, e); }}
                 @keydown=${(e) => this._onKeyDown(e, item, path, hasChildren)}
                 part="row"
@@ -232,7 +254,7 @@ export class ArcTreeView extends LitElement {
                 ${item.icon ? html`<span class="tree__icon">${item.icon}</span>` : ''}
                 <span class="tree__label">${item.label}</span>
               </button>
-              ${hasChildren && expanded ? this._renderItems(children, level + 1, path) : ''}
+              ${hasChildren && expanded ? this._renderItems(children, level + 1, path, focusKey) : ''}
             </li>
           `;
         })}
@@ -241,11 +263,13 @@ export class ArcTreeView extends LitElement {
   }
 
   render() {
+    const visibleKeys = this._collectVisibleKeys(this._items);
+    const focusKey = visibleKeys.includes(this._focusedKey) ? this._focusedKey : null;
     return html`
       <div class="tree__slot-host">
         <slot @slotchange=${this._onSlotChange}></slot>
       </div>
-      ${this._renderItems(this._items)}
+      ${this._renderItems(this._items, 0, [], focusKey)}
     `;
   }
 }

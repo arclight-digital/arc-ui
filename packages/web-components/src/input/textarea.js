@@ -1,12 +1,11 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { FormControlMixin } from '../shared/form-control-mixin.js';
 
 /**
  * @tag arc-textarea
  */
-export class ArcTextarea extends LitElement {
-  static formAssociated = true;
-
+export class ArcTextarea extends FormControlMixin(LitElement) {
   static properties = {
     value:       { type: String },
     placeholder: { type: String },
@@ -137,7 +136,6 @@ export class ArcTextarea extends LitElement {
 
   constructor() {
     super();
-    this._internals = this.attachInternals();
     this.value = '';
     this.placeholder = '';
     this.label = '';
@@ -153,7 +151,7 @@ export class ArcTextarea extends LitElement {
 
   _onInput(e) {
     this.value = e.target.value;
-    this._internals.setFormValue(this.value);
+    this._updateFormValue();
     if (this.autoResize) this._autoGrow(e.target);
     this.dispatchEvent(new CustomEvent('arc-input', {
       detail: { value: this.value },
@@ -170,7 +168,7 @@ export class ArcTextarea extends LitElement {
   updated(changed) {
     super.updated?.(changed);
     if (changed.has('value')) {
-      this._internals.setFormValue(this.value);
+      this._updateFormValue();
     }
     if (this.autoResize && (changed.has('value') || changed.has('autoResize'))) {
       const ta = this.shadowRoot?.querySelector('textarea');
@@ -180,7 +178,7 @@ export class ArcTextarea extends LitElement {
 
   _onChange(e) {
     this.value = e.target.value;
-    this._internals.setFormValue(this.value);
+    this._updateFormValue();
     this.dispatchEvent(new CustomEvent('arc-change', {
       detail: { value: this.value },
       bubbles: true,

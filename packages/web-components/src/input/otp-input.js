@@ -1,13 +1,15 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { FormControlMixin } from '../shared/form-control-mixin.js';
 
 /**
  * @tag arc-otp-input
  */
-export class ArcOtpInput extends LitElement {
+export class ArcOtpInput extends FormControlMixin(LitElement) {
   static properties = {
     length:   { type: Number, reflect: true },
     value:    { type: String, reflect: true },
+    name:     { type: String, reflect: true },
     disabled: { type: Boolean, reflect: true },
     type:     { type: String },
   };
@@ -79,8 +81,15 @@ export class ArcOtpInput extends LitElement {
     super();
     this.length = 6;
     this.value = '';
+    this.name = '';
     this.disabled = false;
     this.type = 'number';
+  }
+
+  updated(changed) {
+    if (changed.has('value')) {
+      this._updateFormValue();
+    }
   }
 
   get _chars() {
@@ -106,6 +115,7 @@ export class ArcOtpInput extends LitElement {
     const chars = [];
     inputs.forEach(input => chars.push(input.value));
     this.value = chars.join('');
+    this._updateFormValue();
     this.dispatchEvent(new CustomEvent('arc-change', {
       detail: { value: this.value },
       bubbles: true,

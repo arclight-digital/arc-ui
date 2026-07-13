@@ -1,5 +1,6 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { deepActiveElement } from '../shared/trigger-aria.js';
 import '../shared/menu-item.js';
 import '../shared/menu-divider.js';
 import '../content/icon.js';
@@ -15,6 +16,7 @@ export class ArcContextMenu extends LitElement {
     _y:             { state: true },
     _activeIndex:   { state: true },
     _children:      { state: true },
+    _positioned:    { state: true },
   };
 
   static styles = [
@@ -127,6 +129,8 @@ export class ArcContextMenu extends LitElement {
     this._y = 0;
     this._activeIndex = -1;
     this._children = [];
+    this._positioned = false;
+    this._returnFocus = null;
 
     this._handleContextMenu = this._handleContextMenu.bind(this);
     this._parentRef = null;
@@ -164,14 +168,11 @@ export class ArcContextMenu extends LitElement {
   _handleContextMenu(e) {
     e.preventDefault();
 
-    const vw = window.innerWidth;
-    const vh = window.innerHeight;
-    const menuWidth = 220;
-    const menuHeight = this._children.length * 32;
-
-    this._x = e.clientX + menuWidth > vw ? vw - menuWidth - 8 : e.clientX;
-    this._y = e.clientY + menuHeight > vh ? vh - menuHeight - 8 : e.clientY;
+    this._returnFocus = deepActiveElement();
+    this._x = e.clientX;
+    this._y = e.clientY;
     this._activeIndex = -1;
+    this._positioned = false;
 
     this.open = true;
 
@@ -180,14 +181,31 @@ export class ArcContextMenu extends LitElement {
       composed: true,
     }));
 
+    // Render the menu invisibly first, measure its real size, then
+    // position it against the viewport and reveal it.
     this.updateComplete.then(() => {
-      this.shadowRoot.querySelector('.menu')?.focus();
+      const menu = this.shadowRoot.querySelector('.menu');
+      if (menu) {
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+        if (this._x + menu.offsetWidth > vw) this._x = Math.max(8, vw - menu.offsetWidth - 8);
+        if (this._y + menu.offsetHeight > vh) this._y = Math.max(8, vh - menu.offsetHeight - 8);
+      }
+      this._positioned = true;
+      this.updateComplete.then(() => {
+        this.shadowRoot.querySelector('.menu')?.focus();
+      });
     });
   }
 
-  _close() {
+  _close(restoreFocus = true) {
     this.open = false;
     this._activeIndex = -1;
+
+    if (restoreFocus && this._returnFocus && this._returnFocus.isConnected) {
+      this._returnFocus.focus();
+    }
+    this._returnFocus = null;
 
     this.dispatchEvent(new CustomEvent('arc-close', {
       bubbles: true,
@@ -263,13 +281,14 @@ export class ArcContextMenu extends LitElement {
     return html`
       <div class="slot-host"><slot @slotchange=${this._onSlotChange}></slot></div>
       <slot name="content"></slot>
-      <div class="backdrop" @click=${this._close}></div>
+      <div class="backdrop" @click=${() => this._close(false)}></div>
       <div
         class="menu"
         part="menu"
         role="menu"
         tabindex="-1"
-        style="left: ${this._x}px; top: ${this._y}px"
+        aria-activedescendant=${this._activeIndex >= 0 ? `ctx-item-${this._activeIndex}` : nothing}
+        style="left: ${this._x}px; top: ${this._y}px; visibility: ${this._positioned ? 'visible' : 'hidden'}"
         @keydown=${this._handleKeydown}
       >
         ${this._children.map((child, i) => {
@@ -279,6 +298,7 @@ export class ArcContextMenu extends LitElement {
 
           return html`
             <button
+              id="ctx-item-${i}"
               class="menu-item ${child.disabled ? 'disabled' : ''} ${i === this._activeIndex ? 'active' : ''}"
               role="menuitem"
               ?disabled=${child.disabled}

@@ -1,18 +1,20 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { FormControlMixin } from '../shared/form-control-mixin.js';
 
 let numberInputIdCounter = 0;
 
 /**
  * @tag arc-number-input
  */
-export class ArcNumberInput extends LitElement {
+export class ArcNumberInput extends FormControlMixin(LitElement) {
   static properties = {
     value:    { type: Number, reflect: true },
     min:      { type: Number },
     max:      { type: Number },
     step:     { type: Number },
     label:    { type: String },
+    name:     { type: String, reflect: true },
     disabled: { type: Boolean, reflect: true },
   };
 
@@ -136,8 +138,19 @@ export class ArcNumberInput extends LitElement {
     this.max = undefined;
     this.step = 1;
     this.label = '';
+    this.name = '';
     this.disabled = false;
     this._fieldId = `arc-number-input-${++numberInputIdCounter}`;
+  }
+
+  updated(changed) {
+    if (changed.has('value')) {
+      this._updateFormValue();
+    }
+  }
+
+  _formValue() {
+    return this.value == null ? null : String(this.value);
   }
 
   get _atMin() {
@@ -159,6 +172,7 @@ export class ArcNumberInput extends LitElement {
     const clamped = this._clamp(newValue);
     if (clamped === this.value) return;
     this.value = clamped;
+    this._updateFormValue();
     this.dispatchEvent(new CustomEvent('arc-change', {
       detail: { value: this.value },
       bubbles: true,

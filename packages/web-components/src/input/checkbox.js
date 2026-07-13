@@ -1,12 +1,11 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { FormControlMixin } from '../shared/form-control-mixin.js';
 
 /**
  * @tag arc-checkbox
  */
-export class ArcCheckbox extends LitElement {
-  static formAssociated = true;
-
+export class ArcCheckbox extends FormControlMixin(LitElement) {
   static properties = {
     checked:       { type: Boolean, reflect: true },
     indeterminate: { type: Boolean, reflect: true },
@@ -119,7 +118,6 @@ export class ArcCheckbox extends LitElement {
 
   constructor() {
     super();
-    this._internals = this.attachInternals();
     this.checked = false;
     this.indeterminate = false;
     this.disabled = false;
@@ -129,9 +127,21 @@ export class ArcCheckbox extends LitElement {
     this.value = '';
   }
 
+  _formValue() {
+    return this.checked ? (this.value || 'on') : null;
+  }
+
+  _formResetState() {
+    return { checked: this.checked };
+  }
+
+  _applyFormState(state) {
+    this.checked = state.checked;
+  }
+
   updated(changed) {
     if (changed.has('checked') || changed.has('value')) {
-      this._internals.setFormValue(this.checked ? (this.value || 'on') : null);
+      this._updateFormValue();
     }
   }
 
@@ -139,7 +149,7 @@ export class ArcCheckbox extends LitElement {
     if (this.disabled) return;
     this.indeterminate = false;
     this.checked = !this.checked;
-    this._internals.setFormValue(this.checked ? (this.value || 'on') : null);
+    this._updateFormValue();
     this.dispatchEvent(new CustomEvent('arc-change', {
       detail: { checked: this.checked },
       bubbles: true,

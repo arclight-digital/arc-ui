@@ -1,12 +1,14 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { FormControlMixin } from '../shared/form-control-mixin.js';
 
 /**
  * @tag arc-color-picker
  */
-export class ArcColorPicker extends LitElement {
+export class ArcColorPicker extends FormControlMixin(LitElement) {
   static properties = {
     value:    { type: String, reflect: true },
+    name:     { type: String, reflect: true },
     presets:  { type: Array },
     disabled: { type: Boolean, reflect: true },
     label:    { type: String },
@@ -67,7 +69,8 @@ export class ArcColorPicker extends LitElement {
         height: 14px;
         border-radius: var(--radius-full);
         border: 2px solid var(--picker-thumb-color, #fff);
-        box-shadow: 0 0 2px rgba(0, 0, 0, 0.6), inset 0 0 2px rgba(0, 0, 0, 0.3);
+        /* Functional contrast ring over arbitrary swatch colors — stays black in all themes */
+        box-shadow: 0 0 2px rgba(var(--black-rgb), 0.6), inset 0 0 2px rgba(var(--black-rgb), 0.3);
         transform: translate(-50%, -50%);
         pointer-events: none;
         z-index: 2;
@@ -99,7 +102,7 @@ export class ArcColorPicker extends LitElement {
         height: 18px;
         border-radius: var(--radius-full);
         border: 2px solid var(--picker-thumb-color, #fff);
-        box-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 0 3px rgba(var(--black-rgb), 0.4);
         transform: translate(-50%, -50%);
         pointer-events: none;
       }
@@ -182,6 +185,7 @@ export class ArcColorPicker extends LitElement {
   constructor() {
     super();
     this.value = '#4d7ef7';
+    this.name = '';
     this.presets = [];
     this.disabled = false;
     this.label = '';
@@ -203,6 +207,9 @@ export class ArcColorPicker extends LitElement {
   }
 
   updated(changed) {
+    if (changed.has('value')) {
+      this._updateFormValue();
+    }
     if (changed.has('value') && !this._draggingArea && !this._draggingHue) {
       this._parseHex(this.value);
       this._hexInput = this.value;

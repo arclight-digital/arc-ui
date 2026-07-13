@@ -1,5 +1,6 @@
 import { LitElement, html, css, render as litRender } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { lockScroll, unlockScroll } from '../shared/scroll-lock.js';
 
 /**
  * @tag arc-navigation-menu
@@ -84,9 +85,9 @@ export class ArcNavigationMenu extends LitElement {
       .nav__trigger--muted:hover,
       .nav__trigger--muted.nav__trigger--open {
         color: var(--text-primary);
-        background: rgba(255, 255, 255, 0.12);
+        background: rgba(var(--text-primary-rgb), 0.12);
         border-color: transparent;
-        box-shadow: 0 0 12px rgba(255, 255, 255, 0.06);
+        box-shadow: 0 0 12px rgba(var(--text-primary-rgb), 0.06);
       }
 
       .nav__trigger--muted.nav__trigger--active {
@@ -155,13 +156,15 @@ export class ArcNavigationMenu extends LitElement {
         box-shadow: var(--shadow-overlay);
         z-index: var(--z-dropdown);
         opacity: 0;
+        visibility: hidden;
         transform: translateY(4px);
         pointer-events: none;
-        transition: opacity var(--transition-fast), transform var(--transition-fast);
+        transition: opacity var(--transition-fast), visibility var(--transition-fast), transform var(--transition-fast);
       }
 
       .nav__dropdown--open {
         opacity: 1;
+        visibility: visible;
         transform: translateY(0);
         pointer-events: auto;
       }
@@ -320,7 +323,7 @@ export class ArcNavigationMenu extends LitElement {
         width: 100%;
         padding: var(--space-md) var(--space-lg);
         min-height: var(--touch-min);
-        background: rgba(255, 255, 255, 0.02);
+        background: rgba(var(--text-primary-rgb), 0.02);
         border: 1px solid var(--border-subtle);
         border-radius: var(--radius-md);
         color: var(--text-primary);
@@ -373,7 +376,7 @@ export class ArcNavigationMenu extends LitElement {
 
       .mobile-trigger--muted:hover {
         color: var(--text-primary);
-        background: rgba(255, 255, 255, 0.06);
+        background: rgba(var(--text-primary-rgb), 0.06);
         border-color: var(--border-subtle);
       }
 
@@ -430,11 +433,13 @@ export class ArcNavigationMenu extends LitElement {
       .mobile-children {
         display: grid;
         grid-template-rows: 0fr;
-        transition: grid-template-rows var(--transition-slow);
+        visibility: hidden;
+        transition: grid-template-rows var(--transition-slow), visibility var(--transition-slow);
       }
 
       .mobile-children--open {
         grid-template-rows: 1fr;
+        visibility: visible;
       }
 
       .mobile-children__inner {
@@ -646,11 +651,11 @@ export class ArcNavigationMenu extends LitElement {
   }
 
   _lockScroll() {
-    document.body.style.overflow = 'hidden';
+    lockScroll(this);
   }
 
   _unlockScroll() {
-    document.body.style.overflow = '';
+    unlockScroll(this);
   }
 
   _onBackdropClick() {

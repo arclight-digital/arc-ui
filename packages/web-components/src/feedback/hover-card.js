@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { positionStyles } from '../shared/position-styles.js';
+import { setTriggerAria } from '../shared/trigger-aria.js';
 
 /**
  * @tag arc-hover-card
@@ -89,6 +90,19 @@ export class ArcHoverCard extends LitElement {
     }
   }
 
+  updated(changed) {
+    if (changed.has('_visible')) {
+      this._syncTriggerAria();
+    }
+  }
+
+  _syncTriggerAria() {
+    setTriggerAria(
+      this.shadowRoot.querySelector('.hovercard__trigger slot'),
+      { 'aria-expanded': this._visible ? 'true' : 'false' }
+    );
+  }
+
   _scheduleOpen() {
     clearTimeout(this._closeTimeout);
     if (this._visible) return;
@@ -133,7 +147,7 @@ export class ArcHoverCard extends LitElement {
         @focusout=${this._scheduleClose}
         part="trigger"
       >
-        <slot></slot>
+        <slot @slotchange=${this._syncTriggerAria}></slot>
       </div>
       <div
         class="hovercard__card ${this._visible ? 'hovercard__card--visible' : ''}"

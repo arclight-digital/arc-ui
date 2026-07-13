@@ -1,12 +1,14 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { FormControlMixin } from '../shared/form-control-mixin.js';
 
 /**
  * @tag arc-time-picker
  */
-export class ArcTimePicker extends LitElement {
+export class ArcTimePicker extends FormControlMixin(LitElement) {
   static properties = {
     value:       { type: String, reflect: true },
+    name:        { type: String, reflect: true },
     min:         { type: String },
     max:         { type: String },
     step:        { type: Number },
@@ -193,6 +195,7 @@ export class ArcTimePicker extends LitElement {
   constructor() {
     super();
     this.value = '';
+    this.name = '';
     this.min = '';
     this.max = '';
     this.step = 1;
@@ -390,6 +393,13 @@ export class ArcTimePicker extends LitElement {
     );
   }
 
+  /** Value that should be the single tab stop for a column (roving tabindex) */
+  _tabStopFor(options, selected, isDisabled) {
+    if (selected !== null && options.includes(selected) && !isDisabled(selected)) return selected;
+    const first = options.find(o => !isDisabled(o));
+    return first !== undefined ? first : null;
+  }
+
   _handleColumnKeydown(e, column) {
     const { key } = e;
 
@@ -398,7 +408,7 @@ export class ArcTimePicker extends LitElement {
       return;
     }
 
-    if (key === 'ArrowDown' || key === 'ArrowUp') {
+    if (key === 'ArrowDown' || key === 'ArrowUp' || key === 'Home' || key === 'End') {
       e.preventDefault();
       const buttons = [...e.currentTarget.querySelectorAll('button:not(.disabled)')];
       if (!buttons.length) return;
@@ -406,10 +416,20 @@ export class ArcTimePicker extends LitElement {
       let nextIndex;
       if (key === 'ArrowDown') {
         nextIndex = currentIndex < buttons.length - 1 ? currentIndex + 1 : 0;
-      } else {
+      } else if (key === 'ArrowUp') {
         nextIndex = currentIndex > 0 ? currentIndex - 1 : buttons.length - 1;
+      } else if (key === 'Home') {
+        nextIndex = 0;
+      } else {
+        nextIndex = buttons.length - 1;
       }
-      buttons[nextIndex]?.focus();
+      const next = buttons[nextIndex];
+      if (!next) return;
+      // Move the roving tab stop along with focus
+      buttons.forEach(b => { b.tabIndex = -1; });
+      next.tabIndex = 0;
+      next.focus();
+      next.scrollIntoView({ block: 'nearest' });
     }
 
     if (key === 'Enter') {
@@ -419,12 +439,16 @@ export class ArcTimePicker extends LitElement {
   }
 
   updated(changed) {
+    if (changed.has('value')) {
+      this._updateFormValue();
+    }
     if (changed.has('_open') && this._open) {
-      // Scroll selected items into view after render
+      // Scroll selected items into view, then focus the hour tab stop
       this.updateComplete.then(() => {
         this.shadowRoot.querySelectorAll('.time-option.selected').forEach(el => {
           el.scrollIntoView({ block: 'nearest' });
         });
+        this.shadowRoot.querySelector('.column[aria-label="Hours"] button[tabindex="0"]')?.focus();
       });
     }
   }
@@ -433,6 +457,9 @@ export class ArcTimePicker extends LitElement {
     const hours = this._getHours();
     const minutes = this._getMinutes();
     const is12h = this.format === '12h';
+    const hourTabStop = this._tabStopFor(hours, this._selectedHour, h => this._isHourDisabled(h));
+    const minuteTabStop = this._tabStopFor(minutes, this._selectedMinute, m => this._isMinuteDisabled(m));
+    const periodTabStop = this._tabStopFor(['AM', 'PM'], this._selectedPeriod, p => this._isPeriodDisabled(p));
 
     return html`
       <div class="wrapper" part="wrapper">
@@ -469,7 +496,7 @@ export class ArcTimePicker extends LitElement {
                         role="option"
                         aria-selected=${selected ? 'true' : 'false'}
                         ?disabled=${disabled}
-                        tabindex=${disabled ? '-1' : '0'}
+                        tabindex=${!disabled && h === hourTabStop ? '0' : '-1'}
                         @click=${() => !disabled && this._selectHour(h)}
                       >${is12h ? h : String(h).padStart(2, '0')}</button>
                     `;
@@ -491,7 +518,7 @@ export class ArcTimePicker extends LitElement {
                         role="option"
                         aria-selected=${selected ? 'true' : 'false'}
                         ?disabled=${disabled}
-                        tabindex=${disabled ? '-1' : '0'}
+                        tabindex=${!disabled && m === minuteTabStop ? '0' : '-1'}
                         @click=${() => !disabled && this._selectMinute(m)}
                       >${String(m).padStart(2, '0')}</button>
                     `;
@@ -512,7 +539,7 @@ export class ArcTimePicker extends LitElement {
                           role="option"
                           aria-selected=${selected ? 'true' : 'false'}
                           ?disabled=${disabled}
-                          tabindex=${disabled ? '-1' : '0'}
+                          tabindex=${!disabled && p === periodTabStop ? '0' : '-1'}
                           @click=${() => !disabled && this._selectPeriod(p)}
                         >${p}</button>
                       `;

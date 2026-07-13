@@ -1,15 +1,17 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { FormControlMixin } from '../shared/form-control-mixin.js';
 
 /**
  * @tag arc-slider
  */
-export class ArcSlider extends LitElement {
+export class ArcSlider extends FormControlMixin(LitElement) {
   static properties = {
     value:    { type: Number, reflect: true },
     min:      { type: Number },
     max:      { type: Number },
     step:     { type: Number },
+    name:     { type: String, reflect: true },
     disabled: { type: Boolean, reflect: true },
     label:    { type: String },
   };
@@ -157,8 +159,19 @@ export class ArcSlider extends LitElement {
     this.min = 0;
     this.max = 100;
     this.step = 1;
+    this.name = '';
     this.disabled = false;
     this.label = '';
+  }
+
+  updated(changed) {
+    if (changed.has('value')) {
+      this._updateFormValue();
+    }
+  }
+
+  _formValue() {
+    return this.value == null ? null : String(this.value);
   }
 
   get _fillPercent() {
@@ -169,6 +182,7 @@ export class ArcSlider extends LitElement {
 
   _onInput(e) {
     this.value = Number(e.target.value);
+    this._updateFormValue();
     this.dispatchEvent(new CustomEvent('arc-input', {
       detail: { value: this.value },
       bubbles: true,
@@ -178,6 +192,7 @@ export class ArcSlider extends LitElement {
 
   _onChange(e) {
     this.value = Number(e.target.value);
+    this._updateFormValue();
     this.dispatchEvent(new CustomEvent('arc-change', {
       detail: { value: this.value },
       bubbles: true,

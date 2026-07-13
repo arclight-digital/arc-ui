@@ -1,14 +1,13 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { FormControlMixin } from '../shared/form-control-mixin.js';
 
 let inputIdCounter = 0;
 
 /**
  * @tag arc-input
  */
-export class ArcInput extends LitElement {
-  static formAssociated = true;
-
+export class ArcInput extends FormControlMixin(LitElement) {
   static properties = {
     type:        { type: String },
     name:        { type: String },
@@ -147,7 +146,6 @@ export class ArcInput extends LitElement {
 
   constructor() {
     super();
-    this._internals = this.attachInternals();
     this.type = 'text';
     this.name = '';
     this.label = '';
@@ -166,19 +164,31 @@ export class ArcInput extends LitElement {
 
   updated(changed) {
     if (changed.has('value')) {
-      this._internals.setFormValue(this.value);
+      this._updateFormValue();
+    }
+    if (changed.has('value') || changed.has('required')) {
+      this._syncValidity();
+    }
+  }
+
+  _syncValidity() {
+    const control = this.shadowRoot?.querySelector('.input-group__field') ?? undefined;
+    if (this.required && !this.value) {
+      this._setValidity({ valueMissing: true }, 'Please fill out this field.', control);
+    } else {
+      this._setValidity({});
     }
   }
 
   _handleInput(e) {
     this.value = e.target.value;
-    this._internals.setFormValue(this.value);
+    this._updateFormValue();
     this.dispatchEvent(new CustomEvent('arc-input', { detail: { value: this.value }, bubbles: true, composed: true }));
   }
 
   _handleChange(e) {
     this.value = e.target.value;
-    this._internals.setFormValue(this.value);
+    this._updateFormValue();
     this.dispatchEvent(new CustomEvent('arc-change', { detail: { value: this.value }, bubbles: true, composed: true }));
   }
 

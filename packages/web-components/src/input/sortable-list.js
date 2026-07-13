@@ -50,7 +50,7 @@ export class ArcSortableList extends LitElement {
 
       .sortable__item--dragging {
         opacity: 0.5;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+        box-shadow: var(--shadow-lg);
       }
 
       .sortable__item--kb-selected {
@@ -60,7 +60,7 @@ export class ArcSortableList extends LitElement {
 
       .sortable__item--kb-moving {
         border-color: var(--interactive);
-        box-shadow: 0 0 0 2px var(--interactive), 0 4px 16px rgba(0, 0, 0, 0.12);
+        box-shadow: 0 0 0 2px var(--interactive), var(--shadow-md);
         background: var(--surface-overlay);
       }
 

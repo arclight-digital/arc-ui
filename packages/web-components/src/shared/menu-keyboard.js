@@ -37,9 +37,18 @@ export class MenuKeyboardController {
     this.focusedIndex = -1;
   }
 
+  /** True when the key event originates in a text-entry element (search input, etc.). */
+  _isEditableTarget(e) {
+    const t = e.composedPath()[0];
+    if (!t || !t.tagName) return false;
+    return t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable;
+  }
+
   _onKeyDown(e) {
     const count = this._getItemCount();
     if (count === 0) return;
+
+    const editable = this._isEditableTarget(e);
 
     switch (e.key) {
       case 'ArrowDown':
@@ -53,17 +62,21 @@ export class MenuKeyboardController {
         this.host.requestUpdate();
         break;
       case 'Home':
+        if (editable) break; // let the caret move within the input
         e.preventDefault();
         this.focusedIndex = 0;
         this.host.requestUpdate();
         break;
       case 'End':
+        if (editable) break;
         e.preventDefault();
         this.focusedIndex = count - 1;
         this.host.requestUpdate();
         break;
-      case 'Enter':
       case ' ':
+        if (editable) break; // space types a space in search inputs
+      // falls through
+      case 'Enter':
         e.preventDefault();
         if (this.focusedIndex >= 0 && this.focusedIndex < count) {
           this._onSelect(this.focusedIndex);

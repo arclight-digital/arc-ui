@@ -1,16 +1,18 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { FormControlMixin } from '../shared/form-control-mixin.js';
 
 /**
  * @tag arc-range-slider
  */
-export class ArcRangeSlider extends LitElement {
+export class ArcRangeSlider extends FormControlMixin(LitElement) {
   static properties = {
     min:        { type: Number },
     max:        { type: Number },
     step:       { type: Number },
     low:        { type: Number, reflect: true },
     high:       { type: Number, reflect: true },
+    name:       { type: String, reflect: true },
     disabled:   { type: Boolean, reflect: true },
     label:      { type: String },
     showValues: { type: Boolean, reflect: true, attribute: 'show-values' },
@@ -124,12 +126,41 @@ export class ArcRangeSlider extends LitElement {
     this.step = 1;
     this.low = 0;
     this.high = 100;
+    this.name = '';
     this.disabled = false;
     this.label = '';
     this.showValues = true;
     this._dragging = null; // 'low' | 'high' | null
     this._onPointerMoveBound = this._onPointerMove.bind(this);
     this._onPointerUpBound = this._onPointerUp.bind(this);
+  }
+
+  updated(changed) {
+    if (changed.has('low') || changed.has('high')) {
+      this._updateFormValue();
+    }
+  }
+
+  _formValue() {
+    return `${this.low},${this.high}`;
+  }
+
+  _formResetState() {
+    return { low: this.low, high: this.high };
+  }
+
+  _applyFormState(state) {
+    this.low = state.low;
+    this.high = state.high;
+  }
+
+  formStateRestoreCallback(state) {
+    if (typeof state === 'string') {
+      const [low, high] = state.split(',').map(Number);
+      if (!Number.isNaN(low)) this.low = low;
+      if (!Number.isNaN(high)) this.high = high;
+      this._updateFormValue();
+    }
   }
 
   get _lowPercent() {
@@ -164,6 +195,7 @@ export class ArcRangeSlider extends LitElement {
   }
 
   _fireInput() {
+    this._updateFormValue();
     this.dispatchEvent(new CustomEvent('arc-input', {
       detail: { low: this.low, high: this.high },
       bubbles: true,
@@ -172,6 +204,7 @@ export class ArcRangeSlider extends LitElement {
   }
 
   _fireChange() {
+    this._updateFormValue();
     this.dispatchEvent(new CustomEvent('arc-change', {
       detail: { low: this.low, high: this.high },
       bubbles: true,

@@ -1,15 +1,18 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { FormControlMixin } from '../shared/form-control-mixin.js';
+import { ClickOutsideController } from '../shared/click-outside.js';
 import '../shared/option.js';
 
 /**
  * @tag arc-multi-select
  */
-export class ArcMultiSelect extends LitElement {
+export class ArcMultiSelect extends FormControlMixin(LitElement) {
   static properties = {
     value:        { type: Array },
     placeholder:  { type: String },
     label:        { type: String },
+    name:         { type: String, reflect: true },
     disabled:     { type: Boolean, reflect: true },
     _query:       { state: true },
     _open:        { state: true },
@@ -101,6 +104,12 @@ export class ArcMultiSelect extends LitElement {
       .ms__tag-remove:hover {
         color: var(--text-primary);
         background: rgba(var(--interactive-rgb), 0.1);
+      }
+
+      .ms__tag-remove:focus-visible {
+        outline: none;
+        color: var(--text-primary);
+        box-shadow: var(--interactive-focus);
       }
 
       .ms__input {
@@ -211,28 +220,46 @@ export class ArcMultiSelect extends LitElement {
     `,
   ];
 
+  static _idCounter = 0;
+
   constructor() {
     super();
     this.value = [];
     this.placeholder = '';
     this.label = '';
+    this.name = '';
     this.disabled = false;
     this._query = '';
     this._open = false;
     this._activeIndex = -1;
     this._focused = false;
     this._options = [];
-    this._onDocClick = this._onDocClick.bind(this);
+    this._msId = `multi-select-${++ArcMultiSelect._idCounter}`;
+    this._clickOutside = new ClickOutsideController(this, {
+      onClickOutside: () => {
+        this._open = false;
+        this._focused = false;
+      },
+    });
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-    document.addEventListener('click', this._onDocClick, true);
+  /** Submits one FormData entry per selected value under `name`. */
+  _formValue() {
+    const selected = this.value || [];
+    if (this.name) {
+      const data = new FormData();
+      for (const val of selected) data.append(this.name, val);
+      return data;
+    }
+    return selected.join(',');
   }
 
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    document.removeEventListener('click', this._onDocClick, true);
+  _formResetState() {
+    return { value: [...(this.value || [])] };
+  }
+
+  _applyFormState(state) {
+    this.value = [...(state.value || [])];
   }
 
   _onSlotChange(e) {
@@ -240,10 +267,13 @@ export class ArcMultiSelect extends LitElement {
       .filter(el => el.tagName === 'ARC-OPTION');
   }
 
-  _onDocClick(e) {
-    if (!e.composedPath().includes(this)) {
-      this._open = false;
-      this._focused = false;
+  updated(changed) {
+    if (changed.has('value')) {
+      this._updateFormValue();
+    }
+    if (changed.has('_open')) {
+      if (this._open) this._clickOutside.activate();
+      else this._clickOutside.deactivate();
     }
   }
 
@@ -329,10 +359,68 @@ export class ArcMultiSelect extends LitElement {
         this._open = false;
         this._activeIndex = -1;
         break;
+      case 'Home':
+        if (this._open && items.length > 0 && !this._query) {
+          e.preventDefault();
+          this._activeIndex = 0;
+        }
+        break;
+      case 'End':
+        if (this._open && items.length > 0 && !this._query) {
+          e.preventDefault();
+          this._activeIndex = items.length - 1;
+        }
+        break;
+      case 'ArrowLeft':
+        if (e.target.selectionStart === 0 && e.target.selectionEnd === 0 && (this.value || []).length > 0) {
+          e.preventDefault();
+          this._focusTag((this.value || []).length - 1);
+        }
+        break;
       case 'Backspace':
         if (!this._query && this.value && this.value.length > 0) {
           this._removeItem(this.value[this.value.length - 1], e);
         }
+        break;
+    }
+  }
+
+  _focusTag(index) {
+    this.shadowRoot.querySelectorAll('.ms__tag-remove')[index]?.focus();
+  }
+
+  _onTagKeyDown(e, index) {
+    const selected = this.value || [];
+
+    switch (e.key) {
+      case 'ArrowLeft':
+        e.preventDefault();
+        this._focusTag(Math.max(index - 1, 0));
+        break;
+      case 'ArrowRight':
+        e.preventDefault();
+        if (index < selected.length - 1) {
+          this._focusTag(index + 1);
+        } else {
+          this.shadowRoot.querySelector('.ms__input')?.focus();
+        }
+        break;
+      case 'Backspace':
+      case 'Delete':
+        e.preventDefault();
+        this._removeItem(selected[index], e);
+        this.updateComplete.then(() => {
+          const remaining = this.shadowRoot.querySelectorAll('.ms__tag-remove');
+          if (remaining.length > 0) {
+            remaining[Math.min(index, remaining.length - 1)].focus();
+          } else {
+            this.shadowRoot.querySelector('.ms__input')?.focus();
+          }
+        });
+        break;
+      case 'Escape':
+        e.preventDefault();
+        this.shadowRoot.querySelector('.ms__input')?.focus();
         break;
     }
   }
@@ -346,6 +434,8 @@ export class ArcMultiSelect extends LitElement {
     const filtered = this._filteredItems;
     const selected = this.value || [];
     const showPlaceholder = selected.length === 0 && !this._query;
+    const listboxId = `${this._msId}-listbox`;
+    const activeId = this._activeIndex >= 0 ? `${this._msId}-option-${this._activeIndex}` : undefined;
 
     return html`
       <div class="ms__slot-host">
@@ -357,12 +447,13 @@ export class ArcMultiSelect extends LitElement {
         @click=${() => this.shadowRoot.querySelector('.ms__input')?.focus()}
         part="control"
       >
-        ${selected.map(val => html`
+        ${selected.map((val, i) => html`
           <span class="ms__tag" part="tag">
             ${this._getLabel(val)}
             <button
               class="ms__tag-remove"
               @click=${(e) => this._removeItem(val, e)}
+              @keydown=${(e) => this._onTagKeyDown(e, i)}
               aria-label="Remove ${this._getLabel(val)}"
               tabindex="-1"
             >&times;</button>
@@ -371,10 +462,15 @@ export class ArcMultiSelect extends LitElement {
         <input
           class="ms__input"
           type="text"
+          role="combobox"
+          autocomplete="off"
           .value=${this._query}
           placeholder=${showPlaceholder ? this.placeholder : ''}
           ?disabled=${this.disabled}
           aria-expanded=${String(this._open)}
+          aria-controls=${listboxId}
+          aria-activedescendant=${activeId || ''}
+          aria-autocomplete="list"
           @input=${this._onInput}
           @focus=${this._onFocusIn}
           @keydown=${this._onKeyDown}
@@ -382,6 +478,7 @@ export class ArcMultiSelect extends LitElement {
         />
       </div>
       <div
+        id=${listboxId}
         class="ms__dropdown ${this._open ? 'ms__dropdown--open' : ''}"
         role="listbox"
         aria-multiselectable="true"
@@ -392,6 +489,7 @@ export class ArcMultiSelect extends LitElement {
               const checked = this._isSelected(item);
               return html`
                 <button
+                  id="${this._msId}-option-${i}"
                   class="ms__option ${i === this._activeIndex ? 'ms__option--active' : ''}"
                   role="option"
                   aria-selected=${String(checked)}

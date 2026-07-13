@@ -1,13 +1,13 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { FormControlMixin } from '../shared/form-control-mixin.js';
+import { ClickOutsideController } from '../shared/click-outside.js';
 import '../shared/option.js';
 
 /**
  * @tag arc-select
  */
-export class ArcSelect extends LitElement {
-  static formAssociated = true;
-
+export class ArcSelect extends FormControlMixin(LitElement) {
   static properties = {
     value:       { type: String, reflect: true },
     placeholder: { type: String },
@@ -181,9 +181,11 @@ export class ArcSelect extends LitElement {
     `,
   ];
 
+  static _idCounter = 0;
+
   constructor() {
     super();
-    this._internals = this.attachInternals();
+    this._selectId = `select-${++ArcSelect._idCounter}`;
     this.value = '';
     this.placeholder = 'Select...';
     this.label = '';
@@ -193,39 +195,24 @@ export class ArcSelect extends LitElement {
     this.error = '';
     this.open = false;
     this._options = [];
-    this._handleOutsideClick = this._handleOutsideClick.bind(this);
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    document.removeEventListener('click', this._handleOutsideClick);
+    this._clickOutside = new ClickOutsideController(this, {
+      onClickOutside: () => { this.open = false; },
+    });
   }
 
   updated(changed) {
     if (changed.has('value')) {
-      this._internals.setFormValue(this.value);
+      this._updateFormValue();
     }
     if (changed.has('open')) {
-      if (this.open) {
-        requestAnimationFrame(() => {
-          document.addEventListener('click', this._handleOutsideClick);
-        });
-      } else {
-        document.removeEventListener('click', this._handleOutsideClick);
-      }
+      if (this.open) this._clickOutside.activate();
+      else this._clickOutside.deactivate();
     }
   }
 
   _onSlotChange(e) {
     this._options = e.target.assignedElements({ flatten: true })
       .filter(el => el.tagName === 'ARC-OPTION');
-  }
-
-  _handleOutsideClick(e) {
-    const path = e.composedPath();
-    if (!path.includes(this)) {
-      this.open = false;
-    }
   }
 
   _toggleOpen() {
@@ -283,18 +270,24 @@ export class ArcSelect extends LitElement {
     const display = this._selectedLabel;
 
     const hasError = !!this.error;
+    const listboxId = `${this._selectId}-listbox`;
+    const labelId = `${this._selectId}-label`;
+    const triggerId = `${this._selectId}-trigger`;
 
     return html`
       <div class="select ${hasError ? 'select--error' : ''}" part="select">
         <div class="select__slot-host">
           <slot @slotchange=${this._onSlotChange}></slot>
         </div>
-        ${this.label ? html`<span class="select__label" part="label">${this.label}</span>` : ''}
+        ${this.label ? html`<span id=${labelId} class="select__label" part="label">${this.label}</span>` : ''}
         <button
+          id=${triggerId}
           class="select__trigger"
           role="combobox"
           aria-expanded=${this.open ? 'true' : 'false'}
           aria-haspopup="listbox"
+          aria-controls=${listboxId}
+          aria-labelledby=${this.label ? `${labelId} ${triggerId}` : nothing}
           @click=${this._toggleOpen}
           @keydown=${this._handleTriggerKeydown}
           part="trigger"
@@ -305,7 +298,7 @@ export class ArcSelect extends LitElement {
           }
           <span class="select__chevron">&#9662;</span>
         </button>
-        <div class="select__dropdown" role="listbox" part="dropdown">
+        <div id=${listboxId} class="select__dropdown" role="listbox" part="dropdown">
           ${this._options.map((opt, i) => html`
             <button
               class="select__option"

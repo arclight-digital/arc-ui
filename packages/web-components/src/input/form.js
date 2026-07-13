@@ -48,9 +48,9 @@ export class ArcForm extends LitElement {
 
       /* Error summary */
       .form-errors {
-        border: 1px solid var(--color-error, #ef4444);
+        border: 1px solid var(--feedback-error-border);
         border-radius: var(--radius-md);
-        background: rgba(239, 68, 68, 0.06);
+        background: rgba(var(--color-error-rgb), 0.06);
         padding: var(--space-sm) var(--space-md);
         margin-bottom: var(--space-sm);
       }
@@ -61,7 +61,7 @@ export class ArcForm extends LitElement {
         font-weight: 600;
         letter-spacing: 1px;
         text-transform: uppercase;
-        color: var(--color-error, #ef4444);
+        color: var(--color-error);
         margin: 0 0 var(--space-xs) 0;
       }
 
@@ -69,7 +69,7 @@ export class ArcForm extends LitElement {
         margin: 0;
         padding: 0 0 0 var(--space-md);
         font-size: var(--text-sm);
-        color: var(--color-error, #ef4444);
+        color: var(--color-error);
         line-height: 1.6;
       }
     `,
@@ -94,15 +94,8 @@ export class ArcForm extends LitElement {
 
     const gather = (elements) => {
       for (const el of elements) {
-        const tag = el.tagName?.toLowerCase();
-        if (
-          tag === 'arc-input' ||
-          tag === 'arc-textarea' ||
-          tag === 'arc-select' ||
-          tag === 'arc-checkbox' ||
-          tag === 'arc-toggle' ||
-          tag === 'arc-radio-group'
-        ) {
+        // Any ARC form-associated control (FormControlMixin) participates.
+        if (el.tagName?.startsWith('ARC-') && el.constructor?.formAssociated) {
           controls.push(el);
         }
         if (!el.shadowRoot && el.children?.length) {

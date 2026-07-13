@@ -1,13 +1,15 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { FormControlMixin } from '../shared/form-control-mixin.js';
 
 /**
  * @tag arc-rating
  */
-export class ArcRating extends LitElement {
+export class ArcRating extends FormControlMixin(LitElement) {
   static properties = {
     value:    { type: Number, reflect: true },
     max:      { type: Number, reflect: true },
+    name:     { type: String, reflect: true },
     disabled: { type: Boolean, reflect: true },
     readonly: { type: Boolean, reflect: true },
   };
@@ -81,14 +83,26 @@ export class ArcRating extends LitElement {
     super();
     this.value = 0;
     this.max = 5;
+    this.name = '';
     this.disabled = false;
     this.readonly = false;
     this._hoverValue = 0;
   }
 
+  updated(changed) {
+    if (changed.has('value')) {
+      this._updateFormValue();
+    }
+  }
+
+  _formValue() {
+    return this.value == null ? null : String(this.value);
+  }
+
   _onStarClick(index) {
     if (this.disabled || this.readonly) return;
     this.value = index;
+    this._updateFormValue();
     this.dispatchEvent(new CustomEvent('arc-change', {
       detail: { value: this.value },
       bubbles: true,
@@ -137,6 +151,7 @@ export class ArcRating extends LitElement {
 
     if (newValue !== this.value) {
       this.value = newValue;
+      this._updateFormValue();
       this.dispatchEvent(new CustomEvent('arc-change', {
         detail: { value: this.value },
         bubbles: true,
