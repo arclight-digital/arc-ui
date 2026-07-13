@@ -2,11 +2,12 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcPinInput } from '@arclux/arc-ui';
+import { ArcPinInput } from '@arclux/arc-ui/pin-input';
 
 export interface PinInputProps {
   length?: number;
   value?: string;
+  name?: string;
   disabled?: boolean;
   mask?: boolean;
   type?: string;

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcCommandItem } from '@arclux/arc-ui';
+import { ArcCommandItem } from '@arclux/arc-ui/command-item';
 
 export interface CommandItemProps {
   shortcut?: string;

@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcCalendar } from './calendar.js';
-customElements.define('arc-calendar', ArcCalendar);
+if (!customElements.get('arc-calendar')) customElements.define('arc-calendar', ArcCalendar);
 export { ArcCalendar };

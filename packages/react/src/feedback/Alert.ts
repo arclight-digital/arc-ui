@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcAlert } from '@arclux/arc-ui';
+import { ArcAlert } from '@arclux/arc-ui/alert';
 
 export interface AlertProps {
   variant?: string;

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcRadio } from '@arclux/arc-ui';
+import { ArcRadio } from '@arclux/arc-ui/radio';
 
 export interface RadioProps {
   value?: string;

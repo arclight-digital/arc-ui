@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcAvatarGroup } from '@arclux/arc-ui';
+import { ArcAvatarGroup } from '@arclux/arc-ui/avatar-group';
 
 export interface AvatarGroupProps {
   max?: number;

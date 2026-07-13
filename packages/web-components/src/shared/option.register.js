@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcOption } from './option.js';
-customElements.define('arc-option', ArcOption);
+if (!customElements.get('arc-option')) customElements.define('arc-option', ArcOption);
 export { ArcOption };

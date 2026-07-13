@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcInfiniteScroll } from '@arclux/arc-ui';
+import { ArcInfiniteScroll } from '@arclux/arc-ui/infinite-scroll';
 
 export interface InfiniteScrollProps {
   threshold?: number;

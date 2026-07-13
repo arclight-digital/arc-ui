@@ -29,7 +29,7 @@
         bottom: var(--space-lg);
       }
 
-      .arc-float-bar(:not([position="top"]):not([open])) .float-bar {
+      .arc-float-bar:not([data-data-position="top"]):not([data-open]) .float-bar {
         transform: translateX(-50%) translateY(calc(100% + var(--space-lg)));
         opacity: 0;
         pointer-events: none;
@@ -40,7 +40,7 @@
         top: var(--space-lg);
       }
 
-      .arc-float-bar([position="top"]:not([open])) .float-bar {
+      .arc-float-bar[data-position="top"]:not([data-open]) .float-bar {
         transform: translateX(-50%) translateY(calc(-100% - var(--space-lg)));
         opacity: 0;
         pointer-events: none;

@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcProse } from './prose.js';
-customElements.define('arc-prose', ArcProse);
+if (!customElements.get('arc-prose')) customElements.define('arc-prose', ArcProse);
 export { ArcProse };

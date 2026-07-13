@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcCalendar } from '@arclux/arc-ui';
+import { ArcCalendar } from '@arclux/arc-ui/calendar';
 
 export interface CalendarProps {
   value?: string;
@@ -10,7 +10,6 @@ export interface CalendarProps {
   max?: string;
   month?: number;
   year?: number;
-  _focusedDay?: string;
   className?: string;
   children?: React.ReactNode;
   onArcNavigate?: (e: CustomEvent) => void;

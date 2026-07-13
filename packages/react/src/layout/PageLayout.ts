@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcPageLayout } from '@arclux/arc-ui';
+import { ArcPageLayout } from '@arclux/arc-ui/page-layout';
 
 export interface PageLayoutProps {
   layout?: string;

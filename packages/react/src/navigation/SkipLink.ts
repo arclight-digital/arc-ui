@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcSkipLink } from '@arclux/arc-ui';
+import { ArcSkipLink } from '@arclux/arc-ui/skip-link';
 
 export interface SkipLinkProps {
   target?: string;

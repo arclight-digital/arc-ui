@@ -2,13 +2,12 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcHoverCard } from '@arclux/arc-ui';
+import { ArcHoverCard } from '@arclux/arc-ui/hover-card';
 
 export interface HoverCardProps {
   position?: string;
   openDelay?: number;
   closeDelay?: number;
-  _visible?: string;
   className?: string;
   children?: React.ReactNode;
   onArcOpen?: (e: CustomEvent) => void;

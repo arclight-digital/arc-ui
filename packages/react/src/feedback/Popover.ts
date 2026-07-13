@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcPopover } from '@arclux/arc-ui';
+import { ArcPopover } from '@arclux/arc-ui/popover';
 
 export interface PopoverProps {
   open?: boolean;

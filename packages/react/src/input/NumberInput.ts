@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcNumberInput } from '@arclux/arc-ui';
+import { ArcNumberInput } from '@arclux/arc-ui/number-input';
 
 export interface NumberInputProps {
   value?: number;
@@ -10,6 +10,7 @@ export interface NumberInputProps {
   max?: number;
   step?: number;
   label?: string;
+  name?: string;
   disabled?: boolean;
   className?: string;
   children?: React.ReactNode;

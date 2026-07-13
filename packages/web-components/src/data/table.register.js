@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcTable } from './table.js';
-customElements.define('arc-table', ArcTable);
+if (!customElements.get('arc-table')) customElements.define('arc-table', ArcTable);
 export { ArcTable };

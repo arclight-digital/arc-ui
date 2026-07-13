@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcSuggestion } from '@arclux/arc-ui';
+import { ArcSuggestion } from '@arclux/arc-ui/suggestion';
 
 export interface SuggestionProps {
   value?: string;

@@ -2,19 +2,16 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcDatePicker } from '@arclux/arc-ui';
+import { ArcDatePicker } from '@arclux/arc-ui/date-picker';
 
 export interface DatePickerProps {
   value?: string;
+  name?: string;
   min?: string;
   max?: string;
   placeholder?: string;
   disabled?: boolean;
   label?: string;
-  _open?: string;
-  _viewMonth?: string;
-  _viewYear?: string;
-  _mode?: string;
   className?: string;
   children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;

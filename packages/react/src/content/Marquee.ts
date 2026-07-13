@@ -2,13 +2,12 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcMarquee } from '@arclux/arc-ui';
+import { ArcMarquee } from '@arclux/arc-ui/marquee';
 
 export interface MarqueeProps {
   speed?: number;
   direction?: string;
   gap?: string;
-  _animDuration?: string;
   className?: string;
   children?: React.ReactNode;
 }

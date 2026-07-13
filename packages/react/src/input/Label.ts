@@ -2,15 +2,13 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcLabel } from '@arclux/arc-ui';
+import { ArcLabel } from '@arclux/arc-ui/label';
 
 export interface LabelProps {
   for?: string;
   required?: boolean;
   size?: 'sm' | 'lg';
   disabled?: boolean;
-  _hasDescription?: string;
-  _hasTooltip?: string;
   className?: string;
   children?: React.ReactNode;
 }

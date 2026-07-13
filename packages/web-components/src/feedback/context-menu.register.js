@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcContextMenu } from './context-menu.js';
-customElements.define('arc-context-menu', ArcContextMenu);
+if (!customElements.get('arc-context-menu')) customElements.define('arc-context-menu', ArcContextMenu);
 export { ArcContextMenu };

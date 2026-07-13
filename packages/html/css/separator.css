@@ -41,21 +41,21 @@
         background: var(--border-default);
       }
 
-      .arc-separator([orientation="vertical"][variant="dashed"]) .separator {
+      .arc-separator[data-orientation="vertical"][data-variant="dashed"] .separator {
         background: none;
         border-top: none;
         border-left: 1px dashed var(--border-default);
         width: 0;
       }
 
-      .arc-separator([orientation="vertical"][variant="dotted"]) .separator {
+      .arc-separator[data-orientation="vertical"][data-variant="dotted"] .separator {
         background: none;
         border-top: none;
         border-left: 1px dotted var(--border-default);
         width: 0;
       }
 
-      .arc-separator([orientation="vertical"][variant="fade"]) .separator {
+      .arc-separator[data-orientation="vertical"][data-variant="fade"] .separator {
         background: linear-gradient(180deg, transparent, var(--border-default), transparent);
       }
 

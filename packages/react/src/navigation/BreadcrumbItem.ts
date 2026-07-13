@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcBreadcrumbItem } from '@arclux/arc-ui';
+import { ArcBreadcrumbItem } from '@arclux/arc-ui/breadcrumb-item';
 
 export interface BreadcrumbItemProps {
   href?: string;

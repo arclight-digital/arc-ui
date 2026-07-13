@@ -2,12 +2,11 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcSnackbar } from '@arclux/arc-ui';
+import { ArcSnackbar } from '@arclux/arc-ui/snackbar';
 
 export interface SnackbarProps {
   position?: 'bottom-center' | 'bottom-left' | 'bottom-right';
   duration?: number;
-  _snackbars?: string;
   className?: string;
   children?: React.ReactNode;
   onArcAction?: (e: CustomEvent) => void;

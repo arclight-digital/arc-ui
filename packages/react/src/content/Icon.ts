@@ -2,13 +2,12 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcIcon } from '@arclux/arc-ui';
+import { ArcIcon } from '@arclux/arc-ui/icon';
 
 export interface IconProps {
   name?: string;
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   label?: string;
-  _svgContent?: string;
   className?: string;
   children?: React.ReactNode;
 }

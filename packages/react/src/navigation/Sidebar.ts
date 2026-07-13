@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcSidebar } from '@arclux/arc-ui';
+import { ArcSidebar } from '@arclux/arc-ui/sidebar';
 
 export interface SidebarProps {
   active?: string;
@@ -10,7 +10,6 @@ export interface SidebarProps {
   position?: 'right';
   width?: string;
   glow?: boolean;
-  _sections?: string;
   className?: string;
   children?: React.ReactNode;
 }

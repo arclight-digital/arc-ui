@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcAppShell } from './app-shell.js';
-customElements.define('arc-app-shell', ArcAppShell);
+if (!customElements.get('arc-app-shell')) customElements.define('arc-app-shell', ArcAppShell);
 export { ArcAppShell };

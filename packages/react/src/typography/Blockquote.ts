@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcBlockquote } from '@arclux/arc-ui';
+import { ArcBlockquote } from '@arclux/arc-ui/blockquote';
 
 export interface BlockquoteProps {
   cite?: string;

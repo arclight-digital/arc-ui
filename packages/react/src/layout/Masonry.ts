@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcMasonry } from '@arclux/arc-ui';
+import { ArcMasonry } from '@arclux/arc-ui/masonry';
 
 export interface MasonryProps {
   columns?: number;

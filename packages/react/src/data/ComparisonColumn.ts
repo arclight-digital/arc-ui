@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcComparisonColumn } from '@arclux/arc-ui';
+import { ArcComparisonColumn } from '@arclux/arc-ui/comparison-column';
 
 export interface ComparisonColumnProps {
   heading?: string;

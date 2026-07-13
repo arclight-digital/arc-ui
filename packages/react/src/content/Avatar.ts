@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcAvatar } from '@arclux/arc-ui';
+import { ArcAvatar } from '@arclux/arc-ui/avatar';
 
 export interface AvatarProps {
   src?: string;
@@ -10,7 +10,6 @@ export interface AvatarProps {
   size?: 'sm' | 'md' | 'lg';
   shape?: 'square' | 'rounded';
   status?: 'online' | 'offline' | 'busy' | 'away';
-  _imgState?: string;
   className?: string;
   children?: React.ReactNode;
 }

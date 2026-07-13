@@ -2,11 +2,9 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcTreeView } from '@arclux/arc-ui';
+import { ArcTreeView } from '@arclux/arc-ui/tree-view';
 
 export interface TreeViewProps {
-  _items?: string;
-  _selected?: string;
   className?: string;
   children?: React.ReactNode;
   onArcToggle?: (e: CustomEvent) => void;

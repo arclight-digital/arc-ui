@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcMarkdown } from '@arclux/arc-ui';
+import { ArcMarkdown } from '@arclux/arc-ui/markdown';
 
 export interface MarkdownProps {
   content?: string;

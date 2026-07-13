@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcSpinner } from '@arclux/arc-ui';
+import { ArcSpinner } from '@arclux/arc-ui/spinner';
 
 export interface SpinnerProps {
   size?: 'sm' | 'md' | 'lg';

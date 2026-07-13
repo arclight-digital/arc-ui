@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcMeter } from './meter.js';
-customElements.define('arc-meter', ArcMeter);
+if (!customElements.get('arc-meter')) customElements.define('arc-meter', ArcMeter);
 export { ArcMeter };

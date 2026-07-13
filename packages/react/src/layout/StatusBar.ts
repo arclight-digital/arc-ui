@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcStatusBar } from '@arclux/arc-ui';
+import { ArcStatusBar } from '@arclux/arc-ui/status-bar';
 
 export interface StatusBarProps {
   position?: string;

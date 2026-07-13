@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcTextarea } from '@arclux/arc-ui';
+import { ArcTextarea } from '@arclux/arc-ui/textarea';
 
 export interface TextareaProps {
   value?: string;

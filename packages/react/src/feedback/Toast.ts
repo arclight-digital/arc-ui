@@ -2,12 +2,11 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcToast } from '@arclux/arc-ui';
+import { ArcToast } from '@arclux/arc-ui/toast';
 
 export interface ToastProps {
   position?: 'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center';
   duration?: number;
-  _toasts?: string;
   className?: string;
   children?: React.ReactNode;
   onArcDismiss?: (e: CustomEvent) => void;

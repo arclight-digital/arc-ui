@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcTable } from '@arclux/arc-ui';
+import { ArcTable } from '@arclux/arc-ui/table';
 
 export interface TableProps {
   columns?: unknown[];

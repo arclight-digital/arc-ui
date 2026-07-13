@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcInset } from '@arclux/arc-ui';
+import { ArcInset } from '@arclux/arc-ui/inset';
 
 export interface InsetProps {
   space?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';

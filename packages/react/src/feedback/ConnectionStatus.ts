@@ -2,11 +2,9 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcConnectionStatus } from '@arclux/arc-ui';
+import { ArcConnectionStatus } from '@arclux/arc-ui/connection-status';
 
 export interface ConnectionStatusProps {
-  online?: string;
-  _visible?: string;
   className?: string;
   children?: React.ReactNode;
   onArcOnline?: (e: CustomEvent) => void;

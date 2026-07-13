@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcDescriptionItem } from '@arclux/arc-ui';
+import { ArcDescriptionItem } from '@arclux/arc-ui/description-item';
 
 export interface DescriptionItemProps {
   term?: string;

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcFieldset } from '@arclux/arc-ui';
+import { ArcFieldset } from '@arclux/arc-ui/fieldset';
 
 export interface FieldsetProps {
   legend?: string;
@@ -10,8 +10,6 @@ export interface FieldsetProps {
   disabled?: boolean;
   error?: string;
   variant?: 'card';
-  _hasLegend?: string;
-  _hasActions?: string;
   className?: string;
   children?: React.ReactNode;
 }

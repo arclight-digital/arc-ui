@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcEmptyState } from '@arclux/arc-ui';
+import { ArcEmptyState } from '@arclux/arc-ui/empty-state';
 
 export interface EmptyStateProps {
   heading?: string;

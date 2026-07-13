@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcSwitchGroup } from '@arclux/arc-ui';
+import { ArcSwitchGroup } from '@arclux/arc-ui/switch-group';
 
 export interface SwitchGroupProps {
   label?: string;

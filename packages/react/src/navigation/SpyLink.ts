@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcSpyLink } from '@arclux/arc-ui';
+import { ArcSpyLink } from '@arclux/arc-ui/spy-link';
 
 export interface SpyLinkProps {
   target?: string;

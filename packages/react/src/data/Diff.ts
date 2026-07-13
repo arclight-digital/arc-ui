@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcDiff } from '@arclux/arc-ui';
+import { ArcDiff } from '@arclux/arc-ui/diff';
 
 export interface DiffProps {
   before?: string;

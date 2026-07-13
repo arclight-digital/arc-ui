@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcAspectGrid } from '@arclux/arc-ui';
+import { ArcAspectGrid } from '@arclux/arc-ui/aspect-grid';
 
 export interface AspectGridProps {
   columns?: number;

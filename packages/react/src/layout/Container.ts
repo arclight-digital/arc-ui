@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcContainer } from '@arclux/arc-ui';
+import { ArcContainer } from '@arclux/arc-ui/container';
 
 export interface ContainerProps {
   narrow?: boolean;

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcForm } from '@arclux/arc-ui';
+import { ArcForm } from '@arclux/arc-ui/form';
 
 export interface FormProps {
   action?: string;
@@ -11,7 +11,6 @@ export interface FormProps {
   loading?: boolean;
   disabled?: boolean;
   errorSummary?: boolean;
-  _errors?: string;
   className?: string;
   children?: React.ReactNode;
   onArcInvalid?: (e: CustomEvent) => void;

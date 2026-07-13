@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcAccordionItem } from '@arclux/arc-ui';
+import { ArcAccordionItem } from '@arclux/arc-ui/accordion-item';
 
 export interface AccordionItemProps {
   question?: string;

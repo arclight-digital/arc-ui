@@ -2,13 +2,11 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcCommandPalette } from '@arclux/arc-ui';
+import { ArcCommandPalette } from '@arclux/arc-ui/command-palette';
 
 export interface CommandPaletteProps {
   open?: boolean;
   placeholder?: string;
-  _query?: string;
-  _items?: string;
   className?: string;
   children?: React.ReactNode;
   onArcSelect?: (e: CustomEvent) => void;

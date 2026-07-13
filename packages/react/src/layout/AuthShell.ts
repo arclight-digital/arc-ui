@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcAuthShell } from '@arclux/arc-ui';
+import { ArcAuthShell } from '@arclux/arc-ui/auth-shell';
 
 export interface AuthShellProps {
   variant?: string;

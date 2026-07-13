@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcCollapsible } from './collapsible.js';
-customElements.define('arc-collapsible', ArcCollapsible);
+if (!customElements.get('arc-collapsible')) customElements.define('arc-collapsible', ArcCollapsible);
 export { ArcCollapsible };

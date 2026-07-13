@@ -2,12 +2,10 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcAccordion } from '@arclux/arc-ui';
+import { ArcAccordion } from '@arclux/arc-ui/accordion';
 
 export interface AccordionProps {
   multiple?: boolean;
-  _items?: string;
-  _openItems?: string;
   className?: string;
   children?: React.ReactNode;
   onClick?: (e: Event) => void;

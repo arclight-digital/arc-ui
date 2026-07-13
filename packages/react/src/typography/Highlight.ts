@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcHighlight } from '@arclux/arc-ui';
+import { ArcHighlight } from '@arclux/arc-ui/highlight';
 
 export interface HighlightProps {
   text?: string;

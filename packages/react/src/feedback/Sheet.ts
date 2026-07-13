@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcSheet } from '@arclux/arc-ui';
+import { ArcSheet } from '@arclux/arc-ui/sheet';
 
 export interface SheetProps {
   open?: boolean;

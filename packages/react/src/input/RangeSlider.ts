@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcRangeSlider } from '@arclux/arc-ui';
+import { ArcRangeSlider } from '@arclux/arc-ui/range-slider';
 
 export interface RangeSliderProps {
   min?: number;
@@ -10,10 +10,10 @@ export interface RangeSliderProps {
   step?: number;
   low?: number;
   high?: number;
+  name?: string;
   disabled?: boolean;
   label?: string;
   showValues?: boolean;
-  _dragging?: string;
   className?: string;
   children?: React.ReactNode;
   onArcInput?: (e: CustomEvent) => void;

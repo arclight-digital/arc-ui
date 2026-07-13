@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcSidebarSection } from '@arclux/arc-ui';
+import { ArcSidebarSection } from '@arclux/arc-ui/sidebar-section';
 
 export interface SidebarSectionProps {
   heading?: string;

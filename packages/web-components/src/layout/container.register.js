@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcContainer } from './container.js';
-customElements.define('arc-container', ArcContainer);
+if (!customElements.get('arc-container')) customElements.define('arc-container', ArcContainer);
 export { ArcContainer };

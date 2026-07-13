@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcMasonry } from './masonry.js';
-customElements.define('arc-masonry', ArcMasonry);
+if (!customElements.get('arc-masonry')) customElements.define('arc-masonry', ArcMasonry);
 export { ArcMasonry };

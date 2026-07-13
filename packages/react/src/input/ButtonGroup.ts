@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcButtonGroup } from '@arclux/arc-ui';
+import { ArcButtonGroup } from '@arclux/arc-ui/button-group';
 
 export interface ButtonGroupProps {
   orientation?: 'vertical';

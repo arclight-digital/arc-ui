@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcKeyValue } from '@arclux/arc-ui';
+import { ArcKeyValue } from '@arclux/arc-ui/key-value';
 
 export interface KeyValueProps {
   layout?: 'horizontal' | 'stacked';

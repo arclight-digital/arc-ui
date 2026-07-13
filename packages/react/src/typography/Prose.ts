@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcProse } from '@arclux/arc-ui';
+import { ArcProse } from '@arclux/arc-ui/prose';
 
 export interface ProseProps {
   size?: 'sm' | 'md' | 'lg';

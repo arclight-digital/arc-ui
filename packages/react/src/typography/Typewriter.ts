@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcTypewriter } from '@arclux/arc-ui';
+import { ArcTypewriter } from '@arclux/arc-ui/typewriter';
 
 export interface TypewriterProps {
   text?: string;
@@ -11,8 +11,6 @@ export interface TypewriterProps {
   cursor?: boolean;
   loop?: boolean;
   nowrap?: boolean;
-  _displayText?: string;
-  _complete?: string;
   className?: string;
   children?: React.ReactNode;
   onArcComplete?: (e: CustomEvent) => void;

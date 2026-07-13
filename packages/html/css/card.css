@@ -6,10 +6,10 @@
       .arc-card .card { height: 100%; }
 
       /* Suppress hover effect when no href and not interactive */
-      .arc-card(:not([href]):not([interactive])) .card:hover {
+      .arc-card:not([data-href]):not([data-interactive]) .card:hover {
         background: var(--border-subtle);
       }
-      .arc-card(:not([href]):not([interactive])) .card:hover .card__inner {
+      .arc-card:not([data-href]):not([data-interactive]) .card:hover .card__inner {
         box-shadow: none;
       }
 

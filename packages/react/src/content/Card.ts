@@ -2,13 +2,12 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcCard } from '@arclux/arc-ui';
+import { ArcCard } from '@arclux/arc-ui/card';
 
 export interface CardProps {
   href?: string;
   padding?: 'none' | 'sm' | 'lg';
   interactive?: boolean;
-  _hasFooter?: string;
   className?: string;
   children?: React.ReactNode;
 }

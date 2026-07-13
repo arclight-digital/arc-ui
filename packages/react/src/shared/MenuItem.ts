@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcMenuItem } from '@arclux/arc-ui';
+import { ArcMenuItem } from '@arclux/arc-ui/menu-item';
 
 export interface MenuItemProps {
   shortcut?: string;

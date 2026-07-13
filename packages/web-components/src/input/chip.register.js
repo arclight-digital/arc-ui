@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcChip } from './chip.js';
-customElements.define('arc-chip', ArcChip);
+if (!customElements.get('arc-chip')) customElements.define('arc-chip', ArcChip);
 export { ArcChip };

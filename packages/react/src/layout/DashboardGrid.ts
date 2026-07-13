@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcDashboardGrid } from '@arclux/arc-ui';
+import { ArcDashboardGrid } from '@arclux/arc-ui/dashboard-grid';
 
 export interface DashboardGridProps {
   columns?: number;

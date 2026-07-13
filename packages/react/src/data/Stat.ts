@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcStat } from '@arclux/arc-ui';
+import { ArcStat } from '@arclux/arc-ui/stat';
 
 export interface StatProps {
   value?: string;

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcTreeItem } from '@arclux/arc-ui';
+import { ArcTreeItem } from '@arclux/arc-ui/tree-item';
 
 export interface TreeItemProps {
   label?: string;

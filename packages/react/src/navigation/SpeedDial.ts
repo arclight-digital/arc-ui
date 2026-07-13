@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcSpeedDial } from '@arclux/arc-ui';
+import { ArcSpeedDial } from '@arclux/arc-ui/speed-dial';
 
 export interface SpeedDialProps {
   open?: boolean;

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcDataTable } from '@arclux/arc-ui';
+import { ArcDataTable } from '@arclux/arc-ui/data-table';
 
 export interface DataTableProps {
   rows?: unknown[];
@@ -12,10 +12,6 @@ export interface DataTableProps {
   sortDirection?: string;
   virtual?: boolean;
   rowHeight?: number;
-  _columns?: string;
-  _selectedRows?: string;
-  _startIndex?: string;
-  _visibleCount?: string;
   className?: string;
   children?: React.ReactNode;
   onArcSort?: (e: CustomEvent) => void;

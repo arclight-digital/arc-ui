@@ -2,14 +2,13 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcCodeBlock } from '@arclux/arc-ui';
+import { ArcCodeBlock } from '@arclux/arc-ui/code-block';
 
 export interface CodeBlockProps {
   language?: string;
   filename?: string;
   code?: string;
   variant?: 'window' | 'basic';
-  _highlightedHtml?: string;
   className?: string;
   children?: React.ReactNode;
 }

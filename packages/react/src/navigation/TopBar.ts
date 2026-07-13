@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcTopBar } from '@arclux/arc-ui';
+import { ArcTopBar } from '@arclux/arc-ui/top-bar';
 
 export interface TopBarProps {
   heading?: string;

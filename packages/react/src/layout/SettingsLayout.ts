@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcSettingsLayout } from '@arclux/arc-ui';
+import { ArcSettingsLayout } from '@arclux/arc-ui/settings-layout';
 
 export interface SettingsLayoutProps {
   navPosition?: string;

@@ -2,13 +2,14 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcSlider } from '@arclux/arc-ui';
+import { ArcSlider } from '@arclux/arc-ui/slider';
 
 export interface SliderProps {
   value?: number;
   min?: number;
   max?: number;
   step?: number;
+  name?: string;
   disabled?: boolean;
   label?: string;
   className?: string;

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcAnnouncement } from '@arclux/arc-ui';
+import { ArcAnnouncement } from '@arclux/arc-ui/announcement';
 
 export interface AnnouncementProps {
   politeness?: string;

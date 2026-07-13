@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcKvPair } from '@arclux/arc-ui';
+import { ArcKvPair } from '@arclux/arc-ui/kv-pair';
 
 export interface KvPairProps {
   label?: string;

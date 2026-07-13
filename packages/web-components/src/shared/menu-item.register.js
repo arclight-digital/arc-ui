@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcMenuItem } from './menu-item.js';
-customElements.define('arc-menu-item', ArcMenuItem);
+if (!customElements.get('arc-menu-item')) customElements.define('arc-menu-item', ArcMenuItem);
 export { ArcMenuItem };

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcSidebarLink } from '@arclux/arc-ui';
+import { ArcSidebarLink } from '@arclux/arc-ui/sidebar-link';
 
 export interface SidebarLinkProps {
   href?: string;

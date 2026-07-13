@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcStack } from '@arclux/arc-ui';
+import { ArcStack } from '@arclux/arc-ui/stack';
 
 export interface StackProps {
   direction?: 'horizontal' | 'vertical';

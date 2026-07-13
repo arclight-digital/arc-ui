@@ -2,12 +2,11 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcSegmentedControl } from '@arclux/arc-ui';
+import { ArcSegmentedControl } from '@arclux/arc-ui/segmented-control';
 
 export interface SegmentedControlProps {
   value?: string;
   disabled?: boolean;
-  _options?: string;
   className?: string;
   children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcValueCard } from '@arclux/arc-ui';
+import { ArcValueCard } from '@arclux/arc-ui/value-card';
 
 export interface ValueCardProps {
   icon?: string;

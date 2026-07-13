@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcText } from './text.js';
-customElements.define('arc-text', ArcText);
+if (!customElements.get('arc-text')) customElements.define('arc-text', ArcText);
 export { ArcText };

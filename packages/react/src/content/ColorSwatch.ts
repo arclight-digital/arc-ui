@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcColorSwatch } from '@arclux/arc-ui';
+import { ArcColorSwatch } from '@arclux/arc-ui/color-swatch';
 
 export interface ColorSwatchProps {
   color?: string;

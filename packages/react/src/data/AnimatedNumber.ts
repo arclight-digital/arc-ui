@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcAnimatedNumber } from '@arclux/arc-ui';
+import { ArcAnimatedNumber } from '@arclux/arc-ui/animated-number';
 
 export interface AnimatedNumberProps {
   value?: number;

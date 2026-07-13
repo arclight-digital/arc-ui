@@ -2,18 +2,13 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcCountdownTimer } from '@arclux/arc-ui';
+import { ArcCountdownTimer } from '@arclux/arc-ui/countdown-timer';
 
 export interface CountdownTimerProps {
   target?: string;
   label?: string;
   expired?: string;
   hideZeroSegments?: boolean;
-  _days?: string;
-  _hours?: string;
-  _minutes?: string;
-  _seconds?: string;
-  _expired?: string;
   className?: string;
   children?: React.ReactNode;
   onArcExpired?: (e: CustomEvent) => void;

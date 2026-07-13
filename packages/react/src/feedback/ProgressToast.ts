@@ -2,11 +2,10 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcProgressToast } from '@arclux/arc-ui';
+import { ArcProgressToast } from '@arclux/arc-ui/progress-toast';
 
 export interface ProgressToastProps {
   position?: 'bottom-right' | 'top-right';
-  _toasts?: string;
   className?: string;
   children?: React.ReactNode;
   onArcComplete?: (e: CustomEvent) => void;

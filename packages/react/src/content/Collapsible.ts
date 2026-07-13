@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcCollapsible } from '@arclux/arc-ui';
+import { ArcCollapsible } from '@arclux/arc-ui/collapsible';
 
 export interface CollapsibleProps {
   open?: boolean;

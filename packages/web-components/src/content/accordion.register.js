@@ -1,5 +1,5 @@
 // Generated — do not edit
 import { ArcAccordion } from './accordion.js';
 import './accordion-item.register.js';
-customElements.define('arc-accordion', ArcAccordion);
+if (!customElements.get('arc-accordion')) customElements.define('arc-accordion', ArcAccordion);
 export { ArcAccordion };

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcToggle } from '@arclux/arc-ui';
+import { ArcToggle } from '@arclux/arc-ui/toggle';
 
 export interface ToggleProps {
   checked?: boolean;

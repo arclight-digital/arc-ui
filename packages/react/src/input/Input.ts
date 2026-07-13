@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcInput } from '@arclux/arc-ui';
+import { ArcInput } from '@arclux/arc-ui/input';
 
 export interface InputProps {
   type?: string;
@@ -16,8 +16,6 @@ export interface InputProps {
   size?: 'sm' | 'lg';
   multiline?: boolean;
   rows?: number;
-  _hasPrefix?: string;
-  _hasSuffix?: string;
   className?: string;
   children?: React.ReactNode;
   onArcInput?: (e: CustomEvent) => void;

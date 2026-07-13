@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcTimeAgo } from '@arclux/arc-ui';
+import { ArcTimeAgo } from '@arclux/arc-ui/time-ago';
 
 export interface TimeAgoProps {
   datetime?: string;

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcResponsiveSwitcher } from '@arclux/arc-ui';
+import { ArcResponsiveSwitcher } from '@arclux/arc-ui/responsive-switcher';
 
 export interface ResponsiveSwitcherProps {
   threshold?: string;

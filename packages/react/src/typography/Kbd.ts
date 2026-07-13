@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcKbd } from '@arclux/arc-ui';
+import { ArcKbd } from '@arclux/arc-ui/kbd';
 
 export interface KbdProps {
   className?: string;

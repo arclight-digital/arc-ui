@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcTimelineItem } from '@arclux/arc-ui';
+import { ArcTimelineItem } from '@arclux/arc-ui/timeline-item';
 
 export interface TimelineItemProps {
   heading?: string;

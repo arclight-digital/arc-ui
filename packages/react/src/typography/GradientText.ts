@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcGradientText } from '@arclux/arc-ui';
+import { ArcGradientText } from '@arclux/arc-ui/gradient-text';
 
 export interface GradientTextProps {
   variant?: 'accent' | 'display' | 'sunset' | 'ocean';

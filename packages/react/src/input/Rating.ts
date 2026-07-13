@@ -2,11 +2,12 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcRating } from '@arclux/arc-ui';
+import { ArcRating } from '@arclux/arc-ui/rating';
 
 export interface RatingProps {
   value?: number;
   max?: number;
+  name?: string;
   disabled?: boolean;
   readonly?: boolean;
   className?: string;

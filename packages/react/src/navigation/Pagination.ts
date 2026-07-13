@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcPagination } from '@arclux/arc-ui';
+import { ArcPagination } from '@arclux/arc-ui/pagination';
 
 export interface PaginationProps {
   total?: number;

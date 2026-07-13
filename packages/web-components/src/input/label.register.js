@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcLabel } from './label.js';
-customElements.define('arc-label', ArcLabel);
+if (!customElements.get('arc-label')) customElements.define('arc-label', ArcLabel);
 export { ArcLabel };

@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcBreadcrumbMenu } from './breadcrumb-menu.js';
-customElements.define('arc-breadcrumb-menu', ArcBreadcrumbMenu);
+if (!customElements.get('arc-breadcrumb-menu')) customElements.define('arc-breadcrumb-menu', ArcBreadcrumbMenu);
 export { ArcBreadcrumbMenu };

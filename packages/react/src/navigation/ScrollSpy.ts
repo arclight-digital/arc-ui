@@ -2,13 +2,11 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcScrollSpy } from '@arclux/arc-ui';
+import { ArcScrollSpy } from '@arclux/arc-ui/scroll-spy';
 
 export interface ScrollSpyProps {
   active?: string;
   offset?: number;
-  _active?: string;
-  _links?: string;
   className?: string;
   children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;

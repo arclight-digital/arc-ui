@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcStepperNav } from '@arclux/arc-ui';
+import { ArcStepperNav } from '@arclux/arc-ui/stepper-nav';
 
 export interface StepperNavProps {
   steps?: string;

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcButton } from '@arclux/arc-ui';
+import { ArcButton } from '@arclux/arc-ui/button';
 
 export interface ButtonProps {
   variant?: 'primary' | 'secondary' | 'ghost';
@@ -11,8 +11,6 @@ export interface ButtonProps {
   disabled?: boolean;
   loading?: boolean;
   type?: string;
-  _hasPrefix?: string;
-  _hasSuffix?: string;
   className?: string;
   children?: React.ReactNode;
   onClick?: (e: Event) => void;

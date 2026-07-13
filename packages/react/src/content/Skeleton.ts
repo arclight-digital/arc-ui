@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcSkeleton } from '@arclux/arc-ui';
+import { ArcSkeleton } from '@arclux/arc-ui/skeleton';
 
 export interface SkeletonProps {
   variant?: 'text' | 'circle' | 'rect';

@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcDropdownMenu } from './dropdown-menu.js';
-customElements.define('arc-dropdown-menu', ArcDropdownMenu);
+if (!customElements.get('arc-dropdown-menu')) customElements.define('arc-dropdown-menu', ArcDropdownMenu);
 export { ArcDropdownMenu };

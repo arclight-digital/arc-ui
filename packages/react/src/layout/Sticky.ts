@@ -2,11 +2,10 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcSticky } from '@arclux/arc-ui';
+import { ArcSticky } from '@arclux/arc-ui/sticky';
 
 export interface StickyProps {
   offset?: string;
-  stuck?: boolean;
   className?: string;
   children?: React.ReactNode;
   onArcStuck?: (e: CustomEvent) => void;

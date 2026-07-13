@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcChip } from '@arclux/arc-ui';
+import { ArcChip } from '@arclux/arc-ui/chip';
 
 export interface ChipProps {
   selected?: boolean;

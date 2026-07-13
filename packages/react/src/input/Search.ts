@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcSearch } from '@arclux/arc-ui';
+import { ArcSearch } from '@arclux/arc-ui/search';
 
 export interface SearchProps {
   value?: string;
@@ -10,9 +10,6 @@ export interface SearchProps {
   label?: string;
   disabled?: boolean;
   loading?: boolean;
-  _open?: string;
-  _activeIndex?: string;
-  _suggestions?: string;
   className?: string;
   children?: React.ReactNode;
   onArcInput?: (e: CustomEvent) => void;

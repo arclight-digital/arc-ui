@@ -2,14 +2,10 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcContextMenu } from '@arclux/arc-ui';
+import { ArcContextMenu } from '@arclux/arc-ui/context-menu';
 
 export interface ContextMenuProps {
   open?: boolean;
-  _x?: string;
-  _y?: string;
-  _activeIndex?: string;
-  _children?: string;
   className?: string;
   children?: React.ReactNode;
   onArcOpen?: (e: CustomEvent) => void;

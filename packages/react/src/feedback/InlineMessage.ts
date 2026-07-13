@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcInlineMessage } from '@arclux/arc-ui';
+import { ArcInlineMessage } from '@arclux/arc-ui/inline-message';
 
 export interface InlineMessageProps {
   variant?: string;

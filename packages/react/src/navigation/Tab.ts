@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcTab } from '@arclux/arc-ui';
+import { ArcTab } from '@arclux/arc-ui/tab';
 
 export interface TabProps {
   label?: string;

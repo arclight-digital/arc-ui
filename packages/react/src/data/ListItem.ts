@@ -2,16 +2,13 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcListItem } from '@arclux/arc-ui';
+import { ArcListItem } from '@arclux/arc-ui/list-item';
 
 export interface ListItemProps {
   value?: string;
   selected?: boolean;
   disabled?: boolean;
   href?: string;
-  _hasPrefix?: string;
-  _hasSuffix?: string;
-  _hasDescription?: string;
   className?: string;
   children?: React.ReactNode;
   onArcItemSelect?: (e: CustomEvent) => void;

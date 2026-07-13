@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcRail } from './rail.js';
-customElements.define('arc-rail', ArcRail);
+if (!customElements.get('arc-rail')) customElements.define('arc-rail', ArcRail);
 export { ArcRail };

@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcHoverCard } from './hover-card.js';
-customElements.define('arc-hover-card', ArcHoverCard);
+if (!customElements.get('arc-hover-card')) customElements.define('arc-hover-card', ArcHoverCard);
 export { ArcHoverCard };

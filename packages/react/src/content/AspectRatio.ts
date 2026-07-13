@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcAspectRatio } from '@arclux/arc-ui';
+import { ArcAspectRatio } from '@arclux/arc-ui/aspect-ratio';
 
 export interface AspectRatioProps {
   ratio?: string;

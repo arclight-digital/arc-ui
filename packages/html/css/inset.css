@@ -14,10 +14,10 @@
       .arc-inset[data-space="2xl"] { padding: var(--space-2xl); }
 
       .arc-inset[bleed] { margin: calc(-1 * var(--_pad)); }
-      .arc-inset([bleed][space="xs"]) { --_pad: var(--space-xs); }
-      .arc-inset([bleed][space="sm"]) { --_pad: var(--space-sm); }
-      .arc-inset([bleed]:not([space])),
-      .arc-inset([bleed][space="md"]) { --_pad: var(--space-md); }
-      .arc-inset([bleed][space="lg"]) { --_pad: var(--space-lg); }
-      .arc-inset([bleed][space="xl"]) { --_pad: var(--space-xl); }
-      .arc-inset([bleed][space="2xl"]) { --_pad: var(--space-2xl); }
+      .arc-inset[bleed][data-space="xs"] { --_pad: var(--space-xs); }
+      .arc-inset[bleed][data-space="sm"] { --_pad: var(--space-sm); }
+      .arc-inset[bleed]:not([data-space]),
+      .arc-inset[bleed][data-space="md"] { --_pad: var(--space-md); }
+      .arc-inset[bleed][data-space="lg"] { --_pad: var(--space-lg); }
+      .arc-inset[bleed][data-space="xl"] { --_pad: var(--space-xl); }
+      .arc-inset[bleed][data-space="2xl"] { --_pad: var(--space-2xl); }

@@ -2,14 +2,13 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcResizable } from '@arclux/arc-ui';
+import { ArcResizable } from '@arclux/arc-ui/resizable';
 
 export interface ResizableProps {
   direction?: 'horizontal' | 'vertical';
   minSize?: number;
   maxSize?: number;
   size?: number;
-  _dragging?: string;
   className?: string;
   children?: React.ReactNode;
   onArcResize?: (e: CustomEvent) => void;

@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcCombobox } from './combobox.js';
-customElements.define('arc-combobox', ArcCombobox);
+if (!customElements.get('arc-combobox')) customElements.define('arc-combobox', ArcCombobox);
 export { ArcCombobox };

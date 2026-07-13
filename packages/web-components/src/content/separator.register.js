@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcSeparator } from './separator.js';
-customElements.define('arc-separator', ArcSeparator);
+if (!customElements.get('arc-separator')) customElements.define('arc-separator', ArcSeparator);
 export { ArcSeparator };

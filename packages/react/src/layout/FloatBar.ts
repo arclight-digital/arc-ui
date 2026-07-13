@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcFloatBar } from '@arclux/arc-ui';
+import { ArcFloatBar } from '@arclux/arc-ui/float-bar';
 
 export interface FloatBarProps {
   open?: boolean;

@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcScrollToTop } from './scroll-to-top.js';
-customElements.define('arc-scroll-to-top', ArcScrollToTop);
+if (!customElements.get('arc-scroll-to-top')) customElements.define('arc-scroll-to-top', ArcScrollToTop);
 export { ArcScrollToTop };

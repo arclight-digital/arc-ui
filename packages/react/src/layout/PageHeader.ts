@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcPageHeader } from '@arclux/arc-ui';
+import { ArcPageHeader } from '@arclux/arc-ui/page-header';
 
 export interface PageHeaderProps {
   heading?: string;

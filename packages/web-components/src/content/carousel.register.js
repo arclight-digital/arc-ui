@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcCarousel } from './carousel.js';
-customElements.define('arc-carousel', ArcCarousel);
+if (!customElements.get('arc-carousel')) customElements.define('arc-carousel', ArcCarousel);
 export { ArcCarousel };

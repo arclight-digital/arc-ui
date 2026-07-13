@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcLink } from '@arclux/arc-ui';
+import { ArcLink } from '@arclux/arc-ui/link';
 
 export interface LinkProps {
   href?: string;

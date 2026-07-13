@@ -2,11 +2,10 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcStepper } from '@arclux/arc-ui';
+import { ArcStepper } from '@arclux/arc-ui/stepper';
 
 export interface StepperProps {
   active?: number;
-  _steps?: string;
   className?: string;
   children?: React.ReactNode;
 }

@@ -2,11 +2,10 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcComparison } from '@arclux/arc-ui';
+import { ArcComparison } from '@arclux/arc-ui/comparison';
 
 export interface ComparisonProps {
   features?: string;
-  _columns?: string;
   className?: string;
   children?: React.ReactNode;
 }

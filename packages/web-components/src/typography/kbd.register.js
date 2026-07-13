@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcKbd } from './kbd.js';
-customElements.define('arc-kbd', ArcKbd);
+if (!customElements.get('arc-kbd')) customElements.define('arc-kbd', ArcKbd);
 export { ArcKbd };

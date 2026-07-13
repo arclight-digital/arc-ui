@@ -2,10 +2,11 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcTimePicker } from '@arclux/arc-ui';
+import { ArcTimePicker } from '@arclux/arc-ui/time-picker';
 
 export interface TimePickerProps {
   value?: string;
+  name?: string;
   min?: string;
   max?: string;
   step?: number;
@@ -13,11 +14,6 @@ export interface TimePickerProps {
   placeholder?: string;
   disabled?: boolean;
   label?: string;
-  _open?: string;
-  _selectedHour?: string;
-  _selectedMinute?: string;
-  _selectedPeriod?: string;
-  _focusedColumn?: string;
   className?: string;
   children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;

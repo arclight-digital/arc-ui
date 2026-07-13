@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcRail } from '@arclux/arc-ui';
+import { ArcRail } from '@arclux/arc-ui/rail';
 
 export interface RailProps {
   items?: string;

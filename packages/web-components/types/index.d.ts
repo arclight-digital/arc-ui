@@ -1,974 +1,2572 @@
-/**
- * @arclux/arc-ui — TypeScript declarations
- * Auto-generated type declarations for ARC UI web components.
- */
-
+// Generated from custom-elements.json by scripts/generate-types.js — do not edit
 import { LitElement } from 'lit';
 
-// ─────────────────────────────────────────────
-// Content Tier
-// ─────────────────────────────────────────────
-
-export declare class ArcCard extends LitElement {
-  href: string;
+/**
+ * `<arc-accordion>`
+ */
+export declare class ArcAccordion extends LitElement {
+  /** @default false */
+  multiple: boolean;
 }
 
-export declare class ArcFeatureCard extends LitElement {
-  icon: string;
-  heading: string;
-  description: string;
-  href: string;
-}
-
-export declare class ArcValueCard extends LitElement {
-  icon: string;
-  heading: string;
-  description: string;
-}
-
-export declare class ArcText extends LitElement {
-  variant: 'display' | 'heading' | 'body' | 'muted' | 'ghost' | 'accent' | 'label' | 'wordmark' | 'code';
-  as: 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span';
-}
-
-export declare class ArcDivider extends LitElement {
-  variant: string;
-}
-
-export declare class ArcStat extends LitElement {
-  value: string;
-  label: string;
-}
-
-export declare class ArcBadge extends LitElement {
-  variant: string;
-}
-
-export declare class ArcCodeBlock extends LitElement {
-  language: string;
-  filename: string;
-  code: string;
-}
-
-export declare class ArcIcon extends LitElement {
-  name: string;
-  size: string;
-  label: string;
-}
-
-export declare class ArcIconLibrary extends LitElement {
-  name: string;
-}
-
-export declare class ArcLink extends LitElement {
-  href: string;
-  variant: string;
-  active: boolean;
-  external: boolean;
-}
-
-export declare class ArcTable extends LitElement {
-  striped: boolean;
-  compact: boolean;
-}
-
-export declare class ArcAvatar extends LitElement {
-  src: string;
-  name: string;
-  size: string;
-}
-
-export declare class ArcAvatarGroup extends LitElement {
-  max: number;
-  overlap: string;
-}
-
-export declare class ArcCallout extends LitElement {
-  variant: string;
-}
-
-export declare class ArcColorSwatch extends LitElement {
-  color: string;
-  label: string;
-  size: string;
-}
-
-export declare class ArcEmptyState extends LitElement {
-  heading: string;
-  description: string;
-}
-
-export declare class ArcKbd extends LitElement {}
-
-export declare class ArcSkeleton extends LitElement {
-  variant: string;
-  width: string;
-  height: string;
-}
-
-export declare class ArcSpinner extends LitElement {
-  size: string;
-  variant: string;
-}
-
-export declare class ArcStepper extends LitElement {
-  active: number;
-}
-
-export declare class ArcTimeline extends LitElement {}
-
-export declare class ArcStep extends LitElement {
-  label: string;
-}
-
-export declare class ArcTimelineItem extends LitElement {
-  heading: string;
-  date: string;
-}
-
-// ─────────────────────────────────────────────
-// Reactive Tier
-// ─────────────────────────────────────────────
-
-export declare class ArcButton extends LitElement {
-  variant: string;
-  size: string;
-  href: string;
-  disabled: boolean;
-  type: string;
-}
-
-export declare class ArcIconButton extends LitElement {
-  name: string;
-  text: string;
-  variant: string;
-  size: string;
-  label: string;
-  href: string;
-  disabled: boolean;
-  type: string;
-}
-
-export declare class ArcInput extends LitElement {
-  type: string;
-  name: string;
-  label: string;
-  placeholder: string;
-  value: string;
-  disabled: boolean;
-  required: boolean;
-  multiline: boolean;
-  rows: number;
-}
-
-export declare class ArcAccordion extends LitElement {}
-
+/**
+ * `<arc-accordion-item>`
+ */
 export declare class ArcAccordionItem extends LitElement {
+  answer: unknown;
+  /** @default '' */
   question: string;
 }
 
-export declare class ArcTab extends LitElement {
-  label: string;
-}
-
-export declare class ArcTabs extends LitElement {
-  selected: number;
-  align: 'start' | 'center' | 'end';
-  variant: 'underline' | 'pills';
-}
-
-export declare class ArcToggle extends LitElement {
-  checked: boolean;
-  disabled: boolean;
-  label: string;
-  name: string;
-}
-
-export declare class ArcCheckbox extends LitElement {
-  checked: boolean;
-  indeterminate: boolean;
-  disabled: boolean;
-  label: string;
-  name: string;
-  value: string;
-}
-
-export declare class ArcRadioGroup extends LitElement {
-  value: string;
-  name: string;
-  disabled: boolean;
-  orientation: string;
-}
-
-export declare class ArcRadio extends LitElement {
-  value: string;
-  disabled: boolean;
-}
-
-export declare class ArcSelect extends LitElement {
-  value: string;
-  placeholder: string;
-  label: string;
-  name: string;
-  disabled: boolean;
-  open: boolean;
-}
-
+/**
+ * `<arc-alert>`
+ * Events: arc-dismiss
+ */
 export declare class ArcAlert extends LitElement {
+  /** @default 'info' */
   variant: string;
+  /** @default false */
+  compact: boolean;
+  /** @default false */
   dismissible: boolean;
+  /** @default '' */
   heading: string;
 }
 
-export declare class ArcProgress extends LitElement {
+/**
+ * `<arc-anchor-nav>`
+ * Events: arc-change
+ */
+export declare class ArcAnchorNav extends LitElement {
+  /** @default 'horizontal' */
+  orientation: string;
+  /** @default '' */
+  value: string;
+  /** @default [] */
+  items: unknown[];
+}
+
+/**
+ * `<arc-animated-number>`
+ */
+export declare class ArcAnimatedNumber extends LitElement {
+  /** @default 0 */
   value: number;
-  variant: string;
-  size: string;
-  indeterminate: boolean;
-  label: string;
-}
-
-export declare class ArcModal extends LitElement {
-  open: boolean;
-  heading: string;
-  size: string;
-  closable: boolean;
-}
-
-export declare class ArcToast extends LitElement {
-  position: string;
+  /** @default 1000 */
   duration: number;
-  show(opts: { message: string; variant?: string; duration?: number }): void;
+  /** @default 'number' */
+  format: string;
+  /** @default '' */
+  prefix: string;
+  /** @default '' */
+  suffix: string;
+  /** @default 0 */
+  decimals: number;
+  /** @default 'en-US' */
+  locale: string;
 }
 
-export declare class ArcTooltip extends LitElement {
-  content: string;
-  position: string;
-  delay: number;
+/**
+ * `<arc-announcement>`
+ */
+export declare class ArcAnnouncement extends LitElement {
+  /** @default 'polite' */
+  politeness: string;
+  /** @default '' */
+  message: string;
 }
 
-export declare class ArcDrawer extends LitElement {
-  open: boolean;
-  position: string;
-  heading: string;
+/**
+ * `<arc-app-shell>`
+ */
+export declare class ArcAppShell extends LitElement {
+  /** @default false */
+  sidebarOpen: boolean;
+  /** @default 900 */
+  breakpoint: number;
 }
 
-export declare class ArcCommandPalette extends LitElement {
-  open: boolean;
-  placeholder: string;
+/**
+ * `<arc-aspect-grid>`
+ */
+export declare class ArcAspectGrid extends LitElement {
+  /** @default 3 */
+  columns: number;
+  /** @default '1/1' */
+  ratio: string;
+  /** @default 'md' */
+  gap: string;
 }
 
-export declare class ArcCopyButton extends LitElement {
-  value: string;
-  disabled: boolean;
+/**
+ * `<arc-aspect-ratio>`
+ */
+export declare class ArcAspectRatio extends LitElement {
+  /** @default '16/9' */
+  ratio: string;
 }
 
-export declare class ArcDropdownMenu extends LitElement {
-  open: boolean;
-}
-
-export declare class ArcPagination extends LitElement {
-  total: number;
-  current: number;
-  siblings: number;
-}
-
-export declare class ArcPopover extends LitElement {
-  open: boolean;
-  position: string;
-  trigger: string;
-}
-
-export declare class ArcSlider extends LitElement {
-  value: number;
-  min: number;
-  max: number;
-  step: number;
-  disabled: boolean;
-  label: string;
-}
-
-export declare class ArcTag extends LitElement {
+/**
+ * `<arc-auth-shell>`
+ */
+export declare class ArcAuthShell extends LitElement {
+  /** @default 'centered' */
   variant: string;
-  removable: boolean;
-  disabled: boolean;
 }
 
-export declare class ArcThemeToggle extends LitElement {
-  theme: 'dark' | 'light' | 'auto';
-  disabled: boolean;
-  iconOnly: boolean;
+/**
+ * `<arc-avatar>`
+ */
+export declare class ArcAvatar extends LitElement {
+  /** @default '' */
+  src: string;
+  /** @default '' */
+  name: string;
+  /** @default 'md' */
+  size: string;
+  /** @default 'circle' */
+  shape: string;
+  /** @default '' */
+  status: string;
 }
 
-export declare class ArcCalendar extends LitElement {
+/**
+ * `<arc-avatar-group>`
+ */
+export declare class ArcAvatarGroup extends LitElement {
+  /** @default Infinity */
+  max: number;
+  /** @default 'md' */
+  overlap: string;
+}
+
+/**
+ * `<arc-badge>`
+ */
+export declare class ArcBadge extends LitElement {
+  /** @default 'default' */
+  variant: string;
+  /** @default 'md' */
+  size: string;
+  /** @default '' */
+  color: string;
+}
+
+/**
+ * `<arc-banner>`
+ * Events: arc-dismiss
+ */
+export declare class ArcBanner extends LitElement {
+  /** @default 'info' */
+  variant: string;
+  /** @default false */
+  dismissible: boolean;
+  /** @default false */
+  sticky: boolean;
+}
+
+/**
+ * `<arc-blockquote>`
+ */
+export declare class ArcBlockquote extends LitElement {
+  /** @default '' */
+  cite: string;
+  /** @default 'default' */
+  variant: string;
+}
+
+/**
+ * `<arc-bottom-nav>`
+ * Events: arc-change
+ */
+export declare class ArcBottomNav extends LitElement {
+  /** @default [] */
+  items: unknown[];
+  /** @default '' */
   value: string;
+}
+
+/**
+ * `<arc-breadcrumb>`
+ * Events: arc-navigate
+ */
+export declare class ArcBreadcrumb extends LitElement {
+  /** @default '/' */
+  separator: string;
+}
+
+/**
+ * `<arc-breadcrumb-item>`
+ */
+export declare class ArcBreadcrumbItem extends LitElement {
+  label: unknown;
+  /** @default '' */
+  href: string;
+}
+
+/**
+ * `<arc-breadcrumb-menu>`
+ * Events: arc-navigate
+ */
+export declare class ArcBreadcrumbMenu extends LitElement {
+  /** @default [] */
+  items: unknown[];
+}
+
+/**
+ * `<arc-button>`
+ */
+export declare class ArcButton extends LitElement {
+  /** @default 'primary' */
+  variant: string;
+  /** @default 'md' */
+  size: string;
+  /** @default '' */
+  href: string;
+  /** @default false */
+  disabled: boolean;
+  /** @default false */
+  loading: boolean;
+  /** @default 'button' */
+  type: string;
+}
+
+/**
+ * `<arc-button-group>`
+ */
+export declare class ArcButtonGroup extends LitElement {
+  /** @default 'horizontal' */
+  orientation: string;
+  /** @default 'md' */
+  size: string;
+  /** @default '' */
+  variant: string;
+}
+
+/**
+ * `<arc-calendar>`
+ * Events: arc-navigate, arc-change
+ */
+export declare class ArcCalendar extends LitElement {
+  /** @default '' */
+  value: string;
+  /** @default '' */
   min: string;
+  /** @default '' */
   max: string;
   month: number;
   year: number;
 }
 
-export declare class ArcCombobox extends LitElement {
+/**
+ * `<arc-callout>`
+ * Events: arc-dismiss
+ */
+export declare class ArcCallout extends LitElement {
+  /** @default 'info' */
+  variant: string;
+  /** @default false */
+  dismissible: boolean;
+}
+
+/**
+ * `<arc-card>`
+ */
+export declare class ArcCard extends LitElement {
+  /** @default '' */
+  href: string;
+  /** @default 'md' */
+  padding: string;
+  /** @default false */
+  interactive: boolean;
+}
+
+/**
+ * `<arc-carousel>`
+ * Events: arc-change
+ */
+export declare class ArcCarousel extends LitElement {
+  /** @default false */
+  autoPlay: boolean;
+  /** @default 5000 */
+  interval: number;
+  /** @default true */
+  loop: boolean;
+  /** @default true */
+  showDots: boolean;
+  /** @default true */
+  showArrows: boolean;
+}
+
+/**
+ * `<arc-center>`
+ */
+export declare class ArcCenter extends LitElement {
+  /** @default '60ch' */
+  maxWidth: string;
+  /** @default false */
+  intrinsic: boolean;
+  /** @default false */
+  text: boolean;
+}
+
+/**
+ * `<arc-checkbox>`
+ * Events: arc-change
+ */
+export declare class ArcCheckbox extends LitElement {
+  /** @default false */
+  checked: boolean;
+  /** @default false */
+  indeterminate: boolean;
+  /** @default false */
+  disabled: boolean;
+  /** @default 'md' */
+  size: string;
+  /** @default '' */
+  label: string;
+  /** @default '' */
+  name: string;
+  /** @default '' */
   value: string;
-  placeholder: string;
-  label: string;
+  /** @default true */
+  formAssociated: boolean;
+  form: unknown;
+  validity: unknown;
+  validationMessage: unknown;
+}
+
+/**
+ * `<arc-chip>`
+ * Events: arc-change
+ */
+export declare class ArcChip extends LitElement {
+  /** @default false */
+  selected: boolean;
+  /** @default false */
   disabled: boolean;
-}
-
-export declare class ArcContextMenu extends LitElement {
-  open: boolean;
-}
-
-export declare class ArcDataTable extends LitElement {
-  rows: any[];
-  sortable: boolean;
-  selectable: boolean;
-  sortColumn: string;
-  sortDirection: string;
-}
-
-export declare class ArcDatePicker extends LitElement {
-  value: string;
-  min: string;
-  max: string;
-  placeholder: string;
-  disabled: boolean;
-  label: string;
-}
-
-export declare class ArcFileUpload extends LitElement {
-  accept: string;
-  multiple: boolean;
-  maxSize: number;
-  disabled: boolean;
-}
-
-export declare class ArcForm extends LitElement {
-  novalidate: boolean;
-  submit(): void;
-  reset(): void;
-}
-
-export declare class ArcHoverCard extends LitElement {
-  position: string;
-  openDelay: number;
-  closeDelay: number;
-}
-
-export declare class ArcMultiSelect extends LitElement {
-  value: string[];
-  placeholder: string;
-  label: string;
-  disabled: boolean;
-}
-
-export declare class ArcSearch extends LitElement {
-  value: string;
-  placeholder: string;
-  label: string;
-  disabled: boolean;
-  loading: boolean;
-}
-
-export declare class ArcTextarea extends LitElement {
-  value: string;
-  placeholder: string;
-  label: string;
-  rows: number;
-  maxlength: number;
-  disabled: boolean;
-  readonly: boolean;
-  resize: string;
-  error: string;
-}
-
-export declare class ArcTreeView extends LitElement {}
-
-export declare class ArcCommandItem extends LitElement {
-  label: string;
-  shortcut: string;
-}
-
-export declare class ArcSuggestion extends LitElement {
+  /** @default '' */
   value: string;
 }
 
-export declare class ArcTreeItem extends LitElement {
-  label: string;
-  icon: string;
-  expanded: boolean;
+/**
+ * `<arc-cluster>`
+ */
+export declare class ArcCluster extends LitElement {
+  /** @default 'sm' */
+  gap: string;
+  /** @default 'center' */
+  align: string;
+  /** @default 'start' */
+  justify: string;
 }
 
-export declare class ArcColumn extends LitElement {
-  key: string;
-  label: string;
-  sortable: boolean;
-  width: string;
-}
-
-// ─────────────────────────────────────────────
-// Application Tier
-// ─────────────────────────────────────────────
-
-export declare class ArcAppShell extends LitElement {
-  sidebarOpen: boolean;
-}
-
-export declare class ArcBreadcrumb extends LitElement {}
-
-export declare class ArcContainer extends LitElement {
-  narrow: boolean;
-}
-
-export declare class ArcNavigationMenu extends LitElement {}
-
-export declare class ArcResizable extends LitElement {
-  direction: string;
-  minSize: number;
-  maxSize: number;
-  size: number;
-}
-
-export declare class ArcScrollSpy extends LitElement {
-  active: string;
-  offset: number;
-}
-
-export declare class ArcSection extends LitElement {
-  label: string;
-}
-
-export declare class ArcSidebar extends LitElement {
-  active: string;
-  collapsed: boolean;
-  width: string;
-}
-
-export declare class ArcTopBar extends LitElement {
-  heading: string;
-  fixed: boolean;
-  menuOpen: boolean;
-}
-
-export declare class ArcAuthShell extends LitElement {
+/**
+ * `<arc-code-block>`
+ */
+export declare class ArcCodeBlock extends LitElement {
+  /** @default '' */
+  language: string;
+  /** @default '' */
+  filename: string;
+  /** @default '' */
+  code: string;
+  /** @default 'default' */
   variant: string;
 }
 
-export declare class ArcDashboardGrid extends LitElement {
-  columns: number;
-  gap: string;
-  minColumnWidth: string;
-}
-
-export declare class ArcFooter extends LitElement {
-  compact: boolean;
-  border: boolean;
-}
-
-export declare class ArcNotificationPanel extends LitElement {
+/**
+ * `<arc-collapsible>`
+ * Events: arc-toggle
+ */
+export declare class ArcCollapsible extends LitElement {
+  /** @default false */
   open: boolean;
-  position: string;
-  maxHeight: string;
-}
-
-export declare class ArcPageHeader extends LitElement {
-  heading: string;
-  description: string;
-}
-
-export declare class ArcPageLayout extends LitElement {
-  layout: string;
-  maxWidth: string;
-  gap: string;
-}
-
-export declare class ArcSettingsLayout extends LitElement {
-  navPosition: string;
-}
-
-export declare class ArcSplitPane extends LitElement {
-  orientation: string;
-  ratio: number;
-  minRatio: number;
-  maxRatio: number;
-}
-
-export declare class ArcStatusBar extends LitElement {
-  position: string;
-}
-
-export declare class ArcToolbar extends LitElement {
-  sticky: boolean;
-  size: string;
-  border: boolean;
-}
-
-export declare class ArcBreadcrumbItem extends LitElement {
-  href: string;
-}
-
-export declare class ArcSidebarSection extends LitElement {
+  /** @default '' */
   heading: string;
 }
 
-export declare class ArcSidebarLink extends LitElement {
-  href: string;
-  active: boolean;
-}
-
-export declare class ArcNavItem extends LitElement {
-  href: string;
-  active: boolean;
-  description: string;
-}
-
-export declare class ArcSpyLink extends LitElement {
-  target: string;
-}
-
-// ─────────────────────────────────────────────
-// Shared
-// ─────────────────────────────────────────────
-
-export declare class ArcOption extends LitElement {
+/**
+ * `<arc-color-picker>`
+ * Events: arc-change
+ */
+export declare class ArcColorPicker extends LitElement {
+  /** @default '#4d7ef7' */
   value: string;
+  /** @default '' */
+  name: string;
+  /** @default [] */
+  presets: unknown[];
+  /** @default false */
   disabled: boolean;
-  selected: boolean;
+  /** @default '' */
+  label: string;
+  /** @default true */
+  formAssociated: boolean;
+  form: unknown;
+  validity: unknown;
+  validationMessage: unknown;
 }
 
-export declare class ArcMenuItem extends LitElement {
-  shortcut: string;
+/**
+ * `<arc-color-swatch>`
+ */
+export declare class ArcColorSwatch extends LitElement {
+  /** @default '#4d7ef7' */
+  color: string;
+  /** @default '' */
+  label: string;
+  /** @default 'md' */
+  size: string;
+}
+
+/**
+ * `<arc-column>`
+ */
+export declare class ArcColumn extends LitElement {
+  /** @default '' */
+  key: string;
+  /** @default '' */
+  label: string;
+  /** @default false */
+  sortable: boolean;
+  /** @default '' */
+  width: string;
+}
+
+/**
+ * `<arc-combobox>`
+ * Events: arc-change
+ */
+export declare class ArcCombobox extends LitElement {
+  /** @default '' */
+  value: string;
+  /** @default '' */
+  placeholder: string;
+  /** @default '' */
+  label: string;
+  /** @default '' */
+  name: string;
+  /** @default false */
   disabled: boolean;
+  /** @default true */
+  formAssociated: boolean;
+  form: unknown;
+  validity: unknown;
+  validationMessage: unknown;
+}
+
+/**
+ * `<arc-command-bar>`
+ * Events: arc-input, arc-submit
+ */
+export declare class ArcCommandBar extends LitElement {
+  /** @default 'Search…' */
+  placeholder: string;
+  /** @default '' */
+  value: string;
+  /** @default 'magnifying-glass' */
   icon: string;
 }
 
-export declare class ArcMenuDivider extends LitElement {}
+/**
+ * `<arc-command-item>`
+ */
+export declare class ArcCommandItem extends LitElement {
+  label: unknown;
+  /** @default '' */
+  shortcut: string;
+  /** @default '' */
+  icon: string;
+}
 
-// ─────────────────────────────────────────────
-// Icon Registry
-// ─────────────────────────────────────────────
+/**
+ * `<arc-command-palette>`
+ * Events: arc-select, arc-close
+ */
+export declare class ArcCommandPalette extends LitElement {
+  /** @default false */
+  open: boolean;
+  /** @default 'Type a command...' */
+  placeholder: string;
+}
 
-export declare const iconRegistry: {
-  use(library: string): void;
-  set(icons: Record<string, string>): void;
-  get(name: string): string | null;
-};
+/**
+ * `<arc-comparison>`
+ */
+export declare class ArcComparison extends LitElement {
+  /** @default '[]' */
+  features: string;
+}
 
-// ─────────────────────────────────────────────
-// HTMLElementTagNameMap augmentation
-// ─────────────────────────────────────────────
+/**
+ * `<arc-comparison-column>`
+ */
+export declare class ArcComparisonColumn extends LitElement {
+  /** @default '' */
+  heading: string;
+  /** @default false */
+  highlight: boolean;
+  /** @default '[]' */
+  values: string;
+}
+
+/**
+ * `<arc-confirm>`
+ * Events: arc-confirm, arc-cancel
+ */
+export declare class ArcConfirm extends LitElement {
+  /** @default false */
+  open: boolean;
+  /** @default '' */
+  heading: string;
+  /** @default '' */
+  message: string;
+  /** @default 'Cancel' */
+  undefined: string;
+  /** @default 'default' */
+  variant: string;
+  'confirm-label': string;
+  'cancel-label': string;
+}
+
+/**
+ * `<arc-connection-status>`
+ * Events: arc-online, arc-offline
+ */
+export declare class ArcConnectionStatus extends LitElement {
+  online: unknown;
+}
+
+/**
+ * `<arc-container>`
+ */
+export declare class ArcContainer extends LitElement {
+  /** @default false */
+  narrow: boolean;
+  /** @default 'md' */
+  size: string;
+  /** @default 'md' */
+  padding: string;
+}
+
+/**
+ * `<arc-context-menu>`
+ * Events: arc-open, arc-close, arc-select
+ */
+export declare class ArcContextMenu extends LitElement {
+  /** @default false */
+  open: boolean;
+}
+
+/**
+ * `<arc-copy-button>`
+ * Events: arc-copy
+ */
+export declare class ArcCopyButton extends LitElement {
+  /** @default '' */
+  value: string;
+  /** @default false */
+  disabled: boolean;
+}
+
+/**
+ * `<arc-countdown-timer>`
+ * Events: arc-expired
+ */
+export declare class ArcCountdownTimer extends LitElement {
+  /** @default '' */
+  target: string;
+  /** @default '' */
+  label: string;
+  /** @default 'Expired' */
+  expired: string;
+  /** @default false */
+  hideZeroSegments: boolean;
+}
+
+/**
+ * `<arc-cta-banner>`
+ */
+export declare class ArcCtaBanner extends LitElement {
+  /** @default '' */
+  eyebrow: string;
+  /** @default '' */
+  headline: string;
+  /** @default false */
+  nogradient: boolean;
+}
+
+/**
+ * `<arc-dashboard-grid>`
+ */
+export declare class ArcDashboardGrid extends LitElement {
+  /** @default 0 */
+  columns: number;
+  /** @default 'var(--space-lg)' */
+  gap: string;
+  /** @default '280px' */
+  minColumnWidth: string;
+}
+
+/**
+ * `<arc-data-table>`
+ * Events: arc-sort, arc-select-all, arc-row-select
+ */
+export declare class ArcDataTable extends LitElement {
+  /** @default [] */
+  rows: unknown[];
+  /** @default false */
+  sortable: boolean;
+  /** @default false */
+  selectable: boolean;
+  /** @default '' */
+  sortColumn: string;
+  /** @default 'asc' */
+  sortDirection: string;
+  /** @default false */
+  virtual: boolean;
+  /** @default 40 */
+  rowHeight: number;
+}
+
+/**
+ * `<arc-date-picker>`
+ * Events: arc-change
+ */
+export declare class ArcDatePicker extends LitElement {
+  /** @default '' */
+  value: string;
+  /** @default '' */
+  name: string;
+  /** @default '' */
+  min: string;
+  /** @default '' */
+  max: string;
+  /** @default 'Select date' */
+  placeholder: string;
+  /** @default false */
+  disabled: boolean;
+  /** @default '' */
+  label: string;
+  /** @default true */
+  formAssociated: boolean;
+  form: unknown;
+  validity: unknown;
+  validationMessage: unknown;
+}
+
+/**
+ * `<arc-description-item>`
+ */
+export declare class ArcDescriptionItem extends LitElement {
+  /** @default '' */
+  term: string;
+}
+
+/**
+ * `<arc-description-list>`
+ */
+export declare class ArcDescriptionList extends LitElement {
+  /** @default 1 */
+  columns: number;
+  /** @default true */
+  dividers: boolean;
+}
+
+/**
+ * `<arc-dialog>`
+ * Events: arc-confirm, arc-cancel
+ */
+export declare class ArcDialog extends LitElement {
+  /** @default false */
+  open: boolean;
+  /** @default '' */
+  heading: string;
+  /** @default '' */
+  message: string;
+  /** @default 'Cancel' */
+  undefined: string;
+  /** @default 'default' */
+  variant: string;
+  'confirm-label': string;
+  'cancel-label': string;
+}
+
+/**
+ * `<arc-diff>`
+ */
+export declare class ArcDiff extends LitElement {
+  /** @default '' */
+  before: string;
+  /** @default '' */
+  after: string;
+  /** @default 'inline' */
+  mode: string;
+}
+
+/**
+ * `<arc-divider>`
+ */
+export declare class ArcDivider extends LitElement {
+  /** @default 'subtle' */
+  variant: string;
+  /** @default false */
+  vertical: boolean;
+  /** @default '' */
+  label: string;
+  align: string;
+}
+
+/**
+ * `<arc-dock>`
+ */
+export declare class ArcDock extends LitElement {
+  /** @default 'bottom' */
+  position: string;
+  /** @default false */
+  autoHide: boolean;
+  /** @default false */
+  open: boolean;
+}
+
+/**
+ * `<arc-drawer>`
+ * Events: arc-close
+ */
+export declare class ArcDrawer extends LitElement {
+  /** @default false */
+  open: boolean;
+  /** @default 'left' */
+  position: string;
+  /** @default '' */
+  heading: string;
+}
+
+/**
+ * `<arc-dropdown-menu>`
+ * Events: arc-close, arc-select
+ */
+export declare class ArcDropdownMenu extends LitElement {
+  /** @default false */
+  open: boolean;
+}
+
+/**
+ * `<arc-empty-state>`
+ */
+export declare class ArcEmptyState extends LitElement {
+  /** @default '' */
+  heading: string;
+  /** @default '' */
+  description: string;
+}
+
+/**
+ * `<arc-feature-card>`
+ */
+export declare class ArcFeatureCard extends LitElement {
+  /** @default '' */
+  icon: string;
+  /** @default '' */
+  heading: string;
+  /** @default '' */
+  description: string;
+  /** @default '' */
+  href: string;
+  /** @default '' */
+  action: string;
+}
+
+/**
+ * `<arc-fieldset>`
+ */
+export declare class ArcFieldset extends LitElement {
+  /** @default '' */
+  legend: string;
+  /** @default '' */
+  description: string;
+  /** @default false */
+  disabled: boolean;
+  /** @default '' */
+  error: string;
+  /** @default 'default' */
+  variant: string;
+}
+
+/**
+ * `<arc-file-upload>`
+ * Events: arc-change, arc-remove
+ */
+export declare class ArcFileUpload extends LitElement {
+  /** @default '' */
+  accept: string;
+  /** @default false */
+  multiple: boolean;
+  /** @default 0 */
+  maxSize: number;
+  /** @default false */
+  disabled: boolean;
+}
+
+/**
+ * `<arc-float-bar>`
+ */
+export declare class ArcFloatBar extends LitElement {
+  /** @default false */
+  open: boolean;
+  /** @default 'bottom' */
+  position: string;
+}
+
+/**
+ * `<arc-footer>`
+ */
+export declare class ArcFooter extends LitElement {
+  /** @default false */
+  compact: boolean;
+  /** @default true */
+  border: boolean;
+  /** @default null */
+  contained: null;
+  /** @default 'left' */
+  align: string;
+}
+
+/**
+ * `<arc-form>`
+ * Events: arc-invalid, arc-submit, arc-reset
+ */
+export declare class ArcForm extends LitElement {
+  /** @default '' */
+  action: string;
+  /** @default '' */
+  method: string;
+  /** @default false */
+  novalidate: boolean;
+  /** @default false */
+  loading: boolean;
+  /** @default false */
+  disabled: boolean;
+  /** @default true */
+  errorSummary: boolean;
+}
+
+/**
+ * `<arc-gradient-text>`
+ */
+export declare class ArcGradientText extends LitElement {
+  /** @default 'accent' */
+  variant: string;
+  /** @default '' */
+  gradient: string;
+  /** @default false */
+  animate: boolean;
+}
+
+/**
+ * `<arc-guided-tour>`
+ * Events: arc-change, arc-complete, arc-dismiss
+ */
+export declare class ArcGuidedTour extends LitElement {
+  /** @default [] */
+  steps: unknown[];
+  /** @default 0 */
+  active: number;
+  /** @default false */
+  open: boolean;
+}
+
+/**
+ * `<arc-highlight>`
+ */
+export declare class ArcHighlight extends LitElement {
+  /** @default '' */
+  text: string;
+  /** @default '' */
+  query: string;
+  /** @default false */
+  caseSensitive: boolean;
+}
+
+/**
+ * `<arc-hotkey>`
+ * Events: arc-hotkey-trigger
+ */
+export declare class ArcHotkey extends LitElement {
+  /** @default '' */
+  keys: string;
+  /** @default false */
+  disabled: boolean;
+  /** @default false */
+  global: boolean;
+}
+
+/**
+ * `<arc-hover-card>`
+ * Events: arc-open, arc-close
+ */
+export declare class ArcHoverCard extends LitElement {
+  /** @default 'bottom' */
+  position: string;
+  /** @default 400 */
+  openDelay: number;
+  /** @default 300 */
+  closeDelay: number;
+}
+
+/**
+ * `<arc-icon>`
+ */
+export declare class ArcIcon extends LitElement {
+  /** @default '' */
+  name: string;
+  /** @default 'sm' */
+  size: string;
+  /** @default '' */
+  label: string;
+}
+
+/**
+ * `<arc-icon-button>`
+ */
+export declare class ArcIconButton extends LitElement {
+  /** @default '' */
+  name: string;
+  /** @default '' */
+  text: string;
+  /** @default 'ghost' */
+  variant: string;
+  /** @default 'md' */
+  size: string;
+  /** @default '' */
+  label: string;
+  /** @default '' */
+  href: string;
+  /** @default false */
+  disabled: boolean;
+  /** @default 'button' */
+  type: string;
+}
+
+/**
+ * `<arc-icon-library>`
+ */
+export declare class ArcIconLibrary extends LitElement {
+  /** @default 'phosphor' */
+  name: string;
+}
+
+/**
+ * `<arc-image>`
+ * Events: arc-load, arc-error
+ */
+export declare class ArcImage extends LitElement {
+  /** @default '' */
+  src: string;
+  /** @default '' */
+  alt: string;
+  /** @default '' */
+  aspect: string;
+  /** @default 'cover' */
+  fit: string;
+  /** @default 'lazy' */
+  loading: string;
+  /** @default '' */
+  fallback: string;
+}
+
+/**
+ * `<arc-infinite-scroll>`
+ * Events: arc-load-more
+ */
+export declare class ArcInfiniteScroll extends LitElement {
+  /** @default 200 */
+  threshold: number;
+  /** @default false */
+  loading: boolean;
+  /** @default false */
+  finished: boolean;
+  /** @default false */
+  disabled: boolean;
+}
+
+/**
+ * `<arc-inline-message>`
+ */
+export declare class ArcInlineMessage extends LitElement {
+  /** @default 'info' */
+  variant: string;
+}
+
+/**
+ * `<arc-input>`
+ * Events: arc-input, arc-change
+ */
+export declare class ArcInput extends LitElement {
+  /** @default 'text' */
+  type: string;
+  /** @default '' */
+  name: string;
+  /** @default '' */
+  label: string;
+  /** @default '' */
+  placeholder: string;
+  /** @default '' */
+  value: string;
+  /** @default false */
+  disabled: boolean;
+  /** @default false */
+  required: boolean;
+  /** @default '' */
+  error: string;
+  /** @default 'md' */
+  size: string;
+  /** @default false */
+  multiline: boolean;
+  /** @default 5 */
+  rows: number;
+  /** @default true */
+  formAssociated: boolean;
+  form: unknown;
+  validity: unknown;
+  validationMessage: unknown;
+}
+
+/**
+ * `<arc-input-group>`
+ */
+export declare class ArcInputGroup extends LitElement {
+  /** @default 'md' */
+  size: string;
+}
+
+/**
+ * `<arc-inset>`
+ */
+export declare class ArcInset extends LitElement {
+  /** @default 'md' */
+  space: string;
+  /** @default false */
+  bleed: boolean;
+}
+
+/**
+ * `<arc-kbd>`
+ */
+export declare class ArcKbd extends LitElement {
+}
+
+/**
+ * `<arc-key-value>`
+ */
+export declare class ArcKeyValue extends LitElement {
+  /** @default 'horizontal' */
+  layout: string;
+  /** @default true */
+  dividers: boolean;
+}
+
+/**
+ * `<arc-kv-pair>`
+ */
+export declare class ArcKvPair extends LitElement {
+  /** @default '' */
+  label: string;
+}
+
+/**
+ * `<arc-label>`
+ */
+export declare class ArcLabel extends LitElement {
+  /** @default '' */
+  for: string;
+  /** @default false */
+  required: boolean;
+  /** @default 'md' */
+  size: string;
+  /** @default false */
+  disabled: boolean;
+}
+
+/**
+ * `<arc-link>`
+ */
+export declare class ArcLink extends LitElement {
+  /** @default '' */
+  href: string;
+  /** @default 'default' */
+  variant: string;
+  /** @default 'hover' */
+  underline: string;
+  /** @default false */
+  active: boolean;
+  /** @default false */
+  external: boolean;
+}
+
+/**
+ * `<arc-list>`
+ */
+export declare class ArcList extends LitElement {
+  /** @default 'default' */
+  variant: string;
+  /** @default 'md' */
+  size: string;
+  /** @default false */
+  selectable: boolean;
+  /** @default false */
+  multiple: boolean;
+  /** @default '' */
+  value: string;
+}
+
+/**
+ * `<arc-list-item>`
+ * Events: arc-item-select
+ */
+export declare class ArcListItem extends LitElement {
+  /** @default '' */
+  value: string;
+  /** @default false */
+  selected: boolean;
+  /** @default false */
+  disabled: boolean;
+  /** @default '' */
+  href: string;
+}
+
+/**
+ * `<arc-loading-overlay>`
+ */
+export declare class ArcLoadingOverlay extends LitElement {
+  /** @default false */
+  active: boolean;
+  /** @default '' */
+  message: string;
+  /** @default false */
+  global: boolean;
+}
+
+/**
+ * `<arc-markdown>`
+ */
+export declare class ArcMarkdown extends LitElement {
+  /** @default '' */
+  content: string;
+}
+
+/**
+ * `<arc-marquee>`
+ */
+export declare class ArcMarquee extends LitElement {
+  /** @default 40 */
+  speed: number;
+  /** @default 'left' */
+  direction: string;
+  /** @default true */
+  undefined: boolean;
+  /** @default 'var(--space-xl)' */
+  gap: string;
+  'pause-on-hover': boolean;
+}
+
+/**
+ * `<arc-masonry>`
+ */
+export declare class ArcMasonry extends LitElement {
+  /** @default 3 */
+  columns: number;
+  /** @default 'md' */
+  gap: string;
+}
+
+/**
+ * `<arc-menu-divider>`
+ */
+export declare class ArcMenuDivider extends LitElement {
+}
+
+/**
+ * `<arc-menu-item>`
+ */
+export declare class ArcMenuItem extends LitElement {
+  label: unknown;
+  /** @default '' */
+  shortcut: string;
+  /** @default false */
+  disabled: boolean;
+  /** @default '' */
+  icon: string;
+}
+
+/**
+ * `<arc-meter>`
+ */
+export declare class ArcMeter extends LitElement {
+  /** @default 0 */
+  value: number;
+  /** @default 0 */
+  min: number;
+  /** @default 100 */
+  max: number;
+  /** @default undefined */
+  low: number;
+  /** @default undefined */
+  high: number;
+  /** @default undefined */
+  optimum: number;
+  /** @default '' */
+  label: string;
+}
+
+/**
+ * `<arc-modal>`
+ * Events: arc-close, arc-open
+ */
+export declare class ArcModal extends LitElement {
+  /** @default false */
+  open: boolean;
+  /** @default '' */
+  heading: string;
+  /** @default 'md' */
+  size: string;
+  /** @default false */
+  fullscreen: boolean;
+  /** @default true */
+  closable: boolean;
+}
+
+/**
+ * `<arc-multi-select>`
+ * Events: arc-change
+ */
+export declare class ArcMultiSelect extends LitElement {
+  /** @default [] */
+  value: unknown[];
+  /** @default '' */
+  placeholder: string;
+  /** @default '' */
+  label: string;
+  /** @default '' */
+  name: string;
+  /** @default false */
+  disabled: boolean;
+  /** @default true */
+  formAssociated: boolean;
+  form: unknown;
+  validity: unknown;
+  validationMessage: unknown;
+}
+
+/**
+ * `<arc-nav-item>`
+ */
+export declare class ArcNavItem extends LitElement {
+  label: unknown;
+  children: unknown;
+  hasChildren: unknown;
+  /** @default '' */
+  href: string;
+  /** @default false */
+  active: boolean;
+  /** @default 'default' */
+  variant: string;
+  /** @default '' */
+  description: string;
+}
+
+/**
+ * `<arc-navigation-menu>`
+ */
+export declare class ArcNavigationMenu extends LitElement {
+}
+
+/**
+ * `<arc-notification-panel>`
+ * Events: arc-open, arc-close
+ */
+export declare class ArcNotificationPanel extends LitElement {
+  /** @default false */
+  open: boolean;
+  /** @default 'top-right' */
+  position: string;
+  /** @default '400px' */
+  maxHeight: string;
+}
+
+/**
+ * `<arc-number-format>`
+ */
+export declare class ArcNumberFormat extends LitElement {
+  /** @default 0 */
+  value: number;
+  /** @default 'number' */
+  type: string;
+  /** @default 'en-US' */
+  locale: string;
+  /** @default 'USD' */
+  currency: string;
+  /** @default undefined */
+  decimals: number;
+  /** @default 'standard' */
+  notation: string;
+}
+
+/**
+ * `<arc-number-input>`
+ * Events: arc-change
+ */
+export declare class ArcNumberInput extends LitElement {
+  /** @default 0 */
+  value: number;
+  /** @default undefined */
+  min: number;
+  /** @default undefined */
+  max: number;
+  /** @default 1 */
+  step: number;
+  /** @default '' */
+  label: string;
+  /** @default '' */
+  name: string;
+  /** @default false */
+  disabled: boolean;
+  /** @default true */
+  formAssociated: boolean;
+  form: unknown;
+  validity: unknown;
+  validationMessage: unknown;
+}
+
+/**
+ * `<arc-option>`
+ */
+export declare class ArcOption extends LitElement {
+  label: unknown;
+  /** @default '' */
+  value: string;
+  /** @default false */
+  disabled: boolean;
+  /** @default false */
+  selected: boolean;
+}
+
+/**
+ * `<arc-otp-input>`
+ * Events: arc-change
+ */
+export declare class ArcOtpInput extends LitElement {
+  /** @default 6 */
+  length: number;
+  /** @default '' */
+  value: string;
+  /** @default '' */
+  name: string;
+  /** @default false */
+  disabled: boolean;
+  /** @default 'number' */
+  type: string;
+  /** @default true */
+  formAssociated: boolean;
+  form: unknown;
+  validity: unknown;
+  validationMessage: unknown;
+}
+
+/**
+ * `<arc-page-header>`
+ */
+export declare class ArcPageHeader extends LitElement {
+  /** @default '' */
+  heading: string;
+  /** @default '' */
+  description: string;
+  /** @default false */
+  border: boolean;
+}
+
+/**
+ * `<arc-page-indicator>`
+ * Events: arc-change
+ */
+export declare class ArcPageIndicator extends LitElement {
+  /** @default 0 */
+  count: number;
+  /** @default 0 */
+  value: number;
+  /** @default false */
+  clickable: boolean;
+}
+
+/**
+ * `<arc-page-layout>`
+ */
+export declare class ArcPageLayout extends LitElement {
+  /** @default 'centered' */
+  layout: string;
+  /** @default '1120px' */
+  maxWidth: string;
+  /** @default 'var(--space-xl)' */
+  gap: string;
+}
+
+/**
+ * `<arc-pagination>`
+ * Events: arc-change
+ */
+export declare class ArcPagination extends LitElement {
+  /** @default 1 */
+  total: number;
+  /** @default 1 */
+  current: number;
+  /** @default 1 */
+  siblings: number;
+  /** @default false */
+  compact: boolean;
+}
+
+/**
+ * `<arc-pin-input>`
+ * Events: arc-change, arc-complete
+ */
+export declare class ArcPinInput extends LitElement {
+  /** @default 4 */
+  length: number;
+  /** @default '' */
+  value: string;
+  /** @default '' */
+  name: string;
+  /** @default false */
+  disabled: boolean;
+  /** @default false */
+  mask: boolean;
+  /** @default 'number' */
+  type: string;
+  /** @default 0 */
+  separator: number;
+  /** @default '' */
+  label: string;
+  /** @default true */
+  formAssociated: boolean;
+  form: unknown;
+  validity: unknown;
+  validationMessage: unknown;
+}
+
+/**
+ * `<arc-popover>`
+ * Events: arc-close
+ */
+export declare class ArcPopover extends LitElement {
+  /** @default false */
+  open: boolean;
+  /** @default 'bottom' */
+  position: string;
+  /** @default '' */
+  trigger: string;
+}
+
+/**
+ * `<arc-progress>`
+ */
+export declare class ArcProgress extends LitElement {
+  /** @default 0 */
+  value: number;
+  /** @default 'bar' */
+  variant: string;
+  /** @default 'md' */
+  size: string;
+  /** @default false */
+  indeterminate: boolean;
+  /** @default false */
+  showValue: boolean;
+  /** @default '' */
+  label: string;
+}
+
+/**
+ * `<arc-progress-toast>`
+ * Events: arc-complete, arc-cancel
+ */
+export declare class ArcProgressToast extends LitElement {
+  /** @default 'bottom-right' */
+  position: string;
+}
+
+/**
+ * `<arc-prose>`
+ */
+export declare class ArcProse extends LitElement {
+  /** @default 'md' */
+  size: string;
+}
+
+/**
+ * `<arc-radio>`
+ */
+export declare class ArcRadio extends LitElement {
+  label: unknown;
+  /** @default '' */
+  value: string;
+  /** @default false */
+  disabled: boolean;
+}
+
+/**
+ * `<arc-radio-group>`
+ * Events: arc-change
+ */
+export declare class ArcRadioGroup extends LitElement {
+  /** @default '' */
+  value: string;
+  /** @default '' */
+  name: string;
+  /** @default false */
+  disabled: boolean;
+  /** @default 'md' */
+  size: string;
+  /** @default 'vertical' */
+  orientation: string;
+  /** @default true */
+  formAssociated: boolean;
+  form: unknown;
+  validity: unknown;
+  validationMessage: unknown;
+}
+
+/**
+ * `<arc-rail>`
+ * Events: arc-change
+ */
+export declare class ArcRail extends LitElement {
+  /** @default [] */
+  items: unknown[];
+  /** @default '' */
+  value: string;
+  /** @default false */
+  expanded: boolean;
+}
+
+/**
+ * `<arc-range-slider>`
+ * Events: arc-input, arc-change
+ */
+export declare class ArcRangeSlider extends LitElement {
+  /** @default 0 */
+  min: number;
+  /** @default 100 */
+  max: number;
+  /** @default 1 */
+  step: number;
+  /** @default 0 */
+  low: number;
+  /** @default 100 */
+  high: number;
+  /** @default '' */
+  name: string;
+  /** @default false */
+  disabled: boolean;
+  /** @default '' */
+  label: string;
+  /** @default true */
+  showValues: boolean;
+  /** @default true */
+  formAssociated: boolean;
+  form: unknown;
+  validity: unknown;
+  validationMessage: unknown;
+}
+
+/**
+ * `<arc-rating>`
+ * Events: arc-change
+ */
+export declare class ArcRating extends LitElement {
+  /** @default 0 */
+  value: number;
+  /** @default 5 */
+  max: number;
+  /** @default '' */
+  name: string;
+  /** @default false */
+  disabled: boolean;
+  /** @default false */
+  readonly: boolean;
+  /** @default true */
+  formAssociated: boolean;
+  form: unknown;
+  validity: unknown;
+  validationMessage: unknown;
+}
+
+/**
+ * `<arc-resizable>`
+ * Events: arc-resize
+ */
+export declare class ArcResizable extends LitElement {
+  /** @default 'horizontal' */
+  direction: string;
+  /** @default 100 */
+  minSize: number;
+  /** @default Infinity */
+  maxSize: number;
+  /** @default 300 */
+  size: number;
+}
+
+/**
+ * `<arc-responsive-switcher>`
+ */
+export declare class ArcResponsiveSwitcher extends LitElement {
+  /** @default '600px' */
+  threshold: string;
+  /** @default 'md' */
+  gap: string;
+}
+
+/**
+ * `<arc-scroll-area>`
+ */
+export declare class ArcScrollArea extends LitElement {
+  /** @default '' */
+  maxHeight: string;
+  /** @default 'vertical' */
+  orientation: string;
+}
+
+/**
+ * `<arc-scroll-indicator>`
+ */
+export declare class ArcScrollIndicator extends LitElement {
+  /** @default '' */
+  target: string;
+  /** @default 'top' */
+  position: string;
+  /** @default 'sm' */
+  size: string;
+  /** @default 'accent' */
+  color: string;
+}
+
+/**
+ * `<arc-scroll-spy>`
+ * Events: arc-change
+ */
+export declare class ArcScrollSpy extends LitElement {
+  /** @default '' */
+  active: string;
+  /** @default 80 */
+  offset: number;
+}
+
+/**
+ * `<arc-scroll-to-top>`
+ */
+export declare class ArcScrollToTop extends LitElement {
+  /** @default 300 */
+  threshold: number;
+  /** @default true */
+  smooth: boolean;
+  /** @default 'bottom-right' */
+  position: string;
+  /** @default 'var(--space-lg)' */
+  offset: string;
+}
+
+/**
+ * `<arc-search>`
+ * Events: arc-input, arc-clear, arc-change, arc-select
+ */
+export declare class ArcSearch extends LitElement {
+  /** @default '' */
+  value: string;
+  /** @default 'Search...' */
+  placeholder: string;
+  /** @default '' */
+  label: string;
+  /** @default false */
+  disabled: boolean;
+  /** @default false */
+  loading: boolean;
+}
+
+/**
+ * `<arc-section>`
+ */
+export declare class ArcSection extends LitElement {
+  /** @default '' */
+  label: string;
+}
+
+/**
+ * `<arc-segmented-control>`
+ * Events: arc-change
+ */
+export declare class ArcSegmentedControl extends LitElement {
+  /** @default '' */
+  value: string;
+  /** @default false */
+  disabled: boolean;
+}
+
+/**
+ * `<arc-select>`
+ * Events: arc-change
+ */
+export declare class ArcSelect extends LitElement {
+  /** @default '' */
+  value: string;
+  /** @default 'Select...' */
+  placeholder: string;
+  /** @default '' */
+  label: string;
+  /** @default '' */
+  name: string;
+  /** @default false */
+  disabled: boolean;
+  /** @default 'md' */
+  size: string;
+  /** @default '' */
+  error: string;
+  /** @default false */
+  open: boolean;
+  /** @default true */
+  formAssociated: boolean;
+  form: unknown;
+  validity: unknown;
+  validationMessage: unknown;
+}
+
+/**
+ * `<arc-separator>`
+ */
+export declare class ArcSeparator extends LitElement {
+  /** @default 'horizontal' */
+  orientation: string;
+  /** @default '' */
+  label: string;
+  /** @default 'line' */
+  variant: string;
+}
+
+/**
+ * `<arc-settings-layout>`
+ */
+export declare class ArcSettingsLayout extends LitElement {
+  /** @default 'left' */
+  navPosition: string;
+}
+
+/**
+ * `<arc-sheet>`
+ * Events: arc-close, arc-open
+ */
+export declare class ArcSheet extends LitElement {
+  /** @default false */
+  open: boolean;
+  /** @default 'bottom' */
+  side: string;
+  /** @default '' */
+  heading: string;
+}
+
+/**
+ * `<arc-sidebar>`
+ */
+export declare class ArcSidebar extends LitElement {
+  /** @default '' */
+  active: string;
+  /** @default false */
+  collapsed: boolean;
+  /** @default 'left' */
+  position: string;
+  /** @default '280px' */
+  width: string;
+  /** @default false */
+  glow: boolean;
+}
+
+/**
+ * `<arc-sidebar-link>`
+ */
+export declare class ArcSidebarLink extends LitElement {
+  label: unknown;
+  /** @default '' */
+  href: string;
+  /** @default false */
+  active: boolean;
+  /** @default 0 */
+  level: number;
+}
+
+/**
+ * `<arc-sidebar-section>`
+ * Events: arc-toggle
+ */
+export declare class ArcSidebarSection extends LitElement {
+  links: unknown;
+  /** @default '' */
+  heading: string;
+  /** @default false */
+  collapsible: boolean;
+  /** @default true */
+  open: boolean;
+}
+
+/**
+ * `<arc-skeleton>`
+ */
+export declare class ArcSkeleton extends LitElement {
+  /** @default 'text' */
+  variant: string;
+  /** @default '' */
+  width: string;
+  /** @default '' */
+  height: string;
+  /** @default 1 */
+  count: number;
+}
+
+/**
+ * `<arc-skip-link>`
+ */
+export declare class ArcSkipLink extends LitElement {
+  /** @default '#main' */
+  target: string;
+}
+
+/**
+ * `<arc-slider>`
+ * Events: arc-input, arc-change
+ */
+export declare class ArcSlider extends LitElement {
+  /** @default 0 */
+  value: number;
+  /** @default 0 */
+  min: number;
+  /** @default 100 */
+  max: number;
+  /** @default 1 */
+  step: number;
+  /** @default '' */
+  name: string;
+  /** @default false */
+  disabled: boolean;
+  /** @default '' */
+  label: string;
+  /** @default true */
+  formAssociated: boolean;
+  form: unknown;
+  validity: unknown;
+  validationMessage: unknown;
+}
+
+/**
+ * `<arc-snackbar>`
+ * Events: arc-action, arc-dismiss
+ */
+export declare class ArcSnackbar extends LitElement {
+  /** @default 'bottom-center' */
+  position: string;
+  /** @default 5000 */
+  duration: number;
+}
+
+/**
+ * `<arc-sortable-list>`
+ * Events: arc-change
+ */
+export declare class ArcSortableList extends LitElement {
+  /** @default false */
+  disabled: boolean;
+}
+
+/**
+ * `<arc-sparkline>`
+ */
+export declare class ArcSparkline extends LitElement {
+  /** @default '' */
+  data: string;
+  /** @default 'line' */
+  type: string;
+  /** @default '' */
+  color: string;
+  /** @default 120 */
+  width: number;
+  /** @default 32 */
+  height: number;
+  /** @default false */
+  fill: boolean;
+}
+
+/**
+ * `<arc-speed-dial>`
+ * Events: arc-action, arc-close
+ */
+export declare class ArcSpeedDial extends LitElement {
+  /** @default false */
+  open: boolean;
+  /** @default 'up' */
+  direction: string;
+  /** @default 'bottom-right' */
+  position: string;
+  /** @default [] */
+  items: unknown[];
+}
+
+/**
+ * `<arc-spinner>`
+ */
+export declare class ArcSpinner extends LitElement {
+  /** @default 'md' */
+  size: string;
+  /** @default 'primary' */
+  variant: string;
+}
+
+/**
+ * `<arc-split-pane>`
+ * Events: arc-resize
+ */
+export declare class ArcSplitPane extends LitElement {
+  /** @default 'horizontal' */
+  orientation: string;
+  /** @default 0.5 */
+  ratio: number;
+  /** @default 0.15 */
+  minRatio: number;
+  /** @default 0.85 */
+  maxRatio: number;
+}
+
+/**
+ * `<arc-spotlight>`
+ * Events: arc-dismiss
+ */
+export declare class ArcSpotlight extends LitElement {
+  /** @default '' */
+  target: string;
+  /** @default false */
+  active: boolean;
+  /** @default 8 */
+  padding: number;
+}
+
+/**
+ * `<arc-spy-link>`
+ */
+export declare class ArcSpyLink extends LitElement {
+  label: unknown;
+  /** @default '' */
+  target: string;
+  /** @default 0 */
+  level: number;
+}
+
+/**
+ * `<arc-stack>`
+ */
+export declare class ArcStack extends LitElement {
+  /** @default 'vertical' */
+  direction: string;
+  /** @default 'md' */
+  gap: string;
+  /** @default 'stretch' */
+  align: string;
+  /** @default 'start' */
+  justify: string;
+  /** @default false */
+  wrap: boolean;
+}
+
+/**
+ * `<arc-stat>`
+ */
+export declare class ArcStat extends LitElement {
+  /** @default '' */
+  value: string;
+  /** @default '' */
+  label: string;
+  /** @default '' */
+  trend: string;
+  /** @default '' */
+  change: string;
+}
+
+/**
+ * `<arc-status-bar>`
+ */
+export declare class ArcStatusBar extends LitElement {
+  /** @default 'static' */
+  position: string;
+}
+
+/**
+ * `<arc-step>`
+ */
+export declare class ArcStep extends LitElement {
+  /** @default '' */
+  label: string;
+}
+
+/**
+ * `<arc-stepper>`
+ */
+export declare class ArcStepper extends LitElement {
+  /** @default 0 */
+  active: number;
+}
+
+/**
+ * `<arc-stepper-nav>`
+ * Events: arc-change, arc-complete
+ */
+export declare class ArcStepperNav extends LitElement {
+  /** @default [] */
+  steps: unknown[];
+  /** @default 0 */
+  active: number;
+  /** @default false */
+  linear: boolean;
+}
+
+/**
+ * `<arc-sticky>`
+ * Events: arc-stuck
+ */
+export declare class ArcSticky extends LitElement {
+  /** @default '0px' */
+  offset: string;
+  /** @default false */
+  stuck: boolean;
+}
+
+/**
+ * `<arc-suggestion>`
+ */
+export declare class ArcSuggestion extends LitElement {
+  label: unknown;
+  /** @default '' */
+  value: string;
+}
+
+/**
+ * `<arc-switch-group>`
+ */
+export declare class ArcSwitchGroup extends LitElement {
+  /** @default '' */
+  label: string;
+  /** @default 'vertical' */
+  orientation: string;
+  /** @default 'md' */
+  size: string;
+  /** @default false */
+  disabled: boolean;
+}
+
+/**
+ * `<arc-tab>`
+ */
+export declare class ArcTab extends LitElement {
+  /** @default '' */
+  label: string;
+}
+
+/**
+ * `<arc-table>`
+ */
+export declare class ArcTable extends LitElement {
+  /** @default [] */
+  columns: unknown[];
+  /** @default [] */
+  rows: unknown[];
+  /** @default false */
+  striped: boolean;
+  /** @default false */
+  compact: boolean;
+}
+
+/**
+ * `<arc-tabs>`
+ * Events: arc-change
+ */
+export declare class ArcTabs extends LitElement {
+  /** @default 0 */
+  selected: number;
+  /** @default 'start' */
+  align: string;
+  /** @default 'underline' */
+  variant: string;
+  /** @default 'horizontal' */
+  orientation: string;
+}
+
+/**
+ * `<arc-tag>`
+ * Events: arc-remove
+ */
+export declare class ArcTag extends LitElement {
+  /** @default 'default' */
+  variant: string;
+  /** @default 'md' */
+  size: string;
+  /** @default false */
+  removable: boolean;
+  /** @default false */
+  disabled: boolean;
+  /** @default '' */
+  color: string;
+}
+
+/**
+ * `<arc-text>`
+ */
+export declare class ArcText extends LitElement {
+  /** @default 'body' */
+  variant: string;
+  /** @default 'p' */
+  as: string;
+}
+
+/**
+ * `<arc-textarea>`
+ * Events: arc-input, arc-change
+ */
+export declare class ArcTextarea extends LitElement {
+  /** @default '' */
+  value: string;
+  /** @default '' */
+  placeholder: string;
+  /** @default '' */
+  label: string;
+  /** @default 4 */
+  rows: number;
+  /** @default 0 */
+  maxlength: number;
+  /** @default false */
+  disabled: boolean;
+  /** @default false */
+  readonly: boolean;
+  /** @default 'vertical' */
+  resize: string;
+  /** @default 'md' */
+  size: string;
+  /** @default false */
+  autoResize: boolean;
+  /** @default '' */
+  error: string;
+  /** @default true */
+  formAssociated: boolean;
+  form: unknown;
+  validity: unknown;
+  validationMessage: unknown;
+}
+
+/**
+ * `<arc-theme-toggle>`
+ * Events: arc-change
+ */
+export declare class ArcThemeToggle extends LitElement {
+  /** @default 'auto' */
+  theme: string;
+  /** @default false */
+  disabled: boolean;
+  /** @default false */
+  iconOnly: boolean;
+}
+
+/**
+ * `<arc-time-ago>`
+ */
+export declare class ArcTimeAgo extends LitElement {
+  /** @default '' */
+  datetime: string;
+  /** @default true */
+  live: boolean;
+  /** @default 'en-US' */
+  locale: string;
+}
+
+/**
+ * `<arc-time-picker>`
+ * Events: arc-change
+ */
+export declare class ArcTimePicker extends LitElement {
+  /** @default '' */
+  value: string;
+  /** @default '' */
+  name: string;
+  /** @default '' */
+  min: string;
+  /** @default '' */
+  max: string;
+  /** @default 1 */
+  step: number;
+  /** @default '12h' */
+  format: string;
+  /** @default 'Select time' */
+  placeholder: string;
+  /** @default false */
+  disabled: boolean;
+  /** @default '' */
+  label: string;
+  /** @default true */
+  formAssociated: boolean;
+  form: unknown;
+  validity: unknown;
+  validationMessage: unknown;
+}
+
+/**
+ * `<arc-timeline>`
+ */
+export declare class ArcTimeline extends LitElement {
+}
+
+/**
+ * `<arc-timeline-item>`
+ */
+export declare class ArcTimelineItem extends LitElement {
+  description: unknown;
+  /** @default '' */
+  heading: string;
+  /** @default '' */
+  date: string;
+}
+
+/**
+ * `<arc-toast>`
+ * Events: arc-dismiss
+ */
+export declare class ArcToast extends LitElement {
+  /** @default 'top-right' */
+  position: string;
+  /** @default 4000 */
+  duration: number;
+}
+
+/**
+ * `<arc-toggle>`
+ * Events: arc-change
+ */
+export declare class ArcToggle extends LitElement {
+  /** @default false */
+  checked: boolean;
+  /** @default false */
+  disabled: boolean;
+  /** @default 'md' */
+  size: string;
+  /** @default '' */
+  label: string;
+  /** @default '' */
+  name: string;
+  /** @default true */
+  formAssociated: boolean;
+  form: unknown;
+  validity: unknown;
+  validationMessage: unknown;
+}
+
+/**
+ * `<arc-toolbar>`
+ */
+export declare class ArcToolbar extends LitElement {
+  /** @default false */
+  sticky: boolean;
+  /** @default 'md' */
+  size: string;
+  /** @default true */
+  border: boolean;
+}
+
+/**
+ * `<arc-tooltip>`
+ */
+export declare class ArcTooltip extends LitElement {
+  /** @default '' */
+  content: string;
+  /** @default 'top' */
+  position: string;
+  /** @default 200 */
+  delay: number;
+}
+
+/**
+ * `<arc-top-bar>`
+ * Events: eventName
+ */
+export declare class ArcTopBar extends LitElement {
+  /** @default '' */
+  heading: string;
+  /** @default false */
+  fixed: boolean;
+  /** @default null */
+  contained: null;
+  /** @default false */
+  menuOpen: boolean;
+  /** @default 'sidebar' */
+  mobileMenu: string;
+  /** @default 'left' */
+  menuPosition: string;
+  /** @default 'center' */
+  navAlign: string;
+}
+
+/**
+ * `<arc-tree-item>`
+ */
+export declare class ArcTreeItem extends LitElement {
+  items: unknown;
+  hasChildren: unknown;
+  /** @default '' */
+  label: string;
+  /** @default '' */
+  icon: string;
+  /** @default false */
+  expanded: boolean;
+}
+
+/**
+ * `<arc-tree-view>`
+ * Events: arc-toggle, arc-select
+ */
+export declare class ArcTreeView extends LitElement {
+}
+
+/**
+ * `<arc-truncate>`
+ * Events: arc-toggle
+ */
+export declare class ArcTruncate extends LitElement {
+  /** @default 3 */
+  lines: number;
+  /** @default false */
+  expanded: boolean;
+}
+
+/**
+ * `<arc-typewriter>`
+ * Events: arc-complete
+ */
+export declare class ArcTypewriter extends LitElement {
+  /** @default '' */
+  text: string;
+  /** @default 50 */
+  speed: number;
+  /** @default 0 */
+  delay: number;
+  /** @default true */
+  cursor: boolean;
+  /** @default false */
+  nowrap: boolean;
+  /** @default false */
+  loop: boolean;
+  /** @default 2000 */
+  undefined: number;
+  'pause-end': number;
+}
+
+/**
+ * `<arc-value-card>`
+ */
+export declare class ArcValueCard extends LitElement {
+  /** @default '' */
+  icon: string;
+  /** @default '' */
+  heading: string;
+  /** @default '' */
+  description: string;
+}
+
+/**
+ * `<arc-virtual-list>`
+ */
+export declare class ArcVirtualList extends LitElement {
+  visibleRange: unknown;
+  /** @default [] */
+  items: unknown[];
+  /** @default 40 */
+  itemHeight: number;
+  /** @default 5 */
+  overscan: number;
+}
 
 declare global {
   interface HTMLElementTagNameMap {
-    // Content
-    'arc-card': ArcCard;
-    'arc-feature-card': ArcFeatureCard;
-    'arc-value-card': ArcValueCard;
-    'arc-text': ArcText;
-    'arc-divider': ArcDivider;
-    'arc-stat': ArcStat;
-    'arc-badge': ArcBadge;
-    'arc-code-block': ArcCodeBlock;
-    'arc-icon': ArcIcon;
-    'arc-icon-library': ArcIconLibrary;
-    'arc-link': ArcLink;
-    'arc-table': ArcTable;
-    'arc-avatar': ArcAvatar;
-    'arc-avatar-group': ArcAvatarGroup;
-    'arc-callout': ArcCallout;
-    'arc-color-swatch': ArcColorSwatch;
-    'arc-empty-state': ArcEmptyState;
-    'arc-kbd': ArcKbd;
-    'arc-skeleton': ArcSkeleton;
-    'arc-spinner': ArcSpinner;
-    'arc-stepper': ArcStepper;
-    'arc-timeline': ArcTimeline;
-    'arc-step': ArcStep;
-    'arc-timeline-item': ArcTimelineItem;
-
-    // Reactive
-    'arc-button': ArcButton;
-    'arc-icon-button': ArcIconButton;
-    'arc-input': ArcInput;
     'arc-accordion': ArcAccordion;
     'arc-accordion-item': ArcAccordionItem;
-    'arc-tab': ArcTab;
-    'arc-tabs': ArcTabs;
-    'arc-toggle': ArcToggle;
-    'arc-checkbox': ArcCheckbox;
-    'arc-radio-group': ArcRadioGroup;
-    'arc-radio': ArcRadio;
-    'arc-select': ArcSelect;
     'arc-alert': ArcAlert;
-    'arc-progress': ArcProgress;
-    'arc-modal': ArcModal;
-    'arc-toast': ArcToast;
-    'arc-tooltip': ArcTooltip;
-    'arc-drawer': ArcDrawer;
-    'arc-command-palette': ArcCommandPalette;
-    'arc-copy-button': ArcCopyButton;
-    'arc-dropdown-menu': ArcDropdownMenu;
-    'arc-pagination': ArcPagination;
-    'arc-popover': ArcPopover;
-    'arc-slider': ArcSlider;
-    'arc-tag': ArcTag;
-    'arc-theme-toggle': ArcThemeToggle;
+    'arc-anchor-nav': ArcAnchorNav;
+    'arc-animated-number': ArcAnimatedNumber;
+    'arc-announcement': ArcAnnouncement;
+    'arc-app-shell': ArcAppShell;
+    'arc-aspect-grid': ArcAspectGrid;
+    'arc-aspect-ratio': ArcAspectRatio;
+    'arc-auth-shell': ArcAuthShell;
+    'arc-avatar': ArcAvatar;
+    'arc-avatar-group': ArcAvatarGroup;
+    'arc-badge': ArcBadge;
+    'arc-banner': ArcBanner;
+    'arc-blockquote': ArcBlockquote;
+    'arc-bottom-nav': ArcBottomNav;
+    'arc-breadcrumb': ArcBreadcrumb;
+    'arc-breadcrumb-item': ArcBreadcrumbItem;
+    'arc-breadcrumb-menu': ArcBreadcrumbMenu;
+    'arc-button': ArcButton;
+    'arc-button-group': ArcButtonGroup;
     'arc-calendar': ArcCalendar;
+    'arc-callout': ArcCallout;
+    'arc-card': ArcCard;
+    'arc-carousel': ArcCarousel;
+    'arc-center': ArcCenter;
+    'arc-checkbox': ArcCheckbox;
+    'arc-chip': ArcChip;
+    'arc-cluster': ArcCluster;
+    'arc-code-block': ArcCodeBlock;
+    'arc-collapsible': ArcCollapsible;
+    'arc-color-picker': ArcColorPicker;
+    'arc-color-swatch': ArcColorSwatch;
+    'arc-column': ArcColumn;
     'arc-combobox': ArcCombobox;
+    'arc-command-bar': ArcCommandBar;
+    'arc-command-item': ArcCommandItem;
+    'arc-command-palette': ArcCommandPalette;
+    'arc-comparison': ArcComparison;
+    'arc-comparison-column': ArcComparisonColumn;
+    'arc-confirm': ArcConfirm;
+    'arc-connection-status': ArcConnectionStatus;
+    'arc-container': ArcContainer;
     'arc-context-menu': ArcContextMenu;
+    'arc-copy-button': ArcCopyButton;
+    'arc-countdown-timer': ArcCountdownTimer;
+    'arc-cta-banner': ArcCtaBanner;
+    'arc-dashboard-grid': ArcDashboardGrid;
     'arc-data-table': ArcDataTable;
     'arc-date-picker': ArcDatePicker;
+    'arc-description-item': ArcDescriptionItem;
+    'arc-description-list': ArcDescriptionList;
+    'arc-dialog': ArcDialog;
+    'arc-diff': ArcDiff;
+    'arc-divider': ArcDivider;
+    'arc-dock': ArcDock;
+    'arc-drawer': ArcDrawer;
+    'arc-dropdown-menu': ArcDropdownMenu;
+    'arc-empty-state': ArcEmptyState;
+    'arc-feature-card': ArcFeatureCard;
+    'arc-fieldset': ArcFieldset;
     'arc-file-upload': ArcFileUpload;
-    'arc-form': ArcForm;
-    'arc-hover-card': ArcHoverCard;
-    'arc-multi-select': ArcMultiSelect;
-    'arc-search': ArcSearch;
-    'arc-textarea': ArcTextarea;
-    'arc-tree-view': ArcTreeView;
-    'arc-command-item': ArcCommandItem;
-    'arc-suggestion': ArcSuggestion;
-    'arc-tree-item': ArcTreeItem;
-    'arc-column': ArcColumn;
-
-    // Application
-    'arc-app-shell': ArcAppShell;
-    'arc-breadcrumb': ArcBreadcrumb;
-    'arc-container': ArcContainer;
-    'arc-navigation-menu': ArcNavigationMenu;
-    'arc-resizable': ArcResizable;
-    'arc-scroll-spy': ArcScrollSpy;
-    'arc-section': ArcSection;
-    'arc-sidebar': ArcSidebar;
-    'arc-top-bar': ArcTopBar;
-    'arc-auth-shell': ArcAuthShell;
-    'arc-dashboard-grid': ArcDashboardGrid;
+    'arc-float-bar': ArcFloatBar;
     'arc-footer': ArcFooter;
-    'arc-notification-panel': ArcNotificationPanel;
-    'arc-page-header': ArcPageHeader;
-    'arc-page-layout': ArcPageLayout;
-    'arc-settings-layout': ArcSettingsLayout;
-    'arc-split-pane': ArcSplitPane;
-    'arc-status-bar': ArcStatusBar;
-    'arc-toolbar': ArcToolbar;
-    'arc-breadcrumb-item': ArcBreadcrumbItem;
-    'arc-sidebar-section': ArcSidebarSection;
-    'arc-sidebar-link': ArcSidebarLink;
-    'arc-nav-item': ArcNavItem;
-    'arc-spy-link': ArcSpyLink;
-
-    // Shared
-    'arc-option': ArcOption;
-    'arc-menu-item': ArcMenuItem;
+    'arc-form': ArcForm;
+    'arc-gradient-text': ArcGradientText;
+    'arc-guided-tour': ArcGuidedTour;
+    'arc-highlight': ArcHighlight;
+    'arc-hotkey': ArcHotkey;
+    'arc-hover-card': ArcHoverCard;
+    'arc-icon': ArcIcon;
+    'arc-icon-button': ArcIconButton;
+    'arc-icon-library': ArcIconLibrary;
+    'arc-image': ArcImage;
+    'arc-infinite-scroll': ArcInfiniteScroll;
+    'arc-inline-message': ArcInlineMessage;
+    'arc-input': ArcInput;
+    'arc-input-group': ArcInputGroup;
+    'arc-inset': ArcInset;
+    'arc-kbd': ArcKbd;
+    'arc-key-value': ArcKeyValue;
+    'arc-kv-pair': ArcKvPair;
+    'arc-label': ArcLabel;
+    'arc-link': ArcLink;
+    'arc-list': ArcList;
+    'arc-list-item': ArcListItem;
+    'arc-loading-overlay': ArcLoadingOverlay;
+    'arc-markdown': ArcMarkdown;
+    'arc-marquee': ArcMarquee;
+    'arc-masonry': ArcMasonry;
     'arc-menu-divider': ArcMenuDivider;
+    'arc-menu-item': ArcMenuItem;
+    'arc-meter': ArcMeter;
+    'arc-modal': ArcModal;
+    'arc-multi-select': ArcMultiSelect;
+    'arc-nav-item': ArcNavItem;
+    'arc-navigation-menu': ArcNavigationMenu;
+    'arc-notification-panel': ArcNotificationPanel;
+    'arc-number-format': ArcNumberFormat;
+    'arc-number-input': ArcNumberInput;
+    'arc-option': ArcOption;
+    'arc-otp-input': ArcOtpInput;
+    'arc-page-header': ArcPageHeader;
+    'arc-page-indicator': ArcPageIndicator;
+    'arc-page-layout': ArcPageLayout;
+    'arc-pagination': ArcPagination;
+    'arc-pin-input': ArcPinInput;
+    'arc-popover': ArcPopover;
+    'arc-progress': ArcProgress;
+    'arc-progress-toast': ArcProgressToast;
+    'arc-prose': ArcProse;
+    'arc-radio': ArcRadio;
+    'arc-radio-group': ArcRadioGroup;
+    'arc-rail': ArcRail;
+    'arc-range-slider': ArcRangeSlider;
+    'arc-rating': ArcRating;
+    'arc-resizable': ArcResizable;
+    'arc-responsive-switcher': ArcResponsiveSwitcher;
+    'arc-scroll-area': ArcScrollArea;
+    'arc-scroll-indicator': ArcScrollIndicator;
+    'arc-scroll-spy': ArcScrollSpy;
+    'arc-scroll-to-top': ArcScrollToTop;
+    'arc-search': ArcSearch;
+    'arc-section': ArcSection;
+    'arc-segmented-control': ArcSegmentedControl;
+    'arc-select': ArcSelect;
+    'arc-separator': ArcSeparator;
+    'arc-settings-layout': ArcSettingsLayout;
+    'arc-sheet': ArcSheet;
+    'arc-sidebar': ArcSidebar;
+    'arc-sidebar-link': ArcSidebarLink;
+    'arc-sidebar-section': ArcSidebarSection;
+    'arc-skeleton': ArcSkeleton;
+    'arc-skip-link': ArcSkipLink;
+    'arc-slider': ArcSlider;
+    'arc-snackbar': ArcSnackbar;
+    'arc-sortable-list': ArcSortableList;
+    'arc-sparkline': ArcSparkline;
+    'arc-speed-dial': ArcSpeedDial;
+    'arc-spinner': ArcSpinner;
+    'arc-split-pane': ArcSplitPane;
+    'arc-spotlight': ArcSpotlight;
+    'arc-spy-link': ArcSpyLink;
+    'arc-stack': ArcStack;
+    'arc-stat': ArcStat;
+    'arc-status-bar': ArcStatusBar;
+    'arc-step': ArcStep;
+    'arc-stepper': ArcStepper;
+    'arc-stepper-nav': ArcStepperNav;
+    'arc-sticky': ArcSticky;
+    'arc-suggestion': ArcSuggestion;
+    'arc-switch-group': ArcSwitchGroup;
+    'arc-tab': ArcTab;
+    'arc-table': ArcTable;
+    'arc-tabs': ArcTabs;
+    'arc-tag': ArcTag;
+    'arc-text': ArcText;
+    'arc-textarea': ArcTextarea;
+    'arc-theme-toggle': ArcThemeToggle;
+    'arc-time-ago': ArcTimeAgo;
+    'arc-time-picker': ArcTimePicker;
+    'arc-timeline': ArcTimeline;
+    'arc-timeline-item': ArcTimelineItem;
+    'arc-toast': ArcToast;
+    'arc-toggle': ArcToggle;
+    'arc-toolbar': ArcToolbar;
+    'arc-tooltip': ArcTooltip;
+    'arc-top-bar': ArcTopBar;
+    'arc-tree-item': ArcTreeItem;
+    'arc-tree-view': ArcTreeView;
+    'arc-truncate': ArcTruncate;
+    'arc-typewriter': ArcTypewriter;
+    'arc-value-card': ArcValueCard;
+    'arc-virtual-list': ArcVirtualList;
   }
-}
-
-// ─────────────────────────────────────────────
-// Module declarations for subpath exports
-// ─────────────────────────────────────────────
-
-declare module '@arclux/arc-ui' {
-  export {
-    // Content
-    ArcCard,
-    ArcFeatureCard,
-    ArcValueCard,
-    ArcText,
-    ArcDivider,
-    ArcStat,
-    ArcBadge,
-    ArcCodeBlock,
-    ArcIcon,
-    ArcIconLibrary,
-    ArcLink,
-    ArcTable,
-    ArcAvatar,
-    ArcAvatarGroup,
-    ArcCallout,
-    ArcColorSwatch,
-    ArcEmptyState,
-    ArcKbd,
-    ArcSkeleton,
-    ArcSpinner,
-    ArcStepper,
-    ArcTimeline,
-    ArcStep,
-    ArcTimelineItem,
-    // Reactive
-    ArcButton,
-    ArcIconButton,
-    ArcInput,
-    ArcAccordion,
-    ArcAccordionItem,
-    ArcTab,
-    ArcTabs,
-    ArcToggle,
-    ArcCheckbox,
-    ArcRadioGroup,
-    ArcRadio,
-    ArcSelect,
-    ArcAlert,
-    ArcProgress,
-    ArcModal,
-    ArcToast,
-    ArcTooltip,
-    ArcDrawer,
-    ArcCommandPalette,
-    ArcCopyButton,
-    ArcDropdownMenu,
-    ArcPagination,
-    ArcPopover,
-    ArcSlider,
-    ArcTag,
-    ArcThemeToggle,
-    ArcCalendar,
-    ArcCombobox,
-    ArcContextMenu,
-    ArcDataTable,
-    ArcDatePicker,
-    ArcFileUpload,
-    ArcForm,
-    ArcHoverCard,
-    ArcMultiSelect,
-    ArcSearch,
-    ArcTextarea,
-    ArcTreeView,
-    ArcCommandItem,
-    ArcSuggestion,
-    ArcTreeItem,
-    ArcColumn,
-    // Application
-    ArcAppShell,
-    ArcBreadcrumb,
-    ArcContainer,
-    ArcNavigationMenu,
-    ArcResizable,
-    ArcScrollSpy,
-    ArcSection,
-    ArcSidebar,
-    ArcTopBar,
-    ArcAuthShell,
-    ArcDashboardGrid,
-    ArcFooter,
-    ArcNotificationPanel,
-    ArcPageHeader,
-    ArcPageLayout,
-    ArcSettingsLayout,
-    ArcSplitPane,
-    ArcStatusBar,
-    ArcToolbar,
-    ArcBreadcrumbItem,
-    ArcSidebarSection,
-    ArcSidebarLink,
-    ArcNavItem,
-    ArcSpyLink,
-    // Shared
-    ArcOption,
-    ArcMenuItem,
-    ArcMenuDivider,
-    // Icon Registry
-    iconRegistry,
-  };
-}
-
-declare module '@arclux/arc-ui/content' {
-  export {
-    ArcCard,
-    ArcFeatureCard,
-    ArcValueCard,
-    ArcText,
-    ArcDivider,
-    ArcStat,
-    ArcBadge,
-    ArcCodeBlock,
-    ArcIcon,
-    ArcIconLibrary,
-    ArcLink,
-    ArcTable,
-    ArcAvatar,
-    ArcAvatarGroup,
-    ArcCallout,
-    ArcColorSwatch,
-    ArcEmptyState,
-    ArcKbd,
-    ArcSkeleton,
-    ArcSpinner,
-    ArcStepper,
-    ArcTimeline,
-    ArcStep,
-    ArcTimelineItem,
-    iconRegistry,
-  };
-}
-
-declare module '@arclux/arc-ui/reactive' {
-  export {
-    ArcButton,
-    ArcIconButton,
-    ArcInput,
-    ArcAccordion,
-    ArcAccordionItem,
-    ArcTab,
-    ArcTabs,
-    ArcToggle,
-    ArcCheckbox,
-    ArcRadioGroup,
-    ArcRadio,
-    ArcSelect,
-    ArcAlert,
-    ArcProgress,
-    ArcModal,
-    ArcToast,
-    ArcTooltip,
-    ArcDrawer,
-    ArcCommandPalette,
-    ArcCopyButton,
-    ArcDropdownMenu,
-    ArcPagination,
-    ArcPopover,
-    ArcSlider,
-    ArcTag,
-    ArcThemeToggle,
-    ArcCalendar,
-    ArcCombobox,
-    ArcContextMenu,
-    ArcDataTable,
-    ArcDatePicker,
-    ArcFileUpload,
-    ArcForm,
-    ArcHoverCard,
-    ArcMultiSelect,
-    ArcSearch,
-    ArcTextarea,
-    ArcTreeView,
-    ArcCommandItem,
-    ArcSuggestion,
-    ArcTreeItem,
-    ArcColumn,
-  };
-}
-
-declare module '@arclux/arc-ui/application' {
-  export {
-    ArcAppShell,
-    ArcBreadcrumb,
-    ArcContainer,
-    ArcNavigationMenu,
-    ArcResizable,
-    ArcScrollSpy,
-    ArcSection,
-    ArcSidebar,
-    ArcTopBar,
-    ArcAuthShell,
-    ArcDashboardGrid,
-    ArcFooter,
-    ArcNotificationPanel,
-    ArcPageHeader,
-    ArcPageLayout,
-    ArcSettingsLayout,
-    ArcSplitPane,
-    ArcStatusBar,
-    ArcToolbar,
-    ArcBreadcrumbItem,
-    ArcSidebarSection,
-    ArcSidebarLink,
-    ArcNavItem,
-    ArcSpyLink,
-  };
-}
-
-declare module '@arclux/arc-ui/icon-registry' {
-  export { iconRegistry };
-}
-
-declare module '@arclux/arc-ui/button' {
-  export { ArcButton };
-}
-
-declare module '@arclux/arc-ui/input' {
-  export { ArcInput };
-}
-
-declare module '@arclux/arc-ui/accordion' {
-  export { ArcAccordion };
-}
-
-declare module '@arclux/arc-ui/tabs' {
-  export { ArcTabs };
-}
-
-declare module '@arclux/arc-ui/toggle' {
-  export { ArcToggle };
-}
-
-declare module '@arclux/arc-ui/checkbox' {
-  export { ArcCheckbox };
-}
-
-declare module '@arclux/arc-ui/radio-group' {
-  export { ArcRadioGroup };
-}
-
-declare module '@arclux/arc-ui/select' {
-  export { ArcSelect };
-}
-
-declare module '@arclux/arc-ui/alert' {
-  export { ArcAlert };
-}
-
-declare module '@arclux/arc-ui/progress' {
-  export { ArcProgress };
-}
-
-declare module '@arclux/arc-ui/modal' {
-  export { ArcModal };
-}
-
-declare module '@arclux/arc-ui/toast' {
-  export { ArcToast };
-}
-
-declare module '@arclux/arc-ui/tooltip' {
-  export { ArcTooltip };
-}
-
-declare module '@arclux/arc-ui/card' {
-  export { ArcCard };
-}
-
-declare module '@arclux/arc-ui/feature-card' {
-  export { ArcFeatureCard };
-}
-
-declare module '@arclux/arc-ui/value-card' {
-  export { ArcValueCard };
-}
-
-declare module '@arclux/arc-ui/container' {
-  export { ArcContainer };
-}
-
-declare module '@arclux/arc-ui/section' {
-  export { ArcSection };
-}
-
-declare module '@arclux/arc-ui/text' {
-  export { ArcText };
-}
-
-declare module '@arclux/arc-ui/divider' {
-  export { ArcDivider };
-}
-
-declare module '@arclux/arc-ui/stat' {
-  export { ArcStat };
-}
-
-declare module '@arclux/arc-ui/badge' {
-  export { ArcBadge };
-}
-
-declare module '@arclux/arc-ui/tokens' {
-  export const tokens: Record<string, string>;
 }

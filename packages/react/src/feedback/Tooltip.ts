@@ -2,13 +2,12 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcTooltip } from '@arclux/arc-ui';
+import { ArcTooltip } from '@arclux/arc-ui/tooltip';
 
 export interface TooltipProps {
   content?: string;
   position?: 'top' | 'bottom' | 'left' | 'right';
   delay?: number;
-  _visible?: string;
   className?: string;
   children?: React.ReactNode;
 }

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcSparkline } from '@arclux/arc-ui';
+import { ArcSparkline } from '@arclux/arc-ui/sparkline';
 
 export interface SparklineProps {
   data?: string;

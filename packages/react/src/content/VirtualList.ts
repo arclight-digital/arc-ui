@@ -2,14 +2,12 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcVirtualList } from '@arclux/arc-ui';
+import { ArcVirtualList } from '@arclux/arc-ui/virtual-list';
 
 export interface VirtualListProps {
   items?: unknown[];
   itemHeight?: number;
   overscan?: number;
-  _startIndex?: string;
-  _visibleCount?: string;
   className?: string;
   children?: React.ReactNode;
 }

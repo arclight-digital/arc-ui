@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcNumberFormat } from '@arclux/arc-ui';
+import { ArcNumberFormat } from '@arclux/arc-ui/number-format';
 
 export interface NumberFormatProps {
   value?: number;

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcColumn } from '@arclux/arc-ui';
+import { ArcColumn } from '@arclux/arc-ui/column';
 
 export interface ColumnProps {
   key?: string;

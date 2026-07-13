@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcCluster } from '@arclux/arc-ui';
+import { ArcCluster } from '@arclux/arc-ui/cluster';
 
 export interface ClusterProps {
   gap?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';

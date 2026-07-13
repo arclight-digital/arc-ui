@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcSegmentedControl } from './segmented-control.js';
-customElements.define('arc-segmented-control', ArcSegmentedControl);
+if (!customElements.get('arc-segmented-control')) customElements.define('arc-segmented-control', ArcSegmentedControl);
 export { ArcSegmentedControl };

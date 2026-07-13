@@ -2,12 +2,10 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcInputGroup } from '@arclux/arc-ui';
+import { ArcInputGroup } from '@arclux/arc-ui/input-group';
 
 export interface InputGroupProps {
   size?: 'sm' | 'lg';
-  _hasPrefix?: string;
-  _hasSuffix?: string;
   className?: string;
   children?: React.ReactNode;
 }

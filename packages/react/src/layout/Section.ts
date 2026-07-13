@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcSection } from '@arclux/arc-ui';
+import { ArcSection } from '@arclux/arc-ui/section';
 
 export interface SectionProps {
   label?: string;

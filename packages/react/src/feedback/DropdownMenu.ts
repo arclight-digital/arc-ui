@@ -2,11 +2,10 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcDropdownMenu } from '@arclux/arc-ui';
+import { ArcDropdownMenu } from '@arclux/arc-ui/dropdown-menu';
 
 export interface DropdownMenuProps {
   open?: boolean;
-  _children?: string;
   className?: string;
   children?: React.ReactNode;
   onArcClose?: (e: CustomEvent) => void;

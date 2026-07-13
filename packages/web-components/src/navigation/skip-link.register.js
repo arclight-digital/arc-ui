@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcSkipLink } from './skip-link.js';
-customElements.define('arc-skip-link', ArcSkipLink);
+if (!customElements.get('arc-skip-link')) customElements.define('arc-skip-link', ArcSkipLink);
 export { ArcSkipLink };

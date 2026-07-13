@@ -2,13 +2,12 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcDock } from '@arclux/arc-ui';
+import { ArcDock } from '@arclux/arc-ui/dock';
 
 export interface DockProps {
   position?: 'bottom' | 'left' | 'right';
   autoHide?: boolean;
   open?: boolean;
-  _hovered?: string;
   className?: string;
   children?: React.ReactNode;
 }

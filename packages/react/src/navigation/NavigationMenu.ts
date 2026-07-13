@@ -2,14 +2,9 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcNavigationMenu } from '@arclux/arc-ui';
+import { ArcNavigationMenu } from '@arclux/arc-ui/navigation-menu';
 
 export interface NavigationMenuProps {
-  _items?: string;
-  _openIndex?: string;
-  _mobileOpen?: string;
-  _mobileClosing?: string;
-  _mobileExpandedIndex?: string;
   className?: string;
   children?: React.ReactNode;
   onArcMobileMenuToggle?: (e: CustomEvent) => void;

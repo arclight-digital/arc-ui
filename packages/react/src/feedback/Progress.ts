@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcProgress } from '@arclux/arc-ui';
+import { ArcProgress } from '@arclux/arc-ui/progress';
 
 export interface ProgressProps {
   value?: number;

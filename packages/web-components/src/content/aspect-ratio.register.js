@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcAspectRatio } from './aspect-ratio.js';
-customElements.define('arc-aspect-ratio', ArcAspectRatio);
+if (!customElements.get('arc-aspect-ratio')) customElements.define('arc-aspect-ratio', ArcAspectRatio);
 export { ArcAspectRatio };

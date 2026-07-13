@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcImage } from '@arclux/arc-ui';
+import { ArcImage } from '@arclux/arc-ui/image';
 
 export interface ImageProps {
   src?: string;
@@ -11,7 +11,6 @@ export interface ImageProps {
   fit?: 'contain' | 'fill' | 'none' | 'scale-down';
   loading?: string;
   fallback?: string;
-  _state?: string;
   className?: string;
   children?: React.ReactNode;
   onArcLoad?: (e: CustomEvent) => void;

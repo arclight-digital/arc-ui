@@ -2,14 +2,13 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcTabs } from '@arclux/arc-ui';
+import { ArcTabs } from '@arclux/arc-ui/tabs';
 
 export interface TabsProps {
   selected?: number;
   align?: 'center' | 'end';
   variant?: 'pills';
   orientation?: 'vertical';
-  _tabs?: string;
   className?: string;
   children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;

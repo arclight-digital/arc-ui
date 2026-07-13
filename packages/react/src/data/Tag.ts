@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcTag } from '@arclux/arc-ui';
+import { ArcTag } from '@arclux/arc-ui/tag';
 
 export interface TagProps {
   variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger';

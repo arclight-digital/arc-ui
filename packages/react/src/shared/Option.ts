@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcOption } from '@arclux/arc-ui';
+import { ArcOption } from '@arclux/arc-ui/option';
 
 export interface OptionProps {
   value?: string;

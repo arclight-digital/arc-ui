@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcBanner } from '@arclux/arc-ui';
+import { ArcBanner } from '@arclux/arc-ui/banner';
 
 export interface BannerProps {
   variant?: string;

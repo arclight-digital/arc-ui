@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcText } from '@arclux/arc-ui';
+import { ArcText } from '@arclux/arc-ui/text';
 
 export interface TextProps {
   variant?: 'accent' | 'code';

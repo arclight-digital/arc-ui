@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcMeter } from '@arclux/arc-ui';
+import { ArcMeter } from '@arclux/arc-ui/meter';
 
 export interface MeterProps {
   value?: number;

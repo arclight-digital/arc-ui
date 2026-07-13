@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcDrawer } from '@arclux/arc-ui';
+import { ArcDrawer } from '@arclux/arc-ui/drawer';
 
 export interface DrawerProps {
   open?: boolean;

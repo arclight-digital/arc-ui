@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcScrollArea } from '@arclux/arc-ui';
+import { ArcScrollArea } from '@arclux/arc-ui/scroll-area';
 
 export interface ScrollAreaProps {
   maxHeight?: string;

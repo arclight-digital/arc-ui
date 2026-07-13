@@ -2,12 +2,11 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcCallout } from '@arclux/arc-ui';
+import { ArcCallout } from '@arclux/arc-ui/callout';
 
 export interface CalloutProps {
   variant?: string;
   dismissible?: boolean;
-  _dismissed?: string;
   className?: string;
   children?: React.ReactNode;
   onArcDismiss?: (e: CustomEvent) => void;

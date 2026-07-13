@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcColorSwatch } from './color-swatch.js';
-customElements.define('arc-color-swatch', ArcColorSwatch);
+if (!customElements.get('arc-color-swatch')) customElements.define('arc-color-swatch', ArcColorSwatch);
 export { ArcColorSwatch };

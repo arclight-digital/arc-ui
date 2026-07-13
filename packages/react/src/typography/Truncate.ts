@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcTruncate } from '@arclux/arc-ui';
+import { ArcTruncate } from '@arclux/arc-ui/truncate';
 
 export interface TruncateProps {
   lines?: number;

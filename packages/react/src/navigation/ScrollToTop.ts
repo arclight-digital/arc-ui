@@ -2,14 +2,13 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcScrollToTop } from '@arclux/arc-ui';
+import { ArcScrollToTop } from '@arclux/arc-ui/scroll-to-top';
 
 export interface ScrollToTopProps {
   threshold?: number;
   smooth?: boolean;
   position?: 'bottom-right' | 'bottom-left';
   offset?: string;
-  _visible?: string;
   className?: string;
   children?: React.ReactNode;
   onClick?: (e: Event) => void;

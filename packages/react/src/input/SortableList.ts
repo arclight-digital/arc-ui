@@ -2,15 +2,10 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcSortableList } from '@arclux/arc-ui';
+import { ArcSortableList } from '@arclux/arc-ui/sortable-list';
 
 export interface SortableListProps {
   disabled?: boolean;
-  _items?: string;
-  _dragIndex?: string;
-  _overIndex?: string;
-  _kbSelected?: string;
-  _kbMoving?: string;
   className?: string;
   children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;

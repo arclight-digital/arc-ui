@@ -2,19 +2,14 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcColorPicker } from '@arclux/arc-ui';
+import { ArcColorPicker } from '@arclux/arc-ui/color-picker';
 
 export interface ColorPickerProps {
   value?: string;
+  name?: string;
   presets?: unknown[];
   disabled?: boolean;
   label?: string;
-  _hue?: string;
-  _sat?: string;
-  _lit?: string;
-  _hexInput?: string;
-  _draggingArea?: string;
-  _draggingHue?: string;
   className?: string;
   children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;

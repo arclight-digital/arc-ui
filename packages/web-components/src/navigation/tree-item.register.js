@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcTreeItem } from './tree-item.js';
-customElements.define('arc-tree-item', ArcTreeItem);
+if (!customElements.get('arc-tree-item')) customElements.define('arc-tree-item', ArcTreeItem);
 export { ArcTreeItem };

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcStep } from '@arclux/arc-ui';
+import { ArcStep } from '@arclux/arc-ui/step';
 
 export interface StepProps {
   label?: string;

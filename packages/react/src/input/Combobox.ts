@@ -2,17 +2,14 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcCombobox } from '@arclux/arc-ui';
+import { ArcCombobox } from '@arclux/arc-ui/combobox';
 
 export interface ComboboxProps {
   value?: string;
   placeholder?: string;
   label?: string;
+  name?: string;
   disabled?: boolean;
-  _query?: string;
-  _open?: string;
-  _activeIndex?: string;
-  _options?: string;
   className?: string;
   children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;

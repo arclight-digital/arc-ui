@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcCheckbox } from '@arclux/arc-ui';
+import { ArcCheckbox } from '@arclux/arc-ui/checkbox';
 
 export interface CheckboxProps {
   checked?: boolean;

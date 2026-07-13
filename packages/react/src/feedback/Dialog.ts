@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcDialog } from '@arclux/arc-ui';
+import { ArcDialog } from '@arclux/arc-ui/dialog';
 
 export interface DialogProps {
   open?: boolean;

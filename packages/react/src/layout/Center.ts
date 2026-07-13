@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcCenter } from '@arclux/arc-ui';
+import { ArcCenter } from '@arclux/arc-ui/center';
 
 export interface CenterProps {
   maxWidth?: string;

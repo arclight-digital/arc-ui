@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcToolbar } from '@arclux/arc-ui';
+import { ArcToolbar } from '@arclux/arc-ui/toolbar';
 
 export interface ToolbarProps {
   sticky?: boolean;

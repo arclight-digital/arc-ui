@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcCluster } from './cluster.js';
-customElements.define('arc-cluster', ArcCluster);
+if (!customElements.get('arc-cluster')) customElements.define('arc-cluster', ArcCluster);
 export { ArcCluster };

@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcInfiniteScroll } from './infinite-scroll.js';
-customElements.define('arc-infinite-scroll', ArcInfiniteScroll);
+if (!customElements.get('arc-infinite-scroll')) customElements.define('arc-infinite-scroll', ArcInfiniteScroll);
 export { ArcInfiniteScroll };

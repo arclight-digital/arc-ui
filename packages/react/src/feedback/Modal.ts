@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcModal } from '@arclux/arc-ui';
+import { ArcModal } from '@arclux/arc-ui/modal';
 
 export interface ModalProps {
   open?: boolean;

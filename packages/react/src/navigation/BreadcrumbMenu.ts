@@ -2,11 +2,10 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcBreadcrumbMenu } from '@arclux/arc-ui';
+import { ArcBreadcrumbMenu } from '@arclux/arc-ui/breadcrumb-menu';
 
 export interface BreadcrumbMenuProps {
   items?: string;
-  _openIndex?: number;
   className?: string;
   children?: React.ReactNode;
   onArcNavigate?: (e: CustomEvent) => void;

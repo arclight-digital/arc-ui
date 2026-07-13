@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcFooter } from '@arclux/arc-ui';
+import { ArcFooter } from '@arclux/arc-ui/footer';
 
 export interface FooterProps {
   compact?: boolean;

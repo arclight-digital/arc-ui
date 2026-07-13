@@ -2,11 +2,12 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcOtpInput } from '@arclux/arc-ui';
+import { ArcOtpInput } from '@arclux/arc-ui/otp-input';
 
 export interface OtpInputProps {
   length?: number;
   value?: string;
+  name?: string;
   disabled?: boolean;
   type?: string;
   className?: string;

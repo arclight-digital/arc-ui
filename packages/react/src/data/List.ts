@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcList } from '@arclux/arc-ui';
+import { ArcList } from '@arclux/arc-ui/list';
 
 export interface ListProps {
   variant?: 'bordered' | 'separated';
@@ -10,7 +10,6 @@ export interface ListProps {
   selectable?: boolean;
   multiple?: boolean;
   value?: string;
-  _items?: string;
   className?: string;
   children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;

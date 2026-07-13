@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcSeparator } from '@arclux/arc-ui';
+import { ArcSeparator } from '@arclux/arc-ui/separator';
 
 export interface SeparatorProps {
   orientation?: 'vertical';

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcNavItem } from '@arclux/arc-ui';
+import { ArcNavItem } from '@arclux/arc-ui/nav-item';
 
 export interface NavItemProps {
   href?: string;

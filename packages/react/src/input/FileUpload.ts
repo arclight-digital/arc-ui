@@ -2,16 +2,13 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcFileUpload } from '@arclux/arc-ui';
+import { ArcFileUpload } from '@arclux/arc-ui/file-upload';
 
 export interface FileUploadProps {
   accept?: string;
   multiple?: boolean;
   maxSize?: number;
   disabled?: boolean;
-  _files?: string;
-  _dragOver?: string;
-  _error?: string;
   className?: string;
   children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;

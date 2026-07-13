@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcCtaBanner } from '@arclux/arc-ui';
+import { ArcCtaBanner } from '@arclux/arc-ui/cta-banner';
 
 export interface CtaBannerProps {
   eyebrow?: string;

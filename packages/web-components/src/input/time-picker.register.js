@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcTimePicker } from './time-picker.js';
-customElements.define('arc-time-picker', ArcTimePicker);
+if (!customElements.get('arc-time-picker')) customElements.define('arc-time-picker', ArcTimePicker);
 export { ArcTimePicker };

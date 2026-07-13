@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcSortableList } from './sortable-list.js';
-customElements.define('arc-sortable-list', ArcSortableList);
+if (!customElements.get('arc-sortable-list')) customElements.define('arc-sortable-list', ArcSortableList);
 export { ArcSortableList };

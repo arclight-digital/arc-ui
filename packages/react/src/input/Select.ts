@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcSelect } from '@arclux/arc-ui';
+import { ArcSelect } from '@arclux/arc-ui/select';
 
 export interface SelectProps {
   value?: string;
@@ -13,7 +13,6 @@ export interface SelectProps {
   size?: 'sm' | 'lg';
   error?: string;
   open?: boolean;
-  _options?: string;
   className?: string;
   children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;

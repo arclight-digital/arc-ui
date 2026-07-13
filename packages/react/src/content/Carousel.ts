@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcCarousel } from '@arclux/arc-ui';
+import { ArcCarousel } from '@arclux/arc-ui/carousel';
 
 export interface CarouselProps {
   autoPlay?: boolean;
@@ -10,8 +10,6 @@ export interface CarouselProps {
   loop?: boolean;
   showDots?: boolean;
   showArrows?: boolean;
-  _current?: string;
-  _total?: string;
   className?: string;
   children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;

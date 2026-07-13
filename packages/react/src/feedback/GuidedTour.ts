@@ -2,11 +2,9 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcGuidedTour } from '@arclux/arc-ui';
+import { ArcGuidedTour } from '@arclux/arc-ui/guided-tour';
 
 export interface GuidedTourProps {
-  steps?: string;
-  active?: string;
   open?: boolean;
   className?: string;
   children?: React.ReactNode;

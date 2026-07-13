@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcInlineMessage } from './inline-message.js';
-customElements.define('arc-inline-message', ArcInlineMessage);
+if (!customElements.get('arc-inline-message')) customElements.define('arc-inline-message', ArcInlineMessage);
 export { ArcInlineMessage };

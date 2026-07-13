@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcIconButton } from '@arclux/arc-ui';
+import { ArcIconButton } from '@arclux/arc-ui/icon-button';
 
 export interface IconButtonProps {
   name?: string;

@@ -23,7 +23,7 @@
         border-bottom: none;
       }
 
-      .arc-dock([position="bottom"][auto-hide]:not([open]):not(:hover)) .dock {
+      .arc-dock[data-position="bottom"][auto-hide]:not([data-open]):not(:hover) .dock {
         transform: translateY(100%);
       }
 
@@ -36,7 +36,7 @@
         border-left: none;
       }
 
-      .arc-dock([position="left"][auto-hide]:not([open]):not(:hover)) .dock {
+      .arc-dock[data-position="left"][auto-hide]:not([data-open]):not(:hover) .dock {
         transform: translateX(-100%);
       }
 
@@ -49,12 +49,12 @@
         border-right: none;
       }
 
-      .arc-dock([position="right"][auto-hide]:not([open]):not(:hover)) .dock {
+      .arc-dock[data-position="right"][auto-hide]:not([data-open]):not(:hover) .dock {
         transform: translateX(100%);
       }
 
       /* Subtle glow on reveal */
       .arc-dock[auto-hide] .dock:hover,
-      .arc-dock([auto-hide][open]) .dock {
+      .arc-dock[auto-hide][open] .dock {
         box-shadow: 0 0 20px rgba(var(--accent-primary-rgb), 0.08);
       }

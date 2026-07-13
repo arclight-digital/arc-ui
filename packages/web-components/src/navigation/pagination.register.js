@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcPagination } from './pagination.js';
-customElements.define('arc-pagination', ArcPagination);
+if (!customElements.get('arc-pagination')) customElements.define('arc-pagination', ArcPagination);
 export { ArcPagination };

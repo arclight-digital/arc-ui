@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcSpinner } from './spinner.js';
-customElements.define('arc-spinner', ArcSpinner);
+if (!customElements.get('arc-spinner')) customElements.define('arc-spinner', ArcSpinner);
 export { ArcSpinner };

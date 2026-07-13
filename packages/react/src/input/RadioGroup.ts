@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcRadioGroup } from '@arclux/arc-ui';
+import { ArcRadioGroup } from '@arclux/arc-ui/radio-group';
 
 export interface RadioGroupProps {
   value?: string;
@@ -10,7 +10,6 @@ export interface RadioGroupProps {
   disabled?: boolean;
   size?: 'sm' | 'lg';
   orientation?: 'horizontal';
-  _radios?: string;
   className?: string;
   children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;

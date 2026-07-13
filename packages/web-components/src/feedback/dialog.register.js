@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcDialog } from './dialog.js';
-customElements.define('arc-dialog', ArcDialog);
+if (!customElements.get('arc-dialog')) customElements.define('arc-dialog', ArcDialog);
 export { ArcDialog };

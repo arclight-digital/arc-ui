@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcLoadingOverlay } from '@arclux/arc-ui';
+import { ArcLoadingOverlay } from '@arclux/arc-ui/loading-overlay';
 
 export interface LoadingOverlayProps {
   active?: boolean;

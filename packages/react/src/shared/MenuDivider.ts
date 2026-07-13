@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcMenuDivider } from '@arclux/arc-ui';
+import { ArcMenuDivider } from '@arclux/arc-ui/menu-divider';
 
 export interface MenuDividerProps {
   className?: string;

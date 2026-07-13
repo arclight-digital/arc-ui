@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcMarkdown } from './markdown.js';
-customElements.define('arc-markdown', ArcMarkdown);
+if (!customElements.get('arc-markdown')) customElements.define('arc-markdown', ArcMarkdown);
 export { ArcMarkdown };

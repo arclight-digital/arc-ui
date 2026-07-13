@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcPageIndicator } from '@arclux/arc-ui';
+import { ArcPageIndicator } from '@arclux/arc-ui/page-indicator';
 
 export interface PageIndicatorProps {
   count?: number;

@@ -2,17 +2,14 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcMultiSelect } from '@arclux/arc-ui';
+import { ArcMultiSelect } from '@arclux/arc-ui/multi-select';
 
 export interface MultiSelectProps {
   value?: unknown[];
   placeholder?: string;
   label?: string;
+  name?: string;
   disabled?: boolean;
-  _query?: string;
-  _open?: string;
-  _activeIndex?: string;
-  _options?: string;
   className?: string;
   children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;

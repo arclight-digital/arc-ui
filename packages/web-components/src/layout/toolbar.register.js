@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcToolbar } from './toolbar.js';
-customElements.define('arc-toolbar', ArcToolbar);
+if (!customElements.get('arc-toolbar')) customElements.define('arc-toolbar', ArcToolbar);
 export { ArcToolbar };

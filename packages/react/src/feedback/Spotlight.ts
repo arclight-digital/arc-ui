@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcSpotlight } from '@arclux/arc-ui';
+import { ArcSpotlight } from '@arclux/arc-ui/spotlight';
 
 export interface SpotlightProps {
   target?: string;

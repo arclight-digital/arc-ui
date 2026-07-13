@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcDivider } from '@arclux/arc-ui';
+import { ArcDivider } from '@arclux/arc-ui/divider';
 
 export interface DividerProps {
   variant?: 'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient';

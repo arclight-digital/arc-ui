@@ -247,7 +247,7 @@
       ::slotted(:hover) {
         transform: translateY(-2px) scale(1.08);
         z-index: 100 !important;
-        box-shadow: 0 0 0 3px var(--surface-base), 0 4px 12px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 0 0 3px var(--surface-base), var(--shadow-md);
       }
 
       .arc-avatar-group .group__overflow {
@@ -394,10 +394,10 @@
       .arc-card .card { height: 100%; }
 
       /* Suppress hover effect when no href and not interactive */
-      .arc-card(:not([href]):not([interactive])) .card:hover {
+      .arc-card:not([data-href]):not([data-interactive]) .card:hover {
         background: var(--border-subtle);
       }
-      .arc-card(:not([href]):not([interactive])) .card:hover .card__inner {
+      .arc-card:not([data-href]):not([data-interactive]) .card:hover .card__inner {
         box-shadow: none;
       }
 
@@ -622,40 +622,40 @@
       .arc-divider[data-align="left"] .divider { margin-inline: 0; }
       .arc-divider[data-align="right"] .divider { margin-left: auto; margin-right: 0; }
 
-      .arc-divider([align="left"]:not([variant])) .divider,
-      .arc-divider([align="left"][variant="subtle"]) .divider {
+      .arc-divider[data-align="left"]:not([data-variant]) .divider,
+      .arc-divider[data-align="left"][data-variant="subtle"] .divider {
         background: linear-gradient(90deg, var(--border-default), transparent);
       }
-      .arc-divider([align="right"]:not([variant])) .divider,
-      .arc-divider([align="right"][variant="subtle"]) .divider {
+      .arc-divider[data-align="right"]:not([data-variant]) .divider,
+      .arc-divider[data-align="right"][data-variant="subtle"] .divider {
         background: linear-gradient(90deg, transparent, var(--border-default));
       }
 
-      .arc-divider([align="left"][variant="glow"]) .divider {
+      .arc-divider[data-align="left"][data-variant="glow"] .divider {
         background: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0.5), rgba(var(--accent-secondary-rgb),0.3), transparent);
       }
-      .arc-divider([align="right"][variant="glow"]) .divider {
+      .arc-divider[data-align="right"][data-variant="glow"] .divider {
         background: linear-gradient(90deg, transparent, rgba(var(--accent-secondary-rgb),0.3), rgba(var(--accent-primary-rgb),0.5));
       }
 
-      .arc-divider([align="left"][variant="line-white"]) .divider {
+      .arc-divider[data-align="left"][data-variant="line-white"] .divider {
         background: linear-gradient(90deg, rgba(var(--text-primary-rgb),0.35), transparent);
       }
-      .arc-divider([align="right"][variant="line-white"]) .divider {
+      .arc-divider[data-align="right"][data-variant="line-white"] .divider {
         background: linear-gradient(90deg, transparent, rgba(var(--text-primary-rgb),0.35));
       }
 
-      .arc-divider([align="left"][variant="line-primary"]) .divider {
+      .arc-divider[data-align="left"][data-variant="line-primary"] .divider {
         background: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0.7), transparent);
       }
-      .arc-divider([align="right"][variant="line-primary"]) .divider {
+      .arc-divider[data-align="right"][data-variant="line-primary"] .divider {
         background: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.7));
       }
 
-      .arc-divider([align="left"][variant="line-gradient"]) .divider {
+      .arc-divider[data-align="left"][data-variant="line-gradient"] .divider {
         background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary), transparent);
       }
-      .arc-divider([align="right"][variant="line-gradient"]) .divider {
+      .arc-divider[data-align="right"][data-variant="line-gradient"] .divider {
         background: linear-gradient(90deg, transparent, var(--accent-primary), var(--accent-secondary));
       }
 
@@ -663,30 +663,30 @@
       .arc-divider[vertical] { display: inline-flex; width: auto; height: 100%; }
       .arc-divider[vertical] .divider { width: 1px; height: 100%; }
 
-      .arc-divider([vertical]:not([variant])) .divider,
-      .arc-divider([vertical][variant="subtle"]) .divider {
+      .arc-divider[vertical]:not([data-variant]) .divider,
+      .arc-divider[vertical][data-variant="subtle"] .divider {
         background: linear-gradient(180deg, transparent, var(--border-default), transparent);
       }
 
-      .arc-divider([vertical][variant="glow"]) .divider {
+      .arc-divider[vertical][data-variant="glow"] .divider {
         background: linear-gradient(180deg, transparent, rgba(var(--accent-primary-rgb),0.5), rgba(var(--accent-secondary-rgb),0.3), transparent);
       }
 
-      .arc-divider([vertical][variant="line-gradient"]) .divider {
+      .arc-divider[vertical][data-variant="line-gradient"] .divider {
         width: 2px;
         max-width: none;
         background: linear-gradient(180deg, transparent, var(--accent-primary), var(--accent-secondary), transparent);
         box-shadow: 0 0 10px rgba(var(--accent-primary-rgb),0.25);
       }
 
-      .arc-divider([vertical][variant="line-primary"]) .divider {
+      .arc-divider[vertical][data-variant="line-primary"] .divider {
         width: 2px;
         max-width: none;
         background: linear-gradient(180deg, transparent, rgba(var(--accent-primary-rgb),0.7), transparent);
         box-shadow: 0 0 8px rgba(var(--accent-primary-rgb),0.3);
       }
 
-      .arc-divider([vertical][variant="line-white"]) .divider {
+      .arc-divider[vertical][data-variant="line-white"] .divider {
         width: 2px;
         max-width: none;
         background: linear-gradient(180deg, transparent, rgba(var(--text-primary-rgb),0.35), transparent);
@@ -1059,21 +1059,21 @@
         background: var(--border-default);
       }
 
-      .arc-separator([orientation="vertical"][variant="dashed"]) .separator {
+      .arc-separator[data-orientation="vertical"][data-variant="dashed"] .separator {
         background: none;
         border-top: none;
         border-left: 1px dashed var(--border-default);
         width: 0;
       }
 
-      .arc-separator([orientation="vertical"][variant="dotted"]) .separator {
+      .arc-separator[data-orientation="vertical"][data-variant="dotted"] .separator {
         background: none;
         border-top: none;
         border-left: 1px dotted var(--border-default);
         width: 0;
       }
 
-      .arc-separator([orientation="vertical"][variant="fade"]) .separator {
+      .arc-separator[data-orientation="vertical"][data-variant="fade"] .separator {
         background: linear-gradient(180deg, transparent, var(--border-default), transparent);
       }
 
@@ -2449,7 +2449,7 @@
 
       /* — Window variant — */
       .arc-code-block[data-variant="window"] .code-block {
-        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+        box-shadow: var(--shadow-overlay);
       }
 
       .arc-code-block .code-block__titlebar {
@@ -3974,7 +3974,7 @@
         border-bottom: none;
       }
 
-      .arc-dock([position="bottom"][auto-hide]:not([open]):not(:hover)) .dock {
+      .arc-dock[data-position="bottom"][auto-hide]:not([data-open]):not(:hover) .dock {
         transform: translateY(100%);
       }
 
@@ -3987,7 +3987,7 @@
         border-left: none;
       }
 
-      .arc-dock([position="left"][auto-hide]:not([open]):not(:hover)) .dock {
+      .arc-dock[data-position="left"][auto-hide]:not([data-open]):not(:hover) .dock {
         transform: translateX(-100%);
       }
 
@@ -4000,13 +4000,13 @@
         border-right: none;
       }
 
-      .arc-dock([position="right"][auto-hide]:not([open]):not(:hover)) .dock {
+      .arc-dock[data-position="right"][auto-hide]:not([data-open]):not(:hover) .dock {
         transform: translateX(100%);
       }
 
       /* Subtle glow on reveal */
       .arc-dock[auto-hide] .dock:hover,
-      .arc-dock([auto-hide][open]) .dock {
+      .arc-dock[auto-hide][open] .dock {
         box-shadow: 0 0 20px rgba(var(--accent-primary-rgb), 0.08);
       }
 
@@ -4039,7 +4039,7 @@
         bottom: var(--space-lg);
       }
 
-      .arc-float-bar(:not([position="top"]):not([open])) .float-bar {
+      .arc-float-bar:not([data-data-position="top"]):not([data-open]) .float-bar {
         transform: translateX(-50%) translateY(calc(100% + var(--space-lg)));
         opacity: 0;
         pointer-events: none;
@@ -4050,7 +4050,7 @@
         top: var(--space-lg);
       }
 
-      .arc-float-bar([position="top"]:not([open])) .float-bar {
+      .arc-float-bar[data-position="top"]:not([data-open]) .float-bar {
         transform: translateX(-50%) translateY(calc(-100% - var(--space-lg)));
         opacity: 0;
         pointer-events: none;
@@ -4070,13 +4070,13 @@
       .arc-inset[data-space="2xl"] { padding: var(--space-2xl); }
 
       .arc-inset[bleed] { margin: calc(-1 * var(--_pad)); }
-      .arc-inset([bleed][space="xs"]) { --_pad: var(--space-xs); }
-      .arc-inset([bleed][space="sm"]) { --_pad: var(--space-sm); }
-      .arc-inset([bleed]:not([space])),
-      .arc-inset([bleed][space="md"]) { --_pad: var(--space-md); }
-      .arc-inset([bleed][space="lg"]) { --_pad: var(--space-lg); }
-      .arc-inset([bleed][space="xl"]) { --_pad: var(--space-xl); }
-      .arc-inset([bleed][space="2xl"]) { --_pad: var(--space-2xl); }
+      .arc-inset[bleed][data-space="xs"] { --_pad: var(--space-xs); }
+      .arc-inset[bleed][data-space="sm"] { --_pad: var(--space-sm); }
+      .arc-inset[bleed]:not([data-space]),
+      .arc-inset[bleed][data-space="md"] { --_pad: var(--space-md); }
+      .arc-inset[bleed][data-space="lg"] { --_pad: var(--space-lg); }
+      .arc-inset[bleed][data-space="xl"] { --_pad: var(--space-xl); }
+      .arc-inset[bleed][data-space="2xl"] { --_pad: var(--space-2xl); }
 
 /* arc-masonry */
 .arc-masonry {
@@ -4488,7 +4488,7 @@
         align-items: center;
         justify-content: center;
         gap: var(--space-md);
-        background: rgba(var(--bg-surface-rgb, 0,0,0), 0.6);
+        background: var(--overlay-backdrop);
         backdrop-filter: blur(4px);
         opacity: 0;
         visibility: hidden;
@@ -4505,27 +4505,13 @@
         z-index: var(--z-overlay);
       }
 
-      .arc-loading-overlay .loading-overlay__spinner {
-        width: 32px;
-        height: 32px;
-        border: 3px solid var(--border-subtle);
-        border-top-color: var(--accent-primary);
-        border-radius: 50%;
-        animation: lo-spin 0.8s linear infinite;
-      }
-
       .arc-loading-overlay .loading-overlay__message {
         font-family: var(--font-body);
         font-size: var(--text-sm);
         color: var(--text-muted);
       }
 
-      @keyframes lo-spin {
-        to { transform: rotate(360deg); }
-      }
-
       @media (prefers-reduced-motion: reduce) {
-        .arc-loading-overlay .loading-overlay__spinner { animation-duration: 1.5s; }
         .arc-loading-overlay .loading-overlay { transition: none; }
       }
 
@@ -4634,122 +4620,5 @@
         .arc-progress .progress__spinner svg,
         .arc-progress .progress__spinner-fill {
           animation: none;
-        }
-      }
-
-/* arc-tooltip */
-.arc-tooltip {
-        display: inline-block;
-        position: relative;
-      }
-
-      .arc-tooltip .tooltip__trigger {
-        display: inline-block;
-      }
-
-      .arc-tooltip .tooltip__popup {
-        position: absolute;
-        z-index: var(--z-tooltip);
-        background: var(--surface-overlay);
-        border: 1px solid var(--border-default);
-        border-radius: var(--radius-sm);
-        padding: var(--space-xs) var(--space-sm);
-        font-family: var(--font-body);
-        font-size: var(--text-sm);
-        color: var(--text-primary);
-        white-space: nowrap;
-        pointer-events: none;
-        opacity: 0;
-        transition: opacity var(--transition-fast);
-        box-shadow: var(--shadow-overlay);
-        overflow: hidden;
-      }
-
-      .arc-tooltip .tooltip__popup::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 1px;
-        background: var(--divider-glow);
-      }
-
-      .arc-tooltip .tooltip__popup.is-visible {
-        opacity: 1;
-      }
-
-      /* Arrow */
-      .arc-tooltip .tooltip__arrow {
-        position: absolute;
-        width: 8px;
-        height: 8px;
-        background: var(--surface-overlay);
-        border: 1px solid var(--border-default);
-        transform: rotate(45deg);
-      }
-
-      /* Positions */
-      .arc-tooltip:not([data-position]) .tooltip__popup,
-      .arc-tooltip[data-position="top"] .tooltip__popup {
-        bottom: calc(100% + 8px);
-        left: 50%;
-        transform: translateX(-50%);
-      }
-      .arc-tooltip:not([data-position]) .tooltip__arrow,
-      .arc-tooltip[data-position="top"] .tooltip__arrow {
-        bottom: -5px;
-        left: 50%;
-        transform: translateX(-50%) rotate(45deg);
-        border-top: none;
-        border-left: none;
-      }
-
-      .arc-tooltip[data-position="bottom"] .tooltip__popup {
-        top: calc(100% + 8px);
-        left: 50%;
-        transform: translateX(-50%);
-      }
-      .arc-tooltip[data-position="bottom"] .tooltip__arrow {
-        top: -5px;
-        left: 50%;
-        transform: translateX(-50%) rotate(45deg);
-        border-bottom: none;
-        border-right: none;
-      }
-
-      .arc-tooltip[data-position="left"] .tooltip__popup {
-        right: calc(100% + 8px);
-        top: 50%;
-        transform: translateY(-50%);
-      }
-      .arc-tooltip[data-position="left"] .tooltip__arrow {
-        right: -5px;
-        top: 50%;
-        transform: translateY(-50%) rotate(45deg);
-        border-bottom: none;
-        border-left: none;
-      }
-
-      .arc-tooltip[data-position="right"] .tooltip__popup {
-        left: calc(100% + 8px);
-        top: 50%;
-        transform: translateY(-50%);
-      }
-      .arc-tooltip[data-position="right"] .tooltip__arrow {
-        left: -5px;
-        top: 50%;
-        transform: translateY(-50%) rotate(45deg);
-        border-top: none;
-        border-right: none;
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        .arc-tooltip *,
-        .arc-tooltip *::before,
-        .arc-tooltip *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
         }
       }

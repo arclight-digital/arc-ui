@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcBottomNav } from '@arclux/arc-ui';
+import { ArcBottomNav } from '@arclux/arc-ui/bottom-nav';
 
 export interface BottomNavProps {
   items?: string;

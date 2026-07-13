@@ -2,12 +2,11 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcCopyButton } from '@arclux/arc-ui';
+import { ArcCopyButton } from '@arclux/arc-ui/copy-button';
 
 export interface CopyButtonProps {
   value?: string;
   disabled?: boolean;
-  _copied?: string;
   className?: string;
   children?: React.ReactNode;
   onArcCopy?: (e: CustomEvent) => void;

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcConfirm } from '@arclux/arc-ui';
+import { ArcConfirm } from '@arclux/arc-ui/confirm';
 
 export interface ConfirmProps {
   open?: boolean;

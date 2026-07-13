@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcDescriptionList } from '@arclux/arc-ui';
+import { ArcDescriptionList } from '@arclux/arc-ui/description-list';
 
 export interface DescriptionListProps {
   columns?: number;

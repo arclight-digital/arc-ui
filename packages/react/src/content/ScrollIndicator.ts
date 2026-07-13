@@ -2,14 +2,13 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcScrollIndicator } from '@arclux/arc-ui';
+import { ArcScrollIndicator } from '@arclux/arc-ui/scroll-indicator';
 
 export interface ScrollIndicatorProps {
   target?: string;
   position?: 'bottom';
   size?: 'sm' | 'md' | 'lg';
   color?: 'gradient';
-  _progress?: string;
   className?: string;
   children?: React.ReactNode;
 }

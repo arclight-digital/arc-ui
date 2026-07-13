@@ -2,13 +2,11 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcAppShell } from '@arclux/arc-ui';
+import { ArcAppShell } from '@arclux/arc-ui/app-shell';
 
 export interface AppShellProps {
   sidebarOpen?: boolean;
   breakpoint?: number;
-  _mobile?: string;
-  _hasToc?: string;
   className?: string;
   children?: React.ReactNode;
 }

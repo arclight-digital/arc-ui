@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcAnnouncement } from './announcement.js';
-customElements.define('arc-announcement', ArcAnnouncement);
+if (!customElements.get('arc-announcement')) customElements.define('arc-announcement', ArcAnnouncement);
 export { ArcAnnouncement };

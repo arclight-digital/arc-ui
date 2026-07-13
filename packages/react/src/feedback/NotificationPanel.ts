@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcNotificationPanel } from '@arclux/arc-ui';
+import { ArcNotificationPanel } from '@arclux/arc-ui/notification-panel';
 
 export interface NotificationPanelProps {
   open?: boolean;

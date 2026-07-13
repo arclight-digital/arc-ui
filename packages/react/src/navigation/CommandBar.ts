@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcCommandBar } from '@arclux/arc-ui';
+import { ArcCommandBar } from '@arclux/arc-ui/command-bar';
 
 export interface CommandBarProps {
   placeholder?: string;

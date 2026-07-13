@@ -1,4 +1,4 @@
 // Generated — do not edit
 import { ArcPinInput } from './pin-input.js';
-customElements.define('arc-pin-input', ArcPinInput);
+if (!customElements.get('arc-pin-input')) customElements.define('arc-pin-input', ArcPinInput);
 export { ArcPinInput };

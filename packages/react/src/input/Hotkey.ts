@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createComponent, type EventName } from '@lit/react';
-import { ArcHotkey } from '@arclux/arc-ui';
+import { ArcHotkey } from '@arclux/arc-ui/hotkey';
 
 export interface HotkeyProps {
   keys?: string;
