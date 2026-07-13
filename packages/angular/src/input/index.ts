@@ -29,3 +29,8 @@ export { SwitchGroup } from './SwitchGroup.js';
 export { Textarea } from './Textarea.js';
 export { ThemeToggle } from './ThemeToggle.js';
 export { TimePicker } from './TimePicker.js';
+export { DateRangePicker } from './DateRangePicker.js';
+export { ImageCropper } from './ImageCropper.js';
+export { PasswordInput } from './PasswordInput.js';
+export { TagInput } from './TagInput.js';
+export { TransferList } from './TransferList.js';

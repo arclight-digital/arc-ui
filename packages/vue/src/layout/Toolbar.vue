@@ -8,11 +8,17 @@ withDefaults(defineProps<{
   sticky?: boolean;
   size?: string;
   border?: boolean;
+  overflow?: boolean;
 }>(), {
   sticky: false,
   size: 'md',
   border: true,
+  overflow: false,
 });
+
+defineEmits<{
+  'arc-overflow-change': [event: CustomEvent];
+}>();
 </script>
 
 <template>
@@ -20,6 +26,7 @@ withDefaults(defineProps<{
     :sticky="sticky"
     :size="size"
     :border="border"
+    :overflow="overflow"
   >
     <slot />
   </arc-toolbar>

@@ -311,6 +311,31 @@ export declare class ArcCenter extends LitElement {
 }
 
 /**
+ * `<arc-chart>`
+ * Events: arc-mark-click
+ */
+export declare class ArcChart extends LitElement {
+  /** @default 'line' */
+  type: string;
+  /** @default [] */
+  series: unknown[];
+  /** @default [] */
+  labels: unknown[];
+  /** @default false */
+  stacked: boolean;
+  /** @default false */
+  hideLegend: boolean;
+  /** @default false */
+  hideAxis: boolean;
+  /** @default 260 */
+  height: number;
+  /** @default 'number' */
+  valueFormat: string;
+  /** @default 'USD' */
+  currency: string;
+}
+
+/**
  * `<arc-checkbox>`
  * Events: arc-change
  */
@@ -610,6 +635,27 @@ export declare class ArcDashboardGrid extends LitElement {
 }
 
 /**
+ * `<arc-data-grid>`
+ * Events: arc-sort, arc-selection-change, arc-cell-change
+ */
+export declare class ArcDataGrid extends LitElement {
+  /** @default [] */
+  columns: unknown[];
+  /** @default [] */
+  rows: unknown[];
+  /** @default [] */
+  sort: unknown[];
+  /** @default false */
+  manualSort: boolean;
+  /** @default false */
+  selectable: boolean;
+  /** @default false */
+  virtual: boolean;
+  /** @default 40 */
+  rowHeight: number;
+}
+
+/**
  * `<arc-data-table>`
  * Events: arc-sort, arc-select-all, arc-row-select
  */
@@ -647,6 +693,41 @@ export declare class ArcDatePicker extends LitElement {
   placeholder: string;
   /** @default false */
   disabled: boolean;
+  /** @default '' */
+  label: string;
+  /** @default true */
+  formAssociated: boolean;
+  form: unknown;
+  validity: unknown;
+  validationMessage: unknown;
+}
+
+/**
+ * `<arc-date-range-picker>`
+ * Events: arc-change
+ */
+export declare class ArcDateRangePicker extends LitElement {
+  value: unknown;
+  /** @default '' */
+  start: string;
+  /** @default '' */
+  end: string;
+  /** @default '' */
+  name: string;
+  /** @default '' */
+  min: string;
+  /** @default '' */
+  max: string;
+  /** @default 2 */
+  months: number;
+  /** @default [] */
+  presets: unknown[];
+  /** @default 'Select date range' */
+  placeholder: string;
+  /** @default false */
+  disabled: boolean;
+  /** @default false */
+  required: boolean;
   /** @default '' */
   label: string;
   /** @default true */
@@ -760,6 +841,19 @@ export declare class ArcEmptyState extends LitElement {
   heading: string;
   /** @default '' */
   description: string;
+}
+
+/**
+ * `<arc-event-calendar>`
+ * Events: arc-period-change, arc-date-click, arc-event-click
+ */
+export declare class ArcEventCalendar extends LitElement {
+  /** @default [] */
+  events: unknown[];
+  /** @default 'month' */
+  view: string;
+  /** @default '' */
+  date: string;
 }
 
 /**
@@ -977,6 +1071,21 @@ export declare class ArcImage extends LitElement {
 }
 
 /**
+ * `<arc-image-cropper>`
+ * Events: arc-crop-change
+ */
+export declare class ArcImageCropper extends LitElement {
+  /** @default '' */
+  src: string;
+  /** @default 320 */
+  height: number;
+  /** @default 0 */
+  aspect: number;
+  /** @default 1 */
+  zoom: number;
+}
+
+/**
  * `<arc-infinite-scroll>`
  * Events: arc-load-more
  */
@@ -1049,6 +1158,17 @@ export declare class ArcInset extends LitElement {
   space: string;
   /** @default false */
   bleed: boolean;
+}
+
+/**
+ * `<arc-kanban>`
+ * Events: arc-card-move, arc-card-click
+ */
+export declare class ArcKanban extends LitElement {
+  /** @default [] */
+  columns: unknown[];
+  /** @default false */
+  disabled: boolean;
 }
 
 /**
@@ -1198,6 +1318,15 @@ export declare class ArcMenuItem extends LitElement {
   disabled: boolean;
   /** @default '' */
   icon: string;
+}
+
+/**
+ * `<arc-menubar>`
+ * Events: arc-select
+ */
+export declare class ArcMenubar extends LitElement {
+  /** @default [] */
+  items: unknown[];
 }
 
 /**
@@ -1427,6 +1556,38 @@ export declare class ArcPagination extends LitElement {
 }
 
 /**
+ * `<arc-password-input>`
+ * Events: arc-strength-change, arc-input, arc-change
+ */
+export declare class ArcPasswordInput extends LitElement {
+  /** @default '' */
+  name: string;
+  /** @default '' */
+  label: string;
+  /** @default '' */
+  placeholder: string;
+  /** @default '' */
+  value: string;
+  /** @default false */
+  disabled: boolean;
+  /** @default false */
+  required: boolean;
+  /** @default '' */
+  error: string;
+  /** @default 'md' */
+  size: string;
+  /** @default 'current-password' */
+  autocomplete: string;
+  /** @default false */
+  showStrength: boolean;
+  /** @default true */
+  formAssociated: boolean;
+  form: unknown;
+  validity: unknown;
+  validationMessage: unknown;
+}
+
+/**
  * `<arc-pin-input>`
  * Events: arc-change, arc-complete
  */
@@ -1500,6 +1661,24 @@ export declare class ArcProgressToast extends LitElement {
 export declare class ArcProse extends LitElement {
   /** @default 'md' */
   size: string;
+}
+
+/**
+ * `<arc-qr-code>`
+ */
+export declare class ArcQrCode extends LitElement {
+  /** @default '' */
+  value: string;
+  /** @default 160 */
+  size: number;
+  /** @default 'M' */
+  level: string;
+  /** @default '' */
+  label: string;
+  /** @default 2 */
+  quietZone: number;
+  /** @default false */
+  contrast: boolean;
 }
 
 /**
@@ -2120,6 +2299,38 @@ export declare class ArcTag extends LitElement {
 }
 
 /**
+ * `<arc-tag-input>`
+ * Events: arc-change, arc-input
+ */
+export declare class ArcTagInput extends LitElement {
+  /** @default [] */
+  value: unknown[];
+  /** @default [] */
+  suggestions: unknown[];
+  /** @default ',' */
+  delimiter: string;
+  /** @default 0 */
+  maxTags: number;
+  /** @default true */
+  allowCustom: boolean;
+  /** @default '' */
+  label: string;
+  /** @default '' */
+  placeholder: string;
+  /** @default '' */
+  name: string;
+  /** @default false */
+  disabled: boolean;
+  /** @default '' */
+  error: string;
+  /** @default true */
+  formAssociated: boolean;
+  form: unknown;
+  validity: unknown;
+  validationMessage: unknown;
+}
+
+/**
  * `<arc-text>`
  */
 export declare class ArcText extends LitElement {
@@ -2247,6 +2458,23 @@ export declare class ArcToast extends LitElement {
 }
 
 /**
+ * `<arc-toast-manager>`
+ * Events: arc-queue-overflow, arc-dismiss, arc-queue-change
+ */
+export declare class ArcToastManager extends LitElement {
+  /** @default 'top-right' */
+  position: string;
+  /** @default 4000 */
+  duration: number;
+  /** @default 3 */
+  maxVisible: number;
+  /** @default true */
+  dedupe: boolean;
+  /** @default 20 */
+  queueLimit: number;
+}
+
+/**
  * `<arc-toggle>`
  * Events: arc-change
  */
@@ -2270,6 +2498,7 @@ export declare class ArcToggle extends LitElement {
 
 /**
  * `<arc-toolbar>`
+ * Events: arc-overflow-change
  */
 export declare class ArcToolbar extends LitElement {
   /** @default false */
@@ -2278,6 +2507,8 @@ export declare class ArcToolbar extends LitElement {
   size: string;
   /** @default true */
   border: boolean;
+  /** @default false */
+  overflow: boolean;
 }
 
 /**
@@ -2311,6 +2542,32 @@ export declare class ArcTopBar extends LitElement {
   menuPosition: string;
   /** @default 'center' */
   navAlign: string;
+}
+
+/**
+ * `<arc-transfer-list>`
+ * Events: arc-change
+ */
+export declare class ArcTransferList extends LitElement {
+  /** @default [] */
+  options: unknown[];
+  /** @default [] */
+  value: unknown[];
+  /** @default '' */
+  name: string;
+  /** @default false */
+  disabled: boolean;
+  /** @default false */
+  searchable: boolean;
+  /** @default 'Available' */
+  sourceLabel: string;
+  /** @default 'Selected' */
+  targetLabel: string;
+  /** @default true */
+  formAssociated: boolean;
+  form: unknown;
+  validity: unknown;
+  validationMessage: unknown;
 }
 
 /**
@@ -2420,6 +2677,7 @@ declare global {
     'arc-card': ArcCard;
     'arc-carousel': ArcCarousel;
     'arc-center': ArcCenter;
+    'arc-chart': ArcChart;
     'arc-checkbox': ArcCheckbox;
     'arc-chip': ArcChip;
     'arc-cluster': ArcCluster;
@@ -2442,8 +2700,10 @@ declare global {
     'arc-countdown-timer': ArcCountdownTimer;
     'arc-cta-banner': ArcCtaBanner;
     'arc-dashboard-grid': ArcDashboardGrid;
+    'arc-data-grid': ArcDataGrid;
     'arc-data-table': ArcDataTable;
     'arc-date-picker': ArcDatePicker;
+    'arc-date-range-picker': ArcDateRangePicker;
     'arc-description-item': ArcDescriptionItem;
     'arc-description-list': ArcDescriptionList;
     'arc-dialog': ArcDialog;
@@ -2453,6 +2713,7 @@ declare global {
     'arc-drawer': ArcDrawer;
     'arc-dropdown-menu': ArcDropdownMenu;
     'arc-empty-state': ArcEmptyState;
+    'arc-event-calendar': ArcEventCalendar;
     'arc-feature-card': ArcFeatureCard;
     'arc-fieldset': ArcFieldset;
     'arc-file-upload': ArcFileUpload;
@@ -2468,11 +2729,13 @@ declare global {
     'arc-icon-button': ArcIconButton;
     'arc-icon-library': ArcIconLibrary;
     'arc-image': ArcImage;
+    'arc-image-cropper': ArcImageCropper;
     'arc-infinite-scroll': ArcInfiniteScroll;
     'arc-inline-message': ArcInlineMessage;
     'arc-input': ArcInput;
     'arc-input-group': ArcInputGroup;
     'arc-inset': ArcInset;
+    'arc-kanban': ArcKanban;
     'arc-kbd': ArcKbd;
     'arc-key-value': ArcKeyValue;
     'arc-kv-pair': ArcKvPair;
@@ -2486,6 +2749,7 @@ declare global {
     'arc-masonry': ArcMasonry;
     'arc-menu-divider': ArcMenuDivider;
     'arc-menu-item': ArcMenuItem;
+    'arc-menubar': ArcMenubar;
     'arc-meter': ArcMeter;
     'arc-modal': ArcModal;
     'arc-multi-select': ArcMultiSelect;
@@ -2500,11 +2764,13 @@ declare global {
     'arc-page-indicator': ArcPageIndicator;
     'arc-page-layout': ArcPageLayout;
     'arc-pagination': ArcPagination;
+    'arc-password-input': ArcPasswordInput;
     'arc-pin-input': ArcPinInput;
     'arc-popover': ArcPopover;
     'arc-progress': ArcProgress;
     'arc-progress-toast': ArcProgressToast;
     'arc-prose': ArcProse;
+    'arc-qr-code': ArcQrCode;
     'arc-radio': ArcRadio;
     'arc-radio-group': ArcRadioGroup;
     'arc-rail': ArcRail;
@@ -2550,6 +2816,7 @@ declare global {
     'arc-table': ArcTable;
     'arc-tabs': ArcTabs;
     'arc-tag': ArcTag;
+    'arc-tag-input': ArcTagInput;
     'arc-text': ArcText;
     'arc-textarea': ArcTextarea;
     'arc-theme-toggle': ArcThemeToggle;
@@ -2558,10 +2825,12 @@ declare global {
     'arc-timeline': ArcTimeline;
     'arc-timeline-item': ArcTimelineItem;
     'arc-toast': ArcToast;
+    'arc-toast-manager': ArcToastManager;
     'arc-toggle': ArcToggle;
     'arc-toolbar': ArcToolbar;
     'arc-tooltip': ArcTooltip;
     'arc-top-bar': ArcTopBar;
+    'arc-transfer-list': ArcTransferList;
     'arc-tree-item': ArcTreeItem;
     'arc-tree-view': ArcTreeView;
     'arc-truncate': ArcTruncate;

@@ -21,3 +21,4 @@ export { Sheet } from './Sheet.js';
 export { Snackbar } from './Snackbar.js';
 export { Spotlight } from './Spotlight.js';
 export { Tooltip } from './Tooltip.js';
+export { ToastManager } from './ToastManager.js';

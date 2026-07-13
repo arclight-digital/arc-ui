@@ -29,3 +29,8 @@ export { default as SwitchGroup } from './SwitchGroup.svelte';
 export { default as Textarea } from './Textarea.svelte';
 export { default as ThemeToggle } from './ThemeToggle.svelte';
 export { default as TimePicker } from './TimePicker.svelte';
+export { default as DateRangePicker } from './DateRangePicker.svelte';
+export { default as ImageCropper } from './ImageCropper.svelte';
+export { default as PasswordInput } from './PasswordInput.svelte';
+export { default as TagInput } from './TagInput.svelte';
+export { default as TransferList } from './TransferList.svelte';

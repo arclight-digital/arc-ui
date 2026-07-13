@@ -7,12 +7,13 @@ export interface ToolbarProps {
   sticky?: boolean;
   size?: string;
   border?: boolean;
+  overflow?: boolean;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const Toolbar: FunctionComponent<ToolbarProps> = ({ sticky, size, border, children, ...rest }) => (
-  <arc-toolbar sticky={sticky} size={size} border={border} {...rest}>
+export const Toolbar: FunctionComponent<ToolbarProps> = ({ sticky, size, border, overflow, children, ...rest }) => (
+  <arc-toolbar sticky={sticky} size={size} border={border} overflow={overflow} {...rest}>
     {children}
   </arc-toolbar>
 );

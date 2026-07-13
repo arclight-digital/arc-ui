@@ -23,3 +23,7 @@ export { ArcKvPair } from './kv-pair.js';
 export { ArcSparkline } from './sparkline.js';
 export { ArcDescriptionList } from './description-list.js';
 export { ArcKeyValue } from './key-value.js';
+export { ArcChart } from './chart.js';
+export { ArcDataGrid } from './data-grid.js';
+export { ArcEventCalendar } from './event-calendar.js';
+export { ArcKanban } from './kanban.js';

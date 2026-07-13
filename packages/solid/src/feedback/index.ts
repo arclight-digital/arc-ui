@@ -65,3 +65,6 @@ export type { SpotlightProps } from './Spotlight.js';
 
 export { Tooltip } from './Tooltip.js';
 export type { TooltipProps } from './Tooltip.js';
+
+export { ToastManager } from './ToastManager.js';
+export type { ToastManagerProps } from './ToastManager.js';

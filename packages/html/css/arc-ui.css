@@ -49,6 +49,13 @@
   --color-info-rgb: 59, 130, 246;
   --color-info-subtle: rgba(59, 130, 246, 0.1);
 
+  --chart-1: #4d7ef7;
+  --chart-2: #ea580c;
+  --chart-3: #0d9488;
+  --chart-4: #8b5cf6;
+  --chart-5: #db2777;
+  --chart-6: #65a30d;
+
   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.15);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.25), 0 2px 4px rgba(0, 0, 0, 0.15);
@@ -906,6 +913,53 @@
         width: 100%;
         height: 100%;
         fill: currentColor;
+      }
+
+/* arc-qr-code */
+.arc-qr-code {
+        display: inline-block;
+        line-height: 0;
+        color: var(--text-primary);
+      }
+
+      svg {
+        display: block;
+      }
+
+      .arc-qr-code .qr-bg {
+        fill: var(--qr-bg, transparent);
+      }
+
+      .arc-qr-code .qr-modules {
+        fill: var(--qr-fg, currentColor);
+      }
+
+      /* Scanners decode dark-on-light far more reliably than inverted codes.
+         Contrast mode forces black modules on a white card so the code stays
+         scannable in both themes, regardless of --qr-fg/--qr-bg overrides. */
+      .arc-qr-code .card {
+        display: inline-block;
+        background: rgb(var(--white-rgb));
+        padding: var(--space-sm);
+        border-radius: var(--radius-md);
+      }
+
+      .arc-qr-code .card .qr-bg {
+        fill: rgb(var(--white-rgb));
+      }
+
+      .arc-qr-code .card .qr-modules {
+        fill: rgb(var(--black-rgb));
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .arc-qr-code *,
+        .arc-qr-code *::before,
+        .arc-qr-code *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
       }
 
 /* arc-scroll-area */
@@ -4384,59 +4438,6 @@
       }
 
       .arc-status-bar .status-bar__end {
-        display: flex;
-        align-items: center;
-        gap: var(--space-sm);
-        flex-shrink: 0;
-        margin-left: auto;
-      }
-
-/* arc-toolbar */
-.arc-toolbar {
-        display: block;
-        font-family: var(--font-body);
-      }
-
-      .arc-toolbar[sticky] {
-        position: sticky;
-        top: 0;
-        z-index: 50;
-      }
-
-      .arc-toolbar .toolbar {
-        display: flex;
-        align-items: center;
-        height: 48px;
-        padding: 0 var(--space-md);
-        background: var(--surface-raised);
-        gap: var(--space-sm);
-      }
-
-      .arc-toolbar([size='sm']) .toolbar {
-        height: 36px;
-        padding: 0 var(--space-sm);
-      }
-
-      .arc-toolbar[border] .toolbar {
-        border-bottom: 1px solid var(--divider);
-      }
-
-      .arc-toolbar .toolbar__start {
-        display: flex;
-        align-items: center;
-        gap: var(--space-sm);
-        flex-shrink: 0;
-      }
-
-      .arc-toolbar .toolbar__center {
-        display: flex;
-        align-items: center;
-        gap: var(--space-sm);
-        flex: 1;
-        justify-content: center;
-      }
-
-      .arc-toolbar .toolbar__end {
         display: flex;
         align-items: center;
         gap: var(--space-sm);

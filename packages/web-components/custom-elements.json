@@ -1837,6 +1837,147 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/content/qr-code.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ArcQrCode",
+          "members": [
+            {
+              "kind": "field",
+              "name": "value",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "value"
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "default": "160",
+              "attribute": "size"
+            },
+            {
+              "kind": "field",
+              "name": "level",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'M'",
+              "attribute": "level",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "quietZone",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "default": "2",
+              "attribute": "quiet-zone"
+            },
+            {
+              "kind": "field",
+              "name": "contrast",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "contrast",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "value",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "value"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "number"
+              },
+              "default": "160",
+              "fieldName": "size"
+            },
+            {
+              "name": "level",
+              "type": {
+                "text": "string"
+              },
+              "default": "'M'",
+              "fieldName": "level"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "label"
+            },
+            {
+              "name": "quiet-zone",
+              "type": {
+                "text": "number"
+              },
+              "default": "2",
+              "fieldName": "quietZone"
+            },
+            {
+              "name": "contrast",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "contrast"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-qr-code",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcQrCode",
+          "declaration": {
+            "name": "ArcQrCode",
+            "module": "src/content/qr-code.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/content/scroll-area.js",
       "declarations": [
         {
@@ -2735,6 +2876,228 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/data/chart.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ArcChart",
+          "members": [
+            {
+              "kind": "field",
+              "name": "type",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'line'",
+              "attribute": "type",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "series",
+              "privacy": "public",
+              "type": {
+                "text": "array"
+              },
+              "default": "[]",
+              "attribute": "series"
+            },
+            {
+              "kind": "field",
+              "name": "labels",
+              "privacy": "public",
+              "type": {
+                "text": "array"
+              },
+              "default": "[]",
+              "attribute": "labels"
+            },
+            {
+              "kind": "field",
+              "name": "stacked",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "stacked",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "hideLegend",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "hide-legend",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "hideAxis",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "hide-axis",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "height",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "default": "260",
+              "attribute": "height"
+            },
+            {
+              "kind": "field",
+              "name": "valueFormat",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'number'",
+              "attribute": "value-format"
+            },
+            {
+              "kind": "field",
+              "name": "currency",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'USD'",
+              "attribute": "currency"
+            }
+          ],
+          "events": [
+            {
+              "name": "arc-mark-click",
+              "type": {
+                "text": "CustomEvent"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "type",
+              "type": {
+                "text": "string"
+              },
+              "default": "'line'",
+              "fieldName": "type"
+            },
+            {
+              "name": "series",
+              "type": {
+                "text": "array"
+              },
+              "default": "[]",
+              "fieldName": "series"
+            },
+            {
+              "name": "labels",
+              "type": {
+                "text": "array"
+              },
+              "default": "[]",
+              "fieldName": "labels"
+            },
+            {
+              "name": "stacked",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "stacked"
+            },
+            {
+              "name": "hide-legend",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "hideLegend"
+            },
+            {
+              "name": "hide-axis",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "hideAxis"
+            },
+            {
+              "name": "height",
+              "type": {
+                "text": "number"
+              },
+              "default": "260",
+              "fieldName": "height"
+            },
+            {
+              "name": "value-format",
+              "type": {
+                "text": "string"
+              },
+              "default": "'number'",
+              "fieldName": "valueFormat"
+            },
+            {
+              "name": "currency",
+              "type": {
+                "text": "string"
+              },
+              "default": "'USD'",
+              "fieldName": "currency"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-chart",
+          "customElement": true
+        },
+        {
+          "kind": "variable",
+          "name": "left"
+        },
+        {
+          "kind": "function",
+          "name": "y",
+          "parameters": [
+            {
+              "name": "v"
+            }
+          ]
+        },
+        {
+          "kind": "variable",
+          "name": "band"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcChart",
+          "declaration": {
+            "name": "ArcChart",
+            "module": "src/data/chart.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/data/comparison-column.js",
       "declarations": [
         {
@@ -2977,6 +3340,185 @@
           "declaration": {
             "name": "ArcCountdownTimer",
             "module": "src/data/countdown-timer.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/data/data-grid.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ArcDataGrid",
+          "members": [
+            {
+              "kind": "field",
+              "name": "columns",
+              "privacy": "public",
+              "type": {
+                "text": "array"
+              },
+              "default": "[]",
+              "attribute": "columns"
+            },
+            {
+              "kind": "field",
+              "name": "rows",
+              "privacy": "public",
+              "type": {
+                "text": "array"
+              },
+              "default": "[]",
+              "attribute": "rows"
+            },
+            {
+              "kind": "field",
+              "name": "sort",
+              "privacy": "public",
+              "type": {
+                "text": "array"
+              },
+              "default": "[]",
+              "attribute": "sort"
+            },
+            {
+              "kind": "field",
+              "name": "manualSort",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "manual-sort"
+            },
+            {
+              "kind": "field",
+              "name": "selectable",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "selectable",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "virtual",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "virtual",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "rowHeight",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "default": "40",
+              "attribute": "row-height"
+            }
+          ],
+          "events": [
+            {
+              "name": "arc-sort",
+              "type": {
+                "text": "CustomEvent"
+              }
+            },
+            {
+              "name": "arc-selection-change",
+              "type": {
+                "text": "CustomEvent"
+              }
+            },
+            {
+              "name": "arc-cell-change",
+              "type": {
+                "text": "CustomEvent"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "columns",
+              "type": {
+                "text": "array"
+              },
+              "default": "[]",
+              "fieldName": "columns"
+            },
+            {
+              "name": "rows",
+              "type": {
+                "text": "array"
+              },
+              "default": "[]",
+              "fieldName": "rows"
+            },
+            {
+              "name": "sort",
+              "type": {
+                "text": "array"
+              },
+              "default": "[]",
+              "fieldName": "sort"
+            },
+            {
+              "name": "manual-sort",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "manualSort"
+            },
+            {
+              "name": "selectable",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "selectable"
+            },
+            {
+              "name": "virtual",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "virtual"
+            },
+            {
+              "name": "row-height",
+              "type": {
+                "text": "number"
+              },
+              "default": "40",
+              "fieldName": "rowHeight"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-data-grid",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcDataGrid",
+          "declaration": {
+            "name": "ArcDataGrid",
+            "module": "src/data/data-grid.js"
           }
         }
       ]
@@ -3362,6 +3904,194 @@
           "declaration": {
             "name": "ArcDiff",
             "module": "src/data/diff.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/data/event-calendar.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ArcEventCalendar",
+          "members": [
+            {
+              "kind": "field",
+              "name": "events",
+              "privacy": "public",
+              "type": {
+                "text": "array"
+              },
+              "default": "[]",
+              "attribute": "events"
+            },
+            {
+              "kind": "field",
+              "name": "view",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'month'",
+              "attribute": "view",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "date",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "date"
+            }
+          ],
+          "events": [
+            {
+              "name": "arc-period-change",
+              "type": {
+                "text": "CustomEvent"
+              }
+            },
+            {
+              "name": "arc-date-click",
+              "type": {
+                "text": "CustomEvent"
+              }
+            },
+            {
+              "name": "arc-event-click",
+              "type": {
+                "text": "CustomEvent"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "events",
+              "type": {
+                "text": "array"
+              },
+              "default": "[]",
+              "fieldName": "events"
+            },
+            {
+              "name": "view",
+              "type": {
+                "text": "string"
+              },
+              "default": "'month'",
+              "fieldName": "view"
+            },
+            {
+              "name": "date",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "date"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-event-calendar",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcEventCalendar",
+          "declaration": {
+            "name": "ArcEventCalendar",
+            "module": "src/data/event-calendar.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/data/kanban.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ArcKanban",
+          "members": [
+            {
+              "kind": "field",
+              "name": "columns",
+              "privacy": "public",
+              "type": {
+                "text": "array"
+              },
+              "default": "[]",
+              "attribute": "columns"
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "disabled",
+              "reflects": true
+            }
+          ],
+          "events": [
+            {
+              "name": "arc-card-move",
+              "type": {
+                "text": "CustomEvent"
+              }
+            },
+            {
+              "name": "arc-card-click",
+              "type": {
+                "text": "CustomEvent"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "columns",
+              "type": {
+                "text": "array"
+              },
+              "default": "[]",
+              "fieldName": "columns"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-kanban",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcKanban",
+          "declaration": {
+            "name": "ArcKanban",
+            "module": "src/data/kanban.js"
           }
         }
       ]
@@ -6829,6 +7559,174 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/feedback/toast-manager.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Queueing/stacking policy layer over arc-toast. Composes an internal\n<arc-toast> (which owns rendering, timers, and a11y) and adds:\nmax-visible capping with a FIFO queue, message+variant deduplication,\nqueue overflow trimming, and a document-level `arc-toast` event channel.\n\nComposition notes (same-package couplings, kept deliberately minimal):\n- arc-toast.show() does not return an id, so after each show() we read\n  the id it just assigned from its internal counter (`_counter`).\n- arc-toast has no public dismiss method, so dismiss()/clear() call its\n  internal `_dismiss(id)`.\n- arc-toast has no update API for a visible toast, so a dedupe hit on a\n  visible toast is re-shown with a \"(×N)\" suffix and the stale entry is\n  dismissed — the least hacky option available (mutating arc-toast's\n  internal reactive state from outside would be worse).",
+          "name": "ArcToastManager",
+          "members": [
+            {
+              "kind": "method",
+              "name": "show",
+              "parameters": [
+                {
+                  "name": "options",
+                  "default": "{}"
+                }
+              ],
+              "description": "Show a toast. Accepts the same options object as arc-toast.show()\n({ message, variant, duration, action, actionLabel, persistent }).\nReturns a manager id usable with dismiss()."
+            },
+            {
+              "kind": "method",
+              "name": "dismiss",
+              "parameters": [
+                {
+                  "name": "id"
+                }
+              ],
+              "description": "Dismiss a toast (visible or queued) by manager id."
+            },
+            {
+              "kind": "method",
+              "name": "clear",
+              "description": "Dismiss all visible toasts and flush the queue."
+            },
+            {
+              "kind": "field",
+              "name": "position",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'top-right'",
+              "attribute": "position",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "duration",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "default": "4000",
+              "attribute": "duration"
+            },
+            {
+              "kind": "field",
+              "name": "maxVisible",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "default": "3",
+              "attribute": "max-visible"
+            },
+            {
+              "kind": "field",
+              "name": "dedupe",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "attribute": "dedupe"
+            },
+            {
+              "kind": "field",
+              "name": "queueLimit",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "default": "20",
+              "attribute": "queue-limit"
+            }
+          ],
+          "events": [
+            {
+              "name": "arc-queue-overflow",
+              "type": {
+                "text": "CustomEvent"
+              }
+            },
+            {
+              "name": "arc-dismiss",
+              "type": {
+                "text": "CustomEvent"
+              }
+            },
+            {
+              "name": "arc-queue-change",
+              "type": {
+                "text": "CustomEvent"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "position",
+              "type": {
+                "text": "string"
+              },
+              "default": "'top-right'",
+              "fieldName": "position"
+            },
+            {
+              "name": "duration",
+              "type": {
+                "text": "number"
+              },
+              "default": "4000",
+              "fieldName": "duration"
+            },
+            {
+              "name": "max-visible",
+              "type": {
+                "text": "number"
+              },
+              "default": "3",
+              "fieldName": "maxVisible"
+            },
+            {
+              "name": "dedupe",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "fieldName": "dedupe"
+            },
+            {
+              "name": "queue-limit",
+              "type": {
+                "text": "number"
+              },
+              "default": "20",
+              "fieldName": "queueLimit"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-toast-manager",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcToastManager",
+          "declaration": {
+            "name": "ArcToastManager",
+            "module": "src/feedback/toast-manager.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/feedback/toast.js",
       "declarations": [
         {
@@ -8517,6 +9415,347 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/input/date-range-picker.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ArcDateRangePicker",
+          "members": [
+            {
+              "kind": "field",
+              "name": "value",
+              "description": "ISO 8601 interval (\"start/end\") when the range is complete, else ''."
+            },
+            {
+              "kind": "field",
+              "name": "start",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "start"
+            },
+            {
+              "kind": "field",
+              "name": "end",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "end"
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "name",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "min",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "min"
+            },
+            {
+              "kind": "field",
+              "name": "max",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "max"
+            },
+            {
+              "kind": "field",
+              "name": "months",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "default": "2",
+              "attribute": "months"
+            },
+            {
+              "kind": "field",
+              "name": "presets",
+              "privacy": "public",
+              "type": {
+                "text": "array"
+              },
+              "default": "[]",
+              "attribute": "presets"
+            },
+            {
+              "kind": "field",
+              "name": "placeholder",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Select date range'",
+              "attribute": "placeholder"
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "required",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "formAssociated",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "true",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "formDisabledCallback",
+              "parameters": [
+                {
+                  "name": "disabled"
+                }
+              ],
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "formResetCallback",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "formStateRestoreCallback",
+              "parameters": [
+                {
+                  "name": "state"
+                }
+              ],
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "form",
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "validity",
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "validationMessage",
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "checkValidity",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "reportValidity",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            }
+          ],
+          "events": [
+            {
+              "name": "arc-change",
+              "type": {
+                "text": "CustomEvent"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "start",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "start"
+            },
+            {
+              "name": "end",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "end"
+            },
+            {
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "name"
+            },
+            {
+              "name": "min",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "min"
+            },
+            {
+              "name": "max",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "max"
+            },
+            {
+              "name": "months",
+              "type": {
+                "text": "number"
+              },
+              "default": "2",
+              "fieldName": "months"
+            },
+            {
+              "name": "presets",
+              "type": {
+                "text": "array"
+              },
+              "default": "[]",
+              "fieldName": "presets"
+            },
+            {
+              "name": "placeholder",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Select date range'",
+              "fieldName": "placeholder"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "required"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "label"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "FormControlMixin",
+              "module": "/src/shared/form-control-mixin.js"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-date-range-picker",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcDateRangePicker",
+          "declaration": {
+            "name": "ArcDateRangePicker",
+            "module": "src/input/date-range-picker.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/input/fieldset.js",
       "declarations": [
         {
@@ -9199,6 +10438,154 @@
           "declaration": {
             "name": "ArcIconButton",
             "module": "src/input/icon-button.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/input/image-cropper.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Crop-before-upload for avatar/media flows. The crop rect lives in stage\ncoordinates; zoom scales the letterboxed image around its center underneath.\n`getCroppedBlob()`/`getCroppedDataUrl()` require `src` to be same-origin or\nCORS-enabled — a tainted canvas throws with a clear message.",
+          "name": "ArcImageCropper",
+          "members": [
+            {
+              "kind": "method",
+              "name": "getCrop",
+              "description": "Current crop in natural image pixels: { x, y, width, height }, or null before load."
+            },
+            {
+              "kind": "method",
+              "name": "getCroppedBlob",
+              "parameters": [
+                {
+                  "name": "type",
+                  "default": "'image/png'"
+                },
+                {
+                  "name": "quality"
+                }
+              ],
+              "description": "Export the crop as a Blob at natural resolution."
+            },
+            {
+              "kind": "method",
+              "name": "getCroppedDataUrl",
+              "parameters": [
+                {
+                  "name": "type",
+                  "default": "'image/png'"
+                },
+                {
+                  "name": "quality"
+                }
+              ],
+              "description": "Export the crop as a data URL at natural resolution."
+            },
+            {
+              "kind": "field",
+              "name": "src",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "src",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "height",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "default": "320",
+              "attribute": "height",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "aspect",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "attribute": "aspect",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "zoom",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "default": "1",
+              "attribute": "zoom",
+              "reflects": true
+            }
+          ],
+          "events": [
+            {
+              "name": "arc-crop-change",
+              "type": {
+                "text": "CustomEvent"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "src",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "src"
+            },
+            {
+              "name": "height",
+              "type": {
+                "text": "number"
+              },
+              "default": "320",
+              "fieldName": "height"
+            },
+            {
+              "name": "aspect",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "fieldName": "aspect"
+            },
+            {
+              "name": "zoom",
+              "type": {
+                "text": "number"
+              },
+              "default": "1",
+              "fieldName": "zoom"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-image-cropper",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcImageCropper",
+          "declaration": {
+            "name": "ArcImageCropper",
+            "module": "src/input/image-cropper.js"
           }
         }
       ]
@@ -10419,6 +11806,337 @@
           "declaration": {
             "name": "ArcOtpInput",
             "module": "src/input/otp-input.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/input/password-input.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ArcPasswordInput",
+          "members": [
+            {
+              "kind": "field",
+              "name": "name",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "name"
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "placeholder",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "placeholder"
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "value"
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "required",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "error",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "error"
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'md'",
+              "attribute": "size",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "autocomplete",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'current-password'",
+              "attribute": "autocomplete"
+            },
+            {
+              "kind": "field",
+              "name": "showStrength",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "show-strength",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "formAssociated",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "true",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "formDisabledCallback",
+              "parameters": [
+                {
+                  "name": "disabled"
+                }
+              ],
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "formResetCallback",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "formStateRestoreCallback",
+              "parameters": [
+                {
+                  "name": "state"
+                }
+              ],
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "form",
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "validity",
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "validationMessage",
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "checkValidity",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "reportValidity",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            }
+          ],
+          "events": [
+            {
+              "name": "arc-strength-change",
+              "type": {
+                "text": "CustomEvent"
+              }
+            },
+            {
+              "name": "arc-input",
+              "type": {
+                "text": "CustomEvent"
+              }
+            },
+            {
+              "name": "arc-change",
+              "type": {
+                "text": "CustomEvent"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "name"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "label"
+            },
+            {
+              "name": "placeholder",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "placeholder"
+            },
+            {
+              "name": "value",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "value"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "required"
+            },
+            {
+              "name": "error",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "error"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "string"
+              },
+              "default": "'md'",
+              "fieldName": "size"
+            },
+            {
+              "name": "autocomplete",
+              "type": {
+                "text": "string"
+              },
+              "default": "'current-password'",
+              "fieldName": "autocomplete"
+            },
+            {
+              "name": "show-strength",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "showStrength"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "FormControlMixin",
+              "module": "/src/shared/form-control-mixin.js"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-password-input",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcPasswordInput",
+          "declaration": {
+            "name": "ArcPasswordInput",
+            "module": "src/input/password-input.js"
           }
         }
       ]
@@ -12554,6 +14272,329 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/input/tag-input.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ArcTagInput",
+          "members": [
+            {
+              "kind": "field",
+              "name": "value",
+              "privacy": "public",
+              "type": {
+                "text": "array"
+              },
+              "default": "[]",
+              "attribute": "value"
+            },
+            {
+              "kind": "field",
+              "name": "suggestions",
+              "privacy": "public",
+              "type": {
+                "text": "array"
+              },
+              "default": "[]",
+              "attribute": "suggestions"
+            },
+            {
+              "kind": "field",
+              "name": "delimiter",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "','",
+              "attribute": "delimiter"
+            },
+            {
+              "kind": "field",
+              "name": "maxTags",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "attribute": "max-tags"
+            },
+            {
+              "kind": "field",
+              "name": "allowCustom",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "attribute": "allow-custom"
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "placeholder",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "placeholder"
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "name",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "error",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "error"
+            },
+            {
+              "kind": "field",
+              "name": "formAssociated",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "true",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "formDisabledCallback",
+              "parameters": [
+                {
+                  "name": "disabled"
+                }
+              ],
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "formResetCallback",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "formStateRestoreCallback",
+              "parameters": [
+                {
+                  "name": "state"
+                }
+              ],
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "form",
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "validity",
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "validationMessage",
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "checkValidity",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "reportValidity",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            }
+          ],
+          "events": [
+            {
+              "name": "arc-change",
+              "type": {
+                "text": "CustomEvent"
+              }
+            },
+            {
+              "name": "arc-input",
+              "type": {
+                "text": "CustomEvent"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "value",
+              "type": {
+                "text": "array"
+              },
+              "default": "[]",
+              "fieldName": "value"
+            },
+            {
+              "name": "suggestions",
+              "type": {
+                "text": "array"
+              },
+              "default": "[]",
+              "fieldName": "suggestions"
+            },
+            {
+              "name": "delimiter",
+              "type": {
+                "text": "string"
+              },
+              "default": "','",
+              "fieldName": "delimiter"
+            },
+            {
+              "name": "max-tags",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "fieldName": "maxTags"
+            },
+            {
+              "name": "allow-custom",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "fieldName": "allowCustom"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "label"
+            },
+            {
+              "name": "placeholder",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "placeholder"
+            },
+            {
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "name"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "error",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "error"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "FormControlMixin",
+              "module": "/src/shared/form-control-mixin.js"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-tag-input",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcTagInput",
+          "declaration": {
+            "name": "ArcTagInput",
+            "module": "src/input/tag-input.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/input/textarea.js",
       "declarations": [
         {
@@ -13516,6 +15557,270 @@
           "declaration": {
             "name": "ArcToggle",
             "module": "src/input/toggle.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/input/transfer-list.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ArcTransferList",
+          "members": [
+            {
+              "kind": "field",
+              "name": "options",
+              "privacy": "public",
+              "type": {
+                "text": "array"
+              },
+              "default": "[]",
+              "attribute": "options"
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "privacy": "public",
+              "type": {
+                "text": "array"
+              },
+              "default": "[]",
+              "attribute": "value"
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "name",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "searchable",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "searchable",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "sourceLabel",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Available'",
+              "attribute": "source-label"
+            },
+            {
+              "kind": "field",
+              "name": "targetLabel",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Selected'",
+              "attribute": "target-label"
+            },
+            {
+              "kind": "field",
+              "name": "formAssociated",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "true",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "formDisabledCallback",
+              "parameters": [
+                {
+                  "name": "disabled"
+                }
+              ],
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "formResetCallback",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "formStateRestoreCallback",
+              "parameters": [
+                {
+                  "name": "state"
+                }
+              ],
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "form",
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "validity",
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "validationMessage",
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "checkValidity",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "reportValidity",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            }
+          ],
+          "events": [
+            {
+              "name": "arc-change",
+              "type": {
+                "text": "CustomEvent"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "options",
+              "type": {
+                "text": "array"
+              },
+              "default": "[]",
+              "fieldName": "options"
+            },
+            {
+              "name": "value",
+              "type": {
+                "text": "array"
+              },
+              "default": "[]",
+              "fieldName": "value"
+            },
+            {
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "name"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "searchable",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "searchable"
+            },
+            {
+              "name": "source-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Available'",
+              "fieldName": "sourceLabel"
+            },
+            {
+              "name": "target-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Selected'",
+              "fieldName": "targetLabel"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "FormControlMixin",
+              "module": "/src/shared/form-control-mixin.js"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-transfer-list",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcTransferList",
+          "declaration": {
+            "name": "ArcTransferList",
+            "module": "src/input/transfer-list.js"
           }
         }
       ]
@@ -15116,6 +17421,25 @@
               "default": "true",
               "attribute": "border",
               "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "overflow",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "overflow",
+              "reflects": true
+            }
+          ],
+          "events": [
+            {
+              "name": "arc-overflow-change",
+              "type": {
+                "text": "CustomEvent"
+              }
             }
           ],
           "attributes": [
@@ -15142,6 +17466,14 @@
               },
               "default": "true",
               "fieldName": "border"
+            },
+            {
+              "name": "overflow",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "overflow"
             }
           ],
           "superclass": {
@@ -15932,6 +18264,63 @@
           "declaration": {
             "name": "ArcLink",
             "module": "src/navigation/link.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/navigation/menubar.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ArcMenubar",
+          "members": [
+            {
+              "kind": "field",
+              "name": "items",
+              "privacy": "public",
+              "type": {
+                "text": "array"
+              },
+              "default": "[]",
+              "attribute": "items"
+            }
+          ],
+          "events": [
+            {
+              "name": "arc-select",
+              "type": {
+                "text": "CustomEvent"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "items",
+              "type": {
+                "text": "array"
+              },
+              "default": "[]",
+              "fieldName": "items"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-menubar",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcMenubar",
+          "declaration": {
+            "name": "ArcMenubar",
+            "module": "src/navigation/menubar.js"
           }
         }
       ]

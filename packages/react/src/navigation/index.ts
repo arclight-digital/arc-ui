@@ -77,3 +77,6 @@ export type { TreeItemProps } from './TreeItem.js';
 
 export { TreeView } from './TreeView.js';
 export type { TreeViewProps } from './TreeView.js';
+
+export { Menubar } from './Menubar.js';
+export type { MenubarProps } from './Menubar.js';

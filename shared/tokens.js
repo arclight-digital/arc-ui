@@ -32,6 +32,18 @@ export const tokens = {
     error:   'rgb(239, 68, 68)',
     warning: 'rgb(245, 158, 11)',
     info:    'rgb(59, 130, 246)',
+
+    /* Chart series — categorical palette, fixed order, never cycled.
+       Validated (OKLCH lightness band, chroma floor, CVD adjacent-pair
+       separation, ≥3:1 contrast) against bg-card in both themes.
+       Status colors (success/error/warning/info) are reserved for state
+       and must not be used as extra series. */
+    chart1: '#4d7ef7',
+    chart2: '#ea580c',
+    chart3: '#0d9488',
+    chart4: '#8b5cf6',
+    chart5: '#db2777',
+    chart6: '#65a30d',
   },
 
   /* RGB channels (for alpha compositing) */
@@ -265,6 +277,13 @@ export const cssVariables = `
   --color-info-rgb: ${tokens.rgb.info};
   --color-info-subtle: rgba(${tokens.rgb.info}, 0.1);
 
+  --chart-1: ${tokens.color.chart1};
+  --chart-2: ${tokens.color.chart2};
+  --chart-3: ${tokens.color.chart3};
+  --chart-4: ${tokens.color.chart4};
+  --chart-5: ${tokens.color.chart5};
+  --chart-6: ${tokens.color.chart6};
+
   --shadow-xs: ${tokens.shadow.xs};
   --shadow-sm: ${tokens.shadow.sm};
   --shadow-md: ${tokens.shadow.md};
@@ -437,6 +456,11 @@ export const lightTokens = {
     borderBright:  'rgb(190, 195, 205)',
     accentPrimary:   'rgb(55, 105, 235)',
     accentSecondary: 'rgb(120, 70, 230)',
+    /* Chart series — light-mode steps (brand accents shift; lime darkens
+       to clear 3:1 on the light surface). Validated like the dark set. */
+    chart1: '#3769eb',
+    chart4: '#7846e6',
+    chart6: '#4d7c0f',
   },
   rgb: {
     accentPrimary:   '55, 105, 235',
@@ -544,6 +568,8 @@ const colorVarMap = {
   borderSubtle: '--border-subtle', borderDefault: '--border-default',
   borderBright: '--border-bright',
   accentPrimary: '--accent-primary', accentSecondary: '--accent-secondary',
+  chart1: '--chart-1', chart2: '--chart-2', chart3: '--chart-3',
+  chart4: '--chart-4', chart5: '--chart-5', chart6: '--chart-6',
 };
 
 const rgbVarMap = {

@@ -71,3 +71,6 @@ export type { StackProps } from './Stack.js';
 
 export { VirtualList } from './VirtualList.js';
 export type { VirtualListProps } from './VirtualList.js';
+
+export { QrCode } from './QrCode.js';
+export type { QrCodeProps } from './QrCode.js';

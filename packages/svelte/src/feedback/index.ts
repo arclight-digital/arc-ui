@@ -21,3 +21,4 @@ export { default as Sheet } from './Sheet.svelte';
 export { default as Snackbar } from './Snackbar.svelte';
 export { default as Spotlight } from './Spotlight.svelte';
 export { default as Tooltip } from './Tooltip.svelte';
+export { default as ToastManager } from './ToastManager.svelte';

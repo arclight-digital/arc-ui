@@ -56,3 +56,15 @@ export type { TimelineItemProps } from './TimelineItem.js';
 
 export { ValueCard } from './ValueCard.js';
 export type { ValueCardProps } from './ValueCard.js';
+
+export { Chart } from './Chart.js';
+export type { ChartProps } from './Chart.js';
+
+export { DataGrid } from './DataGrid.js';
+export type { DataGridProps } from './DataGrid.js';
+
+export { EventCalendar } from './EventCalendar.js';
+export type { EventCalendarProps } from './EventCalendar.js';
+
+export { Kanban } from './Kanban.js';
+export type { KanbanProps } from './Kanban.js';

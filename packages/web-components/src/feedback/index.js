@@ -25,3 +25,4 @@ export { ArcLoadingOverlay } from './loading-overlay.register.js';
 export { ArcProgressToast } from './progress-toast.register.js';
 export { ArcSnackbar } from './snackbar.register.js';
 export { ArcSpotlight } from './spotlight.register.js';
+export { ArcToastManager } from './toast-manager.js';

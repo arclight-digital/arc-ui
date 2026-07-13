@@ -7,14 +7,15 @@ export interface ToolbarProps {
   sticky?: boolean;
   size?: string;
   border?: boolean;
+  overflow?: boolean;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Toolbar: Component<ToolbarProps> = (props) => {
-  const [local, rest] = splitProps(props, ['sticky', 'size', 'border', 'children']);
+  const [local, rest] = splitProps(props, ['sticky', 'size', 'border', 'overflow', 'children']);
   return (
-    <arc-toolbar sticky={local.sticky} size={local.size} border={local.border} {...rest}>
+    <arc-toolbar sticky={local.sticky} size={local.size} border={local.border} overflow={local.overflow} {...rest}>
       {local.children}
     </arc-toolbar>
   );

@@ -150,6 +150,18 @@ import { gradientText } from './gradient-text';
 import { numberFormat } from './number-format';
 import { timeAgo } from './time-ago';
 import { timePicker } from './time-picker';
+import { chart } from './chart';
+import { dataGrid } from './data-grid';
+import { dateRangePicker } from './date-range-picker';
+import { toastManager } from './toast-manager';
+import { kanban } from './kanban';
+import { tagInput } from './tag-input';
+import { passwordInput } from './password-input';
+import { menubar } from './menubar';
+import { eventCalendar } from './event-calendar';
+import { transferList } from './transfer-list';
+import { imageCropper } from './image-cropper';
+import { qrCode } from './qr-code';
 import type { ComponentDef } from './_types';
 
 export type { ComponentDef } from './_types';
@@ -307,4 +319,16 @@ export const components: ComponentDef[] = [
   numberFormat,
   timeAgo,
   timePicker,
+  chart,
+  dataGrid,
+  dateRangePicker,
+  toastManager,
+  kanban,
+  tagInput,
+  passwordInput,
+  menubar,
+  eventCalendar,
+  transferList,
+  imageCropper,
+  qrCode,
 ];

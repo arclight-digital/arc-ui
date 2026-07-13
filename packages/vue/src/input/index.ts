@@ -29,3 +29,8 @@ export { default as SwitchGroup } from './SwitchGroup.vue';
 export { default as Textarea } from './Textarea.vue';
 export { default as ThemeToggle } from './ThemeToggle.vue';
 export { default as TimePicker } from './TimePicker.vue';
+export { default as DateRangePicker } from './DateRangePicker.vue';
+export { default as ImageCropper } from './ImageCropper.vue';
+export { default as PasswordInput } from './PasswordInput.vue';
+export { default as TagInput } from './TagInput.vue';
+export { default as TransferList } from './TransferList.vue';

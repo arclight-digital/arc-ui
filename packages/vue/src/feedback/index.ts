@@ -21,3 +21,4 @@ export { default as Sheet } from './Sheet.vue';
 export { default as Snackbar } from './Snackbar.vue';
 export { default as Spotlight } from './Spotlight.vue';
 export { default as Tooltip } from './Tooltip.vue';
+export { default as ToastManager } from './ToastManager.vue';

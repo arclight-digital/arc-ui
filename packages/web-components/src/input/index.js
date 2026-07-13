@@ -37,3 +37,8 @@ export { ArcTextarea } from './textarea.register.js';
 export { ArcThemeToggle } from './theme-toggle.register.js';
 export { ArcTimePicker } from './time-picker.register.js';
 export { ArcToggle } from './toggle.register.js';
+export { ArcDateRangePicker } from './date-range-picker.js';
+export { ArcImageCropper } from './image-cropper.js';
+export { ArcPasswordInput } from './password-input.js';
+export { ArcTagInput } from './tag-input.js';
+export { ArcTransferList } from './transfer-list.js';

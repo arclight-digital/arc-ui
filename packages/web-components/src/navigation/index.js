@@ -29,3 +29,4 @@ export { ArcRail } from './rail.register.js';
 export { ArcSkipLink } from './skip-link.register.js';
 export { ArcSpeedDial } from './speed-dial.register.js';
 export { ArcStepperNav } from './stepper-nav.register.js';
+export { ArcMenubar } from './menubar.js';

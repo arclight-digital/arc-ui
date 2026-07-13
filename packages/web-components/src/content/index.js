@@ -29,3 +29,4 @@ export { ArcSkeleton } from './skeleton.register.js';
 export { ArcSpinner } from './spinner.register.js';
 export { ArcStack } from './stack.register.js';
 export { ArcVirtualList } from './virtual-list.register.js';
+export { ArcQrCode } from './qr-code.js';

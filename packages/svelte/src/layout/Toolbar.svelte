@@ -7,13 +7,14 @@
     sticky?: boolean;
     size?: string;
     border?: boolean;
+    overflow?: boolean;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { sticky = false, size = 'md', border = true, children, ...rest }: Props = $props();
+  let { sticky = false, size = 'md', border = true, overflow = false, children, ...rest }: Props = $props();
 </script>
 
-<arc-toolbar {sticky} {size} {border} {...rest}>
+<arc-toolbar {sticky} {size} {border} {overflow} {...rest}>
   {@render children?.()}
 </arc-toolbar>

@@ -18,3 +18,7 @@ export { Stepper } from './Stepper.js';
 export { Tag } from './Tag.js';
 export { TimelineItem } from './TimelineItem.js';
 export { ValueCard } from './ValueCard.js';
+export { Chart } from './Chart.js';
+export { DataGrid } from './DataGrid.js';
+export { EventCalendar } from './EventCalendar.js';
+export { Kanban } from './Kanban.js';

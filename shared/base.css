@@ -53,6 +53,13 @@
   --color-info-rgb: 59, 130, 246;
   --color-info-subtle: rgba(59, 130, 246, 0.1);
 
+  --chart-1: #4d7ef7;
+  --chart-2: #ea580c;
+  --chart-3: #0d9488;
+  --chart-4: #8b5cf6;
+  --chart-5: #db2777;
+  --chart-6: #65a30d;
+
   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.15);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.25), 0 2px 4px rgba(0, 0, 0, 0.15);
@@ -233,6 +240,9 @@
   --border-bright: rgb(190, 195, 205);
   --accent-primary: rgb(55, 105, 235);
   --accent-secondary: rgb(120, 70, 230);
+  --chart-1: #3769eb;
+  --chart-4: #7846e6;
+  --chart-6: #4d7c0f;
   --accent-primary-rgb: 55, 105, 235;
   --accent-secondary-rgb: 120, 70, 230;
   --text-primary-rgb: 35, 35, 55;
@@ -277,6 +287,9 @@
     --border-bright: rgb(190, 195, 205);
     --accent-primary: rgb(55, 105, 235);
     --accent-secondary: rgb(120, 70, 230);
+    --chart-1: #3769eb;
+    --chart-4: #7846e6;
+    --chart-6: #4d7c0f;
     --accent-primary-rgb: 55, 105, 235;
     --accent-secondary-rgb: 120, 70, 230;
     --text-primary-rgb: 35, 35, 55;

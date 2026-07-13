@@ -8,12 +8,17 @@ export interface ToolbarProps {
   sticky?: boolean;
   size?: string;
   border?: boolean;
+  overflow?: boolean;
   className?: string;
   children?: React.ReactNode;
+  onArcOverflowChange?: (e: CustomEvent) => void;
 }
 
 export const Toolbar = createComponent({
   tagName: 'arc-toolbar',
   elementClass: ArcToolbar,
   react: React,
+  events: {
+    onArcOverflowChange: 'arc-overflow-change' as EventName<CustomEvent>,
+  },
 });

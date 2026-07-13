@@ -75,18 +75,20 @@ export class ArcDataTable extends LitElement {
       }
 
       .sort-button {
-        display: block;
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
         width: 100%;
         padding: var(--space-sm) var(--space-md);
         font: inherit;
         letter-spacing: inherit;
         text-transform: inherit;
-        text-align: inherit;
         white-space: inherit;
         color: inherit;
         background: none;
         border: none;
         cursor: pointer;
+        border-radius: var(--radius-sm);
       }
 
       .sort-button:focus-visible {
@@ -98,11 +100,19 @@ export class ArcDataTable extends LitElement {
         color: var(--interactive);
       }
 
+      /* Fixed-width slot so the glyph swap (↕ → ↑/↓) can't shift column widths */
       .sort-indicator {
         display: inline-block;
-        margin-left: var(--space-xs);
+        width: 1em;
+        text-align: center;
         font-size: var(--text-xs);
-        vertical-align: middle;
+        opacity: 0.5;
+        transition: opacity var(--transition-fast);
+      }
+
+      th.sorted .sort-indicator,
+      th.sortable:hover .sort-indicator {
+        opacity: 1;
       }
 
       td {
@@ -342,24 +352,37 @@ export class ArcDataTable extends LitElement {
 
   get _sortedRows() {
     if (!this.sortColumn) return this.rows;
+    const key = this.sortColumn;
 
-    return [...this.rows].sort((a, b) => {
-      const aVal = a[this.sortColumn];
-      const bVal = b[this.sortColumn];
-
-      if (aVal == null && bVal == null) return 0;
-      if (aVal == null) return 1;
-      if (bVal == null) return -1;
-
-      let cmp;
-      if (typeof aVal === 'number' && typeof bVal === 'number') {
-        cmp = aVal - bVal;
-      } else {
-        cmp = String(aVal).localeCompare(String(bVal));
-      }
-
-      return this.sortDirection === 'desc' ? -cmp : cmp;
+    // Decide the comparison mode once for the whole column. Deciding per
+    // pair (old behavior) made mixed number/"number" columns non-transitive,
+    // so engines reordered rows arbitrarily on every sort.
+    const numeric = this.rows.every((r) => {
+      const v = r[key];
+      return v == null || v === '' || (typeof v === 'number' ? Number.isFinite(v) : !Number.isNaN(Number(v)));
     });
+    const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
+
+    return this.rows
+      .map((row, i) => ({ row, i }))
+      .sort((a, b) => {
+        const aVal = a.row[key];
+        const bVal = b.row[key];
+        const aEmpty = aVal == null || aVal === '';
+        const bEmpty = bVal == null || bVal === '';
+
+        // Empty values always sort last, in original order, either direction
+        if (aEmpty && bEmpty) return a.i - b.i;
+        if (aEmpty) return 1;
+        if (bEmpty) return -1;
+
+        let cmp = numeric
+          ? Number(aVal) - Number(bVal)
+          : collator.compare(String(aVal), String(bVal));
+        if (this.sortDirection === 'desc') cmp = -cmp;
+        return cmp || a.i - b.i; // original-order tiebreak keeps equal rows stable
+      })
+      .map((entry) => entry.row);
   }
 
   get _allSelected() {

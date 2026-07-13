@@ -18,3 +18,7 @@ export { default as Stepper } from './Stepper.vue';
 export { default as Tag } from './Tag.vue';
 export { default as TimelineItem } from './TimelineItem.vue';
 export { default as ValueCard } from './ValueCard.vue';
+export { default as Chart } from './Chart.vue';
+export { default as DataGrid } from './DataGrid.vue';
+export { default as EventCalendar } from './EventCalendar.vue';
+export { default as Kanban } from './Kanban.vue';

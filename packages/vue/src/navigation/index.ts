@@ -25,3 +25,4 @@ export { default as Tabs } from './Tabs.vue';
 export { default as TopBar } from './TopBar.vue';
 export { default as TreeItem } from './TreeItem.vue';
 export { default as TreeView } from './TreeView.vue';
+export { default as Menubar } from './Menubar.vue';

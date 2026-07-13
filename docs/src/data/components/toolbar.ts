@@ -64,6 +64,10 @@ When the \`sticky\` prop is set, the toolbar uses \`position: sticky\` with \`to
       { name: 'sticky', type: 'boolean', default: 'false', description: 'When set, the toolbar uses position: sticky with top: 0 and z-index: 50, keeping it visible as the user scrolls through content below.' },
       { name: 'size', type: "'md' | 'sm'", default: "'md'", description: 'Controls the toolbar height. The default md size is 48px for primary toolbars. The sm size is 36px for secondary or nested toolbars.' },
       { name: 'border', type: 'boolean', default: 'true', description: 'Renders a subtle bottom border (--border-subtle) to visually separate the toolbar from the content below. Enabled by default.' },
+      { name: 'overflow', type: 'boolean', default: 'false', description: 'Enables responsive overflow collapse. A ResizeObserver measures available width; slotted items that do not fit are collapsed (hidden via the reversible hidden attribute) from the end of the item list, and a "More" trigger opens a menu of proxy items that re-dispatch clicks to the hidden originals. Note: because slotted nodes cannot be moved into the overflow panel, complex custom content is represented in the menu only by its text label (or the label attribute on arc-button / arc-icon-button).' },
+    ],
+    events: [
+      { name: 'arc-overflow-change', description: 'Fired when the set of collapsed items changes (only with the overflow prop). detail: { hiddenCount: number }.' },
     ],
     tabs: [
       {
@@ -74,6 +78,29 @@ When the \`sticky\` prop is set, the toolbar uses \`position: sticky\` with \`to
   <span>Document.txt</span>
   <div slot="end"><arc-button variant="ghost" size="sm">Save</arc-button></div>
 </arc-toolbar>`,
+      },
+      {
+        label: 'Overflow',
+        lang: 'html',
+        code: `<!-- Items that no longer fit collapse (from the end) into a "More" menu.
+     Collapsed originals stay in the light DOM with the hidden attribute;
+     the menu shows text-label proxies that forward clicks to them. -->
+<arc-toolbar overflow>
+  <arc-button slot="start" variant="ghost" size="sm">File</arc-button>
+  <arc-button slot="start" variant="ghost" size="sm">Edit</arc-button>
+  <arc-button slot="start" variant="ghost" size="sm">View</arc-button>
+  <arc-button slot="start" variant="ghost" size="sm">Insert</arc-button>
+  <arc-button slot="start" variant="ghost" size="sm">Format</arc-button>
+  <arc-icon-button slot="end" name="share" label="Share"></arc-icon-button>
+  <arc-button slot="end" variant="primary" size="sm">Save</arc-button>
+</arc-toolbar>
+
+<script>
+  document.querySelector('arc-toolbar')
+    .addEventListener('arc-overflow-change', (e) => {
+      console.log('hidden items:', e.detail.hiddenCount);
+    });
+</script>`,
       },
       {
         label: 'React',

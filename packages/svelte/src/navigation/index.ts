@@ -25,3 +25,4 @@ export { default as Tabs } from './Tabs.svelte';
 export { default as TopBar } from './TopBar.svelte';
 export { default as TreeItem } from './TreeItem.svelte';
 export { default as TreeView } from './TreeView.svelte';
+export { default as Menubar } from './Menubar.svelte';

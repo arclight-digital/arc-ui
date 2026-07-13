@@ -23,3 +23,4 @@ export { Skeleton } from './Skeleton.js';
 export { Spinner } from './Spinner.js';
 export { Stack } from './Stack.js';
 export { VirtualList } from './VirtualList.js';
+export { QrCode } from './QrCode.js';
