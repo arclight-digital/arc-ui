@@ -11,21 +11,24 @@ const SIZES = {
 };
 
 // @font-face must be in document scope — shadow DOM won't pick it up.
+// Register via the FontFace API (not an injected <style>) so the font
+// survives Astro view-transition swaps, which discard runtime-added <head>
+// elements but leave document.fonts intact.
 let fontInjected = false;
 function injectFont() {
-  if (fontInjected) return;
+  if (fontInjected || typeof document === 'undefined') return;
   fontInjected = true;
   const url = base64ToBlobUrl(hostGroteskSubsetBase64);
-  const style = document.createElement('style');
-  style.textContent = `
-    @font-face {
-      font-family: 'Host Grotesk Subset';
-      src: url('${url}') format('woff2');
-      font-weight: 100 900;
-      font-display: block;
-    }
-  `;
-  document.head.appendChild(style);
+  const face = new FontFace('Host Grotesk Subset', `url(${url}) format('woff2')`, {
+    weight: '100 900',
+    display: 'block',
+  });
+  face
+    .load()
+    .then((f) => document.fonts.add(f))
+    .catch(() => {
+      fontInjected = false;
+    });
 }
 
 /** @tag arclight-wordmark */
