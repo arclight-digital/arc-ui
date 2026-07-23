@@ -98,7 +98,7 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
     <div class="hero__content">
       <a href="/docs/changelog" class="hero__announcement">
         <span class="hero__announcement-badge">{versionShort}</span>
-        <span class="hero__announcement-text">Zero axe violations, WCAG AA contrast &amp; Prism 2.0</span>
+        <span class="hero__announcement-text">⌘K docs search, command palette groups &amp; keyword filtering</span>
         <svg class="hero__announcement-arrow" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
       <h1 class="hero__headline">
@@ -133,36 +133,36 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
       <div class="whats-new__inner">
         <div class="whats-new__header reveal">
           <span class="section-label">What's New</span>
-          <h2 class="section-title">Version 2.3 highlights.</h2>
+          <h2 class="section-title">Version 2.4 highlights.</h2>
         </div>
         <div class="whats-new__grid">
           <div class="whats-new__card reveal">
             <div class="whats-new__icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-            <h3 class="whats-new__title">Zero Axe Violations</h3>
-            <p class="whats-new__desc">Every component page passes axe-core with zero violations of any severity — both themes, shadow roots included — enforced in CI on every commit.</p>
-          </div>
-          <div class="whats-new__card reveal">
-            <div class="whats-new__icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M12 3a9 9 0 010 18z" fill="currentColor"/></svg>
-            </div>
-            <h3 class="whats-new__title">AA Contrast, Both Themes</h3>
-            <p class="whats-new__desc">Rebuilt dim-text ramps and a new --accent-text-mix token keep every label above 4.5:1 in light mode without dulling the dark theme.</p>
-          </div>
-          <div class="whats-new__card reveal">
-            <div class="whats-new__icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-            <h3 class="whats-new__title">Prism 2.0 Generator</h3>
-            <p class="whats-new__desc">Hardened codegen: validated component input, Vue events that actually fire, Angular props that bind as properties, leak-free extracted CSS.</p>
-          </div>
-          <div class="whats-new__card reveal">
-            <div class="whats-new__icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M16 16l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
             </div>
-            <h3 class="whats-new__title">Built to Be Found</h3>
-            <p class="whats-new__desc">Real h1s and light-DOM prose on every page, sitemap, canonical URLs, and absolute OG images — the docs finally read as well to crawlers as to you.</p>
+            <h3 class="whats-new__title">⌘K Docs Search</h3>
+            <p class="whats-new__desc">Search every component and guide from anywhere — built on our own Command Palette, rendered at build time, no search service and no client-side index.</p>
+          </div>
+          <div class="whats-new__card reveal">
+            <div class="whats-new__icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4 3h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/></svg>
+            </div>
+            <h3 class="whats-new__title">Command Palette Groups</h3>
+            <p class="whats-new__desc">New arc-command-group wraps items under a heading; results stay one flat keyboard-navigable list and empty groups vanish as you type.</p>
+          </div>
+          <div class="whats-new__card reveal">
+            <div class="whats-new__icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 5h18l-7 8v5l-4 2v-7L3 5z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h3 class="whats-new__title">Keyword Filtering</h3>
+            <p class="whats-new__desc">A keywords attribute on command items matches hidden alias terms — type "dropdown" and find Select — without cluttering what's on screen.</p>
+          </div>
+          <div class="whats-new__card reveal">
+            <div class="whats-new__icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="10" r="1.5" fill="currentColor"/><path d="M3 16l5-4 4 3 4-5 5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h3 class="whats-new__title">Social Cards Everywhere</h3>
+            <p class="whats-new__desc">Every component and guide page ships its own OG image, stats derive from one build-time source, and the changelog grew an RSS feed.</p>
           </div>
         </div>
         <div class="whats-new__cta reveal">

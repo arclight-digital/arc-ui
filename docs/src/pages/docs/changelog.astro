@@ -3,6 +3,8 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 import { components } from '../../data/components/index';
 
 const headings = [
+  { id: 'v2-4-0', label: 'v2.4.0' },
+  { id: 'v2-3-1', label: 'v2.3.1' },
   { id: 'v2-3-0', label: 'v2.3.0' },
   { id: 'v2-2-0', label: 'v2.2.0' },
   { id: 'v2-1-0', label: 'v2.1.0' },
@@ -57,6 +59,44 @@ const byTier = Object.fromEntries(
     <p class="page-desc">
       Release history for ARC UI. All packages are versioned together.
     </p>
+
+    <section id="v2-4-0">
+      <h2 class="docs-heading">v2.4.0 — Command Palette Groups &amp; Keyword Search</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <p class="docs-text">
+        Command Palette learns the two tricks that turn it into a real site-search primitive —
+        group headings and hidden keyword aliases — and this docs site puts them straight to
+        work with a <kbd>⌘K</kbd> search across every component and guide. Fully backwards
+        compatible.
+      </p>
+
+      <h3 class="tier-heading">Command Palette</h3>
+      <ul class="docs-list">
+        <li><strong>New <code>&lt;arc-command-group&gt;</code></strong> &mdash; wraps items under a small uppercase heading. Groups render as <code>role="group"</code> runs inside the listbox, items keep filtering and keyboard-navigating as one flat list, and a heading disappears when none of its items match the query.</li>
+        <li><strong><code>keywords</code> attribute on <code>&lt;arc-command-item&gt;</code></strong> &mdash; extra space-separated terms the filter matches against but never displays, so <code>keywords="dropdown picker"</code> surfaces Select for the queries people actually type.</li>
+      </ul>
+
+      <h3 class="tier-heading">Docs Site</h3>
+      <ul class="docs-list">
+        <li><strong><kbd>⌘K</kbd> / <kbd>Ctrl+K</kbd> site search</strong> &mdash; every component and guide, grouped by tier, searchable by name, tag (<code>arc-select</code>), or alias. Built on Command Palette itself; no search service, no client-side index.</li>
+        <li><strong>Social cards everywhere</strong> &mdash; every component and guide page now ships its own OG image, and the homepage card derives its stats from the same source as the landing page so they can never drift.</li>
+        <li><strong>Changelog RSS feed</strong> &mdash; subscribe at <a href="/rss.xml">/rss.xml</a>; one item per release, all the way back to 1.0.0.</li>
+        <li><strong>Prev/next navigation and structured data</strong> &mdash; component pages chain together in sidebar order and emit TechArticle + BreadcrumbList JSON-LD.</li>
+      </ul>
+    </section>
+
+    <section id="v2-3-1">
+      <h2 class="docs-heading">v2.3.1 — Republish With Vendored Icons</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <p class="docs-text">
+        Identical component code to v2.3.0. The v2.3.0 npm tarballs were missing the generated
+        per-icon modules (<code>icons/phosphor/</code>, <code>icons/lucide/</code>), which broke
+        consumer builds on import. The release pipeline now generates them in CI and verifies
+        the tarball contents before publishing, so this class of failure can&rsquo;t ship again.
+      </p>
+    </section>
 
     <section id="v2-3-0">
       <h2 class="docs-heading">v2.3.0 — Zero Axe Violations, Prism 2.0 &amp; Discoverability</h2>

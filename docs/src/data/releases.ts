@@ -18,6 +18,8 @@ export function anchorFor(version: string): string {
 }
 
 export const releases: Release[] = [
+  { version: '2.4.0', date: '2026-07-23', title: 'Command Palette Groups & Keyword Search' },
+  { version: '2.3.1', date: '2026-07-23', title: 'Republish With Vendored Icons' },
   { version: '2.3.0', date: '2026-07-23', title: 'Zero Axe Violations, Prism 2.0 & Discoverability' },
   { version: '2.2.0', date: '2026-07-13', title: 'Dashboard Suite, Native Forms & Accessibility Overhaul' },
   { version: '2.1.0', date: '2026-02-17', title: 'Export Namespace Fix' },
