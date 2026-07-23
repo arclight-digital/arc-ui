@@ -16,11 +16,13 @@ jobs:
 
       - uses: pnpm/action-setup@v4
 
+      # No registry-url / NODE_AUTH_TOKEN: pnpm >=10.13 performs the OIDC
+      # trusted-publishing exchange natively, and an auth entry in .npmrc
+      # (even an empty one) makes it use that instead of OIDC.
       - uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: pnpm
-          registry-url: https://registry.npmjs.org
 
       - name: Install
         run: pnpm install --frozen-lockfile
@@ -45,12 +47,13 @@ jobs:
             exit 1
           fi
 
-      # OIDC trusted publishing: no token, provenance attached automatically.
+      # OIDC trusted publishing: no token; provenance is generated
+      # automatically. NPM_CONFIG_PROVENANCE stays as a guard so a silent
+      # fallback to tokenless-unsigned publishing can never happen.
       # --no-git-checks is required on a detached tag checkout.
       - name: Publish all packages
         run: pnpm -r publish --access public --no-git-checks
         env:
-          NODE_AUTH_TOKEN: ""
           NPM_CONFIG_PROVENANCE: "true"
 
       - name: Create GitHub Release
