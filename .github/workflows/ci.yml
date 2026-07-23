@@ -51,6 +51,13 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
 
+      # The per-icon modules are generated and gitignored, so a fresh
+      # checkout can't build the docs (icon-registry.js imports them).
+      # This job has been the only red lane since v2.3.0 for exactly
+      # this reason — the verify job gets them via its pnpm generate.
+      - name: Generate vendored icons
+        run: pnpm generate:icons
+
       - name: Install Chromium
         run: pnpm exec playwright install --with-deps chromium
 
