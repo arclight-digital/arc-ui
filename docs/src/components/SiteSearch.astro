@@ -40,11 +40,22 @@ const cap = (s: string) => s[0].toUpperCase() + s.slice(1);
 ---
 
 <arc-command-palette id="site-search" placeholder="Search components and guides…">
-  {guides.map((g) => (
-    <arc-command-item icon="book-open" shortcut="Guide" data-href={g.href}>{g.title}</arc-command-item>
-  ))}
-  {ordered.map((c) => (
-    <arc-command-item icon={tierIcons[c.tier]} shortcut={cap(c.tier)} data-href={`/docs/components/${c.slug}`}>{c.name}</arc-command-item>
+  <arc-command-group heading="Guides">
+    {guides.map((g) => (
+      <arc-command-item icon="book-open" shortcut="Guide" data-href={g.href}>{g.title}</arc-command-item>
+    ))}
+  </arc-command-group>
+  {tierOrder.map((tier) => (
+    <arc-command-group heading={cap(tier)}>
+      {ordered.filter((c) => c.tier === tier).map((c) => (
+        <arc-command-item
+          icon={tierIcons[c.tier]}
+          shortcut={cap(c.tier)}
+          keywords={[c.tag, ...(c.searchKeywords ?? [])].join(' ')}
+          data-href={`/docs/components/${c.slug}`}
+        >{c.name}</arc-command-item>
+      ))}
+    </arc-command-group>
   ))}
 </arc-command-palette>
 

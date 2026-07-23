@@ -184,3 +184,4 @@ export { TagInput } from './input/TagInput.js';
 export { TransferList } from './input/TransferList.js';
 export { Menubar } from './navigation/Menubar.js';
 export { ToastManager } from './feedback/ToastManager.js';
+export { CommandGroup } from './feedback/CommandGroup.js';

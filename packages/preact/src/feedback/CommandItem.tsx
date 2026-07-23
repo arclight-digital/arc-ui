@@ -6,12 +6,13 @@ import '@arclux/arc-ui/command-item';
 export interface CommandItemProps {
   shortcut?: string;
   icon?: string;
+  keywords?: string;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const CommandItem: FunctionComponent<CommandItemProps> = ({ shortcut, icon, children, ...rest }) => (
-  <arc-command-item shortcut={shortcut} icon={icon} {...rest}>
+export const CommandItem: FunctionComponent<CommandItemProps> = ({ shortcut, icon, keywords, children, ...rest }) => (
+  <arc-command-item shortcut={shortcut} icon={icon} keywords={keywords} {...rest}>
     {children}
   </arc-command-item>
 );

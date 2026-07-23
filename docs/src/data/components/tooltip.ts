@@ -6,6 +6,7 @@ export const tooltip: ComponentDef = {
     tag: 'arc-tooltip',
     tier: 'feedback',
     interactivity: 'hybrid',
+    searchKeywords: ['hint'],
     description: 'Contextual hint that appears on hover or focus, providing supplementary information without cluttering the UI. Supports four placement positions and a configurable show delay.',
 
     overview: `Tooltip is a non-intrusive disclosure component that surfaces contextual information when a user hovers over or focuses on an element. It is the right choice whenever a control's purpose is not immediately obvious from its visual alone — icon-only buttons, truncated labels, abbreviated values, and keyboard shortcuts all benefit from a tooltip that fills in the gap without adding permanent visual noise.

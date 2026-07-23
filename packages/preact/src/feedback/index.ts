@@ -74,3 +74,6 @@ export type { ProgressProps } from './Progress.js';
 
 export { Toast } from './Toast.js';
 export type { ToastProps } from './Toast.js';
+
+export { CommandGroup } from './CommandGroup.js';
+export type { CommandGroupProps } from './CommandGroup.js';

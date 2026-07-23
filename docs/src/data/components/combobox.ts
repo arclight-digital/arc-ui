@@ -6,6 +6,7 @@ export const combobox: ComponentDef = {
     tag: 'arc-combobox',
     tier: 'input',
     interactivity: 'interactive',
+    searchKeywords: ['autocomplete', 'typeahead'],
     description: 'Searchable dropdown with type-ahead filtering.',
 
     overview: `Combobox combines a text input with a filterable dropdown list, giving users the speed of typing with the certainty of selecting from a known set of options. As the user types into the input, the listbox narrows to show only options whose labels match the query string. This makes Combobox ideal for fields where the option set is too large for a plain Select but still needs to be constrained to predefined values -- country selectors, tag pickers, and user-mention fields are common examples.

@@ -7,6 +7,7 @@ export class ArcCommandItem extends LitElement {
   static properties = {
     shortcut: { type: String, reflect: true },
     icon:     { type: String },
+    keywords: { type: String },
   };
 
   static styles = css`
@@ -17,6 +18,7 @@ export class ArcCommandItem extends LitElement {
     super();
     this.shortcut = '';
     this.icon = '';
+    this.keywords = '';
   }
 
   get label() {

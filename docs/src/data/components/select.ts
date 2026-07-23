@@ -6,6 +6,7 @@ export const select: ComponentDef = {
     tag: 'arc-select',
     tier: 'input',
     interactivity: 'interactive',
+    searchKeywords: ['dropdown', 'picker'],
     description: 'Dropdown select with searchable options, keyboard navigation, and full ARIA listbox semantics for accessible form inputs.',
 
     overview: `The Select component replaces the native \`<select>\` element with a fully styled, accessible dropdown that integrates seamlessly with ARC UI's design tokens. It provides built-in type-ahead search filtering, allowing users to quickly locate options in long lists without scrolling.

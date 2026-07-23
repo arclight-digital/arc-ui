@@ -8,6 +8,7 @@ import '../content/icon.js';
 /**
  * @tag arc-command-palette
  * @requires arc-command-item
+ * @requires arc-command-group
  */
 export class ArcCommandPalette extends LitElement {
   static properties = {
@@ -110,6 +111,15 @@ export class ArcCommandPalette extends LitElement {
         color: var(--text-muted);
       }
 
+      .palette__group-heading {
+        padding: var(--space-sm) var(--space-sm) var(--space-xs);
+        font-family: var(--font-accent);
+        font-size: var(--text-xs);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--text-ghost);
+      }
+
       .palette__item {
         display: flex;
         align-items: center;
@@ -206,16 +216,60 @@ export class ArcCommandPalette extends LitElement {
   }
 
   _onSlotChange(e) {
-    this._items = e.target.assignedElements({ flatten: true })
-      .filter(el => el.tagName === 'ARC-COMMAND-ITEM');
+    this._items = e.target.assignedElements({ flatten: true }).flatMap(el => {
+      if (el.tagName === 'ARC-COMMAND-ITEM') return [el];
+      if (el.tagName === 'ARC-COMMAND-GROUP') {
+        return [...el.querySelectorAll('arc-command-item')];
+      }
+      return [];
+    });
   }
 
   get _filteredItems() {
     if (!this._query) return this._items;
     const q = this._query.toLowerCase();
     return this._items.filter(item =>
-      (item.label || '').toLowerCase().includes(q)
+      `${item.label || ''} ${item.keywords || ''}`.toLowerCase().includes(q)
     );
+  }
+
+  /**
+   * Partition the filtered items into consecutive runs sharing a group
+   * heading (empty heading for ungrouped items). Each entry keeps its flat
+   * index so keyboard focus and aria-activedescendant stay in sync.
+   */
+  _groupRuns(filtered) {
+    const runs = [];
+    filtered.forEach((item, index) => {
+      const group = item.closest('arc-command-group');
+      const heading = (group && group.heading) || '';
+      const last = runs[runs.length - 1];
+      if (last && last.heading === heading) {
+        last.entries.push({ item, index });
+      } else {
+        runs.push({ heading, entries: [{ item, index }] });
+      }
+    });
+    return runs;
+  }
+
+  _renderItem(item, i) {
+    return html`
+      <button
+        id="palette-item-${i}"
+        class="palette__item ${i === this._menuKb.focusedIndex ? 'is-focused' : ''}"
+        role="option"
+        aria-selected=${i === this._menuKb.focusedIndex ? 'true' : 'false'}
+        tabindex="-1"
+        @click=${() => this._selectItem(item)}
+        @mouseenter=${() => { this._menuKb.focusedIndex = i; }}
+        part="item"
+      >
+        ${item.icon ? html`<arc-icon name=${item.icon} size="16" class="palette__item-icon" aria-hidden="true"></arc-icon>` : ''}
+        <span class="palette__item-label">${item.label || ''}</span>
+        ${item.shortcut ? html`<span class="palette__item-shortcut">${item.shortcut}</span>` : ''}
+      </button>
+    `;
   }
 
   updated(changed) {
@@ -313,21 +367,13 @@ export class ArcCommandPalette extends LitElement {
           />
         </div>
         <div class="palette__results" id="palette-results" role="listbox" part="results">
-          ${filtered.map((item, i) => html`
-            <button
-              id="palette-item-${i}"
-              class="palette__item ${i === this._menuKb.focusedIndex ? 'is-focused' : ''}"
-              role="option"
-              aria-selected=${i === this._menuKb.focusedIndex ? 'true' : 'false'}
-              tabindex="-1"
-              @click=${() => this._selectItem(item)}
-              @mouseenter=${() => { this._menuKb.focusedIndex = i; }}
-              part="item"
-            >
-              ${item.icon ? html`<arc-icon name=${item.icon} size="16" class="palette__item-icon" aria-hidden="true"></arc-icon>` : ''}
-              <span class="palette__item-label">${item.label || ''}</span>
-              ${item.shortcut ? html`<span class="palette__item-shortcut">${item.shortcut}</span>` : ''}
-            </button>
+          ${this._groupRuns(filtered).map(run => html`
+            ${run.heading ? html`
+              <div role="group" aria-label=${run.heading} class="palette__group">
+                <div class="palette__group-heading" aria-hidden="true" part="group-heading">${run.heading}</div>
+                ${run.entries.map(entry => this._renderItem(entry.item, entry.index))}
+              </div>
+            ` : run.entries.map(entry => this._renderItem(entry.item, entry.index))}
           `)}
         </div>
         <div class="palette__footer" part="footer">

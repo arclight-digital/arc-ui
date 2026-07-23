@@ -5699,6 +5699,56 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/feedback/command-group.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ArcCommandGroup",
+          "members": [
+            {
+              "kind": "field",
+              "name": "heading",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "heading",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "heading",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "heading"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-command-group",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcCommandGroup",
+          "declaration": {
+            "name": "ArcCommandGroup",
+            "module": "src/feedback/command-group.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/feedback/command-item.js",
       "declarations": [
         {
@@ -5731,6 +5781,16 @@
               },
               "default": "''",
               "attribute": "icon"
+            },
+            {
+              "kind": "field",
+              "name": "keywords",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "keywords"
             }
           ],
           "attributes": [
@@ -5749,6 +5809,14 @@
               },
               "default": "''",
               "fieldName": "icon"
+            },
+            {
+              "name": "keywords",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "keywords"
             }
           ],
           "superclass": {

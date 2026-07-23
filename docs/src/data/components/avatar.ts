@@ -6,6 +6,7 @@ export const avatar: ComponentDef = {
     tag: 'arc-avatar',
     tier: 'content',
     interactivity: 'static',
+    searchKeywords: ['profile picture'],
     description: 'User avatar with image or initials fallback.',
 
     overview: `Avatar displays a user's profile image inside a circular, bordered container with a hover glow effect. When an image \`src\` is provided, it renders a fully covered \`<img>\` element with object-fit: cover and full border-radius. When no image is available, the component automatically falls back to rendering the first character of the \`name\` property as an uppercase initial inside the circle, using the Tektur accent font at weight 600.

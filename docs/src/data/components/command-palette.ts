@@ -157,7 +157,16 @@ export class MyComponent {}`,
         description: 'Action item inside a CommandPalette.',
         props: [
           { name: 'shortcut', type: 'string', description: 'Keyboard shortcut hint' },
-          { name: 'icon', type: 'string', description: 'Name of the icon to display before the item label.' }
+          { name: 'icon', type: 'string', description: 'Name of the icon to display before the item label.' },
+          { name: 'keywords', type: 'string', description: 'Extra space-separated terms the search filter matches against but never displays — e.g. keywords="dialog popup" on a Modal item.' }
+        ],
+      },
+      {
+        name: 'CommandGroup',
+        tag: 'arc-command-group',
+        description: 'Groups CommandItems under a small uppercase heading in the results list. Items inside a group still filter and keyboard-navigate as one flat list; headings disappear when none of their items match.',
+        props: [
+          { name: 'heading', type: 'string', description: 'Heading text displayed above the group’s items.' }
         ],
       }
     ],

@@ -184,3 +184,4 @@ export { default as TagInput } from './input/TagInput.vue';
 export { default as TransferList } from './input/TransferList.vue';
 export { default as Menubar } from './navigation/Menubar.vue';
 export { default as ToastManager } from './feedback/ToastManager.vue';
+export { default as CommandGroup } from './feedback/CommandGroup.vue';

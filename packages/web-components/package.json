@@ -57,6 +57,7 @@
     "./column": "./src/content/column.register.js",
     "./combobox": "./src/input/combobox.register.js",
     "./command-bar": "./src/navigation/command-bar.register.js",
+    "./command-group": "./src/feedback/command-group.register.js",
     "./command-item": "./src/feedback/command-item.register.js",
     "./command-palette": "./src/feedback/command-palette.register.js",
     "./comparison": "./src/data/comparison.register.js",

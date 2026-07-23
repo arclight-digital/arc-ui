@@ -499,6 +499,14 @@ export declare class ArcCommandBar extends LitElement {
 }
 
 /**
+ * `<arc-command-group>`
+ */
+export declare class ArcCommandGroup extends LitElement {
+  /** @default '' */
+  heading: string;
+}
+
+/**
  * `<arc-command-item>`
  */
 export declare class ArcCommandItem extends LitElement {
@@ -507,6 +515,8 @@ export declare class ArcCommandItem extends LitElement {
   shortcut: string;
   /** @default '' */
   icon: string;
+  /** @default '' */
+  keywords: string;
 }
 
 /**
@@ -2700,6 +2710,7 @@ declare global {
     'arc-column': ArcColumn;
     'arc-combobox': ArcCombobox;
     'arc-command-bar': ArcCommandBar;
+    'arc-command-group': ArcCommandGroup;
     'arc-command-item': ArcCommandItem;
     'arc-command-palette': ArcCommandPalette;
     'arc-comparison': ArcComparison;

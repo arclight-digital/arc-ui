@@ -6,6 +6,7 @@ export const toast: ComponentDef = {
     tag: 'arc-toast',
     tier: 'feedback',
     interactivity: 'interactive',
+    searchKeywords: ['notification'],
     description: 'Stack-managed notification toasts with auto-dismiss, variant-colored indicators, configurable position, and smooth enter/exit animations.',
 
     overview: `Toast provides a stack-managed notification system that surfaces brief, non-blocking messages to the user. Unlike modals or alerts, toasts appear in a fixed corner of the viewport and dismiss themselves automatically, making them ideal for confirming background operations — file saved, record updated, network reconnected — without interrupting the user's workflow.

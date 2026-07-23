@@ -6,6 +6,7 @@ export const modal: ComponentDef = {
     tag: 'arc-modal',
     tier: 'feedback',
     interactivity: 'interactive',
+    searchKeywords: ['popup'],
     description: 'General-purpose focus-trapping overlay with backdrop blur, slide-up animation, and ESC-to-close behavior for forms, settings, and rich content that needs full user attention.',
 
     overview: `Modal is a general-purpose focus-trapping overlay that floats above the page content behind a blurred backdrop. It captures keyboard focus on open, cycles through focusable children with Tab, and returns focus to the trigger element on close. Use Modal any time you need a rich container for forms, settings panels, content previews, or multi-step workflows where background interaction must be blocked.

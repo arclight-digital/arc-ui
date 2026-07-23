@@ -6,6 +6,7 @@ export const skeleton: ComponentDef = {
     tag: 'arc-skeleton',
     tier: 'content',
     interactivity: 'static',
+    searchKeywords: ['placeholder', 'loading'],
     description: 'Loading placeholder with shimmer animation.',
 
     overview: `Skeleton is a loading placeholder that mimics the shape of content before it arrives, reducing perceived wait times and preventing layout shift. It uses a shimmer animation — a linear gradient that sweeps left to right at 1.8-second intervals — to signal that data is being loaded. This approach is less intrusive than a spinner and gives users a preview of the page structure.

@@ -6,6 +6,7 @@ export const textarea: ComponentDef = {
     tag: 'arc-textarea',
     tier: 'input',
     interactivity: 'hybrid',
+    searchKeywords: ['multiline'],
     description: 'Multi-line text input with integrated label, placeholder, resize control, and live character count that turns red at the limit.',
 
     overview: `Textarea is the dedicated multi-line text-entry component in ARC UI. It wraps a native \`<textarea>\` element with consistent styling, an integrated uppercase label, placeholder support, optional character counting, and validation feedback -- all exposed through a declarative attribute API that works identically across every framework.

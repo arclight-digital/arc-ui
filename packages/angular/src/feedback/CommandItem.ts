@@ -7,9 +7,10 @@ import '@arclux/arc-ui/command-item';
   selector: 'arc-command-item',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-command-item [attr.shortcut]="shortcut" [attr.icon]="icon"><ng-content /></arc-command-item>`,
+  template: `<arc-command-item [attr.shortcut]="shortcut" [attr.icon]="icon" [attr.keywords]="keywords"><ng-content /></arc-command-item>`,
 })
 export class CommandItem {
   @Input() shortcut: string = '';
   @Input() icon: string = '';
+  @Input() keywords: string = '';
 }

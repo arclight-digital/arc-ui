@@ -6,13 +6,14 @@
   interface Props {
     shortcut?: string;
     icon?: string;
+    keywords?: string;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { shortcut = '', icon = '', children, ...rest }: Props = $props();
+  let { shortcut = '', icon = '', keywords = '', children, ...rest }: Props = $props();
 </script>
 
-<arc-command-item {shortcut} {icon} {...rest}>
+<arc-command-item {shortcut} {icon} {keywords} {...rest}>
   {@render children?.()}
 </arc-command-item>

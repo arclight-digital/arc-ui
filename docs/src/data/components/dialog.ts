@@ -6,6 +6,7 @@ export const dialog: ComponentDef = {
     tag: 'arc-dialog',
     tier: 'feedback',
     interactivity: 'interactive',
+    searchKeywords: ['prompt', 'popup'],
     description: 'Small centered confirmation dialog wrapping arc-modal for simple confirm/cancel prompts — unsaved changes, session expiry, and discard decisions.',
 
     overview: `Dialog is a convenience wrapper around \`arc-modal\` configured with \`size="sm"\` and \`closable\`, rendering as a small centered modal with backdrop blur and a slide-up entrance animation. It is purpose-built for simple confirm/cancel prompts — unsaved changes, session warnings, and discard decisions — where a full Modal would be overkill.

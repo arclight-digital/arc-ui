@@ -6,6 +6,7 @@ export const kbd: ComponentDef = {
     tag: 'arc-kbd',
     tier: 'typography',
     interactivity: 'static',
+    searchKeywords: ['keyboard key'],
     description: 'Keyboard key indicator styled like a physical key.',
 
     overview: `Kbd renders a keyboard key indicator styled to resemble a physical keycap. It uses an elevated background, a 1px border with a thicker 2px bottom border, and monospace typography to create the classic "keycap" appearance. The component is inline-level, so it sits naturally within running text, making it ideal for documenting keyboard shortcuts, hotkeys, and key combinations.

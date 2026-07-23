@@ -6,6 +6,7 @@ export const spinner: ComponentDef = {
     tag: 'arc-spinner',
     tier: 'content',
     interactivity: 'static',
+    searchKeywords: ['loader', 'loading'],
     description: 'Animated loading spinner in three sizes.',
 
     overview: `Spinner is a simple rotating loading indicator for actions where content shape is unknown or a skeleton layout is impractical. It renders a circular border element with one transparent edge that spins continuously at 0.75-second intervals, creating the classic "loading ring" pattern. Use it for button loading states, inline status indicators, and overlay loading screens.

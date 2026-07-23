@@ -554,3 +554,6 @@ export type { MenubarProps } from './navigation/Menubar.js';
 
 export { ToastManager } from './feedback/ToastManager.js';
 export type { ToastManagerProps } from './feedback/ToastManager.js';
+
+export { CommandGroup } from './feedback/CommandGroup.js';
+export type { CommandGroupProps } from './feedback/CommandGroup.js';

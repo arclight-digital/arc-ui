@@ -6,14 +6,15 @@ import '@arclux/arc-ui/command-item';
 export interface CommandItemProps {
   shortcut?: string;
   icon?: string;
+  keywords?: string;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const CommandItem: Component<CommandItemProps> = (props) => {
-  const [local, rest] = splitProps(props, ['shortcut', 'icon', 'children']);
+  const [local, rest] = splitProps(props, ['shortcut', 'icon', 'keywords', 'children']);
   return (
-    <arc-command-item shortcut={local.shortcut} icon={local.icon} {...rest}>
+    <arc-command-item shortcut={local.shortcut} icon={local.icon} keywords={local.keywords} {...rest}>
       {local.children}
     </arc-command-item>
   );

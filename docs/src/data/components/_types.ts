@@ -10,6 +10,8 @@ export interface ComponentDef {
   interactivity: 'static' | 'hybrid' | 'interactive';
   status?: 'stable' | 'beta' | 'experimental';
   description: string;
+  /** Alias terms for site search (⌘K) that aren't in the component name, e.g. ['dropdown'] on Select. */
+  searchKeywords?: string[];
   props: Array<{ name: string; type: string; default?: string; description: string }>;
   events?: Array<{ name: string; description: string }>;
   tabs: Array<{ label: string; lang: string; code: string }>;

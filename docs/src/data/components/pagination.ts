@@ -6,6 +6,7 @@ export const pagination: ComponentDef = {
     tag: 'arc-pagination',
     tier: 'navigation',
     interactivity: 'interactive',
+    searchKeywords: ['pager', 'page numbers'],
     description: 'Page navigation control with previous/next arrows, numbered page buttons, and smart ellipsis truncation.',
 
     overview: `Pagination provides a compact navigation strip for moving between pages of content. It renders previous/next arrow buttons flanking a row of numbered page buttons, with ellipsis markers automatically inserted when the total page count exceeds what can be displayed. The first and last pages are always visible, and the \`siblings\` prop controls how many pages appear adjacent to the currently active page.

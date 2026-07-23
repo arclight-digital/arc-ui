@@ -7,9 +7,11 @@ defineOptions({ name: 'CommandItem' });
 withDefaults(defineProps<{
   shortcut?: string;
   icon?: string;
+  keywords?: string;
 }>(), {
   shortcut: '',
   icon: '',
+  keywords: '',
 });
 </script>
 
@@ -17,6 +19,7 @@ withDefaults(defineProps<{
   <arc-command-item
     :shortcut="shortcut"
     :icon="icon"
+    :keywords="keywords"
   >
     <slot />
   </arc-command-item>

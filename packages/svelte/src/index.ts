@@ -184,3 +184,4 @@ export { default as TagInput } from './input/TagInput.svelte';
 export { default as TransferList } from './input/TransferList.svelte';
 export { default as Menubar } from './navigation/Menubar.svelte';
 export { default as ToastManager } from './feedback/ToastManager.svelte';
+export { default as CommandGroup } from './feedback/CommandGroup.svelte';

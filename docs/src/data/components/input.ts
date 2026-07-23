@@ -6,6 +6,7 @@ export const input: ComponentDef = {
     tag: 'arc-input',
     tier: 'input',
     interactivity: 'hybrid',
+    searchKeywords: ['textfield', 'text field'],
     description: 'Versatile form control supporting single-line text, email, password, and multiline textarea modes with built-in label, placeholder, and validation states. Pairs with Form for complete data-entry workflows.',
 
     overview: `Input is the foundational text-entry component in ARC UI. It wraps a native \`<input>\` or \`<textarea>\` element with consistent styling, an integrated label, placeholder support, and validation feedback -- all managed through a single declarative API.

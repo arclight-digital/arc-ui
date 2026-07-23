@@ -160,6 +160,7 @@ import './layout/toolbar.register.js';
 import './feedback/alert.register.js';
 import './feedback/announcement.register.js';
 import './feedback/banner.register.js';
+import './feedback/command-group.register.js';
 import './feedback/command-item.register.js';
 import './feedback/command-palette.register.js';
 import './feedback/confirm.register.js';

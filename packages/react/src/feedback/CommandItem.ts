@@ -7,6 +7,7 @@ import { ArcCommandItem } from '@arclux/arc-ui/command-item';
 export interface CommandItemProps {
   shortcut?: string;
   icon?: string;
+  keywords?: string;
   className?: string;
   children?: React.ReactNode;
 }

@@ -6,6 +6,7 @@ export const drawer: ComponentDef = {
     tag: 'arc-drawer',
     tier: 'navigation',
     interactivity: 'interactive',
+    searchKeywords: ['side panel'],
     description: 'Slide-out panel with backdrop overlay, keyboard dismissal, and left/right positioning for off-canvas navigation, filters, and detail views.',
 
     overview: `Drawer is a slide-out panel that emerges from the left or right edge of the viewport, overlaying page content behind a semi-transparent backdrop. It is the standard pattern for housing navigation menus on mobile, exposing filter panels in data-heavy applications, or showing contextual detail views without navigating away from the current page.

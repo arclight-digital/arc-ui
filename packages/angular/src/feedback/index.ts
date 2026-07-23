@@ -24,3 +24,4 @@ export { Tooltip } from './Tooltip.js';
 export { ToastManager } from './ToastManager.js';
 export { Progress } from './Progress.js';
 export { Toast } from './Toast.js';
+export { CommandGroup } from './CommandGroup.js';
