@@ -5,13 +5,16 @@
  *
  * Runs all generation steps in order:
  *   1. Tokens    — shared/tokens.js → shared/base.css
- *   2. Register  — Auto-generate .register.js files
- *   3. Brand     — Generate brand assets
- *   4. Prism     — Generate framework wrappers + HTML/CSS
- *   5. Exports   — Sync package.json exports map from register files
- *   6. Manifest  — custom-elements.json via @custom-elements-manifest/analyzer
- *   7. Types     — types/index.d.ts generated from the manifest
- *   8. Readme    — README component counts synced from docs data
+ *   2. Icons     — vendored icon modules from upstream libraries (gitignored,
+ *                  so fresh checkouts — e.g. the CI release runner — must
+ *                  regenerate them before packing the npm tarball)
+ *   3. Register  — Auto-generate .register.js files
+ *   4. Brand     — Generate brand assets
+ *   5. Prism     — Generate framework wrappers + HTML/CSS
+ *   6. Exports   — Sync package.json exports map from register files
+ *   7. Manifest  — custom-elements.json via @custom-elements-manifest/analyzer
+ *   8. Types     — types/index.d.ts generated from the manifest
+ *   9. Readme    — README component counts synced from docs data
  *
  * Usage: node scripts/generate.js
  */
@@ -21,6 +24,7 @@ import { performance } from 'node:perf_hooks';
 
 const steps = [
   { name: 'Tokens',   cmd: 'node',  args: ['scripts/generate-base-css.js'] },
+  { name: 'Icons',    cmd: 'node',  args: ['scripts/generate-icons.js'] },
   { name: 'Register', cmd: 'node',  args: ['scripts/generate-registrations.js'] },
   { name: 'Brand',    cmd: 'node',  args: ['scripts/generate-brand-assets.js'] },
   { name: 'Prism',    cmd: 'npx',   args: ['prism'] },

@@ -39,6 +39,22 @@ jobs:
       - name: Lint
         run: pnpm lint
 
+      # The per-icon modules are generated and gitignored, so a fresh CI
+      # checkout only has them because `pnpm generate` ran above. Pack the
+      # tarball and prove the critical files made it in — v2.3.0 shipped
+      # without them and broke every consumer build.
+      - name: Tarball contains generated icon modules
+        run: |
+          cd packages/web-components
+          TARBALL="$(pnpm pack | tail -n1)"
+          for f in src/icons/phosphor/_resolver.js src/icons/lucide/_resolver.js src/icons/phosphor/_manifest.js src/icons/lucide/_manifest.js; do
+            if ! tar -tzf "$TARBALL" | grep -qx "package/$f"; then
+              echo "::error::$f is missing from the npm tarball"
+              exit 1
+            fi
+          done
+          rm "$TARBALL"
+
       - name: Tag matches package version
         run: |
           PKG_VERSION="$(node -p "require('./packages/web-components/package.json').version")"
