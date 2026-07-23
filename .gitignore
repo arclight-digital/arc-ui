@@ -25,3 +25,4 @@ CLAUDE.md
 # Generated per-icon files (run `node scripts/generate-icons.js` to regenerate)
 packages/web-components/src/icons/phosphor/
 packages/web-components/src/icons/lucide/
+.playwright-mcp/

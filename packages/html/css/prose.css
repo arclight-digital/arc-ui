@@ -14,7 +14,7 @@
       .arc-prose[data-size="lg"] { font-size: var(--text-lg); }
 
       .arc-prose /* Direct-child block elements via ::slotted */
-      ::slotted(h1) {
+      h1 {
         font-size: var(--text-3xl) !important;
         font-weight: var(--heading-weight) !important;
         color: var(--text-primary) !important;
@@ -22,7 +22,7 @@
         margin-bottom: var(--space-md) !important;
         line-height: 1.3 !important;
       }
-      .arc-prose ::slotted(h2) {
+      .arc-prose h2 {
         font-size: var(--heading-size) !important;
         font-weight: var(--heading-weight) !important;
         color: var(--text-primary) !important;
@@ -30,31 +30,31 @@
         margin-bottom: var(--space-md) !important;
         line-height: 1.4 !important;
       }
-      .arc-prose ::slotted(h3) {
+      .arc-prose h3 {
         font-size: var(--text-lg) !important;
         font-weight: 600 !important;
         color: var(--text-primary) !important;
         margin-top: var(--space-lg) !important;
         margin-bottom: var(--space-sm) !important;
       }
-      .arc-prose ::slotted(h4) {
+      .arc-prose h4 {
         font-size: var(--text-md) !important;
         font-weight: 600 !important;
         color: var(--text-primary) !important;
         margin-top: var(--space-lg) !important;
         margin-bottom: var(--space-sm) !important;
       }
-      .arc-prose ::slotted(p) {
+      .arc-prose p {
         margin-bottom: var(--space-md) !important;
         text-wrap: pretty !important;
       }
-      .arc-prose ::slotted(ul),
-      .arc-prose ::slotted(ol) {
+      .arc-prose ul,
+      .arc-prose ol {
         margin-bottom: var(--space-md) !important;
         padding-left: var(--space-lg) !important;
         color: var(--text-secondary) !important;
       }
-      .arc-prose ::slotted(blockquote) {
+      .arc-prose blockquote {
         padding: var(--space-md) var(--space-lg) !important;
         margin: var(--space-lg) 0 !important;
         background: rgba(var(--accent-primary-rgb), 0.03) !important;
@@ -62,7 +62,7 @@
         font-style: italic !important;
         color: var(--text-muted) !important;
       }
-      .arc-prose ::slotted(pre) {
+      .arc-prose pre {
         margin: var(--space-lg) 0 !important;
         padding: var(--space-md) !important;
         background: var(--surface-primary) !important;
@@ -73,19 +73,19 @@
         font-size: var(--code-size) !important;
         line-height: var(--code-lh) !important;
       }
-      .arc-prose ::slotted(hr) {
+      .arc-prose hr {
         border: none !important;
         height: 1px !important;
         background: var(--divider) !important;
         margin: var(--space-xl) 0 !important;
       }
-      .arc-prose ::slotted(img) {
+      .arc-prose img {
         max-width: 100% !important;
         height: auto !important;
         border-radius: var(--radius-md) !important;
         margin: var(--space-lg) 0 !important;
       }
-      .arc-prose ::slotted(table) {
+      .arc-prose table {
         width: 100% !important;
         border-collapse: collapse !important;
         margin: var(--space-lg) 0 !important;

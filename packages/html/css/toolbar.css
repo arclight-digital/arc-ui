@@ -52,3 +52,85 @@
         flex-shrink: 0;
         margin-left: auto;
       }
+
+      .arc-toolbar /* Overflow collapse prevents slotted items from forcing the row wider */
+      .arc-toolbar[overflow] .toolbar {
+        min-width: 0;
+        overflow: hidden;
+      }
+      .arc-toolbar[overflow] .toolbar__center {
+        min-width: 0;
+      }
+
+      .arc-toolbar .toolbar__overflow {
+        position: relative;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+      }
+
+      .arc-toolbar .overflow__panel {
+        position: absolute;
+        z-index: var(--z-dropdown);
+        top: calc(100% + var(--space-xs));
+        right: 0;
+        min-width: 200px;
+        display: flex;
+        flex-direction: column;
+        background: var(--surface-raised);
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-md);
+        padding: var(--space-xs) 0;
+        box-shadow: var(--shadow-overlay);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-4px);
+        transition:
+          opacity var(--transition-base),
+          visibility var(--transition-base),
+          transform var(--transition-base);
+      }
+
+      .arc-toolbar .overflow__panel.is-open {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .arc-toolbar .overflow__item {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+        width: 100%;
+        padding: var(--touch-pad) var(--space-md);
+        min-height: var(--touch-min);
+        border: none;
+        background: transparent;
+        color: var(--text-secondary);
+        font-family: var(--font-body);
+        font-size: var(--text-sm);
+        cursor: pointer;
+        text-align: left;
+        transition: background var(--transition-fast), color var(--transition-fast);
+        outline: none;
+      }
+
+      .arc-toolbar .overflow__item:hover,
+      .arc-toolbar .overflow__item.is-focused {
+        background: var(--surface-hover);
+        color: var(--text-primary);
+      }
+
+      .arc-toolbar .overflow__item:focus-visible {
+        box-shadow: inset var(--interactive-focus);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .arc-toolbar *,
+        .arc-toolbar *::before,
+        .arc-toolbar *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }

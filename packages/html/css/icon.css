@@ -15,8 +15,9 @@
       .arc-icon[data-size="md"] { width: 20px; height: 20px; }
       .arc-icon[data-size="lg"] { width: 24px; height: 24px; }
       .arc-icon[data-size="xl"] { width: 32px; height: 32px; }
+      .arc-icon /* Numeric sizes (px) are applied as inline width/height in updated() */
 
-      .arc-icon .icon {
+      .icon {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -29,7 +30,7 @@
         height: 100%;
       }
 
-      .arc-icon ::slotted(svg) {
+      .arc-icon svg {
         width: 100%;
         height: 100%;
         fill: currentColor;

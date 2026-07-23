@@ -1,8 +1,8 @@
 # @arclux/arc-ui-preact
 
-Preact component wrappers for [ARC UI](https://arcui.dev) web components.
+Preact component wrappers for [ARC UI](https://arcui.dev) web components with typed props and events.
 
-> **Auto-generated** -- this package is produced by [Prism](../../prism.config.js) from the canonical source in [`@arclux/arc-ui`](../web-components/). Do not edit by hand.
+> **Auto-generated** — this package is produced by [Prism](https://www.npmjs.com/package/@arclux/prism) from the canonical source in [`@arclux/arc-ui`](https://www.npmjs.com/package/@arclux/arc-ui). Do not edit by hand.
 
 ## Installation
 
@@ -33,7 +33,7 @@ export function App() {
 }
 ```
 
-Components are organized by category and can be imported from subpaths:
+Components are organized by tier and can be imported from subpaths:
 
 ```tsx
 import { Button } from '@arclux/arc-ui-preact/input';
@@ -41,12 +41,32 @@ import { Card }   from '@arclux/arc-ui-preact/content';
 import { AppShell } from '@arclux/arc-ui-preact/layout';
 ```
 
-## Documentation
+## Events
 
-Full component docs and interactive examples: [arcui.dev](https://arcui.dev)
+Each component's `arc-*` CustomEvents are exposed as typed `onArc*` props (`arc-input` → `onArcInput`, `arc-select` → `onArcSelect`, …). The handler receives the original `CustomEvent`; payloads are on `event.detail`:
+
+```tsx
+<Input label="Email" onArcInput={(e) => console.log(e.detail.value)} />
+```
+
+## Server-side rendering
+
+The wrappers register custom elements on import, which requires a DOM. With SSR frameworks, render them client-side only.
+
+## Theming
+
+Components read design tokens from CSS custom properties. Overriding the base accent tokens re-themes every component — see the [theming guide](https://arcui.dev/docs/theming):
+
+```css
+:root {
+  --accent-primary: rgb(77, 126, 247);
+  --accent-primary-rgb: 77, 126, 247;
+}
+```
 
 ## Links
 
-- [Canonical source (`@arclux/arc-ui`)](../web-components/)
-- [Root README](../../README.md)
-- [License](../../LICENSE)
+- [Documentation & interactive examples](https://arcui.dev)
+- [Canonical source (`@arclux/arc-ui`)](https://www.npmjs.com/package/@arclux/arc-ui)
+- [Repository](https://github.com/arclight-digital/arc-ui)
+- [License (MIT)](https://github.com/arclight-digital/arc-ui/blob/main/LICENSE)

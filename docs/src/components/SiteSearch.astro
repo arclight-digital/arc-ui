@@ -72,7 +72,7 @@ const cap = (s: string) => s[0].toUpperCase() + s.slice(1);
       if ((e.metaKey || e.ctrlKey) && !e.shiftKey && !e.altKey && (e.key === 'k' || e.key === 'K')) {
         e.preventDefault();
         var p = getPalette();
-        if (p) p.open = true;
+        if (p) p.open = !p.open;
       }
     });
 

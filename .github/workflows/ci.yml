@@ -33,6 +33,18 @@ jobs:
       - name: Lint
         run: pnpm lint
 
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+
+      - name: Install Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Component tests
+        run: pnpm test
+
       - name: Typecheck generated declarations
         run: ./node_modules/.bin/tsc --noEmit --skipLibCheck --moduleResolution bundler --module esnext --target es2022 packages/web-components/types/index.d.ts
 
@@ -57,6 +69,12 @@ jobs:
       # this reason — the verify job gets them via its pnpm generate.
       - name: Generate vendored icons
         run: pnpm generate:icons
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
 
       - name: Install Chromium
         run: pnpm exec playwright install --with-deps chromium

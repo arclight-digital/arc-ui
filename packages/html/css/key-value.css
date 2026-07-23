@@ -11,7 +11,7 @@
       }
 
       .arc-key-value /* Horizontal layout — grid pairs */
-      .arc-key-value[data-layout="horizontal"] ::slotted(arc-kv-pair) {
+      .arc-key-value[data-layout="horizontal"] arc-kv-pair {
         display: grid;
         grid-template-columns: minmax(120px, auto) 1fr;
         gap: var(--space-md);
@@ -19,30 +19,30 @@
       }
 
       .arc-key-value /* Stacked layout — flex column pairs */
-      .arc-key-value[data-layout="stacked"] ::slotted(arc-kv-pair) {
+      .arc-key-value[data-layout="stacked"] arc-kv-pair {
         display: flex;
         flex-direction: column;
         gap: var(--space-xs);
       }
 
       .arc-key-value /* Pair padding */
-      ::slotted(arc-kv-pair) {
+      arc-kv-pair {
         padding: var(--space-md) var(--space-sm);
         border-radius: var(--radius-sm);
         transition: background var(--transition-fast);
       }
 
-      .arc-key-value ::slotted(arc-kv-pair:hover) {
+      .arc-key-value arc-kv-pair:hover {
         background: var(--surface-hover);
       }
 
       .arc-key-value /* Dividers */
-      .arc-key-value[dividers] ::slotted(arc-kv-pair:not(:last-child)) {
+      .arc-key-value[dividers] arc-kv-pair:not(:last-child) {
         border-bottom: 1px solid var(--divider);
       }
 
       @media (prefers-reduced-motion: reduce) {
-        .arc-key-value ::slotted(arc-kv-pair) {
+        .arc-key-value arc-kv-pair {
           transition: none;
         }
       }

@@ -61,7 +61,7 @@
         line-height: 1.7;
       }
 
-      .arc-cta-banner .cta__body ::slotted(*) { margin: 0; }
+      .arc-cta-banner .cta__body * { margin: 0; }
 
       .arc-cta-banner .cta__actions {
         display: flex;

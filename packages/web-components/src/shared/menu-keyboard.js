@@ -45,6 +45,14 @@ export class MenuKeyboardController {
   }
 
   _onKeyDown(e) {
+    // Escape must close even when there are no items (e.g. a search query
+    // with zero matches) — check it before the count guard.
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      this._onClose();
+      return;
+    }
+
     const count = this._getItemCount();
     if (count === 0) return;
 
@@ -81,10 +89,6 @@ export class MenuKeyboardController {
         if (this.focusedIndex >= 0 && this.focusedIndex < count) {
           this._onSelect(this.focusedIndex);
         }
-        break;
-      case 'Escape':
-        e.preventDefault();
-        this._onClose();
         break;
     }
   }

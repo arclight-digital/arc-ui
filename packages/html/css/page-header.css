@@ -27,7 +27,7 @@
       }
 
       .arc-page-header .page-header__heading,
-      .arc-page-header slot[name='heading']::slotted(*) {
+      .arc-page-header [slot="heading"] {
         margin: 0;
         font-family: var(--font-body);
         font-size: 28px;
@@ -50,7 +50,7 @@
         line-height: 1.5;
       }
 
-      .arc-page-header slot[name='description']::slotted(*) {
+      .arc-page-header [slot="description"] {
         margin: var(--space-sm) 0 0;
         color: var(--text-secondary);
         font-size: var(--body-size);

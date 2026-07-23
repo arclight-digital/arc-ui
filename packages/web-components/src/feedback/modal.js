@@ -32,12 +32,15 @@ export class ArcModal extends LitElement {
         padding: var(--space-lg);
         opacity: 0;
         visibility: hidden;
-        transition: opacity var(--transition-base), visibility var(--transition-base);
+        /* visibility flips instantly on open (delayed only on close) so the
+           dialog is focusable the moment [open] is set */
+        transition: opacity var(--transition-base), visibility 0s var(--transition-base);
       }
 
       :host([open]) .modal__backdrop {
         opacity: 1;
         visibility: visible;
+        transition-delay: 0s;
       }
 
       .modal__dialog {

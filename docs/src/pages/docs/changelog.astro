@@ -3,6 +3,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 import { components } from '../../data/components/index';
 
 const headings = [
+  { id: 'v2-5-0', label: 'v2.5.0' },
   { id: 'v2-4-0', label: 'v2.4.0' },
   { id: 'v2-3-1', label: 'v2.3.1' },
   { id: 'v2-3-0', label: 'v2.3.0' },
@@ -59,6 +60,44 @@ const byTier = Object.fromEntries(
     <p class="page-desc">
       Release history for ARC UI. All packages are versioned together.
     </p>
+
+    <section id="v2-5-0">
+      <h2 class="docs-heading">v2.5.0 — Keyboard-First Command Palette &amp; Browser Tests</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <p class="docs-text">
+        A fit-and-finish release for the overlays. Command Palette now delivers a genuinely
+        keyboard-only experience — instant input focus on open, arrow navigation that keeps the
+        highlighted item in view, a real empty state — and the focus bug it exposed is fixed
+        across every overlay and guarded by the project&rsquo;s first real-browser test suite.
+      </p>
+
+      <h3 class="tier-heading">Command Palette</h3>
+      <ul class="docs-list">
+        <li><strong>Search input autofocuses on open</strong> &mdash; opening the palette previously left focus on the page because the dialog&rsquo;s <code>visibility</code> transition made it unfocusable at the moment <code>focus()</code> ran. Overlays now flip <code>visibility</code> instantly on open and only delay it on close (Modal had the same latent bug and got the same fix).</li>
+        <li><strong>Empty state that actually shows</strong> &mdash; a query with no matches now renders <em>No results for &ldquo;query&rdquo;</em>; the old CSS <code>:empty</code> approach never fired against Lit-rendered content.</li>
+        <li><strong>Escape always closes</strong> &mdash; previously ignored when the result list was empty.</li>
+        <li><strong>Arrow keys scroll the highlighted item into view</strong> in long result lists.</li>
+        <li><strong>Item icons render at the right size</strong> &mdash; <code>arc-icon</code> now accepts numeric pixel sizes (<code>size="16"</code>) alongside named sizes, fixing oversized icons in Command Palette, Context Menu, and any consumer passing numbers.</li>
+      </ul>
+
+      <h3 class="tier-heading">Testing</h3>
+      <ul class="docs-list">
+        <li><strong>Real-browser component tests</strong> &mdash; <code>pnpm test</code> runs a web-test-runner suite in headless Chromium, wired into CI. The regressions in this release (focus vs. visibility transitions, computed icon sizing) are invisible to jsdom, so the suite tests what browsers actually do.</li>
+      </ul>
+
+      <h3 class="tier-heading">Docs Site</h3>
+      <ul class="docs-list">
+        <li><strong><kbd>⌘K</kbd> toggles</strong> &mdash; pressing the shortcut with the palette open now closes it.</li>
+        <li><strong>Fleshed-out package READMEs</strong> &mdash; every npm package now documents events, theming, SSR caveats, and correct registration entry points, with links that work on npm.</li>
+      </ul>
+
+      <h3 class="tier-heading">Housekeeping</h3>
+      <ul class="docs-list">
+        <li><strong>Prism 2.0.2</strong> &mdash; regenerated all wrapper output; 74 files stuck on a pre-rename header refreshed, Page Header&rsquo;s HTML example and slotted styles corrected.</li>
+        <li><strong>Removed orphaned HTML examples</strong> &mdash; the static <code>callout</code>, <code>app-shell</code>, <code>toolbar</code>, and <code>tooltip</code> snippets in <code>@arclux/arc-ui-html</code> predated those components becoming interactive and were no longer maintained by the generator. Interactive components are intentionally excluded from the static-HTML package.</li>
+      </ul>
+    </section>
 
     <section id="v2-4-0">
       <h2 class="docs-heading">v2.4.0 — Command Palette Groups &amp; Keyword Search</h2>

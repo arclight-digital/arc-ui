@@ -22,15 +22,15 @@
         column-gap: var(--space-lg);
       }
 
-      .arc-masonry ::slotted(*) {
+      .arc-masonry * {
         break-inside: avoid;
         margin-bottom: var(--space-md);
       }
 
-      .arc-masonry[data-gap="sm"] ::slotted(*) {
+      .arc-masonry[data-gap="sm"] * {
         margin-bottom: var(--space-sm);
       }
 
-      .arc-masonry[data-gap="lg"] ::slotted(*) {
+      .arc-masonry[data-gap="lg"] * {
         margin-bottom: var(--space-lg);
       }

@@ -84,8 +84,8 @@
       .arc-button .btn__prefix--empty,
       .arc-button .btn__suffix--empty { display: none; }
 
-      .arc-button ::slotted([slot="prefix"]),
-      .arc-button ::slotted([slot="suffix"]) {
+      .arc-button [slot="prefix"],
+      .arc-button [slot="suffix"] {
         display: flex;
       }
 

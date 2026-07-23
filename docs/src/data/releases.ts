@@ -18,6 +18,7 @@ export function anchorFor(version: string): string {
 }
 
 export const releases: Release[] = [
+  { version: '2.5.0', date: '2026-07-23', title: 'Keyboard-First Command Palette & Browser Tests' },
   { version: '2.4.0', date: '2026-07-23', title: 'Command Palette Groups & Keyword Search' },
   { version: '2.3.1', date: '2026-07-23', title: 'Republish With Vendored Icons' },
   { version: '2.3.0', date: '2026-07-23', title: 'Zero Axe Violations, Prism 2.0 & Discoverability' },

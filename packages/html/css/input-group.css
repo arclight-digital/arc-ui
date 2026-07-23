@@ -51,10 +51,10 @@
       }
 
       .arc-input-group /* Remove borders/radii from slotted inputs */
-      ::slotted(arc-input),
-      .arc-input-group ::slotted(arc-select),
-      .arc-input-group ::slotted(input),
-      .arc-input-group ::slotted(select) {
+      arc-input,
+      .arc-input-group arc-select,
+      .arc-input-group input,
+      .arc-input-group select {
         border: none !important;
         border-radius: 0 !important;
         box-shadow: none !important;

@@ -30,14 +30,17 @@ export class ArcCommandPalette extends LitElement {
         background: var(--overlay-backdrop);
         opacity: 0;
         visibility: hidden;
+        /* visibility flips instantly on open (delayed only on close) so the
+           dialog is focusable the moment [open] is set */
         transition:
           opacity var(--transition-base),
-          visibility var(--transition-base);
+          visibility 0s var(--transition-base);
       }
 
       :host([open]) .palette__backdrop {
         opacity: 1;
         visibility: visible;
+        transition-delay: 0s;
       }
 
       .palette__dialog {
@@ -57,7 +60,7 @@ export class ArcCommandPalette extends LitElement {
         visibility: hidden;
         transition:
           opacity var(--transition-base),
-          visibility var(--transition-base),
+          visibility 0s var(--transition-base),
           transform var(--transition-base);
       }
 
@@ -65,6 +68,7 @@ export class ArcCommandPalette extends LitElement {
         opacity: 1;
         visibility: visible;
         transform: translateX(-50%) scale(1);
+        transition-delay: 0s;
       }
 
       .palette__search {
@@ -101,14 +105,18 @@ export class ArcCommandPalette extends LitElement {
         padding: var(--space-xs) 0;
       }
 
-      .palette__results:empty::after {
-        content: 'No results found';
-        display: block;
+      .palette__empty {
         padding: var(--space-lg);
         text-align: center;
         font-family: var(--font-body);
         font-size: var(--text-sm);
         color: var(--text-muted);
+      }
+
+      .palette__empty strong {
+        color: var(--text-secondary);
+        font-weight: var(--weight-medium, 500);
+        overflow-wrap: anywhere;
       }
 
       .palette__group-heading {
@@ -273,6 +281,10 @@ export class ArcCommandPalette extends LitElement {
   }
 
   updated(changed) {
+    if (this.open) {
+      const focused = this.shadowRoot.querySelector('.palette__item.is-focused');
+      if (focused) focused.scrollIntoView({ block: 'nearest' });
+    }
     if (changed.has('open')) {
       if (this.open) {
         this._previousFocus = deepActiveElement();
@@ -367,6 +379,13 @@ export class ArcCommandPalette extends LitElement {
           />
         </div>
         <div class="palette__results" id="palette-results" role="listbox" part="results">
+          ${filtered.length === 0 ? html`
+            <div class="palette__empty" role="status" part="empty">
+              ${this._query
+                ? html`No results for <strong>&ldquo;${this._query}&rdquo;</strong>`
+                : 'No results found'}
+            </div>
+          ` : ''}
           ${this._groupRuns(filtered).map(run => html`
             ${run.heading ? html`
               <div role="group" aria-label=${run.heading} class="palette__group">

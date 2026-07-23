@@ -16,7 +16,7 @@
       }
 
       .arc-button-group /* Remove inner radii — connected borders */
-      ::slotted(*) {
+      * {
         --radius-md: 0;
         --radius-sm: 0;
         --radius-lg: 0;
@@ -24,36 +24,36 @@
       }
 
       .arc-button-group /* Horizontal: first/last get outer radii */
-      .arc-button-group:not([data-orientation="vertical"]) ::slotted(:first-child) {
+      .arc-button-group:not([data-orientation="vertical"]) :first-child {
         border-radius: var(--_group-radius) 0 0 var(--_group-radius) !important;
       }
 
-      .arc-button-group:not([data-orientation="vertical"]) ::slotted(:last-child) {
+      .arc-button-group:not([data-orientation="vertical"]) :last-child {
         border-radius: 0 var(--_group-radius) var(--_group-radius) 0 !important;
       }
 
-      .arc-button-group:not([data-orientation="vertical"]) ::slotted(:only-child) {
+      .arc-button-group:not([data-orientation="vertical"]) :only-child {
         border-radius: var(--_group-radius) !important;
       }
 
       .arc-button-group /* Vertical: first/last get outer radii */
-      .arc-button-group[data-orientation="vertical"] ::slotted(:first-child) {
+      .arc-button-group[data-orientation="vertical"] :first-child {
         border-radius: var(--_group-radius) var(--_group-radius) 0 0 !important;
       }
 
-      .arc-button-group[data-orientation="vertical"] ::slotted(:last-child) {
+      .arc-button-group[data-orientation="vertical"] :last-child {
         border-radius: 0 0 var(--_group-radius) var(--_group-radius) !important;
       }
 
-      .arc-button-group[data-orientation="vertical"] ::slotted(:only-child) {
+      .arc-button-group[data-orientation="vertical"] :only-child {
         border-radius: var(--_group-radius) !important;
       }
 
       .arc-button-group /* Collapse borders between items */
-      .arc-button-group:not([data-orientation="vertical"]) ::slotted(:not(:first-child)) {
+      .arc-button-group:not([data-orientation="vertical"]) :not(:first-child) {
         margin-left: -1px;
       }
 
-      .arc-button-group[data-orientation="vertical"] ::slotted(:not(:first-child)) {
+      .arc-button-group[data-orientation="vertical"] :not(:first-child) {
         margin-top: -1px;
       }

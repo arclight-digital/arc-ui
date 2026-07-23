@@ -229,7 +229,7 @@
         height: 100%;
       }
 
-      .arc-aspect-ratio ::slotted(*) {
+      .arc-aspect-ratio * {
         width: 100%;
         height: 100%;
         object-fit: cover;
@@ -244,7 +244,7 @@
         align-items: center;
       }
 
-      .arc-avatar-group ::slotted(*) {
+      .arc-avatar-group * {
         position: relative;
         box-sizing: border-box;
         box-shadow: 0 0 0 3px var(--surface-base);
@@ -252,7 +252,7 @@
         transition: transform var(--transition-fast), box-shadow var(--transition-fast);
       }
 
-      .arc-avatar-group ::slotted(:hover) {
+      .arc-avatar-group :hover {
         transform: translateY(-2px) scale(1.08);
         z-index: 100 !important;
         box-shadow: 0 0 0 3px var(--surface-base), var(--shadow-md);
@@ -569,7 +569,7 @@
         line-height: 1.7;
       }
 
-      .arc-cta-banner .cta__body ::slotted(*) { margin: 0; }
+      .arc-cta-banner .cta__body * { margin: 0; }
 
       .arc-cta-banner .cta__actions {
         display: flex;
@@ -896,8 +896,9 @@
       .arc-icon[data-size="md"] { width: 20px; height: 20px; }
       .arc-icon[data-size="lg"] { width: 24px; height: 24px; }
       .arc-icon[data-size="xl"] { width: 32px; height: 32px; }
+      .arc-icon /* Numeric sizes (px) are applied as inline width/height in updated() */
 
-      .arc-icon .icon {
+      .icon {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -910,7 +911,7 @@
         height: 100%;
       }
 
-      .arc-icon ::slotted(svg) {
+      .arc-icon svg {
         width: 100%;
         height: 100%;
         fill: currentColor;
@@ -1327,7 +1328,7 @@
         width: 100%;
       }
 
-      .arc-virtual-list ::slotted(*) {
+      .arc-virtual-list * {
         position: absolute;
         left: 0;
         width: 100%;
@@ -1575,7 +1576,7 @@
         padding: 0;
       }
 
-      .arc-description-list ::slotted(arc-description-item) {
+      .arc-description-list arc-description-item {
         padding: var(--space-md) var(--space-sm);
       }
 
@@ -1679,7 +1680,7 @@
       }
 
       .arc-key-value /* Horizontal layout — grid pairs */
-      .arc-key-value[data-layout="horizontal"] ::slotted(arc-kv-pair) {
+      .arc-key-value[data-layout="horizontal"] arc-kv-pair {
         display: grid;
         grid-template-columns: minmax(120px, auto) 1fr;
         gap: var(--space-md);
@@ -1687,30 +1688,30 @@
       }
 
       .arc-key-value /* Stacked layout — flex column pairs */
-      .arc-key-value[data-layout="stacked"] ::slotted(arc-kv-pair) {
+      .arc-key-value[data-layout="stacked"] arc-kv-pair {
         display: flex;
         flex-direction: column;
         gap: var(--space-xs);
       }
 
       .arc-key-value /* Pair padding */
-      ::slotted(arc-kv-pair) {
+      arc-kv-pair {
         padding: var(--space-md) var(--space-sm);
         border-radius: var(--radius-sm);
         transition: background var(--transition-fast);
       }
 
-      .arc-key-value ::slotted(arc-kv-pair:hover) {
+      .arc-key-value arc-kv-pair:hover {
         background: var(--surface-hover);
       }
 
       .arc-key-value /* Dividers */
-      .arc-key-value[dividers] ::slotted(arc-kv-pair:not(:last-child)) {
+      .arc-key-value[dividers] arc-kv-pair:not(:last-child) {
         border-bottom: 1px solid var(--divider);
       }
 
       @media (prefers-reduced-motion: reduce) {
-        .arc-key-value ::slotted(arc-kv-pair) {
+        .arc-key-value arc-kv-pair {
           transition: none;
         }
       }
@@ -2834,7 +2835,7 @@
       .arc-prose[data-size="lg"] { font-size: var(--text-lg); }
 
       .arc-prose /* Direct-child block elements via ::slotted */
-      ::slotted(h1) {
+      h1 {
         font-size: var(--text-3xl) !important;
         font-weight: var(--heading-weight) !important;
         color: var(--text-primary) !important;
@@ -2842,7 +2843,7 @@
         margin-bottom: var(--space-md) !important;
         line-height: 1.3 !important;
       }
-      .arc-prose ::slotted(h2) {
+      .arc-prose h2 {
         font-size: var(--heading-size) !important;
         font-weight: var(--heading-weight) !important;
         color: var(--text-primary) !important;
@@ -2850,31 +2851,31 @@
         margin-bottom: var(--space-md) !important;
         line-height: 1.4 !important;
       }
-      .arc-prose ::slotted(h3) {
+      .arc-prose h3 {
         font-size: var(--text-lg) !important;
         font-weight: 600 !important;
         color: var(--text-primary) !important;
         margin-top: var(--space-lg) !important;
         margin-bottom: var(--space-sm) !important;
       }
-      .arc-prose ::slotted(h4) {
+      .arc-prose h4 {
         font-size: var(--text-md) !important;
         font-weight: 600 !important;
         color: var(--text-primary) !important;
         margin-top: var(--space-lg) !important;
         margin-bottom: var(--space-sm) !important;
       }
-      .arc-prose ::slotted(p) {
+      .arc-prose p {
         margin-bottom: var(--space-md) !important;
         text-wrap: pretty !important;
       }
-      .arc-prose ::slotted(ul),
-      .arc-prose ::slotted(ol) {
+      .arc-prose ul,
+      .arc-prose ol {
         margin-bottom: var(--space-md) !important;
         padding-left: var(--space-lg) !important;
         color: var(--text-secondary) !important;
       }
-      .arc-prose ::slotted(blockquote) {
+      .arc-prose blockquote {
         padding: var(--space-md) var(--space-lg) !important;
         margin: var(--space-lg) 0 !important;
         background: rgba(var(--accent-primary-rgb), 0.03) !important;
@@ -2882,7 +2883,7 @@
         font-style: italic !important;
         color: var(--text-muted) !important;
       }
-      .arc-prose ::slotted(pre) {
+      .arc-prose pre {
         margin: var(--space-lg) 0 !important;
         padding: var(--space-md) !important;
         background: var(--surface-primary) !important;
@@ -2893,19 +2894,19 @@
         font-size: var(--code-size) !important;
         line-height: var(--code-lh) !important;
       }
-      .arc-prose ::slotted(hr) {
+      .arc-prose hr {
         border: none !important;
         height: 1px !important;
         background: var(--divider) !important;
         margin: var(--space-xl) 0 !important;
       }
-      .arc-prose ::slotted(img) {
+      .arc-prose img {
         max-width: 100% !important;
         height: auto !important;
         border-radius: var(--radius-md) !important;
         margin: var(--space-lg) 0 !important;
       }
-      .arc-prose ::slotted(table) {
+      .arc-prose table {
         width: 100% !important;
         border-collapse: collapse !important;
         margin: var(--space-lg) 0 !important;
@@ -3022,7 +3023,7 @@
       }
 
       .arc-button-group /* Remove inner radii — connected borders */
-      ::slotted(*) {
+      * {
         --radius-md: 0;
         --radius-sm: 0;
         --radius-lg: 0;
@@ -3030,37 +3031,37 @@
       }
 
       .arc-button-group /* Horizontal: first/last get outer radii */
-      .arc-button-group:not([data-orientation="vertical"]) ::slotted(:first-child) {
+      .arc-button-group:not([data-orientation="vertical"]) :first-child {
         border-radius: var(--_group-radius) 0 0 var(--_group-radius) !important;
       }
 
-      .arc-button-group:not([data-orientation="vertical"]) ::slotted(:last-child) {
+      .arc-button-group:not([data-orientation="vertical"]) :last-child {
         border-radius: 0 var(--_group-radius) var(--_group-radius) 0 !important;
       }
 
-      .arc-button-group:not([data-orientation="vertical"]) ::slotted(:only-child) {
+      .arc-button-group:not([data-orientation="vertical"]) :only-child {
         border-radius: var(--_group-radius) !important;
       }
 
       .arc-button-group /* Vertical: first/last get outer radii */
-      .arc-button-group[data-orientation="vertical"] ::slotted(:first-child) {
+      .arc-button-group[data-orientation="vertical"] :first-child {
         border-radius: var(--_group-radius) var(--_group-radius) 0 0 !important;
       }
 
-      .arc-button-group[data-orientation="vertical"] ::slotted(:last-child) {
+      .arc-button-group[data-orientation="vertical"] :last-child {
         border-radius: 0 0 var(--_group-radius) var(--_group-radius) !important;
       }
 
-      .arc-button-group[data-orientation="vertical"] ::slotted(:only-child) {
+      .arc-button-group[data-orientation="vertical"] :only-child {
         border-radius: var(--_group-radius) !important;
       }
 
       .arc-button-group /* Collapse borders between items */
-      .arc-button-group:not([data-orientation="vertical"]) ::slotted(:not(:first-child)) {
+      .arc-button-group:not([data-orientation="vertical"]) :not(:first-child) {
         margin-left: -1px;
       }
 
-      .arc-button-group[data-orientation="vertical"] ::slotted(:not(:first-child)) {
+      .arc-button-group[data-orientation="vertical"] :not(:first-child) {
         margin-top: -1px;
       }
 
@@ -3148,8 +3149,8 @@
       .arc-button .btn__prefix--empty,
       .arc-button .btn__suffix--empty { display: none; }
 
-      .arc-button ::slotted([slot="prefix"]),
-      .arc-button ::slotted([slot="suffix"]) {
+      .arc-button [slot="prefix"],
+      .arc-button [slot="suffix"] {
         display: flex;
       }
 
@@ -3389,10 +3390,10 @@
       }
 
       .arc-input-group /* Remove borders/radii from slotted inputs */
-      ::slotted(arc-input),
-      .arc-input-group ::slotted(arc-select),
-      .arc-input-group ::slotted(input),
-      .arc-input-group ::slotted(select) {
+      arc-input,
+      .arc-input-group arc-select,
+      .arc-input-group input,
+      .arc-input-group select {
         border: none !important;
         border-radius: 0 !important;
         box-shadow: none !important;
@@ -3828,7 +3829,7 @@
         gap: var(--space-lg);
       }
 
-      .arc-aspect-grid ::slotted(*) {
+      .arc-aspect-grid * {
         aspect-ratio: var(--_ratio, 1 / 1);
         border: 1px solid var(--border-subtle);
         border-radius: var(--radius-md);
@@ -4165,16 +4166,16 @@
         column-gap: var(--space-lg);
       }
 
-      .arc-masonry ::slotted(*) {
+      .arc-masonry * {
         break-inside: avoid;
         margin-bottom: var(--space-md);
       }
 
-      .arc-masonry[data-gap="sm"] ::slotted(*) {
+      .arc-masonry[data-gap="sm"] * {
         margin-bottom: var(--space-sm);
       }
 
-      .arc-masonry[data-gap="lg"] ::slotted(*) {
+      .arc-masonry[data-gap="lg"] * {
         margin-bottom: var(--space-lg);
       }
 
@@ -4205,7 +4206,7 @@
       }
 
       .arc-page-header .page-header__heading,
-      .arc-page-header slot[name='heading']::slotted(*) {
+      .arc-page-header [slot="heading"] {
         margin: 0;
         font-family: var(--font-body);
         font-size: 28px;
@@ -4228,7 +4229,7 @@
         line-height: 1.5;
       }
 
-      .arc-page-header slot[name='description']::slotted(*) {
+      .arc-page-header [slot="description"] {
         margin: var(--space-sm) 0 0;
         color: var(--text-secondary);
         font-size: var(--body-size);
@@ -4331,7 +4332,7 @@
         }
       }
 
-      .arc-responsive-switcher ::slotted(*) {
+      .arc-responsive-switcher * {
         flex: 1;
       }
 

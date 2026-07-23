@@ -50,6 +50,7 @@ export class ArcIcon extends LitElement {
       :host([size="md"]) { width: 20px; height: 20px; }
       :host([size="lg"]) { width: 24px; height: 24px; }
       :host([size="xl"]) { width: 32px; height: 32px; }
+      /* Numeric sizes (px) are applied as inline width/height in updated() */
 
       .icon {
         display: flex;
@@ -82,6 +83,16 @@ export class ArcIcon extends LitElement {
 
   updated(changed) {
     if (changed.has('name')) this._loadIcon();
+    if (changed.has('size')) {
+      const px = Number(this.size);
+      if (this.size !== '' && Number.isFinite(px) && px > 0) {
+        this.style.width = `${px}px`;
+        this.style.height = `${px}px`;
+      } else {
+        this.style.removeProperty('width');
+        this.style.removeProperty('height');
+      }
+    }
   }
 
   async _loadIcon() {
