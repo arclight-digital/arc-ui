@@ -4,6 +4,8 @@ import SidebarNav from '../components/SidebarNav.astro';
 import TableOfContents from '../components/TableOfContents.astro';
 import Wordmark from '../components/Wordmark.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import SiteSearch from '../components/SiteSearch.astro';
+import { ogPathFor } from '../lib/og-pages';
 import fs from 'node:fs';
 import '../styles/docs.css';
 
@@ -14,6 +16,8 @@ interface Props {
   /** Full document title; overrides the default `${title} — ARC UI` pattern */
   htmlTitle?: string;
   description?: string;
+  /** Site-relative OG image path; defaults to the page's card from og-pages.ts */
+  ogImage?: string;
   activeSlug?: string;
   headings?: Array<{ id: string; label: string; level?: number }>;
   breadcrumbs?: Array<{ label: string; href?: string }>;
@@ -23,16 +27,18 @@ const {
   title,
   htmlTitle,
   description,
+  ogImage = ogPathFor(Astro.url.pathname),
   activeSlug,
   headings = [],
   breadcrumbs = [],
 } = Astro.props;
 ---
 
-<BaseLayout title={htmlTitle ?? `${title} — ARC UI`} description={description}>
+<BaseLayout title={htmlTitle ?? `${title} — ARC UI`} description={description} ogImage={ogImage}>
   <nav aria-label="Skip link">
     <arc-skip-link target="#main-content">Skip to content</arc-skip-link>
   </nav>
+  <SiteSearch />
   <arc-app-shell>
     <!-- Top Bar -->
     <arc-top-bar slot="topbar" fixed nav-align="left" class="theme-fixed">
@@ -46,6 +52,19 @@ const {
         <arc-nav-item href="/docs/theme-synthesizer" active={activeSlug === 'theme-synthesizer' || undefined}>Synthesizer</arc-nav-item>
       </arc-navigation-menu>
       <div slot="actions" class="topbar-actions">
+        <button
+          type="button"
+          class="topbar-search"
+          data-site-search-trigger
+          aria-label="Search docs"
+          aria-keyshortcuts="Meta+K Control+K"
+        >
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <path d="M11.5 7a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zm-.82 4.74a6 6 0 111.06-1.06l3.04 3.04a.75.75 0 11-1.06 1.06l-3.04-3.04z"/>
+          </svg>
+          <span class="topbar-search__text">Search</span>
+          <kbd class="topbar-search__kbd" data-search-kbd>⌘K</kbd>
+        </button>
         <arc-badge variant="primary" class="topbar-version">v{pkg.version}</arc-badge>
         <arc-theme-toggle icon-only></arc-theme-toggle>
         <arc-icon-button href="https://github.com/Arclight-Digital/arc-ui" name="github-logo" label="GitHub" variant="ghost" size="sm"></arc-icon-button>

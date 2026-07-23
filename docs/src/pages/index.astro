@@ -3,6 +3,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Wordmark from '../components/Wordmark.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import { components } from '../data/components/index';
+import { frameworkCount, buildSteps, tokenCount, version, versionShort } from '../data/site-stats';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'ARC UI',
+  description: `${components.length} dark-first Lit web components, generated natively for React, Vue, Svelte, Angular, Solid, Preact, and plain HTML.`,
+  url: 'https://arcui.dev',
+  applicationCategory: 'DeveloperApplication',
+  operatingSystem: 'Web',
+  softwareVersion: version,
+  license: 'https://opensource.org/license/mit',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+};
 import fs from 'node:fs';
 
 const codeExamples = {
@@ -83,7 +97,7 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
     <div class="hero__ambient"></div>
     <div class="hero__content">
       <a href="/docs/changelog" class="hero__announcement">
-        <span class="hero__announcement-badge">v2.3</span>
+        <span class="hero__announcement-badge">{versionShort}</span>
         <span class="hero__announcement-text">Zero axe violations, WCAG AA contrast &amp; Prism 2.0</span>
         <svg class="hero__announcement-arrow" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
@@ -171,17 +185,17 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
           <span class="stat-custom__label">Components</span>
         </div>
         <div class="stat-custom reveal">
-          <arc-animated-number class="stat-custom__number" value="0" data-target="7">7</arc-animated-number>
+          <arc-animated-number class="stat-custom__number" value="0" data-target={`${frameworkCount}`}>{frameworkCount}</arc-animated-number>
           <div class="stat-custom__rule"></div>
           <span class="stat-custom__label">Frameworks</span>
         </div>
         <div class="stat-custom reveal">
-          <arc-animated-number class="stat-custom__number" value="0" data-target="0">0</arc-animated-number>
+          <arc-animated-number class="stat-custom__number" value="0" data-target={`${buildSteps}`}>{buildSteps}</arc-animated-number>
           <div class="stat-custom__rule"></div>
           <span class="stat-custom__label">Build Steps</span>
         </div>
         <div class="stat-custom reveal">
-          <arc-animated-number class="stat-custom__number" value="0" data-target="170">170</arc-animated-number>
+          <arc-animated-number class="stat-custom__number" value="0" data-target={`${tokenCount}`}>{tokenCount}</arc-animated-number>
           <div class="stat-custom__rule"></div>
           <span class="stat-custom__label">Design Tokens</span>
         </div>
@@ -450,6 +464,7 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
     <SiteFooter />
   </main>
   <arc-scroll-to-top></arc-scroll-to-top>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
 </BaseLayout>
 
 <script>

@@ -2,10 +2,16 @@ import satori from 'satori';
 import sharp from 'sharp';
 import fs from 'node:fs';
 import type { APIRoute } from 'astro';
-import { components } from '../data/components/index';
 import { tokens } from '../../../shared/tokens.js';
-
-const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components/package.json', import.meta.url), 'utf-8'));
+import {
+  componentCount,
+  frameworks,
+  frameworkCount,
+  buildSteps,
+  tokenCount,
+  version,
+  versionShort,
+} from '../data/site-stats';
 
 export const prerender = true;
 
@@ -57,7 +63,7 @@ function statCard(value: string, label: string, accentColor: string, accentRgb: 
         alignItems: 'center',
         justifyContent: 'center',
         position: 'relative' as const,
-        width: '220px',
+        width: '250px',
         height: '120px',
         borderRadius: tokens.radius.lg,
         border: `1px solid rgba(${accentRgb}, 0.25)`,
@@ -69,7 +75,7 @@ function statCard(value: string, label: string, accentColor: string, accentRgb: 
           type: 'div' as const,
           props: {
             style: {
-              fontSize: '44px',
+              fontSize: '58px',
               fontWeight: 800,
               fontFamily: 'Host Grotesk',
               background: `linear-gradient(135deg, ${accentColor}, rgba(255,255,255,0.9))`,
@@ -96,7 +102,7 @@ function statCard(value: string, label: string, accentColor: string, accentRgb: 
           type: 'div' as const,
           props: {
             style: {
-              fontSize: '18px',
+              fontSize: '21px',
               fontWeight: 600,
               fontFamily: 'Tektur',
               letterSpacing: '3px',
@@ -116,11 +122,11 @@ function frameworkPill(name: string) {
     type: 'div' as const,
     props: {
       style: {
-        padding: '6px 16px',
+        padding: '8px 20px',
         borderRadius: tokens.radius.md,
         border: `1px solid rgba(${blueRgb}, 0.15)`,
         background: `rgba(${blueRgb}, 0.06)`,
-        fontSize: '18px',
+        fontSize: '24px',
         fontWeight: 500,
         fontFamily: 'Host Grotesk',
         color: 'rgba(255,255,255,0.5)',
@@ -293,7 +299,7 @@ export const GET: APIRoute = async () => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 zIndex: '1',
-                marginTop: '-140px',
+                marginTop: '-132px',
               },
               children: [
                 // v2.0 pill
@@ -303,35 +309,35 @@ export const GET: APIRoute = async () => {
                     style: {
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '8px',
-                      padding: '6px 20px 6px 8px',
+                      gap: '10px',
+                      padding: '8px 24px 8px 10px',
                       borderRadius: tokens.radius.full,
                       border: `1px solid rgba(${blueRgb}, 0.3)`,
                       background: `rgba(${blueRgb}, 0.08)`,
-                      marginBottom: '14px',
+                      marginBottom: '20px',
                     },
                     children: [
                       {
                         type: 'div' as const,
                         props: {
                           style: {
-                            padding: '2px 10px',
+                            padding: '3px 13px',
                             borderRadius: tokens.radius.full,
                             background: `linear-gradient(135deg, ${blue}, ${violet})`,
-                            fontSize: '18px',
+                            fontSize: '23px',
                             fontWeight: 700,
                             fontFamily: 'Host Grotesk',
                             color: 'white',
                             letterSpacing: '0.5px',
                           },
-                          children: 'v2.0',
+                          children: versionShort,
                         },
                       },
                       {
                         type: 'div' as const,
                         props: {
                           style: {
-                            fontSize: '18px',
+                            fontSize: '23px',
                             fontWeight: 500,
                             fontFamily: 'Host Grotesk',
                             color: 'rgba(255,255,255,0.6)',
@@ -378,7 +384,7 @@ export const GET: APIRoute = async () => {
                       position: 'relative' as const,
                       width: '580px',
                       height: '16px',
-                      marginTop: '10px',
+                      marginTop: '14px',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -417,11 +423,11 @@ export const GET: APIRoute = async () => {
                   type: 'div',
                   props: {
                     style: {
-                      fontSize: '24px',
+                      fontSize: '31px',
                       fontWeight: 400,
                       fontFamily: 'Host Grotesk',
                       color: 'rgba(255,255,255,0.55)',
-                      marginTop: '10px',
+                      marginTop: '20px',
                       letterSpacing: '0.5px',
                     },
                     children: 'One source of truth. Seven framework targets.',
@@ -433,18 +439,10 @@ export const GET: APIRoute = async () => {
                   props: {
                     style: {
                       display: 'flex',
-                      gap: '8px',
-                      marginTop: '10px',
+                      gap: '10px',
+                      marginTop: '28px',
                     },
-                    children: [
-                      frameworkPill('React'),
-                      frameworkPill('Vue'),
-                      frameworkPill('Svelte'),
-                      frameworkPill('Angular'),
-                      frameworkPill('Solid'),
-                      frameworkPill('Preact'),
-                      frameworkPill('HTML'),
-                    ],
+                    children: frameworks.map(frameworkPill),
                   },
                 },
               ],
@@ -457,16 +455,16 @@ export const GET: APIRoute = async () => {
             props: {
               style: {
                 position: 'absolute',
-                bottom: '65px',
+                bottom: '38px',
                 display: 'flex',
-                gap: '16px',
+                gap: '20px',
                 alignItems: 'center',
               },
               children: [
-                statCard(String(components.length), 'Components', blue, blueRgb),
-                statCard('7', 'Frameworks', violet, violetRgb),
-                statCard('0', 'Build Steps', teal, tealRgb),
-                statCard('170+', 'Tokens', blue, blueRgb),
+                statCard(String(componentCount), 'Components', blue, blueRgb),
+                statCard(String(frameworkCount), 'Frameworks', violet, violetRgb),
+                statCard(String(buildSteps), 'Build Steps', teal, tealRgb),
+                statCard(String(tokenCount), 'Tokens', blue, blueRgb),
               ],
             },
           },
@@ -477,20 +475,20 @@ export const GET: APIRoute = async () => {
             props: {
               style: {
                 position: 'absolute',
-                bottom: '16px',
+                top: '18px',
                 right: '24px',
                 display: 'flex',
                 alignItems: 'center',
-                padding: '6px 18px',
+                padding: '7px 20px',
                 borderRadius: tokens.radius.full,
                 border: `1px solid rgba(${blueRgb},0.3)`,
                 background: `rgba(${blueRgb},0.08)`,
-                fontSize: '18px',
+                fontSize: '22px',
                 fontWeight: 600,
                 fontFamily: 'Host Grotesk',
                 color: blue,
               },
-              children: `v${pkg.version}`,
+              children: `v${version}`,
             },
           },
 
@@ -500,9 +498,9 @@ export const GET: APIRoute = async () => {
             props: {
               style: {
                 position: 'absolute',
-                bottom: '18px',
+                top: '24px',
                 left: '24px',
-                fontSize: '18px',
+                fontSize: '22px',
                 fontWeight: 400,
                 fontFamily: 'Host Grotesk',
                 letterSpacing: '1px',

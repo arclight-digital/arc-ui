@@ -4,12 +4,15 @@ import { ViewTransitions } from 'astro:transitions';
 interface Props {
   title?: string;
   description?: string;
+  /** Site-relative path to a page-specific OG image, e.g. `/og/button.png`. */
+  ogImage?: string;
 }
 
-const { title = 'ARC UI — Lit Web Components Library', description = 'A component library built on Lit Web Components. A custom code generator produces native bindings for React, Vue, Svelte, Angular, Solid, and Preact.' } = Astro.props;
+const { title = 'ARC UI — Lit Web Components Library', description = 'A component library built on Lit Web Components. A custom code generator produces native bindings for React, Vue, Svelte, Angular, Solid, and Preact.', ogImage = '/og-image.png' } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const ogImageURL = new URL('/og-image.png', Astro.site);
+const ogImageURL = new URL(ogImage, Astro.site);
+const ogImageAlt = `${title} — dark social card in the ARC UI glow style`;
 ---
 
 <html lang="en">
@@ -24,12 +27,17 @@ const ogImageURL = new URL('/og-image.png', Astro.site);
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="ARC UI" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageURL} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
+    <link rel="alternate" type="application/rss+xml" title="ARC UI Changelog" href="/rss.xml" />
     <script is:inline>
       (function(){
         var t=localStorage.getItem('arc-theme')||'auto';

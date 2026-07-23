@@ -43,6 +43,38 @@ const seeAlsoItems = (component.seeAlso ?? []).map((ref: string) => {
   return { type: 'component' as const, href: `/docs/components/${ref}`, label: ref.replace(/-/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase()), description: '' };
 });
 
+// Prev/next in sidebar order: fixed tier order, alphabetical within tier
+const tierOrder = ['layout', 'navigation', 'content', 'data', 'typography', 'input', 'feedback'];
+const ordered = tierOrder.flatMap((t) =>
+  components.filter((c) => c.tier === t).sort((a, b) => a.name.localeCompare(b.name)),
+);
+const orderedIndex = ordered.findIndex((c) => c.slug === component.slug);
+const prevComponent = orderedIndex > 0 ? ordered[orderedIndex - 1] : null;
+const nextComponent = orderedIndex < ordered.length - 1 ? ordered[orderedIndex + 1] : null;
+
+const pageUrl = new URL(`/docs/components/${component.slug}`, Astro.site).href;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'TechArticle',
+      headline: `${component.name} — ARC UI`,
+      name: component.name,
+      description: component.description,
+      url: pageUrl,
+      isPartOf: { '@type': 'WebSite', name: 'ARC UI', url: new URL('/', Astro.site).href },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Docs', item: new URL('/docs', Astro.site).href },
+        { '@type': 'ListItem', position: 2, name: 'Components', item: new URL('/docs/components', Astro.site).href },
+        { '@type': 'ListItem', position: 3, name: component.name, item: pageUrl },
+      ],
+    },
+  ],
+};
+
 const headings = [
   ...(component.overview ? [{ id: 'overview', label: 'Overview' }] : []),
   ...(component.guidelines ? [{ id: 'guidelines', label: 'Guidelines' }] : []),
@@ -287,7 +319,27 @@ const headings = [
         </ul>
       </section>
     )}
+
+    {/* Prev / Next */}
+    <nav class="component-pager" aria-label="Component navigation">
+      {prevComponent ? (
+        <a href={`/docs/components/${prevComponent.slug}`} class="component-pager__link" rel="prev">
+          <span class="component-pager__label">Previous</span>
+          <span class="component-pager__name">{prevComponent.name}</span>
+        </a>
+      ) : (
+        <span />
+      )}
+      {nextComponent && (
+        <a href={`/docs/components/${nextComponent.slug}`} class="component-pager__link component-pager__link--next" rel="next">
+          <span class="component-pager__label">Next</span>
+          <span class="component-pager__name">{nextComponent.name}</span>
+        </a>
+      )}
+    </nav>
   </div>
+
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
 </DocsLayout>
 
 <!-- Client-side: register WCs and populate live previews -->

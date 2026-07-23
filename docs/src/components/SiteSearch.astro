@@ -1,0 +1,109 @@
+---
+/**
+ * SiteSearch — ⌘K / Ctrl+K site-wide search built on arc-command-palette.
+ *
+ * All ~175 items (guides + components) are rendered statically at build time;
+ * the palette's built-in label filter does the matching. No index, no fetch.
+ * See docs/specs/command-palette-search.md for the full design.
+ */
+import { components } from '../data/components/index';
+
+const tierOrder = ['layout', 'navigation', 'content', 'data', 'typography', 'input', 'feedback'];
+const tierIcons: Record<string, string> = {
+  layout: 'layout',
+  navigation: 'compass',
+  content: 'article',
+  data: 'chart-bar',
+  typography: 'text-aa',
+  input: 'textbox',
+  feedback: 'bell',
+};
+// Same order as the sidebar: fixed tier order, alphabetical within tier
+const ordered = tierOrder.flatMap((t) =>
+  components.filter((c) => c.tier === t).sort((a, b) => a.name.localeCompare(b.name)),
+);
+
+const guides = [
+  { title: 'Getting Started', href: '/docs/getting-started' },
+  { title: 'Components', href: '/docs/components' },
+  { title: 'Design Tokens', href: '/docs/tokens' },
+  { title: 'Theming', href: '/docs/theming' },
+  { title: 'Theme Synthesizer', href: '/docs/theme-synthesizer' },
+  { title: 'Frameworks', href: '/docs/frameworks' },
+  { title: 'Accessibility', href: '/docs/accessibility' },
+  { title: 'Browser Support', href: '/docs/browser-support' },
+  { title: 'Contributing', href: '/docs/contributing' },
+  { title: 'Changelog', href: '/docs/changelog' },
+];
+
+const cap = (s: string) => s[0].toUpperCase() + s.slice(1);
+---
+
+<arc-command-palette id="site-search" placeholder="Search components and guides…">
+  {guides.map((g) => (
+    <arc-command-item icon="book-open" shortcut="Guide" data-href={g.href}>{g.title}</arc-command-item>
+  ))}
+  {ordered.map((c) => (
+    <arc-command-item icon={tierIcons[c.tier]} shortcut={cap(c.tier)} data-href={`/docs/components/${c.slug}`}>{c.name}</arc-command-item>
+  ))}
+</arc-command-palette>
+
+<script is:inline>
+  (function () {
+    // Document-level delegation: document survives view-transition swaps, so
+    // these listeners bind once per session and keep working after navigation.
+    if (window.__arcSiteSearch) return;
+    window.__arcSiteSearch = true;
+
+    var getPalette = function () { return document.getElementById('site-search'); };
+
+    document.addEventListener('keydown', function (e) {
+      if ((e.metaKey || e.ctrlKey) && !e.shiftKey && !e.altKey && (e.key === 'k' || e.key === 'K')) {
+        e.preventDefault();
+        var p = getPalette();
+        if (p) p.open = true;
+      }
+    });
+
+    document.addEventListener('click', function (e) {
+      var t = e.target && e.target.closest && e.target.closest('[data-site-search-trigger]');
+      if (t) {
+        var p = getPalette();
+        if (p) p.open = true;
+      }
+    });
+
+    // arc-select detail carries only {label, shortcut} — resolve it back to
+    // the matching item element to find the destination href.
+    document.addEventListener('arc-select', function (e) {
+      var p = getPalette();
+      if (!p || e.target !== p) return;
+      var d = e.detail && e.detail.item;
+      if (!d) return;
+      var items = p.querySelectorAll('arc-command-item');
+      for (var i = 0; i < items.length; i++) {
+        if (
+          items[i].textContent.trim() === d.label &&
+          (items[i].getAttribute('shortcut') || '') === (d.shortcut || '')
+        ) {
+          if (items[i].dataset.href) {
+            p.open = false;
+            window.location.assign(items[i].dataset.href);
+          }
+          return;
+        }
+      }
+    });
+
+    // The key handler is OS-agnostic (metaKey || ctrlKey); only the visible
+    // hint is platform-specific.
+    var applyKbd = function () {
+      var mac = /Mac|iPhone|iPad|iPod/.test(navigator.platform || navigator.userAgent);
+      document.querySelectorAll('[data-search-kbd]').forEach(function (el) {
+        el.textContent = mac ? '⌘K' : 'Ctrl K';
+      });
+    };
+    applyKbd();
+    document.addEventListener('astro:page-load', applyKbd);
+  })();
+</script>

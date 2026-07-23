@@ -145,6 +145,90 @@ section + section::before {
   text-decoration: underline;
 }
 
+/* ── Top bar search trigger ── */
+.topbar-search {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: var(--text-xs);
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+}
+
+.topbar-search:hover {
+  border-color: rgba(var(--accent-primary-rgb), 0.4);
+  color: var(--text-primary);
+  background: rgba(var(--accent-primary-rgb), 0.05);
+}
+
+.topbar-search__kbd {
+  font-family: var(--font-accent);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  padding: 2px 6px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-ghost);
+}
+
+@media (max-width: 768px) {
+  .topbar-search__text,
+  .topbar-search__kbd { display: none; }
+  .topbar-search { padding: 6px 8px; border-radius: var(--radius-full); }
+}
+
+/* ── Prev / Next pager ── */
+.component-pager {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-md);
+  margin-top: var(--space-xl);
+}
+
+.component-pager__link {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  min-width: 160px;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.component-pager__link--next {
+  align-items: flex-end;
+  text-align: right;
+  margin-left: auto;
+}
+
+.component-pager__link:hover {
+  border-color: rgba(var(--accent-primary-rgb), 0.4);
+  background: rgba(var(--accent-primary-rgb), 0.05);
+}
+
+.component-pager__label {
+  font-family: var(--font-accent);
+  font-size: var(--text-xs);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-ghost);
+}
+
+.component-pager__name {
+  font-weight: 600;
+  font-size: var(--text-sm);
+  /* Blend toward text-primary in light mode so the label clears WCAG AA */
+  color: color-mix(in srgb, var(--accent-primary), var(--text-primary) var(--accent-text-mix, 0%));
+}
+
 @media (max-width: 768px) {
   .page-title { font-size: var(--text-xl); }
   .docs-heading { font-size: var(--text-lg); }
