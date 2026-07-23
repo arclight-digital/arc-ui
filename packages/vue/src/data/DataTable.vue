@@ -22,7 +22,7 @@ withDefaults(defineProps<{
   rowHeight: 40,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-sort': [event: CustomEvent];
   'arc-select-all': [event: CustomEvent];
   'arc-row-select': [event: CustomEvent];
@@ -38,6 +38,9 @@ defineEmits<{
     :sortDirection="sortDirection"
     :virtual="virtual"
     :rowHeight="rowHeight"
+    @arc-sort="(payload: CustomEvent) => emit('arc-sort', payload)"
+    @arc-select-all="(payload: CustomEvent) => emit('arc-select-all', payload)"
+    @arc-row-select="(payload: CustomEvent) => emit('arc-row-select', payload)"
   >
     <slot />
   </arc-data-table>

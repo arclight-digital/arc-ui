@@ -11,14 +11,15 @@ export interface TransferListProps {
   searchable?: boolean;
   sourceLabel?: string;
   targetLabel?: string;
+  onArcChange?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const TransferList: Component<TransferListProps> = (props) => {
-  const [local, rest] = splitProps(props, ['options', 'value', 'name', 'disabled', 'searchable', 'sourceLabel', 'targetLabel', 'children']);
+  const [local, rest] = splitProps(props, ['options', 'value', 'name', 'disabled', 'searchable', 'sourceLabel', 'targetLabel', 'onArcChange', 'children']);
   return (
-    <arc-transfer-list options={local.options} value={local.value} name={local.name} disabled={local.disabled} searchable={local.searchable} sourceLabel={local.sourceLabel} targetLabel={local.targetLabel} {...rest}>
+    <arc-transfer-list options={local.options} value={local.value} name={local.name} disabled={local.disabled} searchable={local.searchable} sourceLabel={local.sourceLabel} targetLabel={local.targetLabel} on:arc-change={local.onArcChange} {...rest}>
       {local.children}
     </arc-transfer-list>
   );

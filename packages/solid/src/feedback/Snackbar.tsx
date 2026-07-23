@@ -6,14 +6,16 @@ import '@arclux/arc-ui/snackbar';
 export interface SnackbarProps {
   position?: 'bottom-center' | 'bottom-left' | 'bottom-right';
   duration?: number;
+  onArcAction?: (e: CustomEvent) => void;
+  onArcDismiss?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Snackbar: Component<SnackbarProps> = (props) => {
-  const [local, rest] = splitProps(props, ['position', 'duration', 'children']);
+  const [local, rest] = splitProps(props, ['position', 'duration', 'onArcAction', 'onArcDismiss', 'children']);
   return (
-    <arc-snackbar position={local.position} duration={local.duration} {...rest}>
+    <arc-snackbar position={local.position} duration={local.duration} on:arc-action={local.onArcAction} on:arc-dismiss={local.onArcDismiss} {...rest}>
       {local.children}
     </arc-snackbar>
   );

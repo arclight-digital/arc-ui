@@ -16,7 +16,7 @@ withDefaults(defineProps<{
   disabled: false,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-load-more': [event: CustomEvent];
 }>();
 </script>
@@ -27,6 +27,7 @@ defineEmits<{
     :loading="loading"
     :finished="finished"
     :disabled="disabled"
+    @arc-load-more="(payload: CustomEvent) => emit('arc-load-more', payload)"
   >
     <slot />
   </arc-infinite-scroll>

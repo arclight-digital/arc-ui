@@ -18,7 +18,7 @@ withDefaults(defineProps<{
   queueLimit: 20,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-queue-overflow': [event: CustomEvent];
   'arc-dismiss': [event: CustomEvent];
   'arc-queue-change': [event: CustomEvent];
@@ -32,6 +32,9 @@ defineEmits<{
     :maxVisible="maxVisible"
     :dedupe="dedupe"
     :queueLimit="queueLimit"
+    @arc-queue-overflow="(payload: CustomEvent) => emit('arc-queue-overflow', payload)"
+    @arc-dismiss="(payload: CustomEvent) => emit('arc-dismiss', payload)"
+    @arc-queue-change="(payload: CustomEvent) => emit('arc-queue-change', payload)"
   >
     <slot />
   </arc-toast-manager>

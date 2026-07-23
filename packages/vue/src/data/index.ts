@@ -22,3 +22,7 @@ export { default as Chart } from './Chart.vue';
 export { default as DataGrid } from './DataGrid.vue';
 export { default as EventCalendar } from './EventCalendar.vue';
 export { default as Kanban } from './Kanban.vue';
+export { default as Comparison } from './Comparison.vue';
+export { default as List } from './List.vue';
+export { default as Table } from './Table.vue';
+export { default as Timeline } from './Timeline.vue';

@@ -26,3 +26,5 @@ export { TopBar } from './TopBar.js';
 export { TreeItem } from './TreeItem.js';
 export { TreeView } from './TreeView.js';
 export { Menubar } from './Menubar.js';
+export { Breadcrumb } from './Breadcrumb.js';
+export { Sidebar } from './Sidebar.js';

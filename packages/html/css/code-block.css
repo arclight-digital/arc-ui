@@ -45,10 +45,10 @@
         overflow-y: hidden;
       }
 
-      /* Shiki CSS-variables theme — map --shiki-* to design tokens.
-         Consumers override --accent-primary, --color-success, etc. and
+      .arc-code-block /* Shiki CSS-variables theme — map --shiki-* to design tokens.
+         Consumers override --accent-primary, .arc-code-block --color-success, .arc-code-block etc. and
          syntax colors follow automatically. */
-      .arc-code-block .code-block {
+      .code-block {
         --shiki-foreground: var(--text-secondary);
         --shiki-background: var(--surface-primary);
         --shiki-token-comment: var(--text-ghost);
@@ -103,15 +103,15 @@
         tab-size: 2;
       }
 
-      arc-status-bar {
+      .arc-code-block arc-status-bar {
         border-radius: 0;
       }
 
-      arc-status-bar::part(base) {
+      .arc-code-block arc-status-bar::part(base) {
         border-top-color: var(--divider);
       }
 
-      /* — Window variant — */
+      .arc-code-block /* — Window variant — */
       .arc-code-block[data-variant="window"] .code-block {
         box-shadow: var(--shadow-overlay);
       }
@@ -149,7 +149,7 @@
         color: var(--text-muted);
       }
 
-      /* — Basic variant — */
+      .arc-code-block /* — Basic variant — */
       .arc-code-block[data-variant="basic"] .code-block__body-wrap {
         display: flex;
         align-items: center;

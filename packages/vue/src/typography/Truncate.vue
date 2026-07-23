@@ -12,7 +12,7 @@ withDefaults(defineProps<{
   expanded: false,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-toggle': [event: CustomEvent];
 }>();
 </script>
@@ -21,6 +21,7 @@ defineEmits<{
   <arc-truncate
     :lines="lines"
     :expanded="expanded"
+    @arc-toggle="(payload: CustomEvent) => emit('arc-toggle', payload)"
   >
     <slot />
   </arc-truncate>

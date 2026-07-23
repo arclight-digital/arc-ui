@@ -5,14 +5,17 @@ import '@arclux/arc-ui/context-menu';
 
 export interface ContextMenuProps {
   open?: boolean;
+  onArcOpen?: (e: CustomEvent) => void;
+  onArcClose?: (e: CustomEvent) => void;
+  onArcSelect?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const ContextMenu: Component<ContextMenuProps> = (props) => {
-  const [local, rest] = splitProps(props, ['open', 'children']);
+  const [local, rest] = splitProps(props, ['open', 'onArcOpen', 'onArcClose', 'onArcSelect', 'children']);
   return (
-    <arc-context-menu open={local.open} {...rest}>
+    <arc-context-menu open={local.open} on:arc-open={local.onArcOpen} on:arc-close={local.onArcClose} on:arc-select={local.onArcSelect} {...rest}>
       {local.children}
     </arc-context-menu>
   );

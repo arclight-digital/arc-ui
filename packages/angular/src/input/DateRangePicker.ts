@@ -7,7 +7,7 @@ import '@arclux/arc-ui/date-range-picker';
   selector: 'arc-date-range-picker',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-date-range-picker [attr.start]="start" [attr.end]="end" [attr.name]="name" [attr.min]="min" [attr.max]="max" [attr.months]="months" [attr.presets]="presets" [attr.placeholder]="placeholder" [disabled]="disabled" [required]="required" [attr.label]="label" (arc-change)="arcChange.emit($event)"><ng-content /></arc-date-range-picker>`,
+  template: `<arc-date-range-picker [attr.start]="start" [attr.end]="end" [attr.name]="name" [attr.min]="min" [attr.max]="max" [attr.months]="months" [presets]="presets" [attr.placeholder]="placeholder" [disabled]="disabled" [required]="required" [attr.label]="label" (arc-change)="arcChange.emit($event)"><ng-content /></arc-date-range-picker>`,
 })
 export class DateRangePicker {
   @Input() start: string = '';

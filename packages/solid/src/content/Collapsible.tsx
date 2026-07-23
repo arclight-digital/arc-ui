@@ -6,14 +6,15 @@ import '@arclux/arc-ui/collapsible';
 export interface CollapsibleProps {
   open?: boolean;
   heading?: string;
+  onArcToggle?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Collapsible: Component<CollapsibleProps> = (props) => {
-  const [local, rest] = splitProps(props, ['open', 'heading', 'children']);
+  const [local, rest] = splitProps(props, ['open', 'heading', 'onArcToggle', 'children']);
   return (
-    <arc-collapsible open={local.open} heading={local.heading} {...rest}>
+    <arc-collapsible open={local.open} heading={local.heading} on:arc-toggle={local.onArcToggle} {...rest}>
       {local.children}
     </arc-collapsible>
   );

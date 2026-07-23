@@ -10,7 +10,7 @@ withDefaults(defineProps<{
   open: false,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-change': [event: CustomEvent];
   'arc-complete': [event: CustomEvent];
   'arc-dismiss': [event: CustomEvent];
@@ -20,6 +20,9 @@ defineEmits<{
 <template>
   <arc-guided-tour
     :open="open"
+    @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
+    @arc-complete="(payload: CustomEvent) => emit('arc-complete', payload)"
+    @arc-dismiss="(payload: CustomEvent) => emit('arc-dismiss', payload)"
   >
     <slot />
   </arc-guided-tour>

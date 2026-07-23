@@ -6,14 +6,15 @@ import '@arclux/arc-ui/scroll-spy';
 export interface ScrollSpyProps {
   active?: string;
   offset?: number;
+  onArcChange?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const ScrollSpy: Component<ScrollSpyProps> = (props) => {
-  const [local, rest] = splitProps(props, ['active', 'offset', 'children']);
+  const [local, rest] = splitProps(props, ['active', 'offset', 'onArcChange', 'children']);
   return (
-    <arc-scroll-spy active={local.active} offset={local.offset} {...rest}>
+    <arc-scroll-spy active={local.active} offset={local.offset} on:arc-change={local.onArcChange} {...rest}>
       {local.children}
     </arc-scroll-spy>
   );

@@ -16,7 +16,7 @@ withDefaults(defineProps<{
   size: 300,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-resize': [event: CustomEvent];
 }>();
 </script>
@@ -27,6 +27,7 @@ defineEmits<{
     :minSize="minSize"
     :maxSize="maxSize"
     :size="size"
+    @arc-resize="(payload: CustomEvent) => emit('arc-resize', payload)"
   >
     <slot />
   </arc-resizable>

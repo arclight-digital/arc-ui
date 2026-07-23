@@ -15,7 +15,7 @@
         height: 100%;
       }
 
-      ::slotted(*) {
+      .arc-aspect-ratio ::slotted(*) {
         width: 100%;
         height: 100%;
         object-fit: cover;

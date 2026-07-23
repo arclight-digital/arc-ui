@@ -4,13 +4,14 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
+    headingLevel?: number;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { children, ...rest }: Props = $props();
+  let { headingLevel = 3, children, ...rest }: Props = $props();
 </script>
 
-<arc-timeline {...rest}>
+<arc-timeline {headingLevel} {...rest}>
   {@render children?.()}
 </arc-timeline>

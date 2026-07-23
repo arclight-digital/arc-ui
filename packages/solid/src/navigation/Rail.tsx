@@ -7,14 +7,15 @@ export interface RailProps {
   items?: string;
   value?: string;
   expanded?: boolean;
+  onArcChange?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Rail: Component<RailProps> = (props) => {
-  const [local, rest] = splitProps(props, ['items', 'value', 'expanded', 'children']);
+  const [local, rest] = splitProps(props, ['items', 'value', 'expanded', 'onArcChange', 'children']);
   return (
-    <arc-rail items={local.items} value={local.value} expanded={local.expanded} {...rest}>
+    <arc-rail items={local.items} value={local.value} expanded={local.expanded} on:arc-change={local.onArcChange} {...rest}>
       {local.children}
     </arc-rail>
   );

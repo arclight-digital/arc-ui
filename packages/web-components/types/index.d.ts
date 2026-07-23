@@ -193,6 +193,8 @@ export declare class ArcBottomNav extends LitElement {
 export declare class ArcBreadcrumb extends LitElement {
   /** @default '/' */
   separator: string;
+  /** @default 'Breadcrumb' */
+  label: string;
 }
 
 /**
@@ -209,6 +211,8 @@ export declare class ArcBreadcrumbItem extends LitElement {
  * Events: arc-navigate
  */
 export declare class ArcBreadcrumbMenu extends LitElement {
+  /** @default 'Breadcrumb' */
+  label: string;
   /** @default [] */
   items: unknown[];
 }
@@ -1239,6 +1243,8 @@ export declare class ArcList extends LitElement {
   multiple: boolean;
   /** @default '' */
   value: string;
+  /** @default '' */
+  label: string;
 }
 
 /**
@@ -1409,6 +1415,8 @@ export declare class ArcNavItem extends LitElement {
  * `<arc-navigation-menu>`
  */
 export declare class ArcNavigationMenu extends LitElement {
+  /** @default 'Navigation menu' */
+  label: string;
 }
 
 /**
@@ -1964,6 +1972,8 @@ export declare class ArcSidebar extends LitElement {
   width: string;
   /** @default false */
   glow: boolean;
+  /** @default 'Sidebar navigation' */
+  label: string;
 }
 
 /**
@@ -2433,6 +2443,8 @@ export declare class ArcTimePicker extends LitElement {
  * `<arc-timeline>`
  */
 export declare class ArcTimeline extends LitElement {
+  /** @default 3 */
+  headingLevel: number;
 }
 
 /**

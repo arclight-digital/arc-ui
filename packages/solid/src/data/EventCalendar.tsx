@@ -7,14 +7,17 @@ export interface EventCalendarProps {
   events?: unknown[];
   view?: string;
   date?: string;
+  onArcPeriodChange?: (e: CustomEvent) => void;
+  onArcDateClick?: (e: CustomEvent) => void;
+  onArcEventClick?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const EventCalendar: Component<EventCalendarProps> = (props) => {
-  const [local, rest] = splitProps(props, ['events', 'view', 'date', 'children']);
+  const [local, rest] = splitProps(props, ['events', 'view', 'date', 'onArcPeriodChange', 'onArcDateClick', 'onArcEventClick', 'children']);
   return (
-    <arc-event-calendar events={local.events} view={local.view} date={local.date} {...rest}>
+    <arc-event-calendar events={local.events} view={local.view} date={local.date} on:arc-period-change={local.onArcPeriodChange} on:arc-date-click={local.onArcDateClick} on:arc-event-click={local.onArcEventClick} {...rest}>
       {local.children}
     </arc-event-calendar>
   );

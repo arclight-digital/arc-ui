@@ -5,14 +5,17 @@ import '@arclux/arc-ui/connection-status';
 defineOptions({ name: 'ConnectionStatus' });
 
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-online': [event: CustomEvent];
   'arc-offline': [event: CustomEvent];
 }>();
 </script>
 
 <template>
-  <arc-connection-status>
+  <arc-connection-status
+    @arc-online="(payload: CustomEvent) => emit('arc-online', payload)"
+    @arc-offline="(payload: CustomEvent) => emit('arc-offline', payload)"
+  >
     <slot />
   </arc-connection-status>
 </template>

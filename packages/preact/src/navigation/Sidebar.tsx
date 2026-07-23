@@ -9,12 +9,13 @@ export interface SidebarProps {
   position?: 'right';
   width?: string;
   glow?: boolean;
+  label?: string;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const Sidebar: FunctionComponent<SidebarProps> = ({ active, collapsed, position, width, glow, children, ...rest }) => (
-  <arc-sidebar active={active} collapsed={collapsed} position={position} width={width} glow={glow} {...rest}>
+export const Sidebar: FunctionComponent<SidebarProps> = ({ active, collapsed, position, width, glow, label, children, ...rest }) => (
+  <arc-sidebar active={active} collapsed={collapsed} position={position} width={width} glow={glow} label={label} {...rest}>
     {children}
   </arc-sidebar>
 );

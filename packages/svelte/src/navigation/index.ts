@@ -26,3 +26,5 @@ export { default as TopBar } from './TopBar.svelte';
 export { default as TreeItem } from './TreeItem.svelte';
 export { default as TreeView } from './TreeView.svelte';
 export { default as Menubar } from './Menubar.svelte';
+export { default as Breadcrumb } from './Breadcrumb.svelte';
+export { default as Sidebar } from './Sidebar.svelte';

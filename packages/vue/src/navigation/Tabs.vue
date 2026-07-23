@@ -16,7 +16,7 @@ withDefaults(defineProps<{
   orientation: 'horizontal',
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-change': [event: CustomEvent];
 }>();
 </script>
@@ -27,6 +27,7 @@ defineEmits<{
     :align="align"
     :variant="variant"
     :orientation="orientation"
+    @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
   >
     <slot />
   </arc-tabs>

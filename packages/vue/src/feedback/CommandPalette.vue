@@ -12,7 +12,7 @@ withDefaults(defineProps<{
   placeholder: 'Type a command...',
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-select': [event: CustomEvent];
   'arc-close': [event: CustomEvent];
 }>();
@@ -22,6 +22,8 @@ defineEmits<{
   <arc-command-palette
     :open="open"
     :placeholder="placeholder"
+    @arc-select="(payload: CustomEvent) => emit('arc-select', payload)"
+    @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"
   >
     <slot />
   </arc-command-palette>

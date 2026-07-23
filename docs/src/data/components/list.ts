@@ -38,7 +38,7 @@ Three visual variants — default (plain), bordered (outlined container), and se
     ],
   },
 
-  previewHtml: `<arc-list variant="bordered" selectable style="max-width: 320px;">
+  previewHtml: `<arc-list variant="bordered" selectable label="Mailboxes" style="max-width: 320px;">
   <arc-list-item value="inbox">Inbox</arc-list-item>
   <arc-list-item value="drafts">Drafts</arc-list-item>
   <arc-list-item value="sent">Sent</arc-list-item>
@@ -50,7 +50,8 @@ Three visual variants — default (plain), bordered (outlined container), and se
     { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Controls the base font size for the list and its children.' },
     { name: 'selectable', type: 'boolean', default: 'false', description: 'Enables selection mode. Sets `role="listbox"` and manages `aria-selected` on child items.' },
     { name: 'multiple', type: 'boolean', default: 'false', description: 'Allows multiple items to be selected simultaneously. Only applies when `selectable` is true.' },
-    { name: 'value', type: 'string', default: "''", description: 'The currently selected value(s). Comma-separated when `multiple` is true.' }
+    { name: 'value', type: 'string', default: "''", description: 'The currently selected value(s). Comma-separated when `multiple` is true.' },
+    { name: 'label', type: 'string', default: "''", description: 'Accessible name for the list, applied as `aria-label`. Required when `selectable` is set so the listbox has an accessible name.' }
   ],
 
   events: [

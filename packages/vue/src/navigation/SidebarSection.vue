@@ -14,7 +14,7 @@ withDefaults(defineProps<{
   open: true,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-toggle': [event: CustomEvent];
 }>();
 </script>
@@ -24,6 +24,7 @@ defineEmits<{
     :heading="heading"
     :collapsible="collapsible"
     :open="open"
+    @arc-toggle="(payload: CustomEvent) => emit('arc-toggle', payload)"
   >
     <slot />
   </arc-sidebar-section>

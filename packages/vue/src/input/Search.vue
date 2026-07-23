@@ -18,7 +18,7 @@ withDefaults(defineProps<{
   loading: false,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-input': [event: CustomEvent];
   'arc-clear': [event: CustomEvent];
   'arc-change': [event: CustomEvent];
@@ -33,6 +33,10 @@ defineEmits<{
     :label="label"
     :disabled="disabled"
     :loading="loading"
+    @arc-input="(payload: CustomEvent) => emit('arc-input', payload)"
+    @arc-clear="(payload: CustomEvent) => emit('arc-clear', payload)"
+    @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
+    @arc-select="(payload: CustomEvent) => emit('arc-select', payload)"
   >
     <slot />
   </arc-search>

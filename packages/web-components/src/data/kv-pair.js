@@ -38,6 +38,15 @@ export class ArcKvPair extends LitElement {
     this.label = '';
   }
 
+  connectedCallback() {
+    super.connectedCallback();
+    // Pairs slot into arc-key-value's role="list" container, which
+    // requires listitem children. Respect any author-set role.
+    if (!this.hasAttribute('role')) {
+      this.setAttribute('role', 'listitem');
+    }
+  }
+
   render() {
     return html`
       <span class="kv__key" part="key">${this.label}</span>

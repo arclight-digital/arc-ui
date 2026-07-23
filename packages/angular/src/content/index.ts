@@ -24,3 +24,5 @@ export { Spinner } from './Spinner.js';
 export { Stack } from './Stack.js';
 export { VirtualList } from './VirtualList.js';
 export { QrCode } from './QrCode.js';
+export { Accordion } from './Accordion.js';
+export { Avatar } from './Avatar.js';

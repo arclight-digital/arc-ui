@@ -12,7 +12,7 @@ withDefaults(defineProps<{
   duration: 5000,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-action': [event: CustomEvent];
   'arc-dismiss': [event: CustomEvent];
 }>();
@@ -22,6 +22,8 @@ defineEmits<{
   <arc-snackbar
     :position="position"
     :duration="duration"
+    @arc-action="(payload: CustomEvent) => emit('arc-action', payload)"
+    @arc-dismiss="(payload: CustomEvent) => emit('arc-dismiss', payload)"
   >
     <slot />
   </arc-snackbar>

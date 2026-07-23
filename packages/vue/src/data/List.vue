@@ -10,15 +10,17 @@ withDefaults(defineProps<{
   selectable?: boolean;
   multiple?: boolean;
   value?: string;
+  label?: string;
 }>(), {
   variant: 'default',
   size: 'md',
   selectable: false,
   multiple: false,
   value: '',
+  label: '',
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-change': [event: CustomEvent];
   'arc-item-select': [event: CustomEvent];
 }>();
@@ -31,6 +33,9 @@ defineEmits<{
     :selectable="selectable"
     :multiple="multiple"
     :value="value"
+    :label="label"
+    @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
+    @arc-item-select="(payload: CustomEvent) => emit('arc-item-select', payload)"
   >
     <slot />
   </arc-list>

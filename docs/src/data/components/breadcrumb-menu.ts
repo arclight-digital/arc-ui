@@ -44,7 +44,7 @@ Each item in the \`items\` array can optionally include a \`siblings\` array. Wh
   },
 
   previewHtml: `<div style="width:100%;max-width:480px;padding:var(--space-lg);padding-bottom:100px;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-md)">
-  <arc-breadcrumb-menu items='[{"label":"Home","href":"/"},{"label":"Products","href":"/products","siblings":[{"label":"Solutions","href":"/solutions"},{"label":"Pricing","href":"/pricing"}]},{"label":"Analytics","href":"/products/analytics"}]'></arc-breadcrumb-menu>
+  <arc-breadcrumb-menu label="Example breadcrumb" items='[{"label":"Home","href":"/"},{"label":"Products","href":"/products","siblings":[{"label":"Solutions","href":"/solutions"},{"label":"Pricing","href":"/pricing"}]},{"label":"Analytics","href":"/products/analytics"}]'></arc-breadcrumb-menu>
 </div>`,
 
   props: [

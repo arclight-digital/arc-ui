@@ -6,14 +6,15 @@ import '@arclux/arc-ui/callout';
 export interface CalloutProps {
   variant?: string;
   dismissible?: boolean;
+  onArcDismiss?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Callout: Component<CalloutProps> = (props) => {
-  const [local, rest] = splitProps(props, ['variant', 'dismissible', 'children']);
+  const [local, rest] = splitProps(props, ['variant', 'dismissible', 'onArcDismiss', 'children']);
   return (
-    <arc-callout variant={local.variant} dismissible={local.dismissible} {...rest}>
+    <arc-callout variant={local.variant} dismissible={local.dismissible} on:arc-dismiss={local.onArcDismiss} {...rest}>
       {local.children}
     </arc-callout>
   );

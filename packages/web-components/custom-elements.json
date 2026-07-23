@@ -4389,6 +4389,16 @@
               },
               "default": "''",
               "attribute": "value"
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "label"
             }
           ],
           "attributes": [
@@ -4431,6 +4441,14 @@
               },
               "default": "''",
               "fieldName": "value"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "label"
             }
           ],
           "superclass": {
@@ -5275,8 +5293,28 @@
           "kind": "class",
           "description": "",
           "name": "ArcTimeline",
-          "members": [],
-          "attributes": [],
+          "members": [
+            {
+              "kind": "field",
+              "name": "headingLevel",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "default": "3",
+              "attribute": "heading-level"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "heading-level",
+              "type": {
+                "text": "number"
+              },
+              "default": "3",
+              "fieldName": "headingLevel"
+            }
+          ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
@@ -17732,6 +17770,16 @@
           "members": [
             {
               "kind": "field",
+              "name": "label",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Breadcrumb'",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
               "name": "items",
               "privacy": "public",
               "type": {
@@ -17757,6 +17805,14 @@
               },
               "default": "[]",
               "fieldName": "items"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Breadcrumb'",
+              "fieldName": "label"
             }
           ],
           "superclass": {
@@ -17796,6 +17852,16 @@
               },
               "default": "'/'",
               "attribute": "separator"
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Breadcrumb'",
+              "attribute": "label"
             }
           ],
           "events": [
@@ -17814,6 +17880,14 @@
               },
               "default": "'/'",
               "fieldName": "separator"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Breadcrumb'",
+              "fieldName": "label"
             }
           ],
           "superclass": {
@@ -18455,8 +18529,28 @@
           "kind": "class",
           "description": "",
           "name": "ArcNavigationMenu",
-          "members": [],
-          "attributes": [],
+          "members": [
+            {
+              "kind": "field",
+              "name": "label",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Navigation menu'",
+              "attribute": "label"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Navigation menu'",
+              "fieldName": "label"
+            }
+          ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
@@ -19221,6 +19315,16 @@
               "default": "false",
               "attribute": "glow",
               "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Sidebar navigation'",
+              "attribute": "label"
             }
           ],
           "attributes": [
@@ -19263,6 +19367,14 @@
               },
               "default": "false",
               "fieldName": "glow"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Sidebar navigation'",
+              "fieldName": "label"
             }
           ],
           "superclass": {

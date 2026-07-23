@@ -5,14 +5,16 @@ import '@arclux/arc-ui/breadcrumb-menu';
 
 export interface BreadcrumbMenuProps {
   items?: string;
+  label?: string;
+  onArcNavigate?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const BreadcrumbMenu: Component<BreadcrumbMenuProps> = (props) => {
-  const [local, rest] = splitProps(props, ['items', 'children']);
+  const [local, rest] = splitProps(props, ['items', 'label', 'onArcNavigate', 'children']);
   return (
-    <arc-breadcrumb-menu items={local.items} {...rest}>
+    <arc-breadcrumb-menu items={local.items} label={local.label} on:arc-navigate={local.onArcNavigate} {...rest}>
       {local.children}
     </arc-breadcrumb-menu>
   );

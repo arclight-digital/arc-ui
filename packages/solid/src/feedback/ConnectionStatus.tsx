@@ -4,14 +4,16 @@ import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/connection-status';
 
 export interface ConnectionStatusProps {
+  onArcOnline?: (e: CustomEvent) => void;
+  onArcOffline?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const ConnectionStatus: Component<ConnectionStatusProps> = (props) => {
-  const [local, rest] = splitProps(props, ['children']);
+  const [local, rest] = splitProps(props, ['onArcOnline', 'onArcOffline', 'children']);
   return (
-    <arc-connection-status {...rest}>
+    <arc-connection-status on:arc-online={local.onArcOnline} on:arc-offline={local.onArcOffline} {...rest}>
       {local.children}
     </arc-connection-status>
   );

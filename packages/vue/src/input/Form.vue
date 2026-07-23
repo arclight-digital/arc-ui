@@ -20,7 +20,7 @@ withDefaults(defineProps<{
   errorSummary: true,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-invalid': [event: CustomEvent];
   'arc-submit': [event: CustomEvent];
   'arc-reset': [event: CustomEvent];
@@ -35,6 +35,9 @@ defineEmits<{
     :loading="loading"
     :disabled="disabled"
     :errorSummary="errorSummary"
+    @arc-invalid="(payload: CustomEvent) => emit('arc-invalid', payload)"
+    @arc-submit="(payload: CustomEvent) => emit('arc-submit', payload)"
+    @arc-reset="(payload: CustomEvent) => emit('arc-reset', payload)"
   >
     <slot />
   </arc-form>

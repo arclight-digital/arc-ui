@@ -16,7 +16,7 @@ withDefaults(defineProps<{
   variant: 'default',
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-confirm': [event: CustomEvent];
   'arc-cancel': [event: CustomEvent];
 }>();
@@ -28,6 +28,8 @@ defineEmits<{
     :heading="heading"
     :message="message"
     :variant="variant"
+    @arc-confirm="(payload: CustomEvent) => emit('arc-confirm', payload)"
+    @arc-cancel="(payload: CustomEvent) => emit('arc-cancel', payload)"
   >
     <slot />
   </arc-dialog>

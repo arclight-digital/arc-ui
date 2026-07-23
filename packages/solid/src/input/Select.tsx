@@ -12,14 +12,15 @@ export interface SelectProps {
   size?: 'sm' | 'lg';
   error?: string;
   open?: boolean;
+  onArcChange?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Select: Component<SelectProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'placeholder', 'label', 'name', 'disabled', 'size', 'error', 'open', 'children']);
+  const [local, rest] = splitProps(props, ['value', 'placeholder', 'label', 'name', 'disabled', 'size', 'error', 'open', 'onArcChange', 'children']);
   return (
-    <arc-select value={local.value} placeholder={local.placeholder} label={local.label} name={local.name} disabled={local.disabled} size={local.size} error={local.error} open={local.open} {...rest}>
+    <arc-select value={local.value} placeholder={local.placeholder} label={local.label} name={local.name} disabled={local.disabled} size={local.size} error={local.error} open={local.open} on:arc-change={local.onArcChange} {...rest}>
       {local.children}
     </arc-select>
   );

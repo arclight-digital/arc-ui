@@ -7,7 +7,7 @@ import '@arclux/arc-ui/list';
   selector: 'arc-list',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-list [attr.variant]="variant" [attr.size]="size" [selectable]="selectable" [multiple]="multiple" [attr.value]="value" (arc-change)="arcChange.emit($event)" (arc-item-select)="arcItemSelect.emit($event)"><ng-content /></arc-list>`,
+  template: `<arc-list [attr.variant]="variant" [attr.size]="size" [selectable]="selectable" [multiple]="multiple" [attr.value]="value" [attr.label]="label" (arc-change)="arcChange.emit($event)" (arc-item-select)="arcItemSelect.emit($event)"><ng-content /></arc-list>`,
 })
 export class List {
   @Input() variant: 'bordered' | 'separated' = 'default';
@@ -15,6 +15,7 @@ export class List {
   @Input() selectable: boolean = false;
   @Input() multiple: boolean = false;
   @Input() value: string = '';
+  @Input() label: string = '';
   @Output() arcChange = new EventEmitter<CustomEvent>();
   @Output() arcItemSelect = new EventEmitter<CustomEvent>();
 }

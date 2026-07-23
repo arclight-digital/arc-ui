@@ -7,14 +7,15 @@ export interface AnchorNavProps {
   orientation?: 'vertical';
   value?: string;
   items?: string;
+  onArcChange?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const AnchorNav: Component<AnchorNavProps> = (props) => {
-  const [local, rest] = splitProps(props, ['orientation', 'value', 'items', 'children']);
+  const [local, rest] = splitProps(props, ['orientation', 'value', 'items', 'onArcChange', 'children']);
   return (
-    <arc-anchor-nav orientation={local.orientation} value={local.value} items={local.items} {...rest}>
+    <arc-anchor-nav orientation={local.orientation} value={local.value} items={local.items} on:arc-change={local.onArcChange} {...rest}>
       {local.children}
     </arc-anchor-nav>
   );

@@ -27,3 +27,4 @@ export { ArcChart } from './chart.js';
 export { ArcDataGrid } from './data-grid.js';
 export { ArcEventCalendar } from './event-calendar.js';
 export { ArcKanban } from './kanban.js';
+export { ArcComparison } from './comparison.js';

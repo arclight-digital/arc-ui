@@ -8,14 +8,15 @@ export interface ToolbarProps {
   size?: string;
   border?: boolean;
   overflow?: boolean;
+  onArcOverflowChange?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Toolbar: Component<ToolbarProps> = (props) => {
-  const [local, rest] = splitProps(props, ['sticky', 'size', 'border', 'overflow', 'children']);
+  const [local, rest] = splitProps(props, ['sticky', 'size', 'border', 'overflow', 'onArcOverflowChange', 'children']);
   return (
-    <arc-toolbar sticky={local.sticky} size={local.size} border={local.border} overflow={local.overflow} {...rest}>
+    <arc-toolbar sticky={local.sticky} size={local.size} border={local.border} overflow={local.overflow} on:arc-overflow-change={local.onArcOverflowChange} {...rest}>
       {local.children}
     </arc-toolbar>
   );

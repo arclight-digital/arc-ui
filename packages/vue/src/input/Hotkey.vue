@@ -14,7 +14,7 @@ withDefaults(defineProps<{
   global: false,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-hotkey-trigger': [event: CustomEvent];
 }>();
 </script>
@@ -24,6 +24,7 @@ defineEmits<{
     :keys="keys"
     :disabled="disabled"
     :global="global"
+    @arc-hotkey-trigger="(payload: CustomEvent) => emit('arc-hotkey-trigger', payload)"
   >
     <slot />
   </arc-hotkey>

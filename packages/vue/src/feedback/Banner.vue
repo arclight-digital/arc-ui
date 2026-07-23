@@ -14,7 +14,7 @@ withDefaults(defineProps<{
   sticky: false,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-dismiss': [event: CustomEvent];
 }>();
 </script>
@@ -24,6 +24,7 @@ defineEmits<{
     :variant="variant"
     :dismissible="dismissible"
     :sticky="sticky"
+    @arc-dismiss="(payload: CustomEvent) => emit('arc-dismiss', payload)"
   >
     <slot />
   </arc-banner>

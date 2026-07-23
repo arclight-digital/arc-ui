@@ -23,11 +23,11 @@
         color: inherit;
       }
 
-      /* Icon-only (square) */
-      .arc-icon-button .btn:not(.btn--has-text) { aspect-ratio: 1; }
+      .arc-icon-button /* Icon-only (square) */
+      .btn:not(.btn--has-text) { aspect-ratio: 1; }
 
-      /* With text */
-      .arc-icon-button .btn--has-text {
+      .arc-icon-button /* With text */
+      .btn--has-text {
         font-family: var(--font-accent);
         font-weight: 600;
         text-transform: uppercase;
@@ -39,23 +39,23 @@
         line-height: 1;
       }
 
-      /* Sizes — icon-only */
-      .arc-icon-button .btn:not(.btn--has-text) { min-width: var(--touch-min); min-height: var(--touch-min); }
+      .arc-icon-button /* Sizes — icon-only */
+      .btn:not(.btn--has-text) { min-width: var(--touch-min); min-height: var(--touch-min); }
       .arc-icon-button[data-size="xs"] .btn:not(.btn--has-text) { width: 28px; height: 28px; border-radius: var(--radius-sm); }
       .arc-icon-button[data-size="sm"] .btn:not(.btn--has-text) { width: 32px; height: 32px; }
       .arc-icon-button:not([data-size]) .btn:not(.btn--has-text),
       .arc-icon-button[data-size="md"] .btn:not(.btn--has-text) { width: 36px; height: 36px; }
       .arc-icon-button[data-size="lg"] .btn:not(.btn--has-text) { width: 44px; height: 44px; }
 
-      /* Sizes — with text */
-      .arc-icon-button .btn--has-text { min-height: var(--touch-min); }
+      .arc-icon-button /* Sizes — with text */
+      .btn--has-text { min-height: var(--touch-min); }
       .arc-icon-button[data-size="xs"] .btn--has-text { padding: var(--space-xs) var(--space-sm); font-size: var(--text-xs); }
       .arc-icon-button[data-size="sm"] .btn--has-text { padding: calc(var(--space-xs) + 2px) calc(var(--space-sm) + 2px); font-size: var(--text-xs); }
       .arc-icon-button:not([data-size]) .btn--has-text,
       .arc-icon-button[data-size="md"] .btn--has-text { padding: var(--space-xs) var(--space-sm); font-size: var(--text-xs); }
       .arc-icon-button[data-size="lg"] .btn--has-text { padding: var(--space-sm) var(--space-md); font-size: var(--text-xs); }
 
-      /* Default → ghost */
+      .arc-icon-button /* Default → ghost */
       .arc-icon-button:not([data-variant]) .btn {
         background: transparent;
         color: var(--text-muted);
@@ -66,7 +66,7 @@
         background: var(--surface-hover);
       }
 
-      /* :active scale */
+      .arc-icon-button /* :active scale */
       .arc-icon-button:not([data-variant]) .btn:active,
       .arc-icon-button[data-variant="ghost"] .btn:active {
         transform: scale(0.93);
@@ -81,12 +81,12 @@
         box-shadow: 0 0 8px rgba(var(--interactive-rgb), 0.5);
       }
 
-      /* IconButton secondary uses text-secondary instead of text-primary */
+      .arc-icon-button /* IconButton secondary uses text-secondary instead of text-primary */
       .arc-icon-button[data-variant="secondary"] .btn {
         color: var(--text-secondary);
       }
 
-      /* IconButton secondary hover uses smaller glow */
+      .arc-icon-button /* IconButton secondary hover uses smaller glow */
       .arc-icon-button[data-variant="secondary"] .btn:hover {
         box-shadow: 0 0 16px var(--accent-primary-ring);
       }

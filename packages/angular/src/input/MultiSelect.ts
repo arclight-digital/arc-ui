@@ -7,7 +7,7 @@ import '@arclux/arc-ui/multi-select';
   selector: 'arc-multi-select',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-multi-select [attr.value]="value" [attr.placeholder]="placeholder" [attr.label]="label" [attr.name]="name" [disabled]="disabled" (arc-change)="arcChange.emit($event)"><ng-content /></arc-multi-select>`,
+  template: `<arc-multi-select [value]="value" [attr.placeholder]="placeholder" [attr.label]="label" [attr.name]="name" [disabled]="disabled" (arc-change)="arcChange.emit($event)"><ng-content /></arc-multi-select>`,
 })
 export class MultiSelect {
   @Input() value: unknown[] = [];

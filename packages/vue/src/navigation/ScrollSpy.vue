@@ -12,7 +12,7 @@ withDefaults(defineProps<{
   offset: 80,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-change': [event: CustomEvent];
 }>();
 </script>
@@ -21,6 +21,7 @@ defineEmits<{
   <arc-scroll-spy
     :active="active"
     :offset="offset"
+    @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
   >
     <slot />
   </arc-scroll-spy>

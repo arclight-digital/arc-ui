@@ -8,6 +8,7 @@ import { tokenStyles } from '../shared-styles.js';
 export class ArcBreadcrumb extends LitElement {
   static properties = {
     separator: { type: String },
+    label:     { type: String },
     _items:    { state: true },
   };
 
@@ -98,6 +99,7 @@ export class ArcBreadcrumb extends LitElement {
   constructor() {
     super();
     this.separator = '/';
+    this.label = 'Breadcrumb';
     this._items = [];
   }
 
@@ -119,7 +121,7 @@ export class ArcBreadcrumb extends LitElement {
       <div class="breadcrumb__slot-host">
         <slot @slotchange=${this._onSlotChange}></slot>
       </div>
-      <nav class="breadcrumb" aria-label="Breadcrumb" part="breadcrumb">
+      <nav class="breadcrumb" aria-label=${this.label} part="breadcrumb">
         ${this._items.map((item, i) => {
           const isLast = i === this._items.length - 1;
           return html`

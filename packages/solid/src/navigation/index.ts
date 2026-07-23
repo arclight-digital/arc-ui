@@ -80,3 +80,9 @@ export type { TreeViewProps } from './TreeView.js';
 
 export { Menubar } from './Menubar.js';
 export type { MenubarProps } from './Menubar.js';
+
+export { Breadcrumb } from './Breadcrumb.js';
+export type { BreadcrumbProps } from './Breadcrumb.js';
+
+export { Sidebar } from './Sidebar.js';
+export type { SidebarProps } from './Sidebar.js';

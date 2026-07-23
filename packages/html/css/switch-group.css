@@ -10,14 +10,14 @@
         pointer-events: none;
       }
 
-      fieldset {
+      .arc-switch-group fieldset {
         border: none;
         padding: 0;
         margin: 0;
         min-width: 0;
       }
 
-      legend {
+      .arc-switch-group legend {
         font-family: var(--font-body);
         font-size: var(--text-sm);
         font-weight: 600;

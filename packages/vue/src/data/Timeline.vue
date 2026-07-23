@@ -4,10 +4,17 @@ import '@arclux/arc-ui/timeline';
 
 defineOptions({ name: 'Timeline' });
 
+withDefaults(defineProps<{
+  headingLevel?: number;
+}>(), {
+  headingLevel: 3,
+});
 </script>
 
 <template>
-  <arc-timeline>
+  <arc-timeline
+    :headingLevel="headingLevel"
+  >
     <slot />
   </arc-timeline>
 </template>

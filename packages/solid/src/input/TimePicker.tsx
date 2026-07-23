@@ -13,14 +13,15 @@ export interface TimePickerProps {
   placeholder?: string;
   disabled?: boolean;
   label?: string;
+  onArcChange?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const TimePicker: Component<TimePickerProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'name', 'min', 'max', 'step', 'format', 'placeholder', 'disabled', 'label', 'children']);
+  const [local, rest] = splitProps(props, ['value', 'name', 'min', 'max', 'step', 'format', 'placeholder', 'disabled', 'label', 'onArcChange', 'children']);
   return (
-    <arc-time-picker value={local.value} name={local.name} min={local.min} max={local.max} step={local.step} format={local.format} placeholder={local.placeholder} disabled={local.disabled} label={local.label} {...rest}>
+    <arc-time-picker value={local.value} name={local.name} min={local.min} max={local.max} step={local.step} format={local.format} placeholder={local.placeholder} disabled={local.disabled} label={local.label} on:arc-change={local.onArcChange} {...rest}>
       {local.children}
     </arc-time-picker>
   );

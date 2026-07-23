@@ -13,7 +13,7 @@
         filter: drop-shadow(0 0 12px rgba(var(--accent-primary-rgb), 0.2));
       }
 
-      /* --- Variant gradients --- */
+      .arc-gradient-text /* --- Variant gradients --- */
 
       .arc-gradient-text[data-variant="accent"] .gradient-text,
       .arc-gradient-text:not([data-variant]) .gradient-text {
@@ -40,7 +40,7 @@
         background-clip: text;
       }
 
-      /* custom variant handled via inline style in render() */
+      .arc-gradient-text /* custom variant handled via inline style in render() */
 
       /* --- Animation --- */
 

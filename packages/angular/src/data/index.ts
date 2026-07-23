@@ -22,3 +22,7 @@ export { Chart } from './Chart.js';
 export { DataGrid } from './DataGrid.js';
 export { EventCalendar } from './EventCalendar.js';
 export { Kanban } from './Kanban.js';
+export { Comparison } from './Comparison.js';
+export { List } from './List.js';
+export { Table } from './Table.js';
+export { Timeline } from './Timeline.js';

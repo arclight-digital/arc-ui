@@ -5,14 +5,15 @@ import '@arclux/arc-ui/sortable-list';
 
 export interface SortableListProps {
   disabled?: boolean;
+  onArcChange?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const SortableList: Component<SortableListProps> = (props) => {
-  const [local, rest] = splitProps(props, ['disabled', 'children']);
+  const [local, rest] = splitProps(props, ['disabled', 'onArcChange', 'children']);
   return (
-    <arc-sortable-list disabled={local.disabled} {...rest}>
+    <arc-sortable-list disabled={local.disabled} on:arc-change={local.onArcChange} {...rest}>
       {local.children}
     </arc-sortable-list>
   );

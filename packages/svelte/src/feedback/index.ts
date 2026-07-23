@@ -22,3 +22,5 @@ export { default as Snackbar } from './Snackbar.svelte';
 export { default as Spotlight } from './Spotlight.svelte';
 export { default as Tooltip } from './Tooltip.svelte';
 export { default as ToastManager } from './ToastManager.svelte';
+export { default as Progress } from './Progress.svelte';
+export { default as Toast } from './Toast.svelte';

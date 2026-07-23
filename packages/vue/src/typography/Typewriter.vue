@@ -20,7 +20,7 @@ withDefaults(defineProps<{
   nowrap: false,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-complete': [event: CustomEvent];
 }>();
 </script>
@@ -33,6 +33,7 @@ defineEmits<{
     :cursor="cursor"
     :loop="loop"
     :nowrap="nowrap"
+    @arc-complete="(payload: CustomEvent) => emit('arc-complete', payload)"
   >
     <slot />
   </arc-typewriter>

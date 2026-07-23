@@ -4,12 +4,13 @@ import { type FunctionComponent } from 'preact';
 import '@arclux/arc-ui/timeline';
 
 export interface TimelineProps {
+  headingLevel?: number;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const Timeline: FunctionComponent<TimelineProps> = ({ children, ...rest }) => (
-  <arc-timeline {...rest}>
+export const Timeline: FunctionComponent<TimelineProps> = ({ headingLevel, children, ...rest }) => (
+  <arc-timeline headingLevel={headingLevel} {...rest}>
     {children}
   </arc-timeline>
 );

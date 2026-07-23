@@ -12,7 +12,7 @@ export const infiniteScroll: ComponentDef = {
 
 While data is being fetched, set the \`loading\` prop to \`true\` to display a centered spinner in the footer area. The component automatically suppresses additional \`arc-load-more\` events while loading is active, preventing duplicate fetch requests. Once your data arrives, reset \`loading\` to \`false\` and the sentinel resumes observation.
 
-When all data has been loaded, set the \`finished\` prop to \`true\`. The sentinel is removed and replaced with a "No more items" text indicator, and the Intersection Observer is disconnected. The container uses \`role="feed"\` and \`aria-busy\` to communicate loading state to assistive technologies, ensuring the infinite scrolling pattern remains accessible.`,
+When all data has been loaded, set the \`finished\` prop to \`true\`. The sentinel is removed and replaced with a "No more items" text indicator, and the Intersection Observer is disconnected. The container uses \`aria-busy\` to communicate loading state to assistive technologies. If your items are self-contained entries (e.g. posts), slot them as \`<article>\` elements and add \`role="feed"\` to the component to opt into the ARIA feed pattern.`,
 
     features: [
       'Intersection Observer-based sentinel that fires `arc-load-more` when the user nears the content bottom',
@@ -20,7 +20,7 @@ When all data has been loaded, set the \`finished\` prop to \`true\`. The sentin
       'Built-in `arc-spinner` displayed in the footer when `loading` is `true`',
       'Automatic suppression of duplicate load events while loading is in progress',
       'End-of-list state via `finished` prop -- removes the sentinel and shows "No more items" text',
-      'ARIA `role="feed"` and `aria-busy` for accessible loading communication',
+      'ARIA `aria-busy` for accessible loading communication',
       'Observer automatically disconnects and reconnects when `finished` or `disabled` change',
       'Disabled state at 40% opacity with pointer events blocked'
     ],

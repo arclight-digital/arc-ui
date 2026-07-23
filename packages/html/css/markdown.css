@@ -50,12 +50,12 @@
 
       .arc-markdown .markdown a {
         color: var(--interactive);
-        text-decoration: none;
+        text-decoration: underline;
         transition: color var(--transition-fast);
       }
 
       .arc-markdown .markdown a:hover {
-        text-decoration: underline;
+        text-decoration-thickness: 2px;
       }
 
       .arc-markdown .markdown code {

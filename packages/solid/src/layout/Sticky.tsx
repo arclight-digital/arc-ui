@@ -5,14 +5,15 @@ import '@arclux/arc-ui/sticky';
 
 export interface StickyProps {
   offset?: string;
+  onArcStuck?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Sticky: Component<StickyProps> = (props) => {
-  const [local, rest] = splitProps(props, ['offset', 'children']);
+  const [local, rest] = splitProps(props, ['offset', 'onArcStuck', 'children']);
   return (
-    <arc-sticky offset={local.offset} {...rest}>
+    <arc-sticky offset={local.offset} on:arc-stuck={local.onArcStuck} {...rest}>
       {local.children}
     </arc-sticky>
   );

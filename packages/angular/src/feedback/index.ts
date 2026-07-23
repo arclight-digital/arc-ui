@@ -22,3 +22,5 @@ export { Snackbar } from './Snackbar.js';
 export { Spotlight } from './Spotlight.js';
 export { Tooltip } from './Tooltip.js';
 export { ToastManager } from './ToastManager.js';
+export { Progress } from './Progress.js';
+export { Toast } from './Toast.js';

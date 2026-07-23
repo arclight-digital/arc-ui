@@ -47,7 +47,7 @@ export class ArcComparison extends LitElement {
 
       .header-cell--highlight {
         background: var(--accent-primary-subtle);
-        color: var(--accent-primary);
+        color: color-mix(in srgb, var(--accent-primary), var(--text-primary) var(--accent-text-mix, 0%));
       }
 
       .row {
@@ -99,6 +99,17 @@ export class ArcComparison extends LitElement {
         justify-content: center;
       }
 
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+      }
+
       @media (prefers-reduced-motion: reduce) {
         :host *,
         :host *::before,
@@ -128,7 +139,7 @@ export class ArcComparison extends LitElement {
   }
 
   _renderCheck() {
-    return html`<span class="check" aria-label="Yes">
+    return html`<span class="check" role="img" aria-label="Yes">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
         <path d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"/>
       </svg>
@@ -136,7 +147,7 @@ export class ArcComparison extends LitElement {
   }
 
   _renderCross() {
-    return html`<span class="cross" aria-label="No">
+    return html`<span class="cross" role="img" aria-label="No">
       <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
         <path d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z"/>
       </svg>
@@ -159,7 +170,7 @@ export class ArcComparison extends LitElement {
         <div class="grid" style="grid-template-columns: minmax(140px, 1fr) repeat(${cols.length}, 1fr);" role="table">
           <!-- Header row -->
           <div class="row" role="row">
-            <div class="header-cell header-cell--feature" part="header" role="columnheader"></div>
+            <div class="header-cell header-cell--feature" part="header" role="columnheader"><span class="sr-only">Feature</span></div>
             ${cols.map(col => html`
               <div class="header-cell ${col.highlight ? 'header-cell--highlight' : ''}" part="header" role="columnheader">
                 ${col.heading}

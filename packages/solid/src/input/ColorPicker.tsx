@@ -9,14 +9,15 @@ export interface ColorPickerProps {
   presets?: unknown[];
   disabled?: boolean;
   label?: string;
+  onArcChange?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const ColorPicker: Component<ColorPickerProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'name', 'presets', 'disabled', 'label', 'children']);
+  const [local, rest] = splitProps(props, ['value', 'name', 'presets', 'disabled', 'label', 'onArcChange', 'children']);
   return (
-    <arc-color-picker value={local.value} name={local.name} presets={local.presets} disabled={local.disabled} label={local.label} {...rest}>
+    <arc-color-picker value={local.value} name={local.name} presets={local.presets} disabled={local.disabled} label={local.label} on:arc-change={local.onArcChange} {...rest}>
       {local.children}
     </arc-color-picker>
   );

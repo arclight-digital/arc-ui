@@ -16,7 +16,7 @@ withDefaults(defineProps<{
   href: '',
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-item-select': [event: CustomEvent];
 }>();
 </script>
@@ -27,6 +27,7 @@ defineEmits<{
     :selected="selected"
     :disabled="disabled"
     :href="href"
+    @arc-item-select="(payload: CustomEvent) => emit('arc-item-select', payload)"
   >
     <slot />
   </arc-list-item>

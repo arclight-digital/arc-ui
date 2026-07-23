@@ -5,14 +5,17 @@ import '@arclux/arc-ui/tree-view';
 defineOptions({ name: 'TreeView' });
 
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-toggle': [event: CustomEvent];
   'arc-select': [event: CustomEvent];
 }>();
 </script>
 
 <template>
-  <arc-tree-view>
+  <arc-tree-view
+    @arc-toggle="(payload: CustomEvent) => emit('arc-toggle', payload)"
+    @arc-select="(payload: CustomEvent) => emit('arc-select', payload)"
+  >
     <slot />
   </arc-tree-view>
 </template>

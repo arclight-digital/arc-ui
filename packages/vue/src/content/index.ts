@@ -24,3 +24,5 @@ export { default as Spinner } from './Spinner.vue';
 export { default as Stack } from './Stack.vue';
 export { default as VirtualList } from './VirtualList.vue';
 export { default as QrCode } from './QrCode.vue';
+export { default as Accordion } from './Accordion.vue';
+export { default as Avatar } from './Avatar.vue';

@@ -7,7 +7,7 @@
         color: var(--text-primary);
       }
 
-      svg {
+      .arc-qr-code svg {
         display: block;
       }
 
@@ -19,10 +19,10 @@
         fill: var(--qr-fg, currentColor);
       }
 
-      /* Scanners decode dark-on-light far more reliably than inverted codes.
+      .arc-qr-code /* Scanners decode dark-on-light far more reliably than inverted codes.
          Contrast mode forces black modules on a white card so the code stays
-         scannable in both themes, regardless of --qr-fg/--qr-bg overrides. */
-      .arc-qr-code .card {
+         scannable in both themes, .arc-qr-code regardless of --qr-fg/--qr-bg overrides. */
+      .card {
         display: inline-block;
         background: rgb(var(--white-rgb));
         padding: var(--space-sm);

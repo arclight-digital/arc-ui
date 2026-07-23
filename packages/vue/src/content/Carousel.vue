@@ -18,7 +18,7 @@ withDefaults(defineProps<{
   showArrows: true,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-change': [event: CustomEvent];
 }>();
 </script>
@@ -30,6 +30,7 @@ defineEmits<{
     :loop="loop"
     :showDots="showDots"
     :showArrows="showArrows"
+    @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
   >
     <slot />
   </arc-carousel>

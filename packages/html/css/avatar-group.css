@@ -8,7 +8,7 @@
         align-items: center;
       }
 
-      ::slotted(*) {
+      .arc-avatar-group ::slotted(*) {
         position: relative;
         box-sizing: border-box;
         box-shadow: 0 0 0 3px var(--surface-base);
@@ -16,7 +16,7 @@
         transition: transform var(--transition-fast), box-shadow var(--transition-fast);
       }
 
-      ::slotted(:hover) {
+      .arc-avatar-group ::slotted(:hover) {
         transform: translateY(-2px) scale(1.08);
         z-index: 100 !important;
         box-shadow: 0 0 0 3px var(--surface-base), var(--shadow-md);

@@ -16,7 +16,7 @@ withDefaults(defineProps<{
   maxRatio: 0.85,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-resize': [event: CustomEvent];
 }>();
 </script>
@@ -27,6 +27,7 @@ defineEmits<{
     :ratio="ratio"
     :minRatio="minRatio"
     :maxRatio="maxRatio"
+    @arc-resize="(payload: CustomEvent) => emit('arc-resize', payload)"
   >
     <slot />
   </arc-split-pane>

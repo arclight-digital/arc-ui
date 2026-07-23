@@ -14,7 +14,7 @@ withDefaults(defineProps<{
   closeDelay: 300,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-open': [event: CustomEvent];
   'arc-close': [event: CustomEvent];
 }>();
@@ -25,6 +25,8 @@ defineEmits<{
     :position="position"
     :openDelay="openDelay"
     :closeDelay="closeDelay"
+    @arc-open="(payload: CustomEvent) => emit('arc-open', payload)"
+    @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"
   >
     <slot />
   </arc-hover-card>

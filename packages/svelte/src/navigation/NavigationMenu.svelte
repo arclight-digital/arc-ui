@@ -4,13 +4,14 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
+    label?: string;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { children, ...rest }: Props = $props();
+  let { label = 'Navigation menu', children, ...rest }: Props = $props();
 </script>
 
-<arc-navigation-menu {...rest}>
+<arc-navigation-menu {label} {...rest}>
   {@render children?.()}
 </arc-navigation-menu>

@@ -68,3 +68,9 @@ export type { TooltipProps } from './Tooltip.js';
 
 export { ToastManager } from './ToastManager.js';
 export type { ToastManagerProps } from './ToastManager.js';
+
+export { Progress } from './Progress.js';
+export type { ProgressProps } from './Progress.js';
+
+export { Toast } from './Toast.js';
+export type { ToastProps } from './Toast.js';

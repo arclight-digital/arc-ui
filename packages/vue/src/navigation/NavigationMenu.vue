@@ -4,14 +4,22 @@ import '@arclux/arc-ui/navigation-menu';
 
 defineOptions({ name: 'NavigationMenu' });
 
+withDefaults(defineProps<{
+  label?: string;
+}>(), {
+  label: 'Navigation menu',
+});
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-mobile-menu-toggle': [event: CustomEvent];
 }>();
 </script>
 
 <template>
-  <arc-navigation-menu>
+  <arc-navigation-menu
+    :label="label"
+    @arc-mobile-menu-toggle="(payload: CustomEvent) => emit('arc-mobile-menu-toggle', payload)"
+  >
     <slot />
   </arc-navigation-menu>
 </template>

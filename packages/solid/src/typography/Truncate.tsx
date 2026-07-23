@@ -6,14 +6,15 @@ import '@arclux/arc-ui/truncate';
 export interface TruncateProps {
   lines?: number;
   expanded?: boolean;
+  onArcToggle?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Truncate: Component<TruncateProps> = (props) => {
-  const [local, rest] = splitProps(props, ['lines', 'expanded', 'children']);
+  const [local, rest] = splitProps(props, ['lines', 'expanded', 'onArcToggle', 'children']);
   return (
-    <arc-truncate lines={local.lines} expanded={local.expanded} {...rest}>
+    <arc-truncate lines={local.lines} expanded={local.expanded} on:arc-toggle={local.onArcToggle} {...rest}>
       {local.children}
     </arc-truncate>
   );

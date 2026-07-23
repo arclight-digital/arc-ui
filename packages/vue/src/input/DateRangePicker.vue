@@ -30,7 +30,7 @@ withDefaults(defineProps<{
   label: '',
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-change': [event: CustomEvent];
 }>();
 </script>
@@ -48,6 +48,7 @@ defineEmits<{
     :disabled="disabled"
     :required="required"
     :label="label"
+    @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
   >
     <slot />
   </arc-date-range-picker>

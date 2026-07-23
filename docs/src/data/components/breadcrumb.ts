@@ -44,7 +44,7 @@ Breadcrumbs work best alongside a primary navigation element like a sidebar or t
   },
 
   previewHtml: `<div style="width:100%">
-  <arc-breadcrumb>
+  <arc-breadcrumb label="Example breadcrumb">
     <arc-breadcrumb-item href="/dashboard">Dashboard</arc-breadcrumb-item>
     <arc-breadcrumb-item href="/dashboard/projects">Projects</arc-breadcrumb-item>
     <arc-breadcrumb-item href="/dashboard/projects/arc-ui">ARC UI</arc-breadcrumb-item>

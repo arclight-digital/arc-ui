@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
@@ -12,6 +12,7 @@ export class ArcList extends LitElement {
     selectable: { type: Boolean, reflect: true },
     multiple:   { type: Boolean },
     value:      { type: String },
+    label:      { type: String },
     _items:     { state: true },
   };
 
@@ -53,6 +54,7 @@ export class ArcList extends LitElement {
     this.selectable = false;
     this.multiple = false;
     this.value = '';
+    this.label = '';
     this._items = [];
   }
 
@@ -163,6 +165,7 @@ export class ArcList extends LitElement {
       <div
         class="list"
         role=${this.selectable ? 'listbox' : 'list'}
+        aria-label=${this.label || nothing}
         aria-multiselectable=${this.selectable && this.multiple ? 'true' : 'false'}
         @keydown=${this._handleKeydown}
         part="list"

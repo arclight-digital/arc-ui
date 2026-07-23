@@ -18,7 +18,7 @@ withDefaults(defineProps<{
   closable: true,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-close': [event: CustomEvent];
   'arc-open': [event: CustomEvent];
 }>();
@@ -31,6 +31,8 @@ defineEmits<{
     :size="size"
     :fullscreen="fullscreen"
     :closable="closable"
+    @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"
+    @arc-open="(payload: CustomEvent) => emit('arc-open', payload)"
   >
     <slot />
   </arc-modal>

@@ -18,7 +18,7 @@ withDefaults(defineProps<{
   color: '',
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-remove': [event: CustomEvent];
 }>();
 </script>
@@ -30,6 +30,7 @@ defineEmits<{
     :removable="removable"
     :disabled="disabled"
     :color="color"
+    @arc-remove="(payload: CustomEvent) => emit('arc-remove', payload)"
   >
     <slot />
   </arc-tag>

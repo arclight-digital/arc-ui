@@ -9,14 +9,15 @@ export interface TagProps {
   removable?: boolean;
   disabled?: boolean;
   color?: string;
+  onArcRemove?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Tag: Component<TagProps> = (props) => {
-  const [local, rest] = splitProps(props, ['variant', 'size', 'removable', 'disabled', 'color', 'children']);
+  const [local, rest] = splitProps(props, ['variant', 'size', 'removable', 'disabled', 'color', 'onArcRemove', 'children']);
   return (
-    <arc-tag variant={local.variant} size={local.size} removable={local.removable} disabled={local.disabled} color={local.color} {...rest}>
+    <arc-tag variant={local.variant} size={local.size} removable={local.removable} disabled={local.disabled} color={local.color} on:arc-remove={local.onArcRemove} {...rest}>
       {local.children}
     </arc-tag>
   );

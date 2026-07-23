@@ -5,13 +5,14 @@
 
   interface Props {
     items?: string;
+    label?: string;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { items = [], children, ...rest }: Props = $props();
+  let { items = [], label = 'Breadcrumb', children, ...rest }: Props = $props();
 </script>
 
-<arc-breadcrumb-menu {items} {...rest}>
+<arc-breadcrumb-menu {items} {label} {...rest}>
   {@render children?.()}
 </arc-breadcrumb-menu>

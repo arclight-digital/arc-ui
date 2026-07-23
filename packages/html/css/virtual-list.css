@@ -19,7 +19,7 @@
         width: 100%;
       }
 
-      ::slotted(*) {
+      .arc-virtual-list ::slotted(*) {
         position: absolute;
         left: 0;
         width: 100%;

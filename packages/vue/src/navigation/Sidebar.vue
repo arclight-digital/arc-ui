@@ -10,12 +10,14 @@ withDefaults(defineProps<{
   position?: 'right';
   width?: string;
   glow?: boolean;
+  label?: string;
 }>(), {
   active: '',
   collapsed: false,
   position: 'left',
   width: '280px',
   glow: false,
+  label: 'Sidebar navigation',
 });
 </script>
 
@@ -26,6 +28,7 @@ withDefaults(defineProps<{
     :position="position"
     :width="width"
     :glow="glow"
+    :label="label"
   >
     <slot />
   </arc-sidebar>

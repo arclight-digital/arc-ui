@@ -16,7 +16,7 @@ withDefaults(defineProps<{
   items: () => ([]),
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-action': [event: CustomEvent];
   'arc-close': [event: CustomEvent];
 }>();
@@ -28,6 +28,8 @@ defineEmits<{
     :direction="direction"
     :position="position"
     :items="items"
+    @arc-action="(payload: CustomEvent) => emit('arc-action', payload)"
+    @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"
   >
     <slot />
   </arc-speed-dial>

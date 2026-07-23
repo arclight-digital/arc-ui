@@ -115,7 +115,6 @@ export class ArcInfiniteScroll extends LitElement {
     return html`
       <div
         class="infinite-scroll"
-        role="feed"
         aria-busy=${this.loading ? 'true' : 'false'}
         part="container"
       >

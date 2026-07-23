@@ -26,14 +26,13 @@
 
       .arc-diff .diff__line--added {
         background: rgba(var(--color-success-rgb), 0.08);
-        color: var(--color-success);
+        color: color-mix(in srgb, var(--color-success), var(--text-primary) 50%);
       }
 
       .arc-diff .diff__line--removed {
         background: rgba(var(--color-error-rgb), 0.08);
-        color: var(--color-error);
+        color: color-mix(in srgb, var(--color-error), var(--text-primary) 50%);
         text-decoration: line-through;
-        opacity: 0.7;
       }
 
       .arc-diff .diff__line--unchanged {
@@ -62,7 +61,7 @@
         min-width: 0;
       }
 
-      /* Side-by-side mode */
+      .arc-diff /* Side-by-side mode */
       .arc-diff[data-mode="side-by-side"] .diff__body {
         display: grid;
         grid-template-columns: 1fr 1fr;

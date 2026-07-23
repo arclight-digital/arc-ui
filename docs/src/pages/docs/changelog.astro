@@ -3,6 +3,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 import { components } from '../../data/components/index';
 
 const headings = [
+  { id: 'v2-3-0', label: 'v2.3.0' },
   { id: 'v2-2-0', label: 'v2.2.0' },
   { id: 'v2-1-0', label: 'v2.1.0' },
   { id: 'v2-0-1', label: 'v2.0.1' },
@@ -56,6 +57,67 @@ const byTier = Object.fromEntries(
     <p class="page-desc">
       Release history for ARC UI. All packages are versioned together.
     </p>
+
+    <section id="v2-3-0">
+      <h2 class="docs-heading">v2.3.0 — Zero Axe Violations, Prism 2.0 &amp; Discoverability</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <p class="docs-text">
+        The receipts release. Every component documentation page now passes axe-core with zero
+        violations of any severity — dark and light themes, shadow roots included — and CI
+        enforces it on every commit. The generator moved to Prism 2.0, and the docs site
+        became properly crawlable. Backwards compatible, with a handful of deliberate
+        behavior corrections listed below.
+      </p>
+
+      <h3 class="tier-heading">Accessibility, Verified</h3>
+      <ul class="docs-list">
+        <li><strong>Automated audit in CI</strong> &mdash; a new <code>pnpm audit:a11y</code> harness runs axe-core against every built component page in both themes and fails the build on any serious or critical violation, with no rule exclusions. All 164 pages currently audit clean. Live results on the <a href="/docs/accessibility">Accessibility</a> page.</li>
+        <li><strong>~30 ARIA fixes across 20 components</strong> &mdash; date, time, and range pickers adopt the combobox-with-dialog pattern; Calendar&rsquo;s grid gained real row/columnheader/gridcell structure; Search uses a coherent combobox role with suggestions wired via <code>aria-controls</code>; Select triggers are always named, including the empty-placeholder state; Stepper Nav indicators announce &ldquo;Step N: label&rdquo;; Icon Button correctly adopts a host <code>aria-label</code> onto its internal button; Key Value items expose <code>listitem</code>; List accepts a <code>label</code>; Comparison marks its yes/no glyphs with <code>role="img"</code> and names its feature column; Markdown code blocks and Virtual List are keyboard-scrollable.</li>
+        <li><strong>Docs chrome</strong> &mdash; every docs page now has a real <code>&lt;main&gt;</code> landmark, a light-DOM <code>&lt;h1&gt;</code>, correct heading order, and a labeled skip-link landmark.</li>
+      </ul>
+
+      <h3 class="tier-heading">Contrast &amp; Theming</h3>
+      <ul class="docs-list">
+        <li><strong>Dim-text ramps rebuilt</strong> &mdash; <code>--text-secondary</code>, <code>--text-muted</code>, and <code>--text-ghost</code> now clear WCAG AA 4.5:1 on every surface token in both themes (dark ramp brightened one step; light ramp darkened).</li>
+        <li><strong>New <code>--accent-text-mix</code> token</strong> &mdash; Tag, Badge, and Comparison blend colored text toward <code>--text-primary</code> (0% in dark, 55% in light), so accent and custom-color labels stay readable on their tinted backgrounds in light mode without dulling the dark theme.</li>
+        <li><strong>Diff</strong> &mdash; added/removed line text mixes toward <code>--text-primary</code> for legibility in both themes; the removed-line <code>opacity: 0.7</code> dim (which broke contrast) is gone.</li>
+        <li><strong>Fixed nav regions</strong> &mdash; the light-mode royal-blue top bar brightened its text ramp and gained an accessible <code>--accent-primary</code> override.</li>
+        <li><strong>Theme bug</strong> &mdash; the docs site&rsquo;s light-mode accent overrides were never mirrored into the <code>auto</code> theme&rsquo;s media query, so system-light visitors on the default theme got dark-theme accents on light backgrounds. Fixed, and the light teal darkened to pass AA as text.</li>
+      </ul>
+
+      <h3 class="tier-heading">New Attributes</h3>
+      <ul class="docs-list">
+        <li><code>label</code> on Breadcrumb, Breadcrumb Menu, Navigation Menu, Sidebar, and List &mdash; override the default landmark/listbox names so multiple instances on one page stay distinguishable.</li>
+        <li><code>heading-level</code> on Timeline (default 3) &mdash; item titles render as a proper heading at the level that fits your document outline instead of a hard-coded <code>&lt;h4&gt;</code>.</li>
+        <li>Page Header accepts slotted <code>heading</code> and <code>description</code> elements as an alternative to the attributes &mdash; slot a real light-DOM <code>&lt;h1&gt;</code> for SEO-critical pages.</li>
+      </ul>
+
+      <h3 class="tier-heading">Behavior Changes</h3>
+      <ul class="docs-list">
+        <li>Markdown prose links are always underlined (WCAG 1.4.1 &mdash; links must be distinguishable without color).</li>
+        <li>Standalone Chips render as <code>role="button"</code> with <code>aria-pressed</code>; the <code>option</code>/<code>aria-selected</code> semantics now apply only inside a listbox or group ancestor.</li>
+        <li>Infinite Scroll no longer hard-codes <code>role="feed"</code> (feed requires <code>&lt;article&gt;</code> children it can&rsquo;t guarantee); slot articles and add the role yourself for the full feed pattern.</li>
+        <li>Drawer&rsquo;s panel is a <code>&lt;div role="dialog"&gt;</code> instead of an <code>&lt;aside&gt;</code> (dialog is not a permitted role on aside). Styling hooks are unchanged.</li>
+      </ul>
+
+      <h3 class="tier-heading">Generator: Prism 2.0</h3>
+      <ul class="docs-list">
+        <li>All framework packages in this release are generated by <strong>@arclux/prism 2.0.0</strong>, a major hardening release of our code generator.</li>
+        <li><strong>Security</strong> &mdash; the parser validates custom-element tag names and event identifiers, closing code-injection, path-traversal, and ReDoS vectors from malicious or malformed component sources.</li>
+        <li><strong>Vue</strong> &mdash; emitted events are actually wired; <code>@arc-*</code> listeners on wrappers fire again.</li>
+        <li><strong>Angular</strong> &mdash; array and object props bind as DOM properties instead of stringified attributes.</li>
+        <li><strong>CSS extraction</strong> &mdash; the shadow&rarr;light transform scopes every selector in comma lists and bare element selectors, closing style leaks in the standalone CSS package; design tokens referenced multiple times resolve on every occurrence.</li>
+        <li><strong>Barrels</strong> &mdash; missing tier barrels are created instead of silently skipped, and same-name-substring exports are no longer dropped.</li>
+      </ul>
+
+      <h3 class="tier-heading">Docs &amp; Discoverability</h3>
+      <ul class="docs-list">
+        <li>Sitemap and robots.txt; canonical URLs, <code>og:url</code>, and absolute Open Graph images on every page.</li>
+        <li>Component pages render their title and overview as light-DOM text (real <code>&lt;h1&gt;</code> plus slotted markdown), so crawlers that don&rsquo;t execute JavaScript see actual content, with search-qualified page titles.</li>
+        <li>The component count is generated from the docs catalog into the README, homepage, and OG image &mdash; one source, no drift.</li>
+      </ul>
+    </section>
 
     <section id="v2-2-0">
       <h2 class="docs-heading">v2.2.0 — Dashboard Suite, Native Forms &amp; Accessibility Overhaul</h2>

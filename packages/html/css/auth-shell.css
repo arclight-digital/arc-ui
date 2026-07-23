@@ -6,8 +6,8 @@
         box-sizing: border-box;
       }
 
-      /* Centered variant */
-      .arc-auth-shell .auth-shell--centered {
+      .arc-auth-shell /* Centered variant */
+      .auth-shell--centered {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -40,8 +40,8 @@
         text-align: center;
       }
 
-      /* Split variant */
-      .arc-auth-shell .auth-shell--split {
+      .arc-auth-shell /* Split variant */
+      .auth-shell--split {
         display: grid;
         grid-template-columns: 1fr 1fr;
         min-height: 100vh;
@@ -87,8 +87,8 @@
         padding: var(--space-xl);
       }
 
-      @media (max-width: 768px) { /* --breakpoint-md */
-        .arc-auth-shell .auth-shell--split {
+      @media (max-width: 768px) { .arc-auth-shell /* --breakpoint-md */
+        .auth-shell--split {
           grid-template-columns: 1fr;
         }
 

@@ -24,7 +24,7 @@ withDefaults(defineProps<{
   label: '',
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-change': [event: CustomEvent];
   'arc-complete': [event: CustomEvent];
 }>();
@@ -40,6 +40,8 @@ defineEmits<{
     :type="type"
     :separator="separator"
     :label="label"
+    @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
+    @arc-complete="(payload: CustomEvent) => emit('arc-complete', payload)"
   >
     <slot />
   </arc-pin-input>

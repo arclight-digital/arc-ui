@@ -8,14 +8,15 @@ export interface InfiniteScrollProps {
   loading?: boolean;
   finished?: boolean;
   disabled?: boolean;
+  onArcLoadMore?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const InfiniteScroll: Component<InfiniteScrollProps> = (props) => {
-  const [local, rest] = splitProps(props, ['threshold', 'loading', 'finished', 'disabled', 'children']);
+  const [local, rest] = splitProps(props, ['threshold', 'loading', 'finished', 'disabled', 'onArcLoadMore', 'children']);
   return (
-    <arc-infinite-scroll threshold={local.threshold} loading={local.loading} finished={local.finished} disabled={local.disabled} {...rest}>
+    <arc-infinite-scroll threshold={local.threshold} loading={local.loading} finished={local.finished} disabled={local.disabled} on:arc-load-more={local.onArcLoadMore} {...rest}>
       {local.children}
     </arc-infinite-scroll>
   );

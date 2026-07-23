@@ -7,14 +7,16 @@ export interface HoverCardProps {
   position?: string;
   openDelay?: number;
   closeDelay?: number;
+  onArcOpen?: (e: CustomEvent) => void;
+  onArcClose?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const HoverCard: Component<HoverCardProps> = (props) => {
-  const [local, rest] = splitProps(props, ['position', 'openDelay', 'closeDelay', 'children']);
+  const [local, rest] = splitProps(props, ['position', 'openDelay', 'closeDelay', 'onArcOpen', 'onArcClose', 'children']);
   return (
-    <arc-hover-card position={local.position} openDelay={local.openDelay} closeDelay={local.closeDelay} {...rest}>
+    <arc-hover-card position={local.position} openDelay={local.openDelay} closeDelay={local.closeDelay} on:arc-open={local.onArcOpen} on:arc-close={local.onArcClose} {...rest}>
       {local.children}
     </arc-hover-card>
   );

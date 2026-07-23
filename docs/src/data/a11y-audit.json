@@ -1,0 +1,13 @@
+{
+  "date": "2026-07-23",
+  "axeVersion": "4.12.1",
+  "pagesAudited": 164,
+  "pagesClean": 164,
+  "totals": {
+    "minor": 0,
+    "moderate": 0,
+    "serious": 0,
+    "critical": 0
+  },
+  "violations": []
+}

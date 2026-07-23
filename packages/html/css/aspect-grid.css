@@ -23,7 +23,7 @@
         gap: var(--space-lg);
       }
 
-      ::slotted(*) {
+      .arc-aspect-grid ::slotted(*) {
         aspect-ratio: var(--_ratio, 1 / 1);
         border: 1px solid var(--border-subtle);
         border-radius: var(--radius-md);

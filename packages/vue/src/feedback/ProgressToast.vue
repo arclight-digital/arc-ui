@@ -10,7 +10,7 @@ withDefaults(defineProps<{
   position: 'bottom-right',
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-complete': [event: CustomEvent];
   'arc-cancel': [event: CustomEvent];
 }>();
@@ -19,6 +19,8 @@ defineEmits<{
 <template>
   <arc-progress-toast
     :position="position"
+    @arc-complete="(payload: CustomEvent) => emit('arc-complete', payload)"
+    @arc-cancel="(payload: CustomEvent) => emit('arc-cancel', payload)"
   >
     <slot />
   </arc-progress-toast>

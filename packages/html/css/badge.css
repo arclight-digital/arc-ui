@@ -23,31 +23,31 @@
 
       .arc-badge[data-variant="primary"] .badge {
         border-color: var(--accent-primary-border);
-        color: var(--accent-primary);
+        color: color-mix(in srgb, var(--accent-primary), var(--text-primary) var(--accent-text-mix, 0%));
         background: rgba(var(--accent-primary-rgb), 0.06);
       }
 
       .arc-badge[data-variant="secondary"] .badge {
         border-color: var(--accent-secondary-border);
-        color: var(--accent-secondary);
+        color: color-mix(in srgb, var(--accent-secondary), var(--text-primary) var(--accent-text-mix, 0%));
         background: rgba(var(--accent-secondary-rgb), 0.06);
       }
 
       .arc-badge[data-variant="success"] .badge {
         border-color: rgba(var(--color-success-rgb), 0.2);
-        color: var(--color-success);
+        color: color-mix(in srgb, var(--color-success), var(--text-primary) var(--accent-text-mix, 0%));
         background: rgba(var(--color-success-rgb), 0.06);
       }
 
       .arc-badge[data-variant="warning"] .badge {
         border-color: rgba(var(--color-warning-rgb), 0.2);
-        color: var(--color-warning);
+        color: color-mix(in srgb, var(--color-warning), var(--text-primary) var(--accent-text-mix, 0%));
         background: rgba(var(--color-warning-rgb), 0.06);
       }
 
       .arc-badge[data-variant="error"] .badge {
         border-color: rgba(var(--color-error-rgb), 0.2);
-        color: var(--color-error);
+        color: color-mix(in srgb, var(--color-error), var(--text-primary) var(--accent-text-mix, 0%));
         background: rgba(var(--color-error-rgb), 0.06);
       }
 
@@ -65,7 +65,7 @@
       .arc-badge[data-variant="error"]:hover .badge { box-shadow: 0 0 12px rgba(var(--color-error-rgb), 0.15); }
       .arc-badge[data-variant="info"]:hover .badge { box-shadow: 0 0 12px rgba(var(--color-info-rgb), 0.15); }
 
-      /* Sizes */
+      .arc-badge /* Sizes */
       .arc-badge[data-size="sm"] .badge { font-size: calc(var(--text-xs) - 1px); padding: 2px var(--space-xs); }
       .arc-badge[data-size="lg"] .badge { font-size: var(--text-sm); padding: var(--space-sm) var(--space-md); }
 

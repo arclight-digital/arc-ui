@@ -7,7 +7,7 @@ import '@arclux/arc-ui/virtual-list';
   selector: 'arc-virtual-list',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-virtual-list [attr.items]="items" [attr.itemHeight]="itemHeight" [attr.overscan]="overscan"><ng-content /></arc-virtual-list>`,
+  template: `<arc-virtual-list [items]="items" [attr.itemHeight]="itemHeight" [attr.overscan]="overscan"><ng-content /></arc-virtual-list>`,
 })
 export class VirtualList {
   @Input() items: unknown[] = [];

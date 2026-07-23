@@ -10,7 +10,7 @@ withDefaults(defineProps<{
   disabled: false,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-change': [event: CustomEvent];
 }>();
 </script>
@@ -18,6 +18,7 @@ defineEmits<{
 <template>
   <arc-sortable-list
     :disabled="disabled"
+    @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
   >
     <slot />
   </arc-sortable-list>

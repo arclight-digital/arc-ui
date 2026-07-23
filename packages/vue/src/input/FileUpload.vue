@@ -16,7 +16,7 @@ withDefaults(defineProps<{
   disabled: false,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-change': [event: CustomEvent];
   'arc-remove': [event: CustomEvent];
 }>();
@@ -28,6 +28,8 @@ defineEmits<{
     :multiple="multiple"
     :maxSize="maxSize"
     :disabled="disabled"
+    @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
+    @arc-remove="(payload: CustomEvent) => emit('arc-remove', payload)"
   >
     <slot />
   </arc-file-upload>

@@ -20,7 +20,7 @@ withDefaults(defineProps<{
   fallback: '',
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-load': [event: CustomEvent];
   'arc-error': [event: CustomEvent];
 }>();
@@ -34,6 +34,8 @@ defineEmits<{
     :fit="fit"
     :loading="loading"
     :fallback="fallback"
+    @arc-load="(payload: CustomEvent) => emit('arc-load', payload)"
+    @arc-error="(payload: CustomEvent) => emit('arc-error', payload)"
   >
     <slot />
   </arc-image>

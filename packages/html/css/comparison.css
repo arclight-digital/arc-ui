@@ -34,7 +34,7 @@
 
       .arc-comparison .header-cell--highlight {
         background: var(--accent-primary-subtle);
-        color: var(--accent-primary);
+        color: color-mix(in srgb, var(--accent-primary), var(--text-primary) var(--accent-text-mix, 0%));
       }
 
       .arc-comparison .row {
@@ -84,6 +84,17 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
+      }
+
+      .arc-comparison .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
       }
 
       @media (prefers-reduced-motion: reduce) {

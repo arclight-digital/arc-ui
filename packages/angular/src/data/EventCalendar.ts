@@ -7,7 +7,7 @@ import '@arclux/arc-ui/event-calendar';
   selector: 'arc-event-calendar',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-event-calendar [attr.events]="events" [attr.view]="view" [attr.date]="date" (arc-period-change)="arcPeriodChange.emit($event)" (arc-date-click)="arcDateClick.emit($event)" (arc-event-click)="arcEventClick.emit($event)"><ng-content /></arc-event-calendar>`,
+  template: `<arc-event-calendar [events]="events" [attr.view]="view" [attr.date]="date" (arc-period-change)="arcPeriodChange.emit($event)" (arc-date-click)="arcDateClick.emit($event)" (arc-event-click)="arcEventClick.emit($event)"><ng-content /></arc-event-calendar>`,
 })
 export class EventCalendar {
   @Input() events: unknown[] = [];

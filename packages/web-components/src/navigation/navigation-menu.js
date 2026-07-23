@@ -8,6 +8,7 @@ import { lockScroll, unlockScroll } from '../shared/scroll-lock.js';
  */
 export class ArcNavigationMenu extends LitElement {
   static properties = {
+    label:               { type: String },
     _items:              { state: true },
     _openIndex:          { state: true },
     _mobileOpen:         { state: true },
@@ -497,6 +498,7 @@ export class ArcNavigationMenu extends LitElement {
 
   constructor() {
     super();
+    this.label = 'Navigation menu';
     this._items = [];
     this._openIndex = -1;
     this._mobileOpen = false;
@@ -720,7 +722,7 @@ export class ArcNavigationMenu extends LitElement {
       <div class="nav__slot-host">
         <slot @slotchange=${this._onSlotChange}></slot>
       </div>
-      <nav class="nav" part="nav" aria-label="Navigation menu">
+      <nav class="nav" part="nav" aria-label=${this.label}>
         ${this._items.map((item, i) => {
           const hasChildren = item.hasChildren;
           const isOpen = this._openIndex === i;
@@ -798,7 +800,7 @@ export class ArcNavigationMenu extends LitElement {
         class="mobile-panel ${this._mobileOpen && !this._mobileClosing ? 'mobile-panel--open' : ''} ${this._mobileClosing ? 'mobile-panel--closing' : ''}"
         role="dialog"
         aria-modal="true"
-        aria-label="Navigation menu"
+        aria-label=${this.label}
         @animationend=${this._onPanelAnimEnd}
         @touchstart=${this._onPanelTouchStart}
         @touchend=${this._onPanelTouchEnd}

@@ -7,14 +7,16 @@ export interface StepperNavProps {
   steps?: string;
   active?: number;
   linear?: boolean;
+  onArcChange?: (e: CustomEvent) => void;
+  onArcComplete?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const StepperNav: Component<StepperNavProps> = (props) => {
-  const [local, rest] = splitProps(props, ['steps', 'active', 'linear', 'children']);
+  const [local, rest] = splitProps(props, ['steps', 'active', 'linear', 'onArcChange', 'onArcComplete', 'children']);
   return (
-    <arc-stepper-nav steps={local.steps} active={local.active} linear={local.linear} {...rest}>
+    <arc-stepper-nav steps={local.steps} active={local.active} linear={local.linear} on:arc-change={local.onArcChange} on:arc-complete={local.onArcComplete} {...rest}>
       {local.children}
     </arc-stepper-nav>
   );

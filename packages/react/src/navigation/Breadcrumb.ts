@@ -6,6 +6,7 @@ import { ArcBreadcrumb } from '@arclux/arc-ui/breadcrumb';
 
 export interface BreadcrumbProps {
   separator?: string;
+  label?: string;
   className?: string;
   children?: React.ReactNode;
   onArcNavigate?: (e: CustomEvent) => void;

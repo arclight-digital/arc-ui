@@ -9,13 +9,14 @@
     selectable?: boolean;
     multiple?: boolean;
     value?: string;
+    label?: string;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { variant = 'default', size = 'md', selectable = false, multiple = false, value = '', children, ...rest }: Props = $props();
+  let { variant = 'default', size = 'md', selectable = false, multiple = false, value = '', label = '', children, ...rest }: Props = $props();
 </script>
 
-<arc-list {variant} {size} {selectable} {multiple} {value} {...rest}>
+<arc-list {variant} {size} {selectable} {multiple} {value} {label} {...rest}>
   {@render children?.()}
 </arc-list>

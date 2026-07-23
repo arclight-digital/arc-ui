@@ -4,14 +4,16 @@ import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/tree-view';
 
 export interface TreeViewProps {
+  onArcToggle?: (e: CustomEvent) => void;
+  onArcSelect?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const TreeView: Component<TreeViewProps> = (props) => {
-  const [local, rest] = splitProps(props, ['children']);
+  const [local, rest] = splitProps(props, ['onArcToggle', 'onArcSelect', 'children']);
   return (
-    <arc-tree-view {...rest}>
+    <arc-tree-view on:arc-toggle={local.onArcToggle} on:arc-select={local.onArcSelect} {...rest}>
       {local.children}
     </arc-tree-view>
   );

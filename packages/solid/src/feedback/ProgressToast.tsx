@@ -5,14 +5,16 @@ import '@arclux/arc-ui/progress-toast';
 
 export interface ProgressToastProps {
   position?: 'bottom-right' | 'top-right';
+  onArcComplete?: (e: CustomEvent) => void;
+  onArcCancel?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const ProgressToast: Component<ProgressToastProps> = (props) => {
-  const [local, rest] = splitProps(props, ['position', 'children']);
+  const [local, rest] = splitProps(props, ['position', 'onArcComplete', 'onArcCancel', 'children']);
   return (
-    <arc-progress-toast position={local.position} {...rest}>
+    <arc-progress-toast position={local.position} on:arc-complete={local.onArcComplete} on:arc-cancel={local.onArcCancel} {...rest}>
       {local.children}
     </arc-progress-toast>
   );

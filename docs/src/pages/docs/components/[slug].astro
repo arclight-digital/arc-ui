@@ -60,6 +60,7 @@ const headings = [
 
 <DocsLayout
   title={component.name}
+  htmlTitle={`${component.name} — Web Component | ARC UI`}
   description={component.description}
   activeSlug={component.slug}
   headings={headings}
@@ -67,7 +68,9 @@ const headings = [
 >
   <div class="component-page">
     <!-- Header -->
-    <arc-page-header heading={component.name} description={component.description}>
+    <arc-page-header>
+      <h1 slot="heading">{component.name}</h1>
+      <p slot="description">{component.description}</p>
       <arc-breadcrumb slot="above">
         <arc-breadcrumb-item href="/docs/components">Components</arc-breadcrumb-item>
         <arc-breadcrumb-item>{component.name}</arc-breadcrumb-item>
@@ -87,7 +90,7 @@ const headings = [
         <h2 class="docs-heading">Overview</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
         <div class="component-page__overview">
-          <arc-markdown content={component.overview}></arc-markdown>
+          <arc-markdown>{component.overview}</arc-markdown>
         </div>
       </section>
     )}

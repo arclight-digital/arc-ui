@@ -18,7 +18,7 @@ withDefaults(defineProps<{
   year: 'now.getFullYear()',
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-navigate': [event: CustomEvent];
   'arc-change': [event: CustomEvent];
 }>();
@@ -31,6 +31,8 @@ defineEmits<{
     :max="max"
     :month="month"
     :year="year"
+    @arc-navigate="(payload: CustomEvent) => emit('arc-navigate', payload)"
+    @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
   >
     <slot />
   </arc-calendar>

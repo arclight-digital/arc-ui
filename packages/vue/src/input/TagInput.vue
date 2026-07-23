@@ -28,7 +28,7 @@ withDefaults(defineProps<{
   error: '',
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-change': [event: CustomEvent];
   'arc-input': [event: CustomEvent];
 }>();
@@ -46,6 +46,8 @@ defineEmits<{
     :name="name"
     :disabled="disabled"
     :error="error"
+    @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
+    @arc-input="(payload: CustomEvent) => emit('arc-input', payload)"
   >
     <slot />
   </arc-tag-input>

@@ -11,6 +11,7 @@ export class ArcBreadcrumbMenu extends LitElement {
         fromAttribute: (v) => { try { return JSON.parse(v); } catch { return []; } },
       },
     },
+    label: { type: String },
     _openIndex:  { type: Number, state: true },
   };
 
@@ -113,6 +114,7 @@ export class ArcBreadcrumbMenu extends LitElement {
 
   constructor() {
     super();
+    this.label = 'Breadcrumb';
     this.items = [];
     this._openIndex = -1;
     this._onDocClick = this._onDocClick.bind(this);
@@ -150,7 +152,7 @@ export class ArcBreadcrumbMenu extends LitElement {
     const lastIndex = this.items.length - 1;
 
     return html`
-      <nav class="breadcrumb-menu" part="base" aria-label="Breadcrumb">
+      <nav class="breadcrumb-menu" part="base" aria-label=${this.label}>
         ${this.items.map((item, i) => html`
           ${i > 0 ? html`<span class="breadcrumb-menu__separator" part="separator" aria-hidden="true">/</span>` : ''}
           <div class="breadcrumb-menu__item" part="item">

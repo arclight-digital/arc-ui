@@ -10,7 +10,7 @@ withDefaults(defineProps<{
   offset: '0px',
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-stuck': [event: CustomEvent];
 }>();
 </script>
@@ -18,6 +18,7 @@ defineEmits<{
 <template>
   <arc-sticky
     :offset="offset"
+    @arc-stuck="(payload: CustomEvent) => emit('arc-stuck', payload)"
   >
     <slot />
   </arc-sticky>

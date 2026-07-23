@@ -6,14 +6,16 @@ import '@arclux/arc-ui/command-palette';
 export interface CommandPaletteProps {
   open?: boolean;
   placeholder?: string;
+  onArcSelect?: (e: CustomEvent) => void;
+  onArcClose?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const CommandPalette: Component<CommandPaletteProps> = (props) => {
-  const [local, rest] = splitProps(props, ['open', 'placeholder', 'children']);
+  const [local, rest] = splitProps(props, ['open', 'placeholder', 'onArcSelect', 'onArcClose', 'children']);
   return (
-    <arc-command-palette open={local.open} placeholder={local.placeholder} {...rest}>
+    <arc-command-palette open={local.open} placeholder={local.placeholder} on:arc-select={local.onArcSelect} on:arc-close={local.onArcClose} {...rest}>
       {local.children}
     </arc-command-palette>
   );

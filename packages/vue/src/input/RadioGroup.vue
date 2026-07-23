@@ -18,7 +18,7 @@ withDefaults(defineProps<{
   orientation: 'vertical',
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-change': [event: CustomEvent];
 }>();
 </script>
@@ -30,6 +30,7 @@ defineEmits<{
     :disabled="disabled"
     :size="size"
     :orientation="orientation"
+    @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
   >
     <slot />
   </arc-radio-group>

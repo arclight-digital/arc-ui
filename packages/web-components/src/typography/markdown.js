@@ -53,7 +53,7 @@ function parseMarkdown(src) {
     const idx = codeBlocks.length;
     const escaped = code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     const langAttr = lang ? ` class="language-${lang}"` : '';
-    codeBlocks.push(`<pre><code${langAttr}>${escaped}</code></pre>`);
+    codeBlocks.push(`<pre tabindex="0"><code${langAttr}>${escaped}</code></pre>`);
     return `\x00CODEBLOCK_${idx}\x00`;
   });
 
@@ -199,12 +199,12 @@ export class ArcMarkdown extends LitElement {
 
       .markdown a {
         color: var(--interactive);
-        text-decoration: none;
+        text-decoration: underline;
         transition: color var(--transition-fast);
       }
 
       .markdown a:hover {
-        text-decoration: underline;
+        text-decoration-thickness: 2px;
       }
 
       .markdown code {

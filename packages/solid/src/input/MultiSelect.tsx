@@ -9,14 +9,15 @@ export interface MultiSelectProps {
   label?: string;
   name?: string;
   disabled?: boolean;
+  onArcChange?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const MultiSelect: Component<MultiSelectProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'placeholder', 'label', 'name', 'disabled', 'children']);
+  const [local, rest] = splitProps(props, ['value', 'placeholder', 'label', 'name', 'disabled', 'onArcChange', 'children']);
   return (
-    <arc-multi-select value={local.value} placeholder={local.placeholder} label={local.label} name={local.name} disabled={local.disabled} {...rest}>
+    <arc-multi-select value={local.value} placeholder={local.placeholder} label={local.label} name={local.name} disabled={local.disabled} on:arc-change={local.onArcChange} {...rest}>
       {local.children}
     </arc-multi-select>
   );

@@ -10,3 +10,4 @@ export { default as Prose } from './Prose.svelte';
 export { default as TimeAgo } from './TimeAgo.svelte';
 export { default as Truncate } from './Truncate.svelte';
 export { default as Typewriter } from './Typewriter.svelte';
+export { default as Text } from './Text.svelte';

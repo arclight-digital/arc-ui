@@ -26,7 +26,8 @@
         flex-wrap: wrap;
       }
 
-      .arc-page-header .page-header__heading {
+      .arc-page-header .page-header__heading,
+      .arc-page-header slot[name='heading']::slotted(*) {
         margin: 0;
         font-family: var(--font-body);
         font-size: 28px;
@@ -44,6 +45,13 @@
 
       .arc-page-header .page-header__description {
         margin-top: var(--space-sm);
+        color: var(--text-secondary);
+        font-size: var(--body-size);
+        line-height: 1.5;
+      }
+
+      .arc-page-header slot[name='description']::slotted(*) {
+        margin: var(--space-sm) 0 0;
         color: var(--text-secondary);
         font-size: var(--body-size);
         line-height: 1.5;

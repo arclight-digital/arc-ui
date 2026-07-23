@@ -24,7 +24,7 @@ withDefaults(defineProps<{
   open: false,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-change': [event: CustomEvent];
 }>();
 </script>
@@ -39,6 +39,7 @@ defineEmits<{
     :size="size"
     :error="error"
     :open="open"
+    @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
   >
     <slot />
   </arc-select>

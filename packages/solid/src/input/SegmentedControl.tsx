@@ -6,14 +6,15 @@ import '@arclux/arc-ui/segmented-control';
 export interface SegmentedControlProps {
   value?: string;
   disabled?: boolean;
+  onArcChange?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const SegmentedControl: Component<SegmentedControlProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'disabled', 'children']);
+  const [local, rest] = splitProps(props, ['value', 'disabled', 'onArcChange', 'children']);
   return (
-    <arc-segmented-control value={local.value} disabled={local.disabled} {...rest}>
+    <arc-segmented-control value={local.value} disabled={local.disabled} on:arc-change={local.onArcChange} {...rest}>
       {local.children}
     </arc-segmented-control>
   );

@@ -10,3 +10,4 @@ export { Prose } from './Prose.js';
 export { TimeAgo } from './TimeAgo.js';
 export { Truncate } from './Truncate.js';
 export { Typewriter } from './Typewriter.js';
+export { Text } from './Text.js';

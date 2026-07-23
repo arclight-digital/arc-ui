@@ -41,7 +41,7 @@ Common use cases include section headers that stick as the user scrolls through 
       ],
     },
 
-    previewHtml: `<div style="width:100%;height:180px;overflow-y:auto;border:1px solid var(--border-subtle);border-radius:var(--radius-md);background:var(--bg-surface)">
+    previewHtml: `<div tabindex="0" style="width:100%;height:180px;overflow-y:auto;border:1px solid var(--border-subtle);border-radius:var(--radius-md);background:var(--bg-surface)">
   <div style="padding:var(--space-md)">
     <div style="color:var(--text-secondary);font-size:13px;font-family:var(--font-body);margin-bottom:var(--space-sm)">Scroll down to see the sticky header</div>
   </div>

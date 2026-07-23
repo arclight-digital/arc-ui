@@ -13,14 +13,16 @@ export interface RangeSliderProps {
   disabled?: boolean;
   label?: string;
   showValues?: boolean;
+  onArcInput?: (e: CustomEvent) => void;
+  onArcChange?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const RangeSlider: Component<RangeSliderProps> = (props) => {
-  const [local, rest] = splitProps(props, ['min', 'max', 'step', 'low', 'high', 'name', 'disabled', 'label', 'showValues', 'children']);
+  const [local, rest] = splitProps(props, ['min', 'max', 'step', 'low', 'high', 'name', 'disabled', 'label', 'showValues', 'onArcInput', 'onArcChange', 'children']);
   return (
-    <arc-range-slider min={local.min} max={local.max} step={local.step} low={local.low} high={local.high} name={local.name} disabled={local.disabled} label={local.label} showValues={local.showValues} {...rest}>
+    <arc-range-slider min={local.min} max={local.max} step={local.step} low={local.low} high={local.high} name={local.name} disabled={local.disabled} label={local.label} showValues={local.showValues} on:arc-input={local.onArcInput} on:arc-change={local.onArcChange} {...rest}>
       {local.children}
     </arc-range-slider>
   );

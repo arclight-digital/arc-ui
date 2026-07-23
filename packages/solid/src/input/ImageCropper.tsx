@@ -8,14 +8,15 @@ export interface ImageCropperProps {
   height?: number;
   aspect?: number;
   zoom?: number;
+  onArcCropChange?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const ImageCropper: Component<ImageCropperProps> = (props) => {
-  const [local, rest] = splitProps(props, ['src', 'height', 'aspect', 'zoom', 'children']);
+  const [local, rest] = splitProps(props, ['src', 'height', 'aspect', 'zoom', 'onArcCropChange', 'children']);
   return (
-    <arc-image-cropper src={local.src} height={local.height} aspect={local.aspect} zoom={local.zoom} {...rest}>
+    <arc-image-cropper src={local.src} height={local.height} aspect={local.aspect} zoom={local.zoom} on:arc-crop-change={local.onArcCropChange} {...rest}>
       {local.children}
     </arc-image-cropper>
   );

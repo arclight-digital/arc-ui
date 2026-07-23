@@ -75,6 +75,10 @@ export class ArcCalendar extends LitElement {
         text-align: center;
       }
 
+      .calendar__row {
+        display: contents;
+      }
+
       .calendar__dow {
         font-family: var(--font-mono);
         font-size: var(--text-xs);
@@ -292,6 +296,10 @@ export class ArcCalendar extends LitElement {
 
   render() {
     const days = this._getCalendarDays();
+    const weeks = [];
+    for (let i = 0; i < days.length; i += 7) {
+      weeks.push(days.slice(i, i + 7));
+    }
     const today = this._todayISO;
 
     return html`
@@ -311,29 +319,36 @@ export class ArcCalendar extends LitElement {
         </div>
 
         <div class="calendar__grid" role="grid" part="grid">
-          ${ArcCalendar._DAYS.map(d => html`<div class="calendar__dow" part="dow">${d}</div>`)}
+          <div class="calendar__row" role="row">
+            ${ArcCalendar._DAYS.map(d => html`<div class="calendar__dow" role="columnheader" part="dow">${d}</div>`)}
+          </div>
 
-          ${days.map(({ day, month, year, outside }) => {
-            const iso = this._toISO(year, month, day);
-            const isToday = iso === today;
-            const isSelected = iso === this.value;
-            const isDisabled = this._isDisabled(iso);
-            const isFocused = this._focusedDay &&
-              this._focusedDay.year === year &&
-              this._focusedDay.month === month &&
-              this._focusedDay.day === day;
+          ${weeks.map(week => html`
+            <div class="calendar__row" role="row">
+              ${week.map(({ day, month, year, outside }) => {
+                const iso = this._toISO(year, month, day);
+                const isToday = iso === today;
+                const isSelected = iso === this.value;
+                const isDisabled = this._isDisabled(iso);
+                const isFocused = this._focusedDay &&
+                  this._focusedDay.year === year &&
+                  this._focusedDay.month === month &&
+                  this._focusedDay.day === day;
 
-            return html`
-              <button
-                class="calendar__day ${outside ? 'calendar__day--outside' : ''} ${isToday ? 'calendar__day--today' : ''} ${isSelected ? 'calendar__day--selected' : ''} ${isFocused ? 'calendar__day--focused' : ''}"
-                ?disabled=${isDisabled}
-                @click=${() => this._selectDate(iso)}
-                aria-label="${ArcCalendar._MONTHS[month]} ${day}, ${year}"
-                aria-pressed=${isSelected ? 'true' : 'false'}
-                part="day"
-              >${day}</button>
-            `;
-          })}
+                return html`
+                  <button
+                    class="calendar__day ${outside ? 'calendar__day--outside' : ''} ${isToday ? 'calendar__day--today' : ''} ${isSelected ? 'calendar__day--selected' : ''} ${isFocused ? 'calendar__day--focused' : ''}"
+                    ?disabled=${isDisabled}
+                    @click=${() => this._selectDate(iso)}
+                    role="gridcell"
+                    aria-label="${ArcCalendar._MONTHS[month]} ${day}, ${year}"
+                    aria-selected=${isSelected ? 'true' : 'false'}
+                    part="day"
+                  >${day}</button>
+                `;
+              })}
+            </div>
+          `)}
         </div>
       </div>
     `;

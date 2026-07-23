@@ -4,14 +4,15 @@ import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/timeline';
 
 export interface TimelineProps {
+  headingLevel?: number;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Timeline: Component<TimelineProps> = (props) => {
-  const [local, rest] = splitProps(props, ['children']);
+  const [local, rest] = splitProps(props, ['headingLevel', 'children']);
   return (
-    <arc-timeline {...rest}>
+    <arc-timeline headingLevel={local.headingLevel} {...rest}>
       {local.children}
     </arc-timeline>
   );

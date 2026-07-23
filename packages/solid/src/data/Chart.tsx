@@ -13,14 +13,15 @@ export interface ChartProps {
   height?: number;
   valueFormat?: string;
   currency?: string;
+  onArcMarkClick?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Chart: Component<ChartProps> = (props) => {
-  const [local, rest] = splitProps(props, ['type', 'series', 'labels', 'stacked', 'hideLegend', 'hideAxis', 'height', 'valueFormat', 'currency', 'children']);
+  const [local, rest] = splitProps(props, ['type', 'series', 'labels', 'stacked', 'hideLegend', 'hideAxis', 'height', 'valueFormat', 'currency', 'onArcMarkClick', 'children']);
   return (
-    <arc-chart type={local.type} series={local.series} labels={local.labels} stacked={local.stacked} hideLegend={local.hideLegend} hideAxis={local.hideAxis} height={local.height} valueFormat={local.valueFormat} currency={local.currency} {...rest}>
+    <arc-chart type={local.type} series={local.series} labels={local.labels} stacked={local.stacked} hideLegend={local.hideLegend} hideAxis={local.hideAxis} height={local.height} valueFormat={local.valueFormat} currency={local.currency} on:arc-mark-click={local.onArcMarkClick} {...rest}>
       {local.children}
     </arc-chart>
   );

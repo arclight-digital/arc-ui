@@ -10,7 +10,7 @@ withDefaults(defineProps<{
   open: false,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-close': [event: CustomEvent];
   'arc-select': [event: CustomEvent];
 }>();
@@ -19,6 +19,8 @@ defineEmits<{
 <template>
   <arc-dropdown-menu
     :open="open"
+    @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"
+    @arc-select="(payload: CustomEvent) => emit('arc-select', payload)"
   >
     <slot />
   </arc-dropdown-menu>

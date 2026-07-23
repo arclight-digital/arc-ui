@@ -13,7 +13,7 @@
         padding: 0;
       }
 
-      ::slotted(arc-description-item) {
+      .arc-description-list ::slotted(arc-description-item) {
         padding: var(--space-md) var(--space-sm);
       }
 

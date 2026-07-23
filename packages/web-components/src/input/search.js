@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
@@ -327,12 +327,14 @@ export class ArcSearch extends LitElement {
         <input
           class="search__input"
           type="text"
-          role="searchbox"
+          role=${this._hasSuggestions ? 'combobox' : 'searchbox'}
           .value=${this.value}
           placeholder=${this.placeholder}
           ?disabled=${this.disabled}
           aria-label=${this.label || this.placeholder}
-          aria-expanded=${this._hasSuggestions ? String(this._open) : undefined}
+          aria-expanded=${this._hasSuggestions ? String(this._open) : nothing}
+          aria-autocomplete=${this._hasSuggestions ? 'list' : nothing}
+          aria-controls=${this._hasSuggestions ? 'search-suggestions' : nothing}
           @input=${this._onInput}
           @focus=${this._onFocus}
           @keydown=${this._onKeyDown}
@@ -352,8 +354,10 @@ export class ArcSearch extends LitElement {
         ` : ''}
 
         <div
+          id="search-suggestions"
           class="search__suggestions ${showSuggestions ? 'search__suggestions--open' : ''}"
           role="listbox"
+          aria-label="Suggestions"
           part="suggestions"
         >
           ${items.map((item, i) => html`

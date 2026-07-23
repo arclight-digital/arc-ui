@@ -22,7 +22,7 @@ withDefaults(defineProps<{
   rowHeight: 40,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-sort': [event: CustomEvent];
   'arc-selection-change': [event: CustomEvent];
   'arc-cell-change': [event: CustomEvent];
@@ -38,6 +38,9 @@ defineEmits<{
     :selectable="selectable"
     :virtual="virtual"
     :rowHeight="rowHeight"
+    @arc-sort="(payload: CustomEvent) => emit('arc-sort', payload)"
+    @arc-selection-change="(payload: CustomEvent) => emit('arc-selection-change', payload)"
+    @arc-cell-change="(payload: CustomEvent) => emit('arc-cell-change', payload)"
   >
     <slot />
   </arc-data-grid>

@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { buttonVariantStyles } from '../button-styles.js';
 import '../content/icon.js';
@@ -136,6 +136,17 @@ export class ArcIconButton extends LitElement {
     this.type = 'button';
   }
 
+  connectedCallback() {
+    super.connectedCallback();
+    // aria-label is prohibited on a role-less custom element — adopt it as the
+    // internal button's label (explicit `label` wins) and remove it from the host.
+    const hostLabel = this.getAttribute('aria-label');
+    if (hostLabel) {
+      if (!this.label) this.label = hostLabel;
+      this.removeAttribute('aria-label');
+    }
+  }
+
   /** Map icon-button size to arc-icon size */
   get _iconSize() {
     const map = { xs: 'xs', sm: 'sm', md: 'sm', lg: 'md' };
@@ -151,14 +162,14 @@ export class ArcIconButton extends LitElement {
     const classes = `btn${hasText ? ' btn--has-text' : ''}`;
 
     if (this.href) {
-      return html`<a class=${classes} href=${this.href} aria-label=${this.label || this.text || ''} part="button">${icon}${textEl}</a>`;
+      return html`<a class=${classes} href=${this.href} aria-label=${this.label || nothing} part="button">${icon}${textEl}</a>`;
     }
     return html`
       <button
         class=${classes}
         type=${this.type}
         ?disabled=${this.disabled}
-        aria-label=${this.label || this.text || ''}
+        aria-label=${this.label || nothing}
         part="button"
       >${icon}${textEl}</button>
     `;

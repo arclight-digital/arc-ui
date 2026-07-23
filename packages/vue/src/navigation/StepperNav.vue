@@ -14,7 +14,7 @@ withDefaults(defineProps<{
   linear: false,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-change': [event: CustomEvent];
   'arc-complete': [event: CustomEvent];
 }>();
@@ -25,6 +25,8 @@ defineEmits<{
     :steps="steps"
     :active="active"
     :linear="linear"
+    @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
+    @arc-complete="(payload: CustomEvent) => emit('arc-complete', payload)"
   >
     <slot />
   </arc-stepper-nav>

@@ -1,6 +1,6 @@
 import type { ComponentDef } from './_types';
 
-const previewMarkup = `<arc-navigation-menu>
+const previewMarkup = `<arc-navigation-menu label="Example menu">
   <arc-nav-item>Products
     <arc-nav-item href="#" description="Real-time dashboards and metrics">Analytics</arc-nav-item>
     <arc-nav-item href="#" description="CI/CD pipelines and deployment">Automation</arc-nav-item>

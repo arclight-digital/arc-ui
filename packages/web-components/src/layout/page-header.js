@@ -39,7 +39,8 @@ export class ArcPageHeader extends LitElement {
         flex-wrap: wrap;
       }
 
-      .page-header__heading {
+      .page-header__heading,
+      slot[name='heading']::slotted(*) {
         margin: 0;
         font-family: var(--font-body);
         font-size: 28px;
@@ -57,6 +58,13 @@ export class ArcPageHeader extends LitElement {
 
       .page-header__description {
         margin-top: var(--space-sm);
+        color: var(--text-secondary);
+        font-size: var(--body-size);
+        line-height: 1.5;
+      }
+
+      slot[name='description']::slotted(*) {
+        margin: var(--space-sm) 0 0;
         color: var(--text-secondary);
         font-size: var(--body-size);
         line-height: 1.5;
@@ -86,14 +94,16 @@ export class ArcPageHeader extends LitElement {
           <slot name="above"></slot>
         </div>
         <div class="page-header__title-row" part="title-row">
-          <h1 class="page-header__heading" part="heading">${this.heading}</h1>
+          ${this.heading
+            ? html`<h1 class="page-header__heading" part="heading">${this.heading}</h1>`
+            : html`<slot name="heading"></slot>`}
           <div class="page-header__aside" part="aside">
             <slot name="aside"></slot>
           </div>
         </div>
         ${this.description
           ? html`<p class="page-header__description" part="description">${this.description}</p>`
-          : ''}
+          : html`<slot name="description"></slot>`}
         <div class="page-header__below" part="below">
           <slot name="below"></slot>
         </div>

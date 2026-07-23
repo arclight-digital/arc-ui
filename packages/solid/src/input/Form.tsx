@@ -10,14 +10,17 @@ export interface FormProps {
   loading?: boolean;
   disabled?: boolean;
   errorSummary?: boolean;
+  onArcInvalid?: (e: CustomEvent) => void;
+  onArcSubmit?: (e: CustomEvent) => void;
+  onArcReset?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Form: Component<FormProps> = (props) => {
-  const [local, rest] = splitProps(props, ['action', 'method', 'novalidate', 'loading', 'disabled', 'errorSummary', 'children']);
+  const [local, rest] = splitProps(props, ['action', 'method', 'novalidate', 'loading', 'disabled', 'errorSummary', 'onArcInvalid', 'onArcSubmit', 'onArcReset', 'children']);
   return (
-    <arc-form action={local.action} method={local.method} novalidate={local.novalidate} loading={local.loading} disabled={local.disabled} errorSummary={local.errorSummary} {...rest}>
+    <arc-form action={local.action} method={local.method} novalidate={local.novalidate} loading={local.loading} disabled={local.disabled} errorSummary={local.errorSummary} on:arc-invalid={local.onArcInvalid} on:arc-submit={local.onArcSubmit} on:arc-reset={local.onArcReset} {...rest}>
       {local.children}
     </arc-form>
   );

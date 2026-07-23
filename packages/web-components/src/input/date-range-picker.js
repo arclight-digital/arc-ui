@@ -734,6 +734,7 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
             .value=${this._formatDisplay()}
             placeholder=${this.placeholder}
             ?disabled=${this.disabled}
+            role="combobox"
             aria-haspopup="dialog"
             aria-expanded=${this._open ? 'true' : 'false'}
             aria-required=${this.required ? 'true' : 'false'}

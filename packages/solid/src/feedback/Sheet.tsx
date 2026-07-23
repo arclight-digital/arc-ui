@@ -7,14 +7,16 @@ export interface SheetProps {
   open?: boolean;
   side?: 'bottom' | 'right';
   heading?: string;
+  onArcClose?: (e: CustomEvent) => void;
+  onArcOpen?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Sheet: Component<SheetProps> = (props) => {
-  const [local, rest] = splitProps(props, ['open', 'side', 'heading', 'children']);
+  const [local, rest] = splitProps(props, ['open', 'side', 'heading', 'onArcClose', 'onArcOpen', 'children']);
   return (
-    <arc-sheet open={local.open} side={local.side} heading={local.heading} {...rest}>
+    <arc-sheet open={local.open} side={local.side} heading={local.heading} on:arc-close={local.onArcClose} on:arc-open={local.onArcOpen} {...rest}>
       {local.children}
     </arc-sheet>
   );

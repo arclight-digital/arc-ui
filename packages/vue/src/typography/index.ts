@@ -10,3 +10,4 @@ export { default as Prose } from './Prose.vue';
 export { default as TimeAgo } from './TimeAgo.vue';
 export { default as Truncate } from './Truncate.vue';
 export { default as Typewriter } from './Typewriter.vue';
+export { default as Text } from './Text.vue';

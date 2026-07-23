@@ -7,6 +7,7 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcTimeline extends LitElement {
   static properties = {
+    headingLevel: { type: Number, attribute: 'heading-level' },
     _items: { state: true },
   };
 
@@ -132,6 +133,7 @@ export class ArcTimeline extends LitElement {
 
   constructor() {
     super();
+    this.headingLevel = 3;
     this._items = [];
   }
 
@@ -154,7 +156,7 @@ export class ArcTimeline extends LitElement {
                 <span class="timeline__line" part="line"></span>
               </div>
               <div class="timeline__content" part="content">
-                <h4 class="timeline__title" part="title">${item.heading || ''}</h4>
+                <div class="timeline__title" part="title" role="heading" aria-level=${this.headingLevel}>${item.heading || ''}</div>
                 ${item.description
                   ? html`<p class="timeline__desc" part="description">${item.description}</p>`
                   : ''}

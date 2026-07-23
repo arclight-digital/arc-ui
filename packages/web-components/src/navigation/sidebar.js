@@ -13,6 +13,7 @@ export class ArcSidebar extends LitElement {
     position:  { type: String, reflect: true },
     width:     { type: String },
     glow:      { type: Boolean, reflect: true },
+    label:     { type: String },
     _sections: { state: true },
   };
 
@@ -276,6 +277,7 @@ export class ArcSidebar extends LitElement {
     this.position = 'left';
     this.width = '280px';
     this.glow = false;
+    this.label = 'Sidebar navigation';
     this._sections = [];
   }
 
@@ -310,7 +312,7 @@ export class ArcSidebar extends LitElement {
       <div class="sidebar__slot-host">
         <slot @slotchange=${this._onSlotChange}></slot>
       </div>
-      <nav class="sidebar" part="sidebar" aria-label="Sidebar navigation">
+      <nav class="sidebar" part="sidebar" aria-label=${this.label}>
         ${this._sections.map((section) => {
           const links = section.links;
           const isCollapsible = section.collapsible;

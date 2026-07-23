@@ -554,6 +554,7 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
             .value=${this._formatDisplay(this.value)}
             placeholder=${this.placeholder}
             ?disabled=${this.disabled}
+            role="combobox"
             aria-haspopup="dialog"
             aria-expanded=${this._open ? 'true' : 'false'}
             aria-label=${this.label || 'Choose date'}

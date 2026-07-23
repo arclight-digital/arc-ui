@@ -12,7 +12,7 @@ withDefaults(defineProps<{
   disabled: false,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-change': [event: CustomEvent];
 }>();
 </script>
@@ -21,6 +21,7 @@ defineEmits<{
   <arc-segmented-control
     :value="value"
     :disabled="disabled"
+    @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
   >
     <slot />
   </arc-segmented-control>

@@ -12,7 +12,7 @@ withDefaults(defineProps<{
   disabled: false,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-copy': [event: CustomEvent];
 }>();
 </script>
@@ -21,6 +21,7 @@ defineEmits<{
   <arc-copy-button
     :value="value"
     :disabled="disabled"
+    @arc-copy="(payload: CustomEvent) => emit('arc-copy', payload)"
   >
     <slot />
   </arc-copy-button>

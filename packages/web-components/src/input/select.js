@@ -287,7 +287,8 @@ export class ArcSelect extends FormControlMixin(LitElement) {
           aria-expanded=${this.open ? 'true' : 'false'}
           aria-haspopup="listbox"
           aria-controls=${listboxId}
-          aria-labelledby=${this.label ? `${labelId} ${triggerId}` : nothing}
+          aria-labelledby=${this.label ? labelId : nothing}
+          aria-label=${this.label ? nothing : this.placeholder || 'Select an option'}
           @click=${this._toggleOpen}
           @keydown=${this._handleTriggerKeydown}
           part="trigger"
@@ -296,7 +297,7 @@ export class ArcSelect extends FormControlMixin(LitElement) {
             ? html`<span>${display}</span>`
             : html`<span class="select__placeholder">${this.placeholder}</span>`
           }
-          <span class="select__chevron">&#9662;</span>
+          <span class="select__chevron" aria-hidden="true">&#9662;</span>
         </button>
         <div id=${listboxId} class="select__dropdown" role="listbox" part="dropdown">
           ${this._options.map((opt, i) => html`

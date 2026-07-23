@@ -14,7 +14,7 @@ withDefaults(defineProps<{
   icon: 'magnifying-glass',
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-input': [event: CustomEvent];
   'arc-submit': [event: CustomEvent];
 }>();
@@ -25,6 +25,8 @@ defineEmits<{
     :placeholder="placeholder"
     :value="value"
     :icon="icon"
+    @arc-input="(payload: CustomEvent) => emit('arc-input', payload)"
+    @arc-submit="(payload: CustomEvent) => emit('arc-submit', payload)"
   >
     <slot />
   </arc-command-bar>

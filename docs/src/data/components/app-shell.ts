@@ -56,7 +56,7 @@ Because AppShell is slot-based, it composes freely with other ARC UI primitives.
       <a href="#" style="color:var(--text-secondary);text-decoration:none;padding:var(--space-xs) var(--space-sm);border-radius:var(--radius-sm)">Settings</a>
       <a href="#" style="color:var(--text-secondary);text-decoration:none;padding:var(--space-xs) var(--space-sm);border-radius:var(--radius-sm)">Users</a>
     </nav>
-    <main style="padding:var(--space-lg)">
+    <div style="padding:var(--space-lg)">
       <h2 style="margin:0 0 var(--space-sm) 0;font-size:var(--text-lg)">Welcome back</h2>
       <p style="color:var(--text-secondary);margin:0 0 var(--space-md) 0">Here is what happened while you were away.</p>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-sm)">
@@ -73,7 +73,7 @@ Because AppShell is slot-based, it composes freely with other ARC UI primitives.
           <div style="font-size:var(--text-xl);font-weight:700;margin-top:var(--space-xs)">99.9%</div>
         </div>
       </div>
-    </main>
+    </div>
   </arc-app-shell>
 </div>`,
 

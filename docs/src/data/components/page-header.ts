@@ -1,7 +1,7 @@
 import type { ComponentDef } from './_types';
 
 const previewMarkup = `<arc-page-header heading="Team Settings" description="Manage roles, permissions, and invitations for your team." border>
-    <arc-breadcrumb slot="above">
+    <arc-breadcrumb slot="above" label="Example breadcrumb">
       <arc-breadcrumb-item href="/">Home</arc-breadcrumb-item>
       <arc-breadcrumb-item href="/settings">Settings</arc-breadcrumb-item>
       <arc-breadcrumb-item>Team</arc-breadcrumb-item>

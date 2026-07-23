@@ -6,14 +6,15 @@ import '@arclux/arc-ui/toast';
 export interface ToastProps {
   position?: 'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center';
   duration?: number;
+  onArcDismiss?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Toast: Component<ToastProps> = (props) => {
-  const [local, rest] = splitProps(props, ['position', 'duration', 'children']);
+  const [local, rest] = splitProps(props, ['position', 'duration', 'onArcDismiss', 'children']);
   return (
-    <arc-toast position={local.position} duration={local.duration} {...rest}>
+    <arc-toast position={local.position} duration={local.duration} on:arc-dismiss={local.onArcDismiss} {...rest}>
       {local.children}
     </arc-toast>
   );

@@ -7,7 +7,7 @@ import '@arclux/arc-ui/table';
   selector: 'arc-table',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-table [attr.columns]="columns" [attr.rows]="rows" [striped]="striped" [compact]="compact"><ng-content /></arc-table>`,
+  template: `<arc-table [columns]="columns" [rows]="rows" [striped]="striped" [compact]="compact"><ng-content /></arc-table>`,
 })
 export class Table {
   @Input() columns: unknown[] = [];

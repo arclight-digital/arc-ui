@@ -30,7 +30,7 @@ withDefaults(defineProps<{
   rows: 5,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-input': [event: CustomEvent];
   'arc-change': [event: CustomEvent];
 }>();
@@ -49,6 +49,8 @@ defineEmits<{
     :size="size"
     :multiline="multiline"
     :rows="rows"
+    @arc-input="(payload: CustomEvent) => emit('arc-input', payload)"
+    @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
   >
     <slot />
   </arc-input>

@@ -32,3 +32,6 @@ export type { TruncateProps } from './Truncate.js';
 
 export { Typewriter } from './Typewriter.js';
 export type { TypewriterProps } from './Typewriter.js';
+
+export { Text } from './Text.js';
+export type { TextProps } from './Text.js';

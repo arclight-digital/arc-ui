@@ -5,14 +5,16 @@ import '@arclux/arc-ui/dropdown-menu';
 
 export interface DropdownMenuProps {
   open?: boolean;
+  onArcClose?: (e: CustomEvent) => void;
+  onArcSelect?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const DropdownMenu: Component<DropdownMenuProps> = (props) => {
-  const [local, rest] = splitProps(props, ['open', 'children']);
+  const [local, rest] = splitProps(props, ['open', 'onArcClose', 'onArcSelect', 'children']);
   return (
-    <arc-dropdown-menu open={local.open} {...rest}>
+    <arc-dropdown-menu open={local.open} on:arc-close={local.onArcClose} on:arc-select={local.onArcSelect} {...rest}>
       {local.children}
     </arc-dropdown-menu>
   );

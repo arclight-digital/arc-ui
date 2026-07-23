@@ -141,6 +141,12 @@ export class ArcStepperNav extends LitElement {
     }
   }
 
+  _stepLabel(step, i) {
+    const label = typeof step === 'string' ? step : (step?.label ?? '');
+    const name = `Step ${i + 1}${label ? `: ${label}` : ''}`;
+    return i < this.active ? `${name} (completed)` : name;
+  }
+
   render() {
     return html`
       <div class="stepper-nav" part="base">
@@ -154,9 +160,10 @@ export class ArcStepperNav extends LitElement {
                 @click=${() => this._goTo(i)}
                 ?disabled=${this.linear && i > this.active}
                 aria-current=${i === this.active ? 'step' : 'false'}
+                aria-label=${this._stepLabel(step, i)}
               >
                 ${i < this.active
-                  ? html`<svg class="stepper-nav__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`
+                  ? html`<svg class="stepper-nav__check" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`
                   : i + 1}
               </button>
             </div>

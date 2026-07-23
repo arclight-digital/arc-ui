@@ -19,12 +19,26 @@
 }
 
 [data-theme="light"] {
-  --accent-secondary:        rgb(13, 148, 136);
-  --accent-secondary-rgb:    13, 148, 136;
+  --accent-secondary:        rgb(15, 118, 110);
+  --accent-secondary-rgb:    15, 118, 110;
 
-  --gradient-display-text:   linear-gradient(135deg, rgb(30, 30, 40) 0%, rgb(55, 105, 235) 50%, rgb(13, 148, 136) 100%);
+  --gradient-display-text:   linear-gradient(135deg, rgb(30, 30, 40) 0%, rgb(55, 105, 235) 50%, rgb(15, 118, 110) 100%);
   --gradient-ambient:        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(var(--accent-primary-rgb), 0.08), transparent 70%),
                               radial-gradient(ellipse 60% 50% at 80% 50%, rgba(var(--accent-secondary-rgb), 0.04), transparent 60%);
+}
+
+/* Auto mode must mirror the light overrides — without this, system-light
+   visitors on the default "auto" theme get dark-theme accents on light
+   backgrounds. */
+@media (prefers-color-scheme: light) {
+  [data-theme="auto"] {
+    --accent-secondary:        rgb(15, 118, 110);
+    --accent-secondary-rgb:    15, 118, 110;
+
+    --gradient-display-text:   linear-gradient(135deg, rgb(30, 30, 40) 0%, rgb(55, 105, 235) 50%, rgb(15, 118, 110) 100%);
+    --gradient-ambient:        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(var(--accent-primary-rgb), 0.08), transparent 70%),
+                                radial-gradient(ellipse 60% 50% at 80% 50%, rgba(var(--accent-secondary-rgb), 0.04), transparent 60%);
+  }
 }
 
 *, *::before, *::after {
@@ -131,11 +145,11 @@ pre code { color: var(--text-secondary); }
   --astro-code-token-constant: #e8e8ec;
   --astro-code-token-string: #14b8a6;
   --astro-code-token-string-expression: #14b8a6;
-  --astro-code-token-comment: #6b6b80;
+  --astro-code-token-comment: #85859a;
   --astro-code-token-keyword: #4d7ef7;
   --astro-code-token-parameter: #e8e8ec;
   --astro-code-token-function: #e8e8ec;
-  --astro-code-token-punctuation: #7c7c89;
+  --astro-code-token-punctuation: #8e8e9b;
   --astro-code-token-link: #4d7ef7;
 }
 
@@ -146,11 +160,11 @@ pre code { color: var(--text-secondary); }
   --astro-code-token-constant: #1e293b;
   --astro-code-token-string: #0d7377;
   --astro-code-token-string-expression: #0d7377;
-  --astro-code-token-comment: #94a3b8;
+  --astro-code-token-comment: #5b6577;
   --astro-code-token-keyword: #3b5fc2;
   --astro-code-token-parameter: #1e293b;
   --astro-code-token-function: #6e42c1;
-  --astro-code-token-punctuation: #64748b;
+  --astro-code-token-punctuation: #5f6f85;
   --astro-code-token-link: #3b5fc2;
 }
 
@@ -161,11 +175,11 @@ pre code { color: var(--text-secondary); }
     --astro-code-token-constant: #1e293b;
     --astro-code-token-string: #0d7377;
     --astro-code-token-string-expression: #0d7377;
-    --astro-code-token-comment: #94a3b8;
+    --astro-code-token-comment: #5b6577;
     --astro-code-token-keyword: #3b5fc2;
     --astro-code-token-parameter: #1e293b;
     --astro-code-token-function: #6e42c1;
-    --astro-code-token-punctuation: #64748b;
+    --astro-code-token-punctuation: #5f6f85;
     --astro-code-token-link: #3b5fc2;
   }
 }

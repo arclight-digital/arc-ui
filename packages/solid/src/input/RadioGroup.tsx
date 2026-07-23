@@ -9,14 +9,15 @@ export interface RadioGroupProps {
   disabled?: boolean;
   size?: 'sm' | 'lg';
   orientation?: 'horizontal';
+  onArcChange?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const RadioGroup: Component<RadioGroupProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'name', 'disabled', 'size', 'orientation', 'children']);
+  const [local, rest] = splitProps(props, ['value', 'name', 'disabled', 'size', 'orientation', 'onArcChange', 'children']);
   return (
-    <arc-radio-group value={local.value} name={local.name} disabled={local.disabled} size={local.size} orientation={local.orientation} {...rest}>
+    <arc-radio-group value={local.value} name={local.name} disabled={local.disabled} size={local.size} orientation={local.orientation} on:arc-change={local.onArcChange} {...rest}>
       {local.children}
     </arc-radio-group>
   );

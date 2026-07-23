@@ -7,7 +7,7 @@ import '@arclux/arc-ui/kanban';
   selector: 'arc-kanban',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-kanban [attr.columns]="columns" [disabled]="disabled" (arc-card-move)="arcCardMove.emit($event)" (arc-card-click)="arcCardClick.emit($event)"><ng-content /></arc-kanban>`,
+  template: `<arc-kanban [columns]="columns" [disabled]="disabled" (arc-card-move)="arcCardMove.emit($event)" (arc-card-click)="arcCardClick.emit($event)"><ng-content /></arc-kanban>`,
 })
 export class Kanban {
   @Input() columns: unknown[] = [];

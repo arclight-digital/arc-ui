@@ -26,7 +26,7 @@ withDefaults(defineProps<{
   currency: 'USD',
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-mark-click': [event: CustomEvent];
 }>();
 </script>
@@ -42,6 +42,7 @@ defineEmits<{
     :height="height"
     :valueFormat="valueFormat"
     :currency="currency"
+    @arc-mark-click="(payload: CustomEvent) => emit('arc-mark-click', payload)"
   >
     <slot />
   </arc-chart>

@@ -2,10 +2,10 @@
   "name": "arc-ui-monorepo",
   "private": true,
   "type": "module",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "ARC UI — Arc Reusable Components. A framework-agnostic design system built with Lit Web Components.",
   "engines": {
-    "node": ">=22.0.0",
+    "node": ">=24.0.0",
     "pnpm": ">=10.0.0"
   },
   "scripts": {
@@ -22,6 +22,7 @@
     "lint:fix": "eslint --fix 'packages/*/src/**/*.{js,ts}'",
     "format": "prettier --write 'packages/*/src/**/*.{js,ts,css}' 'shared/**/*.{js,css}'",
     "format:check": "prettier --check 'packages/*/src/**/*.{js,ts,css}' 'shared/**/*.{js,css}'",
+    "audit:a11y": "node scripts/a11y-audit.js",
     "docs:build": "pnpm --filter arc-ui-docs run build",
     "docs:deploy": "cd docs && pnpm wrangler pages deploy",
     "bump-versions": "node scripts/bump-versions.js",
@@ -29,12 +30,15 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@arclux/prism": "^1.3.0",
+    "@arclux/prism": "^2.0.0",
+    "@axe-core/playwright": "^4.12.1",
     "@custom-elements-manifest/analyzer": "^0.11.0",
     "@phosphor-icons/core": "^2.1.1",
+    "axe-core": "^4.12.1",
     "eslint": "^9.0.0",
     "globals": "^15.0.0",
     "lucide-static": "^0.563.0",
+    "playwright": "^1.61.1",
     "prettier": "^3.3.0",
     "typescript": "^7.0.2"
   },

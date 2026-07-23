@@ -12,7 +12,7 @@ withDefaults(defineProps<{
   disabled: false,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-card-move': [event: CustomEvent];
   'arc-card-click': [event: CustomEvent];
 }>();
@@ -22,6 +22,8 @@ defineEmits<{
   <arc-kanban
     :columns="columns"
     :disabled="disabled"
+    @arc-card-move="(payload: CustomEvent) => emit('arc-card-move', payload)"
+    @arc-card-click="(payload: CustomEvent) => emit('arc-card-click', payload)"
   >
     <slot />
   </arc-kanban>

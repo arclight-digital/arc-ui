@@ -1,9 +1,13 @@
 ---
 import { Code } from 'astro:components';
 import DocsLayout from '../../layouts/DocsLayout.astro';
+import audit from '../../data/a11y-audit.json';
+
+const violationCount = audit.violations.length;
 
 const headings = [
   { id: 'overview', label: 'Overview' },
+  { id: 'audit', label: 'Automated Audit' },
   { id: 'aria', label: 'ARIA Attributes' },
   { id: 'keyboard', label: 'Keyboard Navigation' },
   { id: 'focus', label: 'Focus Management' },
@@ -42,6 +46,36 @@ const headings = [
         <li>Sufficient color contrast ratios</li>
         <li>Reduced motion support via <code>prefers-reduced-motion</code></li>
       </ul>
+    </section>
+
+    <section id="audit">
+      <h2 class="docs-heading">Automated Audit</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <p class="docs-text">
+        Claims are cheap, so we audit. Every component documentation page — live demos
+        included — is checked with <a href="https://github.com/dequelabs/axe-core">axe-core</a>,
+        which evaluates the fully rendered DOM including shadow roots, in both dark and
+        light themes. The audit runs in CI on every commit and fails the build on any
+        serious or critical violation — including color contrast. No exclusions.
+      </p>
+      <div class="audit-stats">
+        <div class="audit-stat">
+          <span class="audit-stat__value">{audit.pagesAudited}</span>
+          <span class="audit-stat__label">Pages audited</span>
+        </div>
+        <div class="audit-stat">
+          <span class="audit-stat__value">2</span>
+          <span class="audit-stat__label">Themes audited (dark + light)</span>
+        </div>
+        <div class="audit-stat">
+          <span class="audit-stat__value">{violationCount}</span>
+          <span class="audit-stat__label">Violations, any severity</span>
+        </div>
+      </div>
+      <p class="docs-text audit-meta">
+        Last audit: {audit.date} · axe-core {audit.axeVersion} · run it yourself with
+        <code>pnpm audit:a11y</code>
+      </p>
     </section>
 
     <section id="aria">
@@ -172,7 +206,8 @@ const headings = [
       <h2 class="docs-heading">Color & Contrast</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        ARC UI's color tokens are designed to meet WCAG AA contrast requirements:
+        ARC UI's color tokens target WCAG AA contrast requirements; the automated audit
+        above measures actual rendered ratios in both themes:
       </p>
       <ul class="docs-list">
         <li>
@@ -180,8 +215,8 @@ const headings = [
           achieves a contrast ratio above 15:1.
         </li>
         <li>
-          <strong>Muted text:</strong> <code>--text-muted</code> meets the 4.5:1 ratio for
-          normal text.
+          <strong>Muted text:</strong> <code>--text-muted</code> and <code>--text-ghost</code>
+          meet the 4.5:1 ratio for normal text in both themes, verified by the audit.
         </li>
         <li>
           <strong>Feedback colors:</strong> <code>--color-success</code>, <code>--color-warning</code>,
@@ -319,6 +354,41 @@ const headings = [
   .focus-card--glow:focus-visible {
     box-shadow: var(--focus-glow);
     border-color: var(--accent-primary);
+  }
+
+  .audit-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: var(--space-md);
+    margin: var(--space-lg) 0;
+  }
+
+  .audit-stat {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding: var(--space-md);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    background: var(--bg-card);
+  }
+
+  .audit-stat__value {
+    font-family: var(--font-mono);
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .audit-stat__label {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+  }
+
+  .audit-meta {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
   }
 
 </style>

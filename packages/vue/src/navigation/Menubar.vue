@@ -10,7 +10,7 @@ withDefaults(defineProps<{
   items: () => ([]),
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-select': [event: CustomEvent];
 }>();
 </script>
@@ -18,6 +18,7 @@ defineEmits<{
 <template>
   <arc-menubar
     :items="items"
+    @arc-select="(payload: CustomEvent) => emit('arc-select', payload)"
   >
     <slot />
   </arc-menubar>

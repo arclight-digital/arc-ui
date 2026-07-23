@@ -10,14 +10,16 @@ export interface ImageProps {
   fit?: 'contain' | 'fill' | 'none' | 'scale-down';
   loading?: string;
   fallback?: string;
+  onArcLoad?: (e: CustomEvent) => void;
+  onArcError?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Image: Component<ImageProps> = (props) => {
-  const [local, rest] = splitProps(props, ['src', 'alt', 'aspect', 'fit', 'loading', 'fallback', 'children']);
+  const [local, rest] = splitProps(props, ['src', 'alt', 'aspect', 'fit', 'loading', 'fallback', 'onArcLoad', 'onArcError', 'children']);
   return (
-    <arc-image src={local.src} alt={local.alt} aspect={local.aspect} fit={local.fit} loading={local.loading} fallback={local.fallback} {...rest}>
+    <arc-image src={local.src} alt={local.alt} aspect={local.aspect} fit={local.fit} loading={local.loading} fallback={local.fallback} on:arc-load={local.onArcLoad} on:arc-error={local.onArcError} {...rest}>
       {local.children}
     </arc-image>
   );

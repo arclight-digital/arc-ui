@@ -14,7 +14,7 @@ withDefaults(defineProps<{
   heading: '',
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-close': [event: CustomEvent];
   'arc-open': [event: CustomEvent];
 }>();
@@ -25,6 +25,8 @@ defineEmits<{
     :open="open"
     :side="side"
     :heading="heading"
+    @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"
+    @arc-open="(payload: CustomEvent) => emit('arc-open', payload)"
   >
     <slot />
   </arc-sheet>

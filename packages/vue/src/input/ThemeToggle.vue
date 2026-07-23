@@ -14,7 +14,7 @@ withDefaults(defineProps<{
   iconOnly: false,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-change': [event: CustomEvent];
 }>();
 </script>
@@ -24,6 +24,7 @@ defineEmits<{
     :theme="theme"
     :disabled="disabled"
     :iconOnly="iconOnly"
+    @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
   >
     <slot />
   </arc-theme-toggle>

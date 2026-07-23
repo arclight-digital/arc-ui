@@ -55,7 +55,7 @@ Both variants are fully responsive. On mobile, the split layout collapses to a s
       <arc-input label="Email" type="email" placeholder="you@example.com"></arc-input>
       <arc-input label="Password" type="password" placeholder="••••••••"></arc-input>
       <div style="display: flex; align-items: center; justify-content: space-between;">
-        <arc-toggle size="sm">Remember me</arc-toggle>
+        <arc-toggle size="sm" label="Remember me"></arc-toggle>
         <arc-link href="#">Forgot password?</arc-link>
       </div>
       <arc-button variant="primary" style="width: 100%;">Sign In</arc-button>
@@ -93,7 +93,7 @@ Both variants are fully responsive. On mobile, the split layout collapses to a s
     <arc-input label="Email" type="email" placeholder="you@example.com"></arc-input>
     <arc-input label="Password" type="password" placeholder="••••••••"></arc-input>
     <div style="display: flex; align-items: center; justify-content: space-between;">
-      <arc-toggle size="sm">Remember me</arc-toggle>
+      <arc-toggle size="sm" label="Remember me"></arc-toggle>
       <arc-link href="#">Forgot password?</arc-link>
     </div>
     <arc-button variant="primary" style="width: 100%;">Sign In</arc-button>
@@ -124,7 +124,7 @@ export function SignInPage() {
         <Input label="Email" type="email" placeholder="you@example.com" />
         <Input label="Password" type="password" placeholder="••••••••" />
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Toggle size="sm">Remember me</Toggle>
+          <Toggle size="sm" label="Remember me" />
           <Link href="#">Forgot password?</Link>
         </div>
         <Button variant="primary" style={{ width: '100%' }}>Sign In</Button>
@@ -158,7 +158,7 @@ import { AuthShell, Input, Button, Toggle, Link } from '@arclux/arc-ui-vue';
       <Input label="Email" type="email" placeholder="you@example.com" />
       <Input label="Password" type="password" placeholder="••••••••" />
       <div style="display: flex; align-items: center; justify-content: space-between;">
-        <Toggle size="sm">Remember me</Toggle>
+        <Toggle size="sm" label="Remember me" />
         <Link href="#">Forgot password?</Link>
       </div>
       <Button variant="primary" style="width: 100%;">Sign In</Button>
@@ -190,7 +190,7 @@ import { AuthShell, Input, Button, Toggle, Link } from '@arclux/arc-ui-vue';
     <Input label="Email" type="email" placeholder="you@example.com" />
     <Input label="Password" type="password" placeholder="••••••••" />
     <div style="display: flex; align-items: center; justify-content: space-between;">
-      <Toggle size="sm">Remember me</Toggle>
+      <Toggle size="sm" label="Remember me" />
       <Link href="#">Forgot password?</Link>
     </div>
     <Button variant="primary" style="width: 100%;">Sign In</Button>
@@ -223,7 +223,7 @@ import { AuthShell, Input, Button, Toggle, Link } from '@arclux/arc-ui-angular';
         <Input label="Email" type="email" placeholder="you@example.com"></Input>
         <Input label="Password" type="password" placeholder="••••••••"></Input>
         <div style="display: flex; align-items: center; justify-content: space-between;">
-          <Toggle size="sm">Remember me</Toggle>
+          <Toggle size="sm" label="Remember me"></Toggle>
           <Link href="#">Forgot password?</Link>
         </div>
         <Button variant="primary" style="width: 100%;">Sign In</Button>
@@ -257,7 +257,7 @@ export function SignInPage() {
         <Input label="Email" type="email" placeholder="you@example.com" />
         <Input label="Password" type="password" placeholder="••••••••" />
         <div style={{ display: 'flex', 'align-items': 'center', 'justify-content': 'space-between' }}>
-          <Toggle size="sm">Remember me</Toggle>
+          <Toggle size="sm" label="Remember me" />
           <Link href="#">Forgot password?</Link>
         </div>
         <Button variant="primary" style={{ width: '100%' }}>Sign In</Button>
@@ -290,7 +290,7 @@ export function SignInPage() {
         <Input label="Email" type="email" placeholder="you@example.com" />
         <Input label="Password" type="password" placeholder="••••••••" />
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Toggle size="sm">Remember me</Toggle>
+          <Toggle size="sm" label="Remember me" />
           <Link href="#">Forgot password?</Link>
         </div>
         <Button variant="primary" style={{ width: '100%' }}>Sign In</Button>

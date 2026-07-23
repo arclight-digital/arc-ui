@@ -17,7 +17,7 @@
       .arc-container[data-size="xl"] .container { max-width: 1600px; }
       .arc-container[data-size="full"] .container { max-width: none; }
 
-      /* Padding variants */
+      .arc-container /* Padding variants */
       .arc-container[data-padding="none"] .container { padding-inline: 0; }
       .arc-container[data-padding="sm"] .container { padding-inline: var(--space-sm); }
       .arc-container[data-padding="lg"] .container { padding-inline: var(--space-xl); }

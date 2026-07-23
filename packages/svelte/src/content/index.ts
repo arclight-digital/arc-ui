@@ -24,3 +24,5 @@ export { default as Spinner } from './Spinner.svelte';
 export { default as Stack } from './Stack.svelte';
 export { default as VirtualList } from './VirtualList.svelte';
 export { default as QrCode } from './QrCode.svelte';
+export { default as Accordion } from './Accordion.svelte';
+export { default as Avatar } from './Avatar.svelte';

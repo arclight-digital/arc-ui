@@ -10,6 +10,7 @@ export interface ListProps {
   selectable?: boolean;
   multiple?: boolean;
   value?: string;
+  label?: string;
   className?: string;
   children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;

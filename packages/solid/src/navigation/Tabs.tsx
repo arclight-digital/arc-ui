@@ -8,14 +8,15 @@ export interface TabsProps {
   align?: 'center' | 'end';
   variant?: 'pills';
   orientation?: 'vertical';
+  onArcChange?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Tabs: Component<TabsProps> = (props) => {
-  const [local, rest] = splitProps(props, ['selected', 'align', 'variant', 'orientation', 'children']);
+  const [local, rest] = splitProps(props, ['selected', 'align', 'variant', 'orientation', 'onArcChange', 'children']);
   return (
-    <arc-tabs selected={local.selected} align={local.align} variant={local.variant} orientation={local.orientation} {...rest}>
+    <arc-tabs selected={local.selected} align={local.align} variant={local.variant} orientation={local.orientation} on:arc-change={local.onArcChange} {...rest}>
       {local.children}
     </arc-tabs>
   );

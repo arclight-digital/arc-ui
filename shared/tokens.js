@@ -14,9 +14,9 @@ export const tokens = {
 
     /* Text */
     textPrimary:   'rgb(232, 232, 236)',
-    textSecondary: 'rgb(138, 138, 150)',
-    textMuted:     'rgb(124, 124, 137)',
-    textGhost:     'rgb(107, 107, 128)',
+    textSecondary: 'rgb(150, 152, 162)',
+    textMuted:     'rgb(142, 142, 155)',
+    textGhost:     'rgb(133, 133, 154)',
 
     /* Borders */
     borderSubtle:  'rgb(24, 24, 30)',
@@ -51,7 +51,7 @@ export const tokens = {
     accentPrimary:   '77, 126, 247',
     accentSecondary: '139, 92, 246',
     textPrimary:  '232, 232, 236',
-    textMuted:    '124, 124, 137',
+    textMuted:    '142, 142, 155',
     error:        '239, 68, 68',
     success:      '52, 211, 153',
     warning:      '245, 158, 11',
@@ -403,6 +403,7 @@ export const cssVariables = `
 
   --bg-hover: rgba(${tokens.rgb.white}, 0.04);
   --overlay-backdrop: rgba(${tokens.rgb.black}, 0.6);
+  --accent-text-mix: 0%;
 
   /* ── Semantic: Interactive ── */
   --interactive: var(--accent-primary);
@@ -449,8 +450,8 @@ export const lightTokens = {
     bgElevated:  'rgb(238, 238, 246)',
     textPrimary:   'rgb(35, 35, 55)',
     textSecondary: 'rgb(85, 88, 108)',
-    textMuted:     'rgb(115, 118, 140)',
-    textGhost:     'rgb(150, 152, 172)',
+    textMuted:     'rgb(97, 100, 120)',
+    textGhost:     'rgb(104, 107, 129)',
     borderSubtle:  'rgb(230, 232, 238)',
     borderDefault: 'rgb(210, 214, 222)',
     borderBright:  'rgb(190, 195, 205)',
@@ -466,7 +467,7 @@ export const lightTokens = {
     accentPrimary:   '55, 105, 235',
     accentSecondary: '120, 70, 230',
     textPrimary:  '35, 35, 55',
-    textMuted:    '115, 118, 140',
+    textMuted:    '97, 100, 120',
   },
   glow: {
     primary:   '0 0 8px rgba(var(--accent-primary-rgb),0.5), 0 0 24px rgba(var(--accent-primary-rgb),0.2), 0 0 48px rgba(var(--accent-primary-rgb),0.08)',
@@ -499,6 +500,7 @@ export const lightTokens = {
   utility: {
     bgHover: 'rgba(55, 105, 235, 0.04)',
     overlayBackdrop: 'rgba(20, 20, 40, 0.25)',
+    accentTextMix: '55%',
   },
 };
 
@@ -511,9 +513,9 @@ export const fixedDarkTokens = {
     bgCard:      'rgb(13, 13, 18)',
     bgElevated:  'rgb(17, 17, 22)',
     textPrimary:   'rgb(232, 232, 236)',
-    textSecondary: 'rgb(138, 138, 150)',
-    textMuted:     'rgb(124, 124, 137)',
-    textGhost:     'rgb(107, 107, 128)',
+    textSecondary: 'rgb(150, 152, 162)',
+    textMuted:     'rgb(142, 142, 155)',
+    textGhost:     'rgb(133, 133, 154)',
     borderSubtle:  'rgb(24, 24, 30)',
     borderDefault: 'rgb(34, 34, 41)',
     borderBright:  'rgb(51, 51, 64)',
@@ -524,7 +526,7 @@ export const fixedDarkTokens = {
     accentPrimary:   '77, 126, 247',
     accentSecondary: '139, 92, 246',
     textPrimary:  '232, 232, 236',
-    textMuted:    '124, 124, 137',
+    textMuted:    '142, 142, 155',
     white:        '255, 255, 255',
     black:        '0, 0, 0',
   },
@@ -549,12 +551,16 @@ export const lightFixedTokens = {
     bgBase:      'rgb(16, 16, 62)',
     bgCard:      'rgb(20, 20, 70)',
     bgElevated:  'rgb(26, 26, 80)',
-    textSecondary: 'rgb(160, 165, 195)',
-    textMuted:     'rgb(135, 140, 175)',
-    textGhost:     'rgb(110, 115, 155)',
+    textSecondary: 'rgb(179, 183, 212)',
+    textMuted:     'rgb(165, 170, 203)',
+    textGhost:     'rgb(155, 160, 196)',
+    accentPrimary:   'rgb(130, 164, 250)',
     borderSubtle:  'rgb(30, 30, 78)',
     borderDefault: 'rgb(42, 42, 92)',
     borderBright:  'rgb(56, 56, 108)',
+  },
+  rgb: {
+    accentPrimary: '130, 164, 250',
   },
 };
 
@@ -614,6 +620,7 @@ function renderOverrides(t, indent = '  ') {
 
   if (t.utility) {
     if (t.utility.bgHover)          add('--bg-hover', t.utility.bgHover);
+    if (t.utility.accentTextMix)       add('--accent-text-mix', t.utility.accentTextMix);
     if (t.utility.overlayBackdrop)  add('--overlay-backdrop', t.utility.overlayBackdrop);
   }
 

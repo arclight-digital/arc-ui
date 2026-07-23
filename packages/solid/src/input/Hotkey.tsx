@@ -7,14 +7,15 @@ export interface HotkeyProps {
   keys?: string;
   disabled?: boolean;
   global?: boolean;
+  onArcHotkeyTrigger?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Hotkey: Component<HotkeyProps> = (props) => {
-  const [local, rest] = splitProps(props, ['keys', 'disabled', 'global', 'children']);
+  const [local, rest] = splitProps(props, ['keys', 'disabled', 'global', 'onArcHotkeyTrigger', 'children']);
   return (
-    <arc-hotkey keys={local.keys} disabled={local.disabled} global={local.global} {...rest}>
+    <arc-hotkey keys={local.keys} disabled={local.disabled} global={local.global} on:arc-hotkey-trigger={local.onArcHotkeyTrigger} {...rest}>
       {local.children}
     </arc-hotkey>
   );

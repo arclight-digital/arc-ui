@@ -6,11 +6,13 @@ defineOptions({ name: 'Breadcrumb' });
 
 withDefaults(defineProps<{
   separator?: string;
+  label?: string;
 }>(), {
   separator: '/',
+  label: 'Breadcrumb',
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-navigate': [event: CustomEvent];
 }>();
 </script>
@@ -18,6 +20,8 @@ defineEmits<{
 <template>
   <arc-breadcrumb
     :separator="separator"
+    :label="label"
+    @arc-navigate="(payload: CustomEvent) => emit('arc-navigate', payload)"
   >
     <slot />
   </arc-breadcrumb>

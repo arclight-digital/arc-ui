@@ -12,14 +12,16 @@ export interface PinInputProps {
   type?: string;
   separator?: number;
   label?: string;
+  onArcChange?: (e: CustomEvent) => void;
+  onArcComplete?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const PinInput: Component<PinInputProps> = (props) => {
-  const [local, rest] = splitProps(props, ['length', 'value', 'name', 'disabled', 'mask', 'type', 'separator', 'label', 'children']);
+  const [local, rest] = splitProps(props, ['length', 'value', 'name', 'disabled', 'mask', 'type', 'separator', 'label', 'onArcChange', 'onArcComplete', 'children']);
   return (
-    <arc-pin-input length={local.length} value={local.value} name={local.name} disabled={local.disabled} mask={local.mask} type={local.type} separator={local.separator} label={local.label} {...rest}>
+    <arc-pin-input length={local.length} value={local.value} name={local.name} disabled={local.disabled} mask={local.mask} type={local.type} separator={local.separator} label={local.label} on:arc-change={local.onArcChange} on:arc-complete={local.onArcComplete} {...rest}>
       {local.children}
     </arc-pin-input>
   );

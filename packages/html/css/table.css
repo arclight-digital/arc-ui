@@ -13,18 +13,18 @@
         border-radius: var(--radius-md);
       }
 
-      table {
+      .arc-table table {
         width: 100%;
         border-collapse: collapse;
         font-size: var(--text-sm);
         color: var(--text-primary);
       }
 
-      thead {
+      .arc-table thead {
         background: var(--surface-overlay);
       }
 
-      th {
+      .arc-table th {
         text-align: left;
         padding: var(--space-sm) var(--space-md);
         font-family: var(--font-accent);
@@ -41,7 +41,7 @@
         padding: var(--space-xs) var(--space-sm);
       }
 
-      td {
+      .arc-table td {
         padding: var(--space-sm) var(--space-md);
         border-bottom: 1px solid var(--divider);
         color: var(--text-secondary);
@@ -54,7 +54,7 @@
         font-size: var(--text-sm);
       }
 
-      tr:last-child td {
+      .arc-table tr:last-child td {
         border-bottom: none;
       }
 
@@ -66,11 +66,11 @@
         background: var(--surface-raised);
       }
 
-      tbody tr {
+      .arc-table tbody tr {
         transition: background var(--transition-fast);
       }
 
-      tbody tr:hover {
+      .arc-table tbody tr:hover {
         background: var(--surface-hover);
       }
 

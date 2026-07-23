@@ -36,31 +36,31 @@ export class ArcBadge extends LitElement {
 
       :host([variant="primary"]) .badge {
         border-color: var(--accent-primary-border);
-        color: var(--accent-primary);
+        color: color-mix(in srgb, var(--accent-primary), var(--text-primary) var(--accent-text-mix, 0%));
         background: rgba(var(--accent-primary-rgb), 0.06);
       }
 
       :host([variant="secondary"]) .badge {
         border-color: var(--accent-secondary-border);
-        color: var(--accent-secondary);
+        color: color-mix(in srgb, var(--accent-secondary), var(--text-primary) var(--accent-text-mix, 0%));
         background: rgba(var(--accent-secondary-rgb), 0.06);
       }
 
       :host([variant="success"]) .badge {
         border-color: rgba(var(--color-success-rgb), 0.2);
-        color: var(--color-success);
+        color: color-mix(in srgb, var(--color-success), var(--text-primary) var(--accent-text-mix, 0%));
         background: rgba(var(--color-success-rgb), 0.06);
       }
 
       :host([variant="warning"]) .badge {
         border-color: rgba(var(--color-warning-rgb), 0.2);
-        color: var(--color-warning);
+        color: color-mix(in srgb, var(--color-warning), var(--text-primary) var(--accent-text-mix, 0%));
         background: rgba(var(--color-warning-rgb), 0.06);
       }
 
       :host([variant="error"]) .badge {
         border-color: rgba(var(--color-error-rgb), 0.2);
-        color: var(--color-error);
+        color: color-mix(in srgb, var(--color-error), var(--text-primary) var(--accent-text-mix, 0%));
         background: rgba(var(--color-error-rgb), 0.06);
       }
 
@@ -103,7 +103,7 @@ export class ArcBadge extends LitElement {
 
   render() {
     const colorStyle = this.color
-      ? `border-color: rgba(${this.color}, 0.2); color: rgb(${this.color}); background: rgba(${this.color}, 0.06);`
+      ? `border-color: rgba(${this.color}, 0.2); color: color-mix(in srgb, rgb(${this.color}), var(--text-primary) var(--accent-text-mix, 0%)); background: rgba(${this.color}, 0.06);`
       : '';
 
     return html`<span class="badge" part="badge" style=${colorStyle}

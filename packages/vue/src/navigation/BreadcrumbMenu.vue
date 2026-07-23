@@ -6,11 +6,13 @@ defineOptions({ name: 'BreadcrumbMenu' });
 
 withDefaults(defineProps<{
   items?: string;
+  label?: string;
 }>(), {
   items: () => ([]),
+  label: 'Breadcrumb',
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-navigate': [event: CustomEvent];
 }>();
 </script>
@@ -18,6 +20,8 @@ defineEmits<{
 <template>
   <arc-breadcrumb-menu
     :items="items"
+    :label="label"
+    @arc-navigate="(payload: CustomEvent) => emit('arc-navigate', payload)"
   >
     <slot />
   </arc-breadcrumb-menu>

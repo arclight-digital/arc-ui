@@ -8,14 +8,16 @@ export interface ConfirmProps {
   heading?: string;
   message?: string;
   variant?: string;
+  onArcConfirm?: (e: CustomEvent) => void;
+  onArcCancel?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Confirm: Component<ConfirmProps> = (props) => {
-  const [local, rest] = splitProps(props, ['open', 'heading', 'message', 'variant', 'children']);
+  const [local, rest] = splitProps(props, ['open', 'heading', 'message', 'variant', 'onArcConfirm', 'onArcCancel', 'children']);
   return (
-    <arc-confirm open={local.open} heading={local.heading} message={local.message} variant={local.variant} {...rest}>
+    <arc-confirm open={local.open} heading={local.heading} message={local.message} variant={local.variant} on:arc-confirm={local.onArcConfirm} on:arc-cancel={local.onArcCancel} {...rest}>
       {local.children}
     </arc-confirm>
   );

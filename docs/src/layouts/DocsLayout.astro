@@ -11,6 +11,8 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
 
 interface Props {
   title: string;
+  /** Full document title; overrides the default `${title} — ARC UI` pattern */
+  htmlTitle?: string;
   description?: string;
   activeSlug?: string;
   headings?: Array<{ id: string; label: string; level?: number }>;
@@ -19,6 +21,7 @@ interface Props {
 
 const {
   title,
+  htmlTitle,
   description,
   activeSlug,
   headings = [],
@@ -26,8 +29,10 @@ const {
 } = Astro.props;
 ---
 
-<BaseLayout title={`${title} — ARC UI`} description={description}>
-  <arc-skip-link target="#main-content">Skip to content</arc-skip-link>
+<BaseLayout title={htmlTitle ?? `${title} — ARC UI`} description={description}>
+  <nav aria-label="Skip link">
+    <arc-skip-link target="#main-content">Skip to content</arc-skip-link>
+  </nav>
   <arc-app-shell>
     <!-- Top Bar -->
     <arc-top-bar slot="topbar" fixed nav-align="left" class="theme-fixed">
@@ -58,9 +63,9 @@ const {
     </div>
 
     <!-- Main Content -->
-    <div id="main-content" class="docs-content" tabindex="-1">
+    <main id="main-content" class="docs-content" tabindex="-1">
       <slot />
-    </div>
+    </main>
   </arc-app-shell>
 
   <SiteFooter />

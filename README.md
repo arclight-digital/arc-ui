@@ -4,7 +4,7 @@
 <p align="center">
   <a href="https://www.npmjs.com/package/@arclux/arc-ui"><img src="https://img.shields.io/npm/v/@arclux/arc-ui?style=flat-square&color=4d7ef7" alt="npm version"></a>
   <a href="https://github.com/arclight-digital/arc-ui/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-8b5cf6?style=flat-square" alt="license"></a>
-  <img src="https://img.shields.io/badge/components-180%2B-4d7ef7?style=flat-square" alt="components">
+  <img src="https://img.shields.io/badge/components-164-4d7ef7?style=flat-square" alt="components">
   <img src="https://img.shields.io/badge/frameworks-7-8b5cf6?style=flat-square" alt="frameworks">
   <img src="https://img.shields.io/badge/Lit_powered-3.3-14b8a6?style=flat-square" alt="Lit 3.3">
 </p>
@@ -77,19 +77,23 @@ All framework packages are generated from the same Lit source and stay in sync a
 
 ## Components
 
-180+ components organized across seven tiers:
+164 components organized across seven tiers:
 
 | Tier | Count | Highlights |
 |------|-------|------------|
 | **Layout** | 21 | App Shell, Dashboard Grid, Page Layout, Split Pane, Dock, Resizable, Masonry |
-| **Navigation** | 29 | Top Bar, Sidebar, Tabs, Menubar, Breadcrumb, Command Bar, Drawer, Tree View |
-| **Content** | 28 | Card, Accordion, Carousel, Avatar, QR Code, Divider, Infinite Scroll, Virtual List |
-| **Data** | 27 | Chart, Data Grid, Data Table, Kanban, Event Calendar, Timeline, Stat, Sparkline |
-| **Input** | 41 | Input, Select, Combobox, Date Range Picker, Tag Input, Transfer List, Image Cropper |
-| **Feedback** | 25 | Modal, Dialog, Toast Manager, Command Palette, Tooltip, Sheet, Popover, Guided Tour |
+| **Navigation** | 23 | Top Bar, Sidebar, Tabs, Menubar, Breadcrumb, Command Bar, Drawer, Tree View |
+| **Content** | 24 | Card, Accordion, Carousel, Avatar, QR Code, Divider, Infinite Scroll, Virtual List |
+| **Data** | 21 | Chart, Data Grid, Data Table, Kanban, Event Calendar, Timeline, Stat, Sparkline |
+| **Input** | 39 | Input, Select, Combobox, Date Range Picker, Tag Input, Transfer List, Image Cropper |
+| **Feedback** | 24 | Modal, Dialog, Toast Manager, Command Palette, Tooltip, Sheet, Popover, Guided Tour |
 | **Typography** | 12 | Code Block, Markdown, Kbd, Gradient Text, Typewriter, Prose, Blockquote |
 
 Browse the full catalog at [arcui.dev/docs/components](https://arcui.dev/docs/components).
+
+## Accessibility
+
+Every component documentation page — live demos included — is audited with [axe-core](https://github.com/dequelabs/axe-core) in both dark and light themes on every commit. Structural WCAG violations fail CI; run the audit yourself with `pnpm audit:a11y`. Live results: [arcui.dev/docs/accessibility](https://arcui.dev/docs/accessibility).
 
 ## Design Tokens
 

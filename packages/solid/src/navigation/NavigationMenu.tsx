@@ -4,14 +4,16 @@ import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/navigation-menu';
 
 export interface NavigationMenuProps {
+  label?: string;
+  onArcMobileMenuToggle?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const NavigationMenu: Component<NavigationMenuProps> = (props) => {
-  const [local, rest] = splitProps(props, ['children']);
+  const [local, rest] = splitProps(props, ['label', 'onArcMobileMenuToggle', 'children']);
   return (
-    <arc-navigation-menu {...rest}>
+    <arc-navigation-menu label={local.label} on:arc-mobile-menu-toggle={local.onArcMobileMenuToggle} {...rest}>
       {local.children}
     </arc-navigation-menu>
   );

@@ -11,14 +11,15 @@ export interface NumberInputProps {
   label?: string;
   name?: string;
   disabled?: boolean;
+  onArcChange?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const NumberInput: Component<NumberInputProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'min', 'max', 'step', 'label', 'name', 'disabled', 'children']);
+  const [local, rest] = splitProps(props, ['value', 'min', 'max', 'step', 'label', 'name', 'disabled', 'onArcChange', 'children']);
   return (
-    <arc-number-input value={local.value} min={local.min} max={local.max} step={local.step} label={local.label} name={local.name} disabled={local.disabled} {...rest}>
+    <arc-number-input value={local.value} min={local.min} max={local.max} step={local.step} label={local.label} name={local.name} disabled={local.disabled} on:arc-change={local.onArcChange} {...rest}>
       {local.children}
     </arc-number-input>
   );

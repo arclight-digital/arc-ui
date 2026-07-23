@@ -26,7 +26,7 @@ withDefaults(defineProps<{
   showValues: true,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-input': [event: CustomEvent];
   'arc-change': [event: CustomEvent];
 }>();
@@ -43,6 +43,8 @@ defineEmits<{
     :disabled="disabled"
     :label="label"
     :showValues="showValues"
+    @arc-input="(payload: CustomEvent) => emit('arc-input', payload)"
+    @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
   >
     <slot />
   </arc-range-slider>

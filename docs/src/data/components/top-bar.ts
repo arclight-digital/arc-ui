@@ -59,7 +59,7 @@ Use TopBar whenever your application needs a consistent, recognizable header. It
       <arc-link href="#">Settings</arc-link>
     </nav>
     <div slot="actions" style="display:flex;align-items:center;gap:12px;">
-      <arc-icon-button name="gear" variant="ghost" size="sm" aria-label="Settings"></arc-icon-button>
+      <arc-icon-button name="gear" variant="ghost" size="sm" label="Settings"></arc-icon-button>
       <arc-avatar size="sm" initials="JD" aria-label="Jane Doe"></arc-avatar>
     </div>
   </arc-top-bar>
@@ -117,7 +117,7 @@ Use TopBar whenever your application needs a consistent, recognizable header. It
     <arc-link href="#">Settings</arc-link>
   </nav>
   <div slot="actions" style="display:flex;align-items:center;gap:12px;">
-    <arc-icon-button name="gear" variant="ghost" size="sm" aria-label="Settings"></arc-icon-button>
+    <arc-icon-button name="gear" variant="ghost" size="sm" label="Settings"></arc-icon-button>
     <arc-avatar size="sm" initials="JD" aria-label="Jane Doe"></arc-avatar>
   </div>
 </arc-top-bar>`,

@@ -5,7 +5,7 @@
 
       .arc-card .card { height: 100%; }
 
-      /* Suppress hover effect when no href and not interactive */
+      .arc-card /* Suppress hover effect when no href and not interactive */
       .arc-card:not([data-href]):not([data-interactive]) .card:hover {
         background: var(--border-subtle);
       }
@@ -19,7 +19,7 @@
         padding: var(--space-lg);
       }
 
-      /* Padding variants */
+      .arc-card /* Padding variants */
       .arc-card[data-padding="none"] .card__inner { padding: 0; }
       .arc-card[data-padding="sm"] .card__inner { padding: var(--space-sm); }
       .arc-card[data-padding="lg"] .card__inner { padding: var(--space-xl); }
@@ -52,8 +52,8 @@
         display: none;
       }
 
-      @media (max-width: 768px) { /* --breakpoint-md */
-        .arc-card .card__inner { padding: var(--space-lg) var(--space-md); }
+      @media (max-width: 768px) { .arc-card /* --breakpoint-md */
+        .card__inner { padding: var(--space-lg) var(--space-md); }
       }
 
       @media (prefers-reduced-motion: reduce) {

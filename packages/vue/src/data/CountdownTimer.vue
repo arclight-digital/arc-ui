@@ -16,7 +16,7 @@ withDefaults(defineProps<{
   hideZeroSegments: false,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-expired': [event: CustomEvent];
 }>();
 </script>
@@ -27,6 +27,7 @@ defineEmits<{
     :label="label"
     :expired="expired"
     :hideZeroSegments="hideZeroSegments"
+    @arc-expired="(payload: CustomEvent) => emit('arc-expired', payload)"
   >
     <slot />
   </arc-countdown-timer>

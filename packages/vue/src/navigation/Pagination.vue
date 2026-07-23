@@ -16,7 +16,7 @@ withDefaults(defineProps<{
   compact: false,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-change': [event: CustomEvent];
 }>();
 </script>
@@ -27,6 +27,7 @@ defineEmits<{
     :current="current"
     :siblings="siblings"
     :compact="compact"
+    @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
   >
     <slot />
   </arc-pagination>

@@ -7,14 +7,15 @@ export interface ChipProps {
   selected?: boolean;
   disabled?: boolean;
   value?: string;
+  onArcChange?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Chip: Component<ChipProps> = (props) => {
-  const [local, rest] = splitProps(props, ['selected', 'disabled', 'value', 'children']);
+  const [local, rest] = splitProps(props, ['selected', 'disabled', 'value', 'onArcChange', 'children']);
   return (
-    <arc-chip selected={local.selected} disabled={local.disabled} value={local.value} {...rest}>
+    <arc-chip selected={local.selected} disabled={local.disabled} value={local.value} on:arc-change={local.onArcChange} {...rest}>
       {local.children}
     </arc-chip>
   );

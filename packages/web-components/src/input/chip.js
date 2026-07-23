@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import '../data/tag.js';
 
@@ -7,9 +7,10 @@ import '../data/tag.js';
  */
 export class ArcChip extends LitElement {
   static properties = {
-    selected: { type: Boolean, reflect: true },
-    disabled: { type: Boolean, reflect: true },
-    value:    { type: String },
+    selected:   { type: Boolean, reflect: true },
+    disabled:   { type: Boolean, reflect: true },
+    value:      { type: String },
+    _inListbox: { state: true },
   };
 
   static styles = [
@@ -43,6 +44,14 @@ export class ArcChip extends LitElement {
     this.selected = false;
     this.disabled = false;
     this.value = '';
+    this._inListbox = false;
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    // role="option" is only valid inside a listbox/group ancestor;
+    // standalone chips act as toggle buttons instead.
+    this._inListbox = !!this.closest('[role="listbox"], [role="group"]');
   }
 
   _toggle() {
@@ -68,8 +77,9 @@ export class ArcChip extends LitElement {
         variant=${this.selected ? 'primary' : 'default'}
         ?disabled=${this.disabled}
         exportparts="tag: chip, label"
-        role="option"
-        aria-selected=${this.selected ? 'true' : 'false'}
+        role=${this._inListbox ? 'option' : 'button'}
+        aria-selected=${this._inListbox ? (this.selected ? 'true' : 'false') : nothing}
+        aria-pressed=${this._inListbox ? nothing : (this.selected ? 'true' : 'false')}
         aria-disabled=${this.disabled ? 'true' : 'false'}
         tabindex=${this.disabled ? '-1' : '0'}
         @click=${this._toggle}

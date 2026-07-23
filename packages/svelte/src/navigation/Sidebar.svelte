@@ -9,13 +9,14 @@
     position?: 'right';
     width?: string;
     glow?: boolean;
+    label?: string;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { active = '', collapsed = false, position = 'left', width = '280px', glow = false, children, ...rest }: Props = $props();
+  let { active = '', collapsed = false, position = 'left', width = '280px', glow = false, label = 'Sidebar navigation', children, ...rest }: Props = $props();
 </script>
 
-<arc-sidebar {active} {collapsed} {position} {width} {glow} {...rest}>
+<arc-sidebar {active} {collapsed} {position} {width} {glow} {label} {...rest}>
   {@render children?.()}
 </arc-sidebar>

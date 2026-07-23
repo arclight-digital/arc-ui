@@ -28,7 +28,7 @@ withDefaults(defineProps<{
   showStrength: false,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-strength-change': [event: CustomEvent];
   'arc-input': [event: CustomEvent];
   'arc-change': [event: CustomEvent];
@@ -47,6 +47,9 @@ defineEmits<{
     :size="size"
     :autocomplete="autocomplete"
     :showStrength="showStrength"
+    @arc-strength-change="(payload: CustomEvent) => emit('arc-strength-change', payload)"
+    @arc-input="(payload: CustomEvent) => emit('arc-input', payload)"
+    @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
   >
     <slot />
   </arc-password-input>

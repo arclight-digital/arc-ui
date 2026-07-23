@@ -68,3 +68,15 @@ export type { EventCalendarProps } from './EventCalendar.js';
 
 export { Kanban } from './Kanban.js';
 export type { KanbanProps } from './Kanban.js';
+
+export { Comparison } from './Comparison.js';
+export type { ComparisonProps } from './Comparison.js';
+
+export { List } from './List.js';
+export type { ListProps } from './List.js';
+
+export { Table } from './Table.js';
+export type { TableProps } from './Table.js';
+
+export { Timeline } from './Timeline.js';
+export type { TimelineProps } from './Timeline.js';

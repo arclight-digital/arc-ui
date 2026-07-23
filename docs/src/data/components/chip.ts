@@ -10,7 +10,7 @@ export const chip: ComponentDef = {
 
     overview: `Chip is a compact, pill-shaped interactive element that can be toggled between selected and unselected states. It is designed for scenarios where users need to pick one or more options from a visible set -- such as filter chips, tag selectors, or interest pickers. The default appearance uses a bordered pill with muted uppercase text, and toggling to the selected state transitions the chip to an accent-primary border, matching text colour, and a subtle blue-tinted background with a glow effect.
 
-The component renders a single \`<span>\` with the \`option\` ARIA role and \`aria-selected\` attribute, making it compatible with listbox or grid accessibility patterns when grouped. Keyboard interaction is handled with Enter and Space keys for toggling, and the chip is focusable via the \`tabindex\` attribute (automatically set to -1 when disabled). The slot accepts any inline content, though plain text labels work best for the uppercase styling.
+Standalone chips expose the \`button\` ARIA role with \`aria-pressed\` reflecting the toggle state. When placed inside an ancestor with \`role="listbox"\` or \`role="group"\`, chips switch to the \`option\` role with \`aria-selected\`, making them compatible with listbox accessibility patterns when grouped. Keyboard interaction is handled with Enter and Space keys for toggling, and the chip is focusable via the \`tabindex\` attribute (automatically set to -1 when disabled). The slot accepts any inline content, though plain text labels work best for the uppercase styling.
 
 Chip fires an \`arc-change\` event on every toggle, including both the \`value\` and \`selected\` state in the event detail. This makes it straightforward to manage chip groups -- simply listen to \`arc-change\` on each chip and maintain a set of selected values in your application state. The \`value\` prop acts as a machine-readable identifier that is separate from the visible label text.`,
 
@@ -19,7 +19,7 @@ Chip fires an \`arc-change\` event on every toggle, including both the \`value\`
       'Selected state: accent-primary border, matching text colour, tinted background, and glow shadow',
       'Hover state brightens the border and elevates the background for unselected chips',
       'Combined focus-visible glow with selection glow for clear keyboard focus indication',
-      'ARIA `option` role with `aria-selected` and `aria-disabled` for accessible group patterns',
+      'ARIA `button` role with `aria-pressed` standalone; `option` role with `aria-selected` inside a listbox or group',
       'Fires `arc-change` with `{ value, selected }` detail on every toggle interaction',
       'Keyboard toggle via Enter and Space with automatic tabindex management',
       'Disabled state at 40% opacity with pointer events blocked'

@@ -22,7 +22,7 @@ withDefaults(defineProps<{
   targetLabel: 'Selected',
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-change': [event: CustomEvent];
 }>();
 </script>
@@ -36,6 +36,7 @@ defineEmits<{
     :searchable="searchable"
     :sourceLabel="sourceLabel"
     :targetLabel="targetLabel"
+    @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
   >
     <slot />
   </arc-transfer-list>

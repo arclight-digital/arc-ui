@@ -16,7 +16,7 @@ withDefaults(defineProps<{
   zoom: 1,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-crop-change': [event: CustomEvent];
 }>();
 </script>
@@ -27,6 +27,7 @@ defineEmits<{
     :height="height"
     :aspect="aspect"
     :zoom="zoom"
+    @arc-crop-change="(payload: CustomEvent) => emit('arc-crop-change', payload)"
   >
     <slot />
   </arc-image-cropper>

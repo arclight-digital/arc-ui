@@ -6,14 +6,15 @@ import '@arclux/arc-ui/bottom-nav';
 export interface BottomNavProps {
   items?: string;
   value?: string;
+  onArcChange?: (e: CustomEvent) => void;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const BottomNav: Component<BottomNavProps> = (props) => {
-  const [local, rest] = splitProps(props, ['items', 'value', 'children']);
+  const [local, rest] = splitProps(props, ['items', 'value', 'onArcChange', 'children']);
   return (
-    <arc-bottom-nav items={local.items} value={local.value} {...rest}>
+    <arc-bottom-nav items={local.items} value={local.value} on:arc-change={local.onArcChange} {...rest}>
       {local.children}
     </arc-bottom-nav>
   );

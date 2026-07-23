@@ -14,7 +14,7 @@ withDefaults(defineProps<{
   clickable: false,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-change': [event: CustomEvent];
 }>();
 </script>
@@ -24,6 +24,7 @@ defineEmits<{
     :count="count"
     :value="value"
     :clickable="clickable"
+    @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
   >
     <slot />
   </arc-page-indicator>

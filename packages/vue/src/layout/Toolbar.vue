@@ -16,7 +16,7 @@ withDefaults(defineProps<{
   overflow: false,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-overflow-change': [event: CustomEvent];
 }>();
 </script>
@@ -27,6 +27,7 @@ defineEmits<{
     :size="size"
     :border="border"
     :overflow="overflow"
+    @arc-overflow-change="(payload: CustomEvent) => emit('arc-overflow-change', payload)"
   >
     <slot />
   </arc-toolbar>

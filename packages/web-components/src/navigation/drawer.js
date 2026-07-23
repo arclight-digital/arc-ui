@@ -120,7 +120,7 @@ export class ArcDrawer extends OverlayMixin(LitElement) {
   render() {
     return html`
       <div class="drawer__backdrop" @click=${this._handleBackdropClick} part="backdrop"></div>
-      <aside class="drawer__panel" role="dialog" aria-modal="true" aria-label=${this.heading || 'Drawer'} part="panel">
+      <div class="drawer__panel" role="dialog" aria-modal="true" aria-label=${this.heading || 'Drawer'} part="panel">
         <div class="drawer__header" part="header">
           <span class="drawer__title" part="title">${this.heading}</span>
           <arc-icon-button name="x" label="Close" variant="ghost" size="sm" @click=${this._close} part="close"></arc-icon-button>
@@ -128,7 +128,7 @@ export class ArcDrawer extends OverlayMixin(LitElement) {
         <div class="drawer__body" part="body">
           <slot></slot>
         </div>
-      </aside>
+      </div>
     `;
   }
 }

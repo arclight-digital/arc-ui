@@ -55,6 +55,8 @@ export class ArcVirtualList extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
+    // The host is the scrollable region — it must be keyboard-focusable
+    if (!this.hasAttribute('tabindex')) this.setAttribute('tabindex', '0');
     this.addEventListener('scroll', this._onScroll, { passive: true });
   }
 

@@ -18,7 +18,7 @@ withDefaults(defineProps<{
   type: 'number',
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-change': [event: CustomEvent];
 }>();
 </script>
@@ -30,6 +30,7 @@ defineEmits<{
     :name="name"
     :disabled="disabled"
     :type="type"
+    @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
   >
     <slot />
   </arc-otp-input>

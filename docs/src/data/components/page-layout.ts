@@ -59,7 +59,7 @@ PageLayout collapses gracefully on mobile. At 768px and below, sidebar-left and 
       <a href="#" style="color:var(--text-secondary);text-decoration:none;font-size:0.85rem;padding:var(--space-xs) var(--space-sm);border-radius:var(--radius-sm)">Settings</a>
       <a href="#" style="color:var(--text-secondary);text-decoration:none;font-size:0.85rem;padding:var(--space-xs) var(--space-sm);border-radius:var(--radius-sm)">Users</a>
     </nav>
-    <main style="padding:var(--space-lg);display:flex;flex-direction:column;gap:var(--space-md)">
+    <div style="padding:var(--space-lg);display:flex;flex-direction:column;gap:var(--space-md)">
       <h2 style="margin:0;font-family:var(--font-heading);font-size:1.25rem;font-weight:600">Dashboard</h2>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-sm)">
         <div style="background:var(--surface-alt);border-radius:var(--radius-sm);padding:var(--space-md);border:1px solid var(--border-subtle)">
@@ -76,7 +76,7 @@ PageLayout collapses gracefully on mobile. At 768px and below, sidebar-left and 
         </div>
       </div>
       <div style="flex:1;background:var(--surface-alt);border-radius:var(--radius-sm);border:1px solid var(--border-subtle);padding:var(--space-md);display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:0.85rem">Chart area</div>
-    </main>
+    </div>
   </arc-page-layout>
 </div>`,
 

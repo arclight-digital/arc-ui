@@ -14,7 +14,7 @@ withDefaults(defineProps<{
   date: '',
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-period-change': [event: CustomEvent];
   'arc-date-click': [event: CustomEvent];
   'arc-event-click': [event: CustomEvent];
@@ -26,6 +26,9 @@ defineEmits<{
     :events="events"
     :view="view"
     :date="date"
+    @arc-period-change="(payload: CustomEvent) => emit('arc-period-change', payload)"
+    @arc-date-click="(payload: CustomEvent) => emit('arc-date-click', payload)"
+    @arc-event-click="(payload: CustomEvent) => emit('arc-event-click', payload)"
   >
     <slot />
   </arc-event-calendar>

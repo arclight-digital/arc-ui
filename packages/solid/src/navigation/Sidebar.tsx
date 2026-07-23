@@ -9,14 +9,15 @@ export interface SidebarProps {
   position?: 'right';
   width?: string;
   glow?: boolean;
+  label?: string;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Sidebar: Component<SidebarProps> = (props) => {
-  const [local, rest] = splitProps(props, ['active', 'collapsed', 'position', 'width', 'glow', 'children']);
+  const [local, rest] = splitProps(props, ['active', 'collapsed', 'position', 'width', 'glow', 'label', 'children']);
   return (
-    <arc-sidebar active={local.active} collapsed={local.collapsed} position={local.position} width={local.width} glow={local.glow} {...rest}>
+    <arc-sidebar active={local.active} collapsed={local.collapsed} position={local.position} width={local.width} glow={local.glow} label={local.label} {...rest}>
       {local.children}
     </arc-sidebar>
   );

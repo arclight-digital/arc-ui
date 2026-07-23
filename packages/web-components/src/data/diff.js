@@ -39,14 +39,13 @@ export class ArcDiff extends LitElement {
 
       .diff__line--added {
         background: rgba(var(--color-success-rgb), 0.08);
-        color: var(--color-success);
+        color: color-mix(in srgb, var(--color-success), var(--text-primary) 50%);
       }
 
       .diff__line--removed {
         background: rgba(var(--color-error-rgb), 0.08);
-        color: var(--color-error);
+        color: color-mix(in srgb, var(--color-error), var(--text-primary) 50%);
         text-decoration: line-through;
-        opacity: 0.7;
       }
 
       .diff__line--unchanged {

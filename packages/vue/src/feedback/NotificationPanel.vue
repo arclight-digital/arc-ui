@@ -14,7 +14,7 @@ withDefaults(defineProps<{
   maxHeight: '400px',
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-open': [event: CustomEvent];
   'arc-close': [event: CustomEvent];
 }>();
@@ -25,6 +25,8 @@ defineEmits<{
     :open="open"
     :position="position"
     :maxHeight="maxHeight"
+    @arc-open="(payload: CustomEvent) => emit('arc-open', payload)"
+    @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"
   >
     <slot />
   </arc-notification-panel>

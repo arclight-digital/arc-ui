@@ -45,7 +45,7 @@ Sidebar is designed to sit inside an AppShell or PageLayout, typically occupying
     },
 
     previewHtml: `<div style="width:100%;max-width:300px;height:280px;border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden">
-  <arc-sidebar active="#theming" glow style="position:static;height:100%">
+  <arc-sidebar label="Example sidebar" active="#theming" glow style="position:static;height:100%">
     <arc-sidebar-section heading="Guide">
       <arc-sidebar-link href="#getting-started">Getting Started</arc-sidebar-link>
       <arc-sidebar-link href="#tokens">Design Tokens</arc-sidebar-link>

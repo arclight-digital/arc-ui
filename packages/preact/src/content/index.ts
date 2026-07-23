@@ -74,3 +74,9 @@ export type { VirtualListProps } from './VirtualList.js';
 
 export { QrCode } from './QrCode.js';
 export type { QrCodeProps } from './QrCode.js';
+
+export { Accordion } from './Accordion.js';
+export type { AccordionProps } from './Accordion.js';
+
+export { Avatar } from './Avatar.js';
+export type { AvatarProps } from './Avatar.js';

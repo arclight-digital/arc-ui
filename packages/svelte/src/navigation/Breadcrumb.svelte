@@ -5,13 +5,14 @@
 
   interface Props {
     separator?: string;
+    label?: string;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { separator = '/', children, ...rest }: Props = $props();
+  let { separator = '/', label = 'Breadcrumb', children, ...rest }: Props = $props();
 </script>
 
-<arc-breadcrumb {separator} {...rest}>
+<arc-breadcrumb {separator} {label} {...rest}>
   {@render children?.()}
 </arc-breadcrumb>

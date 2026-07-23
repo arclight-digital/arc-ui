@@ -24,6 +24,6 @@
         }
       }
 
-      ::slotted(*) {
+      .arc-responsive-switcher ::slotted(*) {
         flex: 1;
       }

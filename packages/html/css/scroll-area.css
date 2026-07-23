@@ -12,7 +12,7 @@
         border-radius: inherit;
       }
 
-      /* Orientation variants */
+      .arc-scroll-area /* Orientation variants */
       .arc-scroll-area[data-orientation="vertical"] .scroll-area,
       .arc-scroll-area:not([data-orientation]) .scroll-area {
         overflow-y: auto;
@@ -28,8 +28,8 @@
         overflow: auto;
       }
 
-      /* Webkit scrollbar styling */
-      .arc-scroll-area .scroll-area::-webkit-scrollbar {
+      .arc-scroll-area /* Webkit scrollbar styling */
+      .scroll-area::-webkit-scrollbar {
         width: 6px;
         height: 6px;
       }
@@ -53,8 +53,8 @@
         background: var(--surface-overlay);
       }
 
-      /* Firefox scrollbar styling */
-      .arc-scroll-area .scroll-area {
+      .arc-scroll-area /* Firefox scrollbar styling */
+      .scroll-area {
         scrollbar-width: thin;
         scrollbar-color: var(--border-bright) var(--surface-overlay);
       }

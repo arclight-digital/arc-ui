@@ -11,6 +11,7 @@
  *   5. Exports   — Sync package.json exports map from register files
  *   6. Manifest  — custom-elements.json via @custom-elements-manifest/analyzer
  *   7. Types     — types/index.d.ts generated from the manifest
+ *   8. Readme    — README component counts synced from docs data
  *
  * Usage: node scripts/generate.js
  */
@@ -26,6 +27,7 @@ const steps = [
   { name: 'Exports',  cmd: 'node',  args: ['scripts/generate-exports.js'] },
   { name: 'Manifest', cmd: 'node',  args: ['scripts/generate-manifest.js'] },
   { name: 'Types',    cmd: 'node',  args: ['scripts/generate-types.js'] },
+  { name: 'Readme',   cmd: 'node',  args: ['scripts/generate-readme-stats.js'] },
 ];
 
 const totalStart = performance.now();

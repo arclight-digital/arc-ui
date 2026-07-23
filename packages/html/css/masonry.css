@@ -22,7 +22,7 @@
         column-gap: var(--space-lg);
       }
 
-      ::slotted(*) {
+      .arc-masonry ::slotted(*) {
         break-inside: avoid;
         margin-bottom: var(--space-md);
       }

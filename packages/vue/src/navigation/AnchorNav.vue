@@ -14,7 +14,7 @@ withDefaults(defineProps<{
   items: () => ([]),
 });
 
-defineEmits<{
+const emit = defineEmits<{
   'arc-change': [event: CustomEvent];
 }>();
 </script>
@@ -24,6 +24,7 @@ defineEmits<{
     :orientation="orientation"
     :value="value"
     :items="items"
+    @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
   >
     <slot />
   </arc-anchor-nav>

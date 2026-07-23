@@ -50,11 +50,11 @@
         display: flex;
       }
 
-      /* Remove borders/radii from slotted inputs */
+      .arc-input-group /* Remove borders/radii from slotted inputs */
       ::slotted(arc-input),
-      ::slotted(arc-select),
-      ::slotted(input),
-      ::slotted(select) {
+      .arc-input-group ::slotted(arc-select),
+      .arc-input-group ::slotted(input),
+      .arc-input-group ::slotted(select) {
         border: none !important;
         border-radius: 0 !important;
         box-shadow: none !important;
@@ -62,7 +62,7 @@
         min-width: 0;
       }
 
-      /* Sizes */
+      .arc-input-group /* Sizes */
       .arc-input-group[data-size="sm"] .input-group__addon { padding: 0 var(--space-sm); font-size: var(--text-xs); }
       .arc-input-group[data-size="lg"] .input-group__addon { padding: 0 var(--space-lg); font-size: var(--body-size); }
 

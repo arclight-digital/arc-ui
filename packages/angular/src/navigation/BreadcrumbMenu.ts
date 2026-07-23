@@ -7,9 +7,10 @@ import '@arclux/arc-ui/breadcrumb-menu';
   selector: 'arc-breadcrumb-menu',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-breadcrumb-menu [attr.items]="items" (arc-navigate)="arcNavigate.emit($event)"><ng-content /></arc-breadcrumb-menu>`,
+  template: `<arc-breadcrumb-menu [attr.items]="items" [attr.label]="label" (arc-navigate)="arcNavigate.emit($event)"><ng-content /></arc-breadcrumb-menu>`,
 })
 export class BreadcrumbMenu {
   @Input() items: string = [];
+  @Input() label: string = 'Breadcrumb';
   @Output() arcNavigate = new EventEmitter<CustomEvent>();
 }
