@@ -84,6 +84,31 @@ export class ArcForm extends LitElement {
     this.disabled = false;
     this.errorSummary = true;
     this._errors = [];
+    this._onKeyDown = this._onKeyDown.bind(this);
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.addEventListener('keydown', this._onKeyDown);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.removeEventListener('keydown', this._onKeyDown);
+  }
+
+  /**
+   * Implicit submission: Enter in a slotted single-line input submits the
+   * form. The browser only provides this for controls associated with the
+   * form element itself, which never happens across shadow boundaries.
+   */
+  _onKeyDown(e) {
+    if (e.key !== 'Enter' || e.defaultPrevented) return;
+    const target = e.composedPath()[0];
+    if (!target || target.tagName !== 'INPUT') return;
+    if (['checkbox', 'radio', 'button', 'submit', 'reset', 'file', 'range', 'color'].includes(target.type)) return;
+    e.preventDefault();
+    this.submit();
   }
 
   /** Gather all form controls and propagate disabled */
@@ -208,7 +233,15 @@ export class ArcForm extends LitElement {
 
   /** Programmatic submit — call from outside */
   submit() {
-    this._handleSubmit(new Event('submit'));
+    // Route through the real <form> so action-mode submits actually navigate;
+    // requestSubmit() fires a genuine cancelable submit event into
+    // _handleSubmit. Fallback keeps JS-only mode working pre-render.
+    const form = this.shadowRoot?.querySelector('form');
+    if (form) {
+      form.requestSubmit();
+    } else {
+      this._handleSubmit(new Event('submit', { cancelable: true }));
+    }
   }
 
   /** Reset error states on child controls */

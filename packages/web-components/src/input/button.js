@@ -133,6 +133,25 @@ export class ArcButton extends LitElement {
     this._hasSuffix = false;
   }
 
+  /**
+   * The inner <button> lives in this component's shadow root, so it is never
+   * form-associated with an ancestor form — clicking type="submit" would
+   * silently do nothing. Bridge the gap by finding the nearest arc-form or
+   * native <form> and submitting/resetting it explicitly.
+   */
+  _handleClick() {
+    if (this.type !== 'submit' && this.type !== 'reset') return;
+    const form = this.closest('arc-form, form');
+    if (!form) return;
+    if (form.tagName === 'FORM') {
+      if (this.type === 'submit') form.requestSubmit();
+      else form.reset();
+    } else {
+      if (this.type === 'submit') form.submit();
+      else form.reset();
+    }
+  }
+
   _onPrefixSlotChange(e) {
     this._hasPrefix = e.target.assignedNodes({ flatten: true }).length > 0;
   }
@@ -158,6 +177,6 @@ export class ArcButton extends LitElement {
     if (this.href) {
       return html`<a class="btn" href=${this.href} part="button">${this._renderContent()}</a>`;
     }
-    return html`<button class="btn" type=${this.type} ?disabled=${this.disabled || this.loading} aria-busy=${this.loading ? 'true' : 'false'} part="button">${this._renderContent()}</button>`;
+    return html`<button class="btn" type=${this.type} ?disabled=${this.disabled || this.loading} aria-busy=${this.loading ? 'true' : 'false'} @click=${this._handleClick} part="button">${this._renderContent()}</button>`;
   }
 }
