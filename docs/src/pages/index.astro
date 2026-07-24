@@ -98,7 +98,7 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
     <div class="hero__content">
       <a href="/docs/changelog" class="hero__announcement">
         <span class="hero__announcement-badge">{versionShort}</span>
-        <span class="hero__announcement-text">⌘K docs search, command palette groups &amp; keyword filtering</span>
+        <span class="hero__announcement-text">Autocomplete in your editor, typed events &amp; dev warnings</span>
         <svg class="hero__announcement-arrow" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
       <h1 class="hero__headline">
@@ -128,48 +128,88 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
   <main>
     <arc-divider></arc-divider>
 
-    <!-- What's New in v2 -->
+    <!-- What's New — the editor autocomplete demo -->
     <section class="whats-new">
       <div class="whats-new__inner">
         <div class="whats-new__header reveal">
-          <span class="section-label">What's New</span>
-          <h2 class="section-title">Version 2.4 highlights.</h2>
+          <span class="section-label">What's New — {versionShort}</span>
+          <h2 class="section-title">Your editor already knows.</h2>
+          <p class="section-desc">
+            Every component documents its full API in <code>custom-elements.json</code> —
+            {versionShort} turns that into autocomplete in your editor, typed events in
+            TypeScript, and warnings in your console.
+          </p>
         </div>
         <div class="whats-new__grid">
-          <div class="whats-new__card reveal">
-            <div class="whats-new__icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M16 16l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <div class="editor-demo reveal" id="editor-demo">
+            <p class="sr-only">
+              Animated demo: an editor autocompletes the variant attribute of an
+              arc-button with the values primary, secondary, and ghost, showing hover
+              documentation, and the live button below updates as each value is accepted.
+            </p>
+            <div class="editor-demo__window" aria-hidden="true">
+              <div class="editor-demo__chrome">
+                <span class="editor-demo__dot"></span>
+                <span class="editor-demo__dot"></span>
+                <span class="editor-demo__dot"></span>
+                <span class="editor-demo__filename">index.html</span>
+              </div>
+              <div class="editor-demo__code">
+                <span class="editor-demo__punct">&lt;</span><span class="editor-demo__tag">arc-button</span>&nbsp;<span class="editor-demo__attr">variant</span><span class="editor-demo__punct">=</span><span class="editor-demo__str">"<span id="editor-demo-typed"></span></span><span class="editor-demo__caret"></span>
+                <div class="editor-demo__suggest" id="editor-demo-suggest">
+                  <div class="editor-demo__rows">
+                    <div class="editor-demo__row is-active" data-value="primary"><span class="editor-demo__row-icon">□</span>primary</div>
+                    <div class="editor-demo__row" data-value="secondary"><span class="editor-demo__row-icon">□</span>secondary</div>
+                    <div class="editor-demo__row" data-value="ghost"><span class="editor-demo__row-icon">□</span>ghost</div>
+                  </div>
+                  <div class="editor-demo__doc">
+                    <span class="editor-demo__doc-title">variant</span>
+                    Controls the visual weight and emphasis. Primary is a filled button
+                    with a neon glow hover suited for the top-level CTA.
+                  </div>
+                </div>
+              </div>
             </div>
-            <h3 class="whats-new__title">⌘K Docs Search</h3>
-            <p class="whats-new__desc">Search every component and guide from anywhere — built on our own Command Palette, rendered at build time, no search service and no client-side index.</p>
-          </div>
-          <div class="whats-new__card reveal">
-            <div class="whats-new__icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4 3h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/></svg>
+            <div class="editor-demo__stage">
+              <span class="editor-demo__stage-label">Live component</span>
+              <arc-button variant="primary" size="md" id="editor-demo-btn">Launch</arc-button>
             </div>
-            <h3 class="whats-new__title">Command Palette Groups</h3>
-            <p class="whats-new__desc">New arc-command-group wraps items under a heading; results stay one flat keyboard-navigable list and empty groups vanish as you type.</p>
           </div>
-          <div class="whats-new__card reveal">
-            <div class="whats-new__icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 5h18l-7 8v5l-4 2v-7L3 5z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="whats-new__list">
+            <div class="whats-new__item reveal">
+              <div class="whats-new__icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M8 4c-2 0-2 2-2 3v2c0 1-1 2-2 2 1 0 2 1 2 2v3c0 1 0 3 2 3M16 4c2 0 2 2 2 3v2c0 1 1 2 2 2-1 0-2 1-2 2v3c0 1 0 3-2 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+              <div>
+                <h3 class="whats-new__title">Autocomplete everywhere</h3>
+                <p class="whats-new__desc">Tags, attributes, and allowed values complete in VS Code and JetBrains, hover docs included. One settings line to enable — or none.</p>
+              </div>
             </div>
-            <h3 class="whats-new__title">Keyword Filtering</h3>
-            <p class="whats-new__desc">A keywords attribute on command items matches hidden alias terms — type "dropdown" and find Select — without cluttering what's on screen.</p>
-          </div>
-          <div class="whats-new__card reveal">
-            <div class="whats-new__icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="10" r="1.5" fill="currentColor"/><path d="M3 16l5-4 4 3 4-5 5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div class="whats-new__item reveal">
+              <div class="whats-new__icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 7V5h10v2M9 5v14M7 19h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 13c0-1 1-2 2.5-2s2.5.8 2.5 2c0 2-5 2-5 4 0 1.2 1 2 2.5 2s2.5-1 2.5-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+              <div>
+                <h3 class="whats-new__title">Typed to the detail</h3>
+                <p class="whats-new__desc">Every arc-* event carries a typed payload in TypeScript, and React 19 JSX type-checks each tag — no wrapper required.</p>
+              </div>
             </div>
-            <h3 class="whats-new__title">Social Cards Everywhere</h3>
-            <p class="whats-new__desc">Every component and guide page ships its own OG image, stats derive from one build-time source, and the changelog grew an RSS feed.</p>
+            <div class="whats-new__item reveal">
+              <div class="whats-new__icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 6l6 6-6 6M12 18h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div>
+                <h3 class="whats-new__title">A console that coaches</h3>
+                <p class="whats-new__desc">Import <code>@arclux/arc-ui/dev</code> and invalid values, attribute typos, and camelCase slips get flagged — each with a link to the right docs page.</p>
+              </div>
+            </div>
+            <div class="whats-new__cta reveal">
+              <arc-button href="/docs/changelog" variant="ghost" size="sm">
+                Full changelog
+                <svg slot="suffix" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </arc-button>
+            </div>
           </div>
-        </div>
-        <div class="whats-new__cta reveal">
-          <arc-button href="/docs/changelog" variant="ghost" size="sm">
-            Full changelog
-            <svg slot="suffix" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </arc-button>
         </div>
       </div>
     </section>
@@ -635,6 +675,66 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
     nums.forEach(el => observer.observe(el));
   }
 
+  /* ── Editor autocomplete demo ── */
+  function initEditorDemo() {
+    const demo = document.getElementById('editor-demo');
+    if (!demo || (demo as any).dataset.demoInit) return;
+    (demo as any).dataset.demoInit = '1';
+
+    const typed = document.getElementById('editor-demo-typed')!;
+    const suggest = document.getElementById('editor-demo-suggest')!;
+    const btn = document.getElementById('editor-demo-btn')!;
+    const rows = Array.from(suggest.querySelectorAll<HTMLElement>('.editor-demo__row'));
+    const values = rows.map((r) => r.dataset.value!);
+
+    const setActive = (i: number) => rows.forEach((r, j) => r.classList.toggle('is-active', i === j));
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      // Static tableau: dropdown open on the first value, docs visible.
+      suggest.classList.add('is-open');
+      return;
+    }
+
+    let stopped = false;
+    document.addEventListener('astro:before-swap', () => { stopped = true; }, { once: true });
+    const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+    async function run() {
+      let target = 0;
+      for (;;) {
+        typed.textContent = '';
+        setActive(0);
+        await sleep(700);
+        if (stopped) return;
+        suggest.classList.add('is-open');
+        await sleep(900);
+        // Arrow down to the target value.
+        for (let i = 1; i <= target; i++) {
+          if (stopped) return;
+          setActive(i);
+          await sleep(420);
+        }
+        await sleep(650);
+        if (stopped) return;
+        // Accept: complete the attribute, close the dropdown, morph the button.
+        typed.textContent = `${values[target]}"`;
+        suggest.classList.remove('is-open');
+        btn.setAttribute('variant', values[target]);
+        await sleep(2400);
+        if (stopped) return;
+        target = (target + 1) % values.length;
+      }
+    }
+
+    const io = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) {
+        io.disconnect();
+        run();
+      }
+    }, { threshold: 0.4 });
+    io.observe(demo);
+  }
+
   async function initNavigation() {
     const { navigate } = await import('astro:transitions/client');
     document.addEventListener('arc-navigate', (e: any) => {
@@ -649,11 +749,13 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
   initCanvas();
   initReveal();
   initStatCountUp();
+  initEditorDemo();
   initNavigation();
   document.addEventListener('astro:page-load', () => {
     initCanvas();
     initReveal();
     initStatCountUp();
+    initEditorDemo();
     initNavigation();
   });
 </script>
@@ -961,26 +1063,186 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
 
   .whats-new__grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-lg);
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: var(--space-2xl);
+    align-items: start;
   }
 
-  .whats-new__card {
-    padding: var(--space-lg);
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* ── Editor autocomplete demo ── */
+  .editor-demo {
+    display: flex;
+    flex-direction: column;
     border-radius: var(--radius-lg);
     border: 1px solid var(--border-subtle);
     background: var(--bg-card);
-    transition: border-color var(--transition-fast), box-shadow var(--transition-base);
+    overflow: hidden;
   }
 
-  .whats-new__card:hover {
-    border-color: var(--border-default);
-    box-shadow: var(--glow-card-hover);
+  .editor-demo__chrome {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px var(--space-md);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .editor-demo__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: var(--radius-full);
+    background: var(--border-default);
+    opacity: 0.6;
+  }
+
+  .editor-demo__filename {
+    margin-left: var(--space-sm);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+  }
+
+  .editor-demo__code {
+    position: relative;
+    padding: var(--space-lg) var(--space-lg) calc(var(--space-lg) + 128px);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    white-space: nowrap;
+  }
+
+  .editor-demo__punct { color: var(--text-muted); }
+  .editor-demo__tag { color: var(--accent-primary); }
+  .editor-demo__attr { color: var(--accent-secondary); }
+  .editor-demo__str { color: var(--color-success, #7bd88f); }
+
+  .editor-demo__caret {
+    display: inline-block;
+    width: 1.5px;
+    height: 1.1em;
+    margin-left: 1px;
+    vertical-align: text-bottom;
+    background: var(--text-primary);
+    animation: editor-caret 1s steps(1) infinite;
+  }
+
+  @keyframes editor-caret {
+    50% { opacity: 0; }
+  }
+
+  .editor-demo__suggest {
+    position: absolute;
+    top: calc(var(--space-lg) + 1.9em);
+    left: min(calc(var(--space-lg) + 21ch), 40%);
+    display: flex;
+    align-items: flex-start;
+    gap: 2px;
+    opacity: 0;
+    transition: opacity 120ms ease;
+    pointer-events: none;
+  }
+
+  .editor-demo__suggest.is-open { opacity: 1; }
+
+  .editor-demo__rows {
+    min-width: 150px;
+    padding: 3px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-default);
+    background: var(--bg-elevated);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  }
+
+  .editor-demo__row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 8px;
+    border-radius: 3px;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+  }
+
+  .editor-demo__row.is-active {
+    background: rgba(var(--accent-primary-rgb), 0.16);
+    color: var(--text-primary);
+  }
+
+  .editor-demo__row-icon {
+    color: var(--accent-secondary);
+    font-size: 9px;
+  }
+
+  .editor-demo__doc {
+    max-width: 240px;
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-elevated);
+    font-size: var(--text-xs);
+    line-height: 1.5;
+    color: var(--text-secondary);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  }
+
+  .editor-demo__doc-title {
+    display: block;
+    margin-bottom: 2px;
+    font-family: var(--font-mono);
+    color: var(--accent-secondary);
+  }
+
+  .editor-demo__stage {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-xl) var(--space-lg);
+    border-top: 1px solid var(--border-subtle);
+    background:
+      radial-gradient(ellipse at center, rgba(var(--accent-primary-rgb), 0.06), transparent 70%);
+  }
+
+  .editor-demo__stage-label {
+    position: absolute;
+    top: var(--space-sm);
+    right: var(--space-md);
+    font-family: var(--font-accent);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* ── Highlight list ── */
+  .whats-new__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .whats-new__item {
+    display: flex;
+    gap: var(--space-md);
+    align-items: flex-start;
   }
 
   .whats-new__icon {
-    width: 48px;
-    height: 48px;
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
     border-radius: var(--radius-md);
     background: rgba(var(--accent-primary-rgb), 0.1);
     border: 1px solid rgba(var(--accent-primary-rgb), 0.2);
@@ -988,7 +1250,6 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
     align-items: center;
     justify-content: center;
     color: var(--accent-primary);
-    margin-bottom: var(--space-md);
   }
 
   .whats-new__title {
@@ -1004,9 +1265,18 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
     line-height: 1.6;
   }
 
+  .whats-new__desc code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    color: var(--text-primary);
+  }
+
   .whats-new__cta {
-    margin-top: var(--space-xl);
-    text-align: center;
+    margin-top: var(--space-sm);
+  }
+
+  @media (max-width: 900px) {
+    .editor-demo__doc { display: none; }
   }
 
   /* ── Stats ── */
