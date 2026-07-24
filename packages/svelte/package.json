@@ -1,6 +1,6 @@
 {
   "name": "@arclux/arc-ui-svelte",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "description": "Svelte 5 wrappers for ARC UI Web Components.",
   "sideEffects": false,
   "type": "module",

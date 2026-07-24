@@ -3,6 +3,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 import { components } from '../../data/components/index';
 
 const headings = [
+  { id: 'v2-6-0', label: 'v2.6.0' },
   { id: 'v2-5-0', label: 'v2.5.0' },
   { id: 'v2-4-0', label: 'v2.4.0' },
   { id: 'v2-3-1', label: 'v2.3.1' },
@@ -11,32 +12,7 @@ const headings = [
   { id: 'v2-1-0', label: 'v2.1.0' },
   { id: 'v2-0-1', label: 'v2.0.1' },
   { id: 'v2-0-0', label: 'v2.0.0' },
-  { id: 'v1-11-0', label: 'v1.11.0' },
-  { id: 'v1-10-2', label: 'v1.10.2' },
-  { id: 'v1-10-1', label: 'v1.10.1' },
-  { id: 'v1-10-0', label: 'v1.10.0' },
-  { id: 'v1-9-2', label: 'v1.9.2' },
-  { id: 'v1-9-1', label: 'v1.9.1' },
-  { id: 'v1-9-0', label: 'v1.9.0' },
-  { id: 'v1-8-6', label: 'v1.8.6' },
-  { id: 'v1-8-5', label: 'v1.8.5' },
-  { id: 'v1-8-4', label: 'v1.8.4' },
-  { id: 'v1-8-3', label: 'v1.8.3' },
-  { id: 'v1-8-2', label: 'v1.8.2' },
-  { id: 'v1-8-1', label: 'v1.8.1' },
-  { id: 'v1-8-0', label: 'v1.8.0' },
-  { id: 'v1-7-2', label: 'v1.7.2' },
-  { id: 'v1-7-1', label: 'v1.7.1' },
-  { id: 'v1-7-0', label: 'v1.7.0' },
-  { id: 'v1-6-0', label: 'v1.6.0' },
-  { id: 'v1-5-2', label: 'v1.5.2' },
-  { id: 'v1-5-1', label: 'v1.5.1' },
-  { id: 'v1-5-0', label: 'v1.5.0' },
-  { id: 'v1-4-0', label: 'v1.4.0' },
-  { id: 'v1-3-0', label: 'v1.3.0' },
-  { id: 'v1-2-0', label: 'v1.2.0' },
-  { id: 'v1-1-0', label: 'v1.1.0' },
-  { id: 'v1-0-0', label: 'v1.0.0' },
+  { id: 'v1-archive', label: 'v1.x archive' },
   { id: 'components', label: 'Components' },
   { id: 'frameworks', label: 'Framework Wrappers' },
   { id: 'tokens', label: 'Design Tokens' },
@@ -60,6 +36,30 @@ const byTier = Object.fromEntries(
     <p class="page-desc">
       Release history for ARC UI. All packages are versioned together.
     </p>
+
+    <section id="v2-6-0">
+      <h2 class="docs-heading">v2.6.0 — Form Submission Across Shadow Boundaries</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <p class="docs-text">
+        Forms now behave the way every developer expects, with zero wiring. Shadow-DOM buttons
+        are never form-associated with an ancestor form, so <code>&lt;arc-button type="submit"&gt;</code>
+        inside a form silently did nothing and Enter-to-submit was lost — both are fixed at the
+        component level.
+      </p>
+
+      <h3 class="tier-heading">Forms</h3>
+      <ul class="docs-list">
+        <li><strong><code>arc-button</code> submit &amp; reset work everywhere</strong> &mdash; clicking a <code>type="submit"</code> or <code>type="reset"</code> button finds the nearest <code>arc-form</code> <em>or</em> native <code>&lt;form&gt;</code> and submits/resets it. Native forms go through <code>requestSubmit()</code>, so constraint validation and the <code>submit</code> event still fire.</li>
+        <li><strong>Enter submits</strong> &mdash; pressing Enter in a slotted single-line input submits the surrounding <code>arc-form</code>, matching standard browser behavior. Textareas and non-text input types are unaffected.</li>
+        <li><strong><code>arc-form.submit()</code> honors <code>action</code></strong> &mdash; programmatic submits now route through the internal form&rsquo;s <code>requestSubmit()</code>, so action-mode forms actually navigate instead of only firing <code>arc-submit</code>.</li>
+      </ul>
+
+      <p class="docs-text">
+        If you wired a manual click-to-submit workaround around <code>arc-form</code>, remove it
+        when upgrading — the component-level submit plus a workaround means double submission.
+      </p>
+    </section>
 
     <section id="v2-5-0">
       <h2 class="docs-heading">v2.5.0 — Keyboard-First Command Palette &amp; Browser Tests</h2>
@@ -501,6 +501,9 @@ const byTier = Object.fromEntries(
         <li>4 components updated to use <code>var(--glow-hover)</code> instead of inline shadow definitions.</li>
       </ul>
     </section>
+
+    <details class="changelog-archive" id="v1-archive">
+      <summary>v1.x archive — 26 releases, v1.0.0 through v1.11.0</summary>
 
     <section id="v1-11-0">
       <h2 class="docs-heading">v1.11.0 — Footer Containment &amp; Layout Improvements</h2>
@@ -1134,6 +1137,8 @@ const byTier = Object.fromEntries(
       </p>
     </section>
 
+    </details>
+
     <section id="components">
       <h2 class="docs-heading">Components</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
@@ -1222,4 +1227,53 @@ const byTier = Object.fromEntries(
     border-color: var(--border-bright);
     background: var(--bg-card);
   }
+
+  .changelog-archive {
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 0 var(--space-lg);
+    margin: var(--space-xl) 0;
+  }
+
+  .changelog-archive summary {
+    cursor: pointer;
+    padding: var(--space-md) 0;
+    font-family: var(--font-accent);
+    font-size: var(--text-xs);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    transition: color var(--transition-fast);
+  }
+
+  .changelog-archive summary:hover {
+    color: var(--text-primary);
+  }
+
+  .changelog-archive[open] summary {
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-subtle);
+    margin-bottom: var(--space-lg);
+  }
 </style>
+
+<script is:inline>
+  (function () {
+    // RSS items and old links target #v1-* anchors that now live inside the
+    // collapsed archive — open it before the browser scrolls to them.
+    var openArchiveForHash = function () {
+      var hash = location.hash;
+      if (!hash) return;
+      var target = document.getElementById(hash.slice(1));
+      if (!target) return;
+      var details = target.closest('details');
+      if (details && !details.open) {
+        details.open = true;
+        requestAnimationFrame(function () { target.scrollIntoView(); });
+      }
+    };
+    openArchiveForHash();
+    window.addEventListener('hashchange', openArchiveForHash);
+    document.addEventListener('astro:page-load', openArchiveForHash);
+  })();
+</script>
