@@ -2,3 +2,6 @@ User-agent: *
 Allow: /
 
 Sitemap: https://arcui.dev/sitemap-index.xml
+
+# Machine-readable library reference for LLMs and agents:
+# https://arcui.dev/llms.txt (index) and https://arcui.dev/llms-full.txt (complete)

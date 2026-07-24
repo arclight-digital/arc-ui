@@ -21,6 +21,8 @@ interface Props {
   activeSlug?: string;
   headings?: Array<{ id: string; label: string; level?: number }>;
   breadcrumbs?: Array<{ label: string; href?: string }>;
+  /** Set false on pages that emit their own TechArticle JSON-LD. */
+  articleSchema?: boolean;
 }
 
 const {
@@ -31,10 +33,51 @@ const {
   activeSlug,
   headings = [],
   breadcrumbs = [],
+  articleSchema = true,
 } = Astro.props;
+
+// Structured data for every docs page: breadcrumb trail (from the same prop
+// that renders the visible breadcrumb) plus a default TechArticle for guide
+// pages that don't emit a richer one themselves.
+const canonicalPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const pageUrl = new URL(canonicalPath, Astro.site).href;
+const trail = [
+  { label: 'Docs', href: '/docs/getting-started' },
+  ...breadcrumbs,
+  ...(breadcrumbs.length ? [] : [{ label: title }]),
+];
+const docsJsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: trail.map((c, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: c.label,
+        ...(c.href ? { item: new URL(c.href, Astro.site).href } : {}),
+      })),
+    },
+    ...(articleSchema
+      ? [
+          {
+            '@type': 'TechArticle',
+            headline: `${title} — ARC UI`,
+            name: title,
+            ...(description ? { description } : {}),
+            url: pageUrl,
+            image: new URL(ogImage, Astro.site).href,
+            author: { '@id': 'https://arcui.dev/#org' },
+            publisher: { '@id': 'https://arcui.dev/#org' },
+            isPartOf: { '@id': 'https://arcui.dev/#website' },
+          },
+        ]
+      : []),
+  ],
+};
 ---
 
-<BaseLayout title={htmlTitle ?? `${title} — ARC UI`} description={description} ogImage={ogImage}>
+<BaseLayout title={htmlTitle ?? `${title} — ARC UI`} description={description} ogImage={ogImage} ogType="article">
   <nav aria-label="Skip link">
     <arc-skip-link target="#main-content">Skip to content</arc-skip-link>
   </nav>
@@ -89,6 +132,7 @@ const {
 
   <SiteFooter />
   <arc-scroll-to-top></arc-scroll-to-top>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(docsJsonLd)} />
 </BaseLayout>
 
 <script>

@@ -25,9 +25,28 @@ const tierBadgeVariant: Record<string, string> = {
   input: 'violet',
   feedback: 'blue',
 };
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'ARC UI Components',
+  description: `Browse all ${components.length} ARC UI components.`,
+  url: new URL('/docs/components', Astro.site).href,
+  isPartOf: { '@id': 'https://arcui.dev/#website' },
+  mainEntity: {
+    '@type': 'ItemList',
+    numberOfItems: components.length,
+    itemListElement: components.map((c, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: c.name,
+      url: new URL(`/docs/components/${c.slug}`, Astro.site).href,
+    })),
+  },
+};
 ---
 
-<DocsLayout title="Components" description="Browse all ARC UI components." activeSlug="components">
+<DocsLayout title="Components" description="Browse all ARC UI components." activeSlug="components" articleSchema={false}>
   <div class="components-index">
     <h1 class="components-index__title">Components</h1>
     <p class="components-index__desc">
@@ -58,6 +77,7 @@ const tierBadgeVariant: Record<string, string> = {
       </section>
     ))}
   </div>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
 </DocsLayout>
 
 <script>

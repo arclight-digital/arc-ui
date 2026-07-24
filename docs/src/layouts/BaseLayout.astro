@@ -6,13 +6,44 @@ interface Props {
   description?: string;
   /** Site-relative path to a page-specific OG image, e.g. `/og/button.png`. */
   ogImage?: string;
+  /** `article` for docs/guide/component pages, `website` for everything else. */
+  ogType?: 'website' | 'article';
+  /** Keep utility pages (404) out of search indexes. */
+  noindex?: boolean;
 }
 
-const { title = 'ARC UI — Lit Web Components Library', description = 'A component library built on Lit Web Components. A custom code generator produces native bindings for React, Vue, Svelte, Angular, Solid, and Preact.', ogImage = '/og-image.png' } = Astro.props;
+const { title = 'ARC UI — Lit Web Components Library', description = 'A component library built on Lit Web Components. A custom code generator produces native bindings for React, Vue, Svelte, Angular, Solid, and Preact.', ogImage = '/og-image.png', ogType = 'website', noindex = false } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+// Canonical form is slash-less (matching internal links and the sitemap);
+// the CDN serves both forms, so these tags are what deduplicates them.
+const canonicalPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const canonicalURL = new URL(canonicalPath, Astro.site);
 const ogImageURL = new URL(ogImage, Astro.site);
 const ogImageAlt = `${title} — dark social card in the ARC UI glow style`;
+
+// Site-wide structured data: the site itself and the org behind it.
+const siteJsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': 'https://arcui.dev/#website',
+      name: 'ARC UI',
+      url: 'https://arcui.dev',
+      description:
+        'Dark-first Lit web components, generated natively for React, Vue, Svelte, Angular, Solid, Preact, and plain HTML.',
+      publisher: { '@id': 'https://arcui.dev/#org' },
+    },
+    {
+      '@type': 'Organization',
+      '@id': 'https://arcui.dev/#org',
+      name: 'Arclight Digital',
+      url: 'https://arcui.dev',
+      logo: 'https://arcui.dev/favicon-512x512.png',
+      sameAs: ['https://github.com/Arclight-Digital/arc-ui'],
+    },
+  ],
+};
 ---
 
 <html lang="en">
@@ -22,6 +53,7 @@ const ogImageAlt = `${title} — dark social card in the ARC UI glow style`;
     <meta name="description" content={description} />
     <title>{title}</title>
     <link rel="canonical" href={canonicalURL} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <meta name="theme-color" content="#030307" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -30,7 +62,7 @@ const ogImageAlt = `${title} — dark social card in the ARC UI glow style`;
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content={ogImageAlt} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content="ARC UI" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
@@ -38,6 +70,7 @@ const ogImageAlt = `${title} — dark social card in the ARC UI glow style`;
     <meta name="twitter:image" content={ogImageURL} />
     <meta name="twitter:image:alt" content={ogImageAlt} />
     <link rel="alternate" type="application/rss+xml" title="ARC UI Changelog" href="/rss.xml" />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(siteJsonLd)} />
     <script is:inline>
       (function(){
         var t=localStorage.getItem('arc-theme')||'auto';

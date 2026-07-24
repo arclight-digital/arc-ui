@@ -1,9 +1,12 @@
 {
   "name": "ARC UI",
   "short_name": "ARC UI",
+  "description": "Dark-first Lit web components, generated natively for React, Vue, Svelte, Angular, Solid, Preact, and plain HTML.",
+  "start_url": "/",
+  "scope": "/",
   "icons": [
     { "src": "/favicon-192x192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "/favicon-512x512.png", "sizes": "512x512", "type": "image/png" }
+    { "src": "/favicon-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
   ],
   "theme_color": "#030307",
   "background_color": "#030307",
