@@ -111,15 +111,6 @@ Sheet manages focus trapping and scroll locking automatically. When opened, it l
 
     previewSetup: `const bottomBtn = el.querySelector('#open-bottom-sheet'); const rightBtn = el.querySelector('#open-right-sheet'); const bottomSheet = el.querySelector('#demo-bottom-sheet'); const rightSheet = el.querySelector('#demo-right-sheet'); bottomBtn?.addEventListener('click', () => { if (bottomSheet) bottomSheet.open = true; }); rightBtn?.addEventListener('click', () => { if (rightSheet) rightSheet.open = true; }); el.querySelector('#reset-filters')?.addEventListener('click', () => { if (bottomSheet) bottomSheet.open = false; }); el.querySelector('#apply-filters')?.addEventListener('click', () => { if (bottomSheet) bottomSheet.open = false; });`,
 
-    props: [
-      { name: 'open', type: 'boolean', default: 'false', description: 'Controls whether the sheet is visible. Reflected as an attribute and toggleable programmatically.' },
-      { name: 'side', type: "'bottom' | 'right'", default: "'bottom'", description: 'Which edge the panel slides in from. Bottom sheets have a max-height of 80vh; right sheets are 400px wide.' },
-      { name: 'heading', type: 'string', default: "''", description: 'Text displayed in the header row. Also used as the `aria-label` for the dialog panel.' }
-    ],
-    events: [
-      { name: 'arc-open', description: 'Fired when the sheet opens' },
-      { name: 'arc-close', description: 'Fired when the sheet closes' }
-    ],
 
     tabs: [
     {

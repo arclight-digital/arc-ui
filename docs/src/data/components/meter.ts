@@ -47,15 +47,6 @@ Meter uses \`role="meter"\` with \`aria-valuenow\`, \`aria-valuemin\`, and \`ari
   <arc-meter label="Error Rate" value="45" min="0" max="100" low="10" high="50" optimum="0"></arc-meter>
 </div>`,
 
-    props: [
-      { name: 'value', type: 'number', default: '0', description: 'Current meter value. Clamped between `min` and `max`. Reflected as an attribute.' },
-      { name: 'min', type: 'number', default: '0', description: 'Minimum value representing the left edge (empty) of the meter.' },
-      { name: 'max', type: 'number', default: '100', description: 'Maximum value representing the right edge (full) of the meter.' },
-      { name: 'low', type: 'number', default: 'min + range * 0.33', description: 'Threshold below which the value is considered low. Used for color zone calculation.' },
-      { name: 'high', type: 'number', default: 'min + range * 0.67', description: 'Threshold above which the value is considered high. Used for color zone calculation.' },
-      { name: 'optimum', type: 'number', default: '(low + high) / 2', description: 'The optimal value. Determines which end of the range is "good" for color zone logic.' },
-      { name: 'label', type: 'string', default: "''", description: 'Label text displayed in the header row alongside the current percentage.' },
-    ],
     tabs: [
       {
         label: 'Web Component',

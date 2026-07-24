@@ -70,43 +70,6 @@ Because a toaster is usually a singleton placed at the application root, the man
       });
     `,
 
-    props: [
-      {
-        name: 'position',
-        type: "'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center'",
-        default: "'top-right'",
-        description: 'Forwarded to the inner arc-toast. Anchors the toast stack to a fixed edge of the viewport.',
-      },
-      {
-        name: 'duration',
-        type: 'number',
-        default: '4000',
-        description: 'Forwarded to the inner arc-toast as the default auto-dismiss time in milliseconds. Overridable per-toast via the duration option in the show() payload; pass persistent: true (or duration 0) to require manual dismissal.',
-      },
-      {
-        name: 'maxVisible',
-        type: 'number',
-        default: '3',
-        description: 'Maximum number of toasts visible at once (attribute: max-visible). Further show() calls queue FIFO and release as visible toasts dismiss.',
-      },
-      {
-        name: 'dedupe',
-        type: 'boolean',
-        default: 'true',
-        description: 'When true, a show() whose message and variant match a visible or queued toast is coalesced: visible matches re-show with a "(×N)" counter suffix and a fresh timer; queued matches bump their counter in place. Set the property to false from JS to disable.',
-      },
-      {
-        name: 'queueLimit',
-        type: 'number',
-        default: '20',
-        description: 'Maximum queued (not visible) toasts (attribute: queue-limit). Beyond it the oldest queued entries are dropped and arc-queue-overflow fires with the drop count.',
-      }
-    ],
-    events: [
-      { name: 'arc-dismiss', description: 'Fired when a managed toast is dismissed. detail: { id } — the id returned by show().' },
-      { name: 'arc-queue-change', description: 'Fired whenever the visible or queued count changes. detail: { visible, queued }.' },
-      { name: 'arc-queue-overflow', description: 'Fired when the queue exceeds queueLimit and oldest queued entries are dropped. detail: { dropped } — how many were dropped.' }
-    ],
 
     tabs: [
     {

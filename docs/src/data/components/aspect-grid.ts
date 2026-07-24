@@ -50,11 +50,6 @@ Use Aspect Grid when all items should have identical dimensions — photo galler
   <div style="aspect-ratio:1/1;background:rgba(139,92,246,0.12);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;color:var(--text-secondary);font-size:13px;font-family:var(--font-body)">6</div>
 </div>`,
 
-    props: [
-      { name: 'columns', type: 'number', default: '3', description: 'Number of columns in the grid. Each column is equal width (1fr).' },
-      { name: 'ratio', type: "'1/1' | '16/9' | '4/3'", default: "'1/1'", description: 'Aspect ratio applied to every cell. 1/1 for squares, 16/9 for widescreen, 4/3 for classic landscape.' },
-      { name: 'gap', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Spacing between grid cells, mapped to design system spacing tokens (--space-sm, --space-md, --space-lg).' },
-    ],
 
     tabs: [
       {

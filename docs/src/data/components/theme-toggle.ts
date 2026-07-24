@@ -47,14 +47,6 @@ An \`icon-only\` mode is available for compact layouts like toolbars, rendering 
   <arc-theme-toggle icon-only></arc-theme-toggle>
 </div>`,
 
-    props: [
-      { name: 'theme', type: "'dark' | 'light' | 'auto'", default: "'auto'", description: 'The current theme mode. Automatically synced to localStorage and the document root `data-theme` attribute.' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Prevents cycling and reduces opacity to 40%.' },
-      { name: 'icon-only', type: 'boolean', default: 'false', description: 'Renders the button as a compact circle without the theme name label. Attribute name is `icon-only`.' }
-    ],
-    events: [
-      { name: 'arc-change', description: 'Fired when the theme is toggled, with { theme } detail' }
-    ],
     tabs: [
     {
         label: 'Web Component',

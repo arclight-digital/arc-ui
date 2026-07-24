@@ -44,15 +44,6 @@ Pagination follows the WAI-ARIA pattern for navigation landmarks with \`role="na
 
     previewHtml: `<arc-pagination total="12" current="4" siblings="1"></arc-pagination>`,
 
-    props: [
-      { name: 'total', type: 'number', default: '1', description: 'Total number of pages.' },
-      { name: 'current', type: 'number', default: '1', description: 'The currently active page number (1-based). Reflected as an attribute.' },
-      { name: 'siblings', type: 'number', default: '1', description: 'Number of page buttons to show on each side of the current page before ellipsis truncation kicks in.' },
-      { name: 'compact', type: 'boolean', default: 'false', description: "Shows only previous/next buttons with a 'current / total' label. Hides individual page numbers." }
-    ],
-    events: [
-      { name: 'arc-change', description: 'Fired when the current page changes' }
-    ],
     tabs: [
       {
         label: 'Web Component',

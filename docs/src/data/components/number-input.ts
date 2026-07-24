@@ -44,17 +44,6 @@ When a \`label\` is provided, it renders as an uppercase accent-font label above
 
     previewHtml: `<arc-number-input label="Quantity" value="3" min="1" max="99" step="1"></arc-number-input>`,
 
-    props: [
-      { name: 'value', type: 'number', default: '0', description: 'Current numeric value. Reflected as an attribute and updated on user interaction.' },
-      { name: 'min', type: 'number', default: 'undefined', description: 'Minimum allowed value. The decrement button is disabled when the value reaches this limit.' },
-      { name: 'max', type: 'number', default: 'undefined', description: 'Maximum allowed value. The increment button is disabled when the value reaches this limit.' },
-      { name: 'step', type: 'number', default: '1', description: 'Increment and decrement step size. Arrow keys use this value, Shift+Arrow uses 10x this value.' },
-      { name: 'label', type: 'string', default: "''", description: 'Label text displayed above the control in uppercase accent font.' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables interaction, reducing opacity to 40% and blocking pointer events.' }
-    ],
-    events: [
-      { name: 'arc-change', description: 'Fired when the numeric value changes via buttons or keyboard' }
-    ],
 
     tabs: [
     {

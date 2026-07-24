@@ -55,14 +55,6 @@ Unlike Dock, which auto-hides and reveals on hover, Float Bar is explicitly cont
   </div>
 </div>`,
 
-    props: [
-      { name: 'open', type: 'boolean', default: 'false', description: 'Controls visibility of the float bar. Set to true when a triggering condition is met (e.g., items selected, form dirty) and false when the condition resolves.' },
-      { name: 'position', type: "'bottom' | 'top'", default: "'bottom'", description: 'Which edge of the viewport the float bar appears at. Bottom is standard for bulk-action bars; top works for consent banners or global alerts.' },
-    ],
-    events: [
-      { name: 'arc-open', description: 'Fired when the float bar becomes visible after the open prop is set to true.' },
-      { name: 'arc-close', description: 'Fired when the float bar hides after the open prop is set to false.' },
-    ],
 
     tabs: [
       {

@@ -56,15 +56,7 @@ By default, Hotkey skips events when focus is inside an input, textarea, select,
   });
 }`,
 
-  props: [
-    { name: 'keys', type: 'string', default: "''", description: 'Key pattern to match. Modifier combos use "+" (e.g., "ctrl+k"). Chords use spaces (e.g., "g i").' },
-    { name: 'disabled', type: 'boolean', default: 'false', description: 'Temporarily suspends the shortcut listener.' },
-    { name: 'global', type: 'boolean', default: 'false', description: 'When true, attaches to `window` instead of `document` and skips input/textarea filtering.' }
-  ],
 
-  events: [
-    { name: 'arc-hotkey-trigger', description: 'Fired when the full key pattern is matched. `event.detail.keys` contains the matched pattern string.' }
-  ],
 
   tabs: [
     {

@@ -50,15 +50,6 @@ MultiSelect fires an \`arc-change\` event whenever the selection changes, with t
   <arc-option value="lit">Lit</arc-option>
 </arc-multi-select>`,
 
-    props: [
-      { name: 'value', type: 'string[]', default: '[]', description: 'Array of selected option values. Updated when items are toggled and emitted via `arc-change`.' },
-      { name: 'label', type: 'string', default: "''", description: 'Visible label rendered above the control in a small uppercase style.' },
-      { name: 'placeholder', type: 'string', default: "''", description: 'Hint text shown inside the control when no items are selected and the input is empty.' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the control, preventing interaction and reducing opacity to 50%.' }
-    ],
-    events: [
-      { name: 'arc-change', description: 'Fired when the selected values change' }
-    ],
     tabs: [
     {
         label: 'Web Component',

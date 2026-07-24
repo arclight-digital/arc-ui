@@ -49,14 +49,6 @@ Chip fires an \`arc-change\` event on every toggle, including both the \`value\`
   <arc-chip value="angular">Angular</arc-chip>
 </div>`,
 
-    props: [
-      { name: 'selected', type: 'boolean', default: 'false', description: 'Whether the chip is currently selected. Reflected as an attribute and toggled on click or keypress.' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables interaction, reducing opacity to 40% and blocking pointer events.' },
-      { name: 'value', type: 'string', default: "''", description: 'Machine-readable identifier for this chip, included in the `arc-change` event detail.' }
-    ],
-    events: [
-      { name: 'arc-change', description: 'Fired when the chip selected state changes' }
-    ],
 
     tabs: [
     {

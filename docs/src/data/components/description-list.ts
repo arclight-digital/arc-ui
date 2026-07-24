@@ -46,20 +46,12 @@ Dividers (bottom borders between items, and right borders between columns) are e
   <arc-description-item term="Version">4.2.1</arc-description-item>
 </arc-description-list>`,
 
-  props: [
-    { name: 'columns', type: 'number', default: '1', description: 'Number of grid columns for laying out items side by side.' },
-    { name: 'dividers', type: 'boolean', default: 'true', description: 'Show horizontal dividers between rows and vertical dividers between columns.' },
-  ],
 
   subComponents: [
     {
       name: 'Description Item',
       tag: 'arc-description-item',
       description: 'A single term/detail pair within a description list. The term is rendered as an uppercase label, and the default slot holds the detail content.',
-      props: [
-        { name: 'term', type: 'string', default: "''", description: 'The key or label for this description entry, displayed as an uppercase heading.' },
-        { name: 'default slot', type: 'slot', description: 'The detail or value content for this entry.' },
-      ],
     },
   ],
 

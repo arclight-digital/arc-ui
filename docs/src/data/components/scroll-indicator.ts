@@ -46,12 +46,6 @@ Three size presets (sm: 2px, md: 3px, lg: 4px) keep the indicator unobtrusive at
   </div>
 </div>`,
 
-  props: [
-    { name: 'target', type: 'string', default: "''", description: 'CSS selector for the scroll container to track. Defaults to the window when empty.' },
-    { name: 'position', type: "'top' | 'bottom'", default: "'top'", description: 'Which edge the indicator sticks to.' },
-    { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'sm'", description: 'Bar thickness: sm (2px), md (3px), lg (4px).' },
-    { name: 'color', type: "'accent' | 'gradient'", default: "'accent'", description: 'Fill color mode. Accent uses `--accent-primary`. Gradient blends from primary to secondary.' }
-  ],
 
   tabs: [
     {

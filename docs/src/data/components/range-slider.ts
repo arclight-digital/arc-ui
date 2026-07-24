@@ -53,20 +53,6 @@ Range Slider fires \`arc-input\` continuously during drag for real-time previews
   <arc-range-slider label="Price Range" low="25" high="75" min="0" max="100" step="1"></arc-range-slider>
 </div>`,
 
-    props: [
-      { name: 'min', type: 'number', default: '0', description: 'Minimum allowed value at the left edge of the track.' },
-      { name: 'max', type: 'number', default: '100', description: 'Maximum allowed value at the right edge of the track.' },
-      { name: 'step', type: 'number', default: '1', description: 'Increment granularity. Values snap to multiples of this number.' },
-      { name: 'low', type: 'number', default: '0', description: 'Lower bound value of the selected range. Reflected as an attribute.' },
-      { name: 'high', type: 'number', default: '100', description: 'Upper bound value of the selected range. Reflected as an attribute.' },
-      { name: 'label', type: 'string', default: "''", description: 'Label text displayed above the slider with the range values shown on the right.' },
-      { name: 'show-values', type: 'boolean', default: 'true', description: 'Whether to display the numeric "low – high" readout in the header.' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables interaction, reducing opacity and blocking pointer events.' },
-    ],
-    events: [
-      { name: 'arc-input', description: 'Fired continuously as the user drags either thumb. Detail contains `{ low, high }`. Use for real-time filtering or preview.' },
-      { name: 'arc-change', description: 'Fired once when the user releases a thumb, indicating the final committed range. Detail contains `{ low, high }`. Use for persisting to a database or triggering an expensive operation.' },
-    ],
     tabs: [
       {
         label: 'Web Component',

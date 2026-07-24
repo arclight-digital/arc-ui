@@ -53,10 +53,6 @@ The \`max-height\` attribute constrains the container's height, making it ideal 
   <p>Line 8: Try scrolling down to see more content below.</p>
 </arc-scroll-area>`,
 
-    props: [
-      { name: 'max-height', type: 'string', default: "''", description: 'CSS max-height value applied to the scrollable container. Use any valid CSS length (e.g. `300px`, `50vh`).' },
-      { name: 'orientation', type: "'vertical' | 'horizontal' | 'both'", default: "'vertical'", description: 'Scroll direction. `vertical` shows a vertical scrollbar, `horizontal` shows a horizontal scrollbar, `both` shows both.' },
-    ],
     tabs: [
       {
         label: 'Web Component',

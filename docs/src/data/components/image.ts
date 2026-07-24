@@ -46,19 +46,7 @@ Six aspect ratio presets (\`1/1\`, \`4/3\`, \`16/9\`, \`21/9\`, \`3/4\`, \`9/16\
   <arc-image src="https://invalid-url.example/broken.jpg" alt="Broken image" aspect="16/9"></arc-image>
 </div>`,
 
-  props: [
-    { name: 'src', type: 'string', default: "''", description: 'Image source URL.' },
-    { name: 'alt', type: 'string', default: "''", description: 'Alt text for the image. Used as the accessible description.' },
-    { name: 'aspect', type: "'1/1' | '4/3' | '16/9' | '21/9' | '3/4' | '9/16'", default: "''", description: 'Constrains the container to a fixed aspect ratio, preventing layout shift during loading.' },
-    { name: 'fit', type: "'cover' | 'contain' | 'fill' | 'none' | 'scale-down'", default: "'cover'", description: 'CSS object-fit mode controlling how the image fills its container.' },
-    { name: 'loading', type: "'lazy' | 'eager'", default: "'lazy'", description: 'Native loading strategy. Lazy defers off-screen images until they approach the viewport.' },
-    { name: 'fallback', type: 'string', default: "''", description: 'URL of a fallback image to display if the primary `src` fails to load.' }
-  ],
 
-  events: [
-    { name: 'arc-load', description: 'Fired when the image successfully loads.' },
-    { name: 'arc-error', description: 'Fired when the image fails to load.' }
-  ],
 
   tabs: [
     {

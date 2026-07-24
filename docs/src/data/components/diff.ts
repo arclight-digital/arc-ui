@@ -52,11 +52,6 @@ Diff is designed for code review panels, changelog overlays, configuration compa
   after="const name = 'ARC UI';\\nconsole.log('Hello');\\nconsole.log('Welcome');\\nreturn name;">
 </arc-diff>`,
 
-    props: [
-      { name: 'before', type: 'string', default: "''", description: 'The original text to compare (split by newlines).' },
-      { name: 'after', type: 'string', default: "''", description: 'The modified text to compare (split by newlines).' },
-      { name: 'mode', type: 'string', default: "'inline'", description: "Display mode: 'inline' renders changes in a single column, 'side-by-side' renders two panes in a grid." },
-    ],
 
     tabs: [
       {

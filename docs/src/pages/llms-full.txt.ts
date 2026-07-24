@@ -1,11 +1,58 @@
 import type { APIRoute } from 'astro';
 import { components } from '../data/components/index';
+import { getApi, type ComponentApi } from '../data/manifest';
 import fs from 'node:fs';
 
 const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components/package.json', import.meta.url), 'utf-8'));
 const tokensCss = fs.readFileSync(new URL('../../../shared/base.css', import.meta.url), 'utf-8');
 
 export const prerender = true;
+
+const mdEscape = (s: string) => s.replace(/\|/g, '\\|').replace(/\n/g, ' ');
+
+/** Props/events/slots/parts sections for one element, from the manifest. */
+function renderApi(api: ComponentApi, h = '###'): string[] {
+  const lines: string[] = [];
+
+  if (api.props.length) {
+    lines.push('');
+    lines.push(`${h} Props`);
+    lines.push('');
+    lines.push('| Prop | Type | Default | Description |');
+    lines.push('|------|------|---------|-------------|');
+    for (const p of api.props) {
+      lines.push(`| \`${p.name}\` | \`${mdEscape(p.type)}\` | ${p.default ?? '—'} | ${mdEscape(p.description)} |`);
+    }
+  }
+
+  if (api.events.length) {
+    lines.push('');
+    lines.push(`${h} Events`);
+    lines.push('');
+    for (const e of api.events) {
+      const detail = e.detail ? ` (detail: \`${e.detail}\`)` : '';
+      lines.push(`- \`${e.name}\`${detail} — ${e.description}`);
+    }
+  }
+
+  if (api.slots.length) {
+    lines.push('');
+    lines.push(`${h} Slots`);
+    lines.push('');
+    for (const s of api.slots) {
+      lines.push(`- ${s.name ? `\`${s.name}\`` : '_default_'}${s.description ? ` — ${s.description}` : ''}`);
+    }
+  }
+
+  if (api.cssParts.length) {
+    lines.push('');
+    lines.push(`${h} CSS Parts`);
+    lines.push('');
+    lines.push(api.cssParts.map((p) => `\`${p.name}\``).join(', '));
+  }
+
+  return lines;
+}
 
 function renderComponent(c: typeof components[number]): string {
   const lines: string[] = [];
@@ -35,27 +82,9 @@ function renderComponent(c: typeof components[number]): string {
     }
   }
 
-  // Props
-  lines.push('');
-  lines.push('### Props');
-  lines.push('');
-  lines.push('| Prop | Type | Default | Description |');
-  lines.push('|------|------|---------|-------------|');
-  for (const p of c.props) {
-    const def = p.default ?? '—';
-    const desc = p.description.replace(/\|/g, '\\|').replace(/\n/g, ' ');
-    lines.push(`| \`${p.name}\` | \`${p.type.replace(/\|/g, '\\|')}\` | ${def} | ${desc} |`);
-  }
-
-  // Events
-  if (c.events?.length) {
-    lines.push('');
-    lines.push('### Events');
-    lines.push('');
-    for (const e of c.events) {
-      lines.push(`- \`${e.name}\` — ${e.description}`);
-    }
-  }
+  // API surface — sourced from custom-elements.json via data/manifest.ts
+  const api = getApi(c.tag);
+  lines.push(...renderApi(api));
 
   // Sub-components
   if (c.subComponents?.length) {
@@ -64,14 +93,7 @@ function renderComponent(c: typeof components[number]): string {
       lines.push(`### Sub-component: ${sub.name} (\`<${sub.tag}>\`)`);
       lines.push('');
       lines.push(sub.description);
-      lines.push('');
-      lines.push('| Prop | Type | Default | Description |');
-      lines.push('|------|------|---------|-------------|');
-      for (const p of sub.props) {
-        const def = p.default ?? '—';
-        const desc = p.description.replace(/\|/g, '\\|').replace(/\n/g, ' ');
-        lines.push(`| \`${p.name}\` | \`${p.type.replace(/\|/g, '\\|')}\` | ${def} | ${desc} |`);
-      }
+      lines.push(...renderApi(getApi(sub.tag), '####'));
     }
   }
 
@@ -136,7 +158,7 @@ function extractTokenSection(css: string, sectionName: string): string[] {
 }
 
 export const GET: APIRoute = async () => {
-  const tiers = ['layout', 'navigation', 'content', 'input', 'feedback'] as const;
+  const tiers = ['layout', 'navigation', 'content', 'data', 'typography', 'input', 'feedback'] as const;
 
   // Token categories from CSS comments
   const tokenCategories = [

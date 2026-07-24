@@ -49,16 +49,6 @@ When \`loop\` is enabled (the default), navigating past the last slide wraps to 
   <div style="padding:var(--space-xl); background:var(--bg-elevated); text-align:center;">Slide 3</div>
 </arc-carousel>`,
 
-    props: [
-      { name: 'auto-play', type: 'boolean', default: 'false', description: 'Enables automatic slide advancement on a timer. Pauses on hover and focus, respects prefers-reduced-motion.' },
-      { name: 'interval', type: 'number', default: '5000', description: 'Auto-play interval in milliseconds between slide transitions.' },
-      { name: 'loop', type: 'boolean', default: 'true', description: 'Enables wrapping at the edges so the last slide connects to the first and vice versa.' },
-      { name: 'show-dots', type: 'boolean', default: 'true', description: 'Shows dot indicators below the viewport for direct slide navigation.' },
-      { name: 'show-arrows', type: 'boolean', default: 'true', description: 'Shows previous/next arrow buttons on the left and right edges of the viewport.' }
-    ],
-    events: [
-      { name: 'arc-change', description: 'Fired when the active slide changes' }
-    ],
 
     tabs: [
     {

@@ -51,13 +51,6 @@ Stack is especially useful for form layouts, card groups, button rows, and any c
   </arc-stack>
 </arc-stack>`,
 
-    props: [
-      { name: 'direction', type: "'vertical' | 'horizontal'", default: "'vertical'", description: 'Flex direction — vertical is column, horizontal is row' },
-      { name: 'gap', type: "'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'", default: "'md'", description: 'Gap between children, maps to --space-* tokens' },
-      { name: 'align', type: "'start' | 'center' | 'end' | 'stretch'", default: "'stretch'", description: 'Cross-axis alignment (align-items)' },
-      { name: 'justify', type: "'start' | 'center' | 'end' | 'between' | 'around'", default: "'start'", description: 'Main-axis alignment (justify-content)' },
-      { name: 'wrap', type: 'boolean', default: 'false', description: 'Enable flex-wrap for responsive wrapping' },
-    ],
     tabs: [
       {
         label: 'Web Component',

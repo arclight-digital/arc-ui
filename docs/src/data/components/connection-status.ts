@@ -45,11 +45,6 @@ The component fires \`arc-online\` and \`arc-offline\` events so your applicatio
 
     previewHtml: `<arc-connection-status></arc-connection-status><p style="color:var(--text-secondary);font-size:var(--font-size-sm)">Toggle your network connection in browser DevTools to see the status bar appear.</p>`,
 
-    props: [],
-    events: [
-      { name: 'arc-online', description: 'Fired when the browser regains network connectivity' },
-      { name: 'arc-offline', description: 'Fired when the browser loses network connectivity' },
-    ],
 
     tabs: [
       {

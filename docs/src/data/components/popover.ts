@@ -50,15 +50,6 @@ Popover uses \`role="dialog"\` on the panel and sets \`aria-haspopup\` and \`ari
   </div>
 </arc-popover>`,
 
-    props: [
-      { name: 'open', type: 'boolean', default: 'false', description: 'Whether the popover panel is currently visible. Reflected as an attribute.' },
-      { name: 'position', type: "'top' | 'bottom' | 'left' | 'right'", default: "'bottom'", description: 'Placement of the panel relative to the trigger element.' },
-      { name: 'trigger', type: 'string', default: "''", description: 'Reserved for future trigger-mode configuration (click, hover, manual).' }
-    ],
-    events: [
-      { name: 'arc-open', description: 'Fired when the popover opens.' },
-      { name: 'arc-close', description: 'Fired when the popover closes.' }
-    ],
     tabs: [
     {
         label: 'Web Component',

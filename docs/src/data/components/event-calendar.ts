@@ -66,16 +66,6 @@ if (cal) {
   ];
 }`,
 
-    props: [
-      { name: 'events', type: 'Array<{ id: string | number; date: string; end?: string; label: string; color?: 1|2|3|4|5|6 }>', default: '[]', description: 'The event objects to display. `date` (and optional `end` for multi-day spans) are ISO strings (YYYY-MM-DD). `color` indexes the fixed `--chart-N` palette and defaults to 1. Set via JavaScript property, not an attribute.' },
-      { name: 'view', type: "'month' | 'week'", default: "'month'", description: 'Which period layout to render. Also switchable by the user via the header view toggle.' },
-      { name: 'date', type: 'string', default: "''", description: 'ISO date string (YYYY-MM-DD) anchoring the visible period. Defaults to today when left empty.' }
-    ],
-    events: [
-      { name: 'arc-event-click', description: 'Fired when an event chip is clicked or activated. `event.detail.event` contains the original event object.' },
-      { name: 'arc-date-click', description: 'Fired when a day cell or a "+N more" overflow button is activated. `event.detail.date` contains the ISO date string.' },
-      { name: 'arc-period-change', description: 'Fired when the visible period or view changes (navigation buttons, Today, view toggle, or keyboard). `event.detail` contains `{ view, date }`.' }
-    ],
     tabs: [
     {
         label: 'Web Component',

@@ -93,17 +93,6 @@ if (mb) {
   });
 }`,
 
-    props: [
-      {
-        name: 'items',
-        type: 'Array<MenubarItem>',
-        default: '[]',
-        description: 'The menu structure. Each top-level entry is `{ label, disabled?, items }` where `items` contains menu entries of shape `{ label, shortcut?, disabled?, divider?, items? }`. Entries with an `items` array become submenus (one further nesting level supported); `{ divider: true }` renders a separator. Set via JavaScript — this is a property, not an HTML attribute.',
-      },
-    ],
-    events: [
-      { name: 'arc-select', description: 'Fired when a leaf menu item is activated. `detail.path` is the array of labels from the top-level menu to the selected leaf, e.g. `["File", "Export", "PNG"]`.' },
-    ],
     tabs: [
       {
         label: 'Web Component',

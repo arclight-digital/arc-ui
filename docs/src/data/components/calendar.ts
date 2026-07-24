@@ -44,17 +44,6 @@ Full keyboard navigation is supported: arrow keys move a focus ring through the 
 
     previewHtml: `<arc-calendar value="2026-02-12"></arc-calendar>`,
 
-    props: [
-      { name: 'value', type: 'string', default: "''", description: 'The selected date as an ISO string (YYYY-MM-DD). Empty string means no date is selected.' },
-      { name: 'min', type: 'string', default: "''", description: 'Minimum selectable date as an ISO string. Days before this date are disabled.' },
-      { name: 'max', type: 'string', default: "''", description: 'Maximum selectable date as an ISO string. Days after this date are disabled.' },
-      { name: 'month', type: 'number', description: 'The currently displayed month (0-based, 0=January). Defaults to the current month.' },
-      { name: 'year', type: 'number', description: 'The currently displayed year. Defaults to the current year.' }
-    ],
-    events: [
-      { name: 'arc-change', description: 'Fired when a date is selected. `event.detail.value` contains the ISO date string (YYYY-MM-DD).' },
-      { name: 'arc-navigate', description: 'Fired when the visible month or year changes via the navigation buttons.' }
-    ],
     tabs: [
     {
         label: 'Web Component',

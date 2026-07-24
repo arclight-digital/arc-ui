@@ -64,13 +64,6 @@ BottomNav is designed to complement TopBar — use TopBar for desktop viewports 
   </nav>
 </div>`,
 
-  props: [
-    { name: 'items', type: 'Array<{ label, icon, value }>', default: '[]', description: 'Array of navigation items, each with a label, icon name, and value identifier.' },
-    { name: 'value', type: 'string', default: "''", description: 'The value of the currently active item. Controls which item is highlighted.' },
-  ],
-  events: [
-    { name: 'arc-change', description: 'Fired when an item is tapped with detail: { value }.' },
-  ],
 
   tabs: [
     {

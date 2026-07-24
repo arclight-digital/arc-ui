@@ -61,15 +61,6 @@ Positioning is controlled by the \`position\` prop, which accepts \`top-right\` 
   </arc-notification-panel>
 </div>`,
 
-    props: [
-      { name: 'open', type: 'boolean', default: 'false', description: 'Controls whether the notification panel is visible. Toggle this programmatically or let the built-in trigger click handler manage it.' },
-      { name: 'position', type: "'top-right' | 'top-left'", default: "'top-right'", description: 'Horizontal alignment of the panel relative to the trigger element. Use top-right when the trigger is near the right edge of the viewport.' },
-      { name: 'max-height', type: 'string', default: "'400px'", description: 'Maximum height of the scrollable body area. Prevents long notification lists from overflowing the viewport.' }
-    ],
-    events: [
-      { name: 'arc-open', description: 'Fired when the notification panel opens' },
-      { name: 'arc-close', description: 'Fired when the notification panel closes' }
-    ],
     tabs: [
     {
         label: 'Web Component',

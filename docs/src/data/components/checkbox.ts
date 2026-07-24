@@ -51,50 +51,6 @@ Every checkbox includes a built-in label, a form-compatible name/value pair, and
   <arc-checkbox label="Configure CI/CD"></arc-checkbox>
 </div>`,
 
-    props: [
-      {
-        name: 'checked',
-        type: 'boolean',
-        default: 'false',
-        description: 'Controls whether the checkbox is in its checked (selected) state. When true, a checkmark icon is rendered inside the box. Bind to this property for two-way state management in frameworks that support it.',
-      },
-      {
-        name: 'indeterminate',
-        type: 'boolean',
-        default: 'false',
-        description: 'When true, displays a horizontal dash instead of a checkmark, representing a mixed or partially-selected state. Commonly used on a parent "select all" checkbox when only some children are checked. Clicking an indeterminate checkbox resolves it to fully checked.',
-      },
-      {
-        name: 'disabled',
-        type: 'boolean',
-        default: 'false',
-        description: 'Prevents all pointer and keyboard interaction and applies a dimmed visual treatment. Use this for options that are unavailable due to unmet prerequisites. Pair with a tooltip or helper text to explain why the option is locked.',
-      },
-      {
-        name: 'label',
-        type: 'string',
-        description: 'Visible text rendered beside the checkbox. Clicking the label toggles the checkbox, matching native HTML behaviour. Keep labels short, affirmative, and action-oriented for the best readability.',
-      },
-      {
-        name: 'size',
-        type: 'string',
-        default: "'md'",
-        description: "Controls the checkbox size. Options: 'sm', 'md', 'lg'.",
-      },
-      {
-        name: 'name',
-        type: 'string',
-        description: 'The form field name submitted when the checkbox lives inside a <form>. Required for native form submission and useful for serializing checkbox group values on the server.',
-      },
-      {
-        name: 'value',
-        type: 'string',
-        description: 'The value sent with the form when the checkbox is checked. Defaults to "on" if omitted, matching native checkbox behaviour. Set explicit values when multiple checkboxes share the same name to distinguish them in the submitted data.',
-      },
-    ],
-    events: [
-      { name: 'arc-change', description: 'Fired when the checked state changes' },
-    ],
 
     tabs: [
       {

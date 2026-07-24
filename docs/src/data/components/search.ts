@@ -49,19 +49,6 @@ Suggestions are provided declaratively with \`<arc-suggestion>\` elements, each 
   <arc-suggestion value="tabs">Tabs</arc-suggestion>
 </arc-search>`,
 
-    props: [
-      { name: 'value', type: 'string', default: "''", description: 'Current text content of the search input.' },
-      { name: 'placeholder', type: 'string', default: "'Search...'", description: 'Hint text displayed when the input is empty.' },
-      { name: 'label', type: 'string', default: "''", description: 'Accessible label for the search field. Rendered visually above the input when provided.' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the input, reducing opacity and blocking interaction.' },
-      { name: 'loading', type: 'boolean', default: 'false', description: 'Shows a spinning indicator in place of the clear button to signal in-progress loading.' }
-    ],
-    events: [
-      { name: 'arc-input', description: 'Fired on each keystroke in the search field' },
-      { name: 'arc-clear', description: 'Fired when the clear button is clicked' },
-      { name: 'arc-change', description: 'Fired when the search value changes on blur' },
-      { name: 'arc-select', description: 'Fired when a suggestion is selected' }
-    ],
     tabs: [
     {
         label: 'Web Component',
@@ -150,9 +137,6 @@ export class MyComponent {}`,
         name: 'Suggestion',
         tag: 'arc-suggestion',
         description: 'Autocomplete suggestion item inside a Search component.',
-        props: [
-          { name: 'value', type: 'string', description: 'Suggestion value' }
-        ],
       }
     ],
   

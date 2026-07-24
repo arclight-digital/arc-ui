@@ -53,9 +53,6 @@ The \`position\` prop controls whether the status bar flows with the page layout
   </arc-status-bar>
 </div>`,
 
-    props: [
-      { name: 'position', type: "'static' | 'fixed'", default: "'static'", description: 'Controls whether the status bar flows with the document (static) or pins to the bottom of the viewport (fixed). Fixed mode sets bottom: 0, left: 0, right: 0 with z-index: 100.' },
-    ],
     tabs: [
       {
         label: 'Web Component',

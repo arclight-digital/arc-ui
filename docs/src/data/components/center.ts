@@ -57,11 +57,6 @@ The \`text\` prop adds \`text-align: center\` for centering inline text content 
   </div>
 </div>`,
 
-    props: [
-      { name: 'max-width', type: 'string', default: "'var(--max-width)'", description: 'Maximum width for the centered content block. Accepts any CSS length or custom property. Only applies in default (block) centering mode.' },
-      { name: 'intrinsic', type: 'boolean', default: 'false', description: 'Enables intrinsic centering mode using flexbox, which centers children based on their natural width rather than stretching to max-width.' },
-      { name: 'text', type: 'boolean', default: 'false', description: 'Adds text-align: center for centering inline text content within the block.' },
-    ],
 
     tabs: [
       {

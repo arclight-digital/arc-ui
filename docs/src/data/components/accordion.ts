@@ -64,14 +64,6 @@ The component is fully accessible out of the box: trigger buttons carry \`aria-e
   </arc-accordion>
 </div>`,
 
-  props: [
-    {
-      name: 'multiple',
-      type: 'boolean',
-      default: 'false',
-      description: 'When true, allows multiple accordion panels to be open simultaneously. When false (default), opening one panel closes any other open panel.',
-    },
-  ],
 
   subComponents: [
     {
@@ -79,14 +71,6 @@ The component is fully accessible out of the box: trigger buttons carry \`aria-e
       tag: 'arc-accordion-item',
       description:
         'An individual collapsible section inside an Accordion. The question attribute supplies the clickable header text, and slotted children become the expandable body content.',
-      props: [
-        {
-          name: 'question',
-          type: 'string',
-          description:
-            'The heading text displayed on the trigger button. Should be a concise, scannable label or question.',
-        },
-      ],
     },
   ],
 

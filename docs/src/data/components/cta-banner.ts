@@ -48,12 +48,6 @@ The component is fully responsive: on viewports below 768px, padding compresses 
 
     previewHtml: `<div style="width:100%">${previewMarkup}</div>`,
 
-    props: [
-      { name: 'eyebrow', type: 'string', default: "''", description: 'Small label text displayed above the headline. Typically a short phrase like "Ready to build?" that sets context.' },
-      { name: 'headline', type: 'string', default: "''", description: 'Main headline text rendered with gradient display styling. Keep it concise and action-oriented.' },
-      { name: 'nogradient', type: 'boolean', default: 'false', description: 'When true, disables the radial gradient background effect for quieter contexts.' },
-    ],
-    events: [],
 
     tabs: [
       {

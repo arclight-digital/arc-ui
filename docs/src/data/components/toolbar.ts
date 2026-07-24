@@ -60,15 +60,6 @@ When the \`sticky\` prop is set, the toolbar uses \`position: sticky\` with \`to
   </div>
 </div>`,
 
-    props: [
-      { name: 'sticky', type: 'boolean', default: 'false', description: 'When set, the toolbar uses position: sticky with top: 0 and z-index: 50, keeping it visible as the user scrolls through content below.' },
-      { name: 'size', type: "'md' | 'sm'", default: "'md'", description: 'Controls the toolbar height. The default md size is 48px for primary toolbars. The sm size is 36px for secondary or nested toolbars.' },
-      { name: 'border', type: 'boolean', default: 'true', description: 'Renders a subtle bottom border (--border-subtle) to visually separate the toolbar from the content below. Enabled by default.' },
-      { name: 'overflow', type: 'boolean', default: 'false', description: 'Enables responsive overflow collapse. A ResizeObserver measures available width; slotted items that do not fit are collapsed (hidden via the reversible hidden attribute) from the end of the item list, and a "More" trigger opens a menu of proxy items that re-dispatch clicks to the hidden originals. Note: because slotted nodes cannot be moved into the overflow panel, complex custom content is represented in the menu only by its text label (or the label attribute on arc-button / arc-icon-button).' },
-    ],
-    events: [
-      { name: 'arc-overflow-change', description: 'Fired when the set of collapsed items changes (only with the overflow prop). detail: { hiddenCount: number }.' },
-    ],
     tabs: [
       {
         label: 'Web Component',

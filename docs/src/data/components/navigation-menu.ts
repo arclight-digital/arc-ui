@@ -67,11 +67,6 @@ Keyboard support is built in from the start. Arrow keys move between top-level i
   ${previewMarkup}
 </div>`,
 
-    props: [],
-    events: [
-      { name: 'arc-navigate', description: 'Fired when a navigation item is selected' },
-      { name: 'arc-mobile-menu-toggle', description: 'Dispatched on the document when the mobile hamburger button is clicked. Listen on document to toggle your mobile navigation state.' },
-    ],
 
     tabs: [
       {
@@ -243,30 +238,6 @@ export function SiteNav() {
         name: 'NavItem',
         tag: 'arc-nav-item',
         description: 'A single entry inside NavigationMenu. When used at the top level and containing nested NavItem children, it becomes a dropdown trigger. When used without children, it renders as a direct navigation link. Nest one level deep to populate a dropdown panel.',
-        props: [
-          {
-            name: 'href',
-            type: 'string',
-            description: 'Destination URL for the nav item. Required for leaf items that navigate. Omit on parent items that serve only as dropdown triggers.',
-          },
-          {
-            name: 'active',
-            type: 'boolean',
-            default: 'false',
-            description: 'Highlights the item with an accent-coloured bottom border to indicate the current route. Set this on the top-level NavItem that corresponds to the active page.',
-          },
-          {
-            name: 'variant',
-            type: "'default' | 'primary' | 'muted'",
-            default: "'default'",
-            description: 'Visual style variant. `default` shows a subtle border and muted text with accent glow on active. `primary` uses accent-colored text and border in the resting state with a stronger glow on hover/active. `muted` renders a subdued style with no border and lighter text — ideal for secondary links like "Blog" or "Changelog".',
-          },
-          {
-            name: 'description',
-            type: 'string',
-            description: 'Secondary text displayed below the item label inside a dropdown. Use this to add context like "Real-time dashboards and metrics" so users can scan the mega-menu without clicking through.',
-          },
-        ],
       },
     ],
   

@@ -48,39 +48,6 @@ RadioGroup supports both vertical and horizontal orientations. Vertical is the d
   <arc-radio value="enterprise">Enterprise — Custom pricing</arc-radio>
 </arc-radio-group>`,
 
-    props: [
-      {
-        name: 'value',
-        type: 'string',
-        description: 'The currently selected value. Must match one of the child arc-radio value attributes. Setting this property programmatically updates the visual selection and the internal aria-checked state.',
-      },
-      {
-        name: 'name',
-        type: 'string',
-        description: 'The form field name submitted with the selected value. Required for native form integration — without it, the selection will not appear in FormData.',
-      },
-      {
-        name: 'disabled',
-        type: 'boolean',
-        default: 'false',
-        description: 'When true, disables all options in the group. The component becomes non-interactive: arrow-key navigation is suppressed, click events are ignored, and the group is excluded from the Tab order.',
-      },
-      {
-        name: 'orientation',
-        type: "'vertical' | 'horizontal'",
-        default: "'vertical'",
-        description: 'Controls the layout direction of the radio options. Vertical stacks options top-to-bottom and maps Arrow Up/Down to navigation. Horizontal places options in a row and maps Arrow Left/Right.',
-      },
-      {
-        name: 'size',
-        type: 'string',
-        default: "'md'",
-        description: "Controls the radio button and label size. Options: 'sm', 'md', 'lg'.",
-      },
-    ],
-    events: [
-      { name: 'arc-change', description: 'Fired when the selected radio value changes' },
-    ],
 
     tabs: [
       {
@@ -254,10 +221,6 @@ function NotificationPreference() {
         name: 'Radio',
         tag: 'arc-radio',
         description: 'Individual radio option rendered inside a RadioGroup. Each Radio represents a single selectable choice with its own label and value. Can be independently disabled while the rest of the group remains interactive.',
-        props: [
-          { name: 'value', type: 'string', description: 'The value submitted when this option is selected. Must be unique within the parent RadioGroup.' },
-          { name: 'disabled', type: 'boolean', default: 'false', description: 'When true, dims this individual option and removes it from keyboard navigation. The option cannot be selected by click or arrow keys.' },
-        ],
       },
     ],
   

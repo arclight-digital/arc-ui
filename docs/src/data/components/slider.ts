@@ -46,18 +46,6 @@ Slider fires \`arc-input\` on every movement for real-time UI updates and \`arc-
   <arc-slider label="Opacity" value="75" min="0" max="100" step="1"></arc-slider>
 </div>`,
 
-    props: [
-      { name: 'value', type: 'number', default: '0', description: 'Current slider value. Reflected as an attribute and updated on user interaction.' },
-      { name: 'min', type: 'number', default: '0', description: 'Minimum allowed value at the left edge of the track.' },
-      { name: 'max', type: 'number', default: '100', description: 'Maximum allowed value at the right edge of the track.' },
-      { name: 'step', type: 'number', default: '1', description: 'Increment granularity. The value snaps to multiples of this number.' },
-      { name: 'label', type: 'string', default: "''", description: 'Label text displayed above the slider with the current value shown on the right.' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables interaction, reducing opacity to 40% and blocking pointer events.' },
-    ],
-    events: [
-      { name: 'arc-input', description: 'Fired continuously as the user drags the thumb. Use for real-time preview updates like adjusting opacity, volume, or a CSS property live.' },
-      { name: 'arc-change', description: 'Fired once when the user releases the thumb, indicating the final committed value. Use for persisting the value to a database or triggering an expensive operation.' },
-    ],
     tabs: [
       {
         label: 'Web Component',

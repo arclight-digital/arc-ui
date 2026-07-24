@@ -46,15 +46,6 @@ CommandBar is intentionally minimal — it handles the input chrome and events w
   <arc-command-bar placeholder="Search or type a command..." style="width:100%;max-width:400px"></arc-command-bar>
 </div>`,
 
-  props: [
-    { name: 'placeholder', type: 'string', default: "'Search...'", description: 'Placeholder text displayed when the input is empty. Use it to communicate the scope of the search.' },
-    { name: 'value', type: 'string', default: "''", description: 'The current value of the input. Set externally to control the input state programmatically.' },
-    { name: 'icon', type: 'string', default: "'magnifying-glass'", description: 'Icon name displayed before the input. Accepts any Phosphor icon name.' },
-  ],
-  events: [
-    { name: 'arc-input', description: 'Fired on every keystroke with detail: { value }.' },
-    { name: 'arc-submit', description: 'Fired when the user presses Enter with detail: { value }.' },
-  ],
 
   tabs: [
     {

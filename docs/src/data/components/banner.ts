@@ -46,29 +46,6 @@ Four semantic variants — info, success, warning, and error — apply a subtle 
   <arc-banner variant="info" dismissible>Scheduled maintenance tonight from 11 PM to 1 AM UTC.</arc-banner>
 </div>`,
 
-    props: [
-      {
-        name: 'variant',
-        type: "'info' | 'success' | 'warning' | 'error'",
-        default: "'info'",
-        description: 'Controls the semantic colour palette and icon. Use "info" for neutral announcements, "success" for positive confirmations, "warning" for caution states, and "error" for outages or critical failures.',
-      },
-      {
-        name: 'dismissible',
-        type: 'boolean',
-        default: 'false',
-        description: 'When true, renders a close button on the right side. Clicking it collapses the banner and fires an "arc-dismiss" event.',
-      },
-      {
-        name: 'sticky',
-        type: 'boolean',
-        default: 'false',
-        description: 'When true, pins the banner to the top of the viewport with position: sticky so it remains visible as the user scrolls.',
-      },
-    ],
-    events: [
-      { name: 'arc-dismiss', description: 'Fired when a dismissible banner is closed by the user' },
-    ],
 
     tabs: [
       {

@@ -53,12 +53,6 @@ Three sizes (sm, md, lg) control the font size, and the disabled state reduces o
   </div>
 </div>`,
 
-  props: [
-    { name: 'for', type: 'string', default: "''", description: 'ID of the target input element. Clicking the label focuses the associated control.' },
-    { name: 'required', type: 'boolean', default: 'false', description: 'Shows a red asterisk (*) after the label text.' },
-    { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Controls the label font size.' },
-    { name: 'disabled', type: 'boolean', default: 'false', description: 'Reduces opacity and blocks pointer events.' },
-  ],
 
   tabs: [
     {

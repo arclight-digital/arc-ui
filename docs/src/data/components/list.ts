@@ -45,33 +45,13 @@ Three visual variants — default (plain), bordered (outlined container), and se
   <arc-list-item value="trash" disabled>Trash</arc-list-item>
 </arc-list>`,
 
-  props: [
-    { name: 'variant', type: "'default' | 'bordered' | 'separated'", default: "'default'", description: 'Visual style. Bordered wraps the list in an outlined container. Separated adds bottom borders between items.' },
-    { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Controls the base font size for the list and its children.' },
-    { name: 'selectable', type: 'boolean', default: 'false', description: 'Enables selection mode. Sets `role="listbox"` and manages `aria-selected` on child items.' },
-    { name: 'multiple', type: 'boolean', default: 'false', description: 'Allows multiple items to be selected simultaneously. Only applies when `selectable` is true.' },
-    { name: 'value', type: 'string', default: "''", description: 'The currently selected value(s). Comma-separated when `multiple` is true.' },
-    { name: 'label', type: 'string', default: "''", description: 'Accessible name for the list, applied as `aria-label`. Required when `selectable` is set so the listbox has an accessible name.' }
-  ],
 
-  events: [
-    { name: 'arc-change', description: 'Fired when the selection changes. `event.detail.value` contains the new value string.' }
-  ],
 
   subComponents: [
     {
       name: 'List Item',
       tag: 'arc-list-item',
       description: 'Individual row within an arc-list. Supports prefix/suffix slots, a description slot for secondary text, links, and selection state.',
-      props: [
-        { name: 'value', type: 'string', default: "''", description: 'Unique identifier used for selection tracking.' },
-        { name: 'selected', type: 'boolean', default: 'false', description: 'Whether this item is currently selected. Managed automatically by the parent list.' },
-        { name: 'disabled', type: 'boolean', default: 'false', description: 'Prevents interaction and dims the item.' },
-        { name: 'href', type: 'string', default: "''", description: 'When set, renders the item as an anchor tag for navigation.' },
-        { name: 'slot="prefix"', type: 'slot', description: 'Leading content area for icons, avatars, or indicators.' },
-        { name: 'slot="suffix"', type: 'slot', description: 'Trailing content area for badges, actions, or metadata.' },
-        { name: 'slot="description"', type: 'slot', description: 'Secondary text rendered below the main label in smaller, muted type.' }
-      ],
     }
   ],
 

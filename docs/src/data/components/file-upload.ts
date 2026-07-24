@@ -44,16 +44,6 @@ The component dispatches an \`arc-change\` event whenever the file list changes 
 
     previewHtml: `<arc-file-upload accept=".png,.jpg,.svg" multiple max-size="5242880" style="width:100%; max-width:480px;"></arc-file-upload>`,
 
-    props: [
-      { name: 'accept', type: 'string', default: "''", description: 'Comma-separated list of accepted file types, passed directly to the native file input accept attribute. Examples: "image/*", ".pdf,.docx", "audio/mp3".' },
-      { name: 'multiple', type: 'boolean', default: 'false', description: 'When true, allows selecting multiple files. Each drop or browse interaction appends to the existing file list rather than replacing it.' },
-      { name: 'max-size', type: 'number', default: '0', description: 'Maximum file size in bytes. Files exceeding this limit are rejected with an inline error message. Set to 0 for no limit.' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the dropzone, preventing drag-and-drop and click interactions. Reduces opacity to 0.4.' }
-    ],
-    events: [
-      { name: 'arc-change', description: 'Fired when files are added or dropped' },
-      { name: 'arc-remove', description: 'Fired when a file is removed from the list' }
-    ],
     tabs: [
     {
         label: 'Web Component',

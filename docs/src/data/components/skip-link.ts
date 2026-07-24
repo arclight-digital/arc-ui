@@ -46,10 +46,6 @@ The component accepts a \`target\` prop — typically an ID selector like \`#mai
   <p style="color:var(--text-muted);font-size:var(--text-sm);margin:0">SkipLink is invisible by default. Press <kbd style="padding:2px 6px;background:var(--bg-inset);border:1px solid var(--border-default);border-radius:var(--radius-sm);font-size:var(--text-xs);font-family:var(--font-mono)">Tab</kbd> at the top of any page to reveal it.</p>
 </div>`,
 
-  props: [
-    { name: 'target', type: 'string', default: "'#main'", description: 'CSS selector for the element that should receive focus when the skip link is activated. Typically an ID like #main.' },
-  ],
-  events: [],
 
   tabs: [
     {

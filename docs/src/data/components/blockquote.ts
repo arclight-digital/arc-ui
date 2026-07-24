@@ -44,10 +44,6 @@ The component uses CSS parts (\`blockquote\`, \`quote\`, \`cite\`) for fine-grai
 
     previewHtml: `<arc-blockquote cite="Grace Hopper" variant="accent">The most dangerous phrase in the language is: we have always done it this way.</arc-blockquote>`,
 
-    props: [
-        { name: 'cite', type: 'string', default: "''", description: 'Citation or attribution text displayed beneath the quote with an em dash prefix' },
-        { name: 'variant', type: "'default' | 'accent'", default: "'default'", description: 'Visual variant. Accent applies a gradient text fill to the quote content.' },
-    ],
 
     tabs: [
         {

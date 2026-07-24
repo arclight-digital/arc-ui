@@ -44,15 +44,6 @@ Paste handling is built in -- pasting a code into any box distributes the charac
 
     previewHtml: `<arc-otp-input length="6" type="number"></arc-otp-input>`,
 
-    props: [
-      { name: 'length', type: 'number', default: '6', description: 'Number of individual character boxes to render. Reflected as an attribute.' },
-      { name: 'value', type: 'string', default: "''", description: 'The concatenated value of all boxes. Reflected as an attribute and updated on every input.' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables all input boxes, reducing opacity to 40% and blocking pointer events.' },
-      { name: 'type', type: "'number' | 'text'", default: "'number'", description: 'Input mode. `number` filters non-digits and uses the numeric keyboard; `text` allows any character.' }
-    ],
-    events: [
-      { name: 'arc-change', description: 'Fired when any digit changes' }
-    ],
 
     tabs: [
     {

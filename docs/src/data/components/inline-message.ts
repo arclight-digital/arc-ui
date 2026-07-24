@@ -48,15 +48,6 @@ Unlike alert, inline-message is not dismissible and has no interactive behavior 
   <arc-inline-message variant="error">Please enter a valid email address.</arc-inline-message>
 </div>`,
 
-    props: [
-      {
-        name: 'variant',
-        type: "'info' | 'success' | 'warning' | 'error'",
-        default: "'info'",
-        description: 'Controls the icon and text colour. Use "info" for neutral hints, "success" for valid state feedback, "warning" for caution notes, and "error" for validation failures.',
-      },
-    ],
-    events: [],
 
     tabs: [
       {

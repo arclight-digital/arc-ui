@@ -57,16 +57,6 @@ When the \`removable\` prop is set, a small close button appears after the label
   <arc-tag variant="primary" removable>Removable</arc-tag>
 </div>`,
 
-    props: [
-      { name: 'variant', type: "'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger'", default: "'default'", description: 'Colour variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and danger provide semantic status colours.' },
-      { name: 'color', type: 'string', description: 'Custom colour as an RGB triplet (e.g. `"77, 126, 247"`). When set, overrides the variant colours for border, text, background, and hover glow. Useful for data-driven category colours.' },
-      { name: 'size', type: 'string', default: "'md'", description: "Controls the tag size. Options: 'sm', 'md', 'lg'." },
-      { name: 'removable', type: 'boolean', default: 'false', description: 'When true, shows a close button that fires `arc-remove` when clicked.' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the tag, reducing opacity to 40% and blocking pointer events including the remove button.' },
-    ],
-    events: [
-      { name: 'arc-remove', description: 'Fired when the remove button on a removable tag is clicked' },
-    ],
     tabs: [
       {
         label: 'Web Component',

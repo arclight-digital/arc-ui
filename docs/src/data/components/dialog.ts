@@ -48,18 +48,6 @@ The component uses \`role="alertdialog"\` with \`aria-modal="true"\` to properly
     previewHtml: `<arc-button onclick="this.nextElementSibling.open = true" variant="secondary">Discard Draft</arc-button>
 <arc-dialog heading="Discard Draft?" message="You have unsaved changes that will be permanently lost. This action cannot be undone." confirm-label="Discard" cancel-label="Keep Editing" variant="danger"></arc-dialog>`,
 
-    props: [
-      { name: 'open', type: 'boolean', default: 'false', description: 'Whether the dialog is visible' },
-      { name: 'heading', type: 'string', default: "''", description: 'Dialog title text' },
-      { name: 'message', type: 'string', default: "''", description: 'Dialog body message' },
-      { name: 'confirm-label', type: 'string', default: "'Confirm'", description: 'Text for the confirm button' },
-      { name: 'cancel-label', type: 'string', default: "'Cancel'", description: 'Text for the cancel button' },
-      { name: 'variant', type: "'default' | 'danger'", default: "'default'", description: 'Visual variant — danger adds red accent line, glow border, and red confirm button' }
-    ],
-    events: [
-      { name: 'arc-confirm', description: 'Fired when the confirm button is clicked' },
-      { name: 'arc-cancel', description: 'Fired when cancel, escape, or backdrop click occurs' }
-    ],
     tabs: [
     {
         label: 'Web Component',

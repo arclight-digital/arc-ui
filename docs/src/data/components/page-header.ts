@@ -55,26 +55,6 @@ Because PageHeader renders a semantic \`<h1>\` for its heading, it establishes t
   ${previewMarkup}
 </div>`,
 
-    props: [
-      {
-        name: 'heading',
-        type: 'string',
-        default: "''",
-        description: 'The page title rendered as an <h1>. This is the primary text landmark and should clearly describe the current page or view (e.g. "Team Settings", "Order #4021"). Keep it concise — two to five words is ideal.',
-      },
-      {
-        name: 'description',
-        type: 'string',
-        default: "''",
-        description: 'Optional supporting text displayed below the title row. Use it to provide a one-line summary of what the page contains or what action the user should take. When empty, the description paragraph is not rendered.',
-      },
-      {
-        name: 'border',
-        type: 'boolean',
-        default: 'false',
-        description: 'When set, renders a subtle bottom border below the header to visually separate it from page content.',
-      },
-    ],
 
     tabs: [
       {

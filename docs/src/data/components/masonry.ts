@@ -50,10 +50,6 @@ Use Masonry when your content items have naturally varying heights — image gal
   <div style="break-inside:avoid;margin-bottom:var(--space-md);background:rgba(139,92,246,0.12);border-radius:var(--radius-sm);padding:var(--space-md);height:90px;display:flex;align-items:center;justify-content:center;color:var(--text-secondary);font-size:13px;font-family:var(--font-body)">Item 6</div>
 </div>`,
 
-    props: [
-      { name: 'columns', type: 'number', default: '3', description: 'Number of columns in the masonry grid. The browser distributes children across columns to minimize overall height difference.' },
-      { name: 'gap', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Spacing between columns and rows, mapped to design system spacing tokens (--space-sm, --space-md, --space-lg).' },
-    ],
 
     tabs: [
       {

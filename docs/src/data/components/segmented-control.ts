@@ -48,22 +48,12 @@ Segmented Control auto-selects the first option when no initial \`value\` is pro
   <arc-option value="monthly">Monthly</arc-option>
 </arc-segmented-control>`,
 
-    props: [
-      { name: 'value', type: 'string', default: "''", description: 'The value of the currently selected option. Reflected as an attribute and auto-set to the first option if empty.' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the entire control, reducing opacity to 40% and blocking pointer events.' }
-    ],
-    events: [
-      { name: 'arc-change', description: 'Fired when the selected segment changes' }
-    ],
 
     subComponents: [
       {
         name: 'Option',
         tag: 'arc-option',
         description: 'Individual option element slotted into the segmented control. The `value` attribute identifies the option and the text content becomes the label.',
-        props: [
-          { name: 'value', type: 'string', default: "''", description: 'The value identifier for this option, used to match against the parent control value.' }
-        ],
       }
     ],
 

@@ -49,11 +49,6 @@ Three size presets (\`sm\`, \`md\`, \`lg\`) control the swatch dimensions: 32px,
   <arc-color-swatch color="#ef4444" label="Error" size="lg"></arc-color-swatch>
 </div>`,
 
-    props: [
-      { name: 'color', type: 'string', default: "'#4d7ef7'", description: 'Any valid CSS colour value applied as the swatch background' },
-      { name: 'label', type: 'string', default: "''", description: 'Display label below the swatch; falls back to the colour value if empty' },
-      { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Controls swatch dimensions: sm (32px), md (48px), lg (64px)' },
-    ],
     tabs: [
       {
         label: 'Web Component',

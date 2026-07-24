@@ -51,16 +51,6 @@ When an \`href\` is provided, IconButton renders as an anchor tag instead of a \
   <arc-icon-button name="download" text="Export" variant="ghost" size="md"></arc-icon-button>
 </div>`,
 
-    props: [
-      { name: 'name', type: 'string', default: "''", description: 'Name of the arc-icon to render. When empty, the default slot is used for custom icon content.' },
-      { name: 'text', type: 'string', default: "''", description: 'Optional text label displayed next to the icon. When provided, the button expands from a square to a wider labeled button with uppercase styling.' },
-      { name: 'variant', type: "'ghost' | 'secondary' | 'primary'", default: "'ghost'", description: 'Visual style variant. Ghost is transparent, secondary has a border with glow, primary has a solid accent-primary fill.' },
-      { name: 'size', type: "'xs' | 'sm' | 'md' | 'lg'", default: "'md'", description: 'Button size controlling dimensions and icon scale. Icon-only sizes: xs=28px, sm=32px, md=36px, lg=44px.' },
-      { name: 'label', type: 'string', default: "''", description: 'Accessible label for the button. Falls back to `text` if not provided. Required for icon-only usage.' },
-      { name: 'href', type: 'string', default: "''", description: 'When set, renders the button as an anchor tag for navigation links.' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the button, reducing opacity to 40% and blocking pointer events.' },
-      { name: 'type', type: 'string', default: "'button'", description: 'HTML button type attribute. Only applies when `href` is not set.' },
-    ],
     tabs: [
       {
         label: 'Web Component',

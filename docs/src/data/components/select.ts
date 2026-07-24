@@ -55,19 +55,6 @@ Use Select any time you need a single-choice dropdown in a form: assigning a tea
   </arc-select>
 </div>`,
 
-    props: [
-      { name: 'value', type: 'string', description: 'The currently selected value. Must match one of the child `arc-option` value attributes. Setting this programmatically updates the displayed label and internal selection state.' },
-      { name: 'placeholder', type: 'string', default: "'Select...'", description: 'Hint text displayed inside the trigger button when no option is selected. Use it to communicate what kind of choice the user should make, such as "Choose a team member..." or "Pick a status". The placeholder disappears once a value is chosen.' },
-      { name: 'label', type: 'string', description: 'Visible label rendered above the select trigger. Also serves as the accessible name for assistive technologies. Always provide a label for accessibility compliance.' },
-      { name: 'size', type: 'string', default: "'md'", description: "Controls the select trigger size. Options: 'sm', 'md', 'lg'." },
-      { name: 'name', type: 'string', description: 'Form field name submitted with the selected value. Required for native form integration via ElementInternals.' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'When true, the select trigger becomes non-interactive: it cannot be opened, focused via keyboard, or clicked. The component renders with reduced opacity to visually convey the unavailable state.' },
-      { name: 'error', type: 'string', default: "''", description: 'Error message displayed below the select. When set, the trigger border turns red.' },
-      { name: 'open', type: 'boolean', default: 'false', description: 'Controls whether the dropdown is visible. Set programmatically to open or close the dropdown. Automatically set to `false` when an option is selected or the user clicks outside.' }
-    ],
-    events: [
-      { name: 'arc-change', description: 'Fired when the selected option changes' }
-    ],
 
     tabs: [
     {
@@ -257,10 +244,6 @@ function LocalePicker() {
         name: 'Option',
         tag: 'arc-option',
         description: 'Individual option rendered inside a Select or MultiSelect. Each Option provides a value for form submission and displays its text content as the label in the dropdown.',
-        props: [
-          { name: 'value', type: 'string', description: 'The value submitted when this option is selected. Must be unique within the parent Select.' },
-          { name: 'disabled', type: 'boolean', default: 'false', description: 'When true, dims this option and prevents it from being selected.' }
-        ],
       }
     ],
   

@@ -49,13 +49,6 @@ The icon slot lets you replace the default emoji icons with custom SVG or icon-f
   <arc-callout variant="danger">This action permanently deletes all data and cannot be undone.</arc-callout>
 </div>`,
 
-    props: [
-      { name: 'variant', type: "'info' | 'warning' | 'tip' | 'danger'", default: "'info'", description: 'Semantic variant that controls the colour scheme, top accent bar, and default icon' },
-      { name: 'dismissible', type: 'boolean', default: 'false', description: 'Shows a close button that removes the callout. Fires an arc-dismiss event on close.' },
-    ],
-    events: [
-      { name: 'arc-dismiss', description: 'Fired when the dismiss button is clicked on a dismissible callout.' },
-    ],
     tabs: [
       {
         label: 'Web Component',

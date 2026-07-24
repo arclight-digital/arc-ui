@@ -74,66 +74,7 @@ if (line) {
   ];
 }`,
 
-  props: [
-    {
-      name: 'type',
-      type: "'line' | 'area' | 'bar' | 'donut'",
-      default: "'line'",
-      description: 'The chart form. Line and area share the x axis across all series; bar renders grouped columns (or stacked with the `stacked` attribute); donut renders one segment per series (or per category when a single series is given).',
-    },
-    {
-      name: 'series',
-      type: 'Array<{ label: string, data: number[] }>',
-      default: '[]',
-      description: 'The data that drives the chart. Each entry is one series; all series share the x axis defined by `labels`. Set via JavaScript property, not an attribute. Colors are assigned in fixed order from --chart-1 to --chart-6; series beyond six are summed into an "Other" series noted in the legend.',
-    },
-    {
-      name: 'labels',
-      type: 'string[]',
-      default: '[]',
-      description: 'Category labels for the x axis (or donut segment names when a single series is given). Labels that would collide are automatically thinned — every Nth label renders based on available width.',
-    },
-    {
-      name: 'stacked',
-      type: 'boolean',
-      default: 'false',
-      description: 'Bar type only. Stacks series segments on a shared baseline with 2px surface gaps between segments; only the outermost segment gets the rounded value end. Assumes non-negative data.',
-    },
-    {
-      name: 'hide-legend',
-      type: 'boolean',
-      default: 'false',
-      description: 'Suppresses the legend. By default the legend renders for two or more series and is omitted for a single series.',
-    },
-    {
-      name: 'hide-axis',
-      type: 'boolean',
-      default: 'false',
-      description: 'Removes the axis layer — gridlines, y tick labels, and x category labels — for compact trend panels where exact values are read from the tooltip.',
-    },
-    {
-      name: 'height',
-      type: 'number',
-      default: '260',
-      description: 'Chart height in pixels. Width is fluid and tracked with a ResizeObserver.',
-    },
-    {
-      name: 'value-format',
-      type: "'number' | 'percent' | 'currency'",
-      default: "'number'",
-      description: 'How values are formatted in tooltips, the axis, and the accessible data table, via Intl.NumberFormat. Percent expects fractional data (0.24 → 24%). Axis numbers are abbreviated (1.2k, 3.4M).',
-    },
-    {
-      name: 'currency',
-      type: 'string',
-      default: "'USD'",
-      description: 'ISO 4217 currency code used when value-format="currency".',
-    },
-  ],
 
-  events: [
-    { name: 'arc-mark-click', description: 'Fired when a mark (bar, stacked segment, line point column, or donut segment) is clicked. detail: { seriesIndex, index, value }. Indices refer to displayed series after any "Other" folding; a folded donut segment reports seriesIndex -1.' },
-  ],
 
   tabs: [
     {

@@ -60,23 +60,6 @@ Four built-in variants — info, success, warning, and error — apply a colored
       });
     `,
 
-    props: [
-      {
-        name: 'position',
-        type: "'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center'",
-        default: "'top-right'",
-        description: 'Anchors the toast stack to a fixed edge of the viewport. Top-right is the most conventional position for web applications. Bottom positions work well for media players or editors where the top area is occupied by toolbars.',
-      },
-      {
-        name: 'duration',
-        type: 'number',
-        default: '4000',
-        description: 'Time in milliseconds before a toast auto-dismisses. Applies as the default for every show() call but can be overridden per-toast via the duration option in the show() payload. Set to 0 to disable auto-dismiss entirely, requiring the user to click the close button.',
-      }
-    ],
-    events: [
-      { name: 'arc-dismiss', description: 'Fired when a toast notification is dismissed' }
-    ],
 
     tabs: [
     {

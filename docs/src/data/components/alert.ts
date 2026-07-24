@@ -44,34 +44,6 @@ Alerts support an optional heading for a scannable summary and a dismiss button 
   <arc-alert variant="success" heading="Deployment complete" dismissible>Your changes are now live on production.</arc-alert>
 </div>`,
 
-    props: [
-      {
-        name: 'variant',
-        type: "'info' | 'success' | 'warning' | 'error'",
-        default: "'info'",
-        description: 'Controls the semantic colour palette and icon. Use "info" for neutral guidance, "success" for confirmations, "warning" for caution states, and "error" for failures or blocking issues.',
-      },
-      {
-        name: 'dismissible',
-        type: 'boolean',
-        default: 'false',
-        description: 'When true, renders a close button in the top-right corner. Clicking it removes the alert from the DOM and fires an "arc-dismiss" event that parent components can listen to.',
-      },
-      {
-        name: 'heading',
-        type: 'string',
-        description: 'Optional bold heading rendered above the body slot. Use it for a scannable one-line summary so users can quickly gauge the alert\'s importance before reading the full message.',
-      },
-      {
-        name: 'compact',
-        type: 'boolean',
-        default: 'false',
-        description: 'Reduces padding and font sizes for inline or space-constrained usage.',
-      },
-    ],
-    events: [
-      { name: 'arc-dismiss', description: 'Fired when a dismissible alert is closed' },
-    ],
 
     tabs: [
       {

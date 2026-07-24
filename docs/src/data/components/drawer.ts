@@ -87,14 +87,6 @@ Choose Drawer over Modal when the supplementary content is navigation-oriented, 
 
     previewSetup: `const openBtn = el.querySelector('#open-nav-drawer'); const drawer = el.querySelector('#nav-drawer'); openBtn?.addEventListener('click', () => { if (drawer) drawer.open = true; });`,
 
-    props: [
-      { name: 'open', type: 'boolean', default: 'false', description: 'Controls the visible state of the drawer. Set to `true` to slide the panel into view and activate the backdrop; set to `false` to run the exit animation, remove the backdrop, and restore body scroll.' },
-      { name: 'heading', type: 'string', default: "''", description: 'Text displayed in the drawer header bar. Also used as the `aria-label` for the dialog panel, ensuring screen readers announce the panel purpose when it opens.' },
-      { name: 'position', type: "'left' | 'right'", default: "'left'", description: 'Which edge of the viewport the drawer slides in from. Use `left` for primary navigation menus and `right` for contextual detail panels, filter sidebars, or settings trays.' }
-    ],
-    events: [
-      { name: 'arc-close', description: 'Fired when the drawer closes via backdrop click or escape key' }
-    ],
 
     tabs: [
       {

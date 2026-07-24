@@ -47,20 +47,12 @@ Pairs respond to hover with a subtle background highlight, making it easy to tra
   <arc-kv-pair label="Last Deploy">2 hours ago</arc-kv-pair>
 </arc-key-value>`,
 
-  props: [
-    { name: 'layout', type: "'horizontal' | 'stacked'", default: "'horizontal'", description: 'Controls pair arrangement. Horizontal uses a CSS grid with key and value side by side. Stacked places the key above the value.' },
-    { name: 'dividers', type: 'boolean', default: 'true', description: 'When true, renders a subtle border between each key-value pair.' },
-  ],
 
   subComponents: [
     {
       name: 'KV Pair',
       tag: 'arc-kv-pair',
       description: 'A single key-value pair within an arc-key-value container. The `label` attribute provides the key text, and the default slot holds the value content.',
-      props: [
-        { name: 'label', type: 'string', default: "''", description: 'The key/term text displayed in uppercase accent styling.' },
-        { name: 'default slot', type: 'slot', description: 'The value content — can be text, badges, links, or any inline/block content.' },
-      ],
     },
   ],
 

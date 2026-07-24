@@ -46,14 +46,6 @@ PageIndicator is intentionally minimal — it handles position communication and
   <arc-page-indicator count="5" value="2" clickable></arc-page-indicator>
 </div>`,
 
-  props: [
-    { name: 'count', type: 'number', default: '3', description: 'Total number of dots to display.' },
-    { name: 'value', type: 'number', default: '0', description: 'Zero-based index of the active dot.' },
-    { name: 'clickable', type: 'boolean', default: 'false', description: 'When true, dots become interactive tap targets that dispatch arc-change on click.' },
-  ],
-  events: [
-    { name: 'arc-change', description: 'Fired when a dot is clicked (clickable mode only) with detail: { value }.' },
-  ],
 
   tabs: [
     {

@@ -52,14 +52,6 @@ When an item is selected -- by clicking or pressing Enter -- the palette dispatc
   <arc-command-item icon="sign-out">Sign Out</arc-command-item>
 </arc-command-palette>`,
 
-    props: [
-      { name: 'open', type: 'boolean', default: 'false', description: 'Controls whether the palette is visible. When set to true, the dialog animates in, the search input auto-focuses, and body scroll is locked. Set to false to close.' },
-      { name: 'placeholder', type: 'string', default: "'Type a command...'", description: 'Placeholder text displayed in the search input when the query is empty.' }
-    ],
-    events: [
-      { name: 'arc-select', description: 'Fired when a command item is selected' },
-      { name: 'arc-close', description: 'Fired when the palette closes' }
-    ],
     tabs: [
     {
         label: 'Web Component',
@@ -155,19 +147,11 @@ export class MyComponent {}`,
         name: 'CommandItem',
         tag: 'arc-command-item',
         description: 'Action item inside a CommandPalette.',
-        props: [
-          { name: 'shortcut', type: 'string', description: 'Keyboard shortcut hint' },
-          { name: 'icon', type: 'string', description: 'Name of the icon to display before the item label.' },
-          { name: 'keywords', type: 'string', description: 'Extra space-separated terms the search filter matches against but never displays — e.g. keywords="dialog popup" on a Modal item.' }
-        ],
       },
       {
         name: 'CommandGroup',
         tag: 'arc-command-group',
         description: 'Groups CommandItems under a small uppercase heading in the results list. Items inside a group still filter and keyboard-navigate as one flat list; headings disappear when none of their items match.',
-        props: [
-          { name: 'heading', type: 'string', description: 'Heading text displayed above the group’s items.' }
-        ],
       }
     ],
   

@@ -49,9 +49,6 @@ The focus-within pseudo-class triggers the accent border and glow on the outer c
   </arc-input-group>
 </div>`,
 
-  props: [
-    { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Controls addon padding and font size.' },
-  ],
 
   tabs: [
     {

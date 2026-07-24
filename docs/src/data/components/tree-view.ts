@@ -56,13 +56,6 @@ TreeView supports full keyboard navigation following the WAI-ARIA tree pattern. 
   <arc-tree-item label="package.json" icon="&#128196;"></arc-tree-item>
 </arc-tree-view>`,
 
-    props: [
-
-    ],
-    events: [
-      { name: 'arc-toggle', description: 'Fired when a tree node is expanded or collapsed' },
-      { name: 'arc-select', description: 'Fired when a tree item is selected' }
-    ],
     tabs: [
       {
         label: 'Web Component',
@@ -165,11 +158,6 @@ export class MyComponent {}`,
         name: 'TreeItem',
         tag: 'arc-tree-item',
         description: 'Node within a TreeView. Can nest for sub-trees.',
-        props: [
-          { name: 'label', type: 'string', description: 'Item label text' },
-          { name: 'icon', type: 'string', description: 'Icon or emoji' },
-          { name: 'expanded', type: 'boolean', default: 'false', description: 'Expand child items' }
-        ],
       }
     ],
   

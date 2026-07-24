@@ -2,6 +2,7 @@
 import DocsLayout from '../../../layouts/DocsLayout.astro';
 import ComponentShowcase from '../../../components/ComponentShowcase.astro';
 import { components } from '../../../data/components/index';
+import { getApi } from '../../../data/manifest';
 
 export function getStaticPaths() {
   return components.map((c) => ({
@@ -11,6 +12,15 @@ export function getStaticPaths() {
 }
 
 const { component } = Astro.props;
+
+// API surface from custom-elements.json (single source of truth) — the docs
+// data layer only carries prose, examples, and page metadata.
+const api = getApi(component.tag);
+const subComponents = (component.subComponents ?? []).map((sub: any) => ({
+  ...sub,
+  api: getApi(sub.tag),
+}));
+const hasEventDetails = api.events.some((e) => e.detail);
 
 const tierColors: Record<string, string> = {
   layout: '100, 180, 120',
@@ -81,9 +91,9 @@ const headings = [
   ...(component.features ? [{ id: 'features', label: 'Features' }] : []),
   { id: 'preview', label: 'Preview' },
   { id: 'usage', label: 'Usage' },
-  ...(component.props.length > 0 ? [{ id: 'api', label: 'API' }] : []),
-  ...((component.events ?? []).length > 0 ? [{ id: 'events', label: 'Events' }] : []),
-  ...(component.subComponents ?? []).map((sub: any) => ({
+  ...(api.props.length > 0 ? [{ id: 'api', label: 'API' }] : []),
+  ...(api.events.length > 0 ? [{ id: 'events', label: 'Events' }] : []),
+  ...subComponents.map((sub: any) => ({
     id: sub.tag,
     label: sub.name,
   })),
@@ -212,7 +222,7 @@ const headings = [
     </section>
 
     <!-- API Table -->
-    {component.props.length > 0 && (
+    {api.props.length > 0 && (
       <section id="api">
         <h2 class="docs-heading">API</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
@@ -227,7 +237,7 @@ const headings = [
               </tr>
             </thead>
             <tbody>
-              {component.props.map((p) => (
+              {api.props.map((p) => (
                 <tr>
                   <td><code>{p.name}</code></td>
                   <td><code>{p.type}</code></td>
@@ -242,7 +252,7 @@ const headings = [
     )}
 
     {/* Events */}
-    {(component.events ?? []).length > 0 && (
+    {api.events.length > 0 && (
       <section id="events">
         <h2 class="docs-heading">Events</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
@@ -251,13 +261,15 @@ const headings = [
             <thead>
               <tr>
                 <th>Event</th>
+                {hasEventDetails && <th>Detail</th>}
                 <th>Description</th>
               </tr>
             </thead>
             <tbody>
-              {component.events.map((ev) => (
+              {api.events.map((ev) => (
                 <tr>
                   <td><code>{ev.name}</code></td>
+                  {hasEventDetails && <td>{ev.detail ? <code>{ev.detail}</code> : '—'}</td>}
                   <td>{ev.description}</td>
                 </tr>
               ))}
@@ -268,13 +280,13 @@ const headings = [
     )}
 
     {/* Sub-components */}
-    {component.subComponents?.map((sub: any) => (
+    {subComponents.map((sub: any) => (
       <section id={sub.tag}>
         <h2 class="docs-heading">{sub.name}</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
         <code class="component-page__tag">&lt;{sub.tag}&gt;</code>
         <p class="component-page__desc" style="margin-top:var(--space-sm)">{sub.description}</p>
-        {sub.props.length > 0 && (
+        {sub.api.props.length > 0 && (
           <div class="component-page__api" style="margin-top:var(--space-md)">
             <table class="api-table">
               <thead>
@@ -286,7 +298,7 @@ const headings = [
                 </tr>
               </thead>
               <tbody>
-                {sub.props.map((p: any) => (
+                {sub.api.props.map((p: any) => (
                   <tr>
                     <td><code>{p.name}</code></td>
                     <td><code>{p.type}</code></td>

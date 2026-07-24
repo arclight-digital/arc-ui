@@ -45,19 +45,6 @@ The \`min\` and \`max\` properties constrain the selectable range -- time option
 
     previewHtml: `<arc-time-picker label="Start Time" placeholder="Pick a time" step="15" style="width:240px"></arc-time-picker>`,
 
-    props: [
-      { name: 'value', type: 'string', default: "''", description: 'The selected time in 24-hour "HH:MM" format (e.g. "14:30"). Set this to pre-select a time. Updated when the user picks a time.' },
-      { name: 'min', type: 'string', default: "''", description: 'Minimum selectable time in "HH:MM" 24-hour format. Times before this are visually dimmed and non-interactive.' },
-      { name: 'max', type: 'string', default: "''", description: 'Maximum selectable time in "HH:MM" 24-hour format. Times after this are visually dimmed and non-interactive.' },
-      { name: 'step', type: 'number', default: '1', description: 'Minute step increment (1, 5, 15, or 30). Controls the granularity of minute options shown in the dropdown.' },
-      { name: 'format', type: 'string', default: "'12h'", description: 'Display format: "12h" shows hours 1-12 with an AM/PM column, "24h" shows hours 0-23 without AM/PM.' },
-      { name: 'placeholder', type: 'string', default: "'Select time'", description: 'Placeholder text displayed in the input when no time is selected.' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the time picker, reducing opacity and preventing the dropdown from opening.' },
-      { name: 'label', type: 'string', default: "''", description: 'Label text rendered above the input in uppercase accent font styling.' }
-    ],
-    events: [
-      { name: 'arc-change', description: 'Fired when a time is selected. Detail contains { value: "HH:MM" } in 24-hour format.' }
-    ],
     tabs: [
     {
         label: 'Web Component',

@@ -53,15 +53,6 @@ The card supports four positions -- \`bottom\` (default), \`top\`, \`left\`, and
   </arc-hover-card>
 </div>`,
 
-    props: [
-      { name: 'position', type: "'bottom' | 'top' | 'left' | 'right'", default: "'bottom'", description: 'Controls which side of the trigger the card appears on. The card is centered along the perpendicular axis using CSS transforms.' },
-      { name: 'open-delay', type: 'number', default: '400', description: 'Milliseconds to wait after hover/focus before showing the card. Prevents accidental activation during fast cursor movement.' },
-      { name: 'close-delay', type: 'number', default: '300', description: 'Milliseconds to wait after the cursor leaves the trigger before hiding the card. Moving into the card cancels this timer.' }
-    ],
-    events: [
-      { name: 'arc-open', description: 'Fired when the hover card becomes visible' },
-      { name: 'arc-close', description: 'Fired when the hover card hides' }
-    ],
     tabs: [
     {
         label: 'Web Component',

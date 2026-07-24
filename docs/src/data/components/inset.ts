@@ -58,10 +58,6 @@ The \`bleed\` prop activates negative-margin mode, which allows the Inset's chil
   </div>
 </div>`,
 
-    props: [
-      { name: 'space', type: "'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'", default: "'md'", description: 'Padding size mapped to a design system spacing token. Controls all four sides equally.' },
-      { name: 'bleed', type: 'boolean', default: 'false', description: 'When true, applies negative margins equal to the space value, allowing children to break out of a parent container\'s padding for full-bleed layouts.' },
-    ],
 
     tabs: [
       {

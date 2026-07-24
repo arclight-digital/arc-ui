@@ -54,15 +54,6 @@ The component exposes three methods: \`getCrop()\` returns \`{ x, y, width, heig
   height="280"
 ></arc-image-cropper>`,
 
-    props: [
-      { name: 'src', type: 'string', default: "''", description: 'Image URL, object URL, or data URL to crop. Must be same-origin or CORS-enabled for canvas export.' },
-      { name: 'height', type: 'number', default: '320', description: 'Fixed stage height in pixels. The image is letterboxed to fit.' },
-      { name: 'aspect', type: 'number', default: '0', description: 'Crop aspect ratio as width/height (e.g. `1`, `16/9`). `0` allows free-form cropping.' },
-      { name: 'zoom', type: 'number', default: '1', description: 'Image zoom factor, clamped to 1-4. Scales the image around its center; also settable via the built-in slider.' }
-    ],
-    events: [
-      { name: 'arc-crop-change', description: 'Fired when the crop changes (drag, resize, keyboard, zoom, stage resize). `event.detail` is `{ x, y, width, height }` in natural image pixels, debounced to animation frames.' }
-    ],
     tabs: [
     {
         label: 'Web Component',

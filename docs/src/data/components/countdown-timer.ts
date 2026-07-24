@@ -48,16 +48,7 @@ The \`hide-zero-segments\` attribute suppresses leading zero-value segments — 
 
     previewHtml: `<arc-countdown-timer target="2026-12-31T00:00:00" label="New Year"></arc-countdown-timer>`,
 
-    props: [
-      { name: 'target', type: 'string', default: "''", description: 'ISO date string or parseable date for the countdown target' },
-      { name: 'label', type: 'string', default: "''", description: 'Optional label displayed above the countdown' },
-      { name: 'expired', type: 'string', default: "'Expired'", description: 'Text shown when the countdown reaches zero' },
-      { name: 'hide-zero-segments', type: 'boolean', default: 'false', description: 'Hide leading segments that are zero' },
-    ],
 
-    events: [
-      { name: 'arc-expired', description: 'Fired when the countdown reaches zero' },
-    ],
 
     tabs: [
       {

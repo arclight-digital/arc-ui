@@ -45,13 +45,6 @@ An \`actions\` slot in the legend area lets you place buttons or links (like "Se
   <arc-toggle label="SMS alerts"></arc-toggle>
 </arc-fieldset>`,
 
-  props: [
-    { name: 'legend', type: 'string', default: "''", description: 'Text displayed in the `<legend>` element. Also available via the `legend` slot for rich content.' },
-    { name: 'description', type: 'string', default: "''", description: 'Helper text displayed below the legend.' },
-    { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables all child controls and dims the fieldset.' },
-    { name: 'error', type: 'string', default: "''", description: 'Error message displayed below the content with `role="alert"`.' },
-    { name: 'variant', type: "'default' | 'card'", default: "'default'", description: 'Visual style. Card adds a surface background and shadow.' },
-  ],
 
   tabs: [
     {

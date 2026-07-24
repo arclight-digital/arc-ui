@@ -55,14 +55,6 @@ Keyboard navigation follows the standard menu pattern: ArrowDown and ArrowUp mov
   </arc-context-menu>
 </div>`,
 
-    props: [
-      { name: 'open', type: 'boolean', default: 'false', description: 'Controls the visibility of the context menu. Set to true when the contextmenu event fires; set to false when the user selects an item, clicks the backdrop, or presses Escape.' }
-    ],
-    events: [
-      { name: 'arc-open', description: 'Fired when the context menu opens' },
-      { name: 'arc-close', description: 'Fired when the context menu closes' },
-      { name: 'arc-select', description: 'Fired when a menu item is selected' }
-    ],
     tabs: [
     {
         label: 'Web Component',
@@ -159,18 +151,11 @@ export class MyComponent {}`,
       name: 'MenuItem',
       tag: 'arc-menu-item',
       description: 'A single action entry inside the context menu.',
-      props: [
-        { name: 'label', type: 'string', description: 'Display text for the menu item.' },
-        { name: 'shortcut', type: 'string', description: 'Keyboard shortcut hint displayed on the right side.' },
-        { name: 'icon', type: 'string', description: 'Name of the icon to display before the label.' },
-        { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the item, preventing interaction.' },
-      ],
     },
     {
       name: 'MenuDivider',
       tag: 'arc-menu-divider',
       description: 'A visual separator between groups of menu items.',
-      props: [],
     },
   ],
 

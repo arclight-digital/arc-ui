@@ -48,10 +48,6 @@ Three colour variants — \`primary\`, \`secondary\`, and \`white\` — let you 
   <arc-spinner size="lg" variant="primary"></arc-spinner>
 </div>`,
 
-    props: [
-      { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Spinner dimensions: sm (16px), md (24px), lg (40px)' },
-      { name: 'variant', type: "'primary' | 'secondary' | 'white'", default: "'primary'", description: 'Colour of the spinner ring' },
-    ],
     tabs: [
       {
         label: 'Web Component',

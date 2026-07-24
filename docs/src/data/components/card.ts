@@ -70,11 +70,6 @@ Cards are intentionally unopinionated about their inner layout. Slot any combina
   </arc-card>
 </div>`,
 
-    props: [
-      { name: 'href', type: 'string', description: 'When set, renders the card as an anchor element, making the entire card surface a clickable link. On hover, the border transitions to a blue-to-violet gradient and the inner surface gains a lift shadow.' },
-      { name: 'padding', type: "'none' | 'sm' | 'md' | 'lg'", default: "'md'", description: "Controls internal spacing. Options: 'none', 'sm', 'md', 'lg'." },
-      { name: 'interactive', type: 'boolean', default: 'false', description: 'Enables hover effects for clickable cards that trigger JS instead of navigating via href.' },
-    ],
 
     tabs: [
       {

@@ -65,39 +65,6 @@ Use TopBar whenever your application needs a consistent, recognizable header. It
   </arc-top-bar>
 </div>`,
 
-    props: [
-      {
-        name: 'heading',
-        type: 'string',
-        default: "''",
-        description: 'Brand text displayed in the top-left corner next to the optional logo slot. Rendered with the accent font family (Tektur), uppercase, and wide letter-spacing. Keep this to one or two words that identify the application.',
-      },
-      {
-        name: 'fixed',
-        type: 'boolean',
-        default: 'false',
-        description: 'When true, the bar uses position: fixed so it stays at the top of the viewport while content scrolls underneath. Automatically applied when TopBar is placed inside an AppShell. Be sure to add matching top padding to the content below to prevent overlap.',
-      },
-      {
-        name: 'menu-open',
-        type: 'boolean',
-        default: 'false',
-        description: 'Reflects whether the mobile hamburger menu is open. Toggling this value updates the aria-expanded attribute on the menu button. Typically managed by AppShell in response to the arc-sidebar-toggle event rather than set directly.',
-      },
-      {
-        name: 'nav-align',
-        type: 'string',
-        default: "'center'",
-        description: "Controls the alignment of content in the center slot. Options: 'left', 'center', 'right'. Pulls nav toward the brand or actions without reordering DOM.",
-      },
-      { name: 'contained', type: 'string', default: "''", description: 'Sets a max-width containment on the top bar content area. Accepts any CSS length or named size.' },
-      { name: 'mobile-menu', type: 'string', default: "''", description: 'Controls the mobile menu behavior. When set to a value like "nav", the hamburger toggles an inline navigation panel instead of triggering sidebar toggle.' },
-      { name: 'menu-position', type: 'string', default: "''", description: 'Position of the mobile menu panel when mobile-menu is active.' },
-    ],
-    events: [
-      { name: 'arc-sidebar-toggle', description: 'Fired when the mobile menu toggle is clicked (sidebar mode)' },
-      { name: 'arc-mobile-menu-toggle', description: 'Fired when the mobile hamburger button is clicked and mobile-menu mode is active. Use this to toggle your own mobile navigation panel.' },
-    ],
 
     tabs: [
       {

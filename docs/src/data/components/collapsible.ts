@@ -46,13 +46,6 @@ The component fires an \`arc-toggle\` event with an \`open\` boolean in the deta
   <p>These settings control fine-grained behaviour that most users will not need to change.</p>
 </arc-collapsible>`,
 
-    props: [
-      { name: 'open', type: 'boolean', default: 'false', description: 'Controls whether the content is visible. Reflected as an attribute and toggleable by clicking the heading.' },
-      { name: 'heading', type: 'string', default: "''", description: 'Text displayed in the clickable trigger row. Also used as the ARIA label for the content region.' }
-    ],
-    events: [
-      { name: 'arc-toggle', description: 'Fired when the collapsible expands or collapses' }
-    ],
 
     tabs: [
     {

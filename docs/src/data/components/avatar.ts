@@ -49,13 +49,6 @@ The component sets \`role="img"\` and \`aria-label\` on the container, using the
   <arc-avatar src="https://i.pravatar.cc/150?img=3" name="Diana Lee" size="lg"></arc-avatar>
 </div>`,
 
-    props: [
-      { name: 'src', type: 'string', default: "''", description: 'Image URL for the avatar. When provided, renders an `<img>` element. When empty, displays initials derived from the `name` prop.' },
-      { name: 'name', type: 'string', default: "''", description: 'User name used to generate initials (first letter, uppercased) and as the `alt` text / `aria-label` for the avatar.' },
-      { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Controls avatar dimensions: `sm` (32px), `md` (40px), `lg` (56px).' },
-      { name: 'status', type: "'online' | 'offline' | 'busy' | 'away'", default: "''", description: "Shows a status indicator dot. Options: 'online', 'offline', 'busy', 'away'." },
-      { name: 'shape', type: "'circle' | 'square' | 'rounded'", default: "'circle'", description: "Controls the avatar shape. Options: 'circle', 'square', 'rounded'." },
-    ],
     tabs: [
       {
         label: 'Web Component',

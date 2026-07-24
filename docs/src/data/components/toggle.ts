@@ -48,16 +48,6 @@ Toggle works equally well as an uncontrolled element (set \`checked\` once and l
   <arc-toggle label="Marketing emails"></arc-toggle>
 </div>`,
 
-    props: [
-      { name: 'checked', type: 'boolean', default: 'false', description: 'Whether the toggle is in the on position. When set, the thumb slides to the active side and the track displays the accent glow.' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Prevents user interaction. The toggle appears at reduced opacity and ignores pointer and keyboard events.' },
-      { name: 'label', type: 'string', description: 'Visible text rendered beside the toggle. Clicking the label also toggles the switch, matching native `<label>` behavior.' },
-      { name: 'size', type: 'string', default: "'md'", description: "Controls the toggle size. Options: 'sm', 'md', 'lg'." },
-      { name: 'name', type: 'string', description: 'Form field name submitted with the toggle value. When set, the component participates in native `<form>` submission.' },
-    ],
-    events: [
-      { name: 'arc-change', description: 'Fired when the toggle state changes' },
-    ],
 
     tabs: [
       {

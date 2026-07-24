@@ -41,9 +41,6 @@ All output is sanitized through a DOMParser pipeline that strips \`<script>\` el
 
     previewHtml: `<arc-markdown content="# Hello World\n\nThis is a **markdown** component with *italic* text and \`inline code\`.\n\n## Features\n\n- Zero dependencies\n- Design token styling\n- XSS sanitization\n\n> Blockquotes work too, styled with the accent color.\n\n\`\`\`js\nconst greeting = 'Hello from ARC UI';\nconsole.log(greeting);\n\`\`\`\n\n---\n\nLinks like [ARC UI](https://arclight.build) are styled with the accent color."></arc-markdown>`,
 
-    props: [
-      { name: 'content', type: 'string', description: 'Markdown string to parse and render. Takes precedence over slotted text content.' },
-    ],
     tabs: [
       {
         label: 'Web Component',

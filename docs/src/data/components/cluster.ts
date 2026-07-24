@@ -52,11 +52,6 @@ Use Cluster whenever you have a set of inline elements that should wrap naturall
   <span style="display:inline-flex;align-items:center;padding:4px 12px;background:rgba(139,92,246,0.12);color:var(--accent-secondary);border-radius:var(--radius-full);font-size:13px;font-family:var(--font-body)">Operations</span>
 </div>`,
 
-    props: [
-      { name: 'gap', type: "'xs' | 'sm' | 'md' | 'lg'", default: "'sm'", description: 'Spacing between items, mapped to design system spacing tokens. Use sm for dense tag groups, md for button groups.' },
-      { name: 'align', type: "'start' | 'center' | 'end'", default: "'center'", description: 'Vertical alignment of items within each row (maps to align-items).' },
-      { name: 'justify', type: "'start' | 'center' | 'end' | 'between'", default: "'start'", description: 'Horizontal distribution of items (maps to justify-content). Use "between" for navigation-style spacing.' },
-    ],
 
     tabs: [
       {

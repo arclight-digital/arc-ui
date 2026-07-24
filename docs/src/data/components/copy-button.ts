@@ -47,13 +47,6 @@ CopyButton dispatches an \`arc-copy\` event on successful copy, carrying the cop
   <arc-copy-button value="npm install @arclux/arc-ui"></arc-copy-button>
 </div>`,
 
-    props: [
-      { name: 'value', type: 'string', default: "''", description: 'The text string to copy to the clipboard when the button is clicked.' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the button, preventing clicks and reducing visual opacity.' }
-    ],
-    events: [
-      { name: 'arc-copy', description: 'Fired when text is successfully copied to the clipboard. `event.detail.value` contains the copied string.' }
-    ],
     tabs: [
     {
         label: 'Web Component',

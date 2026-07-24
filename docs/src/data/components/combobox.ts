@@ -53,15 +53,6 @@ Keyboard navigation follows the WAI-ARIA combobox pattern: Arrow Down/Up move th
   <arc-option value="lit" label="Lit">Lit</arc-option>
 </arc-combobox>`,
 
-    props: [
-      { name: 'value', type: 'string', default: "''", description: 'The currently selected option value. Reflected as an attribute so it can be read from the DOM. Updated automatically when the user selects an option.' },
-      { name: 'placeholder', type: 'string', default: "''", description: 'Placeholder text shown in the input when no value is entered.' },
-      { name: 'label', type: 'string', default: "''", description: 'Visible label rendered above the input. Also used as the accessible label for the combobox.' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the input and prevents interaction. The host element receives reduced opacity and pointer-events: none.' }
-    ],
-    events: [
-      { name: 'arc-change', description: 'Fired when an option is selected. `event.detail.value` contains the selected option value.' }
-    ],
     tabs: [
     {
         label: 'Web Component',

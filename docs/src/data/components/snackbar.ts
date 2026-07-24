@@ -56,24 +56,6 @@ The surface-base background gives snackbar a darker, more grounded feel than toa
       });
     `,
 
-    props: [
-      {
-        name: 'position',
-        type: "'bottom-center' | 'bottom-left' | 'bottom-right'",
-        default: "'bottom-center'",
-        description: 'Anchors the snackbar to a bottom edge of the viewport. Bottom-center is the conventional position for material-style snackbars.',
-      },
-      {
-        name: 'duration',
-        type: 'number',
-        default: '5000',
-        description: 'Time in milliseconds before the snackbar auto-dismisses. Can be overridden per-show via the duration option. Set to 0 to persist until manually dismissed.',
-      },
-    ],
-    events: [
-      { name: 'arc-dismiss', description: 'Fired when the snackbar is dismissed, either by auto-timeout or user interaction' },
-      { name: 'arc-action', description: 'Fired when the user clicks the action button (e.g. "Undo")' },
-    ],
 
     tabs: [
       {

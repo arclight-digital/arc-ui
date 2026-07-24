@@ -48,15 +48,6 @@ The component dispatches \`arc-change\` on every step transition and \`arc-compl
   <arc-stepper-nav steps='["Account", "Profile", "Confirm"]' active="1"></arc-stepper-nav>
 </div>`,
 
-  props: [
-    { name: 'steps', type: 'Array<string>', default: '[]', description: 'Array of step labels displayed along the progress track.' },
-    { name: 'active', type: 'number', default: '0', description: 'Zero-based index of the currently active step.' },
-    { name: 'linear', type: 'boolean', default: 'false', description: 'When true, prevents jumping to future steps — the user must complete each step sequentially.' },
-  ],
-  events: [
-    { name: 'arc-change', description: 'Fired when the active step changes with detail: { step }.' },
-    { name: 'arc-complete', description: 'Fired when the user confirms the final step.' },
-  ],
 
   tabs: [
     {

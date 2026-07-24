@@ -69,46 +69,6 @@ The component can also be used declaratively as \`<arc-confirm>\` with props and
       });
     `,
 
-    props: [
-      {
-        name: 'open',
-        type: 'boolean',
-        default: 'false',
-        description: 'Controls whether the confirmation dialog is visible. For declarative usage; the imperative API manages this automatically.',
-      },
-      {
-        name: 'heading',
-        type: 'string',
-        description: 'The heading text displayed at the top of the confirmation dialog.',
-      },
-      {
-        name: 'message',
-        type: 'string',
-        description: 'The body message explaining what the user is confirming.',
-      },
-      {
-        name: 'confirm-label',
-        type: 'string',
-        default: "'Confirm'",
-        description: 'Label for the confirm button. Use a specific verb like "Delete" or "Publish" instead of generic "OK".',
-      },
-      {
-        name: 'cancel-label',
-        type: 'string',
-        default: "'Cancel'",
-        description: 'Label for the cancel button. Use a specific alternative like "Keep" or "Go back" when possible.',
-      },
-      {
-        name: 'variant',
-        type: "'default' | 'danger'",
-        default: "'default'",
-        description: 'Controls the confirm button style. Use "danger" for destructive actions — the confirm button renders in the error colour.',
-      },
-    ],
-    events: [
-      { name: 'arc-confirm', description: 'Fired when the user clicks the confirm button' },
-      { name: 'arc-cancel', description: 'Fired when the user clicks cancel, presses Escape, or clicks the backdrop' },
-    ],
 
     tabs: [
       {

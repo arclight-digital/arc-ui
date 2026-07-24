@@ -44,19 +44,6 @@ Pin Input fires \`arc-change\` on every character entry or deletion, providing t
 
     previewHtml: `<arc-pin-input label="Verification Code" length="6" separator="3"></arc-pin-input>`,
 
-    props: [
-      { name: 'length', type: 'number', default: '4', description: 'Number of input boxes to render. Determines the expected code length.' },
-      { name: 'value', type: 'string', default: "''", description: 'Current combined value across all boxes. Reflected as an attribute.' },
-      { name: 'type', type: "'number' | 'alphanumeric' | 'text'", default: "'number'", description: 'Character validation mode. `number` allows digits only, `alphanumeric` allows letters and digits, `text` allows any character.' },
-      { name: 'mask', type: 'boolean', default: 'false', description: 'When true, obscures entered characters with dots for sensitive codes.' },
-      { name: 'separator', type: 'number', default: '0', description: 'Inserts a visual dash separator every N boxes. Set to 0 to disable separators.' },
-      { name: 'label', type: 'string', default: "''", description: 'Label text displayed above the input boxes in uppercase accent font.' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables all boxes, reducing opacity to 40% and blocking input.' }
-    ],
-    events: [
-      { name: 'arc-change', description: 'Fired on every character entry or deletion. `event.detail.value` contains the current partial value.' },
-      { name: 'arc-complete', description: 'Fired when all boxes are filled. `event.detail.value` contains the full value string.' }
-    ],
     tabs: [
     {
         label: 'Web Component',

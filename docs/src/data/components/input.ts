@@ -57,23 +57,6 @@ Input is designed to work seamlessly with the Form component. Wrap a set of Inpu
   <arc-input label="Message" name="message" multiline placeholder="How can we help?" required></arc-input>
 </div>`,
 
-    props: [
-      { name: 'label', type: 'string', description: 'Visible label rendered above the input. Automatically associated with the field via a generated id, ensuring screen readers announce it correctly.' },
-      { name: 'name', type: 'string', description: 'The `name` attribute sent with form data on submission. Also used by the Form component to track field state and validation.' },
-      { name: 'type', type: "'text' | 'email' | 'tel' | 'url' | 'password'", default: "'text'", description: 'The HTML input type. Controls browser validation behaviour and which virtual keyboard appears on mobile devices. Ignored when `multiline` is true.' },
-      { name: 'placeholder', type: 'string', description: 'Hint text displayed inside the field when it is empty. Use it to show an example value -- never as a substitute for the label.' },
-      { name: 'multiline', type: 'boolean', default: 'false', description: 'When true, renders a `<textarea>` instead of an `<input>`, allowing multi-row text entry. The textarea is vertically resizable by default.' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Prevents user interaction and applies a muted visual treatment. The field value is excluded from form submission when disabled.' },
-      { name: 'required', type: 'boolean', default: 'false', description: 'Marks the field as required. Displays a required indicator next to the label and triggers native constraint validation on form submission.' },
-      { name: 'value', type: 'string', default: "''", description: 'The current value of the input. Can be set programmatically to pre-fill the field or used for controlled-component patterns. Updated internally on each keystroke.' },
-      { name: 'rows', type: 'number', default: '5', description: 'Number of visible text rows when `multiline` is true. Controls the initial height of the textarea. Ignored for single-line inputs.' },
-      { name: 'error', type: 'string', default: "''", description: 'Error message displayed below the input. When set, the input border turns red and the error text appears.' },
-      { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: "Controls the input size. Options: 'sm', 'md', 'lg'." },
-    ],
-    events: [
-      { name: 'arc-input', description: 'Fired on each keystroke with { value } detail' },
-      { name: 'arc-change', description: 'Fired on blur when value has changed' },
-    ],
 
     tabs: [
       {

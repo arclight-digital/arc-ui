@@ -51,11 +51,6 @@ The \`size\` and \`variant\` props cascade to all child buttons, ensuring consis
   </arc-button-group>
 </div>`,
 
-  props: [
-    { name: 'orientation', type: "'horizontal' | 'vertical'", default: "'horizontal'", description: 'Layout direction. Vertical stacks buttons top-to-bottom.' },
-    { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Size cascaded to all child buttons.' },
-    { name: 'variant', type: 'string', default: "''", description: 'Button variant cascaded to all children (e.g., "ghost", "outline").' },
-  ],
 
   tabs: [
     {

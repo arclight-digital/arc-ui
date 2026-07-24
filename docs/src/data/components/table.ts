@@ -45,12 +45,6 @@ The \`striped\` prop adds alternating row backgrounds for improved scanability, 
   rows='[["Button","Input","Stable"],["Card","Content","Stable"],["Modal","Feedback","Beta"],["DatePicker","Input","Experimental"]]'
 ></arc-table>`,
 
-    props: [
-      { name: 'columns', type: 'string[]', default: '[]', description: 'Array of column header strings.' },
-      { name: 'rows', type: 'string[][]', default: '[]', description: 'Array of row arrays. Each inner array contains cell values in column order.' },
-      { name: 'striped', type: 'boolean', default: 'false', description: 'Alternating row backgrounds for improved scanability.' },
-      { name: 'compact', type: 'boolean', default: 'false', description: 'Reduced cell padding for dense data displays.' },
-    ],
     tabs: [
       {
         label: 'Web Component',

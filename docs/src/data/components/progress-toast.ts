@@ -64,18 +64,6 @@ The component shares the same positioning options and enter/exit animations as t
       });
     `,
 
-    props: [
-      {
-        name: 'position',
-        type: "'top-right' | 'bottom-right'",
-        default: "'bottom-right'",
-        description: 'Anchors the progress toast stack to a fixed corner of the viewport.',
-      },
-    ],
-    events: [
-      { name: 'arc-complete', description: 'Fired when a progress toast operation reaches 100%. Detail contains { id } with the operation identifier.' },
-      { name: 'arc-cancel', description: 'Fired when the user clicks the cancel button on a progress toast. Detail contains { id } with the operation identifier.' },
-    ],
 
     tabs: [
       {

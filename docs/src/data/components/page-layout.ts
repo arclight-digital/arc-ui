@@ -80,26 +80,6 @@ PageLayout collapses gracefully on mobile. At 768px and below, sidebar-left and 
   </arc-page-layout>
 </div>`,
 
-    props: [
-      {
-        name: 'layout',
-        type: "'sidebar-left' | 'sidebar-right' | 'centered' | 'wide'",
-        default: "'centered'",
-        description: 'Controls the column structure of the page. sidebar-left creates a 240px fixed column on the left for navigation. sidebar-right creates a 300px fixed column on the right for contextual content. centered constrains the main area to max-width with auto margins. wide allows content to stretch the full available width.',
-      },
-      {
-        name: 'max-width',
-        type: 'string',
-        default: "'1120px'",
-        description: 'Maximum width of the content area when using the centered layout. Accepts any valid CSS length value. Has no effect on sidebar-left, sidebar-right, or wide layouts. Maps to the --max-width CSS custom property.',
-      },
-      {
-        name: 'gap',
-        type: 'string',
-        default: "'var(--space-xl)'",
-        description: 'Gap between the sidebar/aside and main content regions. Accepts any valid CSS length or spacing token. Maps to the --gap CSS custom property and applies to the CSS Grid gap in sidebar layouts.',
-      },
-    ],
 
     tabs: [
       {

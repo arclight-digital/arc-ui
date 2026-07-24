@@ -48,11 +48,6 @@ Under the hood it uses \`Intl.RelativeTimeFormat\` for locale-aware formatting, 
   <div>Next deploy: <arc-time-ago datetime="2026-02-17T08:00:00Z"></arc-time-ago></div>
 </div>`,
 
-    props: [
-      { name: 'datetime', type: 'string', description: 'ISO 8601 date string or any value parseable by new Date().' },
-      { name: 'live', type: 'boolean', default: 'true', description: 'Auto-update the relative time on an adaptive interval.' },
-      { name: 'locale', type: 'string', default: "'en-US'", description: 'BCP 47 locale tag for Intl.RelativeTimeFormat output.' },
-    ],
 
     tabs: [
       {

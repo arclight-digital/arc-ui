@@ -49,12 +49,6 @@ Stat is designed for landing-page metrics, dashboard KPI rows, and pricing compa
   <arc-stat value="24/7" label="Support"></arc-stat>
 </div>`,
 
-    props: [
-      { name: 'value', type: 'string', description: 'The stat value (e.g. "99%")' },
-      { name: 'label', type: 'string', description: 'Label below the value' },
-      { name: 'trend', type: 'string', default: "''", description: "Shows a trend indicator arrow below the label. Options: 'up', 'down', 'neutral'." },
-      { name: 'change', type: 'string', default: "''", description: "Text displayed next to the trend arrow, typically a percentage like '+12%' or '-3.5%'." },
-    ],
     tabs: [
       {
         label: 'Web Component',

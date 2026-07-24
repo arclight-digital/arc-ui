@@ -76,11 +76,6 @@ Items are rendered via named slots (\`item-0\`, \`item-1\`, etc.), giving you fu
   ro.observe(vl);
 }`,
 
-  props: [
-    { name: 'items', type: 'Array', default: '[]', description: 'The full data array. Only the visible slice is rendered at any given time.' },
-    { name: 'item-height', type: 'number', default: '40', description: 'Height in pixels of each item row. Must match the actual rendered height.' },
-    { name: 'overscan', type: 'number', default: '5', description: 'Number of extra items to render above and below the visible window to reduce flicker.' }
-  ],
 
   tabs: [
     {

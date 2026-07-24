@@ -1,6 +1,11 @@
 /**
  * Component metadata definition for the demo site.
  * Each entry drives a component documentation page.
+ *
+ * NOTE: API surface (props, events, slots, CSS parts) is NOT defined here —
+ * it is read from packages/web-components/custom-elements.json via
+ * data/manifest.ts, generated from component JSDoc by `pnpm generate`.
+ * This layer carries only prose, examples, and page metadata.
  */
 export interface ComponentDef {
   name: string;
@@ -12,14 +17,11 @@ export interface ComponentDef {
   description: string;
   /** Alias terms for site search (⌘K) that aren't in the component name, e.g. ['dropdown'] on Select. */
   searchKeywords?: string[];
-  props: Array<{ name: string; type: string; default?: string; description: string }>;
-  events?: Array<{ name: string; description: string }>;
   tabs: Array<{ label: string; lang: string; code: string }>;
   subComponents?: Array<{
     name: string;
     tag: string;
     description: string;
-    props: Array<{ name: string; type: string; default?: string; description: string }>;
   }>;
 
   // Rich documentation fields (all optional — graceful fallback)

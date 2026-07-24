@@ -52,25 +52,6 @@ Because Badge is a static content element with no interactive behavior, it rende
   <arc-badge variant="info">Info</arc-badge>
 </div>`,
 
-    props: [
-      {
-        name: 'variant',
-        type: "'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'",
-        default: "'default'",
-        description: 'Controls the badge color scheme. Default renders a neutral gray. Primary and secondary use the accent token colors. Success, warning, error, and info map to the corresponding semantic color tokens for status-oriented labels.',
-      },
-      {
-        name: 'size',
-        type: "'sm' | 'md' | 'lg'",
-        default: "'md'",
-        description: "Controls the badge size. Options: 'sm', 'md', 'lg'.",
-      },
-      {
-        name: 'color',
-        type: 'string',
-        description: 'Custom RGB color value (e.g. `"255, 100, 50"`) that overrides the variant color. Sets the border, text, background tint, and hover glow to the specified color.',
-      },
-    ],
 
     tabs: [
       {

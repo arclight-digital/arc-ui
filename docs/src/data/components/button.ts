@@ -55,43 +55,6 @@ Three size presets — sm, md, and lg — let you scale buttons to their context
   <arc-button variant="ghost">Learn More</arc-button>
 </div>`,
 
-    props: [
-      {
-        name: 'variant',
-        type: "'primary' | 'secondary' | 'ghost'",
-        default: "'primary'",
-        description: 'Controls the visual weight and emphasis. Primary is a filled button with a neon glow hover suited for the top-level CTA. Secondary uses a bordered outline for supporting actions. Ghost renders with no border or background, ideal for low-priority or tertiary actions.',
-      },
-      {
-        name: 'size',
-        type: "'sm' | 'md' | 'lg'",
-        default: "'md'",
-        description: 'Sets the button size. Large (lg) is intended for hero sections and high-impact areas. Medium (md) is the default for general UI. Small (sm) fits compact toolbars, table rows, and inline contexts.',
-      },
-      {
-        name: 'href',
-        type: 'string',
-        description: 'When provided, the button renders as an <a> element instead of a <button>, making it a navigational link. This is the recommended approach for any action that takes the user to a new page or section.',
-      },
-      {
-        name: 'disabled',
-        type: 'boolean',
-        default: 'false',
-        description: 'When true, dims the button and prevents all pointer and keyboard interaction. Applies reduced opacity and removes hover/focus effects. Consider pairing with a tooltip that explains why the action is unavailable.',
-      },
-      {
-        name: 'loading',
-        type: 'boolean',
-        default: 'false',
-        description: 'Shows a spinner and disables the button. Use for async operations like form submission or API calls.',
-      },
-      {
-        name: 'type',
-        type: "'button' | 'submit' | 'reset'",
-        default: "'button'",
-        description: 'Sets the HTML button type attribute. Use `submit` inside forms to trigger native form submission, or `reset` to clear form fields. Only applies when no `href` is set (link buttons ignore this).',
-      },
-    ],
     tabs: [
       {
         label: 'Web Component',

@@ -52,12 +52,6 @@ By default, the marquee pauses when the user hovers over it (\`pause-on-hover\` 
   <span style="padding:var(--space-sm) var(--space-md); background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:var(--radius-md); white-space:nowrap;">Stark Industries</span>
 </arc-marquee>`,
 
-    props: [
-      { name: 'speed', type: 'number', default: '40', description: 'Scroll speed in pixels per second. The animation duration is calculated from the content width divided by this value.' },
-      { name: 'direction', type: "'left' | 'right'", default: "'left'", description: 'Scroll direction. `left` scrolls content from right to left (default), `right` reverses the direction.' },
-      { name: 'pause-on-hover', type: 'boolean', default: 'true', description: 'When true, the animation pauses while the cursor hovers over the marquee.' },
-      { name: 'gap', type: 'string', default: 'var(--space-xl)', description: 'CSS length value for the gap between slotted items. Accepts any valid CSS length or custom property.' },
-    ],
     tabs: [
       {
         label: 'Web Component',

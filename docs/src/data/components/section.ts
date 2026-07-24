@@ -48,9 +48,6 @@ Section sets \`scroll-margin-top: var(--space-md)\` on its inner wrapper, which 
   </arc-section>
 </div>`,
 
-    props: [
-      { name: 'label', type: 'string', description: 'Section label displayed in uppercase above content' },
-    ],
     tabs: [
       {
         label: 'Web Component',

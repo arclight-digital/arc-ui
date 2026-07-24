@@ -56,28 +56,6 @@ The overlay listens for clicks outside the highlighted element and fires an \`ar
       });
     `,
 
-    props: [
-      {
-        name: 'target',
-        type: 'string',
-        description: 'CSS selector for the element to highlight. The first matching element will be spotlighted with a glow ring and elevated z-index.',
-      },
-      {
-        name: 'active',
-        type: 'boolean',
-        default: 'false',
-        description: 'Controls whether the spotlight overlay is visible. Set to true to activate the dimming overlay and highlight the target element.',
-      },
-      {
-        name: 'padding',
-        type: 'number',
-        default: '8',
-        description: 'Padding in pixels around the target element cutout. Increase for larger glow rings or to give the target more breathing room.',
-      },
-    ],
-    events: [
-      { name: 'arc-dismiss', description: 'Fired when the user clicks outside the highlighted element to dismiss the spotlight' },
-    ],
 
     tabs: [
       {

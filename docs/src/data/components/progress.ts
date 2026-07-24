@@ -50,43 +50,6 @@ Both variants support an indeterminate mode for operations whose total duration 
   <arc-progress variant="spinner" indeterminate label="Processing upload"></arc-progress>
 </div>`,
 
-    props: [
-      {
-        name: 'value',
-        type: 'number',
-        default: '0',
-        description: 'Current completion percentage from 0 to 100. Only meaningful in determinate mode. The bar fills proportionally and aria-valuenow updates to match, giving screen readers a live reading.',
-      },
-      {
-        name: 'variant',
-        type: "'bar' | 'spinner'",
-        default: "'bar'",
-        description: 'Selects the visual shape. Bar renders a horizontal track with a fill that grows from left to right — best for wide containers and known percentages. Spinner renders a circular indicator suited to compact inline or button contexts.',
-      },
-      {
-        name: 'size',
-        type: "'sm' | 'md' | 'lg'",
-        default: "'md'",
-        description: 'Controls the thickness of the bar track or the diameter of the spinner. Small (sm) fits inside table cells and tight layouts. Medium (md) is the standard default. Large (lg) is appropriate for page-level or hero loading states.',
-      },
-      {
-        name: 'indeterminate',
-        type: 'boolean',
-        default: 'false',
-        description: 'When true, the bar pulses or the spinner loops without a fixed endpoint. Use this when the total work is unknown. Switch to determinate (indeterminate=false) and set a value as soon as real progress data becomes available.',
-      },
-      {
-        name: 'label',
-        type: 'string',
-        description: 'Accessible label text applied as aria-label on the underlying progressbar role element. This is the only way screen readers can convey the purpose of the indicator. Always provide a meaningful label such as "Uploading report.pdf" rather than a generic "Loading".',
-      },
-      {
-        name: 'show-value',
-        type: 'boolean',
-        default: 'false',
-        description: 'Displays the current percentage value next to the label.',
-      },
-    ],
 
     tabs: [
       {

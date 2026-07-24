@@ -46,11 +46,6 @@ The component sets \`role="separator"\` and \`aria-orientation\` automatically, 
   <arc-separator label="or"></arc-separator>
 </div>`,
 
-  props: [
-    { name: 'orientation', type: "'horizontal' | 'vertical'", default: "'horizontal'", description: 'Controls the divider direction. Vertical separators display as inline-flex with full parent height.' },
-    { name: 'label', type: 'string', default: "''", description: 'Optional text displayed centered between two line segments. Only applies to horizontal orientation.' },
-    { name: 'variant', type: "'line' | 'dashed' | 'dotted' | 'fade'", default: "'line'", description: 'Controls the line style. Fade uses a gradient that tapers to transparent at both ends.' },
-  ],
 
   tabs: [
     {

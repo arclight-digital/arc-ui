@@ -52,12 +52,6 @@ Breadcrumbs work best alongside a primary navigation element like a sidebar or t
   </arc-breadcrumb>
 </div>`,
 
-  props: [
-    { name: 'separator', type: 'string', default: "'/'", description: "Character used as the separator between breadcrumb items. Common options: '/', '>', '•'." },
-  ],
-  events: [
-    { name: 'arc-navigate', description: 'Fired when a breadcrumb item is clicked' },
-  ],
 
   tabs: [
     {
@@ -186,9 +180,6 @@ export default function BreadcrumbDemo() {
       name: 'BreadcrumbItem',
       tag: 'arc-breadcrumb-item',
       description: 'An individual crumb inside a Breadcrumb trail. Each item represents one level of the page hierarchy. Items with an `href` render as clickable links; the item without an `href` (typically the last one) is treated as the current page and displayed with stronger visual weight.',
-      props: [
-        { name: 'href', type: 'string', description: 'Navigation URL for this crumb. When provided, the crumb renders as a clickable link styled in muted text that brightens on hover. Omit this property on the final item to mark it as the current page -- it will receive `aria-current="page"` and a bolder font weight automatically.' },
-      ],
     },
   ],
 

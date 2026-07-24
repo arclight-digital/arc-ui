@@ -90,15 +90,6 @@ When all data has been loaded, set the \`finished\` prop to \`true\`. The sentin
       });
     `,
 
-    props: [
-      { name: 'threshold', type: 'number', default: '200', description: 'Distance in pixels from the bottom of the content at which `arc-load-more` fires. Controls how eagerly new data is requested.' },
-      { name: 'loading', type: 'boolean', default: 'false', description: 'When true, displays a spinner in the footer and suppresses additional `arc-load-more` events.' },
-      { name: 'finished', type: 'boolean', default: 'false', description: 'When true, disconnects the observer and displays "No more items" text in the footer.' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the component, disconnects the observer, and reduces opacity to 40%.' }
-    ],
-    events: [
-      { name: 'arc-load-more', description: 'Fired when the scroll sentinel enters the viewport, signaling more content should load' }
-    ],
     tabs: [
       {
         label: 'Web Component',

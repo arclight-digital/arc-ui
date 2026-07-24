@@ -57,12 +57,6 @@ CodeBlock is marked as a hybrid component: the code display works without JavaSc
   </div>
 </div>`,
 
-    props: [
-      { name: 'variant', type: "'default' | 'window' | 'basic'", default: "'default'", description: 'Visual variant. `default` shows the standard layout with optional filename header and status bar. `window` adds a macOS-style title bar with colored orbs and centered filename. `basic` strips all chrome for a compact, minimal display.' },
-      { name: 'language', type: 'string', default: "''", description: 'Programming language identifier (e.g. `js`, `css`, `html`). Displayed in uppercase in the header bar.' },
-      { name: 'filename', type: 'string', default: "''", description: 'Optional filename displayed in the header in monospace font. When empty, the header shows only the language.' },
-      { name: 'code', type: 'string', default: "''", description: 'Code content to display. Used as the `<pre><code>` content and copied to clipboard when the copy button is clicked.' },
-    ],
     tabs: [
       {
         label: 'Web Component',

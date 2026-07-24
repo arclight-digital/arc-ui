@@ -49,9 +49,6 @@ Connecting lines between steps change colour based on completion state — blue 
   <arc-step label="Complete"></arc-step>
 </arc-stepper>`,
 
-    props: [
-      { name: 'active', type: 'number', default: '0', description: 'Zero-indexed active step — steps before this index show as completed' },
-    ],
     tabs: [
       {
         label: 'Web Component',
@@ -183,9 +180,6 @@ export class MyComponent {}`,
         name: 'Step',
         tag: 'arc-step',
         description: 'Individual step within a Stepper.',
-        props: [
-          { name: 'label', type: 'string', description: 'Step label text' },
-        ],
       },
     ],
   

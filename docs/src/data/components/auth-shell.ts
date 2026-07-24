@@ -69,14 +69,6 @@ Both variants are fully responsive. On mobile, the split layout collapses to a s
   </arc-auth-shell>
 </div>`,
 
-    props: [
-      {
-        name: 'variant',
-        type: "'centered' | 'split'",
-        default: "'centered'",
-        description: 'Controls the page layout. Centered places a single card in the middle of the viewport, best for focused credential flows. Split divides the viewport into a form side and an aside panel for marketing content or illustrations. On mobile, split collapses to a single-column centered layout automatically.',
-      },
-    ],
 
     tabs: [
       {

@@ -47,10 +47,6 @@ The action slot (named \`action\`) provides a flex container for one or more but
   <arc-button slot="actions" variant="primary" size="sm">Create Project</arc-button>
 </arc-empty-state>`,
 
-    props: [
-      { name: 'heading', type: 'string', default: "''", description: 'Main heading text displayed below the icon' },
-      { name: 'description', type: 'string', default: "''", description: 'Supporting text displayed below the heading, max-width 360px' },
-    ],
     tabs: [
       {
         label: 'Web Component',

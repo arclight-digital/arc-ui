@@ -43,12 +43,6 @@ The component renders a native \`<fieldset>\` for proper form semantics and sets
   <arc-toggle label="SMS"></arc-toggle>
 </arc-switch-group>`,
 
-  props: [
-    { name: 'label', type: 'string', default: "''", description: 'Group heading rendered as a `<legend>` element.' },
-    { name: 'orientation', type: "'vertical' | 'horizontal'", default: "'vertical'", description: 'Layout direction. Vertical stacks toggles, horizontal arranges them in a row.' },
-    { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Size cascaded to all child arc-toggle elements.' },
-    { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables all child toggles and dims the group.' }
-  ],
 
   tabs: [
     {

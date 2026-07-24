@@ -44,17 +44,6 @@ When a date is selected, the component dispatches an \`arc-change\` event with t
 
     previewHtml: `<arc-date-picker label="Start Date" placeholder="Choose a date" style="width:240px"></arc-date-picker>`,
 
-    props: [
-      { name: 'value', type: 'string', default: "''", description: 'The selected date as an ISO string (YYYY-MM-DD). Set this to pre-select a date. Updated when the user picks a date from the calendar.' },
-      { name: 'min', type: 'string', default: "''", description: 'Minimum selectable date as an ISO string. Dates before this are visually dimmed and non-interactive.' },
-      { name: 'max', type: 'string', default: "''", description: 'Maximum selectable date as an ISO string. Dates after this are visually dimmed and non-interactive.' },
-      { name: 'placeholder', type: 'string', default: "'Select date'", description: 'Placeholder text displayed in the input when no date is selected.' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the date picker, reducing opacity and preventing the calendar from opening.' },
-      { name: 'label', type: 'string', default: "''", description: 'Label text rendered above the input in uppercase accent font styling.' }
-    ],
-    events: [
-      { name: 'arc-change', description: 'Fired when a date is selected' }
-    ],
     tabs: [
     {
         label: 'Web Component',

@@ -69,24 +69,6 @@ if (kb) kb.columns = [
   ]}
 ];`,
 
-  props: [
-    {
-      name: 'columns',
-      type: 'Array<{ id, title, limit?, items: Array<{ id, label, description?, tag?, variant? }> }>',
-      default: '[]',
-      description: 'The data array that drives the board. Each entry becomes a column with a header (title plus count badge) and a list of cards. `limit` renders the count as `count/limit` and turns it error-colored when exceeded. Each card needs a unique `id` and a `label`; `description` renders below the label with a two-line clamp, and `tag` renders an arc-tag chip styled by `variant`. Set via JavaScript — it is not an HTML attribute. The component works on an internal copy for immediate drag feedback; sync your source of truth from `arc-card-move` and assign a new array to re-render.',
-    },
-    {
-      name: 'disabled',
-      type: 'boolean',
-      default: 'false',
-      description: 'Disables all pointer and keyboard interaction and dims the board.',
-    },
-  ],
-  events: [
-    { name: 'arc-card-move', description: 'Fired when a card is dropped in a new position (pointer or keyboard). detail: { cardId, fromColumn, toColumn, index } where index is the final position in the target column.' },
-    { name: 'arc-card-click', description: 'Fired when a card is clicked without being dragged. detail: { cardId, columnId }.' },
-  ],
 
   tabs: [
     {

@@ -47,14 +47,6 @@ For the \`percent\` type, values are treated as the actual percentage: pass \`50
   <div>Compact: <arc-number-format value="1234567" notation="compact"></arc-number-format></div>
 </div>`,
 
-    props: [
-      { name: 'value', type: 'number', default: '0', description: 'The number to format' },
-      { name: 'type', type: "'number' | 'currency' | 'percent' | 'compact'", default: "'number'", description: 'Formatting style to apply' },
-      { name: 'locale', type: 'string', default: "'en-US'", description: 'BCP 47 locale tag for locale-aware formatting' },
-      { name: 'currency', type: 'string', default: "'USD'", description: 'ISO 4217 currency code, used when type is "currency"' },
-      { name: 'decimals', type: 'number', default: 'auto', description: 'Number of decimal places (defaults: 0 for number, 2 for currency, 1 for percent)' },
-      { name: 'notation', type: "'standard' | 'compact'", default: "'standard'", description: 'Number notation — compact gives "12.3K", "1.2M"' },
-    ],
 
     tabs: [
       {

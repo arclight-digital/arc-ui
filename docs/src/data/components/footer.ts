@@ -78,32 +78,6 @@ Footer ships with two boolean props that cover the most common layout tweaks. Th
   </arc-footer>
 </div>`,
 
-    props: [
-      {
-        name: 'compact',
-        type: 'boolean',
-        default: 'false',
-        description: 'Reduces internal padding and spacing throughout the footer. Use this in dashboard layouts or admin panels where vertical space is limited and the footer should feel lightweight rather than expansive.',
-      },
-      {
-        name: 'border',
-        type: 'boolean',
-        default: 'true',
-        description: 'Renders a subtle top border on the footer to visually separate it from the page content above. Enabled by default; disable it only when the footer sits against a dark background where the border would be redundant.',
-      },
-      {
-        name: 'contained',
-        type: 'string',
-        default: "''",
-        description: 'Sets a max-width containment on the footer content. Accepts any CSS length value or named size token.',
-      },
-      {
-        name: 'align',
-        type: 'string',
-        default: "'left'",
-        description: "Controls footer content alignment. Options: 'left', 'center'.",
-      },
-    ],
 
     tabs: [
       {

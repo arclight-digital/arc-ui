@@ -52,23 +52,6 @@ Password Input participates in native forms through ElementInternals just like I
   <arc-password-input label="New password" name="new-password" autocomplete="new-password" show-strength placeholder="Create a strong password"></arc-password-input>
 </div>`,
 
-  props: [
-    { name: 'label', type: 'string', description: 'Visible label rendered above the field. Automatically associated with the input via a generated id.' },
-    { name: 'name', type: 'string', description: 'The `name` attribute sent with form data on submission. Also used by the Form component to track field state.' },
-    { name: 'value', type: 'string', default: "''", description: 'The current value of the field. Can be set programmatically; updated internally on each keystroke.' },
-    { name: 'placeholder', type: 'string', description: 'Hint text displayed when the field is empty. Use it for guidance, never as a substitute for the label.' },
-    { name: 'disabled', type: 'boolean', default: 'false', description: 'Prevents interaction (including the visibility toggle) and applies a muted visual treatment.' },
-    { name: 'required', type: 'boolean', default: 'false', description: 'Marks the field as required and enables native constraint validation on form submission.' },
-    { name: 'error', type: 'string', default: "''", description: 'Error message displayed below the field. When set, the border turns red and the message is announced.' },
-    { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: "Controls the field size. Options: 'sm', 'md', 'lg'." },
-    { name: 'show-strength', type: 'boolean', default: 'false', description: 'Renders a four-segment strength meter with a Weak / Fair / Good / Strong label under the field, scored by a built-in heuristic (length, character variety, common-pattern penalties).' },
-    { name: 'autocomplete', type: 'string', default: "'current-password'", description: 'Passed through to the inner input. Use `new-password` on registration or change-password forms so password managers offer generation.' },
-  ],
-  events: [
-    { name: 'arc-input', description: 'Fired on each keystroke with { value } detail' },
-    { name: 'arc-change', description: 'Fired on blur when value has changed, with { value } detail' },
-    { name: 'arc-strength-change', description: 'Fired when the strength score changes (only while show-strength is set), with { score } detail (0-4)' },
-  ],
 
   tabs: [
     {

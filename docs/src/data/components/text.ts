@@ -52,10 +52,6 @@ The \`as\` property controls the rendered HTML element (h1 through h6, span, or 
   <arc-text variant="code" as="span">const x = 42;</arc-text>
 </div>`,
 
-    props: [
-      { name: 'variant', type: "'display' | 'heading' | 'body' | 'muted' | 'ghost' | 'accent' | 'label' | 'wordmark' | 'code'", default: "'body'", description: 'Typography variant that controls font size, weight, letter-spacing, line-height, and color.' },
-      { name: 'as', type: "'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span'", default: "'p'", description: 'The HTML element to render. Allows semantic heading hierarchy to be set independently from the visual variant.' },
-    ],
     tabs: [
       {
         label: 'Web Component',

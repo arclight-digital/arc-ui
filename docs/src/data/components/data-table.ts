@@ -68,55 +68,6 @@ if (dt) dt.rows = [
   { name: 'Eve Johnson', role: 'UX Researcher', department: 'Design', status: 'Active' }
 ];`,
 
-    props: [
-      {
-        name: 'rows',
-        type: 'Array<Record<string, any>>',
-        default: '[]',
-        description: 'The data array that drives the table. Each object in the array becomes a row, and its keys are matched against the `key` attribute of each `arc-column` child. Set this property via JavaScript — it is not an HTML attribute. Changing this array triggers a re-render.',
-      },
-      {
-        name: 'sortable',
-        type: 'boolean',
-        default: 'false',
-        description: 'Enables the sorting system at the table level. When true, columns that also have their own `sortable` attribute become clickable, toggling between ascending and descending order. The table performs client-side sorting by default and emits an `arc-sort` event with the active column key and direction.',
-      },
-      {
-        name: 'selectable',
-        type: 'boolean',
-        default: 'false',
-        description: 'Adds a checkbox column to the left of the table for row selection. A "select all" checkbox appears in the header. Selected rows receive a visual highlight. The component emits `arc-row-select` when an individual row is toggled and `arc-select-all` when the header checkbox is toggled.',
-      },
-      {
-        name: 'sort-column',
-        type: 'string',
-        default: "''",
-        description: 'The `key` of the currently sorted column. Set this attribute to pre-sort the table on a specific column when it first renders. Updated automatically when the user clicks a sortable column header.',
-      },
-      {
-        name: 'sort-direction',
-        type: "'asc' | 'desc'",
-        default: "'asc'",
-        description: 'The current sort direction. Works in tandem with `sort-column` to control the initial sort state. Reflected as an attribute so it can be read from the DOM or targeted with CSS selectors.',
-      },
-      {
-        name: 'virtual',
-        type: 'boolean',
-        default: 'false',
-        description: 'Enables virtual scrolling for large datasets. When true, only the visible rows plus an overscan buffer are rendered in the DOM, keeping performance constant regardless of row count.',
-      },
-      {
-        name: 'row-height',
-        type: 'number',
-        default: '40',
-        description: 'Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations.',
-      }
-    ],
-    events: [
-      { name: 'arc-sort', description: 'Fired when a sortable column header is clicked' },
-      { name: 'arc-select-all', description: 'Fired when the select-all checkbox is toggled' },
-      { name: 'arc-row-select', description: 'Fired when an individual row checkbox is toggled' }
-    ],
 
     tabs: [
       {
@@ -296,12 +247,6 @@ export function EmployeeDirectory() {
         name: 'Column',
         tag: 'arc-column',
         description: 'Defines a single column within a DataTable. Each Column maps a data field key to a visible table column with a header label. Columns are invisible DOM elements that act as declarative configuration — they do not render any visible content themselves.',
-        props: [
-          { name: 'key', type: 'string', description: 'The property name on each row object whose value should be displayed in this column. Must match a key present in the objects passed to the parent DataTable\'s `rows` array.' },
-          { name: 'label', type: 'string', description: 'The human-readable header text displayed in the table\'s `<th>` element. This is what users see at the top of the column.' },
-          { name: 'sortable', type: 'boolean', default: 'false', description: 'When true (and the parent DataTable also has `sortable`), clicking this column\'s header toggles ascending/descending sort on the corresponding data field. A sort indicator arrow appears next to the label.' },
-          { name: 'width', type: 'string', description: 'Sets a fixed CSS width on the column (e.g., "100px", "20%"). Useful for constraining narrow columns like status badges or actions so they do not stretch unnecessarily.' }
-        ],
       }
     ],
   

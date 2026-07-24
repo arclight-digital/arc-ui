@@ -48,11 +48,6 @@ Set \`animate\` to enable a smooth background-position cycle that shifts the gra
   <arc-gradient-text variant="accent" animate>Animated Gradient</arc-gradient-text>
 </div>`,
 
-    props: [
-      { name: 'variant', type: "'accent' | 'display' | 'sunset' | 'ocean' | 'custom'", default: "'accent'", description: 'Predefined gradient variant to apply' },
-      { name: 'gradient', type: 'string', default: "''", description: 'Custom CSS gradient string, used when variant is set to custom' },
-      { name: 'animate', type: 'boolean', default: 'false', description: 'Animate the gradient with a shifting background-position cycle' },
-    ],
 
     tabs: [
       {

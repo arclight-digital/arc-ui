@@ -66,18 +66,6 @@ tl.options = [
 ];
 tl.value = ['read', 'comment'];`,
 
-    props: [
-      { name: 'options', type: 'Array<{ value: string; label: string; disabled?: boolean }>', default: '[]', description: 'The full universe of items. Items whose value is in `value` render in the Selected pane; the rest render in Available.' },
-      { name: 'value', type: 'string[]', default: '[]', description: 'Values currently in the Selected pane, kept in options order. Updated after every move and emitted via `arc-change`.' },
-      { name: 'name', type: 'string', default: "''", description: 'Form field name. When set, the component submits one form entry per selected value.' },
-      { name: 'searchable', type: 'boolean', default: 'false', description: 'Adds a filter input to each pane that narrows that pane only, case-insensitively. Move-all respects the filter.' },
-      { name: 'sourceLabel', type: 'string', default: "'Available'", description: 'Heading for the left (available) pane. Attribute: `source-label`.' },
-      { name: 'targetLabel', type: 'string', default: "'Selected'", description: 'Heading for the right (selected) pane. Attribute: `target-label`.' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the whole control, preventing interaction and reducing opacity.' }
-    ],
-    events: [
-      { name: 'arc-change', description: 'Fired after every move with `{ value }` -- the current array of selected values.' }
-    ],
     tabs: [
     {
         label: 'Web Component',

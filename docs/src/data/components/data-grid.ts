@@ -75,55 +75,6 @@ if (grid) {
   grid.sort = [{ key: 'price', direction: 'desc' }];
 }`,
 
-  props: [
-    {
-      name: 'columns',
-      type: 'Array<{ key: string; label: string; width?: string; align?: "left" | "center" | "right"; sortable?: boolean; editable?: boolean; pinned?: boolean }>',
-      default: '[]',
-      description: 'Column definitions. Each entry maps a `key` in your row objects to a rendered column with a `label` header. Optional flags enable sorting, inline editing, and left-edge pinning per column; `width` sets a fixed CSS width (required for accurate pinned offsets) and `align` controls text alignment. Pinned columns are always displayed first. Set via JavaScript property.',
-    },
-    {
-      name: 'rows',
-      type: 'Array<Record<string, any>>',
-      default: '[]',
-      description: 'The data array. Each object becomes a row keyed by column `key`. The grid works on an internal shallow copy — sorting and inline edits never mutate the array you pass in. Set via JavaScript property; reassigning it resets selection and any open editor.',
-    },
-    {
-      name: 'sort',
-      type: 'Array<{ key: string; direction: "asc" | "desc" }>',
-      default: '[]',
-      description: 'Multi-sort state in priority order. Clicking a sortable header cycles it asc → desc → none; Shift+click appends it as a secondary sort. When more than one sort is active, headers show a direction arrow plus priority number. Set this property to pre-sort the grid.',
-    },
-    {
-      name: 'manual-sort',
-      type: 'boolean',
-      default: 'false',
-      description: 'Skips internal sorting. Rows render in the order given, while headers still cycle the `sort` state and emit `arc-sort` — use this to implement server-side sorting.',
-    },
-    {
-      name: 'selectable',
-      type: 'boolean',
-      default: 'false',
-      description: 'Adds a checkbox column with a select-all header checkbox (indeterminate when partially selected). Space toggles selection from the keyboard. Emits `arc-selection-change` with the selected row indices.',
-    },
-    {
-      name: 'virtual',
-      type: 'boolean',
-      default: 'false',
-      description: 'Enables virtual scrolling for large datasets. Only visible rows plus an overscan buffer are rendered, keeping performance constant regardless of row count.',
-    },
-    {
-      name: 'row-height',
-      type: 'number',
-      default: '40',
-      description: 'Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations.',
-    },
-  ],
-  events: [
-    { name: 'arc-sort', description: 'Fired when the user changes sorting. detail: { sort } with the full multi-sort array in priority order' },
-    { name: 'arc-cell-change', description: 'Fired when an inline cell edit is committed. detail: { rowIndex, key, value, row } — rowIndex refers to the original rows array' },
-    { name: 'arc-selection-change', description: 'Fired when row selection changes. detail: { selectedIndices } — indices into the original rows array' },
-  ],
 
   tabs: [
     {

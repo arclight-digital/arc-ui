@@ -49,13 +49,6 @@ The \`active\` boolean property highlights the current link in accent-primary, u
   <arc-link href="https://example.com" external>External link</arc-link>
 </div>`,
 
-    props: [
-      { name: 'href', type: 'string', default: "''", description: 'URL destination for the link.' },
-      { name: 'variant', type: "'default' | 'muted' | 'nav'", default: "'default'", description: 'Link style variant. `default` uses accent-primary color, `muted` uses muted text, `nav` uses secondary text with 14px size and flex layout.' },
-      { name: 'active', type: 'boolean', default: 'false', description: 'Active state — applies accent-primary color for navigation highlighting.' },
-      { name: 'external', type: 'boolean', default: 'false', description: 'When true, adds `target="_blank"` and `rel="noopener noreferrer"`, and renders an external link icon after the text.' },
-      { name: 'underline', type: 'string', default: "'hover'", description: "Controls underline behavior. Options: 'hover' (default, underline on hover), 'always' (always visible), 'never' (never underlined)." },
-    ],
     tabs: [
       {
         label: 'Web Component',

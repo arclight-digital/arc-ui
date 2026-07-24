@@ -62,44 +62,6 @@ The component re-encodes automatically whenever \`value\` or \`level\` changes, 
   </div>
 </div>`,
 
-  props: [
-    {
-      name: 'value',
-      type: 'string',
-      default: "''",
-      description: 'The content to encode (URL, text, Wi-Fi string, 2FA URI, …). Empty values render nothing. Values exceeding QR capacity for the chosen level also render nothing.',
-    },
-    {
-      name: 'size',
-      type: 'number',
-      default: '160',
-      description: 'Rendered width and height of the SVG in pixels. The code is vector-based and stays crisp at any size.',
-    },
-    {
-      name: 'level',
-      type: "'L' | 'M' | 'Q' | 'H'",
-      default: "'M'",
-      description: 'Error-correction level: L (~7% recovery), M (~15%), Q (~25%), H (~30%). Higher levels tolerate more damage/occlusion but produce denser codes.',
-    },
-    {
-      name: 'label',
-      type: 'string',
-      default: "''",
-      description: 'Accessible description announced to screen readers (falls back to "QR code"). Describe the purpose, not the encoded value — the value is never exposed by default since it may be a secret.',
-    },
-    {
-      name: 'quiet-zone',
-      type: 'number',
-      default: '2',
-      description: 'Width of the empty border around the code, measured in modules. Scanners rely on this margin to find the code; keep at least 2 against busy backgrounds.',
-    },
-    {
-      name: 'contrast',
-      type: 'boolean',
-      default: 'false',
-      description: 'Renders the code on a white rounded card with forced dark modules, guaranteeing dark-on-light scanability in both themes. Overrides --qr-fg/--qr-bg. Recommended for scan-critical codes.',
-    },
-  ],
 
   tabs: [
     {

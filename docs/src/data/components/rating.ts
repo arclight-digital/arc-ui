@@ -44,15 +44,6 @@ Rating supports both \`disabled\` and \`readonly\` modes. Disabled reduces opaci
 
     previewHtml: `<arc-rating value="3" max="5"></arc-rating>`,
 
-    props: [
-      { name: 'value', type: 'number', default: '0', description: 'Current rating value. Reflected as an attribute and updated on user interaction.' },
-      { name: 'max', type: 'number', default: '5', description: 'Maximum number of stars to render. Determines the upper bound of the rating scale.' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables interaction, reducing opacity to 40% and blocking pointer events.' },
-      { name: 'readonly', type: 'boolean', default: 'false', description: 'Prevents interaction while maintaining full visual appearance. Useful for displaying existing ratings.' }
-    ],
-    events: [
-      { name: 'arc-change', description: 'Fired when the rating value changes' }
-    ],
 
     tabs: [
     {

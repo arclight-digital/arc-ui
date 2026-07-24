@@ -54,15 +54,6 @@ The handle is also fully keyboard-accessible. It renders with \`role="separator"
   </div>
 </div>`,
 
-    props: [
-      { name: 'direction', type: "'horizontal' | 'vertical'", default: "'horizontal'", description: 'Controls which edge the drag handle appears on. Horizontal places the handle on the right edge and resizes width; vertical places it on the bottom edge and resizes height.' },
-      { name: 'size', type: 'number', default: '300', description: 'Current size of the panel in pixels. Updated in real time during drag. Maps to the --panel-size CSS custom property.' },
-      { name: 'min-size', type: 'number', default: '100', description: 'Minimum allowed size in pixels. The panel cannot be dragged smaller than this value.' },
-      { name: 'max-size', type: 'number', default: 'Infinity', description: 'Maximum allowed size in pixels. The panel cannot be dragged larger than this value. Defaults to no limit.' }
-    ],
-    events: [
-      { name: 'arc-resize', description: 'Fired during and after panel resize with { size } detail' }
-    ],
     tabs: [
       {
         label: 'Web Component',

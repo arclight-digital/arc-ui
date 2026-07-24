@@ -52,13 +52,6 @@ Clicking a link triggers a smooth scroll to the target element and immediately u
   </arc-scroll-spy>
 </div>`,
 
-    props: [
-      { name: 'active', type: 'string', default: "''", description: 'The id of the currently active section. Reflects to an attribute and updates automatically as the user scrolls.' },
-      { name: 'offset', type: 'number', default: '80', description: 'Pixel offset from the top of the viewport used in the IntersectionObserver rootMargin. Increase this value to account for taller sticky headers.' }
-    ],
-    events: [
-      { name: 'arc-change', description: 'Fired when the active spy target changes during scroll' }
-    ],
     tabs: [
       {
         label: 'Web Component',
@@ -147,10 +140,6 @@ export class MyComponent {}`,
         name: 'SpyLink',
         tag: 'arc-spy-link',
         description: 'Navigation anchor that highlights when its target section is in view.',
-        props: [
-          { name: 'target', type: 'string', description: 'ID of the section to observe' },
-          { name: 'level', type: 'number', default: '0', description: 'Nesting depth for visual indentation. Level 0 links render at default size; level 1+ links are indented and use a smaller font size.' }
-        ],
       }
     ],
   

@@ -46,11 +46,6 @@ Like Feature Card, Value Card exposes an \`icon\` named slot for custom icon con
   <arc-value-card icon="&#9733;" heading="Open Source" description="MIT licensed with an active community."></arc-value-card>
 </div>`,
 
-    props: [
-      { name: 'icon', type: 'string', default: "''", description: 'Icon text displayed beside content' },
-      { name: 'heading', type: 'string', default: "''", description: 'Card title' },
-      { name: 'description', type: 'string', default: "''", description: 'Card body text' },
-    ],
     tabs: [
       {
         label: 'Web Component',

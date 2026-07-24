@@ -60,15 +60,6 @@ Common use cases include persistent media control bars at the bottom of a music 
   </div>
 </div>`,
 
-    props: [
-      { name: 'position', type: "'bottom' | 'left' | 'right'", default: "'bottom'", description: 'Which viewport edge the dock snaps to. Bottom is the most common for media controls and action bars; left and right are suited for tool palettes in canvas editors.' },
-      { name: 'auto-hide', type: 'boolean', default: 'true', description: 'When true, the dock hides itself when the cursor moves away from the edge and reveals on hover. Set to false to keep the dock permanently visible.' },
-      { name: 'open', type: 'boolean', default: 'false', description: 'Controls the visible state of the dock programmatically. When auto-hide is true, this reflects the current hover-reveal state; when auto-hide is false, use this to toggle visibility manually.' },
-    ],
-    events: [
-      { name: 'arc-open', description: 'Fired when the dock becomes visible, either via hover-reveal or programmatic open.' },
-      { name: 'arc-close', description: 'Fired when the dock hides, either because the cursor left the edge area or the open prop was set to false.' },
-    ],
 
     tabs: [
       {

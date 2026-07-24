@@ -45,18 +45,7 @@ A blinking cursor (the classic \`|\` caret) appears by default and automatically
 
     previewHtml: `<arc-typewriter text="Welcome to the future of UI." speed="60" cursor></arc-typewriter>`,
 
-    props: [
-      { name: 'text', type: 'string', default: "''", description: 'The text to type out character by character' },
-      { name: 'speed', type: 'number', default: '50', description: 'Milliseconds per character' },
-      { name: 'delay', type: 'number', default: '0', description: 'Initial delay in milliseconds before typing starts' },
-      { name: 'cursor', type: 'boolean', default: 'true', description: 'Show a blinking cursor during and after typing' },
-      { name: 'loop', type: 'boolean', default: 'false', description: 'Loop the animation indefinitely' },
-      { name: 'pause-end', type: 'number', default: '2000', description: 'Milliseconds to pause at the end before looping' },
-    ],
 
-    events: [
-      { name: 'arc-complete', description: 'Fired when the typing animation finishes revealing all characters' },
-    ],
 
     tabs: [
       {

@@ -56,10 +56,6 @@ Common use cases include form layouts that go from two-column to single-column i
   </div>
 </div>`,
 
-    props: [
-      { name: 'threshold', type: 'string', default: "'600px'", description: 'The container width at which the layout switches between horizontal and vertical. Accepts any CSS length value. When the container is wider than this value, children are in a row; below it, they stack.' },
-      { name: 'gap', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Spacing between children in both horizontal and vertical modes, mapped to design system spacing tokens.' },
-    ],
 
     tabs: [
       {

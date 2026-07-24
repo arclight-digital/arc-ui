@@ -48,7 +48,6 @@ The dot marker uses \`--accent-primary\` with a double-ring effect (2px \`--bg-c
   <arc-timeline-item heading="Project Started" date="2025-12-01">Initial commit and architecture planning.</arc-timeline-item>
 </arc-timeline>`,
 
-    props: [],
     tabs: [
       {
         label: 'Web Component',
@@ -157,10 +156,6 @@ export class MyComponent {}`,
         name: 'TimelineItem',
         tag: 'arc-timeline-item',
         description: 'Individual event within a Timeline.',
-        props: [
-          { name: 'heading', type: 'string', description: 'Event heading' },
-          { name: 'date', type: 'string', description: 'Date string to display' },
-        ],
       },
     ],
   

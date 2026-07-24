@@ -45,7 +45,6 @@ Kbd renders a semantic \`<kbd>\` HTML element inside the shadow DOM, which is th
   Press <arc-kbd>Ctrl</arc-kbd> + <arc-kbd>C</arc-kbd> to copy, <arc-kbd>Ctrl</arc-kbd> + <arc-kbd>V</arc-kbd> to paste, or <arc-kbd>Esc</arc-kbd> to cancel.
 </p>`,
 
-    props: [],
     tabs: [
       {
         label: 'Web Component',

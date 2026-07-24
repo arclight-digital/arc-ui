@@ -48,14 +48,6 @@ Rail is designed to sit at the far-left edge of an AppShell, occupying a fixed v
   <div style="flex:1;display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:var(--text-sm)">App content here.</div>
 </div>`,
 
-  props: [
-    { name: 'items', type: 'Array<{ icon, label, value }>', default: '[]', description: 'Array of navigation items, each with an icon name, text label, and value identifier.' },
-    { name: 'value', type: 'string', default: "''", description: 'The value of the currently active item. Controls which icon receives the accent glow.' },
-    { name: 'expanded', type: 'boolean', default: 'false', description: 'When true, the Rail widens to show text labels beside each icon. Can be toggled on hover or set permanently.' },
-  ],
-  events: [
-    { name: 'arc-change', description: 'Fired when an item is selected with detail: { value }.' },
-  ],
 
   tabs: [
     {

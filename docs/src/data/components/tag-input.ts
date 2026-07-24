@@ -49,22 +49,6 @@ TagInput is form-associated: it submits one FormData entry per tag under its \`n
   value='["JavaScript"]'
 ></arc-tag-input>`,
 
-    props: [
-      { name: 'value', type: 'string[]', default: '[]', description: 'Array of current tags. Updated on add/remove and emitted via `arc-change`.' },
-      { name: 'suggestions', type: 'string[]', default: '[]', description: 'Autocomplete candidates. When non-empty, typing filters them into a dropdown listbox.' },
-      { name: 'delimiter', type: 'string', default: "','", description: 'Character that commits the current text as a tag when typed; pasted text is split on it.' },
-      { name: 'maxTags', type: 'number', default: '0', description: 'Maximum number of tags (0 = unlimited). At the limit, entry is disabled with a "-- max reached" hint.' },
-      { name: 'allowCustom', type: 'boolean', default: 'true', description: 'When false, only values from `suggestions` can be added; free text is rejected.' },
-      { name: 'label', type: 'string', default: "''", description: 'Visible label rendered above the field in a small uppercase style.' },
-      { name: 'placeholder', type: 'string', default: "''", description: 'Hint text shown inside the field when no tags exist and the input is empty.' },
-      { name: 'name', type: 'string', default: "''", description: 'Form field name. Each tag is submitted as its own FormData entry under this name.' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the control, preventing interaction and reducing opacity to 50%.' },
-      { name: 'error', type: 'string', default: "''", description: 'Error message shown below the field; also applies error styling to the border.' },
-    ],
-    events: [
-      { name: 'arc-change', description: 'Fired when a tag is added or removed; detail contains `{ value }`' },
-      { name: 'arc-input', description: 'Fired as the user types; detail contains `{ query }`' },
-    ],
     tabs: [
     {
         label: 'Web Component',

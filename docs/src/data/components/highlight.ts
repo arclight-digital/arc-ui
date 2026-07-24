@@ -40,11 +40,6 @@ Highlight is designed to pair with Search, DataTable, CommandPalette, and any co
 
     previewHtml: `<arc-highlight text="The quick brown fox jumps over the lazy dog" query="fox"></arc-highlight>`,
 
-    props: [
-      { name: 'text', type: 'string', default: "''", description: 'The full text to display and search within' },
-      { name: 'query', type: 'string', default: "''", description: 'The search query to highlight within the text' },
-      { name: 'case-sensitive', type: 'boolean', default: 'false', description: 'Whether matching should be case-sensitive' },
-    ],
     tabs: [
       {
         label: 'Web Component',

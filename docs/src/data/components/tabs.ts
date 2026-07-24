@@ -49,15 +49,6 @@ Transitions between panels are handled with a crossfade animation driven by CSS,
   </arc-tabs>
 </div>`,
 
-  props: [
-    { name: 'selected', type: 'number', default: '0', description: 'Zero-based index of the currently active tab. Changing this value programmatically switches the visible panel and updates ARIA attributes. Out-of-range values are clamped to the nearest valid index.' },
-    { name: 'align', type: "'start' | 'center' | 'end'", default: "'start'", description: "Aligns the tab list. Options: 'start', 'center', 'end'." },
-    { name: 'variant', type: "'underline' | 'pills'", default: "'underline'", description: "Visual style of the tabs. Options: 'underline', 'pills'." },
-    { name: 'orientation', type: "'horizontal' | 'vertical'", default: "'horizontal'", description: "Layout direction of the tab list. Use 'vertical' to place tabs in a sidebar column with the panel to the right. Arrow-key navigation automatically switches to up/down in vertical mode." },
-  ],
-  events: [
-    { name: 'arc-change', description: 'Fired when the active tab changes' },
-  ],
 
   tabs: [
     {
@@ -220,9 +211,6 @@ export default function TabsDemo() {
       name: 'Tab',
       tag: 'arc-tab',
       description: 'An individual tab panel within a Tabs group. Each Tab renders a button in the tab bar and owns its associated content panel. Use this sub-component when you need fine-grained control over individual tab behavior, such as disabling a specific tab or attaching per-tab event listeners.',
-      props: [
-        { name: 'label', type: 'string', description: 'Text displayed on the tab button. Keep labels concise — one or two words — to prevent the tab bar from overflowing.' },
-      ],
     },
   ],
 

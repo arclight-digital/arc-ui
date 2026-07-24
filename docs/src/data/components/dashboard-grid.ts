@@ -48,11 +48,6 @@ The \`min-column-width\` attribute controls the minimum width of each column in 
   <arc-card><arc-stat value="99.98%" label="Uptime"></arc-stat></arc-card>
 </arc-dashboard-grid>`,
 
-    props: [
-      { name: 'columns', type: 'number', default: '3', description: 'Number of columns when using explicit column mode. When this attribute is set on the element, the grid switches from auto-fill to a fixed repeat(N, 1fr) layout.' },
-      { name: 'gap', type: 'string', default: "'var(--space-lg)'", description: 'Gap between grid cells. Accepts any CSS length value or spacing token. Maps to the --gap CSS custom property.' },
-      { name: 'min-column-width', type: 'string', default: "'280px'", description: 'Minimum column width in auto-fill mode. Controls the minmax() threshold at which columns wrap to the next row. Maps to the --min-col CSS custom property.' },
-    ],
     tabs: [
       {
         label: 'Web Component',

@@ -55,9 +55,6 @@ The \`size\` property controls the base font size of the container, with "sm", "
   </ul>
 </arc-prose>`,
 
-    props: [
-      { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", description: 'Controls the base font size of the prose container. Affects paragraph text; headings and code maintain their own scale.' },
-    ],
     tabs: [
       {
         label: 'Web Component',

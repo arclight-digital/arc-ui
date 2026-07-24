@@ -58,25 +58,6 @@ Tooltip is fully accessible out of the box. It links the popup to its trigger vi
   </arc-tooltip>
 </div>`,
 
-    props: [
-      {
-        name: 'content',
-        type: 'string',
-        description: 'The plain-text string displayed inside the tooltip popup. Keep this concise — one short phrase that describes the trigger element or provides a supplementary hint. HTML is not supported; for rich content, use the Popover component instead.',
-      },
-      {
-        name: 'position',
-        type: "'top' | 'bottom' | 'left' | 'right'",
-        default: "'top'",
-        description: 'Controls which side of the trigger the tooltip appears on. Top is the most common default. Switch to bottom, left, or right when the trigger sits near a viewport edge or when the surrounding layout makes another direction more natural.',
-      },
-      {
-        name: 'delay',
-        type: 'number',
-        default: '200',
-        description: 'Time in milliseconds to wait after mouseenter or focusin before the tooltip becomes visible. The default of 200 ms prevents accidental activation during casual pointer movement. Increase to 400-600 ms in dense toolbars; avoid setting to 0 as it creates a jittery experience.',
-      },
-    ],
 
     tabs: [
       {
@@ -289,6 +270,5 @@ export function ActionBar() {
       },
     ],
   
-  events: [],
   seeAlso: ["hover-card","popover"],
 };

@@ -58,30 +58,6 @@ The component fires events at each transition — \`arc-change\` when the step c
       });
     `,
 
-    props: [
-      {
-        name: 'steps',
-        type: 'Array<{ target: string; title: string; content: string }>',
-        default: '[]',
-        description: 'Array of step definitions. Each step specifies a CSS selector for the target element, a title for the popover heading, and content for the popover body.',
-      },
-      {
-        name: 'active',
-        type: 'number',
-        description: 'Read-only property reflecting the zero-based index of the currently active step.',
-      },
-      {
-        name: 'open',
-        type: 'boolean',
-        default: 'false',
-        description: 'Controls whether the tour is active. Set to true to start the tour from the first step.',
-      },
-    ],
-    events: [
-      { name: 'arc-change', description: 'Fired when the tour advances or goes back to a different step. Detail contains { step } with the new step index.' },
-      { name: 'arc-complete', description: 'Fired when the user finishes the last step of the tour' },
-      { name: 'arc-dismiss', description: 'Fired when the user skips or closes the tour before completing all steps' },
-    ],
 
     tabs: [
       {

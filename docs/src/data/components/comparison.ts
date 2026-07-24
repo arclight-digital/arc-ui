@@ -47,24 +47,15 @@ The \`highlight\` attribute on a column adds a subtle accent background to both 
   <arc-comparison-column heading="Enterprise" values='["Unlimited","Unlimited","true","true"]'></arc-comparison-column>
 </arc-comparison>`,
 
-  props: [
-    { name: 'features', type: 'string', default: "'[]'", description: 'JSON array of feature label strings, e.g. \'["Storage","Bandwidth","Support"]\'. Each entry becomes a row in the comparison grid.' },
-  ],
 
   subComponents: [
     {
       name: 'ComparisonColumn',
       tag: 'arc-comparison-column',
       description: 'Data-holder child element that defines a single column in the comparison grid. Renders nothing visible — it provides heading, highlight, and values data to the parent.',
-      props: [
-        { name: 'heading', type: 'string', default: "''", description: 'Column header text displayed at the top of this column (e.g., "Free", "Pro").' },
-        { name: 'highlight', type: 'boolean', default: 'false', description: 'When true, adds an accent background to the header and all cells in this column.' },
-        { name: 'values', type: 'string', default: "'[]'", description: 'JSON array of values matching the features order. Use "true"/"false" for check/cross icons, or any string for text values.' },
-      ],
     },
   ],
 
-  events: [],
 
   tabs: [
     {

@@ -49,12 +49,6 @@ The component fires a single \`arc-change\` event after every reorder, providing
   <div>Utilities</div>
 </arc-sortable-list>`,
 
-    props: [
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables all interaction, reducing opacity to 40% and blocking pointer events.' }
-    ],
-    events: [
-      { name: 'arc-change', description: 'Fired when items are reordered, with updated order in detail' }
-    ],
     tabs: [
     {
         label: 'Web Component',

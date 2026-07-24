@@ -65,44 +65,6 @@ Color defaults to \`var(--accent-primary)\` so the chart harmonizes with the res
 
   replayable: true,
 
-  props: [
-    {
-      name: 'data',
-      type: 'string',
-      default: "''",
-      description: 'Comma-separated numeric values that define the chart data points (e.g. "10,25,18,30,22,35,28"). Parsed into a number array at render time. Non-numeric entries are silently dropped.',
-    },
-    {
-      name: 'type',
-      type: "'line' | 'bar'",
-      default: "'line'",
-      description: "Chart type. Line renders a polyline with optional area fill; bar renders evenly spaced rectangles.",
-    },
-    {
-      name: 'color',
-      type: 'string',
-      default: "''",
-      description: 'CSS color override applied to strokes and fills. Accepts any valid CSS color value. Defaults to var(--accent-primary) when not set.',
-    },
-    {
-      name: 'width',
-      type: 'number',
-      default: '120',
-      description: 'SVG viewport width in pixels.',
-    },
-    {
-      name: 'height',
-      type: 'number',
-      default: '32',
-      description: 'SVG viewport height in pixels.',
-    },
-    {
-      name: 'fill',
-      type: 'boolean',
-      default: 'false',
-      description: 'When true and type is "line", fills the area beneath the curve with a semi-transparent accent color.',
-    },
-  ],
 
   tabs: [
     {

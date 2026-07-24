@@ -197,11 +197,6 @@ The \`label\` property controls accessibility behavior: when a label is provided
       })()
     `,
 
-    props: [
-      { name: 'name', type: 'string', default: "''", description: 'Icon name to look up in the icon registry. When provided, renders the matching SVG. When empty, falls back to slotted content.' },
-      { name: 'size', type: "'xs' | 'sm' | 'md' | 'lg' | 'xl'", default: "'sm'", description: 'Icon dimensions: `xs` (12px), `sm` (16px), `md` (20px), `lg` (24px), `xl` (32px).' },
-      { name: 'label', type: 'string', default: "''", description: 'Accessibility label. When provided, sets `role="img"` and `aria-label`. When empty, sets `role="presentation"` and `aria-hidden="true"`.' },
-    ],
     tabs: [
       {
         label: 'Web Component',

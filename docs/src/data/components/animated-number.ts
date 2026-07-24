@@ -49,15 +49,6 @@ Formatting is built in: \`prefix\` and \`suffix\` strings wrap the number (e.g.,
   <arc-animated-number value="3200" suffix=" users" duration="1000" style="font-size: 20px;"></arc-animated-number>
 </div>`,
 
-    props: [
-      { name: 'value', type: 'number', default: '0', description: 'Target number to animate to' },
-      { name: 'duration', type: 'number', default: '1000', description: 'Animation duration in milliseconds' },
-      { name: 'prefix', type: 'string', default: "''", description: 'String prepended before the number (e.g., "$")' },
-      { name: 'suffix', type: 'string', default: "''", description: 'String appended after the number (e.g., "%")' },
-      { name: 'decimals', type: 'number', default: '0', description: 'Number of fixed decimal places' },
-      { name: 'format', type: "'number' | 'currency' | 'percent'", default: "'number'", description: 'Controls how the number is formatted using Intl.NumberFormat. Use currency with a prefix like $ or percent with a suffix like %.' },
-      { name: 'locale', type: 'string', default: "'en-US'", description: 'BCP 47 locale tag passed to Intl.NumberFormat for locale-aware number formatting (thousands separators, decimal marks).' },
-    ],
     tabs: [
       {
         label: 'Web Component',

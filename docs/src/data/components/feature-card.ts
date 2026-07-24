@@ -48,13 +48,6 @@ The icon slot accepts custom content (SVG icons, emoji, or any markup) via the \
   <arc-feature-card icon="&#9878;" heading="Accessible" description="WCAG-compliant focus and keyboard support."></arc-feature-card>
 </div>`,
 
-    props: [
-      { name: 'icon', type: 'string', default: "''", description: 'Icon text or emoji displayed in the icon box' },
-      { name: 'heading', type: 'string', default: "''", description: 'Card title' },
-      { name: 'description', type: 'string', default: "''", description: 'Card body text' },
-      { name: 'href', type: 'string', default: "''", description: 'Makes the card a link' },
-      { name: 'action', type: 'string', description: 'Action label (e.g. "Learn more") shown at the bottom of the card when href is set. Hidden when empty or when no href is provided.' },
-    ],
     tabs: [
       {
         label: 'Web Component',

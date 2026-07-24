@@ -47,12 +47,6 @@ Each item in the \`items\` array can optionally include a \`siblings\` array. Wh
   <arc-breadcrumb-menu label="Example breadcrumb" items='[{"label":"Home","href":"/"},{"label":"Products","href":"/products","siblings":[{"label":"Solutions","href":"/solutions"},{"label":"Pricing","href":"/pricing"}]},{"label":"Analytics","href":"/products/analytics"}]'></arc-breadcrumb-menu>
 </div>`,
 
-  props: [
-    { name: 'items', type: 'Array<{ label, href, siblings? }>', default: '[]', description: 'Array of breadcrumb items. Each item has a label and href. Optionally include a siblings array to enable a dropdown at that level.' },
-  ],
-  events: [
-    { name: 'arc-navigate', description: 'Fired when a breadcrumb link or dropdown item is clicked with detail: { href }.' },
-  ],
 
   tabs: [
     {

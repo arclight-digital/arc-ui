@@ -55,23 +55,6 @@ An optional \`presets\` array renders a left rail of one-click quick ranges such
   style="width:300px"
 ></arc-date-range-picker>`,
 
-    props: [
-      { name: 'start', type: 'string', default: "''", description: 'Range start date as an ISO string (YYYY-MM-DD). Empty when unset. Set both start and end to pre-select a range.' },
-      { name: 'end', type: 'string', default: "''", description: 'Range end date as an ISO string (YYYY-MM-DD). Empty when unset or while an end date is pending.' },
-      { name: 'value', type: 'string', default: "''", description: 'Read-derived ISO 8601 interval ("start/end") when both dates are set, otherwise an empty string. This is the value submitted with forms. Assigning "start/end" sets both dates.' },
-      { name: 'min', type: 'string', default: "''", description: 'Minimum selectable date as an ISO string. Earlier days are dimmed and non-interactive.' },
-      { name: 'max', type: 'string', default: "''", description: 'Maximum selectable date as an ISO string. Later days are dimmed and non-interactive.' },
-      { name: 'months', type: 'number', default: '2', description: 'Number of month panels shown in the popup. Panels sit side by side and stack vertically when the popup is too narrow.' },
-      { name: 'presets', type: '{ label: string; days: number }[]', default: '[]', description: 'Quick ranges rendered as a left rail. Each preset selects the last N days ending today and closes the popup. Hidden when empty.' },
-      { name: 'placeholder', type: 'string', default: "'Select date range'", description: 'Placeholder text shown in the input when no range is selected.' },
-      { name: 'label', type: 'string', default: "''", description: 'Label text rendered above the input in uppercase accent font styling.' },
-      { name: 'name', type: 'string', default: "''", description: 'Form field name used when the interval value is submitted with a form.' },
-      { name: 'required', type: 'boolean', default: 'false', description: 'Marks the control invalid (valueMissing) until a complete range is selected.' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the picker, reducing opacity and preventing the popup from opening.' }
-    ],
-    events: [
-      { name: 'arc-change', description: 'Fired when a complete range is committed (second day clicked or preset applied). detail: { start, end }' }
-    ],
     tabs: [
     {
         label: 'Web Component',

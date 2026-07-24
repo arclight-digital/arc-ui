@@ -51,14 +51,6 @@ AnchorNav supports both orientations out of the box. Vertical mode is best for s
   </arc-anchor-nav>
 </div>`,
 
-  props: [
-    { name: 'orientation', type: "'vertical' | 'horizontal'", default: "'horizontal'", description: 'Layout direction. Vertical renders a column of links; horizontal renders a row.' },
-    { name: 'value', type: 'string', default: "''", description: 'The value of the currently active link. Controls which item is highlighted.' },
-    { name: 'items', type: 'Array<{ label: string, value: string }>', default: '[]', description: 'Declarative list of items to render. Each object needs a label (display text) and value (identifier). Alternative to slotting children.' },
-  ],
-  events: [
-    { name: 'arc-change', description: 'Fired when a link is selected with detail: { value }.' },
-  ],
 
   tabs: [
     {

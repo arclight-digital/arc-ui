@@ -45,27 +45,6 @@ In container mode, the overlay is positioned absolutely within its parent and co
 
     previewHtml: `<div style="width:100%;position:relative;min-height:160px;border:1px solid var(--border-default);border-radius:var(--radius-md);padding:var(--space-lg);background:var(--surface-raised)"><arc-loading-overlay active message="Loading data..."></arc-loading-overlay><p style="color:var(--text-secondary)">Content behind the loading overlay</p></div>`,
 
-    props: [
-      {
-        name: 'active',
-        type: 'boolean',
-        default: 'false',
-        description: 'Controls whether the loading overlay is visible. When true, the overlay fades in and blocks interaction with the content behind it.',
-      },
-      {
-        name: 'message',
-        type: 'string',
-        default: "''",
-        description: 'Optional text displayed below the spinner. Use it to communicate what is loading or the current progress step.',
-      },
-      {
-        name: 'global',
-        type: 'boolean',
-        default: 'false',
-        description: 'When true, the overlay uses fixed positioning to cover the entire viewport instead of just its parent container. Includes a focus trap in this mode.',
-      },
-    ],
-    events: [],
 
     tabs: [
       {

@@ -55,12 +55,6 @@ The shimmer gradient uses \`--bg-elevated\` and \`--border-subtle\` tokens to en
   <arc-skeleton variant="text" width="75%"></arc-skeleton>
 </div>`,
 
-    props: [
-      { name: 'variant', type: "'text' | 'circle' | 'rect'", default: "'text'", description: 'Shape of the skeleton: text for lines, circle for avatars, rect for blocks' },
-      { name: 'width', type: 'string', default: "''", description: 'CSS width value (e.g. "200px", "100%")' },
-      { name: 'height', type: 'string', default: "''", description: 'CSS height value; circle auto-matches width when omitted' },
-      { name: 'count', type: 'number', default: '1', description: 'Renders multiple skeleton items stacked vertically with spacing. Useful for placeholder lists.' },
-    ],
     tabs: [
       {
         label: 'Web Component',

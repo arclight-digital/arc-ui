@@ -60,13 +60,6 @@ Common use cases include section headers that stick as the user scrolls through 
   </div>
 </div>`,
 
-    props: [
-      { name: 'offset', type: 'string', default: "'0px'", description: 'The CSS `top` value for sticky positioning. Set to "64px" to stick below a 64px top bar, or "0px" to stick flush with the viewport/scroll container edge.' },
-      { name: 'stuck', type: 'boolean', default: 'false', description: 'Read-only attribute set by the IntersectionObserver when the element is currently stuck. Use the `[stuck]` CSS selector to style the stuck state.' },
-    ],
-    events: [
-      { name: 'arc-stuck', description: 'Fired when the stuck state changes. Event detail contains `{ stuck: boolean }` indicating whether the element is currently stuck.' },
-    ],
 
     tabs: [
       {

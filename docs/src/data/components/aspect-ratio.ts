@@ -48,9 +48,6 @@ The ratio prop accepts any valid \`W/H\` format including decimal values like \`
   </arc-aspect-ratio>
 </div>`,
 
-    props: [
-      { name: 'ratio', type: 'string', default: "'16/9'", description: 'Aspect ratio as a `W/H` string. Supports integers and decimals. Falls back to `16/9` if invalid.' },
-    ],
     tabs: [
       {
         label: 'Web Component',

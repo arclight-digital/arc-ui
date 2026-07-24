@@ -63,9 +63,6 @@ On screens narrower than 768px, the left sidebar layout automatically collapses 
   </arc-settings-layout>
 </div>`,
 
-    props: [
-      { name: 'nav-position', type: "'left' | 'top'", default: "'left'", description: 'Controls whether the navigation panel appears as a left sidebar (220px wide, CSS Grid) or a top bar (full-width, flexbox column). The left layout collapses to stacked on screens narrower than 768px.' },
-    ],
     tabs: [
       {
         label: 'Web Component',

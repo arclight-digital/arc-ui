@@ -51,21 +51,6 @@ Use announcement for any dynamic state change that sighted users can perceive vi
       });
     `,
 
-    props: [
-      {
-        name: 'politeness',
-        type: "'polite' | 'assertive'",
-        default: "'polite'",
-        description: 'Controls the ARIA live region politeness level. Polite waits for the screen reader to finish before announcing; assertive interrupts immediately.',
-      },
-      {
-        name: 'message',
-        type: 'string',
-        default: "''",
-        description: 'The text to announce to screen readers. Each time this property changes, a new announcement is triggered.',
-      },
-    ],
-    events: [],
 
     tabs: [
       {

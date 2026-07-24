@@ -49,15 +49,6 @@ Color Picker performs all HSL-to-hex conversion internally. It fires \`arc-chang
 
     previewSetup: `document.querySelector('arc-color-picker').presets = ['#4d7ef7', '#22c55e', '#ef4444', '#eab308', '#a855f7', '#06b6d4'];`,
 
-    props: [
-      { name: 'value', type: 'string', default: "'#4d7ef7'", description: 'Current color as a 6-digit hex string (e.g. `#4d7ef7`). Reflected as an attribute.' },
-      { name: 'presets', type: 'string[]', default: '[]', description: 'Array of hex color strings to display as quick-select swatches below the hex input.' },
-      { name: 'label', type: 'string', default: "''", description: 'Label text displayed above the picker in uppercase accent font.' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables all interaction, reducing opacity to 40% and blocking pointer events.' }
-    ],
-    events: [
-      { name: 'arc-change', description: 'Fired when the color changes via any input method. `event.detail.value` contains the hex string.' }
-    ],
     tabs: [
     {
         label: 'Web Component',

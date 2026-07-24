@@ -46,13 +46,6 @@ Accessibility is built in: the button has \`aria-label="Scroll to top"\` and pro
 </div>
 <arc-scroll-to-top threshold="200"></arc-scroll-to-top>`,
 
-    props: [
-      { name: 'threshold', type: 'number', default: '300', description: 'Scroll distance in pixels before the button becomes visible.' },
-      { name: 'smooth', type: 'boolean', default: 'true', description: 'Use smooth scrolling animation. Falls back to instant when prefers-reduced-motion is set.' },
-      { name: 'position', type: 'string', default: 'bottom-right', description: 'Corner placement: "bottom-right" or "bottom-left".' },
-      { name: 'offset', type: 'string', default: 'var(--space-lg)', description: 'Distance from viewport edges. Accepts any CSS length value.' }
-    ],
-    events: [],
     tabs: [
       {
         label: 'Web Component',
