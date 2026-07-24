@@ -3,6 +3,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 import { components } from '../../data/components/index';
 
 const headings = [
+  { id: 'v2-7-0', label: 'v2.7.0' },
   { id: 'v2-6-0', label: 'v2.6.0' },
   { id: 'v2-5-0', label: 'v2.5.0' },
   { id: 'v2-4-0', label: 'v2.4.0' },
@@ -36,6 +37,48 @@ const byTier = Object.fromEntries(
     <p class="page-desc">
       Release history for ARC UI. All packages are versioned together.
     </p>
+
+    <section id="v2-7-0">
+      <h2 class="docs-heading">v2.7.0 — Editor Autocomplete, Typed Events &amp; Dev Warnings</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <p class="docs-text">
+        A developer-experience release: the library now teaches its own API through your tooling.
+        Every component documents its full surface — props with allowed values, events with typed
+        payloads, slots, CSS parts — in <code>custom-elements.json</code>, and everything else is
+        generated from it: editor autocomplete data, TypeScript declarations, JSX typings, runtime
+        dev warnings, and the docs API tables themselves.
+      </p>
+
+      <h3 class="tier-heading">Editor Autocomplete</h3>
+      <ul class="docs-list">
+        <li><strong>VS Code</strong> &mdash; the package ships <code>vscode.html-custom-data.json</code> and <code>vscode.css-custom-data.json</code>. One settings line gives tag, attribute, and attribute-<em>value</em> completion with hover docs in plain HTML: <code>"html.customData": ["./node_modules/@arclux/arc-ui/vscode.html-custom-data.json"]</code>.</li>
+        <li><strong>JetBrains IDEs</strong> &mdash; bundled <code>web-types.json</code> is picked up automatically; zero setup in WebStorm or IntelliJ.</li>
+      </ul>
+
+      <h3 class="tier-heading">TypeScript</h3>
+      <ul class="docs-list">
+        <li><strong>Union prop types</strong> &mdash; <code>variant</code> is now <code>'primary' | 'secondary' | 'ghost'</code> instead of <code>string</code>, with per-prop hover documentation, across all 187 elements.</li>
+        <li><strong>Typed events</strong> &mdash; all <code>arc-*</code> event names are registered in <code>GlobalEventHandlersEventMap</code>, most with typed <code>detail</code> payloads, so <code>addEventListener('arc-change', &hellip;)</code> autocompletes and type-checks.</li>
+        <li><strong>React 19 without the wrapper</strong> &mdash; add <code>"types": ["@arclux/arc-ui/react-jsx"]</code> to tsconfig and every <code>arc-*</code> tag is typed directly in JSX; <code>variant="primry"</code> fails to compile with a did-you-mean.</li>
+      </ul>
+
+      <h3 class="tier-heading">Runtime Dev Warnings</h3>
+      <ul class="docs-list">
+        <li><strong><code>import '@arclux/arc-ui/dev'</code></strong> (development only) warns in the console &mdash; with a link to the right docs page &mdash; about invalid attribute values, camelCase property names used as attributes, and attribute-name typos.</li>
+      </ul>
+
+      <h3 class="tier-heading">Docs</h3>
+      <ul class="docs-list">
+        <li><strong>API tables are generated</strong> &mdash; component pages and <code>llms-full.txt</code> read props, events, slots, and CSS parts from <code>custom-elements.json</code>, so API docs can no longer drift from component source. Event tables gained a typed Detail column; <code>llms-full.txt</code> gained Slots and CSS Parts sections.</li>
+        <li><strong><code>llms-full.txt</code> now includes the data and typography tiers</strong> &mdash; 33 components were missing from the LLM reference.</li>
+      </ul>
+
+      <h3 class="tier-heading">Changed</h3>
+      <ul class="docs-list">
+        <li><strong>Quoted kebab property keys are now camelCase properties</strong> &mdash; <code>el['confirm-label']</code> &rarr; <code>el.confirmLabel</code> (same for <code>cancelLabel</code>, <code>pauseOnHover</code>, <code>pauseEnd</code>). HTML attributes are unchanged (<code>confirm-label="&hellip;"</code> still works); only direct JS property access is affected. Framework wrappers expose these four props for the first time.</li>
+      </ul>
+    </section>
 
     <section id="v2-6-0">
       <h2 class="docs-heading">v2.6.0 — Form Submission Across Shadow Boundaries</h2>
