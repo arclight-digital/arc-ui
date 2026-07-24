@@ -98,3 +98,71 @@ lines.push('');
 mkdirSync(resolve(wcDir, 'types'), { recursive: true });
 writeFileSync(resolve(wcDir, 'types/index.d.ts'), lines.join('\n'));
 console.log(`✓ types/index.d.ts — ${elements.length} classes + HTMLElementTagNameMap`);
+
+// ---------------------------------------------------------------------------
+// types/react-jsx.d.ts — opt-in JSX typings for React 19 users who render the
+// custom elements directly instead of using @arclux/arc-ui-react.
+// ---------------------------------------------------------------------------
+
+/** Attribute-level TS type: unions pass through, primitives map, rest is string. */
+function attrType(a) {
+  const text = a.type?.text;
+  if (!text) return 'string';
+  if (text.includes("'")) return text; // literal union
+  if (text === 'boolean') return 'boolean';
+  if (text === 'number') return 'number | string';
+  return 'string';
+}
+
+const jsx = [
+  '// Generated from custom-elements.json by scripts/generate-types.js — do not edit',
+  '// Opt-in JSX typings for using ARC UI custom elements directly in React 19',
+  '// (no wrapper). Enable via tsconfig:',
+  '//   { "compilerOptions": { "types": ["@arclux/arc-ui/react-jsx"] } }',
+  '// or per file:',
+  '//   /// <reference types="@arclux/arc-ui/react-jsx" />',
+  '',
+  'export {};',
+  '',
+  'type ArcBaseAttributes = {',
+  '  children?: unknown;',
+  '  key?: string | number | null;',
+  '  ref?: unknown;',
+  '  class?: string;',
+  '  className?: string;',
+  '  style?: unknown;',
+  '  id?: string;',
+  '  slot?: string;',
+  '  part?: string;',
+  '  hidden?: boolean;',
+  '  title?: string;',
+  '  role?: string;',
+  '  tabIndex?: number;',
+  '} & { [attr: `data-${string}`]: unknown } & { [attr: `aria-${string}`]: unknown } & {',
+  '  [attr: `on${string}`]: unknown;',
+  '};',
+  '',
+  "declare module 'react' {",
+  '  namespace JSX {',
+  '    interface IntrinsicElements {',
+];
+for (const el of elements) {
+  const attrs = (el.attributes ?? []).filter((a) => a.name && !a.name.startsWith('_'));
+  if (!attrs.length) {
+    jsx.push(`      '${el.tagName}': ArcBaseAttributes;`);
+    continue;
+  }
+  jsx.push(`      '${el.tagName}': ArcBaseAttributes & {`);
+  for (const a of attrs) {
+    const key = a.name.includes('-') ? `'${a.name}'` : a.name;
+    jsx.push(`        ${key}?: ${attrType(a)};`);
+  }
+  jsx.push('      };');
+}
+jsx.push('    }');
+jsx.push('  }');
+jsx.push('}');
+jsx.push('');
+
+writeFileSync(resolve(wcDir, 'types/react-jsx.d.ts'), jsx.join('\n'));
+console.log(`✓ types/react-jsx.d.ts — IntrinsicElements for ${elements.length} tags`);

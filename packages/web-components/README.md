@@ -105,6 +105,33 @@ attribute, and attribute-value completion (with hover docs) in plain HTML:
 **JetBrains IDEs** (WebStorm, IntelliJ) — no setup needed; the bundled
 `web-types.json` is picked up automatically.
 
+### React 19 without the wrapper
+
+React 19 renders custom elements natively. If you use the tags directly
+instead of [`@arclux/arc-ui-react`](https://www.npmjs.com/package/@arclux/arc-ui-react),
+opt into typed JSX for all `arc-*` tags:
+
+```json
+{ "compilerOptions": { "types": ["@arclux/arc-ui/react-jsx"] } }
+```
+
+`<arc-button variant="primry">` then fails to compile with
+*Did you mean '"primary"'?*.
+
+### Development warnings
+
+For runtime feedback while building, import the dev module (development
+only — it installs a document-wide observer):
+
+```js
+if (import.meta.env.DEV) import('@arclux/arc-ui/dev');
+```
+
+It warns in the console — with a link to the right docs page — about invalid
+attribute values (`variant="primry"`), camelCase property names used as
+attributes (`confirmLabel=` instead of `confirm-label=`), and attribute-name
+typos (`vairant`).
+
 ## Framework Wrappers
 
 If you are using a framework, prefer the dedicated wrapper package:

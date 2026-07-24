@@ -77,6 +77,7 @@
     "./date-range-picker": "./src/input/date-range-picker.register.js",
     "./description-item": "./src/data/description-item.register.js",
     "./description-list": "./src/data/description-list.register.js",
+    "./dev": "./src/dev.js",
     "./dialog": "./src/feedback/dialog.register.js",
     "./diff": "./src/data/diff.register.js",
     "./divider": "./src/content/divider.register.js",
@@ -147,6 +148,9 @@
     "./rail": "./src/navigation/rail.register.js",
     "./range-slider": "./src/input/range-slider.register.js",
     "./rating": "./src/input/rating.register.js",
+    "./react-jsx": {
+      "types": "./types/react-jsx.d.ts"
+    },
     "./resizable": "./src/layout/resizable.register.js",
     "./responsive-switcher": "./src/layout/responsive-switcher.register.js",
     "./scroll-area": "./src/content/scroll-area.register.js",

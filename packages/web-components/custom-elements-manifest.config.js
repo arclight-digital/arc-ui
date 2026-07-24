@@ -7,6 +7,8 @@ export default {
   exclude: [
     'src/**/*.register.js',
     'src/register.js',
+    'src/dev.js',
+    'src/dev-schema.js',
     'src/index.js',
     'src/*/index.js',
     'src/icons/**',
