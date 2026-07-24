@@ -6,8 +6,8 @@
         box-sizing: border-box;
       }
 
-      .arc-settings-layout /* Left nav layout */
-      .settings-layout--left {
+      /* Left nav layout */
+      .arc-settings-layout .settings-layout--left {
         display: grid;
         grid-template-columns: 220px 1fr;
         min-height: 100%;
@@ -24,8 +24,8 @@
         flex: 1;
       }
 
-      .arc-settings-layout /* Top nav layout */
-      .settings-layout--top {
+      /* Top nav layout */
+      .arc-settings-layout .settings-layout--top {
         display: flex;
         flex-direction: column;
         min-height: 100%;
@@ -42,8 +42,8 @@
         flex: 1;
       }
 
-      @media (max-width: 768px) { .arc-settings-layout /* --breakpoint-md */
-        .settings-layout--left {
+      @media (max-width: 768px) { /* --breakpoint-md */
+        .arc-settings-layout .settings-layout--left {
           display: flex;
           flex-direction: column;
         }

@@ -5,7 +5,7 @@ import '@arclux/arc-ui/status-bar';
 defineOptions({ name: 'StatusBar' });
 
 withDefaults(defineProps<{
-  position?: string;
+  position?: 'fixed';
 }>(), {
   position: 'static',
 });

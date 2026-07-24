@@ -44,7 +44,7 @@
       }
 
 
-      .arc-callout(.dismissed) {
+      .arc-callout.dismissed {
         display: none;
       }
 

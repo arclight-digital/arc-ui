@@ -10,7 +10,7 @@ import '@arclux/arc-ui/page-layout';
   template: `<arc-page-layout [attr.layout]="layout" [attr.maxWidth]="maxWidth" [attr.gap]="gap"><ng-content /></arc-page-layout>`,
 })
 export class PageLayout {
-  @Input() layout: string = 'centered';
+  @Input() layout: 'centered' | 'wide' | 'sidebar-left' | 'sidebar-right' = 'centered';
   @Input() maxWidth: string = '1120px';
   @Input() gap: string = 'var(--space-xl)';
 }

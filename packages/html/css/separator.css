@@ -34,7 +34,7 @@
         background: linear-gradient(90deg, transparent, var(--border-default), transparent);
       }
 
-      .arc-separator /* Vertical */
+      /* Vertical */
       .arc-separator[data-orientation="vertical"] .separator {
         width: 1px;
         height: 100%;
@@ -59,8 +59,8 @@
         background: linear-gradient(180deg, transparent, var(--border-default), transparent);
       }
 
-      .arc-separator /* Labeled */
-      .separator--labeled {
+      /* Labeled */
+      .arc-separator .separator--labeled {
         display: flex;
         align-items: center;
         gap: var(--space-md);

@@ -5,7 +5,7 @@
 
   interface Props {
     open?: boolean;
-    position?: string;
+    position?: 'top-left' | 'top-right';
     maxHeight?: string;
     children?: Snippet;
     [key: string]: unknown;

@@ -4,7 +4,7 @@ import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/split-pane';
 
 export interface SplitPaneProps {
-  orientation?: string;
+  orientation?: 'vertical' | 'horizontal';
   ratio?: number;
   minRatio?: number;
   maxRatio?: number;

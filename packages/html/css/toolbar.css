@@ -21,7 +21,7 @@
         gap: var(--space-sm);
       }
 
-      .arc-toolbar([size='sm']) .toolbar {
+      .arc-toolbar[data-size="sm"] .toolbar {
         height: 36px;
         padding: 0 var(--space-sm);
       }
@@ -53,7 +53,7 @@
         margin-left: auto;
       }
 
-      .arc-toolbar /* Overflow collapse prevents slotted items from forcing the row wider */
+      /* Overflow collapse prevents slotted items from forcing the row wider */
       .arc-toolbar[overflow] .toolbar {
         min-width: 0;
         overflow: hidden;

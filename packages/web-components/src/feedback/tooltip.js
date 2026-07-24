@@ -4,6 +4,7 @@ import { setTriggerAria } from '../shared/trigger-aria.js';
 
 /**
  * @tag arc-tooltip
+ * @arc-prism hybrid — CSS :hover/:focus fallback; show delay and ARIA wiring require JS
  */
 export class ArcTooltip extends LitElement {
   static properties = {
@@ -54,6 +55,15 @@ export class ArcTooltip extends LitElement {
       }
 
       :host .tooltip__popup.is-visible {
+        opacity: 1;
+      }
+
+      /* No-JS fallback for the static HTML export: reveal on hover/focus.
+         The component adds .is-managed at runtime (never in the template, so
+         it can't leak into the export), which disables this rule and leaves
+         the configured show delay in charge. */
+      .tooltip__trigger:hover + .tooltip__popup:not(.is-managed),
+      .tooltip__trigger:focus-within + .tooltip__popup:not(.is-managed) {
         opacity: 1;
       }
 
@@ -168,6 +178,9 @@ export class ArcTooltip extends LitElement {
     if (changed.has('content')) {
       this._syncTriggerAria();
     }
+    // Re-added after every render: the popup's class attribute binding
+    // rewrites the whole attribute and would otherwise drop the marker.
+    this.shadowRoot.querySelector('.tooltip__popup')?.classList.add('is-managed');
   }
 
   /**

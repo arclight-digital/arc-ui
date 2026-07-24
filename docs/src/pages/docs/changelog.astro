@@ -92,10 +92,17 @@ const byTier = Object.fromEntries(
         <li><strong>Fleshed-out package READMEs</strong> &mdash; every npm package now documents events, theming, SSR caveats, and correct registration entry points, with links that work on npm.</li>
       </ul>
 
+      <h3 class="tier-heading">Static HTML Package</h3>
+      <ul class="docs-list">
+        <li><strong>Tooltip works without JavaScript</strong> &mdash; the static export gains a pure-CSS <code>:hover</code>/<code>:focus-within</code> reveal. The web component disables the fallback at runtime, so its configured show delay is unaffected.</li>
+        <li><strong>Callout, App Shell, Toolbar, and Tooltip join the static package as hybrids</strong> &mdash; the generator now maintains their examples (static presentation works; dismissal, overflow collapse, and drawer behavior still require JS).</li>
+        <li><strong>Variant styling un-broken</strong> &mdash; Prism 2.0.4/2.0.5 fix a CSS-scoping bug that left size/variant/position rules dead in 26 components&rsquo; standalone CSS (button sizes, card hover, dock positions, and more), plus example-generator fixes: real labels instead of blank or placeholder junk, sensible attribute defaults, and no shadow-DOM internals leaking into snippets.</li>
+        <li><strong>Removed 72 stale example files</strong> &mdash; leftovers for interactive components (modal, drawer, combobox, &hellip;) that the generator had stopped maintaining, most of them empty shells. Interactive components are intentionally excluded from the static-HTML package.</li>
+      </ul>
+
       <h3 class="tier-heading">Housekeeping</h3>
       <ul class="docs-list">
-        <li><strong>Prism 2.0.2</strong> &mdash; regenerated all wrapper output; 74 files stuck on a pre-rename header refreshed, Page Header&rsquo;s HTML example and slotted styles corrected.</li>
-        <li><strong>Removed orphaned HTML examples</strong> &mdash; the static <code>callout</code>, <code>app-shell</code>, <code>toolbar</code>, and <code>tooltip</code> snippets in <code>@arclux/arc-ui-html</code> predated those components becoming interactive and were no longer maintained by the generator. Interactive components are intentionally excluded from the static-HTML package.</li>
+        <li><strong>Prism 2.0.5</strong> &mdash; regenerated all wrapper output; 74 files stuck on a pre-rename header refreshed, Page Header&rsquo;s HTML example and slotted styles corrected.</li>
       </ul>
     </section>
 

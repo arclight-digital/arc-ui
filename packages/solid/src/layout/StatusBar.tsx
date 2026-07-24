@@ -4,7 +4,7 @@ import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/status-bar';
 
 export interface StatusBarProps {
-  position?: string;
+  position?: 'fixed';
   children?: JSX.Element;
   [key: string]: unknown;
 }

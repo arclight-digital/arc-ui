@@ -44,7 +44,7 @@
         box-shadow: 0 0 10px rgba(var(--accent-primary-rgb),0.25);
       }
 
-      .arc-divider /* Alignment — rewrite gradients to originate from one edge */
+      /* Alignment — rewrite gradients to originate from one edge */
       .arc-divider[data-align="left"] .divider { margin-inline: 0; }
       .arc-divider[data-align="right"] .divider { margin-left: auto; margin-right: 0; }
 
@@ -85,7 +85,7 @@
         background: linear-gradient(90deg, transparent, var(--accent-primary), var(--accent-secondary));
       }
 
-      .arc-divider /* ── Vertical ── */
+      /* ── Vertical ── */
       .arc-divider[vertical] { display: inline-flex; width: auto; height: 100%; }
       .arc-divider[vertical] .divider { width: 1px; height: 100%; }
 
@@ -118,8 +118,8 @@
         background: linear-gradient(180deg, transparent, rgba(var(--text-primary-rgb),0.35), transparent);
       }
 
-      .arc-divider /* Labeled divider */
-      .divider--labeled {
+      /* Labeled divider */
+      .arc-divider .divider--labeled {
         display: flex;
         align-items: center;
         gap: var(--space-md);

@@ -24,7 +24,7 @@
         opacity: 1;
       }
 
-      .arc-float-bar /* Bottom (default) */
+      /* Bottom (default) */
       .arc-float-bar:not([data-position="top"]) .float-bar {
         bottom: var(--space-lg);
       }
@@ -35,7 +35,7 @@
         pointer-events: none;
       }
 
-      .arc-float-bar /* Top */
+      /* Top */
       .arc-float-bar[data-position="top"] .float-bar {
         top: var(--space-lg);
       }

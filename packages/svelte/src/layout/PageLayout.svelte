@@ -4,7 +4,7 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
-    layout?: string;
+    layout?: 'centered' | 'wide' | 'sidebar-left' | 'sidebar-right';
     maxWidth?: string;
     gap?: string;
     children?: Snippet;

@@ -25,7 +25,7 @@
         text-underline-offset: 3px;
       }
 
-      .arc-link /* Underline variants */
+      /* Underline variants */
       .arc-link[data-underline="always"] .link {
         text-decoration: underline;
         text-underline-offset: 3px;

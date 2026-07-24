@@ -50,8 +50,8 @@
         display: flex;
       }
 
-      .arc-input-group /* Remove borders/radii from slotted inputs */
-      arc-input,
+      /* Remove borders/radii from slotted inputs */
+      .arc-input-group arc-input,
       .arc-input-group arc-select,
       .arc-input-group input,
       .arc-input-group select {
@@ -62,7 +62,7 @@
         min-width: 0;
       }
 
-      .arc-input-group /* Sizes */
+      /* Sizes */
       .arc-input-group[data-size="sm"] .input-group__addon { padding: 0 var(--space-sm); font-size: var(--text-xs); }
       .arc-input-group[data-size="lg"] .input-group__addon { padding: 0 var(--space-lg); font-size: var(--body-size); }
 

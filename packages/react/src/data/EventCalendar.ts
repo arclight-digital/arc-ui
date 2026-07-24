@@ -6,7 +6,7 @@ import { ArcEventCalendar } from '@arclux/arc-ui/event-calendar';
 
 export interface EventCalendarProps {
   events?: unknown[];
-  view?: string;
+  view?: 'week';
   date?: string;
   className?: string;
   children?: React.ReactNode;

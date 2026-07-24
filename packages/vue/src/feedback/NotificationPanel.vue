@@ -6,7 +6,7 @@ defineOptions({ name: 'NotificationPanel' });
 
 withDefaults(defineProps<{
   open?: boolean;
-  position?: string;
+  position?: 'top-left' | 'top-right';
   maxHeight?: string;
 }>(), {
   open: false,

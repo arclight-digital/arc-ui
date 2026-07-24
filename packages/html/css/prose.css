@@ -8,13 +8,13 @@
         line-height: var(--body-lh);
       }
 
-      .arc-prose /* Size variants */
+      /* Size variants */
       .arc-prose[data-size="sm"] { font-size: var(--text-sm); }
       .arc-prose[data-size="md"], .arc-prose:not([data-size]) { font-size: var(--body-size); }
       .arc-prose[data-size="lg"] { font-size: var(--text-lg); }
 
-      .arc-prose /* Direct-child block elements via ::slotted */
-      h1 {
+      /* Direct-child block elements via ::slotted */
+      .arc-prose h1 {
         font-size: var(--text-3xl) !important;
         font-weight: var(--heading-weight) !important;
         color: var(--text-primary) !important;

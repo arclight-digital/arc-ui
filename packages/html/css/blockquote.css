@@ -13,8 +13,8 @@
         border-radius: var(--radius-md);
       }
 
-      .arc-blockquote /* Top gradient accent line */
-      .blockquote::before {
+      /* Top gradient accent line */
+      .arc-blockquote .blockquote::before {
         content: '';
         position: absolute;
         top: 0;
@@ -25,8 +25,8 @@
         opacity: 0.4;
       }
 
-      .arc-blockquote /* Decorative opening quote mark */
-      .blockquote::after {
+      /* Decorative opening quote mark */
+      .arc-blockquote .blockquote::after {
         content: '\u201C';
         position: absolute;
         top: -8px;
@@ -49,7 +49,7 @@
         line-height: 1.8;
       }
 
-      .arc-blockquote([variant='accent']) .quote {
+      .arc-blockquote[data-variant="accent"] .quote {
         background: var(--gradient-accent-text);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;

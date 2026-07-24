@@ -42,6 +42,15 @@
         opacity: 1;
       }
 
+      /* No-JS fallback for the static HTML export: reveal on hover/focus.
+         The component adds .is-managed at runtime (never in the template, so
+         it can't leak into the export), which disables this rule and leaves
+         the configured show delay in charge. */
+      .arc-tooltip .tooltip__trigger:hover + .tooltip__popup:not(.is-managed),
+      .arc-tooltip .tooltip__trigger:focus-within + .tooltip__popup:not(.is-managed) {
+        opacity: 1;
+      }
+
       /* Arrow */
       .arc-tooltip .tooltip__arrow {
         position: absolute;

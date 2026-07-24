@@ -10,7 +10,7 @@ import '@arclux/arc-ui/split-pane';
   template: `<arc-split-pane [attr.orientation]="orientation" [attr.ratio]="ratio" [attr.minRatio]="minRatio" [attr.maxRatio]="maxRatio" (arc-resize)="arcResize.emit($event)"><ng-content /></arc-split-pane>`,
 })
 export class SplitPane {
-  @Input() orientation: string = 'horizontal';
+  @Input() orientation: 'vertical' | 'horizontal' = 'horizontal';
   @Input() ratio: number = 0.5;
   @Input() minRatio: number = 0.15;
   @Input() maxRatio: number = 0.85;

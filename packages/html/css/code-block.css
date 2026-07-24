@@ -45,10 +45,10 @@
         overflow-y: hidden;
       }
 
-      .arc-code-block /* Shiki CSS-variables theme — map --shiki-* to design tokens.
-         Consumers override --accent-primary, .arc-code-block --color-success, .arc-code-block etc. and
+      /* Shiki CSS-variables theme — map --shiki-* to design tokens.
+         Consumers override --accent-primary, --color-success, etc. and
          syntax colors follow automatically. */
-      .code-block {
+      .arc-code-block .code-block {
         --shiki-foreground: var(--text-secondary);
         --shiki-background: var(--surface-primary);
         --shiki-token-comment: var(--text-ghost);
@@ -111,7 +111,7 @@
         border-top-color: var(--divider);
       }
 
-      .arc-code-block /* — Window variant — */
+      /* — Window variant — */
       .arc-code-block[data-variant="window"] .code-block {
         box-shadow: var(--shadow-overlay);
       }
@@ -149,7 +149,7 @@
         color: var(--text-muted);
       }
 
-      .arc-code-block /* — Basic variant — */
+      /* — Basic variant — */
       .arc-code-block[data-variant="basic"] .code-block__body-wrap {
         display: flex;
         align-items: center;

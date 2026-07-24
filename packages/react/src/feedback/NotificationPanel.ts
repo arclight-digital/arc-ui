@@ -6,7 +6,7 @@ import { ArcNotificationPanel } from '@arclux/arc-ui/notification-panel';
 
 export interface NotificationPanelProps {
   open?: boolean;
-  position?: string;
+  position?: 'top-left' | 'top-right';
   maxHeight?: string;
   className?: string;
   children?: React.ReactNode;

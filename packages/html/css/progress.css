@@ -14,8 +14,8 @@
         display: block;
       }
 
-      .arc-progress /* Bar */
-      .progress__track {
+      /* Bar */
+      .arc-progress .progress__track {
         width: 100%;
         border-radius: var(--radius-full);
         background: var(--border-subtle);
@@ -40,8 +40,8 @@
         animation: progress-indeterminate 1.5s ease-in-out infinite;
       }
 
-      .arc-progress /* Spinner */
-      .progress__spinner {
+      /* Spinner */
+      .arc-progress .progress__spinner {
         display: inline-block;
       }
 

@@ -39,8 +39,8 @@
         stroke-width: 1;
       }
 
-      .arc-sparkline /* Draw-in animation for line type */
-      .sparkline-line-animated {
+      /* Draw-in animation for line type */
+      .arc-sparkline .sparkline-line-animated {
         animation: sparkline-draw 800ms ease-out forwards;
       }
 

@@ -4,7 +4,7 @@ import { type FunctionComponent } from 'preact';
 import '@arclux/arc-ui/status-bar';
 
 export interface StatusBarProps {
-  position?: string;
+  position?: 'fixed';
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }

@@ -5,7 +5,7 @@
 
   interface Props {
     events?: unknown[];
-    view?: string;
+    view?: 'week';
     date?: string;
     children?: Snippet;
     [key: string]: unknown;

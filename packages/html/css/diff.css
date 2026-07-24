@@ -61,7 +61,7 @@
         min-width: 0;
       }
 
-      .arc-diff /* Side-by-side mode */
+      /* Side-by-side mode */
       .arc-diff[data-mode="side-by-side"] .diff__body {
         display: grid;
         grid-template-columns: 1fr 1fr;

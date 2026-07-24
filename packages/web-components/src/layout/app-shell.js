@@ -4,6 +4,7 @@ import { lockScroll, unlockScroll } from '../shared/scroll-lock.js';
 
 /**
  * @tag arc-app-shell
+ * @arc-prism hybrid — layout is pure CSS; responsive drawer behavior requires JS
  */
 export class ArcAppShell extends LitElement {
   static properties = {

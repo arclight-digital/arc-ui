@@ -48,13 +48,13 @@
         min-height: var(--touch-min);
       }
 
-      .arc-button /* Sizes */
+      /* Sizes */
       .arc-button[data-size="sm"] .btn { font-size: var(--text-xs); padding: var(--space-xs) var(--space-md); }
       .arc-button:not([data-size]) .btn,
       .arc-button[data-size="md"] .btn { font-size: var(--text-xs); padding: var(--space-sm) var(--space-lg); }
       .arc-button[data-size="lg"] .btn { font-size: var(--text-xs); padding: var(--space-md) var(--space-xl); letter-spacing: 3px; }
 
-      .arc-button /* Default → primary */
+      /* Default → primary */
       .arc-button:not([data-variant]) .btn {
         background: var(--interactive);
         color: var(--surface-base);
@@ -62,7 +62,7 @@
       }
       .arc-button:not([data-variant]) .btn:hover { box-shadow: var(--interactive-active); }
 
-      .arc-button /* :active scale */
+      /* :active scale */
       .arc-button:not([data-variant]) .btn:active,
       .arc-button[data-variant="primary"] .btn:active { transform: scale(0.97); box-shadow: 0 0 8px rgba(var(--interactive-rgb),0.5); }
       .arc-button[data-variant="secondary"] .btn:active {
@@ -74,8 +74,8 @@
         background: var(--surface-overlay);
       }
 
-      .arc-button /* Prefix / Suffix */
-      .btn__prefix,
+      /* Prefix / Suffix */
+      .arc-button .btn__prefix,
       .arc-button .btn__suffix {
         display: inline-flex;
         align-items: center;

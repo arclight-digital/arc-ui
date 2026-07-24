@@ -11,7 +11,7 @@ import '@arclux/arc-ui/notification-panel';
 })
 export class NotificationPanel {
   @Input() open: boolean = false;
-  @Input() position: string = 'top-right';
+  @Input() position: 'top-left' | 'top-right' = 'top-right';
   @Input() maxHeight: string = '400px';
   @Output() arcOpen = new EventEmitter<CustomEvent>();
   @Output() arcClose = new EventEmitter<CustomEvent>();

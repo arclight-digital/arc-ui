@@ -6,7 +6,7 @@ defineOptions({ name: 'Toolbar' });
 
 withDefaults(defineProps<{
   sticky?: boolean;
-  size?: string;
+  size?: 'sm';
   border?: boolean;
   overflow?: boolean;
 }>(), {

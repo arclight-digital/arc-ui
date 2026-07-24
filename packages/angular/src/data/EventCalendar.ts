@@ -11,7 +11,7 @@ import '@arclux/arc-ui/event-calendar';
 })
 export class EventCalendar {
   @Input() events: unknown[] = [];
-  @Input() view: string = 'month';
+  @Input() view: 'week' = 'month';
   @Input() date: string = '';
   @Output() arcPeriodChange = new EventEmitter<CustomEvent>();
   @Output() arcDateClick = new EventEmitter<CustomEvent>();

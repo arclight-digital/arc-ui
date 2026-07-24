@@ -10,7 +10,7 @@
         flex-direction: column;
       }
 
-      .arc-key-value /* Horizontal layout — grid pairs */
+      /* Horizontal layout — grid pairs */
       .arc-key-value[data-layout="horizontal"] arc-kv-pair {
         display: grid;
         grid-template-columns: minmax(120px, auto) 1fr;
@@ -18,15 +18,15 @@
         align-items: baseline;
       }
 
-      .arc-key-value /* Stacked layout — flex column pairs */
+      /* Stacked layout — flex column pairs */
       .arc-key-value[data-layout="stacked"] arc-kv-pair {
         display: flex;
         flex-direction: column;
         gap: var(--space-xs);
       }
 
-      .arc-key-value /* Pair padding */
-      arc-kv-pair {
+      /* Pair padding */
+      .arc-key-value arc-kv-pair {
         padding: var(--space-md) var(--space-sm);
         border-radius: var(--radius-sm);
         transition: background var(--transition-fast);
@@ -36,7 +36,7 @@
         background: var(--surface-hover);
       }
 
-      .arc-key-value /* Dividers */
+      /* Dividers */
       .arc-key-value[dividers] arc-kv-pair:not(:last-child) {
         border-bottom: 1px solid var(--divider);
       }

@@ -6,7 +6,7 @@ defineOptions({ name: 'Blockquote' });
 
 withDefaults(defineProps<{
   cite?: string;
-  variant?: string;
+  variant?: 'accent';
 }>(), {
   cite: '',
   variant: 'default',

@@ -11,5 +11,5 @@ import '@arclux/arc-ui/blockquote';
 })
 export class Blockquote {
   @Input() cite: string = '';
-  @Input() variant: string = 'default';
+  @Input() variant: 'accent' = 'default';
 }

@@ -15,9 +15,9 @@
       .arc-icon[data-size="md"] { width: 20px; height: 20px; }
       .arc-icon[data-size="lg"] { width: 24px; height: 24px; }
       .arc-icon[data-size="xl"] { width: 32px; height: 32px; }
-      .arc-icon /* Numeric sizes (px) are applied as inline width/height in updated() */
+      /* Numeric sizes (px) are applied as inline width/height in updated() */
 
-      .icon {
+      .arc-icon .icon {
         display: flex;
         align-items: center;
         justify-content: center;

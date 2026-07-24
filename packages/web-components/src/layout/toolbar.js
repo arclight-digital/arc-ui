@@ -7,6 +7,7 @@ import '../input/icon-button.js';
 /**
  * @tag arc-toolbar
  * @requires arc-icon-button
+ * @arc-prism hybrid — renders without JS; overflow collapse requires JS
  */
 export class ArcToolbar extends LitElement {
   static properties = {

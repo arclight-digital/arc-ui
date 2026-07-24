@@ -6,7 +6,7 @@ defineOptions({ name: 'EventCalendar' });
 
 withDefaults(defineProps<{
   events?: unknown[];
-  view?: string;
+  view?: 'week';
   date?: string;
 }>(), {
   events: () => ([]),

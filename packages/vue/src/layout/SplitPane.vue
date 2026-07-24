@@ -5,7 +5,7 @@ import '@arclux/arc-ui/split-pane';
 defineOptions({ name: 'SplitPane' });
 
 withDefaults(defineProps<{
-  orientation?: string;
+  orientation?: 'vertical' | 'horizontal';
   ratio?: number;
   minRatio?: number;
   maxRatio?: number;

@@ -5,6 +5,7 @@ import { statusVars } from '../status-styles.js';
 /**
  * @tag arc-callout
  * @requires arc-icon
+ * @arc-prism hybrid — renders without JS; dismissible variant requires JS
  */
 export class ArcCallout extends LitElement {
   static properties = {

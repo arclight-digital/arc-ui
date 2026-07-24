@@ -71,7 +71,7 @@
         user-select: none;
       }
 
-      .arc-avatar /* Shape variants */
+      /* Shape variants */
       .arc-avatar[data-shape="square"] .avatar,
       .arc-avatar[data-shape="square"] .avatar__img { border-radius: var(--radius-md); }
       .arc-avatar[data-shape="rounded"] .avatar,
@@ -81,8 +81,8 @@
       .arc-avatar[data-size="md"] .avatar__initials { font-size: var(--text-sm); }
       .arc-avatar[data-size="lg"] .avatar__initials { font-size: var(--text-lg); }
 
-      .arc-avatar /* Status indicator */
-      .avatar__status {
+      /* Status indicator */
+      .arc-avatar .avatar__status {
         position: absolute;
         bottom: 0;
         right: 0;

@@ -8,7 +8,7 @@
         color: var(--text-muted);
       }
 
-      .arc-status-bar([position='fixed']) {
+      .arc-status-bar[data-position="fixed"] {
         position: fixed;
         bottom: 0;
         left: 0;

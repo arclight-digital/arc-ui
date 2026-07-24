@@ -10,5 +10,5 @@ import '@arclux/arc-ui/status-bar';
   template: `<arc-status-bar [attr.position]="position"><ng-content /></arc-status-bar>`,
 })
 export class StatusBar {
-  @Input() position: string = 'static';
+  @Input() position: 'fixed' = 'static';
 }

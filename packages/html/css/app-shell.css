@@ -14,8 +14,8 @@
         min-height: 100vh;
       }
 
-      .arc-app-shell /* Topbar sits above everything */
-      .shell__topbar {
+      /* Topbar sits above everything */
+      .arc-app-shell .shell__topbar {
         position: relative;
         z-index: 200;
       }
@@ -26,8 +26,8 @@
         padding-top: var(--nav-height);
       }
 
-      .arc-app-shell /* ── Desktop sidebar ── */
-      .shell__sidebar {
+      /* ── Desktop sidebar ── */
+      .arc-app-shell .shell__sidebar {
         flex-shrink: 0;
         width: 280px;
         position: sticky;
@@ -66,8 +66,8 @@
 
       .arc-app-shell .shell__toc--empty { display: none; }
 
-      @media (max-width: 1280px) { .arc-app-shell /* --breakpoint-xl */
-        .shell__toc { display: none; }
+      @media (max-width: 1280px) { /* --breakpoint-xl */
+        .arc-app-shell .shell__toc { display: none; }
       }
 
       .arc-app-shell[mobile] .shell__toc {
@@ -78,7 +78,7 @@
         padding: var(--space-lg);
       }
 
-      .arc-app-shell /* ── Mobile overlay ── */
+      /* ── Mobile overlay ── */
       .arc-app-shell[mobile] .shell__sidebar {
         position: fixed;
         top: 0;
@@ -98,8 +98,8 @@
         scrollbar-color: var(--border-default) transparent;
       }
 
-      .arc-app-shell /* Override arc-sidebar's own sticky/height — the shell wrapper handles it */
-      arc-sidebar {
+      /* Override arc-sidebar's own sticky/height — the shell wrapper handles it */
+      .arc-app-shell arc-sidebar {
         position: static !important;
         height: auto !important;
         overflow: visible !important;
@@ -110,8 +110,8 @@
         transform: translateX(0);
       }
 
-      .arc-app-shell /* Backdrop */
-      .shell__backdrop {
+      /* Backdrop */
+      .arc-app-shell .shell__backdrop {
         display: none;
       }
 
@@ -135,8 +135,8 @@
         visibility: visible;
       }
 
-      .arc-app-shell /* Body scroll lock when open */
-      @media (prefers-reduced-motion: reduce) {
+      /* Body scroll lock when open */
+      .arc-app-shell @media (prefers-reduced-motion: reduce) {
         .arc-app-shell[mobile] .shell__sidebar {
           transition: none;
         }

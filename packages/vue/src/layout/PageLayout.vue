@@ -5,7 +5,7 @@ import '@arclux/arc-ui/page-layout';
 defineOptions({ name: 'PageLayout' });
 
 withDefaults(defineProps<{
-  layout?: string;
+  layout?: 'centered' | 'wide' | 'sidebar-left' | 'sidebar-right';
   maxWidth?: string;
   gap?: string;
 }>(), {

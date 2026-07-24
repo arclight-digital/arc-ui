@@ -5,7 +5,7 @@
 
   interface Props {
     cite?: string;
-    variant?: string;
+    variant?: 'accent';
     children?: Snippet;
     [key: string]: unknown;
   }

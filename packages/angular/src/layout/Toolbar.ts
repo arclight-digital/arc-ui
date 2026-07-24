@@ -11,7 +11,7 @@ import '@arclux/arc-ui/toolbar';
 })
 export class Toolbar {
   @Input() sticky: boolean = false;
-  @Input() size: string = 'md';
+  @Input() size: 'sm' = 'md';
   @Input() border: boolean = true;
   @Input() overflow: boolean = false;
   @Output() arcOverflowChange = new EventEmitter<CustomEvent>();

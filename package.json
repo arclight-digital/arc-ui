@@ -31,7 +31,7 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@arclux/prism": "^2.0.2",
+    "@arclux/prism": "^2.0.5",
     "@axe-core/playwright": "^4.12.1",
     "@custom-elements-manifest/analyzer": "^0.11.0",
     "@esm-bundle/chai": "4.3.4-fix.0",

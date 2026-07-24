@@ -47,15 +47,15 @@
         box-sizing: border-box;
       }
 
-      .arc-stepper /* Upcoming (default) */
-      .step__circle {
+      /* Upcoming (default) */
+      .arc-stepper .step__circle {
         background: var(--surface-overlay);
         color: var(--text-ghost);
         border: 1px solid var(--border-default);
       }
 
-      .arc-stepper /* Active */
-      .step--active .step__circle {
+      /* Active */
+      .arc-stepper .step--active .step__circle {
         background: transparent;
         color: var(--accent-primary);
         border: 2px solid var(--accent-primary);
@@ -72,8 +72,8 @@
         }
       }
 
-      .arc-stepper /* Completed */
-      .step--completed .step__circle {
+      /* Completed */
+      .arc-stepper .step--completed .step__circle {
         background: var(--accent-primary);
         color: var(--text-primary);
         border: 2px solid var(--accent-primary);
