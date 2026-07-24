@@ -1,7 +1,11 @@
 import { LitElement, html, css } from 'lit';
 
 /**
+ * Individual step within a Stepper.
+ *
  * @tag arc-step
+ * @prop {string} label - Step label text
+ * @slot - Default content.
  */
 export class ArcStep extends LitElement {
   static properties = {

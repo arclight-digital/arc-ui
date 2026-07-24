@@ -2,10 +2,15 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
- * @arc-prism interactive
- */
-/**
+ * Floating button that appears after scrolling and smoothly returns the user to the top of the
+ * page.
+ *
  * @tag arc-scroll-to-top
+ * @prop {number} threshold - Scroll distance in pixels before the button becomes visible.
+ * @prop {boolean} smooth - Use smooth scrolling animation. Falls back to instant when prefers-reduced-motion is set.
+ * @prop {string} position - Corner placement: "bottom-right" or "bottom-left".
+ * @prop {string} offset - Distance from viewport edges. Accepts any CSS length value.
+ * @csspart button
  */
 export class ArcScrollToTop extends LitElement {
   static properties = {

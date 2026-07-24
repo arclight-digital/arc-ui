@@ -2,7 +2,21 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Individual row within an arc-list. Supports prefix/suffix slots, a description slot for
+ * secondary text, links, and selection state.
+ *
  * @tag arc-list-item
+ * @prop {string} value - Unique identifier used for selection tracking.
+ * @prop {boolean} selected - Whether this item is currently selected. Managed automatically by the parent list.
+ * @prop {boolean} disabled - Prevents interaction and dims the item.
+ * @prop {string} href - When set, renders the item as an anchor tag for navigation.
+ * @slot prefix
+ * @slot - Default content.
+ * @slot description
+ * @slot suffix
+ * @csspart label
+ * @csspart description
+ * @csspart item
  */
 export class ArcListItem extends LitElement {
   static properties = {

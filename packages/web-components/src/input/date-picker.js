@@ -3,7 +3,21 @@ import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 
 /**
+ * Calendar-based date picker with keyboard navigation.
+ *
  * @tag arc-date-picker
+ * @prop {string} value - The selected date as an ISO string (YYYY-MM-DD). Set this to pre-select a date. Updated when the user picks a date from the calendar.
+ * @prop {string} min - Minimum selectable date as an ISO string. Dates before this are visually dimmed and non-interactive.
+ * @prop {string} max - Maximum selectable date as an ISO string. Dates after this are visually dimmed and non-interactive.
+ * @prop {string} placeholder - Placeholder text displayed in the input when no date is selected.
+ * @prop {boolean} disabled - Disables the date picker, reducing opacity and preventing the calendar from opening.
+ * @prop {string} label - Label text rendered above the input in uppercase accent font styling.
+ * @fires {CustomEvent<{ value: string }>} arc-change - Fired when a date is selected
+ * @csspart wrapper
+ * @csspart label
+ * @csspart input-wrapper
+ * @csspart input
+ * @csspart dropdown
  */
 export class ArcDatePicker extends FormControlMixin(LitElement) {
   static properties = {

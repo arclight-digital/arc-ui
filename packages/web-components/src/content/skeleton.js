@@ -2,7 +2,14 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Loading placeholder with shimmer animation.
+ *
  * @tag arc-skeleton
+ * @prop {'text' | 'circle' | 'rect'} variant - Shape of the skeleton: text for lines, circle for avatars, rect for blocks
+ * @prop {string} width - CSS width value (e.g. "200px", "100%")
+ * @prop {string} height - CSS height value; circle auto-matches width when omitted
+ * @prop {number} count - Renders multiple skeleton items stacked vertically with spacing. Useful for placeholder lists.
+ * @csspart skeleton
  */
 export class ArcSkeleton extends LitElement {
   static properties = {

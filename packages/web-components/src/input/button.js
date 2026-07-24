@@ -3,7 +3,21 @@ import { tokenStyles } from '../shared-styles.js';
 import { buttonVariantStyles } from '../button-styles.js';
 
 /**
+ * Primary call-to-action element with three visual variants that map to action hierarchy. Supports
+ * prefix and suffix slots for icons. Renders as an anchor when given an href, making it ideal for
+ * navigation-driven actions across landing pages, toolbars, and forms.
+ *
  * @tag arc-button
+ * @prop {'primary' | 'secondary' | 'ghost'} variant - Controls the visual weight and emphasis. Primary is a filled button with a neon glow hover suited for the top-level CTA. Secondary uses a bordered outline for supporting actions. Ghost renders with no border or background, ideal for low-priority or tertiary actions.
+ * @prop {'sm' | 'md' | 'lg'} size - Sets the button size. Large (lg) is intended for hero sections and high-impact areas. Medium (md) is the default for general UI. Small (sm) fits compact toolbars, table rows, and inline contexts.
+ * @prop {string} href - When provided, the button renders as an <a> element instead of a <button>, making it a navigational link. This is the recommended approach for any action that takes the user to a new page or section.
+ * @prop {boolean} disabled - When true, dims the button and prevents all pointer and keyboard interaction. Applies reduced opacity and removes hover/focus effects. Consider pairing with a tooltip that explains why the action is unavailable.
+ * @prop {boolean} loading - Shows a spinner and disables the button. Use for async operations like form submission or API calls.
+ * @prop {'button' | 'submit' | 'reset'} type - Sets the HTML button type attribute. Use `submit` inside forms to trigger native form submission, or `reset` to clear form fields. Only applies when no `href` is set (link buttons ignore this).
+ * @slot prefix
+ * @slot - Default content.
+ * @slot suffix
+ * @csspart button
  */
 export class ArcButton extends LitElement {
   static properties = {

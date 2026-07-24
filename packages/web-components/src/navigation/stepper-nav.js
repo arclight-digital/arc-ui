@@ -2,7 +2,22 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Wizard navigation with back/next/skip controls and step validation gates. Steps connected by
+ * gradient lines with interactive routing.
+ *
  * @tag arc-stepper-nav
+ * @prop {Array<string>} steps - Array of step labels displayed along the progress track.
+ * @prop {number} active - Zero-based index of the currently active step.
+ * @prop {boolean} linear - When true, prevents jumping to future steps — the user must complete each step sequentially.
+ * @fires {CustomEvent<{ step: number }>} arc-change - Fired when the active step changes with detail: { step }.
+ * @fires {CustomEvent<void>} arc-complete - Fired when the user confirms the final step.
+ * @slot - Default content.
+ * @csspart base
+ * @csspart steps
+ * @csspart connector
+ * @csspart indicator
+ * @csspart panel
+ * @csspart controls
  */
 export class ArcStepperNav extends LitElement {
   static properties = {

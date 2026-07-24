@@ -2,7 +2,18 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Each breadcrumb segment doubles as a dropdown showing sibling pages at that hierarchy level.
+ * Dropdown panels match dropdown-menu styling.
+ *
  * @tag arc-breadcrumb-menu
+ * @prop items - Array of breadcrumb items. Each item has a label and href. Optionally include a siblings array to enable a dropdown at that level.
+ * @fires arc-navigate - Fired when a breadcrumb link or dropdown item is clicked with detail: { href }.
+ * @csspart base
+ * @csspart separator
+ * @csspart item
+ * @csspart link
+ * @csspart dropdown
+ * @csspart dropdown-item
  */
 export class ArcBreadcrumbMenu extends LitElement {
   static properties = {

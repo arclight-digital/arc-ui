@@ -3,8 +3,17 @@ import { tokenStyles } from '../shared-styles.js';
 import '../content/spinner.js';
 
 /**
+ * Semi-transparent surface-overlay with backdrop blur covering a container or page. Centers a
+ * spinner with optional progress text.
+ *
  * @tag arc-loading-overlay
  * @requires arc-spinner
+ * @prop {boolean} active - Controls whether the loading overlay is visible. When true, the overlay fades in and blocks interaction with the content behind it.
+ * @prop {string} message - Optional text displayed below the spinner. Use it to communicate what is loading or the current progress step.
+ * @prop {boolean} global - When true, the overlay uses fixed positioning to cover the entire viewport instead of just its parent container. Includes a focus trap in this mode.
+ * @csspart overlay
+ * @csspart spinner
+ * @csspart message
  */
 export class ArcLoadingOverlay extends LitElement {
   static properties = {

@@ -2,7 +2,15 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Flexbox layout component for vertical or horizontal stacking with token-based spacing.
+ *
  * @tag arc-stack
+ * @prop {'vertical' | 'horizontal'} direction - Flex direction — vertical is column, horizontal is row
+ * @prop {'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'} gap - Gap between children, maps to --space-* tokens
+ * @prop {'start' | 'center' | 'end' | 'stretch'} align - Cross-axis alignment (align-items)
+ * @prop {'start' | 'center' | 'end' | 'between' | 'around'} justify - Main-axis alignment (justify-content)
+ * @prop {boolean} wrap - Enable flex-wrap for responsive wrapping
+ * @slot - Default content.
  */
 export class ArcStack extends LitElement {
   static properties = {

@@ -2,7 +2,15 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Dims the entire page except a targeted element, which gets an accent-primary glow ring and
+ * elevated z-index. For onboarding and feature discovery.
+ *
  * @tag arc-spotlight
+ * @prop {string} target - CSS selector for the element to highlight. The first matching element will be spotlighted with a glow ring and elevated z-index.
+ * @prop {boolean} active - Controls whether the spotlight overlay is visible. Set to true to activate the dimming overlay and highlight the target element.
+ * @prop {number} padding - Padding in pixels around the target element cutout. Increase for larger glow rings or to give the target more breathing room.
+ * @fires {CustomEvent<void>} arc-dismiss - Fired when the user clicks outside the highlighted element to dismiss the spotlight
+ * @csspart ring
  */
 export class ArcSpotlight extends LitElement {
   static properties = {

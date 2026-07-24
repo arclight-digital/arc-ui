@@ -2,7 +2,16 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * A radio-group-style toggle bar that renders slotted arc-option elements as a row of mutually
+ * exclusive buttons with an active highlight.
+ *
  * @tag arc-segmented-control
+ * @prop {string} value - The value of the currently selected option. Reflected as an attribute and auto-set to the first option if empty.
+ * @prop {boolean} disabled - Disables the entire control, reducing opacity to 40% and blocking pointer events.
+ * @fires {CustomEvent<{ value: string }>} arc-change - Fired when the selected segment changes
+ * @slot - Default content.
+ * @csspart control
+ * @csspart option
  */
 export class ArcSegmentedControl extends LitElement {
   static properties = {

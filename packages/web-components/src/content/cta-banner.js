@@ -2,10 +2,24 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
- * @arc-prism content — call-to-action banner with gradient background
- */
-/**
+ * Full-width call-to-action banner with gradient background, eyebrow text, headline, body copy,
+ * and action buttons. Ideal for landing page CTAs, marketing sections, and page closers.
+ *
  * @tag arc-cta-banner
+ * @prop {string} eyebrow - Small label text displayed above the headline. Typically a short phrase like "Ready to build?" that sets context.
+ * @prop {string} headline - Main headline text rendered with gradient display styling. Keep it concise and action-oriented.
+ * @prop {boolean} nogradient - When true, disables the radial gradient background effect for quieter contexts.
+ * @slot eyebrow
+ * @slot headline
+ * @slot - Default content.
+ * @slot actions
+ * @csspart container
+ * @csspart background
+ * @csspart inner
+ * @csspart eyebrow
+ * @csspart headline
+ * @csspart body
+ * @csspart actions
  */
 export class ArcCtaBanner extends LitElement {
   static properties = {

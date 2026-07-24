@@ -2,7 +2,15 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Color sample square with label — useful for token docs.
+ *
  * @tag arc-color-swatch
+ * @prop {string} color - Any valid CSS colour value applied as the swatch background
+ * @prop {string} label - Display label below the swatch; falls back to the colour value if empty
+ * @prop {'sm' | 'md' | 'lg'} size - Controls swatch dimensions: sm (32px), md (48px), lg (64px)
+ * @csspart swatch
+ * @csspart color
+ * @csspart label
  */
 export class ArcColorSwatch extends LitElement {
   static properties = {

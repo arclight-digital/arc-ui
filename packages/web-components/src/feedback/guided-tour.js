@@ -2,7 +2,24 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Multi-step onboarding that composes spotlight with popover-styled tooltips at each step. Step
+ * counter uses accent-primary gradient text.
+ *
  * @tag arc-guided-tour
+ * @prop steps - Array of step definitions. Each step specifies a CSS selector for the target element, a title for the popover heading, and content for the popover body.
+ * @prop {number} active - Read-only property reflecting the zero-based index of the currently active step.
+ * @prop {boolean} open - Controls whether the tour is active. Set to true to start the tour from the first step.
+ * @fires {CustomEvent<{ step: number }>} arc-change - Fired when the tour advances or goes back to a different step. Detail contains { step } with the new step index.
+ * @fires {CustomEvent<void>} arc-complete - Fired when the user finishes the last step of the tour
+ * @fires {CustomEvent<void>} arc-dismiss - Fired when the user skips or closes the tour before completing all steps
+ * @csspart ring
+ * @csspart tooltip
+ * @csspart counter
+ * @csspart title
+ * @csspart content
+ * @csspart controls
+ * @csspart prev
+ * @csspart next
  */
 export class ArcGuidedTour extends LitElement {
   static properties = {

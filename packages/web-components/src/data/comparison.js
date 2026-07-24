@@ -2,8 +2,17 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * A two-column or multi-column comparison table for pricing tiers, feature breakdowns, or
+ * before/after comparisons. Each column is defined with an arc-comparison-column child element.
+ *
  * @tag arc-comparison
  * @requires arc-comparison-column
+ * @prop {string} features - JSON array of feature label strings, e.g. '["Storage","Bandwidth","Support"]'. Each entry becomes a row in the comparison grid.
+ * @slot - Default content.
+ * @csspart table
+ * @csspart header
+ * @csspart feature
+ * @csspart cell
  */
 export class ArcComparison extends LitElement {
   static properties = {

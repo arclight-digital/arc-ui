@@ -2,8 +2,15 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * A styled definition list for displaying labeled key-value pairs. Supports horizontal and stacked
+ * layouts with optional dividers between rows.
+ *
  * @tag arc-key-value
  * @requires arc-kv-pair
+ * @prop {'horizontal' | 'stacked'} layout - Controls pair arrangement. Horizontal uses a CSS grid with key and value side by side. Stacked places the key above the value.
+ * @prop {boolean} dividers - When true, renders a subtle border between each key-value pair.
+ * @slot - Default content.
+ * @csspart list
  */
 export class ArcKeyValue extends LitElement {
   static properties = {

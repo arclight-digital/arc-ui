@@ -2,8 +2,20 @@ import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Structured list container with optional selection, keyboard navigation, and multiple visual
+ * variants. Pairs with arc-list-item for rich content rows.
+ *
  * @tag arc-list
  * @requires arc-list-item
+ * @prop {'default' | 'bordered' | 'separated'} variant - Visual style. Bordered wraps the list in an outlined container. Separated adds bottom borders between items.
+ * @prop {'sm' | 'md' | 'lg'} size - Controls the base font size for the list and its children.
+ * @prop {boolean} selectable - Enables selection mode. Sets `role="listbox"` and manages `aria-selected` on child items.
+ * @prop {boolean} multiple - Allows multiple items to be selected simultaneously. Only applies when `selectable` is true.
+ * @prop {string} value - The currently selected value(s). Comma-separated when `multiple` is true.
+ * @prop {string} label - Accessible name for the list, applied as `aria-label`. Required when `selectable` is set so the listbox has an accessible name.
+ * @fires {CustomEvent<{ value: string }>} arc-change - Fired when the selection changes. `event.detail.value` contains the new value string.
+ * @slot - Default content.
+ * @csspart list
  */
 export class ArcList extends LitElement {
   static properties = {

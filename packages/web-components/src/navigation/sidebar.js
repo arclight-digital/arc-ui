@@ -2,9 +2,26 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Collapsible navigation sidebar with grouped sections, heading labels, and active link
+ * highlighting. Ideal for documentation sites, admin panels, and any layout that needs persistent
+ * vertical navigation.
+ *
  * @tag arc-sidebar
  * @requires arc-sidebar-section
  * @requires arc-sidebar-link
+ * @prop {string} position - Controls which side the sidebar appears on. Options: 'left', 'right'. Moves the border line to the opposite edge.
+ * @prop {string} active - The href of the currently active sidebar link. Used to highlight the matching link with accent styling.
+ * @prop {boolean} collapsed - When true, collapses the sidebar to icon-only mode, hiding labels and reducing width.
+ * @prop {string} width - Width of the sidebar. Accepts any CSS length value.
+ * @prop {boolean} glow - Enables an accent glow effect on the active sidebar link for enhanced visual emphasis.
+ * @fires arc-navigate - Fired when a sidebar link is clicked
+ * @slot - Default content.
+ * @csspart sidebar
+ * @csspart section
+ * @csspart toggle
+ * @csspart heading
+ * @csspart links
+ * @csspart link
  */
 export class ArcSidebar extends LitElement {
   static properties = {

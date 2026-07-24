@@ -2,8 +2,29 @@ import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Search input with a magnifying glass icon, clear button, loading spinner, and autocomplete
+ * suggestions dropdown.
+ *
  * @tag arc-search
  * @requires arc-suggestion
+ * @prop {string} value - Current text content of the search input.
+ * @prop {string} placeholder - Hint text displayed when the input is empty.
+ * @prop {string} label - Accessible label for the search field. Rendered visually above the input when provided.
+ * @prop {boolean} disabled - Disables the input, reducing opacity and blocking interaction.
+ * @prop {boolean} loading - Shows a spinning indicator in place of the clear button to signal in-progress loading.
+ * @fires {CustomEvent<{ value: string }>} arc-input - Fired on each keystroke in the search field
+ * @fires {CustomEvent<void>} arc-clear - Fired when the clear button is clicked
+ * @fires {CustomEvent<{ value: string }>} arc-change - Fired when the search value changes on blur
+ * @fires arc-select - Fired when a suggestion is selected
+ * @slot - Default content.
+ * @csspart label
+ * @csspart wrapper
+ * @csspart icon
+ * @csspart input
+ * @csspart spinner
+ * @csspart clear
+ * @csspart suggestions
+ * @csspart suggestion
  */
 export class ArcSearch extends LitElement {
   static properties = {

@@ -2,7 +2,13 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Long-form content container that applies typographic rhythm and styling to slotted HTML
+ * elements.
+ *
  * @tag arc-prose
+ * @prop {'sm' | 'md' | 'lg'} size - Controls the base font size of the prose container. Affects paragraph text; headings and code maintain their own scale.
+ * @slot - Default content.
+ * @csspart prose
  */
 export class ArcProse extends LitElement {
   static properties = {

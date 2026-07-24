@@ -48,7 +48,41 @@ function scorePassword(pw) {
 }
 
 /**
+ * Password entry field with a built-in visibility toggle and an optional four-segment strength
+ * meter. Shares its styling and form behaviour with Input, so mixed forms stay visually uniform.
+ *
+ * True when the password contains a 4+ run of consecutive chars (abcd, 4321). *\/ function
+ * hasSequentialRun(pw) { const s = pw.toLowerCase(); let asc = 1; let desc = 1; for (let i = 1; i
+ * < s.length; i++) { const d = s.charCodeAt(i) - s.charCodeAt(i - 1); asc = d === 1 ? asc + 1 : 1;
+ * desc = d === -1 ? desc + 1 : 1; if (asc >= 4 || desc >= 4) return true; } return false; }
+ * Self-contained heuristic: 0 = empty, 1–4 = Weak…Strong. *\/ function scorePassword(pw) { if
+ * (!pw) return 0; if (COMMON_PASSWORDS.has(pw.toLowerCase())) return 1; let score = 0; if
+ * (pw.length >= 8) score += 1; if (pw.length >= 12) score += 1; if (pw.length >= 16) score += 1;
+ * const classes = (/[a-z]/.test(pw) ? 1 : 0) + (/[A-Z]/.test(pw) ? 1 : 0) + (/\d/.test(pw) ? 1 :
+ * 0) + (/[^A-Za-z0-9]/.test(pw) ? 1 : 0); if (classes >= 2) score += 1; if (classes >= 4) score +=
+ * 1; if (/(.)\1\1/.test(pw)) score -= 1; if (hasSequentialRun(pw)) score -= 1; return Math.min(4,
+ * Math.max(1, score)); }
+ *
  * @tag arc-password-input
+ * @prop {string} label - Visible label rendered above the field. Automatically associated with the input via a generated id.
+ * @prop {string} name - The `name` attribute sent with form data on submission. Also used by the Form component to track field state.
+ * @prop {string} value - The current value of the field. Can be set programmatically; updated internally on each keystroke.
+ * @prop {string} placeholder - Hint text displayed when the field is empty. Use it for guidance, never as a substitute for the label.
+ * @prop {boolean} disabled - Prevents interaction (including the visibility toggle) and applies a muted visual treatment.
+ * @prop {boolean} required - Marks the field as required and enables native constraint validation on form submission.
+ * @prop {string} error - Error message displayed below the field. When set, the border turns red and the message is announced.
+ * @prop {'sm' | 'md' | 'lg'} size - Controls the field size. Options: 'sm', 'md', 'lg'.
+ * @prop {boolean} showStrength - Renders a four-segment strength meter with a Weak / Fair / Good / Strong label under the field, scored by a built-in heuristic (length, character variety, common-pattern penalties).
+ * @prop {string} autocomplete - Passed through to the inner input. Use `new-password` on registration or change-password forms so password managers offer generation.
+ * @fires {CustomEvent<{ value: string }>} arc-input - Fired on each keystroke with { value } detail
+ * @fires {CustomEvent<{ value: string }>} arc-change - Fired on blur when value has changed, with { value } detail
+ * @fires arc-strength-change - Fired when the strength score changes (only while show-strength is set), with { score } detail (0-4)
+ * @csspart strength
+ * @csspart label
+ * @csspart field
+ * @csspart input
+ * @csspart toggle
+ * @csspart error
  */
 export class ArcPasswordInput extends FormControlMixin(LitElement) {
   static properties = {

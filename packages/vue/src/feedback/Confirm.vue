@@ -8,11 +8,15 @@ withDefaults(defineProps<{
   open?: boolean;
   heading?: string;
   message?: string;
+  confirmLabel?: string;
+  cancelLabel?: string;
   variant?: string;
 }>(), {
   open: false,
   heading: '',
   message: '',
+  confirmLabel: 'Confirm',
+  cancelLabel: 'Cancel',
   variant: 'default',
 });
 
@@ -27,6 +31,8 @@ const emit = defineEmits<{
     :open="open"
     :heading="heading"
     :message="message"
+    :confirmLabel="confirmLabel"
+    :cancelLabel="cancelLabel"
     :variant="variant"
     @arc-confirm="(payload: CustomEvent) => emit('arc-confirm', payload)"
     @arc-cancel="(payload: CustomEvent) => emit('arc-cancel', payload)"

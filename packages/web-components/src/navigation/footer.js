@@ -3,7 +3,23 @@ import { tokenStyles } from '../shared-styles.js';
 import '../layout/container.register.js';
 
 /**
+ * Page footer with branding, link columns, and legal text. Provides a structured layout with slots
+ * for a logo, navigational link groups, social icons, and copyright information.
+ *
  * @tag arc-footer
+ * @prop {boolean} compact - Reduces internal padding and spacing throughout the footer. Use this in dashboard layouts or admin panels where vertical space is limited and the footer should feel lightweight rather than expansive.
+ * @prop {boolean} border - Renders a subtle top border on the footer to visually separate it from the page content above. Enabled by default; disable it only when the footer sits against a dark background where the border would be redundant.
+ * @prop {string} contained - Sets a max-width containment on the footer content. Accepts any CSS length value or named size token.
+ * @prop {string} align - Controls footer content alignment. Options: 'left', 'center'.
+ * @slot logo
+ * @slot - Default content.
+ * @slot social
+ * @slot legal
+ * @csspart brand
+ * @csspart columns
+ * @csspart social
+ * @csspart legal
+ * @csspart base
  */
 export class ArcFooter extends LitElement {
   static properties = {

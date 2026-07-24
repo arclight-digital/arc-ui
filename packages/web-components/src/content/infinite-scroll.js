@@ -3,7 +3,21 @@ import { tokenStyles } from '../shared-styles.js';
 import '../content/spinner.js';
 
 /**
+ * Intersection Observer-powered container that fires a load event when the user scrolls near the
+ * bottom, with built-in loading spinner and end-of-list state.
+ *
  * @tag arc-infinite-scroll
+ * @prop {number} threshold - Distance in pixels from the bottom of the content at which `arc-load-more` fires. Controls how eagerly new data is requested.
+ * @prop {boolean} loading - When true, displays a spinner in the footer and suppresses additional `arc-load-more` events.
+ * @prop {boolean} finished - When true, disconnects the observer and displays "No more items" text in the footer.
+ * @prop {boolean} disabled - Disables the component, disconnects the observer, and reduces opacity to 40%.
+ * @fires {CustomEvent<void>} arc-load-more - Fired when the scroll sentinel enters the viewport, signaling more content should load
+ * @slot - Default content.
+ * @csspart container
+ * @csspart content
+ * @csspart footer
+ * @csspart end-text
+ * @csspart spinner
  */
 export class ArcInfiniteScroll extends LitElement {
   static properties = {

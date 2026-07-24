@@ -3,7 +3,23 @@ import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 
 /**
+ * Full-featured color picker with a saturation/lightness area, hue slider, hex input, and optional
+ * preset swatches.
+ *
  * @tag arc-color-picker
+ * @prop {string} value - Current color as a 6-digit hex string (e.g. `#4d7ef7`). Reflected as an attribute.
+ * @prop {string[]} presets - Array of hex color strings to display as quick-select swatches below the hex input.
+ * @prop {string} label - Label text displayed above the picker in uppercase accent font.
+ * @prop {boolean} disabled - Disables all interaction, reducing opacity to 40% and blocking pointer events.
+ * @fires arc-change - Fired when the color changes via any input method. `event.detail.value` contains the hex string.
+ * @csspart picker
+ * @csspart label
+ * @csspart area
+ * @csspart hue-track
+ * @csspart hex-row
+ * @csspart preview
+ * @csspart hex-input
+ * @csspart presets
  */
 export class ArcColorPicker extends FormControlMixin(LitElement) {
   static properties = {

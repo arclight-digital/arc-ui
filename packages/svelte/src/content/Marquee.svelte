@@ -6,14 +6,15 @@
   interface Props {
     speed?: number;
     direction?: string;
+    pauseOnHover?: boolean;
     gap?: string;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { speed = 40, direction = 'left', gap = 'var(--space-xl)', children, ...rest }: Props = $props();
+  let { speed = 40, direction = 'left', pauseOnHover = true, gap = 'var(--space-xl)', children, ...rest }: Props = $props();
 </script>
 
-<arc-marquee {speed} {direction} {gap} {...rest}>
+<arc-marquee {speed} {direction} {pauseOnHover} {gap} {...rest}>
   {@render children?.()}
 </arc-marquee>

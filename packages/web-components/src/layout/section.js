@@ -2,7 +2,13 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Page section with optional uppercase label, consistent spacing.
+ *
  * @tag arc-section
+ * @prop {string} label - Section label displayed in uppercase above content
+ * @slot - Default content.
+ * @csspart section
+ * @csspart label
  */
 export class ArcSection extends LitElement {
   static properties = {

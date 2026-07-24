@@ -2,13 +2,24 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Continuously scrolling content strip with configurable speed, direction, gap, and pause-on-hover
+ * behavior for logos, testimonials, and announcements.
+ *
  * @tag arc-marquee
+ * @prop {number} speed - Scroll speed in pixels per second. The animation duration is calculated from the content width divided by this value.
+ * @prop {'left' | 'right'} direction - Scroll direction. `left` scrolls content from right to left (default), `right` reverses the direction.
+ * @prop {boolean} pauseOnHover - When true, the animation pauses while the cursor hovers over the marquee.
+ * @prop {string} gap - CSS length value for the gap between slotted items. Accepts any valid CSS length or custom property.
+ * @slot - Default content.
+ * @csspart track
+ * @csspart group
+ * @csspart group-duplicate
  */
 export class ArcMarquee extends LitElement {
   static properties = {
     speed:            { type: Number },
     direction:        { type: String, reflect: true },
-    'pause-on-hover': { type: Boolean, reflect: true, attribute: 'pause-on-hover' },
+    pauseOnHover: { type: Boolean, reflect: true, attribute: 'pause-on-hover' },
     gap:              { type: String },
     _animDuration:    { state: true },
   };
@@ -71,7 +82,7 @@ export class ArcMarquee extends LitElement {
     super();
     this.speed = 40;
     this.direction = 'left';
-    this['pause-on-hover'] = true;
+    this.pauseOnHover = true;
     this.gap = 'var(--space-xl)';
     this._animDuration = '10s';
     this._resizeObserver = null;

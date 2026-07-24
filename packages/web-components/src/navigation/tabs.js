@@ -2,8 +2,17 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Tabbed content navigation with keyboard support and ARIA roles.
+ *
  * @tag arc-tabs
  * @requires arc-tab
+ * @prop {number} selected - Zero-based index of the currently active tab. Changing this value programmatically switches the visible panel and updates ARIA attributes. Out-of-range values are clamped to the nearest valid index.
+ * @prop {'start' | 'center' | 'end'} align - Aligns the tab list. Options: 'start', 'center', 'end'.
+ * @prop {'underline' | 'pills'} variant - Visual style of the tabs. Options: 'underline', 'pills'.
+ * @prop {'horizontal' | 'vertical'} orientation - Layout direction of the tab list. Use 'vertical' to place tabs in a sidebar column with the panel to the right. Arrow-key navigation automatically switches to up/down in vertical mode.
+ * @fires arc-change - Fired when the active tab changes
+ * @slot - Default content.
+ * @csspart tabs
  */
 export class ArcTabs extends LitElement {
   static properties = {

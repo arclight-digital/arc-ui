@@ -3,7 +3,21 @@ import { tokenStyles } from '../shared-styles.js';
 import { OverlayMixin } from '../shared/overlay-mixin.js';
 
 /**
+ * Slide-out panel with backdrop overlay, keyboard dismissal, and left/right positioning for
+ * off-canvas navigation, filters, and detail views.
+ *
  * @tag arc-drawer
+ * @prop {boolean} open - Controls the visible state of the drawer. Set to `true` to slide the panel into view and activate the backdrop; set to `false` to run the exit animation, remove the backdrop, and restore body scroll.
+ * @prop {string} heading - Text displayed in the drawer header bar. Also used as the `aria-label` for the dialog panel, ensuring screen readers announce the panel purpose when it opens.
+ * @prop {'left' | 'right'} position - Which edge of the viewport the drawer slides in from. Use `left` for primary navigation menus and `right` for contextual detail panels, filter sidebars, or settings trays.
+ * @fires {CustomEvent<void>} arc-close - Fired when the drawer closes via backdrop click or escape key
+ * @slot - Default content.
+ * @csspart backdrop
+ * @csspart panel
+ * @csspart header
+ * @csspart title
+ * @csspart close
+ * @csspart body
  */
 export class ArcDrawer extends OverlayMixin(LitElement) {
   static properties = {

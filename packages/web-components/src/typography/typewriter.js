@@ -2,7 +2,17 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Character-by-character text reveal animation with blinking cursor.
+ *
  * @tag arc-typewriter
+ * @prop {string} text - The text to type out character by character
+ * @prop {number} speed - Milliseconds per character
+ * @prop {number} delay - Initial delay in milliseconds before typing starts
+ * @prop {boolean} cursor - Show a blinking cursor during and after typing
+ * @prop {boolean} loop - Loop the animation indefinitely
+ * @prop {number} pauseEnd - Milliseconds to pause at the end before looping
+ * @fires {CustomEvent<void>} arc-complete - Fired when the typing animation finishes revealing all characters
+ * @csspart text
  */
 export class ArcTypewriter extends LitElement {
   static properties = {
@@ -12,7 +22,7 @@ export class ArcTypewriter extends LitElement {
     cursor:       { type: Boolean, reflect: true },
     loop:         { type: Boolean, reflect: true },
     nowrap:       { type: Boolean, reflect: true },
-    'pause-end':  { type: Number, reflect: true, attribute: 'pause-end' },
+    pauseEnd:  { type: Number, reflect: true, attribute: 'pause-end' },
     _displayText: { state: true },
     _complete:    { state: true },
   };
@@ -75,7 +85,7 @@ export class ArcTypewriter extends LitElement {
     this.cursor = true;
     this.nowrap = false;
     this.loop = false;
-    this['pause-end'] = 2000;
+    this.pauseEnd = 2000;
     this._displayText = '';
     this._complete = false;
     this._timeoutId = null;
@@ -136,7 +146,7 @@ export class ArcTypewriter extends LitElement {
       this.dispatchEvent(new CustomEvent('arc-complete', { bubbles: true, composed: true }));
 
       if (this.loop) {
-        this._timeoutId = setTimeout(() => this._startAnimation(), this['pause-end']);
+        this._timeoutId = setTimeout(() => this._startAnimation(), this.pauseEnd);
       }
       return;
     }

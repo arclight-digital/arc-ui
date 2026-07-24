@@ -11,6 +11,7 @@ export interface TypewriterProps {
   cursor?: boolean;
   loop?: boolean;
   nowrap?: boolean;
+  pauseEnd?: number;
   className?: string;
   children?: React.ReactNode;
   onArcComplete?: (e: CustomEvent) => void;

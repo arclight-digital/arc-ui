@@ -2,8 +2,17 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Step indicator for multi-step workflows.
+ *
  * @tag arc-stepper
  * @requires arc-step
+ * @prop {number} active - Zero-indexed active step — steps before this index show as completed
+ * @slot - Default content.
+ * @csspart stepper
+ * @csspart step
+ * @csspart line
+ * @csspart circle
+ * @csspart label
  */
 export class ArcStepper extends LitElement {
   static properties = {

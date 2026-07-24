@@ -2,8 +2,14 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Expandable content sections with smooth height animations. Ideal for FAQs, settings panels, and
+ * any UI that benefits from progressive disclosure.
+ *
  * @tag arc-accordion
  * @requires arc-accordion-item
+ * @prop {boolean} multiple - When true, allows multiple accordion panels to be open simultaneously. When false (default), opening one panel closes any other open panel.
+ * @slot - Default content.
+ * @csspart accordion
  */
 export class ArcAccordion extends LitElement {
   static properties = {

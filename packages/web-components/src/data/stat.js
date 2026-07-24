@@ -2,7 +2,17 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Numeric statistic display with gradient value and label.
+ *
  * @tag arc-stat
+ * @prop {string} value - The stat value (e.g. "99%")
+ * @prop {string} label - Label below the value
+ * @prop {string} trend - Shows a trend indicator arrow below the label. Options: 'up', 'down', 'neutral'.
+ * @prop {string} change - Text displayed next to the trend arrow, typically a percentage like '+12%' or '-3.5%'.
+ * @csspart stat
+ * @csspart value
+ * @csspart label
+ * @csspart trend
  */
 export class ArcStat extends LitElement {
   static properties = {

@@ -2,7 +2,15 @@ import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Styled pull-quote with optional citation for editorial emphasis.
+ *
  * @tag arc-blockquote
+ * @prop {string} cite - Citation or attribution text displayed beneath the quote with an em dash prefix
+ * @prop {'default' | 'accent'} variant - Visual variant. Accent applies a gradient text fill to the quote content.
+ * @slot - Default content.
+ * @csspart blockquote
+ * @csspart quote
+ * @csspart cite
  */
 export class ArcBlockquote extends LitElement {
   static properties = {

@@ -2,7 +2,20 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Compact pill-shaped label with colour variants, custom colour support, and an optional remove
+ * button, for categorisation, filtering, and selection feedback.
+ *
  * @tag arc-tag
+ * @prop {'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger'} variant - Colour variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and danger provide semantic status colours.
+ * @prop {string} color - Custom colour as an RGB triplet (e.g. `"77, 126, 247"`). When set, overrides the variant colours for border, text, background, and hover glow. Useful for data-driven category colours.
+ * @prop {string} size - Controls the tag size. Options: 'sm', 'md', 'lg'.
+ * @prop {boolean} removable - When true, shows a close button that fires `arc-remove` when clicked.
+ * @prop {boolean} disabled - Disables the tag, reducing opacity to 40% and blocking pointer events including the remove button.
+ * @fires {CustomEvent<void>} arc-remove - Fired when the remove button on a removable tag is clicked
+ * @slot - Default content.
+ * @csspart tag
+ * @csspart label
+ * @csspart remove
  */
 export class ArcTag extends LitElement {
   static properties = {

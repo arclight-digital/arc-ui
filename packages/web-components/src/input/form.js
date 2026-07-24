@@ -2,7 +2,23 @@ import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Form wrapper with built-in validation, error aggregation, and submit handling. Composes Input,
+ * Textarea, and Button into a cohesive data-entry workflow.
+ *
  * @tag arc-form
+ * @prop {string} action - Form action URL for native form submission. When set, the form submits to this URL using the browser's built-in mechanism.
+ * @prop {string} method - HTTP method for native form submission (GET or POST). Only applies when action is set.
+ * @prop {boolean} novalidate - When true, skips built-in constraint validation on submit. Use this when you need to implement a fully custom validation flow while still leveraging Form for data serialisation.
+ * @prop {boolean} loading - Indicates an asynchronous submission is in progress. Disables the submit button and shows a loading indicator to prevent duplicate requests.
+ * @prop {boolean} disabled - Disables the entire form, propagating the disabled state to every child field. Useful for read-only previews or while awaiting permissions.
+ * @prop {boolean} errorSummary - When true, renders an aggregated list of validation errors above the submit area after a failed submission attempt. Set to false to handle error display manually.
+ * @fires arc-submit - Fired on valid form submission with serialized form data
+ * @fires arc-invalid - Fired when validation fails, with error details
+ * @fires {CustomEvent<void>} arc-reset - Fired when the form is reset via the .reset() method
+ * @slot - Default content.
+ * @csspart form
+ * @csspart layout
+ * @csspart errors
  */
 export class ArcForm extends LitElement {
   static properties = {

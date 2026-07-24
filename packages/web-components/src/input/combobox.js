@@ -5,7 +5,20 @@ import { ClickOutsideController } from '../shared/click-outside.js';
 import '../shared/option.js';
 
 /**
+ * Searchable dropdown with type-ahead filtering.
+ *
  * @tag arc-combobox
+ * @prop {string} value - The currently selected option value. Reflected as an attribute so it can be read from the DOM. Updated automatically when the user selects an option.
+ * @prop {string} placeholder - Placeholder text shown in the input when no value is entered.
+ * @prop {string} label - Visible label rendered above the input. Also used as the accessible label for the combobox.
+ * @prop {boolean} disabled - Disables the input and prevents interaction. The host element receives reduced opacity and pointer-events: none.
+ * @fires arc-change - Fired when an option is selected. `event.detail.value` contains the selected option value.
+ * @slot - Default content.
+ * @csspart label
+ * @csspart wrapper
+ * @csspart input
+ * @csspart listbox
+ * @csspart option
  */
 export class ArcCombobox extends FormControlMixin(LitElement) {
   static properties = {

@@ -2,7 +2,11 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Keyboard key indicator styled like a physical key.
+ *
  * @tag arc-kbd
+ * @slot - Default content.
+ * @csspart kbd
  */
 export class ArcKbd extends LitElement {
   static properties = {};

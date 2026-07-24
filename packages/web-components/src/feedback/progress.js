@@ -2,7 +2,22 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Progress indicator as a bar or spinner, with determinate and indeterminate modes. Shows
+ * completion state for uploads, installations, and long-running operations.
+ *
  * @tag arc-progress
+ * @prop {number} value - Current completion percentage from 0 to 100. Only meaningful in determinate mode. The bar fills proportionally and aria-valuenow updates to match, giving screen readers a live reading.
+ * @prop {'bar' | 'spinner'} variant - Selects the visual shape. Bar renders a horizontal track with a fill that grows from left to right — best for wide containers and known percentages. Spinner renders a circular indicator suited to compact inline or button contexts.
+ * @prop {'sm' | 'md' | 'lg'} size - Controls the thickness of the bar track or the diameter of the spinner. Small (sm) fits inside table cells and tight layouts. Medium (md) is the standard default. Large (lg) is appropriate for page-level or hero loading states.
+ * @prop {boolean} indeterminate - When true, the bar pulses or the spinner loops without a fixed endpoint. Use this when the total work is unknown. Switch to determinate (indeterminate=false) and set a value as soon as real progress data becomes available.
+ * @prop {string} label - Accessible label text applied as aria-label on the underlying progressbar role element. This is the only way screen readers can convey the purpose of the indicator. Always provide a meaningful label such as "Uploading report.pdf" rather than a generic "Loading".
+ * @prop {boolean} showValue - Displays the current percentage value next to the label.
+ * @csspart progress
+ * @csspart label
+ * @csspart spinner
+ * @csspart value
+ * @csspart track
+ * @csspart fill
  */
 export class ArcProgress extends LitElement {
   static properties = {

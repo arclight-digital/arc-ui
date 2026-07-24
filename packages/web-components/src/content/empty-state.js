@@ -2,7 +2,18 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Placeholder for empty lists or search results.
+ *
  * @tag arc-empty-state
+ * @prop {string} heading - Main heading text displayed below the icon
+ * @prop {string} description - Supporting text displayed below the heading, max-width 360px
+ * @slot icon
+ * @slot actions
+ * @csspart container
+ * @csspart icon
+ * @csspart heading
+ * @csspart description
+ * @csspart actions
  */
 export class ArcEmptyState extends LitElement {
   static properties = {

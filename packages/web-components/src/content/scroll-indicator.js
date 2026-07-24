@@ -2,7 +2,16 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Thin progress bar that tracks scroll position of the page or a target container. Sticks to the
+ * top or bottom edge with accent or gradient fill.
+ *
  * @tag arc-scroll-indicator
+ * @prop {string} target - CSS selector for the scroll container to track. Defaults to the window when empty.
+ * @prop {'top' | 'bottom'} position - Which edge the indicator sticks to.
+ * @prop {'sm' | 'md' | 'lg'} size - Bar thickness: sm (2px), md (3px), lg (4px).
+ * @prop {'accent' | 'gradient'} color - Fill color mode. Accent uses `--accent-primary`. Gradient blends from primary to secondary.
+ * @csspart bar
+ * @csspart fill
  */
 export class ArcScrollIndicator extends LitElement {
   static properties = {

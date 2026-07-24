@@ -3,7 +3,23 @@ import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 
 /**
+ * One-character-per-box input for PINs, OTPs, and verification codes with auto-advance, paste
+ * support, and optional masking.
+ *
  * @tag arc-pin-input
+ * @prop {number} length - Number of input boxes to render. Determines the expected code length.
+ * @prop {string} value - Current combined value across all boxes. Reflected as an attribute.
+ * @prop {'number' | 'alphanumeric' | 'text'} type - Character validation mode. `number` allows digits only, `alphanumeric` allows letters and digits, `text` allows any character.
+ * @prop {boolean} mask - When true, obscures entered characters with dots for sensitive codes.
+ * @prop {number} separator - Inserts a visual dash separator every N boxes. Set to 0 to disable separators.
+ * @prop {string} label - Label text displayed above the input boxes in uppercase accent font.
+ * @prop {boolean} disabled - Disables all boxes, reducing opacity to 40% and blocking input.
+ * @fires arc-change - Fired on every character entry or deletion. `event.detail.value` contains the current partial value.
+ * @fires arc-complete - Fired when all boxes are filled. `event.detail.value` contains the full value string.
+ * @csspart pin
+ * @csspart label
+ * @csspart boxes
+ * @csspart box
  */
 export class ArcPinInput extends FormControlMixin(LitElement) {
   static properties = {

@@ -3,7 +3,17 @@ import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 
 /**
+ * A one-time password input that renders a row of individual character boxes with auto-advance,
+ * paste support, and configurable length and input type.
+ *
  * @tag arc-otp-input
+ * @prop {number} length - Number of individual character boxes to render. Reflected as an attribute.
+ * @prop {string} value - The concatenated value of all boxes. Reflected as an attribute and updated on every input.
+ * @prop {boolean} disabled - Disables all input boxes, reducing opacity to 40% and blocking pointer events.
+ * @prop {'number' | 'text'} type - Input mode. `number` filters non-digits and uses the numeric keyboard; `text` allows any character.
+ * @fires {CustomEvent<{ value: string }>} arc-change - Fired when any digit changes
+ * @csspart otp
+ * @csspart box
  */
 export class ArcOtpInput extends FormControlMixin(LitElement) {
   static properties = {

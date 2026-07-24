@@ -2,7 +2,14 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Uniform aspect-ratio cell grid with configurable columns and ratio.
+ *
  * @tag arc-aspect-grid
+ * @prop {number} columns - Number of columns in the grid. Each column is equal width (1fr).
+ * @prop {'1/1' | '16/9' | '4/3'} ratio - Aspect ratio applied to every cell. 1/1 for squares, 16/9 for widescreen, 4/3 for classic landscape.
+ * @prop {'sm' | 'md' | 'lg'} gap - Spacing between grid cells, mapped to design system spacing tokens (--space-sm, --space-md, --space-lg).
+ * @slot - Default content.
+ * @csspart grid
  */
 export class ArcAspectGrid extends LitElement {
   static properties = {

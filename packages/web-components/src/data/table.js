@@ -2,7 +2,19 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Data-driven table with striped and compact variants, powered by columns and rows props.
+ *
  * @tag arc-table
+ * @prop {string[]} columns - Array of column header strings.
+ * @prop {string[][]} rows - Array of row arrays. Each inner array contains cell values in column order.
+ * @prop {boolean} striped - Alternating row backgrounds for improved scanability.
+ * @prop {boolean} compact - Reduced cell padding for dense data displays.
+ * @csspart table-wrap
+ * @csspart table
+ * @csspart head
+ * @csspart body
+ * @csspart row
+ * @csspart cell
  */
 export class ArcTable extends LitElement {
   static properties = {

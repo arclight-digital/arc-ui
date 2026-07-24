@@ -2,7 +2,14 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Container that enforces a consistent width-to-height ratio on its content, ideal for images,
+ * videos, and embedded media.
+ *
  * @tag arc-aspect-ratio
+ * @prop {string} ratio - Aspect ratio as a `W/H` string. Supports integers and decimals. Falls back to `16/9` if invalid.
+ * @slot - Default content.
+ * @csspart container
+ * @csspart inner
  */
 export class ArcAspectRatio extends LitElement {
   static properties = {

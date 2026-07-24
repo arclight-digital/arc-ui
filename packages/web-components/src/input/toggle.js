@@ -3,7 +3,19 @@ import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 
 /**
+ * On/off switch with smooth animation, glow effect, and ARIA switch role.
+ *
  * @tag arc-toggle
+ * @prop {boolean} checked - Whether the toggle is in the on position. When set, the thumb slides to the active side and the track displays the accent glow.
+ * @prop {boolean} disabled - Prevents user interaction. The toggle appears at reduced opacity and ignores pointer and keyboard events.
+ * @prop {string} label - Visible text rendered beside the toggle. Clicking the label also toggles the switch, matching native `<label>` behavior.
+ * @prop {string} size - Controls the toggle size. Options: 'sm', 'md', 'lg'.
+ * @prop {string} name - Form field name submitted with the toggle value. When set, the component participates in native `<form>` submission.
+ * @fires {CustomEvent<{ checked: boolean }>} arc-change - Fired when the toggle state changes
+ * @csspart toggle
+ * @csspart track
+ * @csspart thumb
+ * @csspart label
  */
 export class ArcToggle extends FormControlMixin(LitElement) {
   static properties = {

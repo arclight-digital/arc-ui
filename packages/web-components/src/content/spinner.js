@@ -2,7 +2,12 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Animated loading spinner in three sizes.
+ *
  * @tag arc-spinner
+ * @prop {'sm' | 'md' | 'lg'} size - Spinner dimensions: sm (16px), md (24px), lg (40px)
+ * @prop {'primary' | 'secondary' | 'white'} variant - Colour of the spinner ring
+ * @csspart spinner
  */
 export class ArcSpinner extends LitElement {
   static properties = {

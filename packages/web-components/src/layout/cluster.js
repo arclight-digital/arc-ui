@@ -2,7 +2,14 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Flex-wrap primitive for variable-width children like tags, chips, and buttons with token gap
+ * spacing.
+ *
  * @tag arc-cluster
+ * @prop {'xs' | 'sm' | 'md' | 'lg'} gap - Spacing between items, mapped to design system spacing tokens. Use sm for dense tag groups, md for button groups.
+ * @prop {'start' | 'center' | 'end'} align - Vertical alignment of items within each row (maps to align-items).
+ * @prop {'start' | 'center' | 'end' | 'between'} justify - Horizontal distribution of items (maps to justify-content). Use "between" for navigation-style spacing.
+ * @slot - Default content.
  */
 export class ArcCluster extends LitElement {
   static properties = {

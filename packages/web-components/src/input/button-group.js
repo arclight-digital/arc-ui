@@ -2,7 +2,15 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Connects multiple buttons into a single visual unit with shared borders and collapsed radii.
+ * Supports horizontal and vertical orientations.
+ *
  * @tag arc-button-group
+ * @prop {'horizontal' | 'vertical'} orientation - Layout direction. Vertical stacks buttons top-to-bottom.
+ * @prop {'sm' | 'md' | 'lg'} size - Size cascaded to all child buttons.
+ * @prop {string} variant - Button variant cascaded to all children (e.g., "ghost", "outline").
+ * @slot - Default content.
+ * @csspart group
  */
 export class ArcButtonGroup extends LitElement {
   static properties = {

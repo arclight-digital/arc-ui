@@ -3,10 +3,29 @@ import { tokenStyles } from '../shared-styles.js';
 import '../layout/container.register.js';
 
 /**
- * @arc-prism hybrid — display works without JS; mobile menu toggle requires JS
- */
-/**
+ * Fixed header bar that anchors every page with a brand slot on the left, an optional center
+ * navigation area, and a right-aligned actions region for user controls, search, and settings.
+ *
  * @tag arc-top-bar
+ * @prop {string} heading - Brand text displayed in the top-left corner next to the optional logo slot. Rendered with the accent font family (Tektur), uppercase, and wide letter-spacing. Keep this to one or two words that identify the application.
+ * @prop {boolean} fixed - When true, the bar uses position: fixed so it stays at the top of the viewport while content scrolls underneath. Automatically applied when TopBar is placed inside an AppShell. Be sure to add matching top padding to the content below to prevent overlap.
+ * @prop {boolean} menuOpen - Reflects whether the mobile hamburger menu is open. Toggling this value updates the aria-expanded attribute on the menu button. Typically managed by AppShell in response to the arc-sidebar-toggle event rather than set directly.
+ * @prop {string} navAlign - Controls the alignment of content in the center slot. Options: 'left', 'center', 'right'. Pulls nav toward the brand or actions without reordering DOM.
+ * @prop {string} contained - Sets a max-width containment on the top bar content area. Accepts any CSS length or named size.
+ * @prop {string} mobileMenu - Controls the mobile menu behavior. When set to a value like "nav", the hamburger toggles an inline navigation panel instead of triggering sidebar toggle.
+ * @prop {string} menuPosition - Position of the mobile menu panel when mobile-menu is active.
+ * @fires arc-sidebar-toggle - Fired when the mobile menu toggle is clicked (sidebar mode)
+ * @fires arc-mobile-menu-toggle - Fired when the mobile hamburger button is clicked and mobile-menu mode is active. Use this to toggle your own mobile navigation panel.
+ * @slot logo
+ * @slot subtitle
+ * @slot center
+ * @slot actions
+ * @csspart menu-btn
+ * @csspart content
+ * @csspart brand
+ * @csspart center
+ * @csspart actions
+ * @csspart topbar
  */
 export class ArcTopBar extends LitElement {
   static properties = {

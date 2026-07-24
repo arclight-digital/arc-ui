@@ -2,7 +2,14 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Wrapper that goes sticky at a configurable offset and emits a stuck attribute/event for visual
+ * state changes.
+ *
  * @tag arc-sticky
+ * @prop {string} offset - The CSS `top` value for sticky positioning. Set to "64px" to stick below a 64px top bar, or "0px" to stick flush with the viewport/scroll container edge.
+ * @prop {boolean} stuck - Read-only attribute set by the IntersectionObserver when the element is currently stuck. Use the `[stuck]` CSS selector to style the stuck state.
+ * @fires arc-stuck - Fired when the stuck state changes. Event detail contains `{ stuck: boolean }` indicating whether the element is currently stuck.
+ * @slot - Default content.
  */
 export class ArcSticky extends LitElement {
   static properties = {

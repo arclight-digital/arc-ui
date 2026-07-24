@@ -7,14 +7,16 @@
     open?: boolean;
     heading?: string;
     message?: string;
+    confirmLabel?: string;
+    cancelLabel?: string;
     variant?: string;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { open = false, heading = '', message = '', variant = 'default', children, ...rest }: Props = $props();
+  let { open = false, heading = '', message = '', confirmLabel = 'Confirm', cancelLabel = 'Cancel', variant = 'default', children, ...rest }: Props = $props();
 </script>
 
-<arc-dialog {open} {heading} {message} {variant} {...rest}>
+<arc-dialog {open} {heading} {message} {confirmLabel} {cancelLabel} {variant} {...rest}>
   {@render children?.()}
 </arc-dialog>

@@ -2,7 +2,17 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Three-state theme toggle cycling through dark, light, and auto modes with animated icon
+ * transitions and localStorage persistence.
+ *
  * @tag arc-theme-toggle
+ * @prop {'dark' | 'light' | 'auto'} theme - The current theme mode. Automatically synced to localStorage and the document root `data-theme` attribute.
+ * @prop {boolean} disabled - Prevents cycling and reduces opacity to 40%.
+ * @prop {boolean} iconOnly - Renders the button as a compact circle without the theme name label. Attribute name is `icon-only`.
+ * @fires {CustomEvent<{ value: 'dark' | 'light' | 'auto' }>} arc-change - Fired when the theme is toggled, with { theme } detail
+ * @csspart button
+ * @csspart icon
+ * @csspart label
  */
 export class ArcThemeToggle extends LitElement {
   static properties = {

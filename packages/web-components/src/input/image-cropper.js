@@ -6,12 +6,26 @@ const HANDLES = ['nw', 'n', 'ne', 'e', 'se', 's', 'sw', 'w'];
 const ARROW_KEYS = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'];
 
 /**
- * Crop-before-upload for avatar/media flows. The crop rect lives in stage
- * coordinates; zoom scales the letterboxed image around its center underneath.
- * `getCroppedBlob()`/`getCroppedDataUrl()` require `src` to be same-origin or
- * CORS-enabled — a tainted canvas throws with a clear message.
+ * Crop-before-upload control with a draggable, resizable crop rectangle, aspect-ratio locking,
+ * zoom, and canvas export at natural image resolution.
+ *
+ * Crop-before-upload for avatar/media flows. The crop rect lives in stage coordinates; zoom scales
+ * the letterboxed image around its center underneath. `getCroppedBlob()`/`getCroppedDataUrl()`
+ * require `src` to be same-origin or CORS-enabled — a tainted canvas throws with a clear message.
  *
  * @tag arc-image-cropper
+ * @prop {string} src - Image URL, object URL, or data URL to crop. Must be same-origin or CORS-enabled for canvas export.
+ * @prop {number} height - Fixed stage height in pixels. The image is letterboxed to fit.
+ * @prop {number} aspect - Crop aspect ratio as width/height (e.g. `1`, `16/9`). `0` allows free-form cropping.
+ * @prop {number} zoom - Image zoom factor, clamped to 1-4. Scales the image around its center; also settable via the built-in slider.
+ * @fires arc-crop-change - Fired when the crop changes (drag, resize, keyboard, zoom, stage resize). `event.detail` is `{ x, y, width, height }` in natural image pixels, debounced to animation frames.
+ * @csspart stage
+ * @csspart image
+ * @csspart skeleton
+ * @csspart error
+ * @csspart crop
+ * @csspart handle
+ * @csspart zoom
  */
 export class ArcImageCropper extends LitElement {
   static properties = {

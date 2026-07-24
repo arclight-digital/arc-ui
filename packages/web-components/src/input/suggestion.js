@@ -1,7 +1,11 @@
 import { LitElement, html, css } from 'lit';
 
 /**
+ * Autocomplete suggestion item inside a Search component.
+ *
  * @tag arc-suggestion
+ * @prop {string} value - Suggestion value
+ * @slot - Default content.
  */
 export class ArcSuggestion extends LitElement {
   static properties = {

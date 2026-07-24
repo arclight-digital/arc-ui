@@ -2,7 +2,21 @@ import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Page navigation control with previous/next arrows, numbered page buttons, and smart ellipsis
+ * truncation.
+ *
  * @tag arc-pagination
+ * @prop {number} total - Total number of pages.
+ * @prop {number} current - The currently active page number (1-based). Reflected as an attribute.
+ * @prop {number} siblings - Number of page buttons to show on each side of the current page before ellipsis truncation kicks in.
+ * @prop {boolean} compact - Shows only previous/next buttons with a 'current / total' label. Hides individual page numbers.
+ * @fires {CustomEvent<{ value: number }>} arc-change - Fired when the current page changes
+ * @csspart prev
+ * @csspart next
+ * @csspart pagination
+ * @csspart label
+ * @csspart ellipsis
+ * @csspart page
  */
 export class ArcPagination extends LitElement {
   static properties = {

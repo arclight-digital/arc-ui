@@ -2,7 +2,18 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * User avatar with image or initials fallback.
+ *
  * @tag arc-avatar
+ * @prop {string} src - Image URL for the avatar. When provided, renders an `<img>` element. When empty, displays initials derived from the `name` prop.
+ * @prop {string} name - User name used to generate initials (first letter, uppercased) and as the `alt` text / `aria-label` for the avatar.
+ * @prop {'sm' | 'md' | 'lg'} size - Controls avatar dimensions: `sm` (32px), `md` (40px), `lg` (56px).
+ * @prop {'online' | 'offline' | 'busy' | 'away'} status - Shows a status indicator dot. Options: 'online', 'offline', 'busy', 'away'.
+ * @prop {'circle' | 'square' | 'rounded'} shape - Controls the avatar shape. Options: 'circle', 'square', 'rounded'.
+ * @csspart img
+ * @csspart initials
+ * @csspart avatar
+ * @csspart status
  */
 export class ArcAvatar extends LitElement {
   static properties = {

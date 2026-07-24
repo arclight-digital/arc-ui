@@ -2,7 +2,23 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Grouped form section with legend, description, error message, and optional card variant. Wraps
+ * related inputs with native fieldset semantics.
+ *
  * @tag arc-fieldset
+ * @prop {string} legend - Text displayed in the `<legend>` element. Also available via the `legend` slot for rich content.
+ * @prop {string} description - Helper text displayed below the legend.
+ * @prop {boolean} disabled - Disables all child controls and dims the fieldset.
+ * @prop {string} error - Error message displayed below the content with `role="alert"`.
+ * @prop {'default' | 'card'} variant - Visual style. Card adds a surface background and shadow.
+ * @slot legend
+ * @slot actions
+ * @slot - Default content.
+ * @csspart fieldset
+ * @csspart legend
+ * @csspart description
+ * @csspart content
+ * @csspart error
  */
 export class ArcFieldset extends LitElement {
   static properties = {

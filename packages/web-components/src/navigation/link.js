@@ -2,7 +2,16 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Styled anchor with nav, muted, and default variants.
+ *
  * @tag arc-link
+ * @prop {string} href - URL destination for the link.
+ * @prop {'default' | 'muted' | 'nav'} variant - Link style variant. `default` uses accent-primary color, `muted` uses muted text, `nav` uses secondary text with 14px size and flex layout.
+ * @prop {boolean} active - Active state — applies accent-primary color for navigation highlighting.
+ * @prop {boolean} external - When true, adds `target="_blank"` and `rel="noopener noreferrer"`, and renders an external link icon after the text.
+ * @prop {string} underline - Controls underline behavior. Options: 'hover' (default, underline on hover), 'always' (always visible), 'never' (never underlined).
+ * @slot - Default content.
+ * @csspart link
  */
 export class ArcLink extends LitElement {
   static properties = {

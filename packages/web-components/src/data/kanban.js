@@ -4,8 +4,27 @@ import { tokenStyles } from '../shared-styles.js';
 import './tag.js';
 
 /**
+ * A drag-and-drop kanban board driven by a `columns` data array. Cards can be dragged between and
+ * within columns with the pointer, or moved entirely from the keyboard with live screen-reader
+ * announcements. Column limits, tags, and descriptions are supported per card, and every move
+ * emits an `arc-card-move` event so the consumer can sync its source of truth.
+ *
  * @tag arc-kanban
  * @requires arc-tag
+ * @prop columns - The data array that drives the board. Each entry becomes a column with a header (title plus count badge) and a list of cards. `limit` renders the count as `count/limit` and turns it error-colored when exceeded. Each card needs a unique `id` and a `label`; `description` renders below the label with a two-line clamp, and `tag` renders an arc-tag chip styled by `variant`. Set via JavaScript — it is not an HTML attribute. The component works on an internal copy for immediate drag feedback; sync your source of truth from `arc-card-move` and assign a new array to re-render.
+ * @prop {boolean} disabled - Disables all pointer and keyboard interaction and dims the board.
+ * @fires arc-card-move - Fired when a card is dropped in a new position (pointer or keyboard). detail: { cardId, fromColumn, toColumn, index } where index is the final position in the target column.
+ * @fires arc-card-click - Fired when a card is clicked without being dragged. detail: { cardId, columnId }.
+ * @csspart card-label
+ * @csspart card-description
+ * @csspart card
+ * @csspart column
+ * @csspart column-header
+ * @csspart column-title
+ * @csspart column-count
+ * @csspart list
+ * @csspart dropzone
+ * @csspart board
  */
 export class ArcKanban extends LitElement {
   static properties = {

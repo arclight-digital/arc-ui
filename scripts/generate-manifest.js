@@ -36,6 +36,11 @@ for (const mod of manifest.modules) {
     if (decl.attributes) {
       decl.attributes = decl.attributes.filter((a) => !a.name?.startsWith('_'));
     }
+    // Dynamic event names (dispatchEvent(new CustomEvent(variable))) come out
+    // of the analyzer as nameless entries — junk for every downstream consumer.
+    if (decl.events) {
+      decl.events = decl.events.filter((e) => e.name);
+    }
   }
 }
 

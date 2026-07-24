@@ -5,7 +5,32 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
 let inputIdCounter = 0;
 
 /**
+ * Versatile form control supporting single-line text, email, password, and multiline textarea
+ * modes with built-in label, placeholder, and validation states. Pairs with Form for complete
+ * data-entry workflows.
+ *
  * @tag arc-input
+ * @prop {string} label - Visible label rendered above the input. Automatically associated with the field via a generated id, ensuring screen readers announce it correctly.
+ * @prop {string} name - The `name` attribute sent with form data on submission. Also used by the Form component to track field state and validation.
+ * @prop {'text' | 'email' | 'tel' | 'url' | 'password'} type - The HTML input type. Controls browser validation behaviour and which virtual keyboard appears on mobile devices. Ignored when `multiline` is true.
+ * @prop {string} placeholder - Hint text displayed inside the field when it is empty. Use it to show an example value -- never as a substitute for the label.
+ * @prop {boolean} multiline - When true, renders a `<textarea>` instead of an `<input>`, allowing multi-row text entry. The textarea is vertically resizable by default.
+ * @prop {boolean} disabled - Prevents user interaction and applies a muted visual treatment. The field value is excluded from form submission when disabled.
+ * @prop {boolean} required - Marks the field as required. Displays a required indicator next to the label and triggers native constraint validation on form submission.
+ * @prop {string} value - The current value of the input. Can be set programmatically to pre-fill the field or used for controlled-component patterns. Updated internally on each keystroke.
+ * @prop {number} rows - Number of visible text rows when `multiline` is true. Controls the initial height of the textarea. Ignored for single-line inputs.
+ * @prop {string} error - Error message displayed below the input. When set, the input border turns red and the error text appears.
+ * @prop {'sm' | 'md' | 'lg'} size - Controls the input size. Options: 'sm', 'md', 'lg'.
+ * @fires {CustomEvent<{ value: string }>} arc-input - Fired on each keystroke with { value } detail
+ * @fires {CustomEvent<{ value: string }>} arc-change - Fired on blur when value has changed
+ * @slot prefix
+ * @slot suffix
+ * @csspart field
+ * @csspart label
+ * @csspart wrapper
+ * @csspart prefix
+ * @csspart suffix
+ * @csspart error
  */
 export class ArcInput extends FormControlMixin(LitElement) {
   static properties = {

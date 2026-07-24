@@ -3,7 +3,19 @@ import { tokenStyles } from '../shared-styles.js';
 import { cardHoverStyles } from '../card-styles.js';
 
 /**
+ * Content container with subtle border styling and hover effects. Links the entire card surface
+ * when an href is provided, creating a seamless clickable area with an animated gradient border.
+ *
  * @tag arc-card
+ * @prop {string} href - When set, renders the card as an anchor element, making the entire card surface a clickable link. On hover, the border transitions to a blue-to-violet gradient and the inner surface gains a lift shadow.
+ * @prop {'none' | 'sm' | 'md' | 'lg'} padding - Controls internal spacing. Options: 'none', 'sm', 'md', 'lg'.
+ * @prop {boolean} interactive - Enables hover effects for clickable cards that trigger JS instead of navigating via href.
+ * @slot - Default content.
+ * @slot footer
+ * @csspart body
+ * @csspart footer
+ * @csspart card
+ * @csspart inner
  */
 export class ArcCard extends LitElement {
   static properties = {

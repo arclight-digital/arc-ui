@@ -2,7 +2,23 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Semantic gauge display with color-coded fill zones (success, warning, error) based on
+ * configurable low/high/optimum thresholds.
+ *
  * @tag arc-meter
+ * @prop {number} value - Current meter value. Clamped between `min` and `max`. Reflected as an attribute.
+ * @prop {number} min - Minimum value representing the left edge (empty) of the meter.
+ * @prop {number} max - Maximum value representing the right edge (full) of the meter.
+ * @prop {number} low - Threshold below which the value is considered low. Used for color zone calculation.
+ * @prop {number} high - Threshold above which the value is considered high. Used for color zone calculation.
+ * @prop {number} optimum - The optimal value. Determines which end of the range is "good" for color zone logic.
+ * @prop {string} label - Label text displayed in the header row alongside the current percentage.
+ * @csspart meter
+ * @csspart header
+ * @csspart label
+ * @csspart value
+ * @csspart track
+ * @csspart fill
  */
 export class ArcMeter extends LitElement {
   static properties = {

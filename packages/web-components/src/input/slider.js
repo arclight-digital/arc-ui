@@ -3,7 +3,24 @@ import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 
 /**
+ * Range input slider with a label, live numeric value display, accent-primary fill track, and
+ * customisable min/max/step.
+ *
  * @tag arc-slider
+ * @prop {number} value - Current slider value. Reflected as an attribute and updated on user interaction.
+ * @prop {number} min - Minimum allowed value at the left edge of the track.
+ * @prop {number} max - Maximum allowed value at the right edge of the track.
+ * @prop {number} step - Increment granularity. The value snaps to multiples of this number.
+ * @prop {string} label - Label text displayed above the slider with the current value shown on the right.
+ * @prop {boolean} disabled - Disables interaction, reducing opacity to 40% and blocking pointer events.
+ * @fires {CustomEvent<{ value: number }>} arc-input - Fired continuously as the user drags the thumb. Use for real-time preview updates like adjusting opacity, volume, or a CSS property live.
+ * @fires {CustomEvent<{ value: number }>} arc-change - Fired once when the user releases the thumb, indicating the final committed value. Use for persisting the value to a database or triggering an expensive operation.
+ * @csspart slider
+ * @csspart header
+ * @csspart label
+ * @csspart value
+ * @csspart track
+ * @csspart input
  */
 export class ArcSlider extends FormControlMixin(LitElement) {
   static properties = {

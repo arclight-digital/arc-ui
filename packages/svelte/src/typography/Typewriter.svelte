@@ -10,13 +10,14 @@
     cursor?: boolean;
     loop?: boolean;
     nowrap?: boolean;
+    pauseEnd?: number;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { text = '', speed = 50, delay = 0, cursor = true, loop = false, nowrap = false, children, ...rest }: Props = $props();
+  let { text = '', speed = 50, delay = 0, cursor = true, loop = false, nowrap = false, pauseEnd = 2000, children, ...rest }: Props = $props();
 </script>
 
-<arc-typewriter {text} {speed} {delay} {cursor} {loop} {nowrap} {...rest}>
+<arc-typewriter {text} {speed} {delay} {cursor} {loop} {nowrap} {pauseEnd} {...rest}>
   {@render children?.()}
 </arc-typewriter>

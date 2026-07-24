@@ -2,7 +2,22 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Authentication page layout with centered and split variants for sign-in, sign-up,
+ * password-reset, and other credential flows. Provides logo, form card, footer, and optional aside
+ * slots out of the box.
+ *
  * @tag arc-auth-shell
+ * @prop {'centered' | 'split'} variant - Controls the page layout. Centered places a single card in the middle of the viewport, best for focused credential flows. Split divides the viewport into a form side and an aside panel for marketing content or illustrations. On mobile, split collapses to a single-column centered layout automatically.
+ * @slot logo
+ * @slot - Default content.
+ * @slot footer
+ * @slot aside
+ * @csspart shell
+ * @csspart form-side
+ * @csspart logo
+ * @csspart card
+ * @csspart footer
+ * @csspart aside
  */
 export class ArcAuthShell extends LitElement {
   static properties = {

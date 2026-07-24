@@ -2,8 +2,16 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Hierarchical tree structure with expandable/collapsible nodes, selection tracking, keyboard
+ * navigation, and indentation guide lines.
+ *
  * @tag arc-tree-view
  * @requires arc-tree-item
+ * @fires arc-toggle - Fired when a tree node is expanded or collapsed
+ * @fires arc-select - Fired when a tree item is selected
+ * @slot - Default content.
+ * @csspart item
+ * @csspart row
  */
 export class ArcTreeView extends LitElement {
   static properties = {

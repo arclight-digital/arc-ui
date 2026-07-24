@@ -140,7 +140,61 @@ function inlineMarkdown(text) {
  * @arc-prism static — renders Markdown content as styled HTML
  */
 /**
+ * Renders markdown content as styled HTML with zero dependencies. Supports headings, lists, code
+ * blocks, blockquotes, links, images, and inline formatting.
+ *
+ * Return true if a URL is safe to emit in href/src: relative, or an allowlisted scheme (http,
+ * https, mailto, tel). function isSafeUrl(value) { // Strip control chars/whitespace the browser
+ * ignores when parsing the scheme const url = value.replace(/[\u0000-\u0020\u00a0]/g,
+ * '').toLowerCase(); if (!/^[a-z][a-z0-9+.-]*:/.test(url)) return true; return
+ * /^(?:https?|mailto|tel):/.test(url); } Sanitize an HTML string: strip active-content tags, on*
+ * event attributes, and href/src values with non-allowlisted URL schemes (javascript:, data:, …).
+ * function sanitizeHtml(raw) { const doc = new DOMParser().parseFromString(raw, 'text/html'); for
+ * (const el of doc.querySelectorAll('script, style, iframe, object, embed, link, meta, base,
+ * form')) el.remove(); for (const el of doc.querySelectorAll('*')) { for (const attr of
+ * [...el.attributes]) { const name = attr.name.toLowerCase(); if (name.startsWith('on')) {
+ * el.removeAttribute(attr.name); } else if ((name === 'href' || name === 'src' || name ===
+ * 'xlink:href') && !isSafeUrl(attr.value)) { el.removeAttribute(attr.name); } } if (el.tagName ===
+ * 'A' && el.hasAttribute('href')) { el.setAttribute('rel', 'noopener noreferrer'); } } return
+ * doc.body.innerHTML; } Lightweight regex-based Markdown-to-HTML parser. Handles headings, bold,
+ * italic, inline code, code blocks, lists, blockquotes, links, images, horizontal rules, and
+ * paragraphs. function parseMarkdown(src) { if (!src) return ''; let out = ''; // Normalize line
+ * endings const text = src.replace(/\r\n?/g, '\n'); // Extract fenced code blocks first to protect
+ * them from further parsing const codeBlocks = []; const withPlaceholders =
+ * text.replace(/^```(\w*)\n([\s\S]*?)^```/gm, (_match, lang, code) => { const idx =
+ * codeBlocks.length; const escaped = code.replace(/&/g, '&amp;').replace(/</g,
+ * '&lt;').replace(/>/g, '&gt;'); const langAttr = lang ? ` class="language-${lang}"` : '';
+ * codeBlocks.push(`<pre tabindex="0"><code${langAttr}>${escaped}</code></pre>`); return
+ * `\x00CODEBLOCK_${idx}\x00`; }); // Split into blocks by double newline const blocks =
+ * withPlaceholders.split(/\n{2,}/); for (const block of blocks) { const trimmed = block.trim(); if
+ * (!trimmed) continue; // Code block placeholder const cbMatch =
+ * trimmed.match(/^\x00CODEBLOCK_(\d+)\x00$/); if (cbMatch) { out +=
+ * codeBlocks[parseInt(cbMatch[1])]; continue; } // Heading const headingMatch =
+ * trimmed.match(/^(#{1,6})\s+(.+)$/); if (headingMatch) { const level = headingMatch[1].length;
+ * out += `<h${level}>${inlineMarkdown(headingMatch[2])}</h${level}>`; continue; } // Horizontal
+ * rule if (/^[-*_]{3,}\s*$/.test(trimmed)) { out += '<hr>'; continue; } // Blockquote if
+ * (/^>\s?/.test(trimmed)) { const content = trimmed .split('\n') .map(l => l.replace(/^>\s?/, ''))
+ * .join('\n'); out += `<blockquote>${parseMarkdown(content)}</blockquote>`; continue; } //
+ * Unordered list if (/^[\-*]\s/.test(trimmed)) { const items = trimmed.split('\n').filter(l =>
+ * /^[\-*]\s/.test(l.trim())); out += '<ul>' + items.map(l =>
+ * `<li>${inlineMarkdown(l.trim().replace(/^[\-*]\s+/, ''))}</li>`).join('') + '</ul>'; continue; }
+ * // Ordered list if (/^\d+\.\s/.test(trimmed)) { const items = trimmed.split('\n').filter(l =>
+ * /^\d+\.\s/.test(l.trim())); out += '<ol>' + items.map(l =>
+ * `<li>${inlineMarkdown(l.trim().replace(/^\d+\.\s+/, ''))}</li>`).join('') + '</ol>'; continue; }
+ * // Paragraph (default) out += `<p>${inlineMarkdown(trimmed.replace(/\n/g, ' '))}</p>`; } return
+ * out; } Parse inline markdown: images, links, bold, italic, inline code. function
+ * inlineMarkdown(text) { let s = text; // Escape HTML entities in source (but not our generated
+ * tags) s = s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); // Inline code
+ * (before bold/italic so backticks are handled first) s = s.replace(/`([^`]+)`/g,
+ * '<code>$1</code>'); // Images s = s.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2"
+ * alt="$1">'); // Links s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>'); // Bold
+ * s = s.replace(/\*\*(.+?)\*\*\/g, '<strong>$1</strong>'); // Italic s = s.replace(/\*(.+?)\*\/g,
+ * '<em>$1</em>'); return s; }
+ *
  * @tag arc-markdown
+ * @prop {string} content - Markdown string to parse and render. Takes precedence over slotted text content.
+ * @slot - Default content.
+ * @csspart markdown
  */
 export class ArcMarkdown extends LitElement {
   static properties = {

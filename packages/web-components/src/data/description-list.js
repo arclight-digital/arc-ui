@@ -2,8 +2,14 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Structured term/detail pair list in a responsive grid layout with optional dividers.
+ *
  * @tag arc-description-list
  * @requires arc-description-item
+ * @prop {number} columns - Number of grid columns for laying out items side by side.
+ * @prop {boolean} dividers - Show horizontal dividers between rows and vertical dividers between columns.
+ * @slot - Default content.
+ * @csspart list
  */
 export class ArcDescriptionList extends LitElement {
   static properties = {

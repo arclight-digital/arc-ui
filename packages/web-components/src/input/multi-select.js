@@ -5,7 +5,21 @@ import { ClickOutsideController } from '../shared/click-outside.js';
 import '../shared/option.js';
 
 /**
+ * Multi-value select with tag chips, inline search filtering, and keyboard navigation.
+ *
  * @tag arc-multi-select
+ * @prop {string[]} value - Array of selected option values. Updated when items are toggled and emitted via `arc-change`.
+ * @prop {string} label - Visible label rendered above the control in a small uppercase style.
+ * @prop {string} placeholder - Hint text shown inside the control when no items are selected and the input is empty.
+ * @prop {boolean} disabled - Disables the control, preventing interaction and reducing opacity to 50%.
+ * @fires {CustomEvent<{ value: string[] }>} arc-change - Fired when the selected values change
+ * @slot - Default content.
+ * @csspart label
+ * @csspart control
+ * @csspart tag
+ * @csspart input
+ * @csspart dropdown
+ * @csspart option
  */
 export class ArcMultiSelect extends FormControlMixin(LitElement) {
   static properties = {

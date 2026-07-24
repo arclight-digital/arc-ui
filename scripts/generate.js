@@ -31,6 +31,7 @@ const steps = [
   { name: 'Exports',  cmd: 'node',  args: ['scripts/generate-exports.js'] },
   { name: 'Manifest', cmd: 'node',  args: ['scripts/generate-manifest.js'] },
   { name: 'Types',    cmd: 'node',  args: ['scripts/generate-types.js'] },
+  { name: 'Editor',   cmd: 'node',  args: ['scripts/generate-editor-data.js'] },
   { name: 'Readme',   cmd: 'node',  args: ['scripts/generate-readme-stats.js'] },
 ];
 

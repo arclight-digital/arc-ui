@@ -2,7 +2,19 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Form label with required indicator, optional description text, and tooltip slot. Pairs with any
+ * input component via the `for` attribute.
+ *
  * @tag arc-label
+ * @prop {string} for - ID of the target input element. Clicking the label focuses the associated control.
+ * @prop {boolean} required - Shows a red asterisk (*) after the label text.
+ * @prop {'sm' | 'md' | 'lg'} size - Controls the label font size.
+ * @prop {boolean} disabled - Reduces opacity and blocks pointer events.
+ * @slot - Default content.
+ * @slot tooltip
+ * @slot description
+ * @csspart label
+ * @csspart description
  */
 export class ArcLabel extends LitElement {
   static properties = {

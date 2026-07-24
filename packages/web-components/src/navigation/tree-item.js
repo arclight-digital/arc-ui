@@ -1,10 +1,13 @@
 import { LitElement, html, css } from 'lit';
 
 /**
- * @arc-prism interactive — tree item, child of arc-tree-view
- */
-/**
+ * Node within a TreeView. Can nest for sub-trees.
+ *
  * @tag arc-tree-item
+ * @prop {string} label - Item label text
+ * @prop {string} icon - Icon or emoji
+ * @prop {boolean} expanded - Expand child items
+ * @slot - Default content.
  */
 export class ArcTreeItem extends LitElement {
   static properties = {

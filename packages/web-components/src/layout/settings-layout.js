@@ -2,7 +2,15 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Settings page with side navigation and content area.
+ *
  * @tag arc-settings-layout
+ * @prop {'left' | 'top'} navPosition - Controls whether the navigation panel appears as a left sidebar (220px wide, CSS Grid) or a top bar (full-width, flexbox column). The left layout collapses to stacked on screens narrower than 768px.
+ * @slot nav
+ * @slot - Default content.
+ * @csspart layout
+ * @csspart nav
+ * @csspart content
  */
 export class ArcSettingsLayout extends LitElement {
   static properties = {

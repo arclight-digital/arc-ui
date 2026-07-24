@@ -2,7 +2,16 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Locale-aware number, currency, percentage, and compact formatter using Intl.NumberFormat.
+ *
  * @tag arc-number-format
+ * @prop {number} value - The number to format
+ * @prop {'number' | 'currency' | 'percent' | 'compact'} type - Formatting style to apply
+ * @prop {string} locale - BCP 47 locale tag for locale-aware formatting
+ * @prop {string} currency - ISO 4217 currency code, used when type is "currency"
+ * @prop {number} decimals - Number of decimal places (defaults: 0 for number, 2 for currency, 1 for percent)
+ * @prop {'standard' | 'compact'} notation - Number notation — compact gives "12.3K", "1.2M"
+ * @csspart number
  */
 export class ArcNumberFormat extends LitElement {
   static properties = {

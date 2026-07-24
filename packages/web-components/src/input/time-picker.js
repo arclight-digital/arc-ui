@@ -3,7 +3,23 @@ import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 
 /**
+ * Scrollable column-based time picker with 12h/24h format support.
+ *
  * @tag arc-time-picker
+ * @prop {string} value - The selected time in 24-hour "HH:MM" format (e.g. "14:30"). Set this to pre-select a time. Updated when the user picks a time.
+ * @prop {string} min - Minimum selectable time in "HH:MM" 24-hour format. Times before this are visually dimmed and non-interactive.
+ * @prop {string} max - Maximum selectable time in "HH:MM" 24-hour format. Times after this are visually dimmed and non-interactive.
+ * @prop {number} step - Minute step increment (1, 5, 15, or 30). Controls the granularity of minute options shown in the dropdown.
+ * @prop {string} format - Display format: "12h" shows hours 1-12 with an AM/PM column, "24h" shows hours 0-23 without AM/PM.
+ * @prop {string} placeholder - Placeholder text displayed in the input when no time is selected.
+ * @prop {boolean} disabled - Disables the time picker, reducing opacity and preventing the dropdown from opening.
+ * @prop {string} label - Label text rendered above the input in uppercase accent font styling.
+ * @fires {CustomEvent<{ value: string }>} arc-change - Fired when a time is selected. Detail contains { value: "HH:MM" } in 24-hour format.
+ * @csspart wrapper
+ * @csspart label
+ * @csspart input-wrapper
+ * @csspart input
+ * @csspart dropdown
  */
 export class ArcTimePicker extends FormControlMixin(LitElement) {
   static properties = {

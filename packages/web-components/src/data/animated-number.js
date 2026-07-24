@@ -2,7 +2,17 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Smooth count-up/down number animation with formatting options.
+ *
  * @tag arc-animated-number
+ * @prop {number} value - Target number to animate to
+ * @prop {number} duration - Animation duration in milliseconds
+ * @prop {string} prefix - String prepended before the number (e.g., "$")
+ * @prop {string} suffix - String appended after the number (e.g., "%")
+ * @prop {number} decimals - Number of fixed decimal places
+ * @prop {'number' | 'currency' | 'percent'} format - Controls how the number is formatted using Intl.NumberFormat. Use currency with a prefix like $ or percent with a suffix like %.
+ * @prop {string} locale - BCP 47 locale tag passed to Intl.NumberFormat for locale-aware number formatting (thousands separators, decimal marks).
+ * @csspart value
  */
 export class ArcAnimatedNumber extends LitElement {
   static properties = {

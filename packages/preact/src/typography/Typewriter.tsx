@@ -11,12 +11,13 @@ export interface TypewriterProps {
   cursor?: boolean;
   loop?: boolean;
   nowrap?: boolean;
+  pauseEnd?: number;
   onArcComplete?: (e: CustomEvent) => void;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const Typewriter: FunctionComponent<TypewriterProps> = ({ text, speed, delay, cursor, loop, nowrap, onArcComplete, children, ...rest }) => {
+export const Typewriter: FunctionComponent<TypewriterProps> = ({ text, speed, delay, cursor, loop, nowrap, pauseEnd, onArcComplete, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -30,7 +31,7 @@ export const Typewriter: FunctionComponent<TypewriterProps> = ({ text, speed, de
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcComplete]);
   return (
-    <arc-typewriter ref={ref} text={text} speed={speed} delay={delay} cursor={cursor} loop={loop} nowrap={nowrap} {...rest}>
+    <arc-typewriter ref={ref} text={text} speed={speed} delay={delay} cursor={cursor} loop={loop} nowrap={nowrap} pauseEnd={pauseEnd} {...rest}>
       {children}
     </arc-typewriter>
   );

@@ -3,7 +3,16 @@ import { tokenStyles } from '../shared-styles.js';
 import '../data/tag.js';
 
 /**
+ * A toggleable pill-shaped element for filters, tags, or multi-select options, with a selected
+ * state highlighted in accent-primary.
+ *
  * @tag arc-chip
+ * @prop {boolean} selected - Whether the chip is currently selected. Reflected as an attribute and toggled on click or keypress.
+ * @prop {boolean} disabled - Disables interaction, reducing opacity to 40% and blocking pointer events.
+ * @prop {string} value - Machine-readable identifier for this chip, included in the `arc-change` event detail.
+ * @fires {CustomEvent<{ value: string, selected: boolean }>} arc-change - Fired when the chip selected state changes
+ * @slot - Default content.
+ * @csspart chip
  */
 export class ArcChip extends LitElement {
   static properties = {

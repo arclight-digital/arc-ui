@@ -4,7 +4,29 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
 import { ClickOutsideController } from '../shared/click-outside.js';
 
 /**
+ * Free-text token entry field with optional autocomplete suggestions, delimiter splitting, and
+ * duplicate rejection.
+ *
  * @tag arc-tag-input
+ * @prop {string[]} value - Array of current tags. Updated on add/remove and emitted via `arc-change`.
+ * @prop {string[]} suggestions - Autocomplete candidates. When non-empty, typing filters them into a dropdown listbox.
+ * @prop {string} delimiter - Character that commits the current text as a tag when typed; pasted text is split on it.
+ * @prop {number} maxTags - Maximum number of tags (0 = unlimited). At the limit, entry is disabled with a "-- max reached" hint.
+ * @prop {boolean} allowCustom - When false, only values from `suggestions` can be added; free text is rejected.
+ * @prop {string} label - Visible label rendered above the field in a small uppercase style.
+ * @prop {string} placeholder - Hint text shown inside the field when no tags exist and the input is empty.
+ * @prop {string} name - Form field name. Each tag is submitted as its own FormData entry under this name.
+ * @prop {boolean} disabled - Disables the control, preventing interaction and reducing opacity to 50%.
+ * @prop {string} error - Error message shown below the field; also applies error styling to the border.
+ * @fires {CustomEvent<{ value: string[] }>} arc-change - Fired when a tag is added or removed; detail contains `{ value }`
+ * @fires arc-input - Fired as the user types; detail contains `{ query }`
+ * @csspart label
+ * @csspart field
+ * @csspart tag
+ * @csspart input
+ * @csspart dropdown
+ * @csspart option
+ * @csspart error
  */
 export class ArcTagInput extends FormControlMixin(LitElement) {
   static properties = {

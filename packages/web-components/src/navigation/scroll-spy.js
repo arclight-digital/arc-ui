@@ -2,8 +2,18 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Tracks scroll position and highlights the active navigation link.
+ *
  * @tag arc-scroll-spy
  * @requires arc-spy-link
+ * @prop {string} active - The id of the currently active section. Reflects to an attribute and updates automatically as the user scrolls.
+ * @prop {number} offset - Pixel offset from the top of the viewport used in the IntersectionObserver rootMargin. Increase this value to account for taller sticky headers.
+ * @fires arc-change - Fired when the active spy target changes during scroll
+ * @slot - Default content.
+ * @csspart scroll-spy
+ * @csspart heading
+ * @csspart list
+ * @csspart link
  */
 export class ArcScrollSpy extends LitElement {
   static properties = {

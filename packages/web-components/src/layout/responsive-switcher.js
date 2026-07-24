@@ -2,7 +2,14 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Container-query-based layout that flips between horizontal and vertical at a threshold width. No
+ * media queries needed.
+ *
  * @tag arc-responsive-switcher
+ * @prop {string} threshold - The container width at which the layout switches between horizontal and vertical. Accepts any CSS length value. When the container is wider than this value, children are in a row; below it, they stack.
+ * @prop {'sm' | 'md' | 'lg'} gap - Spacing between children in both horizontal and vertical modes, mapped to design system spacing tokens.
+ * @slot - Default content.
+ * @csspart switcher
  */
 export class ArcResponsiveSwitcher extends LitElement {
   static properties = {

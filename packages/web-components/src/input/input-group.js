@@ -2,7 +2,18 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Combines an input with prefix and suffix addon slots for labels, icons, or buttons attached to
+ * the input border.
+ *
  * @tag arc-input-group
+ * @prop {'sm' | 'md' | 'lg'} size - Controls addon padding and font size.
+ * @slot prefix
+ * @slot - Default content.
+ * @slot suffix
+ * @csspart group
+ * @csspart prefix
+ * @csspart content
+ * @csspart suffix
  */
 export class ArcInputGroup extends LitElement {
   static properties = {

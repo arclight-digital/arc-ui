@@ -2,7 +2,21 @@ import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Enhanced image component with shimmer loading skeleton, smooth fade-in transition, error
+ * fallback, and aspect ratio presets.
+ *
  * @tag arc-image
+ * @prop {string} src - Image source URL.
+ * @prop {string} alt - Alt text for the image. Used as the accessible description.
+ * @prop {'1/1' | '4/3' | '16/9' | '21/9' | '3/4' | '9/16'} aspect - Constrains the container to a fixed aspect ratio, preventing layout shift during loading.
+ * @prop {'cover' | 'contain' | 'fill' | 'none' | 'scale-down'} fit - CSS object-fit mode controlling how the image fills its container.
+ * @prop {'lazy' | 'eager'} loading - Native loading strategy. Lazy defers off-screen images until they approach the viewport.
+ * @prop {string} fallback - URL of a fallback image to display if the primary `src` fails to load.
+ * @fires {CustomEvent<void>} arc-load - Fired when the image successfully loads.
+ * @fires {CustomEvent<void>} arc-error - Fired when the image fails to load.
+ * @csspart wrapper
+ * @csspart fallback
+ * @csspart image
  */
 export class ArcImage extends LitElement {
   static properties = {

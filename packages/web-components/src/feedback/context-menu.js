@@ -7,7 +7,17 @@ import '../content/icon.js';
 import '../content/separator.js';
 
 /**
+ * Right-click context menu with keyboard shortcuts.
+ *
  * @tag arc-context-menu
+ * @prop {boolean} open - Controls the visibility of the context menu. Set to true when the contextmenu event fires; set to false when the user selects an item, clicks the backdrop, or presses Escape.
+ * @fires {CustomEvent<void>} arc-open - Fired when the context menu opens
+ * @fires {CustomEvent<void>} arc-close - Fired when the context menu closes
+ * @fires arc-select - Fired when a menu item is selected
+ * @slot - Default content.
+ * @slot content
+ * @csspart menu
+ * @csspart divider
  */
 export class ArcContextMenu extends LitElement {
   static properties = {

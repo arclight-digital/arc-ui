@@ -7,6 +7,8 @@ export interface DialogProps {
   open?: boolean;
   heading?: string;
   message?: string;
+  confirmLabel?: string;
+  cancelLabel?: string;
   variant?: string;
   onArcConfirm?: (e: CustomEvent) => void;
   onArcCancel?: (e: CustomEvent) => void;
@@ -15,9 +17,9 @@ export interface DialogProps {
 }
 
 export const Dialog: Component<DialogProps> = (props) => {
-  const [local, rest] = splitProps(props, ['open', 'heading', 'message', 'variant', 'onArcConfirm', 'onArcCancel', 'children']);
+  const [local, rest] = splitProps(props, ['open', 'heading', 'message', 'confirmLabel', 'cancelLabel', 'variant', 'onArcConfirm', 'onArcCancel', 'children']);
   return (
-    <arc-dialog open={local.open} heading={local.heading} message={local.message} variant={local.variant} on:arc-confirm={local.onArcConfirm} on:arc-cancel={local.onArcCancel} {...rest}>
+    <arc-dialog open={local.open} heading={local.heading} message={local.message} confirmLabel={local.confirmLabel} cancelLabel={local.cancelLabel} variant={local.variant} on:arc-confirm={local.onArcConfirm} on:arc-cancel={local.onArcCancel} {...rest}>
       {local.children}
     </arc-dialog>
   );

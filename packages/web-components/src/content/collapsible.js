@@ -2,7 +2,18 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * A disclosure widget with a clickable heading that toggles the visibility of its slotted content
+ * using a smooth CSS grid animation.
+ *
  * @tag arc-collapsible
+ * @prop {boolean} open - Controls whether the content is visible. Reflected as an attribute and toggleable by clicking the heading.
+ * @prop {string} heading - Text displayed in the clickable trigger row. Also used as the ARIA label for the content region.
+ * @fires {CustomEvent<{ open: boolean }>} arc-toggle - Fired when the collapsible expands or collapses
+ * @slot - Default content.
+ * @csspart collapsible
+ * @csspart trigger
+ * @csspart heading
+ * @csspart body
  */
 export class ArcCollapsible extends LitElement {
   static properties = {

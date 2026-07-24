@@ -2,7 +2,14 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Styled scrollable container with custom thin scrollbar styling for Webkit and Firefox,
+ * configurable orientation, and optional max-height constraint.
+ *
  * @tag arc-scroll-area
+ * @prop {string} maxHeight - CSS max-height value applied to the scrollable container. Use any valid CSS length (e.g. `300px`, `50vh`).
+ * @prop {'vertical' | 'horizontal' | 'both'} orientation - Scroll direction. `vertical` shows a vertical scrollbar, `horizontal` shows a horizontal scrollbar, `both` shows both.
+ * @slot - Default content.
+ * @csspart scroll-area
  */
 export class ArcScrollArea extends LitElement {
   static properties = {

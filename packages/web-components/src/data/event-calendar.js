@@ -2,7 +2,33 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Scheduling calendar with month and week views that renders all-day and multi-day event chips
+ * colored by the chart palette.
+ *
  * @tag arc-event-calendar
+ * @prop events - The event objects to display. `date` (and optional `end` for multi-day spans) are ISO strings (YYYY-MM-DD). `color` indexes the fixed `--chart-N` palette and defaults to 1. Set via JavaScript property, not an attribute.
+ * @prop {'month' | 'week'} view - Which period layout to render. Also switchable by the user via the header view toggle.
+ * @prop {string} date - ISO date string (YYYY-MM-DD) anchoring the visible period. Defaults to today when left empty.
+ * @fires arc-event-click - Fired when an event chip is clicked or activated. `event.detail.event` contains the original event object.
+ * @fires arc-date-click - Fired when a day cell or a "+N more" overflow button is activated. `event.detail.date` contains the ISO date string.
+ * @fires {CustomEvent<{ view: 'month' | 'week', date: string }>} arc-period-change - Fired when the visible period or view changes (navigation buttons, Today, view toggle, or keyboard). `event.detail` contains `{ view, date }`.
+ * @csspart event
+ * @csspart day
+ * @csspart day-number
+ * @csspart events
+ * @csspart more
+ * @csspart calendar
+ * @csspart header
+ * @csspart nav-prev
+ * @csspart nav-next
+ * @csspart today
+ * @csspart title
+ * @csspart view-toggle
+ * @csspart view-month
+ * @csspart view-week
+ * @csspart dows
+ * @csspart dow
+ * @csspart grid
  */
 export class ArcEventCalendar extends LitElement {
   static properties = {

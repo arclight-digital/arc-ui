@@ -85,6 +85,26 @@ iconRegistry.set({ myLogo: '<svg>…</svg>' }); // register custom icons
 The package ships type declarations for every component plus a
 [`custom-elements.json`](https://github.com/webcomponents/custom-elements-manifest) manifest, so editors with web-component tooling get tag, attribute, and event completion.
 
+Prop types are unions where the component accepts a fixed set of values
+(`variant: 'primary' | 'secondary' | 'ghost'`), and `arc-*` event names are
+registered in `GlobalEventHandlersEventMap` with typed `detail` payloads, so
+`addEventListener('arc-change', …)` autocompletes and type-checks.
+
+### Editor support
+
+**VS Code** — add the bundled custom data to `.vscode/settings.json` for tag,
+attribute, and attribute-value completion (with hover docs) in plain HTML:
+
+```json
+{
+  "html.customData": ["./node_modules/@arclux/arc-ui/vscode.html-custom-data.json"],
+  "css.customData": ["./node_modules/@arclux/arc-ui/vscode.css-custom-data.json"]
+}
+```
+
+**JetBrains IDEs** (WebStorm, IntelliJ) — no setup needed; the bundled
+`web-types.json` is picked up automatically.
+
 ## Framework Wrappers
 
 If you are using a framework, prefer the dedicated wrapper package:

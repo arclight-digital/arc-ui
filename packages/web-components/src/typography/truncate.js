@@ -2,7 +2,15 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Multi-line text clamping with expandable show-more toggle.
+ *
  * @tag arc-truncate
+ * @prop {number} lines - Maximum number of visible lines before clamping
+ * @prop {boolean} expanded - Whether the text is fully expanded
+ * @fires {CustomEvent<{ expanded: boolean }>} arc-toggle - Fired when expand/collapse toggle is clicked, with { expanded } detail
+ * @slot - Default content.
+ * @csspart content
+ * @csspart toggle
  */
 export class ArcTruncate extends LitElement {
   static properties = {

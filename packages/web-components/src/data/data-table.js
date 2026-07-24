@@ -2,8 +2,30 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * A data-driven table component that renders rows from a JavaScript array. Declarative column
+ * definitions via `arc-column` children control which fields appear, their headers, widths, and
+ * sort behavior. Built-in support for column sorting, row selection with checkboxes, and an
+ * empty-state fallback.
+ *
  * @tag arc-data-table
  * @requires arc-column
+ * @prop {Array<Record<string, any>>} rows - The data array that drives the table. Each object in the array becomes a row, and its keys are matched against the `key` attribute of each `arc-column` child. Set this property via JavaScript — it is not an HTML attribute. Changing this array triggers a re-render.
+ * @prop {boolean} sortable - Enables the sorting system at the table level. When true, columns that also have their own `sortable` attribute become clickable, toggling between ascending and descending order. The table performs client-side sorting by default and emits an `arc-sort` event with the active column key and direction.
+ * @prop {boolean} selectable - Adds a checkbox column to the left of the table for row selection. A "select all" checkbox appears in the header. Selected rows receive a visual highlight. The component emits `arc-row-select` when an individual row is toggled and `arc-select-all` when the header checkbox is toggled.
+ * @prop {string} sortColumn - The `key` of the currently sorted column. Set this attribute to pre-sort the table on a specific column when it first renders. Updated automatically when the user clicks a sortable column header.
+ * @prop {'asc' | 'desc'} sortDirection - The current sort direction. Works in tandem with `sort-column` to control the initial sort state. Reflected as an attribute so it can be read from the DOM or targeted with CSS selectors.
+ * @prop {boolean} virtual - Enables virtual scrolling for large datasets. When true, only the visible rows plus an overscan buffer are rendered in the DOM, keeping performance constant regardless of row count.
+ * @prop {number} rowHeight - Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations.
+ * @fires {CustomEvent<{ column: string, direction: 'asc' | 'desc' }>} arc-sort - Fired when a sortable column header is clicked
+ * @fires arc-select-all - Fired when the select-all checkbox is toggled
+ * @fires arc-row-select - Fired when an individual row checkbox is toggled
+ * @slot - Default content.
+ * @csspart row
+ * @csspart cell
+ * @csspart wrapper
+ * @csspart table
+ * @csspart head
+ * @csspart body
  */
 export class ArcDataTable extends LitElement {
   static properties = {

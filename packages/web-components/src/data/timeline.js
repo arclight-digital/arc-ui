@@ -2,8 +2,20 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Vertical timeline with dated events.
+ *
  * @tag arc-timeline
  * @requires arc-timeline-item
+ * @slot - Default content.
+ * @csspart timeline
+ * @csspart item
+ * @csspart marker
+ * @csspart dot
+ * @csspart line
+ * @csspart content
+ * @csspart title
+ * @csspart description
+ * @csspart date
  */
 export class ArcTimeline extends LitElement {
   static properties = {

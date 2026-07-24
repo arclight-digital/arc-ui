@@ -2,7 +2,18 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Bottom-anchored single-line notification with optional action button. Darker than toast —
+ * surface-base background with accent-colored action link. Slides up, auto-dismisses.
+ *
  * @tag arc-snackbar
+ * @prop {'bottom-center' | 'bottom-left' | 'bottom-right'} position - Anchors the snackbar to a bottom edge of the viewport. Bottom-center is the conventional position for material-style snackbars.
+ * @prop {number} duration - Time in milliseconds before the snackbar auto-dismisses. Can be overridden per-show via the duration option. Set to 0 to persist until manually dismissed.
+ * @fires arc-dismiss - Fired when the snackbar is dismissed, either by auto-timeout or user interaction
+ * @fires arc-action - Fired when the user clicks the action button (e.g. "Undo")
+ * @csspart container
+ * @csspart snackbar
+ * @csspart action
+ * @csspart dismiss
  */
 export class ArcSnackbar extends LitElement {
   static properties = {

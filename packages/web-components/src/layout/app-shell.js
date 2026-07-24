@@ -3,8 +3,23 @@ import { tokenStyles } from '../shared-styles.js';
 import { lockScroll, unlockScroll } from '../shared/scroll-lock.js';
 
 /**
+ * Full-page layout scaffold that composes a TopBar, Sidebar, and scrollable content area into a
+ * cohesive application frame. Handles responsive collapse, sidebar toggling, and optional
+ * table-of-contents rail out of the box.
+ *
  * @tag arc-app-shell
- * @arc-prism hybrid — layout is pure CSS; responsive drawer behavior requires JS
+ * @prop {boolean} sidebarOpen - Controls whether the sidebar is visible on mobile viewports (below 768 px). On desktop the sidebar is always shown regardless of this attribute. Toggle it from a hamburger button in your TopBar to give mobile users access to navigation.
+ * @prop {number} breakpoint - Viewport width in pixels at which the layout switches between mobile and desktop modes.
+ * @slot topbar
+ * @slot sidebar
+ * @slot - Default content.
+ * @slot toc
+ * @csspart shell
+ * @csspart body
+ * @csspart sidebar
+ * @csspart main
+ * @csspart content
+ * @csspart toc
  */
 export class ArcAppShell extends LitElement {
   static properties = {

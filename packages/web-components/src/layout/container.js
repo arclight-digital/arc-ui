@@ -2,7 +2,14 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Max-width wrapper for page sections.
+ *
  * @tag arc-container
+ * @prop {boolean} narrow - Use the narrow max-width (720px vs 1120px)
+ * @prop {string} size - Controls the maximum width. Options: 'sm', 'md', 'lg', 'xl', 'full'.
+ * @prop {string} padding - Controls inline padding. Options: 'none', 'sm', 'md', 'lg'.
+ * @slot - Default content.
+ * @csspart container
  */
 export class ArcContainer extends LitElement {
   static properties = {

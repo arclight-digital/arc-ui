@@ -5,9 +5,25 @@ import { ClickOutsideController } from '../shared/click-outside.js';
 import '../input/icon-button.js';
 
 /**
+ * Horizontal toolbar with start, center, and end slots.
+ *
  * @tag arc-toolbar
  * @requires arc-icon-button
- * @arc-prism hybrid — renders without JS; overflow collapse requires JS
+ * @prop {boolean} sticky - When set, the toolbar uses position: sticky with top: 0 and z-index: 50, keeping it visible as the user scrolls through content below.
+ * @prop {'md' | 'sm'} size - Controls the toolbar height. The default md size is 48px for primary toolbars. The sm size is 36px for secondary or nested toolbars.
+ * @prop {boolean} border - Renders a subtle bottom border (--border-subtle) to visually separate the toolbar from the content below. Enabled by default.
+ * @prop {boolean} overflow - Enables responsive overflow collapse. A ResizeObserver measures available width; slotted items that do not fit are collapsed (hidden via the reversible hidden attribute) from the end of the item list, and a "More" trigger opens a menu of proxy items that re-dispatch clicks to the hidden originals. Note: because slotted nodes cannot be moved into the overflow panel, complex custom content is represented in the menu only by its text label (or the label attribute on arc-button / arc-icon-button).
+ * @fires arc-overflow-change - Fired when the set of collapsed items changes (only with the overflow prop). detail: { hiddenCount: number }.
+ * @slot start
+ * @slot - Default content.
+ * @slot end
+ * @csspart more
+ * @csspart overflow-panel
+ * @csspart overflow-item
+ * @csspart base
+ * @csspart start
+ * @csspart center
+ * @csspart end
  */
 export class ArcToolbar extends LitElement {
   static properties = {

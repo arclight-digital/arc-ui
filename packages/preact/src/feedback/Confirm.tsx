@@ -8,6 +8,8 @@ export interface ConfirmProps {
   open?: boolean;
   heading?: string;
   message?: string;
+  confirmLabel?: string;
+  cancelLabel?: string;
   variant?: string;
   onArcConfirm?: (e: CustomEvent) => void;
   onArcCancel?: (e: CustomEvent) => void;
@@ -15,7 +17,7 @@ export interface ConfirmProps {
   [key: string]: unknown;
 }
 
-export const Confirm: FunctionComponent<ConfirmProps> = ({ open, heading, message, variant, onArcConfirm, onArcCancel, children, ...rest }) => {
+export const Confirm: FunctionComponent<ConfirmProps> = ({ open, heading, message, confirmLabel, cancelLabel, variant, onArcConfirm, onArcCancel, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -34,7 +36,7 @@ export const Confirm: FunctionComponent<ConfirmProps> = ({ open, heading, messag
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcConfirm, onArcCancel]);
   return (
-    <arc-confirm ref={ref} open={open} heading={heading} message={message} variant={variant} {...rest}>
+    <arc-confirm ref={ref} open={open} heading={heading} message={message} confirmLabel={confirmLabel} cancelLabel={cancelLabel} variant={variant} {...rest}>
       {children}
     </arc-confirm>
   );

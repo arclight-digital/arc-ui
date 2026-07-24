@@ -6,13 +6,14 @@ import '@arclux/arc-ui/marquee';
 export interface MarqueeProps {
   speed?: number;
   direction?: string;
+  pauseOnHover?: boolean;
   gap?: string;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const Marquee: FunctionComponent<MarqueeProps> = ({ speed, direction, gap, children, ...rest }) => (
-  <arc-marquee speed={speed} direction={direction} gap={gap} {...rest}>
+export const Marquee: FunctionComponent<MarqueeProps> = ({ speed, direction, pauseOnHover, gap, children, ...rest }) => (
+  <arc-marquee speed={speed} direction={direction} pauseOnHover={pauseOnHover} gap={gap} {...rest}>
     {children}
   </arc-marquee>
 );

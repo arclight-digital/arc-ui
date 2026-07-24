@@ -2,7 +2,21 @@ import { LitElement, html, css, svg } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Tiny inline SVG chart for embedding lightweight line or bar visualizations inside tables, stat
+ * cards, and dashboards. Renders from a simple comma-separated data string with no external
+ * charting dependencies.
+ *
  * @tag arc-sparkline
+ * @prop {string} data - Comma-separated numeric values that define the chart data points (e.g. "10,25,18,30,22,35,28"). Parsed into a number array at render time. Non-numeric entries are silently dropped.
+ * @prop {'line' | 'bar'} type - Chart type. Line renders a polyline with optional area fill; bar renders evenly spaced rectangles.
+ * @prop {string} color - CSS color override applied to strokes and fills. Accepts any valid CSS color value. Defaults to var(--accent-primary) when not set.
+ * @prop {number} width - SVG viewport width in pixels.
+ * @prop {number} height - SVG viewport height in pixels.
+ * @prop {boolean} fill - When true and type is "line", fills the area beneath the curve with a semi-transparent accent color.
+ * @csspart area
+ * @csspart line
+ * @csspart bar
+ * @csspart svg
  */
 export class ArcSparkline extends LitElement {
   static properties = {

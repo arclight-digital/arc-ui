@@ -3,8 +3,20 @@ import { tokenStyles } from '../shared-styles.js';
 import { lockScroll, unlockScroll } from '../shared/scroll-lock.js';
 
 /**
+ * Horizontal navigation bar with hover-triggered dropdown sub-menus and full keyboard
+ * accessibility. Designed for marketing sites, documentation hubs, and product landing pages where
+ * top-level sections expand into categorised link lists.
+ *
  * @tag arc-navigation-menu
  * @requires arc-nav-item
+ * @fires arc-navigate - Fired when a navigation item is selected
+ * @fires {CustomEvent<{ value: boolean }>} arc-mobile-menu-toggle - Dispatched on the document when the mobile hamburger button is clicked. Listen on document to toggle your mobile navigation state.
+ * @slot - Default content.
+ * @csspart nav
+ * @csspart item
+ * @csspart trigger
+ * @csspart dropdown
+ * @csspart dropdown-item
  */
 export class ArcNavigationMenu extends LitElement {
   static properties = {

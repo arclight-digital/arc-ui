@@ -7,6 +7,7 @@ import { ArcMarquee } from '@arclux/arc-ui/marquee';
 export interface MarqueeProps {
   speed?: number;
   direction?: string;
+  pauseOnHover?: boolean;
   gap?: string;
   className?: string;
   children?: React.ReactNode;

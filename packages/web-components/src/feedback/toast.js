@@ -15,7 +15,25 @@ function statusStyle(variant) {
 }
 
 /**
+ * Stack-managed notification toasts with auto-dismiss, variant-colored indicators, configurable
+ * position, and smooth enter/exit animations.
+ *
+ * Returns inline style string setting --_status-color/rgb for a given variant *\/ function
+ * statusStyle(variant) { const map = { info: { color: 'var(--accent-primary)', rgb:
+ * 'var(--accent-primary-rgb)' }, success: { color: 'var(--color-success)', rgb:
+ * 'var(--color-success-rgb)' }, warning: { color: 'var(--color-warning)', rgb:
+ * 'var(--color-warning-rgb)' }, error: { color: 'var(--color-error)', rgb:
+ * 'var(--color-error-rgb)' }, }; const v = map[variant] || map.info; return
+ * `--_status-color:${v.color};--_status-rgb:${v.rgb}`; }
+ *
  * @tag arc-toast
+ * @prop {'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center'} position - Anchors the toast stack to a fixed edge of the viewport. Top-right is the most conventional position for web applications. Bottom positions work well for media players or editors where the top area is occupied by toolbars.
+ * @prop {number} duration - Time in milliseconds before a toast auto-dismisses. Applies as the default for every show() call but can be overridden per-toast via the duration option in the show() payload. Set to 0 to disable auto-dismiss entirely, requiring the user to click the close button.
+ * @fires arc-dismiss - Fired when a toast notification is dismissed
+ * @csspart container
+ * @csspart toast
+ * @csspart action
+ * @csspart dismiss
  */
 export class ArcToast extends LitElement {
   static properties = {

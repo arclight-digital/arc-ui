@@ -2,7 +2,17 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Ultra-narrow icon-only vertical navigation like VS Code's activity bar. Icons use text-muted at
+ * rest, accent-primary glow on active. Expands on hover.
+ *
  * @tag arc-rail
+ * @prop items - Array of navigation items, each with an icon name, text label, and value identifier.
+ * @prop {string} value - The value of the currently active item. Controls which icon receives the accent glow.
+ * @prop {boolean} expanded - When true, the Rail widens to show text labels beside each icon. Can be toggled on hover or set permanently.
+ * @fires {CustomEvent<{ value: string }>} arc-change - Fired when an item is selected with detail: { value }.
+ * @slot - Default content.
+ * @csspart base
+ * @csspart item
  */
 export class ArcRail extends LitElement {
   static properties = {

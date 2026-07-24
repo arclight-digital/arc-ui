@@ -2,7 +2,17 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Drag-and-drop reorderable list with grip handles, keyboard reordering support, and visual
+ * insertion indicators.
+ *
  * @tag arc-sortable-list
+ * @prop {boolean} disabled - Disables all interaction, reducing opacity to 40% and blocking pointer events.
+ * @fires arc-change - Fired when items are reordered, with updated order in detail
+ * @slot - Default content.
+ * @csspart list
+ * @csspart item
+ * @csspart handle
+ * @csspart content
  */
 export class ArcSortableList extends LitElement {
   static properties = {

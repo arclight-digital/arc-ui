@@ -11,6 +11,7 @@ withDefaults(defineProps<{
   cursor?: boolean;
   loop?: boolean;
   nowrap?: boolean;
+  pauseEnd?: number;
 }>(), {
   text: '',
   speed: 50,
@@ -18,6 +19,7 @@ withDefaults(defineProps<{
   cursor: true,
   loop: false,
   nowrap: false,
+  pauseEnd: 2000,
 });
 
 const emit = defineEmits<{
@@ -33,6 +35,7 @@ const emit = defineEmits<{
     :cursor="cursor"
     :loop="loop"
     :nowrap="nowrap"
+    :pauseEnd="pauseEnd"
     @arc-complete="(payload: CustomEvent) => emit('arc-complete', payload)"
   >
     <slot />

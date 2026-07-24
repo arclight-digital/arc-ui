@@ -4,7 +4,18 @@ import { positionStyles } from '../shared/position-styles.js';
 import { setTriggerAria } from '../shared/trigger-aria.js';
 
 /**
+ * Card that appears on hover with a delay.
+ *
  * @tag arc-hover-card
+ * @prop {'bottom' | 'top' | 'left' | 'right'} position - Controls which side of the trigger the card appears on. The card is centered along the perpendicular axis using CSS transforms.
+ * @prop {number} openDelay - Milliseconds to wait after hover/focus before showing the card. Prevents accidental activation during fast cursor movement.
+ * @prop {number} closeDelay - Milliseconds to wait after the cursor leaves the trigger before hiding the card. Moving into the card cancels this timer.
+ * @fires {CustomEvent<void>} arc-open - Fired when the hover card becomes visible
+ * @fires {CustomEvent<void>} arc-close - Fired when the hover card hides
+ * @slot - Default content.
+ * @slot content
+ * @csspart trigger
+ * @csspart card
  */
 export class ArcHoverCard extends LitElement {
   static properties = {

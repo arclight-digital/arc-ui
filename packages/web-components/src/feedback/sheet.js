@@ -3,7 +3,25 @@ import { tokenStyles } from '../shared-styles.js';
 import { OverlayMixin } from '../shared/overlay-mixin.js';
 
 /**
+ * A sliding overlay panel that emerges from the bottom or right edge of the viewport, with a
+ * blurred backdrop, header, scrollable body, and footer slot.
+ *
  * @tag arc-sheet
+ * @prop {boolean} open - Controls whether the sheet is visible. Reflected as an attribute and toggleable programmatically.
+ * @prop {'bottom' | 'right'} side - Which edge the panel slides in from. Bottom sheets have a max-height of 80vh; right sheets are 400px wide.
+ * @prop {string} heading - Text displayed in the header row. Also used as the `aria-label` for the dialog panel.
+ * @fires {CustomEvent<void>} arc-open - Fired when the sheet opens
+ * @fires {CustomEvent<void>} arc-close - Fired when the sheet closes
+ * @slot header
+ * @slot - Default content.
+ * @slot footer
+ * @csspart close
+ * @csspart backdrop
+ * @csspart panel
+ * @csspart handle
+ * @csspart header
+ * @csspart body
+ * @csspart footer
  */
 export class ArcSheet extends OverlayMixin(LitElement) {
   static properties = {

@@ -4,7 +4,19 @@ import { positionStyles } from '../shared/position-styles.js';
 import { setTriggerAria, deepActiveElement } from '../shared/trigger-aria.js';
 
 /**
+ * Floating content panel anchored to a trigger element, with four placement positions and
+ * automatic outside-click dismissal.
+ *
  * @tag arc-popover
+ * @prop {boolean} open - Whether the popover panel is currently visible. Reflected as an attribute.
+ * @prop {'top' | 'bottom' | 'left' | 'right'} position - Placement of the panel relative to the trigger element.
+ * @prop {string} trigger - Reserved for future trigger-mode configuration (click, hover, manual).
+ * @fires arc-open - Fired when the popover opens.
+ * @fires {CustomEvent<void>} arc-close - Fired when the popover closes.
+ * @slot trigger
+ * @slot - Default content.
+ * @csspart trigger
+ * @csspart panel
  */
 export class ArcPopover extends LitElement {
   static properties = {

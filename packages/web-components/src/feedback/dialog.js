@@ -2,15 +2,29 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Small centered confirmation dialog wrapping arc-modal for simple confirm/cancel prompts —
+ * unsaved changes, session expiry, and discard decisions.
+ *
  * @tag arc-dialog
+ * @prop {boolean} open - Whether the dialog is visible
+ * @prop {string} heading - Dialog title text
+ * @prop {string} message - Dialog body message
+ * @prop {string} confirmLabel - Text for the confirm button
+ * @prop {string} cancelLabel - Text for the cancel button
+ * @prop {'default' | 'danger'} variant - Visual variant — danger adds red accent line, glow border, and red confirm button
+ * @fires {CustomEvent<void>} arc-confirm - Fired when the confirm button is clicked
+ * @fires {CustomEvent<void>} arc-cancel - Fired when cancel, escape, or backdrop click occurs
+ * @csspart body
+ * @csspart cancel
+ * @csspart confirm
  */
 export class ArcDialog extends LitElement {
   static properties = {
     open:           { type: Boolean, reflect: true },
     heading:        { type: String },
     message:        { type: String },
-    'confirm-label': { type: String, attribute: 'confirm-label' },
-    'cancel-label':  { type: String, attribute: 'cancel-label' },
+    confirmLabel: { type: String, attribute: 'confirm-label' },
+    cancelLabel:  { type: String, attribute: 'cancel-label' },
     variant:        { type: String, reflect: true },
   };
 
@@ -33,8 +47,8 @@ export class ArcDialog extends LitElement {
     this.open = false;
     this.heading = '';
     this.message = '';
-    this['confirm-label'] = 'Confirm';
-    this['cancel-label'] = 'Cancel';
+    this.confirmLabel = 'Confirm';
+    this.cancelLabel = 'Cancel';
     this.variant = 'default';
     this._resolvePromise = null;
   }
@@ -85,8 +99,8 @@ export class ArcDialog extends LitElement {
           <div class="dialog__body" part="body">${this.message}</div>
         ` : ''}
         <div slot="footer">
-          <arc-button variant="ghost" size="sm" @click=${this._cancel} part="cancel">${this['cancel-label']}</arc-button>
-          <arc-button variant="primary" size="sm" @click=${this._doConfirm} part="confirm">${this['confirm-label']}</arc-button>
+          <arc-button variant="ghost" size="sm" @click=${this._cancel} part="cancel">${this.cancelLabel}</arc-button>
+          <arc-button variant="primary" size="sm" @click=${this._doConfirm} part="confirm">${this.confirmLabel}</arc-button>
         </div>
       </arc-modal>
     `;

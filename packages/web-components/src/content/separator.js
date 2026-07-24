@@ -2,7 +2,16 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Visual divider for separating content sections. Supports horizontal and vertical orientations,
+ * multiple line styles, and optional inline labels.
+ *
  * @tag arc-separator
+ * @prop {'horizontal' | 'vertical'} orientation - Controls the divider direction. Vertical separators display as inline-flex with full parent height.
+ * @prop {string} label - Optional text displayed centered between two line segments. Only applies to horizontal orientation.
+ * @prop {'line' | 'dashed' | 'dotted' | 'fade'} variant - Controls the line style. Fade uses a gradient that tapers to transparent at both ends.
+ * @csspart separator
+ * @csspart line
+ * @csspart label
  */
 export class ArcSeparator extends LitElement {
   static properties = {

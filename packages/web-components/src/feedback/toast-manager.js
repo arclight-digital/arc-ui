@@ -3,23 +3,29 @@ import { tokenStyles } from '../shared-styles.js';
 import './toast.js';
 
 /**
- * Queueing/stacking policy layer over arc-toast. Composes an internal
- * <arc-toast> (which owns rendering, timers, and a11y) and adds:
- * max-visible capping with a FIFO queue, message+variant deduplication,
- * queue overflow trimming, and a document-level `arc-toast` event channel.
+ * Policy layer over Toast that caps how many notifications show at once, queues the overflow FIFO,
+ * deduplicates repeated messages, and lets any component fire toasts via a document-level event.
  *
- * Composition notes (same-package couplings, kept deliberately minimal):
- * - arc-toast.show() does not return an id, so after each show() we read
- *   the id it just assigned from its internal counter (`_counter`).
- * - arc-toast has no public dismiss method, so dismiss()/clear() call its
- *   internal `_dismiss(id)`.
- * - arc-toast has no update API for a visible toast, so a dedupe hit on a
- *   visible toast is re-shown with a "(×N)" suffix and the stale entry is
- *   dismissed — the least hacky option available (mutating arc-toast's
- *   internal reactive state from outside would be worse).
+ * Queueing/stacking policy layer over arc-toast. Composes an internal <arc-toast> (which owns
+ * rendering, timers, and a11y) and adds: max-visible capping with a FIFO queue, message+variant
+ * deduplication, queue overflow trimming, and a document-level `arc-toast` event channel.
+ * Composition notes (same-package couplings, kept deliberately minimal): - arc-toast.show() does
+ * not return an id, so after each show() we read the id it just assigned from its internal counter
+ * (`_counter`). - arc-toast has no public dismiss method, so dismiss()/clear() call its internal
+ * `_dismiss(id)`. - arc-toast has no update API for a visible toast, so a dedupe hit on a visible
+ * toast is re-shown with a "(×N)" suffix and the stale entry is dismissed — the least hacky option
+ * available (mutating arc-toast's internal reactive state from outside would be worse).
  *
  * @tag arc-toast-manager
  * @requires arc-toast
+ * @prop {'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center'} position - Forwarded to the inner arc-toast. Anchors the toast stack to a fixed edge of the viewport.
+ * @prop {number} duration - Forwarded to the inner arc-toast as the default auto-dismiss time in milliseconds. Overridable per-toast via the duration option in the show() payload; pass persistent: true (or duration 0) to require manual dismissal.
+ * @prop {number} maxVisible - Maximum number of toasts visible at once (attribute: max-visible). Further show() calls queue FIFO and release as visible toasts dismiss.
+ * @prop {boolean} dedupe - When true, a show() whose message and variant match a visible or queued toast is coalesced: visible matches re-show with a "(×N)" counter suffix and a fresh timer; queued matches bump their counter in place. Set the property to false from JS to disable.
+ * @prop {number} queueLimit - Maximum queued (not visible) toasts (attribute: queue-limit). Beyond it the oldest queued entries are dropped and arc-queue-overflow fires with the drop count.
+ * @fires arc-dismiss - Fired when a managed toast is dismissed. detail: { id } — the id returned by show().
+ * @fires arc-queue-change - Fired whenever the visible or queued count changes. detail: { visible, queued }.
+ * @fires arc-queue-overflow - Fired when the queue exceeds queueLimit and oldest queued entries are dropped. detail: { dropped } — how many were dropped.
  */
 export class ArcToastManager extends LitElement {
   static properties = {

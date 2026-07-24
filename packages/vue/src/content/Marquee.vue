@@ -7,10 +7,12 @@ defineOptions({ name: 'Marquee' });
 withDefaults(defineProps<{
   speed?: number;
   direction?: string;
+  pauseOnHover?: boolean;
   gap?: string;
 }>(), {
   speed: 40,
   direction: 'left',
+  pauseOnHover: true,
   gap: 'var(--space-xl)',
 });
 </script>
@@ -19,6 +21,7 @@ withDefaults(defineProps<{
   <arc-marquee
     :speed="speed"
     :direction="direction"
+    :pauseOnHover="pauseOnHover"
     :gap="gap"
   >
     <slot />

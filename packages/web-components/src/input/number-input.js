@@ -5,7 +5,23 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
 let numberInputIdCounter = 0;
 
 /**
+ * A numeric stepper input with decrement and increment buttons flanking a central text field,
+ * supporting min/max clamping, step increments, and keyboard shortcuts.
+ *
  * @tag arc-number-input
+ * @prop {number} value - Current numeric value. Reflected as an attribute and updated on user interaction.
+ * @prop {number} min - Minimum allowed value. The decrement button is disabled when the value reaches this limit.
+ * @prop {number} max - Maximum allowed value. The increment button is disabled when the value reaches this limit.
+ * @prop {number} step - Increment and decrement step size. Arrow keys use this value, Shift+Arrow uses 10x this value.
+ * @prop {string} label - Label text displayed above the control in uppercase accent font.
+ * @prop {boolean} disabled - Disables interaction, reducing opacity to 40% and blocking pointer events.
+ * @fires {CustomEvent<{ value: number }>} arc-change - Fired when the numeric value changes via buttons or keyboard
+ * @csspart wrapper
+ * @csspart label
+ * @csspart controls
+ * @csspart decrement
+ * @csspart field
+ * @csspart increment
  */
 export class ArcNumberInput extends FormControlMixin(LitElement) {
   static properties = {

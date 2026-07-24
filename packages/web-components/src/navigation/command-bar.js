@@ -2,7 +2,20 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Always-visible search input designed to sit inside a top bar. Accent-primary bottom border on
+ * focus with glow ring.
+ *
  * @tag arc-command-bar
+ * @prop {string} placeholder - Placeholder text displayed when the input is empty. Use it to communicate the scope of the search.
+ * @prop {string} value - The current value of the input. Set externally to control the input state programmatically.
+ * @prop {string} icon - Icon name displayed before the input. Accepts any Phosphor icon name.
+ * @fires {CustomEvent<{ value: string }>} arc-input - Fired on every keystroke with detail: { value }.
+ * @fires {CustomEvent<{ value: string }>} arc-submit - Fired when the user presses Enter with detail: { value }.
+ * @slot hint
+ * @csspart base
+ * @csspart icon
+ * @csspart input
+ * @csspart hint
  */
 export class ArcCommandBar extends LitElement {
   static properties = {

@@ -2,7 +2,23 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Notification dropdown panel triggered by a button.
+ *
  * @tag arc-notification-panel
+ * @prop {boolean} open - Controls whether the notification panel is visible. Toggle this programmatically or let the built-in trigger click handler manage it.
+ * @prop {'top-right' | 'top-left'} position - Horizontal alignment of the panel relative to the trigger element. Use top-right when the trigger is near the right edge of the viewport.
+ * @prop {string} maxHeight - Maximum height of the scrollable body area. Prevents long notification lists from overflowing the viewport.
+ * @fires {CustomEvent<void>} arc-open - Fired when the notification panel opens
+ * @fires {CustomEvent<void>} arc-close - Fired when the notification panel closes
+ * @slot trigger
+ * @slot header
+ * @slot - Default content.
+ * @slot footer
+ * @csspart trigger
+ * @csspart panel
+ * @csspart header
+ * @csspart body
+ * @csspart footer
  */
 export class ArcNotificationPanel extends LitElement {
   static properties = {

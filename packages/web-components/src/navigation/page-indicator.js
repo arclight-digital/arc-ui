@@ -2,7 +2,16 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Dot-based position indicator for page-level navigation or onboarding flows. Active dot fills
+ * with accent-primary and scales up.
+ *
  * @tag arc-page-indicator
+ * @prop {number} count - Total number of dots to display.
+ * @prop {number} value - Zero-based index of the active dot.
+ * @prop {boolean} clickable - When true, dots become interactive tap targets that dispatch arc-change on click.
+ * @fires {CustomEvent<{ value: number }>} arc-change - Fired when a dot is clicked (clickable mode only) with detail: { value }.
+ * @csspart base
+ * @csspart dot
  */
 export class ArcPageIndicator extends LitElement {
   static properties = {

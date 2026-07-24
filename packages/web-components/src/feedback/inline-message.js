@@ -4,7 +4,14 @@ import { statusVars } from '../status-styles.js';
 import { getStatusIcon } from '../status-utils.js';
 
 /**
+ * Contextual feedback that sits inline in a form or content area. Same semantic color variants as
+ * alert but compact — icon + text only, no background fill.
+ *
  * @tag arc-inline-message
+ * @prop {'info' | 'success' | 'warning' | 'error'} variant - Controls the icon and text colour. Use "info" for neutral hints, "success" for valid state feedback, "warning" for caution notes, and "error" for validation failures.
+ * @slot - Default content.
+ * @csspart icon
+ * @csspart content
  */
 export class ArcInlineMessage extends LitElement {
   static properties = {

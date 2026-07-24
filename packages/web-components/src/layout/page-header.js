@@ -2,7 +2,27 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Page title area with positional slots for composing breadcrumbs, actions, tabs, or any content
+ * around a heading and description.
+ *
  * @tag arc-page-header
+ * @prop {string} heading - The page title rendered as an <h1>. This is the primary text landmark and should clearly describe the current page or view (e.g. "Team Settings", "Order #4021"). Keep it concise — two to five words is ideal.
+ * @prop {string} description - Optional supporting text displayed below the title row. Use it to provide a one-line summary of what the page contains or what action the user should take. When empty, the description paragraph is not rendered.
+ * @prop {boolean} border - When set, renders a subtle bottom border below the header to visually separate it from page content.
+ * @slot above
+ * @slot heading
+ * @slot aside
+ * @slot description
+ * @slot below
+ * @slot - Default content.
+ * @csspart base
+ * @csspart above
+ * @csspart title-row
+ * @csspart heading
+ * @csspart aside
+ * @csspart description
+ * @csspart below
+ * @csspart content
  */
 export class ArcPageHeader extends LitElement {
   static properties = {

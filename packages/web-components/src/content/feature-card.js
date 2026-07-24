@@ -3,7 +3,21 @@ import { tokenStyles } from '../shared-styles.js';
 import { cardHoverStyles } from '../card-styles.js';
 
 /**
+ * Card with icon, heading, description, and animated hover effects.
+ *
  * @tag arc-feature-card
+ * @prop {string} icon - Icon text or emoji displayed in the icon box
+ * @prop {string} heading - Card title
+ * @prop {string} description - Card body text
+ * @prop {string} href - Makes the card a link
+ * @prop {string} action - Action label (e.g. "Learn more") shown at the bottom of the card when href is set. Hidden when empty or when no href is provided.
+ * @slot icon
+ * @csspart inner
+ * @csspart icon
+ * @csspart title
+ * @csspart description
+ * @csspart action
+ * @csspart card
  */
 export class ArcFeatureCard extends LitElement {
   static properties = {

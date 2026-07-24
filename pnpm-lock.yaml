@@ -32,6 +32,12 @@ importers:
       axe-core:
         specifier: ^4.12.1
         version: 4.12.1
+      custom-element-jet-brains-integration:
+        specifier: ^1.7.0
+        version: 1.7.0(prettier@3.8.1)
+      custom-element-vs-code-integration:
+        specifier: ^1.5.0
+        version: 1.5.0(prettier@3.8.1)
       eslint:
         specifier: ^9.0.0
         version: 9.39.2
@@ -1005,6 +1011,11 @@ packages:
 
   '@poppinss/exception@1.2.3':
     resolution: {integrity: sha512-dCED+QRChTVatE9ibtoaxc+WkdzOSjYTKi/+uacHWIsfodVfpsueo3+DKpgU5Px8qXjgmXkSvhXvSCz3fnP9lw==}
+
+  '@prettier/sync@0.5.5':
+    resolution: {integrity: sha512-6BMtNr7aQhyNcGzmumkL0tgr1YQGfm9d7ZdmRpWqWuqpc9vZBind4xMe5NMiRECOhjuSiWHfBWLBnXkpeE90bw==}
+    peerDependencies:
+      prettier: '*'
 
   '@puppeteer/browsers@2.13.2':
     resolution: {integrity: sha512-5EUZSUIc37H6aIXyWO0Z4y8NlF8NnjgmqeQgOGiswAU7pY0HOo16ho4+alIWmSfdZnjqBRawMsP3I5YqLSn6kw==}
@@ -1995,6 +2006,12 @@ packages:
   csstype@3.2.3:
     resolution: {integrity: sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==}
 
+  custom-element-jet-brains-integration@1.7.0:
+    resolution: {integrity: sha512-xub1zmgHsxKn1LSUDrP5UNPuMHVVowcZu6w+y3GC43Kh6gPzNyQs1jRFurUD9bHg7QUmnd7DcT0WhNRuiGkmJA==}
+
+  custom-element-vs-code-integration@1.5.0:
+    resolution: {integrity: sha512-dMKlHq7qz1HbNZUXqw/4fVTh8FBLYX/dIQRt9M0M3KX+Z4iXKUzXxCBdNIdLjE18kMiOCZuRLDZly5mBznoCYw==}
+
   custom-elements-manifest@1.0.0:
     resolution: {integrity: sha512-j59k0ExGCKA8T6Mzaq+7axc+KVHwpEphEERU7VZ99260npu/p/9kd+Db+I3cGKxHkM5y6q5gnlXn00mzRQkX2A==}
 
@@ -2795,6 +2812,9 @@ packages:
   make-dir@4.0.0:
     resolution: {integrity: sha512-hXdUTZYIVOt1Ex//jAQi+wTZZpUpwBj/0QsOzqegb3rGMMeJiSEu5xLHnYfBrRV4RH2+OCSOO95Is/7x1WJ4bw==}
     engines: {node: '>=10'}
+
+  make-synchronized@0.4.2:
+    resolution: {integrity: sha512-EwEJSg8gSGLicKXp/VzNi1tvzhdmNBxOzslkkJSoNUCQFZKH/NIUIp7xlfN+noaHrz4BJDN73gne8IHnjl/F/A==}
 
   markdown-table@3.0.4:
     resolution: {integrity: sha512-wiYz4+JrLyb/DqW2hkFJxP7Vd7JuTDm77fvbM8VfEQdmSMqcImWeeRbHwZjBjIFki/VaMK2BhFi7oUUZeM5bqw==}
@@ -4641,6 +4661,11 @@ snapshots:
 
   '@poppinss/exception@1.2.3': {}
 
+  '@prettier/sync@0.5.5(prettier@3.8.1)':
+    dependencies:
+      make-synchronized: 0.4.2
+      prettier: 3.8.1
+
   '@puppeteer/browsers@2.13.2':
     dependencies:
       debug: 4.4.3
@@ -5722,6 +5747,18 @@ snapshots:
 
   csstype@3.2.3: {}
 
+  custom-element-jet-brains-integration@1.7.0(prettier@3.8.1):
+    dependencies:
+      '@prettier/sync': 0.5.5(prettier@3.8.1)
+    transitivePeerDependencies:
+      - prettier
+
+  custom-element-vs-code-integration@1.5.0(prettier@3.8.1):
+    dependencies:
+      '@prettier/sync': 0.5.5(prettier@3.8.1)
+    transitivePeerDependencies:
+      - prettier
+
   custom-elements-manifest@1.0.0: {}
 
   data-uri-to-buffer@6.0.2: {}
@@ -6619,6 +6656,8 @@ snapshots:
   make-dir@4.0.0:
     dependencies:
       semver: 7.7.4
+
+  make-synchronized@0.4.2: {}
 
   markdown-table@3.0.4: {}
 

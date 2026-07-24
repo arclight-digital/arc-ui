@@ -2,7 +2,17 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Edge-snapped auto-hide panel with a 1px border edge line and subtle accent glow on hover-reveal.
+ * Slides in with spring easing.
+ *
  * @tag arc-dock
+ * @prop {'bottom' | 'left' | 'right'} position - Which viewport edge the dock snaps to. Bottom is the most common for media controls and action bars; left and right are suited for tool palettes in canvas editors.
+ * @prop {boolean} autoHide - When true, the dock hides itself when the cursor moves away from the edge and reveals on hover. Set to false to keep the dock permanently visible.
+ * @prop {boolean} open - Controls the visible state of the dock programmatically. When auto-hide is true, this reflects the current hover-reveal state; when auto-hide is false, use this to toggle visibility manually.
+ * @fires arc-open - Fired when the dock becomes visible, either via hover-reveal or programmatic open.
+ * @fires arc-close - Fired when the dock hides, either because the cursor left the edge area or the open prop was set to false.
+ * @slot - Default content.
+ * @csspart dock
  */
 export class ArcDock extends LitElement {
   static properties = {

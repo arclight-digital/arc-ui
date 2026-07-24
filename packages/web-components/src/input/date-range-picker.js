@@ -4,7 +4,34 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
 import { ClickOutsideController } from '../shared/click-outside.js';
 
 /**
+ * Dual-calendar picker for selecting a start/end date range with presets and full keyboard
+ * navigation.
+ *
  * @tag arc-date-range-picker
+ * @prop {string} start - Range start date as an ISO string (YYYY-MM-DD). Empty when unset. Set both start and end to pre-select a range.
+ * @prop {string} end - Range end date as an ISO string (YYYY-MM-DD). Empty when unset or while an end date is pending.
+ * @prop {string} value - Read-derived ISO 8601 interval ("start/end") when both dates are set, otherwise an empty string. This is the value submitted with forms. Assigning "start/end" sets both dates.
+ * @prop {string} min - Minimum selectable date as an ISO string. Earlier days are dimmed and non-interactive.
+ * @prop {string} max - Maximum selectable date as an ISO string. Later days are dimmed and non-interactive.
+ * @prop {number} months - Number of month panels shown in the popup. Panels sit side by side and stack vertically when the popup is too narrow.
+ * @prop presets - Quick ranges rendered as a left rail. Each preset selects the last N days ending today and closes the popup. Hidden when empty.
+ * @prop {string} placeholder - Placeholder text shown in the input when no range is selected.
+ * @prop {string} label - Label text rendered above the input in uppercase accent font styling.
+ * @prop {string} name - Form field name used when the interval value is submitted with a form.
+ * @prop {boolean} required - Marks the control invalid (valueMissing) until a complete range is selected.
+ * @prop {boolean} disabled - Disables the picker, reducing opacity and preventing the popup from opening.
+ * @fires {CustomEvent<{ start: string, end: string }>} arc-change - Fired when a complete range is committed (second day clicked or preset applied). detail: { start, end }
+ * @csspart calendar
+ * @csspart panel-title
+ * @csspart day
+ * @csspart wrapper
+ * @csspart label
+ * @csspart input-wrapper
+ * @csspart input
+ * @csspart panel
+ * @csspart presets
+ * @csspart preset
+ * @csspart header
  */
 export class ArcDateRangePicker extends FormControlMixin(LitElement) {
   static properties = {

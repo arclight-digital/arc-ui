@@ -2,7 +2,15 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Auto-detects online/offline via navigator API. Offline triggers a persistent warning bar with
+ * amber glow pulse. Reconnection auto-dismisses with success flash.
+ *
  * @tag arc-connection-status
+ * @fires {CustomEvent<void>} arc-online - Fired when the browser regains network connectivity
+ * @fires {CustomEvent<void>} arc-offline - Fired when the browser loses network connectivity
+ * @csspart status
+ * @csspart dot
+ * @csspart label
  */
 export class ArcConnectionStatus extends LitElement {
   static properties = {

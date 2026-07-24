@@ -6,9 +6,25 @@ import { trapTabKey, deepActiveElement } from '../shared/focus-trap.js';
 import '../content/icon.js';
 
 /**
+ * Spotlight-style command palette with search and keyboard shortcuts.
+ *
  * @tag arc-command-palette
  * @requires arc-command-item
  * @requires arc-command-group
+ * @prop {boolean} open - Controls whether the palette is visible. When set to true, the dialog animates in, the search input auto-focuses, and body scroll is locked. Set to false to close.
+ * @prop {string} placeholder - Placeholder text displayed in the search input when the query is empty.
+ * @fires arc-select - Fired when a command item is selected
+ * @fires {CustomEvent<void>} arc-close - Fired when the palette closes
+ * @slot - Default content.
+ * @csspart item
+ * @csspart backdrop
+ * @csspart dialog
+ * @csspart search
+ * @csspart input
+ * @csspart results
+ * @csspart empty
+ * @csspart group-heading
+ * @csspart footer
  */
 export class ArcCommandPalette extends LitElement {
   static properties = {

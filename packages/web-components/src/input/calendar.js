@@ -2,7 +2,25 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Interactive month-view calendar grid for date selection with min/max constraints, keyboard
+ * navigation, and today highlighting.
+ *
  * @tag arc-calendar
+ * @prop {string} value - The selected date as an ISO string (YYYY-MM-DD). Empty string means no date is selected.
+ * @prop {string} min - Minimum selectable date as an ISO string. Days before this date are disabled.
+ * @prop {string} max - Maximum selectable date as an ISO string. Days after this date are disabled.
+ * @prop {number} month - The currently displayed month (0-based, 0=January). Defaults to the current month.
+ * @prop {number} year - The currently displayed year. Defaults to the current year.
+ * @fires arc-change - Fired when a date is selected. `event.detail.value` contains the ISO date string (YYYY-MM-DD).
+ * @fires {CustomEvent<{ month: number, year: number }>} arc-navigate - Fired when the visible month or year changes via the navigation buttons.
+ * @csspart calendar
+ * @csspart header
+ * @csspart nav-prev
+ * @csspart title
+ * @csspart nav-next
+ * @csspart grid
+ * @csspart dow
+ * @csspart day
  */
 export class ArcCalendar extends LitElement {
   static properties = {

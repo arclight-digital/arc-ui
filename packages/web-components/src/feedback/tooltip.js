@@ -3,8 +3,16 @@ import { tokenStyles } from '../shared-styles.js';
 import { setTriggerAria } from '../shared/trigger-aria.js';
 
 /**
+ * Contextual hint that appears on hover or focus, providing supplementary information without
+ * cluttering the UI. Supports four placement positions and a configurable show delay.
+ *
  * @tag arc-tooltip
- * @arc-prism hybrid — CSS :hover/:focus fallback; show delay and ARIA wiring require JS
+ * @prop {string} content - The plain-text string displayed inside the tooltip popup. Keep this concise — one short phrase that describes the trigger element or provides a supplementary hint. HTML is not supported; for rich content, use the Popover component instead.
+ * @prop {'top' | 'bottom' | 'left' | 'right'} position - Controls which side of the trigger the tooltip appears on. Top is the most common default. Switch to bottom, left, or right when the trigger sits near a viewport edge or when the surrounding layout makes another direction more natural.
+ * @prop {number} delay - Time in milliseconds to wait after mouseenter or focusin before the tooltip becomes visible. The default of 200 ms prevents accidental activation during casual pointer movement. Increase to 400-600 ms in dense toolbars; avoid setting to 0 as it creates a jittery experience.
+ * @slot - Default content.
+ * @csspart trigger
+ * @csspart popup
  */
 export class ArcTooltip extends LitElement {
   static properties = {

@@ -2,7 +2,17 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Horizontal card with icon and text, for values or features lists.
+ *
  * @tag arc-value-card
+ * @prop {string} icon - Icon text displayed beside content
+ * @prop {string} heading - Card title
+ * @prop {string} description - Card body text
+ * @slot icon
+ * @csspart card
+ * @csspart icon
+ * @csspart title
+ * @csspart description
  */
 export class ArcValueCard extends LitElement {
   static properties = {

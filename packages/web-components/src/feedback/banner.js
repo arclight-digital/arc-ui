@@ -4,7 +4,19 @@ import { statusVars } from '../status-styles.js';
 import { getStatusIcon } from '../status-utils.js';
 
 /**
+ * Full-width persistent strip pinned to viewport or section top. Uses semantic variants like alert
+ * but edge-to-edge with no border-radius and a subtle gradient wash.
+ *
  * @tag arc-banner
+ * @prop {'info' | 'success' | 'warning' | 'error'} variant - Controls the semantic colour palette and icon. Use "info" for neutral announcements, "success" for positive confirmations, "warning" for caution states, and "error" for outages or critical failures.
+ * @prop {boolean} dismissible - When true, renders a close button on the right side. Clicking it collapses the banner and fires an "arc-dismiss" event.
+ * @prop {boolean} sticky - When true, pins the banner to the top of the viewport with position: sticky so it remains visible as the user scrolls.
+ * @fires {CustomEvent<void>} arc-dismiss - Fired when a dismissible banner is closed by the user
+ * @slot - Default content.
+ * @csspart banner
+ * @csspart icon
+ * @csspart message
+ * @csspart dismiss
  */
 export class ArcBanner extends LitElement {
   static properties = {

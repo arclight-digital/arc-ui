@@ -2,8 +2,18 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Wayfinding navigation trail that shows the user their current location within a hierarchical
+ * page structure, with separator icons and current-page indication.
+ *
  * @tag arc-breadcrumb
  * @requires arc-breadcrumb-item
+ * @prop {string} separator - Character used as the separator between breadcrumb items. Common options: '/', '>', '•'.
+ * @fires arc-navigate - Fired when a breadcrumb item is clicked
+ * @slot - Default content.
+ * @csspart breadcrumb
+ * @csspart current
+ * @csspart link
+ * @csspart separator
  */
 export class ArcBreadcrumb extends LitElement {
   static properties = {

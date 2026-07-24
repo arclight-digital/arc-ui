@@ -2,7 +2,14 @@ import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Text highlighting with search query match markers.
+ *
  * @tag arc-highlight
+ * @prop {string} text - The full text to display and search within
+ * @prop {string} query - The search query to highlight within the text
+ * @prop {boolean} caseSensitive - Whether matching should be case-sensitive
+ * @csspart text
+ * @csspart mark
  */
 export class ArcHighlight extends LitElement {
   static properties = {

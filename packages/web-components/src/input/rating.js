@@ -3,7 +3,17 @@ import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 
 /**
+ * A star-based rating input with hover preview, keyboard navigation, filled/unfilled SVG stars,
+ * and configurable max value.
+ *
  * @tag arc-rating
+ * @prop {number} value - Current rating value. Reflected as an attribute and updated on user interaction.
+ * @prop {number} max - Maximum number of stars to render. Determines the upper bound of the rating scale.
+ * @prop {boolean} disabled - Disables interaction, reducing opacity to 40% and blocking pointer events.
+ * @prop {boolean} readonly - Prevents interaction while maintaining full visual appearance. Useful for displaying existing ratings.
+ * @fires {CustomEvent<{ value: number }>} arc-change - Fired when the rating value changes
+ * @csspart star
+ * @csspart rating
  */
 export class ArcRating extends FormControlMixin(LitElement) {
   static properties = {

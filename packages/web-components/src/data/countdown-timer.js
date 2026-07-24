@@ -2,7 +2,19 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Live countdown to a target date/time with days, hours, minutes, and seconds segments.
+ *
  * @tag arc-countdown-timer
+ * @prop {string} target - ISO date string or parseable date for the countdown target
+ * @prop {string} label - Optional label displayed above the countdown
+ * @prop {string} expired - Text shown when the countdown reaches zero
+ * @prop {boolean} hideZeroSegments - Hide leading segments that are zero
+ * @fires {CustomEvent<void>} arc-expired - Fired when the countdown reaches zero
+ * @csspart separator
+ * @csspart segment
+ * @csspart number
+ * @csspart label
+ * @csspart container
  */
 export class ArcCountdownTimer extends LitElement {
   static properties = {

@@ -6,15 +6,16 @@ import '@arclux/arc-ui/marquee';
 export interface MarqueeProps {
   speed?: number;
   direction?: string;
+  pauseOnHover?: boolean;
   gap?: string;
   children?: JSX.Element;
   [key: string]: unknown;
 }
 
 export const Marquee: Component<MarqueeProps> = (props) => {
-  const [local, rest] = splitProps(props, ['speed', 'direction', 'gap', 'children']);
+  const [local, rest] = splitProps(props, ['speed', 'direction', 'pauseOnHover', 'gap', 'children']);
   return (
-    <arc-marquee speed={local.speed} direction={local.direction} gap={local.gap} {...rest}>
+    <arc-marquee speed={local.speed} direction={local.direction} pauseOnHover={local.pauseOnHover} gap={local.gap} {...rest}>
       {local.children}
     </arc-marquee>
   );

@@ -7,10 +7,11 @@ import '@arclux/arc-ui/marquee';
   selector: 'arc-marquee',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-marquee [attr.speed]="speed" [attr.direction]="direction" [attr.gap]="gap"><ng-content /></arc-marquee>`,
+  template: `<arc-marquee [attr.speed]="speed" [attr.direction]="direction" [pauseOnHover]="pauseOnHover" [attr.gap]="gap"><ng-content /></arc-marquee>`,
 })
 export class Marquee {
   @Input() speed: number = 40;
   @Input() direction: string = 'left';
+  @Input() pauseOnHover: boolean = true;
   @Input() gap: string = 'var(--space-xl)';
 }

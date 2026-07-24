@@ -2,7 +2,17 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Bottom status bar with start, center, and end slots.
+ *
  * @tag arc-status-bar
+ * @prop {'static' | 'fixed'} position - Controls whether the status bar flows with the document (static) or pins to the bottom of the viewport (fixed). Fixed mode sets bottom: 0, left: 0, right: 0 with z-index: 100.
+ * @slot start
+ * @slot - Default content.
+ * @slot end
+ * @csspart base
+ * @csspart start
+ * @csspart center
+ * @csspart end
  */
 export class ArcStatusBar extends LitElement {
   static properties = {

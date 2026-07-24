@@ -3,7 +3,29 @@ import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 
 /**
+ * Dual-thumb range slider for selecting a numeric interval within a defined range, with
+ * accent-primary fill between the thumbs and live value display.
+ *
  * @tag arc-range-slider
+ * @prop {number} min - Minimum allowed value at the left edge of the track.
+ * @prop {number} max - Maximum allowed value at the right edge of the track.
+ * @prop {number} step - Increment granularity. Values snap to multiples of this number.
+ * @prop {number} low - Lower bound value of the selected range. Reflected as an attribute.
+ * @prop {number} high - Upper bound value of the selected range. Reflected as an attribute.
+ * @prop {string} label - Label text displayed above the slider with the range values shown on the right.
+ * @prop {boolean} showValues - Whether to display the numeric "low – high" readout in the header.
+ * @prop {boolean} disabled - Disables interaction, reducing opacity and blocking pointer events.
+ * @fires {CustomEvent<{ low: number, high: number }>} arc-input - Fired continuously as the user drags either thumb. Detail contains `{ low, high }`. Use for real-time filtering or preview.
+ * @fires {CustomEvent<{ low: number, high: number }>} arc-change - Fired once when the user releases a thumb, indicating the final committed range. Detail contains `{ low, high }`. Use for persisting to a database or triggering an expensive operation.
+ * @csspart range-slider
+ * @csspart header
+ * @csspart label
+ * @csspart values
+ * @csspart track
+ * @csspart rail
+ * @csspart fill
+ * @csspart thumb-low
+ * @csspart thumb-high
  */
 export class ArcRangeSlider extends FormControlMixin(LitElement) {
   static properties = {

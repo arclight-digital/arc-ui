@@ -54,17 +54,42 @@ for (const el of elements) {
   lines.push(' */');
   lines.push(`export declare class ${el.name} extends LitElement {`);
   for (const f of fields) {
-    if (f.default !== undefined) lines.push(`  /** @default ${f.default} */`);
+    const doc = [];
+    if (f.description) doc.push(f.description.replace(/\s+/g, ' '));
+    if (f.default !== undefined) doc.push(`@default ${f.default}`);
+    if (doc.length) lines.push(`  /** ${doc.join(' ')} */`);
     lines.push(`  ${f.name}: ${tsType(f)};`);
   }
   lines.push('}');
   lines.push('');
 }
 
+// Custom event map, deduped across components, so addEventListener('arc-…')
+// autocompletes with a typed detail. When several components fire the same
+// event name, the entry is the union of their detail types; any untyped
+// dispatch widens the entry to plain CustomEvent.
+const eventTypes = new Map();
+for (const el of elements) {
+  for (const e of el.events ?? []) {
+    if (!e.name?.startsWith('arc-')) continue;
+    const t = e.type?.text?.startsWith('CustomEvent<') ? e.type.text : 'CustomEvent';
+    if (!eventTypes.has(e.name)) eventTypes.set(e.name, new Set());
+    eventTypes.get(e.name).add(t);
+  }
+}
+const eventEntries = [...eventTypes.entries()]
+  .map(([name, types]) => [name, types.has('CustomEvent') ? 'CustomEvent' : [...types].sort().join(' | ')])
+  .sort((a, b) => a[0].localeCompare(b[0]));
+
 lines.push('declare global {');
 lines.push('  interface HTMLElementTagNameMap {');
 for (const el of elements) {
   lines.push(`    '${el.tagName}': ${el.name};`);
+}
+lines.push('  }');
+lines.push('  interface GlobalEventHandlersEventMap {');
+for (const [name, type] of eventEntries) {
+  lines.push(`    '${name}': ${type};`);
 }
 lines.push('  }');
 lines.push('}');

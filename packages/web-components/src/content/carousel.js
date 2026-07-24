@@ -2,7 +2,23 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * A scrollable slide container with navigation arrows, dot indicators, auto-play, looping, and
+ * keyboard controls.
+ *
  * @tag arc-carousel
+ * @prop {boolean} autoPlay - Enables automatic slide advancement on a timer. Pauses on hover and focus, respects prefers-reduced-motion.
+ * @prop {number} interval - Auto-play interval in milliseconds between slide transitions.
+ * @prop {boolean} loop - Enables wrapping at the edges so the last slide connects to the first and vice versa.
+ * @prop {boolean} showDots - Shows dot indicators below the viewport for direct slide navigation.
+ * @prop {boolean} showArrows - Shows previous/next arrow buttons on the left and right edges of the viewport.
+ * @fires arc-change - Fired when the active slide changes
+ * @slot - Default content.
+ * @csspart carousel
+ * @csspart viewport
+ * @csspart arrow-prev
+ * @csspart arrow-next
+ * @csspart dots
+ * @csspart dot
  */
 export class ArcCarousel extends LitElement {
   static properties = {

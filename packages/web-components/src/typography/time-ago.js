@@ -2,7 +2,13 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Relative time display that auto-updates ("3 minutes ago", "yesterday").
+ *
  * @tag arc-time-ago
+ * @prop {string} datetime - ISO 8601 date string or any value parseable by new Date().
+ * @prop {boolean} live - Auto-update the relative time on an adaptive interval.
+ * @prop {string} locale - BCP 47 locale tag for Intl.RelativeTimeFormat output.
+ * @csspart time
  */
 export class ArcTimeAgo extends LitElement {
   static properties = {

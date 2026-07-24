@@ -3,7 +3,28 @@ import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 
 /**
+ * Multi-line text input with integrated label, placeholder, resize control, and live character
+ * count that turns red at the limit.
+ *
  * @tag arc-textarea
+ * @prop {string} label - Visible label rendered above the textarea in uppercase. Automatically linked to the field via `aria-labelledby`, ensuring screen readers announce it correctly.
+ * @prop {string} value - The current text content of the textarea. Updated on every keystroke and emitted via `arc-input` and `arc-change` events.
+ * @prop {string} placeholder - Hint text displayed inside the field when it is empty. Use it to show example input -- never as a substitute for the label.
+ * @prop {number} rows - The number of visible text rows that set the initial height of the textarea. Does not limit content length -- the user can scroll or resize beyond this height.
+ * @prop {number} maxlength - Maximum number of characters allowed. When set to a value greater than 0, a live counter appears below the field showing current length vs. limit, turning red when the limit is reached.
+ * @prop {'none' | 'vertical' | 'horizontal' | 'both'} resize - Controls whether and in which direction the user can drag to resize the textarea. Defaults to vertical-only resizing.
+ * @prop {boolean} disabled - Prevents user interaction and applies a muted visual treatment at 40% opacity. The field value is excluded from form submission when disabled.
+ * @prop {boolean} readonly - Allows the user to select and copy text but prevents editing. The field has a subtle background change to indicate its read-only state.
+ * @prop {string} error - Error message string. When non-empty, the textarea border turns red and the message is displayed below the field with `role="alert"` for screen reader announcement.
+ * @prop {'sm' | 'md' | 'lg'} size - Controls the textarea size. Options: 'sm', 'md', 'lg'.
+ * @prop {boolean} autoResize - Automatically grows the textarea height to fit its content. Disables manual resize when enabled.
+ * @fires {CustomEvent<{ value: string }>} arc-input - Fired on each keystroke with { value } detail
+ * @fires {CustomEvent<{ value: string }>} arc-change - Fired on blur when value has changed
+ * @csspart wrapper
+ * @csspart label
+ * @csspart textarea
+ * @csspart error
+ * @csspart counter
  */
 export class ArcTextarea extends FormControlMixin(LitElement) {
   static properties = {

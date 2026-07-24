@@ -2,7 +2,18 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Toast variant with embedded progress bar for long-running operations. Same positioning and
+ * animation as toast but persists until complete.
+ *
  * @tag arc-progress-toast
+ * @prop {'top-right' | 'bottom-right'} position - Anchors the progress toast stack to a fixed corner of the viewport.
+ * @fires arc-complete - Fired when a progress toast operation reaches 100%. Detail contains { id } with the operation identifier.
+ * @fires arc-cancel - Fired when the user clicks the cancel button on a progress toast. Detail contains { id } with the operation identifier.
+ * @csspart container
+ * @csspart toast
+ * @csspart cancel
+ * @csspart track
+ * @csspart fill
  */
 export class ArcProgressToast extends LitElement {
   static properties = {

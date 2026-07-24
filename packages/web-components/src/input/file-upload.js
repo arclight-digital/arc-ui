@@ -2,7 +2,20 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Drag-and-drop file upload zone with preview.
+ *
  * @tag arc-file-upload
+ * @prop {string} accept - Comma-separated list of accepted file types, passed directly to the native file input accept attribute. Examples: "image/*", ".pdf,.docx", "audio/mp3".
+ * @prop {boolean} multiple - When true, allows selecting multiple files. Each drop or browse interaction appends to the existing file list rather than replacing it.
+ * @prop {number} maxSize - Maximum file size in bytes. Files exceeding this limit are rejected with an inline error message. Set to 0 for no limit.
+ * @prop {boolean} disabled - Disables the dropzone, preventing drag-and-drop and click interactions. Reduces opacity to 0.4.
+ * @fires arc-change - Fired when files are added or dropped
+ * @fires arc-remove - Fired when a file is removed from the list
+ * @csspart wrapper
+ * @csspart dropzone
+ * @csspart error
+ * @csspart file-list
+ * @csspart file-item
  */
 export class ArcFileUpload extends LitElement {
   static properties = {

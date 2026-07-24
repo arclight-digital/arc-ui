@@ -2,7 +2,18 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Groups multiple toggle switches under a shared label with consistent sizing and disabled state.
+ * Supports vertical and horizontal layouts.
+ *
  * @tag arc-switch-group
+ * @prop {string} label - Group heading rendered as a `<legend>` element.
+ * @prop {'vertical' | 'horizontal'} orientation - Layout direction. Vertical stacks toggles, horizontal arranges them in a row.
+ * @prop {'sm' | 'md' | 'lg'} size - Size cascaded to all child arc-toggle elements.
+ * @prop {boolean} disabled - Disables all child toggles and dims the group.
+ * @slot - Default content.
+ * @csspart fieldset
+ * @csspart legend
+ * @csspart group
  */
 export class ArcSwitchGroup extends LitElement {
   static properties = {

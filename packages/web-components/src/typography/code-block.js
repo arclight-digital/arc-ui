@@ -87,10 +87,25 @@ async function getHL(lang) {
 }
 
 /**
- * @arc-prism hybrid — display works without JS; copy-to-clipboard requires JS
- */
-/**
+ * Syntax-highlighted code display with optional filename and copy button.
+ *
  * @tag arc-code-block
+ * @prop {'default' | 'window' | 'basic'} variant - Visual variant. `default` shows the standard layout with optional filename header and status bar. `window` adds a macOS-style title bar with colored orbs and centered filename. `basic` strips all chrome for a compact, minimal display.
+ * @prop {string} language - Programming language identifier (e.g. `js`, `css`, `html`). Displayed in uppercase in the header bar.
+ * @prop {string} filename - Optional filename displayed in the header in monospace font. When empty, the header shows only the language.
+ * @prop {string} code - Code content to display. Used as the `<pre><code>` content and copied to clipboard when the copy button is clicked.
+ * @csspart titlebar
+ * @csspart orbs
+ * @csspart filename
+ * @csspart header
+ * @csspart lang
+ * @csspart status-bar
+ * @csspart lines
+ * @csspart code-block
+ * @csspart copy
+ * @csspart body
+ * @csspart pre
+ * @csspart code
  */
 export class ArcCodeBlock extends LitElement {
   static properties = {

@@ -2,7 +2,16 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Windowed list that renders only visible items for efficient scrolling through thousands of rows.
+ * Fixed item height with configurable overscan.
+ *
  * @tag arc-virtual-list
+ * @prop {Array} items - The full data array. Only the visible slice is rendered at any given time.
+ * @prop {number} itemHeight - Height in pixels of each item row. Must match the actual rendered height.
+ * @prop {number} overscan - Number of extra items to render above and below the visible window to reduce flicker.
+ * @slot item-${index}
+ * @csspart spacer
+ * @csspart item
  */
 export class ArcVirtualList extends LitElement {
   static properties = {

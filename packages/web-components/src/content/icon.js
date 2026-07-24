@@ -23,7 +23,24 @@ function sanitizeSvg(svgStr) {
 }
 
 /**
+ * Renders icons from Phosphor (1,500+) or Lucide (1,900+) by name, with one-line library switching
+ * and custom icon registration.
+ *
+ * Parse an SVG string into a sanitized SVG element, stripping scripts and event handlers. *\/
+ * function sanitizeSvg(svgStr) { if (_svgCache.has(svgStr)) return
+ * _svgCache.get(svgStr).cloneNode(true); const doc = new DOMParser().parseFromString(svgStr,
+ * 'image/svg+xml'); const svg = doc.querySelector('svg'); if (!svg) return null; // Strip <script>
+ * and any elements with event handler attributes for (const el of svg.querySelectorAll('script'))
+ * el.remove(); const walk = svg.querySelectorAll('*'); for (const el of walk) { for (const attr of
+ * [...el.attributes]) { if (attr.name.startsWith('on')) el.removeAttribute(attr.name); } }
+ * _svgCache.set(svgStr, svg); return svg.cloneNode(true); }
+ *
  * @tag arc-icon
+ * @prop {string} name - Icon name to look up in the icon registry. When provided, renders the matching SVG. When empty, falls back to slotted content.
+ * @prop {'xs' | 'sm' | 'md' | 'lg' | 'xl'} size - Icon dimensions: `xs` (12px), `sm` (16px), `md` (20px), `lg` (24px), `xl` (32px).
+ * @prop {string} label - Accessibility label. When provided, sets `role="img"` and `aria-label`. When empty, sets `role="presentation"` and `aria-hidden="true"`.
+ * @slot - Default content.
+ * @csspart icon
  */
 export class ArcIcon extends LitElement {
   static properties = {

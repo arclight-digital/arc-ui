@@ -4,8 +4,25 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
 import './icon-button.js';
 
 /**
+ * Dual-listbox for moving items between an available and a selected pane, ideal for permissions
+ * and settings UIs.
+ *
  * @tag arc-transfer-list
  * @requires arc-icon-button
+ * @prop options - The full universe of items. Items whose value is in `value` render in the Selected pane; the rest render in Available.
+ * @prop {string[]} value - Values currently in the Selected pane, kept in options order. Updated after every move and emitted via `arc-change`.
+ * @prop {string} name - Form field name. When set, the component submits one form entry per selected value.
+ * @prop {boolean} searchable - Adds a filter input to each pane that narrows that pane only, case-insensitively. Move-all respects the filter.
+ * @prop {string} sourceLabel - Heading for the left (available) pane. Attribute: `source-label`.
+ * @prop {string} targetLabel - Heading for the right (selected) pane. Attribute: `target-label`.
+ * @prop {boolean} disabled - Disables the whole control, preventing interaction and reducing opacity.
+ * @fires {CustomEvent<{ value: string[] }>} arc-change - Fired after every move with `{ value }` -- the current array of selected values.
+ * @csspart pane
+ * @csspart pane-header
+ * @csspart search
+ * @csspart listbox
+ * @csspart option
+ * @csspart controls
  */
 export class ArcTransferList extends FormControlMixin(LitElement) {
   static properties = {

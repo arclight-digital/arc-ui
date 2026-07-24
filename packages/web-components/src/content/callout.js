@@ -3,9 +3,21 @@ import { tokenStyles } from '../shared-styles.js';
 import { statusVars } from '../status-styles.js';
 
 /**
+ * Styled callout box for tips, warnings, and info.
+ *
  * @tag arc-callout
  * @requires arc-icon
- * @arc-prism hybrid — renders without JS; dismissible variant requires JS
+ * @prop {'info' | 'warning' | 'tip' | 'danger'} variant - Semantic variant that controls the colour scheme, top accent bar, and default icon
+ * @prop {boolean} dismissible - Shows a close button that removes the callout. Fires an arc-dismiss event on close.
+ * @fires {CustomEvent<void>} arc-dismiss - Fired when the dismiss button is clicked on a dismissible callout.
+ * @slot icon
+ * @slot - Default content.
+ * @csspart callout
+ * @csspart header
+ * @csspart icon
+ * @csspart label
+ * @csspart dismiss
+ * @csspart content
  */
 export class ArcCallout extends LitElement {
   static properties = {

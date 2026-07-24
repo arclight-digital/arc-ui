@@ -1,7 +1,12 @@
 import { LitElement, html, css } from 'lit';
 
 /**
+ * Individual event within a Timeline.
+ *
  * @tag arc-timeline-item
+ * @prop {string} heading - Event heading
+ * @prop {string} date - Date string to display
+ * @slot - Default content.
  */
 export class ArcTimelineItem extends LitElement {
   static properties = {

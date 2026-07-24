@@ -7,12 +7,14 @@ import '@arclux/arc-ui/confirm';
   selector: 'arc-confirm',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-confirm [open]="open" [attr.heading]="heading" [attr.message]="message" [attr.variant]="variant" (arc-confirm)="arcConfirm.emit($event)" (arc-cancel)="arcCancel.emit($event)"><ng-content /></arc-confirm>`,
+  template: `<arc-confirm [open]="open" [attr.heading]="heading" [attr.message]="message" [attr.confirmLabel]="confirmLabel" [attr.cancelLabel]="cancelLabel" [attr.variant]="variant" (arc-confirm)="arcConfirm.emit($event)" (arc-cancel)="arcCancel.emit($event)"><ng-content /></arc-confirm>`,
 })
 export class Confirm {
   @Input() open: boolean = false;
   @Input() heading: string = '';
   @Input() message: string = '';
+  @Input() confirmLabel: string = 'Confirm';
+  @Input() cancelLabel: string = 'Cancel';
   @Input() variant: string = 'default';
   @Output() arcConfirm = new EventEmitter<CustomEvent>();
   @Output() arcCancel = new EventEmitter<CustomEvent>();

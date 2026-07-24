@@ -8,6 +8,8 @@ export interface ConfirmProps {
   open?: boolean;
   heading?: string;
   message?: string;
+  confirmLabel?: string;
+  cancelLabel?: string;
   variant?: string;
   className?: string;
   children?: React.ReactNode;

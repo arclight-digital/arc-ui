@@ -2,7 +2,14 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Pinterest-style vertical-pack grid using CSS columns for efficient masonry layout without
+ * JavaScript.
+ *
  * @tag arc-masonry
+ * @prop {number} columns - Number of columns in the masonry grid. The browser distributes children across columns to minimize overall height difference.
+ * @prop {'sm' | 'md' | 'lg'} gap - Spacing between columns and rows, mapped to design system spacing tokens (--space-sm, --space-md, --space-lg).
+ * @slot - Default content.
+ * @csspart masonry
  */
 export class ArcMasonry extends LitElement {
   static properties = {

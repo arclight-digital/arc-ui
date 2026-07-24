@@ -4,7 +4,20 @@ import { buttonVariantStyles } from '../button-styles.js';
 import '../content/icon.js';
 
 /**
+ * Compact button that renders an icon with optional text label, supporting ghost, secondary, and
+ * primary variants.
+ *
  * @tag arc-icon-button
+ * @prop {string} name - Name of the arc-icon to render. When empty, the default slot is used for custom icon content.
+ * @prop {string} text - Optional text label displayed next to the icon. When provided, the button expands from a square to a wider labeled button with uppercase styling.
+ * @prop {'ghost' | 'secondary' | 'primary'} variant - Visual style variant. Ghost is transparent, secondary has a border with glow, primary has a solid accent-primary fill.
+ * @prop {'xs' | 'sm' | 'md' | 'lg'} size - Button size controlling dimensions and icon scale. Icon-only sizes: xs=28px, sm=32px, md=36px, lg=44px.
+ * @prop {string} label - Accessible label for the button. Falls back to `text` if not provided. Required for icon-only usage.
+ * @prop {string} href - When set, renders the button as an anchor tag for navigation links.
+ * @prop {boolean} disabled - Disables the button, reducing opacity to 40% and blocking pointer events.
+ * @prop {string} type - HTML button type attribute. Only applies when `href` is not set.
+ * @slot - Default content.
+ * @csspart button
  */
 export class ArcIconButton extends LitElement {
   static properties = {

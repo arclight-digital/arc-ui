@@ -2,7 +2,14 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * Inline text wrapper that applies gradient fills to text declaratively.
+ *
  * @tag arc-gradient-text
+ * @prop {'accent' | 'display' | 'sunset' | 'ocean' | 'custom'} variant - Predefined gradient variant to apply
+ * @prop {string} gradient - Custom CSS gradient string, used when variant is set to custom
+ * @prop {boolean} animate - Animate the gradient with a shifting background-position cycle
+ * @slot - Default content.
+ * @csspart text
  */
 export class ArcGradientText extends LitElement {
   static properties = {

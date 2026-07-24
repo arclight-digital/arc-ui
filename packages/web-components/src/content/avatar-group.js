@@ -2,10 +2,14 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
- * @arc-prism hybrid — stacked layout works without JS; overflow "+N" counter requires JS
- */
-/**
+ * Stack of avatars with overflow count badge.
+ *
  * @tag arc-avatar-group
+ * @prop {number} max - Maximum number of avatars to display. Excess avatars are hidden and a "+N" overflow badge is shown.
+ * @prop {'sm' | 'md' | 'lg'} overlap - Overlap density preset. sm = -8px, md = -12px, lg = -16px negative margin between avatars.
+ * @slot - Default content.
+ * @csspart group
+ * @csspart overflow
  */
 export class ArcAvatarGroup extends LitElement {
   static properties = {
