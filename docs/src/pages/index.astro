@@ -93,8 +93,47 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
   <!-- Hero -->
   <header class="hero">
     <canvas class="hero__canvas" id="hero-canvas"></canvas>
-    <div class="hero__dots"></div>
+    <div class="hero__stream" aria-hidden="true" inert>
+      <div class="stream-item" style="--lxr:-30; --ly:-4vh;  --dur:12s;   --delay:-2s;   --z0:-520px; --angle:4deg;    --trail:170px; --tint:var(--accent-primary-rgb)">
+        <arc-button variant="primary" size="sm">Get started</arc-button>
+      </div>
+      <div class="stream-item" style="--lxr:-23; --ly:15vh;  --dur:10s;   --delay:-7s;   --z0:-780px; --angle:-19deg;  --trail:150px; --tint:var(--accent-secondary-rgb)">
+        <arc-toggle checked label="Dark mode"></arc-toggle>
+      </div>
+      <div class="stream-item" style="--lxr:-35; --ly:7vh;   --dur:9s;    --delay:-4.5s; --z0:-380px; --angle:-6deg;   --trail:130px; --tint:var(--accent-primary-rgb)">
+        <arc-badge variant="success">Stable</arc-badge>
+      </div>
+      <div class="stream-item" style="--lxr:-20; --ly:-17vh; --dur:11s;   --delay:-9s;   --z0:-900px; --angle:24deg;   --trail:160px; --tint:var(--accent-secondary-rgb)">
+        <arc-rating value="5" readonly></arc-rating>
+      </div>
+      <div class="stream-item" style="--lxr:-33; --ly:-15vh; --dur:13s;   --delay:-6s;   --z0:-640px; --angle:14deg;   --trail:180px; --tint:var(--accent-primary-rgb)">
+        <arc-stat value="50" label="Components" trend="up" change="+7"></arc-stat>
+      </div>
+      <div class="stream-item" style="--lxr:-26; --ly:25vh;  --dur:10.5s; --delay:-1s;   --z0:-450px; --angle:-27deg;  --trail:150px; --tint:var(--accent-primary-rgb)">
+        <arc-checkbox checked label="Ship it"></arc-checkbox>
+      </div>
+      <div class="stream-item" style="--lxr:28;  --ly:-7vh;  --dur:10s;   --delay:-3s;   --z0:-560px; --angle:172deg;  --trail:160px; --tint:var(--accent-secondary-rgb)">
+        <arc-avatar name="Arc Light" status="online"></arc-avatar>
+      </div>
+      <div class="stream-item" style="--lxr:31;  --ly:11vh;  --dur:12.5s; --delay:-8s;   --z0:-700px; --angle:-169deg; --trail:180px; --w:180px; --tint:var(--accent-primary-rgb)">
+        <arc-progress value="72" label="Deploying"></arc-progress>
+      </div>
+      <div class="stream-item" style="--lxr:22;  --ly:-19vh; --dur:9.5s;  --delay:-5.5s; --z0:-820px; --angle:155deg;  --trail:150px; --tint:var(--accent-primary-rgb)">
+        <arc-chip selected>Web Components</arc-chip>
+      </div>
+      <div class="stream-item" style="--lxr:35;  --ly:-12vh; --dur:11.5s; --delay:-0.5s; --z0:-360px; --angle:170deg;  --trail:130px; --tint:var(--accent-secondary-rgb)">
+        <arc-tag>Lit 3</arc-tag>
+      </div>
+      <div class="stream-item" style="--lxr:25;  --ly:21vh;  --dur:13.5s; --delay:-10s;  --z0:-880px; --angle:-156deg; --trail:170px; --w:160px; --tint:var(--accent-secondary-rgb)">
+        <arc-slider value="64" label="Glow"></arc-slider>
+      </div>
+      <div class="stream-item" style="--lxr:34;  --ly:2vh;   --dur:10.8s; --delay:-6.8s; --z0:-600px; --angle:-178deg; --trail:160px; --tint:var(--accent-primary-rgb)">
+        <arc-sparkline data="4,9,6,12,9,16,13,20" fill></arc-sparkline>
+      </div>
+    </div>
     <div class="hero__ambient"></div>
+    <div class="hero__dots"></div>
+    <div class="hero__vignette"></div>
     <div class="hero__content">
       <a href="/docs/changelog" class="hero__announcement">
         <span class="hero__announcement-badge">{versionShort}</span>
@@ -508,37 +547,101 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
 </BaseLayout>
 
 <script>
-  /* ── Particle Canvas ── */
+  /* ── Light-Tunnel Canvas ──
+     A tube of light beams the camera flies through: the core stays dark
+     (that's where the headline lives), the walls stream with accent-colored
+     streaks. The DOM component stream (.hero__stream) shares this camera:
+     perspective 900px, vanishing point at 50% 40%. */
   function initCanvas() {
     const canvas = document.getElementById('hero-canvas') as HTMLCanvasElement;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return;
+    const rootStyles = getComputedStyle(document.documentElement);
+    const BLUE = rootStyles.getPropertyValue('--accent-primary-rgb').trim() || '77,126,247';
+    const PURPLE = rootStyles.getPropertyValue('--accent-secondary-rgb').trim() || '139,92,246';
+
+    // Live theme check: additive glow works on dark; on light backgrounds
+    // beams switch to multiply so they read as tinted streaks, not fog
+    const lightMql = window.matchMedia('(prefers-color-scheme: light)');
+    function isLight() {
+      const t = document.documentElement.getAttribute('data-theme');
+      return t === 'light' || (t !== 'dark' && lightMql.matches);
+    }
+
+    const P = 900;        // must match .hero__stream's CSS perspective
+    const Z_SPAWN = 3600; // beams are born deep in the tube
+    const Z_KILL = 120;   // and die just before they'd hit the camera
 
     let width = 0;
     let height = 0;
-    let animId: number;
+    let animId = 0;
+    let last = 0;
+    let time = 0;
 
-    interface Particle {
-      x: number; y: number;
-      vx: number; vy: number;
-      r: number;
+    // Warp model: boost decays toward cruise and is fed only by real
+    // causes — the arrival intro and scrolling. warp = 1 + boost.
+    let boost = 2.2; // arrive at warp speed, settle to cruise
+    let lastScrollY = window.scrollY;
+    let streamAnims: Animation[] = [];
+    let lastRate = 1;
+    let lastPx = 0;
+    let lastPy = 0;
+
+    interface Beam {
+      theta: number;  // angle around the tube wall
+      z: number;      // depth, world units in front of the camera
+      len: number;    // beam length along the tube
+      speed: number;  // world units per second toward the camera
+      color: string;
+      girth: number;
+      phase: number;  // flicker phase
+      freq: number;   // flicker frequency
+    }
+    interface Mote {
+      theta: number;
+      rad: number;    // fraction of the tube radius, keeps the core clear
+      z: number;
+      speed: number;
       color: string;
     }
+    const beams: Beam[] = [];
+    const motes: Mote[] = [];
 
-    const PARTICLE_COUNT = 50;
-    const CONNECTION_DIST = 140;
-    const particles: Particle[] = [];
-    const colors = ['77,126,247', '139,92,246'];
+    function beamColor() {
+      const r = Math.random();
+      return r < 0.68 ? BLUE : r < 0.94 ? PURPLE : '255,255,255';
+    }
+
+    function spawnBeam(b: Beam, anywhere = false) {
+      b.theta = Math.random() * Math.PI * 2;
+      b.z = anywhere
+        ? Z_KILL + Math.random() * (Z_SPAWN - Z_KILL)
+        : Z_SPAWN - Math.random() * 700;
+      b.len = 280 + Math.random() * 520;
+      b.speed = 450 + Math.random() * 550;
+      b.color = beamColor();
+      b.girth = 0.6 + Math.random() * 0.9;
+      b.phase = Math.random() * Math.PI * 2;
+      b.freq = 4 + Math.random() * 6;
+    }
+
+    function spawnMote(m: Mote, anywhere = false) {
+      m.theta = Math.random() * Math.PI * 2;
+      m.rad = 0.35 + Math.random() * 0.75;
+      m.z = anywhere
+        ? Z_KILL + Math.random() * (Z_SPAWN - Z_KILL)
+        : Z_SPAWN - Math.random() * 600;
+      m.speed = 480 + Math.random() * 420;
+      const r = Math.random();
+      m.color = r < 0.5 ? '255,255,255' : r < 0.85 ? BLUE : PURPLE;
+    }
 
     function resize() {
       const rect = canvas.parentElement!.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio, 2);
-      const oldW = width;
-      const oldH = height;
+      // Sub-native backing resolution: the upscale is free bloom
+      const dpr = Math.min(window.devicePixelRatio, 2) * 0.7;
       width = rect.width;
       height = rect.height;
       canvas.width = width * dpr;
@@ -547,89 +650,212 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
       canvas.style.height = height + 'px';
       ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      // Rescale existing particles instead of regenerating
-      if (oldW && oldH && particles.length) {
-        const sx = width / oldW;
-        const sy = height / oldH;
-        for (const p of particles) {
-          p.x *= sx;
-          p.y *= sy;
-        }
+      const beamTarget = Math.max(30, Math.min(56, Math.round((width * height) / 28000)));
+      while (beams.length < beamTarget) {
+        const b = {} as Beam;
+        spawnBeam(b, true);
+        beams.push(b);
       }
+      beams.length = beamTarget;
+
+      const moteTarget = Math.max(40, Math.min(70, Math.round((width * height) / 24000)));
+      while (motes.length < moteTarget) {
+        const m = {} as Mote;
+        spawnMote(m, true);
+        motes.push(m);
+      }
+      motes.length = moteTarget;
     }
 
-    function spawn() {
-      particles.length = 0;
-      for (let i = 0; i < PARTICLE_COUNT; i++) {
-        particles.push({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          vx: (Math.random() - 0.5) * 0.4,
-          vy: (Math.random() - 0.5) * 0.4,
-          r: Math.random() * 1.5 + 0.5,
-          color: colors[Math.floor(Math.random() * colors.length)],
-        });
-      }
-    }
+    // Cursor parallax: the vanishing point drifts a little, in canvas and
+    // CSS together so beams and components stay on the same tube
+    let mx = 0, my = 0;   // smoothed offset, -1..1
+    let tmx = 0, tmy = 0; // targets
+    const stream = document.querySelector('.hero__stream') as HTMLElement | null;
 
-    function draw() {
+    function drawFrame(dt: number) {
+      time += dt;
+
+      // Boost decays smoothly back to cruise
+      boost *= Math.exp(-dt * 1.15);
+      const warp = 1 + boost;
+
+      // Camera: mouse parallax + a slow ambient sway (canvas only — the
+      // DOM layer is touched solely when the parallax actually moves)
+      mx += (tmx - mx) * Math.min(1, dt * 3);
+      my += (tmy - my) * Math.min(1, dt * 3);
+      const px = mx * 16;
+      const py = my * 12;
+      const cx = width * 0.5 + px + Math.sin(time * 0.32) * 6;
+      const cy = height * 0.4 + py + Math.cos(time * 0.21) * 5;
+      if (stream && (Math.abs(px - lastPx) > 0.5 || Math.abs(py - lastPy) > 0.5)) {
+        lastPx = px;
+        lastPy = py;
+        stream.style.perspectiveOrigin =
+          `calc(50% + ${px.toFixed(1)}px) calc(40% + ${py.toFixed(1)}px)`;
+      }
+
+      const light = isLight();
+      const aScale = light ? 0.5 : 1;
+
+      // Components ride the same surges: their CSS animations take the
+      // warp factor as a playback rate
+      if (!streamAnims.length && stream && time < 3) {
+        streamAnims = stream.getAnimations({ subtree: true });
+      }
+      const rate = 1 + boost * 0.7;
+      if (Math.abs(rate - lastRate) > 0.04) {
+        lastRate = rate;
+        for (const anim of streamAnims) anim.playbackRate = rate;
+      }
+
+      const rx = width * 0.62;  // tube wall radii — outside the headline
+      const ry = height * 0.62;
+
       ctx!.clearRect(0, 0, width, height);
+      ctx!.globalCompositeOperation = light ? 'multiply' : 'lighter';
+      ctx!.lineCap = 'round';
 
-      // Connections
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < CONNECTION_DIST) {
-            const alpha = (1 - dist / CONNECTION_DIST) * 0.12;
-            ctx!.strokeStyle = `rgba(${particles[i].color},${alpha})`;
-            ctx!.lineWidth = 0.5;
-            ctx!.beginPath();
-            ctx!.moveTo(particles[i].x, particles[i].y);
-            ctx!.lineTo(particles[j].x, particles[j].y);
-            ctx!.stroke();
-          }
-        }
-      }
+      // Wall beams: white-hot tip, flicker, stretched by warp speed
+      for (const b of beams) {
+        b.z -= b.speed * warp * dt;
+        if (b.z < Z_KILL) spawnBeam(b);
 
-      // Particles
-      for (const p of particles) {
-        // Glow
-        const grad = ctx!.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 8);
-        grad.addColorStop(0, `rgba(${p.color},0.3)`);
-        grad.addColorStop(1, `rgba(${p.color},0)`);
-        ctx!.fillStyle = grad;
-        ctx!.fillRect(p.x - p.r * 8, p.y - p.r * 8, p.r * 16, p.r * 16);
+        const ux = Math.cos(b.theta);
+        const uy = Math.sin(b.theta);
+        const lenEff = b.len * (1 + boost * 1.2);
+        const s1 = P / b.z;             // near end of the beam
+        const s2 = P / (b.z + lenEff);  // far end
+        const x1 = cx + rx * ux * s1;
+        const y1 = cy + ry * uy * s1;
+        const x2 = cx + rx * ux * s2;
+        const y2 = cy + ry * uy * s2;
 
-        // Dot
+        // Fade in as the beam approaches; deep beams stay dark so the
+        // tunnel core reads as black
+        const flick = 0.8 + 0.2 * Math.sin(time * b.freq + b.phase);
+        const a = Math.min(1, (Z_SPAWN - b.z) / 1400) * 0.55 * flick * aScale;
+        if (a <= 0.01) continue;
+        if (
+          (x1 < -60 && x2 < -60) || (x1 > width + 60 && x2 > width + 60) ||
+          (y1 < -60 && y2 < -60) || (y1 > height + 60 && y2 > height + 60)
+        ) continue;
+
+        // White-hot tips glow on dark; on light the tip stays tinted
+        // (white multiplies to nothing)
+        const tip = light
+          ? `rgba(${b.color},${Math.min(1, a * 1.4)})`
+          : `rgba(255,255,255,${Math.min(1, a * 0.7)})`;
+        const grad = ctx!.createLinearGradient(x1, y1, x2, y2);
+        grad.addColorStop(0, tip);
+        grad.addColorStop(0.18, `rgba(${b.color},${a})`);
+        grad.addColorStop(1, `rgba(${b.color},0)`);
+        ctx!.strokeStyle = grad;
+
+        // Two soft passes, no hard core — the canvas blur does the rest
+        ctx!.lineWidth = Math.min(16, 2 + 9 * s1) * b.girth;
+        ctx!.globalAlpha = 0.28;
         ctx!.beginPath();
-        ctx!.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx!.fillStyle = `rgba(${p.color},0.8)`;
-        ctx!.fill();
-
-        // Move
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0) p.x = width;
-        if (p.x > width) p.x = 0;
-        if (p.y < 0) p.y = height;
-        if (p.y > height) p.y = 0;
+        ctx!.moveTo(x1, y1);
+        ctx!.lineTo(x2, y2);
+        ctx!.stroke();
+        ctx!.lineWidth = Math.min(3.5, 0.8 + 2 * s1) * b.girth;
+        ctx!.globalAlpha = 0.5;
+        ctx!.stroke();
       }
 
-      animId = requestAnimationFrame(draw);
+      // Depth dust between the walls; streaks hard when the tunnel surges
+      for (const m of motes) {
+        m.z -= m.speed * warp * dt;
+        if (m.z < Z_KILL) spawnMote(m);
+        const ux = Math.cos(m.theta);
+        const uy = Math.sin(m.theta);
+        const s1 = P / m.z;
+        const s2 = P / (m.z + 50 + 500 * boost);
+        const x1 = cx + rx * m.rad * ux * s1;
+        const y1 = cy + ry * m.rad * uy * s1;
+        const a = Math.min(1, (Z_SPAWN - m.z) / 1600) * 0.22 * aScale;
+        if (a <= 0.01) continue;
+        if (x1 < -40 || x1 > width + 40 || y1 < -40 || y1 > height + 40) continue;
+        const x2 = cx + rx * m.rad * ux * s2;
+        const y2 = cy + ry * m.rad * uy * s2;
+        // White dust vanishes under multiply — tint it on light themes
+        const mc = light && m.color === '255,255,255' ? BLUE : m.color;
+        ctx!.strokeStyle = `rgba(${mc},${a})`;
+        ctx!.lineWidth = 2;
+        ctx!.beginPath();
+        ctx!.moveTo(x1, y1);
+        ctx!.lineTo(x2, y2);
+        ctx!.stroke();
+      }
+
+      ctx!.globalAlpha = 1;
+      ctx!.globalCompositeOperation = 'source-over';
+    }
+
+    function frame(now: number) {
+      const dt = Math.min((now - last) / 1000, 0.05);
+      last = now;
+      drawFrame(dt);
+      animId = requestAnimationFrame(frame);
     }
 
     resize();
-    spawn();
-    draw();
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      // One still frame at cruise speed: the tube is visible, nothing moves
+      boost = 0;
+      drawFrame(0);
+      const redraw = () => {
+        resize();
+        drawFrame(0);
+      };
+      window.addEventListener('resize', redraw);
+      document.addEventListener('astro:before-swap', () => {
+        window.removeEventListener('resize', redraw);
+      }, { once: true });
+      return;
+    }
+
+    function onMouseMove(e: MouseEvent) {
+      tmx = (e.clientX / window.innerWidth) * 2 - 1;
+      tmy = (e.clientY / window.innerHeight) * 2 - 1;
+    }
+
+    function onMouseOut(e: MouseEvent) {
+      if (!e.relatedTarget) {
+        tmx = 0;
+        tmy = 0;
+      }
+    }
+
+    // Scrolling feeds the warp: leaving the hero feels like launching
+    function onScroll() {
+      const y = window.scrollY;
+      const dy = Math.abs(y - lastScrollY);
+      lastScrollY = y;
+      boost = Math.min(3, boost + Math.min(0.5, dy * 0.0035));
+    }
 
     window.addEventListener('resize', resize);
+    window.addEventListener('mousemove', onMouseMove, { passive: true });
+    window.addEventListener('mouseout', onMouseOut);
+    window.addEventListener('scroll', onScroll, { passive: true });
 
-    // Cleanup on navigation
+    animId = requestAnimationFrame((t) => {
+      last = t;
+      animId = requestAnimationFrame(frame);
+    });
+
     document.addEventListener('astro:before-swap', () => {
       cancelAnimationFrame(animId);
-    });
+      window.removeEventListener('resize', resize);
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mouseout', onMouseOut);
+      window.removeEventListener('scroll', onScroll);
+      if (stream) stream.style.perspectiveOrigin = '';
+    }, { once: true });
   }
 
   /* ── Reveal on scroll ── */
@@ -771,6 +997,31 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
     min-height: 85vh;
     display: flex;
     align-items: center;
+    /* Theme knobs for the tunnel: dark is the native habitat; light mode
+       swaps the dark core for haze, drops the screen blend, and halves glow */
+    --hero-core: rgba(3,3,7,0.6);
+    --hero-dot: rgba(255,255,255,0.12);
+    --stream-blend: screen;
+    --glow-a: 1;
+    --peak: 0.9;
+  }
+
+  :global([data-theme='light']) .hero {
+    --hero-core: rgba(255,255,255,0.65);
+    --hero-dot: rgba(10,10,25,0.16);
+    --stream-blend: normal;
+    --glow-a: 0.4;
+    --peak: 0.55;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :global([data-theme='auto']) .hero {
+      --hero-core: rgba(255,255,255,0.65);
+      --hero-dot: rgba(10,10,25,0.16);
+      --stream-blend: normal;
+      --glow-a: 0.4;
+      --peak: 0.55;
+    }
   }
 
   .hero__canvas {
@@ -778,28 +1029,119 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
     inset: 0;
     pointer-events: none;
     z-index: 0;
+    /* everything the tunnel draws melts into bloom */
+    filter: blur(1.2px) saturate(1.15);
   }
 
   .hero__dots {
     position: absolute;
     inset: 0;
-    background-image: radial-gradient(circle, rgba(255,255,255,0.12) 1px, transparent 1px);
+    background-image: radial-gradient(circle, var(--hero-dot) 1px, transparent 1px);
     background-size: 24px 24px;
     pointer-events: none;
-    z-index: 0;
+    z-index: 1;
     mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 70%);
     -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 70%);
+  }
+
+  /* Vignette blur: two masked backdrop-filter layers make the tunnel
+     progressively hazier toward the hero's edges — sharp at the core,
+     frosted at the rim, with no visible seam */
+  .hero__vignette {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    mask-image: radial-gradient(ellipse 78% 74% at 50% 40%, transparent 48%, black 88%);
+    -webkit-mask-image: radial-gradient(ellipse 78% 74% at 50% 40%, transparent 48%, black 88%);
   }
 
   .hero__ambient {
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(ellipse 80% 60% at 20% 40%, rgba(var(--accent-primary-rgb),0.18), transparent 70%),
-      radial-gradient(ellipse 60% 80% at 80% 60%, rgba(var(--accent-secondary-rgb),0.14), transparent 70%),
+      radial-gradient(ellipse 52% 46% at 50% 42%, var(--hero-core), transparent 68%),
+      radial-gradient(ellipse 80% 60% at 20% 40%, rgba(var(--accent-primary-rgb),0.12), transparent 70%),
+      radial-gradient(ellipse 60% 80% at 80% 60%, rgba(var(--accent-secondary-rgb),0.1), transparent 70%),
       radial-gradient(circle at 50% 100%, rgba(var(--accent-primary-rgb),0.08), transparent 40%);
     pointer-events: none;
     z-index: 1;
+  }
+
+  /* ── Component Stream (light-tunnel walls) ──
+     Shares the canvas tunnel's camera: perspective 900px, origin 50% 40%.
+     Items fly from deep in the tube (-2100px) past the viewer (+470px). */
+  .hero__stream {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    perspective: 900px;
+    perspective-origin: 50% 40%;
+    pointer-events: none;
+  }
+
+  .stream-item {
+    --lx: calc(var(--lxr) * 1vw);
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    width: var(--w, auto);
+    transform: translate(-50%, -50%) translate3d(var(--lx), var(--ly), var(--z0, -600px));
+    opacity: 0;
+    /* screen blend (dark theme) melts dark surfaces away — components read
+       as forms made of light; light theme falls back to normal blending */
+    mix-blend-mode: var(--stream-blend);
+    filter:
+      saturate(1.4) brightness(1.15)
+      drop-shadow(0 0 8px rgba(var(--tint), calc(0.6 * var(--glow-a))))
+      drop-shadow(0 0 32px rgba(var(--tint), calc(0.35 * var(--glow-a))));
+    animation: stream-fly var(--dur) linear infinite;
+    animation-delay: var(--delay);
+    will-change: transform, opacity;
+  }
+
+  /* Comet trail: a soft smear of light lagging behind, aimed back at the
+     vanishing point */
+  .stream-item::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: var(--trail, 160px);
+    height: 6px;
+    z-index: -1;
+    transform-origin: left center;
+    transform: translateY(-50%) rotate(var(--angle, 0deg));
+    background: linear-gradient(90deg,
+      rgba(var(--tint), calc(0.45 * var(--glow-a))),
+      rgba(var(--tint), calc(0.1 * var(--glow-a))) 55%,
+      transparent);
+    border-radius: 3px;
+    filter: blur(2px);
+  }
+
+  @keyframes stream-fly {
+    0%   { transform: translate(-50%, -50%) translate3d(var(--lx), var(--ly), -2100px); opacity: 0; }
+    16%  { opacity: var(--peak, 0.9); }
+    80%  { opacity: var(--peak, 0.9); }
+    100% { transform: translate(-50%, -50%) translate3d(var(--lx), var(--ly), 470px); opacity: 0; }
+  }
+
+  @media (max-width: 768px) {
+    .stream-item { --lx: calc(var(--lxr) * 1.7vw); }
+    .stream-item:nth-child(even) { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .stream-item {
+      animation: none;
+      opacity: 0.3;
+    }
+    .stream-item::before {
+      display: none;
+    }
   }
 
   .hero__content {
