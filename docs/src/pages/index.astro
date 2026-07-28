@@ -9,7 +9,7 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
   name: 'ARC UI',
-  description: `${components.length} dark-first Lit web components, generated natively for React, Vue, Svelte, Angular, Solid, Preact, and plain HTML.`,
+  description: `${components.length} dark-first Lit Web Components, generated natively by Prism for React, Vue, Svelte, Angular, Solid, Preact, and plain HTML.`,
   url: 'https://arcui.dev',
   applicationCategory: 'DeveloperApplication',
   operatingSystem: 'Web',
@@ -17,7 +17,6 @@ const jsonLd = {
   license: 'https://opensource.org/license/mit',
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
 };
-import fs from 'node:fs';
 
 const codeExamples = {
   react: `import { Button, Card, Input, Toggle } from '@arclux/arc-ui-react';
@@ -25,7 +24,7 @@ const codeExamples = {
 function Settings() {
   return (
     <Card>
-      <span slot="heading">Preferences</span>
+      <h3>Preferences</h3>
       <Input label="Display name" placeholder="Your name" />
       <Toggle label="Dark mode" checked />
       <Button variant="primary">Save Changes</Button>
@@ -33,29 +32,69 @@ function Settings() {
   );
 }`,
   vue: `<template>
-  <ArcCard>
-    <template #heading>Preferences</template>
-    <ArcInput label="Display name" placeholder="Your name" />
-    <ArcToggle label="Dark mode" :checked="true" />
-    <ArcButton variant="primary">Save Changes</ArcButton>
-  </ArcCard>
+  <Card>
+    <h3>Preferences</h3>
+    <Input label="Display name" placeholder="Your name" />
+    <Toggle label="Dark mode" :checked="true" />
+    <Button variant="primary">Save Changes</Button>
+  </Card>
 </template>
 
 <script setup>
-import { ArcButton, ArcCard, ArcInput, ArcToggle } from '@arclux/arc-ui-vue';
+import { Button, Card, Input, Toggle } from '@arclux/arc-ui-vue';
 </script>`,
   svelte: `<script>
-  import { ArcButton, ArcCard, ArcInput, ArcToggle } from '@arclux/arc-ui-svelte';
+  import { Button, Card, Input, Toggle } from '@arclux/arc-ui-svelte';
 </script>
 
-<ArcCard>
-  <span slot="heading">Preferences</span>
-  <ArcInput label="Display name" placeholder="Your name" />
-  <ArcToggle label="Dark mode" checked />
-  <ArcButton variant="primary">Save Changes</ArcButton>
-</ArcCard>`,
+<Card>
+  <h3>Preferences</h3>
+  <Input label="Display name" placeholder="Your name" />
+  <Toggle label="Dark mode" checked />
+  <Button variant="primary">Save Changes</Button>
+</Card>`,
+  angular: `import { Component } from '@angular/core';
+import { Button, Card, Input, Toggle } from '@arclux/arc-ui-angular';
+
+@Component({
+  selector: 'app-settings',
+  imports: [Button, Card, Input, Toggle],
+  template: \`
+    <arc-card>
+      <h3>Preferences</h3>
+      <arc-input label="Display name" placeholder="Your name"></arc-input>
+      <arc-toggle label="Dark mode" checked></arc-toggle>
+      <arc-button variant="primary">Save Changes</arc-button>
+    </arc-card>
+  \`,
+})
+export class SettingsComponent {}`,
+  solid: `import { Button, Card, Input, Toggle } from '@arclux/arc-ui-solid';
+
+function Settings() {
+  return (
+    <Card>
+      <h3>Preferences</h3>
+      <Input label="Display name" placeholder="Your name" />
+      <Toggle label="Dark mode" checked />
+      <Button variant="primary">Save Changes</Button>
+    </Card>
+  );
+}`,
+  preact: `import { Button, Card, Input, Toggle } from '@arclux/arc-ui-preact';
+
+function Settings() {
+  return (
+    <Card>
+      <h3>Preferences</h3>
+      <Input label="Display name" placeholder="Your name" />
+      <Toggle label="Dark mode" checked />
+      <Button variant="primary">Save Changes</Button>
+    </Card>
+  );
+}`,
   html: `<arc-card>
-  <span slot="heading">Preferences</span>
+  <h3>Preferences</h3>
   <arc-input label="Display name" placeholder="Your name"></arc-input>
   <arc-toggle label="Dark mode" checked></arc-toggle>
   <arc-button variant="primary">Save Changes</arc-button>
@@ -65,11 +104,9 @@ import { ArcButton, ArcCard, ArcInput, ArcToggle } from '@arclux/arc-ui-vue';
   import '@arclux/arc-ui/register';
 </script>`
 };
-
-const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components/package.json', import.meta.url), 'utf-8'));
 ---
 
-<BaseLayout>
+<BaseLayout description={jsonLd.description}>
   <!-- Top Bar -->
   <div class="theme-fixed">
     <arc-top-bar fixed nav-align="left" mobile-menu="nav">
@@ -83,7 +120,7 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
         <arc-nav-item href="/docs/theme-synthesizer">Synthesizer</arc-nav-item>
       </arc-navigation-menu>
       <div slot="actions" class="topbar-actions">
-        <arc-badge variant="primary" class="topbar-version">v{pkg.version}</arc-badge>
+        <arc-badge variant="primary" class="topbar-version">{versionShort}</arc-badge>
         <arc-theme-toggle icon-only></arc-theme-toggle>
         <arc-icon-button href="https://github.com/Arclight-Digital/arc-ui" name="github-logo" label="GitHub" variant="ghost" size="sm"></arc-icon-button>
       </div>
@@ -107,7 +144,7 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
         <arc-rating value="5" readonly></arc-rating>
       </div>
       <div class="stream-item" style="--lxr:-33; --ly:-15vh; --dur:13s;   --delay:-6s;   --z0:-640px; --angle:14deg;   --trail:180px; --tint:var(--accent-primary-rgb)">
-        <arc-stat value="50" label="Components" trend="up" change="+7"></arc-stat>
+        <arc-stat value={String(components.length)} label="Components" trend="up" change="+7"></arc-stat>
       </div>
       <div class="stream-item" style="--lxr:-26; --ly:25vh;  --dur:10.5s; --delay:-1s;   --z0:-450px; --angle:-27deg;  --trail:150px; --tint:var(--accent-primary-rgb)">
         <arc-checkbox checked label="Ship it"></arc-checkbox>
@@ -152,7 +189,7 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
         <span class="hero__body-line">for React, Vue, Svelte, Angular, Solid, Preact, and plain HTML.</span>
         <span class="hero__body-line hero__body-line--kicker">Build the whole product — marketing page to dashboard — from one design system.</span>
       </p>
-      <arc-code-block variant="basic" language="bash" code="npm install @arclux/arc-ui lit"></arc-code-block>
+      <arc-code-block variant="basic" language="bash" code="npm install @arclux/arc-ui"></arc-code-block>
       <div class="hero__actions">
         <arc-button href="/docs/getting-started" variant="primary" size="md">
           Get Started
@@ -288,7 +325,7 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
         <div class="features__header reveal">
           <span class="section-label">Why ARC UI</span>
           <h2 class="section-title">Built different.</h2>
-          <p class="section-desc">Lit web components at the core, a custom code generator for every framework, zero-config theming.</p>
+          <p class="section-desc">Lit Web Components at the core, a custom code generator for every framework, zero-config theming.</p>
         </div>
 
         <div class="features__grid">
@@ -296,11 +333,11 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
             <svg slot="icon" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </arc-feature-card>
 
-          <arc-feature-card heading="Every Framework" description="React, Vue, Svelte, Angular, Solid, Preact — we built a custom code generator (Prism) that turns Lit components into typed, native wrappers for each framework." class="reveal">
+          <arc-feature-card heading="Every Framework" description="React, Vue, Svelte, Angular, Solid, Preact, and plain HTML — we built a custom code generator called Prism that turns Lit components into typed, native wrappers for each target." class="reveal">
             <svg slot="icon" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><line x1="4" y1="22" x2="4" y2="15" stroke="currentColor" stroke-width="1.5"/></svg>
           </arc-feature-card>
 
-          <arc-feature-card heading="Zero Config Theming" description="Dark mode, light mode, auto mode. Override any token with CSS custom properties. Ship a custom theme in minutes." class="reveal">
+          <arc-feature-card heading="Zero-Config Theming" description="Dark, light, and auto modes. Override 2–4 base tokens and every compound token cascades. Ship a custom theme in minutes." class="reveal">
             <svg slot="icon" width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </arc-feature-card>
 
@@ -489,6 +526,15 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
               <arc-tab label="Svelte">
                 <arc-code-block variant="window" filename="App.svelte" language="html" code={codeExamples.svelte}></arc-code-block>
               </arc-tab>
+              <arc-tab label="Angular">
+                <arc-code-block variant="window" filename="settings.component.ts" language="ts" code={codeExamples.angular}></arc-code-block>
+              </arc-tab>
+              <arc-tab label="Solid">
+                <arc-code-block variant="window" filename="Settings.jsx" language="jsx" code={codeExamples.solid}></arc-code-block>
+              </arc-tab>
+              <arc-tab label="Preact">
+                <arc-code-block variant="window" filename="Settings.jsx" language="jsx" code={codeExamples.preact}></arc-code-block>
+              </arc-tab>
               <arc-tab label="HTML">
                 <arc-code-block variant="window" filename="index.html" language="html" code={codeExamples.html}></arc-code-block>
               </arc-tab>
@@ -503,6 +549,10 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
       <div class="frameworks-strip__inner">
         <span class="section-label">Prism</span>
         <h2 class="section-title" style="margin-top: var(--space-xs);">One source. Seven targets.</h2>
+        <p class="section-desc">
+          Prism, our code generator, reads each Lit component and produces a typed, native
+          package for every target — no hand-written wrappers.
+        </p>
         <div class="prism-visual reveal">
           <div class="prism-source">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -555,6 +605,11 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
   function initCanvas() {
     const canvas = document.getElementById('hero-canvas') as HTMLCanvasElement;
     if (!canvas) return;
+    // Guard against double init: on first load both the direct call and
+    // astro:page-load fire, and two rAF loops fighting over one canvas
+    // makes the opening seconds stutter
+    if ((canvas as any).__arcTunnel) return;
+    (canvas as any).__arcTunnel = true;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
@@ -580,9 +635,10 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
     let last = 0;
     let time = 0;
 
-    // Warp model: boost decays toward cruise and is fed only by real
-    // causes — the arrival intro and scrolling. warp = 1 + boost.
-    let boost = 2.2; // arrive at warp speed, settle to cruise
+    // Warp model: boost decays toward cruise and is fed only by
+    // scrolling. warp = 1 + boost. The tunnel starts AT cruise — no
+    // arrival deceleration, nothing to visibly settle.
+    let boost = 0;
     let lastScrollY = window.scrollY;
     let streamAnims: Animation[] = [];
     let lastRate = 1;
@@ -794,7 +850,9 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
     }
 
     function frame(now: number) {
-      const dt = Math.min((now - last) / 1000, 0.05);
+      // Tight dt cap: heavy frames during page load advance the world
+      // gently instead of visibly jumping
+      const dt = Math.min((now - last) / 1000, 0.033);
       last = now;
       drawFrame(dt);
       animId = requestAnimationFrame(frame);
@@ -802,11 +860,17 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
 
     resize();
 
+    const hero = canvas.parentElement!;
+
+    // Grab the stream animations up front so their playback rate is set
+    // before anything is visible — no mid-flight speed snap
+    if (stream) streamAnims = stream.getAnimations({ subtree: true });
+
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) {
       // One still frame at cruise speed: the tube is visible, nothing moves
-      boost = 0;
       drawFrame(0);
+      hero.classList.add('hero--live');
       const redraw = () => {
         resize();
         drawFrame(0);
@@ -846,6 +910,9 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
     animId = requestAnimationFrame((t) => {
       last = t;
       animId = requestAnimationFrame(frame);
+      // Reveal only after the first frame is painted: load-time jank
+      // happens behind a fade instead of in front of the visitor
+      hero.classList.add('hero--live');
     });
 
     document.addEventListener('astro:before-swap', () => {
@@ -1031,6 +1098,19 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components
     z-index: 0;
     /* everything the tunnel draws melts into bloom */
     filter: blur(1.2px) saturate(1.15);
+  }
+
+  /* The tunnel fades in once its first frame has painted, so load-time
+     hitching never shows */
+  .hero__canvas,
+  .hero__stream {
+    opacity: 0;
+    transition: opacity 0.9s ease;
+  }
+
+  .hero--live .hero__canvas,
+  .hero--live .hero__stream {
+    opacity: 1;
   }
 
   .hero__dots {
