@@ -223,6 +223,42 @@ arc-icon:not(:defined) {
   height: 20px;
 }
 
+arc-button:not(:defined) {
+  display: inline-flex;
+  min-height: 40px;
+  visibility: hidden;
+}
+
+arc-icon-button:not(:defined),
+arc-theme-toggle:not(:defined) {
+  display: inline-flex;
+  width: 32px;
+  height: 32px;
+}
+
+arc-badge:not(:defined) {
+  display: inline-flex;
+  min-height: 22px;
+  visibility: hidden;
+}
+
+arc-navigation-menu:not(:defined),
+arc-breadcrumb:not(:defined) {
+  display: flex;
+  min-height: 24px;
+}
+
+arc-page-header:not(:defined),
+arc-code-block:not(:defined),
+arc-tabs:not(:defined) {
+  display: block;
+  min-height: 48px;
+}
+
+arc-code-block[variant='window']:not(:defined) {
+  min-height: 200px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

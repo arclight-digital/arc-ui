@@ -12,7 +12,7 @@ interface Props {
   noindex?: boolean;
 }
 
-const { title = 'ARC UI — Lit Web Components Library', description = 'A component library built on Lit Web Components. A custom code generator produces native bindings for React, Vue, Svelte, Angular, Solid, and Preact.', ogImage = '/og-image.png', ogType = 'website', noindex = false } = Astro.props;
+const { title = 'ARC UI — Lit Web Components Library', description = 'Dark-first Lit Web Components, generated natively by Prism for React, Vue, Svelte, Angular, Solid, Preact, and plain HTML.', ogImage = '/og-image.png', ogType = 'website', noindex = false } = Astro.props;
 
 // Canonical form is slash-less (matching internal links and the sitemap);
 // the CDN serves both forms, so these tags are what deduplicates them.
@@ -31,7 +31,7 @@ const siteJsonLd = {
       name: 'ARC UI',
       url: 'https://arcui.dev',
       description:
-        'Dark-first Lit web components, generated natively for React, Vue, Svelte, Angular, Solid, Preact, and plain HTML.',
+        'Dark-first Lit Web Components, generated natively by Prism for React, Vue, Svelte, Angular, Solid, Preact, and plain HTML.',
       publisher: { '@id': 'https://arcui.dev/#org' },
     },
     {
@@ -93,8 +93,20 @@ const siteJsonLd = {
         which reads as a full-page flicker. Native browsers still cross-fade. */}
     <ViewTransitions fallback="swap" />
     <script>
-      import '@arclux/arc-ui/register';
+      // Critical-first registration: the shell components every page shows
+      // above the fold load synchronously in a small chunk, so the frame
+      // upgrades almost immediately. The full 164-component barrel follows
+      // as a lazy chunk behind the base.css :not(:defined) fade.
+      import '@arclux/arc-ui/icon';
+      import '@arclux/arc-ui/button';
+      import '@arclux/arc-ui/icon-button';
+      import '@arclux/arc-ui/badge';
+      import '@arclux/arc-ui/top-bar';
+      import '@arclux/arc-ui/navigation-menu';
+      import '@arclux/arc-ui/nav-item';
+      import '@arclux/arc-ui/theme-toggle';
       import '@arclux/brand/by';
+      import('@arclux/arc-ui/register');
     </script>
   </head>
   <body>
