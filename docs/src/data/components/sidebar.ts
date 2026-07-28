@@ -1,50 +1,51 @@
 import type { ComponentDef } from './_types';
 
 export const sidebar: ComponentDef = {
-    name: 'Sidebar',
-    slug: 'sidebar',
-    tag: 'arc-sidebar',
-    tier: 'navigation',
-    interactivity: 'hybrid',
-    description: 'Collapsible navigation sidebar with grouped sections, heading labels, and active link highlighting. Ideal for documentation sites, admin panels, and any layout that needs persistent vertical navigation.',
+  name: 'Sidebar',
+  slug: 'sidebar',
+  tag: 'arc-sidebar',
+  tier: 'navigation',
+  interactivity: 'hybrid',
+  description:
+    'Collapsible navigation sidebar with grouped sections, heading labels, and active link highlighting. Ideal for documentation sites, admin panels, and any layout that needs persistent vertical navigation.',
 
-    overview: `Sidebar provides a structured vertical navigation panel that organises links into collapsible, headed sections. It is the standard way to present multi-level navigation in documentation sites, admin dashboards, settings panels, and any application where the user needs to move between many related pages without losing context.
+  overview: `Sidebar provides a structured vertical navigation panel that organizes links into collapsible, headed sections. It is the standard way to present multi-level navigation in documentation sites, admin dashboards, settings panels, and any application where the user needs to move between many related pages without losing context.
 
 Each SidebarSection groups links under an optional heading, creating a clear visual hierarchy that mirrors your information architecture. The active prop on SidebarLink highlights the current page, giving users an immediate sense of where they are within the navigation tree. Sections can be expanded or collapsed to keep long navigation lists manageable.
 
 Sidebar is designed to sit inside an AppShell or PageLayout, typically occupying the left rail. It reads the full viewport height by default and scrolls independently of the main content area, so deep navigation trees remain accessible even on long pages. Pair it with TopBar for a complete application chrome.`,
 
-    features: [
-      'Collapsible sections with heading labels for grouped navigation',
-      'Active link highlighting to indicate the current page',
-      'Independent scroll region for deep navigation trees',
-      'Composable with SidebarSection and SidebarLink sub-components',
-      'Keyboard navigable with focus-visible indicators on every link',
-      'Designed to integrate with AppShell and PageLayout for full-page chrome',
-      'Responsive-ready — pairs with Drawer for mobile breakpoints',
-      'Token-driven theming for background, border, and active-link colors',
+  features: [
+    'Collapsible sections with heading labels for grouped navigation',
+    'Active link highlighting to indicate the current page',
+    'Independent scroll region for deep navigation trees',
+    'Composable with SidebarSection and SidebarLink sub-components',
+    'Keyboard navigable with focus-visible indicators on every link',
+    'Designed to integrate with AppShell and PageLayout for full-page chrome',
+    'Responsive-ready — pairs with Drawer for mobile breakpoints',
+    'Token-driven theming for background, border, and active-link colors',
+  ],
+
+  guidelines: {
+    do: [
+      'Group related links under a SidebarSection with a descriptive heading',
+      'Set the active prop on the link that matches the current route',
+      'Keep section headings short — one to three words that name the category',
+      'Place the Sidebar inside an AppShell or PageLayout for consistent layout',
+      'Use a Drawer to present the Sidebar on narrow viewports',
+      'Order sections by importance or frequency of use, most common first',
     ],
+    dont: [
+      'Do not nest Sidebars inside each other — use sections and indentation instead',
+      'Do not mark more than one link as active at the same time',
+      'Do not use Sidebar for top-level site-wide navigation — prefer TopBar for that role',
+      'Do not add more than eight to ten links per section; split large groups into sub-sections',
+      'Do not omit headings on sections — unlabelled groups make navigation harder to scan',
+      'Do not place actions (buttons, toggles) inside the Sidebar — it is for navigation links only',
+    ],
+  },
 
-    guidelines: {
-      do: [
-        'Group related links under a SidebarSection with a descriptive heading',
-        'Set the active prop on the link that matches the current route',
-        'Keep section headings short — one to three words that name the category',
-        'Place the Sidebar inside an AppShell or PageLayout for consistent layout',
-        'Use a Drawer to present the Sidebar on narrow viewports',
-        'Order sections by importance or frequency of use, most common first',
-      ],
-      dont: [
-        'Nest Sidebars inside each other — use sections and indentation instead',
-        'Mark more than one link as active at the same time',
-        'Use Sidebar for top-level site-wide navigation — prefer TopBar for that role',
-        'Add more than eight to ten links per section; split large groups into sub-sections',
-        'Omit headings on sections — unlabelled groups make navigation harder to scan',
-        'Place actions (buttons, toggles) inside the Sidebar — it is for navigation links only',
-      ],
-    },
-
-    previewHtml: `<div style="width:100%;max-width:300px;height:280px;border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden">
+  previewHtml: `<div style="width:100%;max-width:300px;height:280px;border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden">
   <arc-sidebar label="Example sidebar" active="#theming" glow style="position:static;height:100%">
     <arc-sidebar-section heading="Guide">
       <arc-sidebar-link href="#getting-started">Getting Started</arc-sidebar-link>
@@ -63,12 +64,11 @@ Sidebar is designed to sit inside an AppShell or PageLayout, typically occupying
   </arc-sidebar>
 </div>`,
 
-
-    tabs: [
-      {
-        label: 'Web Component',
-        lang: 'html',
-        code: `<script type="module" src="@arclux/arc-ui"></script>
+  tabs: [
+    {
+      label: 'Web Component',
+      lang: 'html',
+      code: `<script type="module" src="@arclux/arc-ui"></script>
 
 <arc-sidebar>
   <arc-sidebar-section heading="Guide">
@@ -82,11 +82,11 @@ Sidebar is designed to sit inside an AppShell or PageLayout, typically occupying
     <arc-sidebar-link href="/docs/components/modal">Modal</arc-sidebar-link>
   </arc-sidebar-section>
 </arc-sidebar>`,
-      },
-      {
-        label: 'React',
-        lang: 'tsx',
-        code: `import { Sidebar, SidebarSection, SidebarLink } from '@arclux/arc-ui-react';
+    },
+    {
+      label: 'React',
+      lang: 'tsx',
+      code: `import { Sidebar, SidebarSection, SidebarLink } from '@arclux/arc-ui-react';
 
 export function DocsSidebar() {
   return (
@@ -104,11 +104,11 @@ export function DocsSidebar() {
     </Sidebar>
   );
 }`,
-      },
-      {
-        label: 'Vue',
-        lang: 'html',
-        code: `<script setup>
+    },
+    {
+      label: 'Vue',
+      lang: 'html',
+      code: `<script setup>
 import { Sidebar, SidebarSection, SidebarLink } from '@arclux/arc-ui-vue';
 </script>
 
@@ -126,11 +126,11 @@ import { Sidebar, SidebarSection, SidebarLink } from '@arclux/arc-ui-vue';
     </SidebarSection>
   </Sidebar>
 </template>`,
-      },
-      {
-        label: 'Svelte',
-        lang: 'html',
-        code: `<script>
+    },
+    {
+      label: 'Svelte',
+      lang: 'html',
+      code: `<script>
   import { Sidebar, SidebarSection, SidebarLink } from '@arclux/arc-ui-svelte';
 </script>
 
@@ -146,36 +146,36 @@ import { Sidebar, SidebarSection, SidebarLink } from '@arclux/arc-ui-vue';
     <SidebarLink href="/docs/components/modal">Modal</SidebarLink>
   </SidebarSection>
 </Sidebar>`,
-      },
-      {
-        label: 'Angular',
-        lang: 'ts',
-        code: `import { Component } from '@angular/core';
+    },
+    {
+      label: 'Angular',
+      lang: 'ts',
+      code: `import { Component } from '@angular/core';
 import { Sidebar, SidebarSection, SidebarLink } from '@arclux/arc-ui-angular';
 
 @Component({
   imports: [Sidebar, SidebarSection, SidebarLink],
   template: \`
-    <Sidebar>
-      <SidebarSection heading="Guide">
-        <SidebarLink href="/docs/getting-started">Getting Started</SidebarLink>
-        <SidebarLink href="/docs/tokens">Design Tokens</SidebarLink>
-        <SidebarLink href="/docs/theming" active>Theming</SidebarLink>
-      </SidebarSection>
-      <SidebarSection heading="Components">
-        <SidebarLink href="/docs/components/button">Button</SidebarLink>
-        <SidebarLink href="/docs/components/card">Card</SidebarLink>
-        <SidebarLink href="/docs/components/modal">Modal</SidebarLink>
-      </SidebarSection>
-    </Sidebar>
+    <arc-sidebar>
+      <arc-sidebar-section heading="Guide">
+        <arc-sidebar-link href="/docs/getting-started">Getting Started</arc-sidebar-link>
+        <arc-sidebar-link href="/docs/tokens">Design Tokens</arc-sidebar-link>
+        <arc-sidebar-link href="/docs/theming" active>Theming</arc-sidebar-link>
+      </arc-sidebar-section>
+      <arc-sidebar-section heading="Components">
+        <arc-sidebar-link href="/docs/components/button">Button</arc-sidebar-link>
+        <arc-sidebar-link href="/docs/components/card">Card</arc-sidebar-link>
+        <arc-sidebar-link href="/docs/components/modal">Modal</arc-sidebar-link>
+      </arc-sidebar-section>
+    </arc-sidebar>
   \`,
 })
 export class DocsSidebarComponent {}`,
-      },
-      {
-        label: 'Solid',
-        lang: 'tsx',
-        code: `import { Sidebar, SidebarSection, SidebarLink } from '@arclux/arc-ui-solid';
+    },
+    {
+      label: 'Solid',
+      lang: 'tsx',
+      code: `import { Sidebar, SidebarSection, SidebarLink } from '@arclux/arc-ui-solid';
 
 export function DocsSidebar() {
   return (
@@ -193,11 +193,11 @@ export function DocsSidebar() {
     </Sidebar>
   );
 }`,
-      },
-      {
-        label: 'Preact',
-        lang: 'tsx',
-        code: `import { Sidebar, SidebarSection, SidebarLink } from '@arclux/arc-ui-preact';
+    },
+    {
+      label: 'Preact',
+      lang: 'tsx',
+      code: `import { Sidebar, SidebarSection, SidebarLink } from '@arclux/arc-ui-preact';
 
 export function DocsSidebar() {
   return (
@@ -215,11 +215,11 @@ export function DocsSidebar() {
     </Sidebar>
   );
 }`,
-      },
-      {
-        label: 'HTML',
-        lang: 'html',
-        code: `<arc-sidebar>
+    },
+    {
+      label: 'HTML',
+      lang: 'html',
+      code: `<arc-sidebar>
   <arc-sidebar-section heading="Guide">
     <arc-sidebar-link href="/docs/getting-started">Getting Started</arc-sidebar-link>
     <arc-sidebar-link href="/docs/tokens">Design Tokens</arc-sidebar-link>
@@ -231,26 +231,28 @@ export function DocsSidebar() {
     <arc-sidebar-link href="/docs/components/modal">Modal</arc-sidebar-link>
   </arc-sidebar-section>
 </arc-sidebar>`,
-      },
-      {
-        label: 'HTML (Inline)',
-        lang: 'html',
-        code: `<!-- arc-sidebar is hybrid — CSS handles layout, JS enhances interactivity -->
+    },
+    {
+      label: 'HTML (Inline)',
+      lang: 'html',
+      code: `<!-- arc-sidebar is hybrid — CSS handles layout, JS enhances interactivity -->
 <arc-sidebar></arc-sidebar>`,
-      },
-    ],
-    subComponents: [
-      {
-        name: 'SidebarSection',
-        tag: 'arc-sidebar-section',
-        description: 'A collapsible group within a Sidebar. Each section renders an optional heading label above its child links, creating a visual and semantic grouping that mirrors your information architecture. Fires an `arc-toggle` event with `{ open }` detail when the section is expanded or collapsed.',
-      },
-      {
-        name: 'SidebarLink',
-        tag: 'arc-sidebar-link',
-        description: 'A navigation link rendered inside a SidebarSection. Supports an active state to indicate the current page and provides focus-visible styling for keyboard navigation.',
-      },
-    ],
-  
-  seeAlso: ["navigation-menu","drawer","app-shell","top-bar"],
+    },
+  ],
+  subComponents: [
+    {
+      name: 'SidebarSection',
+      tag: 'arc-sidebar-section',
+      description:
+        'A collapsible group within a Sidebar. Each section renders an optional heading label above its child links, creating a visual and semantic grouping that mirrors your information architecture. Fires an `arc-toggle` event with `{ open }` detail when the section is expanded or collapsed.',
+    },
+    {
+      name: 'SidebarLink',
+      tag: 'arc-sidebar-link',
+      description:
+        'A navigation link rendered inside a SidebarSection. Supports an active state to indicate the current page and provides focus-visible styling for keyboard navigation.',
+    },
+  ],
+
+  seeAlso: ['navigation-menu', 'drawer', 'app-shell', 'top-bar'],
 };

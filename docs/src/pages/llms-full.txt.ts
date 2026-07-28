@@ -1,9 +1,9 @@
 import type { APIRoute } from 'astro';
 import { components } from '../data/components/index';
 import { getApi, type ComponentApi } from '../data/manifest';
+import { version, frameworkCount } from '../data/site-stats';
 import fs from 'node:fs';
 
-const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components/package.json', import.meta.url), 'utf-8'));
 const tokensCss = fs.readFileSync(new URL('../../../shared/base.css', import.meta.url), 'utf-8');
 
 export const prerender = true;
@@ -143,43 +143,13 @@ function renderComponent(c: typeof components[number]): string {
   return lines.join('\n');
 }
 
-function extractTokenSection(css: string, sectionName: string): string[] {
-  const tokens: string[] = [];
-  const regex = new RegExp(`\\/\\*.*${sectionName}.*\\*\\/([\\s\\S]*?)(?=\\/\\*|\\})`);
-  const match = css.match(regex);
-  if (match) {
-    const varRegex = /--([\w-]+)\s*:/g;
-    let m;
-    while ((m = varRegex.exec(match[1])) !== null) {
-      tokens.push(`--${m[1]}`);
-    }
-  }
-  return tokens;
-}
-
 export const GET: APIRoute = async () => {
   const tiers = ['layout', 'navigation', 'content', 'data', 'typography', 'input', 'feedback'] as const;
 
-  // Token categories from CSS comments
-  const tokenCategories = [
-    'Accent',
-    'Typography',
-    'Spacing',
-    'Radius',
-    'Interactive',
-    'Borders',
-    'Text Colors',
-    'Backgrounds',
-    'Transitions',
-    'Shadows',
-    'Gradients',
-    'Focus',
-    'Layout',
-  ];
-
-  // Extract all CSS custom properties from base.css
+  // Extract all CSS custom properties from base.css.
+  // Same pattern as site-stats.ts so the two counts can never diverge.
   const allTokens: string[] = [];
-  const varRegex = /--([\w-]+)\s*:/g;
+  const varRegex = /--([a-z0-9-]+)\s*(?=:)/g;
   let m;
   while ((m = varRegex.exec(tokensCss)) !== null) {
     if (!allTokens.includes(`--${m[1]}`)) {
@@ -192,7 +162,7 @@ export const GET: APIRoute = async () => {
   // Header
   sections.push(`# ARC UI — Full Component & Token Reference`);
   sections.push('');
-  sections.push(`> Version ${pkg.version} | ${components.length} components | 7 framework targets`);
+  sections.push(`> Version ${version} | ${components.length} components | ${frameworkCount} framework targets`);
   sections.push('');
   sections.push('This is the complete reference for LLM consumption. For a concise overview, see /llms.txt.');
   sections.push('');

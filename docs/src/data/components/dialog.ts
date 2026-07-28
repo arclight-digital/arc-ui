@@ -1,58 +1,59 @@
 import type { ComponentDef } from './_types';
 
 export const dialog: ComponentDef = {
-    name: 'Dialog',
-    slug: 'dialog',
-    tag: 'arc-dialog',
-    tier: 'feedback',
-    interactivity: 'interactive',
-    searchKeywords: ['prompt', 'popup'],
-    description: 'Small centered confirmation dialog wrapping arc-modal for simple confirm/cancel prompts — unsaved changes, session expiry, and discard decisions.',
+  name: 'Dialog',
+  slug: 'dialog',
+  tag: 'arc-dialog',
+  tier: 'feedback',
+  interactivity: 'interactive',
+  searchKeywords: ['prompt', 'popup'],
+  description:
+    'Small centered confirmation dialog wrapping arc-modal for simple confirm/cancel prompts — unsaved changes, session expiry, and discard decisions.',
 
-    overview: `Dialog is a convenience wrapper around \`arc-modal\` configured with \`size="sm"\` and \`closable\`, rendering as a small centered modal with backdrop blur and a slide-up entrance animation. It is purpose-built for simple confirm/cancel prompts — unsaved changes, session warnings, and discard decisions — where a full Modal would be overkill.
+  overview: `Dialog is a convenience wrapper around \`arc-modal\` configured with \`size="sm"\` and \`closable\`, rendering as a small centered modal with backdrop blur and a slide-up entrance animation. It is purpose-built for simple confirm/cancel prompts — unsaved changes, session warnings, and discard decisions — where a full Modal would be overkill.
 
 Because Dialog delegates to arc-modal internally, it inherits all of Modal's accessibility features: focus trapping, Escape key dismissal, and backdrop click handling come for free. The \`variant="danger"\` option adds a red accent line and a subtle glow to the card border, reinforcing the severity of the action.
 
 The component uses \`role="alertdialog"\` with \`aria-modal="true"\` to properly signal its interruptive nature to screen readers. The \`confirm()\` method returns a \`Promise<boolean>\` — call \`await dialog.confirm()\` and the promise resolves to \`true\` on confirm or \`false\` on cancel. Escape key and backdrop clicks both trigger cancellation.`,
 
-    features: [
-      'Centered modal presentation via arc-modal with size="sm"',
-      'Backdrop with blur effect for focused attention',
-      'Slide-up entrance animation',
-      'Delegates to arc-modal for focus trap and Escape key handling',
-      'Small modal size for compact confirm/cancel prompts',
-      'Promise-based confirm() API — returns true on confirm, false on cancel/escape',
-      'Danger variant with red accent line, glow border, and red confirm button',
-      'Escape key and backdrop click trigger cancellation',
-      'role="alertdialog" with aria-modal for proper screen reader semantics',
-      'Customizable button labels via confirm-label and cancel-label attributes'
+  features: [
+    'Centered modal presentation via `arc-modal` with size="sm"',
+    'Backdrop with blur effect for focused attention',
+    'Slide-up entrance animation',
+    'Delegates to `arc-modal` for focus trap and Escape key handling',
+    'Small modal size for compact confirm/cancel prompts',
+    'Promise-based confirm() API — returns true on confirm, false on cancel/escape',
+    'Danger variant with red accent line, glow border, and red confirm button',
+    'Escape key and backdrop click trigger cancellation',
+    '`role="alertdialog"` with `aria-modal` for proper screen reader semantics',
+    'Customizable button labels via confirm-label and cancel-label attributes',
+  ],
+
+  guidelines: {
+    do: [
+      'Use Dialog for urgent, interruptive prompts — unsaved changes, session expiry, discard warnings',
+      'Keep the message concise — one or two sentences explaining what will happen',
+      'Use variant="danger" when the confirmed action is destructive or irreversible',
+      'Use the confirm() promise API for cleaner async flow in your logic',
+      'Set specific button labels: "Discard Changes" is clearer than "Confirm"',
     ],
+    dont: [
+      'Do not use Dialog for complex forms or rich content — use Modal instead',
+      'Do not Stack multiple dialogs — resolve one before opening another',
+      'Do not use Dialog for informational messages — use Alert or Toast instead',
+      "Do not use Dialog for general-purpose overlays — that's what Modal is for",
+      'Do not use variant="danger" for non-destructive confirmations — it creates unnecessary anxiety',
+    ],
+  },
 
-    guidelines: {
-      do: [
-        'Use Dialog for urgent, interruptive prompts — unsaved changes, session expiry, discard warnings',
-        'Keep the message concise — one or two sentences explaining what will happen',
-        'Use variant="danger" when the confirmed action is destructive or irreversible',
-        'Use the confirm() promise API for cleaner async flow in your logic',
-        'Set specific button labels: "Discard Changes" is clearer than "Confirm"'
-      ],
-      dont: [
-        'Use Dialog for complex forms or rich content — use Modal instead',
-        'Stack multiple dialogs — resolve one before opening another',
-        'Use Dialog for informational messages — use Alert or Toast instead',
-        'Use Dialog for general-purpose overlays — that\'s what Modal is for',
-        'Use variant="danger" for non-destructive confirmations — it creates unnecessary anxiety'
-      ],
-    },
-
-    previewHtml: `<arc-button onclick="this.nextElementSibling.open = true" variant="secondary">Discard Draft</arc-button>
+  previewHtml: `<arc-button onclick="this.nextElementSibling.open = true" variant="secondary">Discard Draft</arc-button>
 <arc-dialog heading="Discard Draft?" message="You have unsaved changes that will be permanently lost. This action cannot be undone." confirm-label="Discard" cancel-label="Keep Editing" variant="danger"></arc-dialog>`,
 
-    tabs: [
+  tabs: [
     {
-        label: 'Web Component',
-        lang: 'html',
-        code: `<arc-dialog
+      label: 'Web Component',
+      lang: 'html',
+      code: `<arc-dialog
   heading="Discard Draft?"
   message="You have unsaved changes that will be permanently lost."
   confirm-label="Discard"
@@ -66,11 +67,11 @@ The component uses \`role="alertdialog"\` with \`aria-modal="true"\` to properly
   const confirmed = await dialog.confirm();
   if (confirmed) discardDraft();
 </script>`,
-      },
+    },
     {
-        label: 'React',
-        lang: 'tsx',
-        code: `import { Dialog } from '@arclux/arc-ui-react';
+      label: 'React',
+      lang: 'tsx',
+      code: `import { Dialog } from '@arclux/arc-ui-react';
 import { useRef } from 'react';
 
 function App() {
@@ -95,11 +96,11 @@ function App() {
     </>
   );
 }`,
-      },
+    },
     {
-        label: 'Vue',
-        lang: 'html',
-        code: `<script setup>
+      label: 'Vue',
+      lang: 'html',
+      code: `<script setup>
 import { ref } from 'vue';
 import { Dialog } from '@arclux/arc-ui-vue';
 
@@ -122,11 +123,11 @@ async function handleDiscard() {
     variant="danger"
   />
 </template>`,
-      },
+    },
     {
-        label: 'Svelte',
-        lang: 'html',
-        code: `<script>
+      label: 'Svelte',
+      lang: 'html',
+      code: `<script>
   import { Dialog } from '@arclux/arc-ui-svelte';
   let dialogEl;
 
@@ -145,18 +146,18 @@ async function handleDiscard() {
   cancelLabel="Keep Editing"
   variant="danger"
 />`,
-      },
+    },
     {
-        label: 'Angular',
-        lang: 'ts',
-        code: `import { Component, ViewChild, ElementRef } from '@angular/core';
+      label: 'Angular',
+      lang: 'ts',
+      code: `import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Dialog } from '@arclux/arc-ui-angular';
 
 @Component({
   imports: [Dialog],
   template: \`
     <button (click)="handleDiscard()">Discard</button>
-    <Dialog #dialog
+    <arc-dialog #dialog
       heading="Discard Draft?"
       message="You have unsaved changes that will be permanently lost."
       confirmLabel="Discard"
@@ -173,11 +174,11 @@ export class MyComponent {
     if (confirmed) this.discardDraft();
   }
 }`,
-      },
+    },
     {
-        label: 'Solid',
-        lang: 'tsx',
-        code: `import { Dialog } from '@arclux/arc-ui-solid';
+      label: 'Solid',
+      lang: 'tsx',
+      code: `import { Dialog } from '@arclux/arc-ui-solid';
 
 let dialogEl;
 
@@ -195,11 +196,11 @@ async function handleDiscard() {
   cancelLabel="Keep Editing"
   variant="danger"
 />`,
-      },
+    },
     {
-        label: 'Preact',
-        lang: 'tsx',
-        code: `import { Dialog } from '@arclux/arc-ui-preact';
+      label: 'Preact',
+      lang: 'tsx',
+      code: `import { Dialog } from '@arclux/arc-ui-preact';
 import { useRef } from 'preact/hooks';
 
 function App() {
@@ -224,8 +225,8 @@ function App() {
     </>
   );
 }`,
-      },
+    },
   ],
 
-  seeAlso: ["modal","alert","sheet"],
+  seeAlso: ['modal', 'alert', 'sheet'],
 };

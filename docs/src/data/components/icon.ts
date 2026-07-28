@@ -1,14 +1,15 @@
 import type { ComponentDef } from './_types';
 
 export const icon: ComponentDef = {
-    name: 'Icon',
-    slug: 'icon',
-    tag: 'arc-icon',
-    tier: 'content',
-    interactivity: 'static',
-    description: 'Renders icons from Phosphor (1,500+) or Lucide (1,900+) by name, with one-line library switching and custom icon registration.',
+  name: 'Icon',
+  slug: 'icon',
+  tag: 'arc-icon',
+  tier: 'content',
+  interactivity: 'static',
+  description:
+    'Renders icons from Phosphor (1,500+) or Lucide (1,900+) by name, with one-line library switching and custom icon registration.',
 
-    overview: `Icon renders SVG icons from a centralized icon registry by name. When the \`name\` property is set, the component dynamically imports the matching icon file, parses it through a DOMParser-based sanitizer that strips all \`<script>\` elements and \`on*\` event handler attributes, and injects the cleaned SVG into the shadow DOM. Parsed SVGs are cached in a module-level Map for efficient re-renders.
+  overview: `Icon renders SVG icons from a centralized icon registry by name. When the \`name\` property is set, the component dynamically imports the matching icon file, parses it through a DOMParser-based sanitizer that strips all \`<script>\` elements and \`on*\` event handler attributes, and injects the cleaned SVG into the shadow DOM. Parsed SVGs are cached in a module-level Map for efficient re-renders.
 
 **Icons are loaded per-icon on demand.** Each of the 3,400+ icons is its own module (~500 bytes). When \`<arc-icon name="star">\` renders, only \`star.js\` is fetched — not the entire library. This means importing \`arc-icon\` adds **0KB** of icon data to your bundle upfront, and each icon you actually use costs only ~500 bytes. Bundlers automatically tree-shake unused icons out of production builds.
 
@@ -47,36 +48,36 @@ Five size presets — xs (12px), sm (16px), md (20px), lg (24px), and xl (32px) 
 
 The \`label\` property controls accessibility behavior: when a label is provided, the icon wrapper receives \`role="img"\` and \`aria-label\` with the given text; when omitted, the icon is marked as \`role="presentation"\` with \`aria-hidden="true"\`, hiding it from assistive technology. This two-mode approach ensures decorative icons stay silent while meaningful icons are properly announced.`,
 
-    features: [
-      'Per-icon lazy loading — only icons you use are fetched (~500 bytes each), 0KB upfront',
-      'Two built-in icon packs: Phosphor (1,500+ filled) and Lucide (1,900+ stroke-based)',
-      'One-line library switching via iconRegistry.use() or <arc-icon-library>',
-      'Custom icon registration — merge your own SVGs on top of any library (renders instantly)',
-      'Five size presets: xs (12px), sm (16px), md (20px), lg (24px), xl (32px)',
-      'Inherits color via currentColor for natural parent-driven styling',
-      'Slot fallback when no registry name matches, allowing inline SVG passthrough',
-      'Accessible role switching: role="img" with label, role="presentation" without',
-      'XSS-safe: strips <script> tags and on* event handlers from SVG content',
+  features: [
+    'Per-icon lazy loading — only icons you use are fetched (~500 bytes each), 0KB upfront',
+    'Two built-in icon packs: Phosphor (1,500+ filled) and Lucide (1,900+ stroke-based)',
+    'One-line library switching via iconRegistry.use() or `<arc-icon-library>`',
+    'Custom icon registration — merge your own SVGs on top of any library (renders instantly)',
+    'Five size presets: xs (12px), sm (16px), md (20px), lg (24px), xl (32px)',
+    'Inherits color via currentColor for natural parent-driven styling',
+    'Slot fallback when no registry name matches, allowing inline SVG passthrough',
+    'Accessible role switching: `role="img"` with label, `role="presentation"` without',
+    'XSS-safe: strips <script> tags and on* event handlers from SVG content',
+  ],
+
+  guidelines: {
+    do: [
+      'Provide a label for icons that convey meaning (e.g. status indicators, action icons)',
+      'Omit the label for purely decorative icons so they are hidden from screen readers',
+      'Use the size prop rather than CSS overrides to maintain consistent icon dimensions',
+      'Register custom icons via the iconRegistry before first render',
+      'Use currentColor inheritance by setting color on the parent element',
     ],
+    dont: [
+      'Do not pass unsanitized SVG strings from user input — while the component strips scripts, defense in depth is wise',
+      'Do not use the xl size for inline text icons; sm or md integrates better with body copy',
+      'Do not set both a name and slot content simultaneously — the name lookup takes precedence',
+      'Do not rely on the icon alone to communicate critical information; pair with visible text',
+      'Do not hardcode fill or stroke colors in registered SVGs — use currentColor so they adapt to context',
+    ],
+  },
 
-    guidelines: {
-      do: [
-        'Provide a label for icons that convey meaning (e.g., status indicators, action icons)',
-        'Omit the label for purely decorative icons so they are hidden from screen readers',
-        'Use the size prop rather than CSS overrides to maintain consistent icon dimensions',
-        'Register custom icons via the iconRegistry before first render',
-        'Use currentColor inheritance by setting color on the parent element',
-      ],
-      dont: [
-        'Pass unsanitized SVG strings from user input — while the component strips scripts, defense in depth is wise',
-        'Use the xl size for inline text icons; sm or md integrates better with body copy',
-        'Set both a name and slot content simultaneously — the name lookup takes precedence',
-        'Rely on the icon alone to communicate critical information; pair with visible text',
-        'Hardcode fill or stroke colors in registered SVGs — use currentColor so they adapt to context',
-      ],
-    },
-
-    previewHtml: `<div style="display: flex; flex-direction: column; gap: 24px; width: 100%;">
+  previewHtml: `<div style="display: flex; flex-direction: column; gap: 24px; width: 100%;">
   <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
     <arc-icon name="star" size="lg"></arc-icon>
     <arc-icon name="heart" size="lg"></arc-icon>
@@ -102,7 +103,7 @@ The \`label\` property controls accessibility behavior: when a label is provided
   <div class="icon-browser"></div>
 </div>`,
 
-    previewSetup: `
+  previewSetup: `
       (async function() {
         var browser = el.querySelector('.icon-browser');
         if (!browser || browser.dataset.init) return;
@@ -197,11 +198,11 @@ The \`label\` property controls accessibility behavior: when a label is provided
       })()
     `,
 
-    tabs: [
-      {
-        label: 'Web Component',
-        lang: 'html',
-        code: `<!-- Basic usage (Phosphor is the default library) -->
+  tabs: [
+    {
+      label: 'Web Component',
+      lang: 'html',
+      code: `<!-- Basic usage (Phosphor is the default library) -->
 <arc-icon name="star" size="sm"></arc-icon>
 <arc-icon name="heart" size="md"></arc-icon>
 <arc-icon name="gear" size="lg"></arc-icon>
@@ -211,11 +212,11 @@ The \`label\` property controls accessibility behavior: when a label is provided
 
 <!-- Switch to Lucide globally -->
 <arc-icon-library name="lucide"></arc-icon-library>`,
-      },
-      {
-        label: 'Registry API',
-        lang: 'js',
-        code: `import { iconRegistry } from '@arclux/arc-ui';
+    },
+    {
+      label: 'Registry API',
+      lang: 'js',
+      code: `import { iconRegistry } from '@arclux/arc-ui';
 
 // Switch all icons to Lucide
 iconRegistry.use('lucide');
@@ -231,75 +232,96 @@ iconRegistry.set({
 
 // Look up an icon by name (async — loads single icon lazily)
 const svg = await iconRegistry.get('star'); // returns SVG string or null`,
-      },
-      {
-        label: 'React',
-        lang: 'tsx',
-        code: `import { Icon } from '@arclux/arc-ui-react';
+    },
+    {
+      label: 'React',
+      lang: 'tsx',
+      code: `import { Icon } from '@arclux/arc-ui-react';
 
-<Icon name="star" size="sm" />
-<Icon name="heart" size="md" />
-<Icon name="gear" size="lg" label="Settings" />`,
-      },
-      {
-        label: 'Vue',
-        lang: 'html',
-        code: `<script setup>
+export default function Example() {
+  return (
+    <>
+      <Icon name="star" size="sm" />
+      <Icon name="heart" size="md" />
+      <Icon name="gear" size="lg" label="Settings" />
+    </>
+  );
+}`,
+    },
+    {
+      label: 'Vue',
+      lang: 'html',
+      code: `<script setup>
 import { Icon } from '@arclux/arc-ui-vue';
 </script>
 
 <template>
-  <Icon name="star" size="sm"></Icon>
-  <Icon name="heart" size="md"></Icon>
-  <Icon name="gear" size="lg"></Icon>
+  <Icon name="star" size="sm" />
+  <Icon name="heart" size="md" />
+  <Icon name="gear" size="lg" />
 </template>`,
-      },
-      {
-        label: 'Svelte',
-        lang: 'html',
-        code: `<script>
+    },
+    {
+      label: 'Svelte',
+      lang: 'html',
+      code: `<script>
   import { Icon } from '@arclux/arc-ui-svelte';
 </script>
 
-<Icon name="star" size="sm"></Icon>
-<Icon name="heart" size="md"></Icon>
-<Icon name="gear" size="lg"></Icon>`,
-      },
-      {
-        label: 'Angular',
-        lang: 'ts',
-        code: `import { Component } from '@angular/core';
+<Icon name="star" size="sm" />
+<Icon name="heart" size="md" />
+<Icon name="gear" size="lg" />`,
+    },
+    {
+      label: 'Angular',
+      lang: 'ts',
+      code: `import { Component } from '@angular/core';
 import { Icon } from '@arclux/arc-ui-angular';
 
 @Component({
   imports: [Icon],
   template: \`
-    <Icon name="star" size="sm"></Icon>
-    <Icon name="heart" size="md"></Icon>
-    <Icon name="gear" size="lg"></Icon>
+    <arc-icon name="star" size="sm"></arc-icon>
+    <arc-icon name="heart" size="md"></arc-icon>
+    <arc-icon name="gear" size="lg"></arc-icon>
   \`,
 })
 export class MyComponent {}`,
-      },
-      {
-        label: 'Solid',
-        lang: 'tsx',
-        code: `import { Icon } from '@arclux/arc-ui-solid';
+    },
+    {
+      label: 'Solid',
+      lang: 'tsx',
+      code: `import { Icon } from '@arclux/arc-ui-solid';
 
-<Icon name="star" size="sm"></Icon>
-<Icon name="heart" size="md"></Icon>
-<Icon name="gear" size="lg"></Icon>`,
-      },
-      {
-        label: 'Preact',
-        lang: 'tsx',
-        code: `import { Icon } from '@arclux/arc-ui-preact';
+export default function Example() {
+  return (
+    <>
+      <Icon name="star" size="sm" />
+      <Icon name="heart" size="md" />
+      <Icon name="gear" size="lg" />
+    </>
+  );
+}`,
+    },
+    {
+      label: 'Preact',
+      lang: 'tsx',
+      code: `import { Icon } from '@arclux/arc-ui-preact';
 
-<Icon name="star" size="sm"></Icon>
-<Icon name="heart" size="md"></Icon>
-<Icon name="gear" size="lg"></Icon>`,
-      },
-      { label: 'HTML', lang: 'html', code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
+export default function Example() {
+  return (
+    <>
+      <Icon name="star" size="sm" />
+      <Icon name="heart" size="md" />
+      <Icon name="gear" size="lg" />
+    </>
+  );
+}`,
+    },
+    {
+      label: 'HTML',
+      lang: 'html',
+      code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
 <!-- arc-icon — requires icon.css + base.css (or arc-ui.css) -->
 <span class="arc-icon">
   <span
@@ -310,8 +332,12 @@ export class MyComponent {}`,
    >
 
    </span>
-</span>` },
-      { label: 'HTML (Inline)', lang: 'html', code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
+</span>`,
+    },
+    {
+      label: 'HTML (Inline)',
+      lang: 'html',
+      code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
 <!-- arc-icon — self-contained, no external CSS needed -->
 <span class="arc-icon" style="display: inline-flex; align-items: center; justify-content: center; color: currentColor; vertical-align: middle">
   <span
@@ -322,8 +348,9 @@ export class MyComponent {}`,
    >
 
    </span>
-</span>` }
-    ],
-  
-  seeAlso: ["icon-button","badge"],
+</span>`,
+    },
+  ],
+
+  seeAlso: ['icon-button', 'badge'],
 };

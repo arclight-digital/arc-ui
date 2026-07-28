@@ -2,15 +2,16 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="404 — Page Not Found — ARC UI" noindex>
+<BaseLayout title="Page Not Found — ARC UI" description="The page you requested does not exist." noindex>
   <div class="not-found">
     <div class="not-found__content">
       <h1 class="not-found__code">404</h1>
       <p class="not-found__message">This page doesn't exist.</p>
       <div class="not-found__actions">
         <a href="/" class="not-found__link">Home</a>
+        <a href="/docs/getting-started" class="not-found__link not-found__link--secondary">Docs</a>
         <a href="/docs/components" class="not-found__link not-found__link--secondary">Components</a>
-        <a href="/docs/getting-started" class="not-found__link not-found__link--secondary">Getting Started</a>
+        <a href="/docs/tokens" class="not-found__link not-found__link--secondary">Tokens</a>
       </div>
     </div>
   </div>

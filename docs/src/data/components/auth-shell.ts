@@ -1,52 +1,53 @@
 import type { ComponentDef } from './_types';
 
 export const authShell: ComponentDef = {
-    name: 'Auth Shell',
-    slug: 'auth-shell',
-    tag: 'arc-auth-shell',
-    tier: 'layout',
-    interactivity: 'hybrid',
-    description: 'Authentication page layout with centered and split variants for sign-in, sign-up, password-reset, and other credential flows. Provides logo, form card, footer, and optional aside slots out of the box.',
+  name: 'Auth Shell',
+  slug: 'auth-shell',
+  tag: 'arc-auth-shell',
+  tier: 'layout',
+  interactivity: 'hybrid',
+  description:
+    'Authentication page layout with centered and split variants for sign-in, sign-up, password-reset, and other credential flows. Provides logo, form card, footer, and optional aside slots out of the box.',
 
-    overview: `AuthShell is a purpose-built page layout for authentication flows. Rather than assembling a centered card with manual CSS every time you need a login page, AuthShell gives you a semantically clear structure with dedicated slots for your logo, form content, footer links, and an optional marketing aside panel. The result is a consistent, polished auth experience that takes minutes to wire up instead of hours.
+  overview: `AuthShell is a purpose-built page layout for authentication flows. Rather than assembling a centered card with manual CSS every time you need a login page, AuthShell gives you a semantically clear structure with dedicated slots for your logo, form content, footer links, and an optional marketing aside panel. The result is a consistent, polished auth experience that takes minutes to wire up instead of hours.
 
 Two layout variants cover the most common patterns. The \`centered\` variant places a single card in the middle of the viewport — ideal for minimal sign-in pages, password-reset screens, and invite-acceptance flows where you want the user's full attention on the form. The \`split\` variant divides the viewport into a form side and an aside panel, giving you space for a product illustration, testimonial, or feature highlights alongside the credentials form.
 
 Both variants are fully responsive. On mobile, the split layout collapses to a single column and hides the aside panel automatically, so users on small screens still get a clean, focused form without any extra media-query work on your part. The card region enforces a comfortable max-width of 420px, preventing overly wide inputs on large monitors while remaining spacious enough for multi-field forms, social login buttons, and terms-of-service links.`,
 
-    features: [
-      'Two layout variants: centered (single card) and split (form + aside panel)',
-      'Dedicated slots for logo, default content (form), footer, and aside',
-      'Responsive split layout collapses to single column on mobile',
-      'Card region enforces 420px max-width for comfortable form widths',
-      'CSS custom property theming via ARC UI design tokens',
-      'Aside panel auto-hides on narrow viewports to keep forms uncluttered',
-      'Exposed CSS parts (shell, logo, card, footer, form-side, aside) for deep customization',
-      'Works seamlessly with Input, Button, Toggle, and other ARC UI form components',
+  features: [
+    'Two layout variants: centered (single card) and split (form + aside panel)',
+    'Dedicated slots for logo, default content (form), footer, and aside',
+    'Responsive split layout collapses to single column on mobile',
+    'Card region enforces 420px max-width for comfortable form widths',
+    'CSS custom property theming via ARC UI design tokens',
+    'Aside panel auto-hides on narrow viewports to keep forms uncluttered',
+    'Exposed CSS parts (shell, logo, card, footer, form-side, aside) for deep customization',
+    'Works seamlessly with Input, Button, Toggle, and other ARC UI form components',
+  ],
+
+  guidelines: {
+    do: [
+      'Use the centered variant for simple flows like sign-in, password reset, and magic-link entry',
+      'Use the split variant when you have marketing content, illustrations, or testimonials to show alongside the form',
+      'Place your brand logo in the logo slot so it appears above the form card consistently',
+      'Include a footer slot with links to terms of service, privacy policy, and support',
+      'Pair with ARC UI Input, Select, and Button components for consistent form styling',
+      'Keep the form concise — ask only for credentials and one optional remember-me toggle',
     ],
+    dont: [
+      'Do not nest AuthShell inside AppShell — auth pages should be standalone, outside the main app chrome',
+      'Do not use the split variant for mobile-only apps where the aside will never be visible',
+      'Do not put navigation bars or sidebars inside AuthShell — it is designed as a single-purpose layout',
+      'Do not overload the form card with too many fields; split long registration forms into multi-step flows instead',
+      'Do not forget to provide a way back to the marketing site or a "sign up" link in the footer',
+    ],
+  },
 
-    guidelines: {
-      do: [
-        'Use the centered variant for simple flows like sign-in, password reset, and magic-link entry',
-        'Use the split variant when you have marketing content, illustrations, or testimonials to show alongside the form',
-        'Place your brand logo in the logo slot so it appears above the form card consistently',
-        'Include a footer slot with links to terms of service, privacy policy, and support',
-        'Pair with ARC UI Input, Select, and Button components for consistent form styling',
-        'Keep the form concise — ask only for credentials and one optional remember-me toggle',
-      ],
-      dont: [
-        'Nest AuthShell inside AppShell — auth pages should be standalone, outside the main app chrome',
-        'Use the split variant for mobile-only apps where the aside will never be visible',
-        'Put navigation bars or sidebars inside AuthShell — it is designed as a single-purpose layout',
-        'Overload the form card with too many fields; split long registration forms into multi-step flows instead',
-        'Forget to provide a way back to the marketing site or a "sign up" link in the footer',
-      ],
-    },
+  previewLayout: 'frame',
+  previewHeight: '560px',
 
-    previewLayout: 'frame',
-    previewHeight: '560px',
-
-    previewHtml: `<div style="width:100%;height:100%;border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden">
+  previewHtml: `<div style="width:100%;height:100%;border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden">
   <arc-auth-shell variant="split">
     <div slot="logo" style="font-family: 'Tektur', system-ui, sans-serif; font-size: 22px; font-weight: 700; letter-spacing: 2px; color: var(--text-heading);">ARC UI</div>
     <div style="display: flex; flex-direction: column; gap: 16px;">
@@ -69,12 +70,11 @@ Both variants are fully responsive. On mobile, the split layout collapses to a s
   </arc-auth-shell>
 </div>`,
 
-
-    tabs: [
-      {
-        label: 'Web Component',
-        lang: 'html',
-        code: `<script type="module" src="@arclux/arc-ui"></script>
+  tabs: [
+    {
+      label: 'Web Component',
+      lang: 'html',
+      code: `<script type="module" src="@arclux/arc-ui"></script>
 
 <arc-auth-shell variant="split">
   <div slot="logo" style="font-size: 22px; font-weight: 700;">ARC UI</div>
@@ -97,11 +97,11 @@ Both variants are fully responsive. On mobile, the split layout collapses to a s
     <p style="color: var(--text-muted);">Enterprise-grade encryption on every layer.</p>
   </div>
 </arc-auth-shell>`,
-      },
-      {
-        label: 'React',
-        lang: 'tsx',
-        code: `import { AuthShell, Input, Button, Toggle, Link } from '@arclux/arc-ui-react';
+    },
+    {
+      label: 'React',
+      lang: 'tsx',
+      code: `import { AuthShell, Input, Button, Toggle, Link } from '@arclux/arc-ui-react';
 
 export function SignInPage() {
   return (
@@ -130,11 +130,11 @@ export function SignInPage() {
     </AuthShell>
   );
 }`,
-      },
-      {
-        label: 'Vue',
-        lang: 'html',
-        code: `<script setup>
+    },
+    {
+      label: 'Vue',
+      lang: 'html',
+      code: `<script setup>
 import { AuthShell, Input, Button, Toggle, Link } from '@arclux/arc-ui-vue';
 </script>
 
@@ -163,11 +163,11 @@ import { AuthShell, Input, Button, Toggle, Link } from '@arclux/arc-ui-vue';
     </div>
   </AuthShell>
 </template>`,
-      },
-      {
-        label: 'Svelte',
-        lang: 'html',
-        code: `<script>
+    },
+    {
+      label: 'Svelte',
+      lang: 'html',
+      code: `<script>
   import { AuthShell, Input, Button, Toggle, Link } from '@arclux/arc-ui-svelte';
 </script>
 
@@ -194,17 +194,17 @@ import { AuthShell, Input, Button, Toggle, Link } from '@arclux/arc-ui-vue';
     <p style="color: var(--text-muted);">Enterprise-grade encryption on every layer.</p>
   </div>
 </AuthShell>`,
-      },
-      {
-        label: 'Angular',
-        lang: 'ts',
-        code: `import { Component } from '@angular/core';
+    },
+    {
+      label: 'Angular',
+      lang: 'ts',
+      code: `import { Component } from '@angular/core';
 import { AuthShell, Input, Button, Toggle, Link } from '@arclux/arc-ui-angular';
 
 @Component({
   imports: [AuthShell, Input, Button, Toggle, Link],
   template: \`
-    <AuthShell variant="split">
+    <arc-auth-shell variant="split">
       <div slot="logo" style="font-size: 22px; font-weight: 700;">ARC UI</div>
 
       <div style="display: flex; flex-direction: column; gap: 16px;">
@@ -212,29 +212,29 @@ import { AuthShell, Input, Button, Toggle, Link } from '@arclux/arc-ui-angular';
         <p style="margin: 0; color: var(--text-muted); font-size: 14px;">
           Enter your credentials to continue
         </p>
-        <Input label="Email" type="email" placeholder="you@example.com"></Input>
-        <Input label="Password" type="password" placeholder="••••••••"></Input>
+        <arc-input label="Email" type="email" placeholder="you@example.com"></arc-input>
+        <arc-input label="Password" type="password" placeholder="••••••••"></arc-input>
         <div style="display: flex; align-items: center; justify-content: space-between;">
-          <Toggle size="sm" label="Remember me"></Toggle>
-          <Link href="#">Forgot password?</Link>
+          <arc-toggle size="sm" label="Remember me"></arc-toggle>
+          <arc-link href="#">Forgot password?</arc-link>
         </div>
-        <Button variant="primary" style="width: 100%;">Sign In</Button>
+        <arc-button variant="primary" style="width: 100%;">Sign In</arc-button>
       </div>
 
-      <div slot="footer">Don't have an account? <Link href="#">Sign up</Link></div>
+      <div slot="footer">Don't have an account? <arc-link href="#">Sign up</arc-link></div>
       <div slot="aside" style="padding: 40px; text-align: center;">
         <h3>Secure by default</h3>
         <p style="color: var(--text-muted);">Enterprise-grade encryption on every layer.</p>
       </div>
-    </AuthShell>
+    </arc-auth-shell>
   \`,
 })
 export class SignInPageComponent {}`,
-      },
-      {
-        label: 'Solid',
-        lang: 'tsx',
-        code: `import { AuthShell, Input, Button, Toggle, Link } from '@arclux/arc-ui-solid';
+    },
+    {
+      label: 'Solid',
+      lang: 'tsx',
+      code: `import { AuthShell, Input, Button, Toggle, Link } from '@arclux/arc-ui-solid';
 
 export function SignInPage() {
   return (
@@ -263,11 +263,11 @@ export function SignInPage() {
     </AuthShell>
   );
 }`,
-      },
-      {
-        label: 'Preact',
-        lang: 'tsx',
-        code: `import { AuthShell, Input, Button, Toggle, Link } from '@arclux/arc-ui-preact';
+    },
+    {
+      label: 'Preact',
+      lang: 'tsx',
+      code: `import { AuthShell, Input, Button, Toggle, Link } from '@arclux/arc-ui-preact';
 
 export function SignInPage() {
   return (
@@ -296,8 +296,11 @@ export function SignInPage() {
     </AuthShell>
   );
 }`,
-      },
-      { label: 'HTML', lang: 'html', code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
+    },
+    {
+      label: 'HTML',
+      lang: 'html',
+      code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
 <!-- arc-auth-shell — requires auth-shell.css + base.css (or arc-ui.css) -->
 <div class="arc-auth-shell">
   <div class="auth-shell--split">
@@ -306,7 +309,7 @@ export function SignInPage() {
 
    </div>
    <div class="card">
-   Auth Shell
+   AuthShell
    </div>
    <div class="footer">
 
@@ -316,8 +319,12 @@ export function SignInPage() {
 
    </div>
    </div>
-</div>` },
-      { label: 'HTML (Inline)', lang: 'html', code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
+</div>`,
+    },
+    {
+      label: 'HTML (Inline)',
+      lang: 'html',
+      code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
 <!-- arc-auth-shell — self-contained, no external CSS needed -->
 <style>
   @media (max-width: 768px) {
@@ -334,7 +341,7 @@ export function SignInPage() {
 
    </div>
    <div style="background: rgb(13, 13, 18); border: 1px solid rgb(34, 34, 41); border-radius: 14px; padding: 40px; width: 100%; max-width: 420px; box-sizing: border-box">
-   Auth Shell
+   AuthShell
    </div>
    <div style="margin-top: 24px; color: rgb(124, 124, 137); font-size: 13px; text-align: center">
 
@@ -344,8 +351,9 @@ export function SignInPage() {
 
    </div>
    </div>
-</div>` }
-    ],
-  
-  seeAlso: ["app-shell","form"],
+</div>`,
+    },
+  ],
+
+  seeAlso: ['app-shell', 'form'],
 };

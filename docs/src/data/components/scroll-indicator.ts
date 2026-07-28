@@ -6,9 +6,10 @@ export const scrollIndicator: ComponentDef = {
   tag: 'arc-scroll-indicator',
   tier: 'navigation',
   interactivity: 'interactive',
-  description: 'Thin progress bar that tracks scroll position of the page or a target container. Sticks to the top or bottom edge with accent or gradient fill.',
+  description:
+    'Thin progress bar that tracks scroll position of the page or a target container. Sticks to the top or bottom edge with accent or gradient fill.',
 
-  overview: `Scroll Indicator renders a slim progress bar that fills left-to-right as the user scrolls through content. It attaches to the nearest scroll container or the window, updating via \`requestAnimationFrame\`-throttled scroll events for smooth, jank-free rendering.
+  overview: `ScrollIndicator renders a slim progress bar that fills left-to-right as the user scrolls through content. It attaches to the nearest scroll container or the window, updating via \`requestAnimationFrame\`-throttled scroll events for smooth, jank-free rendering.
 
 The bar sticks to the top or bottom edge using \`position: sticky\` and stays out of the pointer-event flow so it never blocks clicks or text selection. Two color modes — solid accent and gradient (primary → secondary) — let you match the bar to your theme.
 
@@ -22,7 +23,7 @@ Three size presets (sm: 2px, md: 3px, lg: 4px) keep the indicator unobtrusive at
     'Three size presets: sm (2px), md (3px), lg (4px)',
     'Accessible `role="progressbar"` with live `aria-valuenow`',
     'Non-interactive — `pointer-events: none` so it never blocks content',
-    'Respects `prefers-reduced-motion` by disabling transitions'
+    'Respects `prefers-reduced-motion` by disabling transitions',
   ],
 
   guidelines: {
@@ -30,12 +31,12 @@ Three size presets (sm: 2px, md: 3px, lg: 4px) keep the indicator unobtrusive at
       'Place at the top of long-form content like articles, docs, or settings pages',
       'Use the gradient color for branded reading experiences',
       'Use the sm size (default) for subtle progress indication',
-      'Set a `target` selector when tracking a scrollable panel instead of the full page'
+      'Set a `target` selector when tracking a scrollable panel instead of the full page',
     ],
     dont: [
-      'Use scroll indicator on short pages where scrolling is minimal',
-      'Stack multiple scroll indicators — one per scroll context is sufficient',
-      'Use as a loading indicator — use `arc-progress` for async operations instead'
+      'Do not use scroll indicator on short pages where scrolling is minimal',
+      'Do not Stack multiple scroll indicators — one per scroll context is sufficient',
+      'Do not use as a loading indicator — use `arc-progress` for async operations instead',
     ],
   },
 
@@ -45,7 +46,6 @@ Three size presets (sm: 2px, md: 3px, lg: 4px) keep the indicator unobtrusive at
     <p style="color: var(--text-muted);">Scroll this container to see the indicator fill...</p>
   </div>
 </div>`,
-
 
   tabs: [
     {
@@ -99,8 +99,8 @@ import { ScrollIndicator } from '@arclux/arc-ui-angular';
 @Component({
   imports: [ScrollIndicator],
   template: \`
-    <ScrollIndicator />
-    <ScrollIndicator target="#my-panel" color="gradient" size="md" />
+    <arc-scroll-indicator />
+    <arc-scroll-indicator target="#my-panel" color="gradient" size="md" />
   \`,
 })
 export class ArticlePage {}`,
@@ -110,16 +110,28 @@ export class ArticlePage {}`,
       lang: 'tsx',
       code: `import { ScrollIndicator } from '@arclux/arc-ui-solid';
 
-<ScrollIndicator />
-<ScrollIndicator target="#my-panel" color="gradient" size="md" />`,
+export default function Example() {
+  return (
+    <>
+      <ScrollIndicator />
+      <ScrollIndicator target="#my-panel" color="gradient" size="md" />
+    </>
+  );
+}`,
     },
     {
       label: 'Preact',
       lang: 'tsx',
       code: `import { ScrollIndicator } from '@arclux/arc-ui-preact';
 
-<ScrollIndicator />
-<ScrollIndicator target="#my-panel" color="gradient" size="md" />`,
+export default function Example() {
+  return (
+    <>
+      <ScrollIndicator />
+      <ScrollIndicator target="#my-panel" color="gradient" size="md" />
+    </>
+  );
+}`,
     },
   ],
 

@@ -6,10 +6,8 @@ import Wordmark from '../components/Wordmark.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import SiteSearch from '../components/SiteSearch.astro';
 import { ogPathFor } from '../lib/og-pages';
-import fs from 'node:fs';
+import { versionShort } from '../data/site-stats';
 import '../styles/docs.css';
-
-const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components/package.json', import.meta.url), 'utf-8'));
 
 interface Props {
   title: string;
@@ -108,7 +106,7 @@ const docsJsonLd = {
           <span class="topbar-search__text">Search</span>
           <kbd class="topbar-search__kbd" data-search-kbd>⌘K</kbd>
         </button>
-        <arc-badge variant="primary" class="topbar-version">v{pkg.version}</arc-badge>
+        <arc-badge variant="primary" class="topbar-version">{versionShort}</arc-badge>
         <arc-theme-toggle icon-only></arc-theme-toggle>
         <arc-icon-button href="https://github.com/Arclight-Digital/arc-ui" name="github-logo" label="GitHub" variant="ghost" size="sm"></arc-icon-button>
       </div>

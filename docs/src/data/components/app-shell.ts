@@ -1,52 +1,53 @@
 import type { ComponentDef } from './_types';
 
 export const appShell: ComponentDef = {
-    name: 'App Shell',
-    slug: 'app-shell',
-    tag: 'arc-app-shell',
-    tier: 'layout',
-    interactivity: 'hybrid',
-    description: 'Full-page layout scaffold that composes a TopBar, Sidebar, and scrollable content area into a cohesive application frame. Handles responsive collapse, sidebar toggling, and optional table-of-contents rail out of the box.',
+  name: 'App Shell',
+  slug: 'app-shell',
+  tag: 'arc-app-shell',
+  tier: 'layout',
+  interactivity: 'hybrid',
+  description:
+    'Full-page layout scaffold that composes a TopBar, Sidebar, and scrollable content area into a cohesive application frame. Handles responsive collapse, sidebar toggling, and optional table-of-contents rail out of the box.',
 
-    overview: `AppShell is the outermost structural component for any ARC UI application. It establishes the canonical three-zone layout — a fixed top bar, a collapsible sidebar, and a flexible main content area — so that every page in your app shares a consistent chrome without duplicating layout logic.
+  overview: `AppShell is the outermost structural component for any ARC UI application. It establishes the canonical three-zone layout — a fixed top bar, a collapsible sidebar, and a flexible main content area — so that every page in your app shares a consistent chrome without duplicating layout logic.
 
 The component manages responsive behavior automatically. On screens narrower than 768 px the sidebar collapses out of view and can be toggled back with the \`sidebar-open\` attribute, making it suitable for both desktop dashboards and mobile-first admin panels. A fourth optional slot, \`toc\`, provides a right-hand rail for table-of-contents or contextual widgets; it hides below 1280 px to keep the content area readable.
 
 Because AppShell is slot-based, it composes freely with other ARC UI primitives. Drop an \`arc-top-bar\` into the \`topbar\` slot, an \`arc-sidebar\` (or any nav markup) into \`sidebar\`, and your page content into the default slot. The shell handles all the flex math, scroll containment, and z-index layering so you can focus on what goes inside each zone rather than how the zones relate to each other.`,
 
-    features: [
-      'Three-zone layout: fixed top bar, collapsible sidebar, scrollable main content',
-      'Optional fourth "toc" slot for a right-hand table-of-contents rail',
-      'Responsive sidebar collapse at 768 px with toggle via sidebar-open attribute',
-      'Table-of-contents rail auto-hides below 1280 px',
-      'Slot-based composition works with any TopBar, Sidebar, or custom markup',
-      'Full-viewport min-height ensures the shell always fills the screen',
-      'CSS custom property integration for consistent spacing and color tokens',
-      'Exposed CSS parts (shell, body, sidebar, main, content, toc) for deep style overrides',
+  features: [
+    'Three-zone layout: fixed top bar, collapsible sidebar, scrollable main content',
+    'Optional fourth "toc" slot for a right-hand table-of-contents rail',
+    'Responsive sidebar collapse at 768 px with toggle via sidebar-open attribute',
+    'Table-of-contents rail auto-hides below 1280 px',
+    'Slot-based composition works with any TopBar, Sidebar, or custom markup',
+    'Full-viewport min-height ensures the shell always fills the screen',
+    'CSS custom property integration for consistent spacing and color tokens',
+    'Exposed CSS parts (shell, body, sidebar, main, content, toc) for deep style overrides',
+  ],
+
+  guidelines: {
+    do: [
+      'Use one AppShell as the root layout wrapper for each page or route',
+      'Place an arc-top-bar in the "topbar" slot for a consistent fixed header',
+      'Provide a sidebar toggle button in the top bar that sets sidebar-open on mobile',
+      'Use the "toc" slot for table-of-contents navigation on documentation pages',
+      'Combine with Container or Section components inside the default slot for consistent content widths',
     ],
+    dont: [
+      'Do not nest one AppShell inside another — it is designed as a singleton page frame',
+      'Do not put scrollable content directly in the sidebar slot without its own overflow handling',
+      'Do not rely on the toc slot for critical navigation — it hides on narrower viewports',
+      'Do not override min-height: 100vh on the host unless you are embedding a preview or iframe',
+      'Do not use AppShell for simple marketing pages that do not need a persistent sidebar or top bar',
+    ],
+  },
 
-    guidelines: {
-      do: [
-        'Use one AppShell as the root layout wrapper for each page or route',
-        'Place an arc-top-bar in the "topbar" slot for a consistent fixed header',
-        'Provide a sidebar toggle button in the top bar that sets sidebar-open on mobile',
-        'Use the "toc" slot for table-of-contents navigation on documentation pages',
-        'Combine with Container or Section components inside the default slot for consistent content widths',
-      ],
-      dont: [
-        'Nest one AppShell inside another — it is designed as a singleton page frame',
-        'Put scrollable content directly in the sidebar slot without its own overflow handling',
-        'Rely on the toc slot for critical navigation — it hides on narrower viewports',
-        'Override min-height: 100vh on the host unless you are embedding a preview or iframe',
-        'Use AppShell for simple marketing pages that do not need a persistent sidebar or top bar',
-      ],
-    },
+  previewLayout: 'frame',
 
-    previewLayout: 'frame',
+  previewHeight: '480px',
 
-    previewHeight: '480px',
-
-    previewHtml: `<div style="width:100%;height:100%;border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden;position:relative">
+  previewHtml: `<div style="width:100%;height:100%;border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden;position:relative">
   <arc-app-shell>
     <arc-top-bar slot="topbar" heading="Dashboard"></arc-top-bar>
     <nav slot="sidebar" style="width:200px;padding:var(--space-md);display:flex;flex-direction:column;gap:var(--space-xs);border-right:1px solid var(--border-subtle)">
@@ -77,12 +78,11 @@ Because AppShell is slot-based, it composes freely with other ARC UI primitives.
   </arc-app-shell>
 </div>`,
 
-
-    tabs: [
-      {
-        label: 'Web Component',
-        lang: 'html',
-        code: `<script type="module" src="@arclux/arc-ui"></script>
+  tabs: [
+    {
+      label: 'Web Component',
+      lang: 'html',
+      code: `<script type="module" src="@arclux/arc-ui"></script>
 
 <arc-app-shell>
   <arc-top-bar slot="topbar" heading="Dashboard"></arc-top-bar>
@@ -96,11 +96,11 @@ Because AppShell is slot-based, it composes freely with other ARC UI primitives.
     <p>Here is what happened while you were away.</p>
   </main>
 </arc-app-shell>`,
-      },
-      {
-        label: 'React',
-        lang: 'tsx',
-        code: `import { AppShell, TopBar } from '@arclux/arc-ui-react';
+    },
+    {
+      label: 'React',
+      lang: 'tsx',
+      code: `import { AppShell, TopBar } from '@arclux/arc-ui-react';
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -115,11 +115,11 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
     </AppShell>
   );
 }`,
-      },
-      {
-        label: 'Vue',
-        lang: 'html',
-        code: `<script setup>
+    },
+    {
+      label: 'Vue',
+      lang: 'html',
+      code: `<script setup>
 import { AppShell, TopBar } from '@arclux/arc-ui-vue';
 </script>
 
@@ -136,11 +136,11 @@ import { AppShell, TopBar } from '@arclux/arc-ui-vue';
     </main>
   </AppShell>
 </template>`,
-      },
-      {
-        label: 'Svelte',
-        lang: 'html',
-        code: `<script>
+    },
+    {
+      label: 'Svelte',
+      lang: 'html',
+      code: `<script>
   import { AppShell, TopBar } from '@arclux/arc-ui-svelte';
 </script>
 
@@ -155,18 +155,18 @@ import { AppShell, TopBar } from '@arclux/arc-ui-vue';
     <slot />
   </main>
 </AppShell>`,
-      },
-      {
-        label: 'Angular',
-        lang: 'ts',
-        code: `import { Component } from '@angular/core';
+    },
+    {
+      label: 'Angular',
+      lang: 'ts',
+      code: `import { Component } from '@angular/core';
 import { AppShell, TopBar } from '@arclux/arc-ui-angular';
 
 @Component({
   imports: [AppShell, TopBar],
   template: \`
-    <AppShell>
-      <TopBar slot="topbar" heading="Dashboard"></TopBar>
+    <arc-app-shell>
+      <arc-top-bar slot="topbar" heading="Dashboard"></arc-top-bar>
       <nav slot="sidebar" style="width: 200px; padding: 16px;">
         <a href="/overview">Overview</a>
         <a href="/analytics">Analytics</a>
@@ -175,15 +175,15 @@ import { AppShell, TopBar } from '@arclux/arc-ui-angular';
       <main>
         <ng-content />
       </main>
-    </AppShell>
+    </arc-app-shell>
   \`,
 })
 export class DashboardLayoutComponent {}`,
-      },
-      {
-        label: 'Solid',
-        lang: 'tsx',
-        code: `import { AppShell, TopBar } from '@arclux/arc-ui-solid';
+    },
+    {
+      label: 'Solid',
+      lang: 'tsx',
+      code: `import { AppShell, TopBar } from '@arclux/arc-ui-solid';
 import type { ParentProps } from 'solid-js';
 
 export function DashboardLayout(props: ParentProps) {
@@ -199,11 +199,11 @@ export function DashboardLayout(props: ParentProps) {
     </AppShell>
   );
 }`,
-      },
-      {
-        label: 'Preact',
-        lang: 'tsx',
-        code: `import { AppShell, TopBar } from '@arclux/arc-ui-preact';
+    },
+    {
+      label: 'Preact',
+      lang: 'tsx',
+      code: `import { AppShell, TopBar } from '@arclux/arc-ui-preact';
 import type { ComponentChildren } from 'preact';
 
 export function DashboardLayout({ children }: { children: ComponentChildren }) {
@@ -219,11 +219,11 @@ export function DashboardLayout({ children }: { children: ComponentChildren }) {
     </AppShell>
   );
 }`,
-      },
-      {
-        label: 'HTML',
-        lang: 'html',
-        code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
+    },
+    {
+      label: 'HTML',
+      lang: 'html',
+      code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
 <!-- arc-app-shell — requires app-shell.css + base.css (or arc-ui.css) -->
 <div class="arc-app-shell">
   <div class="shell">
@@ -233,7 +233,7 @@ export function DashboardLayout({ children }: { children: ComponentChildren }) {
       </div>
       <div class="shell__main">
         <div class="shell__content">
-          App Shell
+          AppShell
         </div>
         <div class="shell__toc">
           <!-- optional table-of-contents -->
@@ -242,11 +242,11 @@ export function DashboardLayout({ children }: { children: ComponentChildren }) {
     </div>
   </div>
 </div>`,
-      },
-      {
-        label: 'HTML (Inline)',
-        lang: 'html',
-        code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
+    },
+    {
+      label: 'HTML (Inline)',
+      lang: 'html',
+      code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
 <!-- arc-app-shell — self-contained, no external CSS needed -->
 <style>
   @media (max-width: 1280px) {
@@ -267,7 +267,7 @@ export function DashboardLayout({ children }: { children: ComponentChildren }) {
       </div>
       <div style="flex: 1; min-width: 0; display: flex">
         <div style="flex: 1; min-width: 0; padding: 40px 40px; max-width: 860px">
-          App Shell
+          AppShell
         </div>
         <div class="shell__toc" style="flex-shrink: 0; width: 220px">
           <!-- optional table-of-contents -->
@@ -276,8 +276,8 @@ export function DashboardLayout({ children }: { children: ComponentChildren }) {
     </div>
   </div>
 </div>`,
-      },
-    ],
-  
-  seeAlso: ["page-layout","sidebar","top-bar","footer","auth-shell"],
+    },
+  ],
+
+  seeAlso: ['page-layout', 'sidebar', 'top-bar', 'footer', 'auth-shell'],
 };

@@ -6,19 +6,20 @@ export const pageIndicator: ComponentDef = {
   tag: 'arc-page-indicator',
   tier: 'navigation',
   interactivity: 'interactive',
-  description: 'Dot-based position indicator for page-level navigation or onboarding flows. Active dot fills with accent-primary and scales up.',
+  description:
+    'Dot-based position indicator for page-level navigation or onboarding flows. Active dot fills with accent-primary and scales up.',
 
   overview: `PageIndicator renders a horizontal row of dots that communicate the user's position within a paged sequence — carousels, onboarding flows, slideshow presentations, or any content split into discrete steps. The active dot fills with accent-primary and scales up slightly, providing an immediate visual cue for the current position without requiring labels or numbers.
 
 The component supports both passive and interactive modes. In passive mode (\`clickable\` is false), the dots serve as read-only indicators driven by an external controller like a Carousel or swipe gesture handler. In interactive mode (\`clickable\` is true), each dot becomes a tap target that dispatches \`arc-change\` with the selected index, letting users jump directly to any page.
 
-PageIndicator is intentionally minimal — it handles position communication and optional direct navigation while leaving content transitions to the parent component. Pair it with Carousel for image galleries, StepperNav for wizard flows, or your own custom swipe container. The \`count\` prop sets the total number of dots and \`value\` controls which one is active, making it straightforward to synchronise with any paging state.`,
+PageIndicator is intentionally minimal — it handles position communication and optional direct navigation while leaving content transitions to the parent component. Pair it with Carousel for image galleries, StepperNav for wizard flows, or your own custom swipe container. The \`count\` prop sets the total number of dots and \`value\` controls which one is active, making it straightforward to synchronize with any paging state.`,
 
   features: [
     'Horizontal dot row for position indication',
     'Active dot fills with accent-primary and scales up',
     'Passive (read-only) and interactive (clickable) modes',
-    'arc-change event when a dot is clicked in interactive mode',
+    '`arc-change` event when a dot is clicked in interactive mode',
     'Controlled count and value props for external synchronisation',
     'Compact footprint suitable for overlay positioning',
     'Keyboard accessible in clickable mode with arrow keys',
@@ -31,21 +32,20 @@ PageIndicator is intentionally minimal — it handles position communication and
       'Enable clickable mode when users should be able to jump to any page directly',
       'Keep the count reasonable — five to seven dots maximum for quick scanning',
       'Position the indicator below or overlaid on the paged content',
-      'Synchronise the value prop with the parent component\'s active page state',
+      "Synchronise the value prop with the parent component's active page state",
     ],
     dont: [
-      'Use PageIndicator for progress — use Progress or Stepper instead',
-      'Display more than ten dots — the pattern breaks down at high counts',
-      'Use PageIndicator without a corresponding paged content area',
-      'Rely on PageIndicator as the only navigation mechanism — pair with swipe or buttons',
-      'Place multiple PageIndicators for the same content sequence',
+      'Do not use PageIndicator for progress — use Progress or Stepper instead',
+      'Do not display more than ten dots — the pattern breaks down at high counts',
+      'Do not use PageIndicator without a corresponding paged content area',
+      'Do not rely on PageIndicator as the only navigation mechanism — pair with swipe or buttons',
+      'Do not place multiple PageIndicators for the same content sequence',
     ],
   },
 
   previewHtml: `<div style="width:100%;max-width:300px;padding:var(--space-lg);background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-md);display:flex;justify-content:center">
   <arc-page-indicator count="5" value="2" clickable></arc-page-indicator>
 </div>`,
-
 
   tabs: [
     {
@@ -123,7 +123,7 @@ import { PageIndicator } from '@arclux/arc-ui-angular';
 @Component({
   imports: [PageIndicator],
   template: \`
-    <PageIndicator
+    <arc-page-indicator
       [count]="5"
       [value]="page"
       clickable

@@ -1,48 +1,48 @@
 import type { ComponentDef } from './_types';
 
 export const settingsLayout: ComponentDef = {
-    name: 'Settings Layout',
-    slug: 'settings-layout',
-    tag: 'arc-settings-layout',
-    tier: 'layout',
-    interactivity: 'hybrid',
-    description: 'Settings page with side navigation and content area.',
+  name: 'Settings Layout',
+  slug: 'settings-layout',
+  tag: 'arc-settings-layout',
+  tier: 'layout',
+  interactivity: 'hybrid',
+  description: 'Settings page with side navigation and content area.',
 
-    overview: `SettingsLayout is a two-region layout component designed specifically for settings and preference pages. It pairs a navigation panel (where you place section links like "Profile", "Security", "Billing") with a content area that displays the active settings form. The \`nav-position\` prop lets you choose between a left sidebar (the classic settings pattern) and a top tab-bar style layout.
+  overview: `SettingsLayout is a two-region layout component designed specifically for settings and preference pages. It pairs a navigation panel (where you place section links like "Profile", "Security", "Billing") with a content area that displays the active settings form. The \`nav-position\` prop lets you choose between a left sidebar (the classic settings pattern) and a top tab-bar style layout.
 
 In \`left\` mode, the navigation renders as a 220px sidebar with a card-colored background and a right border, creating a clear visual separation from the content. In \`top\` mode, the navigation appears as a horizontal bar above the content with a bottom border, which works well when there are only a few sections or when horizontal space is at a premium. Both modes use the same slot names, so switching between them requires changing a single attribute.
 
-On screens narrower than 768px, the left sidebar layout automatically collapses to a stacked column -- the nav moves above the content with a bottom border instead of a right border. This responsive behavior is built in and requires no additional configuration. The component exposes CSS parts for the layout container, nav region, and content region, allowing targeted style overrides when needed.`,
+On screens narrower than 768px, the left sidebar layout automatically collapses to a stacked column — the nav moves above the content with a bottom border instead of a right border. This responsive behavior is built in and requires no additional configuration. The component exposes CSS parts for the layout container, nav region, and content region, allowing targeted style overrides when needed.`,
 
-    features: [
-      'Two layout modes: left sidebar (220px) and top navigation bar',
-      'Card-colored nav background with subtle border separation',
-      'Automatic responsive collapse from sidebar to stacked layout at 768px',
-      'Named slots: nav (for section links) and default (for content)',
-      'CSS Grid layout in left mode, flexbox column in top mode',
-      'Exposed CSS parts (layout, nav, content) for targeted ::part() styling',
-      'Consistent padding via design tokens (--space-lg for nav, --space-xl for content)',
-      'Border swaps from right to bottom automatically on mobile collapse',
+  features: [
+    'Two layout modes: left sidebar (220px) and top navigation bar',
+    'Card-colored nav background with subtle border separation',
+    'Automatic responsive collapse from sidebar to stacked layout at 768px',
+    'Named slots: nav (for section links) and default (for content)',
+    'CSS Grid layout in left mode, flexbox column in top mode',
+    'Exposed CSS parts (layout, nav, content) for targeted ::part() styling',
+    'Consistent padding via design tokens (`--space-lg` for nav, `--space-xl` for content)',
+    'Border swaps from right to bottom automatically on mobile collapse',
+  ],
+
+  guidelines: {
+    do: [
+      'Use SettingsLayout for account settings, preferences, and configuration pages',
+      'Place a vertical link list or tab group in the nav slot for section switching',
+      'Use nav-position="left" when you have more than four or five settings sections',
+      'Use nav-position="top" for compact settings pages with only two or three sections',
+      'Nest individual settings forms or panels in the default content slot',
     ],
+    dont: [
+      'Do not use SettingsLayout for general page layout — use PageLayout for dashboard and content pages',
+      'Do not place primary application navigation in the nav slot; it is for settings-section switching only',
+      'Do not nest SettingsLayout inside another SettingsLayout or PageLayout with its own sidebar',
+      'Do not override the responsive breakpoint without testing the stacked layout on real mobile devices',
+      'Do not put heavy interactive content (tables, charts) in the nav slot — keep it lightweight',
+    ],
+  },
 
-    guidelines: {
-      do: [
-        'Use SettingsLayout for account settings, preferences, and configuration pages',
-        'Place a vertical link list or tab group in the nav slot for section switching',
-        'Use nav-position="left" when you have more than four or five settings sections',
-        'Use nav-position="top" for compact settings pages with only two or three sections',
-        'Nest individual settings forms or panels in the default content slot',
-      ],
-      dont: [
-        'Use SettingsLayout for general page layout -- use PageLayout for dashboard and content pages',
-        'Place primary application navigation in the nav slot; it is for settings-section switching only',
-        'Nest SettingsLayout inside another SettingsLayout or PageLayout with its own sidebar',
-        'Override the responsive breakpoint without testing the stacked layout on real mobile devices',
-        'Put heavy interactive content (tables, charts) in the nav slot -- keep it lightweight',
-      ],
-    },
-
-    previewHtml: `<div style="width:100%;height:280px;border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden;background:var(--bg-surface)">
+  previewHtml: `<div style="width:100%;height:280px;border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden;background:var(--bg-surface)">
   <arc-settings-layout nav-position="left" style="height:100%">
     <div slot="nav" style="display:flex;flex-direction:column;gap:var(--space-xs)">
       <span style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:var(--space-xs);font-family:var(--font-accent)">Settings</span>
@@ -63,35 +63,39 @@ On screens narrower than 768px, the left sidebar layout automatically collapses 
   </arc-settings-layout>
 </div>`,
 
-    tabs: [
-      {
-        label: 'Web Component',
-        lang: 'html',
-        code: `<arc-settings-layout nav-position="left">
+  tabs: [
+    {
+      label: 'Web Component',
+      lang: 'html',
+      code: `<arc-settings-layout nav-position="left">
   <div slot="nav">Profile | Security</div>
   <div>
     <h2>Profile Settings</h2>
     <p>Manage your account.</p>
   </div>
 </arc-settings-layout>`,
-      },
-      {
-        label: 'React',
-        lang: 'tsx',
-        code: `import { SettingsLayout } from '@arclux/arc-ui-react';
+    },
+    {
+      label: 'React',
+      lang: 'tsx',
+      code: `import { SettingsLayout } from '@arclux/arc-ui-react';
 
-<SettingsLayout nav-position="left">
-  <div slot="nav">Profile | Security</div>
-  <div>
-    <h2>Profile Settings</h2>
-    <p>Manage your account.</p>
-  </div>
-</SettingsLayout>`,
-      },
-      {
-        label: 'Vue',
-        lang: 'html',
-        code: `<script setup>
+export default function Example() {
+  return (
+    <SettingsLayout nav-position="left">
+      <div slot="nav">Profile | Security</div>
+      <div>
+        <h2>Profile Settings</h2>
+        <p>Manage your account.</p>
+      </div>
+    </SettingsLayout>
+  );
+}`,
+    },
+    {
+      label: 'Vue',
+      lang: 'html',
+      code: `<script setup>
 import { SettingsLayout } from '@arclux/arc-ui-vue';
 </script>
 
@@ -104,11 +108,11 @@ import { SettingsLayout } from '@arclux/arc-ui-vue';
     </div>
   </SettingsLayout>
 </template>`,
-      },
-      {
-        label: 'Svelte',
-        lang: 'html',
-        code: `<script>
+    },
+    {
+      label: 'Svelte',
+      lang: 'html',
+      code: `<script>
   import { SettingsLayout } from '@arclux/arc-ui-svelte';
 </script>
 
@@ -119,16 +123,34 @@ import { SettingsLayout } from '@arclux/arc-ui-vue';
     <p>Manage your account.</p>
   </div>
 </SettingsLayout>`,
-      },
-      {
-        label: 'Angular',
-        lang: 'ts',
-        code: `import { Component } from '@angular/core';
+    },
+    {
+      label: 'Angular',
+      lang: 'ts',
+      code: `import { Component } from '@angular/core';
 import { SettingsLayout } from '@arclux/arc-ui-angular';
 
 @Component({
   imports: [SettingsLayout],
   template: \`
+    <arc-settings-layout nav-position="left">
+      <div slot="nav">Profile | Security</div>
+      <div>
+        <h2>Profile Settings</h2>
+        <p>Manage your account.</p>
+      </div>
+    </arc-settings-layout>
+  \`,
+})
+export class MyComponent {}`,
+    },
+    {
+      label: 'Solid',
+      lang: 'tsx',
+      code: `import { SettingsLayout } from '@arclux/arc-ui-solid';
+
+export default function Example() {
+  return (
     <SettingsLayout nav-position="left">
       <div slot="nav">Profile | Security</div>
       <div>
@@ -136,37 +158,30 @@ import { SettingsLayout } from '@arclux/arc-ui-angular';
         <p>Manage your account.</p>
       </div>
     </SettingsLayout>
-  \`,
-})
-export class MyComponent {}`,
-      },
-      {
-        label: 'Solid',
-        lang: 'tsx',
-        code: `import { SettingsLayout } from '@arclux/arc-ui-solid';
+  );
+}`,
+    },
+    {
+      label: 'Preact',
+      lang: 'tsx',
+      code: `import { SettingsLayout } from '@arclux/arc-ui-preact';
 
-<SettingsLayout nav-position="left">
-  <div slot="nav">Profile | Security</div>
-  <div>
-    <h2>Profile Settings</h2>
-    <p>Manage your account.</p>
-  </div>
-</SettingsLayout>`,
-      },
-      {
-        label: 'Preact',
-        lang: 'tsx',
-        code: `import { SettingsLayout } from '@arclux/arc-ui-preact';
-
-<SettingsLayout nav-position="left">
-  <div slot="nav">Profile | Security</div>
-  <div>
-    <h2>Profile Settings</h2>
-    <p>Manage your account.</p>
-  </div>
-</SettingsLayout>`,
-      },
-      { label: 'HTML', lang: 'html', code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
+export default function Example() {
+  return (
+    <SettingsLayout nav-position="left">
+      <div slot="nav">Profile | Security</div>
+      <div>
+        <h2>Profile Settings</h2>
+        <p>Manage your account.</p>
+      </div>
+    </SettingsLayout>
+  );
+}`,
+    },
+    {
+      label: 'HTML',
+      lang: 'html',
+      code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
 <!-- arc-settings-layout — requires settings-layout.css + base.css (or arc-ui.css) -->
 <div class="arc-settings-layout">
   <div>
@@ -174,11 +189,15 @@ export class MyComponent {}`,
 
    </div>
    <div class="content">
-   Settings Layout
+   SettingsLayout
    </div>
    </div>
-</div>` },
-      { label: 'HTML (Inline)', lang: 'html', code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
+</div>`,
+    },
+    {
+      label: 'HTML (Inline)',
+      lang: 'html',
+      code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
 <!-- arc-settings-layout — self-contained, no external CSS needed -->
 <style>
   @media (max-width: 768px) {
@@ -196,11 +215,12 @@ export class MyComponent {}`,
 
    </div>
    <div style="padding: 40px; flex: 1">
-   Settings Layout
+   SettingsLayout
    </div>
    </div>
-</div>` }
-    ],
-  
-  seeAlso: ["app-shell","sidebar","tabs","form"],
+</div>`,
+    },
+  ],
+
+  seeAlso: ['app-shell', 'sidebar', 'tabs', 'form'],
 };

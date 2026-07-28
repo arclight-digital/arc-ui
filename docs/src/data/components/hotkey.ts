@@ -6,11 +6,12 @@ export const hotkey: ComponentDef = {
   tag: 'arc-hotkey',
   tier: 'input',
   interactivity: 'interactive',
-  description: 'Invisible keyboard shortcut listener that supports modifier combos (Ctrl+K) and chord sequences (g i). Fires an event when the key pattern is matched.',
+  description:
+    'Invisible keyboard shortcut listener that supports modifier combos (Ctrl+K) and chord sequences (g i). Fires an event when the key pattern is matched.',
 
   overview: `Hotkey is a zero-UI component that listens for keyboard shortcuts and fires an \`arc-hotkey-trigger\` event when a matching key pattern is detected. It renders nothing visible — \`display: none\` is enforced — so it acts purely as a declarative shortcut binding you drop into your template.
 
-The \`keys\` prop accepts modifier combos like \`"ctrl+k"\`, \`"meta+shift+p"\`, and \`"alt+n"\`, as well as Vim-style chord sequences where space-separated keys must be pressed in order (e.g., \`"g i"\` means press G, release, then press I within 1 second). Modifier names are normalized: \`cmd\`/\`command\` → \`meta\`, \`option\` → \`alt\`, \`control\` → \`ctrl\`.
+The \`keys\` prop accepts modifier combos like \`"ctrl+k"\`, \`"meta+shift+p"\`, and \`"alt+n"\`, as well as Vim-style chord sequences where space-separated keys must be pressed in order (e.g. \`"g i"\` means press G, release, then press I within 1 second). Modifier names are normalized: \`cmd\`/\`command\` → \`meta\`, \`option\` → \`alt\`, \`control\` → \`ctrl\`.
 
 By default, Hotkey skips events when focus is inside an input, textarea, select, or contentEditable element, preventing shortcuts from interfering with typing. Setting \`global\` attaches the listener to \`window\` and removes this filter, useful for app-wide shortcuts that must work regardless of focus.`,
 
@@ -18,25 +19,25 @@ By default, Hotkey skips events when focus is inside an input, textarea, select,
     'Modifier combos: ctrl+k, meta+shift+p, alt+n, etc.',
     'Chord sequences: "g i" (press G, then I within 1 second)',
     'Normalized modifier names: cmd/command → meta, option → alt',
-    'Automatic input/textarea/select filtering — won\'t fire while typing',
+    "Automatic input/textarea/select filtering — won't fire while typing",
     'Global mode attaches to window and bypasses focus filtering',
     'Disabled prop to temporarily suspend the shortcut',
     'Zero UI — `display: none` enforced, no layout impact',
-    'Fires `arc-hotkey-trigger` with `event.detail.keys` containing the matched pattern'
+    'Fires `arc-hotkey-trigger` with `event.detail.keys` containing the matched pattern',
   ],
 
   guidelines: {
     do: [
       'Use for app-level shortcuts like Ctrl+K for search or Ctrl+S for save',
-      'Set `global` for shortcuts that must work inside text inputs (e.g., Ctrl+S)',
+      'Set `global` for shortcuts that must work inside text inputs (e.g. Ctrl+S)',
       'Provide visual hints elsewhere in the UI (tooltips, menu items) showing available shortcuts',
-      'Use `disabled` to suspend shortcuts when a modal or dialog is open'
+      'Use `disabled` to suspend shortcuts when a modal or dialog is open',
     ],
     dont: [
-      'Override browser-reserved shortcuts (Ctrl+T, Ctrl+W, Ctrl+N) — they won\'t work',
-      'Create chord sequences longer than 2-3 keys — users can\'t remember them',
-      'Rely on hotkeys as the only way to access a feature — always provide a clickable alternative',
-      'Forget the 1-second chord timeout — slow typists may miss the window'
+      "Do not override browser-reserved shortcuts (Ctrl+T, Ctrl+W, Ctrl+N) — they won't work",
+      "Do not create chord sequences longer than 2-3 keys — users can't remember them",
+      'Do not rely on hotkeys as the only way to access a feature — always provide a clickable alternative',
+      'Do not forget the 1-second chord timeout — slow typists may miss the window',
     ],
   },
 
@@ -55,8 +56,6 @@ By default, Hotkey skips events when focus is inside an input, textarea, select,
     _t = setTimeout(() => { el.textContent = ''; }, 2000);
   });
 }`,
-
-
 
   tabs: [
     {
@@ -131,8 +130,8 @@ import { Hotkey } from '@arclux/arc-ui-angular';
 @Component({
   imports: [Hotkey],
   template: \`
-    <Hotkey keys="ctrl+k" (arc-hotkey-trigger)="openSearch()" />
-    <Hotkey keys="ctrl+s" global (arc-hotkey-trigger)="save()" />
+    <arc-hotkey keys="ctrl+k" (arc-hotkey-trigger)="openSearch()" />
+    <arc-hotkey keys="ctrl+s" global (arc-hotkey-trigger)="save()" />
   \`,
 })
 export class AppComponent {
@@ -145,16 +144,28 @@ export class AppComponent {
       lang: 'tsx',
       code: `import { Hotkey } from '@arclux/arc-ui-solid';
 
-<Hotkey keys="ctrl+k" onArcHotkeyTrigger={() => openSearch()} />
-<Hotkey keys="ctrl+s" global onArcHotkeyTrigger={() => save()} />`,
+export default function Example() {
+  return (
+    <>
+      <Hotkey keys="ctrl+k" onArcHotkeyTrigger={() => openSearch()} />
+      <Hotkey keys="ctrl+s" global onArcHotkeyTrigger={() => save()} />
+    </>
+  );
+}`,
     },
     {
       label: 'Preact',
       lang: 'tsx',
       code: `import { Hotkey } from '@arclux/arc-ui-preact';
 
-<Hotkey keys="ctrl+k" onArcHotkeyTrigger={() => openSearch()} />
-<Hotkey keys="ctrl+s" global onArcHotkeyTrigger={() => save()} />`,
+export default function Example() {
+  return (
+    <>
+      <Hotkey keys="ctrl+k" onArcHotkeyTrigger={() => openSearch()} />
+      <Hotkey keys="ctrl+s" global onArcHotkeyTrigger={() => save()} />
+    </>
+  );
+}`,
     },
   ],
 

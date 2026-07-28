@@ -6,7 +6,8 @@ export const label: ComponentDef = {
   tag: 'arc-label',
   tier: 'input',
   interactivity: 'static',
-  description: 'Form label with required indicator, optional description text, and tooltip slot. Pairs with any input component via the `for` attribute.',
+  description:
+    'Form label with required indicator, optional description text, and tooltip slot. Pairs with any input component via the `for` attribute.',
 
   overview: `Label provides a styled, accessible label for form controls. It renders a \`<label>\` element that can target any input via the \`for\` prop, clicking the label to focus the associated control just like native HTML.
 
@@ -28,14 +29,14 @@ Three sizes (sm, md, lg) control the font size, and the disabled state reduces o
   guidelines: {
     do: [
       'Always pair a label with its input — every form control needs an accessible label',
-      'Set the `for` prop to match the target input\'s `id` attribute',
+      "Set the `for` prop to match the target input's `id` attribute",
       'Use the description slot for format hints like "MM/DD/YYYY" or character limits',
       'Use the required indicator to clearly mark mandatory fields',
     ],
     dont: [
-      'Use Label as standalone text — it is a form element, not a heading or paragraph',
-      'Hide labels visually while keeping them only for screen readers — visible labels help all users',
-      'Put interactive elements inside the label text — use the tooltip slot instead',
+      'Do not use Label as standalone text — it is a form element, not a heading or paragraph',
+      'Do not hide labels visually while keeping them only for screen readers — visible labels help all users',
+      'Do not put interactive elements inside the label text — use the tooltip slot instead',
     ],
   },
 
@@ -52,7 +53,6 @@ Three sizes (sm, md, lg) control the font size, and the disabled state reduces o
     <arc-input id="email-input" type="email" placeholder="jane@example.com"></arc-input>
   </div>
 </div>`,
-
 
   tabs: [
     {
@@ -72,14 +72,20 @@ Three sizes (sm, md, lg) control the font size, and the disabled state reduces o
       lang: 'tsx',
       code: `import { Label, Input, Textarea } from '@arclux/arc-ui-react';
 
-<Label for="username" required>Username</Label>
-<Input id="username" placeholder="Enter username" />
+export default function Example() {
+  return (
+    <>
+      <Label for="username" required>Username</Label>
+      <Input id="username" placeholder="Enter username" />
 
-<Label for="bio">
-  Bio
-  <span slot="description">Keep it under 160 characters.</span>
-</Label>
-<Textarea id="bio" />`,
+      <Label for="bio">
+        Bio
+        <span slot="description">Keep it under 160 characters.</span>
+      </Label>
+      <Textarea id="bio" />
+    </>
+  );
+}`,
     },
     {
       label: 'Vue',
@@ -124,8 +130,8 @@ import { Label, Input, Textarea } from '@arclux/arc-ui-angular';
 @Component({
   imports: [Label, Input, Textarea],
   template: \`
-    <Label for="username" required>Username</Label>
-    <Input id="username" placeholder="Enter username" />
+    <arc-label for="username" required>Username</arc-label>
+    <arc-input id="username" placeholder="Enter username" />
   \`,
 })
 export class FormComponent {}`,
@@ -135,16 +141,28 @@ export class FormComponent {}`,
       lang: 'tsx',
       code: `import { Label, Input } from '@arclux/arc-ui-solid';
 
-<Label for="username" required>Username</Label>
-<Input id="username" placeholder="Enter username" />`,
+export default function Example() {
+  return (
+    <>
+      <Label for="username" required>Username</Label>
+      <Input id="username" placeholder="Enter username" />
+    </>
+  );
+}`,
     },
     {
       label: 'Preact',
       lang: 'tsx',
       code: `import { Label, Input } from '@arclux/arc-ui-preact';
 
-<Label for="username" required>Username</Label>
-<Input id="username" placeholder="Enter username" />`,
+export default function Example() {
+  return (
+    <>
+      <Label for="username" required>Username</Label>
+      <Input id="username" placeholder="Enter username" />
+    </>
+  );
+}`,
     },
     {
       label: 'HTML',

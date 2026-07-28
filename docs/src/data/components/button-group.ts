@@ -6,9 +6,10 @@ export const buttonGroup: ComponentDef = {
   tag: 'arc-button-group',
   tier: 'input',
   interactivity: 'hybrid',
-  description: 'Connects multiple buttons into a single visual unit with shared borders and collapsed radii. Supports horizontal and vertical orientations.',
+  description:
+    'Connects multiple buttons into a single visual unit with shared borders and collapsed radii. Supports horizontal and vertical orientations.',
 
-  overview: `Button Group joins adjacent buttons into a connected strip where inner border radii are removed and outer buttons retain rounded corners. This creates a unified control that reads as a single element while each button remains independently clickable.
+  overview: `ButtonGroup joins adjacent buttons into a connected strip where inner border radii are removed and outer buttons retain rounded corners. This creates a unified control that reads as a single element while each button remains independently clickable.
 
 The component automatically overrides the border-radius CSS custom properties on slotted children, giving the first and last child outer radii while removing inner radii. Margins between items are collapsed by -1px to prevent double borders. Both horizontal (default) and vertical orientations are supported.
 
@@ -20,21 +21,21 @@ The \`size\` and \`variant\` props cascade to all child buttons, ensuring consis
     'Horizontal and vertical orientations',
     'Cascades `size` and `variant` props to all child buttons',
     'Semantic `role="group"` container',
-    'Works with arc-button, arc-icon-button, or any slotted children',
+    'Works with `arc-button`, `arc-icon-button`, or any slotted children',
     'Exposed CSS part: group',
   ],
 
   guidelines: {
     do: [
-      'Use for related actions that belong together — e.g., text alignment (Left, Center, Right)',
+      'Use for related actions that belong together — e.g. text alignment (Left, Center, Right)',
       'Keep button groups to 2-5 items for readability',
       'Use the vertical orientation for stacked toolbar controls',
       'Set variant on the group instead of individual buttons for consistency',
     ],
     dont: [
-      'Mix different button sizes inside a group — use the group `size` prop',
-      'Use button groups for navigation — use tabs or segmented control instead',
-      'Put destructive actions in the same group as constructive ones without clear visual separation',
+      'Do not mix different button sizes inside a group — use the group `size` prop',
+      'Do not use button groups for navigation — use tabs or segmented control instead',
+      'Do not put destructive actions in the same group as constructive ones without clear visual separation',
     ],
   },
 
@@ -50,7 +51,6 @@ The \`size\` and \`variant\` props cascade to all child buttons, ensuring consis
     <arc-button variant="ghost">Bottom</arc-button>
   </arc-button-group>
 </div>`,
-
 
   tabs: [
     {
@@ -73,11 +73,15 @@ The \`size\` and \`variant\` props cascade to all child buttons, ensuring consis
       lang: 'tsx',
       code: `import { ButtonGroup, Button } from '@arclux/arc-ui-react';
 
-<ButtonGroup>
-  <Button variant="ghost">Left</Button>
-  <Button variant="ghost">Center</Button>
-  <Button variant="ghost">Right</Button>
-</ButtonGroup>`,
+export default function Example() {
+  return (
+    <ButtonGroup>
+      <Button variant="ghost">Left</Button>
+      <Button variant="ghost">Center</Button>
+      <Button variant="ghost">Right</Button>
+    </ButtonGroup>
+  );
+}`,
     },
     {
       label: 'Vue',
@@ -116,11 +120,11 @@ import { ButtonGroup, Button } from '@arclux/arc-ui-angular';
 @Component({
   imports: [ButtonGroup, Button],
   template: \`
-    <ButtonGroup>
-      <Button variant="ghost">Left</Button>
-      <Button variant="ghost">Center</Button>
-      <Button variant="ghost">Right</Button>
-    </ButtonGroup>
+    <arc-button-group>
+      <arc-button variant="ghost">Left</arc-button>
+      <arc-button variant="ghost">Center</arc-button>
+      <arc-button variant="ghost">Right</arc-button>
+    </arc-button-group>
   \`,
 })
 export class ToolbarComponent {}`,
@@ -130,22 +134,30 @@ export class ToolbarComponent {}`,
       lang: 'tsx',
       code: `import { ButtonGroup, Button } from '@arclux/arc-ui-solid';
 
-<ButtonGroup>
-  <Button variant="ghost">Left</Button>
-  <Button variant="ghost">Center</Button>
-  <Button variant="ghost">Right</Button>
-</ButtonGroup>`,
+export default function Example() {
+  return (
+    <ButtonGroup>
+      <Button variant="ghost">Left</Button>
+      <Button variant="ghost">Center</Button>
+      <Button variant="ghost">Right</Button>
+    </ButtonGroup>
+  );
+}`,
     },
     {
       label: 'Preact',
       lang: 'tsx',
       code: `import { ButtonGroup, Button } from '@arclux/arc-ui-preact';
 
-<ButtonGroup>
-  <Button variant="ghost">Left</Button>
-  <Button variant="ghost">Center</Button>
-  <Button variant="ghost">Right</Button>
-</ButtonGroup>`,
+export default function Example() {
+  return (
+    <ButtonGroup>
+      <Button variant="ghost">Left</Button>
+      <Button variant="ghost">Center</Button>
+      <Button variant="ghost">Right</Button>
+    </ButtonGroup>
+  );
+}`,
     },
     {
       label: 'HTML',

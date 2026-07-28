@@ -1,14 +1,15 @@
 import type { ComponentDef } from './_types';
 
 export const countdownTimer: ComponentDef = {
-    name: 'Countdown Timer',
-    slug: 'countdown-timer',
-    tag: 'arc-countdown-timer',
-    tier: 'data',
-    interactivity: 'interactive',
-    description: 'Live countdown to a target date/time with days, hours, minutes, and seconds segments.',
+  name: 'Countdown Timer',
+  slug: 'countdown-timer',
+  tag: 'arc-countdown-timer',
+  tier: 'data',
+  interactivity: 'interactive',
+  description:
+    'Live countdown to a target date/time with days, hours, minutes, and seconds segments.',
 
-    overview: `CountdownTimer renders a live, self-updating countdown to a target date or time. The display is split into four card-like segments — days, hours, minutes, and seconds — each showing a large mono-spaced number with a gradient accent fill and an uppercase label beneath. Segments are separated by ghost-colored colons to reinforce the time-display metaphor.
+  overview: `CountdownTimer renders a live, self-updating countdown to a target date or time. The display is split into four card-like segments — days, hours, minutes, and seconds — each showing a large mono-spaced number with a gradient accent fill and an uppercase label beneath. Segments are separated by ghost-colored colons to reinforce the time-display metaphor.
 
 The component parses any valid ISO 8601 string or JavaScript-parseable date via the \`target\` attribute and recalculates the remaining time every second using \`setInterval\`. When the countdown reaches zero, an \`arc-expired\` event is dispatched and the display switches to a configurable expired message (default: "Expired"). The interval is automatically cleaned up in \`disconnectedCallback\` to prevent memory leaks.
 
@@ -16,45 +17,43 @@ Numbers use \`font-variant-numeric: tabular-nums\` so digits maintain consistent
 
 The \`hide-zero-segments\` attribute suppresses leading zero-value segments — useful when the countdown is under 24 hours and showing "00 Days" adds no value.`,
 
-    features: [
-      'Live countdown updating every second via setInterval',
-      'Automatic cleanup of interval timer in disconnectedCallback',
-      'Gradient-accent number text with tabular-nums for stable layout',
-      'Card-style segments with hover glow effect',
-      'Dispatches arc-expired custom event when countdown reaches zero',
-      'Configurable expired text via the expired attribute',
-      'Optional label with gradient accent text above the countdown',
-      'hide-zero-segments attribute to suppress leading zero segments',
-      'Respects prefers-reduced-motion by disabling transitions',
-      'CSS parts for container, segment, number, label, and separator',
+  features: [
+    'Live countdown updating every second via setInterval',
+    'Automatic cleanup of interval timer in disconnectedCallback',
+    'Gradient-accent number text with tabular-nums for stable layout',
+    'Card-style segments with hover glow effect',
+    'Fires `arc-expired` custom event when countdown reaches zero',
+    'Configurable expired text via the expired attribute',
+    'Optional label with gradient accent text above the countdown',
+    'hide-zero-segments attribute to suppress leading zero segments',
+    'Respects `prefers-reduced-motion` by disabling transitions',
+    'CSS parts for container, segment, number, label, and separator',
+  ],
+
+  guidelines: {
+    do: [
+      'Use for event countdowns, product launches, and sale timers',
+      'Provide a meaningful label like "Launches In" or "Offer Ends"',
+      'Set a custom expired message relevant to the context (e.g. "Now Live!")',
+      'Use hide-zero-segments when the countdown is under 24 hours',
+      'Place inside a Section or Card for visual context',
     ],
+    dont: [
+      'Do not use for elapsed time or stopwatch functionality — this counts down only',
+      'Do not set a target date in the past unless you want the expired state immediately',
+      'Do not place more than one or two countdowns on a single page — they compete for attention',
+      'Do not rely solely on the visual countdown for critical deadlines — provide server-side enforcement',
+      'Do not use extremely short countdowns (under 10 seconds) as primary UI — the urgency feels manipulative',
+    ],
+  },
 
-    guidelines: {
-      do: [
-        'Use for event countdowns, product launches, and sale timers',
-        'Provide a meaningful label like "Launches In" or "Offer Ends"',
-        'Set a custom expired message relevant to the context (e.g., "Now Live!")',
-        'Use hide-zero-segments when the countdown is under 24 hours',
-        'Place inside a Section or Card for visual context',
-      ],
-      dont: [
-        'Use for elapsed time or stopwatch functionality — this counts down only',
-        'Set a target date in the past unless you want the expired state immediately',
-        'Place more than one or two countdowns on a single page — they compete for attention',
-        'Rely solely on the visual countdown for critical deadlines — provide server-side enforcement',
-        'Use extremely short countdowns (under 10 seconds) as primary UI — the urgency feels manipulative',
-      ],
-    },
+  previewHtml: `<arc-countdown-timer target="2026-12-31T00:00:00" label="New Year"></arc-countdown-timer>`,
 
-    previewHtml: `<arc-countdown-timer target="2026-12-31T00:00:00" label="New Year"></arc-countdown-timer>`,
-
-
-
-    tabs: [
-      {
-        label: 'Web Component',
-        lang: 'html',
-        code: `<!-- New Year countdown -->
+  tabs: [
+    {
+      label: 'Web Component',
+      lang: 'html',
+      code: `<!-- New Year countdown -->
 <arc-countdown-timer
   target="2026-12-31T00:00:00"
   label="New Year"
@@ -72,11 +71,11 @@ The \`hide-zero-segments\` attribute suppresses leading zero-value segments — 
   target="2026-03-01T18:00:00"
   hide-zero-segments
 ></arc-countdown-timer>`,
-      },
-      {
-        label: 'React',
-        lang: 'tsx',
-        code: `import { CountdownTimer } from '@arclux/arc-ui-react';
+    },
+    {
+      label: 'React',
+      lang: 'tsx',
+      code: `import { CountdownTimer } from '@arclux/arc-ui-react';
 
 function LaunchBanner({ launchDate }) {
   return (
@@ -88,11 +87,11 @@ function LaunchBanner({ launchDate }) {
     />
   );
 }`,
-      },
-      {
-        label: 'Vue',
-        lang: 'html',
-        code: `<script setup>
+    },
+    {
+      label: 'Vue',
+      lang: 'html',
+      code: `<script setup>
 import { CountdownTimer } from '@arclux/arc-ui-vue';
 
 const launchDate = '2026-12-31T00:00:00';
@@ -110,11 +109,11 @@ function handleExpired() {
     @arc-expired="handleExpired"
   />
 </template>`,
-      },
-      {
-        label: 'Svelte',
-        lang: 'html',
-        code: `<script>
+    },
+    {
+      label: 'Svelte',
+      lang: 'html',
+      code: `<script>
   import { CountdownTimer } from '@arclux/arc-ui-svelte';
 
   const target = '2026-12-31T00:00:00';
@@ -126,17 +125,17 @@ function handleExpired() {
   expired="Happy New Year!"
   on:arc-expired={() => console.log('Done!')}
 />`,
-      },
-      {
-        label: 'Angular',
-        lang: 'ts',
-        code: `import { Component } from '@angular/core';
+    },
+    {
+      label: 'Angular',
+      lang: 'ts',
+      code: `import { Component } from '@angular/core';
 import { CountdownTimer } from '@arclux/arc-ui-angular';
 
 @Component({
   imports: [CountdownTimer],
   template: \`
-    <CountdownTimer
+    <arc-countdown-timer
       target="2026-12-31T00:00:00"
       label="New Year"
       expired="Happy New Year!"
@@ -149,11 +148,11 @@ export class CountdownComponent {
     console.log('Countdown finished!');
   }
 }`,
-      },
-      {
-        label: 'Solid',
-        lang: 'tsx',
-        code: `import { CountdownTimer } from '@arclux/arc-ui-solid';
+    },
+    {
+      label: 'Solid',
+      lang: 'tsx',
+      code: `import { CountdownTimer } from '@arclux/arc-ui-solid';
 
 function LaunchCountdown() {
   return (
@@ -164,11 +163,11 @@ function LaunchCountdown() {
     />
   );
 }`,
-      },
-      {
-        label: 'Preact',
-        lang: 'tsx',
-        code: `import { CountdownTimer } from '@arclux/arc-ui-preact';
+    },
+    {
+      label: 'Preact',
+      lang: 'tsx',
+      code: `import { CountdownTimer } from '@arclux/arc-ui-preact';
 
 function LaunchCountdown() {
   return (
@@ -179,8 +178,8 @@ function LaunchCountdown() {
     />
   );
 }`,
-      },
-    ],
+    },
+  ],
 
-    seeAlso: ['animated-number', 'stat', 'badge'],
+  seeAlso: ['animated-number', 'stat', 'badge'],
 };

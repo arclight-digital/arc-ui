@@ -6,7 +6,8 @@ export const skipLink: ComponentDef = {
   tag: 'arc-skip-link',
   tier: 'navigation',
   interactivity: 'interactive',
-  description: 'Accessible skip-to-content link, invisible until focused. On focus shows as accent-primary filled pill with glow ring above the page.',
+  description:
+    'Accessible skip-to-content link, invisible until focused. On focus shows as accent-primary filled pill with glow ring above the page.',
 
   overview: `SkipLink is an accessibility-first navigation aid that remains invisible during normal browsing but reveals itself the moment a keyboard user presses Tab at the top of the page. When focused, it appears as an accent-primary filled pill with a glow ring, positioned above all other content so the user can immediately jump past repetitive navigation and land on the main content area.
 
@@ -34,18 +35,17 @@ The component accepts a \`target\` prop — typically an ID selector like \`#mai
       'Include SkipLink on every page for consistent keyboard navigation',
     ],
     dont: [
-      'Hide SkipLink with display:none or visibility:hidden — it must remain focusable',
-      'Place SkipLink after other interactive elements — it must be first',
-      'Use a target that does not exist on the page',
-      'Add multiple SkipLinks unless the page has distinct content regions',
-      'Remove SkipLink to "simplify" the UI — it is a WCAG requirement',
+      'Do not hide SkipLink with display:none or visibility:hidden — it must remain focusable',
+      'Do not place SkipLink after other interactive elements — it must be first',
+      'Do not use a target that does not exist on the page',
+      'Do not add multiple SkipLinks unless the page has distinct content regions',
+      'Do not remove SkipLink to "simplify" the UI — it is a WCAG requirement',
     ],
   },
 
   previewHtml: `<div style="width:100%;max-width:400px;padding:var(--space-lg);background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-md);text-align:center">
   <p style="color:var(--text-muted);font-size:var(--text-sm);margin:0">SkipLink is invisible by default. Press <kbd style="padding:2px 6px;background:var(--bg-inset);border:1px solid var(--border-default);border-radius:var(--radius-sm);font-size:var(--text-xs);font-family:var(--font-mono)">Tab</kbd> at the top of any page to reveal it.</p>
 </div>`,
-
 
   tabs: [
     {
@@ -116,7 +116,7 @@ import { SkipLink } from '@arclux/arc-ui-angular';
 @Component({
   imports: [SkipLink],
   template: \`
-    <SkipLink target="#main">Skip to main content</SkipLink>
+    <arc-skip-link target="#main">Skip to main content</arc-skip-link>
     <!-- ...header, nav, etc... -->
     <main id="main" tabindex="-1">
       <!-- Page content -->

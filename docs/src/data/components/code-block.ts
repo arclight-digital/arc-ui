@@ -1,48 +1,48 @@
 import type { ComponentDef } from './_types';
 
 export const codeBlock: ComponentDef = {
-    name: 'Code Block',
-    slug: 'code-block',
-    tag: 'arc-code-block',
-    tier: 'typography',
-    interactivity: 'hybrid',
-    description: 'Syntax-highlighted code display with optional filename and copy button.',
+  name: 'Code Block',
+  slug: 'code-block',
+  tag: 'arc-code-block',
+  tier: 'typography',
+  interactivity: 'hybrid',
+  description: 'Syntax-highlighted code display with optional filename and copy button.',
 
-    overview: `CodeBlock displays source code in a styled container with a header bar, optional filename, language badge, and a one-click copy button. The header renders the filename in monospace font on the left, the language identifier as an uppercase Tektur badge on the right, and a "Copy" button that writes the code content to the clipboard via the Clipboard API. After a successful copy, the button text and border color switch to a green "Copied" state for two seconds before reverting.
+  overview: `CodeBlock displays source code in a styled container with a header bar, optional filename, language badge, and a one-click copy button. The header renders the filename in monospace font on the left, the language identifier as an uppercase Tektur badge on the right, and a "Copy" button that writes the code content to the clipboard via the Clipboard API. After a successful copy, the button text and border color switch to a green "Copied" state for two seconds before reverting.
 
 The code body renders inside a \`<pre>\` element with the monospace font stack (JetBrains Mono), a line-height of 1.8, and horizontal overflow scrolling for long lines. Code content can be provided via the \`code\` property or through the default slot, making it flexible for both static strings and dynamic content injection. The tab-size is set to 2 for compact indentation.
 
 CodeBlock is marked as a hybrid component: the code display works without JavaScript (the layout and styling are pure CSS), but the copy-to-clipboard functionality requires JS and a secure context (HTTPS). The component gracefully handles copy failures with a silent try-catch, so it degrades without errors on HTTP or restricted environments.`,
 
-    features: [
-      'One-click copy-to-clipboard via the Clipboard API with a 2-second "Copied" confirmation',
-      'Header bar with filename (monospace), language badge (uppercase Tektur), and copy button',
-      'Horizontal scroll overflow for long code lines without wrapping',
-      'Code content via the "code" prop or default slot for flexible content injection',
-      'JetBrains Mono font stack with 1.8 line-height and tab-size of 2',
-      'Graceful degradation: copy fails silently on insecure contexts without breaking the UI',
-      'Six exposed CSS parts: code-block, header, filename, lang, copy, body, pre, code',
-      'Surface and card background tokens for seamless integration with dark themes',
+  features: [
+    'One-click copy-to-clipboard via the Clipboard API with a 2-second "Copied" confirmation',
+    'Header bar with filename (monospace), language badge (uppercase Tektur), and copy button',
+    'Horizontal scroll overflow for long code lines without wrapping',
+    'Code content via the "code" prop or default slot for flexible content injection',
+    'JetBrains Mono font stack with 1.8 line-height and tab-size of 2',
+    'Graceful degradation: copy fails silently on insecure contexts without breaking the UI',
+    'Six exposed CSS parts: code-block, header, filename, lang, copy, body, pre, code',
+    'Surface and card background tokens for seamless integration with dark themes',
+  ],
+
+  guidelines: {
+    do: [
+      'Set the language prop to help users identify the code syntax at a glance',
+      'Provide a filename when showing code from a specific file for context',
+      'Use the code prop for static snippets and the slot for dynamically rendered content',
+      'Place CodeBlock in documentation pages, API references, and tutorial content',
+      'Test copy functionality on HTTPS — the Clipboard API requires a secure context',
     ],
+    dont: [
+      'Do not embed interactive elements inside the code slot — it renders inside a <pre><code> block',
+      'Do not use CodeBlock for single-line inline code; use arc-text variant="code" instead',
+      'Do not omit the language prop when the syntax is not obvious from context',
+      'Do not override the font-family unless you are intentionally switching to a different monospace font',
+      'Do not assume copy will always work — it requires HTTPS and a user gesture in modern browsers',
+    ],
+  },
 
-    guidelines: {
-      do: [
-        'Set the language prop to help users identify the code syntax at a glance',
-        'Provide a filename when showing code from a specific file for context',
-        'Use the code prop for static snippets and the slot for dynamically rendered content',
-        'Place CodeBlock in documentation pages, API references, and tutorial content',
-        'Test copy functionality on HTTPS — the Clipboard API requires a secure context',
-      ],
-      dont: [
-        'Embed interactive elements inside the code slot — it renders inside a <pre><code> block',
-        'Use CodeBlock for single-line inline code; use arc-text variant="code" instead',
-        'Omit the language prop when the syntax is not obvious from context',
-        'Override the font-family unless you are intentionally switching to a different monospace font',
-        'Assume copy will always work — it requires HTTPS and a user gesture in modern browsers',
-      ],
-    },
-
-    previewHtml: `<div style="display: flex; flex-direction: column; gap: 24px;">
+  previewHtml: `<div style="display: flex; flex-direction: column; gap: 24px;">
   <div>
     <arc-text variant="label" style="margin-bottom: 8px; display: block;">Default</arc-text>
     <arc-code-block language="js" filename="app.js" code="import { Button, Card } from '@arclux/arc-ui';\n\nfunction init(config = {}) {\n  const app = document.querySelector('#app');\n  const { theme = 'dark', debug = false } = config;\n\n  if (debug) {\n    console.log('ARC UI loaded', { theme });\n  }\n\n  return app;\n}"></arc-code-block>
@@ -57,27 +57,32 @@ CodeBlock is marked as a hybrid component: the code display works without JavaSc
   </div>
 </div>`,
 
-    tabs: [
-      {
-        label: 'Web Component',
-        lang: 'html',
-        code: `<arc-code-block language="js" filename="example.js">
+  tabs: [
+    {
+      label: 'Web Component',
+      lang: 'html',
+      code: `<arc-code-block language="js" filename="example.js">
 import { Button } from '@arclux/arc-ui';
 </arc-code-block>`,
-      },
-      {
-        label: 'React',
-        lang: 'tsx',
-        code: `import { CodeBlock } from '@arclux/arc-ui-react';
+    },
+    {
+      label: 'React',
+      lang: 'tsx',
+      code: `import { CodeBlock } from '@arclux/arc-ui-react';
 
 <CodeBlock language="js" filename="example.js">
 import { Button } from '@arclux/arc-ui';
-</CodeBlock>`,
-      },
-      {
-        label: 'Vue',
-        lang: 'html',
-        code: `<script setup>
+
+export default function Example() {
+  return (
+    </CodeBlock>
+  );
+}`,
+    },
+    {
+      label: 'Vue',
+      lang: 'html',
+      code: `<script setup>
 import { CodeBlock } from '@arclux/arc-ui-vue';
 </script>
 
@@ -86,53 +91,66 @@ import { CodeBlock } from '@arclux/arc-ui-vue';
   import { Button } from '@arclux/arc-ui';
   </CodeBlock>
 </template>`,
-      },
-      {
-        label: 'Svelte',
-        lang: 'html',
-        code: `<script>
+    },
+    {
+      label: 'Svelte',
+      lang: 'html',
+      code: `<script>
   import { CodeBlock } from '@arclux/arc-ui-svelte';
 </script>
 
 <CodeBlock language="js" filename="example.js">
 import { Button } from '@arclux/arc-ui';
 </CodeBlock>`,
-      },
-      {
-        label: 'Angular',
-        lang: 'ts',
-        code: `import { Component } from '@angular/core';
+    },
+    {
+      label: 'Angular',
+      lang: 'ts',
+      code: `import { Component } from '@angular/core';
 import { CodeBlock } from '@arclux/arc-ui-angular';
 
 @Component({
   imports: [CodeBlock],
   template: \`
-    <CodeBlock language="js" filename="example.js">
+    <arc-code-block language="js" filename="example.js">
     import { Button } from '@arclux/arc-ui';
-    </CodeBlock>
+    </arc-code-block>
   \`,
 })
 export class MyComponent {}`,
-      },
-      {
-        label: 'Solid',
-        lang: 'tsx',
-        code: `import { CodeBlock } from '@arclux/arc-ui-solid';
+    },
+    {
+      label: 'Solid',
+      lang: 'tsx',
+      code: `import { CodeBlock } from '@arclux/arc-ui-solid';
 
 <CodeBlock language="js" filename="example.js">
 import { Button } from '@arclux/arc-ui';
-</CodeBlock>`,
-      },
-      {
-        label: 'Preact',
-        lang: 'tsx',
-        code: `import { CodeBlock } from '@arclux/arc-ui-preact';
+
+export default function Example() {
+  return (
+    </CodeBlock>
+  );
+}`,
+    },
+    {
+      label: 'Preact',
+      lang: 'tsx',
+      code: `import { CodeBlock } from '@arclux/arc-ui-preact';
 
 <CodeBlock language="js" filename="example.js">
 import { Button } from '@arclux/arc-ui';
-</CodeBlock>`,
-      },
-      { label: 'HTML', lang: 'html', code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
+
+export default function Example() {
+  return (
+    </CodeBlock>
+  );
+}`,
+    },
+    {
+      label: 'HTML',
+      lang: 'html',
+      code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
 <!-- arc-code-block — requires code-block.css + base.css (or arc-ui.css) -->
 <div class="arc-code-block">
   <div class="code-block">
@@ -149,8 +167,12 @@ import { Button } from '@arclux/arc-ui';
    <pre class="code-block__pre"><code>Code</code></pre>
    </div>
    </div>
-</div>` },
-      { label: 'HTML (Inline)', lang: 'html', code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
+</div>`,
+    },
+    {
+      label: 'HTML (Inline)',
+      lang: 'html',
+      code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
 <!-- arc-code-block — self-contained, no external CSS needed -->
 <style>
   .arc-code-block .code-block__copy:hover { color: rgb(232, 232, 236);
@@ -171,8 +193,9 @@ import { Button } from '@arclux/arc-ui';
    <pre style="margin: 0; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px; line-height: 1.8; color: rgb(232, 232, 236); white-space: pre; tab-size: 2"><code>Code</code></pre>
    </div>
    </div>
-</div>` }
-    ],
-  
-  seeAlso: ["copy-button","kbd","highlight"],
+</div>`,
+    },
+  ],
+
+  seeAlso: ['copy-button', 'kbd', 'highlight'],
 };

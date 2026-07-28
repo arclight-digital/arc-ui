@@ -23,7 +23,7 @@ export const docsCards: Record<string, PageCard> = {
   'docs-components': {
     pills: [{ text: 'Docs' }],
     title: 'Components',
-    description: `${componentCount} dark-first components, written once in Lit and generated natively for every framework.`,
+    description: `${componentCount} dark-first components, written once in Lit and generated natively for seven framework targets.`,
   },
   'docs-tokens': {
     pills: [{ text: 'Docs' }],
@@ -43,7 +43,7 @@ export const docsCards: Record<string, PageCard> = {
   'docs-frameworks': {
     pills: [{ text: 'Docs' }],
     title: 'Frameworks',
-    description: 'Typed, native wrappers for React, Vue, Svelte, Angular, Solid, and Preact — generated from one Lit source by Prism.',
+    description: 'Typed, native wrappers for React, Vue, Svelte, Angular, Solid, Preact, and plain HTML — generated from one Lit source by Prism.',
   },
   'docs-accessibility': {
     pills: [{ text: 'Docs' }],

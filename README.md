@@ -18,7 +18,7 @@
 
 ---
 
-ARC UI is a design system and component library built on [Lit](https://lit.dev) web components. Write components once in Lit, then use **Prism** — our custom code generator — to produce native wrappers for React, Vue, Svelte, Angular, Solid, Preact, and standalone HTML/CSS. One source of truth, seven framework targets, one runtime dependency: Lit. (Heavier extras like syntax highlighting and QR encoding ship only with the components that use them.)
+ARC UI is a design system and component library built on [Lit](https://lit.dev) Web Components. Write components once in Lit, then use **Prism** — our custom code generator — to produce native wrappers for React, Vue, Svelte, Angular, Solid, Preact, and plain HTML. One source of truth, seven framework targets, one runtime dependency: Lit. (Heavier extras like syntax highlighting and QR encoding ship only with the components that use them.)
 
 ## Quick Start
 
@@ -126,7 +126,7 @@ Backgrounds, text, borders, accents, spacing (xs–4xl), type scale, shadows, ra
 
 ## How Prism Works
 
-Prism reads Lit web component source files — parsing properties, styles, slots, events, and CSS parts — then generates idiomatic wrappers for each target:
+Prism reads Lit Web Component source files — parsing properties, styles, slots, events, and CSS parts — then generates idiomatic wrappers for each target:
 
 - **React** — `@lit/react` `createComponent` wrappers with TypeScript types
 - **Vue 3** — Single-file components with prop definitions

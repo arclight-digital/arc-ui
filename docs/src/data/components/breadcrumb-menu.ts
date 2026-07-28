@@ -6,7 +6,8 @@ export const breadcrumbMenu: ComponentDef = {
   tag: 'arc-breadcrumb-menu',
   tier: 'navigation',
   interactivity: 'interactive',
-  description: 'Each breadcrumb segment doubles as a dropdown showing sibling pages at that hierarchy level. Dropdown panels match dropdown-menu styling.',
+  description:
+    'Each breadcrumb segment doubles as a dropdown showing sibling pages at that hierarchy level. Dropdown panels match dropdown-menu styling.',
 
   overview: `BreadcrumbMenu extends the standard breadcrumb pattern by turning each segment into a clickable dropdown trigger. When a user hovers or clicks a segment, a dropdown panel appears listing sibling pages at that hierarchy level — giving users the ability to navigate laterally within any tier of the information architecture without backtracking to a parent page first. The dropdown panels use the same styling as DropdownMenu for visual consistency across the design system.
 
@@ -18,7 +19,7 @@ Each item in the \`items\` array can optionally include a \`siblings\` array. Wh
     'Breadcrumb segments double as dropdown triggers for sibling navigation',
     'Dropdown panels match DropdownMenu styling for consistency',
     'Optional siblings array per breadcrumb item',
-    'arc-navigate event for client-side routing integration',
+    '`arc-navigate` event for client-side routing integration',
     'Hover and click trigger modes for mouse and touch devices',
     'Keyboard accessible with arrow keys within dropdowns',
     'Chevron indicator on segments that have sibling options',
@@ -35,18 +36,17 @@ Each item in the \`items\` array can optionally include a \`siblings\` array. Wh
       'Highlight the current page in the siblings list for orientation',
     ],
     dont: [
-      'Add siblings to every level — only include them where lateral navigation is meaningful',
-      'Use BreadcrumbMenu when the hierarchy is flat (two levels or fewer) — use Breadcrumb instead',
-      'Nest dropdown panels within dropdown panels — keep it to one level of expansion',
-      'Omit the href on the final breadcrumb segment — it should link to the current page',
-      'Replace primary navigation (TopBar, Sidebar) with BreadcrumbMenu — it is a secondary aid',
+      'Do not add siblings to every level — only include them where lateral navigation is meaningful',
+      'Do not use BreadcrumbMenu when the hierarchy is flat (two levels or fewer) — use Breadcrumb instead',
+      'Do not nest dropdown panels within dropdown panels — keep it to one level of expansion',
+      'Do not omit the href on the final breadcrumb segment — it should link to the current page',
+      'Do not replace primary navigation (TopBar, Sidebar) with BreadcrumbMenu — it is a secondary aid',
     ],
   },
 
   previewHtml: `<div style="width:100%;max-width:480px;padding:var(--space-lg);padding-bottom:100px;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-md)">
   <arc-breadcrumb-menu label="Example breadcrumb" items='[{"label":"Home","href":"/"},{"label":"Products","href":"/products","siblings":[{"label":"Solutions","href":"/solutions"},{"label":"Pricing","href":"/pricing"}]},{"label":"Analytics","href":"/products/analytics"}]'></arc-breadcrumb-menu>
 </div>`,
-
 
   tabs: [
     {
@@ -161,7 +161,7 @@ import { BreadcrumbMenu } from '@arclux/arc-ui-angular';
 @Component({
   imports: [BreadcrumbMenu],
   template: \`
-    <BreadcrumbMenu
+    <arc-breadcrumb-menu
       [items]="items"
       (arc-navigate)="onNavigate($event)"
     />

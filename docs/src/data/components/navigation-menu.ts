@@ -18,68 +18,68 @@ const previewMarkup = `<arc-navigation-menu label="Example menu">
 </arc-navigation-menu>`;
 
 export const navigationMenu: ComponentDef = {
-    name: 'Navigation Menu',
-    slug: 'navigation-menu',
-    tag: 'arc-navigation-menu',
-    tier: 'navigation',
-    interactivity: 'hybrid',
-    description: 'Horizontal navigation bar with hover-triggered dropdown sub-menus and full keyboard accessibility. Designed for marketing sites, documentation hubs, and product landing pages where top-level sections expand into categorised link lists.',
+  name: 'Navigation Menu',
+  slug: 'navigation-menu',
+  tag: 'arc-navigation-menu',
+  tier: 'navigation',
+  interactivity: 'hybrid',
+  description:
+    'Horizontal navigation bar with hover-triggered dropdown sub-menus and full keyboard accessibility. Designed for marketing sites, documentation hubs, and product landing pages where top-level sections expand into categorised link lists.',
 
-    overview: `NavigationMenu is a horizontal nav bar that pairs top-level links with hover-triggered dropdown panels. It is the right choice whenever a site needs to expose multiple content categories — products, solutions, resources — without cluttering the header with dozens of links. Each top-level item can be a simple link or a parent that reveals a dropdown on hover (and on click for touch devices).
+  overview: `NavigationMenu is a horizontal nav bar that pairs top-level links with hover-triggered dropdown panels. It is the right choice whenever a site needs to expose multiple content categories — products, solutions, resources — without cluttering the header with dozens of links. Each top-level item can be a simple link or a parent that reveals a dropdown on hover (and on click for touch devices).
 
 Dropdown items support an optional description line, turning each link into a mini feature card. This "mega-menu" pattern helps users scan a large information architecture at a glance rather than drilling through nested pages. Because descriptions are optional, the same component works for both rich marketing navs and lean documentation menus.
 
 Keyboard support is built in from the start. Arrow keys move between top-level items, Enter and Space toggle dropdowns, and Escape closes any open panel and returns focus to the trigger. All ARIA attributes — \`aria-expanded\`, \`aria-haspopup\`, and \`role="menu"\` / \`role="menuitem"\` — are managed automatically. When a link is navigated, the component dispatches an \`arc-navigate\` custom event so frameworks can intercept client-side routing without full page reloads.`,
 
-    features: [
-      'Hover-triggered dropdowns with smooth fade-and-slide transition',
-      'Click fallback for touch devices and assistive tech',
-      'Keyboard navigation with Arrow, Enter, Space, and Escape keys',
-      'Automatic ARIA attributes (aria-expanded, aria-haspopup, role="menu")',
-      'Optional description text per dropdown item for mega-menu layouts',
-      'Active state indicator via accent-coloured bottom border',
-      'arc-navigate custom event for client-side routing integration',
-      'Graceful close delay prevents accidental dismissal on mouse exit',
-      'CSS custom-property theming via design tokens',
-      'Shadow DOM encapsulation with ::part() hooks for targeted styling',
+  features: [
+    'Hover-triggered dropdowns with smooth fade-and-slide transition',
+    'Click fallback for touch devices and assistive tech',
+    'Full keyboard navigation with Arrow, Enter, Space, and Escape keys',
+    'Automatic ARIA attributes (`aria-expanded`, `aria-haspopup`, `role="menu"`)',
+    'Optional description text per dropdown item for mega-menu layouts',
+    'Active state indicator via accent-colored bottom border',
+    '`arc-navigate` custom event for client-side routing integration',
+    'Graceful close delay prevents accidental dismissal on mouse exit',
+    'CSS custom-property theming via design tokens',
+    'Shadow DOM encapsulation with ::part() hooks for targeted styling',
+  ],
+
+  guidelines: {
+    do: [
+      'Keep top-level items to five or fewer so the bar remains scannable',
+      'Add description text to dropdown items when categories need extra context',
+      'Use simple href links (no dropdown) for single-destination items like "Pricing"',
+      'Set the active attribute on the NavItem that matches the current route',
+      'Listen for the arc-navigate event to integrate with client-side routers',
+      'Place NavigationMenu inside a TopBar or sticky header for consistent positioning',
     ],
+    dont: [
+      'Do not nest dropdowns more than one level deep — the component is flat by design',
+      'Do not mix NavigationMenu and Sidebar in the same viewport; pick one navigation pattern',
+      'Do not use NavigationMenu for in-page section links — use ScrollSpy or Tabs instead',
+      'Do not omit href on leaf items; every clickable link should have a destination',
+      'Do not add more than six or seven items per dropdown — group into separate top-level categories instead',
+      'Do not rely on hover alone for critical paths; ensure click and keyboard access too',
+    ],
+  },
 
-    guidelines: {
-      do: [
-        'Keep top-level items to five or fewer so the bar remains scannable',
-        'Add description text to dropdown items when categories need extra context',
-        'Use simple href links (no dropdown) for single-destination items like "Pricing"',
-        'Set the active attribute on the NavItem that matches the current route',
-        'Listen for the arc-navigate event to integrate with client-side routers',
-        'Place NavigationMenu inside a TopBar or sticky header for consistent positioning',
-      ],
-      dont: [
-        'Nest dropdowns more than one level deep — the component is flat by design',
-        'Mix NavigationMenu and Sidebar in the same viewport; pick one navigation pattern',
-        'Use NavigationMenu for in-page section links — use ScrollSpy or Tabs instead',
-        'Omit href on leaf items; every clickable link should have a destination',
-        'Add more than six or seven items per dropdown — group into separate top-level categories instead',
-        'Rely on hover alone for critical paths; ensure click and keyboard access too',
-      ],
-    },
-
-    previewHtml: `<div style="width:100%;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-md);padding:var(--space-lg) 0;min-height:280px">
+  previewHtml: `<div style="width:100%;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-md);padding:var(--space-lg) 0;min-height:280px">
   ${previewMarkup}
 </div>`,
 
-
-    tabs: [
-      {
-        label: 'Web Component',
-        lang: 'html',
-        code: `<script type="module" src="@arclux/arc-ui"></script>
+  tabs: [
+    {
+      label: 'Web Component',
+      lang: 'html',
+      code: `<script type="module" src="@arclux/arc-ui"></script>
 
 ${previewMarkup}`,
-      },
-      {
-        label: 'React',
-        lang: 'tsx',
-        code: `import { NavigationMenu, NavItem } from '@arclux/arc-ui-react';
+    },
+    {
+      label: 'React',
+      lang: 'tsx',
+      code: `import { NavigationMenu, NavItem } from '@arclux/arc-ui-react';
 
 export function SiteNav() {
   return (
@@ -99,11 +99,11 @@ export function SiteNav() {
     </NavigationMenu>
   );
 }`,
-      },
-      {
-        label: 'Vue',
-        lang: 'html',
-        code: `<script setup>
+    },
+    {
+      label: 'Vue',
+      lang: 'html',
+      code: `<script setup>
 import { NavigationMenu, NavItem } from '@arclux/arc-ui-vue';
 </script>
 
@@ -123,11 +123,11 @@ import { NavigationMenu, NavItem } from '@arclux/arc-ui-vue';
     <NavItem href="/docs">Docs</NavItem>
   </NavigationMenu>
 </template>`,
-      },
-      {
-        label: 'Svelte',
-        lang: 'html',
-        code: `<script>
+    },
+    {
+      label: 'Svelte',
+      lang: 'html',
+      code: `<script>
   import { NavigationMenu, NavItem } from '@arclux/arc-ui-svelte';
 </script>
 
@@ -145,38 +145,38 @@ import { NavigationMenu, NavItem } from '@arclux/arc-ui-vue';
   <NavItem href="/pricing">Pricing</NavItem>
   <NavItem href="/docs">Docs</NavItem>
 </NavigationMenu>`,
-      },
-      {
-        label: 'Angular',
-        lang: 'ts',
-        code: `import { Component } from '@angular/core';
+    },
+    {
+      label: 'Angular',
+      lang: 'ts',
+      code: `import { Component } from '@angular/core';
 import { NavigationMenu, NavItem } from '@arclux/arc-ui-angular';
 
 @Component({
   imports: [NavigationMenu, NavItem],
   template: \`
-    <NavigationMenu>
-      <NavItem>Products
-        <NavItem href="/analytics" description="Real-time dashboards and metrics">Analytics</NavItem>
-        <NavItem href="/automation" description="CI/CD pipelines and deployment">Automation</NavItem>
-        <NavItem href="/security" description="Role-based access and SSO">Security</NavItem>
-      </NavItem>
-      <NavItem>Solutions
-        <NavItem href="/engineering" description="Ship faster with integrated tooling">Engineering Teams</NavItem>
-        <NavItem href="/platform" description="Unified observability stack">Platform Teams</NavItem>
-        <NavItem href="/enterprise" description="SOC 2 and HIPAA compliance">Enterprise</NavItem>
-      </NavItem>
-      <NavItem href="/pricing">Pricing</NavItem>
-      <NavItem href="/docs">Docs</NavItem>
-    </NavigationMenu>
+    <arc-navigation-menu>
+      <arc-nav-item>Products
+        <arc-nav-item href="/analytics" description="Real-time dashboards and metrics">Analytics</arc-nav-item>
+        <arc-nav-item href="/automation" description="CI/CD pipelines and deployment">Automation</arc-nav-item>
+        <arc-nav-item href="/security" description="Role-based access and SSO">Security</arc-nav-item>
+      </arc-nav-item>
+      <arc-nav-item>Solutions
+        <arc-nav-item href="/engineering" description="Ship faster with integrated tooling">Engineering Teams</arc-nav-item>
+        <arc-nav-item href="/platform" description="Unified observability stack">Platform Teams</arc-nav-item>
+        <arc-nav-item href="/enterprise" description="SOC 2 and HIPAA compliance">Enterprise</arc-nav-item>
+      </arc-nav-item>
+      <arc-nav-item href="/pricing">Pricing</arc-nav-item>
+      <arc-nav-item href="/docs">Docs</arc-nav-item>
+    </arc-navigation-menu>
   \`,
 })
 export class SiteNavComponent {}`,
-      },
-      {
-        label: 'Solid',
-        lang: 'tsx',
-        code: `import { NavigationMenu, NavItem } from '@arclux/arc-ui-solid';
+    },
+    {
+      label: 'Solid',
+      lang: 'tsx',
+      code: `import { NavigationMenu, NavItem } from '@arclux/arc-ui-solid';
 
 export function SiteNav() {
   return (
@@ -196,11 +196,11 @@ export function SiteNav() {
     </NavigationMenu>
   );
 }`,
-      },
-      {
-        label: 'Preact',
-        lang: 'tsx',
-        code: `import { NavigationMenu, NavItem } from '@arclux/arc-ui-preact';
+    },
+    {
+      label: 'Preact',
+      lang: 'tsx',
+      code: `import { NavigationMenu, NavItem } from '@arclux/arc-ui-preact';
 
 export function SiteNav() {
   return (
@@ -220,26 +220,27 @@ export function SiteNav() {
     </NavigationMenu>
   );
 }`,
-      },
-      {
-        label: 'HTML',
-        lang: 'html',
-        code: `${previewMarkup}`,
-      },
-      {
-        label: 'HTML (Inline)',
-        lang: 'html',
-        code: `<!-- arc-navigation-menu is hybrid — CSS handles layout, JS enhances interactivity -->
+    },
+    {
+      label: 'HTML',
+      lang: 'html',
+      code: `${previewMarkup}`,
+    },
+    {
+      label: 'HTML (Inline)',
+      lang: 'html',
+      code: `<!-- arc-navigation-menu is hybrid — CSS handles layout, JS enhances interactivity -->
 <arc-navigation-menu></arc-navigation-menu>`,
-      },
-    ],
-    subComponents: [
-      {
-        name: 'NavItem',
-        tag: 'arc-nav-item',
-        description: 'A single entry inside NavigationMenu. When used at the top level and containing nested NavItem children, it becomes a dropdown trigger. When used without children, it renders as a direct navigation link. Nest one level deep to populate a dropdown panel.',
-      },
-    ],
-  
-  seeAlso: ["sidebar","top-bar","breadcrumb","tabs"],
+    },
+  ],
+  subComponents: [
+    {
+      name: 'NavItem',
+      tag: 'arc-nav-item',
+      description:
+        'A single entry inside NavigationMenu. When used at the top level and containing nested NavItem children, it becomes a dropdown trigger. When used without children, it renders as a direct navigation link. Nest one level deep to populate a dropdown panel.',
+    },
+  ],
+
+  seeAlso: ['sidebar', 'top-bar', 'breadcrumb', 'tabs'],
 };

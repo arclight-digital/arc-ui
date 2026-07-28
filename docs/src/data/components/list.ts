@@ -6,7 +6,8 @@ export const list: ComponentDef = {
   tag: 'arc-list',
   tier: 'data',
   interactivity: 'interactive',
-  description: 'Structured list container with optional selection, keyboard navigation, and multiple visual variants. Pairs with arc-list-item for rich content rows.',
+  description:
+    'Structured list container with optional selection, keyboard navigation, and multiple visual variants. Pairs with arc-list-item for rich content rows.',
 
   overview: `List provides a semantic container for ordered collections of items. It handles keyboard navigation (arrow keys, Home, End), optional single or multi-select behavior, and visual variants that control border and separator styles.
 
@@ -15,13 +16,13 @@ When \`selectable\` is set, the list renders with \`role="listbox"\` and manages
 Three visual variants — default (plain), bordered (outlined container), and separated (bottom borders between items) — cover the most common list presentation patterns. A size prop controls the base font size for the entire list, cascading down to child items.`,
 
   features: [
-    'Keyboard navigation with Arrow Up/Down, Home, End, Enter, and Space',
+    'Full keyboard navigation with Arrow Up/Down, Home, End, Enter, and Space',
     'Single and multi-select modes with `value` binding and `arc-change` events',
     'Three visual variants: default, bordered, separated',
     'Three size presets: sm, md, lg — cascades to child items',
     'Semantic `role="listbox"` when selectable, `role="list"` otherwise',
     'Automatic `aria-multiselectable` when `multiple` is set',
-    'Exposed CSS part: list'
+    'Exposed CSS part: list',
   ],
 
   guidelines: {
@@ -29,12 +30,12 @@ Three visual variants — default (plain), bordered (outlined container), and se
       'Use arc-list-item as direct children for consistent styling and keyboard navigation',
       'Set `selectable` when items represent choices the user needs to pick from',
       'Use the bordered variant inside cards or panels that need visual containment',
-      'Use the separated variant for long lists where row boundaries improve scannability'
+      'Use the separated variant for long lists where row boundaries improve scannability',
     ],
     dont: [
-      'Use List for navigation menus — use `arc-navigation-menu` or `arc-dropdown-menu` instead',
-      'Mix arc-list-item with raw HTML elements inside a selectable list',
-      'Nest lists more than one level deep — consider a tree view for hierarchical data'
+      'Do not use List for navigation menus — use `arc-navigation-menu` or `arc-dropdown-menu` instead',
+      'Do not mix arc-list-item with raw HTML elements inside a selectable list',
+      'Do not nest lists more than one level deep — consider a tree view for hierarchical data',
     ],
   },
 
@@ -45,14 +46,13 @@ Three visual variants — default (plain), bordered (outlined container), and se
   <arc-list-item value="trash" disabled>Trash</arc-list-item>
 </arc-list>`,
 
-
-
   subComponents: [
     {
       name: 'List Item',
       tag: 'arc-list-item',
-      description: 'Individual row within an arc-list. Supports prefix/suffix slots, a description slot for secondary text, links, and selection state.',
-    }
+      description:
+        'Individual row within an arc-list. Supports prefix/suffix slots, a description slot for secondary text, links, and selection state.',
+    },
   ],
 
   tabs: [
@@ -80,21 +80,25 @@ Three visual variants — default (plain), bordered (outlined container), and se
       lang: 'tsx',
       code: `import { List, ListItem, Icon, Badge } from '@arclux/arc-ui-react';
 
-<List variant="bordered" selectable>
-  <ListItem value="inbox">
-    <Icon slot="prefix" name="inbox" />
-    Inbox
-    <Badge slot="suffix" variant="primary">12</Badge>
-  </ListItem>
-  <ListItem value="drafts">
-    <Icon slot="prefix" name="file-text" />
-    Drafts
-  </ListItem>
-  <ListItem value="sent">
-    <Icon slot="prefix" name="send" />
-    Sent
-  </ListItem>
-</List>`,
+export default function Example() {
+  return (
+    <List variant="bordered" selectable>
+      <ListItem value="inbox">
+        <Icon slot="prefix" name="inbox" />
+        Inbox
+        <Badge slot="suffix" variant="primary">12</Badge>
+      </ListItem>
+      <ListItem value="drafts">
+        <Icon slot="prefix" name="file-text" />
+        Drafts
+      </ListItem>
+      <ListItem value="sent">
+        <Icon slot="prefix" name="send" />
+        Sent
+      </ListItem>
+    </List>
+  );
+}`,
     },
     {
       label: 'Vue',
@@ -145,6 +149,28 @@ import { List, ListItem, Icon, Badge } from '@arclux/arc-ui-angular';
 @Component({
   imports: [List, ListItem, Icon, Badge],
   template: \`
+    <arc-list variant="bordered" selectable>
+      <arc-list-item value="inbox">
+        <arc-icon slot="prefix" name="inbox" />
+        Inbox
+        <arc-badge slot="suffix" variant="primary">12</arc-badge>
+      </arc-list-item>
+      <arc-list-item value="drafts">
+        <arc-icon slot="prefix" name="file-text" />
+        Drafts
+      </arc-list-item>
+    </arc-list>
+  \`,
+})
+export class MailboxComponent {}`,
+    },
+    {
+      label: 'Solid',
+      lang: 'tsx',
+      code: `import { List, ListItem, Icon, Badge } from '@arclux/arc-ui-solid';
+
+export default function Example() {
+  return (
     <List variant="bordered" selectable>
       <ListItem value="inbox">
         <Icon slot="prefix" name="inbox" />
@@ -156,43 +182,29 @@ import { List, ListItem, Icon, Badge } from '@arclux/arc-ui-angular';
         Drafts
       </ListItem>
     </List>
-  \`,
-})
-export class MailboxComponent {}`,
-    },
-    {
-      label: 'Solid',
-      lang: 'tsx',
-      code: `import { List, ListItem, Icon, Badge } from '@arclux/arc-ui-solid';
-
-<List variant="bordered" selectable>
-  <ListItem value="inbox">
-    <Icon slot="prefix" name="inbox" />
-    Inbox
-    <Badge slot="suffix" variant="primary">12</Badge>
-  </ListItem>
-  <ListItem value="drafts">
-    <Icon slot="prefix" name="file-text" />
-    Drafts
-  </ListItem>
-</List>`,
+  );
+}`,
     },
     {
       label: 'Preact',
       lang: 'tsx',
       code: `import { List, ListItem, Icon, Badge } from '@arclux/arc-ui-preact';
 
-<List variant="bordered" selectable>
-  <ListItem value="inbox">
-    <Icon slot="prefix" name="inbox" />
-    Inbox
-    <Badge slot="suffix" variant="primary">12</Badge>
-  </ListItem>
-  <ListItem value="drafts">
-    <Icon slot="prefix" name="file-text" />
-    Drafts
-  </ListItem>
-</List>`,
+export default function Example() {
+  return (
+    <List variant="bordered" selectable>
+      <ListItem value="inbox">
+        <Icon slot="prefix" name="inbox" />
+        Inbox
+        <Badge slot="suffix" variant="primary">12</Badge>
+      </ListItem>
+      <ListItem value="drafts">
+        <Icon slot="prefix" name="file-text" />
+        Drafts
+      </ListItem>
+    </List>
+  );
+}`,
     },
   ],
 

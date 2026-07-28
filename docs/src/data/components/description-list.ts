@@ -6,9 +6,10 @@ export const descriptionList: ComponentDef = {
   tag: 'arc-description-list',
   tier: 'data',
   interactivity: 'static',
-  description: 'Structured term/detail pair list in a responsive grid layout with optional dividers.',
+  description:
+    'Structured term/detail pair list in a responsive grid layout with optional dividers.',
 
-  overview: `Description List renders term/detail pairs in a grid layout, ideal for metadata displays, specification tables, and detail panels. Each child \`arc-description-item\` contains a term label and a detail slot, with the term displayed as an uppercase accent label and the detail rendered below it.
+  overview: `DescriptionList renders term/detail pairs in a grid layout, ideal for metadata displays, specification tables, and detail panels. Each child \`arc-description-item\` contains a term label and a detail slot, with the term displayed as an uppercase accent label and the detail rendered below it.
 
 The \`columns\` prop controls the grid layout — set it to 2, 3, or 4 to arrange items side by side. Vertical dividers appear automatically between columns when \`dividers\` is enabled. On screens narrower than 640px the layout collapses to a single column for readability.
 
@@ -32,10 +33,10 @@ Dividers (bottom borders between items, and right borders between columns) are e
       'Keep term labels concise — one to three words is ideal',
     ],
     dont: [
-      'Use for tabular data with many rows — use `arc-data-table` instead',
-      'Nest description lists inside each other',
-      'Use long paragraph-length terms — move verbose content to the detail slot',
-      'Mix description items with non-`arc-description-item` children',
+      'Do not use for tabular data with many rows — use `arc-data-table` instead',
+      'Do not nest description lists inside each other',
+      'Do not use long paragraph-length terms — move verbose content to the detail slot',
+      'Do not mix description items with non-`arc-description-item` children',
     ],
   },
 
@@ -46,12 +47,12 @@ Dividers (bottom borders between items, and right borders between columns) are e
   <arc-description-item term="Version">4.2.1</arc-description-item>
 </arc-description-list>`,
 
-
   subComponents: [
     {
       name: 'Description Item',
       tag: 'arc-description-item',
-      description: 'A single term/detail pair within a description list. The term is rendered as an uppercase label, and the default slot holds the detail content.',
+      description:
+        'A single term/detail pair within a description list. The term is rendered as an uppercase label, and the default slot holds the detail content.',
     },
   ],
 
@@ -71,12 +72,16 @@ Dividers (bottom borders between items, and right borders between columns) are e
       lang: 'tsx',
       code: `import { DescriptionList, DescriptionItem } from '@arclux/arc-ui-react';
 
-<DescriptionList columns={2}>
-  <DescriptionItem term="Name">Arclight Platform</DescriptionItem>
-  <DescriptionItem term="Status">Active</DescriptionItem>
-  <DescriptionItem term="Region">US-West-2</DescriptionItem>
-  <DescriptionItem term="Version">4.2.1</DescriptionItem>
-</DescriptionList>`,
+export default function Example() {
+  return (
+    <DescriptionList columns={2}>
+      <DescriptionItem term="Name">Arclight Platform</DescriptionItem>
+      <DescriptionItem term="Status">Active</DescriptionItem>
+      <DescriptionItem term="Region">US-West-2</DescriptionItem>
+      <DescriptionItem term="Version">4.2.1</DescriptionItem>
+    </DescriptionList>
+  );
+}`,
     },
     {
       label: 'Vue',
@@ -117,12 +122,12 @@ import { DescriptionList, DescriptionItem } from '@arclux/arc-ui-angular';
 @Component({
   imports: [DescriptionList, DescriptionItem],
   template: \`
-    <DescriptionList [columns]="2">
-      <DescriptionItem term="Name">Arclight Platform</DescriptionItem>
-      <DescriptionItem term="Status">Active</DescriptionItem>
-      <DescriptionItem term="Region">US-West-2</DescriptionItem>
-      <DescriptionItem term="Version">4.2.1</DescriptionItem>
-    </DescriptionList>
+    <arc-description-list [columns]="2">
+      <arc-description-item term="Name">Arclight Platform</arc-description-item>
+      <arc-description-item term="Status">Active</arc-description-item>
+      <arc-description-item term="Region">US-West-2</arc-description-item>
+      <arc-description-item term="Version">4.2.1</arc-description-item>
+    </arc-description-list>
   \`,
 })
 export class MetadataComponent {}`,
@@ -132,24 +137,32 @@ export class MetadataComponent {}`,
       lang: 'tsx',
       code: `import { DescriptionList, DescriptionItem } from '@arclux/arc-ui-solid';
 
-<DescriptionList columns={2}>
-  <DescriptionItem term="Name">Arclight Platform</DescriptionItem>
-  <DescriptionItem term="Status">Active</DescriptionItem>
-  <DescriptionItem term="Region">US-West-2</DescriptionItem>
-  <DescriptionItem term="Version">4.2.1</DescriptionItem>
-</DescriptionList>`,
+export default function Example() {
+  return (
+    <DescriptionList columns={2}>
+      <DescriptionItem term="Name">Arclight Platform</DescriptionItem>
+      <DescriptionItem term="Status">Active</DescriptionItem>
+      <DescriptionItem term="Region">US-West-2</DescriptionItem>
+      <DescriptionItem term="Version">4.2.1</DescriptionItem>
+    </DescriptionList>
+  );
+}`,
     },
     {
       label: 'Preact',
       lang: 'tsx',
       code: `import { DescriptionList, DescriptionItem } from '@arclux/arc-ui-preact';
 
-<DescriptionList columns={2}>
-  <DescriptionItem term="Name">Arclight Platform</DescriptionItem>
-  <DescriptionItem term="Status">Active</DescriptionItem>
-  <DescriptionItem term="Region">US-West-2</DescriptionItem>
-  <DescriptionItem term="Version">4.2.1</DescriptionItem>
-</DescriptionList>`,
+export default function Example() {
+  return (
+    <DescriptionList columns={2}>
+      <DescriptionItem term="Name">Arclight Platform</DescriptionItem>
+      <DescriptionItem term="Status">Active</DescriptionItem>
+      <DescriptionItem term="Region">US-West-2</DescriptionItem>
+      <DescriptionItem term="Version">4.2.1</DescriptionItem>
+    </DescriptionList>
+  );
+}`,
     },
   ],
 

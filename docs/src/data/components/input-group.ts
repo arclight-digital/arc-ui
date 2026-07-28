@@ -6,9 +6,10 @@ export const inputGroup: ComponentDef = {
   tag: 'arc-input-group',
   tier: 'input',
   interactivity: 'hybrid',
-  description: 'Combines an input with prefix and suffix addon slots for labels, icons, or buttons attached to the input border.',
+  description:
+    'Combines an input with prefix and suffix addon slots for labels, icons, or buttons attached to the input border.',
 
-  overview: `Input Group wraps an input control with optional prefix and suffix addon areas that appear visually attached to the input. The addons share the input's border and focus glow, creating a single unified control that reads as one element.
+  overview: `InputGroup wraps an input control with optional prefix and suffix addon areas that appear visually attached to the input. The addons share the input's border and focus glow, creating a single unified control that reads as one element.
 
 Common patterns include protocol prefixes ("https://"), domain suffixes (".com"), currency symbols, unit labels, and action buttons. The component strips border, border-radius, and box-shadow from slotted inputs so the group's outer container provides the unified visual frame.
 
@@ -18,7 +19,7 @@ The focus-within pseudo-class triggers the accent border and glow on the outer c
     'Prefix and suffix addon slots for labels, icons, or buttons',
     'Unified border and focus glow across the entire group',
     'Automatically strips border/radius/shadow from slotted inputs',
-    'Works with arc-input, arc-select, and native HTML inputs',
+    'Works with `arc-input`, `arc-select`, and native HTML inputs',
     'Three size presets: sm, md, lg',
     'Focus-within styling highlights the entire group on input focus',
     'Exposed CSS parts: group, prefix, content, suffix',
@@ -31,9 +32,9 @@ The focus-within pseudo-class triggers the accent border and glow on the outer c
       'Match the group `size` to the slotted input size for alignment',
     ],
     dont: [
-      'Put multiple inputs inside a single input group — use one input per group',
-      'Use input group for purely decorative icons — use the input\'s own icon slot if available',
-      'Nest input groups inside each other',
+      'Do not put multiple inputs inside a single input group — use one input per group',
+      "Do not use input group for purely decorative icons — use the input's own icon slot if available",
+      'Do not nest input groups inside each other',
     ],
   },
 
@@ -48,7 +49,6 @@ The focus-within pseudo-class triggers the accent border and glow on the outer c
     <span slot="suffix">USD</span>
   </arc-input-group>
 </div>`,
-
 
   tabs: [
     {
@@ -72,16 +72,22 @@ The focus-within pseudo-class triggers the accent border and glow on the outer c
       lang: 'tsx',
       code: `import { InputGroup, Input } from '@arclux/arc-ui-react';
 
-<InputGroup>
-  <span slot="prefix">https://</span>
-  <Input placeholder="example.com" />
-</InputGroup>
+export default function Example() {
+  return (
+    <>
+      <InputGroup>
+        <span slot="prefix">https://</span>
+        <Input placeholder="example.com" />
+      </InputGroup>
 
-<InputGroup>
-  <span slot="prefix">$</span>
-  <Input type="number" placeholder="0.00" />
-  <span slot="suffix">USD</span>
-</InputGroup>`,
+      <InputGroup>
+        <span slot="prefix">$</span>
+        <Input type="number" placeholder="0.00" />
+        <span slot="suffix">USD</span>
+      </InputGroup>
+    </>
+  );
+}`,
     },
     {
       label: 'Vue',
@@ -118,10 +124,10 @@ import { InputGroup, Input } from '@arclux/arc-ui-angular';
 @Component({
   imports: [InputGroup, Input],
   template: \`
-    <InputGroup>
+    <arc-input-group>
       <span slot="prefix">https://</span>
-      <Input placeholder="example.com" />
-    </InputGroup>
+      <arc-input placeholder="example.com" />
+    </arc-input-group>
   \`,
 })
 export class UrlField {}`,
@@ -131,20 +137,28 @@ export class UrlField {}`,
       lang: 'tsx',
       code: `import { InputGroup, Input } from '@arclux/arc-ui-solid';
 
-<InputGroup>
-  <span slot="prefix">https://</span>
-  <Input placeholder="example.com" />
-</InputGroup>`,
+export default function Example() {
+  return (
+    <InputGroup>
+      <span slot="prefix">https://</span>
+      <Input placeholder="example.com" />
+    </InputGroup>
+  );
+}`,
     },
     {
       label: 'Preact',
       lang: 'tsx',
       code: `import { InputGroup, Input } from '@arclux/arc-ui-preact';
 
-<InputGroup>
-  <span slot="prefix">https://</span>
-  <Input placeholder="example.com" />
-</InputGroup>`,
+export default function Example() {
+  return (
+    <InputGroup>
+      <span slot="prefix">https://</span>
+      <Input placeholder="example.com" />
+    </InputGroup>
+  );
+}`,
     },
     {
       label: 'HTML',

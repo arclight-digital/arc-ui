@@ -6,11 +6,12 @@ export const rail: ComponentDef = {
   tag: 'arc-rail',
   tier: 'navigation',
   interactivity: 'interactive',
-  description: 'Ultra-narrow icon-only vertical navigation like VS Code\'s activity bar. Icons use text-muted at rest, accent-primary glow on active. Expands on hover.',
+  description:
+    "Ultra-narrow icon-only vertical navigation like VS Code's activity bar. Icons use text-muted at rest, accent-primary glow on active. Expands on hover.",
 
   overview: `Rail is an ultra-narrow vertical navigation strip — typically 48 to 56 pixels wide — that displays icon-only items in a single column. Inspired by the activity bar in VS Code and similar IDE layouts, it provides top-level section switching without consuming the horizontal space that a full Sidebar requires. Icons render in text-muted at rest and light up with an accent-primary glow when active, giving immediate visual feedback about the current section.
 
-On hover, the Rail can optionally expand to reveal text labels beside each icon, bridging the gap between compact icon-only navigation and a full labelled sidebar. This expand-on-hover behaviour is controlled by the \`expanded\` prop and can also be toggled programmatically for accessibility — some users prefer the labels to remain visible at all times.
+On hover, the Rail can optionally expand to reveal text labels beside each icon, bridging the gap between compact icon-only navigation and a full labeled sidebar. This expand-on-hover behavior is controlled by the \`expanded\` prop and can also be toggled programmatically for accessibility — some users prefer the labels to remain visible at all times.
 
 Rail is designed to sit at the far-left edge of an AppShell, occupying a fixed vertical strip from top to bottom. It works well alongside a contextual Sidebar: the Rail handles top-level section switching (e.g. Explorer, Search, Source Control) while the Sidebar shows the detail panel for the active section. The component dispatches \`arc-change\` on item selection so your application can swap the adjacent content area accordingly.`,
 
@@ -19,7 +20,7 @@ Rail is designed to sit at the far-left edge of an AppShell, occupying a fixed v
     'Accent-primary glow on active item, text-muted at rest',
     'Optional expand-on-hover to reveal text labels',
     'Controlled expanded prop for programmatic label visibility',
-    'arc-change event on item selection',
+    '`arc-change` event on item selection',
     'Designed for far-left positioning in AppShell layouts',
     'Keyboard navigable with arrow keys and Enter activation',
     'Pairs with Sidebar for section-detail navigation patterns',
@@ -29,17 +30,17 @@ Rail is designed to sit at the far-left edge of an AppShell, occupying a fixed v
   guidelines: {
     do: [
       'Limit items to four to seven for a scannable icon column',
-      'Use universally recognisable icons — Rail has no visible labels by default',
+      'Use universally recognizable icons — Rail has no visible labels by default',
       'Place Rail at the far-left edge of the viewport inside an AppShell',
       'Pair with a Sidebar to show detail content for the active Rail section',
       'Provide aria-label on the Rail for screen-reader context',
     ],
     dont: [
-      'Use Rail as the only navigation on a content-heavy site — it is too compact',
-      'Add more than seven items — vertical overflow will be confusing',
-      'Rely solely on icon recognition — ensure tooltips or expand-on-hover labels are available',
-      'Use Rail on mobile viewports — switch to BottomNav instead',
-      'Nest a Rail inside a Sidebar — Rail replaces the sidebar for top-level switching',
+      'Do not use Rail as the only navigation on a content-heavy site — it is too compact',
+      'Do not add more than seven items — vertical overflow will be confusing',
+      'Do not rely solely on icon recognition — ensure tooltips or expand-on-hover labels are available',
+      'Do not use Rail on mobile viewports — switch to BottomNav instead',
+      'Do not nest a Rail inside a Sidebar — Rail replaces the sidebar for top-level switching',
     ],
   },
 
@@ -47,7 +48,6 @@ Rail is designed to sit at the far-left edge of an AppShell, occupying a fixed v
   <arc-rail value="explorer" items='[{"icon":"folder","label":"Explorer","value":"explorer"},{"icon":"magnifying-glass","label":"Search","value":"search"},{"icon":"git-branch","label":"Source Control","value":"scm"},{"icon":"puzzle-piece","label":"Extensions","value":"extensions"},{"icon":"gear","label":"Settings","value":"settings"}]' style="height:100%"></arc-rail>
   <div style="flex:1;display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:var(--text-sm)">App content here.</div>
 </div>`,
-
 
   tabs: [
     {
@@ -149,7 +149,7 @@ import { Rail } from '@arclux/arc-ui-angular';
 @Component({
   imports: [Rail],
   template: \`
-    <Rail
+    <arc-rail
       [items]="items"
       value="explorer"
       (arc-change)="onChange($event)"

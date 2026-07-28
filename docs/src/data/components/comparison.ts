@@ -6,11 +6,12 @@ export const comparison: ComponentDef = {
   tag: 'arc-comparison',
   tier: 'data',
   interactivity: 'static',
-  description: 'A two-column or multi-column comparison table for pricing tiers, feature breakdowns, or before/after comparisons. Each column is defined with an arc-comparison-column child element.',
+  description:
+    'A two-column or multi-column comparison table for pricing tiers, feature breakdowns, or before/after comparisons. Each column is defined with an arc-comparison-column child element.',
 
   overview: `Comparison renders a structured grid of feature rows and value columns, ideal for pricing tables, plan comparisons, and feature matrices. The parent \`arc-comparison\` element accepts a JSON array of feature labels, while each slotted \`arc-comparison-column\` child provides a heading and a matching JSON array of values.
 
-Boolean values are rendered automatically as check marks or crosses — pass \`"true"\` or \`"false"\` as string values and the component renders accessible SVG icons in success/ghost colors. Any other string value is displayed as-is, making it flexible for mixed comparison data (e.g., "5 GB", "Unlimited", "true").
+Boolean values are rendered automatically as check marks or crosses — pass \`"true"\` or \`"false"\` as string values and the component renders accessible SVG icons in success/ghost colors. Any other string value is displayed as-is, making it flexible for mixed comparison data (e.g. "5 GB", "Unlimited", "true").
 
 The \`highlight\` attribute on a column adds a subtle accent background to both the header and all cells in that column, drawing the user's eye to the recommended or featured tier. The entire component uses CSS Grid for automatic column sizing and includes row hover states for scanability.`,
 
@@ -22,7 +23,7 @@ The \`highlight\` attribute on a column adds a subtle accent background to both 
     'Row hover states for easy horizontal scanning',
     'Accessible table roles (table, row, rowheader, columnheader, cell)',
     'CSS parts for deep customization: table, header, cell, feature',
-    'Respects prefers-reduced-motion for transitions',
+    'Respects `prefers-reduced-motion` for transitions',
   ],
 
   guidelines: {
@@ -31,13 +32,13 @@ The \`highlight\` attribute on a column adds a subtle accent background to both 
       'Keep feature labels concise — long labels compress the value columns',
       'Highlight at most one column (the recommended tier) to guide user attention',
       'Use boolean values ("true"/"false") for feature presence to get automatic check/cross icons',
-      'Ensure the features array and each column\'s values array have the same length',
+      "Ensure the features array and each column's values array have the same length",
     ],
     dont: [
-      'Use for arbitrary data tables — use data-table instead for sortable/filterable data',
-      'Add more than 4-5 columns — the grid becomes too compressed on smaller screens',
-      'Mix boolean and text values in the same row — pick one format per feature',
-      'Forget to provide the features prop — without it, no rows will render',
+      'Do not use for arbitrary data tables — use data-table instead for sortable/filterable data',
+      'Do not add more than 4-5 columns — the grid becomes too compressed on smaller screens',
+      'Do not mix boolean and text values in the same row — pick one format per feature',
+      'Do not forget to provide the features prop — without it, no rows will render',
     ],
   },
 
@@ -47,15 +48,14 @@ The \`highlight\` attribute on a column adds a subtle accent background to both 
   <arc-comparison-column heading="Enterprise" values='["Unlimited","Unlimited","true","true"]'></arc-comparison-column>
 </arc-comparison>`,
 
-
   subComponents: [
     {
       name: 'ComparisonColumn',
       tag: 'arc-comparison-column',
-      description: 'Data-holder child element that defines a single column in the comparison grid. Renders nothing visible — it provides heading, highlight, and values data to the parent.',
+      description:
+        'Data-holder child element that defines a single column in the comparison grid. Renders nothing visible — it provides heading, highlight, and values data to the parent.',
     },
   ],
-
 
   tabs: [
     {
@@ -135,11 +135,11 @@ import { Comparison, ComparisonColumn } from '@arclux/arc-ui-angular';
 @Component({
   imports: [Comparison, ComparisonColumn],
   template: \`
-    <Comparison [features]="features">
-      <ComparisonColumn heading="Free" values='["5 GB","10 GB","false","false"]' />
-      <ComparisonColumn heading="Pro" highlight values='["100 GB","Unlimited","true","true"]' />
-      <ComparisonColumn heading="Enterprise" values='["Unlimited","Unlimited","true","true"]' />
-    </Comparison>
+    <arc-comparison [features]="features">
+      <arc-comparison-column heading="Free" values='["5 GB","10 GB","false","false"]' />
+      <arc-comparison-column heading="Pro" highlight values='["100 GB","Unlimited","true","true"]' />
+      <arc-comparison-column heading="Enterprise" values='["Unlimited","Unlimited","true","true"]' />
+    </arc-comparison>
   \`,
 })
 export class PricingComponent {

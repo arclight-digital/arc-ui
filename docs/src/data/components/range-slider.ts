@@ -1,63 +1,64 @@
 import type { ComponentDef } from './_types';
 
 export const rangeSlider: ComponentDef = {
-    name: 'Range Slider',
-    slug: 'range-slider',
-    tag: 'arc-range-slider',
-    tier: 'input',
-    interactivity: 'interactive',
-    description: 'Dual-thumb range slider for selecting a numeric interval within a defined range, with accent-primary fill between the thumbs and live value display.',
+  name: 'Range Slider',
+  slug: 'range-slider',
+  tag: 'arc-range-slider',
+  tier: 'input',
+  interactivity: 'interactive',
+  description:
+    'Dual-thumb range slider for selecting a numeric interval within a defined range, with accent-primary fill between the thumbs and live value display.',
 
-    overview: `Range Slider lets users select a contiguous sub-range between two bounds by dragging two thumbs along a shared track. The filled region between the thumbs is rendered with accent-primary, giving an immediate visual cue of the selected interval.
+  overview: `RangeSlider lets users select a contiguous sub-range between two bounds by dragging two thumbs along a shared track. The filled region between the thumbs is rendered with accent-primary, giving an immediate visual cue of the selected interval.
 
 When a \`label\` is provided the component renders a header row with the label on the left and the current range values ("low – high") on the right in monospace font, matching the single Slider's visual pattern. The \`show-values\` attribute (on by default) controls whether the numeric readout appears.
 
 Rather than layering two native range inputs, this component implements a custom track with pointer capture-based dragging for reliable cross-browser behavior. Both thumbs are keyboard accessible with arrow keys, Home, and End, and each carries proper ARIA \`role="slider"\` attributes (\`aria-valuenow\`, \`aria-valuemin\`, \`aria-valuemax\`) so screen readers announce the current value and range constraints.
 
-Range Slider fires \`arc-input\` continuously during drag for real-time previews and \`arc-change\` on thumb release for committing the final selection, with \`{ low, high }\` in the event detail. The low thumb is clamped to never exceed the high thumb and vice versa, preventing invalid crossover states.`,
+RangeSlider fires \`arc-input\` continuously during drag for real-time previews and \`arc-change\` on thumb release for committing the final selection, with \`{ low, high }\` in the event detail. The low thumb is clamped to never exceed the high thumb and vice versa, preventing invalid crossover states.`,
 
-    features: [
-      'Custom dual-thumb track built with pointer capture for reliable cross-browser dragging',
-      'Accent-primary filled region between the two thumbs visually indicates the selected range',
-      'Header row displaying the label and "low – high" values in monospace font when `label` and `show-values` are set',
-      'Configurable `min`, `max`, and `step` props for precise range and increment control',
-      'Thumb hover and focus effects with scale-up and accent-primary glow shadow matching the single Slider',
-      'Keyboard support: ArrowLeft/Right/Up/Down step by `step`, Home and End jump to limits',
-      'Dual events: `arc-input` fires continuously during drag, `arc-change` fires on release, both with `{ low, high }` detail',
-      'Full ARIA slider roles on each thumb with `aria-valuenow`, `aria-valuemin`, `aria-valuemax`, and `aria-label`',
-      'Clamping logic prevents thumbs from crossing each other, maintaining low ≤ high invariant',
-      'Click-on-track moves the nearest thumb to the clicked position',
-      'Disabled state at 50% opacity with pointer events blocked',
-      'Reduced-motion media query disables thumb transitions',
+  features: [
+    'Custom dual-thumb track built with pointer capture for reliable cross-browser dragging',
+    'Accent-primary filled region between the two thumbs visually indicates the selected range',
+    'Header row displaying the label and "low – high" values in monospace font when `label` and `show-values` are set',
+    'Configurable `min`, `max`, and `step` props for precise range and increment control',
+    'Thumb hover and focus effects with scale-up and accent-primary glow shadow matching the single Slider',
+    'Keyboard support: ArrowLeft/Right/Up/Down step by `step`, Home and End jump to limits',
+    'Dual events: `arc-input` fires continuously during drag, `arc-change` fires on release, both with `{ low, high }` detail',
+    'Full ARIA slider roles on each thumb with `aria-valuenow`, `aria-valuemin`, `aria-valuemax`, and `aria-label`',
+    'Clamping logic prevents thumbs from crossing each other, maintaining low ≤ high invariant',
+    'Click-on-track moves the nearest thumb to the clicked position',
+    'Disabled state at 50% opacity with pointer events blocked',
+    'Reduced-motion media query disables thumb transitions',
+  ],
+
+  guidelines: {
+    do: [
+      'Provide a `label` so users understand what the range represents at a glance',
+      'Use for selecting a sub-range within a larger set, such as a price filter, date range, or frequency band',
+      'Use `arc-input` for real-time filtering or preview and `arc-change` for committing the selection to a server',
+      'Choose `step` values that match your data granularity — use 1 for integers, 0.01 for fine decimal values',
+      'Place the RangeSlider in a container at least 250px wide for comfortable dual-thumb dragging',
+      'Set `low` and `high` to sensible defaults that represent the most common range for your use case',
     ],
+    dont: [
+      'Do not use RangeSlider when the user only needs to pick a single value — use Slider instead',
+      'Do not set a `step` so small that the two thumbs become difficult to separate with a mouse',
+      'Do not omit `label` when the slider is standalone — without context the numeric readout is meaningless',
+      'Do not use for non-numeric selections — use a multi-select or checkbox group instead',
+      'Avoid placing multiple range sliders in a narrow column without sufficient vertical spacing',
+    ],
+  },
 
-    guidelines: {
-      do: [
-        'Provide a `label` so users understand what the range represents at a glance',
-        'Use for selecting a sub-range within a larger set, such as a price filter, date range, or frequency band',
-        'Use `arc-input` for real-time filtering or preview and `arc-change` for committing the selection to a server',
-        'Choose `step` values that match your data granularity — use 1 for integers, 0.01 for fine decimal values',
-        'Place the Range Slider in a container at least 250px wide for comfortable dual-thumb dragging',
-        'Set `low` and `high` to sensible defaults that represent the most common range for your use case',
-      ],
-      dont: [
-        'Do not use Range Slider when the user only needs to pick a single value — use Slider instead',
-        'Do not set a `step` so small that the two thumbs become difficult to separate with a mouse',
-        'Do not omit `label` when the slider is standalone — without context the numeric readout is meaningless',
-        'Do not use for non-numeric selections — use a multi-select or checkbox group instead',
-        'Avoid placing multiple range sliders in a narrow column without sufficient vertical spacing',
-      ],
-    },
-
-    previewHtml: `<div style="width:100%; max-width:400px;">
+  previewHtml: `<div style="width:100%; max-width:400px;">
   <arc-range-slider label="Price Range" low="25" high="75" min="0" max="100" step="1"></arc-range-slider>
 </div>`,
 
-    tabs: [
-      {
-        label: 'Web Component',
-        lang: 'html',
-        code: `<script type="module" src="@arclux/arc-ui"></script>
+  tabs: [
+    {
+      label: 'Web Component',
+      lang: 'html',
+      code: `<script type="module" src="@arclux/arc-ui"></script>
 
 <!-- Basic price range filter -->
 <arc-range-slider label="Price" low="20" high="80" min="0" max="200" step="5"></arc-range-slider>
@@ -87,11 +88,11 @@ Range Slider fires \`arc-input\` continuously during drag for real-time previews
     console.log('Committed:', e.detail.low, '–', e.detail.high);
   });
 </script>`,
-      },
-      {
-        label: 'React',
-        lang: 'tsx',
-        code: `import { RangeSlider } from '@arclux/arc-ui-react';
+    },
+    {
+      label: 'React',
+      lang: 'tsx',
+      code: `import { RangeSlider } from '@arclux/arc-ui-react';
 import { useState } from 'react';
 
 function PriceFilter() {
@@ -134,11 +135,11 @@ function AudioEqualizer() {
     </div>
   );
 }`,
-      },
-      {
-        label: 'Vue',
-        lang: 'html',
-        code: `<script setup>
+    },
+    {
+      label: 'Vue',
+      lang: 'html',
+      code: `<script setup>
 import { RangeSlider } from '@arclux/arc-ui-vue';
 import { ref, computed } from 'vue';
 
@@ -162,11 +163,11 @@ const range = computed(() => maxAge.value - minAge.value);
     </p>
   </div>
 </template>`,
-      },
-      {
-        label: 'Svelte',
-        lang: 'html',
-        code: `<script>
+    },
+    {
+      label: 'Svelte',
+      lang: 'html',
+      code: `<script>
   import { RangeSlider } from '@arclux/arc-ui-svelte';
 
   let low = 25;
@@ -192,18 +193,18 @@ const range = computed(() => maxAge.value - minAge.value);
     Selected: {low} – {high} ({high - low} points)
   </p>
 </div>`,
-      },
-      {
-        label: 'Angular',
-        lang: 'ts',
-        code: `import { Component } from '@angular/core';
+    },
+    {
+      label: 'Angular',
+      lang: 'ts',
+      code: `import { Component } from '@angular/core';
 import { RangeSlider } from '@arclux/arc-ui-angular';
 
 @Component({
   imports: [RangeSlider],
   template: \`
     <div style="max-width:400px;">
-      <RangeSlider
+      <arc-range-slider
         label="Budget"
         [low]="low"
         [high]="high"
@@ -212,7 +213,7 @@ import { RangeSlider } from '@arclux/arc-ui-angular';
         [step]="100"
         (arc-input)="onInput($event)"
         (arc-change)="onCommit($event)"
-      ></RangeSlider>
+      ></arc-range-slider>
 
       <p style="margin-top:12px; font-size:14px; color:var(--text-muted);">
         \${{ low | number }} – \${{ high | number }}
@@ -235,11 +236,11 @@ export class BudgetFilterComponent {
 
   fetchResults(low: number, high: number) { /* ... */ }
 }`,
-      },
-      {
-        label: 'Solid',
-        lang: 'tsx',
-        code: `import { RangeSlider } from '@arclux/arc-ui-solid';
+    },
+    {
+      label: 'Solid',
+      lang: 'tsx',
+      code: `import { RangeSlider } from '@arclux/arc-ui-solid';
 import { createSignal } from 'solid-js';
 
 function WeightFilter() {
@@ -264,11 +265,11 @@ function WeightFilter() {
     </div>
   );
 }`,
-      },
-      {
-        label: 'Preact',
-        lang: 'tsx',
-        code: `import { RangeSlider } from '@arclux/arc-ui-preact';
+    },
+    {
+      label: 'Preact',
+      lang: 'tsx',
+      code: `import { RangeSlider } from '@arclux/arc-ui-preact';
 import { useState } from 'preact/hooks';
 
 function DateRangeFilter() {
@@ -293,20 +294,20 @@ function DateRangeFilter() {
     </div>
   );
 }`,
-      },
-      {
-        label: 'HTML',
-        lang: 'html',
-        code: `<!-- arc-range-slider is interactive — requires JS -->
+    },
+    {
+      label: 'HTML',
+      lang: 'html',
+      code: `<!-- arc-range-slider is interactive — requires JS -->
 <arc-range-slider></arc-range-slider>`,
-      },
-      {
-        label: 'HTML (Inline)',
-        lang: 'html',
-        code: `<!-- arc-range-slider is interactive — requires JS -->
+    },
+    {
+      label: 'HTML (Inline)',
+      lang: 'html',
+      code: `<!-- arc-range-slider is interactive — requires JS -->
 <arc-range-slider></arc-range-slider>`,
-      },
-    ],
+    },
+  ],
 
-  seeAlso: ["slider", "input", "number-input"],
+  seeAlso: ['slider', 'input', 'number-input'],
 };

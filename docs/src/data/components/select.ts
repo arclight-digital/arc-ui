@@ -1,51 +1,52 @@
 import type { ComponentDef } from './_types';
 
 export const select: ComponentDef = {
-    name: 'Select',
-    slug: 'select',
-    tag: 'arc-select',
-    tier: 'input',
-    interactivity: 'interactive',
-    searchKeywords: ['dropdown', 'picker'],
-    description: 'Dropdown select with searchable options, keyboard navigation, and full ARIA listbox semantics for accessible form inputs.',
+  name: 'Select',
+  slug: 'select',
+  tag: 'arc-select',
+  tier: 'input',
+  interactivity: 'interactive',
+  searchKeywords: ['dropdown', 'picker'],
+  description:
+    'Dropdown select with searchable options, keyboard navigation, and full ARIA listbox semantics for accessible form inputs.',
 
-    overview: `The Select component replaces the native \`<select>\` element with a fully styled, accessible dropdown that integrates seamlessly with ARC UI's design tokens. It provides built-in type-ahead search filtering, allowing users to quickly locate options in long lists without scrolling.
+  overview: `The Select component replaces the native \`<select>\` element with a fully styled, accessible dropdown that integrates seamlessly with ARC UI's design tokens. It provides built-in type-ahead search filtering, allowing users to quickly locate options in long lists without scrolling.
 
 Select implements the ARIA listbox pattern, ensuring screen readers announce the current selection, available options, and navigation cues. Keyboard users can open the dropdown with Enter or Space, navigate with arrow keys, filter by typing, and confirm a choice with Enter — all without reaching for a mouse.
 
 Use Select any time you need a single-choice dropdown in a form: assigning a team member, choosing a category, picking a status, or selecting a locale. For multi-choice scenarios, reach for MultiSelect instead. For short lists of three or fewer visible options, consider RadioGroup for faster scanning.`,
 
-    features: [
-      'Type-ahead search filtering narrows options as the user types',
-      'Full keyboard navigation: Arrow keys, Home, End, Enter, Escape',
-      'ARIA listbox role with active-descendant tracking for screen readers',
-      'Supports placeholder text for empty-state guidance',
-      'Controlled and uncontrolled value modes',
-      'Disabled state prevents interaction and conveys unavailability visually',
-      'Automatic scroll-into-view for the highlighted option in long lists',
-      'Works with dynamic option lists — update the options array at any time',
-      'Consistent styling across browsers via Shadow DOM encapsulation'
+  features: [
+    'Type-ahead search filtering narrows options as the user types',
+    'Full keyboard navigation: Arrow keys, Home, End, Enter, Escape',
+    'ARIA listbox role with active-descendant tracking for screen readers',
+    'Supports placeholder text for empty-state guidance',
+    'Controlled and uncontrolled value modes',
+    'Disabled state prevents interaction and conveys unavailability visually',
+    'Automatic scroll-into-view for the highlighted option in long lists',
+    'Works with dynamic option lists — update the options array at any time',
+    'Consistent styling across browsers via Shadow DOM encapsulation',
+  ],
+
+  guidelines: {
+    do: [
+      'Always provide a visible label so users understand what they are selecting',
+      'Use a meaningful placeholder like "Choose a team member..." rather than generic "Select..."',
+      'Keep option labels concise — ideally under 40 characters',
+      'Order options logically (alphabetical, by frequency, or by workflow step)',
+      'Pre-select a sensible default when one exists to reduce interaction cost',
+      'Use the disabled state to indicate temporarily unavailable choices (e.g. permissions)',
     ],
+    dont: [
+      'Do not use Select for fewer than 3 options — use RadioGroup for better scannability',
+      'Do not nest selects inside other selects — flatten the hierarchy or use a staged flow',
+      'Do not rely solely on placeholder text as a label — placeholders disappear once a value is chosen',
+      'Do not use Select for navigation — use NavigationMenu or tabs for moving between views',
+      'Do not disable the component without explaining why — pair disabled state with a tooltip or helper text',
+    ],
+  },
 
-    guidelines: {
-      do: [
-        'Always provide a visible label so users understand what they are selecting',
-        'Use a meaningful placeholder like "Choose a team member..." rather than generic "Select..."',
-        'Keep option labels concise — ideally under 40 characters',
-        'Order options logically (alphabetical, by frequency, or by workflow step)',
-        'Pre-select a sensible default when one exists to reduce interaction cost',
-        'Use the disabled state to indicate temporarily unavailable choices (e.g., permissions)'
-      ],
-      dont: [
-        'Don\'t use Select for fewer than 3 options — use RadioGroup for better scannability',
-        'Don\'t nest selects inside other selects — flatten the hierarchy or use a staged flow',
-        'Don\'t rely solely on placeholder text as a label — placeholders disappear once a value is chosen',
-        'Don\'t use Select for navigation — use NavigationMenu or tabs for moving between views',
-        'Don\'t disable the component without explaining why — pair disabled state with a tooltip or helper text'
-      ],
-    },
-
-    previewHtml: `<div style="width:100%;max-width:300px">
+  previewHtml: `<div style="width:100%;max-width:300px">
   <arc-select label="Assign to team member" placeholder="Choose a person...">
     <arc-option value="alice-chen">Alice Chen</arc-option>
     <arc-option value="bob-martinez">Bob Martinez</arc-option>
@@ -55,12 +56,11 @@ Use Select any time you need a single-choice dropdown in a form: assigning a tea
   </arc-select>
 </div>`,
 
-
-    tabs: [
+  tabs: [
     {
-        label: 'Web Component',
-        lang: 'html',
-        code: `<script type="module" src="@arclux/arc-ui"></script>
+      label: 'Web Component',
+      lang: 'html',
+      code: `<script type="module" src="@arclux/arc-ui"></script>
 
 <!-- Basic select -->
 <arc-select label="Assign to team member" placeholder="Choose a person...">
@@ -94,11 +94,11 @@ Use Select any time you need a single-choice dropdown in a form: assigning a tea
       console.log('Selected:', e.detail.value, e.detail.label);
     });
 </script>`,
-      },
+    },
     {
-        label: 'React',
-        lang: 'tsx',
-        code: `import { Select, Option } from '@arclux/arc-ui-react';
+      label: 'React',
+      lang: 'tsx',
+      code: `import { Select, Option } from '@arclux/arc-ui-react';
 import { useState } from 'react';
 
 function TeamAssigner() {
@@ -130,11 +130,11 @@ function StatusPicker() {
     </Select>
   );
 }`,
-      },
+    },
     {
-        label: 'Vue',
-        lang: 'html',
-        code: `<script setup>
+      label: 'Vue',
+      lang: 'html',
+      code: `<script setup>
 import { Select, Option } from '@arclux/arc-ui-vue';
 import { ref } from 'vue';
 
@@ -155,11 +155,11 @@ const assignee = ref('');
     <Option value="eva-johansson">Eva Johansson</Option>
   </Select>
 </template>`,
-      },
+    },
     {
-        label: 'Svelte',
-        lang: 'html',
-        code: `<script>
+      label: 'Svelte',
+      lang: 'html',
+      code: `<script>
   import { Select, Option } from '@arclux/arc-ui-svelte';
 
   let status = 'open';
@@ -173,34 +173,34 @@ const assignee = ref('');
   <Option value="done">Done</Option>
   <Option value="closed">Closed</Option>
 </Select>`,
-      },
+    },
     {
-        label: 'Angular',
-        lang: 'ts',
-        code: `import { Component } from '@angular/core';
+      label: 'Angular',
+      lang: 'ts',
+      code: `import { Component } from '@angular/core';
 import { Select, Option } from '@arclux/arc-ui-angular';
 
 @Component({
   imports: [Select, Option],
   template: \`
-    <Select label="Assign to team member" placeholder="Choose a person..."
+    <arc-select label="Assign to team member" placeholder="Choose a person..."
       [value]="assignee" (arc-change)="assignee = $event.detail.value">
-      <Option value="alice-chen">Alice Chen</Option>
-      <Option value="bob-martinez">Bob Martinez</Option>
-      <Option value="carol-nguyen">Carol Nguyen</Option>
-      <Option value="david-okafor">David Okafor</Option>
-      <Option value="eva-johansson">Eva Johansson</Option>
-    </Select>
+      <arc-option value="alice-chen">Alice Chen</arc-option>
+      <arc-option value="bob-martinez">Bob Martinez</arc-option>
+      <arc-option value="carol-nguyen">Carol Nguyen</arc-option>
+      <arc-option value="david-okafor">David Okafor</arc-option>
+      <arc-option value="eva-johansson">Eva Johansson</arc-option>
+    </arc-select>
   \`,
 })
 export class AssignmentComponent {
   assignee = '';
 }`,
-      },
+    },
     {
-        label: 'Solid',
-        lang: 'tsx',
-        code: `import { Select, Option } from '@arclux/arc-ui-solid';
+      label: 'Solid',
+      lang: 'tsx',
+      code: `import { Select, Option } from '@arclux/arc-ui-solid';
 import { createSignal } from 'solid-js';
 
 function CategoryPicker() {
@@ -216,11 +216,11 @@ function CategoryPicker() {
     </Select>
   );
 }`,
-      },
+    },
     {
-        label: 'Preact',
-        lang: 'tsx',
-        code: `import { Select, Option } from '@arclux/arc-ui-preact';
+      label: 'Preact',
+      lang: 'tsx',
+      code: `import { Select, Option } from '@arclux/arc-ui-preact';
 import { useState } from 'preact/hooks';
 
 function LocalePicker() {
@@ -237,15 +237,16 @@ function LocalePicker() {
     </Select>
   );
 }`,
-      },
+    },
   ],
-    subComponents: [
-      {
-        name: 'Option',
-        tag: 'arc-option',
-        description: 'Individual option rendered inside a Select or MultiSelect. Each Option provides a value for form submission and displays its text content as the label in the dropdown.',
-      }
-    ],
-  
-  seeAlso: ["combobox","multi-select","radio-group"],
+  subComponents: [
+    {
+      name: 'Option',
+      tag: 'arc-option',
+      description:
+        'Individual option rendered inside a Select or MultiSelect. Each Option provides a value for form submission and displays its text content as the label in the dropdown.',
+    },
+  ],
+
+  seeAlso: ['combobox', 'multi-select', 'radio-group'],
 };

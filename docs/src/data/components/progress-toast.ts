@@ -1,52 +1,53 @@
 import type { ComponentDef } from './_types';
 
 export const progressToast: ComponentDef = {
-    name: 'Progress Toast',
-    slug: 'progress-toast',
-    tag: 'arc-progress-toast',
-    tier: 'feedback',
-    interactivity: 'interactive',
-    description: 'Toast variant with embedded progress bar for long-running operations. Same positioning and animation as toast but persists until complete.',
+  name: 'Progress Toast',
+  slug: 'progress-toast',
+  tag: 'arc-progress-toast',
+  tier: 'feedback',
+  interactivity: 'interactive',
+  description:
+    'Toast variant with embedded progress bar for long-running operations. Same positioning and animation as toast but persists until complete.',
 
-    overview: `Progress Toast extends the toast pattern with an embedded progress bar for long-running operations like file uploads, data exports, and batch processing. Unlike standard toast (which auto-dismisses after a timeout), progress toast persists until the operation completes or is cancelled, giving users continuous visual feedback on the operation's progress.
+  overview: `ProgressToast extends the toast pattern with an embedded progress bar for long-running operations like file uploads, data exports, and batch processing. Unlike standard toast (which auto-dismisses after a timeout), progress toast persists until the operation completes or is cancelled, giving users continuous visual feedback on the operation's progress.
 
 A single \`<arc-progress-toast>\` element acts as the host — place it once in your layout and call its \`show()\` method with a message, initial progress, and optional cancel callback. The method returns an ID that you use to update progress via \`updateToast(id, { progress })\` (optionally including a new \`message\`) and to signal completion via \`complete(id)\`. Multiple progress toasts can stack vertically, each tracking an independent operation.
 
 The component shares the same positioning options and enter/exit animations as toast, so it integrates visually with any existing toast notifications. Each progress toast includes a cancel button that fires an \`arc-cancel\` event with the operation ID, and the \`arc-complete\` event fires when an operation reaches 100%.`,
 
-    features: [
-      'Imperative show() API — returns an ID for tracking each operation',
-      'Embedded progress bar with smooth fill animation',
-      'updateToast(id, { progress, message? }) method for incremental progress updates',
-      'complete(id) method to signal completion and trigger auto-dismiss',
-      'Cancel button on each toast fires arc-cancel with operation ID',
-      'Persists until complete — no auto-dismiss timeout',
-      'Vertical stacking for multiple concurrent operations',
-      'Same positioning options as toast: top-right, bottom-right',
-      'Smooth enter/exit animations matching toast',
-      'arc-complete and arc-cancel events with operation ID in detail',
+  features: [
+    'Imperative show() API — returns an ID for tracking each operation',
+    'Embedded progress bar with smooth fill animation',
+    'updateToast(id, { progress, message? }) method for incremental progress updates',
+    'complete(id) method to signal completion and trigger auto-dismiss',
+    'Cancel button on each toast fires `arc-cancel` with operation ID',
+    'Persists until complete — no auto-dismiss timeout',
+    'Vertical stacking for multiple concurrent operations',
+    'Same positioning options as toast: top-right, bottom-right',
+    'Smooth enter/exit animations matching toast',
+    '`arc-complete` and `arc-cancel` events with operation ID in detail',
+  ],
+
+  guidelines: {
+    do: [
+      'Use progress-toast for operations that take more than 2-3 seconds',
+      'Update progress frequently enough that the bar moves visibly (every 5-10%)',
+      'Provide a cancel button for operations that can be aborted',
+      'Call complete() to trigger the success state and auto-dismiss animation',
+      'Place a single <arc-progress-toast> at the root of your layout for all pages',
     ],
+    dont: [
+      'Do not use progress-toast for operations that complete instantly — use regular toast instead',
+      'Do not fire more than 3-4 concurrent progress toasts — it overwhelms the UI',
+      'Do not update progress on every byte — batch updates to avoid performance issues',
+      'Do not forget to handle errors — call complete() or remove the toast on failure',
+      'Do not use progress-toast for indeterminate loading — use loading-overlay or spinner instead',
+    ],
+  },
 
-    guidelines: {
-      do: [
-        'Use progress-toast for operations that take more than 2-3 seconds',
-        'Update progress frequently enough that the bar moves visibly (every 5-10%)',
-        'Provide a cancel button for operations that can be aborted',
-        'Call complete() to trigger the success state and auto-dismiss animation',
-        'Place a single <arc-progress-toast> at the root of your layout for all pages',
-      ],
-      dont: [
-        'Use progress-toast for operations that complete instantly — use regular toast instead',
-        'Fire more than 3-4 concurrent progress toasts — it overwhelms the UI',
-        'Update progress on every byte — batch updates to avoid performance issues',
-        'Forget to handle errors — call complete() or remove the toast on failure',
-        'Use progress-toast for indeterminate loading — use loading-overlay or spinner instead',
-      ],
-    },
+  previewHtml: `<div style="width:100%"><arc-progress-toast id="demo-progress-toast" position="bottom-right"></arc-progress-toast><arc-button id="demo-progress-toast-btn" variant="primary">Simulate Upload</arc-button></div>`,
 
-    previewHtml: `<div style="width:100%"><arc-progress-toast id="demo-progress-toast" position="bottom-right"></arc-progress-toast><arc-button id="demo-progress-toast-btn" variant="primary">Simulate Upload</arc-button></div>`,
-
-    previewSetup: `
+  previewSetup: `
       const pt = document.getElementById('demo-progress-toast');
       document.getElementById('demo-progress-toast-btn')?.addEventListener('click', () => {
         if (!pt) return;
@@ -64,12 +65,11 @@ The component shares the same positioning options and enter/exit animations as t
       });
     `,
 
-
-    tabs: [
-      {
-        label: 'Web Component',
-        lang: 'html',
-        code: `<script type="module" src="@arclux/arc-ui"></script>
+  tabs: [
+    {
+      label: 'Web Component',
+      lang: 'html',
+      code: `<script type="module" src="@arclux/arc-ui"></script>
 
 <arc-progress-toast id="progress" position="bottom-right"></arc-progress-toast>
 
@@ -92,11 +92,11 @@ The component shares the same positioning options and enter/exit animations as t
     }, 500);
   }
 </script>`,
-      },
-      {
-        label: 'React',
-        lang: 'tsx',
-        code: `import { ProgressToast, Button } from '@arclux/arc-ui-react';
+    },
+    {
+      label: 'React',
+      lang: 'tsx',
+      code: `import { ProgressToast, Button } from '@arclux/arc-ui-react';
 import { useRef } from 'react';
 
 export function UploadDemo() {
@@ -126,11 +126,11 @@ export function UploadDemo() {
     </>
   );
 }`,
-      },
-      {
-        label: 'Vue',
-        lang: 'html',
-        code: `<script setup>
+    },
+    {
+      label: 'Vue',
+      lang: 'html',
+      code: `<script setup>
 import { ref } from 'vue';
 import { Button, ProgressToast } from '@arclux/arc-ui-vue';
 
@@ -157,11 +157,11 @@ const startUpload = () => {
   <ProgressToast ref="pt" position="bottom-right" />
   <Button variant="primary" @click="startUpload">Upload File</Button>
 </template>`,
-      },
-      {
-        label: 'Svelte',
-        lang: 'html',
-        code: `<script>
+    },
+    {
+      label: 'Svelte',
+      lang: 'html',
+      code: `<script>
   import { Button, ProgressToast } from '@arclux/arc-ui-svelte';
 
   let pt;
@@ -184,18 +184,18 @@ const startUpload = () => {
 
 <ProgressToast bind:this={pt} position="bottom-right" />
 <Button variant="primary" on:click={startUpload}>Upload File</Button>`,
-      },
-      {
-        label: 'Angular',
-        lang: 'ts',
-        code: `import { Component, ViewChild, ElementRef } from '@angular/core';
+    },
+    {
+      label: 'Angular',
+      lang: 'ts',
+      code: `import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Button, ProgressToast } from '@arclux/arc-ui-angular';
 
 @Component({
   imports: [Button, ProgressToast],
   template: \`
-    <ProgressToast #pt position="bottom-right"></ProgressToast>
-    <Button variant="primary" (click)="startUpload()">Upload File</Button>
+    <arc-progress-toast #pt position="bottom-right"></arc-progress-toast>
+    <arc-button variant="primary" (click)="startUpload()">Upload File</arc-button>
   \`,
 })
 export class UploadDemoComponent {
@@ -217,11 +217,11 @@ export class UploadDemoComponent {
     }, 500);
   }
 }`,
-      },
-      {
-        label: 'Solid',
-        lang: 'tsx',
-        code: `import { Button, ProgressToast } from '@arclux/arc-ui-solid';
+    },
+    {
+      label: 'Solid',
+      lang: 'tsx',
+      code: `import { Button, ProgressToast } from '@arclux/arc-ui-solid';
 
 export function UploadDemo() {
   let pt: HTMLElement | undefined;
@@ -250,11 +250,11 @@ export function UploadDemo() {
     </>
   );
 }`,
-      },
-      {
-        label: 'Preact',
-        lang: 'tsx',
-        code: `import { Button, ProgressToast } from '@arclux/arc-ui-preact';
+    },
+    {
+      label: 'Preact',
+      lang: 'tsx',
+      code: `import { Button, ProgressToast } from '@arclux/arc-ui-preact';
 import { useRef } from 'preact/hooks';
 
 export function UploadDemo() {
@@ -284,8 +284,8 @@ export function UploadDemo() {
     </>
   );
 }`,
-      },
-    ],
+    },
+  ],
 
-    seeAlso: ['toast', 'progress', 'snackbar'],
+  seeAlso: ['toast', 'progress', 'snackbar'],
 };

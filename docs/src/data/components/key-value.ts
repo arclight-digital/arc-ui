@@ -6,9 +6,10 @@ export const keyValue: ComponentDef = {
   tag: 'arc-key-value',
   tier: 'data',
   interactivity: 'static',
-  description: 'A styled definition list for displaying labeled key-value pairs. Supports horizontal and stacked layouts with optional dividers between rows.',
+  description:
+    'A styled definition list for displaying labeled key-value pairs. Supports horizontal and stacked layouts with optional dividers between rows.',
 
-  overview: `Key Value provides a clean, scannable way to present labeled data — similar to a definition list, but styled with ARC UI's token system. Each pair is an \`arc-kv-pair\` element with a \`label\` attribute for the term and slotted content for the value.
+  overview: `KeyValue provides a clean, scannable way to present labeled data — similar to a definition list, but styled with ARC UI's token system. Each pair is an \`arc-kv-pair\` element with a \`label\` attribute for the term and slotted content for the value.
 
 Two layout modes cover the most common patterns: horizontal (grid-based, with the key and value side by side) and stacked (key above value). An optional \`dividers\` prop adds subtle separators between rows for improved readability in longer lists.
 
@@ -33,10 +34,10 @@ Pairs respond to hover with a subtle background highlight, making it easy to tra
       'Pair with `arc-card` to contain key-value groups within panels',
     ],
     dont: [
-      'Use for tabular data with many columns — use `arc-data-table` instead',
-      'Use for form field labels — use proper `arc-label` and input components',
-      'Mix raw HTML elements with `arc-kv-pair` children',
-      'Use for navigation or action lists — use `arc-list` instead',
+      'Do not use for tabular data with many columns — use `arc-data-table` instead',
+      'Do not use for form field labels — use proper `arc-label` and input components',
+      'Do not mix raw HTML elements with `arc-kv-pair` children',
+      'Do not use for navigation or action lists — use `arc-list` instead',
     ],
   },
 
@@ -47,12 +48,12 @@ Pairs respond to hover with a subtle background highlight, making it easy to tra
   <arc-kv-pair label="Last Deploy">2 hours ago</arc-kv-pair>
 </arc-key-value>`,
 
-
   subComponents: [
     {
       name: 'KV Pair',
       tag: 'arc-kv-pair',
-      description: 'A single key-value pair within an arc-key-value container. The `label` attribute provides the key text, and the default slot holds the value content.',
+      description:
+        'A single key-value pair within an arc-key-value container. The `label` attribute provides the key text, and the default slot holds the value content.',
     },
   ],
 
@@ -72,12 +73,16 @@ Pairs respond to hover with a subtle background highlight, making it easy to tra
       lang: 'tsx',
       code: `import { KeyValue, KvPair } from '@arclux/arc-ui-react';
 
-<KeyValue>
-  <KvPair label="Status">Active</KvPair>
-  <KvPair label="Region">US-East</KvPair>
-  <KvPair label="Uptime">99.9%</KvPair>
-  <KvPair label="Last Deploy">2 hours ago</KvPair>
-</KeyValue>`,
+export default function Example() {
+  return (
+    <KeyValue>
+      <KvPair label="Status">Active</KvPair>
+      <KvPair label="Region">US-East</KvPair>
+      <KvPair label="Uptime">99.9%</KvPair>
+      <KvPair label="Last Deploy">2 hours ago</KvPair>
+    </KeyValue>
+  );
+}`,
     },
     {
       label: 'Vue',
@@ -118,12 +123,12 @@ import { KeyValue, KvPair } from '@arclux/arc-ui-angular';
 @Component({
   imports: [KeyValue, KvPair],
   template: \`
-    <KeyValue>
-      <KvPair label="Status">Active</KvPair>
-      <KvPair label="Region">US-East</KvPair>
-      <KvPair label="Uptime">99.9%</KvPair>
-      <KvPair label="Last Deploy">2 hours ago</KvPair>
-    </KeyValue>
+    <arc-key-value>
+      <arc-kv-pair label="Status">Active</arc-kv-pair>
+      <arc-kv-pair label="Region">US-East</arc-kv-pair>
+      <arc-kv-pair label="Uptime">99.9%</arc-kv-pair>
+      <arc-kv-pair label="Last Deploy">2 hours ago</arc-kv-pair>
+    </arc-key-value>
   \`,
 })
 export class ServerDetailsComponent {}`,
@@ -133,24 +138,32 @@ export class ServerDetailsComponent {}`,
       lang: 'tsx',
       code: `import { KeyValue, KvPair } from '@arclux/arc-ui-solid';
 
-<KeyValue>
-  <KvPair label="Status">Active</KvPair>
-  <KvPair label="Region">US-East</KvPair>
-  <KvPair label="Uptime">99.9%</KvPair>
-  <KvPair label="Last Deploy">2 hours ago</KvPair>
-</KeyValue>`,
+export default function Example() {
+  return (
+    <KeyValue>
+      <KvPair label="Status">Active</KvPair>
+      <KvPair label="Region">US-East</KvPair>
+      <KvPair label="Uptime">99.9%</KvPair>
+      <KvPair label="Last Deploy">2 hours ago</KvPair>
+    </KeyValue>
+  );
+}`,
     },
     {
       label: 'Preact',
       lang: 'tsx',
       code: `import { KeyValue, KvPair } from '@arclux/arc-ui-preact';
 
-<KeyValue>
-  <KvPair label="Status">Active</KvPair>
-  <KvPair label="Region">US-East</KvPair>
-  <KvPair label="Uptime">99.9%</KvPair>
-  <KvPair label="Last Deploy">2 hours ago</KvPair>
-</KeyValue>`,
+export default function Example() {
+  return (
+    <KeyValue>
+      <KvPair label="Status">Active</KvPair>
+      <KvPair label="Region">US-East</KvPair>
+      <KvPair label="Uptime">99.9%</KvPair>
+      <KvPair label="Last Deploy">2 hours ago</KvPair>
+    </KeyValue>
+  );
+}`,
     },
   ],
 

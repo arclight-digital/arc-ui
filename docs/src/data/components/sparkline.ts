@@ -6,7 +6,8 @@ export const sparkline: ComponentDef = {
   tag: 'arc-sparkline',
   tier: 'data',
   interactivity: 'static',
-  description: 'Tiny inline SVG chart for embedding lightweight line or bar visualizations inside tables, stat cards, and dashboards. Renders from a simple comma-separated data string with no external charting dependencies.',
+  description:
+    'Tiny inline SVG chart for embedding lightweight line or bar visualizations inside tables, stat cards, and dashboards. Renders from a simple comma-separated data string with no external charting dependencies.',
 
   overview: `Sparkline is a miniature, inline chart designed to show a trend at a glance without the overhead of a full charting library. Drop it into a table cell next to a metric, pair it with a stat card, or tuck it into a dashboard grid — wherever a compact visual summary beats a wall of numbers.
 
@@ -14,15 +15,15 @@ The component accepts data as a plain comma-separated string, parses it into a n
 
 A draw-in animation on the line type plays once on mount (respecting \`prefers-reduced-motion\`), giving dashboards a polished feel without requiring JavaScript animation libraries. The component uses only CSS custom properties and SVG primitives, keeping the DOM lightweight and the render path fast even when dozens of sparklines appear on a single page.
 
-Color defaults to \`var(--accent-primary)\` so the chart harmonizes with the rest of the design system out of the box. Override the \`color\` prop to use a custom CSS color value when you need a specific semantic color (e.g., green for revenue, red for error rate).`,
+Color defaults to \`var(--accent-primary)\` so the chart harmonizes with the rest of the design system out of the box. Override the \`color\` prop to use a custom CSS color value when you need a specific semantic color (e.g. green for revenue, red for error rate).`,
 
   features: [
     'Two chart types: smooth line and evenly spaced bars',
     'Optional area fill beneath the line with semi-transparent accent color',
-    'Draw-in stroke animation on mount (800ms, respects prefers-reduced-motion)',
+    'Draw-in stroke animation on mount (800ms, respects `prefers-reduced-motion`)',
     'Bar hover state with smooth fill transition',
     'Configurable width, height, and color via props',
-    'Subtle baseline rule using --border-subtle for visual grounding',
+    'Subtle baseline rule using `--border-subtle` for visual grounding',
     'CSS parts (svg, line, area, bar) for external style overrides',
     'Inline-block display with vertical-align: middle for seamless text-flow embedding',
     'No external charting dependencies — pure SVG rendered by Lit',
@@ -40,11 +41,11 @@ Color defaults to \`var(--accent-primary)\` so the chart harmonizes with the res
       'Pair with Stat, AnimatedNumber, or Badge for rich metric displays',
     ],
     dont: [
-      'Use sparklines as the sole data representation for critical decisions — they lack axes, labels, and precision',
-      'Pass more than ~30 data points — the chart becomes an unreadable blob at small sizes',
-      'Rely on sparkline color alone to convey meaning; always include a text label or value nearby',
-      'Animate sparklines in a long list or table — the draw-in effect becomes distracting at scale; consider disabling animation via CSS',
-      'Use sparklines for interactive data exploration — reach for a full chart component when users need tooltips, zoom, or click-to-drill-down',
+      'Do not use sparklines as the sole data representation for critical decisions — they lack axes, labels, and precision',
+      'Do not pass more than ~30 data points — the chart becomes an unreadable blob at small sizes',
+      'Do not rely on sparkline color alone to convey meaning; always include a text label or value nearby',
+      'Do not animate sparklines in a long list or table — the draw-in effect becomes distracting at scale; consider disabling animation via CSS',
+      'Do not use sparklines for interactive data exploration — reach for a full chart component when users need tooltips, zoom, or click-to-drill-down',
     ],
   },
 
@@ -64,7 +65,6 @@ Color defaults to \`var(--accent-primary)\` so the chart harmonizes with the res
 </div>`,
 
   replayable: true,
-
 
   tabs: [
     {
@@ -141,7 +141,7 @@ import { Sparkline } from '@arclux/arc-ui-angular';
   template: \`
     <div style="display: flex; align-items: center; gap: 16px;">
       <span style="font-size: 24px; font-weight: 600;">2,847</span>
-      <Sparkline data="10,25,18,30,22,35,28,40,32" type="line" fill />
+      <arc-sparkline data="10,25,18,30,22,35,28,40,32" type="line" fill />
     </div>
   \`,
 })

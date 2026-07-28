@@ -7,9 +7,10 @@ export const qrCode: ComponentDef = {
   tier: 'content',
   interactivity: 'interactive',
   status: 'beta',
-  description: 'Client-side QR code renderer that encodes any string into a crisp inline SVG. Themes automatically via currentColor, with an optional contrast card for guaranteed scanability on dark backgrounds.',
+  description:
+    'Client-side QR code renderer that encodes any string into a crisp inline SVG. Themes automatically via currentColor, with an optional contrast card for guaranteed scanability on dark backgrounds.',
 
-  overview: `QR Code encodes a URL, Wi-Fi credential, 2FA provisioning URI, or any other string entirely on the client and renders it as a single-path inline SVG — no canvas, no image requests, no server round-trip. All dark modules are combined into one \`<path>\` with crisp edges, so even large codes stay lightweight and scale cleanly at any size.
+  overview: `QRCode encodes a URL, Wi-Fi credential, 2FA provisioning URI, or any other string entirely on the client and renders it as a single-path inline SVG — no canvas, no image requests, no server round-trip. All dark modules are combined into one \`<path>\` with crisp edges, so even large codes stay lightweight and scale cleanly at any size.
 
 By default the modules inherit \`currentColor\` (falling back to \`var(--text-primary)\`) over a transparent background, so the code themes automatically alongside your text. Consumers can override the two custom properties \`--qr-fg\` (module color) and \`--qr-bg\` (background) for full control.
 
@@ -20,11 +21,11 @@ The component re-encodes automatically whenever \`value\` or \`level\` changes, 
   features: [
     'Fully client-side encoding via the battle-tested qrcode-generator library (MIT, zero dependencies)',
     'Single-path SVG output with run-length-combined modules — small DOM, crisp at any size',
-    'Themes automatically: modules use var(--qr-fg, currentColor), background var(--qr-bg, transparent)',
+    'Themes automatically: modules use var(`--qr-fg`, currentColor), background var(`--qr-bg`, transparent)',
     'Contrast mode renders a white rounded card with forced dark modules for guaranteed scanability in both themes',
     'Four error-correction levels (L / M / Q / H) with automatic version (size) selection',
     'Configurable quiet zone (border of empty modules) around the code',
-    'role="img" with a consumer-provided accessible label — the raw value is never exposed by default',
+    '`role="img"` with a consumer-provided accessible label — the raw value is never exposed by default',
     'Re-encodes reactively when value or level changes; renders nothing for empty values',
     'CSS parts (svg, card) for external style overrides',
   ],
@@ -39,11 +40,11 @@ The component re-encodes automatically whenever \`value\` or \`level\` changes, 
       'Pair with visible text or a copy button showing the same link, for users who cannot scan',
     ],
     dont: [
-      'Rely on the default transparent rendering for scan-critical codes on the dark theme — use contrast mode instead',
-      'Put the raw encoded value in the label — it is exposed to assistive technology and may be a secret (2FA URI, token)',
-      'Encode very long strings (over ~1KB) — capacity runs out and density makes scanning unreliable at typical sizes',
-      'Override --qr-fg/--qr-bg with low-contrast or same-lightness colors — scanners need strong dark-on-light contrast',
-      'Shrink the quiet zone below 2 modules when the code sits against busy surrounding content',
+      'Do not rely on the default transparent rendering for scan-critical codes on the dark theme — use contrast mode instead',
+      'Do not put the raw encoded value in the label — it is exposed to assistive technology and may be a secret (2FA URI, token)',
+      'Do not encode very long strings (over ~1KB) — capacity runs out and density makes scanning unreliable at typical sizes',
+      'Do not override --qr-fg/--qr-bg with low-contrast or same-lightness colors — scanners need strong dark-on-light contrast',
+      'Do not shrink the quiet zone below 2 modules when the code sits against busy surrounding content',
     ],
   },
 
@@ -61,7 +62,6 @@ The component re-encodes automatically whenever \`value\` or \`level\` changes, 
     <span style="font-size: 12px; color: var(--text-muted);">Custom --qr-fg, level H</span>
   </div>
 </div>`,
-
 
   tabs: [
     {
@@ -128,7 +128,7 @@ import { QrCode } from '@arclux/arc-ui-angular';
 @Component({
   imports: [QrCode],
   template: \`
-    <QrCode value="https://arcui.dev" label="ARC UI website" size="200" contrast />
+    <arc-qr-code value="https://arcui.dev" label="ARC UI website" size="200" contrast />
   \`,
 })
 export class SharePanelComponent {}`,

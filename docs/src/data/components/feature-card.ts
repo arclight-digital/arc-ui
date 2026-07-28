@@ -1,137 +1,148 @@
 import type { ComponentDef } from './_types';
 
 export const featureCard: ComponentDef = {
-    name: 'Feature Card',
-    slug: 'feature-card',
-    tag: 'arc-feature-card',
-    tier: 'content',
-    interactivity: 'static',
-    description: 'Card with icon, heading, description, and animated hover effects.',
+  name: 'Feature Card',
+  slug: 'feature-card',
+  tag: 'arc-feature-card',
+  tier: 'content',
+  interactivity: 'static',
+  description: 'Card with icon, heading, description, and animated hover effects.',
 
-    overview: `Feature Card is a promotional content block designed for landing pages, feature grids, and marketing sections. It presents an icon, heading, and description in a vertical layout with a polished gradient border hover effect that draws attention without overwhelming the content. The card's animated hover state includes an icon lift, a subtle glow from \`--glow-card-hover\`, and an expanding accent rule that creates a premium feel.
+  overview: `FeatureCard is a promotional content block designed for landing pages, feature grids, and marketing sections. It presents an icon, heading, and description in a vertical layout with a polished gradient border hover effect that draws attention without overwhelming the content. The card's animated hover state includes an icon lift, a subtle glow from \`--glow-card-hover\`, and an expanding accent rule that creates a premium feel.
 
 When an \`href\` is provided, the entire card renders as an anchor element, making it a natural fit for feature grids that link to detail pages. Without an href, it renders as a static \`<div>\`, suitable for purely informational feature lists. The card uses a 1px padding trick with a gradient background to produce a border effect that transitions smoothly on hover.
 
 The icon slot accepts custom content (SVG icons, emoji, or any markup) via the \`icon\` named slot, falling back to the \`icon\` string property for simple text or emoji icons. CSS parts (\`card\`, \`inner\`, \`icon\`, \`title\`, \`description\`) are exposed for deep style customization when needed.`,
 
-    features: [
-      'Gradient border hover effect using a 1px padding technique for smooth transitions',
-      'Icon slot with fallback to the icon string property for simple emoji or text',
-      'Renders as an <a> when href is set, or a <div> for static display',
-      'Animated icon lift with glow shadow (--accent-primary-glow) on hover',
-      'Expanding accent rule that fades in on hover for visual polish',
-      'Focus-visible outline using --focus-glow for keyboard navigation',
-      'Responsive padding that adjusts at the 768px breakpoint',
-      'CSS parts (card, inner, icon, title, description) for external styling',
+  features: [
+    'Gradient border hover effect using a 1px padding technique for smooth transitions',
+    'Icon slot with fallback to the icon string property for simple emoji or text',
+    'Renders as an <a> when href is set, or a <div> for static display',
+    'Animated icon lift with glow shadow (`--accent-primary-glow`) on hover',
+    'Expanding accent rule that fades in on hover for visual polish',
+    'Focus-visible outline using `--focus-glow` for keyboard navigation',
+    'Responsive padding that adjusts at the 768px breakpoint',
+    'CSS parts (card, inner, icon, title, description) for external styling',
+  ],
+
+  guidelines: {
+    do: [
+      'Use in a CSS grid for feature grids — the card fills its height via flex layout',
+      'Provide an href when the card should navigate to a detail or docs page',
+      'Keep descriptions concise (one to two sentences) for scannable feature lists',
+      'Use the icon slot for SVG icons when you need precise sizing and color control',
+      'Combine multiple feature cards in a 2- or 3-column grid for landing page sections',
     ],
+    dont: [
+      'Do not nest interactive elements (buttons, links) inside a feature card that already has an href',
+      'Do not use long paragraph-length descriptions — the card is designed for brief summaries',
+      'Do not mix feature cards with value cards in the same grid — choose one style per section',
+      'Do not override the gradient border with a flat color — it loses the signature hover effect',
+      'Do not use feature cards for data display — use value cards or stat components instead',
+    ],
+  },
 
-    guidelines: {
-      do: [
-        'Use in a CSS grid for feature grids — the card fills its height via flex layout',
-        'Provide an href when the card should navigate to a detail or docs page',
-        'Keep descriptions concise (one to two sentences) for scannable feature lists',
-        'Use the icon slot for SVG icons when you need precise sizing and color control',
-        'Combine multiple feature cards in a 2- or 3-column grid for landing page sections',
-      ],
-      dont: [
-        'Nest interactive elements (buttons, links) inside a feature card that already has an href',
-        'Use long paragraph-length descriptions — the card is designed for brief summaries',
-        'Mix feature cards with value cards in the same grid — choose one style per section',
-        'Override the gradient border with a flat color — it loses the signature hover effect',
-        'Use feature cards for data display — use value cards or stat components instead',
-      ],
-    },
-
-    previewHtml: `<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 720px;">
+  previewHtml: `<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 720px;">
   <arc-feature-card icon="&#9889;" heading="Performance" description="Optimised builds for lightning-fast load times." href="#" action="Learn more"></arc-feature-card>
-  <arc-feature-card icon="&#9881;" heading="Themeable" description="Design tokens let you customise every detail." href="#" action="Customize"></arc-feature-card>
+  <arc-feature-card icon="&#9881;" heading="Themeable" description="Design tokens let you customize every detail." href="#" action="Customize"></arc-feature-card>
   <arc-feature-card icon="&#9878;" heading="Accessible" description="WCAG-compliant focus and keyboard support."></arc-feature-card>
 </div>`,
 
-    tabs: [
-      {
-        label: 'Web Component',
-        lang: 'html',
-        code: `<arc-feature-card
+  tabs: [
+    {
+      label: 'Web Component',
+      lang: 'html',
+      code: `<arc-feature-card
   heading="Performance"
   description="Optimised builds for lightning-fast load times."
 ></arc-feature-card>`,
-      },
-      {
-        label: 'React',
-        lang: 'tsx',
-        code: `import { FeatureCard } from '@arclux/arc-ui-react';
+    },
+    {
+      label: 'React',
+      lang: 'tsx',
+      code: `import { FeatureCard } from '@arclux/arc-ui-react';
 
-<FeatureCard
-  heading="Performance"
-  description="Optimised builds for lightning-fast load times."
-/>`,
-      },
-      
-      {
-        label: 'Vue',
-        lang: 'html',
-        code: `<script setup>
+export default function Example() {
+  return (
+    <FeatureCard
+      heading="Performance"
+      description="Optimised builds for lightning-fast load times."
+    />
+  );
+}`,
+    },
+
+    {
+      label: 'Vue',
+      lang: 'html',
+      code: `<script setup>
 import { FeatureCard } from '@arclux/arc-ui-vue';
 </script>
 
 <template>
   <FeatureCard
     heading="Performance"
-    description="Optimised builds for lightning-fast load times."
-  ></FeatureCard>
+    description="Optimised builds for lightning-fast load times." />
 </template>`,
-      },
-      {
-        label: 'Svelte',
-        lang: 'html',
-        code: `<script>
+    },
+    {
+      label: 'Svelte',
+      lang: 'html',
+      code: `<script>
   import { FeatureCard } from '@arclux/arc-ui-svelte';
 </script>
 
 <FeatureCard
   heading="Performance"
-  description="Optimised builds for lightning-fast load times."
-></FeatureCard>`,
-      },
-      {
-        label: 'Angular',
-        lang: 'ts',
-        code: `import { Component } from '@angular/core';
+  description="Optimised builds for lightning-fast load times." />`,
+    },
+    {
+      label: 'Angular',
+      lang: 'ts',
+      code: `import { Component } from '@angular/core';
 import { FeatureCard } from '@arclux/arc-ui-angular';
 
 @Component({
   imports: [FeatureCard],
   template: \`
-    <FeatureCard
+    <arc-feature-card
       heading="Performance"
       description="Optimised builds for lightning-fast load times."
-    ></FeatureCard>
+    ></arc-feature-card>
   \`,
 })
 export class MyComponent {}`,
-      },
-      {
-        label: 'Solid',
-        lang: 'tsx',
-        code: `import { FeatureCard } from '@arclux/arc-ui-solid';
+    },
+    {
+      label: 'Solid',
+      lang: 'tsx',
+      code: `import { FeatureCard } from '@arclux/arc-ui-solid';
 
-<FeatureCard
-  heading="Performance"
-  description="Optimised builds for lightning-fast load times."
-></FeatureCard>`,
-      },
-      {
-        label: 'Preact',
-        lang: 'tsx',
-        code: `import { FeatureCard } from '@arclux/arc-ui-preact';
+export default function Example() {
+  return (
+    <FeatureCard
+      heading="Performance"
+      description="Optimised builds for lightning-fast load times." />
+  );
+}`,
+    },
+    {
+      label: 'Preact',
+      lang: 'tsx',
+      code: `import { FeatureCard } from '@arclux/arc-ui-preact';
 
-<FeatureCard
-  heading="Performance"
-  description="Optimised builds for lightning-fast load times."
-></FeatureCard>`,
-      },
-{ label: 'HTML', lang: 'html', code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
+export default function Example() {
+  return (
+    <FeatureCard
+      heading="Performance"
+      description="Optimised builds for lightning-fast load times." />
+  );
+}`,
+    },
+    {
+      label: 'HTML',
+      lang: 'html',
+      code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
 <!-- arc-feature-card — requires feature-card.css + base.css (or arc-ui.css) -->
 <div class="arc-feature-card">
   <a class="card" href="#">
@@ -142,8 +153,12 @@ export class MyComponent {}`,
    <span class="card__rule"></span>
    </div>
    </a>
-</div>` },
-      { label: 'HTML (Inline)', lang: 'html', code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
+</div>`,
+    },
+    {
+      label: 'HTML (Inline)',
+      lang: 'html',
+      code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
 <!-- arc-feature-card — self-contained, no external CSS needed -->
 <style>
   @media (max-width: 768px) {
@@ -167,8 +182,9 @@ export class MyComponent {}`,
    <span class="card__rule" style="width: 32px; height: 1px; background: linear-gradient(90deg, rgb(77, 126, 247), transparent); opacity: 0"></span>
    </div>
    </a>
-</div>` }
-    ],
-  
-  seeAlso: ["card","value-card","cta-banner"],
+</div>`,
+    },
+  ],
+
+  seeAlso: ['card', 'value-card', 'cta-banner'],
 };

@@ -7,7 +7,8 @@ export const kanban: ComponentDef = {
   tier: 'data',
   interactivity: 'interactive',
   status: 'beta',
-  description: 'A drag-and-drop kanban board driven by a `columns` data array. Cards can be dragged between and within columns with the pointer, or moved entirely from the keyboard with live screen-reader announcements. Column limits, tags, and descriptions are supported per card, and every move emits an `arc-card-move` event so the consumer can sync its source of truth.',
+  description:
+    'A drag-and-drop kanban board driven by a `columns` data array. Cards can be dragged between and within columns with the pointer, or moved entirely from the keyboard with live screen-reader announcements. Column limits, tags, and descriptions are supported per card, and every move emits an `arc-card-move` event so the consumer can sync its source of truth.',
 
   overview: `Kanban renders a horizontally scrolling row of columns from a single \`columns\` array — each column has an id, a title, an optional work-in-progress \`limit\`, and an \`items\` array of cards. Cards show a label, an optional two-line description, and an optional \`arc-tag\` chip. When a column has a limit, the header count renders as \`count/limit\` and switches to the error color when the column is over its limit.
 
@@ -22,11 +23,11 @@ The keyboard model follows the accepted accessible kanban pattern: each column's
     'Automatic horizontal board scrolling when dragging near the edges',
     'Full keyboard move protocol: Enter/Space grabs, arrows move, Enter drops, Escape cancels',
     'One tab stop per column (roving tabindex) — no tab-key marathons through every card',
-    'aria-live announcements for every grab, move, drop, and cancel',
+    '`aria-live` announcements for every grab, move, drop, and cancel',
     'Optional per-column WIP limit with count/limit badge that turns error-colored when exceeded',
-    'Optional card description with a two-line clamp and an arc-tag chip per card',
+    'Optional card description with a two-line clamp and an `arc-tag` chip per card',
     'Empty columns render a subtle dashed drop zone that highlights during drag',
-    'arc-card-move and arc-card-click events for syncing external state',
+    '`arc-card-move` and `arc-card-click` events for syncing external state',
     'Styleable via ::part — board, column, column-header, card and more',
   ],
 
@@ -39,11 +40,11 @@ The keyboard model follows the accepted accessible kanban pattern: each column's
       'Use tag variants (primary, success, danger, ...) to encode card category at a glance',
     ],
     dont: [
-      'Mutate the columns array in place and expect a re-render — assign a new array instead',
-      'Rely on the component as the source of truth — its internal copy is for immediate feedback only',
-      'Put interactive controls (buttons, links) inside card labels — the whole card is the drag/keyboard target',
-      'Use kanban for a single static list — arc-sortable-list or arc-list is a better fit',
-      'Exceed a handful of columns without expecting horizontal scrolling — columns have a fixed 280px width',
+      'Do not mutate the columns array in place and expect a re-render — assign a new array instead',
+      'Do not rely on the component as the source of truth — its internal copy is for immediate feedback only',
+      'Do not put interactive controls (buttons, links) inside card labels — the whole card is the drag/keyboard target',
+      'Do not use kanban for a single static list — arc-sortable-list or arc-list is a better fit',
+      'Do not exceed a handful of columns without expecting horizontal scrolling — columns have a fixed 280px width',
     ],
   },
 
@@ -68,7 +69,6 @@ if (kb) kb.columns = [
     { id: 'x1', label: 'Set up CI pipeline', tag: 'Infra' }
   ]}
 ];`,
-
 
   tabs: [
     {
@@ -161,6 +161,59 @@ function onMove(e) {
 <template>
   <Kanban :columns="columns" @arc-card-move="onMove" />
 </template>`,
+    },
+    {
+      label: 'Svelte',
+      lang: 'html',
+      code: `<script>
+  import { Kanban } from '@arclux/arc-ui-svelte';
+
+  let columns = [
+    { id: 'todo', title: 'To Do', items: [
+      { id: 't1', label: 'Design onboarding flow', tag: 'Design', variant: 'secondary' }
+    ]},
+    { id: 'doing', title: 'In Progress', limit: 2, items: [
+      { id: 'd1', label: 'Refactor auth middleware', tag: 'Backend', variant: 'primary' }
+    ]},
+    { id: 'done', title: 'Done', items: [] }
+  ];
+
+  function onMove(e) {
+    const { cardId, fromColumn, toColumn, index } = e.detail;
+    columns = moveCard(columns, cardId, fromColumn, toColumn, index);
+  }
+</script>
+
+<Kanban {columns} on:arc-card-move={onMove} />`,
+    },
+    {
+      label: 'Angular',
+      lang: 'ts',
+      code: `import { Component } from '@angular/core';
+import { Kanban } from '@arclux/arc-ui-angular';
+
+@Component({
+  imports: [Kanban],
+  template: \`
+    <arc-kanban [columns]="columns" (arcCardMove)="onMove($event)"></arc-kanban>
+  \`,
+})
+export class BoardComponent {
+  columns = [
+    { id: 'todo', title: 'To Do', items: [
+      { id: 't1', label: 'Design onboarding flow', tag: 'Design', variant: 'secondary' }
+    ]},
+    { id: 'doing', title: 'In Progress', limit: 2, items: [
+      { id: 'd1', label: 'Refactor auth middleware', tag: 'Backend', variant: 'primary' }
+    ]},
+    { id: 'done', title: 'Done', items: [] }
+  ];
+
+  onMove(e: CustomEvent) {
+    const { cardId, fromColumn, toColumn, index } = e.detail;
+    this.columns = moveCard(this.columns, cardId, fromColumn, toColumn, index);
+  }
+}`,
     },
   ],
 

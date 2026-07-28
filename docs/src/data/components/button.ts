@@ -1,14 +1,15 @@
 import type { ComponentDef } from './_types';
 
 export const button: ComponentDef = {
-    name: 'Button',
-    slug: 'button',
-    tag: 'arc-button',
-    tier: 'input',
-    interactivity: 'hybrid',
-    description: 'Primary call-to-action element with three visual variants that map to action hierarchy. Supports prefix and suffix slots for icons. Renders as an anchor when given an href, making it ideal for navigation-driven actions across landing pages, toolbars, and forms.',
+  name: 'Button',
+  slug: 'button',
+  tag: 'arc-button',
+  tier: 'input',
+  interactivity: 'hybrid',
+  description:
+    'Primary call-to-action element with three visual variants that map to action hierarchy. Supports prefix and suffix slots for icons. Renders as an anchor when given an href, making it ideal for navigation-driven actions across landing pages, toolbars, and forms.',
 
-    overview: `Button is the primary CTA element in ARC UI. Its three variants — primary, secondary, and ghost — map directly to a clear action hierarchy: primary draws the eye to the single most important action, secondary offers a visible but lower-emphasis alternative, and ghost provides a minimal, unobtrusive option for tertiary actions.
+  overview: `Button is the primary CTA element in ARC UI. Its three variants — primary, secondary, and ghost — map directly to a clear action hierarchy: primary draws the eye to the single most important action, secondary offers a visible but lower-emphasis alternative, and ghost provides a minimal, unobtrusive option for tertiary actions.
 
 The \`prefix\` and \`suffix\` slots allow you to place icons or other inline elements alongside the button label. This is useful for adding a search icon, an arrow indicator, an RSS icon, or any visual cue that reinforces the button's action.
 
@@ -16,37 +17,37 @@ Because Button renders as an \`<a>\` element when an \`href\` is provided, it is
 
 Three size presets — sm, md, and lg — let you scale buttons to their context. Use lg for hero sections and high-impact CTAs, md for general UI, and sm for compact toolbars or inline actions. All sizes maintain consistent padding ratios and touch targets.`,
 
-    features: [
-      'Three variants (primary, secondary, ghost) for clear action hierarchy',
-      'Three size presets (sm, md, lg) scaled for context',
-      'Prefix and suffix slots for icons or inline elements alongside the label',
-      'Renders as <a> with href for accessible navigation',
-      'Neon glow hover effect on primary variant',
-      'Focus-visible ring for keyboard accessibility',
-      'Subtle scale-down on active press for tactile feedback',
-      'Disabled state that prevents interaction and dims the element',
-      'Uppercase Tektur type treatment for strong visual presence',
+  features: [
+    'Three variants (primary, secondary, ghost) for clear action hierarchy',
+    'Three size presets (sm, md, lg) scaled for context',
+    'Prefix and suffix slots for icons or inline elements alongside the label',
+    'Renders as <a> with href for accessible navigation',
+    'Neon glow hover effect on primary variant',
+    'Focus-visible ring for keyboard accessibility',
+    'Subtle scale-down on active press for tactile feedback',
+    'Disabled state that prevents interaction and dims the element',
+    'Uppercase Tektur type treatment for strong visual presence',
+  ],
+
+  guidelines: {
+    do: [
+      'Use primary for the single most important action on the page',
+      'Pair primary with secondary or ghost to create a clear visual hierarchy',
+      'Use the `prefix` slot for leading icons and `suffix` for trailing arrows or indicators',
+      'Use the lg size for hero sections and above-the-fold CTAs',
+      'Provide an href when the button navigates to another page or section',
+      'Keep button labels short and action-oriented (e.g. "Get Started", "View Docs")',
     ],
+    dont: [
+      'Do not place multiple primary buttons side by side — one primary per action group',
+      'Do not use ghost variant for the most important action; it is too subtle for primary CTAs',
+      'Do not omit href when the action is navigation — this hurts accessibility and SEO',
+      'Do not use long sentences as button labels; aim for two to three words maximum',
+      'Do not disable buttons without explaining why the action is unavailable',
+    ],
+  },
 
-    guidelines: {
-      do: [
-        'Use primary for the single most important action on the page',
-        'Pair primary with secondary or ghost to create a clear visual hierarchy',
-        'Use the `prefix` slot for leading icons and `suffix` for trailing arrows or indicators',
-        'Use the lg size for hero sections and above-the-fold CTAs',
-        'Provide an href when the button navigates to another page or section',
-        'Keep button labels short and action-oriented (e.g. "Get Started", "View Docs")',
-      ],
-      dont: [
-        'Place multiple primary buttons side by side — one primary per action group',
-        'Use ghost variant for the most important action; it is too subtle for primary CTAs',
-        'Omit href when the action is navigation — this hurts accessibility and SEO',
-        'Use long sentences as button labels; aim for two to three words maximum',
-        'Disable buttons without explaining why the action is unavailable',
-      ],
-    },
-
-    previewHtml: `<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+  previewHtml: `<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
   <arc-button variant="primary" size="lg">Get Started</arc-button>
   <arc-button variant="secondary">
     <svg slot="prefix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z"/></svg>
@@ -55,11 +56,11 @@ Three size presets — sm, md, and lg — let you scale buttons to their context
   <arc-button variant="ghost">Learn More</arc-button>
 </div>`,
 
-    tabs: [
-      {
-        label: 'Web Component',
-        lang: 'html',
-        code: `<script type="module" src="@arclux/arc-ui"></script>
+  tabs: [
+    {
+      label: 'Web Component',
+      lang: 'html',
+      code: `<script type="module" src="@arclux/arc-ui"></script>
 
 <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
   <arc-button variant="primary" size="lg" href="/docs/getting-started">Get Started</arc-button>
@@ -72,11 +73,11 @@ Three size presets — sm, md, and lg — let you scale buttons to their context
   <svg slot="prefix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z"/></svg>
   Bookmark
 </arc-button>`,
-      },
-      {
-        label: 'React',
-        lang: 'tsx',
-        code: `import { Button } from '@arclux/arc-ui-react';
+    },
+    {
+      label: 'React',
+      lang: 'tsx',
+      code: `import { Button } from '@arclux/arc-ui-react';
 
 export function HeroActions() {
   return (
@@ -93,11 +94,11 @@ export function HeroActions() {
   <svg slot="prefix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z"/></svg>
   Bookmark
 </Button>`,
-      },
-      {
-        label: 'Vue',
-        lang: 'html',
-        code: `<script setup>
+    },
+    {
+      label: 'Vue',
+      lang: 'html',
+      code: `<script setup>
 import { Button } from '@arclux/arc-ui-vue';
 </script>
 
@@ -108,11 +109,11 @@ import { Button } from '@arclux/arc-ui-vue';
     <Button variant="ghost" href="/docs/tokens">Learn More</Button>
   </div>
 </template>`,
-      },
-      {
-        label: 'Svelte',
-        lang: 'html',
-        code: `<script>
+    },
+    {
+      label: 'Svelte',
+      lang: 'html',
+      code: `<script>
   import { Button } from '@arclux/arc-ui-svelte';
 </script>
 
@@ -121,29 +122,29 @@ import { Button } from '@arclux/arc-ui-vue';
   <Button variant="secondary" href="/docs/components">View Docs</Button>
   <Button variant="ghost" href="/docs/tokens">Learn More</Button>
 </div>`,
-      },
-      {
-        label: 'Angular',
-        lang: 'ts',
-        code: `import { Component } from '@angular/core';
+    },
+    {
+      label: 'Angular',
+      lang: 'ts',
+      code: `import { Component } from '@angular/core';
 import { Button } from '@arclux/arc-ui-angular';
 
 @Component({
   imports: [Button],
   template: \`
     <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-      <Button variant="primary" size="lg" href="/docs/getting-started">Get Started</Button>
-      <Button variant="secondary" href="/docs/components">View Docs</Button>
-      <Button variant="ghost" href="/docs/tokens">Learn More</Button>
+      <arc-button variant="primary" size="lg" href="/docs/getting-started">Get Started</arc-button>
+      <arc-button variant="secondary" href="/docs/components">View Docs</arc-button>
+      <arc-button variant="ghost" href="/docs/tokens">Learn More</arc-button>
     </div>
   \`,
 })
 export class HeroActionsComponent {}`,
-      },
-      {
-        label: 'Solid',
-        lang: 'tsx',
-        code: `import { Button } from '@arclux/arc-ui-solid';
+    },
+    {
+      label: 'Solid',
+      lang: 'tsx',
+      code: `import { Button } from '@arclux/arc-ui-solid';
 
 export function HeroActions() {
   return (
@@ -154,11 +155,11 @@ export function HeroActions() {
     </div>
   );
 }`,
-      },
-      {
-        label: 'Preact',
-        lang: 'tsx',
-        code: `import { Button } from '@arclux/arc-ui-preact';
+    },
+    {
+      label: 'Preact',
+      lang: 'tsx',
+      code: `import { Button } from '@arclux/arc-ui-preact';
 
 export function HeroActions() {
   return (
@@ -169,20 +170,20 @@ export function HeroActions() {
     </div>
   );
 }`,
-      },
-      {
-        label: 'HTML',
-        lang: 'html',
-        code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
+    },
+    {
+      label: 'HTML',
+      lang: 'html',
+      code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
 <!-- arc-button — requires button.css + base.css (or arc-ui.css) -->
 <span class="arc-button">
   <a class="btn" href="#">Button</a>
 </span>`,
-      },
-      {
-        label: 'HTML (Inline)',
-        lang: 'html',
-        code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
+    },
+    {
+      label: 'HTML (Inline)',
+      lang: 'html',
+      code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
 <!-- arc-button — self-contained, no external CSS needed -->
 <style>
   .arc-button:not([data-variant]) .btn:hover,
@@ -203,8 +204,8 @@ export function HeroActions() {
 <span class="arc-button" style="display: inline-flex">
   <a class="btn" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: 'Tektur', system-ui, sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; border: 1px solid transparent; border-radius: 10px; cursor: pointer; text-decoration: none; white-space: nowrap; box-sizing: border-box" href="#">Button</a>
 </span>`,
-      },
-    ],
-  
-  seeAlso: ["icon-button","chip","link"],
+    },
+  ],
+
+  seeAlso: ['icon-button', 'chip', 'link'],
 };

@@ -6,7 +6,8 @@ export const commandBar: ComponentDef = {
   tag: 'arc-command-bar',
   tier: 'navigation',
   interactivity: 'interactive',
-  description: 'Always-visible search input designed to sit inside a top bar. Accent-primary bottom border on focus with glow ring.',
+  description:
+    'Always-visible search input designed to sit inside a top bar. Accent-primary bottom border on focus with glow ring.',
 
   overview: `CommandBar is a persistent search-and-command input designed to live permanently inside a TopBar or toolbar region. Unlike CommandPalette, which is a modal overlay triggered by a keyboard shortcut, CommandBar is always visible and ready for input. This makes it ideal for applications where search is a primary workflow — admin dashboards, documentation sites, and developer tools that benefit from an always-accessible entry point.
 
@@ -17,11 +18,11 @@ CommandBar is intentionally minimal — it handles the input chrome and events w
   features: [
     'Always-visible search input for persistent toolbar placement',
     'Accent-primary bottom border with glow ring on focus',
-    'arc-input event on every keystroke for live filtering',
-    'arc-submit event on Enter for explicit command submission',
+    '`arc-input` event on every keystroke for live filtering',
+    '`arc-submit` event on Enter for explicit command submission',
     'Customisable placeholder text',
     'Controlled value prop for external state management',
-    'Keyboard accessible with standard input behaviour',
+    'Keyboard accessible with standard input behavior',
     'Token-driven theming via CSS custom properties',
   ],
 
@@ -34,18 +35,17 @@ CommandBar is intentionally minimal — it handles the input chrome and events w
       'Constrain the width with max-width so the bar does not dominate the toolbar',
     ],
     dont: [
-      'Use CommandBar when search is secondary — prefer CommandPalette for on-demand access',
-      'Place multiple CommandBars on the same page',
-      'Omit the placeholder — an empty input gives no affordance',
-      'Use CommandBar as a general-purpose text input — it is styled for search context only',
-      'Forget to handle the arc-submit event — users expect Enter to do something',
+      'Do not use CommandBar when search is secondary — prefer CommandPalette for on-demand access',
+      'Do not place multiple CommandBars on the same page',
+      'Do not omit the placeholder — an empty input gives no affordance',
+      'Do not use CommandBar as a general-purpose text input — it is styled for search context only',
+      'Do not forget to handle the arc-submit event — users expect Enter to do something',
     ],
   },
 
   previewHtml: `<div style="width:100%;max-width:480px;padding:var(--space-lg);background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-md)">
   <arc-command-bar placeholder="Search or type a command..." style="width:100%;max-width:400px"></arc-command-bar>
 </div>`,
-
 
   tabs: [
     {
@@ -131,7 +131,7 @@ import { CommandBar } from '@arclux/arc-ui-angular';
 @Component({
   imports: [CommandBar],
   template: \`
-    <CommandBar
+    <arc-command-bar
       placeholder="Search..."
       (arc-input)="onInput($event)"
       (arc-submit)="onSubmit($event)"

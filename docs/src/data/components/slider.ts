@@ -1,56 +1,57 @@
 import type { ComponentDef } from './_types';
 
 export const slider: ComponentDef = {
-    name: 'Slider',
-    slug: 'slider',
-    tag: 'arc-slider',
-    tier: 'input',
-    interactivity: 'hybrid',
-    description: 'Range input slider with a label, live numeric value display, accent-primary fill track, and customisable min/max/step.',
+  name: 'Slider',
+  slug: 'slider',
+  tag: 'arc-slider',
+  tier: 'input',
+  interactivity: 'hybrid',
+  description:
+    'Range input slider with a label, live numeric value display, accent-primary fill track, and customisable min/max/step.',
 
-    overview: `Slider provides a familiar range input for selecting a numeric value within a defined range. When a \`label\` is provided, the component renders a header row with the label on the left and the current numeric value on the right in monospace font, giving users immediate feedback as they drag the thumb. The track uses a gradient fill from accent-primary to the default border colour, visually indicating the selected proportion.
+  overview: `Slider provides a familiar range input for selecting a numeric value within a defined range. When a \`label\` is provided, the component renders a header row with the label on the left and the current numeric value on the right in monospace font, giving users immediate feedback as they drag the thumb. The track uses a gradient fill from accent-primary to the default border color, visually indicating the selected proportion.
 
 The component wraps a native \`<input type="range">\` element, ensuring built-in browser accessibility including keyboard control (arrow keys for stepping) and screen reader announcement of the current value via \`aria-valuenow\`, \`aria-valuemin\`, and \`aria-valuemax\`. The \`step\` prop controls the increment granularity, making it suitable for both coarse controls (volume 0-100) and fine-grained settings (opacity 0.00-1.00).
 
 Slider fires \`arc-input\` on every movement for real-time UI updates and \`arc-change\` when the user releases the thumb, mirroring the native input/change event distinction. The thumb scales up and gains a blue glow on hover or focus, providing clear interactive feedback consistent with ARC UI's design language.`,
 
-    features: [
-      'Visual fill track using a CSS gradient from accent-primary to the border colour, proportional to the current value',
-      'Header row displaying the label and current numeric value in monospace font when `label` is set',
-      'Configurable `min`, `max`, and `step` props for precise range and increment control',
-      'Thumb hover and focus effects with scale-up and accent-primary glow shadow',
-      'Native keyboard support via arrow keys, Page Up/Down, and Home/End from the underlying range input',
-      'Dual events: `arc-input` fires continuously during drag, `arc-change` fires on release',
-      'Full ARIA value attributes: `aria-valuenow`, `aria-valuemin`, `aria-valuemax`, and `aria-label`',
-      'Disabled state at 40% opacity with pointer events blocked',
+  features: [
+    'Visual fill track using a CSS gradient from accent-primary to the border color, proportional to the current value',
+    'Header row displaying the label and current numeric value in monospace font when `label` is set',
+    'Configurable `min`, `max`, and `step` props for precise range and increment control',
+    'Thumb hover and focus effects with scale-up and accent-primary glow shadow',
+    'Native keyboard support via arrow keys, Page Up/Down, and Home/End from the underlying range input',
+    'Dual events: `arc-input` fires continuously during drag, `arc-change` fires on release',
+    'Full ARIA value attributes: `aria-valuenow`, `aria-valuemin`, `aria-valuemax`, and `aria-label`',
+    'Disabled state at 40% opacity with pointer events blocked',
+  ],
+
+  guidelines: {
+    do: [
+      'Provide a `label` so users can see both the purpose and the current value at a glance',
+      'Choose a `step` that matches your data precision — use 1 for integers, 0.01 for percentages',
+      'Use `arc-input` for real-time preview (e.g. adjusting a visual property) and `arc-change` for committing the final value',
+      'Set meaningful `min` and `max` values that reflect the actual valid range for your use case',
+      'Place Slider in a container wide enough for comfortable thumb dragging — at least 200px',
     ],
+    dont: [
+      'Do not use Slider for exact numeric entry where the user needs to type a specific number — use Input with `type="number"` instead',
+      'Do not set a `step` so small that the slider has thousands of positions — it becomes imprecise with mouse input',
+      'Do not omit `label` when the slider is standalone — without context the value readout is meaningless',
+      'Do not use Slider for binary on/off choices — use Toggle instead',
+      'Avoid placing multiple sliders in a narrow column without sufficient vertical spacing between them',
+    ],
+  },
 
-    guidelines: {
-      do: [
-        'Provide a `label` so users can see both the purpose and the current value at a glance',
-        'Choose a `step` that matches your data precision -- use 1 for integers, 0.01 for percentages',
-        'Use `arc-input` for real-time preview (e.g. adjusting a visual property) and `arc-change` for committing the final value',
-        'Set meaningful `min` and `max` values that reflect the actual valid range for your use case',
-        'Place Slider in a container wide enough for comfortable thumb dragging -- at least 200px',
-      ],
-      dont: [
-        'Do not use Slider for exact numeric entry where the user needs to type a specific number -- use Input with `type="number"` instead',
-        'Do not set a `step` so small that the slider has thousands of positions -- it becomes imprecise with mouse input',
-        'Do not omit `label` when the slider is standalone -- without context the value readout is meaningless',
-        'Do not use Slider for binary on/off choices -- use Toggle instead',
-        'Avoid placing multiple sliders in a narrow column without sufficient vertical spacing between them',
-      ],
-    },
-
-    previewHtml: `<div style="width:100%; max-width:400px;">
+  previewHtml: `<div style="width:100%; max-width:400px;">
   <arc-slider label="Opacity" value="75" min="0" max="100" step="1"></arc-slider>
 </div>`,
 
-    tabs: [
-      {
-        label: 'Web Component',
-        lang: 'html',
-        code: `<script type="module" src="@arclux/arc-ui"></script>
+  tabs: [
+    {
+      label: 'Web Component',
+      lang: 'html',
+      code: `<script type="module" src="@arclux/arc-ui"></script>
 
 <!-- Basic labeled slider -->
 <arc-slider label="Volume" value="50" min="0" max="100"></arc-slider>
@@ -77,11 +78,11 @@ Slider fires \`arc-input\` on every movement for real-time UI updates and \`arc-
     console.log('Final value:', e.detail.value);
   });
 </script>`,
-      },
-      {
-        label: 'React',
-        lang: 'tsx',
-        code: `import { Slider } from '@arclux/arc-ui-react';
+    },
+    {
+      label: 'React',
+      lang: 'tsx',
+      code: `import { Slider } from '@arclux/arc-ui-react';
 import { useState } from 'react';
 
 function VolumeControl() {
@@ -115,11 +116,11 @@ function ImageEditor() {
     </div>
   );
 }`,
-      },
-      {
-        label: 'Vue',
-        lang: 'html',
-        code: `<script setup>
+    },
+    {
+      label: 'Vue',
+      lang: 'html',
+      code: `<script setup>
 import { Slider } from '@arclux/arc-ui-vue';
 import { ref } from 'vue';
 
@@ -142,11 +143,11 @@ const letterSpacing = ref(0);
     Preview text with live adjustments.
   </p>
 </template>`,
-      },
-      {
-        label: 'Svelte',
-        lang: 'html',
-        code: `<script>
+    },
+    {
+      label: 'Svelte',
+      lang: 'html',
+      code: `<script>
   import { Slider } from '@arclux/arc-ui-svelte';
 
   let hue = 220;
@@ -166,26 +167,26 @@ const letterSpacing = ref(0);
 </div>
 
 <div style="width:80px; height:80px; border-radius:12px; margin-top:16px; background:{color}"></div>`,
-      },
-      {
-        label: 'Angular',
-        lang: 'ts',
-        code: `import { Component } from '@angular/core';
+    },
+    {
+      label: 'Angular',
+      lang: 'ts',
+      code: `import { Component } from '@angular/core';
 import { Slider } from '@arclux/arc-ui-angular';
 
 @Component({
   imports: [Slider],
   template: \`
     <div style="display:flex; flex-direction:column; gap:16px; max-width:400px;">
-      <Slider label="Playback Speed" [value]="speed" [min]="0.25" [max]="3" [step]="0.25"
-        (arc-input)="speed = $event.detail.value"></Slider>
+      <arc-slider label="Playback Speed" [value]="speed" [min]="0.25" [max]="3" [step]="0.25"
+        (arc-input)="speed = $event.detail.value"></arc-slider>
 
-      <Slider label="Seek" [value]="position" [min]="0" [max]="duration"
+      <arc-slider label="Seek" [value]="position" [min]="0" [max]="duration"
         (arc-input)="onSeek($event.detail.value)"
-        (arc-change)="onSeekCommit($event.detail.value)"></Slider>
+        (arc-change)="onSeekCommit($event.detail.value)"></arc-slider>
 
-      <Slider label="Volume" [value]="volume" [min]="0" [max]="100"
-        (arc-change)="volume = $event.detail.value"></Slider>
+      <arc-slider label="Volume" [value]="volume" [min]="0" [max]="100"
+        (arc-change)="volume = $event.detail.value"></arc-slider>
     </div>
   \`,
 })
@@ -198,11 +199,11 @@ export class MediaPlayerComponent {
   onSeek(val: number) { /* live preview seek position */ }
   onSeekCommit(val: number) { /* commit seek to player */ }
 }`,
-      },
-      {
-        label: 'Solid',
-        lang: 'tsx',
-        code: `import { Slider } from '@arclux/arc-ui-solid';
+    },
+    {
+      label: 'Solid',
+      lang: 'tsx',
+      code: `import { Slider } from '@arclux/arc-ui-solid';
 import { createSignal } from 'solid-js';
 
 function PricingEstimator() {
@@ -224,11 +225,11 @@ function PricingEstimator() {
     </div>
   );
 }`,
-      },
-      {
-        label: 'Preact',
-        lang: 'tsx',
-        code: `import { Slider } from '@arclux/arc-ui-preact';
+    },
+    {
+      label: 'Preact',
+      lang: 'tsx',
+      code: `import { Slider } from '@arclux/arc-ui-preact';
 import { useState } from 'preact/hooks';
 
 function BorderRadiusTool() {
@@ -255,20 +256,20 @@ function BorderRadiusTool() {
     </div>
   );
 }`,
-      },
-      {
-        label: 'HTML',
-        lang: 'html',
-        code: `<!-- arc-slider is interactive — requires JS -->
+    },
+    {
+      label: 'HTML',
+      lang: 'html',
+      code: `<!-- arc-slider is interactive — requires JS -->
 <arc-slider></arc-slider>`,
-      },
-      {
-        label: 'HTML (Inline)',
-        lang: 'html',
-        code: `<!-- arc-slider is interactive — requires JS -->
+    },
+    {
+      label: 'HTML (Inline)',
+      lang: 'html',
+      code: `<!-- arc-slider is interactive — requires JS -->
 <arc-slider></arc-slider>`,
-      },
-    ],
-  
-  seeAlso: ["number-input","input","rating"],
+    },
+  ],
+
+  seeAlso: ['number-input', 'input', 'rating'],
 };

@@ -6,21 +6,22 @@ export const anchorNav: ComponentDef = {
   tag: 'arc-anchor-nav',
   tier: 'navigation',
   interactivity: 'interactive',
-  description: 'Vertical or horizontal in-page link bar with active highlight. Active link gets accent-primary background pill or underline glow.',
+  description:
+    'Vertical or horizontal in-page link bar with active highlight. Active link gets accent-primary background pill or underline glow.',
 
   overview: `AnchorNav is an in-page navigation component that renders a list of section links in either a vertical column or horizontal row. The active link is highlighted with an accent-primary background pill (vertical) or underline glow (horizontal), giving users a clear sense of where they are within a long-scrolling page. It is the ideal companion for single-page documentation, landing pages with sectioned content, and settings screens with distinct panels.
 
 The component manages its own selection state via the \`value\` prop and dispatches \`arc-change\` when the user clicks a link. For automatic scroll-position tracking, pair AnchorNav with ScrollSpy — the scroll spy updates the active value as the user scrolls, and AnchorNav reflects the change visually. This combination delivers a polished "table of contents" experience with minimal wiring.
 
-AnchorNav supports both orientations out of the box. Vertical mode is best for sidebars and narrow rail positions, while horizontal mode works well as a sub-header beneath a TopBar. Both modes use smooth scroll behaviour when links are clicked, and all items are fully keyboard navigable with arrow keys and Enter activation.`,
+AnchorNav supports both orientations out of the box. Vertical mode is best for sidebars and narrow rail positions, while horizontal mode works well as a sub-header beneath a TopBar. Both modes use smooth scroll behavior when links are clicked, and all items are fully keyboard navigable with arrow keys and Enter activation.`,
 
   features: [
     'Vertical and horizontal orientations',
     'Accent-primary background pill (vertical) or underline glow (horizontal) on active link',
-    'arc-change event on link selection',
+    '`arc-change` event on link selection',
     'Controlled value prop for external state management',
     'Smooth scroll to target section on click',
-    'Keyboard navigation with arrow keys',
+    'Full keyboard navigation with arrow keys',
     'Pairs with ScrollSpy for automatic scroll tracking',
     'Token-driven theming via CSS custom properties',
   ],
@@ -34,11 +35,11 @@ AnchorNav supports both orientations out of the box. Vertical mode is best for s
       'Place AnchorNav in a sticky container so it remains visible during scroll',
     ],
     dont: [
-      'Use AnchorNav for multi-page navigation — use Sidebar or NavigationMenu instead',
-      'Add more than eight to ten links — split long pages into separate routes instead',
-      'Mix orientations on the same page',
-      'Forget to set matching IDs on the sections the links point to',
-      'Use AnchorNav without sticky positioning — it loses its wayfinding value if it scrolls away',
+      'Do not use AnchorNav for multi-page navigation — use Sidebar or NavigationMenu instead',
+      'Do not add more than eight to ten links — split long pages into separate routes instead',
+      'Do not mix orientations on the same page',
+      'Do not forget to set matching IDs on the sections the links point to',
+      'Do not use AnchorNav without sticky positioning — it loses its wayfinding value if it scrolls away',
     ],
   },
 
@@ -50,7 +51,6 @@ AnchorNav supports both orientations out of the box. Vertical mode is best for s
     <span value="api">API Reference</span>
   </arc-anchor-nav>
 </div>`,
-
 
   tabs: [
     {
@@ -138,7 +138,7 @@ import { AnchorNav } from '@arclux/arc-ui-angular';
 @Component({
   imports: [AnchorNav],
   template: \`
-    <AnchorNav
+    <arc-anchor-nav
       orientation="vertical"
       value="overview"
       (arc-change)="onChange($event)"
@@ -147,7 +147,7 @@ import { AnchorNav } from '@arclux/arc-ui-angular';
       <span value="installation">Installation</span>
       <span value="theming">Theming</span>
       <span value="api">API Reference</span>
-    </AnchorNav>
+    </arc-anchor-nav>
   \`,
 })
 export class TableOfContentsComponent {

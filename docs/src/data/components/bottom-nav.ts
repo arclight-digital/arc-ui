@@ -6,7 +6,8 @@ export const bottomNav: ComponentDef = {
   tag: 'arc-bottom-nav',
   tier: 'navigation',
   interactivity: 'interactive',
-  description: 'Mobile bottom bar with icon + label items. Active item gets accent-primary glow underline with surface-overlay background and backdrop blur.',
+  description:
+    'Mobile bottom bar with icon + label items. Active item gets accent-primary glow underline with surface-overlay background and backdrop blur.',
 
   overview: `BottomNav is a fixed-position navigation bar anchored to the bottom of the viewport, purpose-built for mobile and touch-first interfaces. It renders a row of icon-and-label items where the active selection is highlighted with an accent-primary glow underline and a frosted surface-overlay background with backdrop blur, making the current section immediately obvious even at a glance.
 
@@ -19,7 +20,7 @@ BottomNav is designed to complement TopBar — use TopBar for desktop viewports 
     'Icon + label items for scannable touch targets',
     'Accent-primary glow underline on the active item',
     'Surface-overlay background with backdrop blur',
-    'arc-change event on item selection',
+    '`arc-change` event on item selection',
     'Controlled value prop for external state management',
     'Supports three to five navigation destinations',
     'Keyboard accessible with arrow key navigation',
@@ -29,17 +30,17 @@ BottomNav is designed to complement TopBar — use TopBar for desktop viewports 
   guidelines: {
     do: [
       'Limit to three to five items — more will crowd the bar on small screens',
-      'Use recognisable icons with short labels (one to two words)',
+      'Use recognizable icons with short labels (one to two words)',
       'Show BottomNav only on mobile breakpoints — use TopBar or Sidebar on desktop',
       'Set the value prop to match the current route for correct highlighting',
       'Pair with a Drawer or Sheet for deeper navigation within a section',
     ],
     dont: [
-      'Display BottomNav and TopBar navigation simultaneously on the same viewport',
-      'Use labels longer than two words — they will truncate on narrow screens',
-      'Add more than five items — prioritise the most important destinations',
-      'Use BottomNav for actions (like "Create" or "Delete") — it is for navigation only',
-      'Forget to provide icons — label-only items break the expected mobile pattern',
+      'Do not display BottomNav and TopBar navigation simultaneously on the same viewport',
+      'Do not use labels longer than two words — they will truncate on narrow screens',
+      'Do not add more than five items — prioritise the most important destinations',
+      'Do not use BottomNav for actions (like "Create" or "Delete") — it is for navigation only',
+      'Do not forget to provide icons — label-only items break the expected mobile pattern',
     ],
   },
 
@@ -63,7 +64,6 @@ BottomNav is designed to complement TopBar — use TopBar for desktop viewports 
     </button>
   </nav>
 </div>`,
-
 
   tabs: [
     {
@@ -161,7 +161,7 @@ import { BottomNav } from '@arclux/arc-ui-angular';
 @Component({
   imports: [BottomNav],
   template: \`
-    <BottomNav
+    <arc-bottom-nav
       [items]="items"
       value="home"
       (arc-change)="onChange($event)"

@@ -1,58 +1,59 @@
 import type { ComponentDef } from './_types';
 
 export const menubar: ComponentDef = {
-    name: 'Menubar',
-    slug: 'menubar',
-    tag: 'arc-menubar',
-    tier: 'navigation',
-    interactivity: 'interactive',
-    status: 'beta',
-    description: 'Desktop-application-style menu bar (File / Edit / View) with nested submenus, keyboard shortcuts display, and full WAI-ARIA menubar keyboard navigation.',
+  name: 'Menubar',
+  slug: 'menubar',
+  tag: 'arc-menubar',
+  tier: 'navigation',
+  interactivity: 'interactive',
+  status: 'beta',
+  description:
+    'Desktop-application-style menu bar (File / Edit / View) with nested submenus, keyboard shortcuts display, and full WAI-ARIA menubar keyboard navigation.',
 
-    overview: `Menubar renders the horizontal command bar familiar from desktop applications: a row of top-level menus like File, Edit, and View, each opening a vertical dropdown of commands. The entire structure is data-driven — assign an array to the \`items\` property via JavaScript and the component renders triggers, menus, submenus, dividers, and right-aligned keyboard shortcut hints.
+  overview: `Menubar renders the horizontal command bar familiar from desktop applications: a row of top-level menus like File, Edit, and View, each opening a vertical dropdown of commands. The entire structure is data-driven — assign an array to the \`items\` property via JavaScript and the component renders triggers, menus, submenus, dividers, and right-aligned keyboard shortcut hints.
 
 Menu entries can nest one further level: an item with its own \`items\` array becomes a submenu parent, rendered with a caret indicator. Submenus open to the right of their parent item and automatically flip to the left when they would overflow the viewport. Entries with \`{ divider: true }\` render as separator lines, \`disabled\` entries are skipped by keyboard navigation, and \`shortcut\` strings display in muted monospace (display only — the component does not bind global hotkeys).
 
 Interaction follows the WAI-ARIA menubar pattern faithfully. The bar exposes a single tab stop with roving focus: ArrowLeft/ArrowRight move across top-level items, ArrowDown or Enter opens a menu, ArrowUp opens it focused on the last item. Inside menus, arrows move and wrap past dividers and disabled items, ArrowRight enters a submenu, ArrowLeft steps back out (or over to the previous top-level menu), typeahead jumps to items by first letter, and Escape unwinds one level at a time, restoring focus to the trigger. With the pointer, clicking a trigger toggles its menu, hovering other triggers switches menus once one is open, and hovering a submenu parent opens it after a short delay. Activating a leaf fires \`arc-select\` with the full label path from root to leaf.`,
 
-    features: [
-      'Data-driven: one `items` array describes triggers, menus, submenus, dividers, shortcuts, and disabled states',
-      'Faithful WAI-ARIA menubar pattern: `role="menubar"`, `role="menu"`, `role="menuitem"`, roving tabindex with a single tab stop',
-      'Full 2D keyboard navigation: arrows in both axes, Home/End, Enter/Space, Escape unwinding one level at a time',
-      'Typeahead: printable characters jump to the next matching item in the open menu, or across the menubar when closed',
-      'Standard menubar pointer behavior: click to toggle, hover to switch open menus, ~150ms hover-intent delay on submenus',
-      'Submenus flip from right to left automatically when they would overflow the viewport',
-      '`arc-select` event carries the full label path from root to leaf (e.g. `["File", "Export", "PNG"]`)',
-      'CSS parts for `bar`, `trigger`, `menu`, `item`, and `shortcut` enable external styling'
+  features: [
+    'Data-driven: one `items` array describes triggers, menus, submenus, dividers, shortcuts, and disabled states',
+    'Faithful WAI-ARIA menubar pattern: `role="menubar"`, `role="menu"`, `role="menuitem"`, roving tabindex with a single tab stop',
+    'Full 2D keyboard navigation: arrows in both axes, Home/End, Enter/Space, Escape unwinding one level at a time',
+    'Typeahead: printable characters jump to the next matching item in the open menu, or across the menubar when closed',
+    'Standard menubar pointer behavior: click to toggle, hover to switch open menus, ~150ms hover-intent delay on submenus',
+    'Submenus flip from right to left automatically when they would overflow the viewport',
+    '`arc-select` event carries the full label path from root to leaf (e.g. `["File", "Export", "PNG"]`)',
+    'CSS parts for `bar`, `trigger`, `menu`, `item`, and `shortcut` enable external styling',
+  ],
+
+  guidelines: {
+    do: [
+      'Assign `items` via JavaScript — it is a property, not an HTML attribute',
+      'Group related commands with `{ divider: true }` entries, mirroring desktop app conventions',
+      'Use `shortcut` strings that match your actual key bindings — the menubar displays them but you must register the hotkeys yourself',
+      'Keep top-level labels to single words (File, Edit, View) so the bar scans like a native app',
+      'Listen to `arc-select` and branch on the label path array to route commands',
     ],
+    dont: [
+      'Do not use Menubar for site navigation — use navigation-menu or top-bar; menubars are for application commands',
+      'Do not nest submenus more than one level below a menu — deep chains are hard to traverse with a pointer',
+      'Do not put destructive actions directly next to common ones without a divider between them',
+      'Do not rely on shortcut hints as functionality — they are display-only text',
+      'Avoid more than 7-8 top-level menus; consolidate rare commands into a submenu instead',
+    ],
+  },
 
-    guidelines: {
-      do: [
-        'Assign `items` via JavaScript — it is a property, not an HTML attribute',
-        'Group related commands with `{ divider: true }` entries, mirroring desktop app conventions',
-        'Use `shortcut` strings that match your actual key bindings — the menubar displays them but you must register the hotkeys yourself',
-        'Keep top-level labels to single words (File, Edit, View) so the bar scans like a native app',
-        'Listen to `arc-select` and branch on the label path array to route commands'
-      ],
-      dont: [
-        'Do not use Menubar for site navigation — use navigation-menu or top-bar; menubars are for application commands',
-        'Do not nest submenus more than one level below a menu — deep chains are hard to traverse with a pointer',
-        'Do not put destructive actions directly next to common ones without a divider between them',
-        'Do not rely on shortcut hints as functionality — they are display-only text',
-        'Avoid more than 7-8 top-level menus; consolidate rare commands into a submenu instead'
-      ],
-    },
+  previewLayout: 'block',
 
-    previewLayout: 'block',
+  previewHeight: '380px',
 
-    previewHeight: '380px',
-
-    previewHtml: `<div style="display: flex; flex-direction: column; gap: var(--space-md); align-items: flex-start;">
+  previewHtml: `<div style="display: flex; flex-direction: column; gap: var(--space-md); align-items: flex-start;">
   <arc-menubar id="demo-menubar-preview"></arc-menubar>
   <div style="font-size: var(--text-sm); color: var(--text-muted); font-family: var(--font-mono);">selected: <span id="demo-menubar-out">—</span></div>
 </div>`,
 
-    previewSetup: `const mb = el.querySelector('#demo-menubar-preview');
+  previewSetup: `const mb = el.querySelector('#demo-menubar-preview');
 const out = el.querySelector('#demo-menubar-out');
 if (mb) {
   mb.items = [
@@ -93,11 +94,11 @@ if (mb) {
   });
 }`,
 
-    tabs: [
-      {
-        label: 'Web Component',
-        lang: 'html',
-        code: `<arc-menubar id="app-menubar"></arc-menubar>
+  tabs: [
+    {
+      label: 'Web Component',
+      lang: 'html',
+      code: `<arc-menubar id="app-menubar"></arc-menubar>
 
 <script>
   const menubar = document.getElementById('app-menubar');
@@ -121,11 +122,11 @@ if (mb) {
     console.log('command:', e.detail.path); // e.g. ['File', 'Export', 'PNG']
   });
 </script>`,
-      },
-      {
-        label: 'React',
-        lang: 'tsx',
-        code: `import { Menubar } from '@arclux/arc-ui-react';
+    },
+    {
+      label: 'React',
+      lang: 'tsx',
+      code: `import { Menubar } from '@arclux/arc-ui-react';
 
 const items = [
   { label: 'File', items: [
@@ -147,11 +148,11 @@ const items = [
   items={items}
   onArcSelect={(e) => console.log('command:', e.detail.path)}
 />`,
-      },
-      {
-        label: 'Vue',
-        lang: 'html',
-        code: `<script setup>
+    },
+    {
+      label: 'Vue',
+      lang: 'html',
+      code: `<script setup>
 import { Menubar } from '@arclux/arc-ui-vue';
 
 const items = [
@@ -169,11 +170,11 @@ const items = [
 <template>
   <Menubar :items="items" @arc-select="(e) => console.log(e.detail.path)" />
 </template>`,
-      },
-      {
-        label: 'Svelte',
-        lang: 'html',
-        code: `<script>
+    },
+    {
+      label: 'Svelte',
+      lang: 'html',
+      code: `<script>
   import { Menubar } from '@arclux/arc-ui-svelte';
 
   const items = [
@@ -189,8 +190,37 @@ const items = [
 </script>
 
 <Menubar {items} on:arc-select={(e) => console.log(e.detail.path)} />`,
-      },
-    ],
+    },
+    {
+      label: 'Angular',
+      lang: 'ts',
+      code: `import { Component } from '@angular/core';
+import { Menubar } from '@arclux/arc-ui-angular';
 
-  seeAlso: ["dropdown-menu","context-menu","top-bar","command-bar"],
+@Component({
+  imports: [Menubar],
+  template: \`
+    <arc-menubar [items]="items" (arcSelect)="onSelect($event)"></arc-menubar>
+  \`,
+})
+export class AppMenubarComponent {
+  items = [
+    { label: 'File', items: [
+      { label: 'New File', shortcut: '⌘N' },
+      { divider: true },
+      { label: 'Export', items: [{ label: 'PNG' }, { label: 'SVG' }] }
+    ] },
+    { label: 'Edit', items: [
+      { label: 'Undo', shortcut: '⌘Z' }
+    ] }
+  ];
+
+  onSelect(e: CustomEvent) {
+    console.log(e.detail.path);
+  }
+}`,
+    },
+  ],
+
+  seeAlso: ['dropdown-menu', 'context-menu', 'top-bar', 'command-bar'],
 };

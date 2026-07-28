@@ -16,7 +16,7 @@ Transitions between panels are handled with a crossfade animation driven by CSS,
 
   features: [
     'Arrow-key keyboard navigation between tabs (left/right for horizontal, up/down for vertical)',
-    'Automatic WAI-ARIA roles: tab, tablist, and tabpanel with proper aria-controls linking',
+    'Automatic WAI-ARIA roles: tab, tablist, and tabpanel with proper `aria-controls` linking',
     'Smooth crossfade transition when switching panels',
     'Disabled tab support — individual tabs can be non-interactive while remaining visible',
     'Programmatic selected index via the `selected` property',
@@ -26,18 +26,18 @@ Transitions between panels are handled with a crossfade animation driven by CSS,
 
   guidelines: {
     do: [
-      'Use Tabs when content sections are closely related and users need to compare or switch between them frequently.',
-      'Keep tab labels short — one or two words — so the entire tab bar fits without scrolling.',
-      'Set a sensible default `selected` index (usually 0) so the component is never empty on first render.',
-      'Provide meaningful panel content for every tab; avoid empty or placeholder panels in production.',
-      'Use the disabled state for tabs that are temporarily unavailable rather than hiding them entirely.',
+      'Use Tabs when content sections are closely related and users need to compare or switch between them frequently',
+      'Keep tab labels short — one or two words — so the entire tab bar fits without scrolling',
+      'Set a sensible default `selected` index (usually 0) so the component is never empty on first render',
+      'Provide meaningful panel content for every tab; avoid empty or placeholder panels in production',
+      'Use the disabled state for tabs that are temporarily unavailable rather than hiding them entirely',
     ],
     dont: [
-      'Do not use Tabs for sequential steps — use a Stepper component instead.',
-      'Avoid nesting Tabs inside Tabs; the double tab bar creates confusion for keyboard and screen-reader users.',
-      'Do not place critical actions (like a Save button) inside a non-default tab where users may never see them.',
-      'Avoid more than five or six tabs in a single group — consider a dropdown or sidebar navigation for larger sets.',
-      'Do not rely on tab order to imply a workflow; tabs should be independently meaningful.',
+      'Do not use Tabs for sequential steps — use a Stepper component instead',
+      'Avoid nesting Tabs inside Tabs; the double tab bar creates confusion for keyboard and screen-reader users',
+      'Do not place critical actions (like a Save button) inside a non-default tab where users may never see them',
+      'Avoid more than five or six tabs in a single group — consider a dropdown or sidebar navigation for larger sets',
+      'Do not rely on tab order to imply a workflow; tabs should be independently meaningful',
     ],
   },
 
@@ -48,7 +48,6 @@ Transitions between panels are handled with a crossfade animation driven by CSS,
     <arc-tab label="Changelog">v2.4.0 — Added disabled tab support and improved focus-visible ring styling. v2.3.0 — Introduced smooth crossfade panel transitions.</arc-tab>
   </arc-tabs>
 </div>`,
-
 
   tabs: [
     {
@@ -71,17 +70,21 @@ Transitions between panels are handled with a crossfade animation driven by CSS,
       lang: 'tsx',
       code: `import { Tabs, Tab } from '@arclux/arc-ui-react';
 
-<Tabs>
-  <Tab label="Overview">
-    ARC UI is a framework-agnostic component library built on web standards.
-  </Tab>
-  <Tab label="Features">
-    Keyboard navigation, ARIA roles, smooth transitions, and lazy rendering.
-  </Tab>
-  <Tab label="Changelog">
-    v2.4.0 — Disabled tab support and improved focus-visible ring styling.
-  </Tab>
-</Tabs>`,
+export default function Example() {
+  return (
+    <Tabs>
+      <Tab label="Overview">
+        ARC UI is a framework-agnostic component library built on web standards.
+      </Tab>
+      <Tab label="Features">
+        Keyboard navigation, ARIA roles, smooth transitions, and lazy rendering.
+      </Tab>
+      <Tab label="Changelog">
+        v2.4.0 — Disabled tab support and improved focus-visible ring styling.
+      </Tab>
+    </Tabs>
+  );
+}`,
     },
     {
       label: 'Vue',
@@ -210,9 +213,10 @@ export default function TabsDemo() {
     {
       name: 'Tab',
       tag: 'arc-tab',
-      description: 'An individual tab panel within a Tabs group. Each Tab renders a button in the tab bar and owns its associated content panel. Use this sub-component when you need fine-grained control over individual tab behavior, such as disabling a specific tab or attaching per-tab event listeners.',
+      description:
+        'An individual tab panel within a Tabs group. Each Tab renders a button in the tab bar and owns its associated content panel. Use this sub-component when you need fine-grained control over individual tab behavior, such as disabling a specific tab or attaching per-tab event listeners.',
     },
   ],
 
-  seeAlso: ["accordion","segmented-control"],
+  seeAlso: ['accordion', 'segmented-control'],
 };

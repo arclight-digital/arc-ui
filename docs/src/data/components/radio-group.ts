@@ -1,59 +1,59 @@
 import type { ComponentDef } from './_types';
 
 export const radioGroup: ComponentDef = {
-    name: 'Radio Group',
-    slug: 'radio-group',
-    tag: 'arc-radio-group',
-    tier: 'input',
-    interactivity: 'hybrid',
-    description: 'Single-select option group with arrow-key navigation and ARIA radiogroup semantics. Ideal for pricing tiers, settings panels, and any context where exactly one choice must be made from a visible set of options.',
+  name: 'Radio Group',
+  slug: 'radio-group',
+  tag: 'arc-radio-group',
+  tier: 'input',
+  interactivity: 'hybrid',
+  description:
+    'Single-select option group with arrow-key navigation and ARIA radiogroup semantics. Ideal for pricing tiers, settings panels, and any context where exactly one choice must be made from a visible set of options.',
 
-    overview: `RadioGroup lets users pick exactly one option from a visible set. Unlike Select, which hides choices behind a dropdown, RadioGroup displays every option up front so users can compare them at a glance. This makes it the right choice when the number of options is small (typically two to six) and the decision benefits from side-by-side visibility — pricing tiers, shipping methods, account types, or preference toggles.
+  overview: `RadioGroup lets users pick exactly one option from a visible set. Unlike Select, which hides choices behind a dropdown, RadioGroup displays every option up front so users can compare them at a glance. This makes it the right choice when the number of options is small (typically two to six) and the decision benefits from side-by-side visibility — pricing tiers, shipping methods, account types, or preference toggles.
 
 Under the hood, the component manages focus with arrow-key navigation following the WAI-ARIA radiogroup pattern. Pressing Arrow Down or Arrow Right moves focus to the next option and selects it; Arrow Up or Arrow Left moves backward. This roving-tabindex approach means the entire group occupies a single Tab stop, keeping keyboard navigation fast and predictable.
 
 RadioGroup supports both vertical and horizontal orientations. Vertical is the default and works best for options with longer labels or descriptions. Horizontal layout suits compact rows of short labels — for example, a row of size options (S, M, L, XL) or a light/dark theme toggle with more than two states. The component also integrates seamlessly with native form submission through its \`name\` and \`value\` properties.`,
 
-    features: [
-      'Single-select from a visible set of options — one choice at a time',
-      'Arrow-key navigation with roving tabindex (single Tab stop)',
-      'ARIA radiogroup role with automatic aria-checked management',
-      'Vertical and horizontal orientation modes',
-      'Disabled state for the entire group or individual options',
-      'Native form integration via name and value properties',
-      'Fires arc-change event on selection with the new value',
-      'Supports rich option objects with label and value fields',
+  features: [
+    'Single-select from a visible set of options — one choice at a time',
+    'Arrow-key navigation with roving tabindex (single Tab stop)',
+    'ARIA radiogroup role with automatic `aria-checked` management',
+    'Vertical and horizontal orientation modes',
+    'Disabled state for the entire group or individual options',
+    'Native form integration via name and value properties',
+    'Fires `arc-change` event on selection with the new value',
+    'Supports rich option objects with label and value fields',
+  ],
+
+  guidelines: {
+    do: [
+      'Use RadioGroup when users must choose exactly one option from two to six visible choices',
+      'Default-select the most common or recommended option to reduce decision friction',
+      'Use vertical orientation when option labels are longer than a few words',
+      'Pair with a visible label or heading so users understand what they are choosing',
+      'Group related radio groups under a shared fieldset or section heading',
     ],
+    dont: [
+      'Do not use RadioGroup for more than six or seven options — switch to Select or Combobox instead',
+      'Do not leave the group without a default selection unless the choice is truly optional',
+      'Do not mix RadioGroup with checkboxes in the same visual row — they imply different selection models',
+      'Do not use horizontal orientation with long labels — text will wrap awkwardly on small screens',
+      'Do not disable individual options without explaining why they are unavailable',
+    ],
+  },
 
-    guidelines: {
-      do: [
-        'Use RadioGroup when users must choose exactly one option from two to six visible choices',
-        'Default-select the most common or recommended option to reduce decision friction',
-        'Use vertical orientation when option labels are longer than a few words',
-        'Pair with a visible label or heading so users understand what they are choosing',
-        'Group related radio groups under a shared fieldset or section heading',
-      ],
-      dont: [
-        'Use RadioGroup for more than six or seven options — switch to Select or Combobox instead',
-        'Leave the group without a default selection unless the choice is truly optional',
-        'Mix RadioGroup with checkboxes in the same visual row — they imply different selection models',
-        'Use horizontal orientation with long labels — text will wrap awkwardly on small screens',
-        'Disable individual options without explaining why they are unavailable',
-      ],
-    },
-
-    previewHtml: `<arc-radio-group value="starter">
+  previewHtml: `<arc-radio-group value="starter">
   <arc-radio value="starter">Starter — Free for individuals</arc-radio>
   <arc-radio value="pro">Pro — $12/mo for teams</arc-radio>
   <arc-radio value="enterprise">Enterprise — Custom pricing</arc-radio>
 </arc-radio-group>`,
 
-
-    tabs: [
-      {
-        label: 'Web Component',
-        lang: 'html',
-        code: `<script type="module" src="@arclux/arc-ui"></script>
+  tabs: [
+    {
+      label: 'Web Component',
+      lang: 'html',
+      code: `<script type="module" src="@arclux/arc-ui"></script>
 
 <!-- Vertical (default) -->
 <arc-radio-group name="plan" value="starter">
@@ -76,11 +76,11 @@ RadioGroup supports both vertical and horizontal orientations. Vertical is the d
       console.log('Selected:', e.detail.value);
     });
 </script>`,
-      },
-      {
-        label: 'React',
-        lang: 'tsx',
-        code: `import { RadioGroup, Radio } from '@arclux/arc-ui-react';
+    },
+    {
+      label: 'React',
+      lang: 'tsx',
+      code: `import { RadioGroup, Radio } from '@arclux/arc-ui-react';
 import { useState } from 'react';
 
 function PricingPlan() {
@@ -109,11 +109,11 @@ function SizeSelector() {
     </RadioGroup>
   );
 }`,
-      },
-      {
-        label: 'Vue',
-        lang: 'html',
-        code: `<script setup>
+    },
+    {
+      label: 'Vue',
+      lang: 'html',
+      code: `<script setup>
 import { RadioGroup, Radio } from '@arclux/arc-ui-vue';
 import { ref } from 'vue';
 
@@ -127,11 +127,11 @@ const plan = ref('starter');
     <Radio value="enterprise">Enterprise — Custom pricing</Radio>
   </RadioGroup>
 </template>`,
-      },
-      {
-        label: 'Svelte',
-        lang: 'html',
-        code: `<script>
+    },
+    {
+      label: 'Svelte',
+      lang: 'html',
+      code: `<script>
   import { RadioGroup, Radio } from '@arclux/arc-ui-svelte';
 
   let theme = 'dark';
@@ -143,31 +143,31 @@ const plan = ref('starter');
   <Radio value="dark">Dark</Radio>
   <Radio value="auto">System</Radio>
 </RadioGroup>`,
-      },
-      {
-        label: 'Angular',
-        lang: 'ts',
-        code: `import { Component } from '@angular/core';
+    },
+    {
+      label: 'Angular',
+      lang: 'ts',
+      code: `import { Component } from '@angular/core';
 import { RadioGroup, Radio } from '@arclux/arc-ui-angular';
 
 @Component({
   imports: [RadioGroup, Radio],
   template: \`
-    <RadioGroup name="plan" [value]="plan" (arc-change)="plan = $event.detail.value">
-      <Radio value="starter">Starter — Free for individuals</Radio>
-      <Radio value="pro">Pro — $12/mo for teams</Radio>
-      <Radio value="enterprise">Enterprise — Custom pricing</Radio>
-    </RadioGroup>
+    <arc-radio-group name="plan" [value]="plan" (arc-change)="plan = $event.detail.value">
+      <arc-radio value="starter">Starter — Free for individuals</arc-radio>
+      <arc-radio value="pro">Pro — $12/mo for teams</arc-radio>
+      <arc-radio value="enterprise">Enterprise — Custom pricing</arc-radio>
+    </arc-radio-group>
   \`,
 })
 export class PricingComponent {
   plan = 'starter';
 }`,
-      },
-      {
-        label: 'Solid',
-        lang: 'tsx',
-        code: `import { RadioGroup, Radio } from '@arclux/arc-ui-solid';
+    },
+    {
+      label: 'Solid',
+      lang: 'tsx',
+      code: `import { RadioGroup, Radio } from '@arclux/arc-ui-solid';
 import { createSignal } from 'solid-js';
 
 function ShippingMethod() {
@@ -182,11 +182,11 @@ function ShippingMethod() {
     </RadioGroup>
   );
 }`,
-      },
-      {
-        label: 'Preact',
-        lang: 'tsx',
-        code: `import { RadioGroup, Radio } from '@arclux/arc-ui-preact';
+    },
+    {
+      label: 'Preact',
+      lang: 'tsx',
+      code: `import { RadioGroup, Radio } from '@arclux/arc-ui-preact';
 import { useState } from 'preact/hooks';
 
 function NotificationPreference() {
@@ -202,27 +202,28 @@ function NotificationPreference() {
     </RadioGroup>
   );
 }`,
-      },
-      {
-        label: 'HTML',
-        lang: 'html',
-        code: `<!-- arc-radio-group is interactive — requires JS -->
+    },
+    {
+      label: 'HTML',
+      lang: 'html',
+      code: `<!-- arc-radio-group is interactive — requires JS -->
 <arc-radio-group></arc-radio-group>`,
-      },
-      {
-        label: 'HTML (Inline)',
-        lang: 'html',
-        code: `<!-- arc-radio-group is interactive — requires JS -->
+    },
+    {
+      label: 'HTML (Inline)',
+      lang: 'html',
+      code: `<!-- arc-radio-group is interactive — requires JS -->
 <arc-radio-group></arc-radio-group>`,
-      },
-    ],
-    subComponents: [
-      {
-        name: 'Radio',
-        tag: 'arc-radio',
-        description: 'Individual radio option rendered inside a RadioGroup. Each Radio represents a single selectable choice with its own label and value. Can be independently disabled while the rest of the group remains interactive.',
-      },
-    ],
-  
-  seeAlso: ["select","segmented-control","checkbox"],
+    },
+  ],
+  subComponents: [
+    {
+      name: 'Radio',
+      tag: 'arc-radio',
+      description:
+        'Individual radio option rendered inside a RadioGroup. Each Radio represents a single selectable choice with its own label and value. Can be independently disabled while the rest of the group remains interactive.',
+    },
+  ],
+
+  seeAlso: ['select', 'segmented-control', 'checkbox'],
 };

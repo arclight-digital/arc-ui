@@ -7,7 +7,8 @@ export const dataGrid: ComponentDef = {
   tier: 'data',
   interactivity: 'interactive',
   status: 'beta',
-  description: 'A spreadsheet-grade grid for working with tabular data: inline cell editing, multi-column sorting, pinned columns, row selection, and virtualized rendering. Columns are defined as a JavaScript array, and the grid implements the full WAI-ARIA grid keyboard pattern with a single tab stop.',
+  description:
+    'A spreadsheet-grade grid for working with tabular data: inline cell editing, multi-column sorting, pinned columns, row selection, and virtualized rendering. Columns are defined as a JavaScript array, and the grid implements the full WAI-ARIA grid keyboard pattern with a single tab stop.',
 
   overview: `DataGrid is the tier above DataTable — reach for it when users need to *work* with the data rather than just read it. Columns are configured through a \`columns\` array property (not child elements), where each entry can opt into sorting, inline editing, alignment, a fixed width, and left-edge pinning.
 
@@ -20,14 +21,14 @@ Keyboard support follows the WAI-ARIA grid pattern: one tab stop for the whole g
   features: [
     'Column configuration via a plain JavaScript array — width, alignment, sortable, editable, pinned per column',
     'Multi-column sorting: click cycles asc/desc/none, Shift+click adds secondary sorts with priority indicators',
-    'manual-sort mode for server-side sorting driven by the arc-sort event',
+    'manual-sort mode for server-side sorting driven by the `arc-sort` event',
     'Inline cell editing with Enter/double-click to open, Enter/blur to commit, Escape to cancel',
     'Grid mutates only its internal display copy — consumer data stays the source of truth',
     'Pinned columns stick to the left edge with an elevation shadow while scrolling horizontally',
     'Row selection with select-all checkbox including indeterminate state',
     'Virtualized rendering for large datasets via the virtual and row-height props',
     'Full WAI-ARIA grid keyboard pattern: roving cell focus, one tab stop, arrow/Home/End/Ctrl navigation',
-    'arc-sort, arc-cell-change, and arc-selection-change custom events',
+    '`arc-sort`, `arc-cell-change`, and `arc-selection-change` custom events',
     'Sticky header row that stays visible during vertical scroll',
     'CSS custom property theming via ARC design tokens, plus ::part hooks for table, header, row, cell, and editor',
   ],
@@ -42,12 +43,12 @@ Keyboard support follows the WAI-ARIA grid pattern: one tab stop for the whole g
       'Enable virtual with an accurate row-height for datasets beyond a few hundred rows',
     ],
     dont: [
-      'Mark every column editable — restrict editing to fields users genuinely need to change inline',
-      'Rely on the grid to persist edits; it never mutates the rows array you passed in',
-      'Pin so many columns that unpinned content has no room on narrow screens',
-      'Mix virtual mode with rows of varying heights — virtualization assumes a fixed row-height',
-      'Nest complex interactive components (modals, drawers) inside grid cells',
-      'Use DataGrid for simple read-only lists — DataTable or List are lighter choices',
+      'Do not mark every column editable — restrict editing to fields users genuinely need to change inline',
+      'Do not rely on the grid to persist edits; it never mutates the rows array you passed in',
+      'Do not pin so many columns that unpinned content has no room on narrow screens',
+      'Do not mix virtual mode with rows of varying heights — virtualization assumes a fixed row-height',
+      'Do not nest complex interactive components (modals, drawers) inside grid cells',
+      'Do not use DataGrid for simple read-only lists — DataTable or List are lighter choices',
     ],
   },
 
@@ -74,7 +75,6 @@ if (grid) {
   ];
   grid.sort = [{ key: 'price', direction: 'desc' }];
 }`,
-
 
   tabs: [
     {
@@ -173,6 +173,77 @@ const positions = [
     @arc-sort="(e) => console.log('sort', e.detail.sort)"
   />
 </template>`,
+    },
+    {
+      label: 'Svelte',
+      lang: 'html',
+      code: `<script>
+  import { DataGrid } from '@arclux/arc-ui-svelte';
+
+  const columns = [
+    { key: 'ticker', label: 'Ticker', width: '90px', pinned: true, sortable: true },
+    { key: 'name', label: 'Company', width: '180px', sortable: true },
+    { key: 'sector', label: 'Sector', sortable: true },
+    { key: 'price', label: 'Price', align: 'right', sortable: true, editable: true },
+    { key: 'change', label: 'Change %', align: 'right', sortable: true, editable: true }
+  ];
+
+  const positions = [
+    { ticker: 'ARC', name: 'Arclight Systems', sector: 'Technology', price: 142.5, change: 2.4 },
+    { ticker: 'LUM', name: 'Lumen Dynamics', sector: 'Energy', price: 87.2, change: -1.1 },
+    { ticker: 'NVA', name: 'Nova Materials', sector: 'Industrials', price: 56.8, change: 0.7 }
+  ];
+</script>
+
+<DataGrid
+  {columns}
+  rows={positions}
+  selectable
+  on:arc-cell-change={(e) => console.log('edited', e.detail)}
+  on:arc-sort={(e) => console.log('sort', e.detail.sort)}
+/>`,
+    },
+    {
+      label: 'Angular',
+      lang: 'ts',
+      code: `import { Component } from '@angular/core';
+import { DataGrid } from '@arclux/arc-ui-angular';
+
+@Component({
+  imports: [DataGrid],
+  template: \`
+    <arc-data-grid
+      [columns]="columns"
+      [rows]="positions"
+      selectable
+      (arcCellChange)="onCellChange($event)"
+      (arcSort)="onSort($event)"
+    ></arc-data-grid>
+  \`,
+})
+export class PositionsGridComponent {
+  columns = [
+    { key: 'ticker', label: 'Ticker', width: '90px', pinned: true, sortable: true },
+    { key: 'name', label: 'Company', width: '180px', sortable: true },
+    { key: 'sector', label: 'Sector', sortable: true },
+    { key: 'price', label: 'Price', align: 'right', sortable: true, editable: true },
+    { key: 'change', label: 'Change %', align: 'right', sortable: true, editable: true }
+  ];
+
+  positions = [
+    { ticker: 'ARC', name: 'Arclight Systems', sector: 'Technology', price: 142.5, change: 2.4 },
+    { ticker: 'LUM', name: 'Lumen Dynamics', sector: 'Energy', price: 87.2, change: -1.1 },
+    { ticker: 'NVA', name: 'Nova Materials', sector: 'Industrials', price: 56.8, change: 0.7 }
+  ];
+
+  onCellChange(e: CustomEvent) {
+    console.log('edited', e.detail);
+  }
+
+  onSort(e: CustomEvent) {
+    console.log('sort', e.detail.sort);
+  }
+}`,
     },
   ],
 

@@ -6,20 +6,21 @@ export const speedDial: ComponentDef = {
   tag: 'arc-speed-dial',
   tier: 'navigation',
   interactivity: 'interactive',
-  description: 'Floating action button that fans out secondary actions with staggered scale-in animation. Trigger is a primary icon-button.',
+  description:
+    'Floating action button that fans out secondary actions with staggered scale-in animation. Trigger is a primary icon-button.',
 
   overview: `SpeedDial is a floating action button (FAB) pattern that reveals a cluster of secondary action buttons when activated. The trigger button — rendered as a prominent icon-button — fans out child actions in a configurable direction (up, down, left, or right) with a staggered scale-in animation that gives each item a satisfying cascade entrance. This pattern is borrowed from Material Design but adapted to the ARC UI token system with accent-primary glow and surface-overlay backdrops.
 
 SpeedDial is best suited for mobile and tablet interfaces where screen space is limited but quick access to two to five frequent actions is important. Common use cases include "compose" flows in messaging apps, quick-add actions in project management tools, and creation shortcuts in creative applications. The floating position ensures the trigger is always reachable without scrolling.
 
-The component manages its own open/closed state and dispatches \`arc-open\`, \`arc-close\`, and \`arc-action\` events. The \`arc-action\` event includes the index of the selected item so your application can map each position to a specific handler. Clicking outside the expanded dial or pressing Escape closes it automatically. For a menu of text-labelled items rather than icon actions, consider DropdownMenu instead.`,
+The component manages its own open/closed state and dispatches \`arc-open\`, \`arc-close\`, and \`arc-action\` events. The \`arc-action\` event includes the index of the selected item so your application can map each position to a specific handler. Clicking outside the expanded dial or pressing Escape closes it automatically. For a menu of text-labeled items rather than icon actions, consider DropdownMenu instead.`,
 
   features: [
     'Floating action button with staggered scale-in animation',
     'Configurable fan direction: up, down, left, or right',
     'Fixed position in bottom-right or bottom-left corner',
-    'arc-open and arc-close events for state tracking',
-    'arc-action event with index of selected item',
+    '`arc-open` and `arc-close` events for state tracking',
+    '`arc-action` event with index of selected item',
     'Auto-close on outside click or Escape keypress',
     'Keyboard accessible with Tab and Enter activation',
     'Accent-primary glow on trigger and action items',
@@ -29,24 +30,23 @@ The component manages its own open/closed state and dispatches \`arc-open\`, \`a
   guidelines: {
     do: [
       'Limit secondary actions to two to five items for quick scanning',
-      'Use recognisable icons for each action — tooltips can add context',
+      'Use recognizable icons for each action — tooltips can add context',
       'Place in bottom-right for right-handed thumb reach on mobile',
       'Use SpeedDial for creation or composition actions that benefit from quick access',
       'Close the dial after an action is selected to avoid visual clutter',
     ],
     dont: [
-      'Use SpeedDial for navigation — it is for actions, not route changes',
-      'Add more than five actions — use a full menu or action sheet instead',
-      'Place SpeedDial in a scrollable container — it should float above content',
-      'Use text labels on the action items — icons only keeps the pattern compact',
-      'Show SpeedDial on desktop when a toolbar with labelled buttons would be clearer',
+      'Do not use SpeedDial for navigation — it is for actions, not route changes',
+      'Do not add more than five actions — use a full menu or action sheet instead',
+      'Do not place SpeedDial in a scrollable container — it should float above content',
+      'Do not use text labels on the action items — icons only keeps the pattern compact',
+      'Do not show SpeedDial on desktop when a toolbar with labeled buttons would be clearer',
     ],
   },
 
   previewHtml: `<div style="width:100%;max-width:200px;height:240px;position:relative;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-md)">
   <arc-speed-dial direction="up" position="bottom-right" open items='[{"icon":"pencil-simple","label":"Edit"},{"icon":"image","label":"Image"},{"icon":"share","label":"Share"}]'></arc-speed-dial>
 </div>`,
-
 
   tabs: [
     {
@@ -131,15 +131,15 @@ import { SpeedDial, IconButton } from '@arclux/arc-ui-angular';
 @Component({
   imports: [SpeedDial, IconButton],
   template: \`
-    <SpeedDial
+    <arc-speed-dial
       direction="up"
       position="bottom-right"
       (arc-action)="onAction($event)"
     >
-      <IconButton slot="action" icon="edit" aria-label="Edit" />
-      <IconButton slot="action" icon="image" aria-label="Image" />
-      <IconButton slot="action" icon="share" aria-label="Share" />
-    </SpeedDial>
+      <arc-icon-button slot="action" icon="edit" aria-label="Edit" />
+      <arc-icon-button slot="action" icon="image" aria-label="Image" />
+      <arc-icon-button slot="action" icon="share" aria-label="Share" />
+    </arc-speed-dial>
   \`,
 })
 export class QuickActionsComponent {

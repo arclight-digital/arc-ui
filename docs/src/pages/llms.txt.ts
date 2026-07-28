@@ -1,8 +1,6 @@
 import type { APIRoute } from 'astro';
 import { components } from '../data/components/index';
-import fs from 'node:fs';
-
-const pkg = JSON.parse(fs.readFileSync(new URL('../../../packages/web-components/package.json', import.meta.url), 'utf-8'));
+import { version, frameworkCount } from '../data/site-stats';
 
 export const prerender = true;
 
@@ -17,11 +15,11 @@ export const GET: APIRoute = async () => {
 
   const body = `# ARC UI
 
-> ARC Reactive Components — a dark-first web component library built with Lit. Single source of truth with automatic code generation for 7 framework targets.
+> ARC Reactive Components — a dark-first Web Component library built with Lit. Single source of truth with automatic code generation for ${frameworkCount} framework targets.
 
-- Version: ${pkg.version}
+- Version: ${version}
 - Components: ${components.length}
-- Frameworks: React, Vue, Svelte, Angular, Solid, Preact, vanilla HTML/CSS
+- Frameworks: React, Vue, Svelte, Angular, Solid, Preact, and plain HTML (standalone HTML/CSS package)
 - License: MIT
 
 ## Installation
@@ -48,7 +46,7 @@ npm install @arclux/arc-ui-solid
 # Preact
 npm install @arclux/arc-ui-preact
 
-# HTML/CSS only (no JS)
+# Plain HTML (standalone HTML/CSS package, no JS)
 npm install @arclux/arc-ui-html
 \`\`\`
 
@@ -70,11 +68,11 @@ import { Button } from '@arclux/arc-ui-react';
 
 ## Architecture
 
-ARC UI uses a **Prism** code generator. You write Lit web components once, and Prism generates framework wrappers for React, Vue, Svelte, Angular, Solid, Preact, plus standalone HTML/CSS — all from the single WC source.
+ARC UI uses **Prism**, our custom code generator. You write Lit Web Components once, and Prism generates framework wrappers for React, Vue, Svelte, Angular, Solid, Preact, plus plain HTML — all from the single WC source.
 
 ### Tier System
 
-Components are organized into 7 tiers by responsibility:
+Components are organized into seven tiers by responsibility:
 - **Layout** — page structure (shells, grids, containers)
 - **Navigation** — wayfinding (tabs, menus, breadcrumbs)
 - **Content** — display (cards, avatars, icons, carousels)

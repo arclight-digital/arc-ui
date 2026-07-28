@@ -6,21 +6,22 @@ export const switchGroup: ComponentDef = {
   tag: 'arc-switch-group',
   tier: 'input',
   interactivity: 'interactive',
-  description: 'Groups multiple toggle switches under a shared label with consistent sizing and disabled state. Supports vertical and horizontal layouts.',
+  description:
+    'Groups multiple toggle switches under a shared label with consistent sizing and disabled state. Supports vertical and horizontal layouts.',
 
-  overview: `Switch Group wraps multiple \`arc-toggle\` components inside a semantic \`<fieldset>\` with an optional legend label. It cascades the \`size\` and \`disabled\` props down to all child toggles, ensuring visual consistency without manually setting props on each one.
+  overview: `SwitchGroup wraps multiple \`arc-toggle\` components inside a semantic \`<fieldset>\` with an optional legend label. It cascades the \`size\` and \`disabled\` props down to all child toggles, ensuring visual consistency without manually setting props on each one.
 
 Two orientation modes control the layout: vertical (default) stacks toggles in a column with compact spacing, while horizontal arranges them in a wrapping row with wider gaps. The vertical layout works well in settings panels, while horizontal suits toolbar-style option rows.
 
 The component renders a native \`<fieldset>\` for proper form semantics and sets \`role="group"\` with \`aria-label\` on the inner container, making the group relationship clear to assistive technology.`,
 
   features: [
-    'Groups arc-toggle children under a shared label and fieldset',
+    'Groups `arc-toggle` children under a shared label and fieldset',
     'Cascades `size` and `disabled` props to all child toggles',
     'Vertical and horizontal orientation modes',
     'Native `<fieldset>` with `role="group"` for accessible semantics',
     'Legend label rendered above the toggle group',
-    'Exposed CSS parts: fieldset, legend, group'
+    'Exposed CSS parts: fieldset, legend, group',
   ],
 
   guidelines: {
@@ -28,12 +29,12 @@ The component renders a native \`<fieldset>\` for proper form semantics and sets
       'Use for groups of related on/off settings like notification preferences',
       'Provide a `label` to describe what the group of toggles controls',
       'Use vertical orientation for settings panels and forms',
-      'Use horizontal orientation for compact toolbar-style layouts'
+      'Use horizontal orientation for compact toolbar-style layouts',
     ],
     dont: [
-      'Mix toggle and non-toggle children — the component only cascades props to arc-toggle',
-      'Use for mutually exclusive options — use a radio group instead',
-      'Nest switch groups inside each other'
+      'Do not mix toggle and non-toggle children — the component only cascades props to arc-toggle',
+      'Do not use for mutually exclusive options — use a radio group instead',
+      'Do not nest switch groups inside each other',
     ],
   },
 
@@ -42,7 +43,6 @@ The component renders a native \`<fieldset>\` for proper form semantics and sets
   <arc-toggle label="Push"></arc-toggle>
   <arc-toggle label="SMS"></arc-toggle>
 </arc-switch-group>`,
-
 
   tabs: [
     {
@@ -65,11 +65,15 @@ The component renders a native \`<fieldset>\` for proper form semantics and sets
       lang: 'tsx',
       code: `import { SwitchGroup, Toggle } from '@arclux/arc-ui-react';
 
-<SwitchGroup label="Notifications">
-  <Toggle label="Email" checked />
-  <Toggle label="Push" />
-  <Toggle label="SMS" />
-</SwitchGroup>`,
+export default function Example() {
+  return (
+    <SwitchGroup label="Notifications">
+      <Toggle label="Email" checked />
+      <Toggle label="Push" />
+      <Toggle label="SMS" />
+    </SwitchGroup>
+  );
+}`,
     },
     {
       label: 'Vue',
@@ -108,11 +112,11 @@ import { SwitchGroup, Toggle } from '@arclux/arc-ui-angular';
 @Component({
   imports: [SwitchGroup, Toggle],
   template: \`
-    <SwitchGroup label="Notifications">
-      <Toggle label="Email" checked />
-      <Toggle label="Push" />
-      <Toggle label="SMS" />
-    </SwitchGroup>
+    <arc-switch-group label="Notifications">
+      <arc-toggle label="Email" checked />
+      <arc-toggle label="Push" />
+      <arc-toggle label="SMS" />
+    </arc-switch-group>
   \`,
 })
 export class SettingsPanel {}`,
@@ -122,22 +126,30 @@ export class SettingsPanel {}`,
       lang: 'tsx',
       code: `import { SwitchGroup, Toggle } from '@arclux/arc-ui-solid';
 
-<SwitchGroup label="Notifications">
-  <Toggle label="Email" checked />
-  <Toggle label="Push" />
-  <Toggle label="SMS" />
-</SwitchGroup>`,
+export default function Example() {
+  return (
+    <SwitchGroup label="Notifications">
+      <Toggle label="Email" checked />
+      <Toggle label="Push" />
+      <Toggle label="SMS" />
+    </SwitchGroup>
+  );
+}`,
     },
     {
       label: 'Preact',
       lang: 'tsx',
       code: `import { SwitchGroup, Toggle } from '@arclux/arc-ui-preact';
 
-<SwitchGroup label="Notifications">
-  <Toggle label="Email" checked />
-  <Toggle label="Push" />
-  <Toggle label="SMS" />
-</SwitchGroup>`,
+export default function Example() {
+  return (
+    <SwitchGroup label="Notifications">
+      <Toggle label="Email" checked />
+      <Toggle label="Push" />
+      <Toggle label="SMS" />
+    </SwitchGroup>
+  );
+}`,
     },
   ],
 

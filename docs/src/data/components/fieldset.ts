@@ -6,7 +6,8 @@ export const fieldset: ComponentDef = {
   tag: 'arc-fieldset',
   tier: 'input',
   interactivity: 'static',
-  description: 'Grouped form section with legend, description, error message, and optional card variant. Wraps related inputs with native fieldset semantics.',
+  description:
+    'Grouped form section with legend, description, error message, and optional card variant. Wraps related inputs with native fieldset semantics.',
 
   overview: `Fieldset wraps a group of related form controls inside a native \`<fieldset>\` element with a styled legend, optional description text, and error messaging. It provides the semantic grouping that screen readers use to announce related fields as a unit.
 
@@ -27,15 +28,15 @@ An \`actions\` slot in the legend area lets you place buttons or links (like "Se
 
   guidelines: {
     do: [
-      'Group related inputs that share a common label — e.g., "Shipping Address" fields',
+      'Group related inputs that share a common label — e.g. "Shipping Address" fields',
       'Use the card variant for visually distinct form sections in settings pages',
       'Use the error prop for group-level validation like "Select at least one option"',
       'Provide a legend for every fieldset — it is the accessible group label',
     ],
     dont: [
-      'Nest fieldsets more than one level deep — it creates confusing screen reader announcements',
-      'Use Fieldset for visual-only grouping — use a `div` or `arc-card` instead',
-      'Put field-level errors in the fieldset error slot — attach those to individual inputs',
+      'Do not nest fieldsets more than one level deep — it creates confusing screen reader announcements',
+      'Do not use Fieldset for visual-only grouping — use a `div` or `arc-card` instead',
+      'Do not put field-level errors in the fieldset error slot — attach those to individual inputs',
     ],
   },
 
@@ -44,7 +45,6 @@ An \`actions\` slot in the legend area lets you place buttons or links (like "Se
   <arc-toggle label="Push notifications"></arc-toggle>
   <arc-toggle label="SMS alerts"></arc-toggle>
 </arc-fieldset>`,
-
 
   tabs: [
     {
@@ -69,12 +69,16 @@ An \`actions\` slot in the legend area lets you place buttons or links (like "Se
       lang: 'tsx',
       code: `import { Fieldset, Label, Input, Checkbox } from '@arclux/arc-ui-react';
 
-<Fieldset legend="Contact info" description="We'll use this to reach you.">
-  <Label htmlFor="email" required>Email</Label>
-  <Input id="email" type="email" placeholder="you@example.com" />
-  <Label htmlFor="phone">Phone</Label>
-  <Input id="phone" type="tel" placeholder="(555) 123-4567" />
-</Fieldset>`,
+export default function Example() {
+  return (
+    <Fieldset legend="Contact info" description="We'll use this to reach you.">
+      <Label htmlFor="email" required>Email</Label>
+      <Input id="email" type="email" placeholder="you@example.com" />
+      <Label htmlFor="phone">Phone</Label>
+      <Input id="phone" type="tel" placeholder="(555) 123-4567" />
+    </Fieldset>
+  );
+}`,
     },
     {
       label: 'Vue',
@@ -111,10 +115,10 @@ import { Fieldset, Label, Input } from '@arclux/arc-ui-angular';
 @Component({
   imports: [Fieldset, Label, Input],
   template: \`
-    <Fieldset legend="Contact info" description="We'll use this to reach you.">
-      <Label for="email" required>Email</Label>
-      <Input id="email" type="email" placeholder="you@example.com" />
-    </Fieldset>
+    <arc-fieldset legend="Contact info" description="We'll use this to reach you.">
+      <arc-label for="email" required>Email</arc-label>
+      <arc-input id="email" type="email" placeholder="you@example.com" />
+    </arc-fieldset>
   \`,
 })
 export class ContactForm {}`,
@@ -124,20 +128,28 @@ export class ContactForm {}`,
       lang: 'tsx',
       code: `import { Fieldset, Label, Input } from '@arclux/arc-ui-solid';
 
-<Fieldset legend="Contact info" description="We'll use this to reach you.">
-  <Label for="email" required>Email</Label>
-  <Input id="email" type="email" placeholder="you@example.com" />
-</Fieldset>`,
+export default function Example() {
+  return (
+    <Fieldset legend="Contact info" description="We'll use this to reach you.">
+      <Label for="email" required>Email</Label>
+      <Input id="email" type="email" placeholder="you@example.com" />
+    </Fieldset>
+  );
+}`,
     },
     {
       label: 'Preact',
       lang: 'tsx',
       code: `import { Fieldset, Label, Input } from '@arclux/arc-ui-preact';
 
-<Fieldset legend="Contact info" description="We'll use this to reach you.">
-  <Label for="email" required>Email</Label>
-  <Input id="email" type="email" placeholder="you@example.com" />
-</Fieldset>`,
+export default function Example() {
+  return (
+    <Fieldset legend="Contact info" description="We'll use this to reach you.">
+      <Label for="email" required>Email</Label>
+      <Input id="email" type="email" placeholder="you@example.com" />
+    </Fieldset>
+  );
+}`,
     },
     {
       label: 'HTML',

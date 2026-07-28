@@ -1,48 +1,49 @@
 import type { ComponentDef } from './_types';
 
 export const iconButton: ComponentDef = {
-    name: 'Icon Button',
-    slug: 'icon-button',
-    tag: 'arc-icon-button',
-    tier: 'input',
-    interactivity: 'hybrid',
-    description: 'Compact button that renders an icon with optional text label, supporting ghost, secondary, and primary variants.',
+  name: 'Icon Button',
+  slug: 'icon-button',
+  tag: 'arc-icon-button',
+  tier: 'input',
+  interactivity: 'hybrid',
+  description:
+    'Compact button that renders an icon with optional text label, supporting ghost, secondary, and primary variants.',
 
-    overview: `IconButton is a versatile interactive element designed for actions where an icon is the primary affordance. It renders as a square button when used icon-only, or expands into a compact labeled button when the \`text\` prop is provided. This makes it ideal for toolbars, action bars, card headers, and anywhere space is limited but functionality needs to be discoverable.
+  overview: `IconButton is a versatile interactive element designed for actions where an icon is the primary affordance. It renders as a square button when used icon-only, or expands into a compact labeled button when the \`text\` prop is provided. This makes it ideal for toolbars, action bars, card headers, and anywhere space is limited but functionality needs to be discoverable.
 
-The component supports three visual variants: \`ghost\` (transparent background, the default), \`secondary\` (bordered with accent glow on hover), and \`primary\` (solid accent-primary background with a glow effect). Four sizes are available -- \`xs\`, \`sm\`, \`md\`, and \`lg\` -- each with distinct dimensions for both icon-only and icon-plus-text modes. The icon-only mode enforces a 1:1 aspect ratio for visual consistency.
+The component supports three visual variants: \`ghost\` (transparent background, the default), \`secondary\` (bordered with accent glow on hover), and \`primary\` (solid accent-primary background with a glow effect). Four sizes are available — \`xs\`, \`sm\`, \`md\`, and \`lg\` — each with distinct dimensions for both icon-only and icon-plus-text modes. The icon-only mode enforces a 1:1 aspect ratio for visual consistency.
 
 When an \`href\` is provided, IconButton renders as an anchor tag instead of a \`<button>\`, making it suitable for navigation links that should look like action buttons. The \`name\` prop references an icon from the arc-icon library, but you can also pass custom SVG content through the default slot if the built-in icon set does not cover your use case.`,
 
-    features: [
-      'Three visual variants: ghost (default transparent), secondary (bordered with blue glow), and primary (solid accent fill)',
-      'Four sizes -- xs (28px), sm (32px), md (36px), lg (44px) -- with automatic icon size mapping',
-      'Optional `text` prop that expands the button from a square icon into a labeled action button with uppercase styling',
-      'Renders as an `<a>` tag when `href` is provided, enabling accessible navigation links',
-      'Active-press animation with `scale(0.93)` transform for tactile feedback',
-      'Built-in `arc-icon` integration via the `name` prop, or custom content via the default slot',
-      'Focus-visible glow ring using the shared `--focus-glow` token for keyboard navigation',
-      'Accessible `aria-label` derived automatically from `label`, `text`, or manual override',
+  features: [
+    'Three visual variants: ghost (default transparent), secondary (bordered with blue glow), and primary (solid accent fill)',
+    'Four sizes — xs (28px), sm (32px), md (36px), lg (44px) — with automatic icon size mapping',
+    'Optional `text` prop that expands the button from a square icon into a labeled action button with uppercase styling',
+    'Renders as an `<a>` tag when `href` is provided, enabling accessible navigation links',
+    'Active-press animation with `scale(0.93)` transform for tactile feedback',
+    'Built-in `arc-icon` integration via the `name` prop, or custom content via the default slot',
+    'Focus-visible glow ring using the shared `--focus-glow` token for keyboard navigation',
+    'Accessible `aria-label` derived automatically from `label`, `text`, or manual override',
+  ],
+
+  guidelines: {
+    do: [
+      'Always provide a `label` or `text` prop so the button has an accessible name for screen readers',
+      'Use the `ghost` variant for secondary or tertiary actions in toolbars to reduce visual noise',
+      'Use `href` for navigation actions so the element renders as a semantic anchor tag',
+      'Match the `size` to surrounding elements — use `xs` or `sm` in dense UIs like table rows',
+      'Pair with `arc-tooltip` to explain icon-only buttons on hover',
     ],
+    dont: [
+      'Do not use IconButton for primary page actions that need a full-width call to action — use Button instead',
+      'Do not omit the `label` prop on icon-only buttons — they will be invisible to assistive technology',
+      'Do not combine `disabled` with `href` — anchor tags cannot be natively disabled',
+      'Do not use long `text` values — the uppercase styling and compact padding are designed for 1-2 word labels',
+      'Avoid placing many `primary` variant icon buttons in the same row — reserve the solid fill for the single most important action',
+    ],
+  },
 
-    guidelines: {
-      do: [
-        'Always provide a `label` or `text` prop so the button has an accessible name for screen readers',
-        'Use the `ghost` variant for secondary or tertiary actions in toolbars to reduce visual noise',
-        'Use `href` for navigation actions so the element renders as a semantic anchor tag',
-        'Match the `size` to surrounding elements -- use `xs` or `sm` in dense UIs like table rows',
-        'Pair with `arc-tooltip` to explain icon-only buttons on hover',
-      ],
-      dont: [
-        'Do not use IconButton for primary page actions that need a full-width call to action -- use Button instead',
-        'Do not omit the `label` prop on icon-only buttons -- they will be invisible to assistive technology',
-        'Do not combine `disabled` with `href` -- anchor tags cannot be natively disabled',
-        'Do not use long `text` values -- the uppercase styling and compact padding are designed for 1-2 word labels',
-        'Avoid placing many `primary` variant icon buttons in the same row -- reserve the solid fill for the single most important action',
-      ],
-    },
-
-    previewHtml: `<div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+  previewHtml: `<div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
   <arc-icon-button name="pencil" label="Edit"></arc-icon-button>
   <arc-icon-button name="trash" label="Delete" variant="secondary"></arc-icon-button>
   <arc-icon-button name="plus" label="Add item" variant="primary"></arc-icon-button>
@@ -51,11 +52,11 @@ When an \`href\` is provided, IconButton renders as an anchor tag instead of a \
   <arc-icon-button name="download" text="Export" variant="ghost" size="md"></arc-icon-button>
 </div>`,
 
-    tabs: [
-      {
-        label: 'Web Component',
-        lang: 'html',
-        code: `<script type="module" src="@arclux/arc-ui"></script>
+  tabs: [
+    {
+      label: 'Web Component',
+      lang: 'html',
+      code: `<script type="module" src="@arclux/arc-ui"></script>
 
 <!-- Toolbar with mixed variants -->
 <div style="display:flex; gap:8px; align-items:center;">
@@ -76,11 +77,11 @@ When an \`href\` is provided, IconButton renders as an anchor tag instead of a \
 
 <!-- Navigation link -->
 <arc-icon-button name="gear" text="Settings" variant="secondary" href="/settings"></arc-icon-button>`,
-      },
-      {
-        label: 'React',
-        lang: 'tsx',
-        code: `import { IconButton } from '@arclux/arc-ui-react';
+    },
+    {
+      label: 'React',
+      lang: 'tsx',
+      code: `import { IconButton } from '@arclux/arc-ui-react';
 
 function DocumentToolbar({ onSave, onDelete }) {
   return (
@@ -105,11 +106,11 @@ function SocialActions() {
     </div>
   );
 }`,
-      },
-      {
-        label: 'Vue',
-        lang: 'html',
-        code: `<script setup>
+    },
+    {
+      label: 'Vue',
+      lang: 'html',
+      code: `<script setup>
 import { IconButton } from '@arclux/arc-ui-vue';
 
 function handleEdit() { console.log('Editing...'); }
@@ -131,11 +132,11 @@ function handleDelete() { console.log('Deleting...'); }
     <IconButton name="plus" text="Add" variant="primary" />
   </div>
 </template>`,
-      },
-      {
-        label: 'Svelte',
-        lang: 'html',
-        code: `<script>
+    },
+    {
+      label: 'Svelte',
+      lang: 'html',
+      code: `<script>
   import { IconButton } from '@arclux/arc-ui-svelte';
 
   let liked = false;
@@ -156,27 +157,27 @@ function handleDelete() { console.log('Deleting...'); }
   <IconButton name="link" label="Copy Link" size="sm" />
   <IconButton name="trash" label="Delete" size="sm" variant="secondary" />
 </div>`,
-      },
-      {
-        label: 'Angular',
-        lang: 'ts',
-        code: `import { Component } from '@angular/core';
+    },
+    {
+      label: 'Angular',
+      lang: 'ts',
+      code: `import { Component } from '@angular/core';
 import { IconButton } from '@arclux/arc-ui-angular';
 
 @Component({
   imports: [IconButton],
   template: \`
     <div style="display:flex; gap:8px; align-items:center;">
-      <IconButton name="pencil" label="Edit" (click)="onEdit()"></IconButton>
-      <IconButton name="copy" label="Duplicate" variant="ghost"></IconButton>
-      <IconButton name="trash" label="Delete" variant="secondary" (click)="onDelete()"></IconButton>
-      <IconButton name="plus" text="New Item" variant="primary" (click)="onCreate()"></IconButton>
+      <arc-icon-button name="pencil" label="Edit" (click)="onEdit()"></arc-icon-button>
+      <arc-icon-button name="copy" label="Duplicate" variant="ghost"></arc-icon-button>
+      <arc-icon-button name="trash" label="Delete" variant="secondary" (click)="onDelete()"></arc-icon-button>
+      <arc-icon-button name="plus" text="New Item" variant="primary" (click)="onCreate()"></arc-icon-button>
     </div>
 
     <!-- Navigation links -->
     <div style="display:flex; gap:8px; margin-top:16px;">
-      <IconButton name="gear" text="Settings" variant="secondary" href="/settings"></IconButton>
-      <IconButton name="bell" text="Notifications" variant="ghost" href="/notifications"></IconButton>
+      <arc-icon-button name="gear" text="Settings" variant="secondary" href="/settings"></arc-icon-button>
+      <arc-icon-button name="bell" text="Notifications" variant="ghost" href="/notifications"></arc-icon-button>
     </div>
   \`,
 })
@@ -185,11 +186,11 @@ export class ToolbarComponent {
   onDelete() { console.log('Delete'); }
   onCreate() { console.log('Create'); }
 }`,
-      },
-      {
-        label: 'Solid',
-        lang: 'tsx',
-        code: `import { IconButton } from '@arclux/arc-ui-solid';
+    },
+    {
+      label: 'Solid',
+      lang: 'tsx',
+      code: `import { IconButton } from '@arclux/arc-ui-solid';
 
 function TableRowActions(props: { onEdit: () => void; onDelete: () => void }) {
   return (
@@ -210,11 +211,11 @@ function PageHeader() {
     </div>
   );
 }`,
-      },
-      {
-        label: 'Preact',
-        lang: 'tsx',
-        code: `import { IconButton } from '@arclux/arc-ui-preact';
+    },
+    {
+      label: 'Preact',
+      lang: 'tsx',
+      code: `import { IconButton } from '@arclux/arc-ui-preact';
 
 function MediaControls() {
   return (
@@ -227,24 +228,24 @@ function MediaControls() {
     </div>
   );
 }`,
-      },
-      {
-        label: 'HTML (Inline)',
-        lang: 'html',
-        code: `<!-- arc-icon-button is interactive — requires JS -->
+    },
+    {
+      label: 'HTML (Inline)',
+      lang: 'html',
+      code: `<!-- arc-icon-button is interactive — requires JS -->
 <arc-icon-button></arc-icon-button>`,
-      },
-    
+    },
+
     {
       label: 'HTML',
       lang: 'html',
-      code: `<!-- Auto-generated by @arclight/prism — do not edit manually -->
+      code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
 <!-- arc-icon-button — requires icon-button.css + tokens.css (or arc-ui.css) -->
 <span class="arc-icon-button">
   <a href="#" aria-label="Label"></a>
 </span>`,
     },
   ],
-  
-  seeAlso: ["button","copy-button","tooltip"],
+
+  seeAlso: ['button', 'copy-button', 'tooltip'],
 };

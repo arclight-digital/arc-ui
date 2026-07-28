@@ -10,57 +10,57 @@ const previewMarkup = `<arc-page-header heading="Team Settings" description="Man
   </arc-page-header>`;
 
 export const pageHeader: ComponentDef = {
-    name: 'Page Header',
-    slug: 'page-header',
-    tag: 'arc-page-header',
-    tier: 'layout',
-    interactivity: 'static',
-    description: 'Page title area with positional slots for composing breadcrumbs, actions, tabs, or any content around a heading and description.',
+  name: 'Page Header',
+  slug: 'page-header',
+  tag: 'arc-page-header',
+  tier: 'layout',
+  interactivity: 'static',
+  description:
+    'Page title area with positional slots for composing breadcrumbs, actions, tabs, or any content around a heading and description.',
 
-    overview: `PageHeader is the topmost landmark on any content page. It anchors the user by combining a prominent heading, an optional description, and four positional slots into a single, predictable layout. Every settings screen, detail view, and dashboard in your application should use PageHeader so users always know where they are and what they can do.
+  overview: `PageHeader is the topmost landmark on any content page. It anchors the user by combining a prominent heading, an optional description, and four positional slots into a single, predictable layout. Every settings screen, detail view, and dashboard in your application should use PageHeader so users always know where they are and what they can do.
 
 The component exposes four positional slots — \`above\` (renders above the heading row), \`aside\` (renders to the right of the heading), \`below\` (renders between the description and default content), and the default slot (renders at the bottom). This design is intentionally unopinionated: put breadcrumbs in \`above\`, action buttons in \`aside\`, a tab strip in \`below\`, or use them for anything else your layout requires.
 
 Because PageHeader renders a semantic \`<h1>\` for its heading, it establishes the document outline automatically. The \`border\` prop adds a clean bottom border when you want a visual separator from the page body below.`,
 
-    features: [
-      'Semantic <h1> heading that establishes the document outline',
-      'Four positional slots: above, aside, below, and default content',
-      'Optional description text for additional page context',
-      'Border prop for optional bottom border separator',
-      'Responsive title row that wraps gracefully on narrow viewports',
-      'CSS custom property theming via design tokens',
-      'Shadow DOM parts (base, above, title-row, heading, aside, description, below, content) for targeted styling',
+  features: [
+    'Semantic <h1> heading that establishes the document outline',
+    'Four positional slots: above, aside, below, and default content',
+    'Optional description text for additional page context',
+    'Border prop for optional bottom border separator',
+    'Responsive title row that wraps gracefully on narrow viewports',
+    'CSS custom property theming via design tokens',
+    'Shadow DOM parts (base, above, title-row, heading, aside, description, below, content) for targeted styling',
+  ],
+
+  guidelines: {
+    do: [
+      'Use one PageHeader per page to maintain a single <h1> document landmark',
+      'Always populate the heading prop — it is the primary orientation cue for the page',
+      'Place breadcrumbs in the above slot on pages more than one level deep',
+      'Put the primary page-level action in the aside slot (e.g. "Invite Member", "Create Report")',
+      'Keep the description to one or two short sentences that clarify what the page contains',
+      'Use the below slot for tab strips or secondary controls between the heading and main content',
     ],
+    dont: [
+      'Do not nest multiple PageHeaders on the same page — this creates duplicate <h1> elements and confuses assistive technology',
+      'Do not use PageHeader as a section divider inside a scrolling page; use Section or Divider instead',
+      'Do not overload the aside slot with more than two or three buttons — move overflow actions into a DropdownMenu',
+      'Do not place lengthy paragraph text in the description — keep it concise and scannable',
+      'Do not hard-code colors or font sizes on slotted children; rely on the token system for consistency',
+    ],
+  },
 
-    guidelines: {
-      do: [
-        'Use one PageHeader per page to maintain a single <h1> document landmark',
-        'Always populate the heading prop — it is the primary orientation cue for the page',
-        'Place breadcrumbs in the above slot on pages more than one level deep',
-        'Put the primary page-level action in the aside slot (e.g. "Invite Member", "Create Report")',
-        'Keep the description to one or two short sentences that clarify what the page contains',
-        'Use the below slot for tab strips or secondary controls between the heading and main content',
-      ],
-      dont: [
-        'Nest multiple PageHeaders on the same page — this creates duplicate <h1> elements and confuses assistive technology',
-        'Use PageHeader as a section divider inside a scrolling page; use Section or Divider instead',
-        'Overload the aside slot with more than two or three buttons — move overflow actions into a DropdownMenu',
-        'Place lengthy paragraph text in the description — keep it concise and scannable',
-        'Hard-code colors or font sizes on slotted children; rely on the token system for consistency',
-      ],
-    },
-
-    previewHtml: `<div style="width:100%;padding:0 var(--space-lg);background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-md);box-sizing:border-box">
+  previewHtml: `<div style="width:100%;padding:0 var(--space-lg);background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-md);box-sizing:border-box">
   ${previewMarkup}
 </div>`,
 
-
-    tabs: [
-      {
-        label: 'Web Component',
-        lang: 'html',
-        code: `<arc-page-header heading="Team Settings" description="Manage roles, permissions, and invitations for your team." border>
+  tabs: [
+    {
+      label: 'Web Component',
+      lang: 'html',
+      code: `<arc-page-header heading="Team Settings" description="Manage roles, permissions, and invitations for your team." border>
   <arc-breadcrumb slot="above">
     <arc-breadcrumb-item href="/">Home</arc-breadcrumb-item>
     <arc-breadcrumb-item href="/settings">Settings</arc-breadcrumb-item>
@@ -68,11 +68,11 @@ Because PageHeader renders a semantic \`<h1>\` for its heading, it establishes t
   </arc-breadcrumb>
   <arc-button slot="aside" variant="primary" size="sm">Invite Member</arc-button>
 </arc-page-header>`,
-      },
-      {
-        label: 'React',
-        lang: 'tsx',
-        code: `import { Breadcrumb, BreadcrumbItem, Button, PageHeader } from '@arclux/arc-ui-react';
+    },
+    {
+      label: 'React',
+      lang: 'tsx',
+      code: `import { Breadcrumb, BreadcrumbItem, Button, PageHeader } from '@arclux/arc-ui-react';
 
 export function TeamSettings() {
   return (
@@ -86,11 +86,11 @@ export function TeamSettings() {
     </PageHeader>
   );
 }`,
-      },
-      {
-        label: 'Vue',
-        lang: 'html',
-        code: `<script setup>
+    },
+    {
+      label: 'Vue',
+      lang: 'html',
+      code: `<script setup>
 import { Breadcrumb, BreadcrumbItem, Button, PageHeader } from '@arclux/arc-ui-vue';
 </script>
 
@@ -104,11 +104,11 @@ import { Breadcrumb, BreadcrumbItem, Button, PageHeader } from '@arclux/arc-ui-v
     <Button slot="aside" variant="primary" size="sm">Invite Member</Button>
   </PageHeader>
 </template>`,
-      },
-      {
-        label: 'Svelte',
-        lang: 'html',
-        code: `<script>
+    },
+    {
+      label: 'Svelte',
+      lang: 'html',
+      code: `<script>
   import { Breadcrumb, BreadcrumbItem, Button, PageHeader } from '@arclux/arc-ui-svelte';
 </script>
 
@@ -120,32 +120,32 @@ import { Breadcrumb, BreadcrumbItem, Button, PageHeader } from '@arclux/arc-ui-v
   </Breadcrumb>
   <Button slot="aside" variant="primary" size="sm">Invite Member</Button>
 </PageHeader>`,
-      },
-      {
-        label: 'Angular',
-        lang: 'ts',
-        code: `import { Component } from '@angular/core';
+    },
+    {
+      label: 'Angular',
+      lang: 'ts',
+      code: `import { Component } from '@angular/core';
 import { Breadcrumb, BreadcrumbItem, Button, PageHeader } from '@arclux/arc-ui-angular';
 
 @Component({
   imports: [Breadcrumb, BreadcrumbItem, Button, PageHeader],
   template: \`
-    <PageHeader heading="Team Settings" description="Manage roles, permissions, and invitations for your team." border>
-      <Breadcrumb slot="above">
-        <BreadcrumbItem href="/">Home</BreadcrumbItem>
-        <BreadcrumbItem href="/settings">Settings</BreadcrumbItem>
-        <BreadcrumbItem>Team</BreadcrumbItem>
-      </Breadcrumb>
-      <Button slot="aside" variant="primary" size="sm">Invite Member</Button>
-    </PageHeader>
+    <arc-page-header heading="Team Settings" description="Manage roles, permissions, and invitations for your team." border>
+      <arc-breadcrumb slot="above">
+        <arc-breadcrumb-item href="/">Home</arc-breadcrumb-item>
+        <arc-breadcrumb-item href="/settings">Settings</arc-breadcrumb-item>
+        <arc-breadcrumb-item>Team</arc-breadcrumb-item>
+      </arc-breadcrumb>
+      <arc-button slot="aside" variant="primary" size="sm">Invite Member</arc-button>
+    </arc-page-header>
   \`,
 })
 export class TeamSettingsComponent {}`,
-      },
-      {
-        label: 'Solid',
-        lang: 'tsx',
-        code: `import { Breadcrumb, BreadcrumbItem, Button, PageHeader } from '@arclux/arc-ui-solid';
+    },
+    {
+      label: 'Solid',
+      lang: 'tsx',
+      code: `import { Breadcrumb, BreadcrumbItem, Button, PageHeader } from '@arclux/arc-ui-solid';
 
 export function TeamSettings() {
   return (
@@ -159,11 +159,11 @@ export function TeamSettings() {
     </PageHeader>
   );
 }`,
-      },
-      {
-        label: 'Preact',
-        lang: 'tsx',
-        code: `import { Breadcrumb, BreadcrumbItem, Button, PageHeader } from '@arclux/arc-ui-preact';
+    },
+    {
+      label: 'Preact',
+      lang: 'tsx',
+      code: `import { Breadcrumb, BreadcrumbItem, Button, PageHeader } from '@arclux/arc-ui-preact';
 
 export function TeamSettings() {
   return (
@@ -177,8 +177,11 @@ export function TeamSettings() {
     </PageHeader>
   );
 }`,
-      },
-      { label: 'HTML', lang: 'html', code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
+    },
+    {
+      label: 'HTML',
+      lang: 'html',
+      code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
 <!-- arc-page-header — requires page-header.css + base.css (or arc-ui.css) -->
 <div class="arc-page-header">
   <div class="page-header">
@@ -199,8 +202,12 @@ export function TeamSettings() {
    </div>
    <p class="page-header__description">Manage roles, permissions, and invitations for your team.</p>
    </div>
-</div>` },
-      { label: 'HTML (Inline)', lang: 'html', code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
+</div>`,
+    },
+    {
+      label: 'HTML (Inline)',
+      lang: 'html',
+      code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
 <!-- arc-page-header — self-contained, no external CSS needed -->
 <div class="arc-page-header" style="display: block; font-family: 'Host Grotesk', system-ui, sans-serif">
   <div style="padding: 24px 0 16px; border-bottom: 1px solid rgb(24, 24, 30)">
@@ -221,8 +228,9 @@ export function TeamSettings() {
    </div>
    <p style="margin-top: 8px; margin-bottom: 0; color: rgb(160, 160, 176); font-size: 15px; line-height: 1.5">Manage roles, permissions, and invitations for your team.</p>
    </div>
-</div>` }
-    ],
-  
-  seeAlso: ["breadcrumb","page-layout"],
+</div>`,
+    },
+  ],
+
+  seeAlso: ['breadcrumb', 'page-layout'],
 };

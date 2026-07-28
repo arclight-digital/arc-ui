@@ -18,13 +18,17 @@ function escapeXml(s: string): string {
 export const GET: APIRoute = ({ site }) => {
   const base = (site ?? new URL('https://arcui.dev')).href.replace(/\/$/, '');
   const items = releases
-    .map((r) => {
+    .map((r, i) => {
       const url = `${base}/docs/changelog#${anchorFor(r.version)}`;
+      // Newer releases get a later time-of-day so same-day releases keep a
+      // stable order in feed readers (releases[] is newest-first).
+      const minutesFromNoon = releases.length - i;
+      const pubDate = new Date(new Date(`${r.date}T12:00:00Z`).getTime() + minutesFromNoon * 60_000);
       return `    <item>
       <title>${escapeXml(`ARC UI v${r.version} — ${r.title}`)}</title>
       <link>${url}</link>
       <guid isPermaLink="false">arc-ui-v${r.version}</guid>
-      <pubDate>${new Date(`${r.date}T12:00:00Z`).toUTCString()}</pubDate>
+      <pubDate>${pubDate.toUTCString()}</pubDate>
       <description>${escapeXml(`ARC UI v${r.version}: ${r.title}. Full release notes on the changelog.`)}</description>
     </item>`;
     })
@@ -36,7 +40,7 @@ export const GET: APIRoute = ({ site }) => {
     <title>ARC UI Changelog</title>
     <link>${base}/docs/changelog</link>
     <atom:link href="${base}/rss.xml" rel="self" type="application/rss+xml" />
-    <description>Release notes for ARC UI — Lit web components generated natively for seven framework targets.</description>
+    <description>Release notes for ARC UI — Lit Web Components generated natively for seven framework targets.</description>
     <language>en</language>
     <lastBuildDate>${new Date(`${releases[0].date}T12:00:00Z`).toUTCString()}</lastBuildDate>
 ${items}

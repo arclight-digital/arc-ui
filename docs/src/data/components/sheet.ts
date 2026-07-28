@@ -1,48 +1,49 @@
 import type { ComponentDef } from './_types';
 
 export const sheet: ComponentDef = {
-    name: 'Sheet',
-    slug: 'sheet',
-    tag: 'arc-sheet',
-    tier: 'feedback',
-    interactivity: 'interactive',
-    description: 'A sliding overlay panel that emerges from the bottom or right edge of the viewport, with a blurred backdrop, header, scrollable body, and footer slot.',
+  name: 'Sheet',
+  slug: 'sheet',
+  tag: 'arc-sheet',
+  tier: 'feedback',
+  interactivity: 'interactive',
+  description:
+    'A sliding overlay panel that emerges from the bottom or right edge of the viewport, with a blurred backdrop, header, scrollable body, and footer slot.',
 
-    overview: `Sheet provides a modal-like surface that slides into view from the bottom or right edge of the screen, ideal for contextual actions, filters, or detail views that do not warrant a full-page navigation. When opened, a backdrop with a 4px blur covers the rest of the UI and clicking it dismisses the sheet. The bottom variant includes a drag-handle bar at the top for visual affordance, while the right variant omits it in favour of a clean sidebar aesthetic.
+  overview: `Sheet provides a modal-like surface that slides into view from the bottom or right edge of the screen, ideal for contextual actions, filters, or detail views that do not warrant a full-page navigation. When opened, a backdrop with a 4px blur covers the rest of the UI and clicking it dismisses the sheet. The bottom variant includes a drag-handle bar at the top for visual affordance, while the right variant omits it in favour of a clean sidebar aesthetic.
 
-The panel is structured into three zones: a header row with a heading and close button, a scrollable body for slotted content, and a sticky footer for action buttons. The header and footer slots allow full customisation -- you can replace the default heading with any markup via the \`header\` named slot, and populate the footer with buttons via the \`footer\` slot. The body area uses \`overflow-y: auto\` so long content scrolls naturally within the panel.
+The panel is structured into three zones: a header row with a heading and close button, a scrollable body for slotted content, and a sticky footer for action buttons. The header and footer slots allow full customisation — you can replace the default heading with any markup via the \`header\` named slot, and populate the footer with buttons via the \`footer\` slot. The body area uses \`overflow-y: auto\` so long content scrolls naturally within the panel.
 
-Sheet manages focus trapping and scroll locking automatically. When opened, it locks \`document.body\` overflow to prevent background scrolling, moves focus to the close button, and listens for the Escape key to dismiss. The \`arc-open\` event fires when the sheet becomes visible and \`arc-close\` fires on dismissal, allowing parent components to synchronise state or perform cleanup.`,
+Sheet manages focus trapping and scroll locking automatically. When opened, it locks \`document.body\` overflow to prevent background scrolling, moves focus to the close button, and listens for the Escape key to dismiss. The \`arc-open\` event fires when the sheet becomes visible and \`arc-close\` fires on dismissal, allowing parent components to synchronize state or perform cleanup.`,
 
-    features: [
-      'Two placement modes: `bottom` (default) and `right`, controlled by the `side` prop',
-      'Backdrop overlay with `backdrop-filter: blur(4px)` that dismisses the sheet on click',
-      'Bottom variant includes a rounded drag-handle bar for mobile touch affordance',
-      'Structured layout with header, scrollable body, and sticky footer zones',
-      'Named slots for `header` and `footer` allow full customisation of chrome areas',
-      'Automatic scroll locking on `document.body` when open, restored on close',
-      'Escape key dismissal with focus auto-moved to the close button on open',
-      'Fires `arc-open` and `arc-close` custom events for lifecycle synchronisation'
+  features: [
+    'Two placement modes: `bottom` (default) and `right`, controlled by the `side` prop',
+    'Backdrop overlay with `backdrop-filter: blur(4px)` that dismisses the sheet on click',
+    'Bottom variant includes a rounded drag-handle bar for mobile touch affordance',
+    'Structured layout with header, scrollable body, and sticky footer zones',
+    'Named slots for `header` and `footer` allow full customisation of chrome areas',
+    'Automatic scroll locking on `document.body` when open, restored on close',
+    'Escape key dismissal with focus auto-moved to the close button on open',
+    'Fires `arc-open` and `arc-close` custom events for lifecycle synchronisation',
+  ],
+
+  guidelines: {
+    do: [
+      'Use the bottom sheet for mobile-friendly contextual panels like filters or share menus',
+      'Use the right sheet for desktop detail panes, settings forms, or property inspectors',
+      'Provide a descriptive `heading` so screen readers announce the dialog purpose via `aria-label`',
+      'Listen to `arc-close` to reset your local open state and perform any necessary cleanup',
+      'Populate the `footer` slot with primary and secondary action buttons for task-oriented sheets',
     ],
+    dont: [
+      'Do not nest a Sheet inside another Sheet — use a Modal for layered overlays instead',
+      'Do not use Sheet for brief confirmations or alerts — use Modal or Toast for those patterns',
+      'Do not set both `side="bottom"` and `side="right"` — only one placement is active at a time',
+      'Do not place critical navigation inside a Sheet — it is dismissible and should contain optional content',
+      'Avoid overloading the sheet body with too many form fields — consider a full page for complex forms',
+    ],
+  },
 
-    guidelines: {
-      do: [
-        'Use the bottom sheet for mobile-friendly contextual panels like filters or share menus',
-        'Use the right sheet for desktop detail panes, settings forms, or property inspectors',
-        'Provide a descriptive `heading` so screen readers announce the dialog purpose via `aria-label`',
-        'Listen to `arc-close` to reset your local open state and perform any necessary cleanup',
-        'Populate the `footer` slot with primary and secondary action buttons for task-oriented sheets'
-      ],
-      dont: [
-        'Do not nest a Sheet inside another Sheet -- use a Modal for layered overlays instead',
-        'Do not use Sheet for brief confirmations or alerts -- use Modal or Toast for those patterns',
-        'Do not set both `side="bottom"` and `side="right"` -- only one placement is active at a time',
-        'Do not place critical navigation inside a Sheet -- it is dismissible and should contain optional content',
-        'Avoid overloading the sheet body with too many form fields -- consider a full page for complex forms'
-      ],
-    },
-
-    previewHtml: `<div style="display:flex;gap:var(--space-sm);">
+  previewHtml: `<div style="display:flex;gap:var(--space-sm);">
   <arc-button id="open-bottom-sheet" variant="secondary">Filters</arc-button>
   <arc-button id="open-right-sheet" variant="secondary">Details</arc-button>
 </div>
@@ -109,14 +110,13 @@ Sheet manages focus trapping and scroll locking automatically. When opened, it l
   </div>
 </arc-sheet>`,
 
-    previewSetup: `const bottomBtn = el.querySelector('#open-bottom-sheet'); const rightBtn = el.querySelector('#open-right-sheet'); const bottomSheet = el.querySelector('#demo-bottom-sheet'); const rightSheet = el.querySelector('#demo-right-sheet'); bottomBtn?.addEventListener('click', () => { if (bottomSheet) bottomSheet.open = true; }); rightBtn?.addEventListener('click', () => { if (rightSheet) rightSheet.open = true; }); el.querySelector('#reset-filters')?.addEventListener('click', () => { if (bottomSheet) bottomSheet.open = false; }); el.querySelector('#apply-filters')?.addEventListener('click', () => { if (bottomSheet) bottomSheet.open = false; });`,
+  previewSetup: `const bottomBtn = el.querySelector('#open-bottom-sheet'); const rightBtn = el.querySelector('#open-right-sheet'); const bottomSheet = el.querySelector('#demo-bottom-sheet'); const rightSheet = el.querySelector('#demo-right-sheet'); bottomBtn?.addEventListener('click', () => { if (bottomSheet) bottomSheet.open = true; }); rightBtn?.addEventListener('click', () => { if (rightSheet) rightSheet.open = true; }); el.querySelector('#reset-filters')?.addEventListener('click', () => { if (bottomSheet) bottomSheet.open = false; }); el.querySelector('#apply-filters')?.addEventListener('click', () => { if (bottomSheet) bottomSheet.open = false; });`,
 
-
-    tabs: [
+  tabs: [
     {
-        label: 'Web Component',
-        lang: 'html',
-        code: `<!-- Bottom sheet for filters -->
+      label: 'Web Component',
+      lang: 'html',
+      code: `<!-- Bottom sheet for filters -->
 <arc-button id="open-filters" variant="secondary">Filters</arc-button>
 <arc-sheet id="filter-sheet" heading="Filter Results" side="bottom">
   <div style="display:flex;flex-direction:column;gap:16px;">
@@ -162,11 +162,11 @@ Sheet manages focus trapping and scroll locking automatically. When opened, it l
     document.querySelector('#detail-sheet').open = true;
   });
 </script>`,
-      },
+    },
     {
-        label: 'React',
-        lang: 'tsx',
-        code: `import { Sheet, Button, Chip, Select, Badge } from '@arclux/arc-ui-react';
+      label: 'React',
+      lang: 'tsx',
+      code: `import { Sheet, Button, Chip, Select, Badge } from '@arclux/arc-ui-react';
 import { useState } from 'react';
 
 function FilterSheet() {
@@ -220,11 +220,11 @@ function DetailSheet() {
     </>
   );
 }`,
-      },
+    },
     {
-        label: 'Vue',
-        lang: 'html',
-        code: `<script setup>
+      label: 'Vue',
+      lang: 'html',
+      code: `<script setup>
 import { ref } from 'vue';
 import { Sheet, Button, Chip, Badge } from '@arclux/arc-ui-vue';
 
@@ -267,11 +267,11 @@ const detailsOpen = ref(false);
     </template>
   </Sheet>
 </template>`,
-      },
+    },
     {
-        label: 'Svelte',
-        lang: 'html',
-        code: `<script>
+      label: 'Svelte',
+      lang: 'html',
+      code: `<script>
   import { Sheet, Button, Chip, Badge } from '@arclux/arc-ui-svelte';
 
   let filtersOpen = $state(false);
@@ -303,40 +303,40 @@ const detailsOpen = ref(false);
     <Button variant="primary">Open Project</Button>
   </div>
 </Sheet>`,
-      },
+    },
     {
-        label: 'Angular',
-        lang: 'ts',
-        code: `import { Component } from '@angular/core';
+      label: 'Angular',
+      lang: 'ts',
+      code: `import { Component } from '@angular/core';
 import { Sheet, Button, Chip, Badge } from '@arclux/arc-ui-angular';
 
 @Component({
   imports: [Sheet, Button, Chip, Badge],
   template: \`
-    <Button variant="secondary" (click)="filtersOpen = true">Filters</Button>
-    <Sheet heading="Filter Results" side="bottom" [open]="filtersOpen" (arcClose)="filtersOpen = false">
+    <arc-button variant="secondary" (click)="filtersOpen = true">Filters</arc-button>
+    <arc-sheet heading="Filter Results" side="bottom" [open]="filtersOpen" (arcClose)="filtersOpen = false">
       <div style="display:flex;flex-direction:column;gap:16px;">
         <strong style="font-size:13px;">Status</strong>
         <div style="display:flex;gap:6px;">
-          <Chip [selected]="true">Active</Chip>
-          <Chip>Archived</Chip>
+          <arc-chip [selected]="true">Active</arc-chip>
+          <arc-chip>Archived</arc-chip>
         </div>
       </div>
       <div slot="footer">
-        <Button variant="ghost" (click)="filtersOpen = false">Reset</Button>
-        <Button variant="primary" (click)="filtersOpen = false">Apply</Button>
+        <arc-button variant="ghost" (click)="filtersOpen = false">Reset</arc-button>
+        <arc-button variant="primary" (click)="filtersOpen = false">Apply</arc-button>
       </div>
-    </Sheet>
+    </arc-sheet>
   \`,
 })
 export class FilterComponent {
   filtersOpen = false;
 }`,
-      },
+    },
     {
-        label: 'Solid',
-        lang: 'tsx',
-        code: `import { createSignal } from 'solid-js';
+      label: 'Solid',
+      lang: 'tsx',
+      code: `import { createSignal } from 'solid-js';
 import { Sheet, Button, Chip, Badge } from '@arclux/arc-ui-solid';
 
 function FilterSheet() {
@@ -361,11 +361,11 @@ function FilterSheet() {
     </>
   );
 }`,
-      },
+    },
     {
-        label: 'Preact',
-        lang: 'tsx',
-        code: `import { useState } from 'preact/hooks';
+      label: 'Preact',
+      lang: 'tsx',
+      code: `import { useState } from 'preact/hooks';
 import { Sheet, Button, Chip, Badge } from '@arclux/arc-ui-preact';
 
 function FilterSheet() {
@@ -390,8 +390,8 @@ function FilterSheet() {
     </>
   );
 }`,
-      },
+    },
   ],
 
-  seeAlso: ["drawer","modal","sidebar"],
+  seeAlso: ['drawer', 'modal', 'sidebar'],
 };

@@ -1,6 +1,7 @@
 ---
 import { Code } from 'astro:components';
 import DocsLayout from '../../layouts/DocsLayout.astro';
+import { version } from '../../data/site-stats';
 
 const headings = [
   { id: 'overview', label: 'Overview' },
@@ -15,14 +16,14 @@ const headings = [
 ---
 
 <DocsLayout
-  title="Framework Guides"
+  title="Frameworks"
   description="Use ARC UI with React, Vue, Svelte, Angular, Solid, Preact, or vanilla JS."
   activeSlug="frameworks"
   headings={headings}
   breadcrumbs={[{ label: 'Frameworks' }]}
 >
   <div class="frameworks-page">
-    <h1 class="page-title">Framework Guides</h1>
+    <h1 class="page-title">Frameworks</h1>
     <p class="page-desc">
       ARC UI is built on Lit Web Components. We built a custom code generator called Prism
       that reads the Lit source and produces typed, idiomatic bindings for every major framework.
@@ -35,10 +36,10 @@ const headings = [
         ARC UI follows a <strong>write-once, run-everywhere</strong> architecture. The core
         <code>@arclux/arc-ui</code> package contains Lit-based custom elements that work in
         any environment. We built a custom code generator called <strong>Prism</strong> that
-        parses any Lit web component and produces framework-native wrappers, giving you:
+        parses any Lit Web Component and produces framework-native wrappers, giving you:
       </p>
       <ul class="docs-list">
-        <li>Proper event binding (e.g., React's synthetic events)</li>
+        <li>Proper event binding (e.g. React's synthetic events)</li>
         <li>TypeScript type definitions</li>
         <li>Idiomatic imports for each framework</li>
         <li>SSR compatibility where supported</li>
@@ -54,13 +55,14 @@ const headings = [
       <arc-badge variant="primary">@arclux/arc-ui-react</arc-badge>
       <p class="docs-text">Install the React wrapper package:</p>
       <div class="docs-code"><Code code="npm install @arclux/arc-ui-react" lang="bash" theme="css-variables" /></div>
-      <p class="docs-text">Import and use components:</p>
-      <div class="docs-code"><Code code={`import { Button, Card, Input } from '@arclux/arc-ui-react';
+      <p class="docs-text">Use in your React components:</p>
+      <div class="docs-code"><Code code={`import '@arclux/arc-ui/base.css';
+import { Button, Card, Input } from '@arclux/arc-ui-react';
 
 function App() {
   return (
     <Card>
-      <span slot="heading">Sign In</span>
+      <h3>Sign In</h3>
       <Input label="Email" placeholder="you@example.com" />
       <Button variant="primary" onClick={() => console.log('clicked')}>
         Submit
@@ -82,16 +84,17 @@ function App() {
       <div class="docs-code"><Code code="npm install @arclux/arc-ui-vue" lang="bash" theme="css-variables" /></div>
       <p class="docs-text">Use in your Vue components:</p>
       <div class="docs-code"><Code code={`<script setup>
-import { ArcButton, ArcCard } from '@arclux/arc-ui-vue';
+import '@arclux/arc-ui/base.css';
+import { Button, Card } from '@arclux/arc-ui-vue';
 </script>
 
 <template>
-  <ArcCard>
-    <template #heading>Hello Vue</template>
-    <ArcButton variant="primary" @click="handleClick">
+  <Card>
+    <h3>Hello Vue</h3>
+    <Button variant="primary" @click="handleClick">
       Click Me
-    </ArcButton>
-  </ArcCard>
+    </Button>
+  </Card>
 </template>`} lang="vue" theme="css-variables" /></div>
     </section>
 
@@ -103,15 +106,16 @@ import { ArcButton, ArcCard } from '@arclux/arc-ui-vue';
       <div class="docs-code"><Code code="npm install @arclux/arc-ui-svelte" lang="bash" theme="css-variables" /></div>
       <p class="docs-text">Use in your Svelte components:</p>
       <div class="docs-code"><Code code={`<script>
-  import { ArcButton, ArcCard } from '@arclux/arc-ui-svelte';
+  import '@arclux/arc-ui/base.css';
+  import { Button, Card } from '@arclux/arc-ui-svelte';
 </script>
 
-<ArcCard>
-  <span slot="heading">Hello Svelte</span>
-  <ArcButton variant="primary" on:click={() => console.log('clicked')}>
+<Card>
+  <h3>Hello Svelte</h3>
+  <Button variant="primary" on:click={() => console.log('clicked')}>
     Click Me
-  </ArcButton>
-</ArcCard>`} lang="svelte" theme="css-variables" /></div>
+  </Button>
+</Card>`} lang="svelte" theme="css-variables" /></div>
     </section>
 
     <section id="angular">
@@ -120,19 +124,30 @@ import { ArcButton, ArcCard } from '@arclux/arc-ui-vue';
       <arc-badge variant="primary">@arclux/arc-ui-angular</arc-badge>
       <p class="docs-text">Install the Angular wrapper package:</p>
       <div class="docs-code"><Code code="npm install @arclux/arc-ui-angular" lang="bash" theme="css-variables" /></div>
-      <p class="docs-text">Add the module to your app and use components:</p>
-      <div class="docs-code"><Code code={`// app.module.ts
-import { ArcUiModule } from '@arclux/arc-ui-angular';
+      <p class="docs-text">Add the stylesheet to your global styles:</p>
+      <div class="docs-code"><Code code={`/* styles.css */
+@import '@arclux/arc-ui/base.css';`} lang="css" theme="css-variables" /></div>
+      <p class="docs-text">Import the standalone components and use them in your template:</p>
+      <div class="docs-code"><Code code={`import { Component } from '@angular/core';
+import { Button, Card } from '@arclux/arc-ui-angular';
 
-@NgModule({
-  imports: [ArcUiModule],
+@Component({
+  selector: 'app-hello',
+  imports: [Button, Card],
+  template: \`
+    <arc-card>
+      <h3>Hello Angular</h3>
+      <arc-button variant="primary" (click)="handleClick()">
+        Click Me
+      </arc-button>
+    </arc-card>
+  \`,
 })
-export class AppModule {}
-
-// In your template:
-// <arc-button variant="primary" (click)="handleClick()">
-//   Click Me
-// </arc-button>`} lang="typescript" theme="css-variables" /></div>
+export class HelloComponent {
+  handleClick() {
+    console.log('clicked');
+  }
+}`} lang="typescript" theme="css-variables" /></div>
     </section>
 
     <section id="solid">
@@ -142,16 +157,17 @@ export class AppModule {}
       <p class="docs-text">Install the Solid wrapper package:</p>
       <div class="docs-code"><Code code="npm install @arclux/arc-ui-solid" lang="bash" theme="css-variables" /></div>
       <p class="docs-text">Use in your Solid components:</p>
-      <div class="docs-code"><Code code={`import { ArcButton, ArcCard } from '@arclux/arc-ui-solid';
+      <div class="docs-code"><Code code={`import '@arclux/arc-ui/base.css';
+import { Button, Card } from '@arclux/arc-ui-solid';
 
 function App() {
   return (
-    <ArcCard>
-      <span slot="heading">Hello Solid</span>
-      <ArcButton variant="primary" onClick={() => console.log('clicked')}>
+    <Card>
+      <h3>Hello Solid</h3>
+      <Button variant="primary" onClick={() => console.log('clicked')}>
         Click Me
-      </ArcButton>
-    </ArcCard>
+      </Button>
+    </Card>
   );
 }`} lang="jsx" theme="css-variables" /></div>
     </section>
@@ -163,16 +179,17 @@ function App() {
       <p class="docs-text">Install the Preact wrapper package:</p>
       <div class="docs-code"><Code code="npm install @arclux/arc-ui-preact" lang="bash" theme="css-variables" /></div>
       <p class="docs-text">Use in your Preact components:</p>
-      <div class="docs-code"><Code code={`import { ArcButton, ArcCard } from '@arclux/arc-ui-preact';
+      <div class="docs-code"><Code code={`import '@arclux/arc-ui/base.css';
+import { Button, Card } from '@arclux/arc-ui-preact';
 
 function App() {
   return (
-    <ArcCard>
-      <span slot="heading">Hello Preact</span>
-      <ArcButton variant="primary" onClick={() => console.log('clicked')}>
+    <Card>
+      <h3>Hello Preact</h3>
+      <Button variant="primary" onClick={() => console.log('clicked')}>
         Click Me
-      </ArcButton>
-    </ArcCard>
+      </Button>
+    </Card>
   );
 }`} lang="jsx" theme="css-variables" /></div>
     </section>
@@ -181,19 +198,21 @@ function App() {
       <h2 class="docs-heading">Vanilla JS / CDN</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        No framework? No problem. Use the core web component package directly:
+        No framework? No problem. Use the core Web Component package directly:
       </p>
-      <div class="docs-code"><Code code="npm install @arclux/arc-ui lit" lang="bash" theme="css-variables" /></div>
+      <div class="docs-code"><Code code="npm install @arclux/arc-ui" lang="bash" theme="css-variables" /></div>
       <div class="docs-code"><Code code={`import '@arclux/arc-ui/button';
 import '@arclux/arc-ui/card';`} lang="js" theme="css-variables" /></div>
       <p class="docs-text">Or load via CDN with no build step:</p>
-      <div class="docs-code"><Code code={`<script type="module"
-  src="https://unpkg.com/@arclux/arc-ui/register">
+      <div class="docs-code"><Code code={`<link rel="stylesheet"
+  href="https://unpkg.com/@arclux/arc-ui@${version}/base.css">
+<script type="module"
+  src="https://unpkg.com/@arclux/arc-ui@${version}/register">
 </script>
 
 <arc-button variant="primary">Click Me</arc-button>
 <arc-card>
-  <span slot="heading">Hello World</span>
+  <h3>Hello World</h3>
   <p>Pure HTML, no framework needed.</p>
 </arc-card>`} lang="html" theme="css-variables" /></div>
       <arc-callout variant="tip">For projects that can't use JavaScript, ARC UI also provides standalone CSS files.</arc-callout>
@@ -201,10 +220,10 @@ import '@arclux/arc-ui/card';`} lang="js" theme="css-variables" /></div>
         Import the bundle or individual component styles:
       </p>
       <div class="docs-code"><Code code={`<!-- Full bundle -->
-<link rel="stylesheet" href="https://unpkg.com/@arclux/arc-ui-html/css/arc-ui.css">
+<link rel="stylesheet" href="https://unpkg.com/@arclux/arc-ui-html@${version}/css/arc-ui.css">
 
 <!-- Individual component -->
-<link rel="stylesheet" href="https://unpkg.com/@arclux/arc-ui-html/css/button.css">
+<link rel="stylesheet" href="https://unpkg.com/@arclux/arc-ui-html@${version}/css/button.css">
 
 <button class="arc-button arc-button--primary">Click Me</button>`} lang="html" theme="css-variables" /></div>
     </section>

@@ -6,7 +6,8 @@ export const image: ComponentDef = {
   tag: 'arc-image',
   tier: 'content',
   interactivity: 'interactive',
-  description: 'Enhanced image component with shimmer loading skeleton, smooth fade-in transition, error fallback, and aspect ratio presets.',
+  description:
+    'Enhanced image component with shimmer loading skeleton, smooth fade-in transition, error fallback, and aspect ratio presets.',
 
   overview: `Image wraps the native \`<img>\` element with loading states and error handling that would otherwise require custom boilerplate in every project. While the image loads, a shimmer skeleton animation fills the container, giving users immediate visual feedback. Once loaded, the image fades in smoothly via a CSS opacity transition.
 
@@ -22,7 +23,7 @@ Six aspect ratio presets (\`1/1\`, \`4/3\`, \`16/9\`, \`21/9\`, \`3/4\`, \`9/16\
     'Five object-fit modes: cover (default), contain, fill, none, scale-down',
     'Native lazy loading enabled by default',
     'Respects `prefers-reduced-motion` — disables shimmer and fade when set',
-    'Exposed CSS parts: wrapper, image, fallback'
+    'Exposed CSS parts: wrapper, image, fallback',
   ],
 
   guidelines: {
@@ -30,13 +31,13 @@ Six aspect ratio presets (\`1/1\`, \`4/3\`, \`16/9\`, \`21/9\`, \`3/4\`, \`9/16\
       'Always provide meaningful `alt` text for accessibility',
       'Set an `aspect` ratio to prevent layout shift during loading',
       'Use `fit="contain"` for logos or icons that should not be cropped',
-      'Provide a `fallback` image URL for critical images that must always display something'
+      'Provide a `fallback` image URL for critical images that must always display something',
     ],
     dont: [
-      'Use arc-image for decorative background images — use CSS `background-image` instead',
-      'Set `loading="eager"` on below-the-fold images — lazy is the default for a reason',
-      'Omit `alt` text — the image is semantically meaningful content',
-      'Use extremely large source images without server-side resizing'
+      'Do not use arc-image for decorative background images — use CSS `background-image` instead',
+      'Do not set `loading="eager"` on below-the-fold images — lazy is the default for a reason',
+      'Do not omit `alt` text — the image is semantically meaningful content',
+      'Do not use extremely large source images without server-side resizing',
     ],
   },
 
@@ -45,8 +46,6 @@ Six aspect ratio presets (\`1/1\`, \`4/3\`, \`16/9\`, \`21/9\`, \`3/4\`, \`9/16\
   <arc-image src="https://picsum.photos/300/300?random=2" alt="Sample square" aspect="1/1"></arc-image>
   <arc-image src="https://invalid-url.example/broken.jpg" alt="Broken image" aspect="16/9"></arc-image>
 </div>`,
-
-
 
   tabs: [
     {
@@ -71,8 +70,14 @@ Six aspect ratio presets (\`1/1\`, \`4/3\`, \`16/9\`, \`21/9\`, \`3/4\`, \`9/16\
       lang: 'tsx',
       code: `import { Image } from '@arclux/arc-ui-react';
 
-<Image src="https://picsum.photos/600/400" alt="Mountain landscape" aspect="16/9" />
-<Image src="/missing.jpg" alt="Product" aspect="1/1" fallback="/placeholder.png" />`,
+export default function Example() {
+  return (
+    <>
+      <Image src="https://picsum.photos/600/400" alt="Mountain landscape" aspect="16/9" />
+      <Image src="/missing.jpg" alt="Product" aspect="1/1" fallback="/placeholder.png" />
+    </>
+  );
+}`,
     },
     {
       label: 'Vue',
@@ -105,8 +110,8 @@ import { Image } from '@arclux/arc-ui-angular';
 @Component({
   imports: [Image],
   template: \`
-    <Image src="https://picsum.photos/600/400" alt="Mountain landscape" aspect="16/9" />
-    <Image src="/missing.jpg" alt="Product" aspect="1/1" fallback="/placeholder.png" />
+    <arc-image src="https://picsum.photos/600/400" alt="Mountain landscape" aspect="16/9" />
+    <arc-image src="/missing.jpg" alt="Product" aspect="1/1" fallback="/placeholder.png" />
   \`,
 })
 export class GalleryComponent {}`,
@@ -116,16 +121,28 @@ export class GalleryComponent {}`,
       lang: 'tsx',
       code: `import { Image } from '@arclux/arc-ui-solid';
 
-<Image src="https://picsum.photos/600/400" alt="Mountain landscape" aspect="16/9" />
-<Image src="/missing.jpg" alt="Product" aspect="1/1" fallback="/placeholder.png" />`,
+export default function Example() {
+  return (
+    <>
+      <Image src="https://picsum.photos/600/400" alt="Mountain landscape" aspect="16/9" />
+      <Image src="/missing.jpg" alt="Product" aspect="1/1" fallback="/placeholder.png" />
+    </>
+  );
+}`,
     },
     {
       label: 'Preact',
       lang: 'tsx',
       code: `import { Image } from '@arclux/arc-ui-preact';
 
-<Image src="https://picsum.photos/600/400" alt="Mountain landscape" aspect="16/9" />
-<Image src="/missing.jpg" alt="Product" aspect="1/1" fallback="/placeholder.png" />`,
+export default function Example() {
+  return (
+    <>
+      <Image src="https://picsum.photos/600/400" alt="Mountain landscape" aspect="16/9" />
+      <Image src="/missing.jpg" alt="Product" aspect="1/1" fallback="/placeholder.png" />
+    </>
+  );
+}`,
     },
   ],
 

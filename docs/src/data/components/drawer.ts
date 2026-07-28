@@ -1,53 +1,54 @@
 import type { ComponentDef } from './_types';
 
 export const drawer: ComponentDef = {
-    name: 'Drawer',
-    slug: 'drawer',
-    tag: 'arc-drawer',
-    tier: 'navigation',
-    interactivity: 'interactive',
-    searchKeywords: ['side panel'],
-    description: 'Slide-out panel with backdrop overlay, keyboard dismissal, and left/right positioning for off-canvas navigation, filters, and detail views.',
+  name: 'Drawer',
+  slug: 'drawer',
+  tag: 'arc-drawer',
+  tier: 'navigation',
+  interactivity: 'interactive',
+  searchKeywords: ['side panel'],
+  description:
+    'Slide-out panel with backdrop overlay, keyboard dismissal, and left/right positioning for off-canvas navigation, filters, and detail views.',
 
-    overview: `Drawer is a slide-out panel that emerges from the left or right edge of the viewport, overlaying page content behind a semi-transparent backdrop. It is the standard pattern for housing navigation menus on mobile, exposing filter panels in data-heavy applications, or showing contextual detail views without navigating away from the current page.
+  overview: `Drawer is a slide-out panel that emerges from the left or right edge of the viewport, overlaying page content behind a semi-transparent backdrop. It is the standard pattern for housing navigation menus on mobile, exposing filter panels in data-heavy applications, or showing contextual detail views without navigating away from the current page.
 
 When the Drawer opens it locks body scroll, preventing the user from accidentally interacting with background content. A smooth CSS transform animation slides the panel into view while the backdrop fades in, creating a clear spatial relationship between the panel and the page behind it. Closing is handled automatically via the built-in close button, pressing the Escape key, or clicking the backdrop — all of which fire an \`arc-close\` event so your application state stays in sync.
 
 Choose Drawer over Modal when the supplementary content is navigation-oriented, when users need to glance back at the main page while interacting with the panel, or when the content is tall and benefits from full-height scrolling. For blocking decisions that require explicit user action, use Modal instead.`,
 
-    features: [
-      'Slides in from the left or right edge via CSS transforms with configurable `position` prop',
-      'Semi-transparent backdrop overlay dims the page and captures click-to-close',
-      'Escape key dismissal with automatic keyboard listener management',
-      'Body scroll lock while open prevents background content interaction',
-      'Built-in header bar with heading text and close button',
-      'Scrollable body region for long content like navigation trees or filter forms',
-      'Fires `arc-close` custom event on any dismiss action for state synchronization',
-      'Max-width capped at 85vw so the drawer never fully obscures the page',
-      'CSS custom property theming via `--bg-surface`, `--border-subtle`, and `--text-primary`',
-      'Accessible with `role="dialog"`, `aria-modal="true"`, and `aria-label` from heading'
+  features: [
+    'Slides in from the left or right edge via CSS transforms with configurable `position` prop',
+    'Semi-transparent backdrop overlay dims the page and captures click-to-close',
+    'Escape key dismissal with automatic keyboard listener management',
+    'Body scroll lock while open prevents background content interaction',
+    'Built-in header bar with heading text and close button',
+    'Scrollable body region for long content like navigation trees or filter forms',
+    'Fires `arc-close` custom event on any dismiss action for state synchronization',
+    'Max-width capped at 85vw so the drawer never fully obscures the page',
+    'CSS custom property theming via `--bg-surface`, `--border-subtle`, and `--text-primary`',
+    'Accessible with `role="dialog"`, `aria-modal="true"`, and `aria-label` from heading',
+  ],
+
+  guidelines: {
+    do: [
+      'Use for mobile navigation menus that slide in from the left edge',
+      'Use for filter or settings panels in data-heavy dashboards',
+      'Provide a clear, short heading that tells the user what the panel contains',
+      'Keep the drawer width reasonable — the default 300px works for most navigation use cases',
+      'Use `position="right"` for detail views and contextual information panels',
+      'Always listen for the `arc-close` event to keep your open state in sync',
     ],
+    dont: [
+      'Do not use a Drawer for critical confirmations — use Modal instead',
+      'Do not nest a Drawer inside another Drawer',
+      'Do not put complex multi-step forms in a Drawer — consider a full page or Modal',
+      'Do not auto-open a Drawer on page load without a clear user-initiated trigger',
+      'Do not remove the backdrop — users expect click-outside-to-close behavior',
+      'Do not place unrelated content in the drawer heading area — keep it for the title and close button',
+    ],
+  },
 
-    guidelines: {
-      do: [
-        'Use for mobile navigation menus that slide in from the left edge',
-        'Use for filter or settings panels in data-heavy dashboards',
-        'Provide a clear, short heading that tells the user what the panel contains',
-        'Keep the drawer width reasonable — the default 300px works for most navigation use cases',
-        'Use `position="right"` for detail views and contextual information panels',
-        'Always listen for the `arc-close` event to keep your open state in sync'
-      ],
-      dont: [
-        'Do not use a Drawer for critical confirmations — use Modal instead',
-        'Do not nest a Drawer inside another Drawer',
-        'Do not put complex multi-step forms in a Drawer — consider a full page or Modal',
-        'Do not auto-open a Drawer on page load without a clear user-initiated trigger',
-        'Do not remove the backdrop — users expect click-outside-to-close behavior',
-        'Do not place unrelated content in the drawer heading area — keep it for the title and close button'
-      ],
-    },
-
-    previewHtml: `<div style="width:100%">
+  previewHtml: `<div style="width:100%">
   <arc-button id="open-nav-drawer" variant="secondary">
     <svg slot="prefix" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="margin-right:4px">
       <path d="M2 3.5h12a.5.5 0 010 1H2a.5.5 0 010-1zm0 4h12a.5.5 0 010 1H2a.5.5 0 010-1zm0 4h12a.5.5 0 010 1H2a.5.5 0 010-1z"/>
@@ -85,14 +86,13 @@ Choose Drawer over Modal when the supplementary content is navigation-oriented, 
   </arc-drawer>
 </div>`,
 
-    previewSetup: `const openBtn = el.querySelector('#open-nav-drawer'); const drawer = el.querySelector('#nav-drawer'); openBtn?.addEventListener('click', () => { if (drawer) drawer.open = true; });`,
+  previewSetup: `const openBtn = el.querySelector('#open-nav-drawer'); const drawer = el.querySelector('#nav-drawer'); openBtn?.addEventListener('click', () => { if (drawer) drawer.open = true; });`,
 
-
-    tabs: [
-      {
-        label: 'Web Component',
-        lang: 'html',
-        code: `<arc-button id="open-nav-drawer">Menu</arc-button>
+  tabs: [
+    {
+      label: 'Web Component',
+      lang: 'html',
+      code: `<arc-button id="open-nav-drawer">Menu</arc-button>
 <arc-drawer id="nav-drawer" heading="Navigation" position="left">
   <nav style="display:flex; flex-direction:column; gap:4px; padding:8px;">
     <a href="/dashboard" style="padding:10px 12px; border-radius:6px; color:var(--text-primary); text-decoration:none;">Dashboard</a>
@@ -108,11 +108,11 @@ Choose Drawer over Modal when the supplementary content is navigation-oriented, 
   openBtn.addEventListener('click', () => { drawer.open = true; });
   drawer.addEventListener('arc-close', () => { drawer.open = false; });
 </script>`,
-      },
-      {
-        label: 'React',
-        lang: 'tsx',
-        code: `import { useState } from 'react';
+    },
+    {
+      label: 'React',
+      lang: 'tsx',
+      code: `import { useState } from 'react';
 import { Button, Drawer } from '@arclux/arc-ui-react';
 
 function MobileNav() {
@@ -132,11 +132,11 @@ function MobileNav() {
     </>
   );
 }`,
-      },
-      {
-        label: 'Vue',
-        lang: 'html',
-        code: `<script setup>
+    },
+    {
+      label: 'Vue',
+      lang: 'html',
+      code: `<script setup>
 import { ref } from 'vue';
 import { Button, Drawer } from '@arclux/arc-ui-vue';
 
@@ -154,11 +154,11 @@ const open = ref(false);
     </nav>
   </Drawer>
 </template>`,
-      },
-      {
-        label: 'Svelte',
-        lang: 'html',
-        code: `<script>
+    },
+    {
+      label: 'Svelte',
+      lang: 'html',
+      code: `<script>
   import { Button, Drawer } from '@arclux/arc-ui-svelte';
 
   let open = $state(false);
@@ -173,35 +173,35 @@ const open = ref(false);
     <a href="/settings">Settings</a>
   </nav>
 </Drawer>`,
-      },
-      {
-        label: 'Angular',
-        lang: 'ts',
-        code: `import { Component } from '@angular/core';
+    },
+    {
+      label: 'Angular',
+      lang: 'ts',
+      code: `import { Component } from '@angular/core';
 import { Button, Drawer } from '@arclux/arc-ui-angular';
 
 @Component({
   imports: [Button, Drawer],
   template: \`
-    <Button (click)="open = true">Menu</Button>
-    <Drawer [open]="open" heading="Navigation" position="left" (arcClose)="open = false">
+    <arc-button (click)="open = true">Menu</arc-button>
+    <arc-drawer [open]="open" heading="Navigation" position="left" (arcClose)="open = false">
       <nav style="display:flex; flex-direction:column; gap:4px; padding:8px;">
         <a href="/dashboard">Dashboard</a>
         <a href="/projects">Projects</a>
         <a href="/activity">Activity</a>
         <a href="/settings">Settings</a>
       </nav>
-    </Drawer>
+    </arc-drawer>
   \`,
 })
 export class MobileNavComponent {
   open = false;
 }`,
-      },
-      {
-        label: 'Solid',
-        lang: 'tsx',
-        code: `import { createSignal } from 'solid-js';
+    },
+    {
+      label: 'Solid',
+      lang: 'tsx',
+      code: `import { createSignal } from 'solid-js';
 import { Button, Drawer } from '@arclux/arc-ui-solid';
 
 function MobileNav() {
@@ -221,11 +221,11 @@ function MobileNav() {
     </>
   );
 }`,
-      },
-      {
-        label: 'Preact',
-        lang: 'tsx',
-        code: `import { useState } from 'preact/hooks';
+    },
+    {
+      label: 'Preact',
+      lang: 'tsx',
+      code: `import { useState } from 'preact/hooks';
 import { Button, Drawer } from '@arclux/arc-ui-preact';
 
 function MobileNav() {
@@ -245,8 +245,8 @@ function MobileNav() {
     </>
   );
 }`,
-      }
-    ],
-  
-  seeAlso: ["modal","sheet","sidebar"],
+    },
+  ],
+
+  seeAlso: ['modal', 'sheet', 'sidebar'],
 };

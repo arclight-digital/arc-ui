@@ -1,50 +1,51 @@
 import type { ComponentDef } from './_types';
 
 export const infiniteScroll: ComponentDef = {
-    name: 'Infinite Scroll',
-    slug: 'infinite-scroll',
-    tag: 'arc-infinite-scroll',
-    tier: 'content',
-    interactivity: 'interactive',
-    description: 'Intersection Observer-powered container that fires a load event when the user scrolls near the bottom, with built-in loading spinner and end-of-list state.',
+  name: 'Infinite Scroll',
+  slug: 'infinite-scroll',
+  tag: 'arc-infinite-scroll',
+  tier: 'content',
+  interactivity: 'interactive',
+  description:
+    'Intersection Observer-powered container that fires a load event when the user scrolls near the bottom, with built-in loading spinner and end-of-list state.',
 
-    overview: `Infinite Scroll wraps your content in a feed container and watches for when the user approaches the bottom using an Intersection Observer sentinel element. When the sentinel enters the viewport (plus a configurable \`threshold\` margin), the component fires an \`arc-load-more\` event, signalling your application to fetch and append the next batch of items. This eliminates the need for manual scroll listeners or pagination button clicks.
+  overview: `InfiniteScroll wraps your content in a feed container and watches for when the user approaches the bottom using an Intersection Observer sentinel element. When the sentinel enters the viewport (plus a configurable \`threshold\` margin), the component fires an \`arc-load-more\` event, signalling your application to fetch and append the next batch of items. This eliminates the need for manual scroll listeners or pagination button clicks.
 
 While data is being fetched, set the \`loading\` prop to \`true\` to display a centered spinner in the footer area. The component automatically suppresses additional \`arc-load-more\` events while loading is active, preventing duplicate fetch requests. Once your data arrives, reset \`loading\` to \`false\` and the sentinel resumes observation.
 
 When all data has been loaded, set the \`finished\` prop to \`true\`. The sentinel is removed and replaced with a "No more items" text indicator, and the Intersection Observer is disconnected. The container uses \`aria-busy\` to communicate loading state to assistive technologies. If your items are self-contained entries (e.g. posts), slot them as \`<article>\` elements and add \`role="feed"\` to the component to opt into the ARIA feed pattern.`,
 
-    features: [
-      'Intersection Observer-based sentinel that fires `arc-load-more` when the user nears the content bottom',
-      'Configurable `threshold` prop (in pixels) to control how far in advance the load event triggers',
-      'Built-in `arc-spinner` displayed in the footer when `loading` is `true`',
-      'Automatic suppression of duplicate load events while loading is in progress',
-      'End-of-list state via `finished` prop -- removes the sentinel and shows "No more items" text',
-      'ARIA `aria-busy` for accessible loading communication',
-      'Observer automatically disconnects and reconnects when `finished` or `disabled` change',
-      'Disabled state at 40% opacity with pointer events blocked'
+  features: [
+    'Intersection Observer-based sentinel that fires `arc-load-more` when the user nears the content bottom',
+    'Configurable `threshold` prop (in pixels) to control how far in advance the load event triggers',
+    'Built-in `arc-spinner` displayed in the footer when `loading` is `true`',
+    'Automatic suppression of duplicate load events while loading is in progress',
+    'End-of-list state via `finished` prop — removes the sentinel and shows "No more items" text',
+    'ARIA `aria-busy` for accessible loading communication',
+    'Observer automatically disconnects and reconnects when `finished` or `disabled` change',
+    'Disabled state at 40% opacity with pointer events blocked',
+  ],
+
+  guidelines: {
+    do: [
+      'Set `loading` to `true` immediately when you begin fetching data, and reset it to `false` when data arrives',
+      'Set `finished` to `true` when the API indicates no more pages remain, so the observer disconnects',
+      'Use a reasonable `threshold` (100-300px) so content loads before users hit the bottom and see a gap',
+      'Place InfiniteScroll inside a scrollable parent or let the page itself be the scroll container',
+      'Append new items as direct children of the component — they render in the default slot',
     ],
+    dont: [
+      'Do not leave `loading` as `true` indefinitely — this blocks further load events and leaves the spinner visible',
+      'Do not use InfiniteScroll for small, fixed datasets — standard pagination or a simple list is more appropriate',
+      'Do not set `threshold` to 0 — the user will see a flash of empty space before content loads',
+      'Do not nest multiple InfiniteScroll components — their observers may conflict',
+      'Avoid using InfiniteScroll without providing a way to reach footer content, since it pushes the footer down continuously',
+    ],
+  },
 
-    guidelines: {
-      do: [
-        'Set `loading` to `true` immediately when you begin fetching data, and reset it to `false` when data arrives',
-        'Set `finished` to `true` when the API indicates no more pages remain, so the observer disconnects',
-        'Use a reasonable `threshold` (100-300px) so content loads before users hit the bottom and see a gap',
-        'Place Infinite Scroll inside a scrollable parent or let the page itself be the scroll container',
-        'Append new items as direct children of the component -- they render in the default slot'
-      ],
-      dont: [
-        'Do not leave `loading` as `true` indefinitely -- this blocks further load events and leaves the spinner visible',
-        'Do not use Infinite Scroll for small, fixed datasets -- standard pagination or a simple list is more appropriate',
-        'Do not set `threshold` to 0 -- the user will see a flash of empty space before content loads',
-        'Do not nest multiple Infinite Scroll components -- their observers may conflict',
-        'Avoid using Infinite Scroll without providing a way to reach footer content, since it pushes the footer down continuously'
-      ],
-    },
+  previewHtml: `<arc-infinite-scroll id="demo-infinite" threshold="100" style="max-height:300px; overflow:auto; width:100%;"></arc-infinite-scroll>`,
 
-    previewHtml: `<arc-infinite-scroll id="demo-infinite" threshold="100" style="max-height:300px; overflow:auto; width:100%;"></arc-infinite-scroll>`,
-
-    previewSetup: `
+  previewSetup: `
       var phrases = [
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
         'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
@@ -90,11 +91,11 @@ When all data has been loaded, set the \`finished\` prop to \`true\`. The sentin
       });
     `,
 
-    tabs: [
-      {
-        label: 'Web Component',
-        lang: 'html',
-        code: `<arc-infinite-scroll id="feed" threshold="200">
+  tabs: [
+    {
+      label: 'Web Component',
+      lang: 'html',
+      code: `<arc-infinite-scroll id="feed" threshold="200">
   <!-- Items appended here -->
 </arc-infinite-scroll>
 
@@ -110,11 +111,11 @@ When all data has been loaded, set the \`finished\` prop to \`true\`. The sentin
     if (!items.length) feed.finished = true;
   });
 </script>`,
-      },
-      {
-        label: 'React',
-        lang: 'tsx',
-        code: `import { InfiniteScroll } from '@arclux/arc-ui-react';
+    },
+    {
+      label: 'React',
+      lang: 'tsx',
+      code: `import { InfiniteScroll } from '@arclux/arc-ui-react';
 
 const [items, setItems] = useState(initialItems);
 const [loading, setLoading] = useState(false);
@@ -131,11 +132,11 @@ async function loadMore() {
 <InfiniteScroll loading={loading} finished={finished} onArcLoadMore={loadMore}>
   {items.map(item => <div key={item.id}>{item.name}</div>)}
 </InfiniteScroll>`,
-      },
-      {
-        label: 'Vue',
-        lang: 'html',
-        code: `<script setup>
+    },
+    {
+      label: 'Vue',
+      lang: 'html',
+      code: `<script setup>
 import { ref } from 'vue';
 import { InfiniteScroll } from '@arclux/arc-ui-vue';
 
@@ -157,11 +158,11 @@ async function loadMore() {
     <div v-for="item in items" :key="item.id">{{ item.name }}</div>
   </InfiniteScroll>
 </template>`,
-      },
-      {
-        label: 'Svelte',
-        lang: 'html',
-        code: `<script>
+    },
+    {
+      label: 'Svelte',
+      lang: 'html',
+      code: `<script>
   import { InfiniteScroll } from '@arclux/arc-ui-svelte';
 
   let items = $state(initialItems);
@@ -182,23 +183,23 @@ async function loadMore() {
     <div>{item.name}</div>
   {/each}
 </InfiniteScroll>`,
-      },
-      {
-        label: 'Angular',
-        lang: 'ts',
-        code: `import { Component } from '@angular/core';
+    },
+    {
+      label: 'Angular',
+      lang: 'ts',
+      code: `import { Component } from '@angular/core';
 import { InfiniteScroll } from '@arclux/arc-ui-angular';
 
 @Component({
   imports: [InfiniteScroll],
   template: \`
-    <InfiniteScroll
+    <arc-infinite-scroll
       [loading]="loading"
       [finished]="finished"
       (arc-load-more)="loadMore()"
     >
       <div *ngFor="let item of items">{{ item.name }}</div>
-    </InfiniteScroll>
+    </arc-infinite-scroll>
   \`,
 })
 export class FeedComponent {
@@ -214,11 +215,11 @@ export class FeedComponent {
     if (!next.length) this.finished = true;
   }
 }`,
-      },
-      {
-        label: 'Solid',
-        lang: 'tsx',
-        code: `import { createSignal, For } from 'solid-js';
+    },
+    {
+      label: 'Solid',
+      lang: 'tsx',
+      code: `import { createSignal, For } from 'solid-js';
 import { InfiniteScroll } from '@arclux/arc-ui-solid';
 
 const [items, setItems] = createSignal(initialItems);
@@ -236,11 +237,11 @@ async function loadMore() {
 <InfiniteScroll loading={loading()} finished={finished()} onArcLoadMore={loadMore}>
   <For each={items()}>{item => <div>{item.name}</div>}</For>
 </InfiniteScroll>`,
-      },
-      {
-        label: 'Preact',
-        lang: 'tsx',
-        code: `import { useState } from 'preact/hooks';
+    },
+    {
+      label: 'Preact',
+      lang: 'tsx',
+      code: `import { useState } from 'preact/hooks';
 import { InfiniteScroll } from '@arclux/arc-ui-preact';
 
 const [items, setItems] = useState(initialItems);
@@ -258,8 +259,8 @@ async function loadMore() {
 <InfiniteScroll loading={loading} finished={finished} onArcLoadMore={loadMore}>
   {items.map(item => <div key={item.id}>{item.name}</div>)}
 </InfiniteScroll>`,
-      }
-    ],
-  
-  seeAlso: ["pagination","scroll-area"],
+    },
+  ],
+
+  seeAlso: ['pagination', 'scroll-area'],
 };

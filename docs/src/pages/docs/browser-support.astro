@@ -4,7 +4,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 const headings = [
   { id: 'overview', label: 'Overview' },
   { id: 'browsers', label: 'Supported Browsers' },
-  { id: 'web-components', label: 'Web Components' },
+  { id: 'web-components', label: 'Web Components APIs' },
   { id: 'polyfills', label: 'Polyfills' },
   { id: 'node', label: 'Node.js' },
 ];
@@ -98,10 +98,10 @@ const headings = [
         older browsers, the <a href="https://github.com/webcomponents/polyfills" target="_blank" rel="noopener">@webcomponents/webcomponentsjs</a>
         polyfill bundle provides Custom Elements and Shadow DOM support. Load it before any ARC UI imports:
       </p>
-      <arc-code-block
+      <div class="docs-code"><arc-code-block
         language="html"
         code='<script src="https://unpkg.com/@webcomponents/webcomponentsjs@2/webcomponents-bundle.js"><\/script>'
-      ></arc-code-block>
+      ></arc-code-block></div>
       <arc-callout variant="warning" style="margin-top:var(--space-sm)">
         The polyfill adds approximately 15 KB (gzipped) and may degrade performance.
         We recommend targeting evergreen browsers instead.
@@ -112,9 +112,8 @@ const headings = [
       <h2 class="docs-heading">Node.js</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        The build tooling and development server require <strong>Node.js 24+</strong> (LTS Krypton)
-        and <strong>pnpm 10+</strong>. These are enforced via the <code>engines</code> field in
-        <code>package.json</code>.
+        The build tooling and development server require <strong>Node.js 24+</strong> (LTS)
+        and <strong>pnpm 10+</strong>. These are enforced via the <code>engines</code> field in the root <code>package.json</code>.
       </p>
     </section>
 
@@ -123,7 +122,7 @@ const headings = [
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <ul class="see-also__list">
         <li><a href="/docs/getting-started">Getting Started</a> — installation and setup</li>
-        <li><a href="/docs/frameworks">Frameworks</a> — framework-specific integration</li>
+        <li><a href="/docs/frameworks">Frameworks</a> — framework-specific installation and usage</li>
       </ul>
     </section>
   </div>

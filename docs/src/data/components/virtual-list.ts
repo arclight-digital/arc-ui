@@ -6,9 +6,10 @@ export const virtualList: ComponentDef = {
   tag: 'arc-virtual-list',
   tier: 'content',
   interactivity: 'interactive',
-  description: 'Windowed list that renders only visible items for efficient scrolling through thousands of rows. Fixed item height with configurable overscan.',
+  description:
+    'Windowed list that renders only visible items for efficient scrolling through thousands of rows. Fixed item height with configurable overscan.',
 
-  overview: `Virtual List implements windowed rendering for large datasets. Instead of mounting every item in the DOM, it calculates which items are visible based on the scroll position and item height, then renders only those items plus a configurable overscan buffer. This keeps DOM node count constant regardless of list size, enabling smooth 60fps scrolling through tens of thousands of items.
+  overview: `VirtualList implements windowed rendering for large datasets. Instead of mounting every item in the DOM, it calculates which items are visible based on the scroll position and item height, then renders only those items plus a configurable overscan buffer. This keeps DOM node count constant regardless of list size, enabling smooth 60fps scrolling through tens of thousands of items.
 
 The component uses absolute positioning within a spacer div whose height equals the total list height (\`items.length × itemHeight\`). As the user scrolls, a \`requestAnimationFrame\`-throttled handler recalculates the visible window and repositions rendered items. The overscan prop (default: 5) controls how many extra items are rendered above and below the viewport to prevent flicker during fast scrolling.
 
@@ -22,7 +23,7 @@ Items are rendered via named slots (\`item-0\`, \`item-1\`, etc.), giving you fu
     'Fixed item height for predictable layout calculations',
     'Named slot pattern for flexible item templates',
     '`visibleRange` getter for external rendering integration',
-    'Exposed CSS parts: spacer, item'
+    'Exposed CSS parts: spacer, item',
   ],
 
   guidelines: {
@@ -30,13 +31,13 @@ Items are rendered via named slots (\`item-0\`, \`item-1\`, etc.), giving you fu
       'Use for lists with 100+ items where full DOM rendering would cause jank',
       'Set `item-height` to match the actual rendered height of each item',
       'Use overscan of 3-10 items — higher values reduce flicker but increase DOM nodes',
-      'Combine with arc-list-item for consistent styling within the virtual container'
+      'Combine with arc-list-item for consistent styling within the virtual container',
     ],
     dont: [
-      'Use for short lists under 50 items — the overhead is not worth it',
-      'Mix different item heights — virtual-list requires fixed row height',
-      'Nest scrollable containers inside virtual-list items',
-      'Forget to set a fixed height on the virtual-list host element'
+      'Do not use for short lists under 50 items — the overhead is not worth it',
+      'Do not mix different item heights — virtual-list requires fixed row height',
+      'Do not nest scrollable containers inside virtual-list items',
+      'Do not forget to set a fixed height on the virtual-list host element',
     ],
   },
 
@@ -75,7 +76,6 @@ Items are rendered via named slots (\`item-0\`, \`item-1\`, etc.), giving you fu
   });
   ro.observe(vl);
 }`,
-
 
   tabs: [
     {
@@ -182,7 +182,7 @@ import { VirtualList } from '@arclux/arc-ui-angular';
 @Component({
   imports: [VirtualList],
   template: \`
-    <VirtualList [items]="items" item-height="48" [overscan]="5" style="height: 400px" />
+    <arc-virtual-list [items]="items" item-height="48" [overscan]="5" style="height: 400px" />
   \`,
 })
 export class LargeListComponent {

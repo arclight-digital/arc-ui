@@ -6,7 +6,8 @@ export const separator: ComponentDef = {
   tag: 'arc-separator',
   tier: 'content',
   interactivity: 'static',
-  description: 'Visual divider for separating content sections. Supports horizontal and vertical orientations, multiple line styles, and optional inline labels.',
+  description:
+    'Visual divider for separating content sections. Supports horizontal and vertical orientations, multiple line styles, and optional inline labels.',
 
   overview: `Separator draws a thin line between content sections to create visual grouping and hierarchy. It replaces raw \`<hr>\` elements with a component that respects design tokens, supports vertical orientation for side-by-side layouts, and can carry an inline text label centered between two lines.
 
@@ -31,10 +32,10 @@ The component sets \`role="separator"\` and \`aria-orientation\` automatically, 
       'Use the vertical orientation to divide side-by-side toolbar groups',
     ],
     dont: [
-      'Stack multiple separators without meaningful content between them',
-      'Use a separator when whitespace alone provides sufficient visual grouping',
-      'Use the label slot for long text — keep it to one or two words',
-      'Use separator as a decorative border — it is a semantic content divider',
+      'Do not Stack multiple separators without meaningful content between them',
+      'Do not use a separator when whitespace alone provides sufficient visual grouping',
+      'Do not use the label slot for long text — keep it to one or two words',
+      'Do not use separator as a decorative border — it is a semantic content divider',
     ],
   },
 
@@ -45,7 +46,6 @@ The component sets \`role="separator"\` and \`aria-orientation\` automatically, 
   <arc-separator variant="fade"></arc-separator>
   <arc-separator label="or"></arc-separator>
 </div>`,
-
 
   tabs: [
     {
@@ -68,10 +68,16 @@ The component sets \`role="separator"\` and \`aria-orientation\` automatically, 
       lang: 'tsx',
       code: `import { Separator } from '@arclux/arc-ui-react';
 
-<Separator />
-<Separator variant="dashed" />
-<Separator variant="fade" />
-<Separator label="or" />`,
+export default function Example() {
+  return (
+    <>
+      <Separator />
+      <Separator variant="dashed" />
+      <Separator variant="fade" />
+      <Separator label="or" />
+    </>
+  );
+}`,
     },
     {
       label: 'Vue',
@@ -108,10 +114,10 @@ import { Separator } from '@arclux/arc-ui-angular';
 @Component({
   imports: [Separator],
   template: \`
-    <Separator />
-    <Separator variant="dashed" />
-    <Separator variant="fade" />
-    <Separator label="or" />
+    <arc-separator />
+    <arc-separator variant="dashed" />
+    <arc-separator variant="fade" />
+    <arc-separator label="or" />
   \`,
 })
 export class ContentSection {}`,
@@ -121,20 +127,32 @@ export class ContentSection {}`,
       lang: 'tsx',
       code: `import { Separator } from '@arclux/arc-ui-solid';
 
-<Separator />
-<Separator variant="dashed" />
-<Separator variant="fade" />
-<Separator label="or" />`,
+export default function Example() {
+  return (
+    <>
+      <Separator />
+      <Separator variant="dashed" />
+      <Separator variant="fade" />
+      <Separator label="or" />
+    </>
+  );
+}`,
     },
     {
       label: 'Preact',
       lang: 'tsx',
       code: `import { Separator } from '@arclux/arc-ui-preact';
 
-<Separator />
-<Separator variant="dashed" />
-<Separator variant="fade" />
-<Separator label="or" />`,
+export default function Example() {
+  return (
+    <>
+      <Separator />
+      <Separator variant="dashed" />
+      <Separator variant="fade" />
+      <Separator label="or" />
+    </>
+  );
+}`,
     },
     {
       label: 'HTML',

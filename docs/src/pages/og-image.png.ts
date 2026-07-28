@@ -464,7 +464,7 @@ export const GET: APIRoute = async () => {
                 statCard(String(componentCount), 'Components', blue, blueRgb),
                 statCard(String(frameworkCount), 'Frameworks', violet, violetRgb),
                 statCard(String(buildSteps), 'Build Steps', teal, tealRgb),
-                statCard(String(tokenCount), 'Tokens', blue, blueRgb),
+                statCard(String(tokenCount), 'Design Tokens', blue, blueRgb),
               ],
             },
           },

@@ -1,52 +1,53 @@
 import type { ComponentDef } from './_types';
 
 export const topBar: ComponentDef = {
-    name: 'Top Bar',
-    slug: 'top-bar',
-    tag: 'arc-top-bar',
-    tier: 'navigation',
-    interactivity: 'hybrid',
-    description: 'Fixed header bar that anchors every page with a brand slot on the left, an optional center navigation area, and a right-aligned actions region for user controls, search, and settings.',
+  name: 'Top Bar',
+  slug: 'top-bar',
+  tag: 'arc-top-bar',
+  tier: 'navigation',
+  interactivity: 'hybrid',
+  description:
+    'Fixed header bar that anchors every page with a brand slot on the left, an optional center navigation area, and a right-aligned actions region for user controls, search, and settings.',
 
-    overview: `TopBar is the persistent horizontal header that sits at the top of every page in an ARC UI application. It provides three clearly defined regions — brand, center, and actions — that map to the universal header pattern found in virtually every modern web app: logo on the left, navigation in the middle, and user controls on the right.
+  overview: `TopBar is the persistent horizontal header that sits at the top of every page in an ARC UI application. It provides three clearly defined regions — brand, center, and actions — that map to the universal header pattern found in virtually every modern web app: logo on the left, navigation in the middle, and user controls on the right.
 
 The component is designed to work hand-in-hand with AppShell and Sidebar. When nested inside an AppShell via the \`top-bar\` slot, it automatically spans the full viewport width and stays fixed at the top of the page while the content below scrolls. On mobile viewports, a hamburger menu button appears automatically, dispatching an \`arc-sidebar-toggle\` event that AppShell listens for to open or close the Sidebar overlay.
 
 Use TopBar whenever your application needs a consistent, recognizable header. It handles responsive behavior out of the box: the brand slot collapses gracefully, the center slot hides on narrow screens, and the actions slot remains accessible at every breakpoint. The \`fixed\` property pins the bar to the viewport so content scrolls underneath it, which is the recommended default for most dashboard and documentation layouts.`,
 
-    features: [
-      'Three named slots (logo, center, actions) for flexible header composition',
-      'Fixed positioning mode that pins the bar to the top of the viewport',
-      'Built-in responsive hamburger menu button that appears on mobile breakpoints',
-      'Dispatches arc-sidebar-toggle custom event for Sidebar integration',
-      'Brand region with accent typography, letter-spacing, and uppercase treatment',
-      'Seamless integration with AppShell via the top-bar slot',
-      'CSS custom property theming through design tokens (--bg-deep, --border-subtle, --nav-height)',
-      'Shadow DOM part attributes (topbar, brand, center, menu-btn) for external styling',
-      'Accessible aria-label and aria-expanded on the mobile menu toggle',
+  features: [
+    'Three named slots (logo, center, actions) for flexible header composition',
+    'Fixed positioning mode that pins the bar to the top of the viewport',
+    'Built-in responsive hamburger menu button that appears on mobile breakpoints',
+    'Fires `arc-sidebar-toggle` custom event for Sidebar integration',
+    'Brand region with accent typography, letter-spacing, and uppercase treatment',
+    'Seamless integration with AppShell via the top-bar slot',
+    'CSS custom property theming through design tokens (`--bg-deep`, `--border-subtle`, `--nav-height`)',
+    'Shadow DOM part attributes (topbar, brand, center, menu-btn) for external styling',
+    'Accessible `aria-label` and `aria-expanded` on the mobile menu toggle',
+  ],
+
+  guidelines: {
+    do: [
+      'Place TopBar inside an AppShell top-bar slot for automatic fixed positioning and sidebar coordination',
+      'Keep the heading short — one or two words that identify the application',
+      'Use the logo slot to place an SVG or image mark next to the heading text',
+      'Put primary navigation links in the center slot for desktop layouts',
+      'Reserve the actions slot for user-facing controls: avatar, settings, notifications, sign-in',
+      'Set the fixed property when the page content is scrollable and the header should stay visible',
+      'Listen for the arc-sidebar-toggle event to synchronize sidebar open/close state',
     ],
+    dont: [
+      'Do not Stack multiple TopBars on the same page — use one per application shell',
+      'Do not put long text or paragraphs in the heading prop; it is meant for a brand name only',
+      'Do not place form elements or search inputs in the brand area; use the center or actions slot instead',
+      'Do not rely solely on the hamburger button for primary navigation on desktop — it is hidden above 768px',
+      'Do not override the z-index without checking that modals and drawers still layer correctly',
+      'Do not omit the heading entirely without providing a logo slot — the brand region should never be empty',
+    ],
+  },
 
-    guidelines: {
-      do: [
-        'Place TopBar inside an AppShell top-bar slot for automatic fixed positioning and sidebar coordination',
-        'Keep the heading short — one or two words that identify the application',
-        'Use the logo slot to place an SVG or image mark next to the heading text',
-        'Put primary navigation links in the center slot for desktop layouts',
-        'Reserve the actions slot for user-facing controls: avatar, settings, notifications, sign-in',
-        'Set the fixed property when the page content is scrollable and the header should stay visible',
-        'Listen for the arc-sidebar-toggle event to synchronize sidebar open/close state',
-      ],
-      dont: [
-        'Stack multiple TopBars on the same page — use one per application shell',
-        'Put long text or paragraphs in the heading prop; it is meant for a brand name only',
-        'Place form elements or search inputs in the brand area; use the center or actions slot instead',
-        'Rely solely on the hamburger button for primary navigation on desktop — it is hidden above 768px',
-        'Override the z-index without checking that modals and drawers still layer correctly',
-        'Omit the heading entirely without providing a logo slot — the brand region should never be empty',
-      ],
-    },
-
-    previewHtml: `<div style="width:100%;">
+  previewHtml: `<div style="width:100%;">
   <arc-top-bar heading="Arclight">
     <svg slot="logo" width="28" height="28" viewBox="0 0 28 28" fill="none" style="flex-shrink:0;">
       <circle cx="14" cy="14" r="13" stroke="rgb(77,126,247)" stroke-width="2"/>
@@ -65,12 +66,11 @@ Use TopBar whenever your application needs a consistent, recognizable header. It
   </arc-top-bar>
 </div>`,
 
-
-    tabs: [
-      {
-        label: 'Web Component',
-        lang: 'html',
-        code: `<script type="module" src="@arclux/arc-ui"></script>
+  tabs: [
+    {
+      label: 'Web Component',
+      lang: 'html',
+      code: `<script type="module" src="@arclux/arc-ui"></script>
 
 <arc-top-bar heading="Arclight">
   <svg slot="logo" width="28" height="28" viewBox="0 0 28 28" fill="none">
@@ -88,11 +88,11 @@ Use TopBar whenever your application needs a consistent, recognizable header. It
     <arc-avatar size="sm" initials="JD" aria-label="Jane Doe"></arc-avatar>
   </div>
 </arc-top-bar>`,
-      },
-      {
-        label: 'React',
-        lang: 'tsx',
-        code: `import { Avatar, IconButton, Link, TopBar } from '@arclux/arc-ui-react';
+    },
+    {
+      label: 'React',
+      lang: 'tsx',
+      code: `import { Avatar, IconButton, Link, TopBar } from '@arclux/arc-ui-react';
 
 export function AppHeader() {
   return (
@@ -114,11 +114,11 @@ export function AppHeader() {
     </TopBar>
   );
 }`,
-      },
-      {
-        label: 'Vue',
-        lang: 'html',
-        code: `<script setup>
+    },
+    {
+      label: 'Vue',
+      lang: 'html',
+      code: `<script setup>
 import { Avatar, IconButton, Link, TopBar } from '@arclux/arc-ui-vue';
 </script>
 
@@ -140,11 +140,11 @@ import { Avatar, IconButton, Link, TopBar } from '@arclux/arc-ui-vue';
     </div>
   </TopBar>
 </template>`,
-      },
-      {
-        label: 'Svelte',
-        lang: 'html',
-        code: `<script>
+    },
+    {
+      label: 'Svelte',
+      lang: 'html',
+      code: `<script>
   import { Avatar, IconButton, Link, TopBar } from '@arclux/arc-ui-svelte';
 </script>
 
@@ -164,40 +164,40 @@ import { Avatar, IconButton, Link, TopBar } from '@arclux/arc-ui-vue';
     <Avatar size="sm" initials="JD" aria-label="Jane Doe" />
   </div>
 </TopBar>`,
-      },
-      {
-        label: 'Angular',
-        lang: 'ts',
-        code: `import { Component } from '@angular/core';
+    },
+    {
+      label: 'Angular',
+      lang: 'ts',
+      code: `import { Component } from '@angular/core';
 import { Avatar, IconButton, Link, TopBar } from '@arclux/arc-ui-angular';
 
 @Component({
   imports: [Avatar, IconButton, Link, TopBar],
   template: \`
-    <TopBar heading="Arclight">
+    <arc-top-bar heading="Arclight">
       <svg slot="logo" width="28" height="28" viewBox="0 0 28 28" fill="none">
         <circle cx="14" cy="14" r="13" stroke="currentColor" stroke-width="2"/>
         <path d="M9 18l5-10 5 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         <line x1="10.5" y1="15" x2="17.5" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
       </svg>
       <nav slot="center" style="display:flex;gap:24px;">
-        <Link href="#">Dashboard</Link>
-        <Link href="#">Projects</Link>
-        <Link href="#">Settings</Link>
+        <arc-link href="#">Dashboard</arc-link>
+        <arc-link href="#">Projects</arc-link>
+        <arc-link href="#">Settings</arc-link>
       </nav>
       <div slot="actions" style="display:flex;align-items:center;gap:12px;">
-        <IconButton icon="settings" variant="ghost" size="sm" aria-label="Settings" />
-        <Avatar size="sm" initials="JD" aria-label="Jane Doe" />
+        <arc-icon-button icon="settings" variant="ghost" size="sm" aria-label="Settings" />
+        <arc-avatar size="sm" initials="JD" aria-label="Jane Doe" />
       </div>
-    </TopBar>
+    </arc-top-bar>
   \`,
 })
 export class AppHeaderComponent {}`,
-      },
-      {
-        label: 'Solid',
-        lang: 'tsx',
-        code: `import { Avatar, IconButton, Link, TopBar } from '@arclux/arc-ui-solid';
+    },
+    {
+      label: 'Solid',
+      lang: 'tsx',
+      code: `import { Avatar, IconButton, Link, TopBar } from '@arclux/arc-ui-solid';
 
 export function AppHeader() {
   return (
@@ -219,11 +219,11 @@ export function AppHeader() {
     </TopBar>
   );
 }`,
-      },
-      {
-        label: 'Preact',
-        lang: 'tsx',
-        code: `import { Avatar, IconButton, Link, TopBar } from '@arclux/arc-ui-preact';
+    },
+    {
+      label: 'Preact',
+      lang: 'tsx',
+      code: `import { Avatar, IconButton, Link, TopBar } from '@arclux/arc-ui-preact';
 
 export function AppHeader() {
   return (
@@ -245,8 +245,11 @@ export function AppHeader() {
     </TopBar>
   );
 }`,
-      },
-      { label: 'HTML', lang: 'html', code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
+    },
+    {
+      label: 'HTML',
+      lang: 'html',
+      code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
 <!-- arc-top-bar — requires top-bar.css + base.css (or arc-ui.css) -->
 <div class="arc-top-bar">
   <header class="topbar">
@@ -268,8 +271,12 @@ export function AppHeader() {
 
    </div>
    </header>
-</div>` },
-      { label: 'HTML (Inline)', lang: 'html', code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
+</div>`,
+    },
+    {
+      label: 'HTML (Inline)',
+      lang: 'html',
+      code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
 <!-- arc-top-bar — self-contained, no external CSS needed -->
 <style>
   @media (max-width: 768px) {
@@ -297,8 +304,9 @@ export function AppHeader() {
 
    </div>
    </header>
-</div>` }
-    ],
-  
-  seeAlso: ["sidebar","navigation-menu","footer","app-shell"],
+</div>`,
+    },
+  ],
+
+  seeAlso: ['sidebar', 'navigation-menu', 'footer', 'app-shell'],
 };

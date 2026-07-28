@@ -7,7 +7,8 @@ export const chart: ComponentDef = {
   tier: 'data',
   interactivity: 'interactive',
   status: 'beta',
-  description: 'An SVG chart component for dashboards with line, area, bar, and donut types. Data-driven from a series array, with automatic nice-tick scales, a legend, hover crosshair and tooltips, and a visually-hidden data table for assistive technology.',
+  description:
+    'An SVG chart component for dashboards with line, area, bar, and donut types. Data-driven from a series array, with automatic nice-tick scales, a legend, hover crosshair and tooltips, and a visually-hidden data table for assistive technology.',
 
   overview: `Chart renders line, area, grouped/stacked bar, and donut charts from plain JavaScript data — no external charting library. Pass a \`series\` array of \`{ label, data }\` objects and a \`labels\` array of x-axis categories, and the component computes a nice 1/2/5-step y scale, recessive horizontal gridlines, abbreviated axis numbers (1.2k, 3.4M), and thin marks in the fixed ARC chart palette.
 
@@ -17,17 +18,17 @@ A hover layer ships by default: line and area charts show a vertical crosshair w
 
   features: [
     'Four chart types: line, area, grouped bar, stacked bar, and donut',
-    'Fixed-order series colors --chart-1 through --chart-6, never cycled',
+    'Fixed-order series colors `--chart-1` through `--chart-6`, never cycled',
     'More than 6 series automatically fold into a summed "Other" series',
     'Nice-tick y scale (1/2/5 steps) with abbreviated axis numbers (1.2k, 3.4M)',
     'Single y-axis with recessive 1px horizontal gridlines only',
     'Hover crosshair + all-series tooltip on line/area; per-mark tooltips on bar/donut',
     'Full-plot-height invisible hover columns — no pixel-hunting thin marks',
-    'arc-mark-click event with seriesIndex, index, and value',
+    '`arc-mark-click` event with seriesIndex, index, and value',
     'Intl.NumberFormat value formatting: number, percent, or currency',
     'Legend with 8px color chips, rendered automatically for 2+ series',
-    'role="img" summary label plus a visually-hidden data table for AT users',
-    'ResizeObserver-driven responsive width; respects prefers-reduced-motion',
+    '`role="img"` summary label plus a visually-hidden data table for AT users',
+    'ResizeObserver-driven responsive width; respects `prefers-reduced-motion`',
     'Styleable via ::part(chart), ::part(legend), ::part(tooltip), ::part(axis)',
   ],
 
@@ -41,12 +42,12 @@ A hover layer ships by default: line and area charts show a vertical crosshair w
       'Listen to arc-mark-click to drive drill-down navigation or detail panels',
     ],
     dont: [
-      'Plot two measures of different scale on one chart — there is one y-axis, never dual axes',
-      'Use donut charts for more than ~6 segments or for precise comparisons — use bars instead',
-      'Hide the legend on multi-series charts unless the series are directly labeled nearby',
-      'Encode meaning in custom mark colors — the fixed palette keeps series identity consistent',
-      'Use hide-axis on charts where readers need to look up values — it is for compact trend panels',
-      'Feed stacked bars negative values; stacking assumes non-negative data',
+      'Do not plot two measures of different scale on one chart — there is one y-axis, never dual axes',
+      'Do not use donut charts for more than ~6 segments or for precise comparisons — use bars instead',
+      'Do not hide the legend on multi-series charts unless the series are directly labeled nearby',
+      'Do not encode meaning in custom mark colors — the fixed palette keeps series identity consistent',
+      'Do not use hide-axis on charts where readers need to look up values — it is for compact trend panels',
+      'Do not feed stacked bars negative values; stacking assumes non-negative data',
     ],
   },
 
@@ -73,8 +74,6 @@ if (line) {
     { label: 'Signups', data: [180, 240, 210, 320, 380, 300, 220] }
   ];
 }`,
-
-
 
   tabs: [
     {
@@ -138,6 +137,51 @@ const series = [
 <template>
   <Chart type="line" :labels="labels" :series="series" :height="280" />
 </template>`,
+    },
+    {
+      label: 'Svelte',
+      lang: 'html',
+      code: `<script>
+  import { Chart } from '@arclux/arc-ui-svelte';
+
+  const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+  const series = [
+    { label: 'Sessions', data: [1200, 1850, 1640, 2100, 2400, 1980] },
+    { label: 'Signups', data: [180, 240, 210, 320, 380, 300] }
+  ];
+</script>
+
+<Chart type="line" {labels} {series} height={280} on:arc-mark-click={(e) => console.log(e.detail)} />`,
+    },
+    {
+      label: 'Angular',
+      lang: 'ts',
+      code: `import { Component } from '@angular/core';
+import { Chart } from '@arclux/arc-ui-angular';
+
+@Component({
+  imports: [Chart],
+  template: \`
+    <arc-chart
+      type="line"
+      [labels]="labels"
+      [series]="series"
+      [height]="280"
+      (arcMarkClick)="onMarkClick($event)"
+    ></arc-chart>
+  \`,
+})
+export class TrafficChartComponent {
+  labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+  series = [
+    { label: 'Sessions', data: [1200, 1850, 1640, 2100, 2400, 1980] },
+    { label: 'Signups', data: [180, 240, 210, 320, 380, 300] }
+  ];
+
+  onMarkClick(e: CustomEvent) {
+    console.log(e.detail);
+  }
+}`,
     },
   ],
 

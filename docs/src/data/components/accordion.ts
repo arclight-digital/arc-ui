@@ -6,11 +6,10 @@ export const accordion: ComponentDef = {
   tag: 'arc-accordion',
   tier: 'content',
   interactivity: 'hybrid',
-  status: 'stable',
   description:
     'Expandable content sections with smooth height animations. Ideal for FAQs, settings panels, and any UI that benefits from progressive disclosure.',
 
-  overview: `The Accordion component organises related content into collapsible sections, letting users focus on one topic at a time without leaving the page. Each section header acts as a toggle that smoothly reveals or hides its body content using a CSS grid animation — no JavaScript-driven height calculations required.
+  overview: `The Accordion component organizes related content into collapsible sections, letting users focus on one topic at a time without leaving the page. Each section header acts as a toggle that smoothly reveals or hides its body content using a CSS grid animation — no JavaScript-driven height calculations required.
 
 Use Accordion when you have multiple blocks of content that are individually useful but would overwhelm the user if shown all at once. Common scenarios include FAQ pages, product feature breakdowns, configuration panels, and documentation side-notes. Because each item is a lightweight \`<arc-accordion-item>\` element, content is authored declaratively in markup rather than passed as a data array.
 
@@ -19,9 +18,9 @@ The component is fully accessible out of the box: trigger buttons carry \`aria-e
   features: [
     'Smooth CSS grid-based expand/collapse animation (no JS height calc)',
     'Single-open by default (set multiple for multi-open)',
-    'Declarative content via <arc-accordion-item> children with a question attribute',
+    'Declarative content via `<arc-accordion-item>` children with a question attribute',
     'Slotted answer content supports rich HTML, not just plain text',
-    'Accessible: aria-expanded on triggers, keyboard-focusable, visible focus ring',
+    'Accessible: `aria-expanded` on triggers, keyboard-focusable, visible focus ring',
     'Animated chevron rotates 180 degrees to indicate open/closed state',
     'Respects design tokens for colors, spacing, radii, and transitions',
     'Rounded container with subtle 1px gap separating items',
@@ -54,7 +53,7 @@ The component is fully accessible out of the box: trigger buttons carry \`aria-e
     <arc-accordion-item question="How do I theme ARC UI components?">
       Every component reads from a shared set of CSS custom properties defined in the
       ARC UI token system. Override the tokens at any scope — :root for global changes,
-      or a wrapper element for localised theming — and all components update automatically.
+      or a wrapper element for localized theming — and all components update automatically.
     </arc-accordion-item>
     <arc-accordion-item question="Can I use individual components without importing the whole library?">
       Yes. Each component is published as a standalone module. Import only what you need —
@@ -63,7 +62,6 @@ The component is fully accessible out of the box: trigger buttons carry \`aria-e
     </arc-accordion-item>
   </arc-accordion>
 </div>`,
-
 
   subComponents: [
     {
@@ -271,5 +269,5 @@ export default function FAQ() {
     },
   ],
 
-  seeAlso: ["collapsible","tabs"],
+  seeAlso: ['collapsible', 'tabs'],
 };

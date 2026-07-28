@@ -1,50 +1,51 @@
 import type { ComponentDef } from './_types';
 
 export const footer: ComponentDef = {
-    name: 'Footer',
-    slug: 'footer',
-    tag: 'arc-footer',
-    tier: 'navigation',
-    interactivity: 'static',
-    description: 'Page footer with branding, link columns, and legal text. Provides a structured layout with slots for a logo, navigational link groups, social icons, and copyright information.',
+  name: 'Footer',
+  slug: 'footer',
+  tag: 'arc-footer',
+  tier: 'navigation',
+  interactivity: 'static',
+  description:
+    'Page footer with branding, link columns, and legal text. Provides a structured layout with slots for a logo, navigational link groups, social icons, and copyright information.',
 
-    overview: `Footer is the bottom-of-page landmark that anchors every page with branding, navigation, and legal information. It uses a slot-based architecture — logo, default (columns), social, and legal — so you can compose any footer layout from simple single-line copyright notices to expansive multi-column site maps.
+  overview: `Footer is the bottom-of-page landmark that anchors every page with branding, navigation, and legal information. It uses a slot-based architecture — logo, default (columns), social, and legal — so you can compose any footer layout from simple single-line copyright notices to expansive multi-column site maps.
 
 The default slot renders its children in a responsive CSS Grid that automatically wraps link columns from a single stack on mobile to as many columns as fit at 160 px minimum width. This means you drop in three or four \`<div>\` elements with heading-and-link-list markup and the grid handles the rest — no manual breakpoints needed.
 
 Footer ships with two boolean props that cover the most common layout tweaks. The \`border\` prop (on by default) adds a subtle top rule to visually separate the footer from the content above. The \`compact\` prop tightens all internal spacing for dashboards and admin panels where vertical real estate is at a premium. Together these two toggles, plus the four slots, cover the vast majority of footer patterns without custom CSS.`,
 
-    features: [
-      'Slot-based composition with logo, default (columns), social, and legal regions',
-      'Responsive CSS Grid columns that auto-wrap without manual breakpoints',
-      'Compact mode for dashboards and space-constrained layouts',
-      'Optional top border to separate footer from page content',
-      'Dark background with muted text for clear visual hierarchy',
-      'Legal section with its own subtle top divider for copyright and policy links',
-      'CSS custom property theming via design tokens',
-      'Shadow DOM encapsulation with ::part() hooks for targeted styling',
+  features: [
+    'Slot-based composition with logo, default (columns), social, and legal regions',
+    'Responsive CSS Grid columns that auto-wrap without manual breakpoints',
+    'Compact mode for dashboards and space-constrained layouts',
+    'Optional top border to separate footer from page content',
+    'Dark background with muted text for clear visual hierarchy',
+    'Legal section with its own subtle top divider for copyright and policy links',
+    'CSS custom property theming via design tokens',
+    'Shadow DOM encapsulation with ::part() hooks for targeted styling',
+  ],
+
+  guidelines: {
+    do: [
+      'Place the footer as the last child of your page layout or AppShell',
+      'Use the logo slot for your brand mark or wordmark — keep it compact',
+      'Organize link columns by category (Product, Company, Resources) for scannability',
+      'Include essential legal text (copyright year, company name) in the legal slot',
+      'Use the compact variant inside admin shells and dashboards to save vertical space',
+      'Keep link column headings short and consistent in casing',
     ],
+    dont: [
+      'Do not nest interactive widgets (forms, modals) inside the footer — keep it navigational',
+      'Do not use more than four or five link columns; too many columns overwhelm on smaller screens',
+      'Do not remove the border prop on pages with light backgrounds — the separator aids readability',
+      'Do not duplicate primary navigation in the footer verbatim; footer nav should be a curated subset',
+      'Do not place critical call-to-action buttons in the footer — they belong above the fold',
+      'Do not omit a copyright notice; legal requires it for most commercial products',
+    ],
+  },
 
-    guidelines: {
-      do: [
-        'Place the footer as the last child of your page layout or AppShell',
-        'Use the logo slot for your brand mark or wordmark — keep it compact',
-        'Organize link columns by category (Product, Company, Resources) for scannability',
-        'Include essential legal text (copyright year, company name) in the legal slot',
-        'Use the compact variant inside admin shells and dashboards to save vertical space',
-        'Keep link column headings short and consistent in casing',
-      ],
-      dont: [
-        'Nest interactive widgets (forms, modals) inside the footer — keep it navigational',
-        'Use more than four or five link columns; too many columns overwhelm on smaller screens',
-        'Remove the border prop on pages with light backgrounds — the separator aids readability',
-        'Duplicate primary navigation in the footer verbatim; footer nav should be a curated subset',
-        'Place critical call-to-action buttons in the footer — they belong above the fold',
-        'Omit a copyright notice; legal requires it for most commercial products',
-      ],
-    },
-
-    previewHtml: `<div style="width:100%;border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden">
+  previewHtml: `<div style="width:100%;border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden">
   <arc-footer border>
     <div slot="logo" style="display:flex;align-items:center;gap:8px;">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="flex-shrink:0"><circle cx="12" cy="12" r="10" stroke="var(--accent)" stroke-width="2"/><path d="M8 12l3 3 5-5" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -78,12 +79,11 @@ Footer ships with two boolean props that cover the most common layout tweaks. Th
   </arc-footer>
 </div>`,
 
-
-    tabs: [
-      {
-        label: 'Web Component',
-        lang: 'html',
-        code: `<script type="module" src="@arclux/arc-ui"></script>
+  tabs: [
+    {
+      label: 'Web Component',
+      lang: 'html',
+      code: `<script type="module" src="@arclux/arc-ui"></script>
 
 <arc-footer border>
   <div slot="logo"><strong>ARC UI</strong></div>
@@ -115,11 +115,11 @@ Footer ships with two boolean props that cover the most common layout tweaks. Th
 
   <div slot="legal">&copy; 2026 ARC UI. All rights reserved.</div>
 </arc-footer>`,
-      },
-      {
-        label: 'React',
-        lang: 'tsx',
-        code: `import { Footer } from '@arclux/arc-ui-react';
+    },
+    {
+      label: 'React',
+      lang: 'tsx',
+      code: `import { Footer } from '@arclux/arc-ui-react';
 
 export function SiteFooter() {
   return (
@@ -155,11 +155,11 @@ export function SiteFooter() {
     </Footer>
   );
 }`,
-      },
-      {
-        label: 'Vue',
-        lang: 'html',
-        code: `<script setup>
+    },
+    {
+      label: 'Vue',
+      lang: 'html',
+      code: `<script setup>
 import { Footer } from '@arclux/arc-ui-vue';
 </script>
 
@@ -195,11 +195,11 @@ import { Footer } from '@arclux/arc-ui-vue';
     <div slot="legal">&copy; 2026 ARC UI. All rights reserved.</div>
   </Footer>
 </template>`,
-      },
-      {
-        label: 'Svelte',
-        lang: 'html',
-        code: `<script>
+    },
+    {
+      label: 'Svelte',
+      lang: 'html',
+      code: `<script>
   import { Footer } from '@arclux/arc-ui-svelte';
 </script>
 
@@ -233,17 +233,17 @@ import { Footer } from '@arclux/arc-ui-vue';
 
   <div slot="legal">&copy; 2026 ARC UI. All rights reserved.</div>
 </Footer>`,
-      },
-      {
-        label: 'Angular',
-        lang: 'ts',
-        code: `import { Component } from '@angular/core';
+    },
+    {
+      label: 'Angular',
+      lang: 'ts',
+      code: `import { Component } from '@angular/core';
 import { Footer } from '@arclux/arc-ui-angular';
 
 @Component({
   imports: [Footer],
   template: \`
-    <Footer border>
+    <arc-footer border>
       <div slot="logo"><strong>ARC UI</strong></div>
 
       <div>
@@ -272,15 +272,15 @@ import { Footer } from '@arclux/arc-ui-angular';
       </div>
 
       <div slot="legal">&copy; 2026 ARC UI. All rights reserved.</div>
-    </Footer>
+    </arc-footer>
   \`,
 })
 export class SiteFooterComponent {}`,
-      },
-      {
-        label: 'Solid',
-        lang: 'tsx',
-        code: `import { Footer } from '@arclux/arc-ui-solid';
+    },
+    {
+      label: 'Solid',
+      lang: 'tsx',
+      code: `import { Footer } from '@arclux/arc-ui-solid';
 
 export function SiteFooter() {
   return (
@@ -316,11 +316,11 @@ export function SiteFooter() {
     </Footer>
   );
 }`,
-      },
-      {
-        label: 'Preact',
-        lang: 'tsx',
-        code: `import { Footer } from '@arclux/arc-ui-preact';
+    },
+    {
+      label: 'Preact',
+      lang: 'tsx',
+      code: `import { Footer } from '@arclux/arc-ui-preact';
 
 export function SiteFooter() {
   return (
@@ -356,8 +356,11 @@ export function SiteFooter() {
     </Footer>
   );
 }`,
-      },
-      { label: 'HTML', lang: 'html', code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
+    },
+    {
+      label: 'HTML',
+      lang: 'html',
+      code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
 <!-- arc-footer — requires footer.css + base.css (or arc-ui.css) -->
 <div class="arc-footer">
   <footer class="footer">
@@ -397,8 +400,12 @@ export function SiteFooter() {
     &copy; 2026 ARC UI. All rights reserved.
    </div>
    </footer>
-</div>` },
-      { label: 'HTML (Inline)', lang: 'html', code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
+</div>`,
+    },
+    {
+      label: 'HTML (Inline)',
+      lang: 'html',
+      code: `<!-- Auto-generated by @arclux/prism — do not edit manually -->
 <!-- arc-footer — self-contained, no external CSS needed -->
 <div class="arc-footer" style="display: block; background: rgb(3, 3, 7); color: rgb(138, 138, 150); font-family: 'Host Grotesk', system-ui, sans-serif; font-size: clamp(15px, 1.2vw, 16px)">
   <footer style="padding: 64px 40px 40px; border-top: 1px solid rgb(24, 24, 30)">
@@ -438,8 +445,9 @@ export function SiteFooter() {
     &copy; 2026 ARC UI. All rights reserved.
    </div>
    </footer>
-</div>` }
-    ],
-  
-  seeAlso: ["top-bar","sidebar","app-shell","link"],
+</div>`,
+    },
+  ],
+
+  seeAlso: ['top-bar', 'sidebar', 'app-shell', 'link'],
 };

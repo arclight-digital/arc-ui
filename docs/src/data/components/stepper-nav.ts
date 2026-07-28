@@ -6,7 +6,8 @@ export const stepperNav: ComponentDef = {
   tag: 'arc-stepper-nav',
   tier: 'navigation',
   interactivity: 'interactive',
-  description: 'Wizard navigation with back/next/skip controls and step validation gates. Steps connected by gradient lines with interactive routing.',
+  description:
+    'Wizard navigation with back/next/skip controls and step validation gates. Steps connected by gradient lines with interactive routing.',
 
   overview: `StepperNav is a full wizard controller that pairs step indicators with built-in navigation buttons — Back, Next, and optional Skip. Unlike the display-only Stepper component, which simply visualises progress, StepperNav owns the routing logic: it tracks the active step, enforces linear or free-form progression, and dispatches events when the user advances, retreats, or completes the flow.
 
@@ -20,8 +21,8 @@ The component dispatches \`arc-change\` on every step transition and \`arc-compl
     'Gradient connector lines fill as steps are completed',
     'Active step with accent-primary glow indicator',
     'Completed steps show filled check marks',
-    'arc-change event on every step transition',
-    'arc-complete event when the wizard finishes',
+    '`arc-change` event on every step transition',
+    '`arc-complete` event when the wizard finishes',
     'Keyboard accessible navigation controls',
     'Configurable step labels via the steps array',
     'Token-driven theming via CSS custom properties',
@@ -36,18 +37,17 @@ The component dispatches \`arc-change\` on every step transition and \`arc-compl
       'Keep the total number of steps between three and six for best usability',
     ],
     dont: [
-      'Use StepperNav for display-only progress — use Stepper instead',
-      'Add more than seven steps — break long flows into grouped stages',
+      'Do not use StepperNav for display-only progress — use Stepper instead',
+      'Do not add more than seven steps — break long flows into grouped stages',
       'Skip validation in linear mode — users expect gated progression',
-      'Mix StepperNav and Tabs for the same content — pick one navigation paradigm',
-      'Nest StepperNav inside another StepperNav',
+      'Do not mix StepperNav and Tabs for the same content — pick one navigation paradigm',
+      'Do not nest StepperNav inside another StepperNav',
     ],
   },
 
   previewHtml: `<div style="width:100%;max-width:520px;padding:var(--space-lg);background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-md)">
   <arc-stepper-nav steps='["Account", "Profile", "Confirm"]' active="1"></arc-stepper-nav>
 </div>`,
-
 
   tabs: [
     {
@@ -141,7 +141,7 @@ import { StepperNav } from '@arclux/arc-ui-angular';
 @Component({
   imports: [StepperNav],
   template: \`
-    <StepperNav
+    <arc-stepper-nav
       [steps]="steps"
       [active]="0"
       linear
