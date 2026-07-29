@@ -87,10 +87,13 @@ const docsJsonLd = {
         <Wordmark />
       </div>
       <arc-navigation-menu slot="center">
-        <arc-nav-item href="/docs/getting-started" active={!activeSlug || !['components', 'tokens', 'theme-synthesizer'].includes(activeSlug) && !Astro.url.pathname.startsWith('/docs/components') || undefined}>Docs</arc-nav-item>
-        <arc-nav-item href="/docs/components" active={activeSlug === 'components' || Astro.url.pathname.startsWith('/docs/components') || undefined}>Components</arc-nav-item>
-        <arc-nav-item href="/docs/tokens" active={activeSlug === 'tokens' || undefined}>Tokens</arc-nav-item>
-        <arc-nav-item href="/docs/theme-synthesizer" active={activeSlug === 'theme-synthesizer' || undefined}>Synthesizer</arc-nav-item>
+        {/* Anchors live in light DOM so the nav is a working link list with JS
+            disabled and before the menu upgrades — arc-navigation-menu reads the
+            href off the child anchor and hides this markup once it takes over. */}
+        <arc-nav-item active={!activeSlug || !['components', 'tokens', 'theme-synthesizer'].includes(activeSlug) && !Astro.url.pathname.startsWith('/docs/components') || undefined}><a href="/docs/getting-started">Docs</a></arc-nav-item>
+        <arc-nav-item active={activeSlug === 'components' || Astro.url.pathname.startsWith('/docs/components') || undefined}><a href="/docs/components">Components</a></arc-nav-item>
+        <arc-nav-item active={activeSlug === 'tokens' || undefined}><a href="/docs/tokens">Tokens</a></arc-nav-item>
+        <arc-nav-item active={activeSlug === 'theme-synthesizer' || undefined}><a href="/docs/theme-synthesizer">Synthesizer</a></arc-nav-item>
       </arc-navigation-menu>
       <div slot="actions" class="topbar-actions">
         <button

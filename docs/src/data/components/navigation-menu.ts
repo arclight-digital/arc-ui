@@ -157,17 +157,17 @@ import { NavigationMenu, NavItem } from '@arclux/arc-ui-angular';
   template: \`
     <arc-navigation-menu>
       <arc-nav-item>Products
-        <arc-nav-item href="/analytics" description="Real-time dashboards and metrics">Analytics</arc-nav-item>
-        <arc-nav-item href="/automation" description="CI/CD pipelines and deployment">Automation</arc-nav-item>
-        <arc-nav-item href="/security" description="Role-based access and SSO">Security</arc-nav-item>
+        <arc-nav-item description="Real-time dashboards and metrics"><a href="/analytics">Analytics</a></arc-nav-item>
+        <arc-nav-item description="CI/CD pipelines and deployment"><a href="/automation">Automation</a></arc-nav-item>
+        <arc-nav-item description="Role-based access and SSO"><a href="/security">Security</a></arc-nav-item>
       </arc-nav-item>
       <arc-nav-item>Solutions
-        <arc-nav-item href="/engineering" description="Ship faster with integrated tooling">Engineering Teams</arc-nav-item>
-        <arc-nav-item href="/platform" description="Unified observability stack">Platform Teams</arc-nav-item>
-        <arc-nav-item href="/enterprise" description="SOC 2 and HIPAA compliance">Enterprise</arc-nav-item>
+        <arc-nav-item description="Ship faster with integrated tooling"><a href="/engineering">Engineering Teams</a></arc-nav-item>
+        <arc-nav-item description="Unified observability stack"><a href="/platform">Platform Teams</a></arc-nav-item>
+        <arc-nav-item description="SOC 2 and HIPAA compliance"><a href="/enterprise">Enterprise</a></arc-nav-item>
       </arc-nav-item>
-      <arc-nav-item href="/pricing">Pricing</arc-nav-item>
-      <arc-nav-item href="/docs">Docs</arc-nav-item>
+      <arc-nav-item><a href="/pricing">Pricing</a></arc-nav-item>
+      <arc-nav-item><a href="/docs">Docs</a></arc-nav-item>
     </arc-navigation-menu>
   \`,
 })

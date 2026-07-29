@@ -3,7 +3,11 @@
 /* arc-link */
 .arc-link { display: inline; }
 
-      .arc-link .link {
+      /* Anchor-adoption form: a lone slotted <a> becomes the link itself and
+         takes the same styling as .link — see shared/anchor-adoption.js.
+         Keep each .link rule paired with its .link-a form. */
+      .arc-link .link,
+      .arc-link .link-a {
         font-family: var(--font-body);
         font-size: inherit;
         color: var(--interactive);
@@ -20,44 +24,53 @@
         align-items: center;
       }
 
-      .arc-link .link:hover {
+      .arc-link .link:hover,
+      .arc-link .link-a:hover {
         text-decoration: underline;
         text-underline-offset: 3px;
       }
 
       /* Underline variants */
-      .arc-link[data-underline="always"] .link {
+      .arc-link[data-underline="always"] .link,
+      .arc-link[data-underline="always"] .link-a {
         text-decoration: underline;
         text-underline-offset: 3px;
       }
-      .arc-link[data-underline="never"] .link:hover {
+      .arc-link[data-underline="never"] .link:hover,
+      .arc-link[data-underline="never"] .link-a:hover {
         text-decoration: none;
       }
 
-      .arc-link[data-variant="muted"] .link {
+      .arc-link[data-variant="muted"] .link,
+      .arc-link[data-variant="muted"] .link-a {
         color: var(--text-muted);
       }
-      .arc-link[data-variant="muted"] .link:hover {
+      .arc-link[data-variant="muted"] .link:hover,
+      .arc-link[data-variant="muted"] .link-a:hover {
         color: var(--text-primary);
       }
 
-      .arc-link[data-variant="nav"] .link {
+      .arc-link[data-variant="nav"] .link,
+      .arc-link[data-variant="nav"] .link-a {
         color: var(--text-secondary);
         font-size: var(--text-sm);
         display: inline-flex;
         align-items: center;
         gap: var(--space-xs);
       }
-      .arc-link[data-variant="nav"] .link:hover {
+      .arc-link[data-variant="nav"] .link:hover,
+      .arc-link[data-variant="nav"] .link-a:hover {
         color: var(--text-primary);
         text-decoration: none;
       }
 
-      .arc-link[active] .link {
+      .arc-link[active] .link,
+      .arc-link[active] .link-a {
         color: var(--interactive);
       }
 
-      .arc-link .link:focus-visible {
+      .arc-link .link:focus-visible,
+      .arc-link .link-a:focus-visible {
         outline: none;
         box-shadow: var(--interactive-focus-ring);
         border-radius: var(--radius-xs);

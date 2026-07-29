@@ -42,9 +42,9 @@ The \`active\` boolean property highlights the current link in accent-primary, u
   },
 
   previewHtml: `<div style="display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
-  <arc-link href="#">Default link</arc-link>
-  <arc-link href="#" variant="muted">Muted link</arc-link>
-  <arc-link href="#" variant="nav">Nav link</arc-link>
+  <arc-link><a href="#">Default link</a></arc-link>
+  <arc-link variant="muted"><a href="#">Muted link</a></arc-link>
+  <arc-link variant="nav"><a href="#">Nav link</a></arc-link>
   <arc-link href="#" variant="nav" active>Active nav</arc-link>
   <arc-link href="https://example.com" external>External link</arc-link>
 </div>`,
@@ -53,9 +53,9 @@ The \`active\` boolean property highlights the current link in accent-primary, u
     {
       label: 'Web Component',
       lang: 'html',
-      code: `<arc-link href="#">Default link</arc-link>
-<arc-link href="#" variant="muted">Muted link</arc-link>
-<arc-link href="#" variant="nav">Nav link</arc-link>`,
+      code: `<arc-link><a href="#">Default link</a></arc-link>
+<arc-link variant="muted"><a href="#">Muted link</a></arc-link>
+<arc-link variant="nav"><a href="#">Nav link</a></arc-link>`,
     },
     {
       label: 'React',
@@ -105,9 +105,9 @@ import { Link } from '@arclux/arc-ui-angular';
 @Component({
   imports: [Link],
   template: \`
-    <arc-link href="#">Default link</arc-link>
-    <arc-link href="#" variant="muted">Muted link</arc-link>
-    <arc-link href="#" variant="nav">Nav link</arc-link>
+    <arc-link><a href="#">Default link</a></arc-link>
+    <arc-link variant="muted"><a href="#">Muted link</a></arc-link>
+    <arc-link variant="nav"><a href="#">Nav link</a></arc-link>
   \`,
 })
 export class MyComponent {}`,

@@ -202,6 +202,9 @@ export declare class ArcBreadcrumb extends LitElement {
  * `<arc-breadcrumb-item>`
  */
 export declare class ArcBreadcrumbItem extends LitElement {
+  /** Destination, preferring the explicit attribute over an anchor child. Authoring `<arc-breadcrumb-item><a href="/docs">Docs</a></arc-breadcrumb-item>` leaves a working trail in the pre-upgrade markup — arc-breadcrumb hides this light DOM only once it has re-rendered it into shadow DOM. */
+  resolvedHref: unknown;
+  /** textContent already reaches through an anchor child, so this needs no special case. */
   label: unknown;
   /** Navigation URL for this crumb. When provided, the crumb renders as a clickable link styled in muted text that brightens on hover. Omit this property on the final item to mark it as the current page -- it will receive `aria-current="page"` and a bolder font weight automatically. @default '' */
   href: string;
@@ -1418,6 +1421,8 @@ export declare class ArcMultiSelect extends LitElement {
  * `<arc-nav-item>`
  */
 export declare class ArcNavItem extends LitElement {
+  /** Destination, preferring the explicit attribute over an anchor child. Authoring `<arc-nav-item><a href="/docs">Docs</a></arc-nav-item>` makes the pre-upgrade markup a working link list, which is what no-JS visitors and anyone on a slow connection actually see — arc-navigation-menu hides this light DOM only once it has upgraded and re-rendered it into shadow DOM. */
+  resolvedHref: unknown;
   label: unknown;
   /** Nested arc-nav-item children for dropdown menus */
   children: unknown;
@@ -2004,6 +2009,9 @@ export declare class ArcSidebar extends LitElement {
  * `<arc-sidebar-link>`
  */
 export declare class ArcSidebarLink extends LitElement {
+  /** Destination, preferring the explicit attribute over an anchor child. Authoring `<arc-sidebar-link><a href="/docs">Docs</a></arc-sidebar-link>` leaves a working link in the pre-upgrade markup — arc-sidebar hides this light DOM only once it has re-rendered it into shadow DOM. */
+  resolvedHref: unknown;
+  /** textContent already reaches through an anchor child, so this needs no special case. */
   label: unknown;
   /** Destination URL for the link. Can be an absolute path, relative path, or hash anchor. The link renders as a standard anchor element for full accessibility and SEO. @default '' */
   href: string;

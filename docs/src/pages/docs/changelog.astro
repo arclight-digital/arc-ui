@@ -2,6 +2,7 @@
 import DocsLayout from '../../layouts/DocsLayout.astro';
 
 const headings = [
+  { id: 'v2-8-0', label: 'v2.8.0' },
   { id: 'v2-7-0', label: 'v2.7.0' },
   { id: 'v2-6-0', label: 'v2.6.0' },
   { id: 'v2-5-0', label: 'v2.5.0' },
@@ -29,6 +30,39 @@ const headings = [
     <p class="page-desc">
       Release history for ARC UI. All packages are versioned together.
     </p>
+
+    <section id="v2-8-0">
+      <h2 class="docs-heading">v2.8.0 — Links That Work Without JavaScript</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <p class="docs-text">
+        With JavaScript disabled, ARC components rendered nothing. The stylesheet hid every
+        custom element until it upgraded — and without JS nothing ever upgrades, so the guard
+        never lifted. That is fixed, and link-bearing components can now carry a real anchor in
+        the initial HTML so navigation survives with no JavaScript at all.
+      </p>
+
+      <h3 class="tier-heading">No-JS Rendering</h3>
+      <ul class="docs-list">
+        <li><strong>The pre-upgrade hide is gated on scripting</strong> — <code>base.css</code> wrapped its <code>:not(:defined)</code> rule in <code>@media (scripting: enabled)</code>. Previously a no-JS visitor got a blank page wherever ARC components were used. Browsers without the <code>scripting</code> query simply skip the rule, trading a brief flash for never-hidden content.</li>
+        <li><strong>The guard no longer hides elements it doesn't own</strong> — the rule was an unscoped <code>:not(:defined)</code>, which matched <em>any</em> undefined element on the page, including your own custom elements and third-party ones. It is now scoped to the 187 <code>arc-*</code> tags, generated from the component sources.</li>
+      </ul>
+
+      <h3 class="tier-heading">Anchor Adoption</h3>
+      <ul class="docs-list">
+        <li><strong>Slot a real <code>&lt;a&gt;</code> and the component adopts it</strong> — <code>&lt;arc-button&gt;&lt;a href="/start"&gt;Get started&lt;/a&gt;&lt;/arc-button&gt;</code> is a working, styled link before hydration and with JS off. On upgrade the component styles that anchor as its control instead of rendering a second one, so only one link ever reaches the accessibility tree. Supported on <code>arc-button</code>, <code>arc-icon-button</code>, <code>arc-link</code>, and <code>arc-card</code>.</li>
+        <li><strong>Nav carriers read a child anchor</strong> — <code>arc-nav-item</code>, <code>arc-breadcrumb-item</code>, and <code>arc-sidebar-link</code> resolve their destination and label from an anchor child, so menus, trails, and sidebars are working link lists before their parent upgrades.</li>
+        <li><strong><code>href</code> is unchanged</strong> — the attribute form still renders an <code>&lt;a&gt;</code> in the shadow root and always wins over a slotted anchor. Nothing that works today changes. Prefer <code>href</code> inside app shells where JS is guaranteed, and the slotted form on public or first-load-critical pages.</li>
+      </ul>
+
+      <p class="docs-text">
+        An <code>href</code> on the custom element cannot be made to work without JavaScript —
+        the real <code>&lt;a&gt;</code> only exists in a shadow root that is never created — which
+        is why the slotted form exists. Components that render from properties rather than slots,
+        such as <code>arc-feature-card</code>, still have no light DOM to fall back to; see
+        <a href="/docs/accessibility#no-javascript">Without JavaScript</a>.
+      </p>
+    </section>
 
     <section id="v2-7-0">
       <h2 class="docs-heading">v2.7.0 — Editor Autocomplete, Typed Events &amp; Dev Warnings</h2>

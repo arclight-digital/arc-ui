@@ -13,7 +13,9 @@ export const button: ComponentDef = {
 
 The \`prefix\` and \`suffix\` slots allow you to place icons or other inline elements alongside the button label. This is useful for adding a search icon, an arrow indicator, an RSS icon, or any visual cue that reinforces the button's action.
 
-Because Button renders as an \`<a>\` element when an \`href\` is provided, it is inherently accessible for navigation. This makes it the right choice for landing-page hero rows, pricing CTAs, documentation links, and any context where the action takes the user somewhere rather than triggering in-page logic. When no href is set, it behaves as a standard button element for form submissions and interactive triggers.
+For links, slot a real \`<a>\` as the button's only child. That anchor is ordinary HTML in the initial markup, so the link works with JavaScript disabled and before the element upgrades — on a slow connection your hero CTA is clickable immediately rather than after hydration. Button adopts the anchor on upgrade and styles it as the control, so there is only ever one link in the accessibility tree.
+
+The \`href\` attribute is still fully supported and renders an \`<a>\` in the shadow root. Reach for it inside app shells behind a login, where JavaScript is a given and the extra markup is noise. Prefer the slotted-anchor form anywhere the page is public, indexed, or first-load critical — that anchor cannot exist without JavaScript when the destination lives on the custom element instead. When no href and no slotted anchor are present, Button behaves as a standard button element for form submissions and interactive triggers.
 
 Three size presets — sm, md, and lg — let you scale buttons to their context. Use lg for hero sections and high-impact CTAs, md for general UI, and sm for compact toolbars or inline actions. All sizes maintain consistent padding ratios and touch targets.`,
 
@@ -21,6 +23,7 @@ Three size presets — sm, md, and lg — let you scale buttons to their context
     'Three variants (primary, secondary, ghost) for clear action hierarchy',
     'Three size presets (sm, md, lg) scaled for context',
     'Prefix and suffix slots for icons or inline elements alongside the label',
+    'Adopts a slotted <a> so links work without JavaScript and before hydration',
     'Renders as <a> with href for accessible navigation',
     'Neon glow hover effect on primary variant',
     'Focus-visible ring for keyboard accessibility',
@@ -35,13 +38,15 @@ Three size presets — sm, md, and lg — let you scale buttons to their context
       'Pair primary with secondary or ghost to create a clear visual hierarchy',
       'Use the `prefix` slot for leading icons and `suffix` for trailing arrows or indicators',
       'Use the lg size for hero sections and above-the-fold CTAs',
-      'Provide an href when the button navigates to another page or section',
+      'Slot a real `<a>` for navigation on public pages so the link survives with JavaScript disabled',
+      'Reserve the `href` attribute for app shells where JavaScript is guaranteed',
       'Keep button labels short and action-oriented (e.g. "Get Started", "View Docs")',
     ],
     dont: [
       'Do not place multiple primary buttons side by side — one primary per action group',
       'Do not use ghost variant for the most important action; it is too subtle for primary CTAs',
-      'Do not omit href when the action is navigation — this hurts accessibility and SEO',
+      'Do not render navigation as a plain button — this hurts accessibility and SEO',
+      'Do not put a second link inside a slotted anchor; the adopted anchor is already the control',
       'Do not use long sentences as button labels; aim for two to three words maximum',
       'Do not disable buttons without explaining why the action is unavailable',
     ],
@@ -62,13 +67,17 @@ Three size presets — sm, md, and lg — let you scale buttons to their context
       lang: 'html',
       code: `<script type="module" src="@arclux/arc-ui"></script>
 
+<!-- Slot a real <a>: the link works without JS and before hydration -->
 <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-  <arc-button variant="primary" size="lg" href="/docs/getting-started">Get Started</arc-button>
-  <arc-button variant="secondary" href="/docs/components">View Docs</arc-button>
-  <arc-button variant="ghost" href="/docs/tokens">Learn More</arc-button>
+  <arc-button variant="primary" size="lg"><a href="/docs/getting-started">Get Started</a></arc-button>
+  <arc-button variant="secondary"><a href="/docs/components">View Docs</a></arc-button>
+  <arc-button variant="ghost"><a href="/docs/tokens">Learn More</a></arc-button>
 </div>
 
-<!-- With prefix icon -->
+<!-- href still works — best inside app shells where JS is guaranteed -->
+<arc-button variant="primary" href="/dashboard">Dashboard</arc-button>
+
+<!-- With prefix icon (icons go inside the anchor in the slotted form) -->
 <arc-button variant="secondary">
   <svg slot="prefix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z"/></svg>
   Bookmark
@@ -82,9 +91,9 @@ Three size presets — sm, md, and lg — let you scale buttons to their context
 export function HeroActions() {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
-      <Button variant="primary" size="lg" href="/docs/getting-started">Get Started</Button>
-      <Button variant="secondary" href="/docs/components">View Docs</Button>
-      <Button variant="ghost" href="/docs/tokens">Learn More</Button>
+      <Button variant="primary" size="lg"><a href="/docs/getting-started">Get Started</a></Button>
+      <Button variant="secondary"><a href="/docs/components">View Docs</a></Button>
+      <Button variant="ghost"><a href="/docs/tokens">Learn More</a></Button>
     </div>
   );
 }
@@ -104,9 +113,9 @@ import { Button } from '@arclux/arc-ui-vue';
 
 <template>
   <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-    <Button variant="primary" size="lg" href="/docs/getting-started">Get Started</Button>
-    <Button variant="secondary" href="/docs/components">View Docs</Button>
-    <Button variant="ghost" href="/docs/tokens">Learn More</Button>
+    <Button variant="primary" size="lg"><a href="/docs/getting-started">Get Started</a></Button>
+    <Button variant="secondary"><a href="/docs/components">View Docs</a></Button>
+    <Button variant="ghost"><a href="/docs/tokens">Learn More</a></Button>
   </div>
 </template>`,
     },
@@ -118,9 +127,9 @@ import { Button } from '@arclux/arc-ui-vue';
 </script>
 
 <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-  <Button variant="primary" size="lg" href="/docs/getting-started">Get Started</Button>
-  <Button variant="secondary" href="/docs/components">View Docs</Button>
-  <Button variant="ghost" href="/docs/tokens">Learn More</Button>
+  <Button variant="primary" size="lg"><a href="/docs/getting-started">Get Started</a></Button>
+  <Button variant="secondary"><a href="/docs/components">View Docs</a></Button>
+  <Button variant="ghost"><a href="/docs/tokens">Learn More</a></Button>
 </div>`,
     },
     {
@@ -133,9 +142,9 @@ import { Button } from '@arclux/arc-ui-angular';
   imports: [Button],
   template: \`
     <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-      <arc-button variant="primary" size="lg" href="/docs/getting-started">Get Started</arc-button>
-      <arc-button variant="secondary" href="/docs/components">View Docs</arc-button>
-      <arc-button variant="ghost" href="/docs/tokens">Learn More</arc-button>
+      <arc-button variant="primary" size="lg"><a href="/docs/getting-started">Get Started</a></arc-button>
+      <arc-button variant="secondary"><a href="/docs/components">View Docs</a></arc-button>
+      <arc-button variant="ghost"><a href="/docs/tokens">Learn More</a></arc-button>
     </div>
   \`,
 })
@@ -149,9 +158,9 @@ export class HeroActionsComponent {}`,
 export function HeroActions() {
   return (
     <div style={{ display: 'flex', 'align-items': 'center', gap: '12px', 'flex-wrap': 'wrap' }}>
-      <Button variant="primary" size="lg" href="/docs/getting-started">Get Started</Button>
-      <Button variant="secondary" href="/docs/components">View Docs</Button>
-      <Button variant="ghost" href="/docs/tokens">Learn More</Button>
+      <Button variant="primary" size="lg"><a href="/docs/getting-started">Get Started</a></Button>
+      <Button variant="secondary"><a href="/docs/components">View Docs</a></Button>
+      <Button variant="ghost"><a href="/docs/tokens">Learn More</a></Button>
     </div>
   );
 }`,
@@ -164,9 +173,9 @@ export function HeroActions() {
 export function HeroActions() {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
-      <Button variant="primary" size="lg" href="/docs/getting-started">Get Started</Button>
-      <Button variant="secondary" href="/docs/components">View Docs</Button>
-      <Button variant="ghost" href="/docs/tokens">Learn More</Button>
+      <Button variant="primary" size="lg"><a href="/docs/getting-started">Get Started</a></Button>
+      <Button variant="secondary"><a href="/docs/components">View Docs</a></Button>
+      <Button variant="ghost"><a href="/docs/tokens">Learn More</a></Button>
     </div>
   );
 }`,

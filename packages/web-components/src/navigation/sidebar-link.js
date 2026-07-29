@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import { resolveCarrierHref } from '../shared/anchor-adoption.js';
 
 /**
  * A navigation link rendered inside a SidebarSection. Supports an active state to indicate the
@@ -28,6 +29,17 @@ export class ArcSidebarLink extends LitElement {
     this.level = 0;
   }
 
+  /**
+   * Destination, preferring the explicit attribute over an anchor child.
+   * Authoring `<arc-sidebar-link><a href="/docs">Docs</a></arc-sidebar-link>`
+   * leaves a working link in the pre-upgrade markup — arc-sidebar hides this
+   * light DOM only once it has re-rendered it into shadow DOM.
+   */
+  get resolvedHref() {
+    return resolveCarrierHref(this, this.href);
+  }
+
+  /** textContent already reaches through an anchor child, so this needs no special case. */
   get label() {
     return this.textContent.trim();
   }

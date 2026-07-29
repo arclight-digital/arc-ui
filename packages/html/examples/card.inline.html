@@ -11,11 +11,16 @@
           animation-iteration-count: 1 !important;
           transition-duration: 0.01ms !important; }
   }
-  .arc-card:not([data-href]):not([data-interactive]) .card:hover { background: rgb(30, 30, 78); }
-  .arc-card:not([data-href]):not([data-interactive]) .card:hover .card__inner { box-shadow: none; }
+  .arc-card:not([data-href]):not([data-interactive]) .card:not(.card--linked):hover { background: rgb(30, 30, 78); }
+  .arc-card:not([data-href]):not([data-interactive]) .card:not(.card--linked):hover .card__inner { box-shadow: none; }
+  .arc-card .card-a:focus-visible { outline: none;
+        box-shadow: 0 0 0 1px rgba(130, 164, 250,0.2), 0 0 6px rgba(130, 164, 250,0.35), 0 0 16px rgba(130, 164, 250,0.2), 0 0 40px rgba(139, 92, 246,0.12);
+        border-radius: 10px; }
 </style>
 <div class="arc-card" style="display: block">
-  <div class="card" style="height: 100%"><div class="card__inner" style="padding: 24px"><div style="flex: 1">Card</div>
+  <div><div class="card__inner" style="padding: 24px"><div style="flex: 1">
+    <slot ></slot>
+  </div>
   <div>
 
   </div></div></div>

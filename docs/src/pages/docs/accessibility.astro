@@ -14,6 +14,7 @@ const headings = [
   { id: 'screen-readers', label: 'Screen Readers' },
   { id: 'color-contrast', label: 'Color & Contrast' },
   { id: 'reduced-motion', label: 'Reduced Motion' },
+  { id: 'no-javascript', label: 'Without JavaScript' },
 ];
 ---
 
@@ -252,6 +253,62 @@ const headings = [
         This affects all component transitions (hover effects, drawer slides, modal fades, etc.)
         without changing functionality. Users can still interact with every component — only
         the motion is removed.
+      </p>
+    </section>
+
+    <section id="no-javascript">
+      <h2 class="docs-heading">Without JavaScript</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <p class="docs-text">
+        Web Components need JavaScript to upgrade. Until that happens — because a script
+        failed, a network is slow, or the visitor has JS disabled — a custom element is an
+        unknown tag rendering only its light DOM. What you put inside the element is
+        therefore what everyone sees first.
+      </p>
+      <p class="docs-text">
+        This matters most for links. An <code>href</code> on the custom element itself
+        <strong>cannot</strong> produce a working link without JavaScript: the attribute sits
+        on the element, and the real <code>&lt;a&gt;</code> only exists in a shadow root that
+        is never created. Slot a real anchor instead and the link is ordinary HTML from the
+        first byte:
+      </p>
+      <div class="docs-code"><Code code={`<!-- Works without JS, and before the element upgrades -->
+<arc-button variant="primary">
+  <a href="/get-started">Get started</a>
+</arc-button>
+
+<arc-navigation-menu>
+  <arc-nav-item><a href="/docs">Docs</a></arc-nav-item>
+  <arc-nav-item><a href="/pricing">Pricing</a></arc-nav-item>
+</arc-navigation-menu>
+
+<!-- Needs JS to become a link at all -->
+<arc-button variant="primary" href="/get-started">Get started</arc-button>`} lang="html" theme="css-variables" /></div>
+      <p class="docs-text">
+        On upgrade the component adopts that anchor as its control rather than rendering a
+        second one, so there is only ever one link in the accessibility tree. The
+        <code>href</code> form stays fully supported — prefer it inside app shells where
+        JavaScript is guaranteed, and the slotted form on anything public, indexed, or
+        first-load critical. This applies to <code>arc-button</code>,
+        <code>arc-icon-button</code>, <code>arc-link</code>, <code>arc-card</code>,
+        <code>arc-nav-item</code>, <code>arc-breadcrumb-item</code>, and
+        <code>arc-sidebar-link</code>.
+      </p>
+      <p class="docs-text">
+        The stylesheet hides components only until they upgrade, and that hide is gated on
+        scripting being available — so with JS disabled your content stays visible rather
+        than being hidden forever waiting for an upgrade that never comes:
+      </p>
+      <div class="docs-code"><Code code={`/* Shipped in base.css */
+@media (scripting: enabled) {
+  :is(arc-button, arc-link /* … */):not(:defined) { opacity: 0; }
+}`} lang="css" theme="css-variables" /></div>
+      <p class="docs-text">
+        Components whose content comes from properties rather than slots — such as
+        <code>arc-feature-card</code>, which renders from <code>heading</code> and
+        <code>description</code> — have no light DOM to fall back to and stay blank without
+        JavaScript. Author their content as slotted markup, or treat them as
+        enhancement-only.
       </p>
     </section>
 

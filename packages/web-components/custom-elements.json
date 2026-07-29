@@ -565,7 +565,7 @@
           ],
           "slots": [
             {
-              "description": "Default content.",
+              "description": "Default content. Wrapping the content in a single `<a>` adopts it as the card's link — the recommended form for cards that must work before hydration or without JavaScript. The anchor fills the padded surface; the `footer` slot stays outside it so footer actions remain separately clickable.",
               "name": ""
             },
             {
@@ -10024,7 +10024,7 @@
               "name": "prefix"
             },
             {
-              "description": "Default content.",
+              "description": "Default content. Slotting a single `<a>` as the only child adopts it as the button's control — the recommended form for links that must work before hydration or without JavaScript, since the anchor is real HTML in the initial markup. Put any icons inside that anchor; the `prefix`/`suffix` slots and `::part(button)` do not apply in this form.",
               "name": ""
             },
             {
@@ -12690,7 +12690,7 @@
           ],
           "slots": [
             {
-              "description": "Default content.",
+              "description": "Default content. Slotting a single `<a>` as the only child adopts it as the button's control — the recommended form for links that must work before hydration or without JavaScript. Put the icon inside that anchor; `::part(button)` does not apply in this form.",
               "name": ""
             }
           ],
@@ -21444,7 +21444,14 @@
           "members": [
             {
               "kind": "field",
+              "name": "resolvedHref",
+              "description": "Destination, preferring the explicit attribute over an anchor child.\nAuthoring `<arc-breadcrumb-item><a href=\"/docs\">Docs</a></arc-breadcrumb-item>`\nleaves a working trail in the pre-upgrade markup — arc-breadcrumb hides this\nlight DOM only once it has re-rendered it into shadow DOM.",
+              "readonly": true
+            },
+            {
+              "kind": "field",
               "name": "label",
+              "description": "textContent already reaches through an anchor child, so this needs no special case.",
               "readonly": true
             },
             {
@@ -22109,7 +22116,7 @@
           ],
           "slots": [
             {
-              "description": "Default content.",
+              "description": "Default content. Slotting a single `<a>` as the only child adopts it as the link — the recommended form for links that must work before hydration or without JavaScript. In this form `external` contributes the marker icon only; put `target`/`rel` on your own anchor, and note that `::part(link)` does not apply.",
               "name": ""
             }
           ],
@@ -22335,6 +22342,12 @@
             }
           ],
           "members": [
+            {
+              "kind": "field",
+              "name": "resolvedHref",
+              "description": "Destination, preferring the explicit attribute over an anchor child.\n\nAuthoring `<arc-nav-item><a href=\"/docs\">Docs</a></arc-nav-item>` makes the\npre-upgrade markup a working link list, which is what no-JS visitors and\nanyone on a slow connection actually see — arc-navigation-menu hides this\nlight DOM only once it has upgraded and re-rendered it into shadow DOM.",
+              "readonly": true
+            },
             {
               "kind": "field",
               "name": "label",
@@ -23145,7 +23158,14 @@
           "members": [
             {
               "kind": "field",
+              "name": "resolvedHref",
+              "description": "Destination, preferring the explicit attribute over an anchor child.\nAuthoring `<arc-sidebar-link><a href=\"/docs\">Docs</a></arc-sidebar-link>`\nleaves a working link in the pre-upgrade markup — arc-sidebar hides this\nlight DOM only once it has re-rendered it into shadow DOM.",
+              "readonly": true
+            },
+            {
+              "kind": "field",
               "name": "label",
+              "description": "textContent already reaches through an anchor child, so this needs no special case.",
               "readonly": true
             },
             {
@@ -24552,6 +24572,98 @@
           "declaration": {
             "name": "ArcTreeView",
             "module": "src/navigation/tree-view.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/shared/anchor-adoption.js",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "isLoneSlottedAnchor",
+          "parameters": [
+            {
+              "name": "slot",
+              "type": {
+                "text": "HTMLSlotElement"
+              }
+            }
+          ],
+          "description": "True when a slot's only meaningful content is a single `<a>`.\n\nDeliberately strict: `<arc-button>Read <a href=\"/x\">this</a></arc-button>` is\nan incidental inline link, not a link button, and must stay on the normal\nrender path. Checking assigned *nodes* rather than assigned elements is what\nmakes that distinction — `assignedElements()` drops the surrounding text and\nwould report a lone anchor.",
+          "return": {
+            "type": {
+              "text": "boolean"
+            }
+          }
+        },
+        {
+          "kind": "function",
+          "name": "loneAnchorChild",
+          "parameters": [
+            {
+              "name": "host",
+              "type": {
+                "text": "Element"
+              }
+            }
+          ],
+          "description": "The lone anchor child of a light-DOM carrier element, if there is one.\n\nUsed by the nav carriers (arc-nav-item, arc-breadcrumb-item,\narc-sidebar-link), which hold data their parent reads rather than rendering\na control themselves. They have no slot to inspect at the time the parent\nasks for `href`/`label`, so this walks child nodes directly.",
+          "return": {
+            "type": {
+              "text": "HTMLAnchorElement | null"
+            }
+          }
+        },
+        {
+          "kind": "function",
+          "name": "resolveCarrierHref",
+          "parameters": [
+            {
+              "name": "host",
+              "type": {
+                "text": "Element"
+              }
+            },
+            {
+              "name": "explicitHref",
+              "type": {
+                "text": "string"
+              }
+            }
+          ],
+          "description": "Resolve a carrier's destination, preferring the explicit attribute.\n\nReturns the anchor's literal `href` attribute rather than the resolved\n`.href` property, so a relative path stays relative — the parent renders it\nback into an `<a>` and the browser resolves it there.",
+          "return": {
+            "type": {
+              "text": "string"
+            }
+          }
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "isLoneSlottedAnchor",
+          "declaration": {
+            "name": "isLoneSlottedAnchor",
+            "module": "src/shared/anchor-adoption.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "loneAnchorChild",
+          "declaration": {
+            "name": "loneAnchorChild",
+            "module": "src/shared/anchor-adoption.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "resolveCarrierHref",
+          "declaration": {
+            "name": "resolveCarrierHref",
+            "module": "src/shared/anchor-adoption.js"
           }
         }
       ]

@@ -627,8 +627,64 @@ function renderOverrides(t, indent = '  ') {
   return lines.join('\n');
 }
 
-/** Generate the full tokens.css content from JS data */
-export function generateTokensCSS() {
+/**
+ * Build the FOUC guard that hides ARC elements until they upgrade.
+ *
+ * Two constraints shape this rule:
+ *
+ *  1. It must not apply when scripting is unavailable. Without JS nothing ever
+ *     becomes `:defined`, so an unconditional rule hides the entire library
+ *     forever — a blank page for no-JS visitors. `scripting: enabled` is
+ *     unsupported on older engines, where the query simply doesn't match and
+ *     the guard switches off: a brief FOUC rather than invisible content, which
+ *     is the safe direction to fail in.
+ *
+ *  2. It must be scoped to tags we own. A bare `:not(:defined)` matches *any*
+ *     undefined element, so the shipped stylesheet would hide the consumer's
+ *     own custom elements and any third-party ones on the page.
+ *
+ * @param {string[]} tags - Custom element tags ARC defines.
+ */
+function renderUndefinedGuard(tags) {
+  if (!tags.length) return '';
+
+  // Wrap the selector list so the generated CSS stays readable at ~190 tags.
+  const lines = [];
+  let current = '';
+  for (const tag of tags) {
+    const next = current ? `${current}, ${tag}` : `  ${tag}`;
+    if (next.length > 96) {
+      lines.push(`${current},`);
+      current = `  ${tag}`;
+    } else {
+      current = next;
+    }
+  }
+  if (current) lines.push(current);
+
+  return `/* Prevent FOUC — hide ARC elements until they upgrade.
+   Fade-in transition provided by :host styles in each component.
+   Gated on scripting so no-JS visitors get visible content instead of a blank
+   page, and scoped to ARC tags so we never hide elements we don't own. */
+@media (scripting: enabled) {
+  :is(
+${lines.join('\n')}
+  ):not(:defined) {
+    opacity: 0;
+  }
+}`;
+}
+
+/**
+ * Generate the full tokens.css content from JS data.
+ *
+ * @param {{ tags?: string[] }} [options] - `tags` scopes the :not(:defined)
+ *   guard. Supplied by scripts/generate-base-css.js from the component sources;
+ *   omitting it drops the guard rather than emitting an unscoped one.
+ */
+export function generateTokensCSS({ tags = [] } = {}) {
+  const undefinedGuard = renderUndefinedGuard(tags);
+
   const touchBlock = [
     '@media (pointer: coarse) {',
     '  :root {',
@@ -647,11 +703,7 @@ export function generateTokensCSS() {
 
   return `/* Generated from shared/tokens.js — do not edit by hand */
 
-/* Prevent FOUC — hide custom elements until registered.
-   Fade-in transition provided by :host styles in each component. */
-:not(:defined) {
-  opacity: 0;
-}
+${undefinedGuard}
 
 :root {
   color-scheme: dark;
