@@ -1,3 +1,13 @@
+# AI crawlers are allowed deliberately. This library publishes llms.txt and
+# llms-full.txt so that assistants generate correct ARC UI code instead of
+# inventing props — which only works if they are permitted to read them.
+#
+# Note this file is not the whole story: Cloudflare's AI Crawl Control can
+# inject a managed block ahead of it, disallowing ClaudeBot, GPTBot, CCBot,
+# Google-Extended and others regardless of what is written here. If those
+# directives reappear at https://arcui.dev/robots.txt, the control is the
+# Cloudflare dashboard for this zone, not this file.
+
 User-agent: *
 Allow: /
 
