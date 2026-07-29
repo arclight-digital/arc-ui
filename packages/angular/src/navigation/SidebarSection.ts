@@ -7,11 +7,23 @@ import '@arclux/arc-ui/sidebar-section';
   selector: 'arc-sidebar-section',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-sidebar-section [attr.heading]="heading" [collapsible]="collapsible" [open]="open" (arc-toggle)="arcToggle.emit($event)"><ng-content /></arc-sidebar-section>`,
+  template: `<arc-sidebar-section [attr.heading]="heading" [collapsible]="collapsible" [open]="open" (arc-toggle)="onArcToggle($event)"><ng-content /></arc-sidebar-section>`,
 })
 export class SidebarSection {
   @Input() heading: string = '';
   @Input() collapsible: boolean = false;
   @Input() open: boolean = true;
   @Output() arcToggle = new EventEmitter<CustomEvent>();
+  @Output() openChange = new EventEmitter<boolean>();
+
+  onArcToggle(event: CustomEvent) {
+    this.arcToggle.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('open' in detail) {
+      const next = detail.open as boolean;
+      this.open = next;
+      this.openChange.emit(next);
+    }
+  }
 }

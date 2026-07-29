@@ -7,7 +7,7 @@ import '@arclux/arc-ui/range-slider';
   selector: 'arc-range-slider',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-range-slider [attr.min]="min" [attr.max]="max" [attr.step]="step" [attr.low]="low" [attr.high]="high" [attr.name]="name" [disabled]="disabled" [attr.label]="label" [showValues]="showValues" (arc-input)="arcInput.emit($event)" (arc-change)="arcChange.emit($event)"><ng-content /></arc-range-slider>`,
+  template: `<arc-range-slider [attr.min]="min" [attr.max]="max" [attr.step]="step" [attr.low]="low" [attr.high]="high" [attr.name]="name" [disabled]="disabled" [attr.label]="label" [showValues]="showValues" (arc-input)="onArcInput($event)" (arc-change)="onArcChange($event)"><ng-content /></arc-range-slider>`,
 })
 export class RangeSlider {
   @Input() min: number = 0;
@@ -21,4 +21,38 @@ export class RangeSlider {
   @Input() showValues: boolean = true;
   @Output() arcInput = new EventEmitter<CustomEvent>();
   @Output() arcChange = new EventEmitter<CustomEvent>();
+  @Output() lowChange = new EventEmitter<number>();
+  @Output() highChange = new EventEmitter<number>();
+
+  onArcInput(event: CustomEvent) {
+    this.arcInput.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('high' in detail) {
+      const next = detail.high as number;
+      this.high = next;
+      this.highChange.emit(next);
+    }
+    if ('low' in detail) {
+      const next = detail.low as number;
+      this.low = next;
+      this.lowChange.emit(next);
+    }
+  }
+
+  onArcChange(event: CustomEvent) {
+    this.arcChange.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('high' in detail) {
+      const next = detail.high as number;
+      this.high = next;
+      this.highChange.emit(next);
+    }
+    if ('low' in detail) {
+      const next = detail.low as number;
+      this.low = next;
+      this.lowChange.emit(next);
+    }
+  }
 }

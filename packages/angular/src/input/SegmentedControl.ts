@@ -7,10 +7,22 @@ import '@arclux/arc-ui/segmented-control';
   selector: 'arc-segmented-control',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-segmented-control [attr.value]="value" [disabled]="disabled" (arc-change)="arcChange.emit($event)"><ng-content /></arc-segmented-control>`,
+  template: `<arc-segmented-control [attr.value]="value" [disabled]="disabled" (arc-change)="onArcChange($event)"><ng-content /></arc-segmented-control>`,
 })
 export class SegmentedControl {
   @Input() value: string = '';
   @Input() disabled: boolean = false;
   @Output() arcChange = new EventEmitter<CustomEvent>();
+  @Output() valueChange = new EventEmitter<string>();
+
+  onArcChange(event: CustomEvent) {
+    this.arcChange.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('value' in detail) {
+      const next = detail.value as string;
+      this.value = next;
+      this.valueChange.emit(next);
+    }
+  }
 }

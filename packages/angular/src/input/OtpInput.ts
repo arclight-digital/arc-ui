@@ -7,7 +7,7 @@ import '@arclux/arc-ui/otp-input';
   selector: 'arc-otp-input',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-otp-input [attr.length]="length" [attr.value]="value" [attr.name]="name" [disabled]="disabled" [attr.type]="type" (arc-change)="arcChange.emit($event)"><ng-content /></arc-otp-input>`,
+  template: `<arc-otp-input [attr.length]="length" [attr.value]="value" [attr.name]="name" [disabled]="disabled" [attr.type]="type" (arc-change)="onArcChange($event)"><ng-content /></arc-otp-input>`,
 })
 export class OtpInput {
   @Input() length: number = 6;
@@ -16,4 +16,16 @@ export class OtpInput {
   @Input() disabled: boolean = false;
   @Input() type: string = 'number';
   @Output() arcChange = new EventEmitter<CustomEvent>();
+  @Output() valueChange = new EventEmitter<string>();
+
+  onArcChange(event: CustomEvent) {
+    this.arcChange.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('value' in detail) {
+      const next = detail.value as string;
+      this.value = next;
+      this.valueChange.emit(next);
+    }
+  }
 }

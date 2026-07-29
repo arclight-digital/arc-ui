@@ -23,7 +23,30 @@ const emit = defineEmits<{
   'arc-clear': [event: CustomEvent];
   'arc-change': [event: CustomEvent];
   'arc-select': [event: CustomEvent];
+  'update:value': [value: string];
 }>();
+
+function onArcInput(payload: CustomEvent) {
+  emit('arc-input', payload);
+  const detail = payload.detail as Record<string, unknown> | null;
+  if (detail) {
+    if ('value' in detail) emit('update:value', detail.value as string);
+  }
+}
+function onArcChange(payload: CustomEvent) {
+  emit('arc-change', payload);
+  const detail = payload.detail as Record<string, unknown> | null;
+  if (detail) {
+    if ('value' in detail) emit('update:value', detail.value as string);
+  }
+}
+function onArcSelect(payload: CustomEvent) {
+  emit('arc-select', payload);
+  const detail = payload.detail as Record<string, unknown> | null;
+  if (detail) {
+    if ('value' in detail) emit('update:value', detail.value as string);
+  }
+}
 </script>
 
 <template>
@@ -33,10 +56,10 @@ const emit = defineEmits<{
     :label="label"
     :disabled="disabled"
     :loading="loading"
-    @arc-input="(payload: CustomEvent) => emit('arc-input', payload)"
+    @arc-input="onArcInput"
     @arc-clear="(payload: CustomEvent) => emit('arc-clear', payload)"
-    @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
-    @arc-select="(payload: CustomEvent) => emit('arc-select', payload)"
+    @arc-change="onArcChange"
+    @arc-select="onArcSelect"
   >
     <slot />
   </arc-search>

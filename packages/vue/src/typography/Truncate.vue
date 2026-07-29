@@ -14,14 +14,23 @@ withDefaults(defineProps<{
 
 const emit = defineEmits<{
   'arc-toggle': [event: CustomEvent];
+  'update:expanded': [value: boolean];
 }>();
+
+function onArcToggle(payload: CustomEvent) {
+  emit('arc-toggle', payload);
+  const detail = payload.detail as Record<string, unknown> | null;
+  if (detail) {
+    if ('expanded' in detail) emit('update:expanded', detail.expanded as boolean);
+  }
+}
 </script>
 
 <template>
   <arc-truncate
     :lines="lines"
     :expanded="expanded"
-    @arc-toggle="(payload: CustomEvent) => emit('arc-toggle', payload)"
+    @arc-toggle="onArcToggle"
   >
     <slot />
   </arc-truncate>

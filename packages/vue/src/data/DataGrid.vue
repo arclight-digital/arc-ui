@@ -26,7 +26,16 @@ const emit = defineEmits<{
   'arc-sort': [event: CustomEvent];
   'arc-selection-change': [event: CustomEvent];
   'arc-cell-change': [event: CustomEvent];
+  'update:sort': [value: unknown[]];
 }>();
+
+function onArcSort(payload: CustomEvent) {
+  emit('arc-sort', payload);
+  const detail = payload.detail as Record<string, unknown> | null;
+  if (detail) {
+    if ('sort' in detail) emit('update:sort', detail.sort as unknown[]);
+  }
+}
 </script>
 
 <template>
@@ -38,7 +47,7 @@ const emit = defineEmits<{
     :selectable="selectable"
     :virtual="virtual"
     :rowHeight="rowHeight"
-    @arc-sort="(payload: CustomEvent) => emit('arc-sort', payload)"
+    @arc-sort="onArcSort"
     @arc-selection-change="(payload: CustomEvent) => emit('arc-selection-change', payload)"
     @arc-cell-change="(payload: CustomEvent) => emit('arc-cell-change', payload)"
   >

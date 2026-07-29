@@ -24,7 +24,16 @@ withDefaults(defineProps<{
 
 const emit = defineEmits<{
   'arc-change': [event: CustomEvent];
+  'update:value': [value: unknown[]];
 }>();
+
+function onArcChange(payload: CustomEvent) {
+  emit('arc-change', payload);
+  const detail = payload.detail as Record<string, unknown> | null;
+  if (detail) {
+    if ('value' in detail) emit('update:value', detail.value as unknown[]);
+  }
+}
 </script>
 
 <template>
@@ -36,7 +45,7 @@ const emit = defineEmits<{
     :searchable="searchable"
     :sourceLabel="sourceLabel"
     :targetLabel="targetLabel"
-    @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
+    @arc-change="onArcChange"
   >
     <slot />
   </arc-transfer-list>

@@ -7,7 +7,7 @@ import '@arclux/arc-ui/calendar';
   selector: 'arc-calendar',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-calendar [attr.value]="value" [attr.min]="min" [attr.max]="max" [attr.month]="month" [attr.year]="year" (arc-navigate)="arcNavigate.emit($event)" (arc-change)="arcChange.emit($event)"><ng-content /></arc-calendar>`,
+  template: `<arc-calendar [attr.value]="value" [attr.min]="min" [attr.max]="max" [attr.month]="month" [attr.year]="year" (arc-navigate)="onArcNavigate($event)" (arc-change)="onArcChange($event)"><ng-content /></arc-calendar>`,
 })
 export class Calendar {
   @Input() value: string = '';
@@ -17,4 +17,34 @@ export class Calendar {
   @Input() year: number = 'now.getFullYear()';
   @Output() arcNavigate = new EventEmitter<CustomEvent>();
   @Output() arcChange = new EventEmitter<CustomEvent>();
+  @Output() valueChange = new EventEmitter<string>();
+  @Output() monthChange = new EventEmitter<number>();
+  @Output() yearChange = new EventEmitter<number>();
+
+  onArcNavigate(event: CustomEvent) {
+    this.arcNavigate.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('month' in detail) {
+      const next = detail.month as number;
+      this.month = next;
+      this.monthChange.emit(next);
+    }
+    if ('year' in detail) {
+      const next = detail.year as number;
+      this.year = next;
+      this.yearChange.emit(next);
+    }
+  }
+
+  onArcChange(event: CustomEvent) {
+    this.arcChange.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('value' in detail) {
+      const next = detail.value as string;
+      this.value = next;
+      this.valueChange.emit(next);
+    }
+  }
 }

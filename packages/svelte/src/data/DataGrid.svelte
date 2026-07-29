@@ -15,9 +15,22 @@
     [key: string]: unknown;
   }
 
-  let { columns = [], rows = [], sort = [], manualSort = false, selectable = false, virtual = false, rowHeight = 40, children, ...rest }: Props = $props();
+  let { columns = [], rows = [], sort = $bindable([]), manualSort = false, selectable = false, virtual = false, rowHeight = 40, children, ...rest }: Props = $props();
+
+  // Two-way binding — mirror the event detail back onto the prop, then
+  // forward to the consumer's own handler, which {...rest} would otherwise
+  // have attached. These are declared after {...rest} below so they win.
+  function __onArcSort(e: Event) {
+    const detail = (e as CustomEvent).detail as Record<string, unknown> | null;
+    if (detail) {
+      if ('sort' in detail) sort = detail.sort as unknown[];
+    }
+    (rest['onarc-sort'] as ((e: Event) => void) | undefined)?.(e);
+  }
 </script>
 
-<arc-data-grid {columns} {rows} {sort} {manualSort} {selectable} {virtual} {rowHeight} {...rest}>
+<arc-data-grid {columns} {rows} {sort} {manualSort} {selectable} {virtual} {rowHeight} {...rest}
+  onarc-sort={__onArcSort}
+>
   {@render children?.()}
 </arc-data-grid>

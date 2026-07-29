@@ -7,11 +7,23 @@ import '@arclux/arc-ui/page-indicator';
   selector: 'arc-page-indicator',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-page-indicator [attr.count]="count" [attr.value]="value" [clickable]="clickable" (arc-change)="arcChange.emit($event)"><ng-content /></arc-page-indicator>`,
+  template: `<arc-page-indicator [attr.count]="count" [attr.value]="value" [clickable]="clickable" (arc-change)="onArcChange($event)"><ng-content /></arc-page-indicator>`,
 })
 export class PageIndicator {
   @Input() count: number = 0;
   @Input() value: number = 0;
   @Input() clickable: boolean = false;
   @Output() arcChange = new EventEmitter<CustomEvent>();
+  @Output() valueChange = new EventEmitter<number>();
+
+  onArcChange(event: CustomEvent) {
+    this.arcChange.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('value' in detail) {
+      const next = detail.value as number;
+      this.value = next;
+      this.valueChange.emit(next);
+    }
+  }
 }

@@ -62,6 +62,25 @@ export default {
   //   arc-navigation-menu  — 60% of its 14 KB is the mobile overlay and dropdown,
   //                          driven by JS state classes; ~5.6 KB would be usable
 
+  // Two-way binding opt-outs. Bindings are derived by convention — an event
+  // whose `detail` carries a key matching a declared prop name is that prop's
+  // write-back path — which holds across the library except here. Lives in
+  // config for the same reason as the interactivity block above.
+  bindings: {
+    // Collision: detail.label is the *selected option's* text, not the field's
+    // own label prop. Binding it would rewrite the field label to the chosen
+    // option's text on every change. The only genuine break in the convention.
+    'arc-select':      { exclude: ['label'] },
+
+    // Echoes: the element dispatches its own unchanged prop as identifying
+    // context, never as a new value, so the write-back is a no-op. Excluded so
+    // the two-way surface only advertises props that can actually change.
+    'arc-copy-button': { exclude: ['value'] },  // the string it just copied
+    'arc-hotkey':      { exclude: ['keys'] },   // the pattern that matched
+    'arc-list-item':   { exclude: ['value'] },  // the item's own identity
+    'arc-chip':        { exclude: ['value'] },  // keeps its real `selected` binding
+  },
+
   // React output
   react: {
     outDir: 'packages/react/src',

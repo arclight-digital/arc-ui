@@ -7,7 +7,7 @@ import '@arclux/arc-ui/rating';
   selector: 'arc-rating',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-rating [attr.value]="value" [attr.max]="max" [attr.name]="name" [disabled]="disabled" [readonly]="readonly" (arc-change)="arcChange.emit($event)"><ng-content /></arc-rating>`,
+  template: `<arc-rating [attr.value]="value" [attr.max]="max" [attr.name]="name" [disabled]="disabled" [readonly]="readonly" (arc-change)="onArcChange($event)"><ng-content /></arc-rating>`,
 })
 export class Rating {
   @Input() value: number = 0;
@@ -16,4 +16,16 @@ export class Rating {
   @Input() disabled: boolean = false;
   @Input() readonly: boolean = false;
   @Output() arcChange = new EventEmitter<CustomEvent>();
+  @Output() valueChange = new EventEmitter<number>();
+
+  onArcChange(event: CustomEvent) {
+    this.arcChange.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('value' in detail) {
+      const next = detail.value as number;
+      this.value = next;
+      this.valueChange.emit(next);
+    }
+  }
 }

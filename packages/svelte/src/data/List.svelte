@@ -14,9 +14,30 @@
     [key: string]: unknown;
   }
 
-  let { variant = 'default', size = 'md', selectable = false, multiple = false, value = '', label = '', children, ...rest }: Props = $props();
+  let { variant = 'default', size = 'md', selectable = false, multiple = false, value = $bindable(''), label = '', children, ...rest }: Props = $props();
+
+  // Two-way binding — mirror the event detail back onto the prop, then
+  // forward to the consumer's own handler, which {...rest} would otherwise
+  // have attached. These are declared after {...rest} below so they win.
+  function __onArcChange(e: Event) {
+    const detail = (e as CustomEvent).detail as Record<string, unknown> | null;
+    if (detail) {
+      if ('value' in detail) value = detail.value as string;
+    }
+    (rest['onarc-change'] as ((e: Event) => void) | undefined)?.(e);
+  }
+  function __onArcItemSelect(e: Event) {
+    const detail = (e as CustomEvent).detail as Record<string, unknown> | null;
+    if (detail) {
+      if ('value' in detail) value = detail.value as string;
+    }
+    (rest['onarc-item-select'] as ((e: Event) => void) | undefined)?.(e);
+  }
 </script>
 
-<arc-list {variant} {size} {selectable} {multiple} {value} {label} {...rest}>
+<arc-list {variant} {size} {selectable} {multiple} {value} {label} {...rest}
+  onarc-change={__onArcChange}
+  onarc-item-select={__onArcItemSelect}
+>
   {@render children?.()}
 </arc-list>

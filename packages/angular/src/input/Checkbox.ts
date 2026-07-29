@@ -7,7 +7,7 @@ import '@arclux/arc-ui/checkbox';
   selector: 'arc-checkbox',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-checkbox [checked]="checked" [indeterminate]="indeterminate" [disabled]="disabled" [attr.size]="size" [attr.label]="label" [attr.name]="name" [attr.value]="value" (arc-change)="arcChange.emit($event)"><ng-content /></arc-checkbox>`,
+  template: `<arc-checkbox [checked]="checked" [indeterminate]="indeterminate" [disabled]="disabled" [attr.size]="size" [attr.label]="label" [attr.name]="name" [attr.value]="value" (arc-change)="onArcChange($event)"><ng-content /></arc-checkbox>`,
 })
 export class Checkbox {
   @Input() checked: boolean = false;
@@ -18,4 +18,16 @@ export class Checkbox {
   @Input() name: string = '';
   @Input() value: string = '';
   @Output() arcChange = new EventEmitter<CustomEvent>();
+  @Output() checkedChange = new EventEmitter<boolean>();
+
+  onArcChange(event: CustomEvent) {
+    this.arcChange.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('checked' in detail) {
+      const next = detail.checked as boolean;
+      this.checked = next;
+      this.checkedChange.emit(next);
+    }
+  }
 }

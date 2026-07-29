@@ -7,7 +7,7 @@ import '@arclux/arc-ui/time-picker';
   selector: 'arc-time-picker',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-time-picker [attr.value]="value" [attr.name]="name" [attr.min]="min" [attr.max]="max" [attr.step]="step" [attr.format]="format" [attr.placeholder]="placeholder" [disabled]="disabled" [attr.label]="label" (arc-change)="arcChange.emit($event)"><ng-content /></arc-time-picker>`,
+  template: `<arc-time-picker [attr.value]="value" [attr.name]="name" [attr.min]="min" [attr.max]="max" [attr.step]="step" [attr.format]="format" [attr.placeholder]="placeholder" [disabled]="disabled" [attr.label]="label" (arc-change)="onArcChange($event)"><ng-content /></arc-time-picker>`,
 })
 export class TimePicker {
   @Input() value: string = '';
@@ -20,4 +20,16 @@ export class TimePicker {
   @Input() disabled: boolean = false;
   @Input() label: string = '';
   @Output() arcChange = new EventEmitter<CustomEvent>();
+  @Output() valueChange = new EventEmitter<string>();
+
+  onArcChange(event: CustomEvent) {
+    this.arcChange.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('value' in detail) {
+      const next = detail.value as string;
+      this.value = next;
+      this.valueChange.emit(next);
+    }
+  }
 }

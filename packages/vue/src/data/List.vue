@@ -23,7 +23,23 @@ withDefaults(defineProps<{
 const emit = defineEmits<{
   'arc-change': [event: CustomEvent];
   'arc-item-select': [event: CustomEvent];
+  'update:value': [value: string];
 }>();
+
+function onArcChange(payload: CustomEvent) {
+  emit('arc-change', payload);
+  const detail = payload.detail as Record<string, unknown> | null;
+  if (detail) {
+    if ('value' in detail) emit('update:value', detail.value as string);
+  }
+}
+function onArcItemSelect(payload: CustomEvent) {
+  emit('arc-item-select', payload);
+  const detail = payload.detail as Record<string, unknown> | null;
+  if (detail) {
+    if ('value' in detail) emit('update:value', detail.value as string);
+  }
+}
 </script>
 
 <template>
@@ -34,8 +50,8 @@ const emit = defineEmits<{
     :multiple="multiple"
     :value="value"
     :label="label"
-    @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
-    @arc-item-select="(payload: CustomEvent) => emit('arc-item-select', payload)"
+    @arc-change="onArcChange"
+    @arc-item-select="onArcItemSelect"
   >
     <slot />
   </arc-list>

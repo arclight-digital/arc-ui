@@ -7,7 +7,7 @@ import '@arclux/arc-ui/color-picker';
   selector: 'arc-color-picker',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-color-picker [attr.value]="value" [attr.name]="name" [presets]="presets" [disabled]="disabled" [attr.label]="label" (arc-change)="arcChange.emit($event)"><ng-content /></arc-color-picker>`,
+  template: `<arc-color-picker [attr.value]="value" [attr.name]="name" [presets]="presets" [disabled]="disabled" [attr.label]="label" (arc-change)="onArcChange($event)"><ng-content /></arc-color-picker>`,
 })
 export class ColorPicker {
   @Input() value: string = '#4d7ef7';
@@ -16,4 +16,16 @@ export class ColorPicker {
   @Input() disabled: boolean = false;
   @Input() label: string = '';
   @Output() arcChange = new EventEmitter<CustomEvent>();
+  @Output() valueChange = new EventEmitter<string>();
+
+  onArcChange(event: CustomEvent) {
+    this.arcChange.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('value' in detail) {
+      const next = detail.value as string;
+      this.value = next;
+      this.valueChange.emit(next);
+    }
+  }
 }

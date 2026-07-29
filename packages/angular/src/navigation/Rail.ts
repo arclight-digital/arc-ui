@@ -7,11 +7,23 @@ import '@arclux/arc-ui/rail';
   selector: 'arc-rail',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-rail [attr.items]="items" [attr.value]="value" [expanded]="expanded" (arc-change)="arcChange.emit($event)"><ng-content /></arc-rail>`,
+  template: `<arc-rail [attr.items]="items" [attr.value]="value" [expanded]="expanded" (arc-change)="onArcChange($event)"><ng-content /></arc-rail>`,
 })
 export class Rail {
   @Input() items: string = [];
   @Input() value: string = '';
   @Input() expanded: boolean = false;
   @Output() arcChange = new EventEmitter<CustomEvent>();
+  @Output() valueChange = new EventEmitter<string>();
+
+  onArcChange(event: CustomEvent) {
+    this.arcChange.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('value' in detail) {
+      const next = detail.value as string;
+      this.value = next;
+      this.valueChange.emit(next);
+    }
+  }
 }

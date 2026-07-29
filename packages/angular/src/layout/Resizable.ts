@@ -7,7 +7,7 @@ import '@arclux/arc-ui/resizable';
   selector: 'arc-resizable',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-resizable [attr.direction]="direction" [attr.minSize]="minSize" [attr.maxSize]="maxSize" [attr.size]="size" (arc-resize)="arcResize.emit($event)"><ng-content /></arc-resizable>`,
+  template: `<arc-resizable [attr.direction]="direction" [attr.minSize]="minSize" [attr.maxSize]="maxSize" [attr.size]="size" (arc-resize)="onArcResize($event)"><ng-content /></arc-resizable>`,
 })
 export class Resizable {
   @Input() direction: 'horizontal' | 'vertical' = 'horizontal';
@@ -15,4 +15,16 @@ export class Resizable {
   @Input() maxSize: number = Infinity;
   @Input() size: number = 300;
   @Output() arcResize = new EventEmitter<CustomEvent>();
+  @Output() sizeChange = new EventEmitter<number>();
+
+  onArcResize(event: CustomEvent) {
+    this.arcResize.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('size' in detail) {
+      const next = detail.size as number;
+      this.size = next;
+      this.sizeChange.emit(next);
+    }
+  }
 }

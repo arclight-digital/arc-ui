@@ -18,7 +18,16 @@ withDefaults(defineProps<{
 
 const emit = defineEmits<{
   'arc-resize': [event: CustomEvent];
+  'update:size': [value: number];
 }>();
+
+function onArcResize(payload: CustomEvent) {
+  emit('arc-resize', payload);
+  const detail = payload.detail as Record<string, unknown> | null;
+  if (detail) {
+    if ('size' in detail) emit('update:size', detail.size as number);
+  }
+}
 </script>
 
 <template>
@@ -27,7 +36,7 @@ const emit = defineEmits<{
     :minSize="minSize"
     :maxSize="maxSize"
     :size="size"
-    @arc-resize="(payload: CustomEvent) => emit('arc-resize', payload)"
+    @arc-resize="onArcResize"
   >
     <slot />
   </arc-resizable>

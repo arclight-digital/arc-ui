@@ -7,10 +7,22 @@ import '@arclux/arc-ui/truncate';
   selector: 'arc-truncate',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-truncate [attr.lines]="lines" [expanded]="expanded" (arc-toggle)="arcToggle.emit($event)"><ng-content /></arc-truncate>`,
+  template: `<arc-truncate [attr.lines]="lines" [expanded]="expanded" (arc-toggle)="onArcToggle($event)"><ng-content /></arc-truncate>`,
 })
 export class Truncate {
   @Input() lines: number = 3;
   @Input() expanded: boolean = false;
   @Output() arcToggle = new EventEmitter<CustomEvent>();
+  @Output() expandedChange = new EventEmitter<boolean>();
+
+  onArcToggle(event: CustomEvent) {
+    this.arcToggle.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('expanded' in detail) {
+      const next = detail.expanded as boolean;
+      this.expanded = next;
+      this.expandedChange.emit(next);
+    }
+  }
 }

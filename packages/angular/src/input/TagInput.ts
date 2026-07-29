@@ -7,7 +7,7 @@ import '@arclux/arc-ui/tag-input';
   selector: 'arc-tag-input',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-tag-input [value]="value" [suggestions]="suggestions" [attr.delimiter]="delimiter" [attr.maxTags]="maxTags" [allowCustom]="allowCustom" [attr.label]="label" [attr.placeholder]="placeholder" [attr.name]="name" [disabled]="disabled" [attr.error]="error" (arc-change)="arcChange.emit($event)" (arc-input)="arcInput.emit($event)"><ng-content /></arc-tag-input>`,
+  template: `<arc-tag-input [value]="value" [suggestions]="suggestions" [attr.delimiter]="delimiter" [attr.maxTags]="maxTags" [allowCustom]="allowCustom" [attr.label]="label" [attr.placeholder]="placeholder" [attr.name]="name" [disabled]="disabled" [attr.error]="error" (arc-change)="onArcChange($event)" (arc-input)="arcInput.emit($event)"><ng-content /></arc-tag-input>`,
 })
 export class TagInput {
   @Input() value: unknown[] = [];
@@ -22,4 +22,16 @@ export class TagInput {
   @Input() error: string = '';
   @Output() arcChange = new EventEmitter<CustomEvent>();
   @Output() arcInput = new EventEmitter<CustomEvent>();
+  @Output() valueChange = new EventEmitter<unknown[]>();
+
+  onArcChange(event: CustomEvent) {
+    this.arcChange.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('value' in detail) {
+      const next = detail.value as unknown[];
+      this.value = next;
+      this.valueChange.emit(next);
+    }
+  }
 }

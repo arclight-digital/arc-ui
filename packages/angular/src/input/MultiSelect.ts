@@ -7,7 +7,7 @@ import '@arclux/arc-ui/multi-select';
   selector: 'arc-multi-select',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-multi-select [value]="value" [attr.placeholder]="placeholder" [attr.label]="label" [attr.name]="name" [disabled]="disabled" (arc-change)="arcChange.emit($event)"><ng-content /></arc-multi-select>`,
+  template: `<arc-multi-select [value]="value" [attr.placeholder]="placeholder" [attr.label]="label" [attr.name]="name" [disabled]="disabled" (arc-change)="onArcChange($event)"><ng-content /></arc-multi-select>`,
 })
 export class MultiSelect {
   @Input() value: unknown[] = [];
@@ -16,4 +16,16 @@ export class MultiSelect {
   @Input() name: string = '';
   @Input() disabled: boolean = false;
   @Output() arcChange = new EventEmitter<CustomEvent>();
+  @Output() valueChange = new EventEmitter<unknown[]>();
+
+  onArcChange(event: CustomEvent) {
+    this.arcChange.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('value' in detail) {
+      const next = detail.value as unknown[];
+      this.value = next;
+      this.valueChange.emit(next);
+    }
+  }
 }

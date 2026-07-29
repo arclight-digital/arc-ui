@@ -10,9 +10,22 @@
     [key: string]: unknown;
   }
 
-  let { lines = 3, expanded = false, children, ...rest }: Props = $props();
+  let { lines = 3, expanded = $bindable(false), children, ...rest }: Props = $props();
+
+  // Two-way binding — mirror the event detail back onto the prop, then
+  // forward to the consumer's own handler, which {...rest} would otherwise
+  // have attached. These are declared after {...rest} below so they win.
+  function __onArcToggle(e: Event) {
+    const detail = (e as CustomEvent).detail as Record<string, unknown> | null;
+    if (detail) {
+      if ('expanded' in detail) expanded = detail.expanded as boolean;
+    }
+    (rest['onarc-toggle'] as ((e: Event) => void) | undefined)?.(e);
+  }
 </script>
 
-<arc-truncate {lines} {expanded} {...rest}>
+<arc-truncate {lines} {expanded} {...rest}
+  onarc-toggle={__onArcToggle}
+>
   {@render children?.()}
 </arc-truncate>

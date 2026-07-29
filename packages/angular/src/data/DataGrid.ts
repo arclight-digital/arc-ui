@@ -7,7 +7,7 @@ import '@arclux/arc-ui/data-grid';
   selector: 'arc-data-grid',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-data-grid [columns]="columns" [rows]="rows" [sort]="sort" [manualSort]="manualSort" [selectable]="selectable" [virtual]="virtual" [attr.rowHeight]="rowHeight" (arc-sort)="arcSort.emit($event)" (arc-selection-change)="arcSelectionChange.emit($event)" (arc-cell-change)="arcCellChange.emit($event)"><ng-content /></arc-data-grid>`,
+  template: `<arc-data-grid [columns]="columns" [rows]="rows" [sort]="sort" [manualSort]="manualSort" [selectable]="selectable" [virtual]="virtual" [attr.rowHeight]="rowHeight" (arc-sort)="onArcSort($event)" (arc-selection-change)="arcSelectionChange.emit($event)" (arc-cell-change)="arcCellChange.emit($event)"><ng-content /></arc-data-grid>`,
 })
 export class DataGrid {
   @Input() columns: unknown[] = [];
@@ -20,4 +20,16 @@ export class DataGrid {
   @Output() arcSort = new EventEmitter<CustomEvent>();
   @Output() arcSelectionChange = new EventEmitter<CustomEvent>();
   @Output() arcCellChange = new EventEmitter<CustomEvent>();
+  @Output() sortChange = new EventEmitter<unknown[]>();
+
+  onArcSort(event: CustomEvent) {
+    this.arcSort.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('sort' in detail) {
+      const next = detail.sort as unknown[];
+      this.sort = next;
+      this.sortChange.emit(next);
+    }
+  }
 }

@@ -21,7 +21,26 @@ withDefaults(defineProps<{
 const emit = defineEmits<{
   'arc-navigate': [event: CustomEvent];
   'arc-change': [event: CustomEvent];
+  'update:value': [value: string];
+  'update:month': [value: number];
+  'update:year': [value: number];
 }>();
+
+function onArcNavigate(payload: CustomEvent) {
+  emit('arc-navigate', payload);
+  const detail = payload.detail as Record<string, unknown> | null;
+  if (detail) {
+    if ('month' in detail) emit('update:month', detail.month as number);
+    if ('year' in detail) emit('update:year', detail.year as number);
+  }
+}
+function onArcChange(payload: CustomEvent) {
+  emit('arc-change', payload);
+  const detail = payload.detail as Record<string, unknown> | null;
+  if (detail) {
+    if ('value' in detail) emit('update:value', detail.value as string);
+  }
+}
 </script>
 
 <template>
@@ -31,8 +50,8 @@ const emit = defineEmits<{
     :max="max"
     :month="month"
     :year="year"
-    @arc-navigate="(payload: CustomEvent) => emit('arc-navigate', payload)"
-    @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
+    @arc-navigate="onArcNavigate"
+    @arc-change="onArcChange"
   >
     <slot />
   </arc-calendar>

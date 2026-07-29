@@ -19,9 +19,30 @@
     [key: string]: unknown;
   }
 
-  let { value = '', placeholder = '', label = '', rows = 4, maxlength = 0, disabled = false, readonly = false, resize = 'vertical', size = 'md', autoResize = false, error = '', children, ...rest }: Props = $props();
+  let { value = $bindable(''), placeholder = '', label = '', rows = 4, maxlength = 0, disabled = false, readonly = false, resize = 'vertical', size = 'md', autoResize = false, error = '', children, ...rest }: Props = $props();
+
+  // Two-way binding — mirror the event detail back onto the prop, then
+  // forward to the consumer's own handler, which {...rest} would otherwise
+  // have attached. These are declared after {...rest} below so they win.
+  function __onArcInput(e: Event) {
+    const detail = (e as CustomEvent).detail as Record<string, unknown> | null;
+    if (detail) {
+      if ('value' in detail) value = detail.value as string;
+    }
+    (rest['onarc-input'] as ((e: Event) => void) | undefined)?.(e);
+  }
+  function __onArcChange(e: Event) {
+    const detail = (e as CustomEvent).detail as Record<string, unknown> | null;
+    if (detail) {
+      if ('value' in detail) value = detail.value as string;
+    }
+    (rest['onarc-change'] as ((e: Event) => void) | undefined)?.(e);
+  }
 </script>
 
-<arc-textarea {value} {placeholder} {label} {rows} {maxlength} {disabled} {readonly} {resize} {size} {autoResize} {error} {...rest}>
+<arc-textarea {value} {placeholder} {label} {rows} {maxlength} {disabled} {readonly} {resize} {size} {autoResize} {error} {...rest}
+  onarc-input={__onArcInput}
+  onarc-change={__onArcChange}
+>
   {@render children?.()}
 </arc-textarea>

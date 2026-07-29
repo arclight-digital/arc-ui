@@ -12,9 +12,22 @@
     [key: string]: unknown;
   }
 
-  let { orientation = 'horizontal', ratio = 0.5, minRatio = 0.15, maxRatio = 0.85, children, ...rest }: Props = $props();
+  let { orientation = 'horizontal', ratio = $bindable(0.5), minRatio = 0.15, maxRatio = 0.85, children, ...rest }: Props = $props();
+
+  // Two-way binding — mirror the event detail back onto the prop, then
+  // forward to the consumer's own handler, which {...rest} would otherwise
+  // have attached. These are declared after {...rest} below so they win.
+  function __onArcResize(e: Event) {
+    const detail = (e as CustomEvent).detail as Record<string, unknown> | null;
+    if (detail) {
+      if ('ratio' in detail) ratio = detail.ratio as number;
+    }
+    (rest['onarc-resize'] as ((e: Event) => void) | undefined)?.(e);
+  }
 </script>
 
-<arc-split-pane {orientation} {ratio} {minRatio} {maxRatio} {...rest}>
+<arc-split-pane {orientation} {ratio} {minRatio} {maxRatio} {...rest}
+  onarc-resize={__onArcResize}
+>
   {@render children?.()}
 </arc-split-pane>

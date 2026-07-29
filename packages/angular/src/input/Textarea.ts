@@ -7,7 +7,7 @@ import '@arclux/arc-ui/textarea';
   selector: 'arc-textarea',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-textarea [attr.value]="value" [attr.placeholder]="placeholder" [attr.label]="label" [attr.rows]="rows" [attr.maxlength]="maxlength" [disabled]="disabled" [readonly]="readonly" [attr.resize]="resize" [attr.size]="size" [autoResize]="autoResize" [attr.error]="error" (arc-input)="arcInput.emit($event)" (arc-change)="arcChange.emit($event)"><ng-content /></arc-textarea>`,
+  template: `<arc-textarea [attr.value]="value" [attr.placeholder]="placeholder" [attr.label]="label" [attr.rows]="rows" [attr.maxlength]="maxlength" [disabled]="disabled" [readonly]="readonly" [attr.resize]="resize" [attr.size]="size" [autoResize]="autoResize" [attr.error]="error" (arc-input)="onArcInput($event)" (arc-change)="onArcChange($event)"><ng-content /></arc-textarea>`,
 })
 export class Textarea {
   @Input() value: string = '';
@@ -23,4 +23,27 @@ export class Textarea {
   @Input() error: string = '';
   @Output() arcInput = new EventEmitter<CustomEvent>();
   @Output() arcChange = new EventEmitter<CustomEvent>();
+  @Output() valueChange = new EventEmitter<string>();
+
+  onArcInput(event: CustomEvent) {
+    this.arcInput.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('value' in detail) {
+      const next = detail.value as string;
+      this.value = next;
+      this.valueChange.emit(next);
+    }
+  }
+
+  onArcChange(event: CustomEvent) {
+    this.arcChange.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('value' in detail) {
+      const next = detail.value as string;
+      this.value = next;
+      this.valueChange.emit(next);
+    }
+  }
 }

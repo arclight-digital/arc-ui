@@ -7,7 +7,7 @@ import '@arclux/arc-ui/pin-input';
   selector: 'arc-pin-input',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-pin-input [attr.length]="length" [attr.value]="value" [attr.name]="name" [disabled]="disabled" [mask]="mask" [attr.type]="type" [attr.separator]="separator" [attr.label]="label" (arc-change)="arcChange.emit($event)" (arc-complete)="arcComplete.emit($event)"><ng-content /></arc-pin-input>`,
+  template: `<arc-pin-input [attr.length]="length" [attr.value]="value" [attr.name]="name" [disabled]="disabled" [mask]="mask" [attr.type]="type" [attr.separator]="separator" [attr.label]="label" (arc-change)="onArcChange($event)" (arc-complete)="onArcComplete($event)"><ng-content /></arc-pin-input>`,
 })
 export class PinInput {
   @Input() length: number = 4;
@@ -20,4 +20,27 @@ export class PinInput {
   @Input() label: string = '';
   @Output() arcChange = new EventEmitter<CustomEvent>();
   @Output() arcComplete = new EventEmitter<CustomEvent>();
+  @Output() valueChange = new EventEmitter<string>();
+
+  onArcChange(event: CustomEvent) {
+    this.arcChange.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('value' in detail) {
+      const next = detail.value as string;
+      this.value = next;
+      this.valueChange.emit(next);
+    }
+  }
+
+  onArcComplete(event: CustomEvent) {
+    this.arcComplete.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('value' in detail) {
+      const next = detail.value as string;
+      this.value = next;
+      this.valueChange.emit(next);
+    }
+  }
 }

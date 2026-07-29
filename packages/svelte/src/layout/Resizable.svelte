@@ -12,9 +12,22 @@
     [key: string]: unknown;
   }
 
-  let { direction = 'horizontal', minSize = 100, maxSize = Infinity, size = 300, children, ...rest }: Props = $props();
+  let { direction = 'horizontal', minSize = 100, maxSize = Infinity, size = $bindable(300), children, ...rest }: Props = $props();
+
+  // Two-way binding — mirror the event detail back onto the prop, then
+  // forward to the consumer's own handler, which {...rest} would otherwise
+  // have attached. These are declared after {...rest} below so they win.
+  function __onArcResize(e: Event) {
+    const detail = (e as CustomEvent).detail as Record<string, unknown> | null;
+    if (detail) {
+      if ('size' in detail) size = detail.size as number;
+    }
+    (rest['onarc-resize'] as ((e: Event) => void) | undefined)?.(e);
+  }
 </script>
 
-<arc-resizable {direction} {minSize} {maxSize} {size} {...rest}>
+<arc-resizable {direction} {minSize} {maxSize} {size} {...rest}
+  onarc-resize={__onArcResize}
+>
   {@render children?.()}
 </arc-resizable>

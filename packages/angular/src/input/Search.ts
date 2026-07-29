@@ -7,7 +7,7 @@ import '@arclux/arc-ui/search';
   selector: 'arc-search',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-search [attr.value]="value" [attr.placeholder]="placeholder" [attr.label]="label" [disabled]="disabled" [loading]="loading" (arc-input)="arcInput.emit($event)" (arc-clear)="arcClear.emit($event)" (arc-change)="arcChange.emit($event)" (arc-select)="arcSelect.emit($event)"><ng-content /></arc-search>`,
+  template: `<arc-search [attr.value]="value" [attr.placeholder]="placeholder" [attr.label]="label" [disabled]="disabled" [loading]="loading" (arc-input)="onArcInput($event)" (arc-clear)="arcClear.emit($event)" (arc-change)="onArcChange($event)" (arc-select)="onArcSelect($event)"><ng-content /></arc-search>`,
 })
 export class Search {
   @Input() value: string = '';
@@ -19,4 +19,38 @@ export class Search {
   @Output() arcClear = new EventEmitter<CustomEvent>();
   @Output() arcChange = new EventEmitter<CustomEvent>();
   @Output() arcSelect = new EventEmitter<CustomEvent>();
+  @Output() valueChange = new EventEmitter<string>();
+
+  onArcInput(event: CustomEvent) {
+    this.arcInput.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('value' in detail) {
+      const next = detail.value as string;
+      this.value = next;
+      this.valueChange.emit(next);
+    }
+  }
+
+  onArcChange(event: CustomEvent) {
+    this.arcChange.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('value' in detail) {
+      const next = detail.value as string;
+      this.value = next;
+      this.valueChange.emit(next);
+    }
+  }
+
+  onArcSelect(event: CustomEvent) {
+    this.arcSelect.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('value' in detail) {
+      const next = detail.value as string;
+      this.value = next;
+      this.valueChange.emit(next);
+    }
+  }
 }

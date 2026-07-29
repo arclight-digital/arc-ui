@@ -7,7 +7,7 @@ import '@arclux/arc-ui/split-pane';
   selector: 'arc-split-pane',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-split-pane [attr.orientation]="orientation" [attr.ratio]="ratio" [attr.minRatio]="minRatio" [attr.maxRatio]="maxRatio" (arc-resize)="arcResize.emit($event)"><ng-content /></arc-split-pane>`,
+  template: `<arc-split-pane [attr.orientation]="orientation" [attr.ratio]="ratio" [attr.minRatio]="minRatio" [attr.maxRatio]="maxRatio" (arc-resize)="onArcResize($event)"><ng-content /></arc-split-pane>`,
 })
 export class SplitPane {
   @Input() orientation: 'vertical' | 'horizontal' = 'horizontal';
@@ -15,4 +15,16 @@ export class SplitPane {
   @Input() minRatio: number = 0.15;
   @Input() maxRatio: number = 0.85;
   @Output() arcResize = new EventEmitter<CustomEvent>();
+  @Output() ratioChange = new EventEmitter<number>();
+
+  onArcResize(event: CustomEvent) {
+    this.arcResize.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('ratio' in detail) {
+      const next = detail.ratio as number;
+      this.ratio = next;
+      this.ratioChange.emit(next);
+    }
+  }
 }

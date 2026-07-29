@@ -17,7 +17,23 @@ withDefaults(defineProps<{
 const emit = defineEmits<{
   'arc-input': [event: CustomEvent];
   'arc-submit': [event: CustomEvent];
+  'update:value': [value: string];
 }>();
+
+function onArcInput(payload: CustomEvent) {
+  emit('arc-input', payload);
+  const detail = payload.detail as Record<string, unknown> | null;
+  if (detail) {
+    if ('value' in detail) emit('update:value', detail.value as string);
+  }
+}
+function onArcSubmit(payload: CustomEvent) {
+  emit('arc-submit', payload);
+  const detail = payload.detail as Record<string, unknown> | null;
+  if (detail) {
+    if ('value' in detail) emit('update:value', detail.value as string);
+  }
+}
 </script>
 
 <template>
@@ -25,8 +41,8 @@ const emit = defineEmits<{
     :placeholder="placeholder"
     :value="value"
     :icon="icon"
-    @arc-input="(payload: CustomEvent) => emit('arc-input', payload)"
-    @arc-submit="(payload: CustomEvent) => emit('arc-submit', payload)"
+    @arc-input="onArcInput"
+    @arc-submit="onArcSubmit"
   >
     <slot />
   </arc-command-bar>

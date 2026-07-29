@@ -11,9 +11,22 @@
     [key: string]: unknown;
   }
 
-  let { selected = false, disabled = false, value = '', children, ...rest }: Props = $props();
+  let { selected = $bindable(false), disabled = false, value = '', children, ...rest }: Props = $props();
+
+  // Two-way binding — mirror the event detail back onto the prop, then
+  // forward to the consumer's own handler, which {...rest} would otherwise
+  // have attached. These are declared after {...rest} below so they win.
+  function __onArcChange(e: Event) {
+    const detail = (e as CustomEvent).detail as Record<string, unknown> | null;
+    if (detail) {
+      if ('selected' in detail) selected = detail.selected as boolean;
+    }
+    (rest['onarc-change'] as ((e: Event) => void) | undefined)?.(e);
+  }
 </script>
 
-<arc-chip {selected} {disabled} {value} {...rest}>
+<arc-chip {selected} {disabled} {value} {...rest}
+  onarc-change={__onArcChange}
+>
   {@render children?.()}
 </arc-chip>

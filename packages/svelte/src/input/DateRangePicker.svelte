@@ -19,9 +19,23 @@
     [key: string]: unknown;
   }
 
-  let { start = '', end = '', name = '', min = '', max = '', months = 2, presets = [], placeholder = 'Select date range', disabled = false, required = false, label = '', children, ...rest }: Props = $props();
+  let { start = $bindable(''), end = $bindable(''), name = '', min = '', max = '', months = 2, presets = [], placeholder = 'Select date range', disabled = false, required = false, label = '', children, ...rest }: Props = $props();
+
+  // Two-way binding — mirror the event detail back onto the prop, then
+  // forward to the consumer's own handler, which {...rest} would otherwise
+  // have attached. These are declared after {...rest} below so they win.
+  function __onArcChange(e: Event) {
+    const detail = (e as CustomEvent).detail as Record<string, unknown> | null;
+    if (detail) {
+      if ('end' in detail) end = detail.end as string;
+      if ('start' in detail) start = detail.start as string;
+    }
+    (rest['onarc-change'] as ((e: Event) => void) | undefined)?.(e);
+  }
 </script>
 
-<arc-date-range-picker {start} {end} {name} {min} {max} {months} {presets} {placeholder} {disabled} {required} {label} {...rest}>
+<arc-date-range-picker {start} {end} {name} {min} {max} {months} {presets} {placeholder} {disabled} {required} {label} {...rest}
+  onarc-change={__onArcChange}
+>
   {@render children?.()}
 </arc-date-range-picker>

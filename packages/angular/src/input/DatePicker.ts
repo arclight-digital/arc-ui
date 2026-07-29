@@ -7,7 +7,7 @@ import '@arclux/arc-ui/date-picker';
   selector: 'arc-date-picker',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-date-picker [attr.value]="value" [attr.name]="name" [attr.min]="min" [attr.max]="max" [attr.placeholder]="placeholder" [disabled]="disabled" [attr.label]="label" (arc-change)="arcChange.emit($event)"><ng-content /></arc-date-picker>`,
+  template: `<arc-date-picker [attr.value]="value" [attr.name]="name" [attr.min]="min" [attr.max]="max" [attr.placeholder]="placeholder" [disabled]="disabled" [attr.label]="label" (arc-change)="onArcChange($event)"><ng-content /></arc-date-picker>`,
 })
 export class DatePicker {
   @Input() value: string = '';
@@ -18,4 +18,16 @@ export class DatePicker {
   @Input() disabled: boolean = false;
   @Input() label: string = '';
   @Output() arcChange = new EventEmitter<CustomEvent>();
+  @Output() valueChange = new EventEmitter<string>();
+
+  onArcChange(event: CustomEvent) {
+    this.arcChange.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('value' in detail) {
+      const next = detail.value as string;
+      this.value = next;
+      this.valueChange.emit(next);
+    }
+  }
 }

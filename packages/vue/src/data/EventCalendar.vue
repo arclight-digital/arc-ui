@@ -18,7 +18,25 @@ const emit = defineEmits<{
   'arc-period-change': [event: CustomEvent];
   'arc-date-click': [event: CustomEvent];
   'arc-event-click': [event: CustomEvent];
+  'update:view': [value: 'week'];
+  'update:date': [value: string];
 }>();
+
+function onArcPeriodChange(payload: CustomEvent) {
+  emit('arc-period-change', payload);
+  const detail = payload.detail as Record<string, unknown> | null;
+  if (detail) {
+    if ('date' in detail) emit('update:date', detail.date as string);
+    if ('view' in detail) emit('update:view', detail.view as 'week');
+  }
+}
+function onArcDateClick(payload: CustomEvent) {
+  emit('arc-date-click', payload);
+  const detail = payload.detail as Record<string, unknown> | null;
+  if (detail) {
+    if ('date' in detail) emit('update:date', detail.date as string);
+  }
+}
 </script>
 
 <template>
@@ -26,8 +44,8 @@ const emit = defineEmits<{
     :events="events"
     :view="view"
     :date="date"
-    @arc-period-change="(payload: CustomEvent) => emit('arc-period-change', payload)"
-    @arc-date-click="(payload: CustomEvent) => emit('arc-date-click', payload)"
+    @arc-period-change="onArcPeriodChange"
+    @arc-date-click="onArcDateClick"
     @arc-event-click="(payload: CustomEvent) => emit('arc-event-click', payload)"
   >
     <slot />

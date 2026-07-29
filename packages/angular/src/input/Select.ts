@@ -7,7 +7,7 @@ import '@arclux/arc-ui/select';
   selector: 'arc-select',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-select [attr.value]="value" [attr.placeholder]="placeholder" [attr.label]="label" [attr.name]="name" [disabled]="disabled" [attr.size]="size" [attr.error]="error" [open]="open" (arc-change)="arcChange.emit($event)"><ng-content /></arc-select>`,
+  template: `<arc-select [attr.value]="value" [attr.placeholder]="placeholder" [attr.label]="label" [attr.name]="name" [disabled]="disabled" [attr.size]="size" [attr.error]="error" [open]="open" (arc-change)="onArcChange($event)"><ng-content /></arc-select>`,
 })
 export class Select {
   @Input() value: string = '';
@@ -19,4 +19,16 @@ export class Select {
   @Input() error: string = '';
   @Input() open: boolean = false;
   @Output() arcChange = new EventEmitter<CustomEvent>();
+  @Output() valueChange = new EventEmitter<string>();
+
+  onArcChange(event: CustomEvent) {
+    this.arcChange.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('value' in detail) {
+      const next = detail.value as string;
+      this.value = next;
+      this.valueChange.emit(next);
+    }
+  }
 }

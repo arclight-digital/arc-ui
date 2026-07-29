@@ -25,7 +25,23 @@ withDefaults(defineProps<{
 const emit = defineEmits<{
   'arc-input': [event: CustomEvent];
   'arc-change': [event: CustomEvent];
+  'update:value': [value: number];
 }>();
+
+function onArcInput(payload: CustomEvent) {
+  emit('arc-input', payload);
+  const detail = payload.detail as Record<string, unknown> | null;
+  if (detail) {
+    if ('value' in detail) emit('update:value', detail.value as number);
+  }
+}
+function onArcChange(payload: CustomEvent) {
+  emit('arc-change', payload);
+  const detail = payload.detail as Record<string, unknown> | null;
+  if (detail) {
+    if ('value' in detail) emit('update:value', detail.value as number);
+  }
+}
 </script>
 
 <template>
@@ -37,8 +53,8 @@ const emit = defineEmits<{
     :name="name"
     :disabled="disabled"
     :label="label"
-    @arc-input="(payload: CustomEvent) => emit('arc-input', payload)"
-    @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
+    @arc-input="onArcInput"
+    @arc-change="onArcChange"
   >
     <slot />
   </arc-slider>

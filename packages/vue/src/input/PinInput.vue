@@ -27,7 +27,23 @@ withDefaults(defineProps<{
 const emit = defineEmits<{
   'arc-change': [event: CustomEvent];
   'arc-complete': [event: CustomEvent];
+  'update:value': [value: string];
 }>();
+
+function onArcChange(payload: CustomEvent) {
+  emit('arc-change', payload);
+  const detail = payload.detail as Record<string, unknown> | null;
+  if (detail) {
+    if ('value' in detail) emit('update:value', detail.value as string);
+  }
+}
+function onArcComplete(payload: CustomEvent) {
+  emit('arc-complete', payload);
+  const detail = payload.detail as Record<string, unknown> | null;
+  if (detail) {
+    if ('value' in detail) emit('update:value', detail.value as string);
+  }
+}
 </script>
 
 <template>
@@ -40,8 +56,8 @@ const emit = defineEmits<{
     :type="type"
     :separator="separator"
     :label="label"
-    @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
-    @arc-complete="(payload: CustomEvent) => emit('arc-complete', payload)"
+    @arc-change="onArcChange"
+    @arc-complete="onArcComplete"
   >
     <slot />
   </arc-pin-input>

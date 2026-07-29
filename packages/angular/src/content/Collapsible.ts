@@ -7,10 +7,22 @@ import '@arclux/arc-ui/collapsible';
   selector: 'arc-collapsible',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-collapsible [open]="open" [attr.heading]="heading" (arc-toggle)="arcToggle.emit($event)"><ng-content /></arc-collapsible>`,
+  template: `<arc-collapsible [open]="open" [attr.heading]="heading" (arc-toggle)="onArcToggle($event)"><ng-content /></arc-collapsible>`,
 })
 export class Collapsible {
   @Input() open: boolean = false;
   @Input() heading: string = '';
   @Output() arcToggle = new EventEmitter<CustomEvent>();
+  @Output() openChange = new EventEmitter<boolean>();
+
+  onArcToggle(event: CustomEvent) {
+    this.arcToggle.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('open' in detail) {
+      const next = detail.open as boolean;
+      this.open = next;
+      this.openChange.emit(next);
+    }
+  }
 }

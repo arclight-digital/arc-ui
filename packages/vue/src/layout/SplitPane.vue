@@ -18,7 +18,16 @@ withDefaults(defineProps<{
 
 const emit = defineEmits<{
   'arc-resize': [event: CustomEvent];
+  'update:ratio': [value: number];
 }>();
+
+function onArcResize(payload: CustomEvent) {
+  emit('arc-resize', payload);
+  const detail = payload.detail as Record<string, unknown> | null;
+  if (detail) {
+    if ('ratio' in detail) emit('update:ratio', detail.ratio as number);
+  }
+}
 </script>
 
 <template>
@@ -27,7 +36,7 @@ const emit = defineEmits<{
     :ratio="ratio"
     :minRatio="minRatio"
     :maxRatio="maxRatio"
-    @arc-resize="(payload: CustomEvent) => emit('arc-resize', payload)"
+    @arc-resize="onArcResize"
   >
     <slot />
   </arc-split-pane>

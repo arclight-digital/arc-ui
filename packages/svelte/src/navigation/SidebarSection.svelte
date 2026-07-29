@@ -11,9 +11,22 @@
     [key: string]: unknown;
   }
 
-  let { heading = '', collapsible = false, open = true, children, ...rest }: Props = $props();
+  let { heading = '', collapsible = false, open = $bindable(true), children, ...rest }: Props = $props();
+
+  // Two-way binding — mirror the event detail back onto the prop, then
+  // forward to the consumer's own handler, which {...rest} would otherwise
+  // have attached. These are declared after {...rest} below so they win.
+  function __onArcToggle(e: Event) {
+    const detail = (e as CustomEvent).detail as Record<string, unknown> | null;
+    if (detail) {
+      if ('open' in detail) open = detail.open as boolean;
+    }
+    (rest['onarc-toggle'] as ((e: Event) => void) | undefined)?.(e);
+  }
 </script>
 
-<arc-sidebar-section {heading} {collapsible} {open} {...rest}>
+<arc-sidebar-section {heading} {collapsible} {open} {...rest}
+  onarc-toggle={__onArcToggle}
+>
   {@render children?.()}
 </arc-sidebar-section>

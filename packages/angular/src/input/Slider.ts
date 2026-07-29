@@ -7,7 +7,7 @@ import '@arclux/arc-ui/slider';
   selector: 'arc-slider',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-slider [attr.value]="value" [attr.min]="min" [attr.max]="max" [attr.step]="step" [attr.name]="name" [disabled]="disabled" [attr.label]="label" (arc-input)="arcInput.emit($event)" (arc-change)="arcChange.emit($event)"><ng-content /></arc-slider>`,
+  template: `<arc-slider [attr.value]="value" [attr.min]="min" [attr.max]="max" [attr.step]="step" [attr.name]="name" [disabled]="disabled" [attr.label]="label" (arc-input)="onArcInput($event)" (arc-change)="onArcChange($event)"><ng-content /></arc-slider>`,
 })
 export class Slider {
   @Input() value: number = 0;
@@ -19,4 +19,27 @@ export class Slider {
   @Input() label: string = '';
   @Output() arcInput = new EventEmitter<CustomEvent>();
   @Output() arcChange = new EventEmitter<CustomEvent>();
+  @Output() valueChange = new EventEmitter<number>();
+
+  onArcInput(event: CustomEvent) {
+    this.arcInput.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('value' in detail) {
+      const next = detail.value as number;
+      this.value = next;
+      this.valueChange.emit(next);
+    }
+  }
+
+  onArcChange(event: CustomEvent) {
+    this.arcChange.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('value' in detail) {
+      const next = detail.value as number;
+      this.value = next;
+      this.valueChange.emit(next);
+    }
+  }
 }

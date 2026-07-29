@@ -7,7 +7,7 @@ import '@arclux/arc-ui/date-range-picker';
   selector: 'arc-date-range-picker',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-date-range-picker [attr.start]="start" [attr.end]="end" [attr.name]="name" [attr.min]="min" [attr.max]="max" [attr.months]="months" [presets]="presets" [attr.placeholder]="placeholder" [disabled]="disabled" [required]="required" [attr.label]="label" (arc-change)="arcChange.emit($event)"><ng-content /></arc-date-range-picker>`,
+  template: `<arc-date-range-picker [attr.start]="start" [attr.end]="end" [attr.name]="name" [attr.min]="min" [attr.max]="max" [attr.months]="months" [presets]="presets" [attr.placeholder]="placeholder" [disabled]="disabled" [required]="required" [attr.label]="label" (arc-change)="onArcChange($event)"><ng-content /></arc-date-range-picker>`,
 })
 export class DateRangePicker {
   @Input() start: string = '';
@@ -22,4 +22,22 @@ export class DateRangePicker {
   @Input() required: boolean = false;
   @Input() label: string = '';
   @Output() arcChange = new EventEmitter<CustomEvent>();
+  @Output() startChange = new EventEmitter<string>();
+  @Output() endChange = new EventEmitter<string>();
+
+  onArcChange(event: CustomEvent) {
+    this.arcChange.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('end' in detail) {
+      const next = detail.end as string;
+      this.end = next;
+      this.endChange.emit(next);
+    }
+    if ('start' in detail) {
+      const next = detail.start as string;
+      this.start = next;
+      this.startChange.emit(next);
+    }
+  }
 }

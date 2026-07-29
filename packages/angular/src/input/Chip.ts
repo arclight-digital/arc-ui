@@ -7,11 +7,23 @@ import '@arclux/arc-ui/chip';
   selector: 'arc-chip',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-chip [selected]="selected" [disabled]="disabled" [attr.value]="value" (arc-change)="arcChange.emit($event)"><ng-content /></arc-chip>`,
+  template: `<arc-chip [selected]="selected" [disabled]="disabled" [attr.value]="value" (arc-change)="onArcChange($event)"><ng-content /></arc-chip>`,
 })
 export class Chip {
   @Input() selected: boolean = false;
   @Input() disabled: boolean = false;
   @Input() value: string = '';
   @Output() arcChange = new EventEmitter<CustomEvent>();
+  @Output() selectedChange = new EventEmitter<boolean>();
+
+  onArcChange(event: CustomEvent) {
+    this.arcChange.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('selected' in detail) {
+      const next = detail.selected as boolean;
+      this.selected = next;
+      this.selectedChange.emit(next);
+    }
+  }
 }

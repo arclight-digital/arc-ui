@@ -11,9 +11,31 @@
     [key: string]: unknown;
   }
 
-  let { events = [], view = 'month', date = '', children, ...rest }: Props = $props();
+  let { events = [], view = $bindable('month'), date = $bindable(''), children, ...rest }: Props = $props();
+
+  // Two-way binding — mirror the event detail back onto the prop, then
+  // forward to the consumer's own handler, which {...rest} would otherwise
+  // have attached. These are declared after {...rest} below so they win.
+  function __onArcPeriodChange(e: Event) {
+    const detail = (e as CustomEvent).detail as Record<string, unknown> | null;
+    if (detail) {
+      if ('date' in detail) date = detail.date as string;
+      if ('view' in detail) view = detail.view as 'week';
+    }
+    (rest['onarc-period-change'] as ((e: Event) => void) | undefined)?.(e);
+  }
+  function __onArcDateClick(e: Event) {
+    const detail = (e as CustomEvent).detail as Record<string, unknown> | null;
+    if (detail) {
+      if ('date' in detail) date = detail.date as string;
+    }
+    (rest['onarc-date-click'] as ((e: Event) => void) | undefined)?.(e);
+  }
 </script>
 
-<arc-event-calendar {events} {view} {date} {...rest}>
+<arc-event-calendar {events} {view} {date} {...rest}
+  onarc-period-change={__onArcPeriodChange}
+  onarc-date-click={__onArcDateClick}
+>
   {@render children?.()}
 </arc-event-calendar>

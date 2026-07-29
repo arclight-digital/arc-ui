@@ -15,9 +15,22 @@
     [key: string]: unknown;
   }
 
-  let { checked = false, indeterminate = false, disabled = false, size = 'md', label = '', name = '', value = '', children, ...rest }: Props = $props();
+  let { checked = $bindable(false), indeterminate = false, disabled = false, size = 'md', label = '', name = '', value = '', children, ...rest }: Props = $props();
+
+  // Two-way binding — mirror the event detail back onto the prop, then
+  // forward to the consumer's own handler, which {...rest} would otherwise
+  // have attached. These are declared after {...rest} below so they win.
+  function __onArcChange(e: Event) {
+    const detail = (e as CustomEvent).detail as Record<string, unknown> | null;
+    if (detail) {
+      if ('checked' in detail) checked = detail.checked as boolean;
+    }
+    (rest['onarc-change'] as ((e: Event) => void) | undefined)?.(e);
+  }
 </script>
 
-<arc-checkbox {checked} {indeterminate} {disabled} {size} {label} {name} {value} {...rest}>
+<arc-checkbox {checked} {indeterminate} {disabled} {size} {label} {name} {value} {...rest}
+  onarc-change={__onArcChange}
+>
   {@render children?.()}
 </arc-checkbox>

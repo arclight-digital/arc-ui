@@ -7,7 +7,7 @@ import '@arclux/arc-ui/command-bar';
   selector: 'arc-command-bar',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-command-bar [attr.placeholder]="placeholder" [attr.value]="value" [attr.icon]="icon" (arc-input)="arcInput.emit($event)" (arc-submit)="arcSubmit.emit($event)"><ng-content /></arc-command-bar>`,
+  template: `<arc-command-bar [attr.placeholder]="placeholder" [attr.value]="value" [attr.icon]="icon" (arc-input)="onArcInput($event)" (arc-submit)="onArcSubmit($event)"><ng-content /></arc-command-bar>`,
 })
 export class CommandBar {
   @Input() placeholder: string = 'Search…';
@@ -15,4 +15,27 @@ export class CommandBar {
   @Input() icon: string = 'magnifying-glass';
   @Output() arcInput = new EventEmitter<CustomEvent>();
   @Output() arcSubmit = new EventEmitter<CustomEvent>();
+  @Output() valueChange = new EventEmitter<string>();
+
+  onArcInput(event: CustomEvent) {
+    this.arcInput.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('value' in detail) {
+      const next = detail.value as string;
+      this.value = next;
+      this.valueChange.emit(next);
+    }
+  }
+
+  onArcSubmit(event: CustomEvent) {
+    this.arcSubmit.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('value' in detail) {
+      const next = detail.value as string;
+      this.value = next;
+      this.valueChange.emit(next);
+    }
+  }
 }

@@ -17,9 +17,32 @@
     [key: string]: unknown;
   }
 
-  let { min = 0, max = 100, step = 1, low = 0, high = 100, name = '', disabled = false, label = '', showValues = true, children, ...rest }: Props = $props();
+  let { min = 0, max = 100, step = 1, low = $bindable(0), high = $bindable(100), name = '', disabled = false, label = '', showValues = true, children, ...rest }: Props = $props();
+
+  // Two-way binding — mirror the event detail back onto the prop, then
+  // forward to the consumer's own handler, which {...rest} would otherwise
+  // have attached. These are declared after {...rest} below so they win.
+  function __onArcInput(e: Event) {
+    const detail = (e as CustomEvent).detail as Record<string, unknown> | null;
+    if (detail) {
+      if ('high' in detail) high = detail.high as number;
+      if ('low' in detail) low = detail.low as number;
+    }
+    (rest['onarc-input'] as ((e: Event) => void) | undefined)?.(e);
+  }
+  function __onArcChange(e: Event) {
+    const detail = (e as CustomEvent).detail as Record<string, unknown> | null;
+    if (detail) {
+      if ('high' in detail) high = detail.high as number;
+      if ('low' in detail) low = detail.low as number;
+    }
+    (rest['onarc-change'] as ((e: Event) => void) | undefined)?.(e);
+  }
 </script>
 
-<arc-range-slider {min} {max} {step} {low} {high} {name} {disabled} {label} {showValues} {...rest}>
+<arc-range-slider {min} {max} {step} {low} {high} {name} {disabled} {label} {showValues} {...rest}
+  onarc-input={__onArcInput}
+  onarc-change={__onArcChange}
+>
   {@render children?.()}
 </arc-range-slider>

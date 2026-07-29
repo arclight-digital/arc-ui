@@ -29,7 +29,26 @@ withDefaults(defineProps<{
 const emit = defineEmits<{
   'arc-input': [event: CustomEvent];
   'arc-change': [event: CustomEvent];
+  'update:low': [value: number];
+  'update:high': [value: number];
 }>();
+
+function onArcInput(payload: CustomEvent) {
+  emit('arc-input', payload);
+  const detail = payload.detail as Record<string, unknown> | null;
+  if (detail) {
+    if ('high' in detail) emit('update:high', detail.high as number);
+    if ('low' in detail) emit('update:low', detail.low as number);
+  }
+}
+function onArcChange(payload: CustomEvent) {
+  emit('arc-change', payload);
+  const detail = payload.detail as Record<string, unknown> | null;
+  if (detail) {
+    if ('high' in detail) emit('update:high', detail.high as number);
+    if ('low' in detail) emit('update:low', detail.low as number);
+  }
+}
 </script>
 
 <template>
@@ -43,8 +62,8 @@ const emit = defineEmits<{
     :disabled="disabled"
     :label="label"
     :showValues="showValues"
-    @arc-input="(payload: CustomEvent) => emit('arc-input', payload)"
-    @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
+    @arc-input="onArcInput"
+    @arc-change="onArcChange"
   >
     <slot />
   </arc-range-slider>

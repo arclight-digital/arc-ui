@@ -7,7 +7,7 @@ import '@arclux/arc-ui/list';
   selector: 'arc-list',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-list [attr.variant]="variant" [attr.size]="size" [selectable]="selectable" [multiple]="multiple" [attr.value]="value" [attr.label]="label" (arc-change)="arcChange.emit($event)" (arc-item-select)="arcItemSelect.emit($event)"><ng-content /></arc-list>`,
+  template: `<arc-list [attr.variant]="variant" [attr.size]="size" [selectable]="selectable" [multiple]="multiple" [attr.value]="value" [attr.label]="label" (arc-change)="onArcChange($event)" (arc-item-select)="onArcItemSelect($event)"><ng-content /></arc-list>`,
 })
 export class List {
   @Input() variant: 'bordered' | 'separated' = 'default';
@@ -18,4 +18,27 @@ export class List {
   @Input() label: string = '';
   @Output() arcChange = new EventEmitter<CustomEvent>();
   @Output() arcItemSelect = new EventEmitter<CustomEvent>();
+  @Output() valueChange = new EventEmitter<string>();
+
+  onArcChange(event: CustomEvent) {
+    this.arcChange.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('value' in detail) {
+      const next = detail.value as string;
+      this.value = next;
+      this.valueChange.emit(next);
+    }
+  }
+
+  onArcItemSelect(event: CustomEvent) {
+    this.arcItemSelect.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('value' in detail) {
+      const next = detail.value as string;
+      this.value = next;
+      this.valueChange.emit(next);
+    }
+  }
 }

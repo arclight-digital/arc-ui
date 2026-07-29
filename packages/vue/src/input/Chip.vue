@@ -16,7 +16,16 @@ withDefaults(defineProps<{
 
 const emit = defineEmits<{
   'arc-change': [event: CustomEvent];
+  'update:selected': [value: boolean];
 }>();
+
+function onArcChange(payload: CustomEvent) {
+  emit('arc-change', payload);
+  const detail = payload.detail as Record<string, unknown> | null;
+  if (detail) {
+    if ('selected' in detail) emit('update:selected', detail.selected as boolean);
+  }
+}
 </script>
 
 <template>
@@ -24,7 +33,7 @@ const emit = defineEmits<{
     :selected="selected"
     :disabled="disabled"
     :value="value"
-    @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
+    @arc-change="onArcChange"
   >
     <slot />
   </arc-chip>

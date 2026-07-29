@@ -7,7 +7,7 @@ import '@arclux/arc-ui/combobox';
   selector: 'arc-combobox',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-combobox [attr.value]="value" [attr.placeholder]="placeholder" [attr.label]="label" [attr.name]="name" [disabled]="disabled" (arc-change)="arcChange.emit($event)"><ng-content /></arc-combobox>`,
+  template: `<arc-combobox [attr.value]="value" [attr.placeholder]="placeholder" [attr.label]="label" [attr.name]="name" [disabled]="disabled" (arc-change)="onArcChange($event)"><ng-content /></arc-combobox>`,
 })
 export class Combobox {
   @Input() value: string = '';
@@ -16,4 +16,16 @@ export class Combobox {
   @Input() name: string = '';
   @Input() disabled: boolean = false;
   @Output() arcChange = new EventEmitter<CustomEvent>();
+  @Output() valueChange = new EventEmitter<string>();
+
+  onArcChange(event: CustomEvent) {
+    this.arcChange.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('value' in detail) {
+      const next = detail.value as string;
+      this.value = next;
+      this.valueChange.emit(next);
+    }
+  }
 }

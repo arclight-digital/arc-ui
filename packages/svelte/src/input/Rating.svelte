@@ -13,9 +13,22 @@
     [key: string]: unknown;
   }
 
-  let { value = 0, max = 5, name = '', disabled = false, readonly = false, children, ...rest }: Props = $props();
+  let { value = $bindable(0), max = 5, name = '', disabled = false, readonly = false, children, ...rest }: Props = $props();
+
+  // Two-way binding — mirror the event detail back onto the prop, then
+  // forward to the consumer's own handler, which {...rest} would otherwise
+  // have attached. These are declared after {...rest} below so they win.
+  function __onArcChange(e: Event) {
+    const detail = (e as CustomEvent).detail as Record<string, unknown> | null;
+    if (detail) {
+      if ('value' in detail) value = detail.value as number;
+    }
+    (rest['onarc-change'] as ((e: Event) => void) | undefined)?.(e);
+  }
 </script>
 
-<arc-rating {value} {max} {name} {disabled} {readonly} {...rest}>
+<arc-rating {value} {max} {name} {disabled} {readonly} {...rest}
+  onarc-change={__onArcChange}
+>
   {@render children?.()}
 </arc-rating>

@@ -2,6 +2,7 @@
 import DocsLayout from '../../layouts/DocsLayout.astro';
 
 const headings = [
+  { id: 'v2-9-0', label: 'v2.9.0' },
   { id: 'v2-8-0', label: 'v2.8.0' },
   { id: 'v2-7-0', label: 'v2.7.0' },
   { id: 'v2-6-0', label: 'v2.6.0' },
@@ -30,6 +31,50 @@ const headings = [
     <p class="page-desc">
       Release history for ARC UI. All packages are versioned together.
     </p>
+
+    <section id="v2-9-0">
+      <h2 class="docs-heading">v2.9.0 — Two-Way Binding in Svelte, Vue &amp; Angular</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <p class="docs-text">
+        The Svelte, Vue and Angular wrappers passed props down but never listened for the
+        component reporting a change back. Typing in an <code>arc-input</code> updated the element
+        and nothing else — and because the framework's copy of <code>value</code> never changed,
+        the next unrelated re-render pushed the stale value back onto the element and silently
+        reverted what you had just typed. 38 components per framework now bind both ways.
+      </p>
+
+      <h3 class="tier-heading">Two-Way Binding</h3>
+      <ul class="docs-list">
+        <li><strong>Svelte — <code>bind:value</code> works</strong> — <code>&lt;Slider bind:value={'{'}v{'}'} /&gt;</code>. Bindable props are declared with <code>$bindable()</code>. This was the worst affected of the three: the wrappers forwarded no events at all, so there was no manual workaround either, and <code>bind:</code> on a non-bindable prop is a hard error.</li>
+        <li><strong>Vue — <code>v-model</code> works</strong> — <code>&lt;Slider v-model:value="v" /&gt;</code>. The wrappers relayed events but never declared the <code>update:value</code> emit that <code>v-model</code> listens for, so the binding looked correct and did nothing.</li>
+        <li><strong>Angular — <code>[(value)]</code> works</strong> — <code>&lt;arc-slider [(value)]="v"&gt;</code>. The matching <code>valueChange</code> output did not exist, so the two-way form failed to compile. The local <code>@Input()</code> is updated as well as emitted, so one-way <code>[value]</code> consumers no longer have a stale value pushed back on the next change detection.</li>
+        <li><strong>Existing handlers still fire</strong> — every wrapper still relays the underlying custom event, and the binding handler forwards to any handler you passed. <code>onarc-input</code>, <code>@arc-input</code> and <code>(arc-input)</code> behave exactly as before, with or without a binding.</li>
+      </ul>
+
+      <p class="docs-text">
+        Bindings are derived from the components themselves rather than a hand-maintained list: an
+        event whose <code>detail</code> carries a key matching a declared prop is that prop's
+        write-back path. Where two events carry the same key — <code>arc-slider</code> fires both
+        <code>arc-input</code> and <code>arc-change</code> — both are bound, so a binding tracks the
+        live drag as well as the commit.
+      </p>
+
+      <p class="docs-text">
+        <strong>React, Solid and Preact are unchanged.</strong> React's wrappers go through
+        <code>@lit/react</code>, which already wires properties and events. Neither Solid nor Preact
+        has a two-way binding form — the idiom there is an explicit handler, which already worked.
+      </p>
+
+      <arc-callout variant="info" style="margin-top:var(--space-sm)">
+        <strong>Fully backwards compatible.</strong> Binding is opt-in at the call site. A parent
+        passing a plain <code>value</code> keeps working exactly as it did; in Svelte the write just
+        stays local. Four components deliberately do <em>not</em> bind: <code>arc-copy-button</code>,
+        <code>arc-hotkey</code> and <code>arc-list-item</code> only echo their own unchanged value
+        back as event context, and <code>arc-select</code> reports the selected option's
+        <code>label</code>, which is a different thing from the field's own <code>label</code> prop.
+      </arc-callout>
+    </section>
 
     <section id="v2-8-0">
       <h2 class="docs-heading">v2.8.0 — Links That Work Without JavaScript</h2>

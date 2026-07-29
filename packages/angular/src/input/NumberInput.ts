@@ -7,7 +7,7 @@ import '@arclux/arc-ui/number-input';
   selector: 'arc-number-input',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-number-input [attr.value]="value" [attr.min]="min" [attr.max]="max" [attr.step]="step" [attr.label]="label" [attr.name]="name" [disabled]="disabled" (arc-change)="arcChange.emit($event)"><ng-content /></arc-number-input>`,
+  template: `<arc-number-input [attr.value]="value" [attr.min]="min" [attr.max]="max" [attr.step]="step" [attr.label]="label" [attr.name]="name" [disabled]="disabled" (arc-change)="onArcChange($event)"><ng-content /></arc-number-input>`,
 })
 export class NumberInput {
   @Input() value: number = 0;
@@ -18,4 +18,16 @@ export class NumberInput {
   @Input() name: string = '';
   @Input() disabled: boolean = false;
   @Output() arcChange = new EventEmitter<CustomEvent>();
+  @Output() valueChange = new EventEmitter<number>();
+
+  onArcChange(event: CustomEvent) {
+    this.arcChange.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('value' in detail) {
+      const next = detail.value as number;
+      this.value = next;
+      this.valueChange.emit(next);
+    }
+  }
 }

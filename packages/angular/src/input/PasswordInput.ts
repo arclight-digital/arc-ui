@@ -7,7 +7,7 @@ import '@arclux/arc-ui/password-input';
   selector: 'arc-password-input',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-password-input [attr.name]="name" [attr.label]="label" [attr.placeholder]="placeholder" [attr.value]="value" [disabled]="disabled" [required]="required" [attr.error]="error" [attr.size]="size" [attr.autocomplete]="autocomplete" [showStrength]="showStrength" (arc-strength-change)="arcStrengthChange.emit($event)" (arc-input)="arcInput.emit($event)" (arc-change)="arcChange.emit($event)"><ng-content /></arc-password-input>`,
+  template: `<arc-password-input [attr.name]="name" [attr.label]="label" [attr.placeholder]="placeholder" [attr.value]="value" [disabled]="disabled" [required]="required" [attr.error]="error" [attr.size]="size" [attr.autocomplete]="autocomplete" [showStrength]="showStrength" (arc-strength-change)="arcStrengthChange.emit($event)" (arc-input)="onArcInput($event)" (arc-change)="onArcChange($event)"><ng-content /></arc-password-input>`,
 })
 export class PasswordInput {
   @Input() name: string = '';
@@ -23,4 +23,27 @@ export class PasswordInput {
   @Output() arcStrengthChange = new EventEmitter<CustomEvent>();
   @Output() arcInput = new EventEmitter<CustomEvent>();
   @Output() arcChange = new EventEmitter<CustomEvent>();
+  @Output() valueChange = new EventEmitter<string>();
+
+  onArcInput(event: CustomEvent) {
+    this.arcInput.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('value' in detail) {
+      const next = detail.value as string;
+      this.value = next;
+      this.valueChange.emit(next);
+    }
+  }
+
+  onArcChange(event: CustomEvent) {
+    this.arcChange.emit(event);
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('value' in detail) {
+      const next = detail.value as string;
+      this.value = next;
+      this.valueChange.emit(next);
+    }
+  }
 }

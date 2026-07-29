@@ -16,7 +16,16 @@ withDefaults(defineProps<{
 
 const emit = defineEmits<{
   'arc-toggle': [event: CustomEvent];
+  'update:open': [value: boolean];
 }>();
+
+function onArcToggle(payload: CustomEvent) {
+  emit('arc-toggle', payload);
+  const detail = payload.detail as Record<string, unknown> | null;
+  if (detail) {
+    if ('open' in detail) emit('update:open', detail.open as boolean);
+  }
+}
 </script>
 
 <template>
@@ -24,7 +33,7 @@ const emit = defineEmits<{
     :heading="heading"
     :collapsible="collapsible"
     :open="open"
-    @arc-toggle="(payload: CustomEvent) => emit('arc-toggle', payload)"
+    @arc-toggle="onArcToggle"
   >
     <slot />
   </arc-sidebar-section>
