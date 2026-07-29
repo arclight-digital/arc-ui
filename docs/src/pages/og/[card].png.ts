@@ -20,10 +20,9 @@ export const GET: APIRoute = async ({ params }) => {
   if (!card) return new Response('Not found', { status: 404 });
 
   const png = await pageCardPng(card);
+  // Prerendered to a static file — see the note in og-image.png.ts. Cache
+  // busting is the ?v= release stamp on the og:image tag in BaseLayout.
   return new Response(png, {
-    headers: {
-      'Content-Type': 'image/png',
-      'Cache-Control': 'public, max-age=31536000, immutable',
-    },
+    headers: { 'Content-Type': 'image/png' },
   });
 };

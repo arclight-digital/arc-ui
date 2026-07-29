@@ -35,6 +35,11 @@ export const docsCards: Record<string, PageCard> = {
     title: 'Theming',
     description: 'Override a handful of base tokens and every gradient, glow, and focus ring cascades automatically.',
   },
+  'docs-typography': {
+    pills: [{ text: 'Docs' }],
+    title: 'Typography',
+    description: 'ARC UI ships no font files. Assign your own typefaces to five role slots and the whole system follows.',
+  },
   'docs-theme-synthesizer': {
     pills: [{ text: 'Docs' }],
     title: 'Theme Synthesizer',

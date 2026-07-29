@@ -1,5 +1,6 @@
 ---
 import { ViewTransitions } from 'astro:transitions';
+import { version } from '../data/site-stats';
 
 interface Props {
   title?: string;
@@ -18,7 +19,15 @@ const { title = 'ARC UI — Lit Web Components Library', description = 'Dark-fir
 // the CDN serves both forms, so these tags are what deduplicates them.
 const canonicalPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
 const canonicalURL = new URL(canonicalPath, Astro.site);
+// Social platforms cache OG images in their own proxy, keyed on the image URL
+// and for far longer than any Cache-Control we send — Discord's runs to weeks.
+// The path never changes, so a refreshed card was invisible to anyone who had
+// already seen the old one. Stamping the release version gives each card a new
+// URL exactly when its contents can have changed; the query is ignored when the
+// static file is served. Note this only affects *new* posts: an embed Discord
+// has already cached is keyed on the page URL, not the image.
 const ogImageURL = new URL(ogImage, Astro.site);
+ogImageURL.searchParams.set('v', version);
 const ogImageAlt = `${title} — dark social card in the ARC UI glow style`;
 
 // Site-wide structured data: the site itself and the org behind it.

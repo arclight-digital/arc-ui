@@ -525,10 +525,10 @@ export const GET: APIRoute = async () => {
 
   const png = await sharp(Buffer.from(svg)).png().toBuffer();
 
+  // No Cache-Control here: this route is prerendered to a static file, so the
+  // host serves it with its own headers and anything set here is discarded.
+  // Cache busting is the ?v= release stamp on the og:image tag in BaseLayout.
   return new Response(png, {
-    headers: {
-      'Content-Type': 'image/png',
-      'Cache-Control': 'public, max-age=31536000, immutable',
-    },
+    headers: { 'Content-Type': 'image/png' },
   });
 };
