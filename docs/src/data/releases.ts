@@ -18,7 +18,7 @@ export function anchorFor(version: string): string {
 }
 
 export const releases: Release[] = [
-  { version: '2.10.0', date: '2026-07-29', title: 'Shared Styles & Infrastructure Exports' },
+  { version: '2.10.0', date: '2026-07-29', title: 'Typed to the Leaf, Typography You Assign' },
   { version: '2.9.0', date: '2026-07-29', title: 'Two-Way Binding in Svelte, Vue & Angular' },
   { version: '2.8.0', date: '2026-07-29', title: 'Links That Work Without JavaScript' },
   { version: '2.7.0', date: '2026-07-23', title: 'Editor Autocomplete, Typed Events & Dev Warnings' },
