@@ -30,7 +30,7 @@ const steps = [
   { name: 'Icons',    cmd: 'node',  args: ['scripts/generate-icons.js'] },
   { name: 'Register', cmd: 'node',  args: ['scripts/generate-registrations.js'] },
   { name: 'Brand',    cmd: 'node',  args: ['scripts/generate-brand-assets.js'] },
-  { name: 'Prism',    cmd: 'npx',   args: ['prism'] },
+  { name: 'Prism',    cmd: 'npx',   args: ['prism', '--strict'] },
   { name: 'Manifest', cmd: 'node',  args: ['scripts/generate-manifest.js'] },
   { name: 'Types',    cmd: 'node',  args: ['scripts/generate-types.js'] },
   { name: 'ModuleTypes', cmd: 'node', args: ['scripts/generate-module-types.js'] },
@@ -44,6 +44,7 @@ const steps = [
 const totalStart = performance.now();
 let failed = false;
 let warned = 0;
+let accepted = 0;
 
 console.log('\n  ARC UI — Generate\n');
 
@@ -56,25 +57,46 @@ for (const step of steps) {
     const ms = Math.round(performance.now() - start);
     console.log(`done  ${ms}ms`);
 
-    // Steps run quiet, but a warning on a successful step is still a finding —
-    // prism reports documentation drift this way. Swallowing stdout wholesale
-    // meant those scrolled past into a pipe nobody read.
-    // Prism groups its findings into a labelled end-of-run block rather than
-    // printing the word "warning", so match the block's markers too. Its
-    // --strict flag is the robust channel for this, but it cannot be adopted
-    // while a finding we have deliberately accepted keeps it failing.
-    const warnings = out
-      .toString()
-      .split('\n')
-      .filter((l) =>
-        /\bwarn(ing)?\b/i.test(l) ||
-        /\bomits\b/.test(l) ||
-        /\breserves\b/.test(l) ||
-        /could not emit|can't emit/.test(l) ||
-        /--strict/.test(l),
-      );
-    for (const w of warnings) console.log(`             ${w.trim()}`);
-    if (warnings.length) warned += warnings.length;
+    // Steps run quiet, but a finding on a *successful* step is still a finding,
+    // and swallowing stdout wholesale meant those scrolled into a pipe nobody
+    // read. Prism prefixes its report headings with a literal `prism: warning:`
+    // / `prism: accepted:` precisely so this match can be exact rather than a
+    // guess at its prose — earlier versions were matched heuristically and a
+    // reworded heading silently hid a real finding twice.
+    //
+    // Prism additionally runs under --strict, so anything it could not act on
+    // fails this step outright. Findings we have decided about are waived in
+    // prism.config.js `acknowledge`, where they still print and where a stale
+    // entry is itself a strict failure.
+    // Only the headings carry the prefix; the findings themselves are indented
+    // beneath one. Take the heading and its block, or the summary would say
+    // "1 accepted finding" without ever saying which.
+    const lines = out.toString().split('\n');
+    const reported = [];
+    let inBlock = false;
+    for (const line of lines) {
+      const heading = /^\s*prism: (warning|accepted):/.test(line);
+      if (heading) {
+        inBlock = true;
+        reported.push(line);
+        continue;
+      }
+      if (inBlock) {
+        if (/^\s+\S/.test(line)) reported.push(line);
+        else inBlock = false;
+        continue;
+      }
+      if (/\bwarn(ing)?\b/i.test(line)) reported.push(line);
+    }
+    for (const line of reported) console.log(`             ${line.trim()}`);
+    // An acknowledged finding is a recorded decision, not an outstanding one.
+    // Counting them together would make a clean run read as a dirty one, which
+    // is how a summary line stops being worth reading.
+    // Count headings only — the block beneath one is detail, not extra findings.
+    warned += reported.filter(
+      (l) => /^\s*prism: warning:/.test(l) || (!/^\s+\S/.test(l) && /\bwarn(ing)?\b/i.test(l)),
+    ).length;
+    accepted += reported.filter((l) => /^\s*prism: accepted:/.test(l)).length;
   } catch (err) {
     const ms = Math.round(performance.now() - start);
     console.log(`FAIL  ${ms}ms`);
@@ -88,6 +110,7 @@ const totalMs = Math.round(performance.now() - totalStart);
 console.log(
   `\n  ${failed ? 'Done with errors' : 'Done'} in ${totalMs}ms` +
     (warned ? ` — ${warned} warning(s) above` : '') +
+    (accepted ? ` — ${accepted} accepted finding(s)` : '') +
     '\n',
 );
 

@@ -62,6 +62,23 @@ export default {
   //   arc-navigation-menu  — 60% of its 14 KB is the mobile overlay and dropdown,
   //                          driven by JS state classes; ~5.6 KB would be usable
 
+  // Findings we have already decided about. Waived entries still print, under
+  // a `prism: accepted:` heading, and an entry matching nothing is itself a
+  // strict failure — so this list cannot quietly shelter a real regression or
+  // rot into pre-waiving whatever next appears under the same key.
+  acknowledge: [
+    {
+      code: 'framework-reserved',
+      tag: 'arc-column',
+      prop: 'key',
+      note:
+        'Deliberate. `field` is the supported name and is what React and Preact ' +
+        'consumers must use; `key` is kept because it works in HTML, Vue, Svelte, ' +
+        'Angular and Solid, and renaming would break five working consumers to ' +
+        'repair two. arc-column falls back via `fieldName` (field || key).',
+    },
+  ],
+
   // Two-way binding opt-outs. Bindings are derived by convention — an event
   // whose `detail` carries a key matching a declared prop name is that prop's
   // write-back path — which holds across the library except here. Lives in
