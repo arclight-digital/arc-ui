@@ -61,7 +61,7 @@ export class ArcInput extends FormControlMixin(LitElement) {
       }
 
       .input-group__label {
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-weight: 600;
         font-size: var(--label-inline-size);
         letter-spacing: var(--label-inline-spacing);

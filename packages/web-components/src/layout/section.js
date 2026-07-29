@@ -34,7 +34,7 @@ export class ArcSection extends LitElement {
 
       .section__label {
         display: block;
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-weight: var(--section-title-weight);
         font-size: var(--section-title-size);
         letter-spacing: var(--section-title-spacing);

@@ -81,7 +81,7 @@ export class ArcDataGrid extends LitElement {
       th {
         text-align: left;
         padding: var(--space-sm) var(--space-md);
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-weight: 600;
         font-size: var(--text-xs);
         letter-spacing: 1px;

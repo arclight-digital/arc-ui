@@ -20,9 +20,18 @@ export const tokenStyles = css`
   :host {
     transition: opacity 150ms ease;
 
-    --font-body: 'Host Grotesk', system-ui, sans-serif;
-    --font-accent: 'Tektur', system-ui, sans-serif;
-    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+    /* Composed here so components still render sensibly without base.css, but
+       composed *from the role slots* rather than from literal faces. A value
+       set on :host beats one inherited from :root, so spelling the typeface out
+       here would make --font-body-family on the document root unreachable —
+       which is exactly what it used to do. Only the slots are inherited; the
+       composition is local. */
+    --font-body: var(--font-body-family, 'Host Grotesk'), var(--font-body-fallback, system-ui, sans-serif);
+    --font-label: var(--font-label-family, 'Tektur'), var(--font-label-fallback, system-ui, sans-serif);
+    --font-mono: var(--font-mono-family, 'JetBrains Mono'), var(--font-mono-fallback, ui-monospace, monospace);
+    --font-display: var(--font-display-family, var(--font-body-family, 'Host Grotesk')), var(--font-display-fallback, var(--font-body-fallback, system-ui, sans-serif));
+    --font-quote: var(--font-quote-family, Georgia), var(--font-quote-fallback, serif);
+    --font-accent: var(--font-label);
 
     --text-xs: 12px;
     --text-sm: 16px;

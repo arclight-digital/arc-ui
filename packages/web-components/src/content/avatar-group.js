@@ -45,7 +45,7 @@ export class ArcAvatarGroup extends LitElement {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-weight: 600;
         font-size: var(--text-sm);
         letter-spacing: 0.5px;

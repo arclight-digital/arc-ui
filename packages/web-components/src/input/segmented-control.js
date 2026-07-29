@@ -43,7 +43,7 @@ export class ArcSegmentedControl extends LitElement {
         justify-content: center;
         padding: var(--touch-pad) var(--space-md);
         min-height: var(--touch-min);
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-size: var(--text-xs);
         font-weight: 600;
         letter-spacing: 1px;

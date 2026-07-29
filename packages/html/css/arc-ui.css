@@ -84,9 +84,32 @@
   --opacity-hover: 0.8;
   --opacity-visible: 1;
 
-  --font-body: 'Host Grotesk', system-ui, sans-serif;
-  --font-accent: 'Tektur', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  /* Font role slots. Override only the -family token to assign a typeface;
+     the fallback and every component using the role follow automatically. */
+  --font-body-family: 'Host Grotesk';
+  --font-body-fallback: system-ui, sans-serif;
+  --font-body: var(--font-body-family), var(--font-body-fallback);
+
+  --font-label-family: 'Tektur';
+  --font-label-fallback: system-ui, sans-serif;
+  --font-label: var(--font-label-family), var(--font-label-fallback);
+
+  --font-mono-family: 'JetBrains Mono';
+  --font-mono-fallback: ui-monospace, monospace;
+  --font-mono: var(--font-mono-family), var(--font-mono-fallback);
+
+  /* Display follows the text role until it is assigned a face of its own. */
+  --font-display-family: var(--font-body-family);
+  --font-display-fallback: var(--font-body-fallback);
+  --font-display: var(--font-display-family), var(--font-display-fallback);
+
+  --font-quote-family: Georgia;
+  --font-quote-fallback: serif;
+  --font-quote: var(--font-quote-family), var(--font-quote-fallback);
+
+  /* --font-accent named the label role before the slots were split out.
+     Kept as an alias so existing overrides and usages keep working. */
+  --font-accent: var(--font-label);
 
   --text-xs: 12px;
   --text-sm: 16px;
@@ -262,7 +285,7 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-weight: 600;
         font-size: var(--text-sm);
         letter-spacing: 0.5px;
@@ -348,7 +371,7 @@
       }
 
       .arc-avatar .avatar__initials {
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-weight: 600;
         color: var(--text-primary);
         text-transform: uppercase;
@@ -427,7 +450,7 @@
       }
 
       .arc-callout .callout__label {
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-size: var(--text-xs);
         font-weight: 600;
         letter-spacing: 1.5px;
@@ -616,7 +639,7 @@
       }
 
       .arc-cta-banner .cta__eyebrow {
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-weight: 600;
         font-size: var(--text-xs);
         letter-spacing: 4px;
@@ -794,7 +817,7 @@
       }
 
       .arc-divider .divider__label {
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-size: var(--text-xs);
         font-weight: 600;
         letter-spacing: 1.5px;
@@ -909,7 +932,7 @@
         display: inline-flex;
         align-items: center;
         gap: 6px;
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-size: var(--text-xs);
         font-weight: 600;
         letter-spacing: 1.5px;
@@ -1521,7 +1544,7 @@
       }
 
       .arc-comparison .header-cell {
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-weight: 600;
         font-size: var(--text-sm);
         letter-spacing: 1px;
@@ -1617,7 +1640,7 @@
       }
 
       .arc-description-item .item__term {
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-weight: 600;
         font-size: var(--text-xs);
         letter-spacing: 2px;
@@ -1799,7 +1822,7 @@
       }
 
       .arc-kv-pair .kv__key {
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-weight: 600;
         font-size: var(--text-xs);
         letter-spacing: 2px;
@@ -1973,7 +1996,7 @@
       }
 
       .arc-stat .stat__label {
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-weight: 600;
         font-size: var(--label-inline-size);
         letter-spacing: var(--label-inline-spacing);
@@ -2032,7 +2055,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-size: var(--text-sm);
         font-weight: 700;
         letter-spacing: 1px;
@@ -2109,7 +2132,7 @@
 
       .arc-stepper .step__label {
         margin-top: var(--space-md);
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-size: var(--text-xs);
         font-weight: 600;
         letter-spacing: 2px;
@@ -2174,7 +2197,7 @@
       .arc-table th {
         text-align: left;
         padding: var(--space-sm) var(--space-md);
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-weight: 600;
         font-size: var(--text-xs);
         letter-spacing: 2px;
@@ -2239,7 +2262,7 @@
         display: inline-flex;
         align-items: center;
         gap: var(--space-xs);
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-weight: 600;
         font-size: var(--text-xs);
         letter-spacing: 2px;
@@ -2408,7 +2431,7 @@
 
       .arc-timeline .timeline__title {
         margin: 0;
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-size: var(--text-xs);
         font-weight: 600;
         letter-spacing: 1.5px;
@@ -2432,7 +2455,7 @@
 
       .arc-timeline .timeline__date {
         margin: var(--space-sm) 0 0;
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-size: var(--text-xs);
         font-weight: 600;
         letter-spacing: 2px;
@@ -2547,7 +2570,7 @@
         line-height: 1;
         color: var(--text-ghost);
         opacity: 0.15;
-        font-family: Georgia, serif;
+        font-family: var(--font-quote);
         pointer-events: none;
       }
 
@@ -2569,7 +2592,7 @@
       .arc-blockquote .cite {
         display: block;
         margin-top: var(--space-md);
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-weight: 600;
         font-size: var(--text-xs);
         letter-spacing: 2px;
@@ -3109,6 +3132,7 @@
       .arc-text[data-variant="code"] { display: inline; }
 
       .arc-text .text--display {
+        font-family: var(--font-display);
         font-size: var(--display-xl-size);
         font-weight: var(--display-xl-weight);
         letter-spacing: var(--display-xl-spacing);
@@ -3121,6 +3145,7 @@
       }
 
       .arc-text .text--heading {
+        font-family: var(--font-display);
         font-size: var(--heading-size);
         font-weight: var(--heading-weight);
         color: var(--text-primary);
@@ -3142,7 +3167,7 @@
       .arc-text .text--ghost { color: var(--text-ghost); }
 
       .arc-text .text--accent {
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-weight: var(--ui-accent-weight);
         font-size: var(--ui-accent-size);
         letter-spacing: var(--ui-accent-spacing);
@@ -3154,7 +3179,7 @@
       }
 
       .arc-text .text--label {
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-weight: var(--section-title-weight);
         font-size: var(--section-title-size);
         letter-spacing: var(--section-title-spacing);
@@ -3285,7 +3310,7 @@
         align-items: center;
         justify-content: center;
         gap: var(--space-sm);
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 2px;
@@ -3558,7 +3583,7 @@
 
       /* With text */
       .arc-icon-button .btn--has-text {
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 1.5px;
@@ -3725,7 +3750,7 @@
       }
 
       .arc-input .input-group__label {
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-weight: 600;
         font-size: var(--label-inline-size);
         letter-spacing: var(--label-inline-spacing);
@@ -3848,7 +3873,7 @@
       }
 
       .arc-slider .slider__label {
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-size: var(--text-xs);
         font-weight: 600;
         letter-spacing: 1px;
@@ -4013,7 +4038,7 @@
       }
 
       .arc-textarea label {
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-weight: 600;
         font-size: var(--text-xs);
         letter-spacing: 1px;
@@ -4119,7 +4144,7 @@
         display: flex;
         align-items: center;
         gap: var(--space-xs);
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-size: var(--text-xs);
         font-weight: 600;
         letter-spacing: 2px;
@@ -4535,7 +4560,7 @@
       /* ── Static heading (non-collapsible) ── */
       .arc-sidebar .sidebar__heading {
         display: block;
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-weight: 600;
         font-size: var(--text-xs);
         letter-spacing: 2px;
@@ -4553,7 +4578,7 @@
         display: flex;
         align-items: center;
         gap: var(--space-xs);
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-weight: 600;
         font-size: var(--text-xs);
         letter-spacing: 2px;
@@ -4717,7 +4742,7 @@
         color: white;
         padding: var(--space-xs) var(--space-lg);
         border-radius: var(--radius-full);
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-size: var(--text-sm);
         font-weight: 600;
         text-decoration: none;
@@ -5591,7 +5616,7 @@
 
       .arc-section .section__label {
         display: block;
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-weight: var(--section-title-weight);
         font-size: var(--section-title-size);
         letter-spacing: var(--section-title-spacing);
@@ -5989,7 +6014,7 @@
 .arc-progress { display: block; }
 
       .arc-progress .progress__label {
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-weight: 600;
         font-size: var(--label-inline-size);
         letter-spacing: var(--label-inline-spacing);

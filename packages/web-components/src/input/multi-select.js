@@ -50,7 +50,7 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
 
       .ms__label {
         display: block;
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-size: var(--text-xs);
         font-weight: 600;
         letter-spacing: 1px;

@@ -58,7 +58,7 @@ export class ArcGuidedTour extends LitElement {
       }
 
       .tour__counter {
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-size: var(--text-xs);
         font-weight: 600;
         letter-spacing: 1px;

@@ -106,6 +106,7 @@ ${componentsByTier.join('\n\n')}
 - [Documentation site](https://arcui.dev)
 - [Component pages](https://arcui.dev/docs/components/)
 - [Theming guide](https://arcui.dev/docs/theming/)
+- [Typography and font roles](https://arcui.dev/docs/typography/)
 - [Token reference](https://arcui.dev/docs/tokens/)
 `;
 

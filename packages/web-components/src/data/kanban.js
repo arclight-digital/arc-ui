@@ -74,7 +74,7 @@ export class ArcKanban extends LitElement {
       }
 
       .kanban__column-title {
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-size: var(--text-xs);
         font-weight: 600;
         letter-spacing: 2px;

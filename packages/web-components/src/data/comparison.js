@@ -39,7 +39,7 @@ export class ArcComparison extends LitElement {
       }
 
       .header-cell {
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-weight: 600;
         font-size: var(--text-sm);
         letter-spacing: 1px;

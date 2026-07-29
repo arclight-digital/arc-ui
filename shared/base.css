@@ -126,9 +126,32 @@
   --opacity-hover: 0.8;
   --opacity-visible: 1;
 
-  --font-body: 'Host Grotesk', system-ui, sans-serif;
-  --font-accent: 'Tektur', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  /* Font role slots. Override only the -family token to assign a typeface;
+     the fallback and every component using the role follow automatically. */
+  --font-body-family: 'Host Grotesk';
+  --font-body-fallback: system-ui, sans-serif;
+  --font-body: var(--font-body-family), var(--font-body-fallback);
+
+  --font-label-family: 'Tektur';
+  --font-label-fallback: system-ui, sans-serif;
+  --font-label: var(--font-label-family), var(--font-label-fallback);
+
+  --font-mono-family: 'JetBrains Mono';
+  --font-mono-fallback: ui-monospace, monospace;
+  --font-mono: var(--font-mono-family), var(--font-mono-fallback);
+
+  /* Display follows the text role until it is assigned a face of its own. */
+  --font-display-family: var(--font-body-family);
+  --font-display-fallback: var(--font-body-fallback);
+  --font-display: var(--font-display-family), var(--font-display-fallback);
+
+  --font-quote-family: Georgia;
+  --font-quote-fallback: serif;
+  --font-quote: var(--font-quote-family), var(--font-quote-fallback);
+
+  /* --font-accent named the label role before the slots were split out.
+     Kept as an alias so existing overrides and usages keep working. */
+  --font-accent: var(--font-label);
 
   --text-xs: 12px;
   --text-sm: 16px;

@@ -41,7 +41,7 @@ export class ArcTabs extends LitElement {
       :host([align="end"]) .tabs__list { justify-content: flex-end; }
 
       .tabs__tab {
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-weight: 600;
         font-size: var(--text-xs);
         letter-spacing: 2px;

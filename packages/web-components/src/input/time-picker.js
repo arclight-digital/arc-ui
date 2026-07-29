@@ -52,7 +52,7 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
       }
 
       label {
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-weight: 600;
         font-size: var(--text-xs);
         letter-spacing: 1px;
@@ -144,7 +144,7 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
       }
 
       .column-label {
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-weight: 600;
         font-size: var(--text-xs);
         letter-spacing: 1px;

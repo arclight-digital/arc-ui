@@ -85,7 +85,7 @@ export class ArcFeatureCard extends LitElement {
         display: inline-flex;
         align-items: center;
         gap: 6px;
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-size: var(--text-xs);
         font-weight: 600;
         letter-spacing: 1.5px;

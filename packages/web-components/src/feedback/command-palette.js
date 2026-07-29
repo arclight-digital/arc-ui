@@ -137,7 +137,7 @@ export class ArcCommandPalette extends LitElement {
 
       .palette__group-heading {
         padding: var(--space-sm) var(--space-sm) var(--space-xs);
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-size: var(--text-xs);
         letter-spacing: 0.12em;
         text-transform: uppercase;

@@ -72,7 +72,7 @@ export class ArcButton extends LitElement {
         align-items: center;
         justify-content: center;
         gap: var(--space-sm);
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 2px;

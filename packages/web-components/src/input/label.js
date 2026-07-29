@@ -42,7 +42,7 @@ export class ArcLabel extends LitElement {
         display: flex;
         align-items: baseline;
         gap: var(--space-xs);
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-size: var(--text-xs);
         font-weight: 600;
         text-transform: uppercase;

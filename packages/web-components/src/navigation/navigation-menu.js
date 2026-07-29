@@ -53,7 +53,7 @@ export class ArcNavigationMenu extends LitElement {
         display: inline-flex;
         align-items: center;
         gap: var(--space-xs);
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-size: var(--text-xs);
         font-weight: 600;
         letter-spacing: 2px;
@@ -340,7 +340,7 @@ export class ArcNavigationMenu extends LitElement {
         border: 1px solid var(--border-subtle);
         border-radius: var(--radius-md);
         color: var(--text-primary);
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-size: var(--section-title-size);
         font-weight: var(--section-title-weight);
         letter-spacing: var(--section-title-spacing);

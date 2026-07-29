@@ -60,7 +60,7 @@ export class ArcRangeSlider extends FormControlMixin(LitElement) {
       }
 
       .range-slider__label {
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-size: var(--text-xs);
         font-weight: 600;
         letter-spacing: 1px;

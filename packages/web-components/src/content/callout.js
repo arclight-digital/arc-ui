@@ -60,7 +60,7 @@ export class ArcCallout extends LitElement {
       }
 
       .callout__label {
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-size: var(--text-xs);
         font-weight: 600;
         letter-spacing: 1.5px;

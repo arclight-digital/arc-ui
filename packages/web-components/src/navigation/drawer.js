@@ -90,7 +90,7 @@ export class ArcDrawer extends OverlayMixin(LitElement) {
       }
 
       .drawer__title {
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-weight: 600;
         font-size: var(--text-sm);
         letter-spacing: 2px;

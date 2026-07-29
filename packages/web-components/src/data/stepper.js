@@ -54,7 +54,7 @@ export class ArcStepper extends LitElement {
         display: flex;
         align-items: center;
         justify-content: center;
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-size: var(--text-sm);
         font-weight: 700;
         letter-spacing: 1px;
@@ -131,7 +131,7 @@ export class ArcStepper extends LitElement {
 
       .step__label {
         margin-top: var(--space-md);
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-size: var(--text-xs);
         font-weight: 600;
         letter-spacing: 2px;

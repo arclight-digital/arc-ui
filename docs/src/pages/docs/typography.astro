@@ -1,0 +1,310 @@
+---
+import { Code } from 'astro:components';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+
+const headings = [
+  { id: 'roles-not-typefaces', label: 'Roles, Not Typefaces' },
+  { id: 'the-roles', label: 'The Roles' },
+  { id: 'assigning', label: 'Assigning a Typeface' },
+  { id: 'loading', label: 'Loading the Font Files' },
+  { id: 'fallbacks', label: 'Fallbacks & Layout Shift' },
+  { id: 'reference-faces', label: 'The Reference Faces' },
+];
+
+const roles = [
+  {
+    slot: 'body',
+    name: 'Text',
+    reference: 'Host Grotesk',
+    fallback: 'system-ui, sans-serif',
+    uses: 'Prose, inputs, descriptions, option lists, table cells. The default for everything that is not covered by another role.',
+  },
+  {
+    slot: 'label',
+    name: 'Label',
+    reference: 'Tektur',
+    fallback: 'system-ui, sans-serif',
+    uses: 'Form labels, table headers, eyebrows, dividers, segment labels. Rendered small, uppercase and tracked, so it wants a face that holds up at 12px in caps.',
+  },
+  {
+    slot: 'mono',
+    name: 'Mono',
+    reference: 'JetBrains Mono',
+    fallback: 'ui-monospace, monospace',
+    uses: 'Code blocks, keyboard hints, command palette shortcuts, and tabular numerics — meter readouts, stat deltas, calendar day numbers.',
+  },
+  {
+    slot: 'display',
+    name: 'Display',
+    reference: 'follows Text',
+    fallback: 'follows Text',
+    uses: 'Large headings and hero type. Inherits the Text role until you assign it a face of its own, so a display typeface is opt-in rather than assumed.',
+  },
+  {
+    slot: 'quote',
+    name: 'Quote',
+    reference: 'Georgia',
+    fallback: 'serif',
+    uses: 'The decorative quotation glyph on arc-blockquote. Separate because it is the one place the system wants a serif.',
+  },
+];
+---
+
+<DocsLayout
+  title="Typography"
+  description="ARC UI ships no font files. Assign your own typefaces to five role slots."
+  activeSlug="typography"
+  headings={headings}
+  breadcrumbs={[{ label: 'Typography' }]}
+>
+  <div class="typography-page">
+    <h1 class="page-title">Typography</h1>
+    <p class="page-desc">
+      ARC UI does not ship font files. It defines five typographic <strong>roles</strong> and
+      names a reference face for each; you assign whatever typefaces you like by overriding one
+      token per role.
+    </p>
+
+    <section id="roles-not-typefaces">
+      <h2 class="docs-heading">Roles, Not Typefaces</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <p class="docs-text">
+        A design system that bundles its own typefaces makes two decisions on your behalf: which
+        faces you use, and how they reach the browser. ARC UI makes neither. What it does commit
+        to is the <em>roles</em> — which parts of the interface are set in which voice, at what
+        size, weight and tracking. Those relationships are the typographic design; the specific
+        faces are yours.
+      </p>
+      <p class="docs-text">
+        Every role is three tokens: the family you assign, the fallback stack behind it, and the
+        composed value components actually consume.
+      </p>
+      <Code
+        lang="css"
+        code={`--font-body-family:    'Host Grotesk';               /* assign this */
+--font-body-fallback:  system-ui, sans-serif;        /* rarely */
+--font-body:           var(--font-body-family), var(--font-body-fallback);`}
+      />
+      <p class="docs-text">
+        Override only <code>-family</code> and everything downstream — the fallback, and every
+        component using that role — follows. Nothing here needs you to retype a font stack.
+      </p>
+    </section>
+
+    <section id="the-roles">
+      <h2 class="docs-heading">The Roles</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <div class="role-list">
+        {roles.map((r) => (
+          <arc-card>
+            <div class="role-head">
+              <span class="role-name">{r.name}</span>
+              <code class="role-slot">--font-{r.slot}-family</code>
+            </div>
+            <p class="role-uses">{r.uses}</p>
+            <div class="role-meta">
+              <span><strong>Reference</strong> {r.reference}</span>
+              <span><strong>Fallback</strong> {r.fallback}</span>
+            </div>
+          </arc-card>
+        ))}
+      </div>
+      <p class="docs-text">
+        <code>--font-accent</code> is kept as an alias of the Label role. It named that role
+        before the slots were split out, and the name was misleading — it reads like a display
+        face, but it has always driven form labels and table headers. Prefer
+        <code>--font-label</code> in new work.
+      </p>
+    </section>
+
+    <section id="assigning">
+      <h2 class="docs-heading">Assigning a Typeface</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <p class="docs-text">
+        Set the family tokens on <code>:root</code>, after ARC UI's stylesheet. That is all —
+        components read the roles through the shadow boundary.
+      </p>
+      <Code
+        lang="css"
+        code={`@import '@arclux/arc-ui/base.css';
+
+:root {
+  --font-body-family:    'Inter';
+  --font-label-family:   'Inter';
+  --font-mono-family:    'IBM Plex Mono';
+  --font-display-family: 'Fraunces';   /* opt into a display face */
+}`}
+      />
+      <p class="docs-text">
+        Assigning one role does not disturb the others. Leaving a role unassigned keeps its
+        reference face, and if that face is not loaded, its fallback.
+      </p>
+      <h3 class="tier-heading">Using one typeface everywhere</h3>
+      <p class="docs-text">
+        Point the roles at the same family. The size, weight and tracking distinctions that
+        separate them are defined independently, so the hierarchy survives.
+      </p>
+      <Code
+        lang="css"
+        code={`:root {
+  --font-body-family:  'Inter';
+  --font-label-family: 'Inter';
+}`}
+      />
+      <h3 class="tier-heading">Scoping to part of a page</h3>
+      <p class="docs-text">
+        Role tokens are ordinary custom properties, so they cascade. Assign them on any ancestor
+        to rebrand a subtree.
+      </p>
+      <Code
+        lang="css"
+        code={`.marketing-section {
+  --font-display-family: 'Playfair Display';
+}`}
+      />
+    </section>
+
+    <section id="loading">
+      <h2 class="docs-heading">Loading the Font Files</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <p class="docs-text">
+        Assigning a role tells components which family to ask for. Getting that family into the
+        browser is separate, and ARC UI stays out of it — self-host, use a font CDN, or use a
+        package like Fontsource. A self-hosted <code>@font-face</code> looks like this:
+      </p>
+      <Code
+        lang="css"
+        code={`@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter-variable.woff2') format('woff2-variations');
+  font-weight: 100 900;        /* one face for a variable font, not one per weight */
+  font-display: swap;
+  font-style: normal;
+}
+
+:root { --font-body-family: 'Inter'; }`}
+      />
+      <p class="docs-text">
+        Declare a variable font <strong>once</strong> with a weight range. Declaring the same file
+        under several discrete weights makes the browser render its default instance at every
+        weight, which silently flattens the hierarchy — components in this library ask for
+        weights from 200 to 800.
+      </p>
+      <p class="docs-text">
+        Preload the faces used above the fold, and only those:
+      </p>
+      <Code
+        lang="html"
+        code={`<link rel="preload" href="/fonts/inter-variable.woff2" as="font" type="font/woff2" crossorigin />`}
+      />
+    </section>
+
+    <section id="fallbacks">
+      <h2 class="docs-heading">Fallbacks &amp; Layout Shift</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <p class="docs-text">
+        Each role carries a fallback stack so an unassigned or unloaded face degrades to
+        something deliberate rather than to the browser default. You can replace a fallback on
+        its own:
+      </p>
+      <Code
+        lang="css"
+        code={`:root { --font-body-fallback: Georgia, serif; }`}
+      />
+      <p class="docs-text">
+        Fallbacks differ from webfonts in width and vertical metrics, so text reflows when the
+        real face arrives. Because you choose the typeface, only you can measure that — the fix
+        is a metric-matched fallback face declared against your font's actual metrics:
+      </p>
+      <Code
+        lang="css"
+        code={`@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial');
+  size-adjust: 107%;        /* measured against Inter, not a general-purpose value */
+  ascent-override: 90%;
+  descent-override: 22%;
+}
+
+:root {
+  --font-body-family:   'Inter';
+  --font-body-fallback: 'Inter Fallback', system-ui, sans-serif;
+}`}
+      />
+      <p class="docs-text">
+        Tools such as Fontaine and <code>next/font</code> generate these overrides
+        automatically. Pair with <code>font-display: swap</code>; with a metric-matched fallback
+        the swap stops being visible as a jump.
+      </p>
+    </section>
+
+    <section id="reference-faces">
+      <h2 class="docs-heading">The Reference Faces</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <p class="docs-text">
+        The defaults name Host Grotesk, Tektur, JetBrains Mono and Georgia. These are what this
+        documentation site is set in, and what the components were designed against — but ARC UI
+        does not ship or load them. If you load nothing, you get each role's fallback, which is a
+        supported configuration rather than a broken one.
+      </p>
+      <p class="docs-text">
+        Treat them as a reference rendering, not a requirement. The roles are the contract.
+      </p>
+    </section>
+  </div>
+</DocsLayout>
+
+<style>
+  .role-list {
+    display: grid;
+    gap: var(--space-md);
+    margin: var(--space-lg) 0;
+  }
+
+  .role-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-sm);
+  }
+
+  .role-name {
+    font-family: var(--font-label);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-primary);
+  }
+
+  .role-slot {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--interactive);
+  }
+
+  .role-uses {
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    margin-bottom: var(--space-sm);
+  }
+
+  .role-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+  }
+
+  .role-meta strong {
+    font-family: var(--font-label);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-ghost);
+    margin-right: var(--space-xs);
+  }
+</style>

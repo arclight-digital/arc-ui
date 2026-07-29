@@ -48,7 +48,7 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
       }
 
       label {
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-weight: 600;
         font-size: var(--text-xs);
         letter-spacing: 1px;
@@ -119,7 +119,7 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
       }
 
       .calendar-title {
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-weight: 600;
         font-size: var(--text-xs);
         letter-spacing: 1.5px;
@@ -154,7 +154,7 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
         align-items: center;
         justify-content: center;
         padding: var(--space-sm) var(--space-xs);
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-size: var(--text-xs);
         font-weight: 500;
         letter-spacing: 1px;

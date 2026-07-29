@@ -60,11 +60,25 @@ export const tokens = {
     black:        '0, 0, 0',
   },
 
-  /* ── Typography ── */
+  /* ── Typography ──
+   *
+   * Fonts are role slots, not typefaces. ARC UI ships no font files: each role
+   * names a reference face and composes it with a fallback stack, so assigning
+   * your own typeface means overriding one `--font-<role>-family` token and
+   * inheriting every decision that sits around it.
+   *
+   * The roles are drawn from how the library actually uses them:
+   *   text    — prose, inputs, descriptions, headings. The default for everything.
+   *   label   — form labels, table headers, eyebrows. Small, uppercase, tracked.
+   *   mono    — code, keyboard hints, and tabular numerics.
+   *   display — large headings. Follows `text` until assigned separately.
+   *   quote   — the decorative glyph on arc-blockquote.
+   */
   font: {
-    body:   "'Host Grotesk', system-ui, sans-serif",
-    accent: "'Tektur', system-ui, sans-serif",
-    mono:   "'JetBrains Mono', ui-monospace, monospace",
+    body:  { family: "'Host Grotesk'",   fallback: 'system-ui, sans-serif' },
+    label: { family: "'Tektur'",         fallback: 'system-ui, sans-serif' },
+    mono:  { family: "'JetBrains Mono'", fallback: 'ui-monospace, monospace' },
+    quote: { family: 'Georgia',          fallback: 'serif' },
   },
 
   fontSize: {
@@ -312,9 +326,32 @@ export const cssVariables = `
   --opacity-hover: ${tokens.opacity.hover};
   --opacity-visible: ${tokens.opacity.visible};
 
-  --font-body: ${tokens.font.body};
-  --font-accent: ${tokens.font.accent};
-  --font-mono: ${tokens.font.mono};
+  /* Font role slots. Override only the -family token to assign a typeface;
+     the fallback and every component using the role follow automatically. */
+  --font-body-family: ${tokens.font.body.family};
+  --font-body-fallback: ${tokens.font.body.fallback};
+  --font-body: var(--font-body-family), var(--font-body-fallback);
+
+  --font-label-family: ${tokens.font.label.family};
+  --font-label-fallback: ${tokens.font.label.fallback};
+  --font-label: var(--font-label-family), var(--font-label-fallback);
+
+  --font-mono-family: ${tokens.font.mono.family};
+  --font-mono-fallback: ${tokens.font.mono.fallback};
+  --font-mono: var(--font-mono-family), var(--font-mono-fallback);
+
+  /* Display follows the text role until it is assigned a face of its own. */
+  --font-display-family: var(--font-body-family);
+  --font-display-fallback: var(--font-body-fallback);
+  --font-display: var(--font-display-family), var(--font-display-fallback);
+
+  --font-quote-family: ${tokens.font.quote.family};
+  --font-quote-fallback: ${tokens.font.quote.fallback};
+  --font-quote: var(--font-quote-family), var(--font-quote-fallback);
+
+  /* --font-accent named the label role before the slots were split out.
+     Kept as an alias so existing overrides and usages keep working. */
+  --font-accent: var(--font-label);
 
   --text-xs: ${tokens.fontSize.xs};
   --text-sm: ${tokens.fontSize.sm};

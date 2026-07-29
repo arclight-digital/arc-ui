@@ -24,6 +24,7 @@ export class ArcText extends LitElement {
       :host([variant="code"]) { display: inline; }
 
       .text--display {
+        font-family: var(--font-display);
         font-size: var(--display-xl-size);
         font-weight: var(--display-xl-weight);
         letter-spacing: var(--display-xl-spacing);
@@ -36,6 +37,7 @@ export class ArcText extends LitElement {
       }
 
       .text--heading {
+        font-family: var(--font-display);
         font-size: var(--heading-size);
         font-weight: var(--heading-weight);
         color: var(--text-primary);
@@ -57,7 +59,7 @@ export class ArcText extends LitElement {
       .text--ghost { color: var(--text-ghost); }
 
       .text--accent {
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-weight: var(--ui-accent-weight);
         font-size: var(--ui-accent-size);
         letter-spacing: var(--ui-accent-spacing);
@@ -69,7 +71,7 @@ export class ArcText extends LitElement {
       }
 
       .text--label {
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-weight: var(--section-title-weight);
         font-size: var(--section-title-size);
         letter-spacing: var(--section-title-spacing);

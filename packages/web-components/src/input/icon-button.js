@@ -69,7 +69,7 @@ export class ArcIconButton extends LitElement {
 
       /* With text */
       .btn--has-text {
-        font-family: var(--font-accent);
+        font-family: var(--font-label);
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 1.5px;
