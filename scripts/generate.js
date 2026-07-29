@@ -11,10 +11,13 @@
  *   3. Register  — Auto-generate .register.js files
  *   4. Brand     — Generate brand assets
  *   5. Prism     — Generate framework wrappers + HTML/CSS
- *   6. Exports   — Sync package.json exports map from register files
- *   7. Manifest  — custom-elements.json via @custom-elements-manifest/analyzer
- *   8. Types     — types/index.d.ts generated from the manifest
- *   9. Readme    — README component counts synced from docs data
+ *   6. Manifest  — custom-elements.json via @custom-elements-manifest/analyzer
+ *   7. Types     — types/index.d.ts generated from the manifest
+ *   8. ModuleTypes — types/**.d.ts for exported non-element modules, from JSDoc
+ *   9. Exports   — Sync package.json exports map, attaching a "types" condition
+ *                  to every subpath. Runs last of the type steps because it
+ *                  asserts the declaration files exist.
+ *  10. Readme    — README component counts synced from docs data
  *
  * Usage: node scripts/generate.js
  */
@@ -28,9 +31,10 @@ const steps = [
   { name: 'Register', cmd: 'node',  args: ['scripts/generate-registrations.js'] },
   { name: 'Brand',    cmd: 'node',  args: ['scripts/generate-brand-assets.js'] },
   { name: 'Prism',    cmd: 'npx',   args: ['prism'] },
-  { name: 'Exports',  cmd: 'node',  args: ['scripts/generate-exports.js'] },
   { name: 'Manifest', cmd: 'node',  args: ['scripts/generate-manifest.js'] },
   { name: 'Types',    cmd: 'node',  args: ['scripts/generate-types.js'] },
+  { name: 'ModuleTypes', cmd: 'node', args: ['scripts/generate-module-types.js'] },
+  { name: 'Exports',  cmd: 'node',  args: ['scripts/generate-exports.js'] },
   { name: 'Editor',   cmd: 'node',  args: ['scripts/generate-editor-data.js'] },
   { name: 'DevSchema', cmd: 'node', args: ['scripts/generate-dev-schema.js'] },
   { name: 'Readme',   cmd: 'node',  args: ['scripts/generate-readme-stats.js'] },

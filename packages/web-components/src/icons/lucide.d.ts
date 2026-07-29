@@ -75,7 +75,6 @@ export type LucideIconName =
   | 'arrow-big-up-dash'
   | 'arrow-down'
   | 'arrow-down-az'
-  | 'arrow-down-az'
   | 'arrow-down-circle'
   | 'arrow-down-from-line'
   | 'arrow-down-left'
@@ -93,7 +92,6 @@ export type LucideIconName =
   | 'arrow-down-up'
   | 'arrow-down-wide-narrow'
   | 'arrow-down-za'
-  | 'arrow-down-za'
   | 'arrow-down01'
   | 'arrow-down10'
   | 'arrow-left'
@@ -109,7 +107,6 @@ export type LucideIconName =
   | 'arrow-right-square'
   | 'arrow-right-to-line'
   | 'arrow-up'
-  | 'arrow-up-az'
   | 'arrow-up-az'
   | 'arrow-up-circle'
   | 'arrow-up-down'
@@ -128,7 +125,6 @@ export type LucideIconName =
   | 'arrow-up-to-line'
   | 'arrow-up-wide-narrow'
   | 'arrow-up-za'
-  | 'arrow-up-za'
   | 'arrow-up01'
   | 'arrow-up10'
   | 'arrows-up-from-line'
@@ -140,7 +136,6 @@ export type LucideIconName =
   | 'audio-waveform'
   | 'award'
   | 'axe'
-  | 'axis3d'
   | 'axis3d'
   | 'baby'
   | 'backpack'
@@ -670,7 +665,6 @@ export type LucideIconName =
   | 'file-audio'
   | 'file-audio2'
   | 'file-axis3d'
-  | 'file-axis3d'
   | 'file-badge'
   | 'file-badge2'
   | 'file-bar-chart'
@@ -876,15 +870,10 @@ export type LucideIconName =
   | 'grape'
   | 'grid'
   | 'grid2x2'
-  | 'grid2x2'
-  | 'grid2x2check'
   | 'grid2x2check'
   | 'grid2x2plus'
-  | 'grid2x2plus'
-  | 'grid2x2x'
   | 'grid2x2x'
   | 'grid3x2'
-  | 'grid3x3'
   | 'grid3x3'
   | 'grip'
   | 'grip-horizontal'
@@ -1201,7 +1190,6 @@ export type LucideIconName =
   | 'move-up-right'
   | 'move-vertical'
   | 'move3d'
-  | 'move3d'
   | 'music'
   | 'music2'
   | 'music3'
@@ -1422,7 +1410,6 @@ export type LucideIconName =
   | 'rotate-cw'
   | 'rotate-cw-square'
   | 'rotate3d'
-  | 'rotate3d'
   | 'route'
   | 'route-off'
   | 'router'
@@ -1444,7 +1431,6 @@ export type LucideIconName =
   | 'save-all'
   | 'save-off'
   | 'scale'
-  | 'scale3d'
   | 'scale3d'
   | 'scaling'
   | 'scan'
@@ -1986,7 +1972,6 @@ export declare const ArrowBigUp: string;
 export declare const ArrowBigUpDash: string;
 export declare const ArrowDown: string;
 export declare const ArrowDownAz: string;
-export declare const ArrowDownAz: string;
 export declare const ArrowDownCircle: string;
 export declare const ArrowDownFromLine: string;
 export declare const ArrowDownLeft: string;
@@ -2004,7 +1989,6 @@ export declare const ArrowDownToLine: string;
 export declare const ArrowDownUp: string;
 export declare const ArrowDownWideNarrow: string;
 export declare const ArrowDownZa: string;
-export declare const ArrowDownZa: string;
 export declare const ArrowDown01: string;
 export declare const ArrowDown10: string;
 export declare const ArrowLeft: string;
@@ -2020,7 +2004,6 @@ export declare const ArrowRightLeft: string;
 export declare const ArrowRightSquare: string;
 export declare const ArrowRightToLine: string;
 export declare const ArrowUp: string;
-export declare const ArrowUpAz: string;
 export declare const ArrowUpAz: string;
 export declare const ArrowUpCircle: string;
 export declare const ArrowUpDown: string;
@@ -2039,7 +2022,6 @@ export declare const ArrowUpSquare: string;
 export declare const ArrowUpToLine: string;
 export declare const ArrowUpWideNarrow: string;
 export declare const ArrowUpZa: string;
-export declare const ArrowUpZa: string;
 export declare const ArrowUp01: string;
 export declare const ArrowUp10: string;
 export declare const ArrowsUpFromLine: string;
@@ -2051,7 +2033,6 @@ export declare const AudioLines: string;
 export declare const AudioWaveform: string;
 export declare const Award: string;
 export declare const Axe: string;
-export declare const Axis3d: string;
 export declare const Axis3d: string;
 export declare const Baby: string;
 export declare const Backpack: string;
@@ -2581,7 +2562,6 @@ export declare const FileArchive: string;
 export declare const FileAudio: string;
 export declare const FileAudio2: string;
 export declare const FileAxis3d: string;
-export declare const FileAxis3d: string;
 export declare const FileBadge: string;
 export declare const FileBadge2: string;
 export declare const FileBarChart: string;
@@ -2787,15 +2767,10 @@ export declare const GraduationCap: string;
 export declare const Grape: string;
 export declare const Grid: string;
 export declare const Grid2x2: string;
-export declare const Grid2x2: string;
-export declare const Grid2x2check: string;
 export declare const Grid2x2check: string;
 export declare const Grid2x2plus: string;
-export declare const Grid2x2plus: string;
-export declare const Grid2x2x: string;
 export declare const Grid2x2x: string;
 export declare const Grid3x2: string;
-export declare const Grid3x3: string;
 export declare const Grid3x3: string;
 export declare const Grip: string;
 export declare const GripHorizontal: string;
@@ -3112,7 +3087,6 @@ export declare const MoveUpLeft: string;
 export declare const MoveUpRight: string;
 export declare const MoveVertical: string;
 export declare const Move3d: string;
-export declare const Move3d: string;
 export declare const Music: string;
 export declare const Music2: string;
 export declare const Music3: string;
@@ -3333,7 +3307,6 @@ export declare const RotateCcwSquare: string;
 export declare const RotateCw: string;
 export declare const RotateCwSquare: string;
 export declare const Rotate3d: string;
-export declare const Rotate3d: string;
 export declare const Route: string;
 export declare const RouteOff: string;
 export declare const Router: string;
@@ -3355,7 +3328,6 @@ export declare const Save: string;
 export declare const SaveAll: string;
 export declare const SaveOff: string;
 export declare const Scale: string;
-export declare const Scale3d: string;
 export declare const Scale3d: string;
 export declare const Scaling: string;
 export declare const Scan: string;

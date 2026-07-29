@@ -70,6 +70,26 @@ const headings = [
         <code>anchor-adoption</code> stay internal and remain free to change. Additive only —
         nothing existing moved or was removed.
       </p>
+
+      <h3 class="tier-heading">Every Subpath Now Publishes Types</h3>
+      <p class="docs-text">
+        Only the root entry carried a <code>types</code> condition. The other 212 subpaths were
+        bare strings, so <code>import &#123; ArcLabel &#125; from '@arclux/arc-ui/label'</code> resolved to
+        implicit <code>any</code> — the package looked typed because its root was, while every deep
+        import silently was not. Invisible from inside this repo, since nothing here imports itself
+        by package name.
+      </p>
+      <ul class="docs-list">
+        <li><strong>208 subpaths now carry types</strong> — element subpaths resolve to <code>types/index.d.ts</code>; non-element modules get their own declaration, generated from JSDoc by the new <code>generate-module-types.js</code>. A <code>@typedef</code> in source becomes an exported type automatically.</li>
+        <li><strong><code>generate-exports.js</code> now asserts instead of assuming</strong> — every subpath must point at a file that exists, and every JavaScript target must resolve to a declaration that exists. Either failure exits non-zero, failing <code>pnpm generate</code> and the generate-diff CI gate. Adding an untyped subpath is no longer something you can forget to notice.</li>
+        <li><strong>The two wildcard subpaths are named in the output</strong> rather than quietly skipped, since an exemption nobody can see reads as coverage it isn't.</li>
+      </ul>
+
+      <h3 class="tier-heading">Fixes</h3>
+      <ul class="docs-list">
+        <li><strong><code>@arclux/arc-ui/icons/lucide</code> was unimportable</strong> — a hard <code>SyntaxError</code>, not a subtle one. Upstream ships casing aliases (<code>ArrowDownAZ</code> / <code>ArrowDownAz</code>, <code>Axis3D</code> / <code>Axis3d</code>) that the kebab-case conversion collapsed onto one name, emitting 14 duplicate <code>export const</code> declarations. Bodies were byte-identical, so the aliases are now collapsed rather than emitted twice. The generator throws if colliding icons ever have <em>differing</em> bodies, instead of silently dropping one.</li>
+        <li><strong>Removed the broken <code>./tokens</code> export</strong> — it pointed at <code>src/tokens.js</code>, deleted back in 286dbf3 when duplicate token modules were eliminated. Importing it has failed ever since. Tokens come from <code>./base.css</code>.</li>
+      </ul>
     </section>
 
     <section id="v2-9-0">

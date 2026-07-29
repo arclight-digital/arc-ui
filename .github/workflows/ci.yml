@@ -46,7 +46,7 @@ jobs:
         run: pnpm test
 
       - name: Typecheck generated declarations
-        run: ./node_modules/.bin/tsc --noEmit --skipLibCheck --moduleResolution bundler --module esnext --target es2022 packages/web-components/types/index.d.ts
+        run: ./node_modules/.bin/tsc --noEmit --skipLibCheck --moduleResolution bundler --module esnext --target es2022 packages/web-components/types/index.d.ts packages/web-components/types/shared-styles.d.ts packages/web-components/types/shared/*.d.ts packages/web-components/types/content/*.d.ts packages/web-components/types/dev.d.ts
 
   accessibility:
     runs-on: ubuntu-latest

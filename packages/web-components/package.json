@@ -13,221 +13,838 @@
       "types": "./types/index.d.ts",
       "default": "./src/index.js"
     },
-    "./register": "./src/register.js",
-    "./accordion": "./src/content/accordion.register.js",
-    "./accordion-item": "./src/content/accordion-item.register.js",
-    "./alert": "./src/feedback/alert.register.js",
-    "./anchor-nav": "./src/navigation/anchor-nav.register.js",
-    "./animated-number": "./src/data/animated-number.register.js",
-    "./announcement": "./src/feedback/announcement.register.js",
-    "./app-shell": "./src/layout/app-shell.register.js",
-    "./aspect-grid": "./src/layout/aspect-grid.register.js",
-    "./aspect-ratio": "./src/content/aspect-ratio.register.js",
-    "./auth-shell": "./src/layout/auth-shell.register.js",
-    "./avatar": "./src/content/avatar.register.js",
-    "./avatar-group": "./src/content/avatar-group.register.js",
-    "./badge": "./src/data/badge.register.js",
-    "./banner": "./src/feedback/banner.register.js",
-    "./blockquote": "./src/typography/blockquote.register.js",
-    "./bottom-nav": "./src/navigation/bottom-nav.register.js",
-    "./breadcrumb": "./src/navigation/breadcrumb.register.js",
-    "./breadcrumb-item": "./src/navigation/breadcrumb-item.register.js",
-    "./breadcrumb-menu": "./src/navigation/breadcrumb-menu.register.js",
-    "./button": "./src/input/button.register.js",
-    "./button-group": "./src/input/button-group.register.js",
-    "./calendar": "./src/input/calendar.register.js",
-    "./callout": "./src/content/callout.register.js",
-    "./card": "./src/content/card.register.js",
-    "./carousel": "./src/content/carousel.register.js",
-    "./categories/content": "./src/content/index.js",
-    "./categories/data": "./src/data/index.js",
-    "./categories/feedback": "./src/feedback/index.js",
-    "./categories/input": "./src/input/index.js",
-    "./categories/layout": "./src/layout/index.js",
-    "./categories/navigation": "./src/navigation/index.js",
-    "./categories/typography": "./src/typography/index.js",
-    "./center": "./src/layout/center.register.js",
-    "./chart": "./src/data/chart.register.js",
-    "./checkbox": "./src/input/checkbox.register.js",
-    "./chip": "./src/input/chip.register.js",
-    "./cluster": "./src/layout/cluster.register.js",
-    "./code-block": "./src/typography/code-block.register.js",
-    "./collapsible": "./src/content/collapsible.register.js",
-    "./color-picker": "./src/input/color-picker.register.js",
-    "./color-swatch": "./src/content/color-swatch.register.js",
-    "./column": "./src/content/column.register.js",
-    "./combobox": "./src/input/combobox.register.js",
-    "./command-bar": "./src/navigation/command-bar.register.js",
-    "./command-group": "./src/feedback/command-group.register.js",
-    "./command-item": "./src/feedback/command-item.register.js",
-    "./command-palette": "./src/feedback/command-palette.register.js",
-    "./comparison": "./src/data/comparison.register.js",
-    "./comparison-column": "./src/data/comparison-column.register.js",
-    "./confirm": "./src/feedback/confirm.register.js",
-    "./connection-status": "./src/feedback/connection-status.register.js",
-    "./container": "./src/layout/container.register.js",
-    "./context-menu": "./src/feedback/context-menu.register.js",
-    "./copy-button": "./src/input/copy-button.register.js",
-    "./countdown-timer": "./src/data/countdown-timer.register.js",
-    "./cta-banner": "./src/content/cta-banner.register.js",
-    "./dashboard-grid": "./src/layout/dashboard-grid.register.js",
-    "./data-grid": "./src/data/data-grid.register.js",
-    "./data-table": "./src/data/data-table.register.js",
-    "./date-picker": "./src/input/date-picker.register.js",
-    "./date-range-picker": "./src/input/date-range-picker.register.js",
-    "./description-item": "./src/data/description-item.register.js",
-    "./description-list": "./src/data/description-list.register.js",
-    "./dev": "./src/dev.js",
-    "./dialog": "./src/feedback/dialog.register.js",
-    "./diff": "./src/data/diff.register.js",
-    "./divider": "./src/content/divider.register.js",
-    "./dock": "./src/layout/dock.register.js",
-    "./drawer": "./src/navigation/drawer.register.js",
-    "./dropdown-menu": "./src/feedback/dropdown-menu.register.js",
-    "./empty-state": "./src/content/empty-state.register.js",
-    "./event-calendar": "./src/data/event-calendar.register.js",
-    "./feature-card": "./src/content/feature-card.register.js",
-    "./fieldset": "./src/input/fieldset.register.js",
-    "./file-upload": "./src/input/file-upload.register.js",
-    "./float-bar": "./src/layout/float-bar.register.js",
-    "./footer": "./src/navigation/footer.register.js",
-    "./form": "./src/input/form.register.js",
-    "./gradient-text": "./src/typography/gradient-text.register.js",
-    "./guided-tour": "./src/feedback/guided-tour.register.js",
-    "./highlight": "./src/typography/highlight.register.js",
-    "./hotkey": "./src/input/hotkey.register.js",
-    "./hover-card": "./src/feedback/hover-card.register.js",
-    "./icon": "./src/content/icon.register.js",
-    "./icon-button": "./src/input/icon-button.register.js",
-    "./icon-library": "./src/content/icon-library.js",
-    "./icon-registry": "./src/content/icon-registry.js",
-    "./image": "./src/content/image.register.js",
-    "./image-cropper": "./src/input/image-cropper.register.js",
-    "./infinite-scroll": "./src/content/infinite-scroll.register.js",
-    "./inline-message": "./src/feedback/inline-message.register.js",
-    "./input-group": "./src/input/input-group.register.js",
-    "./inset": "./src/layout/inset.register.js",
-    "./kanban": "./src/data/kanban.register.js",
-    "./kbd": "./src/typography/kbd.register.js",
-    "./key-value": "./src/data/key-value.register.js",
-    "./kv-pair": "./src/data/kv-pair.register.js",
-    "./label": "./src/input/label.register.js",
-    "./link": "./src/navigation/link.register.js",
-    "./list": "./src/data/list.register.js",
-    "./list-item": "./src/data/list-item.register.js",
-    "./loading-overlay": "./src/feedback/loading-overlay.register.js",
-    "./markdown": "./src/typography/markdown.register.js",
-    "./marquee": "./src/content/marquee.register.js",
-    "./masonry": "./src/layout/masonry.register.js",
-    "./menu-divider": "./src/shared/menu-divider.register.js",
-    "./menu-item": "./src/shared/menu-item.register.js",
-    "./menubar": "./src/navigation/menubar.register.js",
-    "./meter": "./src/data/meter.register.js",
-    "./modal": "./src/feedback/modal.register.js",
-    "./multi-select": "./src/input/multi-select.register.js",
-    "./nav-item": "./src/navigation/nav-item.register.js",
-    "./navigation-menu": "./src/navigation/navigation-menu.register.js",
-    "./notification-panel": "./src/feedback/notification-panel.register.js",
-    "./number-format": "./src/typography/number-format.register.js",
-    "./number-input": "./src/input/number-input.register.js",
-    "./option": "./src/shared/option.register.js",
-    "./otp-input": "./src/input/otp-input.register.js",
-    "./page-header": "./src/layout/page-header.register.js",
-    "./page-indicator": "./src/navigation/page-indicator.register.js",
-    "./page-layout": "./src/layout/page-layout.register.js",
-    "./pagination": "./src/navigation/pagination.register.js",
-    "./password-input": "./src/input/password-input.register.js",
-    "./pin-input": "./src/input/pin-input.register.js",
-    "./popover": "./src/feedback/popover.register.js",
-    "./progress": "./src/feedback/progress.register.js",
-    "./progress-toast": "./src/feedback/progress-toast.register.js",
-    "./prose": "./src/typography/prose.register.js",
-    "./qr-code": "./src/content/qr-code.register.js",
-    "./radio": "./src/input/radio.register.js",
-    "./radio-group": "./src/input/radio-group.register.js",
-    "./rail": "./src/navigation/rail.register.js",
-    "./range-slider": "./src/input/range-slider.register.js",
-    "./rating": "./src/input/rating.register.js",
+    "./register": {
+      "types": "./types/index.d.ts",
+      "default": "./src/register.js"
+    },
+    "./accordion": {
+      "types": "./types/index.d.ts",
+      "default": "./src/content/accordion.register.js"
+    },
+    "./accordion-item": {
+      "types": "./types/index.d.ts",
+      "default": "./src/content/accordion-item.register.js"
+    },
+    "./alert": {
+      "types": "./types/index.d.ts",
+      "default": "./src/feedback/alert.register.js"
+    },
+    "./anchor-nav": {
+      "types": "./types/index.d.ts",
+      "default": "./src/navigation/anchor-nav.register.js"
+    },
+    "./animated-number": {
+      "types": "./types/index.d.ts",
+      "default": "./src/data/animated-number.register.js"
+    },
+    "./announcement": {
+      "types": "./types/index.d.ts",
+      "default": "./src/feedback/announcement.register.js"
+    },
+    "./app-shell": {
+      "types": "./types/index.d.ts",
+      "default": "./src/layout/app-shell.register.js"
+    },
+    "./aspect-grid": {
+      "types": "./types/index.d.ts",
+      "default": "./src/layout/aspect-grid.register.js"
+    },
+    "./aspect-ratio": {
+      "types": "./types/index.d.ts",
+      "default": "./src/content/aspect-ratio.register.js"
+    },
+    "./auth-shell": {
+      "types": "./types/index.d.ts",
+      "default": "./src/layout/auth-shell.register.js"
+    },
+    "./avatar": {
+      "types": "./types/index.d.ts",
+      "default": "./src/content/avatar.register.js"
+    },
+    "./avatar-group": {
+      "types": "./types/index.d.ts",
+      "default": "./src/content/avatar-group.register.js"
+    },
+    "./badge": {
+      "types": "./types/index.d.ts",
+      "default": "./src/data/badge.register.js"
+    },
+    "./banner": {
+      "types": "./types/index.d.ts",
+      "default": "./src/feedback/banner.register.js"
+    },
+    "./blockquote": {
+      "types": "./types/index.d.ts",
+      "default": "./src/typography/blockquote.register.js"
+    },
+    "./bottom-nav": {
+      "types": "./types/index.d.ts",
+      "default": "./src/navigation/bottom-nav.register.js"
+    },
+    "./breadcrumb": {
+      "types": "./types/index.d.ts",
+      "default": "./src/navigation/breadcrumb.register.js"
+    },
+    "./breadcrumb-item": {
+      "types": "./types/index.d.ts",
+      "default": "./src/navigation/breadcrumb-item.register.js"
+    },
+    "./breadcrumb-menu": {
+      "types": "./types/index.d.ts",
+      "default": "./src/navigation/breadcrumb-menu.register.js"
+    },
+    "./button": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/button.register.js"
+    },
+    "./button-group": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/button-group.register.js"
+    },
+    "./calendar": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/calendar.register.js"
+    },
+    "./callout": {
+      "types": "./types/index.d.ts",
+      "default": "./src/content/callout.register.js"
+    },
+    "./card": {
+      "types": "./types/index.d.ts",
+      "default": "./src/content/card.register.js"
+    },
+    "./carousel": {
+      "types": "./types/index.d.ts",
+      "default": "./src/content/carousel.register.js"
+    },
+    "./categories/content": {
+      "types": "./types/index.d.ts",
+      "default": "./src/content/index.js"
+    },
+    "./categories/data": {
+      "types": "./types/index.d.ts",
+      "default": "./src/data/index.js"
+    },
+    "./categories/feedback": {
+      "types": "./types/index.d.ts",
+      "default": "./src/feedback/index.js"
+    },
+    "./categories/input": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/index.js"
+    },
+    "./categories/layout": {
+      "types": "./types/index.d.ts",
+      "default": "./src/layout/index.js"
+    },
+    "./categories/navigation": {
+      "types": "./types/index.d.ts",
+      "default": "./src/navigation/index.js"
+    },
+    "./categories/typography": {
+      "types": "./types/index.d.ts",
+      "default": "./src/typography/index.js"
+    },
+    "./center": {
+      "types": "./types/index.d.ts",
+      "default": "./src/layout/center.register.js"
+    },
+    "./chart": {
+      "types": "./types/index.d.ts",
+      "default": "./src/data/chart.register.js"
+    },
+    "./checkbox": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/checkbox.register.js"
+    },
+    "./chip": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/chip.register.js"
+    },
+    "./cluster": {
+      "types": "./types/index.d.ts",
+      "default": "./src/layout/cluster.register.js"
+    },
+    "./code-block": {
+      "types": "./types/index.d.ts",
+      "default": "./src/typography/code-block.register.js"
+    },
+    "./collapsible": {
+      "types": "./types/index.d.ts",
+      "default": "./src/content/collapsible.register.js"
+    },
+    "./color-picker": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/color-picker.register.js"
+    },
+    "./color-swatch": {
+      "types": "./types/index.d.ts",
+      "default": "./src/content/color-swatch.register.js"
+    },
+    "./column": {
+      "types": "./types/index.d.ts",
+      "default": "./src/content/column.register.js"
+    },
+    "./combobox": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/combobox.register.js"
+    },
+    "./command-bar": {
+      "types": "./types/index.d.ts",
+      "default": "./src/navigation/command-bar.register.js"
+    },
+    "./command-group": {
+      "types": "./types/index.d.ts",
+      "default": "./src/feedback/command-group.register.js"
+    },
+    "./command-item": {
+      "types": "./types/index.d.ts",
+      "default": "./src/feedback/command-item.register.js"
+    },
+    "./command-palette": {
+      "types": "./types/index.d.ts",
+      "default": "./src/feedback/command-palette.register.js"
+    },
+    "./comparison": {
+      "types": "./types/index.d.ts",
+      "default": "./src/data/comparison.register.js"
+    },
+    "./comparison-column": {
+      "types": "./types/index.d.ts",
+      "default": "./src/data/comparison-column.register.js"
+    },
+    "./confirm": {
+      "types": "./types/index.d.ts",
+      "default": "./src/feedback/confirm.register.js"
+    },
+    "./connection-status": {
+      "types": "./types/index.d.ts",
+      "default": "./src/feedback/connection-status.register.js"
+    },
+    "./container": {
+      "types": "./types/index.d.ts",
+      "default": "./src/layout/container.register.js"
+    },
+    "./context-menu": {
+      "types": "./types/index.d.ts",
+      "default": "./src/feedback/context-menu.register.js"
+    },
+    "./copy-button": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/copy-button.register.js"
+    },
+    "./countdown-timer": {
+      "types": "./types/index.d.ts",
+      "default": "./src/data/countdown-timer.register.js"
+    },
+    "./cta-banner": {
+      "types": "./types/index.d.ts",
+      "default": "./src/content/cta-banner.register.js"
+    },
+    "./dashboard-grid": {
+      "types": "./types/index.d.ts",
+      "default": "./src/layout/dashboard-grid.register.js"
+    },
+    "./data-grid": {
+      "types": "./types/index.d.ts",
+      "default": "./src/data/data-grid.register.js"
+    },
+    "./data-table": {
+      "types": "./types/index.d.ts",
+      "default": "./src/data/data-table.register.js"
+    },
+    "./date-picker": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/date-picker.register.js"
+    },
+    "./date-range-picker": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/date-range-picker.register.js"
+    },
+    "./description-item": {
+      "types": "./types/index.d.ts",
+      "default": "./src/data/description-item.register.js"
+    },
+    "./description-list": {
+      "types": "./types/index.d.ts",
+      "default": "./src/data/description-list.register.js"
+    },
+    "./dev": {
+      "types": "./types/dev.d.ts",
+      "default": "./src/dev.js"
+    },
+    "./dialog": {
+      "types": "./types/index.d.ts",
+      "default": "./src/feedback/dialog.register.js"
+    },
+    "./diff": {
+      "types": "./types/index.d.ts",
+      "default": "./src/data/diff.register.js"
+    },
+    "./divider": {
+      "types": "./types/index.d.ts",
+      "default": "./src/content/divider.register.js"
+    },
+    "./dock": {
+      "types": "./types/index.d.ts",
+      "default": "./src/layout/dock.register.js"
+    },
+    "./drawer": {
+      "types": "./types/index.d.ts",
+      "default": "./src/navigation/drawer.register.js"
+    },
+    "./dropdown-menu": {
+      "types": "./types/index.d.ts",
+      "default": "./src/feedback/dropdown-menu.register.js"
+    },
+    "./empty-state": {
+      "types": "./types/index.d.ts",
+      "default": "./src/content/empty-state.register.js"
+    },
+    "./event-calendar": {
+      "types": "./types/index.d.ts",
+      "default": "./src/data/event-calendar.register.js"
+    },
+    "./feature-card": {
+      "types": "./types/index.d.ts",
+      "default": "./src/content/feature-card.register.js"
+    },
+    "./fieldset": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/fieldset.register.js"
+    },
+    "./file-upload": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/file-upload.register.js"
+    },
+    "./float-bar": {
+      "types": "./types/index.d.ts",
+      "default": "./src/layout/float-bar.register.js"
+    },
+    "./footer": {
+      "types": "./types/index.d.ts",
+      "default": "./src/navigation/footer.register.js"
+    },
+    "./form": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/form.register.js"
+    },
+    "./gradient-text": {
+      "types": "./types/index.d.ts",
+      "default": "./src/typography/gradient-text.register.js"
+    },
+    "./guided-tour": {
+      "types": "./types/index.d.ts",
+      "default": "./src/feedback/guided-tour.register.js"
+    },
+    "./highlight": {
+      "types": "./types/index.d.ts",
+      "default": "./src/typography/highlight.register.js"
+    },
+    "./hotkey": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/hotkey.register.js"
+    },
+    "./hover-card": {
+      "types": "./types/index.d.ts",
+      "default": "./src/feedback/hover-card.register.js"
+    },
+    "./icon": {
+      "types": "./types/index.d.ts",
+      "default": "./src/content/icon.register.js"
+    },
+    "./icon-button": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/icon-button.register.js"
+    },
+    "./icon-library": {
+      "types": "./types/content/icon-library.d.ts",
+      "default": "./src/content/icon-library.js"
+    },
+    "./icon-registry": {
+      "types": "./types/content/icon-registry.d.ts",
+      "default": "./src/content/icon-registry.js"
+    },
+    "./image": {
+      "types": "./types/index.d.ts",
+      "default": "./src/content/image.register.js"
+    },
+    "./image-cropper": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/image-cropper.register.js"
+    },
+    "./infinite-scroll": {
+      "types": "./types/index.d.ts",
+      "default": "./src/content/infinite-scroll.register.js"
+    },
+    "./inline-message": {
+      "types": "./types/index.d.ts",
+      "default": "./src/feedback/inline-message.register.js"
+    },
+    "./input": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/input.register.js"
+    },
+    "./input-group": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/input-group.register.js"
+    },
+    "./inset": {
+      "types": "./types/index.d.ts",
+      "default": "./src/layout/inset.register.js"
+    },
+    "./kanban": {
+      "types": "./types/index.d.ts",
+      "default": "./src/data/kanban.register.js"
+    },
+    "./kbd": {
+      "types": "./types/index.d.ts",
+      "default": "./src/typography/kbd.register.js"
+    },
+    "./key-value": {
+      "types": "./types/index.d.ts",
+      "default": "./src/data/key-value.register.js"
+    },
+    "./kv-pair": {
+      "types": "./types/index.d.ts",
+      "default": "./src/data/kv-pair.register.js"
+    },
+    "./label": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/label.register.js"
+    },
+    "./link": {
+      "types": "./types/index.d.ts",
+      "default": "./src/navigation/link.register.js"
+    },
+    "./list": {
+      "types": "./types/index.d.ts",
+      "default": "./src/data/list.register.js"
+    },
+    "./list-item": {
+      "types": "./types/index.d.ts",
+      "default": "./src/data/list-item.register.js"
+    },
+    "./loading-overlay": {
+      "types": "./types/index.d.ts",
+      "default": "./src/feedback/loading-overlay.register.js"
+    },
+    "./markdown": {
+      "types": "./types/index.d.ts",
+      "default": "./src/typography/markdown.register.js"
+    },
+    "./marquee": {
+      "types": "./types/index.d.ts",
+      "default": "./src/content/marquee.register.js"
+    },
+    "./masonry": {
+      "types": "./types/index.d.ts",
+      "default": "./src/layout/masonry.register.js"
+    },
+    "./menu-divider": {
+      "types": "./types/index.d.ts",
+      "default": "./src/shared/menu-divider.register.js"
+    },
+    "./menu-item": {
+      "types": "./types/index.d.ts",
+      "default": "./src/shared/menu-item.register.js"
+    },
+    "./menubar": {
+      "types": "./types/index.d.ts",
+      "default": "./src/navigation/menubar.register.js"
+    },
+    "./meter": {
+      "types": "./types/index.d.ts",
+      "default": "./src/data/meter.register.js"
+    },
+    "./modal": {
+      "types": "./types/index.d.ts",
+      "default": "./src/feedback/modal.register.js"
+    },
+    "./multi-select": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/multi-select.register.js"
+    },
+    "./nav-item": {
+      "types": "./types/index.d.ts",
+      "default": "./src/navigation/nav-item.register.js"
+    },
+    "./navigation-menu": {
+      "types": "./types/index.d.ts",
+      "default": "./src/navigation/navigation-menu.register.js"
+    },
+    "./notification-panel": {
+      "types": "./types/index.d.ts",
+      "default": "./src/feedback/notification-panel.register.js"
+    },
+    "./number-format": {
+      "types": "./types/index.d.ts",
+      "default": "./src/typography/number-format.register.js"
+    },
+    "./number-input": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/number-input.register.js"
+    },
+    "./option": {
+      "types": "./types/index.d.ts",
+      "default": "./src/shared/option.register.js"
+    },
+    "./otp-input": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/otp-input.register.js"
+    },
+    "./page-header": {
+      "types": "./types/index.d.ts",
+      "default": "./src/layout/page-header.register.js"
+    },
+    "./page-indicator": {
+      "types": "./types/index.d.ts",
+      "default": "./src/navigation/page-indicator.register.js"
+    },
+    "./page-layout": {
+      "types": "./types/index.d.ts",
+      "default": "./src/layout/page-layout.register.js"
+    },
+    "./pagination": {
+      "types": "./types/index.d.ts",
+      "default": "./src/navigation/pagination.register.js"
+    },
+    "./password-input": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/password-input.register.js"
+    },
+    "./pin-input": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/pin-input.register.js"
+    },
+    "./popover": {
+      "types": "./types/index.d.ts",
+      "default": "./src/feedback/popover.register.js"
+    },
+    "./progress": {
+      "types": "./types/index.d.ts",
+      "default": "./src/feedback/progress.register.js"
+    },
+    "./progress-toast": {
+      "types": "./types/index.d.ts",
+      "default": "./src/feedback/progress-toast.register.js"
+    },
+    "./prose": {
+      "types": "./types/index.d.ts",
+      "default": "./src/typography/prose.register.js"
+    },
+    "./qr-code": {
+      "types": "./types/index.d.ts",
+      "default": "./src/content/qr-code.register.js"
+    },
+    "./radio": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/radio.register.js"
+    },
+    "./radio-group": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/radio-group.register.js"
+    },
+    "./rail": {
+      "types": "./types/index.d.ts",
+      "default": "./src/navigation/rail.register.js"
+    },
+    "./range-slider": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/range-slider.register.js"
+    },
+    "./rating": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/rating.register.js"
+    },
     "./react-jsx": {
       "types": "./types/react-jsx.d.ts"
     },
-    "./resizable": "./src/layout/resizable.register.js",
-    "./responsive-switcher": "./src/layout/responsive-switcher.register.js",
-    "./scroll-area": "./src/content/scroll-area.register.js",
-    "./scroll-indicator": "./src/content/scroll-indicator.register.js",
-    "./scroll-spy": "./src/navigation/scroll-spy.register.js",
-    "./scroll-to-top": "./src/navigation/scroll-to-top.register.js",
-    "./search": "./src/input/search.register.js",
-    "./section": "./src/layout/section.register.js",
-    "./segmented-control": "./src/input/segmented-control.register.js",
-    "./select": "./src/input/select.register.js",
-    "./separator": "./src/content/separator.register.js",
-    "./settings-layout": "./src/layout/settings-layout.register.js",
-    "./shared-styles": "./src/shared-styles.js",
-    "./shared/click-outside": "./src/shared/click-outside.js",
-    "./shared/focus-trap": "./src/shared/focus-trap.js",
-    "./shared/form-control-mixin": "./src/shared/form-control-mixin.js",
-    "./shared/scroll-lock": "./src/shared/scroll-lock.js",
-    "./shared/time-scale": "./src/shared/time-scale.js",
-    "./sheet": "./src/feedback/sheet.register.js",
-    "./sidebar": "./src/navigation/sidebar.register.js",
-    "./sidebar-link": "./src/navigation/sidebar-link.register.js",
-    "./sidebar-section": "./src/navigation/sidebar-section.register.js",
-    "./skeleton": "./src/content/skeleton.register.js",
-    "./skip-link": "./src/navigation/skip-link.register.js",
-    "./slider": "./src/input/slider.register.js",
-    "./snackbar": "./src/feedback/snackbar.register.js",
-    "./sortable-list": "./src/input/sortable-list.register.js",
-    "./sparkline": "./src/data/sparkline.register.js",
-    "./speed-dial": "./src/navigation/speed-dial.register.js",
-    "./spinner": "./src/content/spinner.register.js",
-    "./split-pane": "./src/layout/split-pane.register.js",
-    "./spotlight": "./src/feedback/spotlight.register.js",
-    "./spy-link": "./src/navigation/spy-link.register.js",
-    "./stack": "./src/content/stack.register.js",
-    "./stat": "./src/data/stat.register.js",
-    "./status-bar": "./src/layout/status-bar.register.js",
-    "./step": "./src/data/step.register.js",
-    "./stepper": "./src/data/stepper.register.js",
-    "./stepper-nav": "./src/navigation/stepper-nav.register.js",
-    "./sticky": "./src/layout/sticky.register.js",
-    "./suggestion": "./src/input/suggestion.register.js",
-    "./switch-group": "./src/input/switch-group.register.js",
-    "./tab": "./src/navigation/tab.register.js",
-    "./table": "./src/data/table.register.js",
-    "./tabs": "./src/navigation/tabs.register.js",
-    "./tag": "./src/data/tag.register.js",
-    "./tag-input": "./src/input/tag-input.register.js",
-    "./text": "./src/typography/text.register.js",
-    "./textarea": "./src/input/textarea.register.js",
-    "./theme-toggle": "./src/input/theme-toggle.register.js",
-    "./time-ago": "./src/typography/time-ago.register.js",
-    "./time-picker": "./src/input/time-picker.register.js",
-    "./timeline": "./src/data/timeline.register.js",
-    "./timeline-item": "./src/data/timeline-item.register.js",
-    "./toast": "./src/feedback/toast.register.js",
-    "./toast-manager": "./src/feedback/toast-manager.register.js",
-    "./toggle": "./src/input/toggle.register.js",
-    "./toolbar": "./src/layout/toolbar.register.js",
-    "./tooltip": "./src/feedback/tooltip.register.js",
-    "./top-bar": "./src/navigation/top-bar.register.js",
-    "./transfer-list": "./src/input/transfer-list.register.js",
-    "./tree-item": "./src/navigation/tree-item.register.js",
-    "./tree-view": "./src/navigation/tree-view.register.js",
-    "./truncate": "./src/typography/truncate.register.js",
-    "./typewriter": "./src/typography/typewriter.register.js",
-    "./value-card": "./src/data/value-card.register.js",
-    "./virtual-list": "./src/content/virtual-list.register.js",
-    "./input": "./src/input/input.register.js",
+    "./resizable": {
+      "types": "./types/index.d.ts",
+      "default": "./src/layout/resizable.register.js"
+    },
+    "./responsive-switcher": {
+      "types": "./types/index.d.ts",
+      "default": "./src/layout/responsive-switcher.register.js"
+    },
+    "./scroll-area": {
+      "types": "./types/index.d.ts",
+      "default": "./src/content/scroll-area.register.js"
+    },
+    "./scroll-indicator": {
+      "types": "./types/index.d.ts",
+      "default": "./src/content/scroll-indicator.register.js"
+    },
+    "./scroll-spy": {
+      "types": "./types/index.d.ts",
+      "default": "./src/navigation/scroll-spy.register.js"
+    },
+    "./scroll-to-top": {
+      "types": "./types/index.d.ts",
+      "default": "./src/navigation/scroll-to-top.register.js"
+    },
+    "./search": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/search.register.js"
+    },
+    "./section": {
+      "types": "./types/index.d.ts",
+      "default": "./src/layout/section.register.js"
+    },
+    "./segmented-control": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/segmented-control.register.js"
+    },
+    "./select": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/select.register.js"
+    },
+    "./separator": {
+      "types": "./types/index.d.ts",
+      "default": "./src/content/separator.register.js"
+    },
+    "./settings-layout": {
+      "types": "./types/index.d.ts",
+      "default": "./src/layout/settings-layout.register.js"
+    },
+    "./shared-styles": {
+      "types": "./types/shared-styles.d.ts",
+      "default": "./src/shared-styles.js"
+    },
+    "./shared/click-outside": {
+      "types": "./types/shared/click-outside.d.ts",
+      "default": "./src/shared/click-outside.js"
+    },
+    "./shared/focus-trap": {
+      "types": "./types/shared/focus-trap.d.ts",
+      "default": "./src/shared/focus-trap.js"
+    },
+    "./shared/form-control-mixin": {
+      "types": "./types/shared/form-control-mixin.d.ts",
+      "default": "./src/shared/form-control-mixin.js"
+    },
+    "./shared/scroll-lock": {
+      "types": "./types/shared/scroll-lock.d.ts",
+      "default": "./src/shared/scroll-lock.js"
+    },
+    "./shared/time-scale": {
+      "types": "./types/shared/time-scale.d.ts",
+      "default": "./src/shared/time-scale.js"
+    },
+    "./sheet": {
+      "types": "./types/index.d.ts",
+      "default": "./src/feedback/sheet.register.js"
+    },
+    "./sidebar": {
+      "types": "./types/index.d.ts",
+      "default": "./src/navigation/sidebar.register.js"
+    },
+    "./sidebar-link": {
+      "types": "./types/index.d.ts",
+      "default": "./src/navigation/sidebar-link.register.js"
+    },
+    "./sidebar-section": {
+      "types": "./types/index.d.ts",
+      "default": "./src/navigation/sidebar-section.register.js"
+    },
+    "./skeleton": {
+      "types": "./types/index.d.ts",
+      "default": "./src/content/skeleton.register.js"
+    },
+    "./skip-link": {
+      "types": "./types/index.d.ts",
+      "default": "./src/navigation/skip-link.register.js"
+    },
+    "./slider": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/slider.register.js"
+    },
+    "./snackbar": {
+      "types": "./types/index.d.ts",
+      "default": "./src/feedback/snackbar.register.js"
+    },
+    "./sortable-list": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/sortable-list.register.js"
+    },
+    "./sparkline": {
+      "types": "./types/index.d.ts",
+      "default": "./src/data/sparkline.register.js"
+    },
+    "./speed-dial": {
+      "types": "./types/index.d.ts",
+      "default": "./src/navigation/speed-dial.register.js"
+    },
+    "./spinner": {
+      "types": "./types/index.d.ts",
+      "default": "./src/content/spinner.register.js"
+    },
+    "./split-pane": {
+      "types": "./types/index.d.ts",
+      "default": "./src/layout/split-pane.register.js"
+    },
+    "./spotlight": {
+      "types": "./types/index.d.ts",
+      "default": "./src/feedback/spotlight.register.js"
+    },
+    "./spy-link": {
+      "types": "./types/index.d.ts",
+      "default": "./src/navigation/spy-link.register.js"
+    },
+    "./stack": {
+      "types": "./types/index.d.ts",
+      "default": "./src/content/stack.register.js"
+    },
+    "./stat": {
+      "types": "./types/index.d.ts",
+      "default": "./src/data/stat.register.js"
+    },
+    "./status-bar": {
+      "types": "./types/index.d.ts",
+      "default": "./src/layout/status-bar.register.js"
+    },
+    "./step": {
+      "types": "./types/index.d.ts",
+      "default": "./src/data/step.register.js"
+    },
+    "./stepper": {
+      "types": "./types/index.d.ts",
+      "default": "./src/data/stepper.register.js"
+    },
+    "./stepper-nav": {
+      "types": "./types/index.d.ts",
+      "default": "./src/navigation/stepper-nav.register.js"
+    },
+    "./sticky": {
+      "types": "./types/index.d.ts",
+      "default": "./src/layout/sticky.register.js"
+    },
+    "./suggestion": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/suggestion.register.js"
+    },
+    "./switch-group": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/switch-group.register.js"
+    },
+    "./tab": {
+      "types": "./types/index.d.ts",
+      "default": "./src/navigation/tab.register.js"
+    },
+    "./table": {
+      "types": "./types/index.d.ts",
+      "default": "./src/data/table.register.js"
+    },
+    "./tabs": {
+      "types": "./types/index.d.ts",
+      "default": "./src/navigation/tabs.register.js"
+    },
+    "./tag": {
+      "types": "./types/index.d.ts",
+      "default": "./src/data/tag.register.js"
+    },
+    "./tag-input": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/tag-input.register.js"
+    },
+    "./text": {
+      "types": "./types/index.d.ts",
+      "default": "./src/typography/text.register.js"
+    },
+    "./textarea": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/textarea.register.js"
+    },
+    "./theme-toggle": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/theme-toggle.register.js"
+    },
+    "./time-ago": {
+      "types": "./types/index.d.ts",
+      "default": "./src/typography/time-ago.register.js"
+    },
+    "./time-picker": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/time-picker.register.js"
+    },
+    "./timeline": {
+      "types": "./types/index.d.ts",
+      "default": "./src/data/timeline.register.js"
+    },
+    "./timeline-item": {
+      "types": "./types/index.d.ts",
+      "default": "./src/data/timeline-item.register.js"
+    },
+    "./toast": {
+      "types": "./types/index.d.ts",
+      "default": "./src/feedback/toast.register.js"
+    },
+    "./toast-manager": {
+      "types": "./types/index.d.ts",
+      "default": "./src/feedback/toast-manager.register.js"
+    },
+    "./toggle": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/toggle.register.js"
+    },
+    "./toolbar": {
+      "types": "./types/index.d.ts",
+      "default": "./src/layout/toolbar.register.js"
+    },
+    "./tooltip": {
+      "types": "./types/index.d.ts",
+      "default": "./src/feedback/tooltip.register.js"
+    },
+    "./top-bar": {
+      "types": "./types/index.d.ts",
+      "default": "./src/navigation/top-bar.register.js"
+    },
+    "./transfer-list": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/transfer-list.register.js"
+    },
+    "./tree-item": {
+      "types": "./types/index.d.ts",
+      "default": "./src/navigation/tree-item.register.js"
+    },
+    "./tree-view": {
+      "types": "./types/index.d.ts",
+      "default": "./src/navigation/tree-view.register.js"
+    },
+    "./truncate": {
+      "types": "./types/index.d.ts",
+      "default": "./src/typography/truncate.register.js"
+    },
+    "./typewriter": {
+      "types": "./types/index.d.ts",
+      "default": "./src/typography/typewriter.register.js"
+    },
+    "./value-card": {
+      "types": "./types/index.d.ts",
+      "default": "./src/data/value-card.register.js"
+    },
+    "./virtual-list": {
+      "types": "./types/index.d.ts",
+      "default": "./src/content/virtual-list.register.js"
+    },
     "./themes/high-contrast": "./src/themes/high-contrast.css",
     "./themes/minimal": "./src/themes/minimal.css",
-    "./tokens": "./src/tokens.js",
     "./base.css": "./src/base.css",
-    "./icons/lucide": "./src/icons/lucide.js",
+    "./icons/lucide": {
+      "types": "./src/icons/lucide.d.ts",
+      "default": "./src/icons/lucide.js"
+    },
     "./icons/lucide/*": "./src/icons/lucide/*.js",
-    "./icons/phosphor": "./src/icons/phosphor.js",
+    "./icons/phosphor": {
+      "types": "./src/icons/phosphor.d.ts",
+      "default": "./src/icons/phosphor.js"
+    },
     "./icons/phosphor/*": "./src/icons/phosphor/*.js",
-    "./icons/types": "./src/icons/types.d.ts"
+    "./icons/types": {
+      "types": "./src/icons/types.d.ts",
+      "default": "./src/icons/types.d.ts"
+    }
   },
   "files": [
     "src/",

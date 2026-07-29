@@ -2,10 +2,24 @@
  * generate-exports.js
  *
  * Syncs the `exports` field in packages/web-components/package.json
- * from the actual .register.js files on disk.
+ * from the actual .register.js files on disk, and attaches a "types"
+ * condition to every JavaScript subpath.
+ *
+ * A bare-string export publishes no types for that subpath, so consuming
+ * TypeScript silently falls back to implicit `any` — the package looks typed
+ * because the root entry is, while every deep import is not. Both failures are
+ * invisible from inside this repo, since nothing here imports itself by
+ * package name. So this script asserts rather than assumes:
+ *
+ *   - every export target must exist on disk
+ *   - every JavaScript target must resolve to a .d.ts that exists
+ *
+ * Either failure exits non-zero, which fails `pnpm generate` and therefore the
+ * generate-diff CI gate. Adding a subpath without types is not something you
+ * can forget to notice.
  *
  * Run via: pnpm run generate:exports
- * Called automatically as part of: pnpm generate
+ * Called automatically as part of: pnpm generate (after the types steps)
  */
 
 import fs from 'node:fs';
@@ -13,8 +27,9 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const pkgPath = path.join(__dirname, '..', 'packages', 'web-components', 'package.json');
-const srcDir = path.join(__dirname, '..', 'packages', 'web-components', 'src');
+const pkgDir = path.join(__dirname, '..', 'packages', 'web-components');
+const pkgPath = path.join(pkgDir, 'package.json');
+const srcDir = path.join(pkgDir, 'src');
 
 const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'));
 const existing = pkg.exports;
@@ -37,7 +52,7 @@ const registerFiles = findRegisterFiles(srcDir);
 let added = 0;
 
 for (const file of registerFiles) {
-  const rel = './' + path.relative(path.dirname(pkgPath), file).replace(/\\/g, '/');
+  const rel = './' + path.relative(pkgDir, file).replace(/\\/g, '/');
   const name = path.basename(file, '.register.js');
   const key = `./${name}`;
 
@@ -47,48 +62,132 @@ for (const file of registerFiles) {
   }
 }
 
+/**
+ * Declaration file for a JavaScript export target, or null when the target
+ * needs no types (stylesheets).
+ *
+ * Element modules all resolve to the single generated types/index.d.ts, which
+ * declares every element class. Shared modules get their own declaration,
+ * emitted from JSDoc by generate-shared-types.js.
+ */
+function typesFor(target) {
+  if (target.endsWith('.css')) return null;
+  if (target.endsWith('.d.ts')) return target;
+
+  // Element registrations, the register barrel, the root and per-tier barrels.
+  if (target.endsWith('.register.js')) return './types/index.d.ts';
+  if (target === './src/index.js' || target === './src/register.js') return './types/index.d.ts';
+  if (/^\.\/src\/[\w-]+\/index\.js$/.test(target)) return './types/index.d.ts';
+
+  // Every other module carries a declaration of its own. Some ship one
+  // alongside the source (the icon packs, written by generate-icons.js); the
+  // rest are emitted from JSDoc into types/ by generate-module-types.js.
+  const mod = target.match(/^\.\/src\/(.+)\.js$/);
+  if (mod) {
+    const colocated = `./src/${mod[1]}.d.ts`;
+    if (fs.existsSync(path.join(pkgDir, colocated))) return colocated;
+    return `./types/${mod[1]}.d.ts`;
+  }
+
+  return undefined; // unrecognised — caller reports it
+}
+
+const problems = [];
+const withTypes = {};
+
+for (const [key, value] of Object.entries(existing)) {
+  // Already an explicit condition object (e.g. "./react-jsx") — leave alone.
+  if (typeof value !== 'string') {
+    withTypes[key] = value;
+    continue;
+  }
+
+  // Wildcard subpaths expand at resolution time; there is no single file to check.
+  if (key.includes('*')) {
+    withTypes[key] = value;
+    continue;
+  }
+
+  if (!fs.existsSync(path.join(pkgDir, value))) {
+    problems.push(`${key} → ${value} does not exist`);
+    continue;
+  }
+
+  const types = typesFor(value);
+  if (types === undefined) {
+    problems.push(`${key} → ${value} has no known declaration mapping (see typesFor)`);
+    continue;
+  }
+  if (types === null) {
+    withTypes[key] = value;
+    continue;
+  }
+  if (!fs.existsSync(path.join(pkgDir, types))) {
+    problems.push(`${key} → ${types} is missing (run generate-shared-types.js first)`);
+    continue;
+  }
+
+  withTypes[key] = { types, default: value };
+}
+
+if (problems.length) {
+  console.error('generate-exports: the exports map is not publishable\n');
+  for (const p of problems) console.error(`  ${p}`);
+  console.error(
+    '\nEvery subpath must point at a file that exists and, if it is JavaScript,\n' +
+      'resolve to a declaration file. Remove the entry or add the missing target.',
+  );
+  process.exit(1);
+}
+
 // Sort exports: "." first, "./register" second, then alphabetical component keys,
 // then category barrels and special entries at the end
 const specialFirst = ['.', './register'];
-const specialLast = [
-  './content', './data', './typography', './input', './feedback',
-  './navigation', './layout', './shared',
-];
+const specialLast = ['./base.css'];
 
 const sorted = {};
 
-// First: . and ./register
 for (const k of specialFirst) {
-  if (existing[k]) sorted[k] = existing[k];
+  if (withTypes[k]) sorted[k] = withTypes[k];
 }
 
-// Middle: component entries (sorted alphabetically), excluding special
-const componentKeys = Object.keys(existing)
-  .filter(k => !specialFirst.includes(k) && !specialLast.includes(k) && !k.startsWith('./themes/') && !k.startsWith('./icons/') && k !== './tokens' && k !== './base.css')
+const componentKeys = Object.keys(withTypes)
+  .filter(
+    (k) =>
+      !specialFirst.includes(k) &&
+      !specialLast.includes(k) &&
+      !k.startsWith('./themes/') &&
+      !k.startsWith('./icons/'),
+  )
   .sort();
 
-for (const k of componentKeys) {
-  sorted[k] = existing[k];
-}
+for (const k of componentKeys) sorted[k] = withTypes[k];
 
-// Last: category barrels, themes, icons, tokens, base.css
+for (const k of Object.keys(withTypes).filter((k) => k.startsWith('./themes/')).sort()) {
+  sorted[k] = withTypes[k];
+}
 for (const k of specialLast) {
-  if (existing[k]) sorted[k] = existing[k];
+  if (withTypes[k]) sorted[k] = withTypes[k];
 }
-for (const k of Object.keys(existing).filter(k => k.startsWith('./themes/')).sort()) {
-  sorted[k] = existing[k];
-}
-if (existing['./tokens']) sorted['./tokens'] = existing['./tokens'];
-if (existing['./base.css']) sorted['./base.css'] = existing['./base.css'];
-for (const k of Object.keys(existing).filter(k => k.startsWith('./icons/')).sort()) {
-  sorted[k] = existing[k];
+for (const k of Object.keys(withTypes).filter((k) => k.startsWith('./icons/')).sort()) {
+  sorted[k] = withTypes[k];
 }
 
 pkg.exports = sorted;
 fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n');
 
-if (added > 0) {
-  console.log(`generate-exports: added ${added} missing export(s) to web-components package.json`);
-} else {
-  console.log('generate-exports: all exports up to date');
+const typed = Object.values(sorted).filter((v) => typeof v !== 'string').length;
+const untyped = Object.entries(sorted)
+  .filter(([, v]) => typeof v === 'string' && !v.endsWith('.css'))
+  .map(([k]) => k);
+
+console.log(
+  `generate-exports: ${Object.keys(sorted).length} subpaths, ${typed} with types` +
+    (added > 0 ? ` (added ${added} missing export(s))` : ''),
+);
+// Wildcard subpaths are exempt from the assertion above because there is no
+// single file to check. Name them anyway — an exemption nobody can see reads
+// as coverage it isn't.
+if (untyped.length) {
+  console.log(`  untyped (wildcard, not asserted): ${untyped.join(', ')}`);
 }

@@ -45,6 +45,33 @@ function cleanSvg(svg) {
 
 function writeIconModule(name, label, entries) {
   entries.sort(([a], [b]) => a.localeCompare(b));
+
+  // Upstream ships casing aliases (ArrowDownAZ / ArrowDownAz, Axis3D / Axis3d)
+  // that toKebab collapses onto one name. Emitting both produced duplicate
+  // `export const` declarations, which is a hard SyntaxError — the whole module
+  // failed to import. Bodies are identical, so keeping the first is lossless.
+  const seen = new Map();
+  const collisions = [];
+  for (const entry of entries) {
+    const [iconName, svg] = entry;
+    if (!seen.has(iconName)) {
+      seen.set(iconName, entry);
+    } else if (seen.get(iconName)[1] !== svg) {
+      collisions.push(iconName);
+    }
+  }
+  if (collisions.length) {
+    throw new Error(
+      `generate-icons: ${label} has name collisions with differing SVG bodies, so one would be ` +
+        `silently lost: ${collisions.join(', ')}. Disambiguate toKebab before continuing.`,
+    );
+  }
+  const dropped = entries.length - seen.size;
+  entries = [...seen.values()];
+  if (dropped > 0) {
+    console.log(`  ${label}: collapsed ${dropped} casing alias(es) onto existing names`);
+  }
+
   const names = entries.map(([n]) => n);
 
   // --- Per-icon files ---
