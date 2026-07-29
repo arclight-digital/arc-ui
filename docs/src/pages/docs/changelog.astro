@@ -2,6 +2,7 @@
 import DocsLayout from '../../layouts/DocsLayout.astro';
 
 const headings = [
+  { id: 'v2-10-0', label: 'v2.10.0' },
   { id: 'v2-9-0', label: 'v2.9.0' },
   { id: 'v2-8-0', label: 'v2.8.0' },
   { id: 'v2-7-0', label: 'v2.7.0' },
@@ -31,6 +32,36 @@ const headings = [
     <p class="page-desc">
       Release history for ARC UI. All packages are versioned together.
     </p>
+
+    <section id="v2-10-0">
+      <h2 class="docs-heading">v2.10.0 — Shared Styles &amp; Infrastructure Exports</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <p class="docs-text">
+        Building an app-specific component on the Arclight design system meant reaching past the
+        package's exports boundary. The map published component register paths,
+        <code>./tokens</code> and <code>./base.css</code> — everything in <code>src/shared/</code>
+        was private, so a component living in your own repo could not adopt
+        <code>tokenStyles</code> or reuse the focus trap without copying it. Five subpaths are now
+        public API.
+      </p>
+
+      <h3 class="tier-heading">New Subpath Exports</h3>
+      <ul class="docs-list">
+        <li><strong><code>@arclux/arc-ui/shared-styles</code></strong> — <code>tokenStyles</code>, the static token layer every component adopts into its shadow root. Only needed for shadow DOM; light-DOM components inherit the same tokens from <code>base.css</code> at <code>:root</code>.</li>
+        <li><strong><code>@arclux/arc-ui/shared/form-control-mixin</code></strong> — <code>FormControlMixin</code>, ElementInternals form participation: native <code>&lt;form&gt;</code> submission, <code>formDisabledCallback</code>, reset and bfcache restore.</li>
+        <li><strong><code>@arclux/arc-ui/shared/focus-trap</code></strong> — <code>collectFocusable</code>, <code>deepActiveElement</code>, <code>focusFirst</code>, <code>trapTabKey</code>. Composed-tree aware, so it sees through shadow boundaries and slots.</li>
+        <li><strong><code>@arclux/arc-ui/shared/scroll-lock</code></strong> — <code>lockScroll</code>, <code>unlockScroll</code>. Refcounted, so nested overlays release correctly.</li>
+        <li><strong><code>@arclux/arc-ui/shared/click-outside</code></strong> — <code>ClickOutsideController</code>, a Lit reactive controller for dismiss-on-outside-click.</li>
+      </ul>
+
+      <p class="docs-text">
+        These are explicit entries rather than a <code>./shared/*</code> wildcard, so
+        <code>overlay-mixin</code>, <code>menu-keyboard</code>, <code>position-styles</code> and
+        <code>anchor-adoption</code> stay internal and remain free to change. Additive only —
+        nothing existing moved or was removed.
+      </p>
+    </section>
 
     <section id="v2-9-0">
       <h2 class="docs-heading">v2.9.0 — Two-Way Binding in Svelte, Vue &amp; Angular</h2>
