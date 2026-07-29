@@ -718,6 +718,9 @@ function Settings() {
     let animId = 0;
     let last = 0;
     let time = 0;
+    let lastW = 0;
+    let lastH = 0;
+    let resizeRaf = 0;
 
     // Warp model: boost decays toward cruise and is fed only by
     // scrolling. warp = 1 + boost. The tunnel starts AT cruise — no
@@ -790,7 +793,14 @@ function Settings() {
       canvas.style.height = height + 'px';
       ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      const beamTarget = Math.max(30, Math.min(56, Math.round((width * height) / 28000)));
+      lastW = width;
+      lastH = height;
+
+      // The area formula already scales down, but the floors were written for
+      // desktop and a phone lands on them — so a 390px screen was paying the
+      // same particle cost as a laptop. Lower floors below 640px.
+      const small = width < 640;
+      const beamTarget = Math.max(small ? 16 : 30, Math.min(56, Math.round((width * height) / 28000)));
       while (beams.length < beamTarget) {
         const b = {} as Beam;
         spawnBeam(b, true);
@@ -798,7 +808,7 @@ function Settings() {
       }
       beams.length = beamTarget;
 
-      const moteTarget = Math.max(40, Math.min(70, Math.round((width * height) / 24000)));
+      const moteTarget = Math.max(small ? 22 : 40, Math.min(70, Math.round((width * height) / 24000)));
       while (motes.length < moteTarget) {
         const m = {} as Mote;
         spawnMote(m, true);
@@ -986,22 +996,61 @@ function Settings() {
       boost = Math.min(3, boost + Math.min(0.5, dy * 0.0035));
     }
 
-    window.addEventListener('resize', resize);
+    // iOS fires resize when the URL bar collapses. The hero is sized in vh, so
+    // its box is unchanged — but resize() reallocates the canvas backing store
+    // and rebuilds both particle arrays regardless, on every scroll direction
+    // change. Measure first, and do nothing if nothing actually moved.
+    function onResize() {
+      if (resizeRaf) return;
+      resizeRaf = requestAnimationFrame(() => {
+        resizeRaf = 0;
+        const rect = canvas.parentElement!.getBoundingClientRect();
+        if (Math.abs(rect.width - lastW) < 1 && Math.abs(rect.height - lastH) < 1) return;
+        resize();
+      });
+    }
+
+    window.addEventListener('resize', onResize);
     window.addEventListener('mousemove', onMouseMove, { passive: true });
     window.addEventListener('mouseout', onMouseOut);
     window.addEventListener('scroll', onScroll, { passive: true });
 
-    animId = requestAnimationFrame((t) => {
-      last = t;
-      animId = requestAnimationFrame(frame);
-      // Reveal only after the first frame is painted: load-time jank
-      // happens behind a fade instead of in front of the visitor
-      hero.classList.add('hero--live');
-    });
+    // The hero is 85vh, so on a phone it leaves the screen in one swipe — and
+    // the loop kept drawing beams, motes and gradients for a canvas nobody
+    // could see, for as long as the tab stayed open. rAF already yields when
+    // the tab is hidden; this covers the far more common case of the tab being
+    // visible but the hero not.
+    let running = false;
+    function start() {
+      if (running) return;
+      running = true;
+      animId = requestAnimationFrame((t) => {
+        last = t;
+        animId = requestAnimationFrame(frame);
+        // Reveal only after the first frame is painted: load-time jank
+        // happens behind a fade instead of in front of the visitor
+        hero.classList.add('hero--live');
+      });
+    }
+    function stop() {
+      if (!running) return;
+      running = false;
+      cancelAnimationFrame(animId);
+      animId = 0;
+    }
+
+    const io = new IntersectionObserver(
+      ([entry]) => (entry.isIntersecting ? start() : stop()),
+      { threshold: 0 },
+    );
+    io.observe(hero);
+    start();
 
     document.addEventListener('astro:before-swap', () => {
-      cancelAnimationFrame(animId);
-      window.removeEventListener('resize', resize);
+      stop();
+      io.disconnect();
+      if (resizeRaf) cancelAnimationFrame(resizeRaf);
+      window.removeEventListener('resize', onResize);
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('mouseout', onMouseOut);
       window.removeEventListener('scroll', onScroll);
@@ -1151,6 +1200,7 @@ function Settings() {
     /* Theme knobs for the tunnel: dark is the native habitat; light mode
        swaps the dark core for haze, drops the screen blend, and halves glow */
     --hero-core: rgba(3,3,7,0.6);
+    --hero-rim: rgba(3,3,7,0.55);
     --hero-dot: rgba(255,255,255,0.12);
     --stream-blend: screen;
     --glow-a: 1;
@@ -1159,6 +1209,7 @@ function Settings() {
 
   :global([data-theme='light']) .hero {
     --hero-core: rgba(255,255,255,0.65);
+    --hero-rim: rgba(255,255,255,0.6);
     --hero-dot: rgba(10,10,25,0.16);
     --stream-blend: normal;
     --glow-a: 0.4;
@@ -1168,6 +1219,7 @@ function Settings() {
   @media (prefers-color-scheme: light) {
     :global([data-theme='auto']) .hero {
       --hero-core: rgba(255,255,255,0.65);
+      --hero-rim: rgba(255,255,255,0.6);
       --hero-dot: rgba(10,10,25,0.16);
       --stream-blend: normal;
       --glow-a: 0.4;
@@ -1296,6 +1348,26 @@ function Settings() {
   @media (max-width: 768px) {
     .stream-item { --lx: calc(var(--lxr) * 1.7vw); }
     .stream-item:nth-child(even) { display: none; }
+
+    /* A full-viewport backdrop-filter re-samples everything beneath it every
+       frame, and beneath it is an animating canvas — the most expensive thing
+       on this page for a mobile GPU, to soften edges on the smallest screen.
+       A painted rim reads the same and costs one composited layer. */
+    .hero__vignette {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      background: radial-gradient(ellipse 78% 74% at 50% 40%, transparent 46%, var(--hero-rim) 92%);
+      mask-image: none;
+      -webkit-mask-image: none;
+    }
+
+    /* Two drop-shadows per item, over a blend mode, on elements already
+       carrying a blurred trail. One glow is enough at this size. */
+    .stream-item {
+      filter:
+        saturate(1.4) brightness(1.15)
+        drop-shadow(0 0 10px rgba(var(--tint), calc(0.5 * var(--glow-a))));
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
