@@ -3621,9 +3621,6 @@
         }
       }
 
-/* arc-nav-item */
-.arc-nav-item { display: contents; }
-
 /* arc-skip-link */
 .arc-skip-link {
         display: contents;
@@ -3652,10 +3649,6 @@
         box-shadow: var(--interactive-focus), 0 0 20px rgba(var(--interactive-rgb), 0.3);
         outline: none;
       }
-
-/* arc-tab */
-.arc-tab { display: block; }
-    .arc-tab[hidden] { display: none; }
 
 /* arc-top-bar */
 .arc-top-bar {
@@ -3824,9 +3817,6 @@
           transition-duration: 0.01ms !important;
         }
       }
-
-/* arc-tree-item */
-.arc-tree-item { display: contents; }
 
 /* arc-app-shell */
 .arc-app-shell {
