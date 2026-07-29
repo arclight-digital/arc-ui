@@ -226,7 +226,6 @@ arc-icon:not(:defined) {
 arc-button:not(:defined) {
   display: inline-flex;
   min-height: 40px;
-  visibility: hidden;
 }
 
 arc-icon-button:not(:defined),
@@ -239,7 +238,17 @@ arc-theme-toggle:not(:defined) {
 arc-badge:not(:defined) {
   display: inline-flex;
   min-height: 22px;
-  visibility: hidden;
+}
+
+/* Hiding pre-upgrade content is only safe when JS will actually arrive to
+   un-hide it. Without scripting nothing ever becomes :defined, so these would
+   blank the element permanently — same trap as the library-level guard in
+   shared/tokens.js. Space is still reserved above, unconditionally. */
+@media (scripting: enabled) {
+  arc-button:not(:defined),
+  arc-badge:not(:defined) {
+    visibility: hidden;
+  }
 }
 
 arc-navigation-menu:not(:defined),

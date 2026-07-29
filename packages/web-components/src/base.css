@@ -1,9 +1,47 @@
 /* Generated from shared/tokens.js — do not edit by hand */
 
-/* Prevent FOUC — hide custom elements until registered.
-   Fade-in transition provided by :host styles in each component. */
-:not(:defined) {
-  opacity: 0;
+/* Prevent FOUC — hide ARC elements until they upgrade.
+   Fade-in transition provided by :host styles in each component.
+   Gated on scripting so no-JS visitors get visible content instead of a blank
+   page, and scoped to ARC tags so we never hide elements we don't own. */
+@media (scripting: enabled) {
+  :is(
+  arc-accordion, arc-accordion-item, arc-alert, arc-anchor-nav, arc-animated-number,
+  arc-announcement, arc-app-shell, arc-aspect-grid, arc-aspect-ratio, arc-auth-shell, arc-avatar,
+  arc-avatar-group, arc-badge, arc-banner, arc-blockquote, arc-bottom-nav, arc-breadcrumb,
+  arc-breadcrumb-item, arc-breadcrumb-menu, arc-button, arc-button-group, arc-calendar,
+  arc-callout, arc-card, arc-carousel, arc-center, arc-chart, arc-checkbox, arc-chip,
+  arc-cluster, arc-code-block, arc-collapsible, arc-color-picker, arc-color-swatch, arc-column,
+  arc-combobox, arc-command-bar, arc-command-group, arc-command-item, arc-command-palette,
+  arc-comparison, arc-comparison-column, arc-confirm, arc-connection-status, arc-container,
+  arc-context-menu, arc-copy-button, arc-countdown-timer, arc-cta-banner, arc-dashboard-grid,
+  arc-data-grid, arc-data-table, arc-date-picker, arc-date-range-picker, arc-description-item,
+  arc-description-list, arc-dialog, arc-diff, arc-divider, arc-dock, arc-drawer,
+  arc-dropdown-menu, arc-empty-state, arc-event-calendar, arc-feature-card, arc-fieldset,
+  arc-file-upload, arc-float-bar, arc-footer, arc-form, arc-gradient-text, arc-guided-tour,
+  arc-highlight, arc-hotkey, arc-hover-card, arc-icon, arc-icon-button, arc-icon-library,
+  arc-image, arc-image-cropper, arc-infinite-scroll, arc-inline-message, arc-input,
+  arc-input-group, arc-inset, arc-kanban, arc-kbd, arc-key-value, arc-kv-pair, arc-label,
+  arc-link, arc-list, arc-list-item, arc-loading-overlay, arc-markdown, arc-marquee, arc-masonry,
+  arc-menu-divider, arc-menu-item, arc-menubar, arc-meter, arc-modal, arc-multi-select,
+  arc-nav-item, arc-navigation-menu, arc-notification-panel, arc-number-format, arc-number-input,
+  arc-option, arc-otp-input, arc-page-header, arc-page-indicator, arc-page-layout,
+  arc-pagination, arc-password-input, arc-pin-input, arc-popover, arc-progress,
+  arc-progress-toast, arc-prose, arc-qr-code, arc-radio, arc-radio-group, arc-rail,
+  arc-range-slider, arc-rating, arc-resizable, arc-responsive-switcher, arc-scroll-area,
+  arc-scroll-indicator, arc-scroll-spy, arc-scroll-to-top, arc-search, arc-section,
+  arc-segmented-control, arc-select, arc-separator, arc-settings-layout, arc-sheet, arc-sidebar,
+  arc-sidebar-link, arc-sidebar-section, arc-skeleton, arc-skip-link, arc-slider, arc-snackbar,
+  arc-sortable-list, arc-sparkline, arc-speed-dial, arc-spinner, arc-split-pane, arc-spotlight,
+  arc-spy-link, arc-stack, arc-stat, arc-status-bar, arc-step, arc-stepper, arc-stepper-nav,
+  arc-sticky, arc-suggestion, arc-switch-group, arc-tab, arc-table, arc-tabs, arc-tag,
+  arc-tag-input, arc-text, arc-textarea, arc-theme-toggle, arc-time-ago, arc-time-picker,
+  arc-timeline, arc-timeline-item, arc-toast, arc-toast-manager, arc-toggle, arc-toolbar,
+  arc-tooltip, arc-top-bar, arc-transfer-list, arc-tree-item, arc-tree-view, arc-truncate,
+  arc-typewriter, arc-value-card, arc-virtual-list
+  ):not(:defined) {
+    opacity: 0;
+  }
 }
 
 :root {

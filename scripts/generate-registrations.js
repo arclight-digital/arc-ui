@@ -6,14 +6,11 @@
  * Run: node scripts/generate-registrations.js
  * (Called automatically by `pnpm generate`)
  */
-import { readFileSync, writeFileSync, readdirSync, rmSync } from 'node:fs';
-import { resolve, dirname, basename, relative } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { writeFileSync, readdirSync, rmSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { findComponents, SRC_DIR, TIERS } from './lib/component-tags.js';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const srcDir = resolve(__dirname, '../packages/web-components/src');
-
-const TIERS = ['content', 'data', 'typography', 'input', 'navigation', 'layout', 'feedback', 'shared'];
+const srcDir = SRC_DIR;
 
 // ── 1. Clean up old .register.js files ──────────────────────────────────────
 
@@ -31,40 +28,7 @@ try { rmSync(resolve(srcDir, 'register.js')); } catch {}
 
 // ── 2. Parse all component files ────────────────────────────────────────────
 
-/** @type {Map<string, { tag: string, className: string, tier: string, file: string, requires: string[] }>} */
-const components = new Map();
-
-for (const tier of TIERS) {
-  const tierDir = resolve(srcDir, tier);
-  for (const file of readdirSync(tierDir)) {
-    if (!file.endsWith('.js') || file === 'index.js' || file.endsWith('.register.js')) continue;
-
-    const filePath = resolve(tierDir, file);
-    const source = readFileSync(filePath, 'utf-8');
-
-    // Extract @tag
-    const tagMatch = source.match(/@tag\s+([a-z][\w-]*)/);
-    if (!tagMatch) continue;
-
-    const tag = tagMatch[1];
-
-    // Extract class name
-    const classMatch = source.match(/export\s+class\s+(\w+)\s+extends/);
-    if (!classMatch) continue;
-
-    const className = classMatch[1];
-
-    // Extract @requires (may be multiple)
-    const requires = [];
-    const reqPattern = /@requires\s+([a-z][\w-]*)/g;
-    let reqMatch;
-    while ((reqMatch = reqPattern.exec(source)) !== null) {
-      requires.push(reqMatch[1]);
-    }
-
-    components.set(tag, { tag, className, tier, file, requires });
-  }
-}
+const components = findComponents();
 
 // ── 3. Generate per-component .register.js ──────────────────────────────────
 
