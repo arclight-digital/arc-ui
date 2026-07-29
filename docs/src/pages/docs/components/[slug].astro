@@ -653,6 +653,14 @@ const headings = [
     border-bottom: 1px solid var(--border-subtle);
     color: var(--text-secondary);
     vertical-align: top;
+    /* Documented object types run long and have no spaces to break at
+       (`Array<{key:string,label:string,…}>`), so without this the table forces
+       the API panel to scroll horizontally. That is worse to read than a
+       wrapped type, and it makes the panel a scrollable region with nothing
+       focusable in it — a serious axe failure. `anywhere` rather than
+       `break-word` so the break also shrinks the column's min-content width,
+       which is what actually lets the table fit. */
+    overflow-wrap: anywhere;
   }
 
   .api-table code {
