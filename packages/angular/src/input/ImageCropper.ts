@@ -7,7 +7,7 @@ import '@arclux/arc-ui/image-cropper';
   selector: 'arc-image-cropper',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-image-cropper [attr.src]="src" [attr.height]="height" [attr.aspect]="aspect" [attr.zoom]="zoom" (arc-crop-change)="arcCropChange.emit($event)"><ng-content /></arc-image-cropper>`,
+  template: `<arc-image-cropper [attr.src]="this.src" [attr.height]="this.height" [attr.aspect]="this.aspect" [attr.zoom]="this.zoom" (arc-crop-change)="this.arcCropChange.emit($event)"><ng-content /></arc-image-cropper>`,
 })
 export class ImageCropper {
   @Input() src: string = '';

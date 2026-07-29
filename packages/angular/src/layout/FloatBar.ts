@@ -7,9 +7,9 @@ import '@arclux/arc-ui/float-bar';
   selector: 'arc-float-bar',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-float-bar [open]="open" [attr.position]="position"><ng-content /></arc-float-bar>`,
+  template: `<arc-float-bar [open]="this.open" [attr.position]="this.position"><ng-content /></arc-float-bar>`,
 })
 export class FloatBar {
   @Input() open: boolean = false;
-  @Input() position: 'top' = 'bottom';
+  @Input() position: 'bottom' | 'top' = 'bottom';
 }

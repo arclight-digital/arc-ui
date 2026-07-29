@@ -7,10 +7,10 @@ import '@arclux/arc-ui/banner';
   selector: 'arc-banner',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-banner [attr.variant]="variant" [dismissible]="dismissible" [sticky]="sticky" (arc-dismiss)="arcDismiss.emit($event)"><ng-content /></arc-banner>`,
+  template: `<arc-banner [attr.variant]="this.variant" [dismissible]="this.dismissible" [sticky]="this.sticky" (arc-dismiss)="this.arcDismiss.emit($event)"><ng-content /></arc-banner>`,
 })
 export class Banner {
-  @Input() variant: string = 'info';
+  @Input() variant: 'info' | 'success' | 'warning' | 'error' = 'info';
   @Input() dismissible: boolean = false;
   @Input() sticky: boolean = false;
   @Output() arcDismiss = new EventEmitter<CustomEvent>();

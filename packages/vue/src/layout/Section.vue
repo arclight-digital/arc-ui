@@ -4,7 +4,7 @@ import '@arclux/arc-ui/section';
 
 defineOptions({ name: 'Section' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   label?: string;
 }>(), {
   label: '',
@@ -13,7 +13,7 @@ withDefaults(defineProps<{
 
 <template>
   <arc-section
-    :label="label"
+    :label="props.label"
   >
     <slot />
   </arc-section>

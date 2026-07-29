@@ -5,7 +5,7 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcBanner } from '@arclux/arc-ui/banner';
 
 export interface BannerProps {
-  variant?: string;
+  variant?: 'info' | 'success' | 'warning' | 'error';
   dismissible?: boolean;
   sticky?: boolean;
   className?: string;

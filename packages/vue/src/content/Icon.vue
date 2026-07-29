@@ -4,7 +4,7 @@ import '@arclux/arc-ui/icon';
 
 defineOptions({ name: 'Icon' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   name?: string;
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   label?: string;
@@ -17,9 +17,9 @@ withDefaults(defineProps<{
 
 <template>
   <arc-icon
-    :name="name"
-    :size="size"
-    :label="label"
+    :name="props.name"
+    :size="props.size"
+    :label="props.label"
   >
     <slot />
   </arc-icon>

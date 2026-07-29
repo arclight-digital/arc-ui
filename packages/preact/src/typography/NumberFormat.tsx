@@ -5,11 +5,11 @@ import '@arclux/arc-ui/number-format';
 
 export interface NumberFormatProps {
   value?: number;
-  type?: string;
+  type?: 'number' | 'currency' | 'percent' | 'compact';
   locale?: string;
   currency?: string;
   decimals?: number;
-  notation?: string;
+  notation?: 'standard' | 'compact';
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }

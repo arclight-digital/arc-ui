@@ -7,7 +7,7 @@ import '@arclux/arc-ui/cta-banner';
   selector: 'arc-cta-banner',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-cta-banner [attr.eyebrow]="eyebrow" [attr.headline]="headline" [nogradient]="nogradient"><ng-content /></arc-cta-banner>`,
+  template: `<arc-cta-banner [attr.eyebrow]="this.eyebrow" [attr.headline]="this.headline" [nogradient]="this.nogradient"><ng-content /></arc-cta-banner>`,
 })
 export class CtaBanner {
   @Input() eyebrow: string = '';

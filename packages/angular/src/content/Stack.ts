@@ -7,10 +7,10 @@ import '@arclux/arc-ui/stack';
   selector: 'arc-stack',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-stack [attr.direction]="direction" [attr.gap]="gap" [attr.align]="align" [attr.justify]="justify" [wrap]="wrap"><ng-content /></arc-stack>`,
+  template: `<arc-stack [attr.direction]="this.direction" [attr.gap]="this.gap" [attr.align]="this.align" [attr.justify]="this.justify" [wrap]="this.wrap"><ng-content /></arc-stack>`,
 })
 export class Stack {
-  @Input() direction: 'horizontal' | 'vertical' = 'vertical';
+  @Input() direction: 'vertical' | 'horizontal' = 'vertical';
   @Input() gap: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' = 'md';
   @Input() align: 'start' | 'center' | 'end' | 'stretch' = 'stretch';
   @Input() justify: 'start' | 'center' | 'end' | 'between' | 'around' = 'start';

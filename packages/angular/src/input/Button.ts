@@ -7,7 +7,7 @@ import '@arclux/arc-ui/button';
   selector: 'arc-button',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-button [attr.variant]="variant" [attr.size]="size" [attr.href]="href" [disabled]="disabled" [loading]="loading" [attr.type]="type"><ng-content /></arc-button>`,
+  template: `<arc-button [attr.variant]="this.variant" [attr.size]="this.size" [attr.href]="this.href" [disabled]="this.disabled" [loading]="this.loading" [attr.type]="this.type"><ng-content /></arc-button>`,
 })
 export class Button {
   @Input() variant: 'primary' | 'secondary' | 'ghost' = 'primary';
@@ -15,5 +15,5 @@ export class Button {
   @Input() href: string = '';
   @Input() disabled: boolean = false;
   @Input() loading: boolean = false;
-  @Input() type: string = 'button';
+  @Input() type: 'button' | 'submit' | 'reset' = 'button';
 }

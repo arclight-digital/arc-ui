@@ -4,7 +4,7 @@ import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/callout';
 
 export interface CalloutProps {
-  variant?: string;
+  variant?: 'info' | 'warning' | 'tip' | 'danger';
   dismissible?: boolean;
   onArcDismiss?: (e: CustomEvent) => void;
   children?: JSX.Element;

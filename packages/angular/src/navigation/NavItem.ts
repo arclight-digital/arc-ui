@@ -7,11 +7,11 @@ import '@arclux/arc-ui/nav-item';
   selector: 'arc-nav-item',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-nav-item [attr.href]="href" [active]="active" [attr.variant]="variant" [attr.description]="description"><ng-content /></arc-nav-item>`,
+  template: `<arc-nav-item [attr.href]="this.href" [active]="this.active" [attr.variant]="this.variant" [attr.description]="this.description"><ng-content /></arc-nav-item>`,
 })
 export class NavItem {
   @Input() href: string = '';
   @Input() active: boolean = false;
-  @Input() variant: string = 'default';
+  @Input() variant: 'default' | 'primary' | 'muted' = 'default';
   @Input() description: string = '';
 }

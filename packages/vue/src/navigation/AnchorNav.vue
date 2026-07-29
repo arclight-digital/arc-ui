@@ -4,8 +4,8 @@ import '@arclux/arc-ui/anchor-nav';
 
 defineOptions({ name: 'AnchorNav' });
 
-withDefaults(defineProps<{
-  orientation?: 'vertical';
+const props = withDefaults(defineProps<{
+  orientation?: 'vertical' | 'horizontal';
   value?: string;
   items?: string;
 }>(), {
@@ -30,9 +30,9 @@ function onArcChange(payload: CustomEvent) {
 
 <template>
   <arc-anchor-nav
-    :orientation="orientation"
-    :value="value"
-    :items="items"
+    :orientation="props.orientation"
+    :value="props.value"
+    :items="props.items"
     @arc-change="onArcChange"
   >
     <slot />

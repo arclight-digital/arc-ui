@@ -6,7 +6,7 @@ import { ArcFloatBar } from '@arclux/arc-ui/float-bar';
 
 export interface FloatBarProps {
   open?: boolean;
-  position?: 'top';
+  position?: 'bottom' | 'top';
   className?: string;
   children?: React.ReactNode;
 }

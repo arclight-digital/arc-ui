@@ -4,7 +4,7 @@ import '@arclux/arc-ui/sheet';
 
 defineOptions({ name: 'Sheet' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   open?: boolean;
   side?: 'bottom' | 'right';
   heading?: string;
@@ -22,9 +22,9 @@ const emit = defineEmits<{
 
 <template>
   <arc-sheet
-    :open="open"
-    :side="side"
-    :heading="heading"
+    :open="props.open"
+    :side="props.side"
+    :heading="props.heading"
     @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"
     @arc-open="(payload: CustomEvent) => emit('arc-open', payload)"
   >

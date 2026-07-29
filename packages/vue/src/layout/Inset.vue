@@ -4,7 +4,7 @@ import '@arclux/arc-ui/inset';
 
 defineOptions({ name: 'Inset' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   space?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
   bleed?: boolean;
 }>(), {
@@ -15,8 +15,8 @@ withDefaults(defineProps<{
 
 <template>
   <arc-inset
-    :space="space"
-    :bleed="bleed"
+    :space="props.space"
+    :bleed="props.bleed"
   >
     <slot />
   </arc-inset>

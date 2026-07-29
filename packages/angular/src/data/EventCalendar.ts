@@ -7,16 +7,16 @@ import '@arclux/arc-ui/event-calendar';
   selector: 'arc-event-calendar',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-event-calendar [events]="events" [attr.view]="view" [attr.date]="date" (arc-period-change)="onArcPeriodChange($event)" (arc-date-click)="onArcDateClick($event)" (arc-event-click)="arcEventClick.emit($event)"><ng-content /></arc-event-calendar>`,
+  template: `<arc-event-calendar [events]="this.events" [attr.view]="this.view" [attr.date]="this.date" (arc-period-change)="this.onArcPeriodChange($event)" (arc-date-click)="this.onArcDateClick($event)" (arc-event-click)="this.arcEventClick.emit($event)"><ng-content /></arc-event-calendar>`,
 })
 export class EventCalendar {
   @Input() events: unknown[] = [];
-  @Input() view: 'week' = 'month';
+  @Input() view: 'month' | 'week' = 'month';
   @Input() date: string = '';
   @Output() arcPeriodChange = new EventEmitter<CustomEvent>();
   @Output() arcDateClick = new EventEmitter<CustomEvent>();
   @Output() arcEventClick = new EventEmitter<CustomEvent>();
-  @Output() viewChange = new EventEmitter<'week'>();
+  @Output() viewChange = new EventEmitter<'month' | 'week'>();
   @Output() dateChange = new EventEmitter<string>();
 
   onArcPeriodChange(event: CustomEvent) {
@@ -29,7 +29,7 @@ export class EventCalendar {
       this.dateChange.emit(next);
     }
     if ('view' in detail) {
-      const next = detail.view as 'week';
+      const next = detail.view as 'month' | 'week';
       this.view = next;
       this.viewChange.emit(next);
     }

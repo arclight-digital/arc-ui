@@ -4,7 +4,7 @@ import { type FunctionComponent } from 'preact';
 import '@arclux/arc-ui/gradient-text';
 
 export interface GradientTextProps {
-  variant?: 'accent' | 'display' | 'sunset' | 'ocean';
+  variant?: 'accent' | 'display' | 'sunset' | 'ocean' | 'custom';
   gradient?: string;
   animate?: boolean;
   children?: preact.ComponentChildren;

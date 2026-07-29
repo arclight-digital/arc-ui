@@ -8,7 +8,7 @@
     sortable?: boolean;
     selectable?: boolean;
     sortColumn?: string;
-    sortDirection?: string;
+    sortDirection?: 'asc' | 'desc';
     virtual?: boolean;
     rowHeight?: number;
     children?: Snippet;

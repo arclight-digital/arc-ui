@@ -5,7 +5,7 @@ import { useLayoutEffect, useRef } from 'preact/hooks';
 import '@arclux/arc-ui/split-pane';
 
 export interface SplitPaneProps {
-  orientation?: 'vertical' | 'horizontal';
+  orientation?: 'horizontal' | 'vertical';
   ratio?: number;
   minRatio?: number;
   maxRatio?: number;

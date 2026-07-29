@@ -7,7 +7,7 @@ import '@arclux/arc-ui/breadcrumb-item';
   selector: 'arc-breadcrumb-item',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-breadcrumb-item [attr.href]="href"><ng-content /></arc-breadcrumb-item>`,
+  template: `<arc-breadcrumb-item [attr.href]="this.href"><ng-content /></arc-breadcrumb-item>`,
 })
 export class BreadcrumbItem {
   @Input() href: string = '';

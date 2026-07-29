@@ -4,7 +4,7 @@ import '@arclux/arc-ui/sticky';
 
 defineOptions({ name: 'Sticky' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   offset?: string;
 }>(), {
   offset: '0px',
@@ -17,7 +17,7 @@ const emit = defineEmits<{
 
 <template>
   <arc-sticky
-    :offset="offset"
+    :offset="props.offset"
     @arc-stuck="(payload: CustomEvent) => emit('arc-stuck', payload)"
   >
     <slot />

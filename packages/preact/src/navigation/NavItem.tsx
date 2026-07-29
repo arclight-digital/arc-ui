@@ -6,7 +6,7 @@ import '@arclux/arc-ui/nav-item';
 export interface NavItemProps {
   href?: string;
   active?: boolean;
-  variant?: string;
+  variant?: 'default' | 'primary' | 'muted';
   description?: string;
   children?: preact.ComponentChildren;
   [key: string]: unknown;

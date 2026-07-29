@@ -4,7 +4,7 @@ import '@arclux/arc-ui/time-picker';
 
 defineOptions({ name: 'TimePicker' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   value?: string;
   name?: string;
   min?: string;
@@ -42,15 +42,15 @@ function onArcChange(payload: CustomEvent) {
 
 <template>
   <arc-time-picker
-    :value="value"
-    :name="name"
-    :min="min"
-    :max="max"
-    :step="step"
-    :format="format"
-    :placeholder="placeholder"
-    :disabled="disabled"
-    :label="label"
+    :value="props.value"
+    :name="props.name"
+    :min="props.min"
+    :max="props.max"
+    :step="props.step"
+    :format="props.format"
+    :placeholder="props.placeholder"
+    :disabled="props.disabled"
+    :label="props.label"
     @arc-change="onArcChange"
   >
     <slot />

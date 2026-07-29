@@ -6,7 +6,7 @@ import '@arclux/arc-ui/qr-code';
 export interface QrCodeProps {
   value?: string;
   size?: number;
-  level?: string;
+  level?: 'L' | 'M' | 'Q' | 'H';
   label?: string;
   quietZone?: number;
   contrast?: boolean;

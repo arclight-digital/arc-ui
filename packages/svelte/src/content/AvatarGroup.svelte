@@ -5,7 +5,7 @@
 
   interface Props {
     max?: number;
-    overlap?: 'sm' | 'lg';
+    overlap?: 'sm' | 'md' | 'lg';
     children?: Snippet;
     [key: string]: unknown;
   }

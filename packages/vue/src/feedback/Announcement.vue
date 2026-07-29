@@ -4,8 +4,8 @@ import '@arclux/arc-ui/announcement';
 
 defineOptions({ name: 'Announcement' });
 
-withDefaults(defineProps<{
-  politeness?: string;
+const props = withDefaults(defineProps<{
+  politeness?: 'polite' | 'assertive';
   message?: string;
 }>(), {
   politeness: 'polite',
@@ -15,8 +15,8 @@ withDefaults(defineProps<{
 
 <template>
   <arc-announcement
-    :politeness="politeness"
-    :message="message"
+    :politeness="props.politeness"
+    :message="props.message"
   >
     <slot />
   </arc-announcement>

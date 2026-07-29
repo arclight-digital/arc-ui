@@ -8,7 +8,7 @@ export interface CodeBlockProps {
   language?: string;
   filename?: string;
   code?: string;
-  variant?: 'window' | 'basic';
+  variant?: 'default' | 'window' | 'basic';
   className?: string;
   children?: React.ReactNode;
 }

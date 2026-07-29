@@ -4,7 +4,7 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
-    variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
+    variant?: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
     size?: 'sm' | 'lg';
     removable?: boolean;
     disabled?: boolean;

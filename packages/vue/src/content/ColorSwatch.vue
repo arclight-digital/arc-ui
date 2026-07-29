@@ -4,7 +4,7 @@ import '@arclux/arc-ui/color-swatch';
 
 defineOptions({ name: 'ColorSwatch' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   color?: string;
   label?: string;
   size?: 'sm' | 'md' | 'lg';
@@ -17,9 +17,9 @@ withDefaults(defineProps<{
 
 <template>
   <arc-color-swatch
-    :color="color"
-    :label="label"
-    :size="size"
+    :color="props.color"
+    :label="props.label"
+    :size="props.size"
   >
     <slot />
   </arc-color-swatch>

@@ -4,7 +4,7 @@ import '@arclux/arc-ui/comparison';
 
 defineOptions({ name: 'Comparison' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   features?: string;
 }>(), {
   features: '[]',
@@ -13,7 +13,7 @@ withDefaults(defineProps<{
 
 <template>
   <arc-comparison
-    :features="features"
+    :features="props.features"
   >
     <slot />
   </arc-comparison>

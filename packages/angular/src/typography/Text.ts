@@ -7,9 +7,9 @@ import '@arclux/arc-ui/text';
   selector: 'arc-text',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-text [attr.variant]="variant" [attr.as]="as"><ng-content /></arc-text>`,
+  template: `<arc-text [attr.variant]="this.variant" [attr.as]="this.as"><ng-content /></arc-text>`,
 })
 export class Text {
-  @Input() variant: 'accent' | 'code' = 'body';
-  @Input() as: string = 'p';
+  @Input() variant: 'display' | 'heading' | 'body' | 'muted' | 'ghost' | 'accent' | 'label' | 'wordmark' | 'code' = 'body';
+  @Input() as: 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span' = 'p';
 }

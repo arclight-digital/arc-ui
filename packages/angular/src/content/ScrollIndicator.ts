@@ -7,11 +7,11 @@ import '@arclux/arc-ui/scroll-indicator';
   selector: 'arc-scroll-indicator',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-scroll-indicator [attr.target]="target" [attr.position]="position" [attr.size]="size" [attr.color]="color"><ng-content /></arc-scroll-indicator>`,
+  template: `<arc-scroll-indicator [attr.target]="this.target" [attr.position]="this.position" [attr.size]="this.size" [attr.color]="this.color"><ng-content /></arc-scroll-indicator>`,
 })
 export class ScrollIndicator {
   @Input() target: string = '';
-  @Input() position: 'bottom' = 'top';
+  @Input() position: 'top' | 'bottom' = 'top';
   @Input() size: 'sm' | 'md' | 'lg' = 'sm';
-  @Input() color: 'gradient' = 'accent';
+  @Input() color: 'accent' | 'gradient' = 'accent';
 }

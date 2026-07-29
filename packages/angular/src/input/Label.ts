@@ -7,11 +7,11 @@ import '@arclux/arc-ui/label';
   selector: 'arc-label',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-label [attr.for]="for" [required]="required" [attr.size]="size" [disabled]="disabled"><ng-content /></arc-label>`,
+  template: `<arc-label [attr.for]="this.for" [required]="this.required" [attr.size]="this.size" [disabled]="this.disabled"><ng-content /></arc-label>`,
 })
 export class Label {
   @Input() for: string = '';
   @Input() required: boolean = false;
-  @Input() size: 'sm' | 'lg' = 'md';
+  @Input() size: 'sm' | 'md' | 'lg' = 'md';
   @Input() disabled: boolean = false;
 }

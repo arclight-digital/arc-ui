@@ -4,7 +4,7 @@ import '@arclux/arc-ui/stepper';
 
 defineOptions({ name: 'Stepper' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   active?: number;
 }>(), {
   active: 0,
@@ -13,7 +13,7 @@ withDefaults(defineProps<{
 
 <template>
   <arc-stepper
-    :active="active"
+    :active="props.active"
   >
     <slot />
   </arc-stepper>

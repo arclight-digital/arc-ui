@@ -7,11 +7,11 @@ import '@arclux/arc-ui/speed-dial';
   selector: 'arc-speed-dial',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-speed-dial [open]="open" [attr.direction]="direction" [attr.position]="position" [attr.items]="items" (arc-action)="arcAction.emit($event)" (arc-close)="arcClose.emit($event)"><ng-content /></arc-speed-dial>`,
+  template: `<arc-speed-dial [open]="this.open" [attr.direction]="this.direction" [attr.position]="this.position" [attr.items]="this.items" (arc-action)="this.arcAction.emit($event)" (arc-close)="this.arcClose.emit($event)"><ng-content /></arc-speed-dial>`,
 })
 export class SpeedDial {
   @Input() open: boolean = false;
-  @Input() direction: 'down' | 'left' | 'right' = 'up';
+  @Input() direction: 'up' | 'down' | 'left' | 'right' = 'up';
   @Input() position: 'bottom-right' | 'bottom-left' = 'bottom-right';
   @Input() items: string = [];
   @Output() arcAction = new EventEmitter<CustomEvent>();

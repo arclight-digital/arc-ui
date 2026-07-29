@@ -4,9 +4,9 @@ import '@arclux/arc-ui/list';
 
 defineOptions({ name: 'List' });
 
-withDefaults(defineProps<{
-  variant?: 'bordered' | 'separated';
-  size?: 'sm' | 'lg';
+const props = withDefaults(defineProps<{
+  variant?: 'default' | 'bordered' | 'separated';
+  size?: 'sm' | 'md' | 'lg';
   selectable?: boolean;
   multiple?: boolean;
   value?: string;
@@ -44,12 +44,12 @@ function onArcItemSelect(payload: CustomEvent) {
 
 <template>
   <arc-list
-    :variant="variant"
-    :size="size"
-    :selectable="selectable"
-    :multiple="multiple"
-    :value="value"
-    :label="label"
+    :variant="props.variant"
+    :size="props.size"
+    :selectable="props.selectable"
+    :multiple="props.multiple"
+    :value="props.value"
+    :label="props.label"
     @arc-change="onArcChange"
     @arc-item-select="onArcItemSelect"
   >

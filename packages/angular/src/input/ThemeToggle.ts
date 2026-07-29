@@ -7,10 +7,10 @@ import '@arclux/arc-ui/theme-toggle';
   selector: 'arc-theme-toggle',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-theme-toggle [attr.theme]="theme" [disabled]="disabled" [iconOnly]="iconOnly" (arc-change)="arcChange.emit($event)"><ng-content /></arc-theme-toggle>`,
+  template: `<arc-theme-toggle [attr.theme]="this.theme" [disabled]="this.disabled" [iconOnly]="this.iconOnly" (arc-change)="this.arcChange.emit($event)"><ng-content /></arc-theme-toggle>`,
 })
 export class ThemeToggle {
-  @Input() theme: string = 'auto';
+  @Input() theme: 'dark' | 'light' | 'auto' = 'auto';
   @Input() disabled: boolean = false;
   @Input() iconOnly: boolean = false;
   @Output() arcChange = new EventEmitter<CustomEvent>();

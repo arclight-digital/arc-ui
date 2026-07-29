@@ -4,7 +4,7 @@ import '@arclux/arc-ui/center';
 
 defineOptions({ name: 'Center' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   maxWidth?: string;
   intrinsic?: boolean;
   text?: boolean;
@@ -17,9 +17,9 @@ withDefaults(defineProps<{
 
 <template>
   <arc-center
-    :maxWidth="maxWidth"
-    :intrinsic="intrinsic"
-    :text="text"
+    :maxWidth="props.maxWidth"
+    :intrinsic="props.intrinsic"
+    :text="props.text"
   >
     <slot />
   </arc-center>

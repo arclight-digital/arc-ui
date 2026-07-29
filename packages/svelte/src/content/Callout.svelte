@@ -4,7 +4,7 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
-    variant?: string;
+    variant?: 'info' | 'warning' | 'tip' | 'danger';
     dismissible?: boolean;
     children?: Snippet;
     [key: string]: unknown;

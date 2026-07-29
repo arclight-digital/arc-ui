@@ -4,7 +4,7 @@ import '@arclux/arc-ui/range-slider';
 
 defineOptions({ name: 'RangeSlider' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   min?: number;
   max?: number;
   step?: number;
@@ -53,15 +53,15 @@ function onArcChange(payload: CustomEvent) {
 
 <template>
   <arc-range-slider
-    :min="min"
-    :max="max"
-    :step="step"
-    :low="low"
-    :high="high"
-    :name="name"
-    :disabled="disabled"
-    :label="label"
-    :showValues="showValues"
+    :min="props.min"
+    :max="props.max"
+    :step="props.step"
+    :low="props.low"
+    :high="props.high"
+    :name="props.name"
+    :disabled="props.disabled"
+    :label="props.label"
+    :showValues="props.showValues"
     @arc-input="onArcInput"
     @arc-change="onArcChange"
   >

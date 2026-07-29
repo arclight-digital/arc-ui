@@ -7,7 +7,7 @@ import '@arclux/arc-ui/command-group';
   selector: 'arc-command-group',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-command-group [attr.heading]="heading"><ng-content /></arc-command-group>`,
+  template: `<arc-command-group [attr.heading]="this.heading"><ng-content /></arc-command-group>`,
 })
 export class CommandGroup {
   @Input() heading: string = '';

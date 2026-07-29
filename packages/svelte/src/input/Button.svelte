@@ -9,7 +9,7 @@
     href?: string;
     disabled?: boolean;
     loading?: boolean;
-    type?: string;
+    type?: 'button' | 'submit' | 'reset';
     children?: Snippet;
     [key: string]: unknown;
   }

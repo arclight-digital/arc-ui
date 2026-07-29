@@ -4,7 +4,7 @@ import '@arclux/arc-ui/command-bar';
 
 defineOptions({ name: 'CommandBar' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   placeholder?: string;
   value?: string;
   icon?: string;
@@ -38,9 +38,9 @@ function onArcSubmit(payload: CustomEvent) {
 
 <template>
   <arc-command-bar
-    :placeholder="placeholder"
-    :value="value"
-    :icon="icon"
+    :placeholder="props.placeholder"
+    :value="props.value"
+    :icon="props.icon"
     @arc-input="onArcInput"
     @arc-submit="onArcSubmit"
   >

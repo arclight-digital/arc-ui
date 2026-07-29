@@ -4,8 +4,8 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
-    variant?: 'bordered' | 'separated';
-    size?: 'sm' | 'lg';
+    variant?: 'default' | 'bordered' | 'separated';
+    size?: 'sm' | 'md' | 'lg';
     selectable?: boolean;
     multiple?: boolean;
     value?: string;

@@ -4,7 +4,7 @@ import '@arclux/arc-ui/transfer-list';
 
 defineOptions({ name: 'TransferList' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   options?: unknown[];
   value?: unknown[];
   name?: string;
@@ -38,13 +38,13 @@ function onArcChange(payload: CustomEvent) {
 
 <template>
   <arc-transfer-list
-    :options="options"
-    :value="value"
-    :name="name"
-    :disabled="disabled"
-    :searchable="searchable"
-    :sourceLabel="sourceLabel"
-    :targetLabel="targetLabel"
+    :options="props.options"
+    :value="props.value"
+    :name="props.name"
+    :disabled="props.disabled"
+    :searchable="props.searchable"
+    :sourceLabel="props.sourceLabel"
+    :targetLabel="props.targetLabel"
     @arc-change="onArcChange"
   >
     <slot />

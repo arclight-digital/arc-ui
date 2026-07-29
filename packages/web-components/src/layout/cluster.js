@@ -6,9 +6,9 @@ import { tokenStyles } from '../shared-styles.js';
  * spacing.
  *
  * @tag arc-cluster
- * @prop {'xs' | 'sm' | 'md' | 'lg'} gap - Spacing between items, mapped to design system spacing tokens. Use sm for dense tag groups, md for button groups.
+ * @prop {'xs' | 'sm' | 'md' | 'lg' | 'xl'} gap - Spacing between items, mapped to design system spacing tokens. Use sm for dense tag groups, md for button groups.
  * @prop {'start' | 'center' | 'end'} align - Vertical alignment of items within each row (maps to align-items).
- * @prop {'start' | 'center' | 'end' | 'between'} justify - Horizontal distribution of items (maps to justify-content). Use "between" for navigation-style spacing.
+ * @prop {'start' | 'center' | 'end' | 'space-between' | 'space-around'} justify - Horizontal distribution of items (maps to justify-content). Use "space-between" for navigation-style spacing.
  * @slot - Default content.
  */
 export class ArcCluster extends LitElement {

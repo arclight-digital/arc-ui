@@ -7,7 +7,7 @@ import '@arclux/arc-ui/top-bar';
   selector: 'arc-top-bar',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-top-bar [attr.heading]="heading" [fixed]="fixed" [attr.contained]="contained" [menuOpen]="menuOpen" [attr.mobileMenu]="mobileMenu" [attr.menuPosition]="menuPosition" [attr.navAlign]="navAlign"><ng-content /></arc-top-bar>`,
+  template: `<arc-top-bar [attr.heading]="this.heading" [fixed]="this.fixed" [attr.contained]="this.contained" [menuOpen]="this.menuOpen" [attr.mobileMenu]="this.mobileMenu" [attr.menuPosition]="this.menuPosition" [attr.navAlign]="this.navAlign"><ng-content /></arc-top-bar>`,
 })
 export class TopBar {
   @Input() heading: string = '';

@@ -4,9 +4,9 @@ import '@arclux/arc-ui/card';
 
 defineOptions({ name: 'Card' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   href?: string;
-  padding?: 'none' | 'sm' | 'lg';
+  padding?: 'none' | 'sm' | 'md' | 'lg';
   interactive?: boolean;
 }>(), {
   href: '',
@@ -17,9 +17,9 @@ withDefaults(defineProps<{
 
 <template>
   <arc-card
-    :href="href"
-    :padding="padding"
-    :interactive="interactive"
+    :href="props.href"
+    :padding="props.padding"
+    :interactive="props.interactive"
   >
     <slot />
   </arc-card>

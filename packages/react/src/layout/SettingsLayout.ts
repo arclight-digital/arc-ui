@@ -5,7 +5,7 @@ import { createComponent } from '@lit/react';
 import { ArcSettingsLayout } from '@arclux/arc-ui/settings-layout';
 
 export interface SettingsLayoutProps {
-  navPosition?: string;
+  navPosition?: 'left' | 'top';
   className?: string;
   children?: React.ReactNode;
 }

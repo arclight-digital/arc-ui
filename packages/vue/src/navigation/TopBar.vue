@@ -4,7 +4,7 @@ import '@arclux/arc-ui/top-bar';
 
 defineOptions({ name: 'TopBar' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   heading?: string;
   fixed?: boolean;
   contained?: string;
@@ -25,13 +25,13 @@ withDefaults(defineProps<{
 
 <template>
   <arc-top-bar
-    :heading="heading"
-    :fixed="fixed"
-    :contained="contained"
-    :menuOpen="menuOpen"
-    :mobileMenu="mobileMenu"
-    :menuPosition="menuPosition"
-    :navAlign="navAlign"
+    :heading="props.heading"
+    :fixed="props.fixed"
+    :contained="props.contained"
+    :menuOpen="props.menuOpen"
+    :mobileMenu="props.mobileMenu"
+    :menuPosition="props.menuPosition"
+    :navAlign="props.navAlign"
   >
     <slot />
   </arc-top-bar>

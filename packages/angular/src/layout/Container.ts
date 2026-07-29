@@ -7,7 +7,7 @@ import '@arclux/arc-ui/container';
   selector: 'arc-container',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-container [narrow]="narrow" [attr.size]="size" [attr.padding]="padding"><ng-content /></arc-container>`,
+  template: `<arc-container [narrow]="this.narrow" [attr.size]="this.size" [attr.padding]="this.padding"><ng-content /></arc-container>`,
 })
 export class Container {
   @Input() narrow: boolean = false;

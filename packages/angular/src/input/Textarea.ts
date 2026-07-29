@@ -7,7 +7,7 @@ import '@arclux/arc-ui/textarea';
   selector: 'arc-textarea',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-textarea [attr.value]="value" [attr.placeholder]="placeholder" [attr.label]="label" [attr.rows]="rows" [attr.maxlength]="maxlength" [disabled]="disabled" [readonly]="readonly" [attr.resize]="resize" [attr.size]="size" [autoResize]="autoResize" [attr.error]="error" (arc-input)="onArcInput($event)" (arc-change)="onArcChange($event)"><ng-content /></arc-textarea>`,
+  template: `<arc-textarea [attr.value]="this.value" [attr.placeholder]="this.placeholder" [attr.label]="this.label" [attr.rows]="this.rows" [attr.maxlength]="this.maxlength" [disabled]="this.disabled" [readonly]="this.readonly" [attr.resize]="this.resize" [attr.size]="this.size" [autoResize]="this.autoResize" [attr.error]="this.error" (arc-input)="this.onArcInput($event)" (arc-change)="this.onArcChange($event)"><ng-content /></arc-textarea>`,
 })
 export class Textarea {
   @Input() value: string = '';
@@ -18,7 +18,7 @@ export class Textarea {
   @Input() disabled: boolean = false;
   @Input() readonly: boolean = false;
   @Input() resize: 'none' | 'vertical' | 'horizontal' | 'both' = 'vertical';
-  @Input() size: 'sm' | 'lg' = 'md';
+  @Input() size: 'sm' | 'md' | 'lg' = 'md';
   @Input() autoResize: boolean = false;
   @Input() error: string = '';
   @Output() arcInput = new EventEmitter<CustomEvent>();

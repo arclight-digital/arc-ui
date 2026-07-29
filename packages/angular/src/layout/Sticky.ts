@@ -7,7 +7,7 @@ import '@arclux/arc-ui/sticky';
   selector: 'arc-sticky',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-sticky [attr.offset]="offset" (arc-stuck)="arcStuck.emit($event)"><ng-content /></arc-sticky>`,
+  template: `<arc-sticky [attr.offset]="this.offset" (arc-stuck)="this.arcStuck.emit($event)"><ng-content /></arc-sticky>`,
 })
 export class Sticky {
   @Input() offset: string = '0px';

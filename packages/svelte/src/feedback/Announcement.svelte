@@ -4,7 +4,7 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
-    politeness?: string;
+    politeness?: 'polite' | 'assertive';
     message?: string;
     children?: Snippet;
     [key: string]: unknown;

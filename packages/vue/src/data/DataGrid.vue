@@ -4,7 +4,7 @@ import '@arclux/arc-ui/data-grid';
 
 defineOptions({ name: 'DataGrid' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   columns?: unknown[];
   rows?: unknown[];
   sort?: unknown[];
@@ -40,13 +40,13 @@ function onArcSort(payload: CustomEvent) {
 
 <template>
   <arc-data-grid
-    :columns="columns"
-    :rows="rows"
-    :sort="sort"
-    :manualSort="manualSort"
-    :selectable="selectable"
-    :virtual="virtual"
-    :rowHeight="rowHeight"
+    :columns="props.columns"
+    :rows="props.rows"
+    :sort="props.sort"
+    :manualSort="props.manualSort"
+    :selectable="props.selectable"
+    :virtual="props.virtual"
+    :rowHeight="props.rowHeight"
     @arc-sort="onArcSort"
     @arc-selection-change="(payload: CustomEvent) => emit('arc-selection-change', payload)"
     @arc-cell-change="(payload: CustomEvent) => emit('arc-cell-change', payload)"

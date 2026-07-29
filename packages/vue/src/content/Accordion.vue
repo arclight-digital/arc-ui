@@ -4,7 +4,7 @@ import '@arclux/arc-ui/accordion';
 
 defineOptions({ name: 'Accordion' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   multiple?: boolean;
 }>(), {
   multiple: false,
@@ -13,7 +13,7 @@ withDefaults(defineProps<{
 
 <template>
   <arc-accordion
-    :multiple="multiple"
+    :multiple="props.multiple"
   >
     <slot />
   </arc-accordion>

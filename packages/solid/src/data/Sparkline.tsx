@@ -5,7 +5,7 @@ import '@arclux/arc-ui/sparkline';
 
 export interface SparklineProps {
   data?: string;
-  type?: string;
+  type?: 'line' | 'bar';
   color?: string;
   width?: number;
   height?: number;

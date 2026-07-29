@@ -7,7 +7,7 @@ import '@arclux/arc-ui/skip-link';
   selector: 'arc-skip-link',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-skip-link [attr.target]="target"><ng-content /></arc-skip-link>`,
+  template: `<arc-skip-link [attr.target]="this.target"><ng-content /></arc-skip-link>`,
 })
 export class SkipLink {
   @Input() target: string = '#main';

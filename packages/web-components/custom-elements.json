@@ -19476,7 +19476,7 @@
               "name": "gap",
               "privacy": "public",
               "type": {
-                "text": "'xs' | 'sm' | 'md' | 'lg'"
+                "text": "'xs' | 'sm' | 'md' | 'lg' | 'xl'"
               },
               "default": "'sm'",
               "description": "Spacing between items, mapped to design system spacing tokens. Use sm for dense tag groups, md for button groups.",
@@ -19500,10 +19500,10 @@
               "name": "justify",
               "privacy": "public",
               "type": {
-                "text": "'start' | 'center' | 'end' | 'between'"
+                "text": "'start' | 'center' | 'end' | 'space-between' | 'space-around'"
               },
               "default": "'start'",
-              "description": "Horizontal distribution of items (maps to justify-content). Use \"between\" for navigation-style spacing.",
+              "description": "Horizontal distribution of items (maps to justify-content). Use \"space-between\" for navigation-style spacing.",
               "attribute": "justify",
               "reflects": true
             }
@@ -19512,7 +19512,7 @@
             {
               "name": "gap",
               "type": {
-                "text": "'xs' | 'sm' | 'md' | 'lg'"
+                "text": "'xs' | 'sm' | 'md' | 'lg' | 'xl'"
               },
               "default": "'sm'",
               "description": "Spacing between items, mapped to design system spacing tokens. Use sm for dense tag groups, md for button groups.",
@@ -19530,10 +19530,10 @@
             {
               "name": "justify",
               "type": {
-                "text": "'start' | 'center' | 'end' | 'between'"
+                "text": "'start' | 'center' | 'end' | 'space-between' | 'space-around'"
               },
               "default": "'start'",
-              "description": "Horizontal distribution of items (maps to justify-content). Use \"between\" for navigation-style spacing.",
+              "description": "Horizontal distribution of items (maps to justify-content). Use \"space-between\" for navigation-style spacing.",
               "fieldName": "justify"
             }
           ],
@@ -20564,7 +20564,7 @@
               "name": "gap",
               "privacy": "public",
               "type": {
-                "text": "'sm' | 'md' | 'lg'"
+                "text": "'xs' | 'sm' | 'md' | 'lg' | 'xl'"
               },
               "default": "'md'",
               "description": "Spacing between children in both horizontal and vertical modes, mapped to design system spacing tokens.",
@@ -20585,7 +20585,7 @@
             {
               "name": "gap",
               "type": {
-                "text": "'sm' | 'md' | 'lg'"
+                "text": "'xs' | 'sm' | 'md' | 'lg' | 'xl'"
               },
               "default": "'md'",
               "description": "Spacing between children in both horizontal and vertical modes, mapped to design system spacing tokens.",

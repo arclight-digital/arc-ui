@@ -4,7 +4,7 @@ import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/progress-toast';
 
 export interface ProgressToastProps {
-  position?: 'bottom-right' | 'top-right';
+  position?: 'top-right' | 'bottom-right';
   onArcComplete?: (e: CustomEvent) => void;
   onArcCancel?: (e: CustomEvent) => void;
   children?: JSX.Element;

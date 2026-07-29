@@ -8,7 +8,7 @@ export interface AvatarProps {
   src?: string;
   name?: string;
   size?: 'sm' | 'md' | 'lg';
-  shape?: 'square' | 'rounded';
+  shape?: 'circle' | 'square' | 'rounded';
   status?: 'online' | 'offline' | 'busy' | 'away';
   className?: string;
   children?: React.ReactNode;

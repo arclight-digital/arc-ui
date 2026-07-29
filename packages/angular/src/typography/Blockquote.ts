@@ -7,9 +7,9 @@ import '@arclux/arc-ui/blockquote';
   selector: 'arc-blockquote',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-blockquote [attr.cite]="cite" [attr.variant]="variant"><ng-content /></arc-blockquote>`,
+  template: `<arc-blockquote [attr.cite]="this.cite" [attr.variant]="this.variant"><ng-content /></arc-blockquote>`,
 })
 export class Blockquote {
   @Input() cite: string = '';
-  @Input() variant: 'accent' = 'default';
+  @Input() variant: 'default' | 'accent' = 'default';
 }

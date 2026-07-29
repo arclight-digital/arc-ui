@@ -7,7 +7,7 @@ import '@arclux/arc-ui/sidebar-section';
   selector: 'arc-sidebar-section',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-sidebar-section [attr.heading]="heading" [collapsible]="collapsible" [open]="open" (arc-toggle)="onArcToggle($event)"><ng-content /></arc-sidebar-section>`,
+  template: `<arc-sidebar-section [attr.heading]="this.heading" [collapsible]="this.collapsible" [open]="this.open" (arc-toggle)="this.onArcToggle($event)"><ng-content /></arc-sidebar-section>`,
 })
 export class SidebarSection {
   @Input() heading: string = '';

@@ -4,9 +4,9 @@ import '@arclux/arc-ui/toolbar';
 
 defineOptions({ name: 'Toolbar' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   sticky?: boolean;
-  size?: 'sm';
+  size?: 'md' | 'sm';
   border?: boolean;
   overflow?: boolean;
 }>(), {
@@ -23,10 +23,10 @@ const emit = defineEmits<{
 
 <template>
   <arc-toolbar
-    :sticky="sticky"
-    :size="size"
-    :border="border"
-    :overflow="overflow"
+    :sticky="props.sticky"
+    :size="props.size"
+    :border="props.border"
+    :overflow="props.overflow"
     @arc-overflow-change="(payload: CustomEvent) => emit('arc-overflow-change', payload)"
   >
     <slot />

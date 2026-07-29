@@ -4,7 +4,7 @@ import '@arclux/arc-ui/image-cropper';
 
 defineOptions({ name: 'ImageCropper' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   src?: string;
   height?: number;
   aspect?: number;
@@ -23,10 +23,10 @@ const emit = defineEmits<{
 
 <template>
   <arc-image-cropper
-    :src="src"
-    :height="height"
-    :aspect="aspect"
-    :zoom="zoom"
+    :src="props.src"
+    :height="props.height"
+    :aspect="props.aspect"
+    :zoom="props.zoom"
     @arc-crop-change="(payload: CustomEvent) => emit('arc-crop-change', payload)"
   >
     <slot />

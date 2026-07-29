@@ -7,11 +7,11 @@ import '@arclux/arc-ui/notification-panel';
   selector: 'arc-notification-panel',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-notification-panel [open]="open" [attr.position]="position" [attr.maxHeight]="maxHeight" (arc-open)="arcOpen.emit($event)" (arc-close)="arcClose.emit($event)"><ng-content /></arc-notification-panel>`,
+  template: `<arc-notification-panel [open]="this.open" [attr.position]="this.position" [attr.maxHeight]="this.maxHeight" (arc-open)="this.arcOpen.emit($event)" (arc-close)="this.arcClose.emit($event)"><ng-content /></arc-notification-panel>`,
 })
 export class NotificationPanel {
   @Input() open: boolean = false;
-  @Input() position: 'top-left' | 'top-right' = 'top-right';
+  @Input() position: 'top-right' | 'top-left' = 'top-right';
   @Input() maxHeight: string = '400px';
   @Output() arcOpen = new EventEmitter<CustomEvent>();
   @Output() arcClose = new EventEmitter<CustomEvent>();

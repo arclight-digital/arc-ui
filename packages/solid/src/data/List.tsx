@@ -4,8 +4,8 @@ import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/list';
 
 export interface ListProps {
-  variant?: 'bordered' | 'separated';
-  size?: 'sm' | 'lg';
+  variant?: 'default' | 'bordered' | 'separated';
+  size?: 'sm' | 'md' | 'lg';
   selectable?: boolean;
   multiple?: boolean;
   value?: string;

@@ -4,7 +4,7 @@ import '@arclux/arc-ui/color-picker';
 
 defineOptions({ name: 'ColorPicker' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   value?: string;
   name?: string;
   presets?: unknown[];
@@ -34,11 +34,11 @@ function onArcChange(payload: CustomEvent) {
 
 <template>
   <arc-color-picker
-    :value="value"
-    :name="name"
-    :presets="presets"
-    :disabled="disabled"
-    :label="label"
+    :value="props.value"
+    :name="props.name"
+    :presets="props.presets"
+    :disabled="props.disabled"
+    :label="props.label"
     @arc-change="onArcChange"
   >
     <slot />

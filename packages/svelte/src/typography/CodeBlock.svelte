@@ -7,7 +7,7 @@
     language?: string;
     filename?: string;
     code?: string;
-    variant?: 'window' | 'basic';
+    variant?: 'default' | 'window' | 'basic';
     children?: Snippet;
     [key: string]: unknown;
   }

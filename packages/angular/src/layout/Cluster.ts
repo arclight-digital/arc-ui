@@ -7,7 +7,7 @@ import '@arclux/arc-ui/cluster';
   selector: 'arc-cluster',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-cluster [attr.gap]="gap" [attr.align]="align" [attr.justify]="justify"><ng-content /></arc-cluster>`,
+  template: `<arc-cluster [attr.gap]="this.gap" [attr.align]="this.align" [attr.justify]="this.justify"><ng-content /></arc-cluster>`,
 })
 export class Cluster {
   @Input() gap: 'xs' | 'sm' | 'md' | 'lg' | 'xl' = 'sm';

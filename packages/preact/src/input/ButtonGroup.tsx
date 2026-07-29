@@ -4,8 +4,8 @@ import { type FunctionComponent } from 'preact';
 import '@arclux/arc-ui/button-group';
 
 export interface ButtonGroupProps {
-  orientation?: 'vertical';
-  size?: string;
+  orientation?: 'horizontal' | 'vertical';
+  size?: 'sm' | 'md' | 'lg';
   variant?: string;
   children?: preact.ComponentChildren;
   [key: string]: unknown;

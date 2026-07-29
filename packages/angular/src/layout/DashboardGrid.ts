@@ -7,7 +7,7 @@ import '@arclux/arc-ui/dashboard-grid';
   selector: 'arc-dashboard-grid',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-dashboard-grid [attr.columns]="columns" [attr.gap]="gap" [attr.minColumnWidth]="minColumnWidth"><ng-content /></arc-dashboard-grid>`,
+  template: `<arc-dashboard-grid [attr.columns]="this.columns" [attr.gap]="this.gap" [attr.minColumnWidth]="this.minColumnWidth"><ng-content /></arc-dashboard-grid>`,
 })
 export class DashboardGrid {
   @Input() columns: number = 0;

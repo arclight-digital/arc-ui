@@ -4,7 +4,7 @@ import '@arclux/arc-ui/value-card';
 
 defineOptions({ name: 'ValueCard' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   icon?: string;
   heading?: string;
   description?: string;
@@ -17,9 +17,9 @@ withDefaults(defineProps<{
 
 <template>
   <arc-value-card
-    :icon="icon"
-    :heading="heading"
-    :description="description"
+    :icon="props.icon"
+    :heading="props.heading"
+    :description="props.description"
   >
     <slot />
   </arc-value-card>

@@ -6,7 +6,7 @@ import { ArcAvatarGroup } from '@arclux/arc-ui/avatar-group';
 
 export interface AvatarGroupProps {
   max?: number;
-  overlap?: 'sm' | 'lg';
+  overlap?: 'sm' | 'md' | 'lg';
   className?: string;
   children?: React.ReactNode;
 }

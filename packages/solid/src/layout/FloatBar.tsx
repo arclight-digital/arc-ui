@@ -5,7 +5,7 @@ import '@arclux/arc-ui/float-bar';
 
 export interface FloatBarProps {
   open?: boolean;
-  position?: 'top';
+  position?: 'bottom' | 'top';
   children?: JSX.Element;
   [key: string]: unknown;
 }

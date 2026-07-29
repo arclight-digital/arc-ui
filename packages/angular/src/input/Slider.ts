@@ -7,7 +7,7 @@ import '@arclux/arc-ui/slider';
   selector: 'arc-slider',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-slider [attr.value]="value" [attr.min]="min" [attr.max]="max" [attr.step]="step" [attr.name]="name" [disabled]="disabled" [attr.label]="label" (arc-input)="onArcInput($event)" (arc-change)="onArcChange($event)"><ng-content /></arc-slider>`,
+  template: `<arc-slider [attr.value]="this.value" [attr.min]="this.min" [attr.max]="this.max" [attr.step]="this.step" [attr.name]="this.name" [disabled]="this.disabled" [attr.label]="this.label" (arc-input)="this.onArcInput($event)" (arc-change)="this.onArcChange($event)"><ng-content /></arc-slider>`,
 })
 export class Slider {
   @Input() value: number = 0;

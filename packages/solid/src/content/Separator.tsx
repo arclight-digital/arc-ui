@@ -4,9 +4,9 @@ import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/separator';
 
 export interface SeparatorProps {
-  orientation?: 'vertical';
+  orientation?: 'horizontal' | 'vertical';
   label?: string;
-  variant?: 'dashed' | 'dotted' | 'fade';
+  variant?: 'line' | 'dashed' | 'dotted' | 'fade';
   children?: JSX.Element;
   [key: string]: unknown;
 }

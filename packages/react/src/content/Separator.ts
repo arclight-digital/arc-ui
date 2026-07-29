@@ -5,9 +5,9 @@ import { createComponent } from '@lit/react';
 import { ArcSeparator } from '@arclux/arc-ui/separator';
 
 export interface SeparatorProps {
-  orientation?: 'vertical';
+  orientation?: 'horizontal' | 'vertical';
   label?: string;
-  variant?: 'dashed' | 'dotted' | 'fade';
+  variant?: 'line' | 'dashed' | 'dotted' | 'fade';
   className?: string;
   children?: React.ReactNode;
 }

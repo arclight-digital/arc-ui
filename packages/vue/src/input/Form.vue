@@ -4,7 +4,7 @@ import '@arclux/arc-ui/form';
 
 defineOptions({ name: 'Form' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   action?: string;
   method?: string;
   novalidate?: boolean;
@@ -29,12 +29,12 @@ const emit = defineEmits<{
 
 <template>
   <arc-form
-    :action="action"
-    :method="method"
-    :novalidate="novalidate"
-    :loading="loading"
-    :disabled="disabled"
-    :errorSummary="errorSummary"
+    :action="props.action"
+    :method="props.method"
+    :novalidate="props.novalidate"
+    :loading="props.loading"
+    :disabled="props.disabled"
+    :errorSummary="props.errorSummary"
     @arc-invalid="(payload: CustomEvent) => emit('arc-invalid', payload)"
     @arc-submit="(payload: CustomEvent) => emit('arc-submit', payload)"
     @arc-reset="(payload: CustomEvent) => emit('arc-reset', payload)"

@@ -4,7 +4,7 @@ import '@arclux/arc-ui/kv-pair';
 
 defineOptions({ name: 'KvPair' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   label?: string;
 }>(), {
   label: '',
@@ -13,7 +13,7 @@ withDefaults(defineProps<{
 
 <template>
   <arc-kv-pair
-    :label="label"
+    :label="props.label"
   >
     <slot />
   </arc-kv-pair>

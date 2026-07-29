@@ -4,7 +4,7 @@ import '@arclux/arc-ui/masonry';
 
 defineOptions({ name: 'Masonry' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   columns?: number;
   gap?: 'sm' | 'md' | 'lg';
 }>(), {
@@ -15,8 +15,8 @@ withDefaults(defineProps<{
 
 <template>
   <arc-masonry
-    :columns="columns"
-    :gap="gap"
+    :columns="props.columns"
+    :gap="props.gap"
   >
     <slot />
   </arc-masonry>

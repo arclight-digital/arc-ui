@@ -7,7 +7,7 @@ import '@arclux/arc-ui/search';
   selector: 'arc-search',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-search [attr.value]="value" [attr.placeholder]="placeholder" [attr.label]="label" [disabled]="disabled" [loading]="loading" (arc-input)="onArcInput($event)" (arc-clear)="arcClear.emit($event)" (arc-change)="onArcChange($event)" (arc-select)="onArcSelect($event)"><ng-content /></arc-search>`,
+  template: `<arc-search [attr.value]="this.value" [attr.placeholder]="this.placeholder" [attr.label]="this.label" [disabled]="this.disabled" [loading]="this.loading" (arc-input)="this.onArcInput($event)" (arc-clear)="this.arcClear.emit($event)" (arc-change)="this.onArcChange($event)" (arc-select)="this.onArcSelect($event)"><ng-content /></arc-search>`,
 })
 export class Search {
   @Input() value: string = '';

@@ -7,7 +7,7 @@ import '@arclux/arc-ui/timeline-item';
   selector: 'arc-timeline-item',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-timeline-item [attr.heading]="heading" [attr.date]="date"><ng-content /></arc-timeline-item>`,
+  template: `<arc-timeline-item [attr.heading]="this.heading" [attr.date]="this.date"><ng-content /></arc-timeline-item>`,
 })
 export class TimelineItem {
   @Input() heading: string = '';

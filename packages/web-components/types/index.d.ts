@@ -389,11 +389,11 @@ export declare class ArcChip extends LitElement {
  */
 export declare class ArcCluster extends LitElement {
   /** Spacing between items, mapped to design system spacing tokens. Use sm for dense tag groups, md for button groups. @default 'sm' */
-  gap: 'xs' | 'sm' | 'md' | 'lg';
+  gap: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   /** Vertical alignment of items within each row (maps to align-items). @default 'center' */
   align: 'start' | 'center' | 'end';
-  /** Horizontal distribution of items (maps to justify-content). Use "between" for navigation-style spacing. @default 'start' */
-  justify: 'start' | 'center' | 'end' | 'between';
+  /** Horizontal distribution of items (maps to justify-content). Use "space-between" for navigation-style spacing. @default 'start' */
+  justify: 'start' | 'center' | 'end' | 'space-between' | 'space-around';
 }
 
 /**
@@ -1837,7 +1837,7 @@ export declare class ArcResponsiveSwitcher extends LitElement {
   /** The container width at which the layout switches between horizontal and vertical. Accepts any CSS length value. When the container is wider than this value, children are in a row; below it, they stack. @default '600px' */
   threshold: string;
   /** Spacing between children in both horizontal and vertical modes, mapped to design system spacing tokens. @default 'md' */
-  gap: 'sm' | 'md' | 'lg';
+  gap: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 }
 
 /**

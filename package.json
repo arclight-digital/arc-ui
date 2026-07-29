@@ -27,11 +27,12 @@
     "docs:build": "pnpm --filter arc-ui-docs run build",
     "docs:deploy": "cd docs && pnpm wrangler pages deploy",
     "bump-versions": "node scripts/bump-versions.js",
+    "check:unions": "node scripts/check-prop-unions.js",
     "publish-all": "pnpm -r publish --access public"
   },
   "license": "MIT",
   "devDependencies": {
-    "@arclux/prism": "2.3.0",
+    "@arclux/prism": "^2.4.0",
     "@axe-core/playwright": "^4.12.1",
     "@custom-elements-manifest/analyzer": "^0.11.0",
     "@esm-bundle/chai": "4.3.4-fix.0",

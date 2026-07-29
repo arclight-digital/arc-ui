@@ -4,7 +4,7 @@ import '@arclux/arc-ui/hotkey';
 
 defineOptions({ name: 'Hotkey' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   keys?: string;
   disabled?: boolean;
   global?: boolean;
@@ -21,9 +21,9 @@ const emit = defineEmits<{
 
 <template>
   <arc-hotkey
-    :keys="keys"
-    :disabled="disabled"
-    :global="global"
+    :keys="props.keys"
+    :disabled="props.disabled"
+    :global="props.global"
     @arc-hotkey-trigger="(payload: CustomEvent) => emit('arc-hotkey-trigger', payload)"
   >
     <slot />

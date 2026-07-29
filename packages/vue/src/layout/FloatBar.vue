@@ -4,9 +4,9 @@ import '@arclux/arc-ui/float-bar';
 
 defineOptions({ name: 'FloatBar' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   open?: boolean;
-  position?: 'top';
+  position?: 'bottom' | 'top';
 }>(), {
   open: false,
   position: 'bottom',
@@ -15,8 +15,8 @@ withDefaults(defineProps<{
 
 <template>
   <arc-float-bar
-    :open="open"
-    :position="position"
+    :open="props.open"
+    :position="props.position"
   >
     <slot />
   </arc-float-bar>

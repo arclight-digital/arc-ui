@@ -9,7 +9,7 @@ export interface OtpInputProps {
   value?: string;
   name?: string;
   disabled?: boolean;
-  type?: string;
+  type?: 'number' | 'text';
   onArcChange?: (e: CustomEvent) => void;
   children?: preact.ComponentChildren;
   [key: string]: unknown;

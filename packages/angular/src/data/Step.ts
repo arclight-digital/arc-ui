@@ -7,7 +7,7 @@ import '@arclux/arc-ui/step';
   selector: 'arc-step',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-step [attr.label]="label"><ng-content /></arc-step>`,
+  template: `<arc-step [attr.label]="this.label"><ng-content /></arc-step>`,
 })
 export class Step {
   @Input() label: string = '';

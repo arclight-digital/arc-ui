@@ -7,10 +7,10 @@ import '@arclux/arc-ui/gradient-text';
   selector: 'arc-gradient-text',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-gradient-text [attr.variant]="variant" [attr.gradient]="gradient" [animate]="animate"><ng-content /></arc-gradient-text>`,
+  template: `<arc-gradient-text [attr.variant]="this.variant" [attr.gradient]="this.gradient" [animate]="this.animate"><ng-content /></arc-gradient-text>`,
 })
 export class GradientText {
-  @Input() variant: 'accent' | 'display' | 'sunset' | 'ocean' = 'accent';
+  @Input() variant: 'accent' | 'display' | 'sunset' | 'ocean' | 'custom' = 'accent';
   @Input() gradient: string = '';
   @Input() animate: boolean = false;
 }

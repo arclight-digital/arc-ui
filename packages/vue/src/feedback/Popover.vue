@@ -4,9 +4,9 @@ import '@arclux/arc-ui/popover';
 
 defineOptions({ name: 'Popover' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   open?: boolean;
-  position?: string;
+  position?: 'top' | 'bottom' | 'left' | 'right';
   trigger?: string;
 }>(), {
   open: false,
@@ -21,9 +21,9 @@ const emit = defineEmits<{
 
 <template>
   <arc-popover
-    :open="open"
-    :position="position"
-    :trigger="trigger"
+    :open="props.open"
+    :position="props.position"
+    :trigger="props.trigger"
     @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"
   >
     <slot />

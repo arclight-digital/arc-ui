@@ -4,7 +4,7 @@ import '@arclux/arc-ui/navigation-menu';
 
 defineOptions({ name: 'NavigationMenu' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   label?: string;
 }>(), {
   label: 'Navigation menu',
@@ -17,7 +17,7 @@ const emit = defineEmits<{
 
 <template>
   <arc-navigation-menu
-    :label="label"
+    :label="props.label"
     @arc-mobile-menu-toggle="(payload: CustomEvent) => emit('arc-mobile-menu-toggle', payload)"
   >
     <slot />

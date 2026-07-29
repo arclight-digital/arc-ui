@@ -5,7 +5,7 @@
 
   interface Props {
     sticky?: boolean;
-    size?: 'sm';
+    size?: 'md' | 'sm';
     border?: boolean;
     overflow?: boolean;
     children?: Snippet;

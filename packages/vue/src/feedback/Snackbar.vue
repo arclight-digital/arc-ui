@@ -4,7 +4,7 @@ import '@arclux/arc-ui/snackbar';
 
 defineOptions({ name: 'Snackbar' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   position?: 'bottom-center' | 'bottom-left' | 'bottom-right';
   duration?: number;
 }>(), {
@@ -20,8 +20,8 @@ const emit = defineEmits<{
 
 <template>
   <arc-snackbar
-    :position="position"
-    :duration="duration"
+    :position="props.position"
+    :duration="props.duration"
     @arc-action="(payload: CustomEvent) => emit('arc-action', payload)"
     @arc-dismiss="(payload: CustomEvent) => emit('arc-dismiss', payload)"
   >

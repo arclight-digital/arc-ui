@@ -4,7 +4,7 @@ import '@arclux/arc-ui/menubar';
 
 defineOptions({ name: 'Menubar' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   items?: unknown[];
 }>(), {
   items: () => ([]),
@@ -17,7 +17,7 @@ const emit = defineEmits<{
 
 <template>
   <arc-menubar
-    :items="items"
+    :items="props.items"
     @arc-select="(payload: CustomEvent) => emit('arc-select', payload)"
   >
     <slot />

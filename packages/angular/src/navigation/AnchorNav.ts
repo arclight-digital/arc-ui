@@ -7,10 +7,10 @@ import '@arclux/arc-ui/anchor-nav';
   selector: 'arc-anchor-nav',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-anchor-nav [attr.orientation]="orientation" [attr.value]="value" [attr.items]="items" (arc-change)="onArcChange($event)"><ng-content /></arc-anchor-nav>`,
+  template: `<arc-anchor-nav [attr.orientation]="this.orientation" [attr.value]="this.value" [attr.items]="this.items" (arc-change)="this.onArcChange($event)"><ng-content /></arc-anchor-nav>`,
 })
 export class AnchorNav {
-  @Input() orientation: 'vertical' = 'horizontal';
+  @Input() orientation: 'vertical' | 'horizontal' = 'horizontal';
   @Input() value: string = '';
   @Input() items: string = [];
   @Output() arcChange = new EventEmitter<CustomEvent>();

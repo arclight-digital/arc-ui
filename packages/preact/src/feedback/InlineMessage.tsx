@@ -4,7 +4,7 @@ import { type FunctionComponent } from 'preact';
 import '@arclux/arc-ui/inline-message';
 
 export interface InlineMessageProps {
-  variant?: string;
+  variant?: 'info' | 'success' | 'warning' | 'error';
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }

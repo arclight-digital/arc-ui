@@ -4,11 +4,11 @@ import '@arclux/arc-ui/code-block';
 
 defineOptions({ name: 'CodeBlock' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   language?: string;
   filename?: string;
   code?: string;
-  variant?: 'window' | 'basic';
+  variant?: 'default' | 'window' | 'basic';
 }>(), {
   language: '',
   filename: '',
@@ -19,10 +19,10 @@ withDefaults(defineProps<{
 
 <template>
   <arc-code-block
-    :language="language"
-    :filename="filename"
-    :code="code"
-    :variant="variant"
+    :language="props.language"
+    :filename="props.filename"
+    :code="props.code"
+    :variant="props.variant"
   >
     <slot />
   </arc-code-block>

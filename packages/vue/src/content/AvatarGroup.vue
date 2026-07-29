@@ -4,9 +4,9 @@ import '@arclux/arc-ui/avatar-group';
 
 defineOptions({ name: 'AvatarGroup' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   max?: number;
-  overlap?: 'sm' | 'lg';
+  overlap?: 'sm' | 'md' | 'lg';
 }>(), {
   max: Infinity,
   overlap: 'md',
@@ -15,8 +15,8 @@ withDefaults(defineProps<{
 
 <template>
   <arc-avatar-group
-    :max="max"
-    :overlap="overlap"
+    :max="props.max"
+    :overlap="props.overlap"
   >
     <slot />
   </arc-avatar-group>

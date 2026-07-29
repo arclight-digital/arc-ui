@@ -6,7 +6,7 @@ import { ArcAspectGrid } from '@arclux/arc-ui/aspect-grid';
 
 export interface AspectGridProps {
   columns?: number;
-  ratio?: string;
+  ratio?: '1/1' | '16/9' | '4/3';
   gap?: 'sm' | 'md' | 'lg';
   className?: string;
   children?: React.ReactNode;

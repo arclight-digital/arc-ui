@@ -7,7 +7,7 @@ import '@arclux/arc-ui/toast';
   selector: 'arc-toast',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-toast [attr.position]="position" [attr.duration]="duration" (arc-dismiss)="arcDismiss.emit($event)"><ng-content /></arc-toast>`,
+  template: `<arc-toast [attr.position]="this.position" [attr.duration]="this.duration" (arc-dismiss)="this.arcDismiss.emit($event)"><ng-content /></arc-toast>`,
 })
 export class Toast {
   @Input() position: 'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center' = 'top-right';

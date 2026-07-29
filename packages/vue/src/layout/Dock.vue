@@ -4,7 +4,7 @@ import '@arclux/arc-ui/dock';
 
 defineOptions({ name: 'Dock' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   position?: 'bottom' | 'left' | 'right';
   autoHide?: boolean;
   open?: boolean;
@@ -17,9 +17,9 @@ withDefaults(defineProps<{
 
 <template>
   <arc-dock
-    :position="position"
-    :autoHide="autoHide"
-    :open="open"
+    :position="props.position"
+    :autoHide="props.autoHide"
+    :open="props.open"
   >
     <slot />
   </arc-dock>

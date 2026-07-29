@@ -9,7 +9,7 @@ export interface FieldsetProps {
   description?: string;
   disabled?: boolean;
   error?: string;
-  variant?: 'card';
+  variant?: 'default' | 'card';
   className?: string;
   children?: React.ReactNode;
 }

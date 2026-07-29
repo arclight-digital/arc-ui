@@ -7,7 +7,7 @@ import '@arclux/arc-ui/icon-button';
   selector: 'arc-icon-button',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-icon-button [attr.name]="name" [attr.text]="text" [attr.variant]="variant" [attr.size]="size" [attr.label]="label" [attr.href]="href" [disabled]="disabled" [attr.type]="type"><ng-content /></arc-icon-button>`,
+  template: `<arc-icon-button [attr.name]="this.name" [attr.text]="this.text" [attr.variant]="this.variant" [attr.size]="this.size" [attr.label]="this.label" [attr.href]="this.href" [disabled]="this.disabled" [attr.type]="this.type"><ng-content /></arc-icon-button>`,
 })
 export class IconButton {
   @Input() name: string = '';

@@ -4,7 +4,7 @@ import '@arclux/arc-ui/aspect-ratio';
 
 defineOptions({ name: 'AspectRatio' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   ratio?: string;
 }>(), {
   ratio: '16/9',
@@ -13,7 +13,7 @@ withDefaults(defineProps<{
 
 <template>
   <arc-aspect-ratio
-    :ratio="ratio"
+    :ratio="props.ratio"
   >
     <slot />
   </arc-aspect-ratio>

@@ -4,13 +4,13 @@ import '@arclux/arc-ui/pin-input';
 
 defineOptions({ name: 'PinInput' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   length?: number;
   value?: string;
   name?: string;
   disabled?: boolean;
   mask?: boolean;
-  type?: string;
+  type?: 'number' | 'alphanumeric' | 'text';
   separator?: number;
   label?: string;
 }>(), {
@@ -48,14 +48,14 @@ function onArcComplete(payload: CustomEvent) {
 
 <template>
   <arc-pin-input
-    :length="length"
-    :value="value"
-    :name="name"
-    :disabled="disabled"
-    :mask="mask"
-    :type="type"
-    :separator="separator"
-    :label="label"
+    :length="props.length"
+    :value="props.value"
+    :name="props.name"
+    :disabled="props.disabled"
+    :mask="props.mask"
+    :type="props.type"
+    :separator="props.separator"
+    :label="props.label"
     @arc-change="onArcChange"
     @arc-complete="onArcComplete"
   >

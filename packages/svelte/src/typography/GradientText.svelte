@@ -4,7 +4,7 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
-    variant?: 'accent' | 'display' | 'sunset' | 'ocean';
+    variant?: 'accent' | 'display' | 'sunset' | 'ocean' | 'custom';
     gradient?: string;
     animate?: boolean;
     children?: Snippet;

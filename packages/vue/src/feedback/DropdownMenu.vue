@@ -4,7 +4,7 @@ import '@arclux/arc-ui/dropdown-menu';
 
 defineOptions({ name: 'DropdownMenu' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   open?: boolean;
 }>(), {
   open: false,
@@ -18,7 +18,7 @@ const emit = defineEmits<{
 
 <template>
   <arc-dropdown-menu
-    :open="open"
+    :open="props.open"
     @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"
     @arc-select="(payload: CustomEvent) => emit('arc-select', payload)"
   >

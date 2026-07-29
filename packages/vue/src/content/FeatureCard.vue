@@ -4,7 +4,7 @@ import '@arclux/arc-ui/feature-card';
 
 defineOptions({ name: 'FeatureCard' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   icon?: string;
   heading?: string;
   description?: string;
@@ -21,11 +21,11 @@ withDefaults(defineProps<{
 
 <template>
   <arc-feature-card
-    :icon="icon"
-    :heading="heading"
-    :description="description"
-    :href="href"
-    :action="action"
+    :icon="props.icon"
+    :heading="props.heading"
+    :description="props.description"
+    :href="props.href"
+    :action="props.action"
   >
     <slot />
   </arc-feature-card>

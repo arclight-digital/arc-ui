@@ -5,7 +5,7 @@
 
   interface Props {
     open?: boolean;
-    direction?: 'down' | 'left' | 'right';
+    direction?: 'up' | 'down' | 'left' | 'right';
     position?: 'bottom-right' | 'bottom-left';
     items?: string;
     children?: Snippet;

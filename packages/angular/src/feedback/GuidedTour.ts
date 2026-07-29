@@ -7,7 +7,7 @@ import '@arclux/arc-ui/guided-tour';
   selector: 'arc-guided-tour',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-guided-tour [open]="open" (arc-change)="arcChange.emit($event)" (arc-complete)="arcComplete.emit($event)" (arc-dismiss)="arcDismiss.emit($event)"><ng-content /></arc-guided-tour>`,
+  template: `<arc-guided-tour [open]="this.open" (arc-change)="this.arcChange.emit($event)" (arc-complete)="this.arcComplete.emit($event)" (arc-dismiss)="this.arcDismiss.emit($event)"><ng-content /></arc-guided-tour>`,
 })
 export class GuidedTour {
   @Input() open: boolean = false;

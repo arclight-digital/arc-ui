@@ -7,7 +7,7 @@ import '@arclux/arc-ui/bottom-nav';
   selector: 'arc-bottom-nav',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-bottom-nav [attr.items]="items" [attr.value]="value" (arc-change)="onArcChange($event)"><ng-content /></arc-bottom-nav>`,
+  template: `<arc-bottom-nav [attr.items]="this.items" [attr.value]="this.value" (arc-change)="this.onArcChange($event)"><ng-content /></arc-bottom-nav>`,
 })
 export class BottomNav {
   @Input() items: string = [];

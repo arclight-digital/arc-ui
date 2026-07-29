@@ -5,7 +5,7 @@ import '@arclux/arc-ui/event-calendar';
 
 export interface EventCalendarProps {
   events?: unknown[];
-  view?: 'week';
+  view?: 'month' | 'week';
   date?: string;
   onArcPeriodChange?: (e: CustomEvent) => void;
   onArcDateClick?: (e: CustomEvent) => void;

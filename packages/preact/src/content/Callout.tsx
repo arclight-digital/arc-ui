@@ -5,7 +5,7 @@ import { useLayoutEffect, useRef } from 'preact/hooks';
 import '@arclux/arc-ui/callout';
 
 export interface CalloutProps {
-  variant?: string;
+  variant?: 'info' | 'warning' | 'tip' | 'danger';
   dismissible?: boolean;
   onArcDismiss?: (e: CustomEvent) => void;
   children?: preact.ComponentChildren;

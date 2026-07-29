@@ -7,7 +7,7 @@ import '@arclux/arc-ui/radio';
   selector: 'arc-radio',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-radio [attr.value]="value" [disabled]="disabled"><ng-content /></arc-radio>`,
+  template: `<arc-radio [attr.value]="this.value" [disabled]="this.disabled"><ng-content /></arc-radio>`,
 })
 export class Radio {
   @Input() value: string = '';

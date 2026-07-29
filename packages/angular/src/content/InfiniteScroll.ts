@@ -7,7 +7,7 @@ import '@arclux/arc-ui/infinite-scroll';
   selector: 'arc-infinite-scroll',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-infinite-scroll [attr.threshold]="threshold" [loading]="loading" [finished]="finished" [disabled]="disabled" (arc-load-more)="arcLoadMore.emit($event)"><ng-content /></arc-infinite-scroll>`,
+  template: `<arc-infinite-scroll [attr.threshold]="this.threshold" [loading]="this.loading" [finished]="this.finished" [disabled]="this.disabled" (arc-load-more)="this.arcLoadMore.emit($event)"><ng-content /></arc-infinite-scroll>`,
 })
 export class InfiniteScroll {
   @Input() threshold: number = 200;

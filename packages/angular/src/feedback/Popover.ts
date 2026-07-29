@@ -7,11 +7,11 @@ import '@arclux/arc-ui/popover';
   selector: 'arc-popover',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-popover [open]="open" [attr.position]="position" [attr.trigger]="trigger" (arc-close)="arcClose.emit($event)"><ng-content /></arc-popover>`,
+  template: `<arc-popover [open]="this.open" [attr.position]="this.position" [attr.trigger]="this.trigger" (arc-close)="this.arcClose.emit($event)"><ng-content /></arc-popover>`,
 })
 export class Popover {
   @Input() open: boolean = false;
-  @Input() position: string = 'bottom';
+  @Input() position: 'top' | 'bottom' | 'left' | 'right' = 'bottom';
   @Input() trigger: string = '';
   @Output() arcClose = new EventEmitter<CustomEvent>();
 }

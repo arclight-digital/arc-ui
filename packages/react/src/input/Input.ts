@@ -5,7 +5,7 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcInput } from '@arclux/arc-ui/input';
 
 export interface InputProps {
-  type?: string;
+  type?: 'text' | 'email' | 'tel' | 'url' | 'password';
   name?: string;
   label?: string;
   placeholder?: string;
@@ -13,7 +13,7 @@ export interface InputProps {
   disabled?: boolean;
   required?: boolean;
   error?: string;
-  size?: 'sm' | 'lg';
+  size?: 'sm' | 'md' | 'lg';
   multiline?: boolean;
   rows?: number;
   className?: string;

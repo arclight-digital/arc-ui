@@ -8,7 +8,7 @@
     value?: string;
     name?: string;
     disabled?: boolean;
-    type?: string;
+    type?: 'number' | 'text';
     children?: Snippet;
     [key: string]: unknown;
   }

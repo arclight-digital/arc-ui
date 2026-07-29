@@ -4,8 +4,8 @@ import '@arclux/arc-ui/settings-layout';
 
 defineOptions({ name: 'SettingsLayout' });
 
-withDefaults(defineProps<{
-  navPosition?: string;
+const props = withDefaults(defineProps<{
+  navPosition?: 'left' | 'top';
 }>(), {
   navPosition: 'left',
 });
@@ -13,7 +13,7 @@ withDefaults(defineProps<{
 
 <template>
   <arc-settings-layout
-    :navPosition="navPosition"
+    :navPosition="props.navPosition"
   >
     <slot />
   </arc-settings-layout>

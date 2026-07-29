@@ -4,7 +4,7 @@ import '@arclux/arc-ui/icon-button';
 
 defineOptions({ name: 'IconButton' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   name?: string;
   text?: string;
   variant?: 'ghost' | 'secondary' | 'primary';
@@ -27,14 +27,14 @@ withDefaults(defineProps<{
 
 <template>
   <arc-icon-button
-    :name="name"
-    :text="text"
-    :variant="variant"
-    :size="size"
-    :label="label"
-    :href="href"
-    :disabled="disabled"
-    :type="type"
+    :name="props.name"
+    :text="props.text"
+    :variant="props.variant"
+    :size="props.size"
+    :label="props.label"
+    :href="props.href"
+    :disabled="props.disabled"
+    :type="props.type"
   >
     <slot />
   </arc-icon-button>

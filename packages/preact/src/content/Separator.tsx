@@ -4,9 +4,9 @@ import { type FunctionComponent } from 'preact';
 import '@arclux/arc-ui/separator';
 
 export interface SeparatorProps {
-  orientation?: 'vertical';
+  orientation?: 'horizontal' | 'vertical';
   label?: string;
-  variant?: 'dashed' | 'dotted' | 'fade';
+  variant?: 'line' | 'dashed' | 'dotted' | 'fade';
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }

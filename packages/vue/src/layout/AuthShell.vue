@@ -4,8 +4,8 @@ import '@arclux/arc-ui/auth-shell';
 
 defineOptions({ name: 'AuthShell' });
 
-withDefaults(defineProps<{
-  variant?: string;
+const props = withDefaults(defineProps<{
+  variant?: 'centered' | 'split';
 }>(), {
   variant: 'centered',
 });
@@ -13,7 +13,7 @@ withDefaults(defineProps<{
 
 <template>
   <arc-auth-shell
-    :variant="variant"
+    :variant="props.variant"
   >
     <slot />
   </arc-auth-shell>

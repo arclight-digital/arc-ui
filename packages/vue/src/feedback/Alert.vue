@@ -4,8 +4,8 @@ import '@arclux/arc-ui/alert';
 
 defineOptions({ name: 'Alert' });
 
-withDefaults(defineProps<{
-  variant?: string;
+const props = withDefaults(defineProps<{
+  variant?: 'info' | 'success' | 'warning' | 'error';
   compact?: boolean;
   dismissible?: boolean;
   heading?: string;
@@ -23,10 +23,10 @@ const emit = defineEmits<{
 
 <template>
   <arc-alert
-    :variant="variant"
-    :compact="compact"
-    :dismissible="dismissible"
-    :heading="heading"
+    :variant="props.variant"
+    :compact="props.compact"
+    :dismissible="props.dismissible"
+    :heading="props.heading"
     @arc-dismiss="(payload: CustomEvent) => emit('arc-dismiss', payload)"
   >
     <slot />

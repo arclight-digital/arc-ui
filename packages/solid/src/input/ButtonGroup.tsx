@@ -4,8 +4,8 @@ import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/button-group';
 
 export interface ButtonGroupProps {
-  orientation?: 'vertical';
-  size?: string;
+  orientation?: 'horizontal' | 'vertical';
+  size?: 'sm' | 'md' | 'lg';
   variant?: string;
   children?: JSX.Element;
   [key: string]: unknown;

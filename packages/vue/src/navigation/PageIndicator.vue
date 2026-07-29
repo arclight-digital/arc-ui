@@ -4,7 +4,7 @@ import '@arclux/arc-ui/page-indicator';
 
 defineOptions({ name: 'PageIndicator' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   count?: number;
   value?: number;
   clickable?: boolean;
@@ -30,9 +30,9 @@ function onArcChange(payload: CustomEvent) {
 
 <template>
   <arc-page-indicator
-    :count="count"
-    :value="value"
-    :clickable="clickable"
+    :count="props.count"
+    :value="props.value"
+    :clickable="props.clickable"
     @arc-change="onArcChange"
   >
     <slot />

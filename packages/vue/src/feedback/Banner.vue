@@ -4,8 +4,8 @@ import '@arclux/arc-ui/banner';
 
 defineOptions({ name: 'Banner' });
 
-withDefaults(defineProps<{
-  variant?: string;
+const props = withDefaults(defineProps<{
+  variant?: 'info' | 'success' | 'warning' | 'error';
   dismissible?: boolean;
   sticky?: boolean;
 }>(), {
@@ -21,9 +21,9 @@ const emit = defineEmits<{
 
 <template>
   <arc-banner
-    :variant="variant"
-    :dismissible="dismissible"
-    :sticky="sticky"
+    :variant="props.variant"
+    :dismissible="props.dismissible"
+    :sticky="props.sticky"
     @arc-dismiss="(payload: CustomEvent) => emit('arc-dismiss', payload)"
   >
     <slot />

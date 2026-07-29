@@ -4,7 +4,7 @@ import '@arclux/arc-ui/divider';
 
 defineOptions({ name: 'Divider' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   variant?: 'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient';
   align?: 'left' | 'right';
   vertical?: boolean;
@@ -18,10 +18,10 @@ withDefaults(defineProps<{
 
 <template>
   <arc-divider
-    :variant="variant"
-    :align="align"
-    :vertical="vertical"
-    :label="label"
+    :variant="props.variant"
+    :align="props.align"
+    :vertical="props.vertical"
+    :label="props.label"
   >
     <slot />
   </arc-divider>

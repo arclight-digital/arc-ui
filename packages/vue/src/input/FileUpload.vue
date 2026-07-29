@@ -4,7 +4,7 @@ import '@arclux/arc-ui/file-upload';
 
 defineOptions({ name: 'FileUpload' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   accept?: string;
   multiple?: boolean;
   maxSize?: number;
@@ -24,10 +24,10 @@ const emit = defineEmits<{
 
 <template>
   <arc-file-upload
-    :accept="accept"
-    :multiple="multiple"
-    :maxSize="maxSize"
-    :disabled="disabled"
+    :accept="props.accept"
+    :multiple="props.multiple"
+    :maxSize="props.maxSize"
+    :disabled="props.disabled"
     @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
     @arc-remove="(payload: CustomEvent) => emit('arc-remove', payload)"
   >

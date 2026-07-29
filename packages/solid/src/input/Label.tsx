@@ -6,7 +6,7 @@ import '@arclux/arc-ui/label';
 export interface LabelProps {
   for?: string;
   required?: boolean;
-  size?: 'sm' | 'lg';
+  size?: 'sm' | 'md' | 'lg';
   disabled?: boolean;
   children?: JSX.Element;
   [key: string]: unknown;

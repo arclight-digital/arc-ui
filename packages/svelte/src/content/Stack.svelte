@@ -4,7 +4,7 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
-    direction?: 'horizontal' | 'vertical';
+    direction?: 'vertical' | 'horizontal';
     gap?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
     align?: 'start' | 'center' | 'end' | 'stretch';
     justify?: 'start' | 'center' | 'end' | 'between' | 'around';

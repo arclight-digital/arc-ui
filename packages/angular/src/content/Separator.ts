@@ -7,10 +7,10 @@ import '@arclux/arc-ui/separator';
   selector: 'arc-separator',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-separator [attr.orientation]="orientation" [attr.label]="label" [attr.variant]="variant"><ng-content /></arc-separator>`,
+  template: `<arc-separator [attr.orientation]="this.orientation" [attr.label]="this.label" [attr.variant]="this.variant"><ng-content /></arc-separator>`,
 })
 export class Separator {
-  @Input() orientation: 'vertical' = 'horizontal';
+  @Input() orientation: 'horizontal' | 'vertical' = 'horizontal';
   @Input() label: string = '';
-  @Input() variant: 'dashed' | 'dotted' | 'fade' = 'line';
+  @Input() variant: 'line' | 'dashed' | 'dotted' | 'fade' = 'line';
 }

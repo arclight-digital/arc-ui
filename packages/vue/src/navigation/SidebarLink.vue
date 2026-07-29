@@ -4,7 +4,7 @@ import '@arclux/arc-ui/sidebar-link';
 
 defineOptions({ name: 'SidebarLink' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   href?: string;
   active?: boolean;
   level?: number;
@@ -17,9 +17,9 @@ withDefaults(defineProps<{
 
 <template>
   <arc-sidebar-link
-    :href="href"
-    :active="active"
-    :level="level"
+    :href="props.href"
+    :active="props.active"
+    :level="props.level"
   >
     <slot />
   </arc-sidebar-link>

@@ -7,10 +7,10 @@ import '@arclux/arc-ui/card';
   selector: 'arc-card',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-card [attr.href]="href" [attr.padding]="padding" [interactive]="interactive"><ng-content /></arc-card>`,
+  template: `<arc-card [attr.href]="this.href" [attr.padding]="this.padding" [interactive]="this.interactive"><ng-content /></arc-card>`,
 })
 export class Card {
   @Input() href: string = '';
-  @Input() padding: 'none' | 'sm' | 'lg' = 'md';
+  @Input() padding: 'none' | 'sm' | 'md' | 'lg' = 'md';
   @Input() interactive: boolean = false;
 }

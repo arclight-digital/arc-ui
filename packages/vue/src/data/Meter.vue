@@ -4,7 +4,7 @@ import '@arclux/arc-ui/meter';
 
 defineOptions({ name: 'Meter' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   value?: number;
   min?: number;
   max?: number;
@@ -25,13 +25,13 @@ withDefaults(defineProps<{
 
 <template>
   <arc-meter
-    :value="value"
-    :min="min"
-    :max="max"
-    :low="low"
-    :high="high"
-    :optimum="optimum"
-    :label="label"
+    :value="props.value"
+    :min="props.min"
+    :max="props.max"
+    :low="props.low"
+    :high="props.high"
+    :optimum="props.optimum"
+    :label="props.label"
   >
     <slot />
   </arc-meter>

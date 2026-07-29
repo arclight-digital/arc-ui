@@ -9,7 +9,7 @@
     message?: string;
     confirmLabel?: string;
     cancelLabel?: string;
-    variant?: string;
+    variant?: 'default' | 'danger';
     children?: Snippet;
     [key: string]: unknown;
   }

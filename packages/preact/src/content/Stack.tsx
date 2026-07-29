@@ -4,7 +4,7 @@ import { type FunctionComponent } from 'preact';
 import '@arclux/arc-ui/stack';
 
 export interface StackProps {
-  direction?: 'horizontal' | 'vertical';
+  direction?: 'vertical' | 'horizontal';
   gap?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
   align?: 'start' | 'center' | 'end' | 'stretch';
   justify?: 'start' | 'center' | 'end' | 'between' | 'around';

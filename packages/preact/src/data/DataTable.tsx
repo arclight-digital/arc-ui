@@ -9,7 +9,7 @@ export interface DataTableProps {
   sortable?: boolean;
   selectable?: boolean;
   sortColumn?: string;
-  sortDirection?: string;
+  sortDirection?: 'asc' | 'desc';
   virtual?: boolean;
   rowHeight?: number;
   onArcSort?: (e: CustomEvent) => void;

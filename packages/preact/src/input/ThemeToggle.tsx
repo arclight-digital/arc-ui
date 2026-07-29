@@ -5,7 +5,7 @@ import { useLayoutEffect, useRef } from 'preact/hooks';
 import '@arclux/arc-ui/theme-toggle';
 
 export interface ThemeToggleProps {
-  theme?: string;
+  theme?: 'dark' | 'light' | 'auto';
   disabled?: boolean;
   iconOnly?: boolean;
   onArcChange?: (e: CustomEvent) => void;

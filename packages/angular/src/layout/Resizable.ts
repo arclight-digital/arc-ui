@@ -7,7 +7,7 @@ import '@arclux/arc-ui/resizable';
   selector: 'arc-resizable',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-resizable [attr.direction]="direction" [attr.minSize]="minSize" [attr.maxSize]="maxSize" [attr.size]="size" (arc-resize)="onArcResize($event)"><ng-content /></arc-resizable>`,
+  template: `<arc-resizable [attr.direction]="this.direction" [attr.minSize]="this.minSize" [attr.maxSize]="this.maxSize" [attr.size]="this.size" (arc-resize)="this.onArcResize($event)"><ng-content /></arc-resizable>`,
 })
 export class Resizable {
   @Input() direction: 'horizontal' | 'vertical' = 'horizontal';

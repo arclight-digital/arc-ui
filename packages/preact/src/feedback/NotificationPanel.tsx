@@ -6,7 +6,7 @@ import '@arclux/arc-ui/notification-panel';
 
 export interface NotificationPanelProps {
   open?: boolean;
-  position?: 'top-left' | 'top-right';
+  position?: 'top-right' | 'top-left';
   maxHeight?: string;
   onArcOpen?: (e: CustomEvent) => void;
   onArcClose?: (e: CustomEvent) => void;

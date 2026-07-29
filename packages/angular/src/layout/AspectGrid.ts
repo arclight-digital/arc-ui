@@ -7,10 +7,10 @@ import '@arclux/arc-ui/aspect-grid';
   selector: 'arc-aspect-grid',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-aspect-grid [attr.columns]="columns" [attr.ratio]="ratio" [attr.gap]="gap"><ng-content /></arc-aspect-grid>`,
+  template: `<arc-aspect-grid [attr.columns]="this.columns" [attr.ratio]="this.ratio" [attr.gap]="this.gap"><ng-content /></arc-aspect-grid>`,
 })
 export class AspectGrid {
   @Input() columns: number = 3;
-  @Input() ratio: string = '1/1';
+  @Input() ratio: '1/1' | '16/9' | '4/3' = '1/1';
   @Input() gap: 'sm' | 'md' | 'lg' = 'md';
 }

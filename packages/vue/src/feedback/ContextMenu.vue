@@ -4,7 +4,7 @@ import '@arclux/arc-ui/context-menu';
 
 defineOptions({ name: 'ContextMenu' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   open?: boolean;
 }>(), {
   open: false,
@@ -19,7 +19,7 @@ const emit = defineEmits<{
 
 <template>
   <arc-context-menu
-    :open="open"
+    :open="props.open"
     @arc-open="(payload: CustomEvent) => emit('arc-open', payload)"
     @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"
     @arc-select="(payload: CustomEvent) => emit('arc-select', payload)"

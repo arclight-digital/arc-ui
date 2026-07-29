@@ -4,12 +4,12 @@ import '@arclux/arc-ui/image';
 
 defineOptions({ name: 'Image' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   src?: string;
   alt?: string;
   aspect?: '1/1' | '4/3' | '16/9' | '21/9' | '3/4' | '9/16';
-  fit?: 'contain' | 'fill' | 'none' | 'scale-down';
-  loading?: string;
+  fit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down';
+  loading?: 'lazy' | 'eager';
   fallback?: string;
 }>(), {
   src: '',
@@ -28,12 +28,12 @@ const emit = defineEmits<{
 
 <template>
   <arc-image
-    :src="src"
-    :alt="alt"
-    :aspect="aspect"
-    :fit="fit"
-    :loading="loading"
-    :fallback="fallback"
+    :src="props.src"
+    :alt="props.alt"
+    :aspect="props.aspect"
+    :fit="props.fit"
+    :loading="props.loading"
+    :fallback="props.fallback"
     @arc-load="(payload: CustomEvent) => emit('arc-load', payload)"
     @arc-error="(payload: CustomEvent) => emit('arc-error', payload)"
   >

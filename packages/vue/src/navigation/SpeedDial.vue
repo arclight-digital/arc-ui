@@ -4,9 +4,9 @@ import '@arclux/arc-ui/speed-dial';
 
 defineOptions({ name: 'SpeedDial' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   open?: boolean;
-  direction?: 'down' | 'left' | 'right';
+  direction?: 'up' | 'down' | 'left' | 'right';
   position?: 'bottom-right' | 'bottom-left';
   items?: string;
 }>(), {
@@ -24,10 +24,10 @@ const emit = defineEmits<{
 
 <template>
   <arc-speed-dial
-    :open="open"
-    :direction="direction"
-    :position="position"
-    :items="items"
+    :open="props.open"
+    :direction="props.direction"
+    :position="props.position"
+    :items="props.items"
     @arc-action="(payload: CustomEvent) => emit('arc-action', payload)"
     @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"
   >

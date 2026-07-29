@@ -5,11 +5,11 @@
 
   interface Props {
     value?: number;
-    type?: string;
+    type?: 'number' | 'currency' | 'percent' | 'compact';
     locale?: string;
     currency?: string;
     decimals?: number;
-    notation?: string;
+    notation?: 'standard' | 'compact';
     children?: Snippet;
     [key: string]: unknown;
   }

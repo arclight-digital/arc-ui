@@ -5,7 +5,7 @@
 
   interface Props {
     speed?: number;
-    direction?: string;
+    direction?: 'left' | 'right';
     pauseOnHover?: boolean;
     gap?: string;
     children?: Snippet;

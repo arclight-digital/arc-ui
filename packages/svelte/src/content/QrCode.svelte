@@ -6,7 +6,7 @@
   interface Props {
     value?: string;
     size?: number;
-    level?: string;
+    level?: 'L' | 'M' | 'Q' | 'H';
     label?: string;
     quietZone?: number;
     contrast?: boolean;

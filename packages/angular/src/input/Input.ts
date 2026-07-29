@@ -7,10 +7,10 @@ import '@arclux/arc-ui/input';
   selector: 'arc-input',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-input [attr.type]="type" [attr.name]="name" [attr.label]="label" [attr.placeholder]="placeholder" [attr.value]="value" [disabled]="disabled" [required]="required" [attr.error]="error" [attr.size]="size" [multiline]="multiline" [attr.rows]="rows" (arc-input)="onArcInput($event)" (arc-change)="onArcChange($event)"><ng-content /></arc-input>`,
+  template: `<arc-input [attr.type]="this.type" [attr.name]="this.name" [attr.label]="this.label" [attr.placeholder]="this.placeholder" [attr.value]="this.value" [disabled]="this.disabled" [required]="this.required" [attr.error]="this.error" [attr.size]="this.size" [multiline]="this.multiline" [attr.rows]="this.rows" (arc-input)="this.onArcInput($event)" (arc-change)="this.onArcChange($event)"><ng-content /></arc-input>`,
 })
 export class Input {
-  @Input() type: string = 'text';
+  @Input() type: 'text' | 'email' | 'tel' | 'url' | 'password' = 'text';
   @Input() name: string = '';
   @Input() label: string = '';
   @Input() placeholder: string = '';
@@ -18,7 +18,7 @@ export class Input {
   @Input() disabled: boolean = false;
   @Input() required: boolean = false;
   @Input() error: string = '';
-  @Input() size: 'sm' | 'lg' = 'md';
+  @Input() size: 'sm' | 'md' | 'lg' = 'md';
   @Input() multiline: boolean = false;
   @Input() rows: number = 5;
   @Output() arcInput = new EventEmitter<CustomEvent>();

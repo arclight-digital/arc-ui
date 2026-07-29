@@ -4,7 +4,7 @@ import '@arclux/arc-ui/option';
 
 defineOptions({ name: 'Option' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   value?: string;
   disabled?: boolean;
   selected?: boolean;
@@ -17,9 +17,9 @@ withDefaults(defineProps<{
 
 <template>
   <arc-option
-    :value="value"
-    :disabled="disabled"
-    :selected="selected"
+    :value="props.value"
+    :disabled="props.disabled"
+    :selected="props.selected"
   >
     <slot />
   </arc-option>

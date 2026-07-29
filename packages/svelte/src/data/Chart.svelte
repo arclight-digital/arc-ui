@@ -4,14 +4,14 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
-    type?: string;
+    type?: 'line' | 'area' | 'bar' | 'donut';
     series?: unknown[];
     labels?: unknown[];
     stacked?: boolean;
     hideLegend?: boolean;
     hideAxis?: boolean;
     height?: number;
-    valueFormat?: string;
+    valueFormat?: 'number' | 'percent' | 'currency';
     currency?: string;
     children?: Snippet;
     [key: string]: unknown;

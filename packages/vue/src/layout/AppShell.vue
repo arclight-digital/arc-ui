@@ -4,7 +4,7 @@ import '@arclux/arc-ui/app-shell';
 
 defineOptions({ name: 'AppShell' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   sidebarOpen?: boolean;
   breakpoint?: number;
 }>(), {
@@ -15,8 +15,8 @@ withDefaults(defineProps<{
 
 <template>
   <arc-app-shell
-    :sidebarOpen="sidebarOpen"
-    :breakpoint="breakpoint"
+    :sidebarOpen="props.sidebarOpen"
+    :breakpoint="props.breakpoint"
   >
     <slot />
   </arc-app-shell>

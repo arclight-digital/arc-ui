@@ -5,7 +5,7 @@ import { createComponent } from '@lit/react';
 import { ArcStatusBar } from '@arclux/arc-ui/status-bar';
 
 export interface StatusBarProps {
-  position?: 'fixed';
+  position?: 'static' | 'fixed';
   className?: string;
   children?: React.ReactNode;
 }

@@ -4,9 +4,9 @@ import '@arclux/arc-ui/aspect-grid';
 
 defineOptions({ name: 'AspectGrid' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   columns?: number;
-  ratio?: string;
+  ratio?: '1/1' | '16/9' | '4/3';
   gap?: 'sm' | 'md' | 'lg';
 }>(), {
   columns: 3,
@@ -17,9 +17,9 @@ withDefaults(defineProps<{
 
 <template>
   <arc-aspect-grid
-    :columns="columns"
-    :ratio="ratio"
-    :gap="gap"
+    :columns="props.columns"
+    :ratio="props.ratio"
+    :gap="props.gap"
   >
     <slot />
   </arc-aspect-grid>

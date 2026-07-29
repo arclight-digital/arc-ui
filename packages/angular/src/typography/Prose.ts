@@ -7,7 +7,7 @@ import '@arclux/arc-ui/prose';
   selector: 'arc-prose',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-prose [attr.size]="size"><ng-content /></arc-prose>`,
+  template: `<arc-prose [attr.size]="this.size"><ng-content /></arc-prose>`,
 })
 export class Prose {
   @Input() size: 'sm' | 'md' | 'lg' = 'md';

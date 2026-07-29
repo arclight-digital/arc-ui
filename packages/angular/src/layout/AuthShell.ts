@@ -7,8 +7,8 @@ import '@arclux/arc-ui/auth-shell';
   selector: 'arc-auth-shell',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-auth-shell [attr.variant]="variant"><ng-content /></arc-auth-shell>`,
+  template: `<arc-auth-shell [attr.variant]="this.variant"><ng-content /></arc-auth-shell>`,
 })
 export class AuthShell {
-  @Input() variant: string = 'centered';
+  @Input() variant: 'centered' | 'split' = 'centered';
 }

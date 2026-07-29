@@ -5,7 +5,7 @@ import { useLayoutEffect, useRef } from 'preact/hooks';
 import '@arclux/arc-ui/alert';
 
 export interface AlertProps {
-  variant?: string;
+  variant?: 'info' | 'success' | 'warning' | 'error';
   compact?: boolean;
   dismissible?: boolean;
   heading?: string;

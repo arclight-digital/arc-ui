@@ -7,7 +7,7 @@ import '@arclux/arc-ui/aspect-ratio';
   selector: 'arc-aspect-ratio',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-aspect-ratio [attr.ratio]="ratio"><ng-content /></arc-aspect-ratio>`,
+  template: `<arc-aspect-ratio [attr.ratio]="this.ratio"><ng-content /></arc-aspect-ratio>`,
 })
 export class AspectRatio {
   @Input() ratio: string = '16/9';

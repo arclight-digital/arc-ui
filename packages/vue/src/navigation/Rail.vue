@@ -4,7 +4,7 @@ import '@arclux/arc-ui/rail';
 
 defineOptions({ name: 'Rail' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   items?: string;
   value?: string;
   expanded?: boolean;
@@ -30,9 +30,9 @@ function onArcChange(payload: CustomEvent) {
 
 <template>
   <arc-rail
-    :items="items"
-    :value="value"
-    :expanded="expanded"
+    :items="props.items"
+    :value="props.value"
+    :expanded="props.expanded"
     @arc-change="onArcChange"
   >
     <slot />

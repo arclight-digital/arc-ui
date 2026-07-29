@@ -1689,7 +1689,8 @@ export default {
     "xs",
     "sm",
     "md",
-    "lg"
+    "lg",
+    "xl"
    ],
    "align": [
     "start",
@@ -1700,7 +1701,8 @@ export default {
     "start",
     "center",
     "end",
-    "between"
+    "space-between",
+    "space-around"
    ]
   },
   "slug": "cluster"
@@ -1826,9 +1828,11 @@ export default {
   ],
   "enums": {
    "gap": [
+    "xs",
     "sm",
     "md",
-    "lg"
+    "lg",
+    "xl"
    ]
   },
   "slug": "responsive-switcher"

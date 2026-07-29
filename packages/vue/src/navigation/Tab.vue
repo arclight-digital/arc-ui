@@ -4,7 +4,7 @@ import '@arclux/arc-ui/tab';
 
 defineOptions({ name: 'Tab' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   label?: string;
 }>(), {
   label: '',
@@ -13,7 +13,7 @@ withDefaults(defineProps<{
 
 <template>
   <arc-tab
-    :label="label"
+    :label="props.label"
   >
     <slot />
   </arc-tab>

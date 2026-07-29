@@ -4,7 +4,7 @@ import '@arclux/arc-ui/drawer';
 
 defineOptions({ name: 'Drawer' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   open?: boolean;
   position?: 'left' | 'right';
   heading?: string;
@@ -21,9 +21,9 @@ const emit = defineEmits<{
 
 <template>
   <arc-drawer
-    :open="open"
-    :position="position"
-    :heading="heading"
+    :open="props.open"
+    :position="props.position"
+    :heading="props.heading"
     @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"
   >
     <slot />

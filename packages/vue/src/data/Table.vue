@@ -4,7 +4,7 @@ import '@arclux/arc-ui/table';
 
 defineOptions({ name: 'Table' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   columns?: unknown[];
   rows?: unknown[];
   striped?: boolean;
@@ -19,10 +19,10 @@ withDefaults(defineProps<{
 
 <template>
   <arc-table
-    :columns="columns"
-    :rows="rows"
-    :striped="striped"
-    :compact="compact"
+    :columns="props.columns"
+    :rows="props.rows"
+    :striped="props.striped"
+    :compact="props.compact"
   >
     <slot />
   </arc-table>

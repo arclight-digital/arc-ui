@@ -4,7 +4,7 @@ import '@arclux/arc-ui/toggle';
 
 defineOptions({ name: 'Toggle' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   checked?: boolean;
   disabled?: boolean;
   size?: 'sm' | 'lg';
@@ -34,11 +34,11 @@ function onArcChange(payload: CustomEvent) {
 
 <template>
   <arc-toggle
-    :checked="checked"
-    :disabled="disabled"
-    :size="size"
-    :label="label"
-    :name="name"
+    :checked="props.checked"
+    :disabled="props.disabled"
+    :size="props.size"
+    :label="props.label"
+    :name="props.name"
     @arc-change="onArcChange"
   >
     <slot />

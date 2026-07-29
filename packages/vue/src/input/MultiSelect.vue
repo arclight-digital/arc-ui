@@ -4,7 +4,7 @@ import '@arclux/arc-ui/multi-select';
 
 defineOptions({ name: 'MultiSelect' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   value?: unknown[];
   placeholder?: string;
   label?: string;
@@ -34,11 +34,11 @@ function onArcChange(payload: CustomEvent) {
 
 <template>
   <arc-multi-select
-    :value="value"
-    :placeholder="placeholder"
-    :label="label"
-    :name="name"
-    :disabled="disabled"
+    :value="props.value"
+    :placeholder="props.placeholder"
+    :label="props.label"
+    :name="props.name"
+    :disabled="props.disabled"
     @arc-change="onArcChange"
   >
     <slot />

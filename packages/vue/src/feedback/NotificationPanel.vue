@@ -4,9 +4,9 @@ import '@arclux/arc-ui/notification-panel';
 
 defineOptions({ name: 'NotificationPanel' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   open?: boolean;
-  position?: 'top-left' | 'top-right';
+  position?: 'top-right' | 'top-left';
   maxHeight?: string;
 }>(), {
   open: false,
@@ -22,9 +22,9 @@ const emit = defineEmits<{
 
 <template>
   <arc-notification-panel
-    :open="open"
-    :position="position"
-    :maxHeight="maxHeight"
+    :open="props.open"
+    :position="props.position"
+    :maxHeight="props.maxHeight"
     @arc-open="(payload: CustomEvent) => emit('arc-open', payload)"
     @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"
   >

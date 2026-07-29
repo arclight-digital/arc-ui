@@ -4,7 +4,7 @@ import '@arclux/arc-ui/comparison-column';
 
 defineOptions({ name: 'ComparisonColumn' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   heading?: string;
   highlight?: boolean;
   values?: string;
@@ -17,9 +17,9 @@ withDefaults(defineProps<{
 
 <template>
   <arc-comparison-column
-    :heading="heading"
-    :highlight="highlight"
-    :values="values"
+    :heading="props.heading"
+    :highlight="props.highlight"
+    :values="props.values"
   >
     <slot />
   </arc-comparison-column>

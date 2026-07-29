@@ -7,14 +7,14 @@ import '@arclux/arc-ui/image';
   selector: 'arc-image',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-image [attr.src]="src" [attr.alt]="alt" [attr.aspect]="aspect" [attr.fit]="fit" [attr.loading]="loading" [attr.fallback]="fallback" (arc-load)="arcLoad.emit($event)" (arc-error)="arcError.emit($event)"><ng-content /></arc-image>`,
+  template: `<arc-image [attr.src]="this.src" [attr.alt]="this.alt" [attr.aspect]="this.aspect" [attr.fit]="this.fit" [attr.loading]="this.loading" [attr.fallback]="this.fallback" (arc-load)="this.arcLoad.emit($event)" (arc-error)="this.arcError.emit($event)"><ng-content /></arc-image>`,
 })
 export class Image {
   @Input() src: string = '';
   @Input() alt: string = '';
   @Input() aspect: '1/1' | '4/3' | '16/9' | '21/9' | '3/4' | '9/16' = '';
-  @Input() fit: 'contain' | 'fill' | 'none' | 'scale-down' = 'cover';
-  @Input() loading: string = 'lazy';
+  @Input() fit: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down' = 'cover';
+  @Input() loading: 'lazy' | 'eager' = 'lazy';
   @Input() fallback: string = '';
   @Output() arcLoad = new EventEmitter<CustomEvent>();
   @Output() arcError = new EventEmitter<CustomEvent>();

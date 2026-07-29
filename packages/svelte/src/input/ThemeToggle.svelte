@@ -4,7 +4,7 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
-    theme?: string;
+    theme?: 'dark' | 'light' | 'auto';
     disabled?: boolean;
     iconOnly?: boolean;
     children?: Snippet;

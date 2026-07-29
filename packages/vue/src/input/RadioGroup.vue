@@ -4,12 +4,12 @@ import '@arclux/arc-ui/radio-group';
 
 defineOptions({ name: 'RadioGroup' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   value?: string;
   name?: string;
   disabled?: boolean;
   size?: 'sm' | 'lg';
-  orientation?: 'horizontal';
+  orientation?: 'vertical' | 'horizontal';
 }>(), {
   value: '',
   name: '',
@@ -34,11 +34,11 @@ function onArcChange(payload: CustomEvent) {
 
 <template>
   <arc-radio-group
-    :value="value"
-    :name="name"
-    :disabled="disabled"
-    :size="size"
-    :orientation="orientation"
+    :value="props.value"
+    :name="props.name"
+    :disabled="props.disabled"
+    :size="props.size"
+    :orientation="props.orientation"
     @arc-change="onArcChange"
   >
     <slot />

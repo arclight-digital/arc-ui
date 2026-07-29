@@ -8,7 +8,7 @@
     description?: string;
     disabled?: boolean;
     error?: string;
-    variant?: 'card';
+    variant?: 'default' | 'card';
     children?: Snippet;
     [key: string]: unknown;
   }

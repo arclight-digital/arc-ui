@@ -4,13 +4,13 @@ import '@arclux/arc-ui/button';
 
 defineOptions({ name: 'Button' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   variant?: 'primary' | 'secondary' | 'ghost';
   size?: 'sm' | 'md' | 'lg';
   href?: string;
   disabled?: boolean;
   loading?: boolean;
-  type?: string;
+  type?: 'button' | 'submit' | 'reset';
 }>(), {
   variant: 'primary',
   size: 'md',
@@ -23,12 +23,12 @@ withDefaults(defineProps<{
 
 <template>
   <arc-button
-    :variant="variant"
-    :size="size"
-    :href="href"
-    :disabled="disabled"
-    :loading="loading"
-    :type="type"
+    :variant="props.variant"
+    :size="props.size"
+    :href="props.href"
+    :disabled="props.disabled"
+    :loading="props.loading"
+    :type="props.type"
   >
     <slot />
   </arc-button>

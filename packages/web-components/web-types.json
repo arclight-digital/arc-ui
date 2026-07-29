@@ -8125,7 +8125,7 @@
               "name": "gap",
               "description": "Spacing between items, mapped to design system spacing tokens. Use sm for dense tag groups, md for button groups.",
               "value": {
-                "type": "'xs' | 'sm' | 'md' | 'lg'",
+                "type": "'xs' | 'sm' | 'md' | 'lg' | 'xl'",
                 "default": "'sm'"
               }
             },
@@ -8139,9 +8139,9 @@
             },
             {
               "name": "justify",
-              "description": "Horizontal distribution of items (maps to justify-content). Use \"between\" for navigation-style spacing.",
+              "description": "Horizontal distribution of items (maps to justify-content). Use \"space-between\" for navigation-style spacing.",
               "value": {
-                "type": "'start' | 'center' | 'end' | 'between'",
+                "type": "'start' | 'center' | 'end' | 'space-between' | 'space-around'",
                 "default": "'start'"
               }
             }
@@ -8153,7 +8153,7 @@
               {
                 "name": "gap",
                 "description": "Spacing between items, mapped to design system spacing tokens. Use sm for dense tag groups, md for button groups.",
-                "type": "'xs' | 'sm' | 'md' | 'lg'"
+                "type": "'xs' | 'sm' | 'md' | 'lg' | 'xl'"
               },
               {
                 "name": "align",
@@ -8162,8 +8162,8 @@
               },
               {
                 "name": "justify",
-                "description": "Horizontal distribution of items (maps to justify-content). Use \"between\" for navigation-style spacing.",
-                "type": "'start' | 'center' | 'end' | 'between'"
+                "description": "Horizontal distribution of items (maps to justify-content). Use \"space-between\" for navigation-style spacing.",
+                "type": "'start' | 'center' | 'end' | 'space-between' | 'space-around'"
               }
             ],
             "events": []
@@ -8629,7 +8629,10 @@
             {
               "name": "gap",
               "description": "Spacing between children in both horizontal and vertical modes, mapped to design system spacing tokens.",
-              "value": { "type": "'sm' | 'md' | 'lg'", "default": "'md'" }
+              "value": {
+                "type": "'xs' | 'sm' | 'md' | 'lg' | 'xl'",
+                "default": "'md'"
+              }
             }
           ],
           "slots": [{ "name": "", "description": "Default content." }],
@@ -8644,7 +8647,7 @@
               {
                 "name": "gap",
                 "description": "Spacing between children in both horizontal and vertical modes, mapped to design system spacing tokens.",
-                "type": "'sm' | 'md' | 'lg'"
+                "type": "'xs' | 'sm' | 'md' | 'lg' | 'xl'"
               }
             ],
             "events": []

@@ -6,7 +6,7 @@ import { ArcMarquee } from '@arclux/arc-ui/marquee';
 
 export interface MarqueeProps {
   speed?: number;
-  direction?: string;
+  direction?: 'left' | 'right';
   pauseOnHover?: boolean;
   gap?: string;
   className?: string;

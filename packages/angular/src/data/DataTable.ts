@@ -7,14 +7,14 @@ import '@arclux/arc-ui/data-table';
   selector: 'arc-data-table',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-data-table [rows]="rows" [sortable]="sortable" [selectable]="selectable" [attr.sortColumn]="sortColumn" [attr.sortDirection]="sortDirection" [virtual]="virtual" [attr.rowHeight]="rowHeight" (arc-sort)="arcSort.emit($event)" (arc-select-all)="arcSelectAll.emit($event)" (arc-row-select)="arcRowSelect.emit($event)"><ng-content /></arc-data-table>`,
+  template: `<arc-data-table [rows]="this.rows" [sortable]="this.sortable" [selectable]="this.selectable" [attr.sortColumn]="this.sortColumn" [attr.sortDirection]="this.sortDirection" [virtual]="this.virtual" [attr.rowHeight]="this.rowHeight" (arc-sort)="this.arcSort.emit($event)" (arc-select-all)="this.arcSelectAll.emit($event)" (arc-row-select)="this.arcRowSelect.emit($event)"><ng-content /></arc-data-table>`,
 })
 export class DataTable {
   @Input() rows: unknown[] = [];
   @Input() sortable: boolean = false;
   @Input() selectable: boolean = false;
   @Input() sortColumn: string = '';
-  @Input() sortDirection: string = 'asc';
+  @Input() sortDirection: 'asc' | 'desc' = 'asc';
   @Input() virtual: boolean = false;
   @Input() rowHeight: number = 40;
   @Output() arcSort = new EventEmitter<CustomEvent>();

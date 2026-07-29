@@ -7,7 +7,7 @@ import '@arclux/arc-ui/spy-link';
   selector: 'arc-spy-link',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-spy-link [attr.target]="target" [attr.level]="level"><ng-content /></arc-spy-link>`,
+  template: `<arc-spy-link [attr.target]="this.target" [attr.level]="this.level"><ng-content /></arc-spy-link>`,
 })
 export class SpyLink {
   @Input() target: string = '';

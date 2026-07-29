@@ -5,7 +5,7 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcToastManager } from '@arclux/arc-ui/toast-manager';
 
 export interface ToastManagerProps {
-  position?: string;
+  position?: 'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center';
   duration?: number;
   maxVisible?: number;
   dedupe?: boolean;

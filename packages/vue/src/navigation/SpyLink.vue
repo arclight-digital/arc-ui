@@ -4,7 +4,7 @@ import '@arclux/arc-ui/spy-link';
 
 defineOptions({ name: 'SpyLink' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   target?: string;
   level?: number;
 }>(), {
@@ -15,8 +15,8 @@ withDefaults(defineProps<{
 
 <template>
   <arc-spy-link
-    :target="target"
-    :level="level"
+    :target="props.target"
+    :level="props.level"
   >
     <slot />
   </arc-spy-link>

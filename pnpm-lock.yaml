@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@arclux/prism':
-        specifier: 2.3.0
-        version: 2.3.0
+        specifier: ^2.4.0
+        version: 2.4.0
       '@axe-core/playwright':
         specifier: ^4.12.1
         version: 4.12.1(playwright-core@1.61.1)
@@ -193,8 +193,8 @@ packages:
       zone.js:
         optional: true
 
-  '@arclux/prism@2.3.0':
-    resolution: {integrity: sha512-ouK6ZQhqwDrvtEB3fed7SA0TvKfphmPYmB0g8jLPQ+2NQzOY9YGixbeOWW074HkeL87o2GM+o/Ohz9n4UxoFFg==}
+  '@arclux/prism@2.4.0':
+    resolution: {integrity: sha512-1QhHg3mKh4291UfTQPTpfwD7coTeijLQMusc0LgPNxhcmPxl8yYiq6S5o2+je7ciL2cvSEOtXJ2Ze5hFc80FCQ==}
     engines: {node: '>=24'}
     hasBin: true
 
@@ -4062,7 +4062,7 @@ snapshots:
       rxjs: 7.8.2
       tslib: 2.8.1
 
-  '@arclux/prism@2.3.0':
+  '@arclux/prism@2.4.0':
     dependencies:
       chokidar: 5.0.0
 

@@ -4,7 +4,7 @@ import '@arclux/arc-ui/resizable';
 
 defineOptions({ name: 'Resizable' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   direction?: 'horizontal' | 'vertical';
   minSize?: number;
   maxSize?: number;
@@ -32,10 +32,10 @@ function onArcResize(payload: CustomEvent) {
 
 <template>
   <arc-resizable
-    :direction="direction"
-    :minSize="minSize"
-    :maxSize="maxSize"
-    :size="size"
+    :direction="props.direction"
+    :minSize="props.minSize"
+    :maxSize="props.maxSize"
+    :size="props.size"
     @arc-resize="onArcResize"
   >
     <slot />

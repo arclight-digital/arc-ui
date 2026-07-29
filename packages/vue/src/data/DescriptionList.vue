@@ -4,7 +4,7 @@ import '@arclux/arc-ui/description-list';
 
 defineOptions({ name: 'DescriptionList' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   columns?: number;
   dividers?: boolean;
 }>(), {
@@ -15,8 +15,8 @@ withDefaults(defineProps<{
 
 <template>
   <arc-description-list
-    :columns="columns"
-    :dividers="dividers"
+    :columns="props.columns"
+    :dividers="props.dividers"
   >
     <slot />
   </arc-description-list>

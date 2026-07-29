@@ -13,7 +13,7 @@ export interface TextareaProps {
   disabled?: boolean;
   readonly?: boolean;
   resize?: 'none' | 'vertical' | 'horizontal' | 'both';
-  size?: 'sm' | 'lg';
+  size?: 'sm' | 'md' | 'lg';
   autoResize?: boolean;
   error?: string;
   className?: string;

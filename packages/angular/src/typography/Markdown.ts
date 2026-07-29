@@ -7,7 +7,7 @@ import '@arclux/arc-ui/markdown';
   selector: 'arc-markdown',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-markdown [attr.content]="content"><ng-content /></arc-markdown>`,
+  template: `<arc-markdown [attr.content]="this.content"><ng-content /></arc-markdown>`,
 })
 export class Markdown {
   @Input() content: string = '';

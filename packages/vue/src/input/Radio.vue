@@ -4,7 +4,7 @@ import '@arclux/arc-ui/radio';
 
 defineOptions({ name: 'Radio' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   value?: string;
   disabled?: boolean;
 }>(), {
@@ -15,8 +15,8 @@ withDefaults(defineProps<{
 
 <template>
   <arc-radio
-    :value="value"
-    :disabled="disabled"
+    :value="props.value"
+    :disabled="props.disabled"
   >
     <slot />
   </arc-radio>

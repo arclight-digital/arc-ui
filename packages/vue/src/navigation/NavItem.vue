@@ -4,10 +4,10 @@ import '@arclux/arc-ui/nav-item';
 
 defineOptions({ name: 'NavItem' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   href?: string;
   active?: boolean;
-  variant?: string;
+  variant?: 'default' | 'primary' | 'muted';
   description?: string;
 }>(), {
   href: '',
@@ -19,10 +19,10 @@ withDefaults(defineProps<{
 
 <template>
   <arc-nav-item
-    :href="href"
-    :active="active"
-    :variant="variant"
-    :description="description"
+    :href="props.href"
+    :active="props.active"
+    :variant="props.variant"
+    :description="props.description"
   >
     <slot />
   </arc-nav-item>

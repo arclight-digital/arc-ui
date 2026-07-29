@@ -5,7 +5,7 @@ import '@arclux/arc-ui/popover';
 
 export interface PopoverProps {
   open?: boolean;
-  position?: string;
+  position?: 'top' | 'bottom' | 'left' | 'right';
   trigger?: string;
   onArcClose?: (e: CustomEvent) => void;
   children?: JSX.Element;

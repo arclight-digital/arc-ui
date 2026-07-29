@@ -4,9 +4,9 @@ import '@arclux/arc-ui/badge';
 
 defineOptions({ name: 'Badge' });
 
-withDefaults(defineProps<{
-  variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';
-  size?: 'sm' | 'lg';
+const props = withDefaults(defineProps<{
+  variant?: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';
+  size?: 'sm' | 'md' | 'lg';
   color?: string;
 }>(), {
   variant: 'default',
@@ -17,9 +17,9 @@ withDefaults(defineProps<{
 
 <template>
   <arc-badge
-    :variant="variant"
-    :size="size"
-    :color="color"
+    :variant="props.variant"
+    :size="props.size"
+    :color="props.color"
   >
     <slot />
   </arc-badge>

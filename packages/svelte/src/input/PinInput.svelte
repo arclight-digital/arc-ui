@@ -9,7 +9,7 @@
     name?: string;
     disabled?: boolean;
     mask?: boolean;
-    type?: string;
+    type?: 'number' | 'alphanumeric' | 'text';
     separator?: number;
     label?: string;
     children?: Snippet;

@@ -6,7 +6,7 @@ import { ArcLink } from '@arclux/arc-ui/link';
 
 export interface LinkProps {
   href?: string;
-  variant?: 'muted' | 'nav';
+  variant?: 'default' | 'muted' | 'nav';
   underline?: 'always' | 'never';
   active?: boolean;
   external?: boolean;

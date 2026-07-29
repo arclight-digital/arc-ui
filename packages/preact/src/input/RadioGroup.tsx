@@ -9,7 +9,7 @@ export interface RadioGroupProps {
   name?: string;
   disabled?: boolean;
   size?: 'sm' | 'lg';
-  orientation?: 'horizontal';
+  orientation?: 'vertical' | 'horizontal';
   onArcChange?: (e: CustomEvent) => void;
   children?: preact.ComponentChildren;
   [key: string]: unknown;

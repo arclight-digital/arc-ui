@@ -7,7 +7,7 @@ import '@arclux/arc-ui/carousel';
   selector: 'arc-carousel',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-carousel [autoPlay]="autoPlay" [attr.interval]="interval" [loop]="loop" [showDots]="showDots" [showArrows]="showArrows" (arc-change)="arcChange.emit($event)"><ng-content /></arc-carousel>`,
+  template: `<arc-carousel [autoPlay]="this.autoPlay" [attr.interval]="this.interval" [loop]="this.loop" [showDots]="this.showDots" [showArrows]="this.showArrows" (arc-change)="this.arcChange.emit($event)"><ng-content /></arc-carousel>`,
 })
 export class Carousel {
   @Input() autoPlay: boolean = false;

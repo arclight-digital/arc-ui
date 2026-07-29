@@ -7,7 +7,7 @@ import '@arclux/arc-ui/sidebar';
   selector: 'arc-sidebar',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-sidebar [attr.active]="active" [collapsed]="collapsed" [attr.position]="position" [attr.width]="width" [glow]="glow" [attr.label]="label"><ng-content /></arc-sidebar>`,
+  template: `<arc-sidebar [attr.active]="this.active" [collapsed]="this.collapsed" [attr.position]="this.position" [attr.width]="this.width" [glow]="this.glow" [attr.label]="this.label"><ng-content /></arc-sidebar>`,
 })
 export class Sidebar {
   @Input() active: string = '';

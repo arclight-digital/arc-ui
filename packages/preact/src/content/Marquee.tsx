@@ -5,7 +5,7 @@ import '@arclux/arc-ui/marquee';
 
 export interface MarqueeProps {
   speed?: number;
-  direction?: string;
+  direction?: 'left' | 'right';
   pauseOnHover?: boolean;
   gap?: string;
   children?: preact.ComponentChildren;

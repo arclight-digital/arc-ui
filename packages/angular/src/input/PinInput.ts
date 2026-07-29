@@ -7,7 +7,7 @@ import '@arclux/arc-ui/pin-input';
   selector: 'arc-pin-input',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-pin-input [attr.length]="length" [attr.value]="value" [attr.name]="name" [disabled]="disabled" [mask]="mask" [attr.type]="type" [attr.separator]="separator" [attr.label]="label" (arc-change)="onArcChange($event)" (arc-complete)="onArcComplete($event)"><ng-content /></arc-pin-input>`,
+  template: `<arc-pin-input [attr.length]="this.length" [attr.value]="this.value" [attr.name]="this.name" [disabled]="this.disabled" [mask]="this.mask" [attr.type]="this.type" [attr.separator]="this.separator" [attr.label]="this.label" (arc-change)="this.onArcChange($event)" (arc-complete)="this.onArcComplete($event)"><ng-content /></arc-pin-input>`,
 })
 export class PinInput {
   @Input() length: number = 4;
@@ -15,7 +15,7 @@ export class PinInput {
   @Input() name: string = '';
   @Input() disabled: boolean = false;
   @Input() mask: boolean = false;
-  @Input() type: string = 'number';
+  @Input() type: 'number' | 'alphanumeric' | 'text' = 'number';
   @Input() separator: number = 0;
   @Input() label: string = '';
   @Output() arcChange = new EventEmitter<CustomEvent>();

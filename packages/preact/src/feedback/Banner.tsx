@@ -5,7 +5,7 @@ import { useLayoutEffect, useRef } from 'preact/hooks';
 import '@arclux/arc-ui/banner';
 
 export interface BannerProps {
-  variant?: string;
+  variant?: 'info' | 'success' | 'warning' | 'error';
   dismissible?: boolean;
   sticky?: boolean;
   onArcDismiss?: (e: CustomEvent) => void;

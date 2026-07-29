@@ -7,7 +7,7 @@ import '@arclux/arc-ui/time-picker';
   selector: 'arc-time-picker',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-time-picker [attr.value]="value" [attr.name]="name" [attr.min]="min" [attr.max]="max" [attr.step]="step" [attr.format]="format" [attr.placeholder]="placeholder" [disabled]="disabled" [attr.label]="label" (arc-change)="onArcChange($event)"><ng-content /></arc-time-picker>`,
+  template: `<arc-time-picker [attr.value]="this.value" [attr.name]="this.name" [attr.min]="this.min" [attr.max]="this.max" [attr.step]="this.step" [attr.format]="this.format" [attr.placeholder]="this.placeholder" [disabled]="this.disabled" [attr.label]="this.label" (arc-change)="this.onArcChange($event)"><ng-content /></arc-time-picker>`,
 })
 export class TimePicker {
   @Input() value: string = '';

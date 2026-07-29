@@ -5,7 +5,7 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcThemeToggle } from '@arclux/arc-ui/theme-toggle';
 
 export interface ThemeToggleProps {
-  theme?: string;
+  theme?: 'dark' | 'light' | 'auto';
   disabled?: boolean;
   iconOnly?: boolean;
   className?: string;

@@ -4,7 +4,7 @@ import '@arclux/arc-ui/copy-button';
 
 defineOptions({ name: 'CopyButton' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   value?: string;
   disabled?: boolean;
 }>(), {
@@ -19,8 +19,8 @@ const emit = defineEmits<{
 
 <template>
   <arc-copy-button
-    :value="value"
-    :disabled="disabled"
+    :value="props.value"
+    :disabled="props.disabled"
     @arc-copy="(payload: CustomEvent) => emit('arc-copy', payload)"
   >
     <slot />

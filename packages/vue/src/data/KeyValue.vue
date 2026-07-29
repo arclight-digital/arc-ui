@@ -4,7 +4,7 @@ import '@arclux/arc-ui/key-value';
 
 defineOptions({ name: 'KeyValue' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   layout?: 'horizontal' | 'stacked';
   dividers?: boolean;
 }>(), {
@@ -15,8 +15,8 @@ withDefaults(defineProps<{
 
 <template>
   <arc-key-value
-    :layout="layout"
-    :dividers="dividers"
+    :layout="props.layout"
+    :dividers="props.dividers"
   >
     <slot />
   </arc-key-value>

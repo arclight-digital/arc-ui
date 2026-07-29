@@ -4,7 +4,7 @@ import '@arclux/arc-ui/calendar';
 
 defineOptions({ name: 'Calendar' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   value?: string;
   min?: string;
   max?: string;
@@ -45,11 +45,11 @@ function onArcChange(payload: CustomEvent) {
 
 <template>
   <arc-calendar
-    :value="value"
-    :min="min"
-    :max="max"
-    :month="month"
-    :year="year"
+    :value="props.value"
+    :min="props.min"
+    :max="props.max"
+    :month="props.month"
+    :year="props.year"
     @arc-navigate="onArcNavigate"
     @arc-change="onArcChange"
   >

@@ -4,7 +4,7 @@ import '@arclux/arc-ui/toast';
 
 defineOptions({ name: 'Toast' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   position?: 'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center';
   duration?: number;
 }>(), {
@@ -19,8 +19,8 @@ const emit = defineEmits<{
 
 <template>
   <arc-toast
-    :position="position"
-    :duration="duration"
+    :position="props.position"
+    :duration="props.duration"
     @arc-dismiss="(payload: CustomEvent) => emit('arc-dismiss', payload)"
   >
     <slot />

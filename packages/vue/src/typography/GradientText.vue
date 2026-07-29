@@ -4,8 +4,8 @@ import '@arclux/arc-ui/gradient-text';
 
 defineOptions({ name: 'GradientText' });
 
-withDefaults(defineProps<{
-  variant?: 'accent' | 'display' | 'sunset' | 'ocean';
+const props = withDefaults(defineProps<{
+  variant?: 'accent' | 'display' | 'sunset' | 'ocean' | 'custom';
   gradient?: string;
   animate?: boolean;
 }>(), {
@@ -17,9 +17,9 @@ withDefaults(defineProps<{
 
 <template>
   <arc-gradient-text
-    :variant="variant"
-    :gradient="gradient"
-    :animate="animate"
+    :variant="props.variant"
+    :gradient="props.gradient"
+    :animate="props.animate"
   >
     <slot />
   </arc-gradient-text>

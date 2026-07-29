@@ -4,8 +4,8 @@ import '@arclux/arc-ui/input';
 
 defineOptions({ name: 'Input' });
 
-withDefaults(defineProps<{
-  type?: string;
+const props = withDefaults(defineProps<{
+  type?: 'text' | 'email' | 'tel' | 'url' | 'password';
   name?: string;
   label?: string;
   placeholder?: string;
@@ -13,7 +13,7 @@ withDefaults(defineProps<{
   disabled?: boolean;
   required?: boolean;
   error?: string;
-  size?: 'sm' | 'lg';
+  size?: 'sm' | 'md' | 'lg';
   multiline?: boolean;
   rows?: number;
 }>(), {
@@ -54,17 +54,17 @@ function onArcChange(payload: CustomEvent) {
 
 <template>
   <arc-input
-    :type="type"
-    :name="name"
-    :label="label"
-    :placeholder="placeholder"
-    :value="value"
-    :disabled="disabled"
-    :required="required"
-    :error="error"
-    :size="size"
-    :multiline="multiline"
-    :rows="rows"
+    :type="props.type"
+    :name="props.name"
+    :label="props.label"
+    :placeholder="props.placeholder"
+    :value="props.value"
+    :disabled="props.disabled"
+    :required="props.required"
+    :error="props.error"
+    :size="props.size"
+    :multiline="props.multiline"
+    :rows="props.rows"
     @arc-input="onArcInput"
     @arc-change="onArcChange"
   >

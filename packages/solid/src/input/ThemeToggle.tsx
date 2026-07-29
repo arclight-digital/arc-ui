@@ -4,7 +4,7 @@ import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/theme-toggle';
 
 export interface ThemeToggleProps {
-  theme?: string;
+  theme?: 'dark' | 'light' | 'auto';
   disabled?: boolean;
   iconOnly?: boolean;
   onArcChange?: (e: CustomEvent) => void;

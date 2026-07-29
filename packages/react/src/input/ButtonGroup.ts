@@ -5,8 +5,8 @@ import { createComponent } from '@lit/react';
 import { ArcButtonGroup } from '@arclux/arc-ui/button-group';
 
 export interface ButtonGroupProps {
-  orientation?: 'vertical';
-  size?: string;
+  orientation?: 'horizontal' | 'vertical';
+  size?: 'sm' | 'md' | 'lg';
   variant?: string;
   className?: string;
   children?: React.ReactNode;

@@ -7,7 +7,7 @@ import '@arclux/arc-ui/form';
   selector: 'arc-form',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-form [attr.action]="action" [attr.method]="method" [novalidate]="novalidate" [loading]="loading" [disabled]="disabled" [errorSummary]="errorSummary" (arc-invalid)="arcInvalid.emit($event)" (arc-submit)="arcSubmit.emit($event)" (arc-reset)="arcReset.emit($event)"><ng-content /></arc-form>`,
+  template: `<arc-form [attr.action]="this.action" [attr.method]="this.method" [novalidate]="this.novalidate" [loading]="this.loading" [disabled]="this.disabled" [errorSummary]="this.errorSummary" (arc-invalid)="this.arcInvalid.emit($event)" (arc-submit)="this.arcSubmit.emit($event)" (arc-reset)="this.arcReset.emit($event)"><ng-content /></arc-form>`,
 })
 export class Form {
   @Input() action: string = '';

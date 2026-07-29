@@ -5,8 +5,8 @@ import '@arclux/arc-ui/switch-group';
 
 export interface SwitchGroupProps {
   label?: string;
-  orientation?: 'horizontal';
-  size?: string;
+  orientation?: 'vertical' | 'horizontal';
+  size?: 'sm' | 'md' | 'lg';
   disabled?: boolean;
   children?: preact.ComponentChildren;
   [key: string]: unknown;

@@ -7,8 +7,8 @@ import '@arclux/arc-ui/status-bar';
   selector: 'arc-status-bar',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-status-bar [attr.position]="position"><ng-content /></arc-status-bar>`,
+  template: `<arc-status-bar [attr.position]="this.position"><ng-content /></arc-status-bar>`,
 })
 export class StatusBar {
-  @Input() position: 'fixed' = 'static';
+  @Input() position: 'static' | 'fixed' = 'static';
 }

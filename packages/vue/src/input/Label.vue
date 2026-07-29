@@ -4,10 +4,10 @@ import '@arclux/arc-ui/label';
 
 defineOptions({ name: 'Label' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   for?: string;
   required?: boolean;
-  size?: 'sm' | 'lg';
+  size?: 'sm' | 'md' | 'lg';
   disabled?: boolean;
 }>(), {
   for: '',
@@ -19,10 +19,10 @@ withDefaults(defineProps<{
 
 <template>
   <arc-label
-    :for="for"
-    :required="required"
-    :size="size"
-    :disabled="disabled"
+    :for="props.for"
+    :required="props.required"
+    :size="props.size"
+    :disabled="props.disabled"
   >
     <slot />
   </arc-label>

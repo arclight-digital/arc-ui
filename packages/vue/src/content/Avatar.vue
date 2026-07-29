@@ -4,11 +4,11 @@ import '@arclux/arc-ui/avatar';
 
 defineOptions({ name: 'Avatar' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   src?: string;
   name?: string;
   size?: 'sm' | 'md' | 'lg';
-  shape?: 'square' | 'rounded';
+  shape?: 'circle' | 'square' | 'rounded';
   status?: 'online' | 'offline' | 'busy' | 'away';
 }>(), {
   src: '',
@@ -21,11 +21,11 @@ withDefaults(defineProps<{
 
 <template>
   <arc-avatar
-    :src="src"
-    :name="name"
-    :size="size"
-    :shape="shape"
-    :status="status"
+    :src="props.src"
+    :name="props.name"
+    :size="props.size"
+    :shape="props.shape"
+    :status="props.status"
   >
     <slot />
   </arc-avatar>

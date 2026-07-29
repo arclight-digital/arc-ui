@@ -7,7 +7,7 @@ import '@arclux/arc-ui/tooltip';
   selector: 'arc-tooltip',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-tooltip [attr.content]="content" [attr.position]="position" [attr.delay]="delay"><ng-content /></arc-tooltip>`,
+  template: `<arc-tooltip [attr.content]="this.content" [attr.position]="this.position" [attr.delay]="this.delay"><ng-content /></arc-tooltip>`,
 })
 export class Tooltip {
   @Input() content: string = '';

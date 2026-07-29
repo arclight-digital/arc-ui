@@ -4,7 +4,7 @@ import '@arclux/arc-ui/sidebar-section';
 
 defineOptions({ name: 'SidebarSection' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   heading?: string;
   collapsible?: boolean;
   open?: boolean;
@@ -30,9 +30,9 @@ function onArcToggle(payload: CustomEvent) {
 
 <template>
   <arc-sidebar-section
-    :heading="heading"
-    :collapsible="collapsible"
-    :open="open"
+    :heading="props.heading"
+    :collapsible="props.collapsible"
+    :open="props.open"
     @arc-toggle="onArcToggle"
   >
     <slot />

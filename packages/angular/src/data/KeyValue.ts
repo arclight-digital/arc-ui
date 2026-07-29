@@ -7,7 +7,7 @@ import '@arclux/arc-ui/key-value';
   selector: 'arc-key-value',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-key-value [attr.layout]="layout" [dividers]="dividers"><ng-content /></arc-key-value>`,
+  template: `<arc-key-value [attr.layout]="this.layout" [dividers]="this.dividers"><ng-content /></arc-key-value>`,
 })
 export class KeyValue {
   @Input() layout: 'horizontal' | 'stacked' = 'horizontal';

@@ -4,9 +4,9 @@ import '@arclux/arc-ui/progress';
 
 defineOptions({ name: 'Progress' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   value?: number;
-  variant?: string;
+  variant?: 'bar' | 'spinner';
   size?: 'sm' | 'md' | 'lg';
   indeterminate?: boolean;
   showValue?: boolean;
@@ -23,12 +23,12 @@ withDefaults(defineProps<{
 
 <template>
   <arc-progress
-    :value="value"
-    :variant="variant"
-    :size="size"
-    :indeterminate="indeterminate"
-    :showValue="showValue"
-    :label="label"
+    :value="props.value"
+    :variant="props.variant"
+    :size="props.size"
+    :indeterminate="props.indeterminate"
+    :showValue="props.showValue"
+    :label="props.label"
   >
     <slot />
   </arc-progress>

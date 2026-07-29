@@ -7,7 +7,7 @@ import '@arclux/arc-ui/sheet';
   selector: 'arc-sheet',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-sheet [open]="open" [attr.side]="side" [attr.heading]="heading" (arc-close)="arcClose.emit($event)" (arc-open)="arcOpen.emit($event)"><ng-content /></arc-sheet>`,
+  template: `<arc-sheet [open]="this.open" [attr.side]="this.side" [attr.heading]="this.heading" (arc-close)="this.arcClose.emit($event)" (arc-open)="this.arcOpen.emit($event)"><ng-content /></arc-sheet>`,
 })
 export class Sheet {
   @Input() open: boolean = false;

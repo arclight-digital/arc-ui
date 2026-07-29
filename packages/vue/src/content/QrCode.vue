@@ -4,10 +4,10 @@ import '@arclux/arc-ui/qr-code';
 
 defineOptions({ name: 'QrCode' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   value?: string;
   size?: number;
-  level?: string;
+  level?: 'L' | 'M' | 'Q' | 'H';
   label?: string;
   quietZone?: number;
   contrast?: boolean;
@@ -23,12 +23,12 @@ withDefaults(defineProps<{
 
 <template>
   <arc-qr-code
-    :value="value"
-    :size="size"
-    :level="level"
-    :label="label"
-    :quietZone="quietZone"
-    :contrast="contrast"
+    :value="props.value"
+    :size="props.size"
+    :level="props.level"
+    :label="props.label"
+    :quietZone="props.quietZone"
+    :contrast="props.contrast"
   >
     <slot />
   </arc-qr-code>

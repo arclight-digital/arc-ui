@@ -7,7 +7,7 @@ import '@arclux/arc-ui/truncate';
   selector: 'arc-truncate',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-truncate [attr.lines]="lines" [expanded]="expanded" (arc-toggle)="onArcToggle($event)"><ng-content /></arc-truncate>`,
+  template: `<arc-truncate [attr.lines]="this.lines" [expanded]="this.expanded" (arc-toggle)="this.onArcToggle($event)"><ng-content /></arc-truncate>`,
 })
 export class Truncate {
   @Input() lines: number = 3;

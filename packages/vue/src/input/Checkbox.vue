@@ -4,7 +4,7 @@ import '@arclux/arc-ui/checkbox';
 
 defineOptions({ name: 'Checkbox' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   checked?: boolean;
   indeterminate?: boolean;
   disabled?: boolean;
@@ -38,13 +38,13 @@ function onArcChange(payload: CustomEvent) {
 
 <template>
   <arc-checkbox
-    :checked="checked"
-    :indeterminate="indeterminate"
-    :disabled="disabled"
-    :size="size"
-    :label="label"
-    :name="name"
-    :value="value"
+    :checked="props.checked"
+    :indeterminate="props.indeterminate"
+    :disabled="props.disabled"
+    :size="props.size"
+    :label="props.label"
+    :name="props.name"
+    :value="props.value"
     @arc-change="onArcChange"
   >
     <slot />

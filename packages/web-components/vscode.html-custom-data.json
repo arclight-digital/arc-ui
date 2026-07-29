@@ -3516,7 +3516,8 @@
             { "name": "xs" },
             { "name": "sm" },
             { "name": "md" },
-            { "name": "lg" }
+            { "name": "lg" },
+            { "name": "xl" }
           ]
         },
         {
@@ -3530,12 +3531,13 @@
         },
         {
           "name": "justify",
-          "description": "Horizontal distribution of items (maps to justify-content). Use \"between\" for navigation-style spacing.",
+          "description": "Horizontal distribution of items (maps to justify-content). Use \"space-between\" for navigation-style spacing.",
           "values": [
             { "name": "start" },
             { "name": "center" },
             { "name": "end" },
-            { "name": "between" }
+            { "name": "space-between" },
+            { "name": "space-around" }
           ]
         }
       ],
@@ -3757,7 +3759,13 @@
         {
           "name": "gap",
           "description": "Spacing between children in both horizontal and vertical modes, mapped to design system spacing tokens.",
-          "values": [{ "name": "sm" }, { "name": "md" }, { "name": "lg" }]
+          "values": [
+            { "name": "xs" },
+            { "name": "sm" },
+            { "name": "md" },
+            { "name": "lg" },
+            { "name": "xl" }
+          ]
         }
       ],
       "references": []

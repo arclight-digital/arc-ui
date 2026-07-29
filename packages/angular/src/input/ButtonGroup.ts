@@ -7,10 +7,10 @@ import '@arclux/arc-ui/button-group';
   selector: 'arc-button-group',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-button-group [attr.orientation]="orientation" [attr.size]="size" [attr.variant]="variant"><ng-content /></arc-button-group>`,
+  template: `<arc-button-group [attr.orientation]="this.orientation" [attr.size]="this.size" [attr.variant]="this.variant"><ng-content /></arc-button-group>`,
 })
 export class ButtonGroup {
-  @Input() orientation: 'vertical' = 'horizontal';
-  @Input() size: string = 'md';
+  @Input() orientation: 'horizontal' | 'vertical' = 'horizontal';
+  @Input() size: 'sm' | 'md' | 'lg' = 'md';
   @Input() variant: string = '';
 }

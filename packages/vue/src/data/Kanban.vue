@@ -4,7 +4,7 @@ import '@arclux/arc-ui/kanban';
 
 defineOptions({ name: 'Kanban' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   columns?: unknown[];
   disabled?: boolean;
 }>(), {
@@ -20,8 +20,8 @@ const emit = defineEmits<{
 
 <template>
   <arc-kanban
-    :columns="columns"
-    :disabled="disabled"
+    :columns="props.columns"
+    :disabled="props.disabled"
     @arc-card-move="(payload: CustomEvent) => emit('arc-card-move', payload)"
     @arc-card-click="(payload: CustomEvent) => emit('arc-card-click', payload)"
   >

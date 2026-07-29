@@ -7,7 +7,7 @@ import '@arclux/arc-ui/suggestion';
   selector: 'arc-suggestion',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-suggestion [attr.value]="value"><ng-content /></arc-suggestion>`,
+  template: `<arc-suggestion [attr.value]="this.value"><ng-content /></arc-suggestion>`,
 })
 export class Suggestion {
   @Input() value: string = '';

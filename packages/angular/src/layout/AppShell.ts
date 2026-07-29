@@ -7,7 +7,7 @@ import '@arclux/arc-ui/app-shell';
   selector: 'arc-app-shell',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-app-shell [sidebarOpen]="sidebarOpen" [attr.breakpoint]="breakpoint"><ng-content /></arc-app-shell>`,
+  template: `<arc-app-shell [sidebarOpen]="this.sidebarOpen" [attr.breakpoint]="this.breakpoint"><ng-content /></arc-app-shell>`,
 })
 export class AppShell {
   @Input() sidebarOpen: boolean = false;

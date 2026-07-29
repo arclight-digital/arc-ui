@@ -7,7 +7,7 @@ import '@arclux/arc-ui/description-item';
   selector: 'arc-description-item',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-description-item [attr.term]="term"><ng-content /></arc-description-item>`,
+  template: `<arc-description-item [attr.term]="this.term"><ng-content /></arc-description-item>`,
 })
 export class DescriptionItem {
   @Input() term: string = '';

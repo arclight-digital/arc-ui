@@ -7,7 +7,7 @@ import { tokenStyles } from '../shared-styles.js';
  *
  * @tag arc-responsive-switcher
  * @prop {string} threshold - The container width at which the layout switches between horizontal and vertical. Accepts any CSS length value. When the container is wider than this value, children are in a row; below it, they stack.
- * @prop {'sm' | 'md' | 'lg'} gap - Spacing between children in both horizontal and vertical modes, mapped to design system spacing tokens.
+ * @prop {'xs' | 'sm' | 'md' | 'lg' | 'xl'} gap - Spacing between children in both horizontal and vertical modes, mapped to design system spacing tokens.
  * @slot - Default content.
  * @csspart switcher
  */

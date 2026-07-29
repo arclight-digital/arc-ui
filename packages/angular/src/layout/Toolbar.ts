@@ -7,11 +7,11 @@ import '@arclux/arc-ui/toolbar';
   selector: 'arc-toolbar',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-toolbar [sticky]="sticky" [attr.size]="size" [border]="border" [overflow]="overflow" (arc-overflow-change)="arcOverflowChange.emit($event)"><ng-content /></arc-toolbar>`,
+  template: `<arc-toolbar [sticky]="this.sticky" [attr.size]="this.size" [border]="this.border" [overflow]="this.overflow" (arc-overflow-change)="this.arcOverflowChange.emit($event)"><ng-content /></arc-toolbar>`,
 })
 export class Toolbar {
   @Input() sticky: boolean = false;
-  @Input() size: 'sm' = 'md';
+  @Input() size: 'md' | 'sm' = 'md';
   @Input() border: boolean = true;
   @Input() overflow: boolean = false;
   @Output() arcOverflowChange = new EventEmitter<CustomEvent>();

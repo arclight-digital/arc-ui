@@ -4,7 +4,7 @@ import '@arclux/arc-ui/scroll-spy';
 
 defineOptions({ name: 'ScrollSpy' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   active?: string;
   offset?: number;
 }>(), {
@@ -19,8 +19,8 @@ const emit = defineEmits<{
 
 <template>
   <arc-scroll-spy
-    :active="active"
-    :offset="offset"
+    :active="props.active"
+    :offset="props.offset"
     @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
   >
     <slot />

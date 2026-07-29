@@ -4,8 +4,8 @@ import { type FunctionComponent } from 'preact';
 import '@arclux/arc-ui/text';
 
 export interface TextProps {
-  variant?: 'accent' | 'code';
-  as?: string;
+  variant?: 'display' | 'heading' | 'body' | 'muted' | 'ghost' | 'accent' | 'label' | 'wordmark' | 'code';
+  as?: 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span';
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }

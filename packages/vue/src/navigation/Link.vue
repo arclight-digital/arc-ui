@@ -4,9 +4,9 @@ import '@arclux/arc-ui/link';
 
 defineOptions({ name: 'Link' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   href?: string;
-  variant?: 'muted' | 'nav';
+  variant?: 'default' | 'muted' | 'nav';
   underline?: 'always' | 'never';
   active?: boolean;
   external?: boolean;
@@ -21,11 +21,11 @@ withDefaults(defineProps<{
 
 <template>
   <arc-link
-    :href="href"
-    :variant="variant"
-    :underline="underline"
-    :active="active"
-    :external="external"
+    :href="props.href"
+    :variant="props.variant"
+    :underline="props.underline"
+    :active="props.active"
+    :external="props.external"
   >
     <slot />
   </arc-link>

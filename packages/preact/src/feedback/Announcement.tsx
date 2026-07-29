@@ -4,7 +4,7 @@ import { type FunctionComponent } from 'preact';
 import '@arclux/arc-ui/announcement';
 
 export interface AnnouncementProps {
-  politeness?: string;
+  politeness?: 'polite' | 'assertive';
   message?: string;
   children?: preact.ComponentChildren;
   [key: string]: unknown;

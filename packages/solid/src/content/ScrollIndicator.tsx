@@ -5,9 +5,9 @@ import '@arclux/arc-ui/scroll-indicator';
 
 export interface ScrollIndicatorProps {
   target?: string;
-  position?: 'bottom';
+  position?: 'top' | 'bottom';
   size?: 'sm' | 'md' | 'lg';
-  color?: 'gradient';
+  color?: 'accent' | 'gradient';
   children?: JSX.Element;
   [key: string]: unknown;
 }

@@ -4,7 +4,7 @@ import '@arclux/arc-ui/sidebar';
 
 defineOptions({ name: 'Sidebar' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   active?: string;
   collapsed?: boolean;
   position?: 'right';
@@ -23,12 +23,12 @@ withDefaults(defineProps<{
 
 <template>
   <arc-sidebar
-    :active="active"
-    :collapsed="collapsed"
-    :position="position"
-    :width="width"
-    :glow="glow"
-    :label="label"
+    :active="props.active"
+    :collapsed="props.collapsed"
+    :position="props.position"
+    :width="props.width"
+    :glow="props.glow"
+    :label="props.label"
   >
     <slot />
   </arc-sidebar>

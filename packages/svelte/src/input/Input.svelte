@@ -4,7 +4,7 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
-    type?: string;
+    type?: 'text' | 'email' | 'tel' | 'url' | 'password';
     name?: string;
     label?: string;
     placeholder?: string;
@@ -12,7 +12,7 @@
     disabled?: boolean;
     required?: boolean;
     error?: string;
-    size?: 'sm' | 'lg';
+    size?: 'sm' | 'md' | 'lg';
     multiline?: boolean;
     rows?: number;
     children?: Snippet;

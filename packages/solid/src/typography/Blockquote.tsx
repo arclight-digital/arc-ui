@@ -5,7 +5,7 @@ import '@arclux/arc-ui/blockquote';
 
 export interface BlockquoteProps {
   cite?: string;
-  variant?: 'accent';
+  variant?: 'default' | 'accent';
   children?: JSX.Element;
   [key: string]: unknown;
 }

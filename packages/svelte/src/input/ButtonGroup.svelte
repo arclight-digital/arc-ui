@@ -4,8 +4,8 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
-    orientation?: 'vertical';
-    size?: string;
+    orientation?: 'horizontal' | 'vertical';
+    size?: 'sm' | 'md' | 'lg';
     variant?: string;
     children?: Snippet;
     [key: string]: unknown;

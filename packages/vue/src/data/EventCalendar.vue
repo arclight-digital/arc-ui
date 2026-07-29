@@ -4,9 +4,9 @@ import '@arclux/arc-ui/event-calendar';
 
 defineOptions({ name: 'EventCalendar' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   events?: unknown[];
-  view?: 'week';
+  view?: 'month' | 'week';
   date?: string;
 }>(), {
   events: () => ([]),
@@ -18,7 +18,7 @@ const emit = defineEmits<{
   'arc-period-change': [event: CustomEvent];
   'arc-date-click': [event: CustomEvent];
   'arc-event-click': [event: CustomEvent];
-  'update:view': [value: 'week'];
+  'update:view': [value: 'month' | 'week'];
   'update:date': [value: string];
 }>();
 
@@ -27,7 +27,7 @@ function onArcPeriodChange(payload: CustomEvent) {
   const detail = payload.detail as Record<string, unknown> | null;
   if (detail) {
     if ('date' in detail) emit('update:date', detail.date as string);
-    if ('view' in detail) emit('update:view', detail.view as 'week');
+    if ('view' in detail) emit('update:view', detail.view as 'month' | 'week');
   }
 }
 function onArcDateClick(payload: CustomEvent) {
@@ -41,9 +41,9 @@ function onArcDateClick(payload: CustomEvent) {
 
 <template>
   <arc-event-calendar
-    :events="events"
-    :view="view"
-    :date="date"
+    :events="props.events"
+    :view="props.view"
+    :date="props.date"
     @arc-period-change="onArcPeriodChange"
     @arc-date-click="onArcDateClick"
     @arc-event-click="(payload: CustomEvent) => emit('arc-event-click', payload)"

@@ -7,13 +7,13 @@ import '@arclux/arc-ui/number-format';
   selector: 'arc-number-format',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-number-format [attr.value]="value" [attr.type]="type" [attr.locale]="locale" [attr.currency]="currency" [attr.decimals]="decimals" [attr.notation]="notation"><ng-content /></arc-number-format>`,
+  template: `<arc-number-format [attr.value]="this.value" [attr.type]="this.type" [attr.locale]="this.locale" [attr.currency]="this.currency" [attr.decimals]="this.decimals" [attr.notation]="this.notation"><ng-content /></arc-number-format>`,
 })
 export class NumberFormat {
   @Input() value: number = 0;
-  @Input() type: string = 'number';
+  @Input() type: 'number' | 'currency' | 'percent' | 'compact' = 'number';
   @Input() locale: string = 'en-US';
   @Input() currency: string = 'USD';
   @Input() decimals: number = 'undefined';
-  @Input() notation: string = 'standard';
+  @Input() notation: 'standard' | 'compact' = 'standard';
 }

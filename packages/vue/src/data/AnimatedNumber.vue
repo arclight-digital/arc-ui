@@ -4,10 +4,10 @@ import '@arclux/arc-ui/animated-number';
 
 defineOptions({ name: 'AnimatedNumber' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   value?: number;
   duration?: number;
-  format?: string;
+  format?: 'number' | 'currency' | 'percent';
   prefix?: string;
   suffix?: string;
   decimals?: number;
@@ -25,13 +25,13 @@ withDefaults(defineProps<{
 
 <template>
   <arc-animated-number
-    :value="value"
-    :duration="duration"
-    :format="format"
-    :prefix="prefix"
-    :suffix="suffix"
-    :decimals="decimals"
-    :locale="locale"
+    :value="props.value"
+    :duration="props.duration"
+    :format="props.format"
+    :prefix="props.prefix"
+    :suffix="props.suffix"
+    :decimals="props.decimals"
+    :locale="props.locale"
   >
     <slot />
   </arc-animated-number>

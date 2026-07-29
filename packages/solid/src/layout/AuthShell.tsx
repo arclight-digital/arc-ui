@@ -4,7 +4,7 @@ import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/auth-shell';
 
 export interface AuthShellProps {
-  variant?: string;
+  variant?: 'centered' | 'split';
   children?: JSX.Element;
   [key: string]: unknown;
 }

@@ -4,7 +4,7 @@ import '@arclux/arc-ui/breadcrumb';
 
 defineOptions({ name: 'Breadcrumb' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   separator?: string;
   label?: string;
 }>(), {
@@ -19,8 +19,8 @@ const emit = defineEmits<{
 
 <template>
   <arc-breadcrumb
-    :separator="separator"
-    :label="label"
+    :separator="props.separator"
+    :label="props.label"
     @arc-navigate="(payload: CustomEvent) => emit('arc-navigate', payload)"
   >
     <slot />

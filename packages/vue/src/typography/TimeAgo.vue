@@ -4,7 +4,7 @@ import '@arclux/arc-ui/time-ago';
 
 defineOptions({ name: 'TimeAgo' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   datetime?: string;
   live?: boolean;
   locale?: string;
@@ -17,9 +17,9 @@ withDefaults(defineProps<{
 
 <template>
   <arc-time-ago
-    :datetime="datetime"
-    :live="live"
-    :locale="locale"
+    :datetime="props.datetime"
+    :live="props.live"
+    :locale="props.locale"
   >
     <slot />
   </arc-time-ago>

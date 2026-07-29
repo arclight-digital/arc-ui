@@ -4,7 +4,7 @@ import '@arclux/arc-ui/countdown-timer';
 
 defineOptions({ name: 'CountdownTimer' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   target?: string;
   label?: string;
   expired?: string;
@@ -23,10 +23,10 @@ const emit = defineEmits<{
 
 <template>
   <arc-countdown-timer
-    :target="target"
-    :label="label"
-    :expired="expired"
-    :hideZeroSegments="hideZeroSegments"
+    :target="props.target"
+    :label="props.label"
+    :expired="props.expired"
+    :hideZeroSegments="props.hideZeroSegments"
     @arc-expired="(payload: CustomEvent) => emit('arc-expired', payload)"
   >
     <slot />

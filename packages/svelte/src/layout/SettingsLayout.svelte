@@ -4,7 +4,7 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
-    navPosition?: string;
+    navPosition?: 'left' | 'top';
     children?: Snippet;
     [key: string]: unknown;
   }

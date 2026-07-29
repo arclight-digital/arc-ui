@@ -7,7 +7,7 @@ import '@arclux/arc-ui/masonry';
   selector: 'arc-masonry',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-masonry [attr.columns]="columns" [attr.gap]="gap"><ng-content /></arc-masonry>`,
+  template: `<arc-masonry [attr.columns]="this.columns" [attr.gap]="this.gap"><ng-content /></arc-masonry>`,
 })
 export class Masonry {
   @Input() columns: number = 3;

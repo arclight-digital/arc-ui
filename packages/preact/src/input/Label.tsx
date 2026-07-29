@@ -6,14 +6,14 @@ import '@arclux/arc-ui/label';
 export interface LabelProps {
   for?: string;
   required?: boolean;
-  size?: 'sm' | 'lg';
+  size?: 'sm' | 'md' | 'lg';
   disabled?: boolean;
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }
 
-export const Label: FunctionComponent<LabelProps> = ({ for, required, size, disabled, children, ...rest }) => (
-  <arc-label for={for} required={required} size={size} disabled={disabled} {...rest}>
+export const Label: FunctionComponent<LabelProps> = ({ for: forProp, required, size, disabled, children, ...rest }) => (
+  <arc-label for={forProp} required={required} size={size} disabled={disabled} {...rest}>
     {children}
   </arc-label>
 );

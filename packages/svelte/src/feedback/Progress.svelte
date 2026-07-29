@@ -5,7 +5,7 @@
 
   interface Props {
     value?: number;
-    variant?: string;
+    variant?: 'bar' | 'spinner';
     size?: 'sm' | 'md' | 'lg';
     indeterminate?: boolean;
     showValue?: boolean;

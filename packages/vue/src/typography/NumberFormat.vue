@@ -4,13 +4,13 @@ import '@arclux/arc-ui/number-format';
 
 defineOptions({ name: 'NumberFormat' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   value?: number;
-  type?: string;
+  type?: 'number' | 'currency' | 'percent' | 'compact';
   locale?: string;
   currency?: string;
   decimals?: number;
-  notation?: string;
+  notation?: 'standard' | 'compact';
 }>(), {
   value: 0,
   type: 'number',
@@ -23,12 +23,12 @@ withDefaults(defineProps<{
 
 <template>
   <arc-number-format
-    :value="value"
-    :type="type"
-    :locale="locale"
-    :currency="currency"
-    :decimals="decimals"
-    :notation="notation"
+    :value="props.value"
+    :type="props.type"
+    :locale="props.locale"
+    :currency="props.currency"
+    :decimals="props.decimals"
+    :notation="props.notation"
   >
     <slot />
   </arc-number-format>

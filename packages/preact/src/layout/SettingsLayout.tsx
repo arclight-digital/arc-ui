@@ -4,7 +4,7 @@ import { type FunctionComponent } from 'preact';
 import '@arclux/arc-ui/settings-layout';
 
 export interface SettingsLayoutProps {
-  navPosition?: string;
+  navPosition?: 'left' | 'top';
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }

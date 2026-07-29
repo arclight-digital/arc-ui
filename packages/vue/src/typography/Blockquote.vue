@@ -4,9 +4,9 @@ import '@arclux/arc-ui/blockquote';
 
 defineOptions({ name: 'Blockquote' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   cite?: string;
-  variant?: 'accent';
+  variant?: 'default' | 'accent';
 }>(), {
   cite: '',
   variant: 'default',
@@ -15,8 +15,8 @@ withDefaults(defineProps<{
 
 <template>
   <arc-blockquote
-    :cite="cite"
-    :variant="variant"
+    :cite="props.cite"
+    :variant="props.variant"
   >
     <slot />
   </arc-blockquote>

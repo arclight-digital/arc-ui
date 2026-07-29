@@ -4,7 +4,7 @@ import '@arclux/arc-ui/container';
 
 defineOptions({ name: 'Container' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   narrow?: boolean;
   size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
   padding?: 'none' | 'sm' | 'lg';
@@ -17,9 +17,9 @@ withDefaults(defineProps<{
 
 <template>
   <arc-container
-    :narrow="narrow"
-    :size="size"
-    :padding="padding"
+    :narrow="props.narrow"
+    :size="props.size"
+    :padding="props.padding"
   >
     <slot />
   </arc-container>

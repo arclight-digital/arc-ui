@@ -4,7 +4,7 @@ import '@arclux/arc-ui/rating';
 
 defineOptions({ name: 'Rating' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   value?: number;
   max?: number;
   name?: string;
@@ -34,11 +34,11 @@ function onArcChange(payload: CustomEvent) {
 
 <template>
   <arc-rating
-    :value="value"
-    :max="max"
-    :name="name"
-    :disabled="disabled"
-    :readonly="readonly"
+    :value="props.value"
+    :max="props.max"
+    :name="props.name"
+    :disabled="props.disabled"
+    :readonly="props.readonly"
     @arc-change="onArcChange"
   >
     <slot />

@@ -7,17 +7,17 @@ import '@arclux/arc-ui/chart';
   selector: 'arc-chart',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-chart [attr.type]="type" [series]="series" [labels]="labels" [stacked]="stacked" [hideLegend]="hideLegend" [hideAxis]="hideAxis" [attr.height]="height" [attr.valueFormat]="valueFormat" [attr.currency]="currency" (arc-mark-click)="arcMarkClick.emit($event)"><ng-content /></arc-chart>`,
+  template: `<arc-chart [attr.type]="this.type" [series]="this.series" [labels]="this.labels" [stacked]="this.stacked" [hideLegend]="this.hideLegend" [hideAxis]="this.hideAxis" [attr.height]="this.height" [attr.valueFormat]="this.valueFormat" [attr.currency]="this.currency" (arc-mark-click)="this.arcMarkClick.emit($event)"><ng-content /></arc-chart>`,
 })
 export class Chart {
-  @Input() type: string = 'line';
+  @Input() type: 'line' | 'area' | 'bar' | 'donut' = 'line';
   @Input() series: unknown[] = [];
   @Input() labels: unknown[] = [];
   @Input() stacked: boolean = false;
   @Input() hideLegend: boolean = false;
   @Input() hideAxis: boolean = false;
   @Input() height: number = 260;
-  @Input() valueFormat: string = 'number';
+  @Input() valueFormat: 'number' | 'percent' | 'currency' = 'number';
   @Input() currency: string = 'USD';
   @Output() arcMarkClick = new EventEmitter<CustomEvent>();
 }

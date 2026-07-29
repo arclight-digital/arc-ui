@@ -4,7 +4,7 @@ import '@arclux/arc-ui/carousel';
 
 defineOptions({ name: 'Carousel' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   autoPlay?: boolean;
   interval?: number;
   loop?: boolean;
@@ -25,11 +25,11 @@ const emit = defineEmits<{
 
 <template>
   <arc-carousel
-    :autoPlay="autoPlay"
-    :interval="interval"
-    :loop="loop"
-    :showDots="showDots"
-    :showArrows="showArrows"
+    :autoPlay="props.autoPlay"
+    :interval="props.interval"
+    :loop="props.loop"
+    :showDots="props.showDots"
+    :showArrows="props.showArrows"
     @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
   >
     <slot />

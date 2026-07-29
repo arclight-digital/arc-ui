@@ -4,7 +4,7 @@ import '@arclux/arc-ui/cluster';
 
 defineOptions({ name: 'Cluster' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   gap?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   align?: 'start' | 'center' | 'end';
   justify?: 'start' | 'center' | 'end' | 'space-between' | 'space-around';
@@ -17,9 +17,9 @@ withDefaults(defineProps<{
 
 <template>
   <arc-cluster
-    :gap="gap"
-    :align="align"
-    :justify="justify"
+    :gap="props.gap"
+    :align="props.align"
+    :justify="props.justify"
   >
     <slot />
   </arc-cluster>

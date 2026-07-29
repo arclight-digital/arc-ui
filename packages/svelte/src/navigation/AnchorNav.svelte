@@ -4,7 +4,7 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
-    orientation?: 'vertical';
+    orientation?: 'vertical' | 'horizontal';
     value?: string;
     items?: string;
     children?: Snippet;

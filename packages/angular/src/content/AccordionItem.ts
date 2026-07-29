@@ -7,7 +7,7 @@ import '@arclux/arc-ui/accordion-item';
   selector: 'arc-accordion-item',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-accordion-item [attr.question]="question"><ng-content /></arc-accordion-item>`,
+  template: `<arc-accordion-item [attr.question]="this.question"><ng-content /></arc-accordion-item>`,
 })
 export class AccordionItem {
   @Input() question: string = '';

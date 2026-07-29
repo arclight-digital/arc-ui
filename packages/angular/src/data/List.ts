@@ -7,11 +7,11 @@ import '@arclux/arc-ui/list';
   selector: 'arc-list',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-list [attr.variant]="variant" [attr.size]="size" [selectable]="selectable" [multiple]="multiple" [attr.value]="value" [attr.label]="label" (arc-change)="onArcChange($event)" (arc-item-select)="onArcItemSelect($event)"><ng-content /></arc-list>`,
+  template: `<arc-list [attr.variant]="this.variant" [attr.size]="this.size" [selectable]="this.selectable" [multiple]="this.multiple" [attr.value]="this.value" [attr.label]="this.label" (arc-change)="this.onArcChange($event)" (arc-item-select)="this.onArcItemSelect($event)"><ng-content /></arc-list>`,
 })
 export class List {
-  @Input() variant: 'bordered' | 'separated' = 'default';
-  @Input() size: 'sm' | 'lg' = 'md';
+  @Input() variant: 'default' | 'bordered' | 'separated' = 'default';
+  @Input() size: 'sm' | 'md' | 'lg' = 'md';
   @Input() selectable: boolean = false;
   @Input() multiple: boolean = false;
   @Input() value: string = '';

@@ -4,7 +4,7 @@ import '@arclux/arc-ui/list-item';
 
 defineOptions({ name: 'ListItem' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   value?: string;
   selected?: boolean;
   disabled?: boolean;
@@ -23,10 +23,10 @@ const emit = defineEmits<{
 
 <template>
   <arc-list-item
-    :value="value"
-    :selected="selected"
-    :disabled="disabled"
-    :href="href"
+    :value="props.value"
+    :selected="props.selected"
+    :disabled="props.disabled"
+    :href="props.href"
     @arc-item-select="(payload: CustomEvent) => emit('arc-item-select', payload)"
   >
     <slot />

@@ -7,7 +7,7 @@ import '@arclux/arc-ui/combobox';
   selector: 'arc-combobox',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-combobox [attr.value]="value" [attr.placeholder]="placeholder" [attr.label]="label" [attr.name]="name" [disabled]="disabled" (arc-change)="onArcChange($event)"><ng-content /></arc-combobox>`,
+  template: `<arc-combobox [attr.value]="this.value" [attr.placeholder]="this.placeholder" [attr.label]="this.label" [attr.name]="this.name" [disabled]="this.disabled" (arc-change)="this.onArcChange($event)"><ng-content /></arc-combobox>`,
 })
 export class Combobox {
   @Input() value: string = '';

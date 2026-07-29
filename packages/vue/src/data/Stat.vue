@@ -4,7 +4,7 @@ import '@arclux/arc-ui/stat';
 
 defineOptions({ name: 'Stat' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   value?: string;
   label?: string;
   trend?: 'up' | 'down' | 'neutral';
@@ -19,10 +19,10 @@ withDefaults(defineProps<{
 
 <template>
   <arc-stat
-    :value="value"
-    :label="label"
-    :trend="trend"
-    :change="change"
+    :value="props.value"
+    :label="props.label"
+    :trend="props.trend"
+    :change="props.change"
   >
     <slot />
   </arc-stat>

@@ -4,7 +4,7 @@ import '@arclux/arc-ui/responsive-switcher';
 
 defineOptions({ name: 'ResponsiveSwitcher' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   threshold?: string;
   gap?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 }>(), {
@@ -15,8 +15,8 @@ withDefaults(defineProps<{
 
 <template>
   <arc-responsive-switcher
-    :threshold="threshold"
-    :gap="gap"
+    :threshold="props.threshold"
+    :gap="props.gap"
   >
     <slot />
   </arc-responsive-switcher>

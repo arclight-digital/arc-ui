@@ -7,7 +7,7 @@ export interface CodeBlockProps {
   language?: string;
   filename?: string;
   code?: string;
-  variant?: 'window' | 'basic';
+  variant?: 'default' | 'window' | 'basic';
   children?: JSX.Element;
   [key: string]: unknown;
 }

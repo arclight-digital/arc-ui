@@ -4,7 +4,7 @@ import '@arclux/arc-ui/date-picker';
 
 defineOptions({ name: 'DatePicker' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   value?: string;
   name?: string;
   min?: string;
@@ -38,13 +38,13 @@ function onArcChange(payload: CustomEvent) {
 
 <template>
   <arc-date-picker
-    :value="value"
-    :name="name"
-    :min="min"
-    :max="max"
-    :placeholder="placeholder"
-    :disabled="disabled"
-    :label="label"
+    :value="props.value"
+    :name="props.name"
+    :min="props.min"
+    :max="props.max"
+    :placeholder="props.placeholder"
+    :disabled="props.disabled"
+    :label="props.label"
     @arc-change="onArcChange"
   >
     <slot />

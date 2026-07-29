@@ -4,7 +4,7 @@ import '@arclux/arc-ui/diff';
 
 defineOptions({ name: 'Diff' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   before?: string;
   after?: string;
   mode?: 'side-by-side';
@@ -17,9 +17,9 @@ withDefaults(defineProps<{
 
 <template>
   <arc-diff
-    :before="before"
-    :after="after"
-    :mode="mode"
+    :before="props.before"
+    :after="props.after"
+    :mode="props.mode"
   >
     <slot />
   </arc-diff>

@@ -4,7 +4,7 @@ import { type FunctionComponent } from 'preact';
 import '@arclux/arc-ui/page-layout';
 
 export interface PageLayoutProps {
-  layout?: 'centered' | 'wide' | 'sidebar-left' | 'sidebar-right';
+  layout?: 'sidebar-left' | 'sidebar-right' | 'centered' | 'wide';
   maxWidth?: string;
   gap?: string;
   children?: preact.ComponentChildren;

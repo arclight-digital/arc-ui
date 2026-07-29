@@ -4,7 +4,7 @@ import '@arclux/arc-ui/breadcrumb-menu';
 
 defineOptions({ name: 'BreadcrumbMenu' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   items?: string;
   label?: string;
 }>(), {
@@ -19,8 +19,8 @@ const emit = defineEmits<{
 
 <template>
   <arc-breadcrumb-menu
-    :items="items"
-    :label="label"
+    :items="props.items"
+    :label="props.label"
     @arc-navigate="(payload: CustomEvent) => emit('arc-navigate', payload)"
   >
     <slot />

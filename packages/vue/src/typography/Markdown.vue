@@ -4,7 +4,7 @@ import '@arclux/arc-ui/markdown';
 
 defineOptions({ name: 'Markdown' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   content?: string;
 }>(), {
   content: '',
@@ -13,7 +13,7 @@ withDefaults(defineProps<{
 
 <template>
   <arc-markdown
-    :content="content"
+    :content="props.content"
   >
     <slot />
   </arc-markdown>

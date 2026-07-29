@@ -8,7 +8,7 @@
     name?: string;
     disabled?: boolean;
     size?: 'sm' | 'lg';
-    orientation?: 'horizontal';
+    orientation?: 'vertical' | 'horizontal';
     children?: Snippet;
     [key: string]: unknown;
   }

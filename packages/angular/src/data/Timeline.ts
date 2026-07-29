@@ -7,7 +7,7 @@ import '@arclux/arc-ui/timeline';
   selector: 'arc-timeline',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-timeline [attr.headingLevel]="headingLevel"><ng-content /></arc-timeline>`,
+  template: `<arc-timeline [attr.headingLevel]="this.headingLevel"><ng-content /></arc-timeline>`,
 })
 export class Timeline {
   @Input() headingLevel: number = 3;

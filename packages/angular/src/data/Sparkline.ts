@@ -7,11 +7,11 @@ import '@arclux/arc-ui/sparkline';
   selector: 'arc-sparkline',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-sparkline [attr.data]="data" [attr.type]="type" [attr.color]="color" [attr.width]="width" [attr.height]="height" [fill]="fill"><ng-content /></arc-sparkline>`,
+  template: `<arc-sparkline [attr.data]="this.data" [attr.type]="this.type" [attr.color]="this.color" [attr.width]="this.width" [attr.height]="this.height" [fill]="this.fill"><ng-content /></arc-sparkline>`,
 })
 export class Sparkline {
   @Input() data: string = '';
-  @Input() type: string = 'line';
+  @Input() type: 'line' | 'bar' = 'line';
   @Input() color: string = '';
   @Input() width: number = 120;
   @Input() height: number = 32;

@@ -4,7 +4,7 @@ import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/banner';
 
 export interface BannerProps {
-  variant?: string;
+  variant?: 'info' | 'success' | 'warning' | 'error';
   dismissible?: boolean;
   sticky?: boolean;
   onArcDismiss?: (e: CustomEvent) => void;

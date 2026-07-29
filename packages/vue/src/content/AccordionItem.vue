@@ -4,7 +4,7 @@ import '@arclux/arc-ui/accordion-item';
 
 defineOptions({ name: 'AccordionItem' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   question?: string;
 }>(), {
   question: '',
@@ -13,7 +13,7 @@ withDefaults(defineProps<{
 
 <template>
   <arc-accordion-item
-    :question="question"
+    :question="props.question"
   >
     <slot />
   </arc-accordion-item>

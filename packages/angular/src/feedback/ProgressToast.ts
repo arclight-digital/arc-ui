@@ -7,10 +7,10 @@ import '@arclux/arc-ui/progress-toast';
   selector: 'arc-progress-toast',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-progress-toast [attr.position]="position" (arc-complete)="arcComplete.emit($event)" (arc-cancel)="arcCancel.emit($event)"><ng-content /></arc-progress-toast>`,
+  template: `<arc-progress-toast [attr.position]="this.position" (arc-complete)="this.arcComplete.emit($event)" (arc-cancel)="this.arcCancel.emit($event)"><ng-content /></arc-progress-toast>`,
 })
 export class ProgressToast {
-  @Input() position: 'bottom-right' | 'top-right' = 'bottom-right';
+  @Input() position: 'top-right' | 'bottom-right' = 'bottom-right';
   @Output() arcComplete = new EventEmitter<CustomEvent>();
   @Output() arcCancel = new EventEmitter<CustomEvent>();
 }

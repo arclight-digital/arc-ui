@@ -7,9 +7,9 @@ import '@arclux/arc-ui/avatar-group';
   selector: 'arc-avatar-group',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-avatar-group [attr.max]="max" [attr.overlap]="overlap"><ng-content /></arc-avatar-group>`,
+  template: `<arc-avatar-group [attr.max]="this.max" [attr.overlap]="this.overlap"><ng-content /></arc-avatar-group>`,
 })
 export class AvatarGroup {
   @Input() max: number = Infinity;
-  @Input() overlap: 'sm' | 'lg' = 'md';
+  @Input() overlap: 'sm' | 'md' | 'lg' = 'md';
 }

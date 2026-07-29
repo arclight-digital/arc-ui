@@ -5,7 +5,7 @@ import { createComponent } from '@lit/react';
 import { ArcGradientText } from '@arclux/arc-ui/gradient-text';
 
 export interface GradientTextProps {
-  variant?: 'accent' | 'display' | 'sunset' | 'ocean';
+  variant?: 'accent' | 'display' | 'sunset' | 'ocean' | 'custom';
   gradient?: string;
   animate?: boolean;
   className?: string;

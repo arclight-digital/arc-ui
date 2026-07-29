@@ -4,7 +4,7 @@ import '@arclux/arc-ui/textarea';
 
 defineOptions({ name: 'Textarea' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   value?: string;
   placeholder?: string;
   label?: string;
@@ -13,7 +13,7 @@ withDefaults(defineProps<{
   disabled?: boolean;
   readonly?: boolean;
   resize?: 'none' | 'vertical' | 'horizontal' | 'both';
-  size?: 'sm' | 'lg';
+  size?: 'sm' | 'md' | 'lg';
   autoResize?: boolean;
   error?: string;
 }>(), {
@@ -54,17 +54,17 @@ function onArcChange(payload: CustomEvent) {
 
 <template>
   <arc-textarea
-    :value="value"
-    :placeholder="placeholder"
-    :label="label"
-    :rows="rows"
-    :maxlength="maxlength"
-    :disabled="disabled"
-    :readonly="readonly"
-    :resize="resize"
-    :size="size"
-    :autoResize="autoResize"
-    :error="error"
+    :value="props.value"
+    :placeholder="props.placeholder"
+    :label="props.label"
+    :rows="props.rows"
+    :maxlength="props.maxlength"
+    :disabled="props.disabled"
+    :readonly="props.readonly"
+    :resize="props.resize"
+    :size="props.size"
+    :autoResize="props.autoResize"
+    :error="props.error"
     @arc-input="onArcInput"
     @arc-change="onArcChange"
   >

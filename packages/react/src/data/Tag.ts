@@ -5,7 +5,7 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcTag } from '@arclux/arc-ui/tag';
 
 export interface TagProps {
-  variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
+  variant?: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
   size?: 'sm' | 'lg';
   removable?: boolean;
   disabled?: boolean;

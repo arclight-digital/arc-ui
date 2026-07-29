@@ -7,8 +7,8 @@ import '@arclux/arc-ui/input-group';
   selector: 'arc-input-group',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-input-group [attr.size]="size"><ng-content /></arc-input-group>`,
+  template: `<arc-input-group [attr.size]="this.size"><ng-content /></arc-input-group>`,
 })
 export class InputGroup {
-  @Input() size: 'sm' | 'lg' = 'md';
+  @Input() size: 'sm' | 'md' | 'lg' = 'md';
 }

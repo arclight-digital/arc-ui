@@ -7,7 +7,7 @@ import '@arclux/arc-ui/dropdown-menu';
   selector: 'arc-dropdown-menu',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-dropdown-menu [open]="open" (arc-close)="arcClose.emit($event)" (arc-select)="arcSelect.emit($event)"><ng-content /></arc-dropdown-menu>`,
+  template: `<arc-dropdown-menu [open]="this.open" (arc-close)="this.arcClose.emit($event)" (arc-select)="this.arcSelect.emit($event)"><ng-content /></arc-dropdown-menu>`,
 })
 export class DropdownMenu {
   @Input() open: boolean = false;

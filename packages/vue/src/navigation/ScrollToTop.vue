@@ -4,7 +4,7 @@ import '@arclux/arc-ui/scroll-to-top';
 
 defineOptions({ name: 'ScrollToTop' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   threshold?: number;
   smooth?: boolean;
   position?: 'bottom-right' | 'bottom-left';
@@ -19,10 +19,10 @@ withDefaults(defineProps<{
 
 <template>
   <arc-scroll-to-top
-    :threshold="threshold"
-    :smooth="smooth"
-    :position="position"
-    :offset="offset"
+    :threshold="props.threshold"
+    :smooth="props.smooth"
+    :position="props.position"
+    :offset="props.offset"
   >
     <slot />
   </arc-scroll-to-top>

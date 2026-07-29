@@ -7,7 +7,7 @@ import '@arclux/arc-ui/tab';
   selector: 'arc-tab',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-tab [attr.label]="label"><ng-content /></arc-tab>`,
+  template: `<arc-tab [attr.label]="this.label"><ng-content /></arc-tab>`,
 })
 export class Tab {
   @Input() label: string = '';

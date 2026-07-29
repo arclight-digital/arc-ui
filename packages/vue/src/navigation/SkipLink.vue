@@ -4,7 +4,7 @@ import '@arclux/arc-ui/skip-link';
 
 defineOptions({ name: 'SkipLink' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   target?: string;
 }>(), {
   target: '#main',
@@ -13,7 +13,7 @@ withDefaults(defineProps<{
 
 <template>
   <arc-skip-link
-    :target="target"
+    :target="props.target"
   >
     <slot />
   </arc-skip-link>

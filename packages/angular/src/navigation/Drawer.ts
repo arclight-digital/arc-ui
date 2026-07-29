@@ -7,7 +7,7 @@ import '@arclux/arc-ui/drawer';
   selector: 'arc-drawer',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-drawer [open]="open" [attr.position]="position" [attr.heading]="heading" (arc-close)="arcClose.emit($event)"><ng-content /></arc-drawer>`,
+  template: `<arc-drawer [open]="this.open" [attr.position]="this.position" [attr.heading]="this.heading" (arc-close)="this.arcClose.emit($event)"><ng-content /></arc-drawer>`,
 })
 export class Drawer {
   @Input() open: boolean = false;

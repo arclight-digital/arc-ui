@@ -7,7 +7,7 @@ import '@arclux/arc-ui/description-list';
   selector: 'arc-description-list',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-description-list [attr.columns]="columns" [dividers]="dividers"><ng-content /></arc-description-list>`,
+  template: `<arc-description-list [attr.columns]="this.columns" [dividers]="this.dividers"><ng-content /></arc-description-list>`,
 })
 export class DescriptionList {
   @Input() columns: number = 1;

@@ -4,7 +4,7 @@ import '@arclux/arc-ui/prose';
 
 defineOptions({ name: 'Prose' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   size?: 'sm' | 'md' | 'lg';
 }>(), {
   size: 'md',
@@ -13,7 +13,7 @@ withDefaults(defineProps<{
 
 <template>
   <arc-prose
-    :size="size"
+    :size="props.size"
   >
     <slot />
   </arc-prose>

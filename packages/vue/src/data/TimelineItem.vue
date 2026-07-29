@@ -4,7 +4,7 @@ import '@arclux/arc-ui/timeline-item';
 
 defineOptions({ name: 'TimelineItem' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   heading?: string;
   date?: string;
 }>(), {
@@ -15,8 +15,8 @@ withDefaults(defineProps<{
 
 <template>
   <arc-timeline-item
-    :heading="heading"
-    :date="date"
+    :heading="props.heading"
+    :date="props.date"
   >
     <slot />
   </arc-timeline-item>

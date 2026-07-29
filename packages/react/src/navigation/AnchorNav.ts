@@ -5,7 +5,7 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcAnchorNav } from '@arclux/arc-ui/anchor-nav';
 
 export interface AnchorNavProps {
-  orientation?: 'vertical';
+  orientation?: 'vertical' | 'horizontal';
   value?: string;
   items?: string;
   className?: string;

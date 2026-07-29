@@ -5,7 +5,7 @@
 
   interface Props {
     data?: string;
-    type?: string;
+    type?: 'line' | 'bar';
     color?: string;
     width?: number;
     height?: number;

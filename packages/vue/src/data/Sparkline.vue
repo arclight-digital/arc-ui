@@ -4,9 +4,9 @@ import '@arclux/arc-ui/sparkline';
 
 defineOptions({ name: 'Sparkline' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   data?: string;
-  type?: string;
+  type?: 'line' | 'bar';
   color?: string;
   width?: number;
   height?: number;
@@ -23,12 +23,12 @@ withDefaults(defineProps<{
 
 <template>
   <arc-sparkline
-    :data="data"
-    :type="type"
-    :color="color"
-    :width="width"
-    :height="height"
-    :fill="fill"
+    :data="props.data"
+    :type="props.type"
+    :color="props.color"
+    :width="props.width"
+    :height="props.height"
+    :fill="props.fill"
   >
     <slot />
   </arc-sparkline>

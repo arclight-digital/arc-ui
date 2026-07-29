@@ -4,7 +4,7 @@ import '@arclux/arc-ui/command-group';
 
 defineOptions({ name: 'CommandGroup' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   heading?: string;
 }>(), {
   heading: '',
@@ -13,7 +13,7 @@ withDefaults(defineProps<{
 
 <template>
   <arc-command-group
-    :heading="heading"
+    :heading="props.heading"
   >
     <slot />
   </arc-command-group>

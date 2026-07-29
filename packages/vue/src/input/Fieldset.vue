@@ -4,12 +4,12 @@ import '@arclux/arc-ui/fieldset';
 
 defineOptions({ name: 'Fieldset' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   legend?: string;
   description?: string;
   disabled?: boolean;
   error?: string;
-  variant?: 'card';
+  variant?: 'default' | 'card';
 }>(), {
   legend: '',
   description: '',
@@ -21,11 +21,11 @@ withDefaults(defineProps<{
 
 <template>
   <arc-fieldset
-    :legend="legend"
-    :description="description"
-    :disabled="disabled"
-    :error="error"
-    :variant="variant"
+    :legend="props.legend"
+    :description="props.description"
+    :disabled="props.disabled"
+    :error="props.error"
+    :variant="props.variant"
   >
     <slot />
   </arc-fieldset>

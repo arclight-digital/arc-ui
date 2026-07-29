@@ -4,7 +4,7 @@ import '@arclux/arc-ui/pagination';
 
 defineOptions({ name: 'Pagination' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   total?: number;
   current?: number;
   siblings?: number;
@@ -23,10 +23,10 @@ const emit = defineEmits<{
 
 <template>
   <arc-pagination
-    :total="total"
-    :current="current"
-    :siblings="siblings"
-    :compact="compact"
+    :total="props.total"
+    :current="props.current"
+    :siblings="props.siblings"
+    :compact="props.compact"
     @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
   >
     <slot />

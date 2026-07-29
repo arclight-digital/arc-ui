@@ -7,7 +7,7 @@ import '@arclux/arc-ui/menu-item';
   selector: 'arc-menu-item',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-menu-item [attr.shortcut]="shortcut" [disabled]="disabled" [attr.icon]="icon"><ng-content /></arc-menu-item>`,
+  template: `<arc-menu-item [attr.shortcut]="this.shortcut" [disabled]="this.disabled" [attr.icon]="this.icon"><ng-content /></arc-menu-item>`,
 })
 export class MenuItem {
   @Input() shortcut: string = '';

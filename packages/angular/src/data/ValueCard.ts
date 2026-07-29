@@ -7,7 +7,7 @@ import '@arclux/arc-ui/value-card';
   selector: 'arc-value-card',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-value-card [attr.icon]="icon" [attr.heading]="heading" [attr.description]="description"><ng-content /></arc-value-card>`,
+  template: `<arc-value-card [attr.icon]="this.icon" [attr.heading]="this.heading" [attr.description]="this.description"><ng-content /></arc-value-card>`,
 })
 export class ValueCard {
   @Input() icon: string = '';

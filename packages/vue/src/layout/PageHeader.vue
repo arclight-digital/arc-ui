@@ -4,7 +4,7 @@ import '@arclux/arc-ui/page-header';
 
 defineOptions({ name: 'PageHeader' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   heading?: string;
   description?: string;
   border?: boolean;
@@ -17,9 +17,9 @@ withDefaults(defineProps<{
 
 <template>
   <arc-page-header
-    :heading="heading"
-    :description="description"
-    :border="border"
+    :heading="props.heading"
+    :description="props.description"
+    :border="props.border"
   >
     <slot />
   </arc-page-header>

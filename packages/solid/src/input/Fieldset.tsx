@@ -8,7 +8,7 @@ export interface FieldsetProps {
   description?: string;
   disabled?: boolean;
   error?: string;
-  variant?: 'card';
+  variant?: 'default' | 'card';
   children?: JSX.Element;
   [key: string]: unknown;
 }

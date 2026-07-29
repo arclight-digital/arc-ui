@@ -7,7 +7,7 @@ import '@arclux/arc-ui/typewriter';
   selector: 'arc-typewriter',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-typewriter [attr.text]="text" [attr.speed]="speed" [attr.delay]="delay" [cursor]="cursor" [loop]="loop" [nowrap]="nowrap" [attr.pauseEnd]="pauseEnd" (arc-complete)="arcComplete.emit($event)"><ng-content /></arc-typewriter>`,
+  template: `<arc-typewriter [attr.text]="this.text" [attr.speed]="this.speed" [attr.delay]="this.delay" [cursor]="this.cursor" [loop]="this.loop" [nowrap]="this.nowrap" [attr.pauseEnd]="this.pauseEnd" (arc-complete)="this.arcComplete.emit($event)"><ng-content /></arc-typewriter>`,
 })
 export class Typewriter {
   @Input() text: string = '';

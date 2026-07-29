@@ -4,10 +4,10 @@ import '@arclux/arc-ui/separator';
 
 defineOptions({ name: 'Separator' });
 
-withDefaults(defineProps<{
-  orientation?: 'vertical';
+const props = withDefaults(defineProps<{
+  orientation?: 'horizontal' | 'vertical';
   label?: string;
-  variant?: 'dashed' | 'dotted' | 'fade';
+  variant?: 'line' | 'dashed' | 'dotted' | 'fade';
 }>(), {
   orientation: 'horizontal',
   label: '',
@@ -17,9 +17,9 @@ withDefaults(defineProps<{
 
 <template>
   <arc-separator
-    :orientation="orientation"
-    :label="label"
-    :variant="variant"
+    :orientation="props.orientation"
+    :label="props.label"
+    :variant="props.variant"
   >
     <slot />
   </arc-separator>

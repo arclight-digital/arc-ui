@@ -4,7 +4,7 @@ import '@arclux/arc-ui/search';
 
 defineOptions({ name: 'Search' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   value?: string;
   placeholder?: string;
   label?: string;
@@ -51,11 +51,11 @@ function onArcSelect(payload: CustomEvent) {
 
 <template>
   <arc-search
-    :value="value"
-    :placeholder="placeholder"
-    :label="label"
-    :disabled="disabled"
-    :loading="loading"
+    :value="props.value"
+    :placeholder="props.placeholder"
+    :label="props.label"
+    :disabled="props.disabled"
+    :loading="props.loading"
     @arc-input="onArcInput"
     @arc-clear="(payload: CustomEvent) => emit('arc-clear', payload)"
     @arc-change="onArcChange"

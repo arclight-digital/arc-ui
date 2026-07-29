@@ -4,7 +4,7 @@ import '@arclux/arc-ui/cta-banner';
 
 defineOptions({ name: 'CtaBanner' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   eyebrow?: string;
   headline?: string;
   nogradient?: boolean;
@@ -17,9 +17,9 @@ withDefaults(defineProps<{
 
 <template>
   <arc-cta-banner
-    :eyebrow="eyebrow"
-    :headline="headline"
-    :nogradient="nogradient"
+    :eyebrow="props.eyebrow"
+    :headline="props.headline"
+    :nogradient="props.nogradient"
   >
     <slot />
   </arc-cta-banner>

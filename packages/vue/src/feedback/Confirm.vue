@@ -4,13 +4,13 @@ import '@arclux/arc-ui/confirm';
 
 defineOptions({ name: 'Confirm' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   open?: boolean;
   heading?: string;
   message?: string;
   confirmLabel?: string;
   cancelLabel?: string;
-  variant?: string;
+  variant?: 'default' | 'danger';
 }>(), {
   open: false,
   heading: '',
@@ -28,12 +28,12 @@ const emit = defineEmits<{
 
 <template>
   <arc-confirm
-    :open="open"
-    :heading="heading"
-    :message="message"
-    :confirmLabel="confirmLabel"
-    :cancelLabel="cancelLabel"
-    :variant="variant"
+    :open="props.open"
+    :heading="props.heading"
+    :message="props.message"
+    :confirmLabel="props.confirmLabel"
+    :cancelLabel="props.cancelLabel"
+    :variant="props.variant"
     @arc-confirm="(payload: CustomEvent) => emit('arc-confirm', payload)"
     @arc-cancel="(payload: CustomEvent) => emit('arc-cancel', payload)"
   >

@@ -7,10 +7,10 @@ import '@arclux/arc-ui/tag';
   selector: 'arc-tag',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-tag [attr.variant]="variant" [attr.size]="size" [removable]="removable" [disabled]="disabled" [attr.color]="color" (arc-remove)="arcRemove.emit($event)"><ng-content /></arc-tag>`,
+  template: `<arc-tag [attr.variant]="this.variant" [attr.size]="this.size" [removable]="this.removable" [disabled]="this.disabled" [attr.color]="this.color" (arc-remove)="this.arcRemove.emit($event)"><ng-content /></arc-tag>`,
 })
 export class Tag {
-  @Input() variant: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' = 'default';
+  @Input() variant: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger' = 'default';
   @Input() size: 'sm' | 'lg' = 'md';
   @Input() removable: boolean = false;
   @Input() disabled: boolean = false;

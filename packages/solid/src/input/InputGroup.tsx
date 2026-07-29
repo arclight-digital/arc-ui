@@ -4,7 +4,7 @@ import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/input-group';
 
 export interface InputGroupProps {
-  size?: 'sm' | 'lg';
+  size?: 'sm' | 'md' | 'lg';
   children?: JSX.Element;
   [key: string]: unknown;
 }

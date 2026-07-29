@@ -7,7 +7,7 @@ import '@arclux/arc-ui/comparison-column';
   selector: 'arc-comparison-column',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-comparison-column [attr.heading]="heading" [highlight]="highlight" [attr.values]="values"><ng-content /></arc-comparison-column>`,
+  template: `<arc-comparison-column [attr.heading]="this.heading" [highlight]="this.highlight" [attr.values]="this.values"><ng-content /></arc-comparison-column>`,
 })
 export class ComparisonColumn {
   @Input() heading: string = '';

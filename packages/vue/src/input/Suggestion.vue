@@ -4,7 +4,7 @@ import '@arclux/arc-ui/suggestion';
 
 defineOptions({ name: 'Suggestion' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   value?: string;
 }>(), {
   value: '',
@@ -13,7 +13,7 @@ withDefaults(defineProps<{
 
 <template>
   <arc-suggestion
-    :value="value"
+    :value="props.value"
   >
     <slot />
   </arc-suggestion>

@@ -4,8 +4,8 @@ import '@arclux/arc-ui/progress-toast';
 
 defineOptions({ name: 'ProgressToast' });
 
-withDefaults(defineProps<{
-  position?: 'bottom-right' | 'top-right';
+const props = withDefaults(defineProps<{
+  position?: 'top-right' | 'bottom-right';
 }>(), {
   position: 'bottom-right',
 });
@@ -18,7 +18,7 @@ const emit = defineEmits<{
 
 <template>
   <arc-progress-toast
-    :position="position"
+    :position="props.position"
     @arc-complete="(payload: CustomEvent) => emit('arc-complete', payload)"
     @arc-cancel="(payload: CustomEvent) => emit('arc-cancel', payload)"
   >

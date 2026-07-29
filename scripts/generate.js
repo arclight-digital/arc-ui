@@ -38,10 +38,12 @@ const steps = [
   { name: 'Editor',   cmd: 'node',  args: ['scripts/generate-editor-data.js'] },
   { name: 'DevSchema', cmd: 'node', args: ['scripts/generate-dev-schema.js'] },
   { name: 'Readme',   cmd: 'node',  args: ['scripts/generate-readme-stats.js'] },
+  { name: 'Unions',   cmd: 'node',  args: ['scripts/check-prop-unions.js'] },
 ];
 
 const totalStart = performance.now();
 let failed = false;
+let warned = 0;
 
 console.log('\n  ARC UI — Generate\n');
 
@@ -50,9 +52,19 @@ for (const step of steps) {
   process.stdout.write(`  ${step.name.padEnd(10)} `);
 
   try {
-    execFileSync(step.cmd, step.args, { stdio: ['inherit', 'pipe', 'pipe'] });
+    const out = execFileSync(step.cmd, step.args, { stdio: ['inherit', 'pipe', 'pipe'] });
     const ms = Math.round(performance.now() - start);
     console.log(`done  ${ms}ms`);
+
+    // Steps run quiet, but a warning on a successful step is still a finding —
+    // prism reports documentation drift this way. Swallowing stdout wholesale
+    // meant those scrolled past into a pipe nobody read.
+    const warnings = out
+      .toString()
+      .split('\n')
+      .filter((l) => /\bwarn(ing)?\b/i.test(l) || /\bomits\b/.test(l));
+    for (const w of warnings) console.log(`             ${w.trim()}`);
+    if (warnings.length) warned += warnings.length;
   } catch (err) {
     const ms = Math.round(performance.now() - start);
     console.log(`FAIL  ${ms}ms`);
@@ -63,6 +75,10 @@ for (const step of steps) {
 }
 
 const totalMs = Math.round(performance.now() - totalStart);
-console.log(`\n  ${failed ? 'Done with errors' : 'Done'} in ${totalMs}ms\n`);
+console.log(
+  `\n  ${failed ? 'Done with errors' : 'Done'} in ${totalMs}ms` +
+    (warned ? ` — ${warned} warning(s) above` : '') +
+    '\n',
+);
 
 if (failed) process.exit(1);

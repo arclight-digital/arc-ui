@@ -4,9 +4,9 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
-    orientation?: 'vertical';
+    orientation?: 'horizontal' | 'vertical';
     label?: string;
-    variant?: 'dashed' | 'dotted' | 'fade';
+    variant?: 'line' | 'dashed' | 'dotted' | 'fade';
     children?: Snippet;
     [key: string]: unknown;
   }

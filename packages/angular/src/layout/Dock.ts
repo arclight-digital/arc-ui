@@ -7,7 +7,7 @@ import '@arclux/arc-ui/dock';
   selector: 'arc-dock',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-dock [attr.position]="position" [autoHide]="autoHide" [open]="open"><ng-content /></arc-dock>`,
+  template: `<arc-dock [attr.position]="this.position" [autoHide]="this.autoHide" [open]="this.open"><ng-content /></arc-dock>`,
 })
 export class Dock {
   @Input() position: 'bottom' | 'left' | 'right' = 'bottom';

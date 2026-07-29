@@ -4,9 +4,9 @@ import '@arclux/arc-ui/marquee';
 
 defineOptions({ name: 'Marquee' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   speed?: number;
-  direction?: string;
+  direction?: 'left' | 'right';
   pauseOnHover?: boolean;
   gap?: string;
 }>(), {
@@ -19,10 +19,10 @@ withDefaults(defineProps<{
 
 <template>
   <arc-marquee
-    :speed="speed"
-    :direction="direction"
-    :pauseOnHover="pauseOnHover"
-    :gap="gap"
+    :speed="props.speed"
+    :direction="props.direction"
+    :pauseOnHover="props.pauseOnHover"
+    :gap="props.gap"
   >
     <slot />
   </arc-marquee>

@@ -5,9 +5,9 @@
 
   interface Props {
     selected?: number;
-    align?: 'center' | 'end';
-    variant?: 'pills';
-    orientation?: 'vertical';
+    align?: 'start' | 'center' | 'end';
+    variant?: 'underline' | 'pills';
+    orientation?: 'horizontal' | 'vertical';
     children?: Snippet;
     [key: string]: unknown;
   }

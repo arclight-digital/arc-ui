@@ -7,7 +7,7 @@ import '@arclux/arc-ui/command-bar';
   selector: 'arc-command-bar',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-command-bar [attr.placeholder]="placeholder" [attr.value]="value" [attr.icon]="icon" (arc-input)="onArcInput($event)" (arc-submit)="onArcSubmit($event)"><ng-content /></arc-command-bar>`,
+  template: `<arc-command-bar [attr.placeholder]="this.placeholder" [attr.value]="this.value" [attr.icon]="this.icon" (arc-input)="this.onArcInput($event)" (arc-submit)="this.onArcSubmit($event)"><ng-content /></arc-command-bar>`,
 })
 export class CommandBar {
   @Input() placeholder: string = 'Search…';

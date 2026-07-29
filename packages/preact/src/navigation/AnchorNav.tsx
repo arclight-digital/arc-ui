@@ -5,7 +5,7 @@ import { useLayoutEffect, useRef } from 'preact/hooks';
 import '@arclux/arc-ui/anchor-nav';
 
 export interface AnchorNavProps {
-  orientation?: 'vertical';
+  orientation?: 'vertical' | 'horizontal';
   value?: string;
   items?: string;
   onArcChange?: (e: CustomEvent) => void;

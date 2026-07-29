@@ -9,7 +9,7 @@ export interface ButtonProps {
   href?: string;
   disabled?: boolean;
   loading?: boolean;
-  type?: string;
+  type?: 'button' | 'submit' | 'reset';
   children?: JSX.Element;
   [key: string]: unknown;
 }

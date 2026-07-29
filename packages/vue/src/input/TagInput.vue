@@ -4,7 +4,7 @@ import '@arclux/arc-ui/tag-input';
 
 defineOptions({ name: 'TagInput' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   value?: unknown[];
   suggestions?: unknown[];
   delimiter?: string;
@@ -45,16 +45,16 @@ function onArcChange(payload: CustomEvent) {
 
 <template>
   <arc-tag-input
-    :value="value"
-    :suggestions="suggestions"
-    :delimiter="delimiter"
-    :maxTags="maxTags"
-    :allowCustom="allowCustom"
-    :label="label"
-    :placeholder="placeholder"
-    :name="name"
-    :disabled="disabled"
-    :error="error"
+    :value="props.value"
+    :suggestions="props.suggestions"
+    :delimiter="props.delimiter"
+    :maxTags="props.maxTags"
+    :allowCustom="props.allowCustom"
+    :label="props.label"
+    :placeholder="props.placeholder"
+    :name="props.name"
+    :disabled="props.disabled"
+    :error="props.error"
     @arc-change="onArcChange"
     @arc-input="(payload: CustomEvent) => emit('arc-input', payload)"
   >

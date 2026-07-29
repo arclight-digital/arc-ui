@@ -4,8 +4,8 @@ import '@arclux/arc-ui/tag';
 
 defineOptions({ name: 'Tag' });
 
-withDefaults(defineProps<{
-  variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
+const props = withDefaults(defineProps<{
+  variant?: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
   size?: 'sm' | 'lg';
   removable?: boolean;
   disabled?: boolean;
@@ -25,11 +25,11 @@ const emit = defineEmits<{
 
 <template>
   <arc-tag
-    :variant="variant"
-    :size="size"
-    :removable="removable"
-    :disabled="disabled"
-    :color="color"
+    :variant="props.variant"
+    :size="props.size"
+    :removable="props.removable"
+    :disabled="props.disabled"
+    :color="props.color"
     @arc-remove="(payload: CustomEvent) => emit('arc-remove', payload)"
   >
     <slot />

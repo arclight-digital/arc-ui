@@ -90,6 +90,22 @@ const headings = [
         <li><strong><code>@arclux/arc-ui/icons/lucide</code> was unimportable</strong> — a hard <code>SyntaxError</code>, not a subtle one. Upstream ships casing aliases (<code>ArrowDownAZ</code> / <code>ArrowDownAz</code>, <code>Axis3D</code> / <code>Axis3d</code>) that the kebab-case conversion collapsed onto one name, emitting 14 duplicate <code>export const</code> declarations. Bodies were byte-identical, so the aliases are now collapsed rather than emitted twice. The generator throws if colliding icons ever have <em>differing</em> bodies, instead of silently dropping one.</li>
         <li><strong>Removed the broken <code>./tokens</code> export</strong> — it pointed at <code>src/tokens.js</code>, deleted back in 286dbf3 when duplicate token modules were eliminated. Importing it has failed ever since. Tokens come from <code>./base.css</code>.</li>
       </ul>
+
+      <h3 class="tier-heading">Wrapper Types Repaired (Prism 2.4.0)</h3>
+      <p class="docs-text">
+        Prism derived every string union by scanning CSS <code>:host([prop="value"])</code>
+        selectors, which structurally cannot see a prop's default — the default variant is the base
+        style and has no attribute selector — and sees nothing at all when variants are driven from
+        JavaScript. It now reads the documented <code>@prop &#123;'a' | 'b'&#125; name</code>
+        annotation, with the CSS scan as fallback.
+      </p>
+      <ul class="docs-list">
+        <li><strong>35 props regained their own default</strong> — <code>&lt;Badge size="md" /&gt;</code> and <code>&lt;Badge variant="default" /&gt;</code> were type errors despite being the defaults. Same for <code>avatar.shape</code>, <code>card.padding</code> and 31 others.</li>
+        <li><strong>33 props regained a union that had collapsed to <code>string</code></strong> — <code>chart.type</code>, <code>alert.variant</code>, <code>qr-code.level</code>, <code>data-table.sortDirection</code> and more, all styled from JavaScript rather than CSS.</li>
+        <li><strong>Reserved-word props no longer emit broken wrappers</strong> — <code>arc-label</code>'s <code>for</code> was a hard syntax error in Svelte and Preact and an invalid expression in Vue; <code>arc-text</code>'s <code>as</code> is a keyword in Angular's template grammar. Attribute names are unchanged; only the local bindings moved.</li>
+        <li><strong>Two documentation bugs surfaced and fixed</strong> — <code>arc-cluster</code> documented <code>justify="between"</code>, which matches no CSS rule and has never done anything, while the values that do work (<code>space-between</code>, <code>space-around</code>) were undocumented. <code>arc-cluster</code> and <code>arc-responsive-switcher</code> both omitted gap sizes their CSS supports.</li>
+        <li><strong>A new <code>check:unions</code> gate</strong> runs as part of <code>pnpm generate</code> and fails if any documented union reaches the wrappers collapsed, incomplete, or missing its default. 113 unions currently pass. <code>pnpm generate</code> also surfaces warnings from steps that succeed, instead of discarding their output.</li>
+      </ul>
     </section>
 
     <section id="v2-9-0">

@@ -4,12 +4,12 @@ import '@arclux/arc-ui/data-table';
 
 defineOptions({ name: 'DataTable' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   rows?: unknown[];
   sortable?: boolean;
   selectable?: boolean;
   sortColumn?: string;
-  sortDirection?: string;
+  sortDirection?: 'asc' | 'desc';
   virtual?: boolean;
   rowHeight?: number;
 }>(), {
@@ -31,13 +31,13 @@ const emit = defineEmits<{
 
 <template>
   <arc-data-table
-    :rows="rows"
-    :sortable="sortable"
-    :selectable="selectable"
-    :sortColumn="sortColumn"
-    :sortDirection="sortDirection"
-    :virtual="virtual"
-    :rowHeight="rowHeight"
+    :rows="props.rows"
+    :sortable="props.sortable"
+    :selectable="props.selectable"
+    :sortColumn="props.sortColumn"
+    :sortDirection="props.sortDirection"
+    :virtual="props.virtual"
+    :rowHeight="props.rowHeight"
     @arc-sort="(payload: CustomEvent) => emit('arc-sort', payload)"
     @arc-select-all="(payload: CustomEvent) => emit('arc-select-all', payload)"
     @arc-row-select="(payload: CustomEvent) => emit('arc-row-select', payload)"

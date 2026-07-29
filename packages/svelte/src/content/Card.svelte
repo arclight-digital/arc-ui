@@ -5,7 +5,7 @@
 
   interface Props {
     href?: string;
-    padding?: 'none' | 'sm' | 'lg';
+    padding?: 'none' | 'sm' | 'md' | 'lg';
     interactive?: boolean;
     children?: Snippet;
     [key: string]: unknown;

@@ -7,7 +7,7 @@ import '@arclux/arc-ui/kv-pair';
   selector: 'arc-kv-pair',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-kv-pair [attr.label]="label"><ng-content /></arc-kv-pair>`,
+  template: `<arc-kv-pair [attr.label]="this.label"><ng-content /></arc-kv-pair>`,
 })
 export class KvPair {
   @Input() label: string = '';

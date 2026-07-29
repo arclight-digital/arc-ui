@@ -6,9 +6,9 @@ import '@arclux/arc-ui/tabs';
 
 export interface TabsProps {
   selected?: number;
-  align?: 'center' | 'end';
-  variant?: 'pills';
-  orientation?: 'vertical';
+  align?: 'start' | 'center' | 'end';
+  variant?: 'underline' | 'pills';
+  orientation?: 'horizontal' | 'vertical';
   onArcChange?: (e: CustomEvent) => void;
   children?: preact.ComponentChildren;
   [key: string]: unknown;

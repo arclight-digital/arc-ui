@@ -7,11 +7,11 @@ import '@arclux/arc-ui/switch-group';
   selector: 'arc-switch-group',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-switch-group [attr.label]="label" [attr.orientation]="orientation" [attr.size]="size" [disabled]="disabled"><ng-content /></arc-switch-group>`,
+  template: `<arc-switch-group [attr.label]="this.label" [attr.orientation]="this.orientation" [attr.size]="this.size" [disabled]="this.disabled"><ng-content /></arc-switch-group>`,
 })
 export class SwitchGroup {
   @Input() label: string = '';
-  @Input() orientation: 'horizontal' = 'vertical';
-  @Input() size: string = 'md';
+  @Input() orientation: 'vertical' | 'horizontal' = 'vertical';
+  @Input() size: 'sm' | 'md' | 'lg' = 'md';
   @Input() disabled: boolean = false;
 }

@@ -4,15 +4,15 @@ import '@arclux/arc-ui/chart';
 
 defineOptions({ name: 'Chart' });
 
-withDefaults(defineProps<{
-  type?: string;
+const props = withDefaults(defineProps<{
+  type?: 'line' | 'area' | 'bar' | 'donut';
   series?: unknown[];
   labels?: unknown[];
   stacked?: boolean;
   hideLegend?: boolean;
   hideAxis?: boolean;
   height?: number;
-  valueFormat?: string;
+  valueFormat?: 'number' | 'percent' | 'currency';
   currency?: string;
 }>(), {
   type: 'line',
@@ -33,15 +33,15 @@ const emit = defineEmits<{
 
 <template>
   <arc-chart
-    :type="type"
-    :series="series"
-    :labels="labels"
-    :stacked="stacked"
-    :hideLegend="hideLegend"
-    :hideAxis="hideAxis"
-    :height="height"
-    :valueFormat="valueFormat"
-    :currency="currency"
+    :type="props.type"
+    :series="props.series"
+    :labels="props.labels"
+    :stacked="props.stacked"
+    :hideLegend="props.hideLegend"
+    :hideAxis="props.hideAxis"
+    :height="props.height"
+    :valueFormat="props.valueFormat"
+    :currency="props.currency"
     @arc-mark-click="(payload: CustomEvent) => emit('arc-mark-click', payload)"
   >
     <slot />

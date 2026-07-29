@@ -7,7 +7,7 @@ import '@arclux/arc-ui/number-input';
   selector: 'arc-number-input',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-number-input [attr.value]="value" [attr.min]="min" [attr.max]="max" [attr.step]="step" [attr.label]="label" [attr.name]="name" [disabled]="disabled" (arc-change)="onArcChange($event)"><ng-content /></arc-number-input>`,
+  template: `<arc-number-input [attr.value]="this.value" [attr.min]="this.min" [attr.max]="this.max" [attr.step]="this.step" [attr.label]="this.label" [attr.name]="this.name" [disabled]="this.disabled" (arc-change)="this.onArcChange($event)"><ng-content /></arc-number-input>`,
 })
 export class NumberInput {
   @Input() value: number = 0;

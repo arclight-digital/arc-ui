@@ -4,7 +4,7 @@ import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/settings-layout';
 
 export interface SettingsLayoutProps {
-  navPosition?: string;
+  navPosition?: 'left' | 'top';
   children?: JSX.Element;
   [key: string]: unknown;
 }

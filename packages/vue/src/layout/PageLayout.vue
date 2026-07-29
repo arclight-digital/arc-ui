@@ -4,8 +4,8 @@ import '@arclux/arc-ui/page-layout';
 
 defineOptions({ name: 'PageLayout' });
 
-withDefaults(defineProps<{
-  layout?: 'centered' | 'wide' | 'sidebar-left' | 'sidebar-right';
+const props = withDefaults(defineProps<{
+  layout?: 'sidebar-left' | 'sidebar-right' | 'centered' | 'wide';
   maxWidth?: string;
   gap?: string;
 }>(), {
@@ -17,9 +17,9 @@ withDefaults(defineProps<{
 
 <template>
   <arc-page-layout
-    :layout="layout"
-    :maxWidth="maxWidth"
-    :gap="gap"
+    :layout="props.layout"
+    :maxWidth="props.maxWidth"
+    :gap="props.gap"
   >
     <slot />
   </arc-page-layout>

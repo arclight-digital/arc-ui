@@ -4,7 +4,7 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
-    orientation?: 'vertical' | 'horizontal';
+    orientation?: 'horizontal' | 'vertical';
     ratio?: number;
     minRatio?: number;
     maxRatio?: number;

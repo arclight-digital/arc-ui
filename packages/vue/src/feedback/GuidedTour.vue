@@ -4,7 +4,7 @@ import '@arclux/arc-ui/guided-tour';
 
 defineOptions({ name: 'GuidedTour' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   open?: boolean;
 }>(), {
   open: false,
@@ -19,7 +19,7 @@ const emit = defineEmits<{
 
 <template>
   <arc-guided-tour
-    :open="open"
+    :open="props.open"
     @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
     @arc-complete="(payload: CustomEvent) => emit('arc-complete', payload)"
     @arc-dismiss="(payload: CustomEvent) => emit('arc-dismiss', payload)"

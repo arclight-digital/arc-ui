@@ -7,7 +7,7 @@ import '@arclux/arc-ui/segmented-control';
   selector: 'arc-segmented-control',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-segmented-control [attr.value]="value" [disabled]="disabled" (arc-change)="onArcChange($event)"><ng-content /></arc-segmented-control>`,
+  template: `<arc-segmented-control [attr.value]="this.value" [disabled]="this.disabled" (arc-change)="this.onArcChange($event)"><ng-content /></arc-segmented-control>`,
 })
 export class SegmentedControl {
   @Input() value: string = '';

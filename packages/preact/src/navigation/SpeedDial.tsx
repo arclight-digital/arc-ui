@@ -6,7 +6,7 @@ import '@arclux/arc-ui/speed-dial';
 
 export interface SpeedDialProps {
   open?: boolean;
-  direction?: 'down' | 'left' | 'right';
+  direction?: 'up' | 'down' | 'left' | 'right';
   position?: 'bottom-right' | 'bottom-left';
   items?: string;
   onArcAction?: (e: CustomEvent) => void;

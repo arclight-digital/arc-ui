@@ -4,8 +4,8 @@ import '@arclux/arc-ui/callout';
 
 defineOptions({ name: 'Callout' });
 
-withDefaults(defineProps<{
-  variant?: string;
+const props = withDefaults(defineProps<{
+  variant?: 'info' | 'warning' | 'tip' | 'danger';
   dismissible?: boolean;
 }>(), {
   variant: 'info',
@@ -19,8 +19,8 @@ const emit = defineEmits<{
 
 <template>
   <arc-callout
-    :variant="variant"
-    :dismissible="dismissible"
+    :variant="props.variant"
+    :dismissible="props.dismissible"
     @arc-dismiss="(payload: CustomEvent) => emit('arc-dismiss', payload)"
   >
     <slot />

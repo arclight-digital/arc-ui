@@ -4,7 +4,7 @@ import '@arclux/arc-ui/modal';
 
 defineOptions({ name: 'Modal' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   open?: boolean;
   heading?: string;
   size?: 'sm' | 'md' | 'lg';
@@ -26,11 +26,11 @@ const emit = defineEmits<{
 
 <template>
   <arc-modal
-    :open="open"
-    :heading="heading"
-    :size="size"
-    :fullscreen="fullscreen"
-    :closable="closable"
+    :open="props.open"
+    :heading="props.heading"
+    :size="props.size"
+    :fullscreen="props.fullscreen"
+    :closable="props.closable"
     @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"
     @arc-open="(payload: CustomEvent) => emit('arc-open', payload)"
   >

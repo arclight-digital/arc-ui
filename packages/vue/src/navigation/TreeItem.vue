@@ -4,7 +4,7 @@ import '@arclux/arc-ui/tree-item';
 
 defineOptions({ name: 'TreeItem' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   label?: string;
   icon?: string;
   expanded?: boolean;
@@ -17,9 +17,9 @@ withDefaults(defineProps<{
 
 <template>
   <arc-tree-item
-    :label="label"
-    :icon="icon"
-    :expanded="expanded"
+    :label="props.label"
+    :icon="props.icon"
+    :expanded="props.expanded"
   >
     <slot />
   </arc-tree-item>

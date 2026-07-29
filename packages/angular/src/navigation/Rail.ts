@@ -7,7 +7,7 @@ import '@arclux/arc-ui/rail';
   selector: 'arc-rail',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-rail [attr.items]="items" [attr.value]="value" [expanded]="expanded" (arc-change)="onArcChange($event)"><ng-content /></arc-rail>`,
+  template: `<arc-rail [attr.items]="this.items" [attr.value]="this.value" [expanded]="this.expanded" (arc-change)="this.onArcChange($event)"><ng-content /></arc-rail>`,
 })
 export class Rail {
   @Input() items: string = [];

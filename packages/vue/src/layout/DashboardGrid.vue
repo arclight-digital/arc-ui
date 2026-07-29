@@ -4,7 +4,7 @@ import '@arclux/arc-ui/dashboard-grid';
 
 defineOptions({ name: 'DashboardGrid' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   columns?: number;
   gap?: string;
   minColumnWidth?: string;
@@ -17,9 +17,9 @@ withDefaults(defineProps<{
 
 <template>
   <arc-dashboard-grid
-    :columns="columns"
-    :gap="gap"
-    :minColumnWidth="minColumnWidth"
+    :columns="props.columns"
+    :gap="props.gap"
+    :minColumnWidth="props.minColumnWidth"
   >
     <slot />
   </arc-dashboard-grid>

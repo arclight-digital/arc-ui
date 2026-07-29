@@ -5,7 +5,7 @@ import { createComponent } from '@lit/react';
 import { ArcPageLayout } from '@arclux/arc-ui/page-layout';
 
 export interface PageLayoutProps {
-  layout?: 'centered' | 'wide' | 'sidebar-left' | 'sidebar-right';
+  layout?: 'sidebar-left' | 'sidebar-right' | 'centered' | 'wide';
   maxWidth?: string;
   gap?: string;
   className?: string;

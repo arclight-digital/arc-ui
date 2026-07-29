@@ -7,12 +7,12 @@ import '@arclux/arc-ui/fieldset';
   selector: 'arc-fieldset',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-fieldset [attr.legend]="legend" [attr.description]="description" [disabled]="disabled" [attr.error]="error" [attr.variant]="variant"><ng-content /></arc-fieldset>`,
+  template: `<arc-fieldset [attr.legend]="this.legend" [attr.description]="this.description" [disabled]="this.disabled" [attr.error]="this.error" [attr.variant]="this.variant"><ng-content /></arc-fieldset>`,
 })
 export class Fieldset {
   @Input() legend: string = '';
   @Input() description: string = '';
   @Input() disabled: boolean = false;
   @Input() error: string = '';
-  @Input() variant: 'card' = 'default';
+  @Input() variant: 'default' | 'card' = 'default';
 }

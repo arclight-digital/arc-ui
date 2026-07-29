@@ -7,7 +7,7 @@ import '@arclux/arc-ui/scroll-spy';
   selector: 'arc-scroll-spy',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-scroll-spy [attr.active]="active" [attr.offset]="offset" (arc-change)="arcChange.emit($event)"><ng-content /></arc-scroll-spy>`,
+  template: `<arc-scroll-spy [attr.active]="this.active" [attr.offset]="this.offset" (arc-change)="this.arcChange.emit($event)"><ng-content /></arc-scroll-spy>`,
 })
 export class ScrollSpy {
   @Input() active: string = '';

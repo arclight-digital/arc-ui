@@ -7,7 +7,7 @@ import '@arclux/arc-ui/tree-view';
   selector: 'arc-tree-view',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-tree-view (arc-toggle)="arcToggle.emit($event)" (arc-select)="arcSelect.emit($event)"><ng-content /></arc-tree-view>`,
+  template: `<arc-tree-view (arc-toggle)="this.arcToggle.emit($event)" (arc-select)="this.arcSelect.emit($event)"><ng-content /></arc-tree-view>`,
 })
 export class TreeView {
   @Output() arcToggle = new EventEmitter<CustomEvent>();

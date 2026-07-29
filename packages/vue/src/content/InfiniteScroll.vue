@@ -4,7 +4,7 @@ import '@arclux/arc-ui/infinite-scroll';
 
 defineOptions({ name: 'InfiniteScroll' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   threshold?: number;
   loading?: boolean;
   finished?: boolean;
@@ -23,10 +23,10 @@ const emit = defineEmits<{
 
 <template>
   <arc-infinite-scroll
-    :threshold="threshold"
-    :loading="loading"
-    :finished="finished"
-    :disabled="disabled"
+    :threshold="props.threshold"
+    :loading="props.loading"
+    :finished="props.finished"
+    :disabled="props.disabled"
     @arc-load-more="(payload: CustomEvent) => emit('arc-load-more', payload)"
   >
     <slot />

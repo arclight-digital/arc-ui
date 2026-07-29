@@ -5,7 +5,7 @@ import { createComponent } from '@lit/react';
 import { ArcInlineMessage } from '@arclux/arc-ui/inline-message';
 
 export interface InlineMessageProps {
-  variant?: string;
+  variant?: 'info' | 'success' | 'warning' | 'error';
   className?: string;
   children?: React.ReactNode;
 }

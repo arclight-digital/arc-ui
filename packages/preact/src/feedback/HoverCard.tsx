@@ -5,7 +5,7 @@ import { useLayoutEffect, useRef } from 'preact/hooks';
 import '@arclux/arc-ui/hover-card';
 
 export interface HoverCardProps {
-  position?: string;
+  position?: 'bottom' | 'top' | 'left' | 'right';
   openDelay?: number;
   closeDelay?: number;
   onArcOpen?: (e: CustomEvent) => void;

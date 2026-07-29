@@ -5,8 +5,8 @@
 
   interface Props {
     label?: string;
-    orientation?: 'horizontal';
-    size?: string;
+    orientation?: 'vertical' | 'horizontal';
+    size?: 'sm' | 'md' | 'lg';
     disabled?: boolean;
     children?: Snippet;
     [key: string]: unknown;

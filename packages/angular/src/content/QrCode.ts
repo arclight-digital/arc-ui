@@ -7,12 +7,12 @@ import '@arclux/arc-ui/qr-code';
   selector: 'arc-qr-code',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-qr-code [attr.value]="value" [attr.size]="size" [attr.level]="level" [attr.label]="label" [attr.quietZone]="quietZone" [contrast]="contrast"><ng-content /></arc-qr-code>`,
+  template: `<arc-qr-code [attr.value]="this.value" [attr.size]="this.size" [attr.level]="this.level" [attr.label]="this.label" [attr.quietZone]="this.quietZone" [contrast]="this.contrast"><ng-content /></arc-qr-code>`,
 })
 export class QrCode {
   @Input() value: string = '';
   @Input() size: number = 160;
-  @Input() level: string = 'M';
+  @Input() level: 'L' | 'M' | 'Q' | 'H' = 'M';
   @Input() label: string = '';
   @Input() quietZone: number = 2;
   @Input() contrast: boolean = false;

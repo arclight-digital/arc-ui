@@ -4,7 +4,7 @@ import '@arclux/arc-ui/password-input';
 
 defineOptions({ name: 'PasswordInput' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   name?: string;
   label?: string;
   placeholder?: string;
@@ -12,7 +12,7 @@ withDefaults(defineProps<{
   disabled?: boolean;
   required?: boolean;
   error?: string;
-  size?: 'sm' | 'lg';
+  size?: 'sm' | 'md' | 'lg';
   autocomplete?: string;
   showStrength?: boolean;
 }>(), {
@@ -53,16 +53,16 @@ function onArcChange(payload: CustomEvent) {
 
 <template>
   <arc-password-input
-    :name="name"
-    :label="label"
-    :placeholder="placeholder"
-    :value="value"
-    :disabled="disabled"
-    :required="required"
-    :error="error"
-    :size="size"
-    :autocomplete="autocomplete"
-    :showStrength="showStrength"
+    :name="props.name"
+    :label="props.label"
+    :placeholder="props.placeholder"
+    :value="props.value"
+    :disabled="props.disabled"
+    :required="props.required"
+    :error="props.error"
+    :size="props.size"
+    :autocomplete="props.autocomplete"
+    :showStrength="props.showStrength"
     @arc-strength-change="(payload: CustomEvent) => emit('arc-strength-change', payload)"
     @arc-input="onArcInput"
     @arc-change="onArcChange"

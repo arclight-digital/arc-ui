@@ -4,8 +4,8 @@ import '@arclux/arc-ui/stack';
 
 defineOptions({ name: 'Stack' });
 
-withDefaults(defineProps<{
-  direction?: 'horizontal' | 'vertical';
+const props = withDefaults(defineProps<{
+  direction?: 'vertical' | 'horizontal';
   gap?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
   align?: 'start' | 'center' | 'end' | 'stretch';
   justify?: 'start' | 'center' | 'end' | 'between' | 'around';
@@ -21,11 +21,11 @@ withDefaults(defineProps<{
 
 <template>
   <arc-stack
-    :direction="direction"
-    :gap="gap"
-    :align="align"
-    :justify="justify"
-    :wrap="wrap"
+    :direction="props.direction"
+    :gap="props.gap"
+    :align="props.align"
+    :justify="props.justify"
+    :wrap="props.wrap"
   >
     <slot />
   </arc-stack>

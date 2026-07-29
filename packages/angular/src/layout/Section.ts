@@ -7,7 +7,7 @@ import '@arclux/arc-ui/section';
   selector: 'arc-section',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-section [attr.label]="label"><ng-content /></arc-section>`,
+  template: `<arc-section [attr.label]="this.label"><ng-content /></arc-section>`,
 })
 export class Section {
   @Input() label: string = '';

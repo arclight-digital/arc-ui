@@ -4,7 +4,7 @@ import '@arclux/arc-ui/breadcrumb-item';
 
 defineOptions({ name: 'BreadcrumbItem' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   href?: string;
 }>(), {
   href: '',
@@ -13,7 +13,7 @@ withDefaults(defineProps<{
 
 <template>
   <arc-breadcrumb-item
-    :href="href"
+    :href="props.href"
   >
     <slot />
   </arc-breadcrumb-item>

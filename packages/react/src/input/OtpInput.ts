@@ -9,7 +9,7 @@ export interface OtpInputProps {
   value?: string;
   name?: string;
   disabled?: boolean;
-  type?: string;
+  type?: 'number' | 'text';
   className?: string;
   children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;

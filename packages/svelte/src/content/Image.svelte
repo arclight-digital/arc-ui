@@ -7,8 +7,8 @@
     src?: string;
     alt?: string;
     aspect?: '1/1' | '4/3' | '16/9' | '21/9' | '3/4' | '9/16';
-    fit?: 'contain' | 'fill' | 'none' | 'scale-down';
-    loading?: string;
+    fit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down';
+    loading?: 'lazy' | 'eager';
     fallback?: string;
     children?: Snippet;
     [key: string]: unknown;

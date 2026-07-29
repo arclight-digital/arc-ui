@@ -4,7 +4,7 @@ import '@arclux/arc-ui/stepper-nav';
 
 defineOptions({ name: 'StepperNav' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   steps?: string;
   active?: number;
   linear?: boolean;
@@ -22,9 +22,9 @@ const emit = defineEmits<{
 
 <template>
   <arc-stepper-nav
-    :steps="steps"
-    :active="active"
-    :linear="linear"
+    :steps="props.steps"
+    :active="props.active"
+    :linear="props.linear"
     @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
     @arc-complete="(payload: CustomEvent) => emit('arc-complete', payload)"
   >

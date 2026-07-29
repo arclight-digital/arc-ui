@@ -4,7 +4,7 @@ import '@arclux/arc-ui/description-item';
 
 defineOptions({ name: 'DescriptionItem' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   term?: string;
 }>(), {
   term: '',
@@ -13,7 +13,7 @@ withDefaults(defineProps<{
 
 <template>
   <arc-description-item
-    :term="term"
+    :term="props.term"
   >
     <slot />
   </arc-description-item>

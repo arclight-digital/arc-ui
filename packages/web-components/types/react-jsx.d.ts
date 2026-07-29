@@ -180,9 +180,9 @@ declare module 'react' {
         value?: string;
       };
       'arc-cluster': ArcBaseAttributes & {
-        gap?: 'xs' | 'sm' | 'md' | 'lg';
+        gap?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
         align?: 'start' | 'center' | 'end';
-        justify?: 'start' | 'center' | 'end' | 'between';
+        justify?: 'start' | 'center' | 'end' | 'space-between' | 'space-around';
       };
       'arc-code-block': ArcBaseAttributes & {
         language?: string;
@@ -739,7 +739,7 @@ declare module 'react' {
       };
       'arc-responsive-switcher': ArcBaseAttributes & {
         threshold?: string;
-        gap?: 'sm' | 'md' | 'lg';
+        gap?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
       };
       'arc-scroll-area': ArcBaseAttributes & {
         'max-height'?: string;

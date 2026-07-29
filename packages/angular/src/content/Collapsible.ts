@@ -7,7 +7,7 @@ import '@arclux/arc-ui/collapsible';
   selector: 'arc-collapsible',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-collapsible [open]="open" [attr.heading]="heading" (arc-toggle)="onArcToggle($event)"><ng-content /></arc-collapsible>`,
+  template: `<arc-collapsible [open]="this.open" [attr.heading]="this.heading" (arc-toggle)="this.onArcToggle($event)"><ng-content /></arc-collapsible>`,
 })
 export class Collapsible {
   @Input() open: boolean = false;

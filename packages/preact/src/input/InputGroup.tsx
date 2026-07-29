@@ -4,7 +4,7 @@ import { type FunctionComponent } from 'preact';
 import '@arclux/arc-ui/input-group';
 
 export interface InputGroupProps {
-  size?: 'sm' | 'lg';
+  size?: 'sm' | 'md' | 'lg';
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }

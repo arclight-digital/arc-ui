@@ -5,7 +5,7 @@ import { createComponent } from '@lit/react';
 import { ArcAnnouncement } from '@arclux/arc-ui/announcement';
 
 export interface AnnouncementProps {
-  politeness?: string;
+  politeness?: 'polite' | 'assertive';
   message?: string;
   className?: string;
   children?: React.ReactNode;

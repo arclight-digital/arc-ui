@@ -4,7 +4,7 @@ import '@arclux/arc-ui/typewriter';
 
 defineOptions({ name: 'Typewriter' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   text?: string;
   speed?: number;
   delay?: number;
@@ -29,13 +29,13 @@ const emit = defineEmits<{
 
 <template>
   <arc-typewriter
-    :text="text"
-    :speed="speed"
-    :delay="delay"
-    :cursor="cursor"
-    :loop="loop"
-    :nowrap="nowrap"
-    :pauseEnd="pauseEnd"
+    :text="props.text"
+    :speed="props.speed"
+    :delay="props.delay"
+    :cursor="props.cursor"
+    :loop="props.loop"
+    :nowrap="props.nowrap"
+    :pauseEnd="props.pauseEnd"
     @arc-complete="(payload: CustomEvent) => emit('arc-complete', payload)"
   >
     <slot />

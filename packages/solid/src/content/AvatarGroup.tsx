@@ -5,7 +5,7 @@ import '@arclux/arc-ui/avatar-group';
 
 export interface AvatarGroupProps {
   max?: number;
-  overlap?: 'sm' | 'lg';
+  overlap?: 'sm' | 'md' | 'lg';
   children?: JSX.Element;
   [key: string]: unknown;
 }

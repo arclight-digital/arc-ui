@@ -4,7 +4,7 @@ import '@arclux/arc-ui/step';
 
 defineOptions({ name: 'Step' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   label?: string;
 }>(), {
   label: '',
@@ -13,7 +13,7 @@ withDefaults(defineProps<{
 
 <template>
   <arc-step
-    :label="label"
+    :label="props.label"
   >
     <slot />
   </arc-step>

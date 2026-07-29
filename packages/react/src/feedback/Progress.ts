@@ -6,7 +6,7 @@ import { ArcProgress } from '@arclux/arc-ui/progress';
 
 export interface ProgressProps {
   value?: number;
-  variant?: string;
+  variant?: 'bar' | 'spinner';
   size?: 'sm' | 'md' | 'lg';
   indeterminate?: boolean;
   showValue?: boolean;

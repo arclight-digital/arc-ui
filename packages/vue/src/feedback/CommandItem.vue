@@ -4,7 +4,7 @@ import '@arclux/arc-ui/command-item';
 
 defineOptions({ name: 'CommandItem' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   shortcut?: string;
   icon?: string;
   keywords?: string;
@@ -17,9 +17,9 @@ withDefaults(defineProps<{
 
 <template>
   <arc-command-item
-    :shortcut="shortcut"
-    :icon="icon"
-    :keywords="keywords"
+    :shortcut="props.shortcut"
+    :icon="props.icon"
+    :keywords="props.keywords"
   >
     <slot />
   </arc-command-item>

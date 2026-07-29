@@ -6,7 +6,7 @@ import '@arclux/arc-ui/animated-number';
 export interface AnimatedNumberProps {
   value?: number;
   duration?: number;
-  format?: string;
+  format?: 'number' | 'currency' | 'percent';
   prefix?: string;
   suffix?: string;
   decimals?: number;

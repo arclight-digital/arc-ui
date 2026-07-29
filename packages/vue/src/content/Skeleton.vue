@@ -4,7 +4,7 @@ import '@arclux/arc-ui/skeleton';
 
 defineOptions({ name: 'Skeleton' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   variant?: 'text' | 'circle' | 'rect';
   width?: string;
   height?: string;
@@ -19,10 +19,10 @@ withDefaults(defineProps<{
 
 <template>
   <arc-skeleton
-    :variant="variant"
-    :width="width"
-    :height="height"
-    :count="count"
+    :variant="props.variant"
+    :width="props.width"
+    :height="props.height"
+    :count="props.count"
   >
     <slot />
   </arc-skeleton>

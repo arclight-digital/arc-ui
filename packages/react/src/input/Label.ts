@@ -7,7 +7,7 @@ import { ArcLabel } from '@arclux/arc-ui/label';
 export interface LabelProps {
   for?: string;
   required?: boolean;
-  size?: 'sm' | 'lg';
+  size?: 'sm' | 'md' | 'lg';
   disabled?: boolean;
   className?: string;
   children?: React.ReactNode;

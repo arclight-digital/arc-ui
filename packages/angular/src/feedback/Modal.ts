@@ -7,7 +7,7 @@ import '@arclux/arc-ui/modal';
   selector: 'arc-modal',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-modal [open]="open" [attr.heading]="heading" [attr.size]="size" [fullscreen]="fullscreen" [closable]="closable" (arc-close)="arcClose.emit($event)" (arc-open)="arcOpen.emit($event)"><ng-content /></arc-modal>`,
+  template: `<arc-modal [open]="this.open" [attr.heading]="this.heading" [attr.size]="this.size" [fullscreen]="this.fullscreen" [closable]="this.closable" (arc-close)="this.arcClose.emit($event)" (arc-open)="this.arcOpen.emit($event)"><ng-content /></arc-modal>`,
 })
 export class Modal {
   @Input() open: boolean = false;

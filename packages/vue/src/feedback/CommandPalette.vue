@@ -4,7 +4,7 @@ import '@arclux/arc-ui/command-palette';
 
 defineOptions({ name: 'CommandPalette' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   open?: boolean;
   placeholder?: string;
 }>(), {
@@ -20,8 +20,8 @@ const emit = defineEmits<{
 
 <template>
   <arc-command-palette
-    :open="open"
-    :placeholder="placeholder"
+    :open="props.open"
+    :placeholder="props.placeholder"
     @arc-select="(payload: CustomEvent) => emit('arc-select', payload)"
     @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"
   >

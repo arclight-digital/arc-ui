@@ -4,7 +4,7 @@ import '@arclux/arc-ui/highlight';
 
 defineOptions({ name: 'Highlight' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   text?: string;
   query?: string;
   caseSensitive?: boolean;
@@ -17,9 +17,9 @@ withDefaults(defineProps<{
 
 <template>
   <arc-highlight
-    :text="text"
-    :query="query"
-    :caseSensitive="caseSensitive"
+    :text="props.text"
+    :query="props.query"
+    :caseSensitive="props.caseSensitive"
   >
     <slot />
   </arc-highlight>

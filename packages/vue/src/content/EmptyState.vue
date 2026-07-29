@@ -4,7 +4,7 @@ import '@arclux/arc-ui/empty-state';
 
 defineOptions({ name: 'EmptyState' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   heading?: string;
   description?: string;
 }>(), {
@@ -15,8 +15,8 @@ withDefaults(defineProps<{
 
 <template>
   <arc-empty-state
-    :heading="heading"
-    :description="description"
+    :heading="props.heading"
+    :description="props.description"
   >
     <slot />
   </arc-empty-state>

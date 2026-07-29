@@ -4,8 +4,8 @@ import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/badge';
 
 export interface BadgeProps {
-  variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';
-  size?: 'sm' | 'lg';
+  variant?: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';
+  size?: 'sm' | 'md' | 'lg';
   color?: string;
   children?: JSX.Element;
   [key: string]: unknown;

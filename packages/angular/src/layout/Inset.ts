@@ -7,7 +7,7 @@ import '@arclux/arc-ui/inset';
   selector: 'arc-inset',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-inset [attr.space]="space" [bleed]="bleed"><ng-content /></arc-inset>`,
+  template: `<arc-inset [attr.space]="this.space" [bleed]="this.bleed"><ng-content /></arc-inset>`,
 })
 export class Inset {
   @Input() space: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' = 'md';

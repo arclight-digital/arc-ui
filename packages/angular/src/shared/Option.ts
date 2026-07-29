@@ -7,7 +7,7 @@ import '@arclux/arc-ui/option';
   selector: 'arc-option',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-option [attr.value]="value" [disabled]="disabled" [selected]="selected"><ng-content /></arc-option>`,
+  template: `<arc-option [attr.value]="this.value" [disabled]="this.disabled" [selected]="this.selected"><ng-content /></arc-option>`,
 })
 export class Option {
   @Input() value: string = '';

@@ -4,7 +4,7 @@ import '@arclux/arc-ui/scroll-area';
 
 defineOptions({ name: 'ScrollArea' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   maxHeight?: string;
   orientation?: 'vertical' | 'horizontal' | 'both';
 }>(), {
@@ -15,8 +15,8 @@ withDefaults(defineProps<{
 
 <template>
   <arc-scroll-area
-    :maxHeight="maxHeight"
-    :orientation="orientation"
+    :maxHeight="props.maxHeight"
+    :orientation="props.orientation"
   >
     <slot />
   </arc-scroll-area>

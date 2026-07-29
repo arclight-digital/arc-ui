@@ -5,8 +5,8 @@ import { createComponent } from '@lit/react';
 import { ArcBadge } from '@arclux/arc-ui/badge';
 
 export interface BadgeProps {
-  variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';
-  size?: 'sm' | 'lg';
+  variant?: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';
+  size?: 'sm' | 'md' | 'lg';
   color?: string;
   className?: string;
   children?: React.ReactNode;

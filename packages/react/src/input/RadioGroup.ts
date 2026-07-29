@@ -9,7 +9,7 @@ export interface RadioGroupProps {
   name?: string;
   disabled?: boolean;
   size?: 'sm' | 'lg';
-  orientation?: 'horizontal';
+  orientation?: 'vertical' | 'horizontal';
   className?: string;
   children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;

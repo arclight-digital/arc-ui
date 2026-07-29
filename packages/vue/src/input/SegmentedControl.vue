@@ -4,7 +4,7 @@ import '@arclux/arc-ui/segmented-control';
 
 defineOptions({ name: 'SegmentedControl' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   value?: string;
   disabled?: boolean;
 }>(), {
@@ -28,8 +28,8 @@ function onArcChange(payload: CustomEvent) {
 
 <template>
   <arc-segmented-control
-    :value="value"
-    :disabled="disabled"
+    :value="props.value"
+    :disabled="props.disabled"
     @arc-change="onArcChange"
   >
     <slot />

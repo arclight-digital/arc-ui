@@ -7,8 +7,8 @@ import '@arclux/arc-ui/inline-message';
   selector: 'arc-inline-message',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-inline-message [attr.variant]="variant"><ng-content /></arc-inline-message>`,
+  template: `<arc-inline-message [attr.variant]="this.variant"><ng-content /></arc-inline-message>`,
 })
 export class InlineMessage {
-  @Input() variant: string = 'info';
+  @Input() variant: 'info' | 'success' | 'warning' | 'error' = 'info';
 }

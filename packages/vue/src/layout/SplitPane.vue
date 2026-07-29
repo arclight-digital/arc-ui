@@ -4,8 +4,8 @@ import '@arclux/arc-ui/split-pane';
 
 defineOptions({ name: 'SplitPane' });
 
-withDefaults(defineProps<{
-  orientation?: 'vertical' | 'horizontal';
+const props = withDefaults(defineProps<{
+  orientation?: 'horizontal' | 'vertical';
   ratio?: number;
   minRatio?: number;
   maxRatio?: number;
@@ -32,10 +32,10 @@ function onArcResize(payload: CustomEvent) {
 
 <template>
   <arc-split-pane
-    :orientation="orientation"
-    :ratio="ratio"
-    :minRatio="minRatio"
-    :maxRatio="maxRatio"
+    :orientation="props.orientation"
+    :ratio="props.ratio"
+    :minRatio="props.minRatio"
+    :maxRatio="props.maxRatio"
     @arc-resize="onArcResize"
   >
     <slot />

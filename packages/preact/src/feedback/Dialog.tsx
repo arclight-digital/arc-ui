@@ -10,7 +10,7 @@ export interface DialogProps {
   message?: string;
   confirmLabel?: string;
   cancelLabel?: string;
-  variant?: string;
+  variant?: 'default' | 'danger';
   onArcConfirm?: (e: CustomEvent) => void;
   onArcCancel?: (e: CustomEvent) => void;
   children?: preact.ComponentChildren;

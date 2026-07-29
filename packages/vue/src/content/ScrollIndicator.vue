@@ -4,11 +4,11 @@ import '@arclux/arc-ui/scroll-indicator';
 
 defineOptions({ name: 'ScrollIndicator' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   target?: string;
-  position?: 'bottom';
+  position?: 'top' | 'bottom';
   size?: 'sm' | 'md' | 'lg';
-  color?: 'gradient';
+  color?: 'accent' | 'gradient';
 }>(), {
   target: '',
   position: 'top',
@@ -19,10 +19,10 @@ withDefaults(defineProps<{
 
 <template>
   <arc-scroll-indicator
-    :target="target"
-    :position="position"
-    :size="size"
-    :color="color"
+    :target="props.target"
+    :position="props.position"
+    :size="props.size"
+    :color="props.color"
   >
     <slot />
   </arc-scroll-indicator>

@@ -4,7 +4,7 @@ import '@arclux/arc-ui/tooltip';
 
 defineOptions({ name: 'Tooltip' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   content?: string;
   position?: 'top' | 'bottom' | 'left' | 'right';
   delay?: number;
@@ -17,9 +17,9 @@ withDefaults(defineProps<{
 
 <template>
   <arc-tooltip
-    :content="content"
-    :position="position"
-    :delay="delay"
+    :content="props.content"
+    :position="props.position"
+    :delay="props.delay"
   >
     <slot />
   </arc-tooltip>

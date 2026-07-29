@@ -4,7 +4,7 @@ import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/input';
 
 export interface InputProps {
-  type?: string;
+  type?: 'text' | 'email' | 'tel' | 'url' | 'password';
   name?: string;
   label?: string;
   placeholder?: string;
@@ -12,7 +12,7 @@ export interface InputProps {
   disabled?: boolean;
   required?: boolean;
   error?: string;
-  size?: 'sm' | 'lg';
+  size?: 'sm' | 'md' | 'lg';
   multiline?: boolean;
   rows?: number;
   onArcInput?: (e: CustomEvent) => void;

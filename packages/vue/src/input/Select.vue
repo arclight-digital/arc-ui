@@ -4,7 +4,7 @@ import '@arclux/arc-ui/select';
 
 defineOptions({ name: 'Select' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   value?: string;
   placeholder?: string;
   label?: string;
@@ -40,14 +40,14 @@ function onArcChange(payload: CustomEvent) {
 
 <template>
   <arc-select
-    :value="value"
-    :placeholder="placeholder"
-    :label="label"
-    :name="name"
-    :disabled="disabled"
-    :size="size"
-    :error="error"
-    :open="open"
+    :value="props.value"
+    :placeholder="props.placeholder"
+    :label="props.label"
+    :name="props.name"
+    :disabled="props.disabled"
+    :size="props.size"
+    :error="props.error"
+    :open="props.open"
     @arc-change="onArcChange"
   >
     <slot />

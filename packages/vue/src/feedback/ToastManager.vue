@@ -4,8 +4,8 @@ import '@arclux/arc-ui/toast-manager';
 
 defineOptions({ name: 'ToastManager' });
 
-withDefaults(defineProps<{
-  position?: string;
+const props = withDefaults(defineProps<{
+  position?: 'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center';
   duration?: number;
   maxVisible?: number;
   dedupe?: boolean;
@@ -27,11 +27,11 @@ const emit = defineEmits<{
 
 <template>
   <arc-toast-manager
-    :position="position"
-    :duration="duration"
-    :maxVisible="maxVisible"
-    :dedupe="dedupe"
-    :queueLimit="queueLimit"
+    :position="props.position"
+    :duration="props.duration"
+    :maxVisible="props.maxVisible"
+    :dedupe="props.dedupe"
+    :queueLimit="props.queueLimit"
     @arc-queue-overflow="(payload: CustomEvent) => emit('arc-queue-overflow', payload)"
     @arc-dismiss="(payload: CustomEvent) => emit('arc-dismiss', payload)"
     @arc-queue-change="(payload: CustomEvent) => emit('arc-queue-change', payload)"

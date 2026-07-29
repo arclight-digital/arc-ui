@@ -4,11 +4,11 @@ import '@arclux/arc-ui/tabs';
 
 defineOptions({ name: 'Tabs' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   selected?: number;
-  align?: 'center' | 'end';
-  variant?: 'pills';
-  orientation?: 'vertical';
+  align?: 'start' | 'center' | 'end';
+  variant?: 'underline' | 'pills';
+  orientation?: 'horizontal' | 'vertical';
 }>(), {
   selected: 0,
   align: 'start',
@@ -23,10 +23,10 @@ const emit = defineEmits<{
 
 <template>
   <arc-tabs
-    :selected="selected"
-    :align="align"
-    :variant="variant"
-    :orientation="orientation"
+    :selected="props.selected"
+    :align="props.align"
+    :variant="props.variant"
+    :orientation="props.orientation"
     @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
   >
     <slot />

@@ -6,7 +6,7 @@
   interface Props {
     href?: string;
     active?: boolean;
-    variant?: string;
+    variant?: 'default' | 'primary' | 'muted';
     description?: string;
     children?: Snippet;
     [key: string]: unknown;

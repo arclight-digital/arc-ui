@@ -7,7 +7,7 @@ import '@arclux/arc-ui/chip';
   selector: 'arc-chip',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-chip [selected]="selected" [disabled]="disabled" [attr.value]="value" (arc-change)="onArcChange($event)"><ng-content /></arc-chip>`,
+  template: `<arc-chip [selected]="this.selected" [disabled]="this.disabled" [attr.value]="this.value" (arc-change)="this.onArcChange($event)"><ng-content /></arc-chip>`,
 })
 export class Chip {
   @Input() selected: boolean = false;

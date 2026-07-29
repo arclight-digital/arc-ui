@@ -4,7 +4,7 @@ import '@arclux/arc-ui/chip';
 
 defineOptions({ name: 'Chip' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   selected?: boolean;
   disabled?: boolean;
   value?: string;
@@ -30,9 +30,9 @@ function onArcChange(payload: CustomEvent) {
 
 <template>
   <arc-chip
-    :selected="selected"
-    :disabled="disabled"
-    :value="value"
+    :selected="props.selected"
+    :disabled="props.disabled"
+    :value="props.value"
     @arc-change="onArcChange"
   >
     <slot />

@@ -7,7 +7,7 @@ import '@arclux/arc-ui/select';
   selector: 'arc-select',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-select [attr.value]="value" [attr.placeholder]="placeholder" [attr.label]="label" [attr.name]="name" [disabled]="disabled" [attr.size]="size" [attr.error]="error" [open]="open" (arc-change)="onArcChange($event)"><ng-content /></arc-select>`,
+  template: `<arc-select [attr.value]="this.value" [attr.placeholder]="this.placeholder" [attr.label]="this.label" [attr.name]="this.name" [disabled]="this.disabled" [attr.size]="this.size" [attr.error]="this.error" [open]="this.open" (arc-change)="this.onArcChange($event)"><ng-content /></arc-select>`,
 })
 export class Select {
   @Input() value: string = '';

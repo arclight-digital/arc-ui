@@ -4,7 +4,7 @@ import '@arclux/arc-ui/footer';
 
 defineOptions({ name: 'Footer' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   compact?: boolean;
   border?: boolean;
   contained?: string;
@@ -19,10 +19,10 @@ withDefaults(defineProps<{
 
 <template>
   <arc-footer
-    :compact="compact"
-    :border="border"
-    :contained="contained"
-    :align="align"
+    :compact="props.compact"
+    :border="props.border"
+    :contained="props.contained"
+    :align="props.align"
   >
     <slot />
   </arc-footer>

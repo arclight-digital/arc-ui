@@ -4,7 +4,7 @@ import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/anchor-nav';
 
 export interface AnchorNavProps {
-  orientation?: 'vertical';
+  orientation?: 'vertical' | 'horizontal';
   value?: string;
   items?: string;
   onArcChange?: (e: CustomEvent) => void;

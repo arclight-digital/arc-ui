@@ -4,7 +4,7 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
-    position?: 'fixed';
+    position?: 'static' | 'fixed';
     children?: Snippet;
     [key: string]: unknown;
   }

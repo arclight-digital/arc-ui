@@ -7,7 +7,7 @@ import '@arclux/arc-ui/file-upload';
   selector: 'arc-file-upload',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-file-upload [attr.accept]="accept" [multiple]="multiple" [attr.maxSize]="maxSize" [disabled]="disabled" (arc-change)="arcChange.emit($event)" (arc-remove)="arcRemove.emit($event)"><ng-content /></arc-file-upload>`,
+  template: `<arc-file-upload [attr.accept]="this.accept" [multiple]="this.multiple" [attr.maxSize]="this.maxSize" [disabled]="this.disabled" (arc-change)="this.arcChange.emit($event)" (arc-remove)="this.arcRemove.emit($event)"><ng-content /></arc-file-upload>`,
 })
 export class FileUpload {
   @Input() accept: string = '';

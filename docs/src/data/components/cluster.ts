@@ -19,7 +19,7 @@ Use Cluster whenever you have a set of inline elements that should wrap naturall
     'Flex-wrap layout for natural inline-flow wrapping',
     'Design-token-based gap spacing (xs, sm, md, lg) for consistent rhythm',
     'Configurable alignment via `align` prop (start, center, end)',
-    'Configurable justification via `justify` prop (start, center, end, between)',
+    'Configurable justification via `justify` prop (start, center, end, space-between, space-around)',
     'Handles variable-width children gracefully — no fixed column assumptions',
     'Lightweight wrapper with zero JavaScript overhead',
     'CSS part: `cluster` for targeted ::part() styling',
@@ -30,7 +30,7 @@ Use Cluster whenever you have a set of inline elements that should wrap naturall
       'Use for tag lists, chip groups, and badge collections',
       'Use for button groups that should wrap on narrow screens',
       'Use gap="sm" for dense tag/chip groups; gap="md" for button groups',
-      'Use justify="between" for navigation-style layouts with space between items',
+      'Use justify="space-between" for navigation-style layouts with space between items',
       'Combine with Inset for padded containers of clustered items',
     ],
     dont: [

@@ -4,7 +4,7 @@ import '@arclux/arc-ui/virtual-list';
 
 defineOptions({ name: 'VirtualList' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   items?: unknown[];
   itemHeight?: number;
   overscan?: number;
@@ -17,9 +17,9 @@ withDefaults(defineProps<{
 
 <template>
   <arc-virtual-list
-    :items="items"
-    :itemHeight="itemHeight"
-    :overscan="overscan"
+    :items="props.items"
+    :itemHeight="props.itemHeight"
+    :overscan="props.overscan"
   >
     <slot />
   </arc-virtual-list>

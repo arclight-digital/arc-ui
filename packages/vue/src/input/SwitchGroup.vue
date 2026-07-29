@@ -4,10 +4,10 @@ import '@arclux/arc-ui/switch-group';
 
 defineOptions({ name: 'SwitchGroup' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   label?: string;
-  orientation?: 'horizontal';
-  size?: string;
+  orientation?: 'vertical' | 'horizontal';
+  size?: 'sm' | 'md' | 'lg';
   disabled?: boolean;
 }>(), {
   label: '',
@@ -19,10 +19,10 @@ withDefaults(defineProps<{
 
 <template>
   <arc-switch-group
-    :label="label"
-    :orientation="orientation"
-    :size="size"
-    :disabled="disabled"
+    :label="props.label"
+    :orientation="props.orientation"
+    :size="props.size"
+    :disabled="props.disabled"
   >
     <slot />
   </arc-switch-group>

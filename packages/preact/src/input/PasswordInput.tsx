@@ -12,7 +12,7 @@ export interface PasswordInputProps {
   disabled?: boolean;
   required?: boolean;
   error?: string;
-  size?: 'sm' | 'lg';
+  size?: 'sm' | 'md' | 'lg';
   autocomplete?: string;
   showStrength?: boolean;
   onArcStrengthChange?: (e: CustomEvent) => void;

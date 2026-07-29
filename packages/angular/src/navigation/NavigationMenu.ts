@@ -7,7 +7,7 @@ import '@arclux/arc-ui/navigation-menu';
   selector: 'arc-navigation-menu',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-navigation-menu [attr.label]="label" (arc-mobile-menu-toggle)="arcMobileMenuToggle.emit($event)"><ng-content /></arc-navigation-menu>`,
+  template: `<arc-navigation-menu [attr.label]="this.label" (arc-mobile-menu-toggle)="this.arcMobileMenuToggle.emit($event)"><ng-content /></arc-navigation-menu>`,
 })
 export class NavigationMenu {
   @Input() label: string = 'Navigation menu';

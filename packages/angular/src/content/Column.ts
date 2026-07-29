@@ -7,7 +7,7 @@ import '@arclux/arc-ui/column';
   selector: 'arc-column',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-column [attr.key]="key" [attr.label]="label" [sortable]="sortable" [attr.width]="width"><ng-content /></arc-column>`,
+  template: `<arc-column [attr.key]="this.key" [attr.label]="this.label" [sortable]="this.sortable" [attr.width]="this.width"><ng-content /></arc-column>`,
 })
 export class Column {
   @Input() key: string = '';

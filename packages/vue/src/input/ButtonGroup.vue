@@ -4,9 +4,9 @@ import '@arclux/arc-ui/button-group';
 
 defineOptions({ name: 'ButtonGroup' });
 
-withDefaults(defineProps<{
-  orientation?: 'vertical';
-  size?: string;
+const props = withDefaults(defineProps<{
+  orientation?: 'horizontal' | 'vertical';
+  size?: 'sm' | 'md' | 'lg';
   variant?: string;
 }>(), {
   orientation: 'horizontal',
@@ -17,9 +17,9 @@ withDefaults(defineProps<{
 
 <template>
   <arc-button-group
-    :orientation="orientation"
-    :size="size"
-    :variant="variant"
+    :orientation="props.orientation"
+    :size="props.size"
+    :variant="props.variant"
   >
     <slot />
   </arc-button-group>

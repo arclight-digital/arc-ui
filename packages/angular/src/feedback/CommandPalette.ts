@@ -7,7 +7,7 @@ import '@arclux/arc-ui/command-palette';
   selector: 'arc-command-palette',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-command-palette [open]="open" [attr.placeholder]="placeholder" (arc-select)="arcSelect.emit($event)" (arc-close)="arcClose.emit($event)"><ng-content /></arc-command-palette>`,
+  template: `<arc-command-palette [open]="this.open" [attr.placeholder]="this.placeholder" (arc-select)="this.arcSelect.emit($event)" (arc-close)="this.arcClose.emit($event)"><ng-content /></arc-command-palette>`,
 })
 export class CommandPalette {
   @Input() open: boolean = false;

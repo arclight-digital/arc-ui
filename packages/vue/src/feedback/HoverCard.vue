@@ -4,8 +4,8 @@ import '@arclux/arc-ui/hover-card';
 
 defineOptions({ name: 'HoverCard' });
 
-withDefaults(defineProps<{
-  position?: string;
+const props = withDefaults(defineProps<{
+  position?: 'bottom' | 'top' | 'left' | 'right';
   openDelay?: number;
   closeDelay?: number;
 }>(), {
@@ -22,9 +22,9 @@ const emit = defineEmits<{
 
 <template>
   <arc-hover-card
-    :position="position"
-    :openDelay="openDelay"
-    :closeDelay="closeDelay"
+    :position="props.position"
+    :openDelay="props.openDelay"
+    :closeDelay="props.closeDelay"
     @arc-open="(payload: CustomEvent) => emit('arc-open', payload)"
     @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"
   >

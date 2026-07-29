@@ -4,7 +4,7 @@ import '@arclux/arc-ui/bottom-nav';
 
 defineOptions({ name: 'BottomNav' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   items?: string;
   value?: string;
 }>(), {
@@ -28,8 +28,8 @@ function onArcChange(payload: CustomEvent) {
 
 <template>
   <arc-bottom-nav
-    :items="items"
-    :value="value"
+    :items="props.items"
+    :value="props.value"
     @arc-change="onArcChange"
   >
     <slot />

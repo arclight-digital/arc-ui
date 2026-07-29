@@ -4,7 +4,7 @@ import '@arclux/arc-ui/loading-overlay';
 
 defineOptions({ name: 'LoadingOverlay' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   active?: boolean;
   message?: string;
   global?: boolean;
@@ -17,9 +17,9 @@ withDefaults(defineProps<{
 
 <template>
   <arc-loading-overlay
-    :active="active"
-    :message="message"
-    :global="global"
+    :active="props.active"
+    :message="props.message"
+    :global="props.global"
   >
     <slot />
   </arc-loading-overlay>

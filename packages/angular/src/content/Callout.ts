@@ -7,10 +7,10 @@ import '@arclux/arc-ui/callout';
   selector: 'arc-callout',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-callout [attr.variant]="variant" [dismissible]="dismissible" (arc-dismiss)="arcDismiss.emit($event)"><ng-content /></arc-callout>`,
+  template: `<arc-callout [attr.variant]="this.variant" [dismissible]="this.dismissible" (arc-dismiss)="this.arcDismiss.emit($event)"><ng-content /></arc-callout>`,
 })
 export class Callout {
-  @Input() variant: string = 'info';
+  @Input() variant: 'info' | 'warning' | 'tip' | 'danger' = 'info';
   @Input() dismissible: boolean = false;
   @Output() arcDismiss = new EventEmitter<CustomEvent>();
 }

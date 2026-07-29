@@ -7,11 +7,11 @@ import '@arclux/arc-ui/link';
   selector: 'arc-link',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-link [attr.href]="href" [attr.variant]="variant" [attr.underline]="underline" [active]="active" [external]="external"><ng-content /></arc-link>`,
+  template: `<arc-link [attr.href]="this.href" [attr.variant]="this.variant" [attr.underline]="this.underline" [active]="this.active" [external]="this.external"><ng-content /></arc-link>`,
 })
 export class Link {
   @Input() href: string = '';
-  @Input() variant: 'muted' | 'nav' = 'default';
+  @Input() variant: 'default' | 'muted' | 'nav' = 'default';
   @Input() underline: 'always' | 'never' = 'hover';
   @Input() active: boolean = false;
   @Input() external: boolean = false;

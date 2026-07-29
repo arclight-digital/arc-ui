@@ -5,7 +5,7 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcSplitPane } from '@arclux/arc-ui/split-pane';
 
 export interface SplitPaneProps {
-  orientation?: 'vertical' | 'horizontal';
+  orientation?: 'horizontal' | 'vertical';
   ratio?: number;
   minRatio?: number;
   maxRatio?: number;

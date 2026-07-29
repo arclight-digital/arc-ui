@@ -5,14 +5,14 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcChart } from '@arclux/arc-ui/chart';
 
 export interface ChartProps {
-  type?: string;
+  type?: 'line' | 'area' | 'bar' | 'donut';
   series?: unknown[];
   labels?: unknown[];
   stacked?: boolean;
   hideLegend?: boolean;
   hideAxis?: boolean;
   height?: number;
-  valueFormat?: string;
+  valueFormat?: 'number' | 'percent' | 'currency';
   currency?: string;
   className?: string;
   children?: React.ReactNode;

@@ -4,7 +4,7 @@ import '@arclux/arc-ui/spotlight';
 
 defineOptions({ name: 'Spotlight' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   target?: string;
   active?: boolean;
   padding?: number;
@@ -21,9 +21,9 @@ const emit = defineEmits<{
 
 <template>
   <arc-spotlight
-    :target="target"
-    :active="active"
-    :padding="padding"
+    :target="props.target"
+    :active="props.active"
+    :padding="props.padding"
     @arc-dismiss="(payload: CustomEvent) => emit('arc-dismiss', payload)"
   >
     <slot />

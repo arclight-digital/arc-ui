@@ -6,15 +6,15 @@
   interface Props {
     for?: string;
     required?: boolean;
-    size?: 'sm' | 'lg';
+    size?: 'sm' | 'md' | 'lg';
     disabled?: boolean;
     children?: Snippet;
     [key: string]: unknown;
   }
 
-  let { for = '', required = false, size = 'md', disabled = false, children, ...rest }: Props = $props();
+  let { for: forProp = '', required = false, size = 'md', disabled = false, children, ...rest }: Props = $props();
 </script>
 
-<arc-label {for} {required} {size} {disabled} {...rest}>
+<arc-label for={forProp} {required} {size} {disabled} {...rest}>
   {@render children?.()}
 </arc-label>

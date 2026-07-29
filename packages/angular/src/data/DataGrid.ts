@@ -7,7 +7,7 @@ import '@arclux/arc-ui/data-grid';
   selector: 'arc-data-grid',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-data-grid [columns]="columns" [rows]="rows" [sort]="sort" [manualSort]="manualSort" [selectable]="selectable" [virtual]="virtual" [attr.rowHeight]="rowHeight" (arc-sort)="onArcSort($event)" (arc-selection-change)="arcSelectionChange.emit($event)" (arc-cell-change)="arcCellChange.emit($event)"><ng-content /></arc-data-grid>`,
+  template: `<arc-data-grid [columns]="this.columns" [rows]="this.rows" [sort]="this.sort" [manualSort]="this.manualSort" [selectable]="this.selectable" [virtual]="this.virtual" [attr.rowHeight]="this.rowHeight" (arc-sort)="this.onArcSort($event)" (arc-selection-change)="this.arcSelectionChange.emit($event)" (arc-cell-change)="this.arcCellChange.emit($event)"><ng-content /></arc-data-grid>`,
 })
 export class DataGrid {
   @Input() columns: unknown[] = [];

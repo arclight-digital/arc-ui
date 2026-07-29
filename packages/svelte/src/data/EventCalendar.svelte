@@ -5,7 +5,7 @@
 
   interface Props {
     events?: unknown[];
-    view?: 'week';
+    view?: 'month' | 'week';
     date?: string;
     children?: Snippet;
     [key: string]: unknown;
@@ -20,7 +20,7 @@
     const detail = (e as CustomEvent).detail as Record<string, unknown> | null;
     if (detail) {
       if ('date' in detail) date = detail.date as string;
-      if ('view' in detail) view = detail.view as 'week';
+      if ('view' in detail) view = detail.view as 'month' | 'week';
     }
     (rest['onarc-period-change'] as ((e: Event) => void) | undefined)?.(e);
   }

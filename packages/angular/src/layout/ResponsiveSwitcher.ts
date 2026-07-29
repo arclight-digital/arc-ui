@@ -7,7 +7,7 @@ import '@arclux/arc-ui/responsive-switcher';
   selector: 'arc-responsive-switcher',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-responsive-switcher [attr.threshold]="threshold" [attr.gap]="gap"><ng-content /></arc-responsive-switcher>`,
+  template: `<arc-responsive-switcher [attr.threshold]="this.threshold" [attr.gap]="this.gap"><ng-content /></arc-responsive-switcher>`,
 })
 export class ResponsiveSwitcher {
   @Input() threshold: string = '600px';

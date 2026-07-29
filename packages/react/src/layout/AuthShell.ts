@@ -5,7 +5,7 @@ import { createComponent } from '@lit/react';
 import { ArcAuthShell } from '@arclux/arc-ui/auth-shell';
 
 export interface AuthShellProps {
-  variant?: string;
+  variant?: 'centered' | 'split';
   className?: string;
   children?: React.ReactNode;
 }

@@ -7,7 +7,7 @@ import '@arclux/arc-ui/tree-item';
   selector: 'arc-tree-item',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-tree-item [attr.label]="label" [attr.icon]="icon" [expanded]="expanded"><ng-content /></arc-tree-item>`,
+  template: `<arc-tree-item [attr.label]="this.label" [attr.icon]="this.icon" [expanded]="this.expanded"><ng-content /></arc-tree-item>`,
 })
 export class TreeItem {
   @Input() label: string = '';

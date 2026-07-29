@@ -4,7 +4,7 @@ import { type FunctionComponent } from 'preact';
 import '@arclux/arc-ui/auth-shell';
 
 export interface AuthShellProps {
-  variant?: string;
+  variant?: 'centered' | 'split';
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }

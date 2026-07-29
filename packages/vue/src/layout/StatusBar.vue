@@ -4,8 +4,8 @@ import '@arclux/arc-ui/status-bar';
 
 defineOptions({ name: 'StatusBar' });
 
-withDefaults(defineProps<{
-  position?: 'fixed';
+const props = withDefaults(defineProps<{
+  position?: 'static' | 'fixed';
 }>(), {
   position: 'static',
 });
@@ -13,7 +13,7 @@ withDefaults(defineProps<{
 
 <template>
   <arc-status-bar
-    :position="position"
+    :position="props.position"
   >
     <slot />
   </arc-status-bar>

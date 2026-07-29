@@ -4,7 +4,7 @@ import '@arclux/arc-ui/truncate';
 
 defineOptions({ name: 'Truncate' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   lines?: number;
   expanded?: boolean;
 }>(), {
@@ -28,8 +28,8 @@ function onArcToggle(payload: CustomEvent) {
 
 <template>
   <arc-truncate
-    :lines="lines"
-    :expanded="expanded"
+    :lines="props.lines"
+    :expanded="props.expanded"
     @arc-toggle="onArcToggle"
   >
     <slot />

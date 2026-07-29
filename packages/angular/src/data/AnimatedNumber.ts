@@ -7,12 +7,12 @@ import '@arclux/arc-ui/animated-number';
   selector: 'arc-animated-number',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-animated-number [attr.value]="value" [attr.duration]="duration" [attr.format]="format" [attr.prefix]="prefix" [attr.suffix]="suffix" [attr.decimals]="decimals" [attr.locale]="locale"><ng-content /></arc-animated-number>`,
+  template: `<arc-animated-number [attr.value]="this.value" [attr.duration]="this.duration" [attr.format]="this.format" [attr.prefix]="this.prefix" [attr.suffix]="this.suffix" [attr.decimals]="this.decimals" [attr.locale]="this.locale"><ng-content /></arc-animated-number>`,
 })
 export class AnimatedNumber {
   @Input() value: number = 0;
   @Input() duration: number = 1000;
-  @Input() format: string = 'number';
+  @Input() format: 'number' | 'currency' | 'percent' = 'number';
   @Input() prefix: string = '';
   @Input() suffix: string = '';
   @Input() decimals: number = 0;

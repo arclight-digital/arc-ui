@@ -4,9 +4,9 @@ import '@arclux/arc-ui/text';
 
 defineOptions({ name: 'Text' });
 
-withDefaults(defineProps<{
-  variant?: 'accent' | 'code';
-  as?: string;
+const props = withDefaults(defineProps<{
+  variant?: 'display' | 'heading' | 'body' | 'muted' | 'ghost' | 'accent' | 'label' | 'wordmark' | 'code';
+  as?: 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span';
 }>(), {
   variant: 'body',
   as: 'p',
@@ -15,8 +15,8 @@ withDefaults(defineProps<{
 
 <template>
   <arc-text
-    :variant="variant"
-    :as="as"
+    :variant="props.variant"
+    :as="props.as"
   >
     <slot />
   </arc-text>

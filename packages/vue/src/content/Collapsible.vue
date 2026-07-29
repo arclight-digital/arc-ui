@@ -4,7 +4,7 @@ import '@arclux/arc-ui/collapsible';
 
 defineOptions({ name: 'Collapsible' });
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   open?: boolean;
   heading?: string;
 }>(), {
@@ -28,8 +28,8 @@ function onArcToggle(payload: CustomEvent) {
 
 <template>
   <arc-collapsible
-    :open="open"
-    :heading="heading"
+    :open="props.open"
+    :heading="props.heading"
     @arc-toggle="onArcToggle"
   >
     <slot />
