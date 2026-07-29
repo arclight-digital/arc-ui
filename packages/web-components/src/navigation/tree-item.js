@@ -4,6 +4,7 @@ import { LitElement, html, css } from 'lit';
  * Node within a TreeView. Can nest for sub-trees.
  *
  * @tag arc-tree-item
+ * @arc-prism interactive — tree item, child of arc-tree-view
  * @prop {string} label - Item label text
  * @prop {string} icon - Icon or emoji
  * @prop {boolean} expanded - Expand child items
