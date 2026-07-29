@@ -7,6 +7,12 @@
 
       .arc-button[loading] .btn { opacity: 0.7; }
 
+      /* Anchor-adoption form: the slotted <a> *is* the control, so it takes the
+         same box styling as .btn. The slot itself is display:contents (UA
+         default), so the anchor becomes the host's flex item directly. Rules
+         below pair .btn with .btn-slot::slotted(a) rather than duplicating
+         declarations — keep the two in step when editing either. */
+
       .arc-button .btn__spinner {
         display: none;
         width: 14px;
@@ -24,7 +30,8 @@
         to { transform: rotate(360deg); }
       }
 
-      .arc-button .btn {
+      .arc-button .btn,
+      .arc-button a {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -49,27 +56,37 @@
       }
 
       /* Sizes */
-      .arc-button[data-size="sm"] .btn { font-size: var(--text-xs); padding: var(--space-xs) var(--space-md); }
+      .arc-button[data-size="sm"] .btn,
+      .arc-button[data-size="sm"] a { font-size: var(--text-xs); padding: var(--space-xs) var(--space-md); }
       .arc-button:not([data-size]) .btn,
-      .arc-button[data-size="md"] .btn { font-size: var(--text-xs); padding: var(--space-sm) var(--space-lg); }
-      .arc-button[data-size="lg"] .btn { font-size: var(--text-xs); padding: var(--space-md) var(--space-xl); letter-spacing: 3px; }
+      .arc-button:not([data-size]) a,
+      .arc-button[data-size="md"] .btn,
+      .arc-button[data-size="md"] a { font-size: var(--text-xs); padding: var(--space-sm) var(--space-lg); }
+      .arc-button[data-size="lg"] .btn,
+      .arc-button[data-size="lg"] a { font-size: var(--text-xs); padding: var(--space-md) var(--space-xl); letter-spacing: 3px; }
 
       /* Default → primary */
-      .arc-button:not([data-variant]) .btn {
+      .arc-button:not([data-variant]) .btn,
+      .arc-button:not([data-variant]) a {
         background: var(--interactive);
         color: var(--surface-base);
         border-color: var(--interactive);
       }
-      .arc-button:not([data-variant]) .btn:hover { box-shadow: var(--interactive-active); }
+      .arc-button:not([data-variant]) .btn:hover,
+      .arc-button:not([data-variant]) a:hover { box-shadow: var(--interactive-active); }
 
       /* :active scale */
       .arc-button:not([data-variant]) .btn:active,
-      .arc-button[data-variant="primary"] .btn:active { transform: scale(0.97); box-shadow: 0 0 8px rgba(var(--interactive-rgb),0.5); }
-      .arc-button[data-variant="secondary"] .btn:active {
+      .arc-button:not([data-variant]) a:active,
+      .arc-button[data-variant="primary"] .btn:active,
+      .arc-button[data-variant="primary"] a:active { transform: scale(0.97); box-shadow: 0 0 8px rgba(var(--interactive-rgb),0.5); }
+      .arc-button[data-variant="secondary"] .btn:active,
+      .arc-button[data-variant="secondary"] a:active {
         transform: scale(0.97);
         background: rgba(var(--interactive-rgb),0.05);
       }
-      .arc-button[data-variant="ghost"] .btn:active {
+      .arc-button[data-variant="ghost"] .btn:active,
+      .arc-button[data-variant="ghost"] a:active {
         transform: scale(0.97);
         background: var(--surface-overlay);
       }

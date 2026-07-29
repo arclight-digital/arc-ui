@@ -9,7 +9,7 @@
          adopted anchor is always treated as icon-only, since any text the
          consumer wants lives inside their own anchor. */
       .arc-icon-button .btn,
-      .arc-icon-button .btn-a {
+      .arc-icon-button a {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -46,17 +46,17 @@
 
       /* Sizes — icon-only */
       .arc-icon-button .btn:not(.btn--has-text),
-      .arc-icon-button .btn-a { min-width: var(--touch-min); min-height: var(--touch-min); }
+      .arc-icon-button a { min-width: var(--touch-min); min-height: var(--touch-min); }
       .arc-icon-button[data-size="xs"] .btn:not(.btn--has-text),
-      .arc-icon-button[data-size="xs"] .btn-a { width: 28px; height: 28px; border-radius: var(--radius-sm); }
+      .arc-icon-button[data-size="xs"] a { width: 28px; height: 28px; border-radius: var(--radius-sm); }
       .arc-icon-button[data-size="sm"] .btn:not(.btn--has-text),
-      .arc-icon-button[data-size="sm"] .btn-a { width: 32px; height: 32px; }
+      .arc-icon-button[data-size="sm"] a { width: 32px; height: 32px; }
       .arc-icon-button:not([data-size]) .btn:not(.btn--has-text),
-      .arc-icon-button:not([data-size]) .btn-a,
+      .arc-icon-button:not([data-size]) a,
       .arc-icon-button[data-size="md"] .btn:not(.btn--has-text),
-      .arc-icon-button[data-size="md"] .btn-a { width: 36px; height: 36px; }
+      .arc-icon-button[data-size="md"] a { width: 36px; height: 36px; }
       .arc-icon-button[data-size="lg"] .btn:not(.btn--has-text),
-      .arc-icon-button[data-size="lg"] .btn-a { width: 44px; height: 44px; }
+      .arc-icon-button[data-size="lg"] a { width: 44px; height: 44px; }
 
       /* Sizes — with text */
       .arc-icon-button .btn--has-text { min-height: var(--touch-min); }
@@ -68,45 +68,45 @@
 
       /* Default → ghost */
       .arc-icon-button:not([data-variant]) .btn,
-      .arc-icon-button:not([data-variant]) .btn-a {
+      .arc-icon-button:not([data-variant]) a {
         background: transparent;
         color: var(--text-muted);
         border-color: transparent;
       }
       .arc-icon-button:not([data-variant]) .btn:hover,
-      .arc-icon-button:not([data-variant]) .btn-a:hover {
+      .arc-icon-button:not([data-variant]) a:hover {
         color: var(--text-primary);
         background: var(--surface-hover);
       }
 
       /* :active scale */
       .arc-icon-button:not([data-variant]) .btn:active,
-      .arc-icon-button:not([data-variant]) .btn-a:active,
+      .arc-icon-button:not([data-variant]) a:active,
       .arc-icon-button[data-variant="ghost"] .btn:active,
-      .arc-icon-button[data-variant="ghost"] .btn-a:active {
+      .arc-icon-button[data-variant="ghost"] a:active {
         transform: scale(0.93);
         background: var(--surface-overlay);
       }
       .arc-icon-button[data-variant="secondary"] .btn:active,
-      .arc-icon-button[data-variant="secondary"] .btn-a:active {
+      .arc-icon-button[data-variant="secondary"] a:active {
         transform: scale(0.93);
         background: rgba(var(--interactive-rgb), 0.05);
       }
       .arc-icon-button[data-variant="primary"] .btn:active,
-      .arc-icon-button[data-variant="primary"] .btn-a:active {
+      .arc-icon-button[data-variant="primary"] a:active {
         transform: scale(0.93);
         box-shadow: 0 0 8px rgba(var(--interactive-rgb), 0.5);
       }
 
       /* IconButton secondary uses text-secondary instead of text-primary */
       .arc-icon-button[data-variant="secondary"] .btn,
-      .arc-icon-button[data-variant="secondary"] .btn-a {
+      .arc-icon-button[data-variant="secondary"] a {
         color: var(--text-secondary);
       }
 
       /* IconButton secondary hover uses smaller glow */
       .arc-icon-button[data-variant="secondary"] .btn:hover,
-      .arc-icon-button[data-variant="secondary"] .btn-a:hover {
+      .arc-icon-button[data-variant="secondary"] a:hover {
         box-shadow: 0 0 16px var(--accent-primary-ring);
       }
 

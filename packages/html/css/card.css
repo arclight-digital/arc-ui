@@ -19,14 +19,14 @@
          padded surface is the click target — see shared/anchor-adoption.js.
          It stays inside .card__inner rather than replacing .card, which keeps
          the 1px gradient-border trick in card-styles.js intact. */
-      .arc-card .card-a {
+      .arc-card a {
         display: flex;
         flex-direction: column;
         flex: 1;
         text-decoration: none;
         color: inherit;
       }
-      .arc-card .card-a:focus-visible {
+      .arc-card a:focus-visible {
         outline: none;
         box-shadow: var(--interactive-focus);
         border-radius: var(--radius-md);

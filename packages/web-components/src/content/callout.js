@@ -6,7 +6,6 @@ import { statusVars } from '../status-styles.js';
  * Styled callout box for tips, warnings, and info.
  *
  * @tag arc-callout
- * @arc-prism hybrid — the box, variants and icon are pure CSS; only dismissal needs JS
  * @requires arc-icon
  * @prop {'info' | 'warning' | 'tip' | 'danger'} variant - Semantic variant that controls the colour scheme, top accent bar, and default icon
  * @prop {boolean} dismissible - Shows a close button that removes the callout. Fires an arc-dismiss event on close.
