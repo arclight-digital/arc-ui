@@ -4696,7 +4696,7 @@
               "name": "mode",
               "privacy": "public",
               "type": {
-                "text": "string"
+                "text": "'inline' | 'side-by-side'"
               },
               "default": "'inline'",
               "description": "Display mode: 'inline' renders changes in a single column, 'side-by-side' renders two panes in a grid.",
@@ -4726,7 +4726,7 @@
             {
               "name": "mode",
               "type": {
-                "text": "string"
+                "text": "'inline' | 'side-by-side'"
               },
               "default": "'inline'",
               "description": "Display mode: 'inline' renders changes in a single column, 'side-by-side' renders two panes in a grid.",
@@ -6304,10 +6304,10 @@
               "name": "size",
               "privacy": "public",
               "type": {
-                "text": "string"
+                "text": "'sm' | 'md' | 'lg'"
               },
               "default": "'md'",
-              "description": "Controls the tag size. Options: 'sm', 'md', 'lg'.",
+              "description": "Controls the tag size.",
               "attribute": "size",
               "reflects": true
             },
@@ -6369,10 +6369,10 @@
             {
               "name": "size",
               "type": {
-                "text": "string"
+                "text": "'sm' | 'md' | 'lg'"
               },
               "default": "'md'",
-              "description": "Controls the tag size. Options: 'sm', 'md', 'lg'.",
+              "description": "Controls the tag size.",
               "fieldName": "size"
             },
             {
@@ -10408,10 +10408,10 @@
               "name": "size",
               "privacy": "public",
               "type": {
-                "text": "string"
+                "text": "'sm' | 'md' | 'lg'"
               },
               "default": "'md'",
-              "description": "Controls the checkbox size. Options: 'sm', 'md', 'lg'.",
+              "description": "Controls the checkbox size.",
               "attribute": "size",
               "reflects": true
             },
@@ -10579,10 +10579,10 @@
             {
               "name": "size",
               "type": {
-                "text": "string"
+                "text": "'sm' | 'md' | 'lg'"
               },
               "default": "'md'",
-              "description": "Controls the checkbox size. Options: 'sm', 'md', 'lg'.",
+              "description": "Controls the checkbox size.",
               "fieldName": "size"
             },
             {
@@ -15234,10 +15234,10 @@
               "name": "size",
               "privacy": "public",
               "type": {
-                "text": "string"
+                "text": "'sm' | 'md' | 'lg'"
               },
               "default": "'md'",
-              "description": "Controls the radio button and label size. Options: 'sm', 'md', 'lg'.",
+              "description": "Controls the radio button and label size.",
               "attribute": "size",
               "reflects": true
             },
@@ -15384,10 +15384,10 @@
             {
               "name": "size",
               "type": {
-                "text": "string"
+                "text": "'sm' | 'md' | 'lg'"
               },
               "default": "'md'",
-              "description": "Controls the radio button and label size. Options: 'sm', 'md', 'lg'.",
+              "description": "Controls the radio button and label size.",
               "fieldName": "size"
             },
             {
@@ -16496,10 +16496,10 @@
               "name": "size",
               "privacy": "public",
               "type": {
-                "text": "string"
+                "text": "'sm' | 'md' | 'lg'"
               },
               "default": "'md'",
-              "description": "Controls the select trigger size. Options: 'sm', 'md', 'lg'.",
+              "description": "Controls the select trigger size.",
               "attribute": "size",
               "reflects": true
             },
@@ -16675,10 +16675,10 @@
             {
               "name": "size",
               "type": {
-                "text": "string"
+                "text": "'sm' | 'md' | 'lg'"
               },
               "default": "'md'",
-              "description": "Controls the select trigger size. Options: 'sm', 'md', 'lg'.",
+              "description": "Controls the select trigger size.",
               "fieldName": "size"
             },
             {
@@ -18557,10 +18557,10 @@
               "name": "size",
               "privacy": "public",
               "type": {
-                "text": "string"
+                "text": "'sm' | 'md' | 'lg'"
               },
               "default": "'md'",
-              "description": "Controls the toggle size. Options: 'sm', 'md', 'lg'.",
+              "description": "Controls the toggle size.",
               "attribute": "size",
               "reflects": true
             },
@@ -18708,10 +18708,10 @@
             {
               "name": "size",
               "type": {
-                "text": "string"
+                "text": "'sm' | 'md' | 'lg'"
               },
               "default": "'md'",
-              "description": "Controls the toggle size. Options: 'sm', 'md', 'lg'.",
+              "description": "Controls the toggle size.",
               "fieldName": "size"
             },
             {
@@ -19605,10 +19605,10 @@
               "name": "padding",
               "privacy": "public",
               "type": {
-                "text": "string"
+                "text": "'none' | 'sm' | 'md' | 'lg'"
               },
               "default": "'md'",
-              "description": "Controls inline padding. Options: 'none', 'sm', 'md', 'lg'.",
+              "description": "Controls inline padding.",
               "attribute": "padding",
               "reflects": true
             }
@@ -19635,10 +19635,10 @@
             {
               "name": "padding",
               "type": {
-                "text": "string"
+                "text": "'none' | 'sm' | 'md' | 'lg'"
               },
               "default": "'md'",
-              "description": "Controls inline padding. Options: 'none', 'sm', 'md', 'lg'.",
+              "description": "Controls inline padding.",
               "fieldName": "padding"
             }
           ],
@@ -22036,10 +22036,10 @@
               "name": "align",
               "privacy": "public",
               "type": {
-                "text": "string"
+                "text": "'left' | 'center'"
               },
               "default": "'left'",
-              "description": "Controls footer content alignment. Options: 'left', 'center'.",
+              "description": "Controls footer content alignment.",
               "attribute": "align",
               "reflects": true
             }
@@ -22075,10 +22075,10 @@
             {
               "name": "align",
               "type": {
-                "text": "string"
+                "text": "'left' | 'center'"
               },
               "default": "'left'",
-              "description": "Controls footer content alignment. Options: 'left', 'center'.",
+              "description": "Controls footer content alignment.",
               "fieldName": "align"
             }
           ],
@@ -22149,10 +22149,10 @@
               "name": "underline",
               "privacy": "public",
               "type": {
-                "text": "string"
+                "text": "'hover' | 'always' | 'never'"
               },
               "default": "'hover'",
-              "description": "Controls underline behavior. Options: 'hover' (default, underline on hover), 'always' (always visible), 'never' (never underlined).",
+              "description": "Controls underline behavior: 'hover' underlines on hover, 'always' keeps it visible, 'never' omits it.",
               "attribute": "underline",
               "reflects": true
             },
@@ -22203,10 +22203,10 @@
             {
               "name": "underline",
               "type": {
-                "text": "string"
+                "text": "'hover' | 'always' | 'never'"
               },
               "default": "'hover'",
-              "description": "Controls underline behavior. Options: 'hover' (default, underline on hover), 'always' (always visible), 'never' (never underlined).",
+              "description": "Controls underline behavior: 'hover' underlines on hover, 'always' keeps it visible, 'never' omits it.",
               "fieldName": "underline"
             },
             {
@@ -23435,10 +23435,10 @@
               "name": "position",
               "privacy": "public",
               "type": {
-                "text": "string"
+                "text": "'left' | 'right'"
               },
               "default": "'left'",
-              "description": "Controls which side the sidebar appears on. Options: 'left', 'right'. Moves the border line to the opposite edge.",
+              "description": "Controls which side the sidebar appears on. Moves the border line to the opposite edge.",
               "attribute": "position",
               "reflects": true
             },
@@ -23504,10 +23504,10 @@
             {
               "name": "position",
               "type": {
-                "text": "string"
+                "text": "'left' | 'right'"
               },
               "default": "'left'",
-              "description": "Controls which side the sidebar appears on. Options: 'left', 'right'. Moves the border line to the opposite edge.",
+              "description": "Controls which side the sidebar appears on. Moves the border line to the opposite edge.",
               "fieldName": "position"
             },
             {

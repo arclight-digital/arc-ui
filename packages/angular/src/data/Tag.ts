@@ -11,7 +11,7 @@ import '@arclux/arc-ui/tag';
 })
 export class Tag {
   @Input() variant: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger' = 'default';
-  @Input() size: 'sm' | 'lg' = 'md';
+  @Input() size: 'sm' | 'md' | 'lg' = 'md';
   @Input() removable: boolean = false;
   @Input() disabled: boolean = false;
   @Input() color: string = '';

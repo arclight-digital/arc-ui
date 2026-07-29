@@ -8,7 +8,7 @@ const props = withDefaults(defineProps<{
   value?: string;
   name?: string;
   disabled?: boolean;
-  size?: 'sm' | 'lg';
+  size?: 'sm' | 'md' | 'lg';
   orientation?: 'vertical' | 'horizontal';
 }>(), {
   value: '',

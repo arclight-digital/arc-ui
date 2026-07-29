@@ -8,7 +8,7 @@ export interface FooterProps {
   compact?: boolean;
   border?: boolean;
   contained?: string;
-  align?: 'center';
+  align?: 'left' | 'center';
   className?: string;
   children?: React.ReactNode;
 }

@@ -8,7 +8,7 @@ const props = withDefaults(defineProps<{
   checked?: boolean;
   indeterminate?: boolean;
   disabled?: boolean;
-  size?: 'sm' | 'lg';
+  size?: 'sm' | 'md' | 'lg';
   label?: string;
   name?: string;
   value?: string;

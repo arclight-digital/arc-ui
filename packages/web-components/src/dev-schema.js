@@ -556,6 +556,12 @@ export default {
    "after",
    "mode"
   ],
+  "enums": {
+   "mode": [
+    "inline",
+    "side-by-side"
+   ]
+  },
   "slug": "diff"
  },
  "arc-event-calendar": {
@@ -705,6 +711,11 @@ export default {
     "success",
     "warning",
     "danger"
+   ],
+   "size": [
+    "sm",
+    "md",
+    "lg"
    ]
   },
   "slug": "tag"
@@ -1132,6 +1143,13 @@ export default {
    "name",
    "value"
   ],
+  "enums": {
+   "size": [
+    "sm",
+    "md",
+    "lg"
+   ]
+  },
   "slug": "checkbox"
  },
  "arc-chip": {
@@ -1424,6 +1442,11 @@ export default {
    "orientation"
   ],
   "enums": {
+   "size": [
+    "sm",
+    "md",
+    "lg"
+   ],
    "orientation": [
     "vertical",
     "horizontal"
@@ -1490,6 +1513,13 @@ export default {
    "error",
    "open"
   ],
+  "enums": {
+   "size": [
+    "sm",
+    "md",
+    "lg"
+   ]
+  },
   "slug": "select"
  },
  "arc-slider": {
@@ -1617,6 +1647,13 @@ export default {
    "label",
    "name"
   ],
+  "enums": {
+   "size": [
+    "sm",
+    "md",
+    "lg"
+   ]
+  },
   "slug": "toggle"
  },
  "arc-transfer-list": {
@@ -1713,6 +1750,14 @@ export default {
    "size",
    "padding"
   ],
+  "enums": {
+   "padding": [
+    "none",
+    "sm",
+    "md",
+    "lg"
+   ]
+  },
   "slug": "container"
  },
  "arc-dashboard-grid": {
@@ -1974,6 +2019,12 @@ export default {
    "contained",
    "align"
   ],
+  "enums": {
+   "align": [
+    "left",
+    "center"
+   ]
+  },
   "slug": "footer"
  },
  "arc-link": {
@@ -1989,6 +2040,11 @@ export default {
     "default",
     "muted",
     "nav"
+   ],
+   "underline": [
+    "hover",
+    "always",
+    "never"
    ]
   },
   "slug": "link"
@@ -2087,6 +2143,12 @@ export default {
    "glow",
    "label"
   ],
+  "enums": {
+   "position": [
+    "left",
+    "right"
+   ]
+  },
   "slug": "sidebar"
  },
  "arc-skip-link": {

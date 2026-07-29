@@ -6,7 +6,7 @@
   interface Props {
     checked?: boolean;
     disabled?: boolean;
-    size?: 'sm' | 'lg';
+    size?: 'sm' | 'md' | 'lg';
     label?: string;
     name?: string;
     children?: Snippet;

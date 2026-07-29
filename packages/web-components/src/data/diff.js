@@ -7,7 +7,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @tag arc-diff
  * @prop {string} before - The original text to compare (split by newlines).
  * @prop {string} after - The modified text to compare (split by newlines).
- * @prop {string} mode - Display mode: 'inline' renders changes in a single column, 'side-by-side' renders two panes in a grid.
+ * @prop {'inline' | 'side-by-side'} mode - Display mode: 'inline' renders changes in a single column, 'side-by-side' renders two panes in a grid.
  * @csspart line
  * @csspart line-number
  * @csspart prefix

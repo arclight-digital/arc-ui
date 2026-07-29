@@ -6,7 +6,7 @@
   interface Props {
     narrow?: boolean;
     size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
-    padding?: 'none' | 'sm' | 'lg';
+    padding?: 'none' | 'sm' | 'md' | 'lg';
     children?: Snippet;
     [key: string]: unknown;
   }

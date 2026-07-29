@@ -7,7 +7,7 @@ import { ArcDiff } from '@arclux/arc-ui/diff';
 export interface DiffProps {
   before?: string;
   after?: string;
-  mode?: 'side-by-side';
+  mode?: 'inline' | 'side-by-side';
   className?: string;
   children?: React.ReactNode;
 }

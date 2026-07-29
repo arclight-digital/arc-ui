@@ -6,7 +6,7 @@ import '@arclux/arc-ui/sidebar';
 export interface SidebarProps {
   active?: string;
   collapsed?: boolean;
-  position?: 'right';
+  position?: 'left' | 'right';
   width?: string;
   glow?: boolean;
   label?: string;

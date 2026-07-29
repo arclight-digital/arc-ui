@@ -13,7 +13,7 @@ export class RadioGroup {
   @Input() value: string = '';
   @Input() name: string = '';
   @Input() disabled: boolean = false;
-  @Input() size: 'sm' | 'lg' = 'md';
+  @Input() size: 'sm' | 'md' | 'lg' = 'md';
   @Input() orientation: 'vertical' | 'horizontal' = 'vertical';
   @Output() arcChange = new EventEmitter<CustomEvent>();
   @Output() valueChange = new EventEmitter<string>();

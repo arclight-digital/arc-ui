@@ -169,7 +169,7 @@ declare module 'react' {
         checked?: boolean;
         indeterminate?: boolean;
         disabled?: boolean;
-        size?: string;
+        size?: 'sm' | 'md' | 'lg';
         label?: string;
         name?: string;
         value?: string;
@@ -258,7 +258,7 @@ declare module 'react' {
       'arc-container': ArcBaseAttributes & {
         narrow?: boolean;
         size?: string;
-        padding?: string;
+        padding?: 'none' | 'sm' | 'md' | 'lg';
       };
       'arc-context-menu': ArcBaseAttributes & {
         open?: boolean;
@@ -341,7 +341,7 @@ declare module 'react' {
       'arc-diff': ArcBaseAttributes & {
         before?: string;
         after?: string;
-        mode?: string;
+        mode?: 'inline' | 'side-by-side';
       };
       'arc-divider': ArcBaseAttributes & {
         variant?: 'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient';
@@ -399,7 +399,7 @@ declare module 'react' {
         compact?: boolean;
         border?: boolean;
         contained?: string;
-        align?: string;
+        align?: 'left' | 'center';
       };
       'arc-form': ArcBaseAttributes & {
         action?: string;
@@ -516,7 +516,7 @@ declare module 'react' {
       'arc-link': ArcBaseAttributes & {
         href?: string;
         variant?: 'default' | 'muted' | 'nav';
-        underline?: string;
+        underline?: 'hover' | 'always' | 'never';
         active?: boolean;
         external?: boolean;
       };
@@ -705,7 +705,7 @@ declare module 'react' {
         value?: string;
         name?: string;
         disabled?: boolean;
-        size?: string;
+        size?: 'sm' | 'md' | 'lg';
         orientation?: 'vertical' | 'horizontal';
       };
       'arc-rail': ArcBaseAttributes & {
@@ -781,7 +781,7 @@ declare module 'react' {
         label?: string;
         name?: string;
         disabled?: boolean;
-        size?: string;
+        size?: 'sm' | 'md' | 'lg';
         error?: string;
         open?: boolean;
       };
@@ -801,7 +801,7 @@ declare module 'react' {
       'arc-sidebar': ArcBaseAttributes & {
         active?: string;
         collapsed?: boolean;
-        position?: string;
+        position?: 'left' | 'right';
         width?: string;
         glow?: boolean;
         label?: string;
@@ -931,7 +931,7 @@ declare module 'react' {
       };
       'arc-tag': ArcBaseAttributes & {
         variant?: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
-        size?: string;
+        size?: 'sm' | 'md' | 'lg';
         removable?: boolean;
         disabled?: boolean;
         color?: string;
@@ -1007,7 +1007,7 @@ declare module 'react' {
       'arc-toggle': ArcBaseAttributes & {
         checked?: boolean;
         disabled?: boolean;
-        size?: string;
+        size?: 'sm' | 'md' | 'lg';
         label?: string;
         name?: string;
       };

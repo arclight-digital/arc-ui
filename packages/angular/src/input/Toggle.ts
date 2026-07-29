@@ -12,7 +12,7 @@ import '@arclux/arc-ui/toggle';
 export class Toggle {
   @Input() checked: boolean = false;
   @Input() disabled: boolean = false;
-  @Input() size: 'sm' | 'lg' = 'md';
+  @Input() size: 'sm' | 'md' | 'lg' = 'md';
   @Input() label: string = '';
   @Input() name: string = '';
   @Output() arcChange = new EventEmitter<CustomEvent>();

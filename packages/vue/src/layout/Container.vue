@@ -7,7 +7,7 @@ defineOptions({ name: 'Container' });
 const props = withDefaults(defineProps<{
   narrow?: boolean;
   size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
-  padding?: 'none' | 'sm' | 'lg';
+  padding?: 'none' | 'sm' | 'md' | 'lg';
 }>(), {
   narrow: false,
   size: 'md',

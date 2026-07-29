@@ -5,7 +5,7 @@
 
   interface Props {
     variant?: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
-    size?: 'sm' | 'lg';
+    size?: 'sm' | 'md' | 'lg';
     removable?: boolean;
     disabled?: boolean;
     color?: string;

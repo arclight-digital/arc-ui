@@ -6,7 +6,7 @@ import '@arclux/arc-ui/toggle';
 export interface ToggleProps {
   checked?: boolean;
   disabled?: boolean;
-  size?: 'sm' | 'lg';
+  size?: 'sm' | 'md' | 'lg';
   label?: string;
   name?: string;
   onArcChange?: (e: CustomEvent) => void;

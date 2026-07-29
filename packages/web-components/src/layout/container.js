@@ -7,7 +7,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @tag arc-container
  * @prop {boolean} narrow - Use the narrow max-width (720px vs 1120px)
  * @prop {string} size - Controls the maximum width. Options: 'sm', 'md', 'lg', 'xl', 'full'.
- * @prop {string} padding - Controls inline padding. Options: 'none', 'sm', 'md', 'lg'.
+ * @prop {'none' | 'sm' | 'md' | 'lg'} padding - Controls inline padding.
  * @slot - Default content.
  * @csspart container
  */

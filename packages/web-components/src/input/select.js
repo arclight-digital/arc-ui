@@ -12,7 +12,7 @@ import '../shared/option.js';
  * @prop {string} value - The currently selected value. Must match one of the child `arc-option` value attributes. Setting this programmatically updates the displayed label and internal selection state.
  * @prop {string} placeholder - Hint text displayed inside the trigger button when no option is selected. Use it to communicate what kind of choice the user should make, such as "Choose a team member..." or "Pick a status". The placeholder disappears once a value is chosen.
  * @prop {string} label - Visible label rendered above the select trigger. Also serves as the accessible name for assistive technologies. Always provide a label for accessibility compliance.
- * @prop {string} size - Controls the select trigger size. Options: 'sm', 'md', 'lg'.
+ * @prop {'sm' | 'md' | 'lg'} size - Controls the select trigger size.
  * @prop {string} name - Form field name submitted with the selected value. Required for native form integration via ElementInternals.
  * @prop {boolean} disabled - When true, the select trigger becomes non-interactive: it cannot be opened, focused via keyboard, or clicked. The component renders with reduced opacity to visually convey the unavailable state.
  * @prop {string} error - Error message displayed below the select. When set, the trigger border turns red.

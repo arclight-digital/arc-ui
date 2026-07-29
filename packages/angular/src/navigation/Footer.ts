@@ -13,5 +13,5 @@ export class Footer {
   @Input() compact: boolean = false;
   @Input() border: boolean = true;
   @Input() contained: string = 'null';
-  @Input() align: 'center' = 'left';
+  @Input() align: 'left' | 'center' = 'left';
 }

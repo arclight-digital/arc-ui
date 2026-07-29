@@ -7,7 +7,7 @@ defineOptions({ name: 'Diff' });
 const props = withDefaults(defineProps<{
   before?: string;
   after?: string;
-  mode?: 'side-by-side';
+  mode?: 'inline' | 'side-by-side';
 }>(), {
   before: '',
   after: '',

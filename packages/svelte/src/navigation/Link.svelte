@@ -6,7 +6,7 @@
   interface Props {
     href?: string;
     variant?: 'default' | 'muted' | 'nav';
-    underline?: 'always' | 'never';
+    underline?: 'hover' | 'always' | 'never';
     active?: boolean;
     external?: boolean;
     children?: Snippet;

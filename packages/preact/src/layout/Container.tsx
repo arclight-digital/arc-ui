@@ -6,7 +6,7 @@ import '@arclux/arc-ui/container';
 export interface ContainerProps {
   narrow?: boolean;
   size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
-  padding?: 'none' | 'sm' | 'lg';
+  padding?: 'none' | 'sm' | 'md' | 'lg';
   children?: preact.ComponentChildren;
   [key: string]: unknown;
 }

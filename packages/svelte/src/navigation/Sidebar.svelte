@@ -6,7 +6,7 @@
   interface Props {
     active?: string;
     collapsed?: boolean;
-    position?: 'right';
+    position?: 'left' | 'right';
     width?: string;
     glow?: boolean;
     label?: string;

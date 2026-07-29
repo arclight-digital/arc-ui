@@ -7,7 +7,7 @@ export interface FooterProps {
   compact?: boolean;
   border?: boolean;
   contained?: string;
-  align?: 'center';
+  align?: 'left' | 'center';
   children?: JSX.Element;
   [key: string]: unknown;
 }

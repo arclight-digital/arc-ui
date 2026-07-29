@@ -7,7 +7,7 @@ import { ArcLink } from '@arclux/arc-ui/link';
 export interface LinkProps {
   href?: string;
   variant?: 'default' | 'muted' | 'nav';
-  underline?: 'always' | 'never';
+  underline?: 'hover' | 'always' | 'never';
   active?: boolean;
   external?: boolean;
   className?: string;

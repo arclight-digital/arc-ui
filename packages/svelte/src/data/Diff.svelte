@@ -6,7 +6,7 @@
   interface Props {
     before?: string;
     after?: string;
-    mode?: 'side-by-side';
+    mode?: 'inline' | 'side-by-side';
     children?: Snippet;
     [key: string]: unknown;
   }

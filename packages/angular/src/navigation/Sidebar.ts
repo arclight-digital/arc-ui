@@ -12,7 +12,7 @@ import '@arclux/arc-ui/sidebar';
 export class Sidebar {
   @Input() active: string = '';
   @Input() collapsed: boolean = false;
-  @Input() position: 'right' = 'left';
+  @Input() position: 'left' | 'right' = 'left';
   @Input() width: string = '280px';
   @Input() glow: boolean = false;
   @Input() label: string = 'Sidebar navigation';

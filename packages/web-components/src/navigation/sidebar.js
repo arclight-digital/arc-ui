@@ -9,7 +9,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @tag arc-sidebar
  * @requires arc-sidebar-section
  * @requires arc-sidebar-link
- * @prop {string} position - Controls which side the sidebar appears on. Options: 'left', 'right'. Moves the border line to the opposite edge.
+ * @prop {'left' | 'right'} position - Controls which side the sidebar appears on. Moves the border line to the opposite edge.
  * @prop {string} active - The href of the currently active sidebar link. Used to highlight the matching link with accent styling.
  * @prop {boolean} collapsed - When true, collapses the sidebar to icon-only mode, hiding labels and reducing width.
  * @prop {string} width - Width of the sidebar. Accepts any CSS length value.

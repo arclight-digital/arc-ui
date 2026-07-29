@@ -7,7 +7,7 @@
     value?: string;
     name?: string;
     disabled?: boolean;
-    size?: 'sm' | 'lg';
+    size?: 'sm' | 'md' | 'lg';
     orientation?: 'vertical' | 'horizontal';
     children?: Snippet;
     [key: string]: unknown;

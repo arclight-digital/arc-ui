@@ -8,7 +8,7 @@ const props = withDefaults(defineProps<{
   compact?: boolean;
   border?: boolean;
   contained?: string;
-  align?: 'center';
+  align?: 'left' | 'center';
 }>(), {
   compact: false,
   border: true,

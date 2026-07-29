@@ -7,7 +7,7 @@ defineOptions({ name: 'Toggle' });
 const props = withDefaults(defineProps<{
   checked?: boolean;
   disabled?: boolean;
-  size?: 'sm' | 'lg';
+  size?: 'sm' | 'md' | 'lg';
   label?: string;
   name?: string;
 }>(), {

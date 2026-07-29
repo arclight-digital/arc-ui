@@ -12,5 +12,5 @@ import '@arclux/arc-ui/container';
 export class Container {
   @Input() narrow: boolean = false;
   @Input() size: 'sm' | 'md' | 'lg' | 'xl' | 'full' = 'md';
-  @Input() padding: 'none' | 'sm' | 'lg' = 'md';
+  @Input() padding: 'none' | 'sm' | 'md' | 'lg' = 'md';
 }

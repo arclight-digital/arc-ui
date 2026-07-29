@@ -15,7 +15,7 @@ export class Select {
   @Input() label: string = '';
   @Input() name: string = '';
   @Input() disabled: boolean = false;
-  @Input() size: 'sm' | 'lg' = 'md';
+  @Input() size: 'sm' | 'md' | 'lg' = 'md';
   @Input() error: string = '';
   @Input() open: boolean = false;
   @Output() arcChange = new EventEmitter<CustomEvent>();

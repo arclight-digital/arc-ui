@@ -9,7 +9,7 @@ export interface SelectProps {
   label?: string;
   name?: string;
   disabled?: boolean;
-  size?: 'sm' | 'lg';
+  size?: 'sm' | 'md' | 'lg';
   error?: string;
   open?: boolean;
   onArcChange?: (e: CustomEvent) => void;

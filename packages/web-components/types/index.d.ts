@@ -356,8 +356,8 @@ export declare class ArcCheckbox extends LitElement {
   indeterminate: boolean;
   /** Prevents all pointer and keyboard interaction and applies a dimmed visual treatment. Use this for options that are unavailable due to unmet prerequisites. Pair with a tooltip or helper text to explain why the option is locked. @default false */
   disabled: boolean;
-  /** Controls the checkbox size. Options: 'sm', 'md', 'lg'. @default 'md' */
-  size: string;
+  /** Controls the checkbox size. @default 'md' */
+  size: 'sm' | 'md' | 'lg';
   /** Visible text rendered beside the checkbox. Clicking the label toggles the checkbox, matching native HTML behaviour. Keep labels short, affirmative, and action-oriented for the best readability. @default '' */
   label: string;
   /** The form field name submitted when the checkbox lives inside a <form>. Required for native form submission and useful for serializing checkbox group values on the server. @default '' */
@@ -593,8 +593,8 @@ export declare class ArcContainer extends LitElement {
   narrow: boolean;
   /** Controls the maximum width. Options: 'sm', 'md', 'lg', 'xl', 'full'. @default 'md' */
   size: string;
-  /** Controls inline padding. Options: 'none', 'sm', 'md', 'lg'. @default 'md' */
-  padding: string;
+  /** Controls inline padding. @default 'md' */
+  padding: 'none' | 'sm' | 'md' | 'lg';
 }
 
 /**
@@ -806,7 +806,7 @@ export declare class ArcDiff extends LitElement {
   /** The modified text to compare (split by newlines). @default '' */
   after: string;
   /** Display mode: 'inline' renders changes in a single column, 'side-by-side' renders two panes in a grid. @default 'inline' */
-  mode: string;
+  mode: 'inline' | 'side-by-side';
 }
 
 /**
@@ -949,8 +949,8 @@ export declare class ArcFooter extends LitElement {
   border: boolean;
   /** Sets a max-width containment on the footer content. Accepts any CSS length value or named size token. @default null */
   contained: string;
-  /** Controls footer content alignment. Options: 'left', 'center'. @default 'left' */
-  align: string;
+  /** Controls footer content alignment. @default 'left' */
+  align: 'left' | 'center';
 }
 
 /**
@@ -1243,8 +1243,8 @@ export declare class ArcLink extends LitElement {
   href: string;
   /** Link style variant. `default` uses accent-primary color, `muted` uses muted text, `nav` uses secondary text with 14px size and flex layout. @default 'default' */
   variant: 'default' | 'muted' | 'nav';
-  /** Controls underline behavior. Options: 'hover' (default, underline on hover), 'always' (always visible), 'never' (never underlined). @default 'hover' */
-  underline: string;
+  /** Controls underline behavior: 'hover' underlines on hover, 'always' keeps it visible, 'never' omits it. @default 'hover' */
+  underline: 'hover' | 'always' | 'never';
   /** Active state — applies accent-primary color for navigation highlighting. @default false */
   active: boolean;
   /** When true, adds `target="_blank"` and `rel="noopener noreferrer"`, and renders an external link icon after the text. @default false */
@@ -1739,8 +1739,8 @@ export declare class ArcRadioGroup extends LitElement {
   name: string;
   /** When true, disables all options in the group. The component becomes non-interactive: arrow-key navigation is suppressed, click events are ignored, and the group is excluded from the Tab order. @default false */
   disabled: boolean;
-  /** Controls the radio button and label size. Options: 'sm', 'md', 'lg'. @default 'md' */
-  size: string;
+  /** Controls the radio button and label size. @default 'md' */
+  size: 'sm' | 'md' | 'lg';
   /** Controls the layout direction of the radio options. Vertical stacks options top-to-bottom and maps Arrow Up/Down to navigation. Horizontal places options in a row and maps Arrow Left/Right. @default 'vertical' */
   orientation: 'vertical' | 'horizontal';
   /** @default true */
@@ -1940,8 +1940,8 @@ export declare class ArcSelect extends LitElement {
   name: string;
   /** When true, the select trigger becomes non-interactive: it cannot be opened, focused via keyboard, or clicked. The component renders with reduced opacity to visually convey the unavailable state. @default false */
   disabled: boolean;
-  /** Controls the select trigger size. Options: 'sm', 'md', 'lg'. @default 'md' */
-  size: string;
+  /** Controls the select trigger size. @default 'md' */
+  size: 'sm' | 'md' | 'lg';
   /** Error message displayed below the select. When set, the trigger border turns red. @default '' */
   error: string;
   /** Controls whether the dropdown is visible. Set programmatically to open or close the dropdown. Automatically set to `false` when an option is selected or the user clicks outside. @default false */
@@ -1995,8 +1995,8 @@ export declare class ArcSidebar extends LitElement {
   active: string;
   /** When true, collapses the sidebar to icon-only mode, hiding labels and reducing width. @default false */
   collapsed: boolean;
-  /** Controls which side the sidebar appears on. Options: 'left', 'right'. Moves the border line to the opposite edge. @default 'left' */
-  position: string;
+  /** Controls which side the sidebar appears on. Moves the border line to the opposite edge. @default 'left' */
+  position: 'left' | 'right';
   /** Width of the sidebar. Accepts any CSS length value. @default '280px' */
   width: string;
   /** Enables an accent glow effect on the active sidebar link for enhanced visual emphasis. @default false */
@@ -2331,8 +2331,8 @@ export declare class ArcTabs extends LitElement {
 export declare class ArcTag extends LitElement {
   /** Colour variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and danger provide semantic status colours. @default 'default' */
   variant: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
-  /** Controls the tag size. Options: 'sm', 'md', 'lg'. @default 'md' */
-  size: string;
+  /** Controls the tag size. @default 'md' */
+  size: 'sm' | 'md' | 'lg';
   /** When true, shows a close button that fires `arc-remove` when clicked. @default false */
   removable: boolean;
   /** Disables the tag, reducing opacity to 40% and blocking pointer events including the remove button. @default false */
@@ -2529,8 +2529,8 @@ export declare class ArcToggle extends LitElement {
   checked: boolean;
   /** Prevents user interaction. The toggle appears at reduced opacity and ignores pointer and keyboard events. @default false */
   disabled: boolean;
-  /** Controls the toggle size. Options: 'sm', 'md', 'lg'. @default 'md' */
-  size: string;
+  /** Controls the toggle size. @default 'md' */
+  size: 'sm' | 'md' | 'lg';
   /** Visible text rendered beside the toggle. Clicking the label also toggles the switch, matching native `<label>` behavior. @default '' */
   label: string;
   /** Form field name submitted with the toggle value. When set, the component participates in native `<form>` submission. @default '' */

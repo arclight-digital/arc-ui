@@ -1046,7 +1046,7 @@
         {
           "name": "mode",
           "description": "Display mode: 'inline' renders changes in a single column, 'side-by-side' renders two panes in a grid.",
-          "values": []
+          "values": [{ "name": "inline" }, { "name": "side-by-side" }]
         }
       ],
       "references": []
@@ -1358,8 +1358,8 @@
         },
         {
           "name": "size",
-          "description": "Controls the tag size. Options: 'sm', 'md', 'lg'.",
-          "values": []
+          "description": "Controls the tag size.",
+          "values": [{ "name": "sm" }, { "name": "md" }, { "name": "lg" }]
         },
         {
           "name": "removable",
@@ -2132,8 +2132,8 @@
         },
         {
           "name": "size",
-          "description": "Controls the checkbox size. Options: 'sm', 'md', 'lg'.",
-          "values": []
+          "description": "Controls the checkbox size.",
+          "values": [{ "name": "sm" }, { "name": "md" }, { "name": "lg" }]
         },
         {
           "name": "label",
@@ -2875,8 +2875,8 @@
         },
         {
           "name": "size",
-          "description": "Controls the radio button and label size. Options: 'sm', 'md', 'lg'.",
-          "values": []
+          "description": "Controls the radio button and label size.",
+          "values": [{ "name": "sm" }, { "name": "md" }, { "name": "lg" }]
         },
         {
           "name": "orientation",
@@ -3059,8 +3059,8 @@
         },
         {
           "name": "size",
-          "description": "Controls the select trigger size. Options: 'sm', 'md', 'lg'.",
-          "values": []
+          "description": "Controls the select trigger size.",
+          "values": [{ "name": "sm" }, { "name": "md" }, { "name": "lg" }]
         },
         {
           "name": "error",
@@ -3374,8 +3374,8 @@
         },
         {
           "name": "size",
-          "description": "Controls the toggle size. Options: 'sm', 'md', 'lg'.",
-          "values": []
+          "description": "Controls the toggle size.",
+          "values": [{ "name": "sm" }, { "name": "md" }, { "name": "lg" }]
         },
         {
           "name": "label",
@@ -3559,8 +3559,13 @@
         },
         {
           "name": "padding",
-          "description": "Controls inline padding. Options: 'none', 'sm', 'md', 'lg'.",
-          "values": []
+          "description": "Controls inline padding.",
+          "values": [
+            { "name": "none" },
+            { "name": "sm" },
+            { "name": "md" },
+            { "name": "lg" }
+          ]
         }
       ],
       "references": []
@@ -4019,8 +4024,8 @@
         },
         {
           "name": "align",
-          "description": "Controls footer content alignment. Options: 'left', 'center'.",
-          "values": []
+          "description": "Controls footer content alignment.",
+          "values": [{ "name": "left" }, { "name": "center" }]
         }
       ],
       "references": []
@@ -4045,8 +4050,12 @@
         },
         {
           "name": "underline",
-          "description": "Controls underline behavior. Options: 'hover' (default, underline on hover), 'always' (always visible), 'never' (never underlined).",
-          "values": []
+          "description": "Controls underline behavior: 'hover' underlines on hover, 'always' keeps it visible, 'never' omits it.",
+          "values": [
+            { "name": "hover" },
+            { "name": "always" },
+            { "name": "never" }
+          ]
         },
         {
           "name": "active",
@@ -4285,8 +4294,8 @@
         },
         {
           "name": "position",
-          "description": "Controls which side the sidebar appears on. Options: 'left', 'right'. Moves the border line to the opposite edge.",
-          "values": []
+          "description": "Controls which side the sidebar appears on. Moves the border line to the opposite edge.",
+          "values": [{ "name": "left" }, { "name": "right" }]
         },
         {
           "name": "width",

@@ -13,7 +13,7 @@ export class Checkbox {
   @Input() checked: boolean = false;
   @Input() indeterminate: boolean = false;
   @Input() disabled: boolean = false;
-  @Input() size: 'sm' | 'lg' = 'md';
+  @Input() size: 'sm' | 'md' | 'lg' = 'md';
   @Input() label: string = '';
   @Input() name: string = '';
   @Input() value: string = '';

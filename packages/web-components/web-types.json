@@ -2120,7 +2120,10 @@
             {
               "name": "mode",
               "description": "Display mode: 'inline' renders changes in a single column, 'side-by-side' renders two panes in a grid.",
-              "value": { "type": "string", "default": "'inline'" }
+              "value": {
+                "type": "'inline' | 'side-by-side'",
+                "default": "'inline'"
+              }
             }
           ],
           "events": [],
@@ -2139,7 +2142,7 @@
               {
                 "name": "mode",
                 "description": "Display mode: 'inline' renders changes in a single column, 'side-by-side' renders two panes in a grid.",
-                "type": "string"
+                "type": "'inline' | 'side-by-side'"
               }
             ],
             "events": []
@@ -2809,8 +2812,8 @@
             },
             {
               "name": "size",
-              "description": "Controls the tag size. Options: 'sm', 'md', 'lg'.",
-              "value": { "type": "string", "default": "'md'" }
+              "description": "Controls the tag size.",
+              "value": { "type": "'sm' | 'md' | 'lg'", "default": "'md'" }
             },
             {
               "name": "removable",
@@ -2845,8 +2848,8 @@
               },
               {
                 "name": "size",
-                "description": "Controls the tag size. Options: 'sm', 'md', 'lg'.",
-                "type": "string"
+                "description": "Controls the tag size.",
+                "type": "'sm' | 'md' | 'lg'"
               },
               {
                 "name": "removable",
@@ -4783,8 +4786,8 @@
             },
             {
               "name": "size",
-              "description": "Controls the checkbox size. Options: 'sm', 'md', 'lg'.",
-              "value": { "type": "string", "default": "'md'" }
+              "description": "Controls the checkbox size.",
+              "value": { "type": "'sm' | 'md' | 'lg'", "default": "'md'" }
             },
             {
               "name": "label",
@@ -4828,8 +4831,8 @@
               },
               {
                 "name": "size",
-                "description": "Controls the checkbox size. Options: 'sm', 'md', 'lg'.",
-                "type": "string"
+                "description": "Controls the checkbox size.",
+                "type": "'sm' | 'md' | 'lg'"
               },
               {
                 "name": "label",
@@ -6560,8 +6563,8 @@
             },
             {
               "name": "size",
-              "description": "Controls the radio button and label size. Options: 'sm', 'md', 'lg'.",
-              "value": { "type": "string", "default": "'md'" }
+              "description": "Controls the radio button and label size.",
+              "value": { "type": "'sm' | 'md' | 'lg'", "default": "'md'" }
             },
             {
               "name": "orientation",
@@ -6599,8 +6602,8 @@
               },
               {
                 "name": "size",
-                "description": "Controls the radio button and label size. Options: 'sm', 'md', 'lg'.",
-                "type": "string"
+                "description": "Controls the radio button and label size.",
+                "type": "'sm' | 'md' | 'lg'"
               },
               {
                 "name": "orientation",
@@ -7029,8 +7032,8 @@
             },
             {
               "name": "size",
-              "description": "Controls the select trigger size. Options: 'sm', 'md', 'lg'.",
-              "value": { "type": "string", "default": "'md'" }
+              "description": "Controls the select trigger size.",
+              "value": { "type": "'sm' | 'md' | 'lg'", "default": "'md'" }
             },
             {
               "name": "error",
@@ -7080,8 +7083,8 @@
               },
               {
                 "name": "size",
-                "description": "Controls the select trigger size. Options: 'sm', 'md', 'lg'.",
-                "type": "string"
+                "description": "Controls the select trigger size.",
+                "type": "'sm' | 'md' | 'lg'"
               },
               {
                 "name": "error",
@@ -7798,8 +7801,8 @@
             },
             {
               "name": "size",
-              "description": "Controls the toggle size. Options: 'sm', 'md', 'lg'.",
-              "value": { "type": "string", "default": "'md'" }
+              "description": "Controls the toggle size.",
+              "value": { "type": "'sm' | 'md' | 'lg'", "default": "'md'" }
             },
             {
               "name": "label",
@@ -7833,8 +7836,8 @@
               },
               {
                 "name": "size",
-                "description": "Controls the toggle size. Options: 'sm', 'md', 'lg'.",
-                "type": "string"
+                "description": "Controls the toggle size.",
+                "type": "'sm' | 'md' | 'lg'"
               },
               {
                 "name": "label",
@@ -8186,8 +8189,11 @@
             },
             {
               "name": "padding",
-              "description": "Controls inline padding. Options: 'none', 'sm', 'md', 'lg'.",
-              "value": { "type": "string", "default": "'md'" }
+              "description": "Controls inline padding.",
+              "value": {
+                "type": "'none' | 'sm' | 'md' | 'lg'",
+                "default": "'md'"
+              }
             }
           ],
           "slots": [{ "name": "", "description": "Default content." }],
@@ -8206,8 +8212,8 @@
               },
               {
                 "name": "padding",
-                "description": "Controls inline padding. Options: 'none', 'sm', 'md', 'lg'.",
-                "type": "string"
+                "description": "Controls inline padding.",
+                "type": "'none' | 'sm' | 'md' | 'lg'"
               }
             ],
             "events": []
@@ -9278,8 +9284,8 @@
             },
             {
               "name": "align",
-              "description": "Controls footer content alignment. Options: 'left', 'center'.",
-              "value": { "type": "string", "default": "'left'" }
+              "description": "Controls footer content alignment.",
+              "value": { "type": "'left' | 'center'", "default": "'left'" }
             }
           ],
           "slots": [
@@ -9308,8 +9314,8 @@
               },
               {
                 "name": "align",
-                "description": "Controls footer content alignment. Options: 'left', 'center'.",
-                "type": "string"
+                "description": "Controls footer content alignment.",
+                "type": "'left' | 'center'"
               }
             ],
             "events": []
@@ -9335,8 +9341,11 @@
             },
             {
               "name": "underline",
-              "description": "Controls underline behavior. Options: 'hover' (default, underline on hover), 'always' (always visible), 'never' (never underlined).",
-              "value": { "type": "string", "default": "'hover'" }
+              "description": "Controls underline behavior: 'hover' underlines on hover, 'always' keeps it visible, 'never' omits it.",
+              "value": {
+                "type": "'hover' | 'always' | 'never'",
+                "default": "'hover'"
+              }
             },
             {
               "name": "active",
@@ -9370,8 +9379,8 @@
               },
               {
                 "name": "underline",
-                "description": "Controls underline behavior. Options: 'hover' (default, underline on hover), 'always' (always visible), 'never' (never underlined).",
-                "type": "string"
+                "description": "Controls underline behavior: 'hover' underlines on hover, 'always' keeps it visible, 'never' omits it.",
+                "type": "'hover' | 'always' | 'never'"
               },
               {
                 "name": "active",
@@ -9918,8 +9927,8 @@
             },
             {
               "name": "position",
-              "description": "Controls which side the sidebar appears on. Options: 'left', 'right'. Moves the border line to the opposite edge.",
-              "value": { "type": "string", "default": "'left'" }
+              "description": "Controls which side the sidebar appears on. Moves the border line to the opposite edge.",
+              "value": { "type": "'left' | 'right'", "default": "'left'" }
             },
             {
               "name": "width",
@@ -9957,8 +9966,8 @@
               },
               {
                 "name": "position",
-                "description": "Controls which side the sidebar appears on. Options: 'left', 'right'. Moves the border line to the opposite edge.",
-                "type": "string"
+                "description": "Controls which side the sidebar appears on. Moves the border line to the opposite edge.",
+                "type": "'left' | 'right'"
               },
               {
                 "name": "width",

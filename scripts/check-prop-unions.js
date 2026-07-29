@@ -1,8 +1,9 @@
 /**
  * check-prop-unions.js
  *
- * Asserts that every documented string-literal union on a component reaches the
- * generated framework wrappers intact.
+ * Asserts that every string-literal union on a component reaches the generated
+ * framework wrappers intact — whether it was documented on the class or
+ * inferred by prism from CSS.
  *
  * This exists because the failure it catches is invisible from inside this
  * repo: nothing here consumes the wrappers, so a prop typed `string` instead of
@@ -37,6 +38,7 @@ const pascal = (s) => s.split('-').map((w) => w[0].toUpperCase() + w.slice(1)).j
 const collapsed = [];
 const missingDefault = [];
 const missingMember = [];
+const inferredMissingDefault = [];
 let checked = 0;
 
 for (const tier of TIERS) {
@@ -52,10 +54,13 @@ for (const tier of TIERS) {
     if (!fs.existsSync(wrapperPath)) continue;
     const wrapper = fs.readFileSync(wrapperPath, 'utf-8');
 
+    const documented = new Set();
+
     for (const m of source.matchAll(/@prop \{([^}]*'[^}]*)\} (\w+)/g)) {
       const [, typeText, prop] = m;
       const members = [...typeText.matchAll(/'([^']+)'/g)].map((x) => x[1]);
       if (members.length < 2) continue;
+      documented.add(prop);
 
       const declared = wrapper.match(new RegExp(`^\\s*${prop}\\?:\\s*(.+?);`, 'm'));
       if (!declared) continue;
@@ -80,6 +85,29 @@ for (const tier of TIERS) {
         missingDefault.push(`${name}.${prop} — default '${def[1]}' not assignable to ${generated}`);
       }
     }
+
+    // Undocumented props still get a union from prism's CSS fallback, and that
+    // path cannot see the default — the default variant is the base style, so
+    // it has no :host([prop="value"]) selector to be inferred from. Checking
+    // only annotated props would leave exactly the half the fallback gets wrong.
+    const propsBlock = source.match(/static properties = \{([\s\S]*?)\n\s{2}\};/);
+    for (const p of propsBlock ? propsBlock[1].matchAll(/^\s*(\w+):/gm) : []) {
+      const prop = p[1];
+      if (prop.startsWith('_') || documented.has(prop)) continue;
+
+      const declared = wrapper.match(new RegExp(`^\\s*${prop}\\?:\\s*(.+?);`, 'm'));
+      if (!declared) continue;
+      const generated = declared[1].trim();
+      if (!generated.includes("'")) continue; // not a union — nothing inferred
+      checked++;
+
+      const def = source.match(new RegExp(`this\\.${prop}\\s*=\\s*'([^']+)'`));
+      if (def && !generated.includes(`'${def[1]}'`)) {
+        inferredMissingDefault.push(
+          `${name}.${prop} — default '${def[1]}' not assignable to ${generated} (inferred from CSS; document the union)`,
+        );
+      }
+    }
   }
 }
 
@@ -87,6 +115,7 @@ const groups = [
   ['union collapsed to `string`', collapsed],
   ['documented member missing', missingMember],
   ['default value not in its own union', missingDefault],
+  ['default value missing from a CSS-inferred union', inferredMissingDefault],
 ];
 const total = groups.reduce((n, [, rows]) => n + rows.length, 0);
 

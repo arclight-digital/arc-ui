@@ -12,5 +12,5 @@ import '@arclux/arc-ui/diff';
 export class Diff {
   @Input() before: string = '';
   @Input() after: string = '';
-  @Input() mode: 'side-by-side' = 'inline';
+  @Input() mode: 'inline' | 'side-by-side' = 'inline';
 }

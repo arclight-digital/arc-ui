@@ -12,7 +12,7 @@ import '@arclux/arc-ui/link';
 export class Link {
   @Input() href: string = '';
   @Input() variant: 'default' | 'muted' | 'nav' = 'default';
-  @Input() underline: 'always' | 'never' = 'hover';
+  @Input() underline: 'hover' | 'always' | 'never' = 'hover';
   @Input() active: boolean = false;
   @Input() external: boolean = false;
 }

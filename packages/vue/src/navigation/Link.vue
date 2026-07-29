@@ -7,7 +7,7 @@ defineOptions({ name: 'Link' });
 const props = withDefaults(defineProps<{
   href?: string;
   variant?: 'default' | 'muted' | 'nav';
-  underline?: 'always' | 'never';
+  underline?: 'hover' | 'always' | 'never';
   active?: boolean;
   external?: boolean;
 }>(), {

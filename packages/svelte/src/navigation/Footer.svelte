@@ -7,7 +7,7 @@
     compact?: boolean;
     border?: boolean;
     contained?: string;
-    align?: 'center';
+    align?: 'left' | 'center';
     children?: Snippet;
     [key: string]: unknown;
   }

@@ -13,7 +13,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @prop {string} name - The form field name submitted with the selected value. Required for native form integration — without it, the selection will not appear in FormData.
  * @prop {boolean} disabled - When true, disables all options in the group. The component becomes non-interactive: arrow-key navigation is suppressed, click events are ignored, and the group is excluded from the Tab order.
  * @prop {'vertical' | 'horizontal'} orientation - Controls the layout direction of the radio options. Vertical stacks options top-to-bottom and maps Arrow Up/Down to navigation. Horizontal places options in a row and maps Arrow Left/Right.
- * @prop {string} size - Controls the radio button and label size. Options: 'sm', 'md', 'lg'.
+ * @prop {'sm' | 'md' | 'lg'} size - Controls the radio button and label size.
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired when the selected radio value changes
  * @slot - Default content.
  * @csspart group
