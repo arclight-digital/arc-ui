@@ -168,6 +168,7 @@
     "./shared/focus-trap": "./src/shared/focus-trap.js",
     "./shared/form-control-mixin": "./src/shared/form-control-mixin.js",
     "./shared/scroll-lock": "./src/shared/scroll-lock.js",
+    "./shared/time-scale": "./src/shared/time-scale.js",
     "./sheet": "./src/feedback/sheet.register.js",
     "./sidebar": "./src/navigation/sidebar.register.js",
     "./sidebar-link": "./src/navigation/sidebar-link.register.js",

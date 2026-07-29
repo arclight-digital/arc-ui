@@ -53,7 +53,16 @@ const headings = [
         <li><strong><code>@arclux/arc-ui/shared/focus-trap</code></strong> — <code>collectFocusable</code>, <code>deepActiveElement</code>, <code>focusFirst</code>, <code>trapTabKey</code>. Composed-tree aware, so it sees through shadow boundaries and slots.</li>
         <li><strong><code>@arclux/arc-ui/shared/scroll-lock</code></strong> — <code>lockScroll</code>, <code>unlockScroll</code>. Refcounted, so nested overlays release correctly.</li>
         <li><strong><code>@arclux/arc-ui/shared/click-outside</code></strong> — <code>ClickOutsideController</code>, a Lit reactive controller for dismiss-on-outside-click.</li>
+        <li><strong><code>@arclux/arc-ui/shared/time-scale</code></strong> — linear value↔pixel mapping for time-axis components. Pure functions over a frozen, structured-cloneable scale object: <code>toPixels</code>, <code>toValue</code>, <code>spanToPixels</code>, <code>visibleRange</code>, <code>zoomAround</code>, <code>panBy</code>, <code>gridSnapper</code>, <code>gridLines</code>, <code>boundariesWithin</code>, <code>chooseStep</code>. Axis-agnostic, so the same mapping drives a horizontal ruler and a vertical pitch gutter.</li>
       </ul>
+
+      <p class="docs-text">
+        <code>time-scale</code> holds no viewport state on purpose. Offset and zoom belong to the
+        application, which passes them down and clamps them; components stay viewport-stateless,
+        which is what keeps a ruler and a grid aligned from one shared offset — and what makes
+        either usable outside a timeline. Groundwork for
+        <code>arc-time-ruler</code> and <code>arc-timeline-grid</code>; no component consumes it yet.
+      </p>
 
       <p class="docs-text">
         These are explicit entries rather than a <code>./shared/*</code> wildcard, so

@@ -25114,6 +25114,417 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/shared/time-scale.js",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "createScale",
+          "parameters": [
+            {
+              "name": "{ origin = 0, pixelsPerUnit, invert = false }"
+            },
+            {
+              "name": "spec",
+              "type": {
+                "text": "{ origin?: number, pixelsPerUnit: number, invert?: boolean }"
+              }
+            }
+          ],
+          "description": "Build a scale. Throws on a degenerate `pixelsPerUnit` rather than silently\nproducing NaN downstream — components should default the prop instead of\nconstructing a scale from an unset value.",
+          "return": {
+            "type": {
+              "text": "Scale"
+            }
+          }
+        },
+        {
+          "kind": "function",
+          "name": "rowScale",
+          "parameters": [
+            {
+              "name": "{ high, rowHeight }"
+            },
+            {
+              "name": "spec",
+              "type": {
+                "text": "{ high: number, rowHeight: number }"
+              }
+            }
+          ],
+          "description": "Vertical scale for uniform rows, where `high` sits at pixel 0 and values\ndescend down the screen: `y = (high - value) * rowHeight`.",
+          "return": {
+            "type": {
+              "text": "Scale"
+            }
+          }
+        },
+        {
+          "kind": "function",
+          "name": "toPixels",
+          "parameters": [
+            {
+              "name": "scale",
+              "type": {
+                "text": "Scale"
+              }
+            },
+            {
+              "name": "value",
+              "type": {
+                "text": "number"
+              }
+            }
+          ],
+          "description": "Domain value → pixel offset within the viewport.",
+          "return": {
+            "type": {
+              "text": "number"
+            }
+          }
+        },
+        {
+          "kind": "function",
+          "name": "toValue",
+          "parameters": [
+            {
+              "name": "scale",
+              "type": {
+                "text": "Scale"
+              }
+            },
+            {
+              "name": "px",
+              "type": {
+                "text": "number"
+              }
+            }
+          ],
+          "description": "Pixel offset within the viewport → domain value. Returns an exact\n(fractional) value; apply a snapper if you need it back on the grid.",
+          "return": {
+            "type": {
+              "text": "number"
+            }
+          }
+        },
+        {
+          "kind": "function",
+          "name": "spanToPixels",
+          "parameters": [
+            {
+              "name": "scale",
+              "type": {
+                "text": "Scale"
+              }
+            },
+            {
+              "name": "span",
+              "type": {
+                "text": "number"
+              }
+            }
+          ],
+          "description": "Duration/extent → width in pixels. Always positive, and independent of\n`origin`, so it is safe for element sizing on either axis.",
+          "return": {
+            "type": {
+              "text": "number"
+            }
+          }
+        },
+        {
+          "kind": "function",
+          "name": "visibleRange",
+          "parameters": [
+            {
+              "name": "scale",
+              "type": {
+                "text": "Scale"
+              }
+            },
+            {
+              "name": "viewportPx",
+              "type": {
+                "text": "number"
+              }
+            }
+          ],
+          "description": "Domain range covered by a viewport of `viewportPx`, ordered low→high\nregardless of inversion. Feed this to `gridLines()` and to item windowing so\nneither has to reason about direction.",
+          "return": {
+            "type": {
+              "text": "{ from: number, to: number }"
+            }
+          }
+        },
+        {
+          "kind": "function",
+          "name": "zoomAround",
+          "parameters": [
+            {
+              "name": "scale",
+              "type": {
+                "text": "Scale"
+              }
+            },
+            {
+              "name": "pixelsPerUnit",
+              "description": "Target zoom level.",
+              "type": {
+                "text": "number"
+              }
+            },
+            {
+              "name": "anchorPx",
+              "default": "0",
+              "description": "Viewport pixel to hold fixed. Defaults to 0.",
+              "optional": true,
+              "type": {
+                "text": "number"
+              }
+            }
+          ],
+          "description": "Rescale while pinning the value currently under `anchorPx`, which is what\nmakes wheel-zoom track the pointer and zoom-to-selection hold its edge.",
+          "return": {
+            "type": {
+              "text": "Scale"
+            }
+          }
+        },
+        {
+          "kind": "function",
+          "name": "panBy",
+          "parameters": [
+            {
+              "name": "scale",
+              "type": {
+                "text": "Scale"
+              }
+            },
+            {
+              "name": "deltaPx",
+              "type": {
+                "text": "number"
+              }
+            }
+          ],
+          "description": "Shift the viewport by a pixel delta. Positive moves the view toward larger\nvalues on a non-inverted scale. Clamping is the application's job.",
+          "return": {
+            "type": {
+              "text": "Scale"
+            }
+          }
+        },
+        {
+          "kind": "function",
+          "name": "gridSnapper",
+          "parameters": [
+            {
+              "name": "gridUnits",
+              "description": "Positive integer grid size in domain units.",
+              "type": {
+                "text": "number"
+              }
+            }
+          ],
+          "description": "Build an exact integer snapper for a fixed grid.\n\nInject the same grid size your validator enforces — an editor that snaps to a\ndifferent grid than the one being validated against authors content that\nfails the moment it is written. Different granularities (notes to a\nsubdivision, clip placements to a bar) are separate snappers, not a concept\nthis module needs to know about.",
+          "return": {
+            "type": {
+              "text": "(value: number) => number"
+            }
+          }
+        },
+        {
+          "kind": "function",
+          "name": "gridLines",
+          "parameters": [
+            {
+              "name": "from",
+              "type": {
+                "text": "number"
+              }
+            },
+            {
+              "name": "to",
+              "type": {
+                "text": "number"
+              }
+            },
+            {
+              "name": "step",
+              "type": {
+                "text": "number"
+              }
+            }
+          ],
+          "description": "Evenly spaced grid positions within `[from, to]`, inclusive of any boundary\nthat lands exactly on an edge. Integer in, integer out.\n\nPass a *visible* range. Generating lines for an entire project is never\ncorrect and throws rather than quietly allocating millions of entries.\n\nWhen boundaries stop being evenly spaced — a per-section meter change, say —\nthis is the function you stop calling; hand the ruler an explicit array via\n`boundariesWithin()` instead. Its subdivision logic does not change.",
+          "return": {
+            "type": {
+              "text": "number[]"
+            }
+          }
+        },
+        {
+          "kind": "function",
+          "name": "boundariesWithin",
+          "parameters": [
+            {
+              "name": "boundaries",
+              "description": "Ascending domain positions.",
+              "type": {
+                "text": "number[]"
+              }
+            },
+            {
+              "name": "from",
+              "type": {
+                "text": "number"
+              }
+            },
+            {
+              "name": "to",
+              "type": {
+                "text": "number"
+              }
+            }
+          ],
+          "description": "The subset of an explicit, possibly irregular boundary list that falls within\n`[from, to]`. The escape hatch from `gridLines()` for non-uniform spacing —\nsame return shape, so consumers are agnostic to which one produced it.",
+          "return": {
+            "type": {
+              "text": "number[]"
+            }
+          }
+        },
+        {
+          "kind": "function",
+          "name": "chooseStep",
+          "parameters": [
+            {
+              "name": "scale",
+              "type": {
+                "text": "Scale"
+              }
+            },
+            {
+              "name": "candidates",
+              "description": "Descending step sizes, coarsest first.",
+              "type": {
+                "text": "number[]"
+              }
+            },
+            {
+              "name": "minPixelSpacing",
+              "type": {
+                "text": "number"
+              }
+            }
+          ],
+          "description": "Coarsest-to-finest step selection for an adaptive ruler: the first candidate\nwhose on-screen spacing meets `minPixelSpacing`, so labels thin out as you\nzoom out instead of colliding.\n\nCandidates are plain numbers, which is what keeps this meter-agnostic — the\ncaller decides whether they mean bars, beats, or subdivisions.",
+          "return": {
+            "type": {
+              "text": "number | null"
+            }
+          }
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "createScale",
+          "declaration": {
+            "name": "createScale",
+            "module": "src/shared/time-scale.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "rowScale",
+          "declaration": {
+            "name": "rowScale",
+            "module": "src/shared/time-scale.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "toPixels",
+          "declaration": {
+            "name": "toPixels",
+            "module": "src/shared/time-scale.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "toValue",
+          "declaration": {
+            "name": "toValue",
+            "module": "src/shared/time-scale.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "spanToPixels",
+          "declaration": {
+            "name": "spanToPixels",
+            "module": "src/shared/time-scale.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "visibleRange",
+          "declaration": {
+            "name": "visibleRange",
+            "module": "src/shared/time-scale.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "zoomAround",
+          "declaration": {
+            "name": "zoomAround",
+            "module": "src/shared/time-scale.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "panBy",
+          "declaration": {
+            "name": "panBy",
+            "module": "src/shared/time-scale.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "gridSnapper",
+          "declaration": {
+            "name": "gridSnapper",
+            "module": "src/shared/time-scale.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "gridLines",
+          "declaration": {
+            "name": "gridLines",
+            "module": "src/shared/time-scale.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "boundariesWithin",
+          "declaration": {
+            "name": "boundariesWithin",
+            "module": "src/shared/time-scale.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "chooseStep",
+          "declaration": {
+            "name": "chooseStep",
+            "module": "src/shared/time-scale.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/shared/trigger-aria.js",
       "declarations": [
         {
