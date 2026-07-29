@@ -15,7 +15,7 @@ export const GET: APIRoute = async () => {
 
   const body = `# ARC UI
 
-> ARC Reactive Components — a dark-first Web Component library built with Lit. Single source of truth with automatic code generation for ${frameworkCount} framework targets.
+> ARC Radiant Components — a dark-first Web Component library built with Lit. Single source of truth with automatic code generation for ${frameworkCount} framework targets.
 
 - Version: ${version}
 - Components: ${components.length}

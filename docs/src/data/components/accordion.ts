@@ -57,7 +57,7 @@ The component is fully accessible out of the box: trigger buttons carry \`aria-e
     </arc-accordion-item>
     <arc-accordion-item question="Can I use individual components without importing the whole library?">
       Yes. Each component is published as a standalone module. Import only what you need —
-      for example, import '@arclux/arc-ui/reactive/accordion.js' — and your bundler
+      for example, import '@arclux/arc-ui/accordion' — and your bundler
       will tree-shake everything else away.
     </arc-accordion-item>
   </arc-accordion>

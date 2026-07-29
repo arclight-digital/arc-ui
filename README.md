@@ -1,5 +1,5 @@
 <h1 align="center">ARC UI</h1>
-<p align="center"><strong>ARC Reactive Components</strong> — a modern, dark-first component library built on web standards</p>
+<p align="center"><strong>ARC Radiant Components</strong> — a modern, dark-first component library built on web standards</p>
 
 <p align="center">
   <a href="https://www.npmjs.com/package/@arclux/arc-ui"><img src="https://img.shields.io/npm/v/@arclux/arc-ui?style=flat-square&color=4d7ef7" alt="npm version"></a>
