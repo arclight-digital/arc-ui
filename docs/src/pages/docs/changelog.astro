@@ -62,6 +62,23 @@ const headings = [
         such as <code>arc-feature-card</code>, still have no light DOM to fall back to; see
         <a href="/docs/accessibility#no-javascript">Without JavaScript</a>.
       </p>
+
+      <h3 class="tier-heading">Static HTML Package</h3>
+      <ul class="docs-list">
+        <li><strong>Button styles are back</strong> — <code>arc-button</code> has shipped with <em>zero</em> CSS in <code>arc-ui.css</code> since v2.6.0. Adding an <code>@click</code> handler to bridge form submit/reset across the shadow boundary tripped the generator's auto-detection into classifying the component as fully interactive, which excludes it from the bundle. A stale standalone <code>button.css</code> masked the gap. Same fix restores <code>alert</code>, <code>copy-button</code>, <code>tag</code>, <code>chip</code>, <code>breadcrumb</code>, <code>pagination</code>, <code>sidebar</code>, and the native-element form controls.</li>
+        <li><strong>Classification moved out of JSDoc</strong> — component classification now lives in <code>prism.config.js</code> rather than <code>@arc-prism</code> doc comments. The tags had twice been erased by passes that rewrite JSDoc, silently reclassifying components and causing exactly the bug above. Config is validated, and entries matching no component now warn.</li>
+        <li><strong>117 stale files removed</strong> — see below.</li>
+      </ul>
+
+      <arc-callout variant="warning" style="margin-top:var(--space-sm)">
+        <strong>Breaking for <code>@arclux/arc-ui-html</code> only.</strong> 62 stylesheets and 55
+        examples for interactive components have been removed, so imports like
+        <code>@arclux/arc-ui-html/css/modal.css</code> will no longer resolve. These described
+        shadow-DOM internals that hand-authored static markup cannot reproduce — the generator had
+        already stopped maintaining them, leaving fossils that were last regenerated several
+        releases ago. If you import one, drop it: it was not styling anything you can build
+        statically. The Web Component and framework packages are unaffected.
+      </arc-callout>
     </section>
 
     <section id="v2-7-0">
