@@ -4,9 +4,9 @@ import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/data-grid';
 
 export interface DataGridProps {
-  columns?: unknown[];
-  rows?: unknown[];
-  sort?: unknown[];
+  columns?: Array<{key:string,label:string,sortable?:boolean,editable?:boolean,pinned?:boolean,width?:string,align?:string}>;
+  rows?: Array<Record<string, any>>;
+  sort?: Array<{key:string,direction:'asc'|'desc'}>;
   manualSort?: boolean;
   selectable?: boolean;
   virtual?: boolean;
@@ -15,7 +15,31 @@ export interface DataGridProps {
   onArcSelectionChange?: (e: CustomEvent) => void;
   onArcCellChange?: (e: CustomEvent) => void;
   children?: JSX.Element;
-  [key: string]: unknown;
+  class?: string;
+  id?: string;
+  style?: string;
+  title?: string;
+  role?: string;
+  slot?: string;
+  part?: string;
+  exportparts?: string;
+  dir?: string;
+  lang?: string;
+  translate?: string;
+  accesskey?: string;
+  enterkeyhint?: string;
+  inputmode?: string;
+  popover?: string;
+  contenteditable?: boolean | string;
+  tabindex?: number;
+  hidden?: boolean;
+  inert?: boolean;
+  draggable?: boolean;
+  spellcheck?: boolean;
+  autofocus?: boolean;
+  [key: `data-${string}`]: unknown;
+  [key: `aria-${string}`]: unknown;
+  [key: `on${string}`]: unknown;
 }
 
 export const DataGrid: Component<DataGridProps> = (props) => {

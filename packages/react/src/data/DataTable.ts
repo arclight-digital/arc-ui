@@ -5,7 +5,7 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcDataTable } from '@arclux/arc-ui/data-table';
 
 export interface DataTableProps {
-  rows?: unknown[];
+  rows?: Array<Record<string, any>>;
   sortable?: boolean;
   selectable?: boolean;
   sortColumn?: string;

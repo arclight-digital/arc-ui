@@ -4,12 +4,36 @@ import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/kanban';
 
 export interface KanbanProps {
-  columns?: unknown[];
+  columns?: Array<{id:string,title?:string,limit?:number,items:Array<{id:string,label:string,description?:string,tag?:string,variant?:string}>}>;
   disabled?: boolean;
   onArcCardMove?: (e: CustomEvent) => void;
   onArcCardClick?: (e: CustomEvent) => void;
   children?: JSX.Element;
-  [key: string]: unknown;
+  class?: string;
+  id?: string;
+  style?: string;
+  title?: string;
+  role?: string;
+  slot?: string;
+  part?: string;
+  exportparts?: string;
+  dir?: string;
+  lang?: string;
+  translate?: string;
+  accesskey?: string;
+  enterkeyhint?: string;
+  inputmode?: string;
+  popover?: string;
+  contenteditable?: boolean | string;
+  tabindex?: number;
+  hidden?: boolean;
+  inert?: boolean;
+  draggable?: boolean;
+  spellcheck?: boolean;
+  autofocus?: boolean;
+  [key: `data-${string}`]: unknown;
+  [key: `aria-${string}`]: unknown;
+  [key: `on${string}`]: unknown;
 }
 
 export const Kanban: Component<KanbanProps> = (props) => {

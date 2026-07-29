@@ -5,7 +5,7 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcMultiSelect } from '@arclux/arc-ui/multi-select';
 
 export interface MultiSelectProps {
-  value?: unknown[];
+  value?: string[];
   placeholder?: string;
   label?: string;
   name?: string;

@@ -6,8 +6,8 @@ import '@arclux/arc-ui/chart';
 
 export interface ChartProps {
   type?: 'line' | 'area' | 'bar' | 'donut';
-  series?: unknown[];
-  labels?: unknown[];
+  series?: Array<{label:string,data:number[]}>;
+  labels?: string[];
   stacked?: boolean;
   hideLegend?: boolean;
   hideAxis?: boolean;
@@ -16,7 +16,31 @@ export interface ChartProps {
   currency?: string;
   onArcMarkClick?: (e: CustomEvent) => void;
   children?: preact.ComponentChildren;
-  [key: string]: unknown;
+  class?: string;
+  id?: string;
+  style?: string;
+  title?: string;
+  role?: string;
+  slot?: string;
+  part?: string;
+  exportparts?: string;
+  dir?: string;
+  lang?: string;
+  translate?: string;
+  accesskey?: string;
+  enterkeyhint?: string;
+  inputmode?: string;
+  popover?: string;
+  contenteditable?: boolean | string;
+  tabindex?: number;
+  hidden?: boolean;
+  inert?: boolean;
+  draggable?: boolean;
+  spellcheck?: boolean;
+  autofocus?: boolean;
+  [key: `data-${string}`]: unknown;
+  [key: `aria-${string}`]: unknown;
+  [key: `on${string}`]: unknown;
 }
 
 export const Chart: FunctionComponent<ChartProps> = ({ type, series, labels, stacked, hideLegend, hideAxis, height, valueFormat, currency, onArcMarkClick, children, ...rest }) => {

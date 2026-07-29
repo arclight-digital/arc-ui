@@ -5,8 +5,8 @@ import '@arclux/arc-ui/table';
 defineOptions({ name: 'Table' });
 
 const props = withDefaults(defineProps<{
-  columns?: unknown[];
-  rows?: unknown[];
+  columns?: string[];
+  rows?: string[][];
   striped?: boolean;
   compact?: boolean;
 }>(), {

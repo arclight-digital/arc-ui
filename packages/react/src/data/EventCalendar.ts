@@ -5,7 +5,7 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcEventCalendar } from '@arclux/arc-ui/event-calendar';
 
 export interface EventCalendarProps {
-  events?: unknown[];
+  events?: Array<{date:string,end?:string,label:string,color?:number}>;
   view?: 'month' | 'week';
   date?: string;
   className?: string;

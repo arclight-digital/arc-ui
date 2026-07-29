@@ -10,7 +10,7 @@ import '@arclux/arc-ui/data-table';
   template: `<arc-data-table [rows]="this.rows" [sortable]="this.sortable" [selectable]="this.selectable" [attr.sortColumn]="this.sortColumn" [attr.sortDirection]="this.sortDirection" [virtual]="this.virtual" [attr.rowHeight]="this.rowHeight" (arc-sort)="this.arcSort.emit($event)" (arc-select-all)="this.arcSelectAll.emit($event)" (arc-row-select)="this.arcRowSelect.emit($event)"><ng-content /></arc-data-table>`,
 })
 export class DataTable {
-  @Input() rows: unknown[] = [];
+  @Input() rows: Array<Record<string, any>> = [];
   @Input() sortable: boolean = false;
   @Input() selectable: boolean = false;
   @Input() sortColumn: string = '';

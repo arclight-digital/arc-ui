@@ -328,7 +328,7 @@ export declare class ArcChart extends LitElement {
   /** The chart form. Line and area share the x axis across all series; bar renders grouped columns (or stacked with the `stacked` attribute); donut renders one segment per series (or per category when a single series is given). @default 'line' */
   type: 'line' | 'area' | 'bar' | 'donut';
   /** The data that drives the chart. Each entry is one series; all series share the x axis defined by `labels`. Set via JavaScript property, not an attribute. Colors are assigned in fixed order from --chart-1 to --chart-6; series beyond six are summed into an "Other" series noted in the legend. @default [] */
-  series: unknown[];
+  series: Array<{label:string,data:number[]}>;
   /** Category labels for the x axis (or donut segment names when a single series is given). Labels that would collide are automatically thinned — every Nth label renders based on available width. @default [] */
   labels: string[];
   /** Bar type only. Stacks series segments on a shared baseline with 2px surface gaps between segments; only the outermost segment gets the rounded value end. Assumes non-negative data. @default false */
@@ -459,7 +459,11 @@ export declare class ArcColorSwatch extends LitElement {
  * `<arc-column>`
  */
 export declare class ArcColumn extends LitElement {
-  /** The property name on each row object whose value should be displayed in this column. Must match a key present in the objects passed to the parent DataTable's `rows` array. @default '' */
+  /** The row property this column reads, from whichever alias was supplied. React and Preact strip `key` in the reconciler, so a React consumer can only ever reach this through `field`. */
+  fieldName: unknown;
+  /** The property name on each row object whose value should be displayed in this column. Must match a key present in the objects passed to the parent DataTable's `rows` array. Prefer this over `key`, which React and Preact intercept before the component sees it. @default '' */
+  field: string;
+  /** Alias of `field`, kept for compatibility. Works in HTML, Vue, Svelte, Angular and Solid, but **not** in React or Preact: both reserve `key` for list reconciliation and strip it before the component receives it. `field` takes precedence when both are set. @default '' */
   key: string;
   /** The human-readable header text displayed in the table's `<th>` element. This is what users see at the top of the column. @default '' */
   label: string;
@@ -662,11 +666,11 @@ export declare class ArcDashboardGrid extends LitElement {
  */
 export declare class ArcDataGrid extends LitElement {
   /** Column definitions. Each entry maps a `key` in your row objects to a rendered column with a `label` header. Optional flags enable sorting, inline editing, and left-edge pinning per column; `width` sets a fixed CSS width (required for accurate pinned offsets) and `align` controls text alignment. Pinned columns are always displayed first. Set via JavaScript property. @default [] */
-  columns: unknown[];
+  columns: Array<{key:string,label:string,sortable?:boolean,editable?:boolean,pinned?:boolean,width?:string,align?:string}>;
   /** The data array. Each object becomes a row keyed by column `key`. The grid works on an internal shallow copy — sorting and inline edits never mutate the array you pass in. Set via JavaScript property; reassigning it resets selection and any open editor. @default [] */
   rows: Array<Record<string, any>>;
   /** Multi-sort state in priority order. Clicking a sortable header cycles it asc → desc → none; Shift+click appends it as a secondary sort. When more than one sort is active, headers show a direction arrow plus priority number. Set this property to pre-sort the grid. @default [] */
-  sort: unknown[];
+  sort: Array<{key:string,direction:'asc'|'desc'}>;
   /** Skips internal sorting. Rows render in the order given, while headers still cycle the `sort` state and emit `arc-sort` — use this to implement server-side sorting. @default false */
   manualSort: boolean;
   /** Adds a checkbox column with a select-all header checkbox (indeterminate when partially selected). Space toggles selection from the keyboard. Emits `arc-selection-change` with the selected row indices. @default false */
@@ -744,7 +748,7 @@ export declare class ArcDateRangePicker extends LitElement {
   /** Number of month panels shown in the popup. Panels sit side by side and stack vertically when the popup is too narrow. @default 2 */
   months: number;
   /** Quick ranges rendered as a left rail. Each preset selects the last N days ending today and closes the popup. Hidden when empty. @default [] */
-  presets: unknown[];
+  presets: Array<{label:string,days:number}>;
   /** Placeholder text shown in the input when no range is selected. @default 'Select date range' */
   placeholder: string;
   /** Disables the picker, reducing opacity and preventing the popup from opening. @default false */
@@ -874,7 +878,7 @@ export declare class ArcEmptyState extends LitElement {
  */
 export declare class ArcEventCalendar extends LitElement {
   /** The event objects to display. `date` (and optional `end` for multi-day spans) are ISO strings (YYYY-MM-DD). `color` indexes the fixed `--chart-N` palette and defaults to 1. Set via JavaScript property, not an attribute. @default [] */
-  events: unknown[];
+  events: Array<{date:string,end?:string,label:string,color?:number}>;
   /** Which period layout to render. Also switchable by the user via the header view toggle. @default 'month' */
   view: 'month' | 'week';
   /** ISO date string (YYYY-MM-DD) anchoring the visible period. Defaults to today when left empty. @default '' */
@@ -1192,7 +1196,7 @@ export declare class ArcInset extends LitElement {
  */
 export declare class ArcKanban extends LitElement {
   /** The data array that drives the board. Each entry becomes a column with a header (title plus count badge) and a list of cards. `limit` renders the count as `count/limit` and turns it error-colored when exceeded. Each card needs a unique `id` and a `label`; `description` renders below the label with a two-line clamp, and `tag` renders an arc-tag chip styled by `variant`. Set via JavaScript — it is not an HTML attribute. The component works on an internal copy for immediate drag feedback; sync your source of truth from `arc-card-move` and assign a new array to re-render. @default [] */
-  columns: unknown[];
+  columns: Array<{id:string,title?:string,limit?:number,items:Array<{id:string,label:string,description?:string,tag?:string,variant?:string}>}>;
   /** Disables all pointer and keyboard interaction and dims the board. @default false */
   disabled: boolean;
 }
@@ -1354,8 +1358,8 @@ export declare class ArcMenuItem extends LitElement {
  * Events: arc-select
  */
 export declare class ArcMenubar extends LitElement {
-  /** The menu structure. Each top-level entry is `{ label, disabled?, items }` where `items` contains menu entries of shape `{ label, shortcut?, disabled?, divider?, items? }`. Entries with an `items` array become submenus (one further nesting level supported); `{ divider: true }` renders a separator. Set via JavaScript — this is a property, not an HTML attribute. @default [] */
-  items: Array<MenubarItem>;
+  /** The menu structure. Entries with an `items` array become submenus (one further nesting level supported); `{ divider: true }` renders a separator. Set via JavaScript — this is a property, not an HTML attribute. @default [] */
+  items: Array<{label:string,disabled?:boolean,items:Array<{label?:string,shortcut?:string,disabled?:boolean,divider?:boolean,items?:Array<{label:string,shortcut?:string,disabled?:boolean}>}>}>;
 }
 
 /**
@@ -2596,7 +2600,7 @@ export declare class ArcTopBar extends LitElement {
  */
 export declare class ArcTransferList extends LitElement {
   /** The full universe of items. Items whose value is in `value` render in the Selected pane; the rest render in Available. @default [] */
-  options: unknown[];
+  options: Array<{value:string,label:string,disabled?:boolean}>;
   /** Values currently in the Selected pane, kept in options order. Updated after every move and emitted via `arc-change`. @default [] */
   value: string[];
   /** Form field name. When set, the component submits one form entry per selected value. @default '' */

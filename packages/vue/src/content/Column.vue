@@ -5,11 +5,13 @@ import '@arclux/arc-ui/column';
 defineOptions({ name: 'Column' });
 
 const props = withDefaults(defineProps<{
+  field?: string;
   key?: string;
   label?: string;
   sortable?: boolean;
   width?: string;
 }>(), {
+  field: '',
   key: '',
   label: '',
   sortable: false,
@@ -19,6 +21,7 @@ const props = withDefaults(defineProps<{
 
 <template>
   <arc-column
+    :field="props.field"
     :key="props.key"
     :label="props.label"
     :sortable="props.sortable"

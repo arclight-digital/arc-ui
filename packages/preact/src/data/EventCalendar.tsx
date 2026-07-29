@@ -5,14 +5,38 @@ import { useLayoutEffect, useRef } from 'preact/hooks';
 import '@arclux/arc-ui/event-calendar';
 
 export interface EventCalendarProps {
-  events?: unknown[];
+  events?: Array<{date:string,end?:string,label:string,color?:number}>;
   view?: 'month' | 'week';
   date?: string;
   onArcPeriodChange?: (e: CustomEvent) => void;
   onArcDateClick?: (e: CustomEvent) => void;
   onArcEventClick?: (e: CustomEvent) => void;
   children?: preact.ComponentChildren;
-  [key: string]: unknown;
+  class?: string;
+  id?: string;
+  style?: string;
+  title?: string;
+  role?: string;
+  slot?: string;
+  part?: string;
+  exportparts?: string;
+  dir?: string;
+  lang?: string;
+  translate?: string;
+  accesskey?: string;
+  enterkeyhint?: string;
+  inputmode?: string;
+  popover?: string;
+  contenteditable?: boolean | string;
+  tabindex?: number;
+  hidden?: boolean;
+  inert?: boolean;
+  draggable?: boolean;
+  spellcheck?: boolean;
+  autofocus?: boolean;
+  [key: `data-${string}`]: unknown;
+  [key: `aria-${string}`]: unknown;
+  [key: `on${string}`]: unknown;
 }
 
 export const EventCalendar: FunctionComponent<EventCalendarProps> = ({ events, view, date, onArcPeriodChange, onArcDateClick, onArcEventClick, children, ...rest }) => {

@@ -10,22 +10,22 @@ import '@arclux/arc-ui/transfer-list';
   template: `<arc-transfer-list [options]="this.options" [value]="this.value" [attr.name]="this.name" [disabled]="this.disabled" [searchable]="this.searchable" [attr.sourceLabel]="this.sourceLabel" [attr.targetLabel]="this.targetLabel" (arc-change)="this.onArcChange($event)"><ng-content /></arc-transfer-list>`,
 })
 export class TransferList {
-  @Input() options: unknown[] = [];
-  @Input() value: unknown[] = [];
+  @Input() options: Array<{value:string,label:string,disabled?:boolean}> = [];
+  @Input() value: string[] = [];
   @Input() name: string = '';
   @Input() disabled: boolean = false;
   @Input() searchable: boolean = false;
   @Input() sourceLabel: string = 'Available';
   @Input() targetLabel: string = 'Selected';
   @Output() arcChange = new EventEmitter<CustomEvent>();
-  @Output() valueChange = new EventEmitter<unknown[]>();
+  @Output() valueChange = new EventEmitter<string[]>();
 
   onArcChange(event: CustomEvent) {
     this.arcChange.emit(event);
     const detail = event.detail as Record<string, unknown> | null;
     if (!detail) return;
     if ('value' in detail) {
-      const next = detail.value as unknown[];
+      const next = detail.value as string[];
       this.value = next;
       this.valueChange.emit(next);
     }

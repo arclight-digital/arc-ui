@@ -6,8 +6,8 @@ import { ArcChart } from '@arclux/arc-ui/chart';
 
 export interface ChartProps {
   type?: 'line' | 'area' | 'bar' | 'donut';
-  series?: unknown[];
-  labels?: unknown[];
+  series?: Array<{label:string,data:number[]}>;
+  labels?: string[];
   stacked?: boolean;
   hideLegend?: boolean;
   hideAxis?: boolean;

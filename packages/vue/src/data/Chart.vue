@@ -6,8 +6,8 @@ defineOptions({ name: 'Chart' });
 
 const props = withDefaults(defineProps<{
   type?: 'line' | 'area' | 'bar' | 'donut';
-  series?: unknown[];
-  labels?: unknown[];
+  series?: Array<{label:string,data:number[]}>;
+  labels?: string[];
   stacked?: boolean;
   hideLegend?: boolean;
   hideAxis?: boolean;

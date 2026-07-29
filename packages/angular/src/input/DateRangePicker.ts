@@ -16,7 +16,7 @@ export class DateRangePicker {
   @Input() min: string = '';
   @Input() max: string = '';
   @Input() months: number = 2;
-  @Input() presets: unknown[] = [];
+  @Input() presets: Array<{label:string,days:number}> = [];
   @Input() placeholder: string = 'Select date range';
   @Input() disabled: boolean = false;
   @Input() required: boolean = false;

@@ -10,6 +10,6 @@ import '@arclux/arc-ui/menubar';
   template: `<arc-menubar [items]="this.items" (arc-select)="this.arcSelect.emit($event)"><ng-content /></arc-menubar>`,
 })
 export class Menubar {
-  @Input() items: unknown[] = [];
+  @Input() items: Array<{label:string,disabled?:boolean,items:Array<{label?:string,shortcut?:string,disabled?:boolean,divider?:boolean,items?:Array<{label:string,shortcut?:string,disabled?:boolean}>}>}> = [];
   @Output() arcSelect = new EventEmitter<CustomEvent>();
 }

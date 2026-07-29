@@ -4,14 +4,38 @@ import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/multi-select';
 
 export interface MultiSelectProps {
-  value?: unknown[];
+  value?: string[];
   placeholder?: string;
   label?: string;
   name?: string;
   disabled?: boolean;
   onArcChange?: (e: CustomEvent) => void;
   children?: JSX.Element;
-  [key: string]: unknown;
+  class?: string;
+  id?: string;
+  style?: string;
+  title?: string;
+  role?: string;
+  slot?: string;
+  part?: string;
+  exportparts?: string;
+  dir?: string;
+  lang?: string;
+  translate?: string;
+  accesskey?: string;
+  enterkeyhint?: string;
+  inputmode?: string;
+  popover?: string;
+  contenteditable?: boolean | string;
+  tabindex?: number;
+  hidden?: boolean;
+  inert?: boolean;
+  draggable?: boolean;
+  spellcheck?: boolean;
+  autofocus?: boolean;
+  [key: `data-${string}`]: unknown;
+  [key: `aria-${string}`]: unknown;
+  [key: `on${string}`]: unknown;
 }
 
 export const MultiSelect: Component<MultiSelectProps> = (props) => {

@@ -8,7 +8,31 @@
     active?: boolean;
     padding?: number;
     children?: Snippet;
-    [key: string]: unknown;
+    class?: string;
+    id?: string;
+    style?: string;
+    title?: string;
+    role?: string;
+    slot?: string;
+    part?: string;
+    exportparts?: string;
+    dir?: string;
+    lang?: string;
+    translate?: string;
+    accesskey?: string;
+    enterkeyhint?: string;
+    inputmode?: string;
+    popover?: string;
+    contenteditable?: boolean | string;
+    tabindex?: number;
+    hidden?: boolean;
+    inert?: boolean;
+    draggable?: boolean;
+    spellcheck?: boolean;
+    autofocus?: boolean;
+    [key: `data-${string}`]: unknown;
+    [key: `aria-${string}`]: unknown;
+    [key: `on${string}`]: unknown;
   }
 
   let { target = '', active = false, padding = 8, children, ...rest }: Props = $props();

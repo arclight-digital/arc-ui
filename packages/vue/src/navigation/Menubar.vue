@@ -5,7 +5,7 @@ import '@arclux/arc-ui/menubar';
 defineOptions({ name: 'Menubar' });
 
 const props = withDefaults(defineProps<{
-  items?: unknown[];
+  items?: Array<{label:string,disabled?:boolean,items:Array<{label?:string,shortcut?:string,disabled?:boolean,divider?:boolean,items?:Array<{label:string,shortcut?:string,disabled?:boolean}>}>}>;
 }>(), {
   items: () => ([]),
 });

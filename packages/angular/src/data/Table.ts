@@ -10,8 +10,8 @@ import '@arclux/arc-ui/table';
   template: `<arc-table [columns]="this.columns" [rows]="this.rows" [striped]="this.striped" [compact]="this.compact"><ng-content /></arc-table>`,
 })
 export class Table {
-  @Input() columns: unknown[] = [];
-  @Input() rows: unknown[] = [];
+  @Input() columns: string[] = [];
+  @Input() rows: string[][] = [];
   @Input() striped: boolean = false;
   @Input() compact: boolean = false;
 }

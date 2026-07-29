@@ -11,8 +11,8 @@ import '@arclux/arc-ui/chart';
 })
 export class Chart {
   @Input() type: 'line' | 'area' | 'bar' | 'donut' = 'line';
-  @Input() series: unknown[] = [];
-  @Input() labels: unknown[] = [];
+  @Input() series: Array<{label:string,data:number[]}> = [];
+  @Input() labels: string[] = [];
   @Input() stacked: boolean = false;
   @Input() hideLegend: boolean = false;
   @Input() hideAxis: boolean = false;

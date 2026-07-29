@@ -12,7 +12,7 @@ import '@arclux/arc-ui/color-picker';
 export class ColorPicker {
   @Input() value: string = '#4d7ef7';
   @Input() name: string = '';
-  @Input() presets: unknown[] = [];
+  @Input() presets: string[] = [];
   @Input() disabled: boolean = false;
   @Input() label: string = '';
   @Output() arcChange = new EventEmitter<CustomEvent>();

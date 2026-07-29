@@ -11,7 +11,7 @@ const props = withDefaults(defineProps<{
   min?: string;
   max?: string;
   months?: number;
-  presets?: unknown[];
+  presets?: Array<{label:string,days:number}>;
   placeholder?: string;
   disabled?: boolean;
   required?: boolean;

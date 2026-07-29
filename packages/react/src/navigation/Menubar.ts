@@ -5,7 +5,7 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcMenubar } from '@arclux/arc-ui/menubar';
 
 export interface MenubarProps {
-  items?: unknown[];
+  items?: Array<{label:string,disabled?:boolean,items:Array<{label?:string,shortcut?:string,disabled?:boolean,divider?:boolean,items?:Array<{label:string,shortcut?:string,disabled?:boolean}>}>}>;
   className?: string;
   children?: React.ReactNode;
   onArcSelect?: (e: CustomEvent) => void;

@@ -5,7 +5,7 @@ import '@arclux/arc-ui/stepper-nav';
 defineOptions({ name: 'StepperNav' });
 
 const props = withDefaults(defineProps<{
-  steps?: string;
+  steps?: Array<string>;
   active?: number;
   linear?: boolean;
 }>(), {

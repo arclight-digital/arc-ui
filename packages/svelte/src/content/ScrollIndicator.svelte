@@ -9,7 +9,31 @@
     size?: 'sm' | 'md' | 'lg';
     color?: 'accent' | 'gradient';
     children?: Snippet;
-    [key: string]: unknown;
+    class?: string;
+    id?: string;
+    style?: string;
+    title?: string;
+    role?: string;
+    slot?: string;
+    part?: string;
+    exportparts?: string;
+    dir?: string;
+    lang?: string;
+    translate?: string;
+    accesskey?: string;
+    enterkeyhint?: string;
+    inputmode?: string;
+    popover?: string;
+    contenteditable?: boolean | string;
+    tabindex?: number;
+    hidden?: boolean;
+    inert?: boolean;
+    draggable?: boolean;
+    spellcheck?: boolean;
+    autofocus?: boolean;
+    [key: `data-${string}`]: unknown;
+    [key: `aria-${string}`]: unknown;
+    [key: `on${string}`]: unknown;
   }
 
   let { target = '', position = 'top', size = 'sm', color = 'accent', children, ...rest }: Props = $props();

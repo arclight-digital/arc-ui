@@ -10,7 +10,31 @@
     dedupe?: boolean;
     queueLimit?: number;
     children?: Snippet;
-    [key: string]: unknown;
+    class?: string;
+    id?: string;
+    style?: string;
+    title?: string;
+    role?: string;
+    slot?: string;
+    part?: string;
+    exportparts?: string;
+    dir?: string;
+    lang?: string;
+    translate?: string;
+    accesskey?: string;
+    enterkeyhint?: string;
+    inputmode?: string;
+    popover?: string;
+    contenteditable?: boolean | string;
+    tabindex?: number;
+    hidden?: boolean;
+    inert?: boolean;
+    draggable?: boolean;
+    spellcheck?: boolean;
+    autofocus?: boolean;
+    [key: `data-${string}`]: unknown;
+    [key: `aria-${string}`]: unknown;
+    [key: `on${string}`]: unknown;
   }
 
   let { position = 'top-right', duration = 4000, maxVisible = 3, dedupe = true, queueLimit = 20, children, ...rest }: Props = $props();

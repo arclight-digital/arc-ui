@@ -7,7 +7,7 @@ import { ClickOutsideController } from '../shared/click-outside.js';
  * display, and full WAI-ARIA menubar keyboard navigation.
  *
  * @tag arc-menubar
- * @prop {Array<MenubarItem>} items - The menu structure. Each top-level entry is `{ label, disabled?, items }` where `items` contains menu entries of shape `{ label, shortcut?, disabled?, divider?, items? }`. Entries with an `items` array become submenus (one further nesting level supported); `{ divider: true }` renders a separator. Set via JavaScript — this is a property, not an HTML attribute.
+ * @prop {Array<{label:string,disabled?:boolean,items:Array<{label?:string,shortcut?:string,disabled?:boolean,divider?:boolean,items?:Array<{label:string,shortcut?:string,disabled?:boolean}>}>}>} items - The menu structure. Entries with an `items` array become submenus (one further nesting level supported); `{ divider: true }` renders a separator. Set via JavaScript — this is a property, not an HTML attribute.
  * @fires arc-select - Fired when a leaf menu item is activated. `detail.path` is the array of labels from the top-level menu to the selected leaf, e.g. `["File", "Export", "PNG"]`.
  * @csspart menu
  * @csspart divider

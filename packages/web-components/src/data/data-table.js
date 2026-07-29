@@ -324,10 +324,10 @@ export class ArcDataTable extends LitElement {
   _handleSort(column) {
     if (!this.sortable || !column.sortable) return;
 
-    if (this.sortColumn === column.key) {
+    if (this.sortColumn === column.fieldName) {
       this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
     } else {
-      this.sortColumn = column.key;
+      this.sortColumn = column.fieldName;
       this.sortDirection = 'asc';
     }
 
@@ -413,7 +413,7 @@ export class ArcDataTable extends LitElement {
 
   _renderSortIndicator(column) {
     if (!this.sortable || !column.sortable) return '';
-    if (this.sortColumn !== column.key) {
+    if (this.sortColumn !== column.fieldName) {
       return html`<span class="sort-indicator" aria-hidden="true">\u2195</span>`;
     }
     return html`<span class="sort-indicator" aria-hidden="true">${this.sortDirection === 'asc' ? '\u2191' : '\u2193'}</span>`;
@@ -462,7 +462,7 @@ export class ArcDataTable extends LitElement {
           </td>
         ` : ''}
         ${this._columns.map(col => html`
-          <td part="cell">${row[col.key] ?? ''}</td>
+          <td part="cell">${row[col.fieldName] ?? ''}</td>
         `)}
       </tr>
     `;
@@ -491,9 +491,9 @@ export class ArcDataTable extends LitElement {
               ` : ''}
               ${this._columns.map(col => html`
                 <th
-                  class="${this.sortable && col.sortable ? 'sortable' : ''} ${this.sortColumn === col.key ? 'sorted' : ''}"
+                  class="${this.sortable && col.sortable ? 'sortable' : ''} ${this.sortColumn === col.fieldName ? 'sorted' : ''}"
                   style="${col.width ? `width: ${col.width}` : ''}"
-                  aria-sort=${this.sortColumn === col.key ? (this.sortDirection === 'asc' ? 'ascending' : 'descending') : 'none'}
+                  aria-sort=${this.sortColumn === col.fieldName ? (this.sortDirection === 'asc' ? 'ascending' : 'descending') : 'none'}
                 >
                   ${this.sortable && col.sortable ? html`
                     <button class="sort-button" @click=${() => this._handleSort(col)}>

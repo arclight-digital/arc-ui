@@ -6,7 +6,7 @@ import { tokenStyles } from '../shared-styles.js';
  * colored by the chart palette.
  *
  * @tag arc-event-calendar
- * @prop events - The event objects to display. `date` (and optional `end` for multi-day spans) are ISO strings (YYYY-MM-DD). `color` indexes the fixed `--chart-N` palette and defaults to 1. Set via JavaScript property, not an attribute.
+ * @prop {Array<{date:string,end?:string,label:string,color?:number}>} events - The event objects to display. `date` (and optional `end` for multi-day spans) are ISO strings (YYYY-MM-DD). `color` indexes the fixed `--chart-N` palette and defaults to 1. Set via JavaScript property, not an attribute.
  * @prop {'month' | 'week'} view - Which period layout to render. Also switchable by the user via the header view toggle.
  * @prop {string} date - ISO date string (YYYY-MM-DD) anchoring the visible period. Defaults to today when left empty.
  * @fires arc-event-click - Fired when an event chip is clicked or activated. `event.detail.event` contains the original event object.

@@ -5,9 +5,9 @@ import '@arclux/arc-ui/data-grid';
 defineOptions({ name: 'DataGrid' });
 
 const props = withDefaults(defineProps<{
-  columns?: unknown[];
-  rows?: unknown[];
-  sort?: unknown[];
+  columns?: Array<{key:string,label:string,sortable?:boolean,editable?:boolean,pinned?:boolean,width?:string,align?:string}>;
+  rows?: Array<Record<string, any>>;
+  sort?: Array<{key:string,direction:'asc'|'desc'}>;
   manualSort?: boolean;
   selectable?: boolean;
   virtual?: boolean;
@@ -26,14 +26,14 @@ const emit = defineEmits<{
   'arc-sort': [event: CustomEvent];
   'arc-selection-change': [event: CustomEvent];
   'arc-cell-change': [event: CustomEvent];
-  'update:sort': [value: unknown[]];
+  'update:sort': [value: Array<{key:string,direction:'asc'|'desc'}>];
 }>();
 
 function onArcSort(payload: CustomEvent) {
   emit('arc-sort', payload);
   const detail = payload.detail as Record<string, unknown> | null;
   if (detail) {
-    if ('sort' in detail) emit('update:sort', detail.sort as unknown[]);
+    if ('sort' in detail) emit('update:sort', detail.sort as Array<{key:string,direction:'asc'|'desc'}>);
   }
 }
 </script>

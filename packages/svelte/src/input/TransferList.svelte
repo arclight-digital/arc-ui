@@ -4,15 +4,39 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
-    options?: unknown[];
-    value?: unknown[];
+    options?: Array<{value:string,label:string,disabled?:boolean}>;
+    value?: string[];
     name?: string;
     disabled?: boolean;
     searchable?: boolean;
     sourceLabel?: string;
     targetLabel?: string;
     children?: Snippet;
-    [key: string]: unknown;
+    class?: string;
+    id?: string;
+    style?: string;
+    title?: string;
+    role?: string;
+    slot?: string;
+    part?: string;
+    exportparts?: string;
+    dir?: string;
+    lang?: string;
+    translate?: string;
+    accesskey?: string;
+    enterkeyhint?: string;
+    inputmode?: string;
+    popover?: string;
+    contenteditable?: boolean | string;
+    tabindex?: number;
+    hidden?: boolean;
+    inert?: boolean;
+    draggable?: boolean;
+    spellcheck?: boolean;
+    autofocus?: boolean;
+    [key: `data-${string}`]: unknown;
+    [key: `aria-${string}`]: unknown;
+    [key: `on${string}`]: unknown;
   }
 
   let { options = [], value = $bindable([]), name = '', disabled = false, searchable = false, sourceLabel = 'Available', targetLabel = 'Selected', children, ...rest }: Props = $props();
@@ -23,7 +47,7 @@
   function __onArcChange(e: Event) {
     const detail = (e as CustomEvent).detail as Record<string, unknown> | null;
     if (detail) {
-      if ('value' in detail) value = detail.value as unknown[];
+      if ('value' in detail) value = detail.value as string[];
     }
     (rest['onarc-change'] as ((e: Event) => void) | undefined)?.(e);
   }

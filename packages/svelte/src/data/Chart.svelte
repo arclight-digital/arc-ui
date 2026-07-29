@@ -5,8 +5,8 @@
 
   interface Props {
     type?: 'line' | 'area' | 'bar' | 'donut';
-    series?: unknown[];
-    labels?: unknown[];
+    series?: Array<{label:string,data:number[]}>;
+    labels?: string[];
     stacked?: boolean;
     hideLegend?: boolean;
     hideAxis?: boolean;
@@ -14,7 +14,31 @@
     valueFormat?: 'number' | 'percent' | 'currency';
     currency?: string;
     children?: Snippet;
-    [key: string]: unknown;
+    class?: string;
+    id?: string;
+    style?: string;
+    title?: string;
+    role?: string;
+    slot?: string;
+    part?: string;
+    exportparts?: string;
+    dir?: string;
+    lang?: string;
+    translate?: string;
+    accesskey?: string;
+    enterkeyhint?: string;
+    inputmode?: string;
+    popover?: string;
+    contenteditable?: boolean | string;
+    tabindex?: number;
+    hidden?: boolean;
+    inert?: boolean;
+    draggable?: boolean;
+    spellcheck?: boolean;
+    autofocus?: boolean;
+    [key: `data-${string}`]: unknown;
+    [key: `aria-${string}`]: unknown;
+    [key: `on${string}`]: unknown;
   }
 
   let { type = 'line', series = [], labels = [], stacked = false, hideLegend = false, hideAxis = false, height = 260, valueFormat = 'number', currency = 'USD', children, ...rest }: Props = $props();

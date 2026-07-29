@@ -10,7 +10,7 @@ import '@arclux/arc-ui/stepper-nav';
   template: `<arc-stepper-nav [attr.steps]="this.steps" [attr.active]="this.active" [linear]="this.linear" (arc-change)="this.arcChange.emit($event)" (arc-complete)="this.arcComplete.emit($event)"><ng-content /></arc-stepper-nav>`,
 })
 export class StepperNav {
-  @Input() steps: string = [];
+  @Input() steps: Array<string> = [];
   @Input() active: number = 0;
   @Input() linear: boolean = false;
   @Output() arcChange = new EventEmitter<CustomEvent>();

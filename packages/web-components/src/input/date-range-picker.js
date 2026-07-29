@@ -14,7 +14,7 @@ import { ClickOutsideController } from '../shared/click-outside.js';
  * @prop {string} min - Minimum selectable date as an ISO string. Earlier days are dimmed and non-interactive.
  * @prop {string} max - Maximum selectable date as an ISO string. Later days are dimmed and non-interactive.
  * @prop {number} months - Number of month panels shown in the popup. Panels sit side by side and stack vertically when the popup is too narrow.
- * @prop presets - Quick ranges rendered as a left rail. Each preset selects the last N days ending today and closes the popup. Hidden when empty.
+ * @prop {Array<{label:string,days:number}>} presets - Quick ranges rendered as a left rail. Each preset selects the last N days ending today and closes the popup. Hidden when empty.
  * @prop {string} placeholder - Placeholder text shown in the input when no range is selected.
  * @prop {string} label - Label text rendered above the input in uppercase accent font styling.
  * @prop {string} name - Form field name used when the interval value is submitted with a form.

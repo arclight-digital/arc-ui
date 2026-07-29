@@ -5,7 +5,7 @@ import '@arclux/arc-ui/kanban';
 defineOptions({ name: 'Kanban' });
 
 const props = withDefaults(defineProps<{
-  columns?: unknown[];
+  columns?: Array<{id:string,title?:string,limit?:number,items:Array<{id:string,label:string,description?:string,tag?:string,variant?:string}>}>;
   disabled?: boolean;
 }>(), {
   columns: () => ([]),

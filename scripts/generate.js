@@ -59,10 +59,20 @@ for (const step of steps) {
     // Steps run quiet, but a warning on a successful step is still a finding —
     // prism reports documentation drift this way. Swallowing stdout wholesale
     // meant those scrolled past into a pipe nobody read.
+    // Prism groups its findings into a labelled end-of-run block rather than
+    // printing the word "warning", so match the block's markers too. Its
+    // --strict flag is the robust channel for this, but it cannot be adopted
+    // while a finding we have deliberately accepted keeps it failing.
     const warnings = out
       .toString()
       .split('\n')
-      .filter((l) => /\bwarn(ing)?\b/i.test(l) || /\bomits\b/.test(l));
+      .filter((l) =>
+        /\bwarn(ing)?\b/i.test(l) ||
+        /\bomits\b/.test(l) ||
+        /\breserves\b/.test(l) ||
+        /could not emit|can't emit/.test(l) ||
+        /--strict/.test(l),
+      );
     for (const w of warnings) console.log(`             ${w.trim()}`);
     if (warnings.length) warned += warnings.length;
   } catch (err) {

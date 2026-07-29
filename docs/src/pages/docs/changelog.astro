@@ -107,6 +107,45 @@ const headings = [
         <li><strong>A new <code>check:unions</code> gate</strong> runs as part of <code>pnpm generate</code> and fails if any union reaches the wrappers collapsed, incomplete, or missing its default — whether it was documented on the class or inferred from CSS. 126 unions currently pass. <code>pnpm generate</code> also surfaces warnings from steps that succeed, instead of discarding their output.</li>
         <li><strong>Ten more props documented at source</strong> — <code>tag.size</code>, <code>checkbox.size</code>, <code>radio-group.size</code>, <code>select.size</code>, <code>toggle.size</code>, <code>container.padding</code>, <code>diff.mode</code>, <code>footer.align</code>, <code>link.underline</code> and <code>sidebar.position</code> declared <code>&#123;string&#125;</code> with their values only in prose, so they fell to the CSS scan and lost their defaults the same way. <code>&lt;Tag size="md" /&gt;</code> type-checks again.</li>
       </ul>
+
+      <h3 class="tier-heading">Object and Array Props Are Typed (Prism 2.5.0)</h3>
+      <p class="docs-text">
+        Lit's <code>static properties</code> can only say <code>Array</code>, so every prop carrying
+        real shape arrived in the wrappers as <code>unknown[]</code> — and those are exactly the
+        props a consumer most needs typed. Prism now emits a documented
+        <code>@prop</code> object type verbatim, so eight of them describe themselves:
+      </p>
+      <ul class="docs-list">
+        <li><code>chart.series</code> — <code>Array&#123;label, data: number[]&#125;</code></li>
+        <li><code>event-calendar.events</code> — <code>date</code>, <code>end?</code>, <code>label</code>, <code>color?</code></li>
+        <li><code>data-grid.columns</code> and <code>data-grid.sort</code>, <code>kanban.columns</code> including its nested cards, <code>transfer-list.options</code>, <code>date-range-picker.presets</code>, <code>menubar.items</code> including its two levels of submenu</li>
+      </ul>
+      <p class="docs-text">
+        <code>virtual-list.items</code> stays <code>unknown[]</code> deliberately — it renders
+        whatever you give it, so a shape there would be a fiction.
+      </p>
+
+      <h3 class="tier-heading">arc-column gains <code>field</code></h3>
+      <p class="docs-text">
+        <code>arc-column</code>'s <code>key</code> prop never reached the component in React or
+        Preact: both reserve <code>key</code> for list reconciliation and strip it before the
+        component is called, so <code>&lt;Column key="name" /&gt;</code> set the list key and the
+        column silently rendered nothing — no error, no type error, and <code>key=</code> is what a
+        developer writes by reflex on something that renders in a list.
+      </p>
+      <p class="docs-text">
+        <code>field</code> is the fix, and <code>key</code> stays as an alias. It works today in
+        HTML, Vue, Svelte, Angular and Solid, so renaming would break five working consumers to
+        repair two; <code>field</code> takes precedence when both are set. Prefer
+        <code>field</code> in new work — in React and Preact it is the only one that functions.
+      </p>
+      <p class="docs-text">
+        Generated wrapper props also stopped accepting arbitrary names. The blanket
+        <code>[key: string]: unknown</code> on the Svelte, Preact and Solid interfaces meant
+        <code>&lt;Slider valu=&#123;3&#125; /&gt;</code> type-checked; it is now pattern signatures for
+        <code>data-*</code>, <code>aria-*</code> and <code>on*</code> plus an explicit list of global
+        HTML attributes.
+      </p>
     </section>
 
     <section id="v2-9-0">

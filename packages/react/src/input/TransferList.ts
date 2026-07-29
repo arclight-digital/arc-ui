@@ -5,8 +5,8 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcTransferList } from '@arclux/arc-ui/transfer-list';
 
 export interface TransferListProps {
-  options?: unknown[];
-  value?: unknown[];
+  options?: Array<{value:string,label:string,disabled?:boolean}>;
+  value?: string[];
   name?: string;
   disabled?: boolean;
   searchable?: boolean;

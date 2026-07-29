@@ -7,7 +7,7 @@ defineOptions({ name: 'ColorPicker' });
 const props = withDefaults(defineProps<{
   value?: string;
   name?: string;
-  presets?: unknown[];
+  presets?: string[];
   disabled?: boolean;
   label?: string;
 }>(), {

@@ -5,7 +5,7 @@ import '@arclux/arc-ui/data-table';
 defineOptions({ name: 'DataTable' });
 
 const props = withDefaults(defineProps<{
-  rows?: unknown[];
+  rows?: Array<Record<string, any>>;
   sortable?: boolean;
   selectable?: boolean;
   sortColumn?: string;

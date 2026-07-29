@@ -4,15 +4,39 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
-    columns?: unknown[];
-    rows?: unknown[];
-    sort?: unknown[];
+    columns?: Array<{key:string,label:string,sortable?:boolean,editable?:boolean,pinned?:boolean,width?:string,align?:string}>;
+    rows?: Array<Record<string, any>>;
+    sort?: Array<{key:string,direction:'asc'|'desc'}>;
     manualSort?: boolean;
     selectable?: boolean;
     virtual?: boolean;
     rowHeight?: number;
     children?: Snippet;
-    [key: string]: unknown;
+    class?: string;
+    id?: string;
+    style?: string;
+    title?: string;
+    role?: string;
+    slot?: string;
+    part?: string;
+    exportparts?: string;
+    dir?: string;
+    lang?: string;
+    translate?: string;
+    accesskey?: string;
+    enterkeyhint?: string;
+    inputmode?: string;
+    popover?: string;
+    contenteditable?: boolean | string;
+    tabindex?: number;
+    hidden?: boolean;
+    inert?: boolean;
+    draggable?: boolean;
+    spellcheck?: boolean;
+    autofocus?: boolean;
+    [key: `data-${string}`]: unknown;
+    [key: `aria-${string}`]: unknown;
+    [key: `on${string}`]: unknown;
   }
 
   let { columns = [], rows = [], sort = $bindable([]), manualSort = false, selectable = false, virtual = false, rowHeight = 40, children, ...rest }: Props = $props();
@@ -23,7 +47,7 @@
   function __onArcSort(e: Event) {
     const detail = (e as CustomEvent).detail as Record<string, unknown> | null;
     if (detail) {
-      if ('sort' in detail) sort = detail.sort as unknown[];
+      if ('sort' in detail) sort = detail.sort as Array<{key:string,direction:'asc'|'desc'}>;
     }
     (rest['onarc-sort'] as ((e: Event) => void) | undefined)?.(e);
   }

@@ -125,6 +125,7 @@ export default {
  },
  "arc-column": {
   "attrs": [
+   "field",
    "key",
    "label",
    "sortable",

@@ -207,6 +207,7 @@ declare module 'react' {
         size?: 'sm' | 'md' | 'lg';
       };
       'arc-column': ArcBaseAttributes & {
+        field?: string;
         key?: string;
         label?: string;
         sortable?: boolean;
@@ -286,7 +287,7 @@ declare module 'react' {
       'arc-data-grid': ArcBaseAttributes & {
         columns?: string;
         rows?: string;
-        sort?: string;
+        sort?: Array<{key:string,direction:'asc'|'desc'}>;
         'manual-sort'?: boolean;
         selectable?: boolean;
         virtual?: boolean;

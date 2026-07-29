@@ -5,7 +5,7 @@ import '@arclux/arc-ui/multi-select';
 defineOptions({ name: 'MultiSelect' });
 
 const props = withDefaults(defineProps<{
-  value?: unknown[];
+  value?: string[];
   placeholder?: string;
   label?: string;
   name?: string;
@@ -20,14 +20,14 @@ const props = withDefaults(defineProps<{
 
 const emit = defineEmits<{
   'arc-change': [event: CustomEvent];
-  'update:value': [value: unknown[]];
+  'update:value': [value: string[]];
 }>();
 
 function onArcChange(payload: CustomEvent) {
   emit('arc-change', payload);
   const detail = payload.detail as Record<string, unknown> | null;
   if (detail) {
-    if ('value' in detail) emit('update:value', detail.value as unknown[]);
+    if ('value' in detail) emit('update:value', detail.value as string[]);
   }
 }
 </script>

@@ -4,16 +4,41 @@ import { type FunctionComponent } from 'preact';
 import '@arclux/arc-ui/column';
 
 export interface ColumnProps {
+  field?: string;
   key?: string;
   label?: string;
   sortable?: boolean;
   width?: string;
   children?: preact.ComponentChildren;
-  [key: string]: unknown;
+  class?: string;
+  id?: string;
+  style?: string;
+  title?: string;
+  role?: string;
+  slot?: string;
+  part?: string;
+  exportparts?: string;
+  dir?: string;
+  lang?: string;
+  translate?: string;
+  accesskey?: string;
+  enterkeyhint?: string;
+  inputmode?: string;
+  popover?: string;
+  contenteditable?: boolean | string;
+  tabindex?: number;
+  hidden?: boolean;
+  inert?: boolean;
+  draggable?: boolean;
+  spellcheck?: boolean;
+  autofocus?: boolean;
+  [key: `data-${string}`]: unknown;
+  [key: `aria-${string}`]: unknown;
+  [key: `on${string}`]: unknown;
 }
 
-export const Column: FunctionComponent<ColumnProps> = ({ key, label, sortable, width, children, ...rest }) => (
-  <arc-column key={key} label={label} sortable={sortable} width={width} {...rest}>
+export const Column: FunctionComponent<ColumnProps> = ({ field, key, label, sortable, width, children, ...rest }) => (
+  <arc-column field={field} key={key} label={label} sortable={sortable} width={width} {...rest}>
     {children}
   </arc-column>
 );

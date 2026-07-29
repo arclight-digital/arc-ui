@@ -10,7 +10,7 @@ import '@arclux/arc-ui/event-calendar';
   template: `<arc-event-calendar [events]="this.events" [attr.view]="this.view" [attr.date]="this.date" (arc-period-change)="this.onArcPeriodChange($event)" (arc-date-click)="this.onArcDateClick($event)" (arc-event-click)="this.arcEventClick.emit($event)"><ng-content /></arc-event-calendar>`,
 })
 export class EventCalendar {
-  @Input() events: unknown[] = [];
+  @Input() events: Array<{date:string,end?:string,label:string,color?:number}> = [];
   @Input() view: 'month' | 'week' = 'month';
   @Input() date: string = '';
   @Output() arcPeriodChange = new EventEmitter<CustomEvent>();

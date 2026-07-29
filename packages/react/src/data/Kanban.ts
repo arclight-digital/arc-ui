@@ -5,7 +5,7 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcKanban } from '@arclux/arc-ui/kanban';
 
 export interface KanbanProps {
-  columns?: unknown[];
+  columns?: Array<{id:string,title?:string,limit?:number,items:Array<{id:string,label:string,description?:string,tag?:string,variant?:string}>}>;
   disabled?: boolean;
   className?: string;
   children?: React.ReactNode;

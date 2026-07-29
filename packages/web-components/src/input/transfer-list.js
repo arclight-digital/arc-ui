@@ -9,7 +9,7 @@ import './icon-button.js';
  *
  * @tag arc-transfer-list
  * @requires arc-icon-button
- * @prop options - The full universe of items. Items whose value is in `value` render in the Selected pane; the rest render in Available.
+ * @prop {Array<{value:string,label:string,disabled?:boolean}>} options - The full universe of items. Items whose value is in `value` render in the Selected pane; the rest render in Available.
  * @prop {string[]} value - Values currently in the Selected pane, kept in options order. Updated after every move and emitted via `arc-change`.
  * @prop {string} name - Form field name. When set, the component submits one form entry per selected value.
  * @prop {boolean} searchable - Adds a filter input to each pane that narrows that pane only, case-insensitively. Move-all respects the filter.

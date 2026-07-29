@@ -5,8 +5,8 @@ import { useLayoutEffect, useRef } from 'preact/hooks';
 import '@arclux/arc-ui/tag-input';
 
 export interface TagInputProps {
-  value?: unknown[];
-  suggestions?: unknown[];
+  value?: string[];
+  suggestions?: string[];
   delimiter?: string;
   maxTags?: number;
   allowCustom?: boolean;
@@ -18,7 +18,31 @@ export interface TagInputProps {
   onArcChange?: (e: CustomEvent) => void;
   onArcInput?: (e: CustomEvent) => void;
   children?: preact.ComponentChildren;
-  [key: string]: unknown;
+  class?: string;
+  id?: string;
+  style?: string;
+  title?: string;
+  role?: string;
+  slot?: string;
+  part?: string;
+  exportparts?: string;
+  dir?: string;
+  lang?: string;
+  translate?: string;
+  accesskey?: string;
+  enterkeyhint?: string;
+  inputmode?: string;
+  popover?: string;
+  contenteditable?: boolean | string;
+  tabindex?: number;
+  hidden?: boolean;
+  inert?: boolean;
+  draggable?: boolean;
+  spellcheck?: boolean;
+  autofocus?: boolean;
+  [key: `data-${string}`]: unknown;
+  [key: `aria-${string}`]: unknown;
+  [key: `on${string}`]: unknown;
 }
 
 export const TagInput: FunctionComponent<TagInputProps> = ({ value, suggestions, delimiter, maxTags, allowCustom, label, placeholder, name, disabled, error, onArcChange, onArcInput, children, ...rest }) => {

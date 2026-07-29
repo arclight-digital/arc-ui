@@ -221,8 +221,13 @@
       "description": "Defines a single column within a DataTable. Each Column maps a data field key to a visible table\ncolumn with a header label. Columns are invisible DOM elements that act as declarative\nconfiguration — they do not render any visible content themselves.\n---\n\n\n### **Slots:**\n - _default_ - Default content.",
       "attributes": [
         {
+          "name": "field",
+          "description": "The property name on each row object whose value should be displayed in this column. Must match a key present in the objects passed to the parent DataTable's `rows` array. Prefer this over `key`, which React and Preact intercept before the component sees it.",
+          "values": []
+        },
+        {
           "name": "key",
-          "description": "The property name on each row object whose value should be displayed in this column. Must match a key present in the objects passed to the parent DataTable's `rows` array.",
+          "description": "Alias of `field`, kept for compatibility. Works in HTML, Vue, Svelte, Angular and Solid, but **not** in React or Preact: both reserve `key` for list reconciliation and strip it before the component receives it. `field` takes precedence when both are set.",
           "values": []
         },
         {
@@ -811,7 +816,10 @@
         {
           "name": "series",
           "description": "The data that drives the chart. Each entry is one series; all series share the x axis defined by `labels`. Set via JavaScript property, not an attribute. Colors are assigned in fixed order from --chart-1 to --chart-6; series beyond six are summed into an \"Other\" series noted in the legend.",
-          "values": [{ "name": "array" }]
+          "values": [
+            { "name": "Array<{label:string" },
+            { "name": "data:number[]}>" }
+          ]
         },
         {
           "name": "labels",
@@ -923,7 +931,15 @@
         {
           "name": "columns",
           "description": "Column definitions. Each entry maps a `key` in your row objects to a rendered column with a `label` header. Optional flags enable sorting, inline editing, and left-edge pinning per column; `width` sets a fixed CSS width (required for accurate pinned offsets) and `align` controls text alignment. Pinned columns are always displayed first. Set via JavaScript property.",
-          "values": [{ "name": "array" }]
+          "values": [
+            { "name": "Array<{key:string" },
+            { "name": "label:string" },
+            { "name": "sortable?:boolean" },
+            { "name": "editable?:boolean" },
+            { "name": "pinned?:boolean" },
+            { "name": "width?:string" },
+            { "name": "align?:string}>" }
+          ]
         },
         {
           "name": "rows",
@@ -933,7 +949,10 @@
         {
           "name": "sort",
           "description": "Multi-sort state in priority order. Clicking a sortable header cycles it asc → desc → none; Shift+click appends it as a secondary sort. When more than one sort is active, headers show a direction arrow plus priority number. Set this property to pre-sort the grid.",
-          "values": [{ "name": "array" }]
+          "values": [
+            { "name": "Array<{key:string,direction:'asc'" },
+            { "name": "'desc'}>" }
+          ]
         },
         {
           "name": "manual-sort",
@@ -1058,7 +1077,12 @@
         {
           "name": "events",
           "description": "The event objects to display. `date` (and optional `end` for multi-day spans) are ISO strings (YYYY-MM-DD). `color` indexes the fixed `--chart-N` palette and defaults to 1. Set via JavaScript property, not an attribute.",
-          "values": [{ "name": "array" }]
+          "values": [
+            { "name": "Array<{date:string" },
+            { "name": "end?:string" },
+            { "name": "label:string" },
+            { "name": "color?:number}>" }
+          ]
         },
         {
           "name": "view",
@@ -1080,7 +1104,16 @@
         {
           "name": "columns",
           "description": "The data array that drives the board. Each entry becomes a column with a header (title plus count badge) and a list of cards. `limit` renders the count as `count/limit` and turns it error-colored when exceeded. Each card needs a unique `id` and a `label`; `description` renders below the label with a two-line clamp, and `tag` renders an arc-tag chip styled by `variant`. Set via JavaScript — it is not an HTML attribute. The component works on an internal copy for immediate drag feedback; sync your source of truth from `arc-card-move` and assign a new array to re-render.",
-          "values": [{ "name": "array" }]
+          "values": [
+            { "name": "Array<{id:string" },
+            { "name": "title?:string" },
+            { "name": "limit?:number" },
+            { "name": "items:Array<{id:string" },
+            { "name": "label:string" },
+            { "name": "description?:string" },
+            { "name": "tag?:string" },
+            { "name": "variant?:string}>}>" }
+          ]
         },
         {
           "name": "disabled",
@@ -2323,7 +2356,10 @@
         {
           "name": "presets",
           "description": "Quick ranges rendered as a left rail. Each preset selects the last N days ending today and closes the popup. Hidden when empty.",
-          "values": [{ "name": "array" }]
+          "values": [
+            { "name": "Array<{label:string" },
+            { "name": "days:number}>" }
+          ]
         },
         {
           "name": "placeholder",
@@ -3397,7 +3433,11 @@
         {
           "name": "options",
           "description": "The full universe of items. Items whose value is in `value` render in the Selected pane; the rest render in Available.",
-          "values": [{ "name": "array" }]
+          "values": [
+            { "name": "Array<{value:string" },
+            { "name": "label:string" },
+            { "name": "disabled?:boolean}>" }
+          ]
         },
         {
           "name": "value",
@@ -4076,8 +4116,18 @@
       "attributes": [
         {
           "name": "items",
-          "description": "The menu structure. Each top-level entry is `{ label, disabled?, items }` where `items` contains menu entries of shape `{ label, shortcut?, disabled?, divider?, items? }`. Entries with an `items` array become submenus (one further nesting level supported); `{ divider: true }` renders a separator. Set via JavaScript — this is a property, not an HTML attribute.",
-          "values": [{ "name": "Array<MenubarItem>" }]
+          "description": "The menu structure. Entries with an `items` array become submenus (one further nesting level supported); `{ divider: true }` renders a separator. Set via JavaScript — this is a property, not an HTML attribute.",
+          "values": [
+            { "name": "Array<{label:string" },
+            { "name": "disabled?:boolean" },
+            { "name": "items:Array<{label?:string" },
+            { "name": "shortcut?:string" },
+            { "name": "disabled?:boolean" },
+            { "name": "divider?:boolean" },
+            { "name": "items?:Array<{label:string" },
+            { "name": "shortcut?:string" },
+            { "name": "disabled?:boolean}>}>}>" }
+          ]
         }
       ],
       "references": []

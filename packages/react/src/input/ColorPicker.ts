@@ -7,7 +7,7 @@ import { ArcColorPicker } from '@arclux/arc-ui/color-picker';
 export interface ColorPickerProps {
   value?: string;
   name?: string;
-  presets?: unknown[];
+  presets?: string[];
   disabled?: boolean;
   label?: string;
   className?: string;

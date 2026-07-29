@@ -5,8 +5,8 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcTagInput } from '@arclux/arc-ui/tag-input';
 
 export interface TagInputProps {
-  value?: unknown[];
-  suggestions?: unknown[];
+  value?: string[];
+  suggestions?: string[];
   delimiter?: string;
   maxTags?: number;
   allowCustom?: boolean;

@@ -5,8 +5,8 @@ import { createComponent } from '@lit/react';
 import { ArcTable } from '@arclux/arc-ui/table';
 
 export interface TableProps {
-  columns?: unknown[];
-  rows?: unknown[];
+  columns?: string[];
+  rows?: string[][];
   striped?: boolean;
   compact?: boolean;
   className?: string;

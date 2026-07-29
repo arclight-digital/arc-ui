@@ -5,6 +5,7 @@ import { createComponent } from '@lit/react';
 import { ArcColumn } from '@arclux/arc-ui/column';
 
 export interface ColumnProps {
+  field?: string;
   key?: string;
   label?: string;
   sortable?: boolean;

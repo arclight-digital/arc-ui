@@ -4,8 +4,8 @@ import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/transfer-list';
 
 export interface TransferListProps {
-  options?: unknown[];
-  value?: unknown[];
+  options?: Array<{value:string,label:string,disabled?:boolean}>;
+  value?: string[];
   name?: string;
   disabled?: boolean;
   searchable?: boolean;
@@ -13,7 +13,31 @@ export interface TransferListProps {
   targetLabel?: string;
   onArcChange?: (e: CustomEvent) => void;
   children?: JSX.Element;
-  [key: string]: unknown;
+  class?: string;
+  id?: string;
+  style?: string;
+  title?: string;
+  role?: string;
+  slot?: string;
+  part?: string;
+  exportparts?: string;
+  dir?: string;
+  lang?: string;
+  translate?: string;
+  accesskey?: string;
+  enterkeyhint?: string;
+  inputmode?: string;
+  popover?: string;
+  contenteditable?: boolean | string;
+  tabindex?: number;
+  hidden?: boolean;
+  inert?: boolean;
+  draggable?: boolean;
+  spellcheck?: boolean;
+  autofocus?: boolean;
+  [key: `data-${string}`]: unknown;
+  [key: `aria-${string}`]: unknown;
+  [key: `on${string}`]: unknown;
 }
 
 export const TransferList: Component<TransferListProps> = (props) => {

@@ -5,7 +5,7 @@ import '@arclux/arc-ui/event-calendar';
 defineOptions({ name: 'EventCalendar' });
 
 const props = withDefaults(defineProps<{
-  events?: unknown[];
+  events?: Array<{date:string,end?:string,label:string,color?:number}>;
   view?: 'month' | 'week';
   date?: string;
 }>(), {

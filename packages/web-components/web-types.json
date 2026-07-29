@@ -461,8 +461,13 @@
           "doc-url": "",
           "attributes": [
             {
+              "name": "field",
+              "description": "The property name on each row object whose value should be displayed in this column. Must match a key present in the objects passed to the parent DataTable's `rows` array. Prefer this over `key`, which React and Preact intercept before the component sees it.",
+              "value": { "type": "string", "default": "''" }
+            },
+            {
               "name": "key",
-              "description": "The property name on each row object whose value should be displayed in this column. Must match a key present in the objects passed to the parent DataTable's `rows` array.",
+              "description": "Alias of `field`, kept for compatibility. Works in HTML, Vue, Svelte, Angular and Solid, but **not** in React or Preact: both reserve `key` for list reconciliation and strip it before the component receives it. `field` takes precedence when both are set.",
               "value": { "type": "string", "default": "''" }
             },
             {
@@ -486,8 +491,17 @@
           "js": {
             "properties": [
               {
+                "name": "fieldName",
+                "description": "The row property this column reads, from whichever alias was supplied.\nReact and Preact strip `key` in the reconciler, so a React consumer can\nonly ever reach this through `field`."
+              },
+              {
+                "name": "field",
+                "description": "The property name on each row object whose value should be displayed in this column. Must match a key present in the objects passed to the parent DataTable's `rows` array. Prefer this over `key`, which React and Preact intercept before the component sees it.",
+                "type": "string"
+              },
+              {
                 "name": "key",
-                "description": "The property name on each row object whose value should be displayed in this column. Must match a key present in the objects passed to the parent DataTable's `rows` array.",
+                "description": "Alias of `field`, kept for compatibility. Works in HTML, Vue, Svelte, Angular and Solid, but **not** in React or Preact: both reserve `key` for list reconciliation and strip it before the component receives it. `field` takes precedence when both are set.",
                 "type": "string"
               },
               {
@@ -1576,7 +1590,10 @@
             {
               "name": "series",
               "description": "The data that drives the chart. Each entry is one series; all series share the x axis defined by `labels`. Set via JavaScript property, not an attribute. Colors are assigned in fixed order from --chart-1 to --chart-6; series beyond six are summed into an \"Other\" series noted in the legend.",
-              "value": { "type": "array", "default": "[]" }
+              "value": {
+                "type": "Array<{label:string,data:number[]}>",
+                "default": "[]"
+              }
             },
             {
               "name": "labels",
@@ -1634,7 +1651,7 @@
               {
                 "name": "series",
                 "description": "The data that drives the chart. Each entry is one series; all series share the x axis defined by `labels`. Set via JavaScript property, not an attribute. Colors are assigned in fixed order from --chart-1 to --chart-6; series beyond six are summed into an \"Other\" series noted in the legend.",
-                "type": "array"
+                "type": "Array<{label:string,data:number[]}>"
               },
               {
                 "name": "labels",
@@ -1821,7 +1838,10 @@
             {
               "name": "columns",
               "description": "Column definitions. Each entry maps a `key` in your row objects to a rendered column with a `label` header. Optional flags enable sorting, inline editing, and left-edge pinning per column; `width` sets a fixed CSS width (required for accurate pinned offsets) and `align` controls text alignment. Pinned columns are always displayed first. Set via JavaScript property.",
-              "value": { "type": "array", "default": "[]" }
+              "value": {
+                "type": "Array<{key:string,label:string,sortable?:boolean,editable?:boolean,pinned?:boolean,width?:string,align?:string}>",
+                "default": "[]"
+              }
             },
             {
               "name": "rows",
@@ -1831,7 +1851,10 @@
             {
               "name": "sort",
               "description": "Multi-sort state in priority order. Clicking a sortable header cycles it asc → desc → none; Shift+click appends it as a secondary sort. When more than one sort is active, headers show a direction arrow plus priority number. Set this property to pre-sort the grid.",
-              "value": { "type": "array", "default": "[]" }
+              "value": {
+                "type": "Array<{key:string,direction:'asc'|'desc'}>",
+                "default": "[]"
+              }
             },
             {
               "name": "manual-sort",
@@ -1876,7 +1899,7 @@
               {
                 "name": "columns",
                 "description": "Column definitions. Each entry maps a `key` in your row objects to a rendered column with a `label` header. Optional flags enable sorting, inline editing, and left-edge pinning per column; `width` sets a fixed CSS width (required for accurate pinned offsets) and `align` controls text alignment. Pinned columns are always displayed first. Set via JavaScript property.",
-                "type": "array"
+                "type": "Array<{key:string,label:string,sortable?:boolean,editable?:boolean,pinned?:boolean,width?:string,align?:string}>"
               },
               {
                 "name": "rows",
@@ -1886,7 +1909,7 @@
               {
                 "name": "sort",
                 "description": "Multi-sort state in priority order. Clicking a sortable header cycles it asc → desc → none; Shift+click appends it as a secondary sort. When more than one sort is active, headers show a direction arrow plus priority number. Set this property to pre-sort the grid.",
-                "type": "array"
+                "type": "Array<{key:string,direction:'asc'|'desc'}>"
               },
               {
                 "name": "manualSort",
@@ -2156,7 +2179,10 @@
             {
               "name": "events",
               "description": "The event objects to display. `date` (and optional `end` for multi-day spans) are ISO strings (YYYY-MM-DD). `color` indexes the fixed `--chart-N` palette and defaults to 1. Set via JavaScript property, not an attribute.",
-              "value": { "type": "array", "default": "[]" }
+              "value": {
+                "type": "Array<{date:string,end?:string,label:string,color?:number}>",
+                "default": "[]"
+              }
             },
             {
               "name": "view",
@@ -2191,7 +2217,7 @@
               {
                 "name": "events",
                 "description": "The event objects to display. `date` (and optional `end` for multi-day spans) are ISO strings (YYYY-MM-DD). `color` indexes the fixed `--chart-N` palette and defaults to 1. Set via JavaScript property, not an attribute.",
-                "type": "array"
+                "type": "Array<{date:string,end?:string,label:string,color?:number}>"
               },
               {
                 "name": "view",
@@ -2231,7 +2257,10 @@
             {
               "name": "columns",
               "description": "The data array that drives the board. Each entry becomes a column with a header (title plus count badge) and a list of cards. `limit` renders the count as `count/limit` and turns it error-colored when exceeded. Each card needs a unique `id` and a `label`; `description` renders below the label with a two-line clamp, and `tag` renders an arc-tag chip styled by `variant`. Set via JavaScript — it is not an HTML attribute. The component works on an internal copy for immediate drag feedback; sync your source of truth from `arc-card-move` and assign a new array to re-render.",
-              "value": { "type": "array", "default": "[]" }
+              "value": {
+                "type": "Array<{id:string,title?:string,limit?:number,items:Array<{id:string,label:string,description?:string,tag?:string,variant?:string}>}>",
+                "default": "[]"
+              }
             },
             {
               "name": "disabled",
@@ -2256,7 +2285,7 @@
               {
                 "name": "columns",
                 "description": "The data array that drives the board. Each entry becomes a column with a header (title plus count badge) and a list of cards. `limit` renders the count as `count/limit` and turns it error-colored when exceeded. Each card needs a unique `id` and a `label`; `description` renders below the label with a two-line clamp, and `tag` renders an arc-tag chip styled by `variant`. Set via JavaScript — it is not an HTML attribute. The component works on an internal copy for immediate drag feedback; sync your source of truth from `arc-card-move` and assign a new array to re-render.",
-                "type": "array"
+                "type": "Array<{id:string,title?:string,limit?:number,items:Array<{id:string,label:string,description?:string,tag?:string,variant?:string}>}>"
               },
               {
                 "name": "disabled",
@@ -5232,7 +5261,10 @@
             {
               "name": "presets",
               "description": "Quick ranges rendered as a left rail. Each preset selects the last N days ending today and closes the popup. Hidden when empty.",
-              "value": { "type": "array", "default": "[]" }
+              "value": {
+                "type": "Array<{label:string,days:number}>",
+                "default": "[]"
+              }
             },
             {
               "name": "placeholder",
@@ -5302,7 +5334,7 @@
               {
                 "name": "presets",
                 "description": "Quick ranges rendered as a left rail. Each preset selects the last N days ending today and closes the popup. Hidden when empty.",
-                "type": "array"
+                "type": "Array<{label:string,days:number}>"
               },
               {
                 "name": "placeholder",
@@ -7870,7 +7902,10 @@
             {
               "name": "options",
               "description": "The full universe of items. Items whose value is in `value` render in the Selected pane; the rest render in Available.",
-              "value": { "type": "array", "default": "[]" }
+              "value": {
+                "type": "Array<{value:string,label:string,disabled?:boolean}>",
+                "default": "[]"
+              }
             },
             {
               "name": "value",
@@ -7915,7 +7950,7 @@
               {
                 "name": "options",
                 "description": "The full universe of items. Items whose value is in `value` render in the Selected pane; the rest render in Available.",
-                "type": "array"
+                "type": "Array<{value:string,label:string,disabled?:boolean}>"
               },
               {
                 "name": "value",
@@ -9403,8 +9438,11 @@
           "attributes": [
             {
               "name": "items",
-              "description": "The menu structure. Each top-level entry is `{ label, disabled?, items }` where `items` contains menu entries of shape `{ label, shortcut?, disabled?, divider?, items? }`. Entries with an `items` array become submenus (one further nesting level supported); `{ divider: true }` renders a separator. Set via JavaScript — this is a property, not an HTML attribute.",
-              "value": { "type": "Array<MenubarItem>", "default": "[]" }
+              "description": "The menu structure. Entries with an `items` array become submenus (one further nesting level supported); `{ divider: true }` renders a separator. Set via JavaScript — this is a property, not an HTML attribute.",
+              "value": {
+                "type": "Array<{label:string,disabled?:boolean,items:Array<{label?:string,shortcut?:string,disabled?:boolean,divider?:boolean,items?:Array<{label:string,shortcut?:string,disabled?:boolean}>}>}>",
+                "default": "[]"
+              }
             }
           ],
           "events": [
@@ -9418,8 +9456,8 @@
             "properties": [
               {
                 "name": "items",
-                "description": "The menu structure. Each top-level entry is `{ label, disabled?, items }` where `items` contains menu entries of shape `{ label, shortcut?, disabled?, divider?, items? }`. Entries with an `items` array become submenus (one further nesting level supported); `{ divider: true }` renders a separator. Set via JavaScript — this is a property, not an HTML attribute.",
-                "type": "Array<MenubarItem>"
+                "description": "The menu structure. Entries with an `items` array become submenus (one further nesting level supported); `{ divider: true }` renders a separator. Set via JavaScript — this is a property, not an HTML attribute.",
+                "type": "Array<{label:string,disabled?:boolean,items:Array<{label?:string,shortcut?:string,disabled?:boolean,divider?:boolean,items?:Array<{label:string,shortcut?:string,disabled?:boolean}>}>}>"
               }
             ],
             "events": [

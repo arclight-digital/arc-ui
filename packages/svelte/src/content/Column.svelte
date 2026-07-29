@@ -4,17 +4,42 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
+    field?: string;
     key?: string;
     label?: string;
     sortable?: boolean;
     width?: string;
     children?: Snippet;
-    [key: string]: unknown;
+    class?: string;
+    id?: string;
+    style?: string;
+    title?: string;
+    role?: string;
+    slot?: string;
+    part?: string;
+    exportparts?: string;
+    dir?: string;
+    lang?: string;
+    translate?: string;
+    accesskey?: string;
+    enterkeyhint?: string;
+    inputmode?: string;
+    popover?: string;
+    contenteditable?: boolean | string;
+    tabindex?: number;
+    hidden?: boolean;
+    inert?: boolean;
+    draggable?: boolean;
+    spellcheck?: boolean;
+    autofocus?: boolean;
+    [key: `data-${string}`]: unknown;
+    [key: `aria-${string}`]: unknown;
+    [key: `on${string}`]: unknown;
   }
 
-  let { key = '', label = '', sortable = false, width = '', children, ...rest }: Props = $props();
+  let { field = '', key = '', label = '', sortable = false, width = '', children, ...rest }: Props = $props();
 </script>
 
-<arc-column {key} {label} {sortable} {width} {...rest}>
+<arc-column {field} {key} {label} {sortable} {width} {...rest}>
   {@render children?.()}
 </arc-column>

@@ -10,8 +10,8 @@ import '@arclux/arc-ui/tag-input';
   template: `<arc-tag-input [value]="this.value" [suggestions]="this.suggestions" [attr.delimiter]="this.delimiter" [attr.maxTags]="this.maxTags" [allowCustom]="this.allowCustom" [attr.label]="this.label" [attr.placeholder]="this.placeholder" [attr.name]="this.name" [disabled]="this.disabled" [attr.error]="this.error" (arc-change)="this.onArcChange($event)" (arc-input)="this.arcInput.emit($event)"><ng-content /></arc-tag-input>`,
 })
 export class TagInput {
-  @Input() value: unknown[] = [];
-  @Input() suggestions: unknown[] = [];
+  @Input() value: string[] = [];
+  @Input() suggestions: string[] = [];
   @Input() delimiter: string = ',';
   @Input() maxTags: number = 0;
   @Input() allowCustom: boolean = true;
@@ -22,14 +22,14 @@ export class TagInput {
   @Input() error: string = '';
   @Output() arcChange = new EventEmitter<CustomEvent>();
   @Output() arcInput = new EventEmitter<CustomEvent>();
-  @Output() valueChange = new EventEmitter<unknown[]>();
+  @Output() valueChange = new EventEmitter<string[]>();
 
   onArcChange(event: CustomEvent) {
     this.arcChange.emit(event);
     const detail = event.detail as Record<string, unknown> | null;
     if (!detail) return;
     if ('value' in detail) {
-      const next = detail.value as unknown[];
+      const next = detail.value as string[];
       this.value = next;
       this.valueChange.emit(next);
     }

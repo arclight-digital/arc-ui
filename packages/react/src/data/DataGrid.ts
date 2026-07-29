@@ -5,9 +5,9 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcDataGrid } from '@arclux/arc-ui/data-grid';
 
 export interface DataGridProps {
-  columns?: unknown[];
-  rows?: unknown[];
-  sort?: unknown[];
+  columns?: Array<{key:string,label:string,sortable?:boolean,editable?:boolean,pinned?:boolean,width?:string,align?:string}>;
+  rows?: Array<Record<string, any>>;
+  sort?: Array<{key:string,direction:'asc'|'desc'}>;
   manualSort?: boolean;
   selectable?: boolean;
   virtual?: boolean;

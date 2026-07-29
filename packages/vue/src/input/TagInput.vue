@@ -5,8 +5,8 @@ import '@arclux/arc-ui/tag-input';
 defineOptions({ name: 'TagInput' });
 
 const props = withDefaults(defineProps<{
-  value?: unknown[];
-  suggestions?: unknown[];
+  value?: string[];
+  suggestions?: string[];
   delimiter?: string;
   maxTags?: number;
   allowCustom?: boolean;
@@ -31,14 +31,14 @@ const props = withDefaults(defineProps<{
 const emit = defineEmits<{
   'arc-change': [event: CustomEvent];
   'arc-input': [event: CustomEvent];
-  'update:value': [value: unknown[]];
+  'update:value': [value: string[]];
 }>();
 
 function onArcChange(payload: CustomEvent) {
   emit('arc-change', payload);
   const detail = payload.detail as Record<string, unknown> | null;
   if (detail) {
-    if ('value' in detail) emit('update:value', detail.value as unknown[]);
+    if ('value' in detail) emit('update:value', detail.value as string[]);
   }
 }
 </script>

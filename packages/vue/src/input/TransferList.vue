@@ -5,8 +5,8 @@ import '@arclux/arc-ui/transfer-list';
 defineOptions({ name: 'TransferList' });
 
 const props = withDefaults(defineProps<{
-  options?: unknown[];
-  value?: unknown[];
+  options?: Array<{value:string,label:string,disabled?:boolean}>;
+  value?: string[];
   name?: string;
   disabled?: boolean;
   searchable?: boolean;
@@ -24,14 +24,14 @@ const props = withDefaults(defineProps<{
 
 const emit = defineEmits<{
   'arc-change': [event: CustomEvent];
-  'update:value': [value: unknown[]];
+  'update:value': [value: string[]];
 }>();
 
 function onArcChange(payload: CustomEvent) {
   emit('arc-change', payload);
   const detail = payload.detail as Record<string, unknown> | null;
   if (detail) {
-    if ('value' in detail) emit('update:value', detail.value as unknown[]);
+    if ('value' in detail) emit('update:value', detail.value as string[]);
   }
 }
 </script>
