@@ -601,7 +601,7 @@ export class ArcNavigationMenu extends LitElement {
     this._close();
     if (this._mobileOpen) this._closeMobile();
     const nav = new CustomEvent('arc-navigate', {
-      detail: { href, item: { label: item.label, href: item.href, description: item.description } },
+      detail: { href, item: { label: item.label, href: item.resolvedHref, description: item.description } },
       bubbles: true,
       composed: true,
       cancelable: true,
@@ -619,8 +619,8 @@ export class ArcNavigationMenu extends LitElement {
       } else {
         this._open(index);
       }
-    } else if (item.href) {
-      this._navigate(e, item.href, item);
+    } else if (item.resolvedHref) {
+      this._navigate(e, item.resolvedHref, item);
     }
   }
 
@@ -724,8 +724,8 @@ export class ArcNavigationMenu extends LitElement {
   _handleMobileTriggerClick(e, item, index) {
     if (item.hasChildren) {
       this._toggleMobileDropdown(index);
-    } else if (item.href) {
-      this._navigate(e, item.href, item);
+    } else if (item.resolvedHref) {
+      this._navigate(e, item.resolvedHref, item);
     }
   }
 
@@ -762,7 +762,7 @@ export class ArcNavigationMenu extends LitElement {
               ` : html`
                 <a
                   class="nav__trigger ${item.active ? 'nav__trigger--active' : ''} ${item.variant && item.variant !== 'default' ? `nav__trigger--${item.variant}` : ''}"
-                  href=${item.href}
+                  href=${item.resolvedHref}
                   @click=${(e) => this._handleTriggerClick(e, item, i)}
                   part="trigger"
                 >
@@ -781,9 +781,9 @@ export class ArcNavigationMenu extends LitElement {
                   ${item.children.map(child => html`
                     <a
                       class="nav__dropdown-item"
-                      href=${child.href}
+                      href=${child.resolvedHref}
                       role="menuitem"
-                      @click=${(e) => this._navigate(e, child.href, child)}
+                      @click=${(e) => this._navigate(e, child.resolvedHref, child)}
                       part="dropdown-item"
                     >
                       <span class="nav__dropdown-label">${child.label}</span>
@@ -841,8 +841,8 @@ export class ArcNavigationMenu extends LitElement {
                       ${item.children.map(child => html`
                         <a
                           class="mobile-child"
-                          href=${child.href}
-                          @click=${(e) => this._navigate(e, child.href, child)}
+                          href=${child.resolvedHref}
+                          @click=${(e) => this._navigate(e, child.resolvedHref, child)}
                         >
                           <span class="mobile-child-label">${child.label}</span>
                           ${child.description ? html`
@@ -855,7 +855,7 @@ export class ArcNavigationMenu extends LitElement {
                 ` : html`
                   <a
                     class="mobile-trigger ${item.active ? 'mobile-trigger--active' : ''} ${item.variant && item.variant !== 'default' ? `mobile-trigger--${item.variant}` : ''}"
-                    href=${item.href}
+                    href=${item.resolvedHref}
                     @click=${(e) => this._handleMobileTriggerClick(e, item, i)}
                   >
                     ${item.label}

@@ -353,12 +353,31 @@
 
       .arc-card .card { height: 100%; }
 
-      /* Suppress hover effect when no href and not interactive */
-      .arc-card:not([data-href]):not([data-interactive]) .card:hover {
+      /* Suppress hover effect when the card isn't actually actionable.
+         card--linked opts back in for the anchor-adoption form, where a slotted
+         <a> supplies the destination instead of the href attribute. */
+      .arc-card:not([data-href]):not([data-interactive]) .card:not(.card--linked):hover {
         background: var(--border-subtle);
       }
-      .arc-card:not([data-href]):not([data-interactive]) .card:hover .card__inner {
+      .arc-card:not([data-href]):not([data-interactive]) .card:not(.card--linked):hover .card__inner {
         box-shadow: none;
+      }
+
+      /* Anchor-adoption form: the slotted <a> fills the content box, so the
+         padded surface is the click target — see shared/anchor-adoption.js.
+         It stays inside .card__inner rather than replacing .card, which keeps
+         the 1px gradient-border trick in card-styles.js intact. */
+      .arc-card .card-a {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        text-decoration: none;
+        color: inherit;
+      }
+      .arc-card .card-a:focus-visible {
+        outline: none;
+        box-shadow: var(--interactive-focus);
+        border-radius: var(--radius-md);
       }
 
       .arc-card[interactive] .card { cursor: pointer; }
@@ -3097,7 +3116,12 @@
 .arc-icon-button { display: inline-flex; }
       .arc-icon-button[disabled] { pointer-events: none; }
 
-      .arc-icon-button .btn {
+      /* Anchor-adoption form: a lone slotted <a> becomes the control and takes
+         the same box styling as .btn — see shared/anchor-adoption.js. The
+         adopted anchor is always treated as icon-only, since any text the
+         consumer wants lives inside their own anchor. */
+      .arc-icon-button .btn,
+      .arc-icon-button .btn-a {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -3133,12 +3157,18 @@
       }
 
       /* Sizes — icon-only */
-      .arc-icon-button .btn:not(.btn--has-text) { min-width: var(--touch-min); min-height: var(--touch-min); }
-      .arc-icon-button[data-size="xs"] .btn:not(.btn--has-text) { width: 28px; height: 28px; border-radius: var(--radius-sm); }
-      .arc-icon-button[data-size="sm"] .btn:not(.btn--has-text) { width: 32px; height: 32px; }
+      .arc-icon-button .btn:not(.btn--has-text),
+      .arc-icon-button .btn-a { min-width: var(--touch-min); min-height: var(--touch-min); }
+      .arc-icon-button[data-size="xs"] .btn:not(.btn--has-text),
+      .arc-icon-button[data-size="xs"] .btn-a { width: 28px; height: 28px; border-radius: var(--radius-sm); }
+      .arc-icon-button[data-size="sm"] .btn:not(.btn--has-text),
+      .arc-icon-button[data-size="sm"] .btn-a { width: 32px; height: 32px; }
       .arc-icon-button:not([data-size]) .btn:not(.btn--has-text),
-      .arc-icon-button[data-size="md"] .btn:not(.btn--has-text) { width: 36px; height: 36px; }
-      .arc-icon-button[data-size="lg"] .btn:not(.btn--has-text) { width: 44px; height: 44px; }
+      .arc-icon-button:not([data-size]) .btn-a,
+      .arc-icon-button[data-size="md"] .btn:not(.btn--has-text),
+      .arc-icon-button[data-size="md"] .btn-a { width: 36px; height: 36px; }
+      .arc-icon-button[data-size="lg"] .btn:not(.btn--has-text),
+      .arc-icon-button[data-size="lg"] .btn-a { width: 44px; height: 44px; }
 
       /* Sizes — with text */
       .arc-icon-button .btn--has-text { min-height: var(--touch-min); }
@@ -3149,38 +3179,46 @@
       .arc-icon-button[data-size="lg"] .btn--has-text { padding: var(--space-sm) var(--space-md); font-size: var(--text-xs); }
 
       /* Default → ghost */
-      .arc-icon-button:not([data-variant]) .btn {
+      .arc-icon-button:not([data-variant]) .btn,
+      .arc-icon-button:not([data-variant]) .btn-a {
         background: transparent;
         color: var(--text-muted);
         border-color: transparent;
       }
-      .arc-icon-button:not([data-variant]) .btn:hover {
+      .arc-icon-button:not([data-variant]) .btn:hover,
+      .arc-icon-button:not([data-variant]) .btn-a:hover {
         color: var(--text-primary);
         background: var(--surface-hover);
       }
 
       /* :active scale */
       .arc-icon-button:not([data-variant]) .btn:active,
-      .arc-icon-button[data-variant="ghost"] .btn:active {
+      .arc-icon-button:not([data-variant]) .btn-a:active,
+      .arc-icon-button[data-variant="ghost"] .btn:active,
+      .arc-icon-button[data-variant="ghost"] .btn-a:active {
         transform: scale(0.93);
         background: var(--surface-overlay);
       }
-      .arc-icon-button[data-variant="secondary"] .btn:active {
+      .arc-icon-button[data-variant="secondary"] .btn:active,
+      .arc-icon-button[data-variant="secondary"] .btn-a:active {
         transform: scale(0.93);
         background: rgba(var(--interactive-rgb), 0.05);
       }
-      .arc-icon-button[data-variant="primary"] .btn:active {
+      .arc-icon-button[data-variant="primary"] .btn:active,
+      .arc-icon-button[data-variant="primary"] .btn-a:active {
         transform: scale(0.93);
         box-shadow: 0 0 8px rgba(var(--interactive-rgb), 0.5);
       }
 
       /* IconButton secondary uses text-secondary instead of text-primary */
-      .arc-icon-button[data-variant="secondary"] .btn {
+      .arc-icon-button[data-variant="secondary"] .btn,
+      .arc-icon-button[data-variant="secondary"] .btn-a {
         color: var(--text-secondary);
       }
 
       /* IconButton secondary hover uses smaller glow */
-      .arc-icon-button[data-variant="secondary"] .btn:hover {
+      .arc-icon-button[data-variant="secondary"] .btn:hover,
+      .arc-icon-button[data-variant="secondary"] .btn-a:hover {
         box-shadow: 0 0 16px var(--accent-primary-ring);
       }
 
@@ -3385,7 +3423,11 @@
 /* arc-link */
 .arc-link { display: inline; }
 
-      .arc-link .link {
+      /* Anchor-adoption form: a lone slotted <a> becomes the link itself and
+         takes the same styling as .link — see shared/anchor-adoption.js.
+         Keep each .link rule paired with its .link-a form. */
+      .arc-link .link,
+      .arc-link .link-a {
         font-family: var(--font-body);
         font-size: inherit;
         color: var(--interactive);
@@ -3402,44 +3444,53 @@
         align-items: center;
       }
 
-      .arc-link .link:hover {
+      .arc-link .link:hover,
+      .arc-link .link-a:hover {
         text-decoration: underline;
         text-underline-offset: 3px;
       }
 
       /* Underline variants */
-      .arc-link[data-underline="always"] .link {
+      .arc-link[data-underline="always"] .link,
+      .arc-link[data-underline="always"] .link-a {
         text-decoration: underline;
         text-underline-offset: 3px;
       }
-      .arc-link[data-underline="never"] .link:hover {
+      .arc-link[data-underline="never"] .link:hover,
+      .arc-link[data-underline="never"] .link-a:hover {
         text-decoration: none;
       }
 
-      .arc-link[data-variant="muted"] .link {
+      .arc-link[data-variant="muted"] .link,
+      .arc-link[data-variant="muted"] .link-a {
         color: var(--text-muted);
       }
-      .arc-link[data-variant="muted"] .link:hover {
+      .arc-link[data-variant="muted"] .link:hover,
+      .arc-link[data-variant="muted"] .link-a:hover {
         color: var(--text-primary);
       }
 
-      .arc-link[data-variant="nav"] .link {
+      .arc-link[data-variant="nav"] .link,
+      .arc-link[data-variant="nav"] .link-a {
         color: var(--text-secondary);
         font-size: var(--text-sm);
         display: inline-flex;
         align-items: center;
         gap: var(--space-xs);
       }
-      .arc-link[data-variant="nav"] .link:hover {
+      .arc-link[data-variant="nav"] .link:hover,
+      .arc-link[data-variant="nav"] .link-a:hover {
         color: var(--text-primary);
         text-decoration: none;
       }
 
-      .arc-link[active] .link {
+      .arc-link[active] .link,
+      .arc-link[active] .link-a {
         color: var(--interactive);
       }
 
-      .arc-link .link:focus-visible {
+      .arc-link .link:focus-visible,
+      .arc-link .link-a:focus-visible {
         outline: none;
         box-shadow: var(--interactive-focus-ring);
         border-radius: var(--radius-xs);

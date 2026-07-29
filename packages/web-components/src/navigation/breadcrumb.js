@@ -139,9 +139,9 @@ export class ArcBreadcrumb extends LitElement {
               ${isLast
                 ? html`<span class="breadcrumb__current" aria-current="page" part="current">${item.label}</span>`
                 : html`
-                    ${item.href
-                      ? html`<a class="breadcrumb__link" href=${item.href} part="link">${item.label}</a>`
-                      : html`<button class="breadcrumb__link" @click=${() => this._handleClick(item.href)} part="link">${item.label}</button>`
+                    ${item.resolvedHref
+                      ? html`<a class="breadcrumb__link" href=${item.resolvedHref} part="link">${item.label}</a>`
+                      : html`<button class="breadcrumb__link" @click=${() => this._handleClick(item.resolvedHref)} part="link">${item.label}</button>`
                     }
                     <span class="breadcrumb__separator" aria-hidden="true" part="separator">${this.separator}</span>
                   `

@@ -361,9 +361,9 @@ export class ArcSidebar extends LitElement {
                   return html`
                   <a
                     class="sidebar__link ${level > 0 ? 'sidebar__link--nested' : ''}"
-                    href=${link.href}
-                    aria-current=${(this.active === link.href || link.active) ? 'page' : 'false'}
-                    @click=${(e) => this._handleClick(e, link.href)}
+                    href=${link.resolvedHref}
+                    aria-current=${(this.active === link.resolvedHref || link.active) ? 'page' : 'false'}
+                    @click=${(e) => this._handleClick(e, link.resolvedHref)}
                     part="link"
                     style=${level > 0 ? `padding-left: ${level * 14 + 12}px` : ''}
                   >

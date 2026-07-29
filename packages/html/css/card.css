@@ -5,12 +5,31 @@
 
       .arc-card .card { height: 100%; }
 
-      /* Suppress hover effect when no href and not interactive */
-      .arc-card:not([data-href]):not([data-interactive]) .card:hover {
+      /* Suppress hover effect when the card isn't actually actionable.
+         card--linked opts back in for the anchor-adoption form, where a slotted
+         <a> supplies the destination instead of the href attribute. */
+      .arc-card:not([data-href]):not([data-interactive]) .card:not(.card--linked):hover {
         background: var(--border-subtle);
       }
-      .arc-card:not([data-href]):not([data-interactive]) .card:hover .card__inner {
+      .arc-card:not([data-href]):not([data-interactive]) .card:not(.card--linked):hover .card__inner {
         box-shadow: none;
+      }
+
+      /* Anchor-adoption form: the slotted <a> fills the content box, so the
+         padded surface is the click target — see shared/anchor-adoption.js.
+         It stays inside .card__inner rather than replacing .card, which keeps
+         the 1px gradient-border trick in card-styles.js intact. */
+      .arc-card .card-a {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        text-decoration: none;
+        color: inherit;
+      }
+      .arc-card .card-a:focus-visible {
+        outline: none;
+        box-shadow: var(--interactive-focus);
+        border-radius: var(--radius-md);
       }
 
       .arc-card[interactive] .card { cursor: pointer; }

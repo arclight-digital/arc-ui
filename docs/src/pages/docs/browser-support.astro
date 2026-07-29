@@ -85,9 +85,19 @@ const headings = [
             <tr><td>CSS Custom Properties</td><td>49+</td><td>31+</td><td>9.1+</td><td>Design token system</td></tr>
             <tr><td>IntersectionObserver</td><td>51+</td><td>55+</td><td>12.1+</td><td>Infinite scroll, scroll spy</td></tr>
             <tr><td>Clipboard API</td><td>66+</td><td>63+</td><td>13.1+</td><td>Copy button (code blocks)</td></tr>
+            <tr><td><code>@media (scripting)</code></td><td>120+</td><td>113+</td><td>17+</td><td>Gates the pre-upgrade hide in base.css — degrades safely</td></tr>
           </tbody>
         </table>
       </div>
+
+      <p class="docs-text">
+        The <code>scripting</code> media query is the one entry here that is newer than the
+        baseline above, and it is deliberately not a requirement. It gates the rule that hides
+        components until they upgrade. Where the query is unsupported it simply does not match,
+        which switches that hide <em>off</em> — older browsers get a brief flash of unstyled
+        content instead of hidden content, never the reverse. See
+        <a href="/docs/accessibility#no-javascript">Without JavaScript</a> for the full picture.
+      </p>
     </section>
 
     <section id="polyfills">

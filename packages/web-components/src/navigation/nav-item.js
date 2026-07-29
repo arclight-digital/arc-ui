@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import { loneAnchorChild, resolveCarrierHref } from '../shared/anchor-adoption.js';
 
 /**
  * A single entry inside NavigationMenu. When used at the top level and containing nested NavItem
@@ -32,7 +33,22 @@ export class ArcNavItem extends LitElement {
     this.description = '';
   }
 
+  /**
+   * Destination, preferring the explicit attribute over an anchor child.
+   *
+   * Authoring `<arc-nav-item><a href="/docs">Docs</a></arc-nav-item>` makes the
+   * pre-upgrade markup a working link list, which is what no-JS visitors and
+   * anyone on a slow connection actually see — arc-navigation-menu hides this
+   * light DOM only once it has upgraded and re-rendered it into shadow DOM.
+   */
+  get resolvedHref() {
+    return resolveCarrierHref(this, this.href);
+  }
+
   get label() {
+    const anchor = loneAnchorChild(this);
+    if (anchor) return anchor.textContent.trim();
+
     return [...this.childNodes]
       .filter(n => n.nodeType === Node.TEXT_NODE)
       .map(n => n.textContent.trim())

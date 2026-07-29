@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import { resolveCarrierHref } from '../shared/anchor-adoption.js';
 
 /**
  * An individual crumb inside a Breadcrumb trail. Each item represents one level of the page
@@ -23,6 +24,17 @@ export class ArcBreadcrumbItem extends LitElement {
     this.href = '';
   }
 
+  /**
+   * Destination, preferring the explicit attribute over an anchor child.
+   * Authoring `<arc-breadcrumb-item><a href="/docs">Docs</a></arc-breadcrumb-item>`
+   * leaves a working trail in the pre-upgrade markup — arc-breadcrumb hides this
+   * light DOM only once it has re-rendered it into shadow DOM.
+   */
+  get resolvedHref() {
+    return resolveCarrierHref(this, this.href);
+  }
+
+  /** textContent already reaches through an anchor child, so this needs no special case. */
   get label() {
     return this.textContent.trim();
   }

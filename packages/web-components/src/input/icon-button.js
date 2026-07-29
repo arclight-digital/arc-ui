@@ -1,6 +1,7 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { buttonVariantStyles } from '../button-styles.js';
+import { isLoneSlottedAnchor } from '../shared/anchor-adoption.js';
 import '../content/icon.js';
 
 /**
@@ -16,7 +17,7 @@ import '../content/icon.js';
  * @prop {string} href - When set, renders the button as an anchor tag for navigation links.
  * @prop {boolean} disabled - Disables the button, reducing opacity to 40% and blocking pointer events.
  * @prop {string} type - HTML button type attribute. Only applies when `href` is not set.
- * @slot - Default content.
+ * @slot - Default content. Slotting a single `<a>` as the only child adopts it as the button's control — the recommended form for links that must work before hydration or without JavaScript. Put the icon inside that anchor; `::part(button)` does not apply in this form.
  * @csspart button
  */
 export class ArcIconButton extends LitElement {
@@ -29,6 +30,7 @@ export class ArcIconButton extends LitElement {
     href:     { type: String },
     disabled: { type: Boolean, reflect: true },
     type:     { type: String },
+    _slottedAnchor: { state: true },
   };
 
   static styles = [
@@ -38,7 +40,12 @@ export class ArcIconButton extends LitElement {
       :host { display: inline-flex; }
       :host([disabled]) { pointer-events: none; }
 
-      .btn {
+      /* Anchor-adoption form: a lone slotted <a> becomes the control and takes
+         the same box styling as .btn — see shared/anchor-adoption.js. The
+         adopted anchor is always treated as icon-only, since any text the
+         consumer wants lives inside their own anchor. */
+      .btn,
+      .btn-slot::slotted(a) {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -74,12 +81,18 @@ export class ArcIconButton extends LitElement {
       }
 
       /* Sizes — icon-only */
-      .btn:not(.btn--has-text) { min-width: var(--touch-min); min-height: var(--touch-min); }
-      :host([size="xs"]) .btn:not(.btn--has-text) { width: 28px; height: 28px; border-radius: var(--radius-sm); }
-      :host([size="sm"]) .btn:not(.btn--has-text) { width: 32px; height: 32px; }
+      .btn:not(.btn--has-text),
+      .btn-slot::slotted(a) { min-width: var(--touch-min); min-height: var(--touch-min); }
+      :host([size="xs"]) .btn:not(.btn--has-text),
+      :host([size="xs"]) .btn-slot::slotted(a) { width: 28px; height: 28px; border-radius: var(--radius-sm); }
+      :host([size="sm"]) .btn:not(.btn--has-text),
+      :host([size="sm"]) .btn-slot::slotted(a) { width: 32px; height: 32px; }
       :host(:not([size])) .btn:not(.btn--has-text),
-      :host([size="md"]) .btn:not(.btn--has-text) { width: 36px; height: 36px; }
-      :host([size="lg"]) .btn:not(.btn--has-text) { width: 44px; height: 44px; }
+      :host(:not([size])) .btn-slot::slotted(a),
+      :host([size="md"]) .btn:not(.btn--has-text),
+      :host([size="md"]) .btn-slot::slotted(a) { width: 36px; height: 36px; }
+      :host([size="lg"]) .btn:not(.btn--has-text),
+      :host([size="lg"]) .btn-slot::slotted(a) { width: 44px; height: 44px; }
 
       /* Sizes — with text */
       .btn--has-text { min-height: var(--touch-min); }
@@ -90,38 +103,46 @@ export class ArcIconButton extends LitElement {
       :host([size="lg"]) .btn--has-text { padding: var(--space-sm) var(--space-md); font-size: var(--text-xs); }
 
       /* Default → ghost */
-      :host(:not([variant])) .btn {
+      :host(:not([variant])) .btn,
+      :host(:not([variant])) .btn-slot::slotted(a) {
         background: transparent;
         color: var(--text-muted);
         border-color: transparent;
       }
-      :host(:not([variant])) .btn:hover {
+      :host(:not([variant])) .btn:hover,
+      :host(:not([variant])) .btn-slot::slotted(a:hover) {
         color: var(--text-primary);
         background: var(--surface-hover);
       }
 
       /* :active scale */
       :host(:not([variant])) .btn:active,
-      :host([variant="ghost"]) .btn:active {
+      :host(:not([variant])) .btn-slot::slotted(a:active),
+      :host([variant="ghost"]) .btn:active,
+      :host([variant="ghost"]) .btn-slot::slotted(a:active) {
         transform: scale(0.93);
         background: var(--surface-overlay);
       }
-      :host([variant="secondary"]) .btn:active {
+      :host([variant="secondary"]) .btn:active,
+      :host([variant="secondary"]) .btn-slot::slotted(a:active) {
         transform: scale(0.93);
         background: rgba(var(--interactive-rgb), 0.05);
       }
-      :host([variant="primary"]) .btn:active {
+      :host([variant="primary"]) .btn:active,
+      :host([variant="primary"]) .btn-slot::slotted(a:active) {
         transform: scale(0.93);
         box-shadow: 0 0 8px rgba(var(--interactive-rgb), 0.5);
       }
 
       /* IconButton secondary uses text-secondary instead of text-primary */
-      :host([variant="secondary"]) .btn {
+      :host([variant="secondary"]) .btn,
+      :host([variant="secondary"]) .btn-slot::slotted(a) {
         color: var(--text-secondary);
       }
 
       /* IconButton secondary hover uses smaller glow */
-      :host([variant="secondary"]) .btn:hover {
+      :host([variant="secondary"]) .btn:hover,
+      :host([variant="secondary"]) .btn-slot::slotted(a:hover) {
         box-shadow: 0 0 16px var(--accent-primary-ring);
       }
 
@@ -147,6 +168,7 @@ export class ArcIconButton extends LitElement {
     this.href = '';
     this.disabled = false;
     this.type = 'button';
+    this._slottedAnchor = false;
   }
 
   connectedCallback() {
@@ -166,13 +188,23 @@ export class ArcIconButton extends LitElement {
     return map[this.size] || 'sm';
   }
 
+  _onDefaultSlotChange(e) {
+    this._slottedAnchor = isLoneSlottedAnchor(e.target);
+  }
+
   render() {
     const hasText = !!this.text;
     const icon = this.name
       ? html`<arc-icon name=${this.name} size=${this._iconSize}></arc-icon>`
-      : html`<slot></slot>`;
+      : html`<slot @slotchange=${this._onDefaultSlotChange}></slot>`;
     const textEl = hasText ? html`<span class="btn__text">${this.text}</span>` : null;
     const classes = `btn${hasText ? ' btn--has-text' : ''}`;
+
+    // An explicit href wins; adoption only applies when the icon comes from the
+    // slot, since a `name`-supplied icon leaves no slot to author an anchor in.
+    if (!this.href && this._slottedAnchor) {
+      return html`<slot class="btn-slot" @slotchange=${this._onDefaultSlotChange}></slot>`;
+    }
 
     if (this.href) {
       return html`<a class=${classes} href=${this.href} aria-label=${this.label || nothing} part="button">${icon}${textEl}</a>`;
