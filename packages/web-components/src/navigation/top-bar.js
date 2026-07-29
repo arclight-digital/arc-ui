@@ -7,7 +7,6 @@ import '../layout/container.register.js';
  * navigation area, and a right-aligned actions region for user controls, search, and settings.
  *
  * @tag arc-top-bar
- * @arc-prism hybrid — the bar, slots and sticky behaviour are CSS; only the mobile menu toggle needs JS
  * @prop {string} heading - Brand text displayed in the top-left corner next to the optional logo slot. Rendered with the accent font family (Tektur), uppercase, and wide letter-spacing. Keep this to one or two words that identify the application.
  * @prop {boolean} fixed - When true, the bar uses position: fixed so it stays at the top of the viewport while content scrolls underneath. Automatically applied when TopBar is placed inside an AppShell. Be sure to add matching top padding to the content below to prevent overlap.
  * @prop {boolean} menuOpen - Reflects whether the mobile hamburger menu is open. Toggling this value updates the aria-expanded attribute on the menu button. Typically managed by AppShell in response to the arc-sidebar-toggle event rather than set directly.

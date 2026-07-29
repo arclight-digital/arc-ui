@@ -137,9 +137,6 @@ function inlineMarkdown(text) {
 }
 
 /**
- * @arc-prism static — renders Markdown content as styled HTML
- */
-/**
  * Renders markdown content as styled HTML with zero dependencies. Supports headings, lists, code
  * blocks, blockquotes, links, images, and inline formatting.
  *

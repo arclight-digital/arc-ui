@@ -6,7 +6,6 @@ import { LitElement, html, css } from 'lit';
  * individual tab behavior, such as disabling a specific tab or attaching per-tab event listeners.
  *
  * @tag arc-tab
- * @arc-prism interactive — tab panel, child of arc-tabs
  * @prop {string} label - Text displayed on the tab button. Keep labels concise — one or two words — to prevent the tab bar from overflowing.
  * @slot - Default content.
  */
