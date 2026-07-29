@@ -8,6 +8,7 @@ import { lockScroll, unlockScroll } from '../shared/scroll-lock.js';
  * table-of-contents rail out of the box.
  *
  * @tag arc-app-shell
+ * @arc-prism hybrid — the full page grid renders from CSS; only the mobile drawer backdrop needs JS
  * @prop {boolean} sidebarOpen - Controls whether the sidebar is visible on mobile viewports (below 768 px). On desktop the sidebar is always shown regardless of this attribute. Toggle it from a hamburger button in your TopBar to give mobile users access to navigation.
  * @prop {number} breakpoint - Viewport width in pixels at which the layout switches between mobile and desktop modes.
  * @slot topbar
