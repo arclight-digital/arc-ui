@@ -9,7 +9,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {string} target - CSS selector for the element to highlight. The first matching element will be spotlighted with a glow ring and elevated z-index.
  * @prop {boolean} active - Controls whether the spotlight overlay is visible. Set to true to activate the dimming overlay and highlight the target element.
  * @prop {number} padding - Padding in pixels around the target element cutout. Increase for larger glow rings or to give the target more breathing room.
- * @fires {CustomEvent<void>} arc-dismiss - Fired when the user clicks outside the highlighted element to dismiss the spotlight
+ * @fires {CustomEvent<void>} arc-close - Fired when the user clicks outside the highlighted element to dismiss the spotlight
  * @csspart ring
  */
 export class ArcSpotlight extends LitElement {
@@ -93,8 +93,8 @@ export class ArcSpotlight extends LitElement {
   }
 
   _dismiss() {
+    if (!this.dispatchEvent(new CustomEvent('arc-close', { bubbles: true, composed: true, cancelable: true }))) return;
     this.active = false;
-    this.dispatchEvent(new CustomEvent('arc-dismiss', { bubbles: true, composed: true }));
   }
 
   render() {

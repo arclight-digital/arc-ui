@@ -125,11 +125,12 @@ export class ArcDrawer extends OverlayMixin(LitElement) {
   }
 
   _close() {
-    this.open = false;
-    this.dispatchEvent(new CustomEvent('arc-close', {
+    if (!this.dispatchEvent(new CustomEvent('arc-close', {
       bubbles: true,
       composed: true,
-    }));
+      cancelable: true,
+    }))) return;
+    this.open = false;
   }
 
   render() {

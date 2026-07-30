@@ -9,8 +9,8 @@ import { statusVars } from '../status-styles.js';
  * @requires arc-icon-button
  * @requires arc-icon
  * @prop {'info' | 'warning' | 'tip' | 'danger'} variant - Semantic variant that controls the colour scheme, top accent bar, and default icon
- * @prop {boolean} dismissible - Shows a close button that removes the callout. Fires an arc-dismiss event on close.
- * @fires {CustomEvent<void>} arc-dismiss - Fired when the dismiss button is clicked on a dismissible callout.
+ * @prop {boolean} dismissible - Shows a close button that removes the callout. Fires an arc-close event on close.
+ * @fires {CustomEvent<void>} arc-close - Fired when the dismiss button is clicked on a dismissible callout.
  * @slot icon
  * @slot - Default content.
  * @csspart callout
@@ -120,9 +120,9 @@ export class ArcCallout extends LitElement {
   }
 
   _dismiss() {
+    if (!this.dispatchEvent(new CustomEvent('arc-close', { bubbles: true, composed: true, cancelable: true }))) return;
     this._dismissed = true;
     this.classList.add('dismissed');
-    this.dispatchEvent(new CustomEvent('arc-dismiss', { bubbles: true, composed: true }));
   }
 
   render() {

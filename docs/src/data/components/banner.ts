@@ -19,7 +19,7 @@ Four semantic variants — info, success, warning, and error — apply a subtle 
     'Full-width edge-to-edge layout with no border-radius',
     'Four semantic variants (info, success, warning, error) with gradient wash backgrounds',
     'Sticky mode pins the banner to the top of the viewport on scroll',
-    'Dismissible mode adds a close button and fires `arc-dismiss` on close',
+    'Dismissible mode adds a close button and fires `arc-close` on close',
     'Subtle gradient wash background for each variant',
     'Accessible `role="banner"` and aria-live="polite" for dynamic content',
     'Smooth slide-down enter and collapse exit transitions',

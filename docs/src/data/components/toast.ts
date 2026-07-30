@@ -27,7 +27,7 @@ Four built-in variants — info, success, warning, and error — apply a colored
     'aria-live="polite" container for screen-reader announcements',
     'Respects `prefers-reduced-motion` — disables animations when set',
     'Responsive full-width layout on viewports under 640 px',
-    '`arc-dismiss` event fires when a toast is removed',
+    '`arc-close` event fires when a toast is removed',
   ],
 
   guidelines: {

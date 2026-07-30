@@ -141,11 +141,12 @@ export class ArcHoverCard extends LitElement {
   _hide() {
     clearTimeout(this._openTimeout);
     clearTimeout(this._closeTimeout);
-    this._visible = false;
-    this.dispatchEvent(new CustomEvent('arc-close', {
+    if (!this.dispatchEvent(new CustomEvent('arc-close', {
       bubbles: true,
       composed: true,
-    }));
+      cancelable: true,
+    }))) return;
+    this._visible = false;
   }
 
   render() {

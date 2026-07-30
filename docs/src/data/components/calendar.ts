@@ -13,7 +13,7 @@ export const calendar: ComponentDef = {
 
 Days from the previous and next months fill the grid to maintain a consistent 6-row layout, but these "outside" days are displayed at reduced opacity. The current date receives an inset ring highlight (\`--border-bright\`), while the selected date gets a solid accent-primary background. Optional \`min\` and \`max\` ISO date strings constrain the selectable range — disabled dates are dimmed and non-interactive.
 
-Full keyboard navigation is supported: arrow keys move a focus ring through the grid (including automatic month transitions at boundaries), and Enter or Space confirms the selection. The component fires \`arc-change\` when a date is selected and \`arc-navigate\` when the visible month changes, enabling lazy-loading of events or availability data for the newly visible period.`,
+Full keyboard navigation is supported: arrow keys move a focus ring through the grid (including automatic month transitions at boundaries), and Enter or Space confirms the selection. The component fires \`arc-change\` when a date is selected and \`arc-month-change\` when the visible month changes, enabling lazy-loading of events or availability data for the newly visible period.`,
 
   features: [
     'Standard 7-column month grid with Sun-Sat headers in monospace uppercase',
@@ -23,13 +23,13 @@ Full keyboard navigation is supported: arrow keys move a focus ring through the 
     'Min/max date constraints via ISO date strings that disable out-of-range days',
     'Arrow key navigation through the grid with automatic month transitions at boundaries',
     'Outside-month day cells shown at 30% opacity to fill the 6-row grid consistently',
-    'Two events: `arc-change` on date selection and `arc-navigate` on month/year changes',
+    'Two events: `arc-change` on date selection and `arc-month-change` on month/year changes',
   ],
 
   guidelines: {
     do: [
       'Set `min` and `max` to constrain the selectable range when your use case has date boundaries',
-      'Use `arc-navigate` to lazy-load events or availability data when the user changes months',
+      'Use `arc-month-change` to lazy-load events or availability data when the user changes months',
       'Pair Calendar with a text input or DatePicker wrapper for combined typed and visual date entry',
       'Pre-set `month` and `year` to the month containing the initial `value` so the selection is visible on load',
       'Provide sufficient container width (280px minimum) so the grid cells are comfortably clickable',

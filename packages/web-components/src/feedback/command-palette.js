@@ -349,11 +349,12 @@ export class ArcCommandPalette extends LitElement {
 
   _close() {
     if (!this.open) return;
-    this.open = false;
-    this.dispatchEvent(new CustomEvent('arc-close', {
+    if (!this.dispatchEvent(new CustomEvent('arc-close', {
       bubbles: true,
       composed: true,
-    }));
+      cancelable: true,
+    }))) return;
+    this.open = false;
   }
 
   _backdropClick() {

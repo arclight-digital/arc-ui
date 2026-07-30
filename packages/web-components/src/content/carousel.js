@@ -205,7 +205,7 @@ export class ArcCarousel extends LitElement {
     }
 
     this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { index: this._current },
+      detail: { value: this._current, index: this._current },
       bubbles: true,
       composed: true,
     }));

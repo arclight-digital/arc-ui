@@ -219,7 +219,7 @@ export class ArcRangeSlider extends FormControlMixin(LitElement) {
   _fireInput() {
     this._updateFormValue();
     this.dispatchEvent(new CustomEvent('arc-input', {
-      detail: { low: this.low, high: this.high },
+      detail: { value: [this.low, this.high], low: this.low, high: this.high },
       bubbles: true,
       composed: true,
     }));
@@ -228,7 +228,7 @@ export class ArcRangeSlider extends FormControlMixin(LitElement) {
   _fireChange() {
     this._updateFormValue();
     this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { low: this.low, high: this.high },
+      detail: { value: [this.low, this.high], low: this.low, high: this.high },
       bubbles: true,
       composed: true,
     }));

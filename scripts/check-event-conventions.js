@@ -45,6 +45,20 @@ const WAIVERS = new Map([
   ],
 ]);
 
+/**
+ * Names retired by the v3 vocabulary pass. arc-close absorbed arc-dismiss;
+ * arc-select absorbed the four selection variants; arc-month-change replaced
+ * calendar's arc-navigate (which collided with the router event of the same
+ * name). A retired name reappearing is a regression, not a style choice.
+ */
+const RETIRED = new Map([
+  ['arc-dismiss', 'use arc-close'],
+  ['arc-item-select', 'use arc-select'],
+  ['arc-row-select', 'use arc-select'],
+  ['arc-select-all', 'use arc-select with detail.all'],
+  ['arc-selection-change', 'use arc-select'],
+]);
+
 /** Extract the balanced argument text of each `new CustomEvent(...)` call. */
 function customEventArgs(source) {
   const calls = [];
@@ -96,6 +110,7 @@ for (const tier of TIERS) {
       }
       for (const name of names) {
         if (!name.startsWith('arc-')) problems.push(`event name "${name}" is not arc-prefixed`);
+        if (RETIRED.has(name)) problems.push(`event name "${name}" was retired in v3 — ${RETIRED.get(name)}`);
       }
       if (!/bubbles:\s*true/.test(args)) problems.push('missing bubbles: true');
       if (!/composed:\s*true/.test(args)) problems.push('missing composed: true');

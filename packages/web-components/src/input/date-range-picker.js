@@ -472,7 +472,7 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
     this.shadowRoot.querySelector('input')?.focus();
 
     this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { start: this.start, end: this.end },
+      detail: { value: { start: this.start, end: this.end }, start: this.start, end: this.end },
       bubbles: true,
       composed: true,
     }));
@@ -490,7 +490,7 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
     this.shadowRoot.querySelector('input')?.focus();
 
     this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { start: this.start, end: this.end },
+      detail: { value: { start: this.start, end: this.end }, start: this.start, end: this.end },
       bubbles: true,
       composed: true,
     }));

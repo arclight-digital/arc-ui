@@ -25,7 +25,7 @@ The surface-base background gives snackbar a darker, more grounded feel than toa
     'Single-instance — new show() replaces the current snackbar, no stacking',
     'aria-live="polite" for non-intrusive screen-reader announcements',
     'Respects `prefers-reduced-motion` — disables slide animations when set',
-    '`arc-dismiss` and `arc-action` events for parent component integration',
+    '`arc-close` and `arc-action` events for parent component integration',
   ],
 
   guidelines: {

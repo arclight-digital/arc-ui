@@ -167,7 +167,7 @@ export class ArcToggle extends FormControlMixin(LitElement) {
     this.checked = !this.checked;
     this._updateFormValue();
     this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { checked: this.checked },
+      detail: { value: this.checked, checked: this.checked },
       bubbles: true,
       composed: true,
     }));

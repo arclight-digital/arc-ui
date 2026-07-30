@@ -31,7 +31,7 @@ function statusStyle(variant) {
  * @requires arc-icon-button
  * @prop {'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center'} position - Anchors the toast stack to a fixed edge of the viewport. Top-right is the most conventional position for web applications. Bottom positions work well for media players or editors where the top area is occupied by toolbars.
  * @prop {number} duration - Time in milliseconds before a toast auto-dismisses. Applies as the default for every show() call but can be overridden per-toast via the duration option in the show() payload. Set to 0 to disable auto-dismiss entirely, requiring the user to click the close button.
- * @fires arc-dismiss - Fired when a toast notification is dismissed
+ * @fires arc-close - Fired when a toast notification is dismissed
  * @csspart container
  * @csspart toast
  * @csspart action
@@ -195,7 +195,7 @@ export class ArcToast extends LitElement {
         if (done) return;
         done = true;
         this._toasts = this._toasts.filter(t => t.id !== id);
-        this.dispatchEvent(new CustomEvent('arc-dismiss', {
+        this.dispatchEvent(new CustomEvent('arc-close', {
           detail: { id },
           bubbles: true,
           composed: true,

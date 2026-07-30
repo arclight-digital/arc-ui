@@ -23,7 +23,7 @@ import './toast.js';
  * @prop {number} maxVisible - Maximum number of toasts visible at once (attribute: max-visible). Further show() calls queue FIFO and release as visible toasts dismiss.
  * @prop {boolean} dedupe - When true, a show() whose message and variant match a visible or queued toast is coalesced: visible matches re-show with a "(×N)" counter suffix and a fresh timer; queued matches bump their counter in place. Set the property to false from JS to disable.
  * @prop {number} queueLimit - Maximum queued (not visible) toasts (attribute: queue-limit). Beyond it the oldest queued entries are dropped and arc-queue-overflow fires with the drop count.
- * @fires arc-dismiss - Fired when a managed toast is dismissed. detail: { id } — the id returned by show().
+ * @fires arc-close - Fired when a managed toast is dismissed. detail: { id } — the id returned by show().
  * @fires arc-queue-change - Fired whenever the visible or queued count changes. detail: { visible, queued }.
  * @fires arc-queue-overflow - Fired when the queue exceeds queueLimit and oldest queued entries are dropped. detail: { dropped } — how many were dropped.
  */
@@ -162,7 +162,7 @@ export class ArcToastManager extends LitElement {
     if (!toast) return;
     const staleId = entry.innerId;
     this._showOnInner(entry);
-    toast._dismiss(staleId); // its arc-dismiss no longer matches entry.innerId → ignored
+    toast._dismiss(staleId); // its arc-close no longer matches entry.innerId → ignored
   }
 
   _release() {
@@ -180,7 +180,7 @@ export class ArcToastManager extends LitElement {
     const entry = this._visible.find(en => en.innerId === e.detail.id);
     if (!entry) return; // stale inner toast from a dedupe re-show
     this._visible = this._visible.filter(en => en !== entry);
-    this.dispatchEvent(new CustomEvent('arc-dismiss', {
+    this.dispatchEvent(new CustomEvent('arc-close', {
       detail: { id: entry.id },
       bubbles: true,
       composed: true,
@@ -206,7 +206,7 @@ export class ArcToastManager extends LitElement {
         position=${this.position}
         .duration=${this.duration}
         exportparts="container, toast, action, dismiss"
-        @arc-dismiss=${this._onInnerDismiss}
+        @arc-close=${this._onInnerDismiss}
       ></arc-toast>
     `;
   }

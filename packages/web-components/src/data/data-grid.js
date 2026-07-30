@@ -12,12 +12,12 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {Array<Record<string, any>>} rows - The data array. Each object becomes a row keyed by column `key`. The grid works on an internal shallow copy — sorting and inline edits never mutate the array you pass in. Set via JavaScript property; reassigning it resets selection and any open editor.
  * @prop {Array<{key:string,direction:'asc'|'desc'}>} sort - Multi-sort state in priority order. Clicking a sortable header cycles it asc → desc → none; Shift+click appends it as a secondary sort. When more than one sort is active, headers show a direction arrow plus priority number. Set this property to pre-sort the grid.
  * @prop {boolean} manualSort - Skips internal sorting. Rows render in the order given, while headers still cycle the `sort` state and emit `arc-sort` — use this to implement server-side sorting.
- * @prop {boolean} selectable - Adds a checkbox column with a select-all header checkbox (indeterminate when partially selected). Space toggles selection from the keyboard. Emits `arc-selection-change` with the selected row indices.
+ * @prop {boolean} selectable - Adds a checkbox column with a select-all header checkbox (indeterminate when partially selected). Space toggles selection from the keyboard. Emits `arc-select` with the selected row indices.
  * @prop {boolean} virtual - Enables virtual scrolling for large datasets. Only visible rows plus an overscan buffer are rendered, keeping performance constant regardless of row count.
  * @prop {number} rowHeight - Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations.
  * @fires arc-sort - Fired when the user changes sorting. detail: { sort } with the full multi-sort array in priority order
  * @fires arc-cell-change - Fired when an inline cell edit is committed. detail: { rowIndex, key, value, row } — rowIndex refers to the original rows array
- * @fires arc-selection-change - Fired when row selection changes. detail: { selectedIndices } — indices into the original rows array
+ * @fires arc-select - Fired when row selection changes. detail: { value, selectedIndices } — sorted indices into the original rows array
  * @csspart header-cell
  * @csspart cell
  * @csspart editor
@@ -472,8 +472,9 @@ export class ArcDataGrid extends LitElement {
   }
 
   _emitSelection() {
-    this.dispatchEvent(new CustomEvent('arc-selection-change', {
-      detail: { selectedIndices: [...this._selected].sort((a, b) => a - b) },
+    const selectedIndices = [...this._selected].sort((a, b) => a - b);
+    this.dispatchEvent(new CustomEvent('arc-select', {
+      detail: { value: selectedIndices, selectedIndices },
       bubbles: true,
       composed: true,
     }));

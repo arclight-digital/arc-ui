@@ -13,7 +13,7 @@ export const guidedTour: ComponentDef = {
 
 Each step targets a DOM element by CSS selector, dims the rest of the page with a spotlight overlay, and positions a popover next to the highlighted element with a title, body content, and navigation controls (Back, Next, Skip). A step counter at the bottom of the popover uses accent-primary gradient text to show progress through the tour.
 
-The component fires events at each transition — \`arc-change\` when the step changes, \`arc-complete\` when the user finishes the tour, and \`arc-dismiss\` when they skip or close early. These events let you track onboarding completion, persist progress to a backend, or conditionally skip steps based on user state.`,
+The component fires events at each transition — \`arc-change\` when the step changes, \`arc-complete\` when the user finishes the tour, and \`arc-close\` when they skip or close early. These events let you track onboarding completion, persist progress to a backend, or conditionally skip steps based on user state.`,
 
   features: [
     'Declarative step definitions with target selector, title, and content',
@@ -22,7 +22,7 @@ The component fires events at each transition — \`arc-change\` when the step c
     'Built-in navigation: Back, Next, Skip, and Finish buttons',
     'Step counter with accent-primary gradient text for progress indication',
     'Automatic scroll-into-view for off-screen target elements',
-    '`arc-change`, `arc-complete`, and `arc-dismiss` events for state tracking',
+    '`arc-change`, `arc-complete`, and `arc-close` events for state tracking',
     'Full keyboard navigation — Arrow keys to advance/go back, Escape to dismiss',
     'Respects `prefers-reduced-motion` for overlay transitions',
     'Composable — uses spotlight and popover internally',
@@ -124,7 +124,7 @@ const steps = [
 
 <template>
   <GuidedTour :steps="steps" :open="open"
-    @arc-complete="open = false" @arc-dismiss="open = false" />
+    @arc-complete="open = false" @arc-close="open = false" />
   <Button variant="primary" @click="open = true">Start Tour</Button>
   <div id="step-1">Feature One</div>
   <div id="step-2">Feature Two</div>
@@ -145,7 +145,7 @@ const steps = [
 
 <GuidedTour {steps} {open}
   on:arc-complete={() => open = false}
-  on:arc-dismiss={() => open = false} />
+  on:arc-close={() => open = false} />
 <Button variant="primary" on:click={() => open = true}>Start Tour</Button>
 <div id="step-1">Feature One</div>
 <div id="step-2">Feature Two</div>`,
@@ -160,7 +160,7 @@ import { Button, GuidedTour } from '@arclux/arc-ui-angular';
   imports: [Button, GuidedTour],
   template: \`
     <arc-guided-tour [steps]="steps" [open]="open"
-      (arc-complete)="open = false" (arc-dismiss)="open = false"></arc-guided-tour>
+      (arc-complete)="open = false" (arc-close)="open = false"></arc-guided-tour>
     <arc-button variant="primary" (click)="open = true">Start Tour</arc-button>
     <div id="step-1">Feature One</div>
     <div id="step-2">Feature Two</div>

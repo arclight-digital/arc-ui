@@ -12,7 +12,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {number} month - The currently displayed month (0-based, 0=January). Defaults to the current month.
  * @prop {number} year - The currently displayed year. Defaults to the current year.
  * @fires arc-change - Fired when a date is selected. `event.detail.value` contains the ISO date string (YYYY-MM-DD).
- * @fires {CustomEvent<{ month: number, year: number }>} arc-navigate - Fired when the visible month or year changes via the navigation buttons.
+ * @fires {CustomEvent<{ month: number, year: number }>} arc-month-change - Fired when the visible month or year changes via the navigation buttons.
  * @csspart calendar
  * @csspart header
  * @csspart nav-prev
@@ -252,7 +252,7 @@ export class ArcCalendar extends LitElement {
   }
 
   _dispatchMonthChange() {
-    this.dispatchEvent(new CustomEvent('arc-navigate', {
+    this.dispatchEvent(new CustomEvent('arc-month-change', {
       detail: { month: this.month, year: this.year },
       bubbles: true,
       composed: true,

@@ -10,7 +10,7 @@ import { lockScroll, unlockScroll } from '../shared/scroll-lock.js';
  * @tag arc-navigation-menu
  * @requires arc-nav-item
  * @fires arc-navigate - Fired when a navigation item is selected
- * @fires {CustomEvent<{ value: boolean }>} arc-mobile-menu-toggle - Dispatched on the document when the mobile hamburger button is clicked. Listen on document to toggle your mobile navigation state.
+ * @fires {CustomEvent<{ value: boolean }>} arc-mobile-menu-toggle - Fired when the mobile hamburger button is clicked. Bubbles composed from the host, so listening on the element or on document both work.
  * @slot - Default content.
  * @csspart nav
  * @csspart item
@@ -651,8 +651,10 @@ export class ArcNavigationMenu extends LitElement {
     if (!this._mobileOpen || this._mobileClosing) return;
     this._mobileClosing = true;
     this._mobileExpandedIndex = -1;
-    document.dispatchEvent(new CustomEvent('arc-mobile-menu-toggle', {
+    this.dispatchEvent(new CustomEvent('arc-mobile-menu-toggle', {
       detail: { value: false },
+      bubbles: true,
+      composed: true,
     }));
   }
 

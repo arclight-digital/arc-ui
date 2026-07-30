@@ -170,8 +170,8 @@ export class ArcSheet extends OverlayMixin(LitElement) {
   }
 
   _close() {
+    if (!this.dispatchEvent(new CustomEvent('arc-close', { bubbles: true, composed: true, cancelable: true }))) return;
     this.open = false;
-    this.dispatchEvent(new CustomEvent('arc-close', { bubbles: true, composed: true }));
   }
 
   updated(changed) {

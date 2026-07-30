@@ -130,7 +130,7 @@ export class ArcStepperNav extends LitElement {
     if (this.linear && index > this.active) return;
     this.active = index;
     this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { step: this.active },
+      detail: { value: this.active, step: this.active },
       bubbles: true,
       composed: true,
     }));

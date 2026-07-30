@@ -148,7 +148,7 @@ export class ArcListItem extends LitElement {
 
   _onClick(e) {
     if (this.disabled) return;
-    this.dispatchEvent(new CustomEvent('arc-item-select', {
+    this.dispatchEvent(new CustomEvent('arc-select', {
       bubbles: true,
       composed: true,
       detail: { value: this.value },

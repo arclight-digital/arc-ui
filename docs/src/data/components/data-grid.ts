@@ -28,7 +28,7 @@ Keyboard support follows the WAI-ARIA grid pattern: one tab stop for the whole g
     'Row selection with select-all checkbox including indeterminate state',
     'Virtualized rendering for large datasets via the virtual and row-height props',
     'Full WAI-ARIA grid keyboard pattern: roving cell focus, one tab stop, arrow/Home/End/Ctrl navigation',
-    '`arc-sort`, `arc-cell-change`, and `arc-selection-change` custom events',
+    '`arc-sort`, `arc-cell-change`, and `arc-select` custom events',
     'Sticky header row that stays visible during vertical scroll',
     'CSS custom property theming via ARC design tokens, plus ::part hooks for table, header, row, cell, and editor',
   ],
@@ -108,7 +108,7 @@ if (grid) {
   });
 
   grid.addEventListener('arc-sort', (e) => console.log('sort', e.detail.sort));
-  grid.addEventListener('arc-selection-change', (e) => console.log('selected', e.detail.selectedIndices));
+  grid.addEventListener('arc-select', (e) => console.log('selected', e.detail.selectedIndices));
 </script>`,
     },
     {

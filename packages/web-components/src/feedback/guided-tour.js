@@ -12,7 +12,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {boolean} open - Controls whether the tour is active. Set to true to start the tour from the first step.
  * @fires {CustomEvent<{ step: number }>} arc-change - Fired when the tour advances or goes back to a different step. Detail contains { step } with the new step index.
  * @fires {CustomEvent<void>} arc-complete - Fired when the user finishes the last step of the tour
- * @fires {CustomEvent<void>} arc-dismiss - Fired when the user skips or closes the tour before completing all steps
+ * @fires {CustomEvent<void>} arc-close - Fired when the user skips or closes the tour before completing all steps
  * @csspart ring
  * @csspart tooltip
  * @csspart counter
@@ -158,7 +158,7 @@ export class ArcGuidedTour extends LitElement {
     if (this.active < this.steps.length - 1) {
       this.active++;
       this.dispatchEvent(new CustomEvent('arc-change', {
-        detail: { step: this.active },
+        detail: { value: this.active, step: this.active },
         bubbles: true,
         composed: true,
       }));
@@ -171,7 +171,7 @@ export class ArcGuidedTour extends LitElement {
     if (this.active > 0) {
       this.active--;
       this.dispatchEvent(new CustomEvent('arc-change', {
-        detail: { step: this.active },
+        detail: { value: this.active, step: this.active },
         bubbles: true,
         composed: true,
       }));
@@ -184,8 +184,8 @@ export class ArcGuidedTour extends LitElement {
   }
 
   _dismiss() {
+    if (!this.dispatchEvent(new CustomEvent('arc-close', { bubbles: true, composed: true, cancelable: true }))) return;
     this.open = false;
-    this.dispatchEvent(new CustomEvent('arc-dismiss', { bubbles: true, composed: true }));
   }
 
   render() {

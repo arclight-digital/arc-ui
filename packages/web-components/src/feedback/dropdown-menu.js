@@ -207,15 +207,16 @@ export class ArcDropdownMenu extends LitElement {
 
   _close(restoreFocus = true) {
     if (!this.open) return;
+    if (!this.dispatchEvent(new CustomEvent('arc-close', {
+      bubbles: true,
+      composed: true,
+      cancelable: true,
+    }))) return;
     this.open = false;
     if (restoreFocus && this._openedFrom && this._openedFrom.isConnected) {
       this._openedFrom.focus();
     }
     this._openedFrom = null;
-    this.dispatchEvent(new CustomEvent('arc-close', {
-      bubbles: true,
-      composed: true,
-    }));
   }
 
   _selectItem(item, index) {

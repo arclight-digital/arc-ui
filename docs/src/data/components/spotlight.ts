@@ -13,7 +13,7 @@ export const spotlight: ComponentDef = {
 
 This pattern is essential for onboarding flows, feature discovery, and guided walkthroughs where you need to direct the user's attention to a specific UI element. Spotlight can be used standalone for one-off highlights or composed with guided-tour for multi-step onboarding sequences.
 
-The overlay listens for clicks outside the highlighted element and fires an \`arc-dismiss\` event, allowing you to close the spotlight or advance to the next step. The padding prop controls the breathing room around the target element, and the component automatically repositions when the target moves or the viewport resizes.`,
+The overlay listens for clicks outside the highlighted element and fires an \`arc-close\` event, allowing you to close the spotlight or advance to the next step. The padding prop controls the breathing room around the target element, and the component automatically repositions when the target moves or the viewport resizes.`,
 
   features: [
     'Full-page dimming overlay with configurable opacity',
@@ -21,7 +21,7 @@ The overlay listens for clicks outside the highlighted element and fires an \`ar
     'Automatic z-index elevation for the targeted element',
     'CSS selector-based targeting — highlight any element on the page',
     'Configurable padding around the highlighted element',
-    'Click-outside-to-dismiss fires `arc-dismiss` event',
+    'Click-outside-to-dismiss fires `arc-close` event',
     'Automatic repositioning on scroll, resize, and DOM mutations',
     'Smooth fade-in/fade-out transitions for the overlay',
     'Respects `prefers-reduced-motion` — disables transitions when set',
@@ -52,7 +52,7 @@ The overlay listens for clicks outside the highlighted element and fires an \`ar
         const spotlight = document.getElementById('demo-spotlight');
         if (spotlight) spotlight.active = true;
       });
-      document.getElementById('demo-spotlight')?.addEventListener('arc-dismiss', (e) => {
+      document.getElementById('demo-spotlight')?.addEventListener('arc-close', (e) => {
         e.target.active = false;
       });
     `,
@@ -104,7 +104,7 @@ const active = ref(false);
 
 <template>
   <Spotlight target="#my-feature" :active="active" :padding="12"
-    @arc-dismiss="active = false" />
+    @arc-close="active = false" />
   <Button variant="primary" @click="active = true">Highlight Feature</Button>
   <div id="my-feature">This element will be spotlighted</div>
 </template>`,
@@ -119,7 +119,7 @@ const active = ref(false);
 </script>
 
 <Spotlight target="#my-feature" {active} padding={12}
-  on:arc-dismiss={() => active = false} />
+  on:arc-close={() => active = false} />
 <Button variant="primary" on:click={() => active = true}>Highlight Feature</Button>
 <div id="my-feature">This element will be spotlighted</div>`,
     },
@@ -133,7 +133,7 @@ import { Button, Spotlight } from '@arclux/arc-ui-angular';
   imports: [Button, Spotlight],
   template: \`
     <arc-spotlight target="#my-feature" [active]="active" [padding]="12"
-      (arc-dismiss)="active = false"></arc-spotlight>
+      (arc-close)="active = false"></arc-spotlight>
     <arc-button variant="primary" (click)="active = true">Highlight Feature</arc-button>
     <div id="my-feature">This element will be spotlighted</div>
   \`,

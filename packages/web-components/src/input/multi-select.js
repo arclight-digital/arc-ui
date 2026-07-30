@@ -12,6 +12,7 @@ import '../shared/option.js';
  * @prop {string} label - Visible label rendered above the control in a small uppercase style.
  * @prop {string} placeholder - Hint text shown inside the control when no items are selected and the input is empty.
  * @prop {boolean} disabled - Disables the control, preventing interaction and reducing opacity to 50%.
+ * @fires {CustomEvent<{ value: string }>} arc-input - Fired on every keystroke in the filter input. `event.detail.value` contains the current query text.
  * @fires {CustomEvent<{ value: string[] }>} arc-change - Fired when the selected values change
  * @slot - Default content.
  * @csspart label
@@ -345,6 +346,11 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
     this._query = e.target.value;
     this._open = true;
     this._activeIndex = -1;
+    this.dispatchEvent(new CustomEvent('arc-input', {
+      detail: { value: this._query },
+      bubbles: true,
+      composed: true,
+    }));
   }
 
   _onFocusIn() {

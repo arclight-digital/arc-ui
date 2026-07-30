@@ -10,10 +10,10 @@ import { getStatusIcon } from '../status-utils.js';
  * @tag arc-alert
  * @requires arc-icon-button
  * @prop {'info' | 'success' | 'warning' | 'error'} variant - Controls the semantic colour palette and icon. Use "info" for neutral guidance, "success" for confirmations, "warning" for caution states, and "error" for failures or blocking issues.
- * @prop {boolean} dismissible - When true, renders a close button in the top-right corner. Clicking it removes the alert from the DOM and fires an "arc-dismiss" event that parent components can listen to.
+ * @prop {boolean} dismissible - When true, renders a close button in the top-right corner. Clicking it removes the alert from the DOM and fires an "arc-close" event that parent components can listen to.
  * @prop {string} heading - Optional bold heading rendered above the body slot. Use it for a scannable one-line summary so users can quickly gauge the alert's importance before reading the full message.
  * @prop {boolean} compact - Reduces padding and font sizes for inline or space-constrained usage.
- * @fires {CustomEvent<void>} arc-dismiss - Fired when a dismissible alert is closed
+ * @fires {CustomEvent<void>} arc-close - Fired when a dismissible alert is closed
  * @slot - Default content.
  * @csspart alert
  * @csspart icon
@@ -119,7 +119,7 @@ export class ArcAlert extends LitElement {
   }
 
   _dismiss() {
-    this.dispatchEvent(new CustomEvent('arc-dismiss', { bubbles: true, composed: true }));
+    if (!this.dispatchEvent(new CustomEvent('arc-close', { bubbles: true, composed: true, cancelable: true }))) return;
     this.style.display = 'none';
   }
 

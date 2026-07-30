@@ -211,6 +211,11 @@ export class ArcContextMenu extends LitElement {
   }
 
   _close(restoreFocus = true) {
+    if (!this.dispatchEvent(new CustomEvent('arc-close', {
+      bubbles: true,
+      composed: true,
+      cancelable: true,
+    }))) return;
     this.open = false;
     this._activeIndex = -1;
 
@@ -218,11 +223,6 @@ export class ArcContextMenu extends LitElement {
       this._returnFocus.focus();
     }
     this._returnFocus = null;
-
-    this.dispatchEvent(new CustomEvent('arc-close', {
-      bubbles: true,
-      composed: true,
-    }));
   }
 
   _selectItem(item, index) {

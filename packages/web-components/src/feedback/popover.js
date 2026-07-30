@@ -135,8 +135,12 @@ export class ArcPopover extends LitElement {
   }
 
   _toggle() {
-    this.open = !this.open;
-    this.dispatchEvent(new CustomEvent(this.open ? 'arc-open' : 'arc-close', {
+    if (this.open) {
+      this._close();
+      return;
+    }
+    this.open = true;
+    this.dispatchEvent(new CustomEvent('arc-open', {
       bubbles: true,
       composed: true,
     }));
@@ -144,15 +148,16 @@ export class ArcPopover extends LitElement {
 
   _close(restoreFocus = true) {
     if (!this.open) return;
+    if (!this.dispatchEvent(new CustomEvent('arc-close', {
+      bubbles: true,
+      composed: true,
+      cancelable: true,
+    }))) return;
     this.open = false;
     if (restoreFocus && this._openedFrom && this._openedFrom.isConnected) {
       this._openedFrom.focus();
     }
     this._openedFrom = null;
-    this.dispatchEvent(new CustomEvent('arc-close', {
-      bubbles: true,
-      composed: true,
-    }));
   }
 
   render() {

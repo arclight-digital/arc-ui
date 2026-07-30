@@ -190,8 +190,9 @@ export class ArcModal extends LitElement {
   }
 
   _close() {
+    // Cancelable: a consumer with unsaved state can preventDefault() to veto.
+    if (!this.dispatchEvent(new CustomEvent('arc-close', { bubbles: true, composed: true, cancelable: true }))) return;
     this.open = false;
-    this.dispatchEvent(new CustomEvent('arc-close', { bubbles: true, composed: true }));
   }
 
   _backdropClick(e) {

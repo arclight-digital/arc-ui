@@ -274,7 +274,7 @@ export class ArcSortableList extends LitElement {
 
   _fireOrderChange() {
     this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { order: this._items.map(item => item.originalIndex) },
+      detail: { value: this._items.map(item => item.originalIndex), order: this._items.map(item => item.originalIndex) },
       bubbles: true,
       composed: true,
     }));

@@ -12,6 +12,7 @@ import '../shared/option.js';
  * @prop {string} placeholder - Placeholder text shown in the input when no value is entered.
  * @prop {string} label - Visible label rendered above the input. Also used as the accessible label for the combobox.
  * @prop {boolean} disabled - Disables the input and prevents interaction. The host element receives reduced opacity and pointer-events: none.
+ * @fires arc-input - Fired on every keystroke in the filter input. `event.detail.value` contains the current query text.
  * @fires arc-change - Fired when an option is selected. `event.detail.value` contains the selected option value.
  * @slot - Default content.
  * @csspart label
@@ -227,6 +228,11 @@ export class ArcCombobox extends FormControlMixin(LitElement) {
     this._query = e.target.value;
     this._open = true;
     this._activeIndex = -1;
+    this.dispatchEvent(new CustomEvent('arc-input', {
+      detail: { value: this._query },
+      bubbles: true,
+      composed: true,
+    }));
   }
 
   _onFocus() {

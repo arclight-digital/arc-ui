@@ -142,8 +142,17 @@ export class ArcSpeedDial extends LitElement {
   }
 
   _toggle() {
-    this.open = !this.open;
-    this.dispatchEvent(new CustomEvent(this.open ? 'arc-open' : 'arc-close', {
+    if (this.open) {
+      if (!this.dispatchEvent(new CustomEvent('arc-close', {
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+      }))) return;
+      this.open = false;
+      return;
+    }
+    this.open = true;
+    this.dispatchEvent(new CustomEvent('arc-open', {
       bubbles: true,
       composed: true,
     }));
@@ -155,11 +164,12 @@ export class ArcSpeedDial extends LitElement {
       bubbles: true,
       composed: true,
     }));
-    this.open = false;
-    this.dispatchEvent(new CustomEvent('arc-close', {
+    if (!this.dispatchEvent(new CustomEvent('arc-close', {
+      cancelable: true,
       bubbles: true,
       composed: true,
-    }));
+    }))) return;
+    this.open = false;
   }
 
   render() {

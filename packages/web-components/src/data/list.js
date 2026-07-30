@@ -72,12 +72,12 @@ export class ArcList extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.addEventListener('arc-item-select', this._onItemClick);
+    this.addEventListener('arc-select', this._onItemClick);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    this.removeEventListener('arc-item-select', this._onItemClick);
+    this.removeEventListener('arc-select', this._onItemClick);
   }
 
   _onSlotChange(e) {
@@ -149,7 +149,7 @@ export class ArcList extends LitElement {
       case ' ':
         if (this.selectable && current >= 0) {
           e.preventDefault();
-          items[current].dispatchEvent(new CustomEvent('arc-item-select', {
+          items[current].dispatchEvent(new CustomEvent('arc-select', {
             bubbles: true,
             composed: true,
             detail: { value: items[current].value },

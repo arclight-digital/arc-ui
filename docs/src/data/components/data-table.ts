@@ -13,7 +13,7 @@ export const dataTable: ComponentDef = {
 
 Sorting is opt-in at two levels: the table must have the \`sortable\` attribute, and each column that should be sortable needs its own \`sortable\` flag. When a user clicks a sortable header, the table toggles between ascending and descending order and emits an \`arc-sort\` event with the active column and direction, making it easy to integrate with server-side sorting if needed.
 
-Row selection adds a checkbox column to the left of the table. A "select all" checkbox in the header toggles every row, and individual row checkboxes emit \`arc-row-select\` events. The \`selectable\` attribute enables this mode. Selected rows receive a subtle blue highlight so the user always knows which rows are active. This is ideal for bulk-action patterns like "delete selected" or "export selected."`,
+Row selection adds a checkbox column to the left of the table. A "select all" checkbox in the header toggles every row, and individual row checkboxes emit \`arc-select\` events. The \`selectable\` attribute enables this mode. Selected rows receive a subtle blue highlight so the user always knows which rows are active. This is ideal for bulk-action patterns like "delete selected" or "export selected."`,
 
   features: [
     'Data-driven rendering from a rows array — no manual <tr>/<td> markup',
@@ -24,7 +24,7 @@ Row selection adds a checkbox column to the left of the table. A "select all" ch
     'Alternating row backgrounds for improved scanability',
     'Hover highlighting on rows for easy tracking',
     'Empty-state fallback when no data is available',
-    '`arc-sort`, `arc-row-select`, and `arc-select-all` custom events',
+    '`arc-sort` and `arc-select` custom events',
     'Accessible ARIA attributes: `aria-sort` on headers, `aria-label` on checkboxes',
     'Configurable column widths via the width attribute',
     'CSS custom property theming via ARC design tokens',
