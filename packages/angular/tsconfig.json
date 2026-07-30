@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "es2022",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "skipLibCheck": true,
+    "experimentalDecorators": false,
+    "importHelpers": true,
+    "lib": ["es2022", "dom"]
+  },
+  "angularCompilerOptions": {
+    "compilationMode": "partial",
+    "strictTemplates": true
+  },
+  "include": ["src"]
+}

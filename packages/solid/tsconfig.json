@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+    "strict": true,
+    "skipLibCheck": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": "dist",
+    "rootDir": "src"
+  },
+  "include": ["src"]
+}

@@ -48,6 +48,33 @@ jobs:
       - name: Typecheck generated declarations
         run: ./node_modules/.bin/tsc --noEmit --skipLibCheck --moduleResolution bundler --module esnext --target es2022 packages/web-components/types/index.d.ts packages/web-components/types/shared-styles.d.ts packages/web-components/types/shared/*.d.ts packages/web-components/types/content/*.d.ts packages/web-components/types/dev.d.ts
 
+  wrapper-builds:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      # Compiles all six wrapper packages with their real toolchains —
+      # including ng-packagr, whose strictTemplates pass is the Angular
+      # verification (a scratch Angular consumer would cost a full CLI).
+      - name: Build wrapper packages
+        run: pnpm --filter @arclux/arc-ui-react --filter @arclux/arc-ui-preact --filter @arclux/arc-ui-solid --filter @arclux/arc-ui-svelte --filter @arclux/arc-ui-vue --filter @arclux/arc-ui-angular run build
+
+      # Packs the real tarballs and builds a scratch Vite consumer per
+      # framework — the check that resolves through npm's eyes, not the
+      # workspace's.
+      - name: Smoke-test packed tarballs
+        run: pnpm smoke:wrappers
+
   accessibility:
     runs-on: ubuntu-latest
     steps:

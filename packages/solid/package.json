@@ -4,788 +4,982 @@
   "description": "Solid wrappers for ARC UI Web Components.",
   "sideEffects": false,
   "type": "module",
-  "main": "src/index.ts",
-  "module": "src/index.ts",
-  "types": "src/index.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./src/index.ts",
-      "default": "./src/index.ts"
+      "types": "./dist/index.d.ts",
+      "solid": "./src/index.ts",
+      "default": "./dist/index.js"
     },
     "./content": {
-      "types": "./src/content/index.ts",
-      "default": "./src/content/index.ts"
+      "types": "./dist/content/index.d.ts",
+      "solid": "./src/content/index.ts",
+      "default": "./dist/content/index.js"
     },
     "./Accordion": {
-      "types": "./src/content/Accordion.tsx",
-      "default": "./src/content/Accordion.tsx"
+      "types": "./dist/content/Accordion.d.ts",
+      "solid": "./src/content/Accordion.tsx",
+      "default": "./dist/content/Accordion.js"
     },
     "./AccordionItem": {
-      "types": "./src/content/AccordionItem.tsx",
-      "default": "./src/content/AccordionItem.tsx"
+      "types": "./dist/content/AccordionItem.d.ts",
+      "solid": "./src/content/AccordionItem.tsx",
+      "default": "./dist/content/AccordionItem.js"
     },
     "./AspectRatio": {
-      "types": "./src/content/AspectRatio.tsx",
-      "default": "./src/content/AspectRatio.tsx"
+      "types": "./dist/content/AspectRatio.d.ts",
+      "solid": "./src/content/AspectRatio.tsx",
+      "default": "./dist/content/AspectRatio.js"
     },
     "./Avatar": {
-      "types": "./src/content/Avatar.tsx",
-      "default": "./src/content/Avatar.tsx"
+      "types": "./dist/content/Avatar.d.ts",
+      "solid": "./src/content/Avatar.tsx",
+      "default": "./dist/content/Avatar.js"
     },
     "./AvatarGroup": {
-      "types": "./src/content/AvatarGroup.tsx",
-      "default": "./src/content/AvatarGroup.tsx"
+      "types": "./dist/content/AvatarGroup.d.ts",
+      "solid": "./src/content/AvatarGroup.tsx",
+      "default": "./dist/content/AvatarGroup.js"
     },
     "./Callout": {
-      "types": "./src/content/Callout.tsx",
-      "default": "./src/content/Callout.tsx"
+      "types": "./dist/content/Callout.d.ts",
+      "solid": "./src/content/Callout.tsx",
+      "default": "./dist/content/Callout.js"
     },
     "./Card": {
-      "types": "./src/content/Card.tsx",
-      "default": "./src/content/Card.tsx"
+      "types": "./dist/content/Card.d.ts",
+      "solid": "./src/content/Card.tsx",
+      "default": "./dist/content/Card.js"
     },
     "./Carousel": {
-      "types": "./src/content/Carousel.tsx",
-      "default": "./src/content/Carousel.tsx"
+      "types": "./dist/content/Carousel.d.ts",
+      "solid": "./src/content/Carousel.tsx",
+      "default": "./dist/content/Carousel.js"
     },
     "./Collapsible": {
-      "types": "./src/content/Collapsible.tsx",
-      "default": "./src/content/Collapsible.tsx"
+      "types": "./dist/content/Collapsible.d.ts",
+      "solid": "./src/content/Collapsible.tsx",
+      "default": "./dist/content/Collapsible.js"
     },
     "./ColorSwatch": {
-      "types": "./src/content/ColorSwatch.tsx",
-      "default": "./src/content/ColorSwatch.tsx"
+      "types": "./dist/content/ColorSwatch.d.ts",
+      "solid": "./src/content/ColorSwatch.tsx",
+      "default": "./dist/content/ColorSwatch.js"
     },
     "./Column": {
-      "types": "./src/content/Column.tsx",
-      "default": "./src/content/Column.tsx"
+      "types": "./dist/content/Column.d.ts",
+      "solid": "./src/content/Column.tsx",
+      "default": "./dist/content/Column.js"
     },
     "./CtaBanner": {
-      "types": "./src/content/CtaBanner.tsx",
-      "default": "./src/content/CtaBanner.tsx"
+      "types": "./dist/content/CtaBanner.d.ts",
+      "solid": "./src/content/CtaBanner.tsx",
+      "default": "./dist/content/CtaBanner.js"
     },
     "./Divider": {
-      "types": "./src/content/Divider.tsx",
-      "default": "./src/content/Divider.tsx"
+      "types": "./dist/content/Divider.d.ts",
+      "solid": "./src/content/Divider.tsx",
+      "default": "./dist/content/Divider.js"
     },
     "./EmptyState": {
-      "types": "./src/content/EmptyState.tsx",
-      "default": "./src/content/EmptyState.tsx"
+      "types": "./dist/content/EmptyState.d.ts",
+      "solid": "./src/content/EmptyState.tsx",
+      "default": "./dist/content/EmptyState.js"
     },
     "./FeatureCard": {
-      "types": "./src/content/FeatureCard.tsx",
-      "default": "./src/content/FeatureCard.tsx"
+      "types": "./dist/content/FeatureCard.d.ts",
+      "solid": "./src/content/FeatureCard.tsx",
+      "default": "./dist/content/FeatureCard.js"
     },
     "./Icon": {
-      "types": "./src/content/Icon.tsx",
-      "default": "./src/content/Icon.tsx"
+      "types": "./dist/content/Icon.d.ts",
+      "solid": "./src/content/Icon.tsx",
+      "default": "./dist/content/Icon.js"
     },
     "./Image": {
-      "types": "./src/content/Image.tsx",
-      "default": "./src/content/Image.tsx"
+      "types": "./dist/content/Image.d.ts",
+      "solid": "./src/content/Image.tsx",
+      "default": "./dist/content/Image.js"
     },
     "./InfiniteScroll": {
-      "types": "./src/content/InfiniteScroll.tsx",
-      "default": "./src/content/InfiniteScroll.tsx"
+      "types": "./dist/content/InfiniteScroll.d.ts",
+      "solid": "./src/content/InfiniteScroll.tsx",
+      "default": "./dist/content/InfiniteScroll.js"
     },
     "./Marquee": {
-      "types": "./src/content/Marquee.tsx",
-      "default": "./src/content/Marquee.tsx"
+      "types": "./dist/content/Marquee.d.ts",
+      "solid": "./src/content/Marquee.tsx",
+      "default": "./dist/content/Marquee.js"
     },
     "./QrCode": {
-      "types": "./src/content/QrCode.tsx",
-      "default": "./src/content/QrCode.tsx"
+      "types": "./dist/content/QrCode.d.ts",
+      "solid": "./src/content/QrCode.tsx",
+      "default": "./dist/content/QrCode.js"
     },
     "./ScrollArea": {
-      "types": "./src/content/ScrollArea.tsx",
-      "default": "./src/content/ScrollArea.tsx"
+      "types": "./dist/content/ScrollArea.d.ts",
+      "solid": "./src/content/ScrollArea.tsx",
+      "default": "./dist/content/ScrollArea.js"
     },
     "./ScrollIndicator": {
-      "types": "./src/content/ScrollIndicator.tsx",
-      "default": "./src/content/ScrollIndicator.tsx"
+      "types": "./dist/content/ScrollIndicator.d.ts",
+      "solid": "./src/content/ScrollIndicator.tsx",
+      "default": "./dist/content/ScrollIndicator.js"
     },
     "./Separator": {
-      "types": "./src/content/Separator.tsx",
-      "default": "./src/content/Separator.tsx"
+      "types": "./dist/content/Separator.d.ts",
+      "solid": "./src/content/Separator.tsx",
+      "default": "./dist/content/Separator.js"
     },
     "./Skeleton": {
-      "types": "./src/content/Skeleton.tsx",
-      "default": "./src/content/Skeleton.tsx"
+      "types": "./dist/content/Skeleton.d.ts",
+      "solid": "./src/content/Skeleton.tsx",
+      "default": "./dist/content/Skeleton.js"
     },
     "./Spinner": {
-      "types": "./src/content/Spinner.tsx",
-      "default": "./src/content/Spinner.tsx"
+      "types": "./dist/content/Spinner.d.ts",
+      "solid": "./src/content/Spinner.tsx",
+      "default": "./dist/content/Spinner.js"
     },
     "./Stack": {
-      "types": "./src/content/Stack.tsx",
-      "default": "./src/content/Stack.tsx"
+      "types": "./dist/content/Stack.d.ts",
+      "solid": "./src/content/Stack.tsx",
+      "default": "./dist/content/Stack.js"
     },
     "./VirtualList": {
-      "types": "./src/content/VirtualList.tsx",
-      "default": "./src/content/VirtualList.tsx"
+      "types": "./dist/content/VirtualList.d.ts",
+      "solid": "./src/content/VirtualList.tsx",
+      "default": "./dist/content/VirtualList.js"
     },
     "./data": {
-      "types": "./src/data/index.ts",
-      "default": "./src/data/index.ts"
+      "types": "./dist/data/index.d.ts",
+      "solid": "./src/data/index.ts",
+      "default": "./dist/data/index.js"
     },
     "./AnimatedNumber": {
-      "types": "./src/data/AnimatedNumber.tsx",
-      "default": "./src/data/AnimatedNumber.tsx"
+      "types": "./dist/data/AnimatedNumber.d.ts",
+      "solid": "./src/data/AnimatedNumber.tsx",
+      "default": "./dist/data/AnimatedNumber.js"
     },
     "./Badge": {
-      "types": "./src/data/Badge.tsx",
-      "default": "./src/data/Badge.tsx"
+      "types": "./dist/data/Badge.d.ts",
+      "solid": "./src/data/Badge.tsx",
+      "default": "./dist/data/Badge.js"
     },
     "./Chart": {
-      "types": "./src/data/Chart.tsx",
-      "default": "./src/data/Chart.tsx"
+      "types": "./dist/data/Chart.d.ts",
+      "solid": "./src/data/Chart.tsx",
+      "default": "./dist/data/Chart.js"
     },
     "./Comparison": {
-      "types": "./src/data/Comparison.tsx",
-      "default": "./src/data/Comparison.tsx"
+      "types": "./dist/data/Comparison.d.ts",
+      "solid": "./src/data/Comparison.tsx",
+      "default": "./dist/data/Comparison.js"
     },
     "./ComparisonColumn": {
-      "types": "./src/data/ComparisonColumn.tsx",
-      "default": "./src/data/ComparisonColumn.tsx"
+      "types": "./dist/data/ComparisonColumn.d.ts",
+      "solid": "./src/data/ComparisonColumn.tsx",
+      "default": "./dist/data/ComparisonColumn.js"
     },
     "./CountdownTimer": {
-      "types": "./src/data/CountdownTimer.tsx",
-      "default": "./src/data/CountdownTimer.tsx"
+      "types": "./dist/data/CountdownTimer.d.ts",
+      "solid": "./src/data/CountdownTimer.tsx",
+      "default": "./dist/data/CountdownTimer.js"
     },
     "./DataGrid": {
-      "types": "./src/data/DataGrid.tsx",
-      "default": "./src/data/DataGrid.tsx"
+      "types": "./dist/data/DataGrid.d.ts",
+      "solid": "./src/data/DataGrid.tsx",
+      "default": "./dist/data/DataGrid.js"
     },
     "./DataTable": {
-      "types": "./src/data/DataTable.tsx",
-      "default": "./src/data/DataTable.tsx"
+      "types": "./dist/data/DataTable.d.ts",
+      "solid": "./src/data/DataTable.tsx",
+      "default": "./dist/data/DataTable.js"
     },
     "./DescriptionItem": {
-      "types": "./src/data/DescriptionItem.tsx",
-      "default": "./src/data/DescriptionItem.tsx"
+      "types": "./dist/data/DescriptionItem.d.ts",
+      "solid": "./src/data/DescriptionItem.tsx",
+      "default": "./dist/data/DescriptionItem.js"
     },
     "./DescriptionList": {
-      "types": "./src/data/DescriptionList.tsx",
-      "default": "./src/data/DescriptionList.tsx"
+      "types": "./dist/data/DescriptionList.d.ts",
+      "solid": "./src/data/DescriptionList.tsx",
+      "default": "./dist/data/DescriptionList.js"
     },
     "./Diff": {
-      "types": "./src/data/Diff.tsx",
-      "default": "./src/data/Diff.tsx"
+      "types": "./dist/data/Diff.d.ts",
+      "solid": "./src/data/Diff.tsx",
+      "default": "./dist/data/Diff.js"
     },
     "./EventCalendar": {
-      "types": "./src/data/EventCalendar.tsx",
-      "default": "./src/data/EventCalendar.tsx"
+      "types": "./dist/data/EventCalendar.d.ts",
+      "solid": "./src/data/EventCalendar.tsx",
+      "default": "./dist/data/EventCalendar.js"
     },
     "./Kanban": {
-      "types": "./src/data/Kanban.tsx",
-      "default": "./src/data/Kanban.tsx"
+      "types": "./dist/data/Kanban.d.ts",
+      "solid": "./src/data/Kanban.tsx",
+      "default": "./dist/data/Kanban.js"
     },
     "./KeyValue": {
-      "types": "./src/data/KeyValue.tsx",
-      "default": "./src/data/KeyValue.tsx"
+      "types": "./dist/data/KeyValue.d.ts",
+      "solid": "./src/data/KeyValue.tsx",
+      "default": "./dist/data/KeyValue.js"
     },
     "./KvPair": {
-      "types": "./src/data/KvPair.tsx",
-      "default": "./src/data/KvPair.tsx"
+      "types": "./dist/data/KvPair.d.ts",
+      "solid": "./src/data/KvPair.tsx",
+      "default": "./dist/data/KvPair.js"
     },
     "./List": {
-      "types": "./src/data/List.tsx",
-      "default": "./src/data/List.tsx"
+      "types": "./dist/data/List.d.ts",
+      "solid": "./src/data/List.tsx",
+      "default": "./dist/data/List.js"
     },
     "./ListItem": {
-      "types": "./src/data/ListItem.tsx",
-      "default": "./src/data/ListItem.tsx"
+      "types": "./dist/data/ListItem.d.ts",
+      "solid": "./src/data/ListItem.tsx",
+      "default": "./dist/data/ListItem.js"
     },
     "./Meter": {
-      "types": "./src/data/Meter.tsx",
-      "default": "./src/data/Meter.tsx"
+      "types": "./dist/data/Meter.d.ts",
+      "solid": "./src/data/Meter.tsx",
+      "default": "./dist/data/Meter.js"
     },
     "./Sparkline": {
-      "types": "./src/data/Sparkline.tsx",
-      "default": "./src/data/Sparkline.tsx"
+      "types": "./dist/data/Sparkline.d.ts",
+      "solid": "./src/data/Sparkline.tsx",
+      "default": "./dist/data/Sparkline.js"
     },
     "./Stat": {
-      "types": "./src/data/Stat.tsx",
-      "default": "./src/data/Stat.tsx"
+      "types": "./dist/data/Stat.d.ts",
+      "solid": "./src/data/Stat.tsx",
+      "default": "./dist/data/Stat.js"
     },
     "./Step": {
-      "types": "./src/data/Step.tsx",
-      "default": "./src/data/Step.tsx"
+      "types": "./dist/data/Step.d.ts",
+      "solid": "./src/data/Step.tsx",
+      "default": "./dist/data/Step.js"
     },
     "./Stepper": {
-      "types": "./src/data/Stepper.tsx",
-      "default": "./src/data/Stepper.tsx"
+      "types": "./dist/data/Stepper.d.ts",
+      "solid": "./src/data/Stepper.tsx",
+      "default": "./dist/data/Stepper.js"
     },
     "./Table": {
-      "types": "./src/data/Table.tsx",
-      "default": "./src/data/Table.tsx"
+      "types": "./dist/data/Table.d.ts",
+      "solid": "./src/data/Table.tsx",
+      "default": "./dist/data/Table.js"
     },
     "./Tag": {
-      "types": "./src/data/Tag.tsx",
-      "default": "./src/data/Tag.tsx"
+      "types": "./dist/data/Tag.d.ts",
+      "solid": "./src/data/Tag.tsx",
+      "default": "./dist/data/Tag.js"
     },
     "./Timeline": {
-      "types": "./src/data/Timeline.tsx",
-      "default": "./src/data/Timeline.tsx"
+      "types": "./dist/data/Timeline.d.ts",
+      "solid": "./src/data/Timeline.tsx",
+      "default": "./dist/data/Timeline.js"
     },
     "./TimelineItem": {
-      "types": "./src/data/TimelineItem.tsx",
-      "default": "./src/data/TimelineItem.tsx"
+      "types": "./dist/data/TimelineItem.d.ts",
+      "solid": "./src/data/TimelineItem.tsx",
+      "default": "./dist/data/TimelineItem.js"
     },
     "./ValueCard": {
-      "types": "./src/data/ValueCard.tsx",
-      "default": "./src/data/ValueCard.tsx"
+      "types": "./dist/data/ValueCard.d.ts",
+      "solid": "./src/data/ValueCard.tsx",
+      "default": "./dist/data/ValueCard.js"
     },
     "./typography": {
-      "types": "./src/typography/index.ts",
-      "default": "./src/typography/index.ts"
+      "types": "./dist/typography/index.d.ts",
+      "solid": "./src/typography/index.ts",
+      "default": "./dist/typography/index.js"
     },
     "./Blockquote": {
-      "types": "./src/typography/Blockquote.tsx",
-      "default": "./src/typography/Blockquote.tsx"
+      "types": "./dist/typography/Blockquote.d.ts",
+      "solid": "./src/typography/Blockquote.tsx",
+      "default": "./dist/typography/Blockquote.js"
     },
     "./CodeBlock": {
-      "types": "./src/typography/CodeBlock.tsx",
-      "default": "./src/typography/CodeBlock.tsx"
+      "types": "./dist/typography/CodeBlock.d.ts",
+      "solid": "./src/typography/CodeBlock.tsx",
+      "default": "./dist/typography/CodeBlock.js"
     },
     "./GradientText": {
-      "types": "./src/typography/GradientText.tsx",
-      "default": "./src/typography/GradientText.tsx"
+      "types": "./dist/typography/GradientText.d.ts",
+      "solid": "./src/typography/GradientText.tsx",
+      "default": "./dist/typography/GradientText.js"
     },
     "./Highlight": {
-      "types": "./src/typography/Highlight.tsx",
-      "default": "./src/typography/Highlight.tsx"
+      "types": "./dist/typography/Highlight.d.ts",
+      "solid": "./src/typography/Highlight.tsx",
+      "default": "./dist/typography/Highlight.js"
     },
     "./Kbd": {
-      "types": "./src/typography/Kbd.tsx",
-      "default": "./src/typography/Kbd.tsx"
+      "types": "./dist/typography/Kbd.d.ts",
+      "solid": "./src/typography/Kbd.tsx",
+      "default": "./dist/typography/Kbd.js"
     },
     "./Markdown": {
-      "types": "./src/typography/Markdown.tsx",
-      "default": "./src/typography/Markdown.tsx"
+      "types": "./dist/typography/Markdown.d.ts",
+      "solid": "./src/typography/Markdown.tsx",
+      "default": "./dist/typography/Markdown.js"
     },
     "./NumberFormat": {
-      "types": "./src/typography/NumberFormat.tsx",
-      "default": "./src/typography/NumberFormat.tsx"
+      "types": "./dist/typography/NumberFormat.d.ts",
+      "solid": "./src/typography/NumberFormat.tsx",
+      "default": "./dist/typography/NumberFormat.js"
     },
     "./Prose": {
-      "types": "./src/typography/Prose.tsx",
-      "default": "./src/typography/Prose.tsx"
+      "types": "./dist/typography/Prose.d.ts",
+      "solid": "./src/typography/Prose.tsx",
+      "default": "./dist/typography/Prose.js"
     },
     "./Text": {
-      "types": "./src/typography/Text.tsx",
-      "default": "./src/typography/Text.tsx"
+      "types": "./dist/typography/Text.d.ts",
+      "solid": "./src/typography/Text.tsx",
+      "default": "./dist/typography/Text.js"
     },
     "./TimeAgo": {
-      "types": "./src/typography/TimeAgo.tsx",
-      "default": "./src/typography/TimeAgo.tsx"
+      "types": "./dist/typography/TimeAgo.d.ts",
+      "solid": "./src/typography/TimeAgo.tsx",
+      "default": "./dist/typography/TimeAgo.js"
     },
     "./Truncate": {
-      "types": "./src/typography/Truncate.tsx",
-      "default": "./src/typography/Truncate.tsx"
+      "types": "./dist/typography/Truncate.d.ts",
+      "solid": "./src/typography/Truncate.tsx",
+      "default": "./dist/typography/Truncate.js"
     },
     "./Typewriter": {
-      "types": "./src/typography/Typewriter.tsx",
-      "default": "./src/typography/Typewriter.tsx"
+      "types": "./dist/typography/Typewriter.d.ts",
+      "solid": "./src/typography/Typewriter.tsx",
+      "default": "./dist/typography/Typewriter.js"
     },
     "./input": {
-      "types": "./src/input/index.ts",
-      "default": "./src/input/index.ts"
+      "types": "./dist/input/index.d.ts",
+      "solid": "./src/input/index.ts",
+      "default": "./dist/input/index.js"
     },
     "./Button": {
-      "types": "./src/input/Button.tsx",
-      "default": "./src/input/Button.tsx"
+      "types": "./dist/input/Button.d.ts",
+      "solid": "./src/input/Button.tsx",
+      "default": "./dist/input/Button.js"
     },
     "./ButtonGroup": {
-      "types": "./src/input/ButtonGroup.tsx",
-      "default": "./src/input/ButtonGroup.tsx"
+      "types": "./dist/input/ButtonGroup.d.ts",
+      "solid": "./src/input/ButtonGroup.tsx",
+      "default": "./dist/input/ButtonGroup.js"
     },
     "./Calendar": {
-      "types": "./src/input/Calendar.tsx",
-      "default": "./src/input/Calendar.tsx"
+      "types": "./dist/input/Calendar.d.ts",
+      "solid": "./src/input/Calendar.tsx",
+      "default": "./dist/input/Calendar.js"
     },
     "./Checkbox": {
-      "types": "./src/input/Checkbox.tsx",
-      "default": "./src/input/Checkbox.tsx"
+      "types": "./dist/input/Checkbox.d.ts",
+      "solid": "./src/input/Checkbox.tsx",
+      "default": "./dist/input/Checkbox.js"
     },
     "./Chip": {
-      "types": "./src/input/Chip.tsx",
-      "default": "./src/input/Chip.tsx"
+      "types": "./dist/input/Chip.d.ts",
+      "solid": "./src/input/Chip.tsx",
+      "default": "./dist/input/Chip.js"
     },
     "./ColorPicker": {
-      "types": "./src/input/ColorPicker.tsx",
-      "default": "./src/input/ColorPicker.tsx"
+      "types": "./dist/input/ColorPicker.d.ts",
+      "solid": "./src/input/ColorPicker.tsx",
+      "default": "./dist/input/ColorPicker.js"
     },
     "./Combobox": {
-      "types": "./src/input/Combobox.tsx",
-      "default": "./src/input/Combobox.tsx"
+      "types": "./dist/input/Combobox.d.ts",
+      "solid": "./src/input/Combobox.tsx",
+      "default": "./dist/input/Combobox.js"
     },
     "./CopyButton": {
-      "types": "./src/input/CopyButton.tsx",
-      "default": "./src/input/CopyButton.tsx"
+      "types": "./dist/input/CopyButton.d.ts",
+      "solid": "./src/input/CopyButton.tsx",
+      "default": "./dist/input/CopyButton.js"
     },
     "./DatePicker": {
-      "types": "./src/input/DatePicker.tsx",
-      "default": "./src/input/DatePicker.tsx"
+      "types": "./dist/input/DatePicker.d.ts",
+      "solid": "./src/input/DatePicker.tsx",
+      "default": "./dist/input/DatePicker.js"
     },
     "./DateRangePicker": {
-      "types": "./src/input/DateRangePicker.tsx",
-      "default": "./src/input/DateRangePicker.tsx"
+      "types": "./dist/input/DateRangePicker.d.ts",
+      "solid": "./src/input/DateRangePicker.tsx",
+      "default": "./dist/input/DateRangePicker.js"
     },
     "./Fieldset": {
-      "types": "./src/input/Fieldset.tsx",
-      "default": "./src/input/Fieldset.tsx"
+      "types": "./dist/input/Fieldset.d.ts",
+      "solid": "./src/input/Fieldset.tsx",
+      "default": "./dist/input/Fieldset.js"
     },
     "./FileUpload": {
-      "types": "./src/input/FileUpload.tsx",
-      "default": "./src/input/FileUpload.tsx"
+      "types": "./dist/input/FileUpload.d.ts",
+      "solid": "./src/input/FileUpload.tsx",
+      "default": "./dist/input/FileUpload.js"
     },
     "./Form": {
-      "types": "./src/input/Form.tsx",
-      "default": "./src/input/Form.tsx"
+      "types": "./dist/input/Form.d.ts",
+      "solid": "./src/input/Form.tsx",
+      "default": "./dist/input/Form.js"
     },
     "./Hotkey": {
-      "types": "./src/input/Hotkey.tsx",
-      "default": "./src/input/Hotkey.tsx"
+      "types": "./dist/input/Hotkey.d.ts",
+      "solid": "./src/input/Hotkey.tsx",
+      "default": "./dist/input/Hotkey.js"
     },
     "./IconButton": {
-      "types": "./src/input/IconButton.tsx",
-      "default": "./src/input/IconButton.tsx"
+      "types": "./dist/input/IconButton.d.ts",
+      "solid": "./src/input/IconButton.tsx",
+      "default": "./dist/input/IconButton.js"
     },
     "./ImageCropper": {
-      "types": "./src/input/ImageCropper.tsx",
-      "default": "./src/input/ImageCropper.tsx"
+      "types": "./dist/input/ImageCropper.d.ts",
+      "solid": "./src/input/ImageCropper.tsx",
+      "default": "./dist/input/ImageCropper.js"
     },
     "./Input": {
-      "types": "./src/input/Input.tsx",
-      "default": "./src/input/Input.tsx"
+      "types": "./dist/input/Input.d.ts",
+      "solid": "./src/input/Input.tsx",
+      "default": "./dist/input/Input.js"
     },
     "./InputGroup": {
-      "types": "./src/input/InputGroup.tsx",
-      "default": "./src/input/InputGroup.tsx"
+      "types": "./dist/input/InputGroup.d.ts",
+      "solid": "./src/input/InputGroup.tsx",
+      "default": "./dist/input/InputGroup.js"
     },
     "./Label": {
-      "types": "./src/input/Label.tsx",
-      "default": "./src/input/Label.tsx"
+      "types": "./dist/input/Label.d.ts",
+      "solid": "./src/input/Label.tsx",
+      "default": "./dist/input/Label.js"
     },
     "./MultiSelect": {
-      "types": "./src/input/MultiSelect.tsx",
-      "default": "./src/input/MultiSelect.tsx"
+      "types": "./dist/input/MultiSelect.d.ts",
+      "solid": "./src/input/MultiSelect.tsx",
+      "default": "./dist/input/MultiSelect.js"
     },
     "./NumberInput": {
-      "types": "./src/input/NumberInput.tsx",
-      "default": "./src/input/NumberInput.tsx"
+      "types": "./dist/input/NumberInput.d.ts",
+      "solid": "./src/input/NumberInput.tsx",
+      "default": "./dist/input/NumberInput.js"
     },
     "./OtpInput": {
-      "types": "./src/input/OtpInput.tsx",
-      "default": "./src/input/OtpInput.tsx"
+      "types": "./dist/input/OtpInput.d.ts",
+      "solid": "./src/input/OtpInput.tsx",
+      "default": "./dist/input/OtpInput.js"
     },
     "./PasswordInput": {
-      "types": "./src/input/PasswordInput.tsx",
-      "default": "./src/input/PasswordInput.tsx"
+      "types": "./dist/input/PasswordInput.d.ts",
+      "solid": "./src/input/PasswordInput.tsx",
+      "default": "./dist/input/PasswordInput.js"
     },
     "./PinInput": {
-      "types": "./src/input/PinInput.tsx",
-      "default": "./src/input/PinInput.tsx"
+      "types": "./dist/input/PinInput.d.ts",
+      "solid": "./src/input/PinInput.tsx",
+      "default": "./dist/input/PinInput.js"
     },
     "./Radio": {
-      "types": "./src/input/Radio.tsx",
-      "default": "./src/input/Radio.tsx"
+      "types": "./dist/input/Radio.d.ts",
+      "solid": "./src/input/Radio.tsx",
+      "default": "./dist/input/Radio.js"
     },
     "./RadioGroup": {
-      "types": "./src/input/RadioGroup.tsx",
-      "default": "./src/input/RadioGroup.tsx"
+      "types": "./dist/input/RadioGroup.d.ts",
+      "solid": "./src/input/RadioGroup.tsx",
+      "default": "./dist/input/RadioGroup.js"
     },
     "./RangeSlider": {
-      "types": "./src/input/RangeSlider.tsx",
-      "default": "./src/input/RangeSlider.tsx"
+      "types": "./dist/input/RangeSlider.d.ts",
+      "solid": "./src/input/RangeSlider.tsx",
+      "default": "./dist/input/RangeSlider.js"
     },
     "./Rating": {
-      "types": "./src/input/Rating.tsx",
-      "default": "./src/input/Rating.tsx"
+      "types": "./dist/input/Rating.d.ts",
+      "solid": "./src/input/Rating.tsx",
+      "default": "./dist/input/Rating.js"
     },
     "./Search": {
-      "types": "./src/input/Search.tsx",
-      "default": "./src/input/Search.tsx"
+      "types": "./dist/input/Search.d.ts",
+      "solid": "./src/input/Search.tsx",
+      "default": "./dist/input/Search.js"
     },
     "./SegmentedControl": {
-      "types": "./src/input/SegmentedControl.tsx",
-      "default": "./src/input/SegmentedControl.tsx"
+      "types": "./dist/input/SegmentedControl.d.ts",
+      "solid": "./src/input/SegmentedControl.tsx",
+      "default": "./dist/input/SegmentedControl.js"
     },
     "./Select": {
-      "types": "./src/input/Select.tsx",
-      "default": "./src/input/Select.tsx"
+      "types": "./dist/input/Select.d.ts",
+      "solid": "./src/input/Select.tsx",
+      "default": "./dist/input/Select.js"
     },
     "./Slider": {
-      "types": "./src/input/Slider.tsx",
-      "default": "./src/input/Slider.tsx"
+      "types": "./dist/input/Slider.d.ts",
+      "solid": "./src/input/Slider.tsx",
+      "default": "./dist/input/Slider.js"
     },
     "./SortableList": {
-      "types": "./src/input/SortableList.tsx",
-      "default": "./src/input/SortableList.tsx"
+      "types": "./dist/input/SortableList.d.ts",
+      "solid": "./src/input/SortableList.tsx",
+      "default": "./dist/input/SortableList.js"
     },
     "./Suggestion": {
-      "types": "./src/input/Suggestion.tsx",
-      "default": "./src/input/Suggestion.tsx"
+      "types": "./dist/input/Suggestion.d.ts",
+      "solid": "./src/input/Suggestion.tsx",
+      "default": "./dist/input/Suggestion.js"
     },
     "./SwitchGroup": {
-      "types": "./src/input/SwitchGroup.tsx",
-      "default": "./src/input/SwitchGroup.tsx"
+      "types": "./dist/input/SwitchGroup.d.ts",
+      "solid": "./src/input/SwitchGroup.tsx",
+      "default": "./dist/input/SwitchGroup.js"
     },
     "./TagInput": {
-      "types": "./src/input/TagInput.tsx",
-      "default": "./src/input/TagInput.tsx"
+      "types": "./dist/input/TagInput.d.ts",
+      "solid": "./src/input/TagInput.tsx",
+      "default": "./dist/input/TagInput.js"
     },
     "./Textarea": {
-      "types": "./src/input/Textarea.tsx",
-      "default": "./src/input/Textarea.tsx"
+      "types": "./dist/input/Textarea.d.ts",
+      "solid": "./src/input/Textarea.tsx",
+      "default": "./dist/input/Textarea.js"
     },
     "./ThemeToggle": {
-      "types": "./src/input/ThemeToggle.tsx",
-      "default": "./src/input/ThemeToggle.tsx"
+      "types": "./dist/input/ThemeToggle.d.ts",
+      "solid": "./src/input/ThemeToggle.tsx",
+      "default": "./dist/input/ThemeToggle.js"
     },
     "./TimePicker": {
-      "types": "./src/input/TimePicker.tsx",
-      "default": "./src/input/TimePicker.tsx"
+      "types": "./dist/input/TimePicker.d.ts",
+      "solid": "./src/input/TimePicker.tsx",
+      "default": "./dist/input/TimePicker.js"
     },
     "./Toggle": {
-      "types": "./src/input/Toggle.tsx",
-      "default": "./src/input/Toggle.tsx"
+      "types": "./dist/input/Toggle.d.ts",
+      "solid": "./src/input/Toggle.tsx",
+      "default": "./dist/input/Toggle.js"
     },
     "./TransferList": {
-      "types": "./src/input/TransferList.tsx",
-      "default": "./src/input/TransferList.tsx"
+      "types": "./dist/input/TransferList.d.ts",
+      "solid": "./src/input/TransferList.tsx",
+      "default": "./dist/input/TransferList.js"
     },
     "./navigation": {
-      "types": "./src/navigation/index.ts",
-      "default": "./src/navigation/index.ts"
+      "types": "./dist/navigation/index.d.ts",
+      "solid": "./src/navigation/index.ts",
+      "default": "./dist/navigation/index.js"
     },
     "./AnchorNav": {
-      "types": "./src/navigation/AnchorNav.tsx",
-      "default": "./src/navigation/AnchorNav.tsx"
+      "types": "./dist/navigation/AnchorNav.d.ts",
+      "solid": "./src/navigation/AnchorNav.tsx",
+      "default": "./dist/navigation/AnchorNav.js"
     },
     "./BottomNav": {
-      "types": "./src/navigation/BottomNav.tsx",
-      "default": "./src/navigation/BottomNav.tsx"
+      "types": "./dist/navigation/BottomNav.d.ts",
+      "solid": "./src/navigation/BottomNav.tsx",
+      "default": "./dist/navigation/BottomNav.js"
     },
     "./Breadcrumb": {
-      "types": "./src/navigation/Breadcrumb.tsx",
-      "default": "./src/navigation/Breadcrumb.tsx"
+      "types": "./dist/navigation/Breadcrumb.d.ts",
+      "solid": "./src/navigation/Breadcrumb.tsx",
+      "default": "./dist/navigation/Breadcrumb.js"
     },
     "./BreadcrumbItem": {
-      "types": "./src/navigation/BreadcrumbItem.tsx",
-      "default": "./src/navigation/BreadcrumbItem.tsx"
+      "types": "./dist/navigation/BreadcrumbItem.d.ts",
+      "solid": "./src/navigation/BreadcrumbItem.tsx",
+      "default": "./dist/navigation/BreadcrumbItem.js"
     },
     "./BreadcrumbMenu": {
-      "types": "./src/navigation/BreadcrumbMenu.tsx",
-      "default": "./src/navigation/BreadcrumbMenu.tsx"
+      "types": "./dist/navigation/BreadcrumbMenu.d.ts",
+      "solid": "./src/navigation/BreadcrumbMenu.tsx",
+      "default": "./dist/navigation/BreadcrumbMenu.js"
     },
     "./CommandBar": {
-      "types": "./src/navigation/CommandBar.tsx",
-      "default": "./src/navigation/CommandBar.tsx"
+      "types": "./dist/navigation/CommandBar.d.ts",
+      "solid": "./src/navigation/CommandBar.tsx",
+      "default": "./dist/navigation/CommandBar.js"
     },
     "./Drawer": {
-      "types": "./src/navigation/Drawer.tsx",
-      "default": "./src/navigation/Drawer.tsx"
+      "types": "./dist/navigation/Drawer.d.ts",
+      "solid": "./src/navigation/Drawer.tsx",
+      "default": "./dist/navigation/Drawer.js"
     },
     "./Footer": {
-      "types": "./src/navigation/Footer.tsx",
-      "default": "./src/navigation/Footer.tsx"
+      "types": "./dist/navigation/Footer.d.ts",
+      "solid": "./src/navigation/Footer.tsx",
+      "default": "./dist/navigation/Footer.js"
     },
     "./Link": {
-      "types": "./src/navigation/Link.tsx",
-      "default": "./src/navigation/Link.tsx"
+      "types": "./dist/navigation/Link.d.ts",
+      "solid": "./src/navigation/Link.tsx",
+      "default": "./dist/navigation/Link.js"
     },
     "./Menubar": {
-      "types": "./src/navigation/Menubar.tsx",
-      "default": "./src/navigation/Menubar.tsx"
+      "types": "./dist/navigation/Menubar.d.ts",
+      "solid": "./src/navigation/Menubar.tsx",
+      "default": "./dist/navigation/Menubar.js"
     },
     "./NavItem": {
-      "types": "./src/navigation/NavItem.tsx",
-      "default": "./src/navigation/NavItem.tsx"
+      "types": "./dist/navigation/NavItem.d.ts",
+      "solid": "./src/navigation/NavItem.tsx",
+      "default": "./dist/navigation/NavItem.js"
     },
     "./NavigationMenu": {
-      "types": "./src/navigation/NavigationMenu.tsx",
-      "default": "./src/navigation/NavigationMenu.tsx"
+      "types": "./dist/navigation/NavigationMenu.d.ts",
+      "solid": "./src/navigation/NavigationMenu.tsx",
+      "default": "./dist/navigation/NavigationMenu.js"
     },
     "./PageIndicator": {
-      "types": "./src/navigation/PageIndicator.tsx",
-      "default": "./src/navigation/PageIndicator.tsx"
+      "types": "./dist/navigation/PageIndicator.d.ts",
+      "solid": "./src/navigation/PageIndicator.tsx",
+      "default": "./dist/navigation/PageIndicator.js"
     },
     "./Pagination": {
-      "types": "./src/navigation/Pagination.tsx",
-      "default": "./src/navigation/Pagination.tsx"
+      "types": "./dist/navigation/Pagination.d.ts",
+      "solid": "./src/navigation/Pagination.tsx",
+      "default": "./dist/navigation/Pagination.js"
     },
     "./Rail": {
-      "types": "./src/navigation/Rail.tsx",
-      "default": "./src/navigation/Rail.tsx"
+      "types": "./dist/navigation/Rail.d.ts",
+      "solid": "./src/navigation/Rail.tsx",
+      "default": "./dist/navigation/Rail.js"
     },
     "./ScrollSpy": {
-      "types": "./src/navigation/ScrollSpy.tsx",
-      "default": "./src/navigation/ScrollSpy.tsx"
+      "types": "./dist/navigation/ScrollSpy.d.ts",
+      "solid": "./src/navigation/ScrollSpy.tsx",
+      "default": "./dist/navigation/ScrollSpy.js"
     },
     "./ScrollToTop": {
-      "types": "./src/navigation/ScrollToTop.tsx",
-      "default": "./src/navigation/ScrollToTop.tsx"
+      "types": "./dist/navigation/ScrollToTop.d.ts",
+      "solid": "./src/navigation/ScrollToTop.tsx",
+      "default": "./dist/navigation/ScrollToTop.js"
     },
     "./Sidebar": {
-      "types": "./src/navigation/Sidebar.tsx",
-      "default": "./src/navigation/Sidebar.tsx"
+      "types": "./dist/navigation/Sidebar.d.ts",
+      "solid": "./src/navigation/Sidebar.tsx",
+      "default": "./dist/navigation/Sidebar.js"
     },
     "./SidebarLink": {
-      "types": "./src/navigation/SidebarLink.tsx",
-      "default": "./src/navigation/SidebarLink.tsx"
+      "types": "./dist/navigation/SidebarLink.d.ts",
+      "solid": "./src/navigation/SidebarLink.tsx",
+      "default": "./dist/navigation/SidebarLink.js"
     },
     "./SidebarSection": {
-      "types": "./src/navigation/SidebarSection.tsx",
-      "default": "./src/navigation/SidebarSection.tsx"
+      "types": "./dist/navigation/SidebarSection.d.ts",
+      "solid": "./src/navigation/SidebarSection.tsx",
+      "default": "./dist/navigation/SidebarSection.js"
     },
     "./SkipLink": {
-      "types": "./src/navigation/SkipLink.tsx",
-      "default": "./src/navigation/SkipLink.tsx"
+      "types": "./dist/navigation/SkipLink.d.ts",
+      "solid": "./src/navigation/SkipLink.tsx",
+      "default": "./dist/navigation/SkipLink.js"
     },
     "./SpeedDial": {
-      "types": "./src/navigation/SpeedDial.tsx",
-      "default": "./src/navigation/SpeedDial.tsx"
+      "types": "./dist/navigation/SpeedDial.d.ts",
+      "solid": "./src/navigation/SpeedDial.tsx",
+      "default": "./dist/navigation/SpeedDial.js"
     },
     "./SpyLink": {
-      "types": "./src/navigation/SpyLink.tsx",
-      "default": "./src/navigation/SpyLink.tsx"
+      "types": "./dist/navigation/SpyLink.d.ts",
+      "solid": "./src/navigation/SpyLink.tsx",
+      "default": "./dist/navigation/SpyLink.js"
     },
     "./StepperNav": {
-      "types": "./src/navigation/StepperNav.tsx",
-      "default": "./src/navigation/StepperNav.tsx"
+      "types": "./dist/navigation/StepperNav.d.ts",
+      "solid": "./src/navigation/StepperNav.tsx",
+      "default": "./dist/navigation/StepperNav.js"
     },
     "./Tab": {
-      "types": "./src/navigation/Tab.tsx",
-      "default": "./src/navigation/Tab.tsx"
+      "types": "./dist/navigation/Tab.d.ts",
+      "solid": "./src/navigation/Tab.tsx",
+      "default": "./dist/navigation/Tab.js"
     },
     "./Tabs": {
-      "types": "./src/navigation/Tabs.tsx",
-      "default": "./src/navigation/Tabs.tsx"
+      "types": "./dist/navigation/Tabs.d.ts",
+      "solid": "./src/navigation/Tabs.tsx",
+      "default": "./dist/navigation/Tabs.js"
     },
     "./TopBar": {
-      "types": "./src/navigation/TopBar.tsx",
-      "default": "./src/navigation/TopBar.tsx"
+      "types": "./dist/navigation/TopBar.d.ts",
+      "solid": "./src/navigation/TopBar.tsx",
+      "default": "./dist/navigation/TopBar.js"
     },
     "./TreeItem": {
-      "types": "./src/navigation/TreeItem.tsx",
-      "default": "./src/navigation/TreeItem.tsx"
+      "types": "./dist/navigation/TreeItem.d.ts",
+      "solid": "./src/navigation/TreeItem.tsx",
+      "default": "./dist/navigation/TreeItem.js"
     },
     "./TreeView": {
-      "types": "./src/navigation/TreeView.tsx",
-      "default": "./src/navigation/TreeView.tsx"
+      "types": "./dist/navigation/TreeView.d.ts",
+      "solid": "./src/navigation/TreeView.tsx",
+      "default": "./dist/navigation/TreeView.js"
     },
     "./layout": {
-      "types": "./src/layout/index.ts",
-      "default": "./src/layout/index.ts"
+      "types": "./dist/layout/index.d.ts",
+      "solid": "./src/layout/index.ts",
+      "default": "./dist/layout/index.js"
     },
     "./AppShell": {
-      "types": "./src/layout/AppShell.tsx",
-      "default": "./src/layout/AppShell.tsx"
+      "types": "./dist/layout/AppShell.d.ts",
+      "solid": "./src/layout/AppShell.tsx",
+      "default": "./dist/layout/AppShell.js"
     },
     "./AspectGrid": {
-      "types": "./src/layout/AspectGrid.tsx",
-      "default": "./src/layout/AspectGrid.tsx"
+      "types": "./dist/layout/AspectGrid.d.ts",
+      "solid": "./src/layout/AspectGrid.tsx",
+      "default": "./dist/layout/AspectGrid.js"
     },
     "./AuthShell": {
-      "types": "./src/layout/AuthShell.tsx",
-      "default": "./src/layout/AuthShell.tsx"
+      "types": "./dist/layout/AuthShell.d.ts",
+      "solid": "./src/layout/AuthShell.tsx",
+      "default": "./dist/layout/AuthShell.js"
     },
     "./Center": {
-      "types": "./src/layout/Center.tsx",
-      "default": "./src/layout/Center.tsx"
+      "types": "./dist/layout/Center.d.ts",
+      "solid": "./src/layout/Center.tsx",
+      "default": "./dist/layout/Center.js"
     },
     "./Cluster": {
-      "types": "./src/layout/Cluster.tsx",
-      "default": "./src/layout/Cluster.tsx"
+      "types": "./dist/layout/Cluster.d.ts",
+      "solid": "./src/layout/Cluster.tsx",
+      "default": "./dist/layout/Cluster.js"
     },
     "./Container": {
-      "types": "./src/layout/Container.tsx",
-      "default": "./src/layout/Container.tsx"
+      "types": "./dist/layout/Container.d.ts",
+      "solid": "./src/layout/Container.tsx",
+      "default": "./dist/layout/Container.js"
     },
     "./DashboardGrid": {
-      "types": "./src/layout/DashboardGrid.tsx",
-      "default": "./src/layout/DashboardGrid.tsx"
+      "types": "./dist/layout/DashboardGrid.d.ts",
+      "solid": "./src/layout/DashboardGrid.tsx",
+      "default": "./dist/layout/DashboardGrid.js"
     },
     "./Dock": {
-      "types": "./src/layout/Dock.tsx",
-      "default": "./src/layout/Dock.tsx"
+      "types": "./dist/layout/Dock.d.ts",
+      "solid": "./src/layout/Dock.tsx",
+      "default": "./dist/layout/Dock.js"
     },
     "./FloatBar": {
-      "types": "./src/layout/FloatBar.tsx",
-      "default": "./src/layout/FloatBar.tsx"
+      "types": "./dist/layout/FloatBar.d.ts",
+      "solid": "./src/layout/FloatBar.tsx",
+      "default": "./dist/layout/FloatBar.js"
     },
     "./Inset": {
-      "types": "./src/layout/Inset.tsx",
-      "default": "./src/layout/Inset.tsx"
+      "types": "./dist/layout/Inset.d.ts",
+      "solid": "./src/layout/Inset.tsx",
+      "default": "./dist/layout/Inset.js"
     },
     "./Masonry": {
-      "types": "./src/layout/Masonry.tsx",
-      "default": "./src/layout/Masonry.tsx"
+      "types": "./dist/layout/Masonry.d.ts",
+      "solid": "./src/layout/Masonry.tsx",
+      "default": "./dist/layout/Masonry.js"
     },
     "./PageHeader": {
-      "types": "./src/layout/PageHeader.tsx",
-      "default": "./src/layout/PageHeader.tsx"
+      "types": "./dist/layout/PageHeader.d.ts",
+      "solid": "./src/layout/PageHeader.tsx",
+      "default": "./dist/layout/PageHeader.js"
     },
     "./PageLayout": {
-      "types": "./src/layout/PageLayout.tsx",
-      "default": "./src/layout/PageLayout.tsx"
+      "types": "./dist/layout/PageLayout.d.ts",
+      "solid": "./src/layout/PageLayout.tsx",
+      "default": "./dist/layout/PageLayout.js"
     },
     "./Resizable": {
-      "types": "./src/layout/Resizable.tsx",
-      "default": "./src/layout/Resizable.tsx"
+      "types": "./dist/layout/Resizable.d.ts",
+      "solid": "./src/layout/Resizable.tsx",
+      "default": "./dist/layout/Resizable.js"
     },
     "./ResponsiveSwitcher": {
-      "types": "./src/layout/ResponsiveSwitcher.tsx",
-      "default": "./src/layout/ResponsiveSwitcher.tsx"
+      "types": "./dist/layout/ResponsiveSwitcher.d.ts",
+      "solid": "./src/layout/ResponsiveSwitcher.tsx",
+      "default": "./dist/layout/ResponsiveSwitcher.js"
     },
     "./Section": {
-      "types": "./src/layout/Section.tsx",
-      "default": "./src/layout/Section.tsx"
+      "types": "./dist/layout/Section.d.ts",
+      "solid": "./src/layout/Section.tsx",
+      "default": "./dist/layout/Section.js"
     },
     "./SettingsLayout": {
-      "types": "./src/layout/SettingsLayout.tsx",
-      "default": "./src/layout/SettingsLayout.tsx"
+      "types": "./dist/layout/SettingsLayout.d.ts",
+      "solid": "./src/layout/SettingsLayout.tsx",
+      "default": "./dist/layout/SettingsLayout.js"
     },
     "./SplitPane": {
-      "types": "./src/layout/SplitPane.tsx",
-      "default": "./src/layout/SplitPane.tsx"
+      "types": "./dist/layout/SplitPane.d.ts",
+      "solid": "./src/layout/SplitPane.tsx",
+      "default": "./dist/layout/SplitPane.js"
     },
     "./StatusBar": {
-      "types": "./src/layout/StatusBar.tsx",
-      "default": "./src/layout/StatusBar.tsx"
+      "types": "./dist/layout/StatusBar.d.ts",
+      "solid": "./src/layout/StatusBar.tsx",
+      "default": "./dist/layout/StatusBar.js"
     },
     "./Sticky": {
-      "types": "./src/layout/Sticky.tsx",
-      "default": "./src/layout/Sticky.tsx"
+      "types": "./dist/layout/Sticky.d.ts",
+      "solid": "./src/layout/Sticky.tsx",
+      "default": "./dist/layout/Sticky.js"
     },
     "./Toolbar": {
-      "types": "./src/layout/Toolbar.tsx",
-      "default": "./src/layout/Toolbar.tsx"
+      "types": "./dist/layout/Toolbar.d.ts",
+      "solid": "./src/layout/Toolbar.tsx",
+      "default": "./dist/layout/Toolbar.js"
     },
     "./feedback": {
-      "types": "./src/feedback/index.ts",
-      "default": "./src/feedback/index.ts"
+      "types": "./dist/feedback/index.d.ts",
+      "solid": "./src/feedback/index.ts",
+      "default": "./dist/feedback/index.js"
     },
     "./Alert": {
-      "types": "./src/feedback/Alert.tsx",
-      "default": "./src/feedback/Alert.tsx"
+      "types": "./dist/feedback/Alert.d.ts",
+      "solid": "./src/feedback/Alert.tsx",
+      "default": "./dist/feedback/Alert.js"
     },
     "./Announcement": {
-      "types": "./src/feedback/Announcement.tsx",
-      "default": "./src/feedback/Announcement.tsx"
+      "types": "./dist/feedback/Announcement.d.ts",
+      "solid": "./src/feedback/Announcement.tsx",
+      "default": "./dist/feedback/Announcement.js"
     },
     "./Banner": {
-      "types": "./src/feedback/Banner.tsx",
-      "default": "./src/feedback/Banner.tsx"
+      "types": "./dist/feedback/Banner.d.ts",
+      "solid": "./src/feedback/Banner.tsx",
+      "default": "./dist/feedback/Banner.js"
     },
     "./CommandGroup": {
-      "types": "./src/feedback/CommandGroup.tsx",
-      "default": "./src/feedback/CommandGroup.tsx"
+      "types": "./dist/feedback/CommandGroup.d.ts",
+      "solid": "./src/feedback/CommandGroup.tsx",
+      "default": "./dist/feedback/CommandGroup.js"
     },
     "./CommandItem": {
-      "types": "./src/feedback/CommandItem.tsx",
-      "default": "./src/feedback/CommandItem.tsx"
+      "types": "./dist/feedback/CommandItem.d.ts",
+      "solid": "./src/feedback/CommandItem.tsx",
+      "default": "./dist/feedback/CommandItem.js"
     },
     "./CommandPalette": {
-      "types": "./src/feedback/CommandPalette.tsx",
-      "default": "./src/feedback/CommandPalette.tsx"
+      "types": "./dist/feedback/CommandPalette.d.ts",
+      "solid": "./src/feedback/CommandPalette.tsx",
+      "default": "./dist/feedback/CommandPalette.js"
     },
     "./Confirm": {
-      "types": "./src/feedback/Confirm.tsx",
-      "default": "./src/feedback/Confirm.tsx"
+      "types": "./dist/feedback/Confirm.d.ts",
+      "solid": "./src/feedback/Confirm.tsx",
+      "default": "./dist/feedback/Confirm.js"
     },
     "./ConnectionStatus": {
-      "types": "./src/feedback/ConnectionStatus.tsx",
-      "default": "./src/feedback/ConnectionStatus.tsx"
+      "types": "./dist/feedback/ConnectionStatus.d.ts",
+      "solid": "./src/feedback/ConnectionStatus.tsx",
+      "default": "./dist/feedback/ConnectionStatus.js"
     },
     "./ContextMenu": {
-      "types": "./src/feedback/ContextMenu.tsx",
-      "default": "./src/feedback/ContextMenu.tsx"
+      "types": "./dist/feedback/ContextMenu.d.ts",
+      "solid": "./src/feedback/ContextMenu.tsx",
+      "default": "./dist/feedback/ContextMenu.js"
     },
     "./Dialog": {
-      "types": "./src/feedback/Dialog.tsx",
-      "default": "./src/feedback/Dialog.tsx"
+      "types": "./dist/feedback/Dialog.d.ts",
+      "solid": "./src/feedback/Dialog.tsx",
+      "default": "./dist/feedback/Dialog.js"
     },
     "./DropdownMenu": {
-      "types": "./src/feedback/DropdownMenu.tsx",
-      "default": "./src/feedback/DropdownMenu.tsx"
+      "types": "./dist/feedback/DropdownMenu.d.ts",
+      "solid": "./src/feedback/DropdownMenu.tsx",
+      "default": "./dist/feedback/DropdownMenu.js"
     },
     "./GuidedTour": {
-      "types": "./src/feedback/GuidedTour.tsx",
-      "default": "./src/feedback/GuidedTour.tsx"
+      "types": "./dist/feedback/GuidedTour.d.ts",
+      "solid": "./src/feedback/GuidedTour.tsx",
+      "default": "./dist/feedback/GuidedTour.js"
     },
     "./HoverCard": {
-      "types": "./src/feedback/HoverCard.tsx",
-      "default": "./src/feedback/HoverCard.tsx"
+      "types": "./dist/feedback/HoverCard.d.ts",
+      "solid": "./src/feedback/HoverCard.tsx",
+      "default": "./dist/feedback/HoverCard.js"
     },
     "./InlineMessage": {
-      "types": "./src/feedback/InlineMessage.tsx",
-      "default": "./src/feedback/InlineMessage.tsx"
+      "types": "./dist/feedback/InlineMessage.d.ts",
+      "solid": "./src/feedback/InlineMessage.tsx",
+      "default": "./dist/feedback/InlineMessage.js"
     },
     "./LoadingOverlay": {
-      "types": "./src/feedback/LoadingOverlay.tsx",
-      "default": "./src/feedback/LoadingOverlay.tsx"
+      "types": "./dist/feedback/LoadingOverlay.d.ts",
+      "solid": "./src/feedback/LoadingOverlay.tsx",
+      "default": "./dist/feedback/LoadingOverlay.js"
     },
     "./Modal": {
-      "types": "./src/feedback/Modal.tsx",
-      "default": "./src/feedback/Modal.tsx"
+      "types": "./dist/feedback/Modal.d.ts",
+      "solid": "./src/feedback/Modal.tsx",
+      "default": "./dist/feedback/Modal.js"
     },
     "./NotificationPanel": {
-      "types": "./src/feedback/NotificationPanel.tsx",
-      "default": "./src/feedback/NotificationPanel.tsx"
+      "types": "./dist/feedback/NotificationPanel.d.ts",
+      "solid": "./src/feedback/NotificationPanel.tsx",
+      "default": "./dist/feedback/NotificationPanel.js"
     },
     "./Popover": {
-      "types": "./src/feedback/Popover.tsx",
-      "default": "./src/feedback/Popover.tsx"
+      "types": "./dist/feedback/Popover.d.ts",
+      "solid": "./src/feedback/Popover.tsx",
+      "default": "./dist/feedback/Popover.js"
     },
     "./Progress": {
-      "types": "./src/feedback/Progress.tsx",
-      "default": "./src/feedback/Progress.tsx"
+      "types": "./dist/feedback/Progress.d.ts",
+      "solid": "./src/feedback/Progress.tsx",
+      "default": "./dist/feedback/Progress.js"
     },
     "./ProgressToast": {
-      "types": "./src/feedback/ProgressToast.tsx",
-      "default": "./src/feedback/ProgressToast.tsx"
+      "types": "./dist/feedback/ProgressToast.d.ts",
+      "solid": "./src/feedback/ProgressToast.tsx",
+      "default": "./dist/feedback/ProgressToast.js"
     },
     "./Sheet": {
-      "types": "./src/feedback/Sheet.tsx",
-      "default": "./src/feedback/Sheet.tsx"
+      "types": "./dist/feedback/Sheet.d.ts",
+      "solid": "./src/feedback/Sheet.tsx",
+      "default": "./dist/feedback/Sheet.js"
     },
     "./Snackbar": {
-      "types": "./src/feedback/Snackbar.tsx",
-      "default": "./src/feedback/Snackbar.tsx"
+      "types": "./dist/feedback/Snackbar.d.ts",
+      "solid": "./src/feedback/Snackbar.tsx",
+      "default": "./dist/feedback/Snackbar.js"
     },
     "./Spotlight": {
-      "types": "./src/feedback/Spotlight.tsx",
-      "default": "./src/feedback/Spotlight.tsx"
+      "types": "./dist/feedback/Spotlight.d.ts",
+      "solid": "./src/feedback/Spotlight.tsx",
+      "default": "./dist/feedback/Spotlight.js"
     },
     "./Toast": {
-      "types": "./src/feedback/Toast.tsx",
-      "default": "./src/feedback/Toast.tsx"
+      "types": "./dist/feedback/Toast.d.ts",
+      "solid": "./src/feedback/Toast.tsx",
+      "default": "./dist/feedback/Toast.js"
     },
     "./ToastManager": {
-      "types": "./src/feedback/ToastManager.tsx",
-      "default": "./src/feedback/ToastManager.tsx"
+      "types": "./dist/feedback/ToastManager.d.ts",
+      "solid": "./src/feedback/ToastManager.tsx",
+      "default": "./dist/feedback/ToastManager.js"
     },
     "./Tooltip": {
-      "types": "./src/feedback/Tooltip.tsx",
-      "default": "./src/feedback/Tooltip.tsx"
+      "types": "./dist/feedback/Tooltip.d.ts",
+      "solid": "./src/feedback/Tooltip.tsx",
+      "default": "./dist/feedback/Tooltip.js"
     },
     "./shared": {
-      "types": "./src/shared/index.ts",
-      "default": "./src/shared/index.ts"
+      "types": "./dist/shared/index.d.ts",
+      "solid": "./src/shared/index.ts",
+      "default": "./dist/shared/index.js"
     }
   },
   "files": [
+    "dist/",
     "src/"
   ],
   "scripts": {
-    "build": "echo 'Consumed directly via workspace — no build step required'"
+    "build": "vite build && tsc -p tsconfig.json",
+    "prepack": "pnpm run build"
   },
   "peerDependencies": {
-    "solid-js": "^1.8.0",
-    "@arclux/arc-ui": "workspace:^"
+    "@arclux/arc-ui": "workspace:^",
+    "solid-js": "^1.8.0"
   },
   "license": "MIT",
   "keywords": [
@@ -808,6 +1002,9 @@
     "access": "public"
   },
   "devDependencies": {
-    "@arclux/arc-ui": "workspace:*"
+    "@arclux/arc-ui": "workspace:*",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.6",
+    "vite-plugin-solid": "^2.11.14"
   }
 }

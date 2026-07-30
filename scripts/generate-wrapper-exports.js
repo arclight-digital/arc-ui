@@ -27,24 +27,51 @@ const root = resolve(__dirname, '..');
 const TIERS = ['content', 'data', 'typography', 'input', 'navigation', 'layout', 'feedback'];
 
 /**
- * dist: compiled output — types are the emitted .d.ts, runtime is .js.
- * src: shipped source — the file itself serves both conditions.
+ * Modes describe what each package's build emits:
+ *   dist        — tsc/vite output: .d.ts next to .js per module
+ *   dist-vue    — vite preserveModules (X.vue.js) + vue-tsc (X.vue.d.ts)
+ *   dist-svelte — svelte-package: shipped .svelte + svelte2tsx .svelte.d.ts,
+ *                 with the `svelte` condition Svelte tooling resolves
+ *   dist-solid  — compiled fallback + declarations, plus a `solid` condition
+ *                 pointing at source .tsx so Solid's own compiler (which owns
+ *                 reactivity) processes the JSX instead of the prebuilt copy
+ *
+ * Angular is absent on purpose: ng-packagr owns its published package.json
+ * (APF: FESM + partial-Ivy declarations, single entry). Any exports written
+ * into its source manifest get copied verbatim into dist and ship broken.
  */
 const PACKAGES = [
-  { dir: 'react',   ext: '.ts',     mode: 'dist' },
-  { dir: 'preact',  ext: '.tsx',    mode: 'dist' },
-  { dir: 'solid',   ext: '.tsx',    mode: 'src' },
-  { dir: 'svelte',  ext: '.svelte', mode: 'src' },
-  { dir: 'vue',     ext: '.vue',    mode: 'src' },
-  { dir: 'angular', ext: '.ts',     mode: 'src' },
+  { dir: 'react',  ext: '.ts',     mode: 'dist' },
+  { dir: 'preact', ext: '.tsx',    mode: 'dist' },
+  { dir: 'solid',  ext: '.tsx',    mode: 'dist-solid' },
+  { dir: 'svelte', ext: '.svelte', mode: 'dist-svelte' },
+  { dir: 'vue',    ext: '.vue',    mode: 'dist-vue' },
 ];
 
 function entry(pkg, rel) {
-  if (pkg.mode === 'dist') {
-    const base = rel.replace(/\.(tsx|ts)$/, '');
-    return { types: `./dist/${base}.d.ts`, default: `./dist/${base}.js` };
+  const base = rel.replace(/\.(tsx|ts|svelte|vue)$/, '');
+  switch (pkg.mode) {
+    case 'dist':
+      return { types: `./dist/${base}.d.ts`, default: `./dist/${base}.js` };
+    case 'dist-solid':
+      return {
+        types: `./dist/${base}.d.ts`,
+        solid: `./src/${rel}`,
+        default: `./dist/${base}.js`,
+      };
+    case 'dist-svelte':
+      return rel.endsWith('.svelte')
+        ? {
+            types: `./dist/${base}.svelte.d.ts`,
+            svelte: `./dist/${base}.svelte`,
+            default: `./dist/${base}.svelte`,
+          }
+        : { types: `./dist/${base}.d.ts`, svelte: `./dist/${base}.js`, default: `./dist/${base}.js` };
+    case 'dist-vue':
+      return rel.endsWith('.vue')
+        ? { types: `./dist/${base}.vue.d.ts`, default: `./dist/${base}.vue.js` }
+        : { types: `./dist/${base}.d.ts`, default: `./dist/${base}.js` };
   }
-  return { types: `./src/${rel}`, default: `./src/${rel}` };
 }
 
 let failures = 0;
@@ -69,24 +96,25 @@ for (const pkg of PACKAGES) {
     exports['./shared'] = entry(pkg, 'shared/index.ts');
   }
 
-  // Assert every src-mode target exists; dist targets are asserted by the
-  // package build (tsc fails loudly), not by this script.
+  // Assert every target that points at *source* exists; dist targets are
+  // asserted by the package build (tsc/vite fail loudly), not by this script.
   for (const [subpath, target] of Object.entries(exports)) {
-    if (pkg.mode === 'src' && !existsSync(resolve(pkgDir, target.default))) {
-      console.error(`  ${pkg.dir}: ${subpath} → ${target.default} does not exist`);
-      failures++;
+    const srcTargets = Object.values(target).filter((t) => t.startsWith('./src/'));
+    for (const t of srcTargets) {
+      if (!existsSync(resolve(pkgDir, t))) {
+        console.error(`  ${pkg.dir}: ${subpath} → ${t} does not exist`);
+        failures++;
+      }
     }
   }
 
   const pkgJsonPath = resolve(pkgDir, 'package.json');
   const pkgJson = JSON.parse(readFileSync(pkgJsonPath, 'utf-8'));
   pkgJson.exports = exports;
-  if (pkg.mode === 'dist') {
-    pkgJson.main = 'dist/index.js';
-    pkgJson.module = 'dist/index.js';
-    pkgJson.types = 'dist/index.d.ts';
-    pkgJson.files = ['dist/', 'src/'];
-  }
+  pkgJson.main = 'dist/index.js';
+  pkgJson.module = 'dist/index.js';
+  pkgJson.types = 'dist/index.d.ts';
+  pkgJson.files = ['dist/', 'src/'];
   writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2) + '\n');
   console.log(`  ${pkg.dir}: ${Object.keys(exports).length} subpaths (${pkg.mode})`);
 }
