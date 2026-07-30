@@ -53,7 +53,7 @@ When the \`removable\` prop is set, a small close button appears after the label
   <arc-tag variant="secondary">Secondary</arc-tag>
   <arc-tag variant="success">Success</arc-tag>
   <arc-tag variant="warning">Warning</arc-tag>
-  <arc-tag variant="danger">Danger</arc-tag>
+  <arc-tag variant="error">Danger</arc-tag>
   <arc-tag color="255, 120, 50">Custom</arc-tag>
   <arc-tag variant="primary" removable>Removable</arc-tag>
 </div>`,

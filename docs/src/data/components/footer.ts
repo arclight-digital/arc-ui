@@ -13,7 +13,7 @@ export const footer: ComponentDef = {
 
 The default slot renders its children in a responsive CSS Grid that automatically wraps link columns from a single stack on mobile to as many columns as fit at 160 px minimum width. This means you drop in three or four \`<div>\` elements with heading-and-link-list markup and the grid handles the rest — no manual breakpoints needed.
 
-Footer ships with two boolean props that cover the most common layout tweaks. The \`border\` prop (on by default) adds a subtle top rule to visually separate the footer from the content above. The \`compact\` prop tightens all internal spacing for dashboards and admin panels where vertical real estate is at a premium. Together these two toggles, plus the four slots, cover the vast majority of footer patterns without custom CSS.`,
+Footer ships with two props that cover the most common layout tweaks. The \`border\` prop (on by default) adds a subtle top rule to visually separate the footer from the content above. \`density="compact"\` tightens all internal spacing for dashboards and admin panels where vertical real estate is at a premium. Together border, density, and the four slots cover the vast majority of footer patterns without custom CSS.`,
 
   features: [
     'Slot-based composition with logo, default (columns), social, and legal regions',
@@ -32,7 +32,7 @@ Footer ships with two boolean props that cover the most common layout tweaks. Th
       'Use the logo slot for your brand mark or wordmark — keep it compact',
       'Organize link columns by category (Product, Company, Resources) for scannability',
       'Include essential legal text (copyright year, company name) in the legal slot',
-      'Use the compact variant inside admin shells and dashboards to save vertical space',
+      'Use density="compact" inside admin shells and dashboards to save vertical space',
       'Keep link column headings short and consistent in casing',
     ],
     dont: [

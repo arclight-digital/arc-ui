@@ -44,7 +44,7 @@ The component can also be used declaratively as \`<arc-confirm>\` with props and
     ],
   },
 
-  previewHtml: `<div style="width:100%;display:flex;gap:8px;flex-wrap:wrap"><arc-confirm id="demo-confirm"></arc-confirm><arc-button id="demo-confirm-danger" variant="danger">Delete Item</arc-button><arc-button id="demo-confirm-default" variant="secondary">Confirm Action</arc-button></div>`,
+  previewHtml: `<div style="width:100%;display:flex;gap:8px;flex-wrap:wrap"><arc-confirm id="demo-confirm"></arc-confirm><arc-button id="demo-confirm-danger" variant="error">Delete Item</arc-button><arc-button id="demo-confirm-default" variant="secondary">Confirm Action</arc-button></div>`,
 
   previewSetup: `
       const confirmEl = document.getElementById('demo-confirm');
@@ -78,7 +78,7 @@ The component can also be used declaratively as \`<arc-confirm>\` with props and
 
 <arc-confirm id="confirm"></arc-confirm>
 
-<arc-button variant="danger"
+<arc-button variant="error"
   onclick="Object.assign(document.getElementById('confirm'), {
     heading: 'Delete this item?',
     message: 'This action cannot be undone.',
@@ -105,13 +105,13 @@ export function ConfirmDemo() {
         open={open}
         heading="Delete this item?"
         message="This action cannot be undone."
-        variant="danger"
+        variant="error"
         confirmLabel="Delete"
         cancelLabel="Keep"
         onArcConfirm={() => { setOpen(false); /* perform delete */ }}
         onArcCancel={() => setOpen(false)}
       />
-      <Button variant="danger" onClick={() => setOpen(true)}>Delete Item</Button>
+      <Button variant="error" onClick={() => setOpen(true)}>Delete Item</Button>
     </>
   );
 }`,
@@ -129,10 +129,10 @@ const handleConfirm = () => { open.value = false; /* perform delete */ };
 
 <template>
   <Confirm :open="open" heading="Delete this item?"
-    message="This action cannot be undone." variant="danger"
+    message="This action cannot be undone." variant="error"
     confirm-label="Delete" cancel-label="Keep"
     @arc-confirm="handleConfirm" @arc-cancel="open = false" />
-  <Button variant="danger" @click="open = true">Delete Item</Button>
+  <Button variant="error" @click="open = true">Delete Item</Button>
 </template>`,
     },
     {
@@ -146,11 +146,11 @@ const handleConfirm = () => { open.value = false; /* perform delete */ };
 </script>
 
 <Confirm {open} heading="Delete this item?"
-  message="This action cannot be undone." variant="danger"
+  message="This action cannot be undone." variant="error"
   confirmLabel="Delete" cancelLabel="Keep"
   on:arc-confirm={handleConfirm}
   on:arc-cancel={() => open = false} />
-<Button variant="danger" on:click={() => open = true}>Delete Item</Button>`,
+<Button variant="error" on:click={() => open = true}>Delete Item</Button>`,
     },
     {
       label: 'Angular',
@@ -162,10 +162,10 @@ import { Button, Confirm } from '@arclux/arc-ui-angular';
   imports: [Button, Confirm],
   template: \`
     <arc-confirm [open]="open" heading="Delete this item?"
-      message="This action cannot be undone." variant="danger"
+      message="This action cannot be undone." variant="error"
       confirmLabel="Delete" cancelLabel="Keep"
       (arc-confirm)="onConfirm()" (arc-cancel)="open = false"></arc-confirm>
-    <arc-button variant="danger" (click)="open = true">Delete Item</arc-button>
+    <arc-button variant="error" (click)="open = true">Delete Item</arc-button>
   \`,
 })
 export class ConfirmDemoComponent {
@@ -191,13 +191,13 @@ export function ConfirmDemo() {
         open={open()}
         heading="Delete this item?"
         message="This action cannot be undone."
-        variant="danger"
+        variant="error"
         confirmLabel="Delete"
         cancelLabel="Keep"
         onArcConfirm={() => { setOpen(false); /* perform delete */ }}
         onArcCancel={() => setOpen(false)}
       />
-      <Button variant="danger" onClick={() => setOpen(true)}>Delete Item</Button>
+      <Button variant="error" onClick={() => setOpen(true)}>Delete Item</Button>
     </>
   );
 }`,
@@ -217,13 +217,13 @@ export function ConfirmDemo() {
         open={open}
         heading="Delete this item?"
         message="This action cannot be undone."
-        variant="danger"
+        variant="error"
         confirmLabel="Delete"
         cancelLabel="Keep"
         onArcConfirm={() => { setOpen(false); /* perform delete */ }}
         onArcCancel={() => setOpen(false)}
       />
-      <Button variant="danger" onClick={() => setOpen(true)}>Delete Item</Button>
+      <Button variant="error" onClick={() => setOpen(true)}>Delete Item</Button>
     </>
   );
 }`,

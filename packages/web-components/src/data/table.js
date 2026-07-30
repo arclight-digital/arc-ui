@@ -2,13 +2,13 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
- * Data-driven table with striped and compact variants, powered by columns and rows props.
+ * Data-driven table with striped and compact-density variants, powered by columns and rows props.
  *
  * @tag arc-table
  * @prop {string[]} columns - Array of column header strings.
  * @prop {string[][]} rows - Array of row arrays. Each inner array contains cell values in column order.
  * @prop {boolean} striped - Alternating row backgrounds for improved scanability.
- * @prop {boolean} compact - Reduced cell padding for dense data displays.
+ * @prop {'default' | 'compact'} density - Row density. 'compact' reduces cell padding for dense data displays.
  * @csspart table-wrap
  * @csspart table
  * @csspart head
@@ -21,7 +21,7 @@ export class ArcTable extends LitElement {
     columns: { type: Array },
     rows:    { type: Array },
     striped: { type: Boolean, reflect: true },
-    compact: { type: Boolean, reflect: true },
+    density: { type: String, reflect: true },
   };
 
   static styles = [
@@ -63,7 +63,7 @@ export class ArcTable extends LitElement {
         white-space: nowrap;
       }
 
-      :host([compact]) th {
+      :host([density="compact"]) th {
         padding: var(--space-xs) var(--space-sm);
       }
 
@@ -75,7 +75,7 @@ export class ArcTable extends LitElement {
         font-size: var(--text-sm);
       }
 
-      :host([compact]) td {
+      :host([density="compact"]) td {
         padding: var(--space-xs) var(--space-sm);
         font-size: var(--text-sm);
       }
@@ -117,7 +117,7 @@ export class ArcTable extends LitElement {
     this.columns = [];
     this.rows = [];
     this.striped = false;
-    this.compact = false;
+    this.density = 'default';
   }
 
   render() {

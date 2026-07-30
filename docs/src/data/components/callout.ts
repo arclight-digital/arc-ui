@@ -46,7 +46,7 @@ The icon slot lets you replace the default emoji icons with custom SVG or icon-f
   <arc-callout variant="info">This API requires authentication. See the setup guide for details.</arc-callout>
   <arc-callout variant="tip">Use keyboard shortcuts to speed up your workflow.</arc-callout>
   <arc-callout variant="warning">This feature is deprecated and will be removed in v3.0.</arc-callout>
-  <arc-callout variant="danger">This action permanently deletes all data and cannot be undone.</arc-callout>
+  <arc-callout variant="error">This action permanently deletes all data and cannot be undone.</arc-callout>
 </div>`,
 
   tabs: [

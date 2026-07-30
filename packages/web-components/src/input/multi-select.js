@@ -12,6 +12,7 @@ import '../shared/option.js';
  * @prop {string} label - Visible label rendered above the control in a small uppercase style.
  * @prop {string} placeholder - Hint text shown inside the control when no items are selected and the input is empty.
  * @prop {boolean} disabled - Disables the control, preventing interaction and reducing opacity to 50%.
+ * @prop {boolean} readonly - Prevents toggling options or removing chips while the control stays focusable; the dropdown can still be opened for viewing and the values still submit.
  * @fires {CustomEvent<{ value: string }>} arc-input - Fired on every keystroke in the filter input. `event.detail.value` contains the current query text.
  * @fires {CustomEvent<{ value: string[] }>} arc-change - Fired when the selected values change
  * @slot - Default content.
@@ -311,6 +312,7 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
   }
 
   _toggleItem(item) {
+    if (this.readonly) return;
     const current = [...(this.value || [])];
     const idx = current.indexOf(item.value);
 
@@ -333,6 +335,7 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
 
   _removeItem(val, e) {
     e.stopPropagation();
+    if (this.readonly) return;
     this.value = (this.value || []).filter(v => v !== val);
 
     this.dispatchEvent(new CustomEvent('arc-change', {
@@ -489,6 +492,7 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
           .value=${this._query}
           placeholder=${showPlaceholder ? this.placeholder : ''}
           ?disabled=${this.disabled}
+          ?readonly=${this.readonly}
           aria-expanded=${String(this._open)}
           aria-controls=${listboxId}
           aria-activedescendant=${activeId || ''}

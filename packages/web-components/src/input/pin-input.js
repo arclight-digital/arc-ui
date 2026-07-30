@@ -14,6 +14,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @prop {number} separator - Inserts a visual dash separator every N boxes. Set to 0 to disable separators.
  * @prop {string} label - Label text displayed above the input boxes in uppercase accent font.
  * @prop {boolean} disabled - Disables all boxes, reducing opacity to 40% and blocking input.
+ * @prop {boolean} readonly - Prevents entering, deleting, or pasting characters while the boxes stay focusable and the value still submits.
  * @fires arc-change - Fired on every character entry or deletion. `event.detail.value` contains the current partial value.
  * @fires arc-complete - Fired when all boxes are filled. `event.detail.value` contains the full value string.
  * @csspart pin
@@ -237,10 +238,12 @@ export class ArcPinInput extends FormControlMixin(LitElement) {
       const input = e.target;
       if (!input.value && index > 0) {
         e.preventDefault();
-        const boxes = this._getBoxes();
-        boxes[index - 1].value = '';
         this._focusBox(index - 1);
-        this._emitChange();
+        if (!this.readonly) {
+          const boxes = this._getBoxes();
+          boxes[index - 1].value = '';
+          this._emitChange();
+        }
       }
     } else if (e.key === 'ArrowLeft' && index > 0) {
       e.preventDefault();
@@ -249,6 +252,7 @@ export class ArcPinInput extends FormControlMixin(LitElement) {
       e.preventDefault();
       this._focusBox(index + 1);
     } else if (e.key === 'Delete') {
+      if (this.readonly) return;
       e.target.value = '';
       this._emitChange();
     }
@@ -256,6 +260,7 @@ export class ArcPinInput extends FormControlMixin(LitElement) {
 
   _onPaste(e, index) {
     e.preventDefault();
+    if (this.readonly) return;
     const pasted = (e.clipboardData || window.clipboardData).getData('text').trim();
     if (!pasted) return;
 
@@ -304,6 +309,7 @@ export class ArcPinInput extends FormControlMixin(LitElement) {
               autocomplete="one-time-code"
               .value=${ch}
               ?disabled=${this.disabled}
+              ?readonly=${this.readonly}
               aria-label=${`${this.label || 'PIN'} digit ${i + 1}`}
               ${pattern ? html`pattern=${pattern}` : nothing}
               @input=${(e) => this._onInput(e, i)}

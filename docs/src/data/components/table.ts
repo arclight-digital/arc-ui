@@ -7,16 +7,16 @@ export const table: ComponentDef = {
   tier: 'data',
   interactivity: 'static',
   description:
-    'Data-driven table with striped and compact variants, powered by columns and rows props.',
+    'Data-driven table with striped and compact-density variants, powered by columns and rows props.',
 
   overview: `Table renders a fully styled data table from two simple props: \`columns\` (an array of header strings) and \`rows\` (an array of arrays, one per row). All markup is generated inside the shadow DOM, so headers, cells, striping, and hover states are styled consistently without any slotted HTML duplication.
 
-The \`striped\` prop adds alternating row backgrounds for improved scanability, and \`compact\` reduces padding for data-dense displays. The wrapper applies \`overflow-x: auto\` for responsive horizontal scrolling on narrow viewports. CSS parts are exposed on every structural element for external customization.`,
+The \`striped\` prop adds alternating row backgrounds for improved scanability, and \`density="compact"\` reduces padding for data-dense displays. The wrapper applies \`overflow-x: auto\` for responsive horizontal scrolling on narrow viewports. CSS parts are exposed on every structural element for external customization.`,
 
   features: [
     'Data-driven: pass `columns` and `rows` arrays — no manual `<table>` markup needed',
     'Striped rows via the `striped` boolean for improved visual tracking',
-    'Compact mode via the `compact` boolean for dense data displays',
+    'Compact mode via the `density="compact"` boolean for dense data displays',
     'Horizontal overflow scrolling for wide tables on narrow viewports',
     'Tektur uppercase headers with letter-spacing for consistent design language',
     'Row hover highlight for interactive feel',
@@ -28,7 +28,7 @@ The \`striped\` prop adds alternating row backgrounds for improved scanability, 
       'Pass columns as a flat array of strings for header labels',
       'Pass rows as an array of arrays, with values in the same order as columns',
       'Enable striped for tables with more than five rows to aid visual tracking',
-      'Use compact for data-dense tables like API reference or token listings',
+      'Use density="compact" for data-dense tables like API reference or token listings',
       'Use arc-data-table instead when you need sorting, selection, or column configuration',
     ],
     dont: [

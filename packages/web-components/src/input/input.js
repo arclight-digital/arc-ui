@@ -17,6 +17,7 @@ let inputIdCounter = 0;
  * @prop {boolean} multiline - When true, renders a `<textarea>` instead of an `<input>`, allowing multi-row text entry. The textarea is vertically resizable by default.
  * @prop {boolean} disabled - Prevents user interaction and applies a muted visual treatment. The field value is excluded from form submission when disabled.
  * @prop {boolean} required - Marks the field as required. Displays a required indicator next to the label and triggers native constraint validation on form submission.
+ * @prop {boolean} readonly - Prevents the user from editing the value while keeping the field focusable, and the value is still submitted with the form.
  * @prop {string} value - The current value of the input. Can be set programmatically to pre-fill the field or used for controlled-component patterns. Updated internally on each keystroke.
  * @prop {number} rows - Number of visible text rows when `multiline` is true. Controls the initial height of the textarea. Ignored for single-line inputs.
  * @prop {string} error - Error message displayed below the input. When set, the input border turns red and the error text appears.
@@ -33,9 +34,12 @@ let inputIdCounter = 0;
  * @csspart error
  */
 export class ArcInput extends FormControlMixin(LitElement) {
+  /** Runs its own constraint logic — owns the whole validity flag set. */
+  static autoValidates = false;
+
   static properties = {
     type:        { type: String },
-    name:        { type: String },
+    name:        { type: String, reflect: true },
     label:       { type: String },
     placeholder: { type: String },
     value:       { type: String },
@@ -236,6 +240,7 @@ export class ArcInput extends FormControlMixin(LitElement) {
           rows=${this.rows}
           ?required=${this.required}
           ?disabled=${this.disabled}
+          ?readonly=${this.readonly}
           aria-required=${this.required ? 'true' : 'false'}
           aria-disabled=${this.disabled ? 'true' : 'false'}
           .value=${this.value}
@@ -251,6 +256,7 @@ export class ArcInput extends FormControlMixin(LitElement) {
           placeholder=${this.placeholder}
           ?required=${this.required}
           ?disabled=${this.disabled}
+          ?readonly=${this.readonly}
           aria-required=${this.required ? 'true' : 'false'}
           aria-disabled=${this.disabled ? 'true' : 'false'}
           .value=${this.value}

@@ -17,6 +17,7 @@ import { ClickOutsideController } from '../shared/click-outside.js';
  * @prop {string} placeholder - Hint text shown inside the field when no tags exist and the input is empty.
  * @prop {string} name - Form field name. Each tag is submitted as its own FormData entry under this name.
  * @prop {boolean} disabled - Disables the control, preventing interaction and reducing opacity to 50%.
+ * @prop {boolean} readonly - Prevents adding or removing tags while the field stays focusable and the tags still submit with the form.
  * @prop {string} error - Error message shown below the field; also applies error styling to the border.
  * @fires {CustomEvent<{ value: string[] }>} arc-change - Fired when a tag is added or removed; detail contains `{ value }`
  * @fires arc-input - Fired as the user types; detail contains `{ query }`
@@ -340,6 +341,7 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
 
   /** Adds a trimmed tag; rejects empties, over-max, non-suggestions (when allowCustom=false), and duplicates (with a shake). */
   _commit(raw) {
+    if (this.readonly) return false;
     const text = (raw ?? '').trim();
     if (!text || this._atMax) return false;
 
@@ -372,6 +374,7 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
 
   _removeTag(tag, e) {
     e?.stopPropagation();
+    if (this.readonly) return;
     this.value = (this.value || []).filter(t => t !== tag);
     this._emitChange();
   }
@@ -543,7 +546,7 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
           .value=${this._query}
           placeholder=${placeholder}
           ?disabled=${this.disabled}
-          ?readonly=${atMax}
+          ?readonly=${atMax || this.readonly}
           aria-disabled=${atMax || this.disabled ? 'true' : 'false'}
           aria-expanded=${String(dropdownOpen)}
           aria-controls=${listboxId}

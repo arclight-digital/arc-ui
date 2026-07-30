@@ -12,6 +12,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {string} label - Accessible label for the search field. Rendered visually above the input when provided.
  * @prop {boolean} disabled - Disables the input, reducing opacity and blocking interaction.
  * @prop {boolean} loading - Shows a spinning indicator in place of the clear button to signal in-progress loading.
+ * @prop {boolean} open - Whether the suggestion dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.
  * @fires {CustomEvent<{ value: string }>} arc-input - Fired on each keystroke in the search field
  * @fires {CustomEvent<void>} arc-clear - Fired when the clear button is clicked
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired when the search value changes on blur
@@ -33,7 +34,7 @@ export class ArcSearch extends LitElement {
     label:        { type: String },
     disabled:     { type: Boolean, reflect: true },
     loading:      { type: Boolean, reflect: true },
-    _open:        { state: true },
+    open:        { type: Boolean, reflect: true },
     _activeIndex: { state: true },
     _suggestions: { state: true },
   };
@@ -211,7 +212,7 @@ export class ArcSearch extends LitElement {
     this.label = '';
     this.disabled = false;
     this.loading = false;
-    this._open = false;
+    this.open = false;
     this._activeIndex = -1;
     this._suggestions = [];
     this._onDocClick = this._onDocClick.bind(this);
@@ -234,7 +235,7 @@ export class ArcSearch extends LitElement {
 
   _onDocClick(e) {
     if (!e.composedPath().includes(this)) {
-      this._open = false;
+      this.open = false;
     }
   }
 
@@ -252,7 +253,7 @@ export class ArcSearch extends LitElement {
   _onInput(e) {
     this.value = e.target.value;
     this._activeIndex = -1;
-    if (this._hasSuggestions) this._open = true;
+    if (this._hasSuggestions) this.open = true;
 
     this.dispatchEvent(new CustomEvent('arc-input', {
       detail: { value: this.value },
@@ -262,12 +263,12 @@ export class ArcSearch extends LitElement {
   }
 
   _onFocus() {
-    if (this._hasSuggestions) this._open = true;
+    if (this._hasSuggestions) this.open = true;
   }
 
   _clear() {
     this.value = '';
-    this._open = false;
+    this.open = false;
     this._activeIndex = -1;
 
     this.dispatchEvent(new CustomEvent('arc-clear', {
@@ -288,7 +289,7 @@ export class ArcSearch extends LitElement {
 
   _selectSuggestion(item) {
     this.value = item.label || item.value;
-    this._open = false;
+    this.open = false;
     this._activeIndex = -1;
 
     this.dispatchEvent(new CustomEvent('arc-select', {
@@ -303,7 +304,7 @@ export class ArcSearch extends LitElement {
 
     switch (e.key) {
       case 'ArrowDown':
-        if (!this._open && this._hasSuggestions) { this._open = true; return; }
+        if (!this.open && this._hasSuggestions) { this.open = true; return; }
         e.preventDefault();
         this._activeIndex = Math.min(this._activeIndex + 1, items.length - 1);
         break;
@@ -320,8 +321,8 @@ export class ArcSearch extends LitElement {
         }
         break;
       case 'Escape':
-        if (this._open) {
-          this._open = false;
+        if (this.open) {
+          this.open = false;
           this._activeIndex = -1;
         }
         break;
@@ -330,7 +331,7 @@ export class ArcSearch extends LitElement {
 
   render() {
     const items = this._normalizedSuggestions;
-    const showSuggestions = this._open && items.length > 0;
+    const showSuggestions = this.open && items.length > 0;
 
     return html`
       <div class="search__slot-host">
@@ -353,7 +354,7 @@ export class ArcSearch extends LitElement {
           placeholder=${this.placeholder}
           ?disabled=${this.disabled}
           aria-label=${this.label || this.placeholder}
-          aria-expanded=${this._hasSuggestions ? String(this._open) : nothing}
+          aria-expanded=${this._hasSuggestions ? String(this.open) : nothing}
           aria-autocomplete=${this._hasSuggestions ? 'list' : nothing}
           aria-controls=${this._hasSuggestions ? 'search-suggestions' : nothing}
           @input=${this._onInput}

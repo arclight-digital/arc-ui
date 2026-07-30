@@ -85,8 +85,11 @@ function scorePassword(pw) {
  * @csspart error
  */
 export class ArcPasswordInput extends FormControlMixin(LitElement) {
+  /** Runs its own constraint logic — owns the whole validity flag set. */
+  static autoValidates = false;
+
   static properties = {
-    name:         { type: String },
+    name:        { type: String, reflect: true },
     label:        { type: String },
     placeholder:  { type: String },
     value:        { type: String },

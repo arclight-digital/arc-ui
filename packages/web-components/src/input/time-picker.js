@@ -14,6 +14,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @prop {string} placeholder - Placeholder text displayed in the input when no time is selected.
  * @prop {boolean} disabled - Disables the time picker, reducing opacity and preventing the dropdown from opening.
  * @prop {string} label - Label text rendered above the input in uppercase accent font styling.
+ * @prop {boolean} open - Whether the time dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired when a time is selected. Detail contains { value: "HH:MM" } in 24-hour format.
  * @csspart wrapper
  * @csspart label
@@ -32,7 +33,7 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
     placeholder: { type: String },
     disabled:    { type: Boolean, reflect: true },
     label:       { type: String },
-    _open:            { state: true },
+    open:        { type: Boolean, reflect: true },
     _selectedHour:    { state: true },
     _selectedMinute:  { state: true },
     _selectedPeriod:  { state: true },
@@ -219,7 +220,7 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
     this.placeholder = 'Select time';
     this.disabled = false;
     this.label = '';
-    this._open = false;
+    this.open = false;
     this._selectedHour = null;
     this._selectedMinute = null;
     this._selectedPeriod = 'AM';
@@ -243,14 +244,14 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
   }
 
   _handleOutsideClick(e) {
-    if (this._open && !e.composedPath().includes(this)) {
-      this._open = false;
+    if (this.open && !e.composedPath().includes(this)) {
+      this.open = false;
     }
   }
 
   _handleEscape(e) {
-    if (this._open && e.key === 'Escape') {
-      this._open = false;
+    if (this.open && e.key === 'Escape') {
+      this.open = false;
       this.shadowRoot.querySelector('input')?.focus();
     }
   }
@@ -274,10 +275,10 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
   }
 
   _toggleDropdown() {
-    if (this.disabled) return;
-    this._open = !this._open;
+    if (this.disabled || this.readonly) return;
+    this.open = !this.open;
 
-    if (this._open) {
+    if (this.open) {
       this._syncFromValue();
       this._focusedColumn = 'hour';
     }
@@ -340,7 +341,7 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
     if (this._isDisabledTime(newValue)) return;
 
     this.value = newValue;
-    this._open = false;
+    this.open = false;
 
     this.dispatchEvent(new CustomEvent('arc-change', {
       detail: { value: this.value },
@@ -458,7 +459,7 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
     if (changed.has('value')) {
       this._updateFormValue();
     }
-    if (changed.has('_open') && this._open) {
+    if (changed.has('open') && this.open) {
       // Scroll selected items into view, then focus the hour tab stop
       this.updateComplete.then(() => {
         this.shadowRoot.querySelectorAll('.time-option.selected').forEach(el => {
@@ -491,14 +492,14 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
             ?disabled=${this.disabled}
             role="combobox"
             aria-haspopup="dialog"
-            aria-expanded=${this._open ? 'true' : 'false'}
+            aria-expanded=${this.open ? 'true' : 'false'}
             aria-label=${this.label || 'Choose time'}
             @click=${this._toggleDropdown}
           />
           <span class="clock-icon" aria-hidden="true">\u{1F552}</span>
         </div>
 
-        ${this._open ? html`
+        ${this.open ? html`
           <div class="dropdown" part="dropdown" role="dialog" aria-label="Time picker">
             <div class="columns">
               <div>

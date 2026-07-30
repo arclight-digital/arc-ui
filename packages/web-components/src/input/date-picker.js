@@ -12,6 +12,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @prop {string} placeholder - Placeholder text displayed in the input when no date is selected.
  * @prop {boolean} disabled - Disables the date picker, reducing opacity and preventing the calendar from opening.
  * @prop {string} label - Label text rendered above the input in uppercase accent font styling.
+ * @prop {boolean} open - Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired when a date is selected
  * @csspart wrapper
  * @csspart label
@@ -21,14 +22,14 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  */
 export class ArcDatePicker extends FormControlMixin(LitElement) {
   static properties = {
-    value:       { type: String },
+    value:       { type: String, reflect: true },
     name:        { type: String, reflect: true },
     min:         { type: String },
     max:         { type: String },
     placeholder: { type: String },
     disabled:    { type: Boolean, reflect: true },
     label:       { type: String },
-    _open:       { state: true },
+    open:        { type: Boolean, reflect: true },
     _viewMonth:  { state: true },
     _viewYear:   { state: true },
     _mode:       { state: true },
@@ -298,7 +299,7 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
     this.placeholder = 'Select date';
     this.disabled = false;
     this.label = '';
-    this._open = false;
+    this.open = false;
     this._mode = 'days'; // 'days' | 'months' | 'years'
     this._focusedIso = null;
 
@@ -327,24 +328,24 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
   }
 
   _handleOutsideClick(e) {
-    if (this._open && !e.composedPath().includes(this)) {
-      this._open = false;
+    if (this.open && !e.composedPath().includes(this)) {
+      this.open = false;
     }
   }
 
   _handleEscape(e) {
-    if (this._open && e.key === 'Escape') {
-      this._open = false;
+    if (this.open && e.key === 'Escape') {
+      this.open = false;
       this.shadowRoot.querySelector('input')?.focus();
     }
   }
 
   _toggleDropdown() {
-    if (this.disabled) return;
-    this._open = !this._open;
+    if (this.disabled || this.readonly) return;
+    this.open = !this.open;
 
-    if (!this._open) this._mode = 'days';
-    if (this._open) {
+    if (!this.open) this._mode = 'days';
+    if (this.open) {
       this._focusedIso = null;
       if (this.value) {
         const d = new Date(this.value + 'T00:00:00');
@@ -404,7 +405,7 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
 
   _selectDate(dateStr) {
     this.value = dateStr;
-    this._open = false;
+    this.open = false;
 
     this.dispatchEvent(new CustomEvent('arc-change', {
       detail: { value: this.value },
@@ -543,7 +544,7 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
     if (changed.has('value')) {
       this._updateFormValue();
     }
-    if (changed.has('_open') && this._open && this._mode === 'days') {
+    if (changed.has('open') && this.open && this._mode === 'days') {
       // Move focus to the roving tab stop when the popup opens
       this.updateComplete.then(() => {
         this.shadowRoot.querySelector('.day[tabindex="0"]')?.focus();
@@ -570,14 +571,14 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
             ?disabled=${this.disabled}
             role="combobox"
             aria-haspopup="dialog"
-            aria-expanded=${this._open ? 'true' : 'false'}
+            aria-expanded=${this.open ? 'true' : 'false'}
             aria-label=${this.label || 'Choose date'}
             @click=${this._toggleDropdown}
           />
           <span class="calendar-icon" aria-hidden="true">\u{1F4C5}</span>
         </div>
 
-        ${this._open ? html`
+        ${this.open ? html`
           <div class="dropdown" part="dropdown" role="dialog" aria-label="Date picker">
             <div class="calendar-header">
               <button class="nav-btn" @click=${this._prev} aria-label=${this._mode === 'days' ? 'Previous month' : this._mode === 'months' ? 'Previous year' : 'Previous years'}>\u2039</button>

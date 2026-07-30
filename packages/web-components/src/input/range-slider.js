@@ -235,7 +235,7 @@ export class ArcRangeSlider extends FormControlMixin(LitElement) {
   }
 
   _onThumbPointerDown(thumb, e) {
-    if (this.disabled) return;
+    if (this.disabled || this.readonly) return;
     e.preventDefault();
     this._dragging = thumb;
     e.target.setPointerCapture(e.pointerId);
@@ -259,7 +259,7 @@ export class ArcRangeSlider extends FormControlMixin(LitElement) {
   }
 
   _onTrackPointerDown(e) {
-    if (this.disabled) return;
+    if (this.disabled || this.readonly) return;
     // If the click is not directly on a thumb, move the nearest thumb
     if (e.target.classList.contains('range-slider__thumb')) return;
     const value = this._valueFromPointer(e);
@@ -279,7 +279,7 @@ export class ArcRangeSlider extends FormControlMixin(LitElement) {
   }
 
   _onKeyDown(thumb, e) {
-    if (this.disabled) return;
+    if (this.disabled || this.readonly) return;
     let delta = 0;
     switch (e.key) {
       case 'ArrowRight':

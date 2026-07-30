@@ -30,7 +30,7 @@ export class ArcSelect extends FormControlMixin(LitElement) {
     value:       { type: String, reflect: true },
     placeholder: { type: String },
     label:       { type: String },
-    name:        { type: String },
+    name:        { type: String, reflect: true },
     disabled:    { type: Boolean, reflect: true },
     size:        { type: String, reflect: true },
     error:       { type: String },
@@ -235,7 +235,7 @@ export class ArcSelect extends FormControlMixin(LitElement) {
   }
 
   _toggleOpen() {
-    if (this.disabled) return;
+    if (this.disabled || this.readonly) return;
     this.open = !this.open;
   }
 

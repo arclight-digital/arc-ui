@@ -30,8 +30,22 @@ import { isEditingNode, setEditingMarker } from './editing-target.js';
 export const FormControlMixin = (superClass) => class extends superClass {
   static formAssociated = true;
 
+  /**
+   * Lit merges static properties up the prototype chain, so every consumer
+   * gets these without declaring them. `required` participates in constraint
+   * validation below; `readonly` reflects for styling and is enforced by
+   * each component's interaction handlers (the mixin can't know which
+   * gestures mutate state).
+   */
+  static properties = {
+    required: { type: Boolean, reflect: true },
+    readonly: { type: Boolean, reflect: true },
+  };
+
   constructor() {
     super();
+    this.required = false;
+    this.readonly = false;
     this._internals = this.attachInternals();
     // Bound once so the same reference removes cleanly on disconnect.
     this.__onEditingFocusIn = (e) => {
@@ -46,6 +60,9 @@ export const FormControlMixin = (superClass) => class extends superClass {
     if (this.__resetState === undefined) {
       this.__resetState = this._formResetState();
     }
+    // A parse-time `required` attribute must be visible to checkValidity()
+    // before any value change triggers _updateFormValue.
+    if (this.constructor.autoValidates !== false) this._syncRequiredValidity();
     // focusin/focusout are composed, so they cross the shadow boundary and
     // arrive here with the real focused node still at the head of the path.
     // Focus moving between two elements inside fires focusout then focusin, so
@@ -77,14 +94,59 @@ export const FormControlMixin = (superClass) => class extends superClass {
     return this.value ?? null;
   }
 
+  /**
+   * Components that run their own constraint-validation logic (pattern
+   * checks, range checks) opt out of the automatic required sync by
+   * overriding this to false, and own the whole validity flag set instead.
+   */
+  static autoValidates = true;
+
+  /** Whether a submitted value counts as empty for `required`. */
+  _formValueIsEmpty(value) {
+    if (value == null || value === '') return true;
+    if (Array.isArray(value)) return value.length === 0;
+    if (typeof FormData !== 'undefined' && value instanceof FormData) {
+      return [...value.keys()].length === 0;
+    }
+    return false;
+  }
+
+  /** valueMissing tracks required + emptiness; everything else stays clear. */
+  _syncRequiredValidity() {
+    if (this.required && this._formValueIsEmpty(this._formValue())) {
+      this._setValidity({ valueMissing: true }, 'Please fill out this field.');
+    } else {
+      this._setValidity({});
+    }
+  }
+
   /** Sync the current value into the form. Call on every value change. */
   _updateFormValue() {
     this._internals.setFormValue(this._formValue());
+    if (this.constructor.autoValidates !== false) this._syncRequiredValidity();
   }
 
   /** Constraint-validation passthrough with a stable signature. */
   _setValidity(flags = {}, message = '', anchor = undefined) {
     this._internals.setValidity(flags, message, anchor);
+  }
+
+  updated(changed) {
+    super.updated?.(changed);
+    // Programmatic value changes must reach the form: most controls only call
+    // _updateFormValue() from their interaction handlers, so `el.value = x`
+    // from script used to leave the submitted value and validity stale.
+    // Double-calling after an interaction handler is harmless — it's
+    // idempotent. (Subclasses that override updated() without calling super
+    // lose these hooks and must sync themselves — combobox and multi-select
+    // already do.)
+    if (changed.has('value') || changed.has('checked')) {
+      this._updateFormValue();
+    }
+    // Toggling `required` after mount must resync without a value change.
+    if (changed.has('required') && this.constructor.autoValidates !== false) {
+      this._syncRequiredValidity();
+    }
   }
 
   formDisabledCallback(disabled) {

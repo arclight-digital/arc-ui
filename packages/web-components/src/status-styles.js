@@ -4,12 +4,12 @@ import { css } from 'lit';
  * Shared status-variant CSS custom properties.
  * Maps variant attributes on :host to --_status-color / --_status-rgb.
  *
- * Covers both Alert/Toast names (info, success, warning, error)
- * and Callout aliases (note → info, tip → success, danger → error).
+ * Covers the Alert/Toast names (info, success, warning, error) plus
+ * Callout's tip, which renders on the success ramp. The v2 note/danger
+ * aliases are retired — v3 speaks one name per state.
  */
 export const statusVars = css`
-  :host([variant="info"]),
-  :host([variant="note"]) {
+  :host([variant="info"]) {
     --_status-color: var(--accent-primary);
     --_status-rgb:   var(--accent-primary-rgb);
   }
@@ -25,8 +25,7 @@ export const statusVars = css`
     --_status-rgb:   var(--color-warning-rgb);
   }
 
-  :host([variant="error"]),
-  :host([variant="danger"]) {
+  :host([variant="error"]) {
     --_status-color: var(--color-error);
     --_status-rgb:   var(--color-error-rgb);
   }

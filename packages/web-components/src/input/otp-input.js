@@ -10,6 +10,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @prop {number} length - Number of individual character boxes to render. Reflected as an attribute.
  * @prop {string} value - The concatenated value of all boxes. Reflected as an attribute and updated on every input.
  * @prop {boolean} disabled - Disables all input boxes, reducing opacity to 40% and blocking pointer events.
+ * @prop {boolean} readonly - Prevents typing, pasting, and clearing digits while the boxes stay focusable and the value still submits.
  * @prop {'number' | 'text'} type - Input mode. `number` filters non-digits and uses the numeric keyboard; `text` allows any character.
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired when any digit changes
  * @csspart otp
@@ -162,9 +163,11 @@ export class ArcOtpInput extends FormControlMixin(LitElement) {
         if (!e.target.value && index > 0) {
           e.preventDefault();
           this._focusBox(index - 1);
-          const inputs = this._getInputs();
-          inputs[index - 1].value = '';
-          this._updateValue();
+          if (!this.readonly) {
+            const inputs = this._getInputs();
+            inputs[index - 1].value = '';
+            this._updateValue();
+          }
         }
         break;
       case 'ArrowLeft':
@@ -188,6 +191,7 @@ export class ArcOtpInput extends FormControlMixin(LitElement) {
 
   _onPaste(e, index) {
     e.preventDefault();
+    if (this.readonly) return;
     const pasted = (e.clipboardData.getData('text') || '').trim();
     let chars = pasted.split('');
 
@@ -228,6 +232,7 @@ export class ArcOtpInput extends FormControlMixin(LitElement) {
             autocomplete="one-time-code"
             .value=${char}
             ?disabled=${this.disabled}
+            ?readonly=${this.readonly}
             aria-label=${`Digit ${i + 1} of ${this.length}`}
             @input=${(e) => this._onInput(e, i)}
             @keydown=${(e) => this._onKeydown(e, i)}

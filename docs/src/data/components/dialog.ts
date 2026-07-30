@@ -12,7 +12,7 @@ export const dialog: ComponentDef = {
 
   overview: `Dialog is a convenience wrapper around \`arc-modal\` configured with \`size="sm"\` and \`closable\`, rendering as a small centered modal with backdrop blur and a slide-up entrance animation. It is purpose-built for simple confirm/cancel prompts — unsaved changes, session warnings, and discard decisions — where a full Modal would be overkill.
 
-Because Dialog delegates to arc-modal internally, it inherits all of Modal's accessibility features: focus trapping, Escape key dismissal, and backdrop click handling come for free. The \`variant="danger"\` option adds a red accent line and a subtle glow to the card border, reinforcing the severity of the action.
+Because Dialog delegates to arc-modal internally, it inherits all of Modal's accessibility features: focus trapping, Escape key dismissal, and backdrop click handling come for free. The \`variant="error"\` option adds a red accent line and a subtle glow to the card border, reinforcing the severity of the action.
 
 The component uses \`role="alertdialog"\` with \`aria-modal="true"\` to properly signal its interruptive nature to screen readers. The \`confirm()\` method returns a \`Promise<boolean>\` — call \`await dialog.confirm()\` and the promise resolves to \`true\` on confirm or \`false\` on cancel. Escape key and backdrop clicks both trigger cancellation.`,
 
@@ -33,7 +33,7 @@ The component uses \`role="alertdialog"\` with \`aria-modal="true"\` to properly
     do: [
       'Use Dialog for urgent, interruptive prompts — unsaved changes, session expiry, discard warnings',
       'Keep the message concise — one or two sentences explaining what will happen',
-      'Use variant="danger" when the confirmed action is destructive or irreversible',
+      'Use variant="error" when the confirmed action is destructive or irreversible',
       'Use the confirm() promise API for cleaner async flow in your logic',
       'Set specific button labels: "Discard Changes" is clearer than "Confirm"',
     ],
@@ -42,12 +42,12 @@ The component uses \`role="alertdialog"\` with \`aria-modal="true"\` to properly
       'Do not Stack multiple dialogs — resolve one before opening another',
       'Do not use Dialog for informational messages — use Alert or Toast instead',
       "Do not use Dialog for general-purpose overlays — that's what Modal is for",
-      'Do not use variant="danger" for non-destructive confirmations — it creates unnecessary anxiety',
+      'Do not use variant="error" for non-destructive confirmations — it creates unnecessary anxiety',
     ],
   },
 
   previewHtml: `<arc-button onclick="this.nextElementSibling.open = true" variant="secondary">Discard Draft</arc-button>
-<arc-dialog heading="Discard Draft?" message="You have unsaved changes that will be permanently lost. This action cannot be undone." confirm-label="Discard" cancel-label="Keep Editing" variant="danger"></arc-dialog>`,
+<arc-dialog heading="Discard Draft?" message="You have unsaved changes that will be permanently lost. This action cannot be undone." confirm-label="Discard" cancel-label="Keep Editing" variant="error"></arc-dialog>`,
 
   tabs: [
     {
@@ -58,7 +58,7 @@ The component uses \`role="alertdialog"\` with \`aria-modal="true"\` to properly
   message="You have unsaved changes that will be permanently lost."
   confirm-label="Discard"
   cancel-label="Keep Editing"
-  variant="danger"
+  variant="error"
 ></arc-dialog>
 
 <script>
@@ -91,7 +91,7 @@ function App() {
         message="You have unsaved changes that will be permanently lost."
         confirm-label="Discard"
         cancel-label="Keep Editing"
-        variant="danger"
+        variant="error"
       />
     </>
   );
@@ -120,7 +120,7 @@ async function handleDiscard() {
     message="You have unsaved changes that will be permanently lost."
     confirm-label="Discard"
     cancel-label="Keep Editing"
-    variant="danger"
+    variant="error"
   />
 </template>`,
     },
@@ -144,7 +144,7 @@ async function handleDiscard() {
   message="You have unsaved changes that will be permanently lost."
   confirmLabel="Discard"
   cancelLabel="Keep Editing"
-  variant="danger"
+  variant="error"
 />`,
     },
     {
@@ -162,7 +162,7 @@ import { Dialog } from '@arclux/arc-ui-angular';
       message="You have unsaved changes that will be permanently lost."
       confirmLabel="Discard"
       cancelLabel="Keep Editing"
-      variant="danger"
+      variant="error"
     />
   \`,
 })
@@ -194,7 +194,7 @@ async function handleDiscard() {
   message="You have unsaved changes that will be permanently lost."
   confirmLabel="Discard"
   cancelLabel="Keep Editing"
-  variant="danger"
+  variant="error"
 />`,
     },
     {
@@ -220,7 +220,7 @@ function App() {
         message="You have unsaved changes that will be permanently lost."
         confirmLabel="Discard"
         cancelLabel="Keep Editing"
-        variant="danger"
+        variant="error"
       />
     </>
   );

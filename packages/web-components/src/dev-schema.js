@@ -68,9 +68,9 @@ export default {
   "enums": {
    "variant": [
     "info",
-    "warning",
     "tip",
-    "danger"
+    "warning",
+    "error"
    ]
   },
   "slug": "callout"
@@ -699,8 +699,14 @@ export default {
    "columns",
    "rows",
    "striped",
-   "compact"
+   "density"
   ],
+  "enums": {
+   "density": [
+    "default",
+    "compact"
+   ]
+  },
   "slug": "table"
  },
  "arc-tag": {
@@ -718,7 +724,7 @@ export default {
     "secondary",
     "success",
     "warning",
-    "danger"
+    "error"
    ],
    "size": [
     "sm",
@@ -752,7 +758,7 @@ export default {
  "arc-alert": {
   "attrs": [
    "variant",
-   "compact",
+   "density",
    "dismissible",
    "heading"
   ],
@@ -762,6 +768,10 @@ export default {
     "success",
     "warning",
     "error"
+   ],
+   "density": [
+    "default",
+    "compact"
    ]
   },
   "slug": "alert"
@@ -828,7 +838,7 @@ export default {
   "enums": {
    "variant": [
     "default",
-    "danger"
+    "error"
    ]
   },
   "slug": "confirm"
@@ -857,7 +867,7 @@ export default {
   "enums": {
    "variant": [
     "default",
-    "danger"
+    "error"
    ]
   },
   "slug": "dialog"
@@ -1149,7 +1159,9 @@ export default {
    "size",
    "label",
    "name",
-   "value"
+   "value",
+   "required",
+   "readonly"
   ],
   "enums": {
    "size": [
@@ -1174,7 +1186,9 @@ export default {
    "name",
    "presets",
    "disabled",
-   "label"
+   "label",
+   "required",
+   "readonly"
   ],
   "slug": "color-picker"
  },
@@ -1184,7 +1198,9 @@ export default {
    "placeholder",
    "label",
    "name",
-   "disabled"
+   "disabled",
+   "required",
+   "readonly"
   ],
   "slug": "combobox"
  },
@@ -1203,7 +1219,10 @@ export default {
    "max",
    "placeholder",
    "disabled",
-   "label"
+   "label",
+   "open",
+   "required",
+   "readonly"
   ],
   "slug": "date-picker"
  },
@@ -1219,7 +1238,9 @@ export default {
    "placeholder",
    "disabled",
    "required",
-   "label"
+   "label",
+   "open",
+   "readonly"
   ],
   "slug": "date-range-picker"
  },
@@ -1327,7 +1348,8 @@ export default {
    "error",
    "size",
    "multiline",
-   "rows"
+   "rows",
+   "readonly"
   ],
   "enums": {
    "type": [
@@ -1367,7 +1389,9 @@ export default {
    "placeholder",
    "label",
    "name",
-   "disabled"
+   "disabled",
+   "required",
+   "readonly"
   ],
   "slug": "multi-select"
  },
@@ -1379,7 +1403,9 @@ export default {
    "step",
    "label",
    "name",
-   "disabled"
+   "disabled",
+   "required",
+   "readonly"
   ],
   "slug": "number-input"
  },
@@ -1389,7 +1415,9 @@ export default {
    "value",
    "name",
    "disabled",
-   "type"
+   "type",
+   "required",
+   "readonly"
   ],
   "enums": {
    "type": [
@@ -1410,7 +1438,8 @@ export default {
    "error",
    "size",
    "autocomplete",
-   "show-strength"
+   "show-strength",
+   "readonly"
   ],
   "enums": {
    "size": [
@@ -1430,7 +1459,9 @@ export default {
    "mask",
    "type",
    "separator",
-   "label"
+   "label",
+   "required",
+   "readonly"
   ],
   "enums": {
    "type": [
@@ -1447,7 +1478,9 @@ export default {
    "name",
    "disabled",
    "size",
-   "orientation"
+   "orientation",
+   "required",
+   "readonly"
   ],
   "enums": {
    "size": [
@@ -1479,7 +1512,9 @@ export default {
    "name",
    "disabled",
    "label",
-   "show-values"
+   "show-values",
+   "required",
+   "readonly"
   ],
   "slug": "range-slider"
  },
@@ -1489,7 +1524,8 @@ export default {
    "max",
    "name",
    "disabled",
-   "readonly"
+   "readonly",
+   "required"
   ],
   "slug": "rating"
  },
@@ -1499,7 +1535,8 @@ export default {
    "placeholder",
    "label",
    "disabled",
-   "loading"
+   "loading",
+   "open"
   ],
   "slug": "search"
  },
@@ -1519,7 +1556,9 @@ export default {
    "disabled",
    "size",
    "error",
-   "open"
+   "open",
+   "required",
+   "readonly"
   ],
   "enums": {
    "size": [
@@ -1538,7 +1577,9 @@ export default {
    "step",
    "name",
    "disabled",
-   "label"
+   "label",
+   "required",
+   "readonly"
   ],
   "slug": "slider"
  },
@@ -1585,13 +1626,16 @@ export default {
    "placeholder",
    "name",
    "disabled",
-   "error"
+   "error",
+   "required",
+   "readonly"
   ],
   "slug": "tag-input"
  },
  "arc-textarea": {
   "attrs": [
    "value",
+   "name",
    "placeholder",
    "label",
    "rows",
@@ -1601,7 +1645,8 @@ export default {
    "resize",
    "size",
    "auto-resize",
-   "error"
+   "error",
+   "required"
   ],
   "enums": {
    "resize": [
@@ -1643,7 +1688,10 @@ export default {
    "format",
    "placeholder",
    "disabled",
-   "label"
+   "label",
+   "open",
+   "required",
+   "readonly"
   ],
   "slug": "time-picker"
  },
@@ -1653,7 +1701,9 @@ export default {
    "disabled",
    "size",
    "label",
-   "name"
+   "name",
+   "required",
+   "readonly"
   ],
   "enums": {
    "size": [
@@ -1672,7 +1722,9 @@ export default {
    "disabled",
    "searchable",
    "source-label",
-   "target-label"
+   "target-label",
+   "required",
+   "readonly"
   ],
   "slug": "transfer-list"
  },
@@ -2029,12 +2081,16 @@ export default {
  },
  "arc-footer": {
   "attrs": [
-   "compact",
+   "density",
    "border",
    "contained",
    "align"
   ],
   "enums": {
+   "density": [
+    "default",
+    "compact"
+   ],
    "align": [
     "left",
     "center"

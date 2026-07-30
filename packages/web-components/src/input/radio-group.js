@@ -23,7 +23,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
 export class ArcRadioGroup extends FormControlMixin(LitElement) {
   static properties = {
     value:       { type: String, reflect: true },
-    name:        { type: String },
+    name:        { type: String, reflect: true },
     disabled:    { type: Boolean, reflect: true },
     size:        { type: String, reflect: true },
     orientation: { type: String, reflect: true },
@@ -153,7 +153,7 @@ export class ArcRadioGroup extends FormControlMixin(LitElement) {
   }
 
   _select(val) {
-    if (this.disabled) return;
+    if (this.disabled || this.readonly) return;
     this.value = val;
     this.dispatchEvent(new CustomEvent('arc-change', {
       detail: { value: this.value },

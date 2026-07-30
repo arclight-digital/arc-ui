@@ -15,6 +15,7 @@ let numberInputIdCounter = 0;
  * @prop {number} step - Increment and decrement step size. Arrow keys use this value, Shift+Arrow uses 10x this value.
  * @prop {string} label - Label text displayed above the control in uppercase accent font.
  * @prop {boolean} disabled - Disables interaction, reducing opacity to 40% and blocking pointer events.
+ * @prop {boolean} readonly - Prevents value changes from typing, stepper buttons, and arrow keys while keeping the field focusable and its value submitted.
  * @fires {CustomEvent<{ value: number }>} arc-change - Fired when the numeric value changes via buttons or keyboard
  * @csspart wrapper
  * @csspart label
@@ -204,10 +205,12 @@ export class ArcNumberInput extends FormControlMixin(LitElement) {
   }
 
   _decrement() {
+    if (this.readonly) return;
     this._setValue(this.value - this.step);
   }
 
   _increment() {
+    if (this.readonly) return;
     this._setValue(this.value + this.step);
   }
 
@@ -219,6 +222,7 @@ export class ArcNumberInput extends FormControlMixin(LitElement) {
   }
 
   _handleKeydown(e) {
+    if (this.readonly) return;
     const multiplier = e.shiftKey ? 10 : 1;
 
     if (e.key === 'ArrowUp') {
@@ -257,6 +261,7 @@ export class ArcNumberInput extends FormControlMixin(LitElement) {
             aria-label=${this.label || 'Number'}
             .value=${String(this.value)}
             ?disabled=${this.disabled}
+            ?readonly=${this.readonly}
             @change=${this._handleInput}
             @keydown=${this._handleKeydown}
             part="field"

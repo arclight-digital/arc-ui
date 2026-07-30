@@ -6,7 +6,7 @@ import { tokenStyles } from '../shared-styles.js';
  * button, for categorisation, filtering, and selection feedback.
  *
  * @tag arc-tag
- * @prop {'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger'} variant - Colour variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and danger provide semantic status colours.
+ * @prop {'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error'} variant - Colour variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and error provide semantic status colours.
  * @prop {string} color - Custom colour as an RGB triplet (e.g. `"77, 126, 247"`). When set, overrides the variant colours for border, text, background, and hover glow. Useful for data-driven category colours.
  * @prop {'sm' | 'md' | 'lg'} size - Controls the tag size.
  * @prop {boolean} removable - When true, shows a close button that fires `arc-remove` when clicked.
@@ -75,7 +75,7 @@ export class ArcTag extends LitElement {
         background: rgba(var(--color-warning-rgb), 0.06);
       }
 
-      :host([variant="danger"]) .tag {
+      :host([variant="error"]) .tag {
         border-color: rgba(var(--color-error-rgb), 0.2);
         color: color-mix(in srgb, var(--color-error), var(--text-primary) var(--accent-text-mix, 0%));
         background: rgba(var(--color-error-rgb), 0.06);
@@ -86,7 +86,7 @@ export class ArcTag extends LitElement {
       :host([variant="secondary"]) .tag:hover { box-shadow: 0 0 12px rgba(var(--accent-secondary-rgb), 0.15); }
       :host([variant="success"]) .tag:hover { box-shadow: 0 0 12px rgba(var(--color-success-rgb), 0.15); }
       :host([variant="warning"]) .tag:hover { box-shadow: 0 0 12px rgba(var(--color-warning-rgb), 0.15); }
-      :host([variant="danger"]) .tag:hover { box-shadow: 0 0 12px rgba(var(--color-error-rgb), 0.15); }
+      :host([variant="error"]) .tag:hover { box-shadow: 0 0 12px rgba(var(--color-error-rgb), 0.15); }
 
       /* Sizes */
       :host([size="sm"]) .tag { font-size: calc(var(--text-xs) - 1px); padding: 2px var(--space-sm); letter-spacing: 1.5px; }

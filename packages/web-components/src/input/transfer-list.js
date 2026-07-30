@@ -16,6 +16,7 @@ import './icon-button.js';
  * @prop {string} sourceLabel - Heading for the left (available) pane. Attribute: `source-label`.
  * @prop {string} targetLabel - Heading for the right (selected) pane. Attribute: `target-label`.
  * @prop {boolean} disabled - Disables the whole control, preventing interaction and reducing opacity.
+ * @prop {boolean} readonly - Prevents moving items between panes while the lists stay focusable and filterable; the selected values still submit with the form.
  * @fires {CustomEvent<{ value: string[] }>} arc-change - Fired after every move with `{ value }` -- the current array of selected values.
  * @csspart pane
  * @csspart pane-header
@@ -350,6 +351,7 @@ export class ArcTransferList extends FormControlMixin(LitElement) {
    * and (optionally) keeps focus in the origin pane on the nearest item.
    */
   _move(values, pane, { keepFocus = false } = {}) {
+    if (this.readonly) return;
     const movable = values.filter(v => {
       const opt = (this.options || []).find(o => o.value === v);
       return opt && !opt.disabled;
@@ -529,6 +531,7 @@ export class ArcTransferList extends FormControlMixin(LitElement) {
           data-pane=${pane}
           role="listbox"
           aria-multiselectable="true"
+          aria-readonly=${this.readonly ? 'true' : 'false'}
           aria-label=${label}
           part="listbox"
           @keydown=${(e) => this._onListKeyDown(e, pane)}

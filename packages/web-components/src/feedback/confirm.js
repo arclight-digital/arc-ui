@@ -13,7 +13,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {string} message - The body message explaining what the user is confirming. Used as the fallback for the default slot, so it is the simplest way to set the body and the only one available to the imperative `ArcConfirm.open()` API.
  * @prop {string} confirmLabel - Label for the confirm button. Use a specific verb like "Delete" or "Publish" instead of generic "OK".
  * @prop {string} cancelLabel - Label for the cancel button. Use a specific alternative like "Keep" or "Go back" when possible.
- * @prop {'default' | 'danger'} variant - Controls the confirm button style. Use "danger" for destructive actions — the confirm button renders in the error colour.
+ * @prop {'default' | 'error'} variant - Controls the confirm button style. Use "error" for destructive actions — the confirm button renders in the error colour.
  * @fires {CustomEvent<void>} arc-confirm - Fired when the user clicks the confirm button
  * @fires {CustomEvent<void>} arc-cancel - Fired when the user clicks cancel, presses Escape, or clicks the backdrop
  * @slot - Body content, for when the confirmation needs markup the `message` string cannot carry — a filename in `<code>`, an emphasised consequence, a short list of what is about to change. Falls back to `message` when nothing is slotted.

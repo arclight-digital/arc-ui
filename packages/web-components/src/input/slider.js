@@ -13,6 +13,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @prop {number} step - Increment granularity. The value snaps to multiples of this number.
  * @prop {string} label - Label text displayed above the slider with the current value shown on the right.
  * @prop {boolean} disabled - Disables interaction, reducing opacity to 40% and blocking pointer events.
+ * @prop {boolean} readonly - Prevents dragging and arrow-key changes while the thumb stays focusable and the value still submits.
  * @fires {CustomEvent<{ value: number }>} arc-input - Fired continuously as the user drags the thumb. Use for real-time preview updates like adjusting opacity, volume, or a CSS property live.
  * @fires {CustomEvent<{ value: number }>} arc-change - Fired once when the user releases the thumb, indicating the final committed value. Use for persisting the value to a database or triggering an expensive operation.
  * @csspart slider
@@ -198,6 +199,11 @@ export class ArcSlider extends FormControlMixin(LitElement) {
   }
 
   _onInput(e) {
+    // Native range inputs ignore the readonly attribute, so snap the thumb back.
+    if (this.readonly) {
+      e.target.value = String(this.value);
+      return;
+    }
     this.value = Number(e.target.value);
     this._updateFormValue();
     this.dispatchEvent(new CustomEvent('arc-input', {
@@ -208,6 +214,10 @@ export class ArcSlider extends FormControlMixin(LitElement) {
   }
 
   _onChange(e) {
+    if (this.readonly) {
+      e.target.value = String(this.value);
+      return;
+    }
     this.value = Number(e.target.value);
     this._updateFormValue();
     this.dispatchEvent(new CustomEvent('arc-change', {
@@ -238,6 +248,7 @@ export class ArcSlider extends FormControlMixin(LitElement) {
             aria-valuemin=${this.min}
             aria-valuemax=${this.max}
             aria-valuenow=${this.value}
+            aria-readonly=${this.readonly ? 'true' : 'false'}
             style="--fill-percent: ${this._fillPercent}%"
             @input=${this._onInput}
             @change=${this._onChange}

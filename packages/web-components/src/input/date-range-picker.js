@@ -20,6 +20,7 @@ import { ClickOutsideController } from '../shared/click-outside.js';
  * @prop {string} name - Form field name used when the interval value is submitted with a form.
  * @prop {boolean} required - Marks the control invalid (valueMissing) until a complete range is selected.
  * @prop {boolean} disabled - Disables the picker, reducing opacity and preventing the popup from opening.
+ * @prop {boolean} open - Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.
  * @fires {CustomEvent<{ start: string, end: string }>} arc-change - Fired when a complete range is committed (second day clicked or preset applied). detail: { start, end }
  * @csspart calendar
  * @csspart panel-title
@@ -34,6 +35,9 @@ import { ClickOutsideController } from '../shared/click-outside.js';
  * @csspart header
  */
 export class ArcDateRangePicker extends FormControlMixin(LitElement) {
+  /** Runs its own constraint logic — owns the whole validity flag set. */
+  static autoValidates = false;
+
   static properties = {
     start:       { type: String },
     end:         { type: String },
@@ -46,7 +50,7 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
     disabled:    { type: Boolean, reflect: true },
     required:    { type: Boolean, reflect: true },
     label:       { type: String },
-    _open:        { state: true },
+    open:        { type: Boolean, reflect: true },
     _viewMonth:   { state: true },
     _viewYear:    { state: true },
     _focusedIso:  { state: true },
@@ -352,7 +356,7 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
     this.disabled = false;
     this.required = false;
     this.label = '';
-    this._open = false;
+    this.open = false;
     this._viewMonth = null;
     this._viewYear = null;
     this._focusedIso = null;
@@ -360,8 +364,8 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
     this._announcement = '';
 
     this._clickOutside = new ClickOutsideController(this, {
-      onClickOutside: () => { this._open = false; },
-      when: () => this._open,
+      onClickOutside: () => { this.open = false; },
+      when: () => this.open,
     });
     this._handleEscape = this._handleEscape.bind(this);
   }
@@ -401,8 +405,8 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
   }
 
   _handleEscape(e) {
-    if (this._open && e.key === 'Escape') {
-      this._open = false;
+    if (this.open && e.key === 'Escape') {
+      this.open = false;
       this.shadowRoot.querySelector('input')?.focus();
     }
   }
@@ -412,9 +416,9 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
   }
 
   _toggleDropdown() {
-    if (this.disabled) return;
-    this._open = !this._open;
-    if (this._open) {
+    if (this.disabled || this.readonly) return;
+    this.open = !this.open;
+    if (this.open) {
       this._focusedIso = null;
       this._previewIso = null;
       const anchor = this.start || this.end;
@@ -468,7 +472,7 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
     }
     this._previewIso = null;
     this._announcement = `Range: ${this._dayAriaLabel(this.start)} to ${this._dayAriaLabel(this.end)}.`;
-    this._open = false;
+    this.open = false;
     this.shadowRoot.querySelector('input')?.focus();
 
     this.dispatchEvent(new CustomEvent('arc-change', {
@@ -486,7 +490,7 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
     this.end = this._toISO(today.getFullYear(), today.getMonth(), today.getDate());
     this._previewIso = null;
     this._announcement = `Range: ${this._dayAriaLabel(this.start)} to ${this._dayAriaLabel(this.end)}.`;
-    this._open = false;
+    this.open = false;
     this.shadowRoot.querySelector('input')?.focus();
 
     this.dispatchEvent(new CustomEvent('arc-change', {
@@ -674,8 +678,8 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
     if (changed.has('start') || changed.has('end') || changed.has('required')) {
       this._syncValidity();
     }
-    if (changed.has('_open')) {
-      if (this._open) {
+    if (changed.has('open')) {
+      if (this.open) {
         this._clickOutside.activate();
         this.updateComplete.then(() => {
           this.shadowRoot.querySelector('.day[tabindex="0"]')?.focus();
@@ -763,7 +767,7 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
             ?disabled=${this.disabled}
             role="combobox"
             aria-haspopup="dialog"
-            aria-expanded=${this._open ? 'true' : 'false'}
+            aria-expanded=${this.open ? 'true' : 'false'}
             aria-required=${this.required ? 'true' : 'false'}
             aria-label=${this.label || 'Choose date range'}
             @click=${this._toggleDropdown}
@@ -773,7 +777,7 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
 
         <div class="sr-only" role="status" aria-live="polite">${this._announcement}</div>
 
-        ${this._open ? html`
+        ${this.open ? html`
           <div class="dropdown" part="panel" role="dialog" aria-label="Date range picker">
             <div class="layout">
               ${hasPresets ? html`

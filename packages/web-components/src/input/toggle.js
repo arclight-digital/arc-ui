@@ -23,7 +23,7 @@ export class ArcToggle extends FormControlMixin(LitElement) {
     disabled: { type: Boolean, reflect: true },
     size:     { type: String, reflect: true },
     label:    { type: String },
-    name:     { type: String },
+    name:        { type: String, reflect: true },
   };
 
   static styles = [
@@ -163,7 +163,7 @@ export class ArcToggle extends FormControlMixin(LitElement) {
   }
 
   _toggle() {
-    if (this.disabled) return;
+    if (this.disabled || this.readonly) return;
     this.checked = !this.checked;
     this._updateFormValue();
     this.dispatchEvent(new CustomEvent('arc-change', {

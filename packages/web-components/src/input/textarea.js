@@ -9,6 +9,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @tag arc-textarea
  * @prop {string} label - Visible label rendered above the textarea in uppercase. Automatically linked to the field via `aria-labelledby`, ensuring screen readers announce it correctly.
  * @prop {string} value - The current text content of the textarea. Updated on every keystroke and emitted via `arc-input` and `arc-change` events.
+ * @prop {string} name - Form field name submitted with the value. Required for native form integration via ElementInternals.
  * @prop {string} placeholder - Hint text displayed inside the field when it is empty. Use it to show example input -- never as a substitute for the label.
  * @prop {number} rows - The number of visible text rows that set the initial height of the textarea. Does not limit content length -- the user can scroll or resize beyond this height.
  * @prop {number} maxlength - Maximum number of characters allowed. When set to a value greater than 0, a live counter appears below the field showing current length vs. limit, turning red when the limit is reached.
@@ -29,6 +30,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
 export class ArcTextarea extends FormControlMixin(LitElement) {
   static properties = {
     value:       { type: String },
+    name:        { type: String, reflect: true },
     placeholder: { type: String },
     label:       { type: String },
     rows:        { type: Number },
@@ -159,6 +161,7 @@ export class ArcTextarea extends FormControlMixin(LitElement) {
   constructor() {
     super();
     this.value = '';
+    this.name = '';
     this.placeholder = '';
     this.label = '';
     this.rows = 4;

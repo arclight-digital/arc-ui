@@ -12,7 +12,7 @@ import { getStatusIcon } from '../status-utils.js';
  * @prop {'info' | 'success' | 'warning' | 'error'} variant - Controls the semantic colour palette and icon. Use "info" for neutral guidance, "success" for confirmations, "warning" for caution states, and "error" for failures or blocking issues.
  * @prop {boolean} dismissible - When true, renders a close button in the top-right corner. Clicking it removes the alert from the DOM and fires an "arc-close" event that parent components can listen to.
  * @prop {string} heading - Optional bold heading rendered above the body slot. Use it for a scannable one-line summary so users can quickly gauge the alert's importance before reading the full message.
- * @prop {boolean} compact - Reduces padding and font sizes for inline or space-constrained usage.
+ * @prop {'default' | 'compact'} density - Visual density. 'compact' reduces padding and font sizes for inline or space-constrained usage.
  * @fires {CustomEvent<void>} arc-close - Fired when a dismissible alert is closed
  * @slot - Default content.
  * @csspart alert
@@ -24,7 +24,7 @@ import { getStatusIcon } from '../status-utils.js';
 export class ArcAlert extends LitElement {
   static properties = {
     variant:     { type: String, reflect: true },
-    compact:     { type: Boolean, reflect: true },
+    density: { type: String, reflect: true },
     dismissible: { type: Boolean, reflect: true },
     heading:     { type: String },
   };
@@ -92,10 +92,10 @@ export class ArcAlert extends LitElement {
       }
 
       /* Compact variant */
-      :host([compact]) .alert { padding: var(--space-sm) var(--space-md); gap: var(--space-sm); }
-      :host([compact]) .alert__icon-wrap { width: 24px; height: 24px; font-size: var(--text-sm); }
-      :host([compact]) .alert__heading { font-size: var(--text-sm); margin-bottom: 2px; }
-      :host([compact]) .alert__content { font-size: var(--text-xs); }
+      :host([density="compact"]) .alert { padding: var(--space-sm) var(--space-md); gap: var(--space-sm); }
+      :host([density="compact"]) .alert__icon-wrap { width: 24px; height: 24px; font-size: var(--text-sm); }
+      :host([density="compact"]) .alert__heading { font-size: var(--text-sm); margin-bottom: 2px; }
+      :host([density="compact"]) .alert__content { font-size: var(--text-xs); }
 
 
       @media (prefers-reduced-motion: reduce) {
@@ -113,7 +113,7 @@ export class ArcAlert extends LitElement {
   constructor() {
     super();
     this.variant = 'info';
-    this.compact = false;
+    this.density = 'default';
     this.dismissible = false;
     this.heading = '';
   }

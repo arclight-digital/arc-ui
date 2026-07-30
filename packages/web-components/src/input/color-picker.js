@@ -11,6 +11,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @prop {string[]} presets - Array of hex color strings to display as quick-select swatches below the hex input.
  * @prop {string} label - Label text displayed above the picker in uppercase accent font.
  * @prop {boolean} disabled - Disables all interaction, reducing opacity to 40% and blocking pointer events.
+ * @prop {boolean} readonly - Prevents changing the color via the area, hue slider, hex input, or swatches while the picker stays focusable and the value still submits.
  * @fires arc-change - Fired when the color changes via any input method. `event.detail.value` contains the hex string.
  * @csspart picker
  * @csspart label
@@ -292,6 +293,7 @@ export class ArcColorPicker extends FormControlMixin(LitElement) {
   /* ---- Area (saturation / lightness) interaction ---- */
 
   _onAreaPointerDown(e) {
+    if (this.readonly) return;
     e.preventDefault();
     this._draggingArea = true;
     this._areaEl = this.shadowRoot.querySelector('.picker__area');
@@ -320,6 +322,7 @@ export class ArcColorPicker extends FormControlMixin(LitElement) {
   /* ---- Hue slider interaction ---- */
 
   _onHuePointerDown(e) {
+    if (this.readonly) return;
     e.preventDefault();
     this._draggingHue = true;
     this._hueTrackEl = this.shadowRoot.querySelector('.picker__hue-track');
@@ -361,6 +364,7 @@ export class ArcColorPicker extends FormControlMixin(LitElement) {
   }
 
   _onHexBlur() {
+    if (this.readonly) return;
     let hex = this._hexInput.trim();
     if (!hex.startsWith('#')) hex = '#' + hex;
     if (/^#[0-9a-f]{6}$/i.test(hex)) {
@@ -387,6 +391,7 @@ export class ArcColorPicker extends FormControlMixin(LitElement) {
   /* ---- Preset swatch ---- */
 
   _selectPreset(hex) {
+    if (this.readonly) return;
     this.value = hex.toLowerCase();
     this._hexInput = this.value;
     this._parseHex(this.value);
@@ -457,6 +462,7 @@ export class ArcColorPicker extends FormControlMixin(LitElement) {
             type="text"
             maxlength="7"
             .value=${this._hexInput}
+            ?readonly=${this.readonly}
             @input=${this._onHexInput}
             @blur=${this._onHexBlur}
             @keydown=${this._onHexKeydown}

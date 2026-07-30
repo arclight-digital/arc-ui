@@ -8,7 +8,7 @@ import '../layout/container.register.js';
  *
  * @tag arc-footer
  * @requires arc-container
- * @prop {boolean} compact - Reduces internal padding and spacing throughout the footer. Use this in dashboard layouts or admin panels where vertical space is limited and the footer should feel lightweight rather than expansive.
+ * @prop {'default' | 'compact'} density - Visual density. 'compact' reduces internal padding and spacing throughout the footer — for dashboard layouts or admin panels where vertical space is limited.
  * @prop {boolean} border - Renders a subtle top border on the footer to visually separate it from the page content above. Enabled by default; disable it only when the footer sits against a dark background where the border would be redundant.
  * @prop {string} contained - Sets a max-width containment on the footer content. Accepts any CSS length value or named size token.
  * @prop {'left' | 'center'} align - Controls footer content alignment.
@@ -24,7 +24,7 @@ import '../layout/container.register.js';
  */
 export class ArcFooter extends LitElement {
   static properties = {
-    compact:   { type: Boolean, reflect: true },
+    density: { type: String, reflect: true },
     border:    { type: Boolean, reflect: true },
     contained: { type: String, reflect: true },
     align:     { type: String, reflect: true },
@@ -54,7 +54,7 @@ export class ArcFooter extends LitElement {
         padding-inline: 0;
       }
 
-      :host([compact]) .footer {
+      :host([density="compact"]) .footer {
         padding: var(--space-md);
       }
 
@@ -62,7 +62,7 @@ export class ArcFooter extends LitElement {
         margin-bottom: var(--space-xl);
       }
 
-      :host([compact]) .footer__brand {
+      :host([density="compact"]) .footer__brand {
         margin-bottom: var(--space-md);
       }
 
@@ -73,7 +73,7 @@ export class ArcFooter extends LitElement {
         margin-bottom: var(--space-xl);
       }
 
-      :host([compact]) .footer__columns {
+      :host([density="compact"]) .footer__columns {
         gap: var(--space-md);
         margin-bottom: var(--space-md);
       }
@@ -85,7 +85,7 @@ export class ArcFooter extends LitElement {
         margin-bottom: var(--space-lg);
       }
 
-      :host([compact]) .footer__social {
+      :host([density="compact"]) .footer__social {
         margin-bottom: var(--space-sm);
       }
 
@@ -116,7 +116,7 @@ export class ArcFooter extends LitElement {
 
   constructor() {
     super();
-    this.compact = false;
+    this.density = 'default';
     this.border = true;
     this.contained = null;
     this.align = 'left';

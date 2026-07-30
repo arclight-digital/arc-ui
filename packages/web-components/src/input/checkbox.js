@@ -27,7 +27,7 @@ export class ArcCheckbox extends FormControlMixin(LitElement) {
     disabled:      { type: Boolean, reflect: true },
     size:          { type: String, reflect: true },
     label:         { type: String },
-    name:          { type: String },
+    name:        { type: String, reflect: true },
     value:         { type: String },
   };
 
@@ -161,7 +161,7 @@ export class ArcCheckbox extends FormControlMixin(LitElement) {
   }
 
   _toggle() {
-    if (this.disabled) return;
+    if (this.disabled || this.readonly) return;
     this.indeterminate = false;
     this.checked = !this.checked;
     this._updateFormValue();

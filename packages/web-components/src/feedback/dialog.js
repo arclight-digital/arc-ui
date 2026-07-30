@@ -13,7 +13,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {string} message - Dialog body message
  * @prop {string} confirmLabel - Text for the confirm button
  * @prop {string} cancelLabel - Text for the cancel button
- * @prop {'default' | 'danger'} variant - Visual variant — danger adds red accent line, glow border, and red confirm button
+ * @prop {'default' | 'error'} variant - Visual variant — error adds red accent line, glow border, and red confirm button
  * @fires {CustomEvent<void>} arc-confirm - Fired when the confirm button is clicked
  * @fires {CustomEvent<void>} arc-cancel - Fired when cancel, escape, or backdrop click occurs
  * @csspart body
