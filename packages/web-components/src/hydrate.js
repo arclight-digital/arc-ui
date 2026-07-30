@@ -28,33 +28,21 @@
  * Not needed by consumers who don't server-render. It costs nothing at runtime
  * beyond the import, but it is meaningless without declarative shadow DOM in
  * the payload.
+ *
+ * **This module must not import anything that reaches lit-element.** It looks
+ * like a safe convenience — importing `LitElement` to check the hook landed, say
+ * — and it is the one thing that breaks it. The support module works by setting
+ * `globalThis.litElementHydrateSupport`, which lit-element reads once while its
+ * own module evaluates; a bundler hoists a chunk's cross-chunk imports above
+ * that chunk's own module bodies, so importing lit-element from here pulls it
+ * (and any component registration bundled alongside it) into evaluation *before*
+ * this file's import of the support module has run. The hook then arrives too
+ * late for those components, silently: they render a second copy of their
+ * template above the server's markup, leaving two default slots of which only
+ * the first is assigned.
+ *
+ * That is not hypothetical. Adding such an import here left exactly the nine
+ * eagerly-registered components on arcui.dev unpatched while the other 176
+ * hydrated correctly.
  */
 import '@lit-labs/ssr-client/lit-element-hydrate-support.js';
-import { LitElement } from 'lit';
-
-/**
- * Apply the hook ourselves if lit-element got there first.
- *
- * That module does not patch anything directly — it assigns
- * `globalThis.litElementHydrateSupport`, which lit-element reads once, while
- * *its own* module is evaluating. Import this file after lit-element has
- * already run and the hook is set to a function nobody will ever call: no
- * error, no warning, and every component renders a second copy of its template
- * above the server's markup instead of adopting it. Two default slots then
- * exist and only the first is assigned, so server-rendered content silently
- * loses its slotted children.
- *
- * "Just import it first" is the documented advice and it is not sufficient.
- * Module evaluation order is the bundler's to decide, and any dependency that
- * reaches lit-element before this file wins — which is exactly what happened on
- * arcui.dev, where the hook was set correctly and did nothing.
- *
- * The hook redefines `observedAttributes` as an *own* property of LitElement to
- * append `defer-hydration`; unpatched, the accessor is inherited from
- * ReactiveElement. That is the hook's own fingerprint, so this detects the real
- * thing rather than a flag we set beside it — and unlike reading the getter, it
- * does not force the class to finalize.
- */
-if (!Object.prototype.hasOwnProperty.call(LitElement, 'observedAttributes')) {
-  globalThis.litElementHydrateSupport({ LitElement });
-}

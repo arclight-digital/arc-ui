@@ -45,33 +45,27 @@
  * of stylesheets shared across every page. The remaining growth is the rendered
  * shadow content itself, which is the thing being bought.
  *
- * ## Not done yet — why this is off by default
+ * ## Hydration depends on a chunking rule, not on import order
  *
- * The markup is right and every page renders, but Lit is **not adopting it**.
- * On a built page 425 of 426 elements end up holding the server's markers *and*
- * a second, client-rendered copy of the same template above them — so each has
- * two default slots, only the first is assigned, and the server's slotted
- * children go unassigned. axe sees the result as buttons and links with no
- * accessible name: 9 critical and 41 serious violations against a gate that is
- * otherwise at zero.
+ * Getting Lit to *adopt* this markup rather than render over it took three
+ * fixes, and the load-bearing one is in `docs/astro.config.mjs`: hydration
+ * support is forced into a chunk of its own via `manualChunks`. Without that
+ * the module is small enough for Rollup to inline it into the entry chunk,
+ * while the components stay separate chunks — and a chunk's cross-chunk imports
+ * are hoisted above its own inlined code, so the hook landed after all 185
+ * components had been defined. As its own chunk it is a cross-chunk import too,
+ * and those keep their relative source order.
  *
- * Ruled out so far, each empirically:
- * - Not the stylesheet lift. `ARC_DSD_LIFT=0` fails identically.
- * - Not a missing hydration bundle. It was missing — `src/hydrate.js` was not
- *   in the package's `sideEffects`, so bundlers dropped the import — and fixing
- *   that changed nothing here.
- * - Not the documented import-order rule. Splitting hydrate into its own module
- *   script, which is the only ordering guarantee bundler chunking does not
- *   reorder, changed nothing either.
- * - Not two copies of lit. One `lit@3.3.2` in the tree, one lit-element chunk
- *   in the bundle.
+ * Two things that look like fixes and are not: putting the import first inside
+ * the script (Rollup hoists past it, 0 of 185 patched), and splitting it into a
+ * second `<script>` (Astro does not preserve the source order of sibling script
+ * blocks — it emitted the component block first).
  *
- * What the evidence says: `createRenderRoot` is demonstrably the patched
- * version, yet elements take the non-hydrating branch — which is only reachable
- * if `this.shadowRoot` was falsy when they first updated. Next step is a
- * genuine minimal reproduction: DSD plus hydrate plus one component, served
- * without Astro or a bundler. The first attempt at that did not resolve its
- * bare specifiers and so proved nothing.
+ * The symptom, worth recognising: elements end up holding the server's markers
+ * *and* a second client-rendered copy above them, so each has two default slots
+ * of which only the first is assigned, and axe reports buttons and links with
+ * no accessible name. `<!--lit-part-->` comments surviving in a shadow root is
+ * hydration working, not failing — hydration preserves them.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -90,20 +84,14 @@ const SHADOW_STYLE = /(<template shadowroot(?:mode)?="[^"]*"[^>]*>)<style>([\s\S
 const ICON_NAME = /<arc-icon\b[^>]*\bname=["']([^"']+)["']/g;
 
 /**
- * **Opt-in until hydration adoption is proven.** Run it with `ARC_DSD=1 pnpm
- * build`; a default build skips it entirely, which is how the before/after
- * numbers above were taken. The dev server never runs it either — this is an
- * `astro:build:done` hook — so dev renders everything client-side, as before.
- *
- * The reason for the gate is in the module comment under "Not done yet": the
- * markup this produces is correct, but Lit is not yet adopting it, and shipping
- * unadopted DSD is worse than shipping none.
- *
- * `ARC_DSD_LIFT=0` keeps the stylesheets inline, which is how the lift was
- * ruled out as the cause of that.
+ * `ARC_DSD=0 pnpm build` skips the pass, which is how the before/after numbers
+ * above were taken; `ARC_DSD_LIFT=0` keeps the stylesheets inline, which is how
+ * the lift was ruled out while diagnosing hydration. The dev server never runs
+ * it either — this is an `astro:build:done` hook — so dev renders everything
+ * client-side, as before.
  */
 export default function arcDsd({
-  enabled = process.env.ARC_DSD === '1',
+  enabled = process.env.ARC_DSD !== '0',
   lift = process.env.ARC_DSD_LIFT !== '0',
 } = {}) {
   return {

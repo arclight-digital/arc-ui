@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 import './icon-button.js';
@@ -536,6 +536,21 @@ export class ArcTransferList extends FormControlMixin(LitElement) {
     else this._targetQuery = e.target.value;
   }
 
+  /**
+   * One pane, listbox role and all.
+   *
+   * The role is conditional because a listbox has to contain options:
+   * `role="listbox"` wrapped around nothing but an empty-state message fails
+   * aria-required-children, and a screen reader announces a list with no items
+   * instead of the message that says so. An empty pane drops the role and the
+   * listbox-only attributes with it, and takes them back the moment it has
+   * options.
+   *
+   * Server rendering is what surfaced this. `items` is a property rather than
+   * an attribute, so an un-hydrated pane is genuinely empty in the delivered
+   * HTML — a state that previously existed only between two client renders and
+   * so was never in the DOM long enough to audit.
+   */
   _renderPane(pane) {
     const label = this._paneLabel(pane);
     const all = this._paneItems(pane);
@@ -566,9 +581,9 @@ export class ArcTransferList extends FormControlMixin(LitElement) {
         <div
           class="tl__listbox"
           data-pane=${pane}
-          role="listbox"
-          aria-multiselectable="true"
-          aria-readonly=${this.readonly ? 'true' : 'false'}
+          role=${items.length > 0 ? 'listbox' : nothing}
+          aria-multiselectable=${items.length > 0 ? 'true' : nothing}
+          aria-readonly=${items.length > 0 ? (this.readonly ? 'true' : 'false') : nothing}
           aria-label=${label}
           part="listbox"
           @keydown=${(e) => this._onListKeyDown(e, pane)}

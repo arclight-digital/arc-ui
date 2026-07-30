@@ -101,24 +101,19 @@ const siteJsonLd = {
         get an instant swap instead of Astro's simulated fade-out/fade-in,
         which reads as a full-page flicker. Native browsers still cross-fade. */}
     <ViewTransitions fallback="swap" />
-    {/* Hydration support, deliberately in a script of its own.
-
-        The build's arc-dsd pass ships every component with its shadow root
-        already attached and painted. Lit only adopts that DOM if hydration
-        support is installed before the component's class is defined; otherwise
-        it renders a second copy of the template into the same shadow root,
-        leaving two default slots of which only the first is assigned.
-
-        Putting the import first inside the script below is not enough. Rollup
-        hoists a chunk's cross-chunk imports above its own inlined module
-        bodies, so the chunk carrying lit-element evaluated before this module
-        ran no matter where the import sat in the source. Two separate module
-        scripts execute in document order, which is the ordering guarantee that
-        actually holds. */}
-    <script>
+        <script>
+      // Hydration support, and it must stay the first import in this block.
+      // arc-dsd ships every component with its shadow root already attached and
+      // painted; Lit only adopts that DOM if this is in place before the class
+      // is defined, and otherwise renders a second copy of the template into the
+      // same root, leaving two default slots of which only the first is
+      // assigned.
+      //
+      // It belongs here rather than in a script of its own: Astro does not
+      // preserve the source order of sibling <script> blocks, and emitted the
+      // component block first when this was split out.
       import '@arclux/arc-ui/hydrate';
-    </script>
-    <script>
+
       // Critical-first registration: the shell components every page shows
       // above the fold load synchronously in a small chunk, so the frame
       // upgrades almost immediately. The full 164-component barrel follows

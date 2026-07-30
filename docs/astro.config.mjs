@@ -17,6 +17,30 @@ export default defineConfig({
     }),
   ],
   vite: {
+    build: {
+      rollupOptions: {
+        output: {
+          // Force Lit's hydration support into a chunk of its own.
+          //
+          // It has to evaluate before any component class is defined, and
+          // importing it first does not achieve that on its own: the module is
+          // small, so Rollup inlines it into the entry chunk, while the
+          // components stay separate chunks — and a chunk's cross-chunk imports
+          // are hoisted above its own inlined code. The hook was therefore
+          // assigned after all 185 components had already been defined.
+          //
+          // As its own chunk it becomes a cross-chunk import too, and those keep
+          // their source order relative to each other. Splitting it into a
+          // second <script> does not work either: Astro does not preserve the
+          // order of sibling script blocks.
+          manualChunks(id) {
+            if (id.includes('ssr-client') || id.endsWith('arc-ui/src/hydrate.js')) {
+              return 'arc-hydrate';
+            }
+          },
+        },
+      },
+    },
     ssr: {
       // lit and its packages are deliberately absent. They were here from the
       // first commit with no recorded reason, and bundling them gives Astro's
