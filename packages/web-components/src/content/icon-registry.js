@@ -21,15 +21,25 @@ const _resolved = new Map();
  *
  * Read lazily rather than at module load, so it does not matter whether the
  * payload tag comes before or after the bundle that registers the components.
+ *
+ * Keyed on the payload *element*, not on a read-once flag. Under a client-side
+ * router the document is replaced without the module being re-evaluated, so a
+ * flag would leave every page after the first reading the payload of the page
+ * that happened to load first — and any icon only the new page uses resolves to
+ * null. On a server-rendered page that is not a missing glyph but a hydration
+ * mismatch: the server painted the SVG and the client renders the empty-slot
+ * fallback into the DOM being adopted. Comparing node identity re-reads exactly
+ * when the document brings a new payload, and costs one getElementById
+ * otherwise.
  */
 const ICON_PAYLOAD_ID = 'arc-icon-payload';
-let _payloadRead = false;
+let _payloadNode = null;
 
 function readInlinePayload() {
-  if (_payloadRead || typeof document === 'undefined') return;
-  _payloadRead = true;
+  if (typeof document === 'undefined') return;
   const el = document.getElementById(ICON_PAYLOAD_ID);
-  if (!el) return;
+  if (!el || el === _payloadNode) return;
+  _payloadNode = el;
   try {
     const icons = JSON.parse(el.textContent);
     // Anything registered by hand wins: a consumer overriding an icon should

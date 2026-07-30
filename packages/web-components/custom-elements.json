@@ -4,6 +4,27 @@
   "modules": [
     {
       "kind": "javascript-module",
+      "path": "src/astro-router.js",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "installAstroRouter",
+          "description": "Install the listener. Safe to call more than once and on the server, where it\nreturns immediately."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "installAstroRouter",
+          "declaration": {
+            "name": "installAstroRouter",
+            "module": "src/astro-router.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/content/accordion-item.js",
       "declarations": [
         {

@@ -114,6 +114,10 @@ const siteJsonLd = {
       // component block first when this was split out.
       import '@arclux/arc-ui/hydrate';
 
+      // Keep the server-rendered shadow roots across ClientRouter navigations,
+      // which otherwise fetch them and throw them away.
+      import '@arclux/arc-ui/astro-router';
+
       // Critical-first registration: the shell components every page shows
       // above the fold load synchronously in a small chunk, so the frame
       // upgrades almost immediately. The full 164-component barrel follows
