@@ -9,12 +9,11 @@ import './toast.js';
  * Queueing/stacking policy layer over arc-toast. Composes an internal <arc-toast> (which owns
  * rendering, timers, and a11y) and adds: max-visible capping with a FIFO queue, message+variant
  * deduplication, queue overflow trimming, and a document-level `arc-toast` event channel.
- * Composition notes (same-package couplings, kept deliberately minimal): - arc-toast.show() does
- * not return an id, so after each show() we read the id it just assigned from its internal counter
- * (`_counter`). - arc-toast has no public dismiss method, so dismiss()/clear() call its internal
- * `_dismiss(id)`. - arc-toast has no update API for a visible toast, so a dedupe hit on a visible
- * toast is re-shown with a "(×N)" suffix and the stale entry is dismissed — the least hacky option
- * available (mutating arc-toast's internal reactive state from outside would be worse).
+ * Composes an internal <arc-toast> through its public API only: show() returns the
+ * id it assigned and dismiss() takes one back, so the manager holds no knowledge
+ * of arc-toast's internals. The one remaining seam is that arc-toast has no
+ * update-in-place API, so a dedupe hit on a *visible* toast is re-shown with a
+ * "(×N)" suffix and the stale entry dismissed.
  *
  * @tag arc-toast-manager
  * @requires arc-toast
@@ -120,7 +119,7 @@ export class ArcToastManager extends LitElement {
     const entry = this._visible.find(e => e.id === id);
     if (entry) {
       // Removal from _visible happens in _onInnerDismiss.
-      this._toastEl?._dismiss(entry.innerId);
+      this._toastEl?.dismiss(entry.innerId);
       return;
     }
     const before = this._queue.length;
@@ -132,7 +131,7 @@ export class ArcToastManager extends LitElement {
   clear() {
     this._queue = [];
     const toast = this._toastEl;
-    for (const entry of [...this._visible]) toast?._dismiss(entry.innerId);
+    for (const entry of [...this._visible]) toast?.dismiss(entry.innerId);
     this._notify();
   }
 
@@ -151,9 +150,7 @@ export class ArcToastManager extends LitElement {
   }
 
   _showOnInner(entry) {
-    const toast = this._toastEl;
-    toast.show({ ...entry.options, message: this._label(entry) });
-    entry.innerId = toast._counter; // id arc-toast just assigned (see class doc)
+    entry.innerId = this._toastEl.show({ ...entry.options, message: this._label(entry) });
   }
 
   /** Dedupe bump on a visible toast: re-show with (×N), drop the stale one. */
@@ -162,7 +159,7 @@ export class ArcToastManager extends LitElement {
     if (!toast) return;
     const staleId = entry.innerId;
     this._showOnInner(entry);
-    toast._dismiss(staleId); // its arc-close no longer matches entry.innerId → ignored
+    toast.dismiss(staleId); // its arc-close no longer matches entry.innerId → ignored
   }
 
   _release() {

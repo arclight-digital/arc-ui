@@ -45,7 +45,8 @@ async function mountButton() {
 }
 
 describe('a :root override reaches components', () => {
-  const touched = ['--space-md', '--radius-md', '--z-dropdown', '--touch-min', '--body-size'];
+  const touched = ['--space-md', '--radius-md', '--z-dropdown', '--touch-min',
+                   '--text-md', '--accent-primary'];
   afterEach(() => {
     for (const t of touched) document.documentElement.style.removeProperty(t);
     cleanup();
@@ -56,7 +57,6 @@ describe('a :root override reaches components', () => {
     ['--radius-md', '10px', '3px'],
     ['--z-dropdown', '1000', '42'],
     ['--touch-min', '24px', '55px'],
-    ['--body-size', '17px', '23px'],
   ];
 
   for (const [token, def, override] of cases) {
@@ -69,6 +69,16 @@ describe('a :root override reaches components', () => {
       expect(seen(el, token), `${token} after :root override`).to.equal(override);
     });
   }
+
+  it('reaches a derived token through its base rather than directly', async () => {
+    // --body-size is var(--text-md), a composition, so it is deliberately NOT
+    // forwarded — see below. The capability is preserved through the base token:
+    // overriding --text-md moves --body-size with it.
+    const el = await mountButton();
+    document.documentElement.style.setProperty('--text-md', '23px');
+    await el.updateComplete;
+    expect(seen(el, '--body-size')).to.equal('23px');
+  });
 
   it('reaches a second, unrelated component too', async () => {
     const card = document.createElement('arc-card');
@@ -95,6 +105,51 @@ describe('a :root override reaches components', () => {
     expect(seen(el, '--space-md')).to.equal('16px');
     expect(seen(el, '--radius-md')).to.equal('10px');
     expect(seen(el, '--touch-min')).to.equal('24px');
+  });
+});
+
+describe('compositions are deliberately not forwarded', () => {
+  afterEach(() => {
+    document.documentElement.style.removeProperty('--accent-primary');
+    cleanup();
+  });
+
+  it('keeps a per-instance --accent-primary override flowing into its aliases', async () => {
+    // The regression this guards: `inherit` resolves to the parent's *substituted*
+    // value, so forwarding --interactive would freeze it to the parent's accent and
+    // `arc-button { --accent-primary: … }` would stop recolouring the button —
+    // :host's `--interactive: var(--accent-primary)` would never resolve locally.
+    // Only literal-valued tokens may be forwarded.
+    const el = await mountButton();
+    expect(seen(el, '--interactive')).to.equal('rgb(77, 126, 247)');
+
+    el.style.setProperty('--accent-primary', 'rgb(1, 2, 3)');
+    await el.updateComplete;
+    expect(seen(el, '--interactive'), 'alias followed the instance').to.equal('rgb(1, 2, 3)');
+  });
+
+  it('forwards no token whose value contains a var() reference', async () => {
+    const cssText2 = cssText;
+    const from = cssText2.indexOf('Let a :root override');
+    const block = cssText2.slice(from, cssText2.indexOf('\n}', from));
+    const forwarded = [...block.matchAll(/(--[a-z0-9_-]+): inherit;/g)].map((m) => m[1]);
+
+    // Look each one up in the :root block and confirm it is a literal.
+    const rootFrom = cssText2.indexOf(':root {');
+    const root = cssText2.slice(rootFrom, cssText2.indexOf('\n}', rootFrom));
+    const values = new Map(
+      [...root.matchAll(/(--[a-zA-Z0-9_-]+)\s*:\s*([^;]+);/g)].map((m) => [m[1], m[2]]));
+
+    const compositions = forwarded.filter((n) => (values.get(n) || '').includes('var('));
+    expect(compositions, 'these would freeze to the parent value').to.deep.equal([]);
+  });
+
+  it('does not forward the semantic aliases', async () => {
+    const from = cssText.indexOf('Let a :root override');
+    const block = cssText.slice(from, cssText.indexOf('\n}', from));
+    for (const n of ['--interactive', '--surface-raised', '--divider', '--focus-glow']) {
+      expect(block, n).to.not.include(`${n}: inherit`);
+    }
   });
 });
 

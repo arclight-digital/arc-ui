@@ -170,6 +170,14 @@ export class ArcToast extends LitElement {
     this._timers.add(timer);
   }
 
+  /**
+   * Show a toast.
+   *
+   * @returns {number} the toast's id, for a later dismiss(). Returning it is what
+   *   lets a policy layer track toasts it has shown; arc-toast-manager used to
+   *   read the private counter after each call to work out what id it had just
+   *   been given.
+   */
   show({ message, variant = 'info', duration, action, actionLabel, persistent = false }) {
     const id = ++this._counter;
     const dur = duration ?? this.duration;
@@ -178,6 +186,16 @@ export class ArcToast extends LitElement {
     if (!persistent && dur > 0) {
       this._setTimer(() => this._dismiss(id), dur);
     }
+    return id;
+  }
+
+  /**
+   * Dismiss a toast by the id show() returned. Unknown ids are ignored.
+   *
+   * @param {number} id
+   */
+  dismiss(id) {
+    this._dismiss(id);
   }
 
   _handleAction(toast) {

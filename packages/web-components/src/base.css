@@ -453,23 +453,13 @@
   arc-tooltip, arc-top-bar, arc-transfer-list, arc-tree-item, arc-tree-view, arc-truncate,
   arc-typewriter, arc-value-card, arc-virtual-list
 ) {
-  --display-xl-size: inherit;
-  --display-xl-weight: inherit;
   --display-xl-spacing: inherit;
-  --heading-size: inherit;
-  --heading-weight: inherit;
   --heading-lh: inherit;
-  --body-size: inherit;
-  --body-weight: inherit;
   --body-lh: inherit;
   --wordmark-size: inherit;
-  --wordmark-weight: inherit;
   --wordmark-spacing: inherit;
-  --section-title-size: inherit;
-  --section-title-weight: inherit;
   --section-title-spacing: inherit;
   --ui-accent-size: inherit;
-  --ui-accent-weight: inherit;
   --ui-accent-spacing: inherit;
   --code-size: inherit;
   --code-lh: inherit;
@@ -503,22 +493,6 @@
   --z-modal: inherit;
   --z-toast: inherit;
   --z-max: inherit;
-  --glow-hover: inherit;
-  --focus-ring: inherit;
-  --focus-glow: inherit;
-  --interactive: inherit;
-  --interactive-rgb: inherit;
-  --interactive-hover: inherit;
-  --interactive-active: inherit;
-  --interactive-focus: inherit;
-  --interactive-focus-ring: inherit;
-  --interactive-muted: inherit;
-  --surface-base: inherit;
-  --surface-primary: inherit;
-  --surface-raised: inherit;
-  --surface-overlay: inherit;
-  --surface-hover: inherit;
-  --divider: inherit;
   --touch-min: inherit;
   --touch-pad: inherit;
   --max-width: inherit;

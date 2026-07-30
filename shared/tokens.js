@@ -831,7 +831,19 @@ function renderTokenForwarding(tags) {
 
   // Derived from the :host layer itself rather than a hand-kept list, so a token
   // added to the tree is forwarded automatically.
-  const names = [...generateHostTokensCSS('').matchAll(/^(--[a-zA-Z0-9_-]+)\s*:/gm)]
+  // Only tokens whose value is a *literal* may be forwarded.
+  //
+  // `inherit` resolves to the parent's already-substituted value, so forwarding a
+  // composition freezes it: --interactive: inherit would take the parent's
+  // resolved accent, and `arc-button { --accent-primary: red }` would stop
+  // recolouring the button because :host's --interactive: var(--accent-primary)
+  // never gets to resolve in the element's own context. Compositions must stay
+  // local. Nothing is lost by skipping them — each derives from a base token that
+  // is itself reachable: --interactive from --accent-primary (a colour, never on
+  // :host, so already inherited) and --body-size from --text-md (via its private
+  // mirror).
+  const names = [...generateHostTokensCSS('').matchAll(/^(--[a-zA-Z0-9_-]+)\s*:\s*([^;]+);/gm)]
+    .filter(([, , value]) => !value.includes('var('))
     .map((m) => m[1])
     .filter((n) => !NOT_FORWARDED.test(n));
 

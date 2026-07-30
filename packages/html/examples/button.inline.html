@@ -9,17 +9,17 @@
           transition-duration: 0.01ms !important; }
   }
   .arc-button:not([data-data-variant="ghost"]):not([data-data-variant="secondary"]) .btn:hover,
-      .arc-button:not([data-data-variant="ghost"]):not([data-data-variant="secondary"]) a:hover { box-shadow: inherit; }
+      .arc-button:not([data-data-variant="ghost"]):not([data-data-variant="secondary"]) a:hover { box-shadow: 0 0 8px rgba(130, 164, 250,0.5), 0 0 24px rgba(130, 164, 250,0.2), 0 0 48px rgba(130, 164, 250,0.08); }
   .arc-button:not([data-data-variant="ghost"]):not([data-data-variant="secondary"]) .btn:active,
       .arc-button:not([data-data-variant="ghost"]):not([data-data-variant="secondary"]) a:active,
       .arc-button[data-variant="primary"] .btn:active,
-      .arc-button[data-variant="primary"] a:active { transform: scale(0.97); box-shadow: 0 0 8px rgba(inherit,0.5); }
+      .arc-button[data-variant="primary"] a:active { transform: scale(0.97); box-shadow: 0 0 8px rgba(130, 164, 250,0.5); }
   .arc-button[data-variant="secondary"] .btn:active,
       .arc-button[data-variant="secondary"] a:active { transform: scale(0.97);
-        background: rgba(inherit,0.05); }
+        background: rgba(130, 164, 250,0.05); }
   .arc-button[data-variant="ghost"] .btn:active,
       .arc-button[data-variant="ghost"] a:active { transform: scale(0.97);
-        background: inherit; }
+        background: rgb(26, 26, 80); }
 </style>
 <span class="arc-button" style="display: inline-flex">
   <button class="btn" type="button" aria-busy="false">Button</button>
