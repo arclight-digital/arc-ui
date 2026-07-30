@@ -7,8 +7,13 @@ import { ArcToast } from '@arclux/arc-ui/toast';
 export interface ToastProps {
   position?: 'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center';
   duration?: number;
+  maxVisible?: number;
+  dedupe?: boolean;
+  queueLimit?: number;
   className?: string;
   children?: React.ReactNode;
+  onArcQueueOverflow?: (e: CustomEvent) => void;
+  onArcQueueChange?: (e: CustomEvent) => void;
   onArcClose?: (e: CustomEvent) => void;
 }
 
@@ -17,6 +22,8 @@ export const Toast = createComponent({
   elementClass: ArcToast,
   react: React,
   events: {
+    onArcQueueOverflow: 'arc-queue-overflow' as EventName<CustomEvent>,
+    onArcQueueChange: 'arc-queue-change' as EventName<CustomEvent>,
     onArcClose: 'arc-close' as EventName<CustomEvent>,
   },
 });

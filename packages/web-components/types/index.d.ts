@@ -2666,27 +2666,16 @@ export declare class ArcTimelineItem extends LitElement {
 
 /**
  * `<arc-toast>`
- * Events: arc-close
+ * Events: arc-queue-overflow, arc-queue-change, arc-close
  */
 export declare class ArcToast extends LitElement {
   /** Anchors the toast stack to a fixed edge of the viewport. Top-right is the most conventional position for web applications. Bottom positions work well for media players or editors where the top area is occupied by toolbars. @default 'top-right' */
   position: 'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center';
   /** Time in milliseconds before a toast auto-dismisses. Applies as the default for every show() call but can be overridden per-toast via the duration option in the show() payload. Set to 0 to disable auto-dismiss entirely, requiring the user to click the close button. @default 4000 */
   duration: number;
-}
-
-/**
- * `<arc-toast-manager>`
- * Events: arc-queue-overflow, arc-close, arc-queue-change
- */
-export declare class ArcToastManager extends LitElement {
-  /** Forwarded to the inner arc-toast. Anchors the toast stack to a fixed edge of the viewport. @default 'top-right' */
-  position: 'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center';
-  /** Forwarded to the inner arc-toast as the default auto-dismiss time in milliseconds. Overridable per-toast via the duration option in the show() payload; pass persistent: true (or duration 0) to require manual dismissal. @default 4000 */
-  duration: number;
-  /** Maximum number of toasts visible at once (attribute: max-visible). Further show() calls queue FIFO and release as visible toasts dismiss. @default 3 */
+  /** Maximum toasts on screen at once (attribute: max-visible). Further show() calls queue FIFO and release as visible toasts dismiss. Set to 0 for no cap. @default 3 */
   maxVisible: number;
-  /** When true, a show() whose message and variant match a visible or queued toast is coalesced: visible matches re-show with a "(×N)" counter suffix and a fresh timer; queued matches bump their counter in place. Set the property to false from JS to disable. @default true */
+  /** When true, a show() whose message and variant match a visible or queued toast is coalesced: the existing toast gains a "(×N)" counter and a fresh timer instead of a second toast appearing. Set the property to false from JS to disable. @default true */
   dedupe: boolean;
   /** Maximum queued (not visible) toasts (attribute: queue-limit). Beyond it the oldest queued entries are dropped and arc-queue-overflow fires with the drop count. @default 20 */
   queueLimit: number;
@@ -3061,7 +3050,6 @@ declare global {
     'arc-timeline': ArcTimeline;
     'arc-timeline-item': ArcTimelineItem;
     'arc-toast': ArcToast;
-    'arc-toast-manager': ArcToastManager;
     'arc-toggle': ArcToggle;
     'arc-toolbar': ArcToolbar;
     'arc-tooltip': ArcTooltip;

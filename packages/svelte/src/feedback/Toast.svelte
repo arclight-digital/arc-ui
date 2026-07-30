@@ -6,6 +6,9 @@
   interface Props {
     position?: 'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center';
     duration?: number;
+    maxVisible?: number;
+    dedupe?: boolean;
+    queueLimit?: number;
     children?: Snippet;
     class?: string;
     id?: string;
@@ -34,9 +37,17 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { position = 'top-right', duration = 4000, children, ...rest }: Props = $props();
+  let { position = 'top-right', duration = 4000, maxVisible = 3, dedupe = true, queueLimit = 20, children, ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (maxVisible !== undefined) el.maxVisible = maxVisible;
+    if (queueLimit !== undefined) el.queueLimit = queueLimit;
+  });
 </script>
 
-<arc-toast {position} {duration} {...rest}>
+<arc-toast {position} {duration} {dedupe} bind:this={__el} {...rest}>
   {@render children?.()}
 </arc-toast>

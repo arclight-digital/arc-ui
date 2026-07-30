@@ -1043,10 +1043,6 @@ declare module 'react' {
       'arc-toast': ArcBaseAttributes & {
         position?: 'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center';
         duration?: number | string;
-      };
-      'arc-toast-manager': ArcBaseAttributes & {
-        position?: 'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center';
-        duration?: number | string;
         'max-visible'?: number | string;
         dedupe?: boolean;
         'queue-limit'?: number | string;

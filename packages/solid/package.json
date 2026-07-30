@@ -953,11 +953,6 @@
       "solid": "./src/feedback/Toast.tsx",
       "default": "./dist/feedback/Toast.js"
     },
-    "./ToastManager": {
-      "types": "./dist/feedback/ToastManager.d.ts",
-      "solid": "./src/feedback/ToastManager.tsx",
-      "default": "./dist/feedback/ToastManager.js"
-    },
     "./Tooltip": {
       "types": "./dist/feedback/Tooltip.d.ts",
       "solid": "./src/feedback/Tooltip.tsx",

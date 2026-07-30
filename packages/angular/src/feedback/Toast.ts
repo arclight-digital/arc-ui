@@ -24,4 +24,25 @@ export class Toast {
   get duration(): number {
     return this._el.duration;
   }
+
+  @Input() set maxVisible(value: number) {
+    this._el.maxVisible = value;
+  }
+  get maxVisible(): number {
+    return this._el.maxVisible;
+  }
+
+  @Input() set dedupe(value: boolean) {
+    this._el.dedupe = value;
+  }
+  get dedupe(): boolean {
+    return this._el.dedupe;
+  }
+
+  @Input() set queueLimit(value: number) {
+    this._el.queueLimit = value;
+  }
+  get queueLimit(): number {
+    return this._el.queueLimit;
+  }
 }

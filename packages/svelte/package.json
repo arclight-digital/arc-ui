@@ -953,11 +953,6 @@
       "svelte": "./dist/feedback/Toast.svelte",
       "default": "./dist/feedback/Toast.svelte"
     },
-    "./ToastManager": {
-      "types": "./dist/feedback/ToastManager.svelte.d.ts",
-      "svelte": "./dist/feedback/ToastManager.svelte",
-      "default": "./dist/feedback/ToastManager.svelte"
-    },
     "./Tooltip": {
       "types": "./dist/feedback/Tooltip.svelte.d.ts",
       "svelte": "./dist/feedback/Tooltip.svelte",

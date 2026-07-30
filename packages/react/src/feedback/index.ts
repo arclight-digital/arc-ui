@@ -9,6 +9,9 @@ export type { AnnouncementProps } from './Announcement.js';
 export { Banner } from './Banner.js';
 export type { BannerProps } from './Banner.js';
 
+export { CommandGroup } from './CommandGroup.js';
+export type { CommandGroupProps } from './CommandGroup.js';
+
 export { CommandItem } from './CommandItem.js';
 export type { CommandItemProps } from './CommandItem.js';
 
@@ -54,6 +57,9 @@ export type { PopoverProps } from './Popover.js';
 export { ProgressToast } from './ProgressToast.js';
 export type { ProgressToastProps } from './ProgressToast.js';
 
+export { Progress } from './Progress.js';
+export type { ProgressProps } from './Progress.js';
+
 export { Sheet } from './Sheet.js';
 export type { SheetProps } from './Sheet.js';
 
@@ -63,17 +69,8 @@ export type { SnackbarProps } from './Snackbar.js';
 export { Spotlight } from './Spotlight.js';
 export type { SpotlightProps } from './Spotlight.js';
 
-export { Tooltip } from './Tooltip.js';
-export type { TooltipProps } from './Tooltip.js';
-
-export { ToastManager } from './ToastManager.js';
-export type { ToastManagerProps } from './ToastManager.js';
-
-export { Progress } from './Progress.js';
-export type { ProgressProps } from './Progress.js';
-
 export { Toast } from './Toast.js';
 export type { ToastProps } from './Toast.js';
 
-export { CommandGroup } from './CommandGroup.js';
-export type { CommandGroupProps } from './CommandGroup.js';
+export { Tooltip } from './Tooltip.js';
+export type { TooltipProps } from './Tooltip.js';

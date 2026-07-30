@@ -22,6 +22,5 @@ export { Progress } from './Progress';
 export { Sheet } from './Sheet';
 export { Snackbar } from './Snackbar';
 export { Spotlight } from './Spotlight';
-export { ToastManager } from './ToastManager';
 export { Toast } from './Toast';
 export { Tooltip } from './Tooltip';

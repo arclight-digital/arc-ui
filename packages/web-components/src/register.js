@@ -180,7 +180,6 @@ import './feedback/progress.register.js';
 import './feedback/sheet.register.js';
 import './feedback/snackbar.register.js';
 import './feedback/spotlight.register.js';
-import './feedback/toast-manager.register.js';
 import './feedback/toast.register.js';
 import './feedback/tooltip.register.js';
 import './shared/menu-divider.register.js';

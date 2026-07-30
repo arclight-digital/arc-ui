@@ -764,10 +764,6 @@
       "types": "./dist/feedback/Toast.d.ts",
       "default": "./dist/feedback/Toast.js"
     },
-    "./ToastManager": {
-      "types": "./dist/feedback/ToastManager.d.ts",
-      "default": "./dist/feedback/ToastManager.js"
-    },
     "./Tooltip": {
       "types": "./dist/feedback/Tooltip.d.ts",
       "default": "./dist/feedback/Tooltip.js"

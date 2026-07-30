@@ -153,7 +153,6 @@ import { timePicker } from './time-picker';
 import { chart } from './chart';
 import { dataGrid } from './data-grid';
 import { dateRangePicker } from './date-range-picker';
-import { toastManager } from './toast-manager';
 import { kanban } from './kanban';
 import { tagInput } from './tag-input';
 import { passwordInput } from './password-input';
@@ -322,7 +321,6 @@ export const components: ComponentDef[] = [
   chart,
   dataGrid,
   dateRangePicker,
-  toastManager,
   kanban,
   tagInput,
   passwordInput,

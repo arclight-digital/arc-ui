@@ -7,6 +7,11 @@ import '@arclux/arc-ui/toast';
 export interface ToastProps {
   position?: 'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center';
   duration?: number;
+  maxVisible?: number;
+  dedupe?: boolean;
+  queueLimit?: number;
+  onArcQueueOverflow?: (e: CustomEvent) => void;
+  onArcQueueChange?: (e: CustomEvent) => void;
   onArcClose?: (e: CustomEvent) => void;
   children?: preact.ComponentChildren;
   class?: string;
@@ -36,18 +41,28 @@ export interface ToastProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Toast: FunctionComponent<ToastProps> = ({ position, duration, onArcClose, children, ...rest }) => {
+export const Toast: FunctionComponent<ToastProps> = ({ position, duration, maxVisible, dedupe, queueLimit, onArcQueueOverflow, onArcQueueChange, onArcClose, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
     const listeners: Array<[string, EventListener]> = [];
+    if (onArcQueueOverflow) {
+      const fn: EventListener = (e) => onArcQueueOverflow(e as CustomEvent);
+      el.addEventListener('arc-queue-overflow', fn);
+      listeners.push(['arc-queue-overflow', fn]);
+    }
+    if (onArcQueueChange) {
+      const fn: EventListener = (e) => onArcQueueChange(e as CustomEvent);
+      el.addEventListener('arc-queue-change', fn);
+      listeners.push(['arc-queue-change', fn]);
+    }
     if (onArcClose) {
       const fn: EventListener = (e) => onArcClose(e as CustomEvent);
       el.addEventListener('arc-close', fn);
       listeners.push(['arc-close', fn]);
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
-  }, [onArcClose]);
-  return h('arc-toast', { ref, position, duration, ...rest }, children);
+  }, [onArcQueueOverflow, onArcQueueChange, onArcClose]);
+  return h('arc-toast', { ref, position, duration, maxVisible, dedupe, queueLimit, ...rest }, children);
 };

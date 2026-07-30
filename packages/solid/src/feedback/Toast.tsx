@@ -14,6 +14,11 @@ declare module 'solid-js' {
 export interface ToastProps {
   position?: 'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center';
   duration?: number;
+  maxVisible?: number;
+  dedupe?: boolean;
+  queueLimit?: number;
+  onArcQueueOverflow?: (e: CustomEvent) => void;
+  onArcQueueChange?: (e: CustomEvent) => void;
   onArcClose?: (e: CustomEvent) => void;
   children?: JSX.Element;
   class?: string;
@@ -44,9 +49,9 @@ export interface ToastProps {
 }
 
 export const Toast: Component<ToastProps> = (props) => {
-  const [local, rest] = splitProps(props, ['position', 'duration', 'onArcClose', 'children']);
+  const [local, rest] = splitProps(props, ['position', 'duration', 'maxVisible', 'dedupe', 'queueLimit', 'onArcQueueOverflow', 'onArcQueueChange', 'onArcClose', 'children']);
   return (
-    <arc-toast position={local.position} duration={local.duration} on:arc-close={local.onArcClose} {...rest}>
+    <arc-toast position={local.position} duration={local.duration} prop:maxVisible={local.maxVisible} dedupe={local.dedupe} prop:queueLimit={local.queueLimit} on:arc-queue-overflow={local.onArcQueueOverflow} on:arc-queue-change={local.onArcQueueChange} on:arc-close={local.onArcClose} {...rest}>
       {local.children}
     </arc-toast>
   );

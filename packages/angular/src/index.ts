@@ -179,7 +179,6 @@ export { Progress } from './feedback/Progress';
 export { Sheet } from './feedback/Sheet';
 export { Snackbar } from './feedback/Snackbar';
 export { Spotlight } from './feedback/Spotlight';
-export { ToastManager } from './feedback/ToastManager';
 export { Toast } from './feedback/Toast';
 export { Tooltip } from './feedback/Tooltip';
 export { MenuDivider } from './shared/MenuDivider';

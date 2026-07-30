@@ -1043,30 +1043,13 @@ export default {
   ],
   "slug": "spotlight"
  },
- "arc-toast-manager": {
+ "arc-toast": {
   "attrs": [
    "position",
    "duration",
    "max-visible",
    "dedupe",
    "queue-limit"
-  ],
-  "enums": {
-   "position": [
-    "top-right",
-    "top-left",
-    "top-center",
-    "bottom-right",
-    "bottom-left",
-    "bottom-center"
-   ]
-  },
-  "slug": "toast-manager"
- },
- "arc-toast": {
-  "attrs": [
-   "position",
-   "duration"
   ],
   "enums": {
    "position": [

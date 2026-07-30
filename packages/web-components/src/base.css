@@ -36,9 +36,9 @@
   arc-spy-link, arc-stack, arc-stat, arc-status-bar, arc-step, arc-stepper, arc-stepper-nav,
   arc-sticky, arc-suggestion, arc-switch-group, arc-tab, arc-table, arc-tabs, arc-tag,
   arc-tag-input, arc-text, arc-textarea, arc-theme-toggle, arc-time-ago, arc-time-picker,
-  arc-timeline, arc-timeline-item, arc-toast, arc-toast-manager, arc-toggle, arc-toolbar,
-  arc-tooltip, arc-top-bar, arc-transfer-list, arc-tree-item, arc-tree-view, arc-truncate,
-  arc-typewriter, arc-value-card, arc-virtual-list
+  arc-timeline, arc-timeline-item, arc-toast, arc-toggle, arc-toolbar, arc-tooltip, arc-top-bar,
+  arc-transfer-list, arc-tree-item, arc-tree-view, arc-truncate, arc-typewriter, arc-value-card,
+  arc-virtual-list
   ):not(:defined) {
     opacity: 0;
   }
@@ -449,9 +449,9 @@
   arc-spy-link, arc-stack, arc-stat, arc-status-bar, arc-step, arc-stepper, arc-stepper-nav,
   arc-sticky, arc-suggestion, arc-switch-group, arc-tab, arc-table, arc-tabs, arc-tag,
   arc-tag-input, arc-text, arc-textarea, arc-theme-toggle, arc-time-ago, arc-time-picker,
-  arc-timeline, arc-timeline-item, arc-toast, arc-toast-manager, arc-toggle, arc-toolbar,
-  arc-tooltip, arc-top-bar, arc-transfer-list, arc-tree-item, arc-tree-view, arc-truncate,
-  arc-typewriter, arc-value-card, arc-virtual-list
+  arc-timeline, arc-timeline-item, arc-toast, arc-toggle, arc-toolbar, arc-tooltip, arc-top-bar,
+  arc-transfer-list, arc-tree-item, arc-tree-view, arc-truncate, arc-typewriter, arc-value-card,
+  arc-virtual-list
 ) {
   --display-xl-spacing: inherit;
   --heading-lh: inherit;

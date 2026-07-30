@@ -7,12 +7,20 @@ defineOptions({ name: 'Toast' });
 const props = withDefaults(defineProps<{
   position?: 'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center';
   duration?: number;
+  maxVisible?: number;
+  dedupe?: boolean;
+  queueLimit?: number;
 }>(), {
   position: 'top-right',
   duration: 4000,
+  maxVisible: 3,
+  dedupe: true,
+  queueLimit: 20,
 });
 
 const emit = defineEmits<{
+  'arc-queue-overflow': [event: CustomEvent];
+  'arc-queue-change': [event: CustomEvent];
   'arc-close': [event: CustomEvent];
 }>();
 </script>
@@ -21,6 +29,11 @@ const emit = defineEmits<{
   <arc-toast
     :position="props.position"
     :duration="props.duration"
+    :maxVisible="props.maxVisible"
+    :dedupe="props.dedupe"
+    :queueLimit="props.queueLimit"
+    @arc-queue-overflow="(payload: CustomEvent) => emit('arc-queue-overflow', payload)"
+    @arc-queue-change="(payload: CustomEvent) => emit('arc-queue-change', payload)"
     @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"
   >
     <slot />

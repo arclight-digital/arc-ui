@@ -5321,13 +5321,13 @@
           }
         },
         {
-          "name": "arc-toast-manager",
-          "description": "Policy layer over Toast that caps how many notifications show at once, queues the overflow FIFO,\ndeduplicates repeated messages, and lets any component fire toasts via a document-level event.\n\nQueueing/stacking policy layer over arc-toast. Composes an internal <arc-toast> (which owns\nrendering, timers, and a11y) and adds: max-visible capping with a FIFO queue, message+variant\ndeduplication, queue overflow trimming, and a document-level `arc-toast` event channel.\nComposes an internal <arc-toast> through its public API only: show() returns the\nid it assigned and dismiss() takes one back, so the manager holds no knowledge\nof arc-toast's internals. The one remaining seam is that arc-toast has no\nupdate-in-place API, so a dedupe hit on a *visible* toast is re-shown with a\n\"(×N)\" suffix and the stale entry dismissed.\n---\n\n\n### **Events:**\n - **arc-queue-overflow** - Fired when the queue exceeds queueLimit and oldest queued entries are dropped. detail: { dropped } — how many were dropped.\n- **arc-close** - Fired when a managed toast is dismissed. detail: { id } — the id returned by show().\n- **arc-queue-change** - Fired whenever the visible or queued count changes. detail: { visible, queued }.\n\n### **Methods:**\n - **show(options)** - Show a toast. Accepts the same options object as arc-toast.show()\n({ message, variant, duration, action, actionLabel, persistent }).\nReturns a manager id usable with dismiss().\n- **dismiss(id)** - Dismiss a toast (visible or queued) by manager id.\n- **clear()** - Dismiss all visible toasts and flush the queue.",
+          "name": "arc-toast",
+          "description": "Stack-managed notification toasts with auto-dismiss, variant-colored indicators, configurable\nposition, smooth enter/exit animations, and the stacking policy that used to live in a separate\narc-toast-manager: a cap on how many show at once, a FIFO queue for the overflow, and\ndeduplication of repeated messages.\n\nQueueing belongs here rather than in a wrapper. As a separate component it could only reach\narc-toast's public surface, so a duplicate of a *visible* toast had to be dismissed and re-shown\nto gain its \"(×N)\" suffix — a visible flicker for what is conceptually a counter increment. Owning\nthe render state makes that an in-place update.\n---\n\n\n### **Events:**\n - **arc-queue-overflow** - Fired when the queue exceeds queueLimit and the oldest queued entries are dropped. detail: { dropped }.\n- **arc-queue-change** - Fired whenever the visible or queued count changes. detail: { visible, queued }.\n- **arc-close** - Fired when a toast notification is dismissed. detail: { id } — the id show() returned.\n\n### **Methods:**\n - **show(options): _number_** - Show a toast, or coalesce it into an identical one that is already showing.\n- **dismiss(id: _number_)** - Dismiss a toast by the id show() returned, whether it is visible or still\nqueued. Unknown ids are ignored.\n- **clear()** - Dismiss everything on screen and discard the queue.\n\n### **CSS Parts:**\n - **container**\n- **toast**\n- **action**\n- **dismiss**",
           "doc-url": "",
           "attributes": [
             {
               "name": "position",
-              "description": "Forwarded to the inner arc-toast. Anchors the toast stack to a fixed edge of the viewport.",
+              "description": "Anchors the toast stack to a fixed edge of the viewport. Top-right is the most conventional position for web applications. Bottom positions work well for media players or editors where the top area is occupied by toolbars.",
               "value": {
                 "type": "'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center'",
                 "default": "'top-right'"
@@ -5335,7 +5335,7 @@
             },
             {
               "name": "duration",
-              "description": "Forwarded to the inner arc-toast as the default auto-dismiss time in milliseconds. Overridable per-toast via the duration option in the show() payload; pass persistent: true (or duration 0) to require manual dismissal.",
+              "description": "Time in milliseconds before a toast auto-dismisses. Applies as the default for every show() call but can be overridden per-toast via the duration option in the show() payload. Set to 0 to disable auto-dismiss entirely, requiring the user to click the close button.",
               "value": {
                 "type": "number",
                 "default": "4000"
@@ -5343,7 +5343,7 @@
             },
             {
               "name": "max-visible",
-              "description": "Maximum number of toasts visible at once (attribute: max-visible). Further show() calls queue FIFO and release as visible toasts dismiss.",
+              "description": "Maximum toasts on screen at once (attribute: max-visible). Further show() calls queue FIFO and release as visible toasts dismiss. Set to 0 for no cap.",
               "value": {
                 "type": "number",
                 "default": "3"
@@ -5351,7 +5351,7 @@
             },
             {
               "name": "dedupe",
-              "description": "When true, a show() whose message and variant match a visible or queued toast is coalesced: visible matches re-show with a \"(×N)\" counter suffix and a fresh timer; queued matches bump their counter in place. Set the property to false from JS to disable.",
+              "description": "When true, a show() whose message and variant match a visible or queued toast is coalesced: the existing toast gains a \"(×N)\" counter and a fresh timer instead of a second toast appearing. Set the property to false from JS to disable.",
               "value": {
                 "type": "boolean",
                 "default": "true"
@@ -5370,93 +5370,17 @@
             {
               "name": "arc-queue-overflow",
               "type": "CustomEvent",
-              "description": "Fired when the queue exceeds queueLimit and oldest queued entries are dropped. detail: { dropped } — how many were dropped."
-            },
-            {
-              "name": "arc-close",
-              "type": "CustomEvent",
-              "description": "Fired when a managed toast is dismissed. detail: { id } — the id returned by show()."
+              "description": "Fired when the queue exceeds queueLimit and the oldest queued entries are dropped. detail: { dropped }."
             },
             {
               "name": "arc-queue-change",
               "type": "CustomEvent",
               "description": "Fired whenever the visible or queued count changes. detail: { visible, queued }."
-            }
-          ],
-          "js": {
-            "properties": [
-              {
-                "name": "position",
-                "description": "Forwarded to the inner arc-toast. Anchors the toast stack to a fixed edge of the viewport.",
-                "type": "'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center'"
-              },
-              {
-                "name": "duration",
-                "description": "Forwarded to the inner arc-toast as the default auto-dismiss time in milliseconds. Overridable per-toast via the duration option in the show() payload; pass persistent: true (or duration 0) to require manual dismissal.",
-                "type": "number"
-              },
-              {
-                "name": "maxVisible",
-                "description": "Maximum number of toasts visible at once (attribute: max-visible). Further show() calls queue FIFO and release as visible toasts dismiss.",
-                "type": "number"
-              },
-              {
-                "name": "dedupe",
-                "description": "When true, a show() whose message and variant match a visible or queued toast is coalesced: visible matches re-show with a \"(×N)\" counter suffix and a fresh timer; queued matches bump their counter in place. Set the property to false from JS to disable.",
-                "type": "boolean"
-              },
-              {
-                "name": "queueLimit",
-                "description": "Maximum queued (not visible) toasts (attribute: queue-limit). Beyond it the oldest queued entries are dropped and arc-queue-overflow fires with the drop count.",
-                "type": "number"
-              }
-            ],
-            "events": [
-              {
-                "name": "arc-queue-overflow",
-                "type": "CustomEvent",
-                "description": "Fired when the queue exceeds queueLimit and oldest queued entries are dropped. detail: { dropped } — how many were dropped."
-              },
-              {
-                "name": "arc-close",
-                "type": "CustomEvent",
-                "description": "Fired when a managed toast is dismissed. detail: { id } — the id returned by show()."
-              },
-              {
-                "name": "arc-queue-change",
-                "type": "CustomEvent",
-                "description": "Fired whenever the visible or queued count changes. detail: { visible, queued }."
-              }
-            ]
-          }
-        },
-        {
-          "name": "arc-toast",
-          "description": "Stack-managed notification toasts with auto-dismiss, variant-colored indicators, configurable\nposition, and smooth enter/exit animations.\n\nReturns inline style string setting --_status-color/rgb for a given variant *\\/ function\nstatusStyle(variant) { const map = { info: { color: 'var(--accent-primary)', rgb:\n'var(--accent-primary-rgb)' }, success: { color: 'var(--color-success)', rgb:\n'var(--color-success-rgb)' }, warning: { color: 'var(--color-warning)', rgb:\n'var(--color-warning-rgb)' }, error: { color: 'var(--color-error)', rgb:\n'var(--color-error-rgb)' }, }; const v = map[variant] || map.info; return\n`--_status-color:${v.color};--_status-rgb:${v.rgb}`; }\n---\n\n\n### **Events:**\n - **arc-close** - Fired when a toast notification is dismissed\n\n### **Methods:**\n - **show({ message, variant = 'info', duration, action, actionLabel, persistent = false }): _number_** - Show a toast.\n- **dismiss(id: _number_)** - Dismiss a toast by the id show() returned. Unknown ids are ignored.\n\n### **CSS Parts:**\n - **container**\n- **toast**\n- **action**\n- **dismiss**",
-          "doc-url": "",
-          "attributes": [
-            {
-              "name": "position",
-              "description": "Anchors the toast stack to a fixed edge of the viewport. Top-right is the most conventional position for web applications. Bottom positions work well for media players or editors where the top area is occupied by toolbars.",
-              "value": {
-                "type": "'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center'",
-                "default": "'top-right'"
-              }
             },
-            {
-              "name": "duration",
-              "description": "Time in milliseconds before a toast auto-dismisses. Applies as the default for every show() call but can be overridden per-toast via the duration option in the show() payload. Set to 0 to disable auto-dismiss entirely, requiring the user to click the close button.",
-              "value": {
-                "type": "number",
-                "default": "4000"
-              }
-            }
-          ],
-          "events": [
             {
               "name": "arc-close",
               "type": "CustomEvent",
-              "description": "Fired when a toast notification is dismissed"
+              "description": "Fired when a toast notification is dismissed. detail: { id } — the id show() returned."
             }
           ],
           "js": {
@@ -5470,13 +5394,38 @@
                 "name": "duration",
                 "description": "Time in milliseconds before a toast auto-dismisses. Applies as the default for every show() call but can be overridden per-toast via the duration option in the show() payload. Set to 0 to disable auto-dismiss entirely, requiring the user to click the close button.",
                 "type": "number"
+              },
+              {
+                "name": "maxVisible",
+                "description": "Maximum toasts on screen at once (attribute: max-visible). Further show() calls queue FIFO and release as visible toasts dismiss. Set to 0 for no cap.",
+                "type": "number"
+              },
+              {
+                "name": "dedupe",
+                "description": "When true, a show() whose message and variant match a visible or queued toast is coalesced: the existing toast gains a \"(×N)\" counter and a fresh timer instead of a second toast appearing. Set the property to false from JS to disable.",
+                "type": "boolean"
+              },
+              {
+                "name": "queueLimit",
+                "description": "Maximum queued (not visible) toasts (attribute: queue-limit). Beyond it the oldest queued entries are dropped and arc-queue-overflow fires with the drop count.",
+                "type": "number"
               }
             ],
             "events": [
               {
+                "name": "arc-queue-overflow",
+                "type": "CustomEvent",
+                "description": "Fired when the queue exceeds queueLimit and the oldest queued entries are dropped. detail: { dropped }."
+              },
+              {
+                "name": "arc-queue-change",
+                "type": "CustomEvent",
+                "description": "Fired whenever the visible or queued count changes. detail: { visible, queued }."
+              },
+              {
                 "name": "arc-close",
                 "type": "CustomEvent",
-                "description": "Fired when a toast notification is dismissed"
+                "description": "Fired when a toast notification is dismissed. detail: { id } — the id show() returned."
               }
             ]
           }

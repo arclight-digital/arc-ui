@@ -764,10 +764,6 @@
       "types": "./dist/feedback/Toast.vue.d.ts",
       "default": "./dist/feedback/Toast.vue.js"
     },
-    "./ToastManager": {
-      "types": "./dist/feedback/ToastManager.vue.d.ts",
-      "default": "./dist/feedback/ToastManager.vue.js"
-    },
     "./Tooltip": {
       "types": "./dist/feedback/Tooltip.vue.d.ts",
       "default": "./dist/feedback/Tooltip.vue.js"
