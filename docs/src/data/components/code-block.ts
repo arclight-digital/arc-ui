@@ -10,7 +10,19 @@ export const codeBlock: ComponentDef = {
 
   overview: `CodeBlock displays source code in a styled container with a header bar, optional filename, language badge, and a one-click copy button. The header renders the filename in monospace font on the left, the language identifier as an uppercase Tektur badge on the right, and a "Copy" button that writes the code content to the clipboard via the Clipboard API. After a successful copy, the button text and border color switch to a green "Copied" state for two seconds before reverting.
 
-The code body renders inside a \`<pre>\` element with the monospace font stack (JetBrains Mono), a line-height of 1.8, and horizontal overflow scrolling for long lines. Code content can be provided via the \`code\` property or through the default slot, making it flexible for both static strings and dynamic content injection. The tab-size is set to 2 for compact indentation.
+The code body renders inside a \`<pre>\` element with the monospace font stack (JetBrains Mono), a line-height of 1.8, and horizontal overflow scrolling for long lines. Code content is provided via the \`code\` property — there is no default slot, so content placed between the tags is not rendered. The tab-size is set to 2 for compact indentation.
+
+**Highlighting is opt-in.** CodeBlock is the one component in ARC UI with a heavy dependency: shiki and its grammars are around 13.6 MB, which no other component touches. So shiki is an *optional peer dependency*, and CodeBlock is the one component the main barrel does not re-export — a bundler resolves the dynamic imports of everything it can reach, so being in the barrel would have made shiki everyone's install. Import it by its own subpath and install shiki alongside:
+
+\`\`\`
+npm install shiki @shikijs/langs
+\`\`\`
+
+\`\`\`js
+import '@arclux/arc-ui/code-block';
+\`\`\`
+
+Without shiki, CodeBlock still renders: the layout, the header, the copy button, and the code itself all work — the code is simply not coloured, and the console says so once. \`@arclux/arc-ui/register\` does not register CodeBlock for the same reason; import the subpath.
 
 CodeBlock is marked as a hybrid component: the code display works without JavaScript (the layout and styling are pure CSS), but the copy-to-clipboard functionality requires JS and a secure context (HTTPS). The component gracefully handles copy failures with a silent try-catch, so it degrades without errors on HTTP or restricted environments.`,
 
@@ -18,7 +30,9 @@ CodeBlock is marked as a hybrid component: the code display works without JavaSc
     'One-click copy-to-clipboard via the Clipboard API with a 2-second "Copied" confirmation',
     'Header bar with filename (monospace), language badge (uppercase Tektur), and copy button',
     'Horizontal scroll overflow for long code lines without wrapping',
-    'Code content via the "code" prop or default slot for flexible content injection',
+    'Syntax highlighting via shiki — an optional peer dependency, imported only by this component',
+    'Renders uncoloured but fully functional when shiki is not installed',
+    'Code content via the "code" prop (this component has no default slot)',
     'JetBrains Mono font stack with 1.8 line-height and tab-size of 2',
     'Graceful degradation: copy fails silently on insecure contexts without breaking the UI',
     'Six exposed CSS parts: code-block, header, filename, lang, copy, body, pre, code',
@@ -29,12 +43,14 @@ CodeBlock is marked as a hybrid component: the code display works without JavaSc
     do: [
       'Set the language prop to help users identify the code syntax at a glance',
       'Provide a filename when showing code from a specific file for context',
-      'Use the code prop for static snippets and the slot for dynamically rendered content',
+      'Install shiki and @shikijs/langs when you want highlighting — the component works without them, just uncoloured',
+      'Import `@arclux/arc-ui/code-block` directly; the main barrel and `/register` deliberately exclude it',
       'Place CodeBlock in documentation pages, API references, and tutorial content',
       'Test copy functionality on HTTPS — the Clipboard API requires a secure context',
     ],
     dont: [
-      'Do not embed interactive elements inside the code slot — it renders inside a <pre><code> block',
+      'Do not pass content between the tags — there is no default slot; use the `code` prop',
+      'Do not expect highlighting without shiki installed — check the console if code renders uncoloured',
       'Do not use CodeBlock for single-line inline code; use arc-text variant="code" instead',
       'Do not omit the language prop when the syntax is not obvious from context',
       'Do not override the font-family unless you are intentionally switching to a different monospace font',
