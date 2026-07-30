@@ -4,62 +4,790 @@
   "description": "Preact wrappers for ARC UI Web Components.",
   "sideEffects": false,
   "type": "module",
-  "main": "src/index.ts",
-  "module": "src/index.ts",
-  "types": "src/index.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./src/index.ts",
-      "default": "./src/index.ts"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     },
     "./content": {
-      "types": "./src/content/index.ts",
-      "default": "./src/content/index.ts"
+      "types": "./dist/content/index.d.ts",
+      "default": "./dist/content/index.js"
+    },
+    "./Accordion": {
+      "types": "./dist/content/Accordion.d.ts",
+      "default": "./dist/content/Accordion.js"
+    },
+    "./AccordionItem": {
+      "types": "./dist/content/AccordionItem.d.ts",
+      "default": "./dist/content/AccordionItem.js"
+    },
+    "./AspectRatio": {
+      "types": "./dist/content/AspectRatio.d.ts",
+      "default": "./dist/content/AspectRatio.js"
+    },
+    "./Avatar": {
+      "types": "./dist/content/Avatar.d.ts",
+      "default": "./dist/content/Avatar.js"
+    },
+    "./AvatarGroup": {
+      "types": "./dist/content/AvatarGroup.d.ts",
+      "default": "./dist/content/AvatarGroup.js"
+    },
+    "./Callout": {
+      "types": "./dist/content/Callout.d.ts",
+      "default": "./dist/content/Callout.js"
+    },
+    "./Card": {
+      "types": "./dist/content/Card.d.ts",
+      "default": "./dist/content/Card.js"
+    },
+    "./Carousel": {
+      "types": "./dist/content/Carousel.d.ts",
+      "default": "./dist/content/Carousel.js"
+    },
+    "./Collapsible": {
+      "types": "./dist/content/Collapsible.d.ts",
+      "default": "./dist/content/Collapsible.js"
+    },
+    "./ColorSwatch": {
+      "types": "./dist/content/ColorSwatch.d.ts",
+      "default": "./dist/content/ColorSwatch.js"
+    },
+    "./Column": {
+      "types": "./dist/content/Column.d.ts",
+      "default": "./dist/content/Column.js"
+    },
+    "./CtaBanner": {
+      "types": "./dist/content/CtaBanner.d.ts",
+      "default": "./dist/content/CtaBanner.js"
+    },
+    "./Divider": {
+      "types": "./dist/content/Divider.d.ts",
+      "default": "./dist/content/Divider.js"
+    },
+    "./EmptyState": {
+      "types": "./dist/content/EmptyState.d.ts",
+      "default": "./dist/content/EmptyState.js"
+    },
+    "./FeatureCard": {
+      "types": "./dist/content/FeatureCard.d.ts",
+      "default": "./dist/content/FeatureCard.js"
+    },
+    "./Icon": {
+      "types": "./dist/content/Icon.d.ts",
+      "default": "./dist/content/Icon.js"
+    },
+    "./Image": {
+      "types": "./dist/content/Image.d.ts",
+      "default": "./dist/content/Image.js"
+    },
+    "./InfiniteScroll": {
+      "types": "./dist/content/InfiniteScroll.d.ts",
+      "default": "./dist/content/InfiniteScroll.js"
+    },
+    "./Marquee": {
+      "types": "./dist/content/Marquee.d.ts",
+      "default": "./dist/content/Marquee.js"
+    },
+    "./QrCode": {
+      "types": "./dist/content/QrCode.d.ts",
+      "default": "./dist/content/QrCode.js"
+    },
+    "./ScrollArea": {
+      "types": "./dist/content/ScrollArea.d.ts",
+      "default": "./dist/content/ScrollArea.js"
+    },
+    "./ScrollIndicator": {
+      "types": "./dist/content/ScrollIndicator.d.ts",
+      "default": "./dist/content/ScrollIndicator.js"
+    },
+    "./Separator": {
+      "types": "./dist/content/Separator.d.ts",
+      "default": "./dist/content/Separator.js"
+    },
+    "./Skeleton": {
+      "types": "./dist/content/Skeleton.d.ts",
+      "default": "./dist/content/Skeleton.js"
+    },
+    "./Spinner": {
+      "types": "./dist/content/Spinner.d.ts",
+      "default": "./dist/content/Spinner.js"
+    },
+    "./Stack": {
+      "types": "./dist/content/Stack.d.ts",
+      "default": "./dist/content/Stack.js"
+    },
+    "./VirtualList": {
+      "types": "./dist/content/VirtualList.d.ts",
+      "default": "./dist/content/VirtualList.js"
     },
     "./data": {
-      "types": "./src/data/index.ts",
-      "default": "./src/data/index.ts"
+      "types": "./dist/data/index.d.ts",
+      "default": "./dist/data/index.js"
+    },
+    "./AnimatedNumber": {
+      "types": "./dist/data/AnimatedNumber.d.ts",
+      "default": "./dist/data/AnimatedNumber.js"
+    },
+    "./Badge": {
+      "types": "./dist/data/Badge.d.ts",
+      "default": "./dist/data/Badge.js"
+    },
+    "./Chart": {
+      "types": "./dist/data/Chart.d.ts",
+      "default": "./dist/data/Chart.js"
+    },
+    "./Comparison": {
+      "types": "./dist/data/Comparison.d.ts",
+      "default": "./dist/data/Comparison.js"
+    },
+    "./ComparisonColumn": {
+      "types": "./dist/data/ComparisonColumn.d.ts",
+      "default": "./dist/data/ComparisonColumn.js"
+    },
+    "./CountdownTimer": {
+      "types": "./dist/data/CountdownTimer.d.ts",
+      "default": "./dist/data/CountdownTimer.js"
+    },
+    "./DataGrid": {
+      "types": "./dist/data/DataGrid.d.ts",
+      "default": "./dist/data/DataGrid.js"
+    },
+    "./DataTable": {
+      "types": "./dist/data/DataTable.d.ts",
+      "default": "./dist/data/DataTable.js"
+    },
+    "./DescriptionItem": {
+      "types": "./dist/data/DescriptionItem.d.ts",
+      "default": "./dist/data/DescriptionItem.js"
+    },
+    "./DescriptionList": {
+      "types": "./dist/data/DescriptionList.d.ts",
+      "default": "./dist/data/DescriptionList.js"
+    },
+    "./Diff": {
+      "types": "./dist/data/Diff.d.ts",
+      "default": "./dist/data/Diff.js"
+    },
+    "./EventCalendar": {
+      "types": "./dist/data/EventCalendar.d.ts",
+      "default": "./dist/data/EventCalendar.js"
+    },
+    "./Kanban": {
+      "types": "./dist/data/Kanban.d.ts",
+      "default": "./dist/data/Kanban.js"
+    },
+    "./KeyValue": {
+      "types": "./dist/data/KeyValue.d.ts",
+      "default": "./dist/data/KeyValue.js"
+    },
+    "./KvPair": {
+      "types": "./dist/data/KvPair.d.ts",
+      "default": "./dist/data/KvPair.js"
+    },
+    "./List": {
+      "types": "./dist/data/List.d.ts",
+      "default": "./dist/data/List.js"
+    },
+    "./ListItem": {
+      "types": "./dist/data/ListItem.d.ts",
+      "default": "./dist/data/ListItem.js"
+    },
+    "./Meter": {
+      "types": "./dist/data/Meter.d.ts",
+      "default": "./dist/data/Meter.js"
+    },
+    "./Sparkline": {
+      "types": "./dist/data/Sparkline.d.ts",
+      "default": "./dist/data/Sparkline.js"
+    },
+    "./Stat": {
+      "types": "./dist/data/Stat.d.ts",
+      "default": "./dist/data/Stat.js"
+    },
+    "./Step": {
+      "types": "./dist/data/Step.d.ts",
+      "default": "./dist/data/Step.js"
+    },
+    "./Stepper": {
+      "types": "./dist/data/Stepper.d.ts",
+      "default": "./dist/data/Stepper.js"
+    },
+    "./Table": {
+      "types": "./dist/data/Table.d.ts",
+      "default": "./dist/data/Table.js"
+    },
+    "./Tag": {
+      "types": "./dist/data/Tag.d.ts",
+      "default": "./dist/data/Tag.js"
+    },
+    "./Timeline": {
+      "types": "./dist/data/Timeline.d.ts",
+      "default": "./dist/data/Timeline.js"
+    },
+    "./TimelineItem": {
+      "types": "./dist/data/TimelineItem.d.ts",
+      "default": "./dist/data/TimelineItem.js"
+    },
+    "./ValueCard": {
+      "types": "./dist/data/ValueCard.d.ts",
+      "default": "./dist/data/ValueCard.js"
     },
     "./typography": {
-      "types": "./src/typography/index.ts",
-      "default": "./src/typography/index.ts"
+      "types": "./dist/typography/index.d.ts",
+      "default": "./dist/typography/index.js"
+    },
+    "./Blockquote": {
+      "types": "./dist/typography/Blockquote.d.ts",
+      "default": "./dist/typography/Blockquote.js"
+    },
+    "./CodeBlock": {
+      "types": "./dist/typography/CodeBlock.d.ts",
+      "default": "./dist/typography/CodeBlock.js"
+    },
+    "./GradientText": {
+      "types": "./dist/typography/GradientText.d.ts",
+      "default": "./dist/typography/GradientText.js"
+    },
+    "./Highlight": {
+      "types": "./dist/typography/Highlight.d.ts",
+      "default": "./dist/typography/Highlight.js"
+    },
+    "./Kbd": {
+      "types": "./dist/typography/Kbd.d.ts",
+      "default": "./dist/typography/Kbd.js"
+    },
+    "./Markdown": {
+      "types": "./dist/typography/Markdown.d.ts",
+      "default": "./dist/typography/Markdown.js"
+    },
+    "./NumberFormat": {
+      "types": "./dist/typography/NumberFormat.d.ts",
+      "default": "./dist/typography/NumberFormat.js"
+    },
+    "./Prose": {
+      "types": "./dist/typography/Prose.d.ts",
+      "default": "./dist/typography/Prose.js"
+    },
+    "./Text": {
+      "types": "./dist/typography/Text.d.ts",
+      "default": "./dist/typography/Text.js"
+    },
+    "./TimeAgo": {
+      "types": "./dist/typography/TimeAgo.d.ts",
+      "default": "./dist/typography/TimeAgo.js"
+    },
+    "./Truncate": {
+      "types": "./dist/typography/Truncate.d.ts",
+      "default": "./dist/typography/Truncate.js"
+    },
+    "./Typewriter": {
+      "types": "./dist/typography/Typewriter.d.ts",
+      "default": "./dist/typography/Typewriter.js"
     },
     "./input": {
-      "types": "./src/input/index.ts",
-      "default": "./src/input/index.ts"
+      "types": "./dist/input/index.d.ts",
+      "default": "./dist/input/index.js"
     },
-    "./feedback": {
-      "types": "./src/feedback/index.ts",
-      "default": "./src/feedback/index.ts"
+    "./Button": {
+      "types": "./dist/input/Button.d.ts",
+      "default": "./dist/input/Button.js"
+    },
+    "./ButtonGroup": {
+      "types": "./dist/input/ButtonGroup.d.ts",
+      "default": "./dist/input/ButtonGroup.js"
+    },
+    "./Calendar": {
+      "types": "./dist/input/Calendar.d.ts",
+      "default": "./dist/input/Calendar.js"
+    },
+    "./Checkbox": {
+      "types": "./dist/input/Checkbox.d.ts",
+      "default": "./dist/input/Checkbox.js"
+    },
+    "./Chip": {
+      "types": "./dist/input/Chip.d.ts",
+      "default": "./dist/input/Chip.js"
+    },
+    "./ColorPicker": {
+      "types": "./dist/input/ColorPicker.d.ts",
+      "default": "./dist/input/ColorPicker.js"
+    },
+    "./Combobox": {
+      "types": "./dist/input/Combobox.d.ts",
+      "default": "./dist/input/Combobox.js"
+    },
+    "./CopyButton": {
+      "types": "./dist/input/CopyButton.d.ts",
+      "default": "./dist/input/CopyButton.js"
+    },
+    "./DatePicker": {
+      "types": "./dist/input/DatePicker.d.ts",
+      "default": "./dist/input/DatePicker.js"
+    },
+    "./DateRangePicker": {
+      "types": "./dist/input/DateRangePicker.d.ts",
+      "default": "./dist/input/DateRangePicker.js"
+    },
+    "./Fieldset": {
+      "types": "./dist/input/Fieldset.d.ts",
+      "default": "./dist/input/Fieldset.js"
+    },
+    "./FileUpload": {
+      "types": "./dist/input/FileUpload.d.ts",
+      "default": "./dist/input/FileUpload.js"
+    },
+    "./Form": {
+      "types": "./dist/input/Form.d.ts",
+      "default": "./dist/input/Form.js"
+    },
+    "./Hotkey": {
+      "types": "./dist/input/Hotkey.d.ts",
+      "default": "./dist/input/Hotkey.js"
+    },
+    "./IconButton": {
+      "types": "./dist/input/IconButton.d.ts",
+      "default": "./dist/input/IconButton.js"
+    },
+    "./ImageCropper": {
+      "types": "./dist/input/ImageCropper.d.ts",
+      "default": "./dist/input/ImageCropper.js"
+    },
+    "./Input": {
+      "types": "./dist/input/Input.d.ts",
+      "default": "./dist/input/Input.js"
+    },
+    "./InputGroup": {
+      "types": "./dist/input/InputGroup.d.ts",
+      "default": "./dist/input/InputGroup.js"
+    },
+    "./Label": {
+      "types": "./dist/input/Label.d.ts",
+      "default": "./dist/input/Label.js"
+    },
+    "./MultiSelect": {
+      "types": "./dist/input/MultiSelect.d.ts",
+      "default": "./dist/input/MultiSelect.js"
+    },
+    "./NumberInput": {
+      "types": "./dist/input/NumberInput.d.ts",
+      "default": "./dist/input/NumberInput.js"
+    },
+    "./OtpInput": {
+      "types": "./dist/input/OtpInput.d.ts",
+      "default": "./dist/input/OtpInput.js"
+    },
+    "./PasswordInput": {
+      "types": "./dist/input/PasswordInput.d.ts",
+      "default": "./dist/input/PasswordInput.js"
+    },
+    "./PinInput": {
+      "types": "./dist/input/PinInput.d.ts",
+      "default": "./dist/input/PinInput.js"
+    },
+    "./Radio": {
+      "types": "./dist/input/Radio.d.ts",
+      "default": "./dist/input/Radio.js"
+    },
+    "./RadioGroup": {
+      "types": "./dist/input/RadioGroup.d.ts",
+      "default": "./dist/input/RadioGroup.js"
+    },
+    "./RangeSlider": {
+      "types": "./dist/input/RangeSlider.d.ts",
+      "default": "./dist/input/RangeSlider.js"
+    },
+    "./Rating": {
+      "types": "./dist/input/Rating.d.ts",
+      "default": "./dist/input/Rating.js"
+    },
+    "./Search": {
+      "types": "./dist/input/Search.d.ts",
+      "default": "./dist/input/Search.js"
+    },
+    "./SegmentedControl": {
+      "types": "./dist/input/SegmentedControl.d.ts",
+      "default": "./dist/input/SegmentedControl.js"
+    },
+    "./Select": {
+      "types": "./dist/input/Select.d.ts",
+      "default": "./dist/input/Select.js"
+    },
+    "./Slider": {
+      "types": "./dist/input/Slider.d.ts",
+      "default": "./dist/input/Slider.js"
+    },
+    "./SortableList": {
+      "types": "./dist/input/SortableList.d.ts",
+      "default": "./dist/input/SortableList.js"
+    },
+    "./Suggestion": {
+      "types": "./dist/input/Suggestion.d.ts",
+      "default": "./dist/input/Suggestion.js"
+    },
+    "./SwitchGroup": {
+      "types": "./dist/input/SwitchGroup.d.ts",
+      "default": "./dist/input/SwitchGroup.js"
+    },
+    "./TagInput": {
+      "types": "./dist/input/TagInput.d.ts",
+      "default": "./dist/input/TagInput.js"
+    },
+    "./Textarea": {
+      "types": "./dist/input/Textarea.d.ts",
+      "default": "./dist/input/Textarea.js"
+    },
+    "./ThemeToggle": {
+      "types": "./dist/input/ThemeToggle.d.ts",
+      "default": "./dist/input/ThemeToggle.js"
+    },
+    "./TimePicker": {
+      "types": "./dist/input/TimePicker.d.ts",
+      "default": "./dist/input/TimePicker.js"
+    },
+    "./Toggle": {
+      "types": "./dist/input/Toggle.d.ts",
+      "default": "./dist/input/Toggle.js"
+    },
+    "./TransferList": {
+      "types": "./dist/input/TransferList.d.ts",
+      "default": "./dist/input/TransferList.js"
     },
     "./navigation": {
-      "types": "./src/navigation/index.ts",
-      "default": "./src/navigation/index.ts"
+      "types": "./dist/navigation/index.d.ts",
+      "default": "./dist/navigation/index.js"
+    },
+    "./AnchorNav": {
+      "types": "./dist/navigation/AnchorNav.d.ts",
+      "default": "./dist/navigation/AnchorNav.js"
+    },
+    "./BottomNav": {
+      "types": "./dist/navigation/BottomNav.d.ts",
+      "default": "./dist/navigation/BottomNav.js"
+    },
+    "./Breadcrumb": {
+      "types": "./dist/navigation/Breadcrumb.d.ts",
+      "default": "./dist/navigation/Breadcrumb.js"
+    },
+    "./BreadcrumbItem": {
+      "types": "./dist/navigation/BreadcrumbItem.d.ts",
+      "default": "./dist/navigation/BreadcrumbItem.js"
+    },
+    "./BreadcrumbMenu": {
+      "types": "./dist/navigation/BreadcrumbMenu.d.ts",
+      "default": "./dist/navigation/BreadcrumbMenu.js"
+    },
+    "./CommandBar": {
+      "types": "./dist/navigation/CommandBar.d.ts",
+      "default": "./dist/navigation/CommandBar.js"
+    },
+    "./Drawer": {
+      "types": "./dist/navigation/Drawer.d.ts",
+      "default": "./dist/navigation/Drawer.js"
+    },
+    "./Footer": {
+      "types": "./dist/navigation/Footer.d.ts",
+      "default": "./dist/navigation/Footer.js"
+    },
+    "./Link": {
+      "types": "./dist/navigation/Link.d.ts",
+      "default": "./dist/navigation/Link.js"
+    },
+    "./Menubar": {
+      "types": "./dist/navigation/Menubar.d.ts",
+      "default": "./dist/navigation/Menubar.js"
+    },
+    "./NavItem": {
+      "types": "./dist/navigation/NavItem.d.ts",
+      "default": "./dist/navigation/NavItem.js"
+    },
+    "./NavigationMenu": {
+      "types": "./dist/navigation/NavigationMenu.d.ts",
+      "default": "./dist/navigation/NavigationMenu.js"
+    },
+    "./PageIndicator": {
+      "types": "./dist/navigation/PageIndicator.d.ts",
+      "default": "./dist/navigation/PageIndicator.js"
+    },
+    "./Pagination": {
+      "types": "./dist/navigation/Pagination.d.ts",
+      "default": "./dist/navigation/Pagination.js"
+    },
+    "./Rail": {
+      "types": "./dist/navigation/Rail.d.ts",
+      "default": "./dist/navigation/Rail.js"
+    },
+    "./ScrollSpy": {
+      "types": "./dist/navigation/ScrollSpy.d.ts",
+      "default": "./dist/navigation/ScrollSpy.js"
+    },
+    "./ScrollToTop": {
+      "types": "./dist/navigation/ScrollToTop.d.ts",
+      "default": "./dist/navigation/ScrollToTop.js"
+    },
+    "./Sidebar": {
+      "types": "./dist/navigation/Sidebar.d.ts",
+      "default": "./dist/navigation/Sidebar.js"
+    },
+    "./SidebarLink": {
+      "types": "./dist/navigation/SidebarLink.d.ts",
+      "default": "./dist/navigation/SidebarLink.js"
+    },
+    "./SidebarSection": {
+      "types": "./dist/navigation/SidebarSection.d.ts",
+      "default": "./dist/navigation/SidebarSection.js"
+    },
+    "./SkipLink": {
+      "types": "./dist/navigation/SkipLink.d.ts",
+      "default": "./dist/navigation/SkipLink.js"
+    },
+    "./SpeedDial": {
+      "types": "./dist/navigation/SpeedDial.d.ts",
+      "default": "./dist/navigation/SpeedDial.js"
+    },
+    "./SpyLink": {
+      "types": "./dist/navigation/SpyLink.d.ts",
+      "default": "./dist/navigation/SpyLink.js"
+    },
+    "./StepperNav": {
+      "types": "./dist/navigation/StepperNav.d.ts",
+      "default": "./dist/navigation/StepperNav.js"
+    },
+    "./Tab": {
+      "types": "./dist/navigation/Tab.d.ts",
+      "default": "./dist/navigation/Tab.js"
+    },
+    "./Tabs": {
+      "types": "./dist/navigation/Tabs.d.ts",
+      "default": "./dist/navigation/Tabs.js"
+    },
+    "./TopBar": {
+      "types": "./dist/navigation/TopBar.d.ts",
+      "default": "./dist/navigation/TopBar.js"
+    },
+    "./TreeItem": {
+      "types": "./dist/navigation/TreeItem.d.ts",
+      "default": "./dist/navigation/TreeItem.js"
+    },
+    "./TreeView": {
+      "types": "./dist/navigation/TreeView.d.ts",
+      "default": "./dist/navigation/TreeView.js"
     },
     "./layout": {
-      "types": "./src/layout/index.ts",
-      "default": "./src/layout/index.ts"
+      "types": "./dist/layout/index.d.ts",
+      "default": "./dist/layout/index.js"
+    },
+    "./AppShell": {
+      "types": "./dist/layout/AppShell.d.ts",
+      "default": "./dist/layout/AppShell.js"
+    },
+    "./AspectGrid": {
+      "types": "./dist/layout/AspectGrid.d.ts",
+      "default": "./dist/layout/AspectGrid.js"
+    },
+    "./AuthShell": {
+      "types": "./dist/layout/AuthShell.d.ts",
+      "default": "./dist/layout/AuthShell.js"
+    },
+    "./Center": {
+      "types": "./dist/layout/Center.d.ts",
+      "default": "./dist/layout/Center.js"
+    },
+    "./Cluster": {
+      "types": "./dist/layout/Cluster.d.ts",
+      "default": "./dist/layout/Cluster.js"
+    },
+    "./Container": {
+      "types": "./dist/layout/Container.d.ts",
+      "default": "./dist/layout/Container.js"
+    },
+    "./DashboardGrid": {
+      "types": "./dist/layout/DashboardGrid.d.ts",
+      "default": "./dist/layout/DashboardGrid.js"
+    },
+    "./Dock": {
+      "types": "./dist/layout/Dock.d.ts",
+      "default": "./dist/layout/Dock.js"
+    },
+    "./FloatBar": {
+      "types": "./dist/layout/FloatBar.d.ts",
+      "default": "./dist/layout/FloatBar.js"
+    },
+    "./Inset": {
+      "types": "./dist/layout/Inset.d.ts",
+      "default": "./dist/layout/Inset.js"
+    },
+    "./Masonry": {
+      "types": "./dist/layout/Masonry.d.ts",
+      "default": "./dist/layout/Masonry.js"
+    },
+    "./PageHeader": {
+      "types": "./dist/layout/PageHeader.d.ts",
+      "default": "./dist/layout/PageHeader.js"
+    },
+    "./PageLayout": {
+      "types": "./dist/layout/PageLayout.d.ts",
+      "default": "./dist/layout/PageLayout.js"
+    },
+    "./Resizable": {
+      "types": "./dist/layout/Resizable.d.ts",
+      "default": "./dist/layout/Resizable.js"
+    },
+    "./ResponsiveSwitcher": {
+      "types": "./dist/layout/ResponsiveSwitcher.d.ts",
+      "default": "./dist/layout/ResponsiveSwitcher.js"
+    },
+    "./Section": {
+      "types": "./dist/layout/Section.d.ts",
+      "default": "./dist/layout/Section.js"
+    },
+    "./SettingsLayout": {
+      "types": "./dist/layout/SettingsLayout.d.ts",
+      "default": "./dist/layout/SettingsLayout.js"
+    },
+    "./SplitPane": {
+      "types": "./dist/layout/SplitPane.d.ts",
+      "default": "./dist/layout/SplitPane.js"
+    },
+    "./StatusBar": {
+      "types": "./dist/layout/StatusBar.d.ts",
+      "default": "./dist/layout/StatusBar.js"
+    },
+    "./Sticky": {
+      "types": "./dist/layout/Sticky.d.ts",
+      "default": "./dist/layout/Sticky.js"
+    },
+    "./Toolbar": {
+      "types": "./dist/layout/Toolbar.d.ts",
+      "default": "./dist/layout/Toolbar.js"
+    },
+    "./feedback": {
+      "types": "./dist/feedback/index.d.ts",
+      "default": "./dist/feedback/index.js"
+    },
+    "./Alert": {
+      "types": "./dist/feedback/Alert.d.ts",
+      "default": "./dist/feedback/Alert.js"
+    },
+    "./Announcement": {
+      "types": "./dist/feedback/Announcement.d.ts",
+      "default": "./dist/feedback/Announcement.js"
+    },
+    "./Banner": {
+      "types": "./dist/feedback/Banner.d.ts",
+      "default": "./dist/feedback/Banner.js"
+    },
+    "./CommandGroup": {
+      "types": "./dist/feedback/CommandGroup.d.ts",
+      "default": "./dist/feedback/CommandGroup.js"
+    },
+    "./CommandItem": {
+      "types": "./dist/feedback/CommandItem.d.ts",
+      "default": "./dist/feedback/CommandItem.js"
+    },
+    "./CommandPalette": {
+      "types": "./dist/feedback/CommandPalette.d.ts",
+      "default": "./dist/feedback/CommandPalette.js"
+    },
+    "./Confirm": {
+      "types": "./dist/feedback/Confirm.d.ts",
+      "default": "./dist/feedback/Confirm.js"
+    },
+    "./ConnectionStatus": {
+      "types": "./dist/feedback/ConnectionStatus.d.ts",
+      "default": "./dist/feedback/ConnectionStatus.js"
+    },
+    "./ContextMenu": {
+      "types": "./dist/feedback/ContextMenu.d.ts",
+      "default": "./dist/feedback/ContextMenu.js"
+    },
+    "./Dialog": {
+      "types": "./dist/feedback/Dialog.d.ts",
+      "default": "./dist/feedback/Dialog.js"
+    },
+    "./DropdownMenu": {
+      "types": "./dist/feedback/DropdownMenu.d.ts",
+      "default": "./dist/feedback/DropdownMenu.js"
+    },
+    "./GuidedTour": {
+      "types": "./dist/feedback/GuidedTour.d.ts",
+      "default": "./dist/feedback/GuidedTour.js"
+    },
+    "./HoverCard": {
+      "types": "./dist/feedback/HoverCard.d.ts",
+      "default": "./dist/feedback/HoverCard.js"
+    },
+    "./InlineMessage": {
+      "types": "./dist/feedback/InlineMessage.d.ts",
+      "default": "./dist/feedback/InlineMessage.js"
+    },
+    "./LoadingOverlay": {
+      "types": "./dist/feedback/LoadingOverlay.d.ts",
+      "default": "./dist/feedback/LoadingOverlay.js"
+    },
+    "./Modal": {
+      "types": "./dist/feedback/Modal.d.ts",
+      "default": "./dist/feedback/Modal.js"
+    },
+    "./NotificationPanel": {
+      "types": "./dist/feedback/NotificationPanel.d.ts",
+      "default": "./dist/feedback/NotificationPanel.js"
+    },
+    "./Popover": {
+      "types": "./dist/feedback/Popover.d.ts",
+      "default": "./dist/feedback/Popover.js"
+    },
+    "./Progress": {
+      "types": "./dist/feedback/Progress.d.ts",
+      "default": "./dist/feedback/Progress.js"
+    },
+    "./ProgressToast": {
+      "types": "./dist/feedback/ProgressToast.d.ts",
+      "default": "./dist/feedback/ProgressToast.js"
+    },
+    "./Sheet": {
+      "types": "./dist/feedback/Sheet.d.ts",
+      "default": "./dist/feedback/Sheet.js"
+    },
+    "./Snackbar": {
+      "types": "./dist/feedback/Snackbar.d.ts",
+      "default": "./dist/feedback/Snackbar.js"
+    },
+    "./Spotlight": {
+      "types": "./dist/feedback/Spotlight.d.ts",
+      "default": "./dist/feedback/Spotlight.js"
+    },
+    "./Toast": {
+      "types": "./dist/feedback/Toast.d.ts",
+      "default": "./dist/feedback/Toast.js"
+    },
+    "./ToastManager": {
+      "types": "./dist/feedback/ToastManager.d.ts",
+      "default": "./dist/feedback/ToastManager.js"
+    },
+    "./Tooltip": {
+      "types": "./dist/feedback/Tooltip.d.ts",
+      "default": "./dist/feedback/Tooltip.js"
     },
     "./shared": {
-      "types": "./src/shared/index.ts",
-      "default": "./src/shared/index.ts"
-    },
-    "./*": {
-      "types": "./src/*.tsx",
-      "default": "./src/*.tsx"
+      "types": "./dist/shared/index.d.ts",
+      "default": "./dist/shared/index.js"
     }
   },
   "files": [
+    "dist/",
     "src/"
   ],
   "scripts": {
-    "build": "echo 'Consumed directly via workspace — no build step required'"
+    "build": "tsc -p tsconfig.json",
+    "prepack": "pnpm run build"
   },
   "peerDependencies": {
-    "preact": ">=10.19.0"
-  },
-  "dependencies": {
-    "@arclux/arc-ui": "workspace:*"
+    "preact": "^10.19.0",
+    "@arclux/arc-ui": "workspace:^"
   },
   "license": "MIT",
   "keywords": [
@@ -79,5 +807,9 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "devDependencies": {
+    "@arclux/arc-ui": "workspace:*",
+    "typescript": "^7.0.2"
   }
 }

@@ -16,37 +16,765 @@
       "types": "./src/content/index.ts",
       "default": "./src/content/index.ts"
     },
+    "./Accordion": {
+      "types": "./src/content/Accordion.svelte",
+      "default": "./src/content/Accordion.svelte"
+    },
+    "./AccordionItem": {
+      "types": "./src/content/AccordionItem.svelte",
+      "default": "./src/content/AccordionItem.svelte"
+    },
+    "./AspectRatio": {
+      "types": "./src/content/AspectRatio.svelte",
+      "default": "./src/content/AspectRatio.svelte"
+    },
+    "./Avatar": {
+      "types": "./src/content/Avatar.svelte",
+      "default": "./src/content/Avatar.svelte"
+    },
+    "./AvatarGroup": {
+      "types": "./src/content/AvatarGroup.svelte",
+      "default": "./src/content/AvatarGroup.svelte"
+    },
+    "./Callout": {
+      "types": "./src/content/Callout.svelte",
+      "default": "./src/content/Callout.svelte"
+    },
+    "./Card": {
+      "types": "./src/content/Card.svelte",
+      "default": "./src/content/Card.svelte"
+    },
+    "./Carousel": {
+      "types": "./src/content/Carousel.svelte",
+      "default": "./src/content/Carousel.svelte"
+    },
+    "./Collapsible": {
+      "types": "./src/content/Collapsible.svelte",
+      "default": "./src/content/Collapsible.svelte"
+    },
+    "./ColorSwatch": {
+      "types": "./src/content/ColorSwatch.svelte",
+      "default": "./src/content/ColorSwatch.svelte"
+    },
+    "./Column": {
+      "types": "./src/content/Column.svelte",
+      "default": "./src/content/Column.svelte"
+    },
+    "./CtaBanner": {
+      "types": "./src/content/CtaBanner.svelte",
+      "default": "./src/content/CtaBanner.svelte"
+    },
+    "./Divider": {
+      "types": "./src/content/Divider.svelte",
+      "default": "./src/content/Divider.svelte"
+    },
+    "./EmptyState": {
+      "types": "./src/content/EmptyState.svelte",
+      "default": "./src/content/EmptyState.svelte"
+    },
+    "./FeatureCard": {
+      "types": "./src/content/FeatureCard.svelte",
+      "default": "./src/content/FeatureCard.svelte"
+    },
+    "./Icon": {
+      "types": "./src/content/Icon.svelte",
+      "default": "./src/content/Icon.svelte"
+    },
+    "./Image": {
+      "types": "./src/content/Image.svelte",
+      "default": "./src/content/Image.svelte"
+    },
+    "./InfiniteScroll": {
+      "types": "./src/content/InfiniteScroll.svelte",
+      "default": "./src/content/InfiniteScroll.svelte"
+    },
+    "./Marquee": {
+      "types": "./src/content/Marquee.svelte",
+      "default": "./src/content/Marquee.svelte"
+    },
+    "./QrCode": {
+      "types": "./src/content/QrCode.svelte",
+      "default": "./src/content/QrCode.svelte"
+    },
+    "./ScrollArea": {
+      "types": "./src/content/ScrollArea.svelte",
+      "default": "./src/content/ScrollArea.svelte"
+    },
+    "./ScrollIndicator": {
+      "types": "./src/content/ScrollIndicator.svelte",
+      "default": "./src/content/ScrollIndicator.svelte"
+    },
+    "./Separator": {
+      "types": "./src/content/Separator.svelte",
+      "default": "./src/content/Separator.svelte"
+    },
+    "./Skeleton": {
+      "types": "./src/content/Skeleton.svelte",
+      "default": "./src/content/Skeleton.svelte"
+    },
+    "./Spinner": {
+      "types": "./src/content/Spinner.svelte",
+      "default": "./src/content/Spinner.svelte"
+    },
+    "./Stack": {
+      "types": "./src/content/Stack.svelte",
+      "default": "./src/content/Stack.svelte"
+    },
+    "./VirtualList": {
+      "types": "./src/content/VirtualList.svelte",
+      "default": "./src/content/VirtualList.svelte"
+    },
     "./data": {
       "types": "./src/data/index.ts",
       "default": "./src/data/index.ts"
+    },
+    "./AnimatedNumber": {
+      "types": "./src/data/AnimatedNumber.svelte",
+      "default": "./src/data/AnimatedNumber.svelte"
+    },
+    "./Badge": {
+      "types": "./src/data/Badge.svelte",
+      "default": "./src/data/Badge.svelte"
+    },
+    "./Chart": {
+      "types": "./src/data/Chart.svelte",
+      "default": "./src/data/Chart.svelte"
+    },
+    "./Comparison": {
+      "types": "./src/data/Comparison.svelte",
+      "default": "./src/data/Comparison.svelte"
+    },
+    "./ComparisonColumn": {
+      "types": "./src/data/ComparisonColumn.svelte",
+      "default": "./src/data/ComparisonColumn.svelte"
+    },
+    "./CountdownTimer": {
+      "types": "./src/data/CountdownTimer.svelte",
+      "default": "./src/data/CountdownTimer.svelte"
+    },
+    "./DataGrid": {
+      "types": "./src/data/DataGrid.svelte",
+      "default": "./src/data/DataGrid.svelte"
+    },
+    "./DataTable": {
+      "types": "./src/data/DataTable.svelte",
+      "default": "./src/data/DataTable.svelte"
+    },
+    "./DescriptionItem": {
+      "types": "./src/data/DescriptionItem.svelte",
+      "default": "./src/data/DescriptionItem.svelte"
+    },
+    "./DescriptionList": {
+      "types": "./src/data/DescriptionList.svelte",
+      "default": "./src/data/DescriptionList.svelte"
+    },
+    "./Diff": {
+      "types": "./src/data/Diff.svelte",
+      "default": "./src/data/Diff.svelte"
+    },
+    "./EventCalendar": {
+      "types": "./src/data/EventCalendar.svelte",
+      "default": "./src/data/EventCalendar.svelte"
+    },
+    "./Kanban": {
+      "types": "./src/data/Kanban.svelte",
+      "default": "./src/data/Kanban.svelte"
+    },
+    "./KeyValue": {
+      "types": "./src/data/KeyValue.svelte",
+      "default": "./src/data/KeyValue.svelte"
+    },
+    "./KvPair": {
+      "types": "./src/data/KvPair.svelte",
+      "default": "./src/data/KvPair.svelte"
+    },
+    "./List": {
+      "types": "./src/data/List.svelte",
+      "default": "./src/data/List.svelte"
+    },
+    "./ListItem": {
+      "types": "./src/data/ListItem.svelte",
+      "default": "./src/data/ListItem.svelte"
+    },
+    "./Meter": {
+      "types": "./src/data/Meter.svelte",
+      "default": "./src/data/Meter.svelte"
+    },
+    "./Sparkline": {
+      "types": "./src/data/Sparkline.svelte",
+      "default": "./src/data/Sparkline.svelte"
+    },
+    "./Stat": {
+      "types": "./src/data/Stat.svelte",
+      "default": "./src/data/Stat.svelte"
+    },
+    "./Step": {
+      "types": "./src/data/Step.svelte",
+      "default": "./src/data/Step.svelte"
+    },
+    "./Stepper": {
+      "types": "./src/data/Stepper.svelte",
+      "default": "./src/data/Stepper.svelte"
+    },
+    "./Table": {
+      "types": "./src/data/Table.svelte",
+      "default": "./src/data/Table.svelte"
+    },
+    "./Tag": {
+      "types": "./src/data/Tag.svelte",
+      "default": "./src/data/Tag.svelte"
+    },
+    "./Timeline": {
+      "types": "./src/data/Timeline.svelte",
+      "default": "./src/data/Timeline.svelte"
+    },
+    "./TimelineItem": {
+      "types": "./src/data/TimelineItem.svelte",
+      "default": "./src/data/TimelineItem.svelte"
+    },
+    "./ValueCard": {
+      "types": "./src/data/ValueCard.svelte",
+      "default": "./src/data/ValueCard.svelte"
     },
     "./typography": {
       "types": "./src/typography/index.ts",
       "default": "./src/typography/index.ts"
     },
+    "./Blockquote": {
+      "types": "./src/typography/Blockquote.svelte",
+      "default": "./src/typography/Blockquote.svelte"
+    },
+    "./CodeBlock": {
+      "types": "./src/typography/CodeBlock.svelte",
+      "default": "./src/typography/CodeBlock.svelte"
+    },
+    "./GradientText": {
+      "types": "./src/typography/GradientText.svelte",
+      "default": "./src/typography/GradientText.svelte"
+    },
+    "./Highlight": {
+      "types": "./src/typography/Highlight.svelte",
+      "default": "./src/typography/Highlight.svelte"
+    },
+    "./Kbd": {
+      "types": "./src/typography/Kbd.svelte",
+      "default": "./src/typography/Kbd.svelte"
+    },
+    "./Markdown": {
+      "types": "./src/typography/Markdown.svelte",
+      "default": "./src/typography/Markdown.svelte"
+    },
+    "./NumberFormat": {
+      "types": "./src/typography/NumberFormat.svelte",
+      "default": "./src/typography/NumberFormat.svelte"
+    },
+    "./Prose": {
+      "types": "./src/typography/Prose.svelte",
+      "default": "./src/typography/Prose.svelte"
+    },
+    "./Text": {
+      "types": "./src/typography/Text.svelte",
+      "default": "./src/typography/Text.svelte"
+    },
+    "./TimeAgo": {
+      "types": "./src/typography/TimeAgo.svelte",
+      "default": "./src/typography/TimeAgo.svelte"
+    },
+    "./Truncate": {
+      "types": "./src/typography/Truncate.svelte",
+      "default": "./src/typography/Truncate.svelte"
+    },
+    "./Typewriter": {
+      "types": "./src/typography/Typewriter.svelte",
+      "default": "./src/typography/Typewriter.svelte"
+    },
     "./input": {
       "types": "./src/input/index.ts",
       "default": "./src/input/index.ts"
     },
-    "./feedback": {
-      "types": "./src/feedback/index.ts",
-      "default": "./src/feedback/index.ts"
+    "./Button": {
+      "types": "./src/input/Button.svelte",
+      "default": "./src/input/Button.svelte"
+    },
+    "./ButtonGroup": {
+      "types": "./src/input/ButtonGroup.svelte",
+      "default": "./src/input/ButtonGroup.svelte"
+    },
+    "./Calendar": {
+      "types": "./src/input/Calendar.svelte",
+      "default": "./src/input/Calendar.svelte"
+    },
+    "./Checkbox": {
+      "types": "./src/input/Checkbox.svelte",
+      "default": "./src/input/Checkbox.svelte"
+    },
+    "./Chip": {
+      "types": "./src/input/Chip.svelte",
+      "default": "./src/input/Chip.svelte"
+    },
+    "./ColorPicker": {
+      "types": "./src/input/ColorPicker.svelte",
+      "default": "./src/input/ColorPicker.svelte"
+    },
+    "./Combobox": {
+      "types": "./src/input/Combobox.svelte",
+      "default": "./src/input/Combobox.svelte"
+    },
+    "./CopyButton": {
+      "types": "./src/input/CopyButton.svelte",
+      "default": "./src/input/CopyButton.svelte"
+    },
+    "./DatePicker": {
+      "types": "./src/input/DatePicker.svelte",
+      "default": "./src/input/DatePicker.svelte"
+    },
+    "./DateRangePicker": {
+      "types": "./src/input/DateRangePicker.svelte",
+      "default": "./src/input/DateRangePicker.svelte"
+    },
+    "./Fieldset": {
+      "types": "./src/input/Fieldset.svelte",
+      "default": "./src/input/Fieldset.svelte"
+    },
+    "./FileUpload": {
+      "types": "./src/input/FileUpload.svelte",
+      "default": "./src/input/FileUpload.svelte"
+    },
+    "./Form": {
+      "types": "./src/input/Form.svelte",
+      "default": "./src/input/Form.svelte"
+    },
+    "./Hotkey": {
+      "types": "./src/input/Hotkey.svelte",
+      "default": "./src/input/Hotkey.svelte"
+    },
+    "./IconButton": {
+      "types": "./src/input/IconButton.svelte",
+      "default": "./src/input/IconButton.svelte"
+    },
+    "./ImageCropper": {
+      "types": "./src/input/ImageCropper.svelte",
+      "default": "./src/input/ImageCropper.svelte"
+    },
+    "./Input": {
+      "types": "./src/input/Input.svelte",
+      "default": "./src/input/Input.svelte"
+    },
+    "./InputGroup": {
+      "types": "./src/input/InputGroup.svelte",
+      "default": "./src/input/InputGroup.svelte"
+    },
+    "./Label": {
+      "types": "./src/input/Label.svelte",
+      "default": "./src/input/Label.svelte"
+    },
+    "./MultiSelect": {
+      "types": "./src/input/MultiSelect.svelte",
+      "default": "./src/input/MultiSelect.svelte"
+    },
+    "./NumberInput": {
+      "types": "./src/input/NumberInput.svelte",
+      "default": "./src/input/NumberInput.svelte"
+    },
+    "./OtpInput": {
+      "types": "./src/input/OtpInput.svelte",
+      "default": "./src/input/OtpInput.svelte"
+    },
+    "./PasswordInput": {
+      "types": "./src/input/PasswordInput.svelte",
+      "default": "./src/input/PasswordInput.svelte"
+    },
+    "./PinInput": {
+      "types": "./src/input/PinInput.svelte",
+      "default": "./src/input/PinInput.svelte"
+    },
+    "./Radio": {
+      "types": "./src/input/Radio.svelte",
+      "default": "./src/input/Radio.svelte"
+    },
+    "./RadioGroup": {
+      "types": "./src/input/RadioGroup.svelte",
+      "default": "./src/input/RadioGroup.svelte"
+    },
+    "./RangeSlider": {
+      "types": "./src/input/RangeSlider.svelte",
+      "default": "./src/input/RangeSlider.svelte"
+    },
+    "./Rating": {
+      "types": "./src/input/Rating.svelte",
+      "default": "./src/input/Rating.svelte"
+    },
+    "./Search": {
+      "types": "./src/input/Search.svelte",
+      "default": "./src/input/Search.svelte"
+    },
+    "./SegmentedControl": {
+      "types": "./src/input/SegmentedControl.svelte",
+      "default": "./src/input/SegmentedControl.svelte"
+    },
+    "./Select": {
+      "types": "./src/input/Select.svelte",
+      "default": "./src/input/Select.svelte"
+    },
+    "./Slider": {
+      "types": "./src/input/Slider.svelte",
+      "default": "./src/input/Slider.svelte"
+    },
+    "./SortableList": {
+      "types": "./src/input/SortableList.svelte",
+      "default": "./src/input/SortableList.svelte"
+    },
+    "./Suggestion": {
+      "types": "./src/input/Suggestion.svelte",
+      "default": "./src/input/Suggestion.svelte"
+    },
+    "./SwitchGroup": {
+      "types": "./src/input/SwitchGroup.svelte",
+      "default": "./src/input/SwitchGroup.svelte"
+    },
+    "./TagInput": {
+      "types": "./src/input/TagInput.svelte",
+      "default": "./src/input/TagInput.svelte"
+    },
+    "./Textarea": {
+      "types": "./src/input/Textarea.svelte",
+      "default": "./src/input/Textarea.svelte"
+    },
+    "./ThemeToggle": {
+      "types": "./src/input/ThemeToggle.svelte",
+      "default": "./src/input/ThemeToggle.svelte"
+    },
+    "./TimePicker": {
+      "types": "./src/input/TimePicker.svelte",
+      "default": "./src/input/TimePicker.svelte"
+    },
+    "./Toggle": {
+      "types": "./src/input/Toggle.svelte",
+      "default": "./src/input/Toggle.svelte"
+    },
+    "./TransferList": {
+      "types": "./src/input/TransferList.svelte",
+      "default": "./src/input/TransferList.svelte"
     },
     "./navigation": {
       "types": "./src/navigation/index.ts",
       "default": "./src/navigation/index.ts"
     },
+    "./AnchorNav": {
+      "types": "./src/navigation/AnchorNav.svelte",
+      "default": "./src/navigation/AnchorNav.svelte"
+    },
+    "./BottomNav": {
+      "types": "./src/navigation/BottomNav.svelte",
+      "default": "./src/navigation/BottomNav.svelte"
+    },
+    "./Breadcrumb": {
+      "types": "./src/navigation/Breadcrumb.svelte",
+      "default": "./src/navigation/Breadcrumb.svelte"
+    },
+    "./BreadcrumbItem": {
+      "types": "./src/navigation/BreadcrumbItem.svelte",
+      "default": "./src/navigation/BreadcrumbItem.svelte"
+    },
+    "./BreadcrumbMenu": {
+      "types": "./src/navigation/BreadcrumbMenu.svelte",
+      "default": "./src/navigation/BreadcrumbMenu.svelte"
+    },
+    "./CommandBar": {
+      "types": "./src/navigation/CommandBar.svelte",
+      "default": "./src/navigation/CommandBar.svelte"
+    },
+    "./Drawer": {
+      "types": "./src/navigation/Drawer.svelte",
+      "default": "./src/navigation/Drawer.svelte"
+    },
+    "./Footer": {
+      "types": "./src/navigation/Footer.svelte",
+      "default": "./src/navigation/Footer.svelte"
+    },
+    "./Link": {
+      "types": "./src/navigation/Link.svelte",
+      "default": "./src/navigation/Link.svelte"
+    },
+    "./Menubar": {
+      "types": "./src/navigation/Menubar.svelte",
+      "default": "./src/navigation/Menubar.svelte"
+    },
+    "./NavItem": {
+      "types": "./src/navigation/NavItem.svelte",
+      "default": "./src/navigation/NavItem.svelte"
+    },
+    "./NavigationMenu": {
+      "types": "./src/navigation/NavigationMenu.svelte",
+      "default": "./src/navigation/NavigationMenu.svelte"
+    },
+    "./PageIndicator": {
+      "types": "./src/navigation/PageIndicator.svelte",
+      "default": "./src/navigation/PageIndicator.svelte"
+    },
+    "./Pagination": {
+      "types": "./src/navigation/Pagination.svelte",
+      "default": "./src/navigation/Pagination.svelte"
+    },
+    "./Rail": {
+      "types": "./src/navigation/Rail.svelte",
+      "default": "./src/navigation/Rail.svelte"
+    },
+    "./ScrollSpy": {
+      "types": "./src/navigation/ScrollSpy.svelte",
+      "default": "./src/navigation/ScrollSpy.svelte"
+    },
+    "./ScrollToTop": {
+      "types": "./src/navigation/ScrollToTop.svelte",
+      "default": "./src/navigation/ScrollToTop.svelte"
+    },
+    "./Sidebar": {
+      "types": "./src/navigation/Sidebar.svelte",
+      "default": "./src/navigation/Sidebar.svelte"
+    },
+    "./SidebarLink": {
+      "types": "./src/navigation/SidebarLink.svelte",
+      "default": "./src/navigation/SidebarLink.svelte"
+    },
+    "./SidebarSection": {
+      "types": "./src/navigation/SidebarSection.svelte",
+      "default": "./src/navigation/SidebarSection.svelte"
+    },
+    "./SkipLink": {
+      "types": "./src/navigation/SkipLink.svelte",
+      "default": "./src/navigation/SkipLink.svelte"
+    },
+    "./SpeedDial": {
+      "types": "./src/navigation/SpeedDial.svelte",
+      "default": "./src/navigation/SpeedDial.svelte"
+    },
+    "./SpyLink": {
+      "types": "./src/navigation/SpyLink.svelte",
+      "default": "./src/navigation/SpyLink.svelte"
+    },
+    "./StepperNav": {
+      "types": "./src/navigation/StepperNav.svelte",
+      "default": "./src/navigation/StepperNav.svelte"
+    },
+    "./Tab": {
+      "types": "./src/navigation/Tab.svelte",
+      "default": "./src/navigation/Tab.svelte"
+    },
+    "./Tabs": {
+      "types": "./src/navigation/Tabs.svelte",
+      "default": "./src/navigation/Tabs.svelte"
+    },
+    "./TopBar": {
+      "types": "./src/navigation/TopBar.svelte",
+      "default": "./src/navigation/TopBar.svelte"
+    },
+    "./TreeItem": {
+      "types": "./src/navigation/TreeItem.svelte",
+      "default": "./src/navigation/TreeItem.svelte"
+    },
+    "./TreeView": {
+      "types": "./src/navigation/TreeView.svelte",
+      "default": "./src/navigation/TreeView.svelte"
+    },
     "./layout": {
       "types": "./src/layout/index.ts",
       "default": "./src/layout/index.ts"
     },
+    "./AppShell": {
+      "types": "./src/layout/AppShell.svelte",
+      "default": "./src/layout/AppShell.svelte"
+    },
+    "./AspectGrid": {
+      "types": "./src/layout/AspectGrid.svelte",
+      "default": "./src/layout/AspectGrid.svelte"
+    },
+    "./AuthShell": {
+      "types": "./src/layout/AuthShell.svelte",
+      "default": "./src/layout/AuthShell.svelte"
+    },
+    "./Center": {
+      "types": "./src/layout/Center.svelte",
+      "default": "./src/layout/Center.svelte"
+    },
+    "./Cluster": {
+      "types": "./src/layout/Cluster.svelte",
+      "default": "./src/layout/Cluster.svelte"
+    },
+    "./Container": {
+      "types": "./src/layout/Container.svelte",
+      "default": "./src/layout/Container.svelte"
+    },
+    "./DashboardGrid": {
+      "types": "./src/layout/DashboardGrid.svelte",
+      "default": "./src/layout/DashboardGrid.svelte"
+    },
+    "./Dock": {
+      "types": "./src/layout/Dock.svelte",
+      "default": "./src/layout/Dock.svelte"
+    },
+    "./FloatBar": {
+      "types": "./src/layout/FloatBar.svelte",
+      "default": "./src/layout/FloatBar.svelte"
+    },
+    "./Inset": {
+      "types": "./src/layout/Inset.svelte",
+      "default": "./src/layout/Inset.svelte"
+    },
+    "./Masonry": {
+      "types": "./src/layout/Masonry.svelte",
+      "default": "./src/layout/Masonry.svelte"
+    },
+    "./PageHeader": {
+      "types": "./src/layout/PageHeader.svelte",
+      "default": "./src/layout/PageHeader.svelte"
+    },
+    "./PageLayout": {
+      "types": "./src/layout/PageLayout.svelte",
+      "default": "./src/layout/PageLayout.svelte"
+    },
+    "./Resizable": {
+      "types": "./src/layout/Resizable.svelte",
+      "default": "./src/layout/Resizable.svelte"
+    },
+    "./ResponsiveSwitcher": {
+      "types": "./src/layout/ResponsiveSwitcher.svelte",
+      "default": "./src/layout/ResponsiveSwitcher.svelte"
+    },
+    "./Section": {
+      "types": "./src/layout/Section.svelte",
+      "default": "./src/layout/Section.svelte"
+    },
+    "./SettingsLayout": {
+      "types": "./src/layout/SettingsLayout.svelte",
+      "default": "./src/layout/SettingsLayout.svelte"
+    },
+    "./SplitPane": {
+      "types": "./src/layout/SplitPane.svelte",
+      "default": "./src/layout/SplitPane.svelte"
+    },
+    "./StatusBar": {
+      "types": "./src/layout/StatusBar.svelte",
+      "default": "./src/layout/StatusBar.svelte"
+    },
+    "./Sticky": {
+      "types": "./src/layout/Sticky.svelte",
+      "default": "./src/layout/Sticky.svelte"
+    },
+    "./Toolbar": {
+      "types": "./src/layout/Toolbar.svelte",
+      "default": "./src/layout/Toolbar.svelte"
+    },
+    "./feedback": {
+      "types": "./src/feedback/index.ts",
+      "default": "./src/feedback/index.ts"
+    },
+    "./Alert": {
+      "types": "./src/feedback/Alert.svelte",
+      "default": "./src/feedback/Alert.svelte"
+    },
+    "./Announcement": {
+      "types": "./src/feedback/Announcement.svelte",
+      "default": "./src/feedback/Announcement.svelte"
+    },
+    "./Banner": {
+      "types": "./src/feedback/Banner.svelte",
+      "default": "./src/feedback/Banner.svelte"
+    },
+    "./CommandGroup": {
+      "types": "./src/feedback/CommandGroup.svelte",
+      "default": "./src/feedback/CommandGroup.svelte"
+    },
+    "./CommandItem": {
+      "types": "./src/feedback/CommandItem.svelte",
+      "default": "./src/feedback/CommandItem.svelte"
+    },
+    "./CommandPalette": {
+      "types": "./src/feedback/CommandPalette.svelte",
+      "default": "./src/feedback/CommandPalette.svelte"
+    },
+    "./Confirm": {
+      "types": "./src/feedback/Confirm.svelte",
+      "default": "./src/feedback/Confirm.svelte"
+    },
+    "./ConnectionStatus": {
+      "types": "./src/feedback/ConnectionStatus.svelte",
+      "default": "./src/feedback/ConnectionStatus.svelte"
+    },
+    "./ContextMenu": {
+      "types": "./src/feedback/ContextMenu.svelte",
+      "default": "./src/feedback/ContextMenu.svelte"
+    },
+    "./Dialog": {
+      "types": "./src/feedback/Dialog.svelte",
+      "default": "./src/feedback/Dialog.svelte"
+    },
+    "./DropdownMenu": {
+      "types": "./src/feedback/DropdownMenu.svelte",
+      "default": "./src/feedback/DropdownMenu.svelte"
+    },
+    "./GuidedTour": {
+      "types": "./src/feedback/GuidedTour.svelte",
+      "default": "./src/feedback/GuidedTour.svelte"
+    },
+    "./HoverCard": {
+      "types": "./src/feedback/HoverCard.svelte",
+      "default": "./src/feedback/HoverCard.svelte"
+    },
+    "./InlineMessage": {
+      "types": "./src/feedback/InlineMessage.svelte",
+      "default": "./src/feedback/InlineMessage.svelte"
+    },
+    "./LoadingOverlay": {
+      "types": "./src/feedback/LoadingOverlay.svelte",
+      "default": "./src/feedback/LoadingOverlay.svelte"
+    },
+    "./Modal": {
+      "types": "./src/feedback/Modal.svelte",
+      "default": "./src/feedback/Modal.svelte"
+    },
+    "./NotificationPanel": {
+      "types": "./src/feedback/NotificationPanel.svelte",
+      "default": "./src/feedback/NotificationPanel.svelte"
+    },
+    "./Popover": {
+      "types": "./src/feedback/Popover.svelte",
+      "default": "./src/feedback/Popover.svelte"
+    },
+    "./Progress": {
+      "types": "./src/feedback/Progress.svelte",
+      "default": "./src/feedback/Progress.svelte"
+    },
+    "./ProgressToast": {
+      "types": "./src/feedback/ProgressToast.svelte",
+      "default": "./src/feedback/ProgressToast.svelte"
+    },
+    "./Sheet": {
+      "types": "./src/feedback/Sheet.svelte",
+      "default": "./src/feedback/Sheet.svelte"
+    },
+    "./Snackbar": {
+      "types": "./src/feedback/Snackbar.svelte",
+      "default": "./src/feedback/Snackbar.svelte"
+    },
+    "./Spotlight": {
+      "types": "./src/feedback/Spotlight.svelte",
+      "default": "./src/feedback/Spotlight.svelte"
+    },
+    "./Toast": {
+      "types": "./src/feedback/Toast.svelte",
+      "default": "./src/feedback/Toast.svelte"
+    },
+    "./ToastManager": {
+      "types": "./src/feedback/ToastManager.svelte",
+      "default": "./src/feedback/ToastManager.svelte"
+    },
+    "./Tooltip": {
+      "types": "./src/feedback/Tooltip.svelte",
+      "default": "./src/feedback/Tooltip.svelte"
+    },
     "./shared": {
       "types": "./src/shared/index.ts",
       "default": "./src/shared/index.ts"
-    },
-    "./*": {
-      "types": "./src/*.svelte",
-      "default": "./src/*.svelte"
     }
   },
   "files": [
@@ -56,10 +784,8 @@
     "build": "echo 'Consumed directly via workspace — no build step required'"
   },
   "peerDependencies": {
-    "svelte": ">=5.0.0"
-  },
-  "dependencies": {
-    "@arclux/arc-ui": "workspace:*"
+    "svelte": "^5.0.0",
+    "@arclux/arc-ui": "workspace:^"
   },
   "license": "MIT",
   "keywords": [
@@ -79,5 +805,8 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "devDependencies": {
+    "@arclux/arc-ui": "workspace:*"
   }
 }

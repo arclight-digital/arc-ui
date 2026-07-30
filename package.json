@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "version": "2.11.1",
-  "description": "ARC UI — ARC Radiant Components. A framework-agnostic design system built with Lit Web Components.",
+  "description": "ARC UI \u2014 ARC Radiant Components. A framework-agnostic design system built with Lit Web Components.",
   "engines": {
     "node": ">=24.0.0",
     "pnpm": ">=10.0.0"
@@ -33,11 +33,12 @@
     "check:child-registrations": "node scripts/check-child-registrations.js",
     "check:events": "node scripts/check-event-conventions.js",
     "check:wrapper-types": "node scripts/check-wrapper-types.js",
-    "publish-all": "pnpm -r publish --access public"
+    "publish-all": "pnpm -r publish --access public",
+    "smoke:wrappers": "node scripts/smoke-test-wrappers.js"
   },
   "license": "MIT",
   "devDependencies": {
-    "@arclux/prism": "^2.8.0",
+    "@arclux/prism": "github:arclight-digital/prism#v3",
     "@axe-core/playwright": "^4.12.1",
     "@custom-elements-manifest/analyzer": "^0.11.0",
     "@esm-bundle/chai": "4.3.4-fix.0",

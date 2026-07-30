@@ -862,12 +862,11 @@
     "build": "echo 'No build step — plain JS modules'"
   },
   "sideEffects": [
-    "./src/*/*.register.js",
+    "./src/**/*.register.js",
     "./src/register.js"
   ],
   "dependencies": {
     "@shikijs/langs": "^3.22.0",
-    "lit": "^3.3.0",
     "qrcode-generator": "^1.4.4",
     "shiki": "^3.0.0"
   },
@@ -889,5 +888,11 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "peerDependencies": {
+    "lit": "^3.3.0"
+  },
+  "devDependencies": {
+    "lit": "^3.3.0"
   }
 }

@@ -16,37 +16,765 @@
       "types": "./src/content/index.ts",
       "default": "./src/content/index.ts"
     },
+    "./Accordion": {
+      "types": "./src/content/Accordion.vue",
+      "default": "./src/content/Accordion.vue"
+    },
+    "./AccordionItem": {
+      "types": "./src/content/AccordionItem.vue",
+      "default": "./src/content/AccordionItem.vue"
+    },
+    "./AspectRatio": {
+      "types": "./src/content/AspectRatio.vue",
+      "default": "./src/content/AspectRatio.vue"
+    },
+    "./Avatar": {
+      "types": "./src/content/Avatar.vue",
+      "default": "./src/content/Avatar.vue"
+    },
+    "./AvatarGroup": {
+      "types": "./src/content/AvatarGroup.vue",
+      "default": "./src/content/AvatarGroup.vue"
+    },
+    "./Callout": {
+      "types": "./src/content/Callout.vue",
+      "default": "./src/content/Callout.vue"
+    },
+    "./Card": {
+      "types": "./src/content/Card.vue",
+      "default": "./src/content/Card.vue"
+    },
+    "./Carousel": {
+      "types": "./src/content/Carousel.vue",
+      "default": "./src/content/Carousel.vue"
+    },
+    "./Collapsible": {
+      "types": "./src/content/Collapsible.vue",
+      "default": "./src/content/Collapsible.vue"
+    },
+    "./ColorSwatch": {
+      "types": "./src/content/ColorSwatch.vue",
+      "default": "./src/content/ColorSwatch.vue"
+    },
+    "./Column": {
+      "types": "./src/content/Column.vue",
+      "default": "./src/content/Column.vue"
+    },
+    "./CtaBanner": {
+      "types": "./src/content/CtaBanner.vue",
+      "default": "./src/content/CtaBanner.vue"
+    },
+    "./Divider": {
+      "types": "./src/content/Divider.vue",
+      "default": "./src/content/Divider.vue"
+    },
+    "./EmptyState": {
+      "types": "./src/content/EmptyState.vue",
+      "default": "./src/content/EmptyState.vue"
+    },
+    "./FeatureCard": {
+      "types": "./src/content/FeatureCard.vue",
+      "default": "./src/content/FeatureCard.vue"
+    },
+    "./Icon": {
+      "types": "./src/content/Icon.vue",
+      "default": "./src/content/Icon.vue"
+    },
+    "./Image": {
+      "types": "./src/content/Image.vue",
+      "default": "./src/content/Image.vue"
+    },
+    "./InfiniteScroll": {
+      "types": "./src/content/InfiniteScroll.vue",
+      "default": "./src/content/InfiniteScroll.vue"
+    },
+    "./Marquee": {
+      "types": "./src/content/Marquee.vue",
+      "default": "./src/content/Marquee.vue"
+    },
+    "./QrCode": {
+      "types": "./src/content/QrCode.vue",
+      "default": "./src/content/QrCode.vue"
+    },
+    "./ScrollArea": {
+      "types": "./src/content/ScrollArea.vue",
+      "default": "./src/content/ScrollArea.vue"
+    },
+    "./ScrollIndicator": {
+      "types": "./src/content/ScrollIndicator.vue",
+      "default": "./src/content/ScrollIndicator.vue"
+    },
+    "./Separator": {
+      "types": "./src/content/Separator.vue",
+      "default": "./src/content/Separator.vue"
+    },
+    "./Skeleton": {
+      "types": "./src/content/Skeleton.vue",
+      "default": "./src/content/Skeleton.vue"
+    },
+    "./Spinner": {
+      "types": "./src/content/Spinner.vue",
+      "default": "./src/content/Spinner.vue"
+    },
+    "./Stack": {
+      "types": "./src/content/Stack.vue",
+      "default": "./src/content/Stack.vue"
+    },
+    "./VirtualList": {
+      "types": "./src/content/VirtualList.vue",
+      "default": "./src/content/VirtualList.vue"
+    },
     "./data": {
       "types": "./src/data/index.ts",
       "default": "./src/data/index.ts"
+    },
+    "./AnimatedNumber": {
+      "types": "./src/data/AnimatedNumber.vue",
+      "default": "./src/data/AnimatedNumber.vue"
+    },
+    "./Badge": {
+      "types": "./src/data/Badge.vue",
+      "default": "./src/data/Badge.vue"
+    },
+    "./Chart": {
+      "types": "./src/data/Chart.vue",
+      "default": "./src/data/Chart.vue"
+    },
+    "./Comparison": {
+      "types": "./src/data/Comparison.vue",
+      "default": "./src/data/Comparison.vue"
+    },
+    "./ComparisonColumn": {
+      "types": "./src/data/ComparisonColumn.vue",
+      "default": "./src/data/ComparisonColumn.vue"
+    },
+    "./CountdownTimer": {
+      "types": "./src/data/CountdownTimer.vue",
+      "default": "./src/data/CountdownTimer.vue"
+    },
+    "./DataGrid": {
+      "types": "./src/data/DataGrid.vue",
+      "default": "./src/data/DataGrid.vue"
+    },
+    "./DataTable": {
+      "types": "./src/data/DataTable.vue",
+      "default": "./src/data/DataTable.vue"
+    },
+    "./DescriptionItem": {
+      "types": "./src/data/DescriptionItem.vue",
+      "default": "./src/data/DescriptionItem.vue"
+    },
+    "./DescriptionList": {
+      "types": "./src/data/DescriptionList.vue",
+      "default": "./src/data/DescriptionList.vue"
+    },
+    "./Diff": {
+      "types": "./src/data/Diff.vue",
+      "default": "./src/data/Diff.vue"
+    },
+    "./EventCalendar": {
+      "types": "./src/data/EventCalendar.vue",
+      "default": "./src/data/EventCalendar.vue"
+    },
+    "./Kanban": {
+      "types": "./src/data/Kanban.vue",
+      "default": "./src/data/Kanban.vue"
+    },
+    "./KeyValue": {
+      "types": "./src/data/KeyValue.vue",
+      "default": "./src/data/KeyValue.vue"
+    },
+    "./KvPair": {
+      "types": "./src/data/KvPair.vue",
+      "default": "./src/data/KvPair.vue"
+    },
+    "./List": {
+      "types": "./src/data/List.vue",
+      "default": "./src/data/List.vue"
+    },
+    "./ListItem": {
+      "types": "./src/data/ListItem.vue",
+      "default": "./src/data/ListItem.vue"
+    },
+    "./Meter": {
+      "types": "./src/data/Meter.vue",
+      "default": "./src/data/Meter.vue"
+    },
+    "./Sparkline": {
+      "types": "./src/data/Sparkline.vue",
+      "default": "./src/data/Sparkline.vue"
+    },
+    "./Stat": {
+      "types": "./src/data/Stat.vue",
+      "default": "./src/data/Stat.vue"
+    },
+    "./Step": {
+      "types": "./src/data/Step.vue",
+      "default": "./src/data/Step.vue"
+    },
+    "./Stepper": {
+      "types": "./src/data/Stepper.vue",
+      "default": "./src/data/Stepper.vue"
+    },
+    "./Table": {
+      "types": "./src/data/Table.vue",
+      "default": "./src/data/Table.vue"
+    },
+    "./Tag": {
+      "types": "./src/data/Tag.vue",
+      "default": "./src/data/Tag.vue"
+    },
+    "./Timeline": {
+      "types": "./src/data/Timeline.vue",
+      "default": "./src/data/Timeline.vue"
+    },
+    "./TimelineItem": {
+      "types": "./src/data/TimelineItem.vue",
+      "default": "./src/data/TimelineItem.vue"
+    },
+    "./ValueCard": {
+      "types": "./src/data/ValueCard.vue",
+      "default": "./src/data/ValueCard.vue"
     },
     "./typography": {
       "types": "./src/typography/index.ts",
       "default": "./src/typography/index.ts"
     },
+    "./Blockquote": {
+      "types": "./src/typography/Blockquote.vue",
+      "default": "./src/typography/Blockquote.vue"
+    },
+    "./CodeBlock": {
+      "types": "./src/typography/CodeBlock.vue",
+      "default": "./src/typography/CodeBlock.vue"
+    },
+    "./GradientText": {
+      "types": "./src/typography/GradientText.vue",
+      "default": "./src/typography/GradientText.vue"
+    },
+    "./Highlight": {
+      "types": "./src/typography/Highlight.vue",
+      "default": "./src/typography/Highlight.vue"
+    },
+    "./Kbd": {
+      "types": "./src/typography/Kbd.vue",
+      "default": "./src/typography/Kbd.vue"
+    },
+    "./Markdown": {
+      "types": "./src/typography/Markdown.vue",
+      "default": "./src/typography/Markdown.vue"
+    },
+    "./NumberFormat": {
+      "types": "./src/typography/NumberFormat.vue",
+      "default": "./src/typography/NumberFormat.vue"
+    },
+    "./Prose": {
+      "types": "./src/typography/Prose.vue",
+      "default": "./src/typography/Prose.vue"
+    },
+    "./Text": {
+      "types": "./src/typography/Text.vue",
+      "default": "./src/typography/Text.vue"
+    },
+    "./TimeAgo": {
+      "types": "./src/typography/TimeAgo.vue",
+      "default": "./src/typography/TimeAgo.vue"
+    },
+    "./Truncate": {
+      "types": "./src/typography/Truncate.vue",
+      "default": "./src/typography/Truncate.vue"
+    },
+    "./Typewriter": {
+      "types": "./src/typography/Typewriter.vue",
+      "default": "./src/typography/Typewriter.vue"
+    },
     "./input": {
       "types": "./src/input/index.ts",
       "default": "./src/input/index.ts"
     },
-    "./feedback": {
-      "types": "./src/feedback/index.ts",
-      "default": "./src/feedback/index.ts"
+    "./Button": {
+      "types": "./src/input/Button.vue",
+      "default": "./src/input/Button.vue"
+    },
+    "./ButtonGroup": {
+      "types": "./src/input/ButtonGroup.vue",
+      "default": "./src/input/ButtonGroup.vue"
+    },
+    "./Calendar": {
+      "types": "./src/input/Calendar.vue",
+      "default": "./src/input/Calendar.vue"
+    },
+    "./Checkbox": {
+      "types": "./src/input/Checkbox.vue",
+      "default": "./src/input/Checkbox.vue"
+    },
+    "./Chip": {
+      "types": "./src/input/Chip.vue",
+      "default": "./src/input/Chip.vue"
+    },
+    "./ColorPicker": {
+      "types": "./src/input/ColorPicker.vue",
+      "default": "./src/input/ColorPicker.vue"
+    },
+    "./Combobox": {
+      "types": "./src/input/Combobox.vue",
+      "default": "./src/input/Combobox.vue"
+    },
+    "./CopyButton": {
+      "types": "./src/input/CopyButton.vue",
+      "default": "./src/input/CopyButton.vue"
+    },
+    "./DatePicker": {
+      "types": "./src/input/DatePicker.vue",
+      "default": "./src/input/DatePicker.vue"
+    },
+    "./DateRangePicker": {
+      "types": "./src/input/DateRangePicker.vue",
+      "default": "./src/input/DateRangePicker.vue"
+    },
+    "./Fieldset": {
+      "types": "./src/input/Fieldset.vue",
+      "default": "./src/input/Fieldset.vue"
+    },
+    "./FileUpload": {
+      "types": "./src/input/FileUpload.vue",
+      "default": "./src/input/FileUpload.vue"
+    },
+    "./Form": {
+      "types": "./src/input/Form.vue",
+      "default": "./src/input/Form.vue"
+    },
+    "./Hotkey": {
+      "types": "./src/input/Hotkey.vue",
+      "default": "./src/input/Hotkey.vue"
+    },
+    "./IconButton": {
+      "types": "./src/input/IconButton.vue",
+      "default": "./src/input/IconButton.vue"
+    },
+    "./ImageCropper": {
+      "types": "./src/input/ImageCropper.vue",
+      "default": "./src/input/ImageCropper.vue"
+    },
+    "./Input": {
+      "types": "./src/input/Input.vue",
+      "default": "./src/input/Input.vue"
+    },
+    "./InputGroup": {
+      "types": "./src/input/InputGroup.vue",
+      "default": "./src/input/InputGroup.vue"
+    },
+    "./Label": {
+      "types": "./src/input/Label.vue",
+      "default": "./src/input/Label.vue"
+    },
+    "./MultiSelect": {
+      "types": "./src/input/MultiSelect.vue",
+      "default": "./src/input/MultiSelect.vue"
+    },
+    "./NumberInput": {
+      "types": "./src/input/NumberInput.vue",
+      "default": "./src/input/NumberInput.vue"
+    },
+    "./OtpInput": {
+      "types": "./src/input/OtpInput.vue",
+      "default": "./src/input/OtpInput.vue"
+    },
+    "./PasswordInput": {
+      "types": "./src/input/PasswordInput.vue",
+      "default": "./src/input/PasswordInput.vue"
+    },
+    "./PinInput": {
+      "types": "./src/input/PinInput.vue",
+      "default": "./src/input/PinInput.vue"
+    },
+    "./Radio": {
+      "types": "./src/input/Radio.vue",
+      "default": "./src/input/Radio.vue"
+    },
+    "./RadioGroup": {
+      "types": "./src/input/RadioGroup.vue",
+      "default": "./src/input/RadioGroup.vue"
+    },
+    "./RangeSlider": {
+      "types": "./src/input/RangeSlider.vue",
+      "default": "./src/input/RangeSlider.vue"
+    },
+    "./Rating": {
+      "types": "./src/input/Rating.vue",
+      "default": "./src/input/Rating.vue"
+    },
+    "./Search": {
+      "types": "./src/input/Search.vue",
+      "default": "./src/input/Search.vue"
+    },
+    "./SegmentedControl": {
+      "types": "./src/input/SegmentedControl.vue",
+      "default": "./src/input/SegmentedControl.vue"
+    },
+    "./Select": {
+      "types": "./src/input/Select.vue",
+      "default": "./src/input/Select.vue"
+    },
+    "./Slider": {
+      "types": "./src/input/Slider.vue",
+      "default": "./src/input/Slider.vue"
+    },
+    "./SortableList": {
+      "types": "./src/input/SortableList.vue",
+      "default": "./src/input/SortableList.vue"
+    },
+    "./Suggestion": {
+      "types": "./src/input/Suggestion.vue",
+      "default": "./src/input/Suggestion.vue"
+    },
+    "./SwitchGroup": {
+      "types": "./src/input/SwitchGroup.vue",
+      "default": "./src/input/SwitchGroup.vue"
+    },
+    "./TagInput": {
+      "types": "./src/input/TagInput.vue",
+      "default": "./src/input/TagInput.vue"
+    },
+    "./Textarea": {
+      "types": "./src/input/Textarea.vue",
+      "default": "./src/input/Textarea.vue"
+    },
+    "./ThemeToggle": {
+      "types": "./src/input/ThemeToggle.vue",
+      "default": "./src/input/ThemeToggle.vue"
+    },
+    "./TimePicker": {
+      "types": "./src/input/TimePicker.vue",
+      "default": "./src/input/TimePicker.vue"
+    },
+    "./Toggle": {
+      "types": "./src/input/Toggle.vue",
+      "default": "./src/input/Toggle.vue"
+    },
+    "./TransferList": {
+      "types": "./src/input/TransferList.vue",
+      "default": "./src/input/TransferList.vue"
     },
     "./navigation": {
       "types": "./src/navigation/index.ts",
       "default": "./src/navigation/index.ts"
     },
+    "./AnchorNav": {
+      "types": "./src/navigation/AnchorNav.vue",
+      "default": "./src/navigation/AnchorNav.vue"
+    },
+    "./BottomNav": {
+      "types": "./src/navigation/BottomNav.vue",
+      "default": "./src/navigation/BottomNav.vue"
+    },
+    "./Breadcrumb": {
+      "types": "./src/navigation/Breadcrumb.vue",
+      "default": "./src/navigation/Breadcrumb.vue"
+    },
+    "./BreadcrumbItem": {
+      "types": "./src/navigation/BreadcrumbItem.vue",
+      "default": "./src/navigation/BreadcrumbItem.vue"
+    },
+    "./BreadcrumbMenu": {
+      "types": "./src/navigation/BreadcrumbMenu.vue",
+      "default": "./src/navigation/BreadcrumbMenu.vue"
+    },
+    "./CommandBar": {
+      "types": "./src/navigation/CommandBar.vue",
+      "default": "./src/navigation/CommandBar.vue"
+    },
+    "./Drawer": {
+      "types": "./src/navigation/Drawer.vue",
+      "default": "./src/navigation/Drawer.vue"
+    },
+    "./Footer": {
+      "types": "./src/navigation/Footer.vue",
+      "default": "./src/navigation/Footer.vue"
+    },
+    "./Link": {
+      "types": "./src/navigation/Link.vue",
+      "default": "./src/navigation/Link.vue"
+    },
+    "./Menubar": {
+      "types": "./src/navigation/Menubar.vue",
+      "default": "./src/navigation/Menubar.vue"
+    },
+    "./NavItem": {
+      "types": "./src/navigation/NavItem.vue",
+      "default": "./src/navigation/NavItem.vue"
+    },
+    "./NavigationMenu": {
+      "types": "./src/navigation/NavigationMenu.vue",
+      "default": "./src/navigation/NavigationMenu.vue"
+    },
+    "./PageIndicator": {
+      "types": "./src/navigation/PageIndicator.vue",
+      "default": "./src/navigation/PageIndicator.vue"
+    },
+    "./Pagination": {
+      "types": "./src/navigation/Pagination.vue",
+      "default": "./src/navigation/Pagination.vue"
+    },
+    "./Rail": {
+      "types": "./src/navigation/Rail.vue",
+      "default": "./src/navigation/Rail.vue"
+    },
+    "./ScrollSpy": {
+      "types": "./src/navigation/ScrollSpy.vue",
+      "default": "./src/navigation/ScrollSpy.vue"
+    },
+    "./ScrollToTop": {
+      "types": "./src/navigation/ScrollToTop.vue",
+      "default": "./src/navigation/ScrollToTop.vue"
+    },
+    "./Sidebar": {
+      "types": "./src/navigation/Sidebar.vue",
+      "default": "./src/navigation/Sidebar.vue"
+    },
+    "./SidebarLink": {
+      "types": "./src/navigation/SidebarLink.vue",
+      "default": "./src/navigation/SidebarLink.vue"
+    },
+    "./SidebarSection": {
+      "types": "./src/navigation/SidebarSection.vue",
+      "default": "./src/navigation/SidebarSection.vue"
+    },
+    "./SkipLink": {
+      "types": "./src/navigation/SkipLink.vue",
+      "default": "./src/navigation/SkipLink.vue"
+    },
+    "./SpeedDial": {
+      "types": "./src/navigation/SpeedDial.vue",
+      "default": "./src/navigation/SpeedDial.vue"
+    },
+    "./SpyLink": {
+      "types": "./src/navigation/SpyLink.vue",
+      "default": "./src/navigation/SpyLink.vue"
+    },
+    "./StepperNav": {
+      "types": "./src/navigation/StepperNav.vue",
+      "default": "./src/navigation/StepperNav.vue"
+    },
+    "./Tab": {
+      "types": "./src/navigation/Tab.vue",
+      "default": "./src/navigation/Tab.vue"
+    },
+    "./Tabs": {
+      "types": "./src/navigation/Tabs.vue",
+      "default": "./src/navigation/Tabs.vue"
+    },
+    "./TopBar": {
+      "types": "./src/navigation/TopBar.vue",
+      "default": "./src/navigation/TopBar.vue"
+    },
+    "./TreeItem": {
+      "types": "./src/navigation/TreeItem.vue",
+      "default": "./src/navigation/TreeItem.vue"
+    },
+    "./TreeView": {
+      "types": "./src/navigation/TreeView.vue",
+      "default": "./src/navigation/TreeView.vue"
+    },
     "./layout": {
       "types": "./src/layout/index.ts",
       "default": "./src/layout/index.ts"
     },
+    "./AppShell": {
+      "types": "./src/layout/AppShell.vue",
+      "default": "./src/layout/AppShell.vue"
+    },
+    "./AspectGrid": {
+      "types": "./src/layout/AspectGrid.vue",
+      "default": "./src/layout/AspectGrid.vue"
+    },
+    "./AuthShell": {
+      "types": "./src/layout/AuthShell.vue",
+      "default": "./src/layout/AuthShell.vue"
+    },
+    "./Center": {
+      "types": "./src/layout/Center.vue",
+      "default": "./src/layout/Center.vue"
+    },
+    "./Cluster": {
+      "types": "./src/layout/Cluster.vue",
+      "default": "./src/layout/Cluster.vue"
+    },
+    "./Container": {
+      "types": "./src/layout/Container.vue",
+      "default": "./src/layout/Container.vue"
+    },
+    "./DashboardGrid": {
+      "types": "./src/layout/DashboardGrid.vue",
+      "default": "./src/layout/DashboardGrid.vue"
+    },
+    "./Dock": {
+      "types": "./src/layout/Dock.vue",
+      "default": "./src/layout/Dock.vue"
+    },
+    "./FloatBar": {
+      "types": "./src/layout/FloatBar.vue",
+      "default": "./src/layout/FloatBar.vue"
+    },
+    "./Inset": {
+      "types": "./src/layout/Inset.vue",
+      "default": "./src/layout/Inset.vue"
+    },
+    "./Masonry": {
+      "types": "./src/layout/Masonry.vue",
+      "default": "./src/layout/Masonry.vue"
+    },
+    "./PageHeader": {
+      "types": "./src/layout/PageHeader.vue",
+      "default": "./src/layout/PageHeader.vue"
+    },
+    "./PageLayout": {
+      "types": "./src/layout/PageLayout.vue",
+      "default": "./src/layout/PageLayout.vue"
+    },
+    "./Resizable": {
+      "types": "./src/layout/Resizable.vue",
+      "default": "./src/layout/Resizable.vue"
+    },
+    "./ResponsiveSwitcher": {
+      "types": "./src/layout/ResponsiveSwitcher.vue",
+      "default": "./src/layout/ResponsiveSwitcher.vue"
+    },
+    "./Section": {
+      "types": "./src/layout/Section.vue",
+      "default": "./src/layout/Section.vue"
+    },
+    "./SettingsLayout": {
+      "types": "./src/layout/SettingsLayout.vue",
+      "default": "./src/layout/SettingsLayout.vue"
+    },
+    "./SplitPane": {
+      "types": "./src/layout/SplitPane.vue",
+      "default": "./src/layout/SplitPane.vue"
+    },
+    "./StatusBar": {
+      "types": "./src/layout/StatusBar.vue",
+      "default": "./src/layout/StatusBar.vue"
+    },
+    "./Sticky": {
+      "types": "./src/layout/Sticky.vue",
+      "default": "./src/layout/Sticky.vue"
+    },
+    "./Toolbar": {
+      "types": "./src/layout/Toolbar.vue",
+      "default": "./src/layout/Toolbar.vue"
+    },
+    "./feedback": {
+      "types": "./src/feedback/index.ts",
+      "default": "./src/feedback/index.ts"
+    },
+    "./Alert": {
+      "types": "./src/feedback/Alert.vue",
+      "default": "./src/feedback/Alert.vue"
+    },
+    "./Announcement": {
+      "types": "./src/feedback/Announcement.vue",
+      "default": "./src/feedback/Announcement.vue"
+    },
+    "./Banner": {
+      "types": "./src/feedback/Banner.vue",
+      "default": "./src/feedback/Banner.vue"
+    },
+    "./CommandGroup": {
+      "types": "./src/feedback/CommandGroup.vue",
+      "default": "./src/feedback/CommandGroup.vue"
+    },
+    "./CommandItem": {
+      "types": "./src/feedback/CommandItem.vue",
+      "default": "./src/feedback/CommandItem.vue"
+    },
+    "./CommandPalette": {
+      "types": "./src/feedback/CommandPalette.vue",
+      "default": "./src/feedback/CommandPalette.vue"
+    },
+    "./Confirm": {
+      "types": "./src/feedback/Confirm.vue",
+      "default": "./src/feedback/Confirm.vue"
+    },
+    "./ConnectionStatus": {
+      "types": "./src/feedback/ConnectionStatus.vue",
+      "default": "./src/feedback/ConnectionStatus.vue"
+    },
+    "./ContextMenu": {
+      "types": "./src/feedback/ContextMenu.vue",
+      "default": "./src/feedback/ContextMenu.vue"
+    },
+    "./Dialog": {
+      "types": "./src/feedback/Dialog.vue",
+      "default": "./src/feedback/Dialog.vue"
+    },
+    "./DropdownMenu": {
+      "types": "./src/feedback/DropdownMenu.vue",
+      "default": "./src/feedback/DropdownMenu.vue"
+    },
+    "./GuidedTour": {
+      "types": "./src/feedback/GuidedTour.vue",
+      "default": "./src/feedback/GuidedTour.vue"
+    },
+    "./HoverCard": {
+      "types": "./src/feedback/HoverCard.vue",
+      "default": "./src/feedback/HoverCard.vue"
+    },
+    "./InlineMessage": {
+      "types": "./src/feedback/InlineMessage.vue",
+      "default": "./src/feedback/InlineMessage.vue"
+    },
+    "./LoadingOverlay": {
+      "types": "./src/feedback/LoadingOverlay.vue",
+      "default": "./src/feedback/LoadingOverlay.vue"
+    },
+    "./Modal": {
+      "types": "./src/feedback/Modal.vue",
+      "default": "./src/feedback/Modal.vue"
+    },
+    "./NotificationPanel": {
+      "types": "./src/feedback/NotificationPanel.vue",
+      "default": "./src/feedback/NotificationPanel.vue"
+    },
+    "./Popover": {
+      "types": "./src/feedback/Popover.vue",
+      "default": "./src/feedback/Popover.vue"
+    },
+    "./Progress": {
+      "types": "./src/feedback/Progress.vue",
+      "default": "./src/feedback/Progress.vue"
+    },
+    "./ProgressToast": {
+      "types": "./src/feedback/ProgressToast.vue",
+      "default": "./src/feedback/ProgressToast.vue"
+    },
+    "./Sheet": {
+      "types": "./src/feedback/Sheet.vue",
+      "default": "./src/feedback/Sheet.vue"
+    },
+    "./Snackbar": {
+      "types": "./src/feedback/Snackbar.vue",
+      "default": "./src/feedback/Snackbar.vue"
+    },
+    "./Spotlight": {
+      "types": "./src/feedback/Spotlight.vue",
+      "default": "./src/feedback/Spotlight.vue"
+    },
+    "./Toast": {
+      "types": "./src/feedback/Toast.vue",
+      "default": "./src/feedback/Toast.vue"
+    },
+    "./ToastManager": {
+      "types": "./src/feedback/ToastManager.vue",
+      "default": "./src/feedback/ToastManager.vue"
+    },
+    "./Tooltip": {
+      "types": "./src/feedback/Tooltip.vue",
+      "default": "./src/feedback/Tooltip.vue"
+    },
     "./shared": {
       "types": "./src/shared/index.ts",
       "default": "./src/shared/index.ts"
-    },
-    "./*": {
-      "types": "./src/*.vue",
-      "default": "./src/*.vue"
     }
   },
   "files": [
@@ -56,10 +784,8 @@
     "build": "echo 'Consumed directly via workspace — no build step required'"
   },
   "peerDependencies": {
-    "vue": ">=3.3.0"
-  },
-  "dependencies": {
-    "@arclux/arc-ui": "workspace:*"
+    "vue": "^3.3.0",
+    "@arclux/arc-ui": "workspace:^"
   },
   "license": "MIT",
   "keywords": [
@@ -79,5 +805,8 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "devDependencies": {
+    "@arclux/arc-ui": "workspace:*"
   }
 }
