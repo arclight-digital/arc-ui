@@ -15,6 +15,13 @@ import { ArcCombobox } from '@arclux/arc-ui/combobox';
 export class Combobox {
   private readonly _el: ArcCombobox = inject(ElementRef).nativeElement;
 
+  @Input() set size(value: 'sm' | 'md' | 'lg') {
+    this._el.size = value;
+  }
+  get size(): 'sm' | 'md' | 'lg' {
+    return this._el.size;
+  }
+
   @Input() set value(value: string) {
     this._el.value = value;
   }

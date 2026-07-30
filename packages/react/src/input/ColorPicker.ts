@@ -5,6 +5,7 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcColorPicker } from '@arclux/arc-ui/color-picker';
 
 export interface ColorPickerProps {
+  size?: 'sm' | 'md' | 'lg';
   value?: string;
   name?: string;
   presets?: string[];

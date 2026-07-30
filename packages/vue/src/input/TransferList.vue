@@ -5,6 +5,7 @@ import '@arclux/arc-ui/transfer-list';
 defineOptions({ name: 'TransferList' });
 
 const props = withDefaults(defineProps<{
+  size?: 'sm' | 'md' | 'lg';
   options?: Array<{value:string,label:string,disabled?:boolean}>;
   value?: string[];
   name?: string;
@@ -13,6 +14,7 @@ const props = withDefaults(defineProps<{
   sourceLabel?: string;
   targetLabel?: string;
 }>(), {
+  size: 'md',
   options: () => ([]),
   value: () => ([]),
   name: '',
@@ -38,6 +40,7 @@ function onArcChange(payload: CustomEvent) {
 
 <template>
   <arc-transfer-list
+    :size="props.size"
     :options="props.options"
     :value="props.value"
     :name="props.name"

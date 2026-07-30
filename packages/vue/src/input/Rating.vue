@@ -5,12 +5,14 @@ import '@arclux/arc-ui/rating';
 defineOptions({ name: 'Rating' });
 
 const props = withDefaults(defineProps<{
+  size?: 'sm' | 'md' | 'lg';
   value?: number;
   max?: number;
   name?: string;
   disabled?: boolean;
   readonly?: boolean;
 }>(), {
+  size: 'md',
   value: 0,
   max: 5,
   name: '',
@@ -34,6 +36,7 @@ function onArcChange(payload: CustomEvent) {
 
 <template>
   <arc-rating
+    :size="props.size"
     :value="props.value"
     :max="props.max"
     :name="props.name"

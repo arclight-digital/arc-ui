@@ -14,6 +14,13 @@ import { ArcOtpInput } from '@arclux/arc-ui/otp-input';
 export class OtpInput {
   private readonly _el: ArcOtpInput = inject(ElementRef).nativeElement;
 
+  @Input() set size(value: 'sm' | 'md' | 'lg') {
+    this._el.size = value;
+  }
+  get size(): 'sm' | 'md' | 'lg' {
+    return this._el.size;
+  }
+
   @Input() set length(value: number) {
     this._el.length = value;
   }

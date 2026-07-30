@@ -12,6 +12,7 @@ declare module 'solid-js' {
 }
 
 export interface TransferListProps {
+  size?: 'sm' | 'md' | 'lg';
   options?: Array<{value:string,label:string,disabled?:boolean}>;
   value?: string[];
   name?: string;
@@ -48,9 +49,9 @@ export interface TransferListProps {
 }
 
 export const TransferList: Component<TransferListProps> = (props) => {
-  const [local, rest] = splitProps(props, ['options', 'value', 'name', 'disabled', 'searchable', 'sourceLabel', 'targetLabel', 'onArcChange']);
+  const [local, rest] = splitProps(props, ['size', 'options', 'value', 'name', 'disabled', 'searchable', 'sourceLabel', 'targetLabel', 'onArcChange']);
   return (
-    <arc-transfer-list options={local.options} value={local.value} name={local.name} disabled={local.disabled} searchable={local.searchable} prop:sourceLabel={local.sourceLabel} prop:targetLabel={local.targetLabel} on:arc-change={local.onArcChange} {...rest}>
+    <arc-transfer-list size={local.size} options={local.options} value={local.value} name={local.name} disabled={local.disabled} searchable={local.searchable} prop:sourceLabel={local.sourceLabel} prop:targetLabel={local.targetLabel} on:arc-change={local.onArcChange} {...rest}>
     </arc-transfer-list>
   );
 };

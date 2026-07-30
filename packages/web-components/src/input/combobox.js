@@ -16,6 +16,7 @@ import '../shared/option.js';
  * @prop {string} label - Visible label rendered above the input. Also used as the accessible label for the combobox.
  * @prop {boolean} disabled - Disables the input and prevents interaction. The host element receives reduced opacity and pointer-events: none.
  * @prop {boolean} readonly - Prevents typing and selecting an option while the input stays focusable; the list can still be opened for viewing and the value still submits.
+ * @prop {'sm' | 'md' | 'lg'} size - Control size. `md` is the default; `sm` and `lg` scale the field padding.
  * @fires arc-input - Fired on every keystroke in the filter input. `event.detail.value` contains the current query text.
  * @fires arc-change - Fired when an option is selected. `event.detail.value` contains the selected option value.
  * @slot - Default content.
@@ -27,6 +28,7 @@ import '../shared/option.js';
  */
 export class ArcCombobox extends FormControlMixin(LitElement) {
   static properties = {
+    size: { type: String, reflect: true },
     value:        { type: String, reflect: true },
     placeholder:  { type: String },
     label:        { type: String },
@@ -79,6 +81,10 @@ export class ArcCombobox extends FormControlMixin(LitElement) {
         transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
         box-shadow: var(--shadow-inset);
       }
+
+      /* Sizes. md is the base rule above, so an unrecognised value lands on it. */
+      :host([size="sm"]) .combobox__input { padding: var(--space-xs) var(--space-sm); }
+      :host([size="lg"]) .combobox__input { padding: var(--space-md) var(--space-lg); font-size: var(--_text-md); }
 
       .combobox__input::placeholder {
         color: var(--text-muted);
@@ -178,6 +184,7 @@ export class ArcCombobox extends FormControlMixin(LitElement) {
 
   constructor() {
     super();
+    this.size = 'md';
     this.value = '';
     this.placeholder = '';
     this.label = '';

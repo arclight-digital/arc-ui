@@ -5,6 +5,7 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcDatePicker } from '@arclux/arc-ui/date-picker';
 
 export interface DatePickerProps {
+  size?: 'sm' | 'md' | 'lg';
   value?: string;
   name?: string;
   min?: string;

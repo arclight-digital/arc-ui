@@ -5,6 +5,7 @@ import { useLayoutEffect, useRef } from 'preact/hooks';
 import '@arclux/arc-ui/number-input';
 
 export interface NumberInputProps {
+  size?: 'sm' | 'md' | 'lg';
   value?: number;
   min?: number;
   max?: number;
@@ -40,7 +41,7 @@ export interface NumberInputProps {
   [key: `on${string}`]: unknown;
 }
 
-export const NumberInput: FunctionComponent<NumberInputProps> = ({ value, min, max, step, label, name, disabled, onArcChange, ...rest }) => {
+export const NumberInput: FunctionComponent<NumberInputProps> = ({ size, value, min, max, step, label, name, disabled, onArcChange, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -53,5 +54,5 @@ export const NumberInput: FunctionComponent<NumberInputProps> = ({ value, min, m
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcChange]);
-  return h('arc-number-input', { ref, value, min, max, step, label, name, disabled, ...rest });
+  return h('arc-number-input', { ref, size, value, min, max, step, label, name, disabled, ...rest });
 };

@@ -15,6 +15,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @prop {string} label - Label text displayed above the slider with the range values shown on the right.
  * @prop {boolean} showValues - Whether to display the numeric "low – high" readout in the header.
  * @prop {boolean} disabled - Disables interaction, reducing opacity and blocking pointer events.
+ * @prop {'sm' | 'md' | 'lg'} size - Control size. `md` is the default; `sm` and `lg` scale the track and thumbs.
  * @fires {CustomEvent<{ low: number, high: number }>} arc-input - Fired continuously as the user drags either thumb. Detail contains `{ low, high }`. Use for real-time filtering or preview.
  * @fires {CustomEvent<{ low: number, high: number }>} arc-change - Fired once when the user releases a thumb, indicating the final committed range. Detail contains `{ low, high }`. Use for persisting to a database or triggering an expensive operation.
  * @slot none
@@ -30,6 +31,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  */
 export class ArcRangeSlider extends FormControlMixin(LitElement) {
   static properties = {
+    size: { type: String, reflect: true },
     min:        { type: Number },
     max:        { type: Number },
     step:       { type: Number },
@@ -117,6 +119,18 @@ export class ArcRangeSlider extends FormControlMixin(LitElement) {
         z-index: 1;
       }
 
+      /* Sizes — the rail thickness and the thumbs, since a slider has no text
+         to scale. md is the base rule above. The track keeps the thumb's height
+         so the hit area never shrinks below it. */
+      :host([size="sm"]) .range-slider__track { height: 16px; }
+      :host([size="sm"]) .range-slider__rail,
+      :host([size="sm"]) .range-slider__fill { height: 4px; }
+      :host([size="sm"]) .range-slider__thumb { width: 16px; height: 16px; }
+      :host([size="lg"]) .range-slider__track { height: 26px; }
+      :host([size="lg"]) .range-slider__rail,
+      :host([size="lg"]) .range-slider__fill { height: 8px; }
+      :host([size="lg"]) .range-slider__thumb { width: 26px; height: 26px; }
+
       .range-slider__thumb:hover {
         box-shadow:
           0 0 8px rgba(var(--interactive-rgb), 0.5),
@@ -144,6 +158,7 @@ export class ArcRangeSlider extends FormControlMixin(LitElement) {
 
   constructor() {
     super();
+    this.size = 'md';
     this.min = 0;
     this.max = 100;
     this.step = 1;

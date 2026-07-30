@@ -12,6 +12,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @prop {string} label - Label text displayed above the picker in uppercase accent font.
  * @prop {boolean} disabled - Disables all interaction, reducing opacity to 40% and blocking pointer events.
  * @prop {boolean} readonly - Prevents changing the color via the area, hue slider, hex input, or swatches while the picker stays focusable and the value still submits.
+ * @prop {'sm' | 'md' | 'lg'} size - Control size. `md` is the default; `sm` and `lg` scale the swatch and trigger.
  * @fires arc-change - Fired when the color changes via any input method. `event.detail.value` contains the hex string.
  * @slot none
  * @csspart picker
@@ -25,6 +26,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  */
 export class ArcColorPicker extends FormControlMixin(LitElement) {
   static properties = {
+    size: { type: String, reflect: true },
     value:    { type: String, reflect: true },
     name:     { type: String, reflect: true },
     presets:  { type: Array },
@@ -175,6 +177,13 @@ export class ArcColorPicker extends FormControlMixin(LitElement) {
         box-sizing: border-box;
       }
 
+      /* Sizes — the current-colour preview and the preset swatches. md is the
+         base rule above, so an unrecognised value lands on it. */
+      :host([size="sm"]) .picker__preview { width: 26px; height: 26px; }
+      :host([size="sm"]) .picker__swatch { width: 18px; height: 18px; }
+      :host([size="lg"]) .picker__preview { width: 40px; height: 40px; }
+      :host([size="lg"]) .picker__swatch { width: 28px; height: 28px; }
+
       .picker__swatch:hover {
         transform: scale(1.15);
       }
@@ -202,6 +211,7 @@ export class ArcColorPicker extends FormControlMixin(LitElement) {
 
   constructor() {
     super();
+    this.size = 'md';
     this.value = '#4d7ef7';
     this.name = '';
     this.presets = [];

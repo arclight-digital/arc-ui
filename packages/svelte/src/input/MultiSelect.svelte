@@ -4,6 +4,7 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
+    size?: 'sm' | 'md' | 'lg';
     value?: string[];
     placeholder?: string;
     label?: string;
@@ -37,7 +38,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = $bindable([]), placeholder = '', label = '', name = '', disabled = false, children, ...rest }: Props = $props();
+  let { size = 'md', value = $bindable([]), placeholder = '', label = '', name = '', disabled = false, children, ...rest }: Props = $props();
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
@@ -58,7 +59,7 @@
   }
 </script>
 
-<arc-multi-select {value} {placeholder} {label} {name} {disabled} {...rest}
+<arc-multi-select {size} {value} {placeholder} {label} {name} {disabled} {...rest}
   onarc-change={__onArcChange}
   onarc-input={__onArcInput}
 >

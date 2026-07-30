@@ -5,6 +5,7 @@ import { useLayoutEffect, useRef } from 'preact/hooks';
 import '@arclux/arc-ui/multi-select';
 
 export interface MultiSelectProps {
+  size?: 'sm' | 'md' | 'lg';
   value?: string[];
   placeholder?: string;
   label?: string;
@@ -40,7 +41,7 @@ export interface MultiSelectProps {
   [key: `on${string}`]: unknown;
 }
 
-export const MultiSelect: FunctionComponent<MultiSelectProps> = ({ value, placeholder, label, name, disabled, onArcChange, onArcInput, children, ...rest }) => {
+export const MultiSelect: FunctionComponent<MultiSelectProps> = ({ size, value, placeholder, label, name, disabled, onArcChange, onArcInput, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -58,5 +59,5 @@ export const MultiSelect: FunctionComponent<MultiSelectProps> = ({ value, placeh
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcChange, onArcInput]);
-  return h('arc-multi-select', { ref, value, placeholder, label, name, disabled, ...rest }, children);
+  return h('arc-multi-select', { ref, size, value, placeholder, label, name, disabled, ...rest }, children);
 };

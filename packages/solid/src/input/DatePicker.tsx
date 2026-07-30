@@ -12,6 +12,7 @@ declare module 'solid-js' {
 }
 
 export interface DatePickerProps {
+  size?: 'sm' | 'md' | 'lg';
   value?: string;
   name?: string;
   min?: string;
@@ -51,9 +52,9 @@ export interface DatePickerProps {
 }
 
 export const DatePicker: Component<DatePickerProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'name', 'min', 'max', 'placeholder', 'disabled', 'label', 'open', 'locale', 'firstDayOfWeek', 'onArcChange']);
+  const [local, rest] = splitProps(props, ['size', 'value', 'name', 'min', 'max', 'placeholder', 'disabled', 'label', 'open', 'locale', 'firstDayOfWeek', 'onArcChange']);
   return (
-    <arc-date-picker value={local.value} name={local.name} min={local.min} max={local.max} placeholder={local.placeholder} disabled={local.disabled} label={local.label} open={local.open} locale={local.locale} prop:firstDayOfWeek={local.firstDayOfWeek} on:arc-change={local.onArcChange} {...rest}>
+    <arc-date-picker size={local.size} value={local.value} name={local.name} min={local.min} max={local.max} placeholder={local.placeholder} disabled={local.disabled} label={local.label} open={local.open} locale={local.locale} prop:firstDayOfWeek={local.firstDayOfWeek} on:arc-change={local.onArcChange} {...rest}>
     </arc-date-picker>
   );
 };

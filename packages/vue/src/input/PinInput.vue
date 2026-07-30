@@ -5,6 +5,7 @@ import '@arclux/arc-ui/pin-input';
 defineOptions({ name: 'PinInput' });
 
 const props = withDefaults(defineProps<{
+  size?: 'sm' | 'md' | 'lg';
   length?: number;
   value?: string;
   name?: string;
@@ -14,6 +15,7 @@ const props = withDefaults(defineProps<{
   separator?: number;
   label?: string;
 }>(), {
+  size: 'md',
   length: 4,
   value: '',
   name: '',
@@ -48,6 +50,7 @@ function onArcComplete(payload: CustomEvent) {
 
 <template>
   <arc-pin-input
+    :size="props.size"
     :length="props.length"
     :value="props.value"
     :name="props.name"

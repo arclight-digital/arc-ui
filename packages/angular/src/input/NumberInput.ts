@@ -14,6 +14,13 @@ import { ArcNumberInput } from '@arclux/arc-ui/number-input';
 export class NumberInput {
   private readonly _el: ArcNumberInput = inject(ElementRef).nativeElement;
 
+  @Input() set size(value: 'sm' | 'md' | 'lg') {
+    this._el.size = value;
+  }
+  get size(): 'sm' | 'md' | 'lg' {
+    return this._el.size;
+  }
+
   @Input() set value(value: number) {
     this._el.value = value;
   }

@@ -5,6 +5,7 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcOtpInput } from '@arclux/arc-ui/otp-input';
 
 export interface OtpInputProps {
+  size?: 'sm' | 'md' | 'lg';
   length?: number;
   value?: string;
   name?: string;

@@ -11,6 +11,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @prop {number} max - Maximum number of stars to render. Determines the upper bound of the rating scale.
  * @prop {boolean} disabled - Disables interaction, reducing opacity to 40% and blocking pointer events.
  * @prop {boolean} readonly - Prevents interaction while maintaining full visual appearance. Useful for displaying existing ratings.
+ * @prop {'sm' | 'md' | 'lg'} size - Control size. `md` is the default; `sm` and `lg` scale the star glyphs.
  * @fires {CustomEvent<{ value: number }>} arc-change - Fired when the rating value changes
  * @slot none
  * @csspart star
@@ -18,6 +19,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  */
 export class ArcRating extends FormControlMixin(LitElement) {
   static properties = {
+    size: { type: String, reflect: true },
     value:    { type: Number, reflect: true },
     max:      { type: Number, reflect: true },
     name:     { type: String, reflect: true },
@@ -84,6 +86,11 @@ export class ArcRating extends FormControlMixin(LitElement) {
         pointer-events: none;
       }
 
+      /* Sizes — the glyph, since the control is nothing but glyphs. md is the
+         base rule above, so an unrecognised value lands on it. */
+      :host([size="sm"]) .rating__star svg { width: 20px; height: 20px; }
+      :host([size="lg"]) .rating__star svg { width: 36px; height: 36px; }
+
       @media (prefers-reduced-motion: reduce) {
         .rating__star { transition: none; }
       }
@@ -92,6 +99,7 @@ export class ArcRating extends FormControlMixin(LitElement) {
 
   constructor() {
     super();
+    this.size = 'md';
     this.value = 0;
     this.max = 5;
     this.name = '';

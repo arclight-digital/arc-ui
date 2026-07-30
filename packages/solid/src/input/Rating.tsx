@@ -12,6 +12,7 @@ declare module 'solid-js' {
 }
 
 export interface RatingProps {
+  size?: 'sm' | 'md' | 'lg';
   value?: number;
   max?: number;
   name?: string;
@@ -46,9 +47,9 @@ export interface RatingProps {
 }
 
 export const Rating: Component<RatingProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'max', 'name', 'disabled', 'readonly', 'onArcChange']);
+  const [local, rest] = splitProps(props, ['size', 'value', 'max', 'name', 'disabled', 'readonly', 'onArcChange']);
   return (
-    <arc-rating value={local.value} max={local.max} name={local.name} disabled={local.disabled} readonly={local.readonly} on:arc-change={local.onArcChange} {...rest}>
+    <arc-rating size={local.size} value={local.value} max={local.max} name={local.name} disabled={local.disabled} readonly={local.readonly} on:arc-change={local.onArcChange} {...rest}>
     </arc-rating>
   );
 };

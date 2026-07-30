@@ -5,6 +5,7 @@ import '@arclux/arc-ui/slider';
 defineOptions({ name: 'Slider' });
 
 const props = withDefaults(defineProps<{
+  size?: 'sm' | 'md' | 'lg';
   value?: number;
   min?: number;
   max?: number;
@@ -13,6 +14,7 @@ const props = withDefaults(defineProps<{
   disabled?: boolean;
   label?: string;
 }>(), {
+  size: 'md',
   value: 0,
   min: 0,
   max: 100,
@@ -46,6 +48,7 @@ function onArcChange(payload: CustomEvent) {
 
 <template>
   <arc-slider
+    :size="props.size"
     :value="props.value"
     :min="props.min"
     :max="props.max"

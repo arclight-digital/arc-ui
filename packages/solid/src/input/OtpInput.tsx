@@ -12,6 +12,7 @@ declare module 'solid-js' {
 }
 
 export interface OtpInputProps {
+  size?: 'sm' | 'md' | 'lg';
   length?: number;
   value?: string;
   name?: string;
@@ -46,9 +47,9 @@ export interface OtpInputProps {
 }
 
 export const OtpInput: Component<OtpInputProps> = (props) => {
-  const [local, rest] = splitProps(props, ['length', 'value', 'name', 'disabled', 'type', 'onArcChange']);
+  const [local, rest] = splitProps(props, ['size', 'length', 'value', 'name', 'disabled', 'type', 'onArcChange']);
   return (
-    <arc-otp-input length={local.length} value={local.value} name={local.name} disabled={local.disabled} type={local.type} on:arc-change={local.onArcChange} {...rest}>
+    <arc-otp-input size={local.size} length={local.length} value={local.value} name={local.name} disabled={local.disabled} type={local.type} on:arc-change={local.onArcChange} {...rest}>
     </arc-otp-input>
   );
 };

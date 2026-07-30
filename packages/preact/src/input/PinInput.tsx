@@ -5,6 +5,7 @@ import { useLayoutEffect, useRef } from 'preact/hooks';
 import '@arclux/arc-ui/pin-input';
 
 export interface PinInputProps {
+  size?: 'sm' | 'md' | 'lg';
   length?: number;
   value?: string;
   name?: string;
@@ -42,7 +43,7 @@ export interface PinInputProps {
   [key: `on${string}`]: unknown;
 }
 
-export const PinInput: FunctionComponent<PinInputProps> = ({ length, value, name, disabled, mask, type, separator, label, onArcChange, onArcComplete, ...rest }) => {
+export const PinInput: FunctionComponent<PinInputProps> = ({ size, length, value, name, disabled, mask, type, separator, label, onArcChange, onArcComplete, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -60,5 +61,5 @@ export const PinInput: FunctionComponent<PinInputProps> = ({ length, value, name
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcChange, onArcComplete]);
-  return h('arc-pin-input', { ref, length, value, name, disabled, mask, type, separator, label, ...rest });
+  return h('arc-pin-input', { ref, size, length, value, name, disabled, mask, type, separator, label, ...rest });
 };

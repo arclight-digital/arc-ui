@@ -12,6 +12,7 @@ declare module 'solid-js' {
 }
 
 export interface TimePickerProps {
+  size?: 'sm' | 'md' | 'lg';
   value?: string;
   name?: string;
   min?: string;
@@ -51,9 +52,9 @@ export interface TimePickerProps {
 }
 
 export const TimePicker: Component<TimePickerProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'name', 'min', 'max', 'step', 'format', 'placeholder', 'disabled', 'label', 'open', 'onArcChange']);
+  const [local, rest] = splitProps(props, ['size', 'value', 'name', 'min', 'max', 'step', 'format', 'placeholder', 'disabled', 'label', 'open', 'onArcChange']);
   return (
-    <arc-time-picker value={local.value} name={local.name} min={local.min} max={local.max} step={local.step} format={local.format} placeholder={local.placeholder} disabled={local.disabled} label={local.label} open={local.open} on:arc-change={local.onArcChange} {...rest}>
+    <arc-time-picker size={local.size} value={local.value} name={local.name} min={local.min} max={local.max} step={local.step} format={local.format} placeholder={local.placeholder} disabled={local.disabled} label={local.label} open={local.open} on:arc-change={local.onArcChange} {...rest}>
     </arc-time-picker>
   );
 };

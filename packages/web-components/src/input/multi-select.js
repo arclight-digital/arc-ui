@@ -16,6 +16,7 @@ import '../shared/option.js';
  * @prop {string} placeholder - Hint text shown inside the control when no items are selected and the input is empty.
  * @prop {boolean} disabled - Disables the control, preventing interaction and reducing opacity to 50%.
  * @prop {boolean} readonly - Prevents toggling options or removing chips while the control stays focusable; the dropdown can still be opened for viewing and the values still submit.
+ * @prop {'sm' | 'md' | 'lg'} size - Control size. `md` is the default; `sm` and `lg` scale the control height and padding.
  * @fires {CustomEvent<{ value: string }>} arc-input - Fired on every keystroke in the filter input. `event.detail.value` contains the current query text.
  * @fires {CustomEvent<{ value: string[] }>} arc-change - Fired when the selected values change
  * @slot - Default content.
@@ -28,6 +29,7 @@ import '../shared/option.js';
  */
 export class ArcMultiSelect extends FormControlMixin(LitElement) {
   static properties = {
+    size: { type: String, reflect: true },
     value:        { type: Array },
     placeholder:  { type: String },
     label:        { type: String },
@@ -78,6 +80,11 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
         transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
         box-shadow: var(--shadow-inset);
       }
+
+      /* Sizes. The control wraps its chips, so height is a floor rather than a
+         fixed value — md is the base rule above. */
+      :host([size="sm"]) .ms__control { min-height: 32px; padding: 2px var(--space-xs); }
+      :host([size="lg"]) .ms__control { min-height: 46px; padding: var(--space-sm) var(--space-md); }
 
       .ms__control:hover:not(.ms__control--focused) {
         border-color: var(--border-bright);
@@ -241,6 +248,7 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
 
   constructor() {
     super();
+    this.size = 'md';
     this.value = [];
     this.placeholder = '';
     this.label = '';

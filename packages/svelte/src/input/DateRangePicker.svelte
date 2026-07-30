@@ -4,6 +4,7 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
+    size?: 'sm' | 'md' | 'lg';
     locale?: string;
     firstDayOfWeek?: number;
     start?: string;
@@ -45,7 +46,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { locale = '', firstDayOfWeek = 0, start = $bindable(''), end = $bindable(''), name = '', min = '', max = '', months = 2, presets = [], placeholder = 'Select date range', disabled = false, required = false, label = '', open = false, ...rest }: Props = $props();
+  let { size = 'md', locale = '', firstDayOfWeek = 0, start = $bindable(''), end = $bindable(''), name = '', min = '', max = '', months = 2, presets = [], placeholder = 'Select date range', disabled = false, required = false, label = '', open = false, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {
@@ -67,7 +68,7 @@
   }
 </script>
 
-<arc-date-range-picker {locale} {start} {end} {name} {min} {max} {months} {presets} {placeholder} {disabled} {required} {label} {open} bind:this={__el} {...rest}
+<arc-date-range-picker {size} {locale} {start} {end} {name} {min} {max} {months} {presets} {placeholder} {disabled} {required} {label} {open} bind:this={__el} {...rest}
   onarc-change={__onArcChange}
 >
 </arc-date-range-picker>

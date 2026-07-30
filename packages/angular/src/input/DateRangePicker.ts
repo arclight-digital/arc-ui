@@ -14,6 +14,13 @@ import { ArcDateRangePicker } from '@arclux/arc-ui/date-range-picker';
 export class DateRangePicker {
   private readonly _el: ArcDateRangePicker = inject(ElementRef).nativeElement;
 
+  @Input() set size(value: 'sm' | 'md' | 'lg') {
+    this._el.size = value;
+  }
+  get size(): 'sm' | 'md' | 'lg' {
+    return this._el.size;
+  }
+
   @Input() set locale(value: string) {
     this._el.locale = value;
   }

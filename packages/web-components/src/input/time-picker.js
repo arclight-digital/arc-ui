@@ -18,6 +18,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @prop {boolean} disabled - Disables the time picker, reducing opacity and preventing the dropdown from opening.
  * @prop {string} label - Label text rendered above the input in uppercase accent font styling.
  * @prop {boolean} open - Whether the time dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.
+ * @prop {'sm' | 'md' | 'lg'} size - Control size. `md` is the default; `sm` and `lg` scale the field padding.
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired when a time is selected. Detail contains { value: "HH:MM" } in 24-hour format.
  * @slot none
  * @csspart wrapper
@@ -28,6 +29,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  */
 export class ArcTimePicker extends FormControlMixin(LitElement) {
   static properties = {
+    size: { type: String, reflect: true },
     value:       { type: String, reflect: true },
     name:        { type: String, reflect: true },
     min:         { type: String },
@@ -86,6 +88,10 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
         cursor: pointer;
         transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
       }
+
+      /* Sizes. md is the base rule above, so an unrecognised value lands on it. */
+      :host([size="sm"]) input { padding: var(--space-xs) var(--space-sm); padding-inline-end: 32px; }
+      :host([size="lg"]) input { padding: var(--space-md) var(--space-lg); padding-inline-end: 40px; font-size: var(--_text-md); }
 
       input::placeholder { color: var(--text-muted); }
       input:hover:not(:focus) { border-color: var(--border-bright); }
@@ -217,6 +223,7 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
 
   constructor() {
     super();
+    this.size = 'md';
     this.value = '';
     this.name = '';
     this.min = '';

@@ -5,6 +5,7 @@ import { useLayoutEffect, useRef } from 'preact/hooks';
 import '@arclux/arc-ui/color-picker';
 
 export interface ColorPickerProps {
+  size?: 'sm' | 'md' | 'lg';
   value?: string;
   name?: string;
   presets?: string[];
@@ -38,7 +39,7 @@ export interface ColorPickerProps {
   [key: `on${string}`]: unknown;
 }
 
-export const ColorPicker: FunctionComponent<ColorPickerProps> = ({ value, name, presets, disabled, label, onArcChange, ...rest }) => {
+export const ColorPicker: FunctionComponent<ColorPickerProps> = ({ size, value, name, presets, disabled, label, onArcChange, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -51,5 +52,5 @@ export const ColorPicker: FunctionComponent<ColorPickerProps> = ({ value, name, 
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcChange]);
-  return h('arc-color-picker', { ref, value, name, presets, disabled, label, ...rest });
+  return h('arc-color-picker', { ref, size, value, name, presets, disabled, label, ...rest });
 };

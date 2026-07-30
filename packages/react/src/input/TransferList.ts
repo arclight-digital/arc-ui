@@ -5,6 +5,7 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcTransferList } from '@arclux/arc-ui/transfer-list';
 
 export interface TransferListProps {
+  size?: 'sm' | 'md' | 'lg';
   options?: Array<{value:string,label:string,disabled?:boolean}>;
   value?: string[];
   name?: string;

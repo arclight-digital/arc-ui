@@ -11009,6 +11009,18 @@
           "members": [
             {
               "kind": "field",
+              "name": "size",
+              "privacy": "public",
+              "type": {
+                "text": "'sm' | 'md' | 'lg'"
+              },
+              "default": "'md'",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the swatch and trigger.",
+              "attribute": "size",
+              "reflects": true
+            },
+            {
+              "kind": "field",
               "name": "value",
               "privacy": "public",
               "type": {
@@ -11225,6 +11237,15 @@
           ],
           "attributes": [
             {
+              "name": "size",
+              "type": {
+                "text": "'sm' | 'md' | 'lg'"
+              },
+              "default": "'md'",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the swatch and trigger.",
+              "fieldName": "size"
+            },
+            {
               "name": "value",
               "type": {
                 "text": "string"
@@ -11350,6 +11371,18 @@
             }
           ],
           "members": [
+            {
+              "kind": "field",
+              "name": "size",
+              "privacy": "public",
+              "type": {
+                "text": "'sm' | 'md' | 'lg'"
+              },
+              "default": "'md'",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
+              "attribute": "size",
+              "reflects": true
+            },
             {
               "kind": "field",
               "name": "value",
@@ -11575,6 +11608,15 @@
           ],
           "attributes": [
             {
+              "name": "size",
+              "type": {
+                "text": "'sm' | 'md' | 'lg'"
+              },
+              "default": "'md'",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
+              "fieldName": "size"
+            },
+            {
               "name": "value",
               "type": {
                 "text": "string"
@@ -11788,6 +11830,18 @@
           ],
           "slots": [],
           "members": [
+            {
+              "kind": "field",
+              "name": "size",
+              "privacy": "public",
+              "type": {
+                "text": "'sm' | 'md' | 'lg'"
+              },
+              "default": "'md'",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
+              "attribute": "size",
+              "reflects": true
+            },
             {
               "kind": "field",
               "name": "value",
@@ -12061,6 +12115,15 @@
           ],
           "attributes": [
             {
+              "name": "size",
+              "type": {
+                "text": "'sm' | 'md' | 'lg'"
+              },
+              "default": "'md'",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
+              "fieldName": "size"
+            },
+            {
               "name": "value",
               "type": {
                 "text": "string"
@@ -12265,6 +12328,18 @@
               "type": {
                 "text": "string"
               }
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "privacy": "public",
+              "type": {
+                "text": "'sm' | 'md' | 'lg'"
+              },
+              "default": "'md'",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
+              "attribute": "size",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -12558,6 +12633,15 @@
             }
           ],
           "attributes": [
+            {
+              "name": "size",
+              "type": {
+                "text": "'sm' | 'md' | 'lg'"
+              },
+              "default": "'md'",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
+              "fieldName": "size"
+            },
             {
               "name": "locale",
               "type": {
@@ -14439,6 +14523,18 @@
           "members": [
             {
               "kind": "field",
+              "name": "size",
+              "privacy": "public",
+              "type": {
+                "text": "'sm' | 'md' | 'lg'"
+              },
+              "default": "'md'",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the control height and padding.",
+              "attribute": "size",
+              "reflects": true
+            },
+            {
+              "kind": "field",
               "name": "value",
               "privacy": "public",
               "type": {
@@ -14661,6 +14757,15 @@
           ],
           "attributes": [
             {
+              "name": "size",
+              "type": {
+                "text": "'sm' | 'md' | 'lg'"
+              },
+              "default": "'md'",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the control height and padding.",
+              "fieldName": "size"
+            },
+            {
               "name": "value",
               "type": {
                 "text": "string[]"
@@ -14784,6 +14889,18 @@
           ],
           "slots": [],
           "members": [
+            {
+              "kind": "field",
+              "name": "size",
+              "privacy": "public",
+              "type": {
+                "text": "'sm' | 'md' | 'lg'"
+              },
+              "default": "'md'",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
+              "attribute": "size",
+              "reflects": true
+            },
             {
               "kind": "field",
               "name": "value",
@@ -15024,6 +15141,15 @@
           ],
           "attributes": [
             {
+              "name": "size",
+              "type": {
+                "text": "'sm' | 'md' | 'lg'"
+              },
+              "default": "'md'",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
+              "fieldName": "size"
+            },
+            {
               "name": "value",
               "type": {
                 "text": "number"
@@ -15153,6 +15279,18 @@
           ],
           "slots": [],
           "members": [
+            {
+              "kind": "field",
+              "name": "size",
+              "privacy": "public",
+              "type": {
+                "text": "'sm' | 'md' | 'lg'"
+              },
+              "default": "'md'",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the digit boxes.",
+              "attribute": "size",
+              "reflects": true
+            },
             {
               "kind": "field",
               "name": "length",
@@ -15371,6 +15509,15 @@
             }
           ],
           "attributes": [
+            {
+              "name": "size",
+              "type": {
+                "text": "'sm' | 'md' | 'lg'"
+              },
+              "default": "'md'",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the digit boxes.",
+              "fieldName": "size"
+            },
             {
               "name": "length",
               "type": {
@@ -15930,6 +16077,18 @@
           "members": [
             {
               "kind": "field",
+              "name": "size",
+              "privacy": "public",
+              "type": {
+                "text": "'sm' | 'md' | 'lg'"
+              },
+              "default": "'md'",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the digit boxes.",
+              "attribute": "size",
+              "reflects": true
+            },
+            {
+              "kind": "field",
               "name": "length",
               "privacy": "public",
               "type": {
@@ -16187,6 +16346,15 @@
             }
           ],
           "attributes": [
+            {
+              "name": "size",
+              "type": {
+                "text": "'sm' | 'md' | 'lg'"
+              },
+              "default": "'md'",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the digit boxes.",
+              "fieldName": "size"
+            },
             {
               "name": "length",
               "type": {
@@ -16786,6 +16954,18 @@
             },
             {
               "kind": "field",
+              "name": "size",
+              "privacy": "public",
+              "type": {
+                "text": "'sm' | 'md' | 'lg'"
+              },
+              "default": "'md'",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the track and thumbs.",
+              "attribute": "size",
+              "reflects": true
+            },
+            {
+              "kind": "field",
               "name": "min",
               "privacy": "public",
               "type": {
@@ -17041,6 +17221,15 @@
           ],
           "attributes": [
             {
+              "name": "size",
+              "type": {
+                "text": "'sm' | 'md' | 'lg'"
+              },
+              "default": "'md'",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the track and thumbs.",
+              "fieldName": "size"
+            },
+            {
               "name": "min",
               "type": {
                 "text": "number"
@@ -17188,6 +17377,18 @@
           ],
           "slots": [],
           "members": [
+            {
+              "kind": "field",
+              "name": "size",
+              "privacy": "public",
+              "type": {
+                "text": "'sm' | 'md' | 'lg'"
+              },
+              "default": "'md'",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the star glyphs.",
+              "attribute": "size",
+              "reflects": true
+            },
             {
               "kind": "field",
               "name": "value",
@@ -17395,6 +17596,15 @@
             }
           ],
           "attributes": [
+            {
+              "name": "size",
+              "type": {
+                "text": "'sm' | 'md' | 'lg'"
+              },
+              "default": "'md'",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the star glyphs.",
+              "fieldName": "size"
+            },
             {
               "name": "value",
               "type": {
@@ -18231,6 +18441,18 @@
           "members": [
             {
               "kind": "field",
+              "name": "size",
+              "privacy": "public",
+              "type": {
+                "text": "'sm' | 'md' | 'lg'"
+              },
+              "default": "'md'",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the track and thumb.",
+              "attribute": "size",
+              "reflects": true
+            },
+            {
+              "kind": "field",
               "name": "value",
               "privacy": "public",
               "type": {
@@ -18475,6 +18697,15 @@
             }
           ],
           "attributes": [
+            {
+              "name": "size",
+              "type": {
+                "text": "'sm' | 'md' | 'lg'"
+              },
+              "default": "'md'",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the track and thumb.",
+              "fieldName": "size"
+            },
             {
               "name": "value",
               "type": {
@@ -18897,6 +19128,18 @@
           "members": [
             {
               "kind": "field",
+              "name": "size",
+              "privacy": "public",
+              "type": {
+                "text": "'sm' | 'md' | 'lg'"
+              },
+              "default": "'md'",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the field height and padding.",
+              "attribute": "size",
+              "reflects": true
+            },
+            {
+              "kind": "field",
               "name": "value",
               "privacy": "public",
               "type": {
@@ -19174,6 +19417,15 @@
             }
           ],
           "attributes": [
+            {
+              "name": "size",
+              "type": {
+                "text": "'sm' | 'md' | 'lg'"
+              },
+              "default": "'md'",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the field height and padding.",
+              "fieldName": "size"
+            },
             {
               "name": "value",
               "type": {
@@ -19928,6 +20180,18 @@
           "members": [
             {
               "kind": "field",
+              "name": "size",
+              "privacy": "public",
+              "type": {
+                "text": "'sm' | 'md' | 'lg'"
+              },
+              "default": "'md'",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
+              "attribute": "size",
+              "reflects": true
+            },
+            {
+              "kind": "field",
               "name": "value",
               "privacy": "public",
               "type": {
@@ -20198,6 +20462,15 @@
             }
           ],
           "attributes": [
+            {
+              "name": "size",
+              "type": {
+                "text": "'sm' | 'md' | 'lg'"
+              },
+              "default": "'md'",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
+              "fieldName": "size"
+            },
             {
               "name": "value",
               "type": {
@@ -20706,6 +20979,18 @@
           "members": [
             {
               "kind": "field",
+              "name": "size",
+              "privacy": "public",
+              "type": {
+                "text": "'sm' | 'md' | 'lg'"
+              },
+              "default": "'md'",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the row height and list panels.",
+              "attribute": "size",
+              "reflects": true
+            },
+            {
+              "kind": "field",
               "name": "options",
               "privacy": "public",
               "type": {
@@ -20944,6 +21229,15 @@
             }
           ],
           "attributes": [
+            {
+              "name": "size",
+              "type": {
+                "text": "'sm' | 'md' | 'lg'"
+              },
+              "default": "'md'",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the row height and list panels.",
+              "fieldName": "size"
+            },
             {
               "name": "options",
               "type": {

@@ -14,6 +14,13 @@ import { ArcRating } from '@arclux/arc-ui/rating';
 export class Rating {
   private readonly _el: ArcRating = inject(ElementRef).nativeElement;
 
+  @Input() set size(value: 'sm' | 'md' | 'lg') {
+    this._el.size = value;
+  }
+  get size(): 'sm' | 'md' | 'lg' {
+    return this._el.size;
+  }
+
   @Input() set value(value: number) {
     this._el.value = value;
   }

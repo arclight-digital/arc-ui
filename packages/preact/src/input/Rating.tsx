@@ -5,6 +5,7 @@ import { useLayoutEffect, useRef } from 'preact/hooks';
 import '@arclux/arc-ui/rating';
 
 export interface RatingProps {
+  size?: 'sm' | 'md' | 'lg';
   value?: number;
   max?: number;
   name?: string;
@@ -38,7 +39,7 @@ export interface RatingProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Rating: FunctionComponent<RatingProps> = ({ value, max, name, disabled, readonly, onArcChange, ...rest }) => {
+export const Rating: FunctionComponent<RatingProps> = ({ size, value, max, name, disabled, readonly, onArcChange, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -51,5 +52,5 @@ export const Rating: FunctionComponent<RatingProps> = ({ value, max, name, disab
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcChange]);
-  return h('arc-rating', { ref, value, max, name, disabled, readonly, ...rest });
+  return h('arc-rating', { ref, size, value, max, name, disabled, readonly, ...rest });
 };

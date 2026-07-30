@@ -5,6 +5,7 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcRangeSlider } from '@arclux/arc-ui/range-slider';
 
 export interface RangeSliderProps {
+  size?: 'sm' | 'md' | 'lg';
   min?: number;
   max?: number;
   step?: number;

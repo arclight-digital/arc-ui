@@ -5,6 +5,7 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcSlider } from '@arclux/arc-ui/slider';
 
 export interface SliderProps {
+  size?: 'sm' | 'md' | 'lg';
   value?: number;
   min?: number;
   max?: number;

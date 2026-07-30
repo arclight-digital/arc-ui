@@ -5,6 +5,7 @@ import { useLayoutEffect, useRef } from 'preact/hooks';
 import '@arclux/arc-ui/transfer-list';
 
 export interface TransferListProps {
+  size?: 'sm' | 'md' | 'lg';
   options?: Array<{value:string,label:string,disabled?:boolean}>;
   value?: string[];
   name?: string;
@@ -40,7 +41,7 @@ export interface TransferListProps {
   [key: `on${string}`]: unknown;
 }
 
-export const TransferList: FunctionComponent<TransferListProps> = ({ options, value, name, disabled, searchable, sourceLabel, targetLabel, onArcChange, ...rest }) => {
+export const TransferList: FunctionComponent<TransferListProps> = ({ size, options, value, name, disabled, searchable, sourceLabel, targetLabel, onArcChange, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -53,5 +54,5 @@ export const TransferList: FunctionComponent<TransferListProps> = ({ options, va
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcChange]);
-  return h('arc-transfer-list', { ref, options, value, name, disabled, searchable, sourceLabel, targetLabel, ...rest });
+  return h('arc-transfer-list', { ref, size, options, value, name, disabled, searchable, sourceLabel, targetLabel, ...rest });
 };

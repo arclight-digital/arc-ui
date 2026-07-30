@@ -22,6 +22,7 @@ import { ClickOutsideController } from '../shared/click-outside.js';
  * @prop {boolean} disabled - Disables the control, preventing interaction and reducing opacity to 50%.
  * @prop {boolean} readonly - Prevents adding or removing tags while the field stays focusable and the tags still submit with the form.
  * @prop {string} error - Error message shown below the field; also applies error styling to the border.
+ * @prop {'sm' | 'md' | 'lg'} size - Control size. `md` is the default; `sm` and `lg` scale the field height and padding.
  * @fires {CustomEvent<{ value: string[] }>} arc-change - Fired when a tag is added or removed; detail contains `{ value }`
  * @fires arc-input - Fired as the user types; detail contains `{ query }`
  * @slot none
@@ -35,6 +36,7 @@ import { ClickOutsideController } from '../shared/click-outside.js';
  */
 export class ArcTagInput extends FormControlMixin(LitElement) {
   static properties = {
+    size: { type: String, reflect: true },
     value:        { type: Array },
     suggestions:  { type: Array },
     delimiter:    { type: String },
@@ -90,6 +92,11 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
         transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
         box-shadow: var(--shadow-inset);
       }
+
+      /* Sizes. The field wraps its tags, so height is a floor rather than a
+         fixed value — md is the base rule above, which uses --touch-min. */
+      :host([size="sm"]) .ti__field { min-height: 32px; padding: 2px var(--space-xs); }
+      :host([size="lg"]) .ti__field { min-height: 52px; padding: var(--space-sm) var(--space-md); }
 
       .ti__field:hover:not(.ti__field--focused) {
         border-color: var(--border-bright);
@@ -265,6 +272,7 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
 
   constructor() {
     super();
+    this.size = 'md';
     this.value = [];
     this.suggestions = [];
     this.delimiter = ',';

@@ -4,6 +4,7 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
+    size?: 'sm' | 'md' | 'lg';
     value?: string[];
     suggestions?: string[];
     delimiter?: string;
@@ -41,7 +42,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = $bindable([]), suggestions = [], delimiter = ',', maxTags = 0, allowCustom = true, label = '', placeholder = '', name = '', disabled = false, error = '', ...rest }: Props = $props();
+  let { size = 'md', value = $bindable([]), suggestions = [], delimiter = ',', maxTags = 0, allowCustom = true, label = '', placeholder = '', name = '', disabled = false, error = '', ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {
@@ -63,7 +64,7 @@
   }
 </script>
 
-<arc-tag-input {value} {suggestions} {delimiter} {label} {placeholder} {name} {disabled} {error} bind:this={__el} {...rest}
+<arc-tag-input {size} {value} {suggestions} {delimiter} {label} {placeholder} {name} {disabled} {error} bind:this={__el} {...rest}
   onarc-change={__onArcChange}
 >
 </arc-tag-input>

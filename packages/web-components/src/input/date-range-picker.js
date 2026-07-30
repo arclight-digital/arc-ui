@@ -24,6 +24,7 @@ import { ClickOutsideController } from '../shared/click-outside.js';
  * @prop {boolean} required - Marks the control invalid (valueMissing) until a complete range is selected.
  * @prop {boolean} disabled - Disables the picker, reducing opacity and preventing the popup from opening.
  * @prop {boolean} open - Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.
+ * @prop {'sm' | 'md' | 'lg'} size - Control size. `md` is the default; `sm` and `lg` scale the field padding.
  * @fires {CustomEvent<{ start: string, end: string }>} arc-change - Fired when a complete range is committed (second day clicked or preset applied). detail: { start, end }
  * @slot none
  * @csspart calendar
@@ -45,6 +46,8 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
   static autoValidates = false;
 
   static properties = {
+
+    size: { type: String, reflect: true },
     locale:      { type: String },
     firstDayOfWeek: { type: Number, attribute: 'first-day-of-week' },
     start:       { type: String },
@@ -109,6 +112,10 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
         cursor: pointer;
         transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
       }
+
+      /* Sizes. md is the base rule above, so an unrecognised value lands on it. */
+      :host([size="sm"]) input { padding: var(--space-xs) var(--space-sm); padding-inline-end: 32px; }
+      :host([size="lg"]) input { padding: var(--space-md) var(--space-lg); padding-inline-end: 40px; font-size: var(--_text-md); }
 
       input::placeholder { color: var(--text-muted); }
       input:hover:not(:focus) { border-color: var(--border-bright); }
@@ -352,6 +359,7 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
 
   constructor() {
     super();
+    this.size = 'md';
     this.locale = '';
     this.firstDayOfWeek = 0;
     this.start = '';

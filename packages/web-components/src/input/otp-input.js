@@ -12,6 +12,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @prop {boolean} disabled - Disables all input boxes, reducing opacity to 40% and blocking pointer events.
  * @prop {boolean} readonly - Prevents typing, pasting, and clearing digits while the boxes stay focusable and the value still submits.
  * @prop {'number' | 'text'} type - Input mode. `number` filters non-digits and uses the numeric keyboard; `text` allows any character.
+ * @prop {'sm' | 'md' | 'lg'} size - Control size. `md` is the default; `sm` and `lg` scale the digit boxes.
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired when any digit changes
  * @slot none
  * @csspart otp
@@ -19,6 +20,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  */
 export class ArcOtpInput extends FormControlMixin(LitElement) {
   static properties = {
+    size: { type: String, reflect: true },
     length:   { type: Number, reflect: true },
     value:    { type: String, reflect: true },
     name:     { type: String, reflect: true },
@@ -58,6 +60,10 @@ export class ArcOtpInput extends FormControlMixin(LitElement) {
         box-sizing: border-box;
       }
 
+      /* Sizes. md is the base rule above, so an unrecognised value lands on it. */
+      :host([size="sm"]) .otp__box { width: 36px; height: 42px; font-size: var(--_text-sm); }
+      :host([size="lg"]) .otp__box { width: 52px; height: 62px; font-size: var(--_text-lg); }
+
       .otp__box::placeholder {
         color: var(--text-ghost);
       }
@@ -91,6 +97,7 @@ export class ArcOtpInput extends FormControlMixin(LitElement) {
 
   constructor() {
     super();
+    this.size = 'md';
     this.length = 6;
     this.value = '';
     this.name = '';

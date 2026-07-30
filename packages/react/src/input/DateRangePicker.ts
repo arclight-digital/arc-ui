@@ -5,6 +5,7 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcDateRangePicker } from '@arclux/arc-ui/date-range-picker';
 
 export interface DateRangePickerProps {
+  size?: 'sm' | 'md' | 'lg';
   locale?: string;
   firstDayOfWeek?: number;
   start?: string;

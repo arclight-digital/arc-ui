@@ -5,6 +5,7 @@ import { useLayoutEffect, useRef } from 'preact/hooks';
 import '@arclux/arc-ui/range-slider';
 
 export interface RangeSliderProps {
+  size?: 'sm' | 'md' | 'lg';
   min?: number;
   max?: number;
   step?: number;
@@ -43,7 +44,7 @@ export interface RangeSliderProps {
   [key: `on${string}`]: unknown;
 }
 
-export const RangeSlider: FunctionComponent<RangeSliderProps> = ({ min, max, step, low, high, name, disabled, label, showValues, onArcInput, onArcChange, ...rest }) => {
+export const RangeSlider: FunctionComponent<RangeSliderProps> = ({ size, min, max, step, low, high, name, disabled, label, showValues, onArcInput, onArcChange, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -61,5 +62,5 @@ export const RangeSlider: FunctionComponent<RangeSliderProps> = ({ min, max, ste
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcInput, onArcChange]);
-  return h('arc-range-slider', { ref, min, max, step, low, high, name, disabled, label, showValues, ...rest });
+  return h('arc-range-slider', { ref, size, min, max, step, low, high, name, disabled, label, showValues, ...rest });
 };

@@ -12,6 +12,7 @@ declare module 'solid-js' {
 }
 
 export interface PinInputProps {
+  size?: 'sm' | 'md' | 'lg';
   length?: number;
   value?: string;
   name?: string;
@@ -50,9 +51,9 @@ export interface PinInputProps {
 }
 
 export const PinInput: Component<PinInputProps> = (props) => {
-  const [local, rest] = splitProps(props, ['length', 'value', 'name', 'disabled', 'mask', 'type', 'separator', 'label', 'onArcChange', 'onArcComplete']);
+  const [local, rest] = splitProps(props, ['size', 'length', 'value', 'name', 'disabled', 'mask', 'type', 'separator', 'label', 'onArcChange', 'onArcComplete']);
   return (
-    <arc-pin-input length={local.length} value={local.value} name={local.name} disabled={local.disabled} mask={local.mask} type={local.type} separator={local.separator} label={local.label} on:arc-change={local.onArcChange} on:arc-complete={local.onArcComplete} {...rest}>
+    <arc-pin-input size={local.size} length={local.length} value={local.value} name={local.name} disabled={local.disabled} mask={local.mask} type={local.type} separator={local.separator} label={local.label} on:arc-change={local.onArcChange} on:arc-complete={local.onArcComplete} {...rest}>
     </arc-pin-input>
   );
 };

@@ -17,6 +17,7 @@ import './icon-button.js';
  * @prop {string} targetLabel - Heading for the right (selected) pane. Attribute: `target-label`.
  * @prop {boolean} disabled - Disables the whole control, preventing interaction and reducing opacity.
  * @prop {boolean} readonly - Prevents moving items between panes while the lists stay focusable and filterable; the selected values still submit with the form.
+ * @prop {'sm' | 'md' | 'lg'} size - Control size. `md` is the default; `sm` and `lg` scale the row height and list panels.
  * @fires {CustomEvent<{ value: string[] }>} arc-change - Fired after every move with `{ value }` -- the current array of selected values.
  * @slot none
  * @csspart pane
@@ -28,6 +29,7 @@ import './icon-button.js';
  */
 export class ArcTransferList extends FormControlMixin(LitElement) {
   static properties = {
+    size: { type: String, reflect: true },
     options:     { type: Array },
     value:       { type: Array },
     name:        { type: String, reflect: true },
@@ -130,6 +132,14 @@ export class ArcTransferList extends FormControlMixin(LitElement) {
         overflow-x: hidden;
         padding: var(--space-xs);
       }
+
+      /* Sizes — the row height and how much list is visible, which is what
+         "smaller" means for a two-pane picker. md is the base rule below, so an
+         unrecognised value lands on it. */
+      :host([size="sm"]) .tl__listbox { height: 170px; }
+      :host([size="sm"]) .tl__option { min-height: 26px; padding: 2px var(--space-xs); font-size: var(--_text-xs); }
+      :host([size="lg"]) .tl__listbox { height: 280px; }
+      :host([size="lg"]) .tl__option { min-height: 40px; padding: var(--space-sm) var(--space-md); }
 
       .tl__option {
         display: flex;
@@ -265,6 +275,7 @@ export class ArcTransferList extends FormControlMixin(LitElement) {
 
   constructor() {
     super();
+    this.size = 'md';
     this.options = [];
     this.value = [];
     this.name = '';

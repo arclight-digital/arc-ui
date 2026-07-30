@@ -6046,6 +6046,14 @@
           "doc-url": "",
           "attributes": [
             {
+              "name": "size",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the swatch and trigger.",
+              "value": {
+                "type": "'sm' | 'md' | 'lg'",
+                "default": "'md'"
+              }
+            },
+            {
               "name": "value",
               "description": "Current color as a 6-digit hex string (e.g. `#4d7ef7`). Reflected as an attribute.",
               "value": {
@@ -6110,6 +6118,11 @@
           "js": {
             "properties": [
               {
+                "name": "size",
+                "description": "Control size. `md` is the default; `sm` and `lg` scale the swatch and trigger.",
+                "type": "'sm' | 'md' | 'lg'"
+              },
+              {
                 "name": "value",
                 "description": "Current color as a 6-digit hex string (e.g. `#4d7ef7`). Reflected as an attribute.",
                 "type": "string"
@@ -6166,6 +6179,14 @@
           "description": "Searchable dropdown with type-ahead filtering.\n---\n\n\n### **Events:**\n - **arc-input** - Fired on every keystroke in the filter input. `event.detail.value` contains the current query text.\n- **arc-change** - Fired when an option is selected. `event.detail.value` contains the selected option value.\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **label**\n- **wrapper**\n- **input**\n- **listbox**\n- **option**",
           "doc-url": "",
           "attributes": [
+            {
+              "name": "size",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
+              "value": {
+                "type": "'sm' | 'md' | 'lg'",
+                "default": "'md'"
+              }
+            },
             {
               "name": "value",
               "description": "The currently selected option value. Reflected as an attribute so it can be read from the DOM. Updated automatically when the user selects an option.",
@@ -6240,6 +6261,11 @@
           ],
           "js": {
             "properties": [
+              {
+                "name": "size",
+                "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
+                "type": "'sm' | 'md' | 'lg'"
+              },
               {
                 "name": "value",
                 "description": "The currently selected option value. Reflected as an attribute so it can be read from the DOM. Updated automatically when the user selects an option.",
@@ -6355,6 +6381,14 @@
           "doc-url": "",
           "attributes": [
             {
+              "name": "size",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
+              "value": {
+                "type": "'sm' | 'md' | 'lg'",
+                "default": "'md'"
+              }
+            },
+            {
               "name": "value",
               "description": "The selected date as an ISO string (YYYY-MM-DD). Set this to pre-select a date. Updated when the user picks a date from the calendar.",
               "value": {
@@ -6459,6 +6493,11 @@
           "js": {
             "properties": [
               {
+                "name": "size",
+                "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
+                "type": "'sm' | 'md' | 'lg'"
+              },
+              {
                 "name": "value",
                 "description": "The selected date as an ISO string (YYYY-MM-DD). Set this to pre-select a date. Updated when the user picks a date from the calendar.",
                 "type": "string"
@@ -6539,6 +6578,14 @@
           "description": "Dual-calendar picker for selecting a start/end date range with presets and full keyboard\nnavigation.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when a complete range is committed (second day clicked or preset applied). detail: { start, end }\n\n### **CSS Parts:**\n - **calendar**\n- **panel-title**\n- **day**\n- **wrapper**\n- **label**\n- **input-wrapper**\n- **input**\n- **panel**\n- **presets**\n- **preset**\n- **header**",
           "doc-url": "",
           "attributes": [
+            {
+              "name": "size",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
+              "value": {
+                "type": "'sm' | 'md' | 'lg'",
+                "default": "'md'"
+              }
+            },
             {
               "name": "locale",
               "description": "BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language.",
@@ -6673,6 +6720,11 @@
                 "name": "value",
                 "description": "Read-derived ISO 8601 interval (\"start/end\") when both dates are set, otherwise an empty string. This is the value submitted with forms. Assigning \"start/end\" sets both dates.",
                 "type": "string"
+              },
+              {
+                "name": "size",
+                "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
+                "type": "'sm' | 'md' | 'lg'"
               },
               {
                 "name": "locale",
@@ -7668,6 +7720,14 @@
           "doc-url": "",
           "attributes": [
             {
+              "name": "size",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the control height and padding.",
+              "value": {
+                "type": "'sm' | 'md' | 'lg'",
+                "default": "'md'"
+              }
+            },
+            {
               "name": "value",
               "description": "Array of selected option values. Updated when items are toggled and emitted via `arc-change`.",
               "value": {
@@ -7742,6 +7802,11 @@
           "js": {
             "properties": [
               {
+                "name": "size",
+                "description": "Control size. `md` is the default; `sm` and `lg` scale the control height and padding.",
+                "type": "'sm' | 'md' | 'lg'"
+              },
+              {
                 "name": "value",
                 "description": "Array of selected option values. Updated when items are toggled and emitted via `arc-change`.",
                 "type": "string[]"
@@ -7803,6 +7868,14 @@
           "description": "A numeric stepper input with decrement and increment buttons flanking a central text field,\nsupporting min/max clamping, step increments, and keyboard shortcuts.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the numeric value changes via buttons or keyboard\n\n### **CSS Parts:**\n - **wrapper**\n- **label**\n- **controls**\n- **decrement**\n- **field**\n- **increment**",
           "doc-url": "",
           "attributes": [
+            {
+              "name": "size",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
+              "value": {
+                "type": "'sm' | 'md' | 'lg'",
+                "default": "'md'"
+              }
+            },
             {
               "name": "value",
               "description": "Current numeric value. Reflected as an attribute and updated on user interaction.",
@@ -7884,6 +7957,11 @@
           "js": {
             "properties": [
               {
+                "name": "size",
+                "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
+                "type": "'sm' | 'md' | 'lg'"
+              },
+              {
                 "name": "value",
                 "description": "Current numeric value. Reflected as an attribute and updated on user interaction.",
                 "type": "number"
@@ -7951,6 +8029,14 @@
           "doc-url": "",
           "attributes": [
             {
+              "name": "size",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the digit boxes.",
+              "value": {
+                "type": "'sm' | 'md' | 'lg'",
+                "default": "'md'"
+              }
+            },
+            {
               "name": "length",
               "description": "Number of individual character boxes to render. Reflected as an attribute.",
               "value": {
@@ -8014,6 +8100,11 @@
           ],
           "js": {
             "properties": [
+              {
+                "name": "size",
+                "description": "Control size. `md` is the default; `sm` and `lg` scale the digit boxes.",
+                "type": "'sm' | 'md' | 'lg'"
+              },
               {
                 "name": "length",
                 "description": "Number of individual character boxes to render. Reflected as an attribute.",
@@ -8268,6 +8359,14 @@
           "doc-url": "",
           "attributes": [
             {
+              "name": "size",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the digit boxes.",
+              "value": {
+                "type": "'sm' | 'md' | 'lg'",
+                "default": "'md'"
+              }
+            },
+            {
               "name": "length",
               "description": "Number of input boxes to render. Determines the expected code length.",
               "value": {
@@ -8360,6 +8459,11 @@
           ],
           "js": {
             "properties": [
+              {
+                "name": "size",
+                "description": "Control size. `md` is the default; `sm` and `lg` scale the digit boxes.",
+                "type": "'sm' | 'md' | 'lg'"
+              },
               {
                 "name": "length",
                 "description": "Number of input boxes to render. Determines the expected code length.",
@@ -8613,6 +8717,14 @@
           "doc-url": "",
           "attributes": [
             {
+              "name": "size",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the track and thumbs.",
+              "value": {
+                "type": "'sm' | 'md' | 'lg'",
+                "default": "'md'"
+              }
+            },
+            {
               "name": "min",
               "description": "Minimum allowed value at the left edge of the track.",
               "value": {
@@ -8714,6 +8826,11 @@
           "js": {
             "properties": [
               {
+                "name": "size",
+                "description": "Control size. `md` is the default; `sm` and `lg` scale the track and thumbs.",
+                "type": "'sm' | 'md' | 'lg'"
+              },
+              {
                 "name": "min",
                 "description": "Minimum allowed value at the left edge of the track.",
                 "type": "number"
@@ -8795,6 +8912,14 @@
           "doc-url": "",
           "attributes": [
             {
+              "name": "size",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the star glyphs.",
+              "value": {
+                "type": "'sm' | 'md' | 'lg'",
+                "default": "'md'"
+              }
+            },
+            {
               "name": "value",
               "description": "Current rating value. Reflected as an attribute and updated on user interaction.",
               "value": {
@@ -8851,6 +8976,11 @@
           ],
           "js": {
             "properties": [
+              {
+                "name": "size",
+                "description": "Control size. `md` is the default; `sm` and `lg` scale the star glyphs.",
+                "type": "'sm' | 'md' | 'lg'"
+              },
               {
                 "name": "value",
                 "description": "Current rating value. Reflected as an attribute and updated on user interaction.",
@@ -9266,6 +9396,14 @@
           "doc-url": "",
           "attributes": [
             {
+              "name": "size",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the track and thumb.",
+              "value": {
+                "type": "'sm' | 'md' | 'lg'",
+                "default": "'md'"
+              }
+            },
+            {
               "name": "value",
               "description": "Current slider value. Reflected as an attribute and updated on user interaction.",
               "value": {
@@ -9350,6 +9488,11 @@
           ],
           "js": {
             "properties": [
+              {
+                "name": "size",
+                "description": "Control size. `md` is the default; `sm` and `lg` scale the track and thumb.",
+                "type": "'sm' | 'md' | 'lg'"
+              },
               {
                 "name": "value",
                 "description": "Current slider value. Reflected as an attribute and updated on user interaction.",
@@ -9573,6 +9716,14 @@
           "doc-url": "",
           "attributes": [
             {
+              "name": "size",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the field height and padding.",
+              "value": {
+                "type": "'sm' | 'md' | 'lg'",
+                "default": "'md'"
+              }
+            },
+            {
               "name": "value",
               "description": "Array of current tags. Updated on add/remove and emitted via `arc-change`.",
               "value": {
@@ -9682,6 +9833,11 @@
           ],
           "js": {
             "properties": [
+              {
+                "name": "size",
+                "description": "Control size. `md` is the default; `sm` and `lg` scale the field height and padding.",
+                "type": "'sm' | 'md' | 'lg'"
+              },
               {
                 "name": "value",
                 "description": "Array of current tags. Updated on add/remove and emitted via `arc-change`.",
@@ -10048,6 +10204,14 @@
           "doc-url": "",
           "attributes": [
             {
+              "name": "size",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
+              "value": {
+                "type": "'sm' | 'md' | 'lg'",
+                "default": "'md'"
+              }
+            },
+            {
               "name": "value",
               "description": "The selected time in 24-hour \"HH:MM\" format (e.g. \"14:30\"). Set this to pre-select a time. Updated when the user picks a time.",
               "value": {
@@ -10151,6 +10315,11 @@
           ],
           "js": {
             "properties": [
+              {
+                "name": "size",
+                "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
+                "type": "'sm' | 'md' | 'lg'"
+              },
               {
                 "name": "value",
                 "description": "The selected time in 24-hour \"HH:MM\" format (e.g. \"14:30\"). Set this to pre-select a time. Updated when the user picks a time.",
@@ -10355,6 +10524,14 @@
           "doc-url": "",
           "attributes": [
             {
+              "name": "size",
+              "description": "Control size. `md` is the default; `sm` and `lg` scale the row height and list panels.",
+              "value": {
+                "type": "'sm' | 'md' | 'lg'",
+                "default": "'md'"
+              }
+            },
+            {
               "name": "options",
               "description": "The full universe of items. Items whose value is in `value` render in the Selected pane; the rest render in Available.",
               "value": {
@@ -10435,6 +10612,11 @@
           ],
           "js": {
             "properties": [
+              {
+                "name": "size",
+                "description": "Control size. `md` is the default; `sm` and `lg` scale the row height and list panels.",
+                "type": "'sm' | 'md' | 'lg'"
+              },
               {
                 "name": "options",
                 "description": "The full universe of items. Items whose value is in `value` render in the Selected pane; the rest render in Available.",

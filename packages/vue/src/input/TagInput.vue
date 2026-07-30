@@ -5,6 +5,7 @@ import '@arclux/arc-ui/tag-input';
 defineOptions({ name: 'TagInput' });
 
 const props = withDefaults(defineProps<{
+  size?: 'sm' | 'md' | 'lg';
   value?: string[];
   suggestions?: string[];
   delimiter?: string;
@@ -16,6 +17,7 @@ const props = withDefaults(defineProps<{
   disabled?: boolean;
   error?: string;
 }>(), {
+  size: 'md',
   value: () => ([]),
   suggestions: () => ([]),
   delimiter: ',',
@@ -45,6 +47,7 @@ function onArcChange(payload: CustomEvent) {
 
 <template>
   <arc-tag-input
+    :size="props.size"
     :value="props.value"
     :suggestions="props.suggestions"
     :delimiter="props.delimiter"

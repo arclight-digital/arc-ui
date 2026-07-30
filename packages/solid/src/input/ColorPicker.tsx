@@ -12,6 +12,7 @@ declare module 'solid-js' {
 }
 
 export interface ColorPickerProps {
+  size?: 'sm' | 'md' | 'lg';
   value?: string;
   name?: string;
   presets?: string[];
@@ -46,9 +47,9 @@ export interface ColorPickerProps {
 }
 
 export const ColorPicker: Component<ColorPickerProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'name', 'presets', 'disabled', 'label', 'onArcChange']);
+  const [local, rest] = splitProps(props, ['size', 'value', 'name', 'presets', 'disabled', 'label', 'onArcChange']);
   return (
-    <arc-color-picker value={local.value} name={local.name} presets={local.presets} disabled={local.disabled} label={local.label} on:arc-change={local.onArcChange} {...rest}>
+    <arc-color-picker size={local.size} value={local.value} name={local.name} presets={local.presets} disabled={local.disabled} label={local.label} on:arc-change={local.onArcChange} {...rest}>
     </arc-color-picker>
   );
 };

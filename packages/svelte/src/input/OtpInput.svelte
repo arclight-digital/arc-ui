@@ -4,6 +4,7 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
+    size?: 'sm' | 'md' | 'lg';
     length?: number;
     value?: string;
     name?: string;
@@ -36,7 +37,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { length = 6, value = $bindable(''), name = '', disabled = false, type = 'number', ...rest }: Props = $props();
+  let { size = 'md', length = 6, value = $bindable(''), name = '', disabled = false, type = 'number', ...rest }: Props = $props();
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
@@ -50,7 +51,7 @@
   }
 </script>
 
-<arc-otp-input {length} {value} {name} {disabled} {type} {...rest}
+<arc-otp-input {size} {length} {value} {name} {disabled} {type} {...rest}
   onarc-change={__onArcChange}
 >
 </arc-otp-input>

@@ -5,12 +5,14 @@ import '@arclux/arc-ui/combobox';
 defineOptions({ name: 'Combobox' });
 
 const props = withDefaults(defineProps<{
+  size?: 'sm' | 'md' | 'lg';
   value?: string;
   placeholder?: string;
   label?: string;
   name?: string;
   disabled?: boolean;
 }>(), {
+  size: 'md',
   value: '',
   placeholder: '',
   label: '',
@@ -42,6 +44,7 @@ function onArcChange(payload: CustomEvent) {
 
 <template>
   <arc-combobox
+    :size="props.size"
     :value="props.value"
     :placeholder="props.placeholder"
     :label="props.label"

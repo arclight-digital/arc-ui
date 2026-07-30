@@ -5,6 +5,7 @@ import { useLayoutEffect, useRef } from 'preact/hooks';
 import '@arclux/arc-ui/otp-input';
 
 export interface OtpInputProps {
+  size?: 'sm' | 'md' | 'lg';
   length?: number;
   value?: string;
   name?: string;
@@ -38,7 +39,7 @@ export interface OtpInputProps {
   [key: `on${string}`]: unknown;
 }
 
-export const OtpInput: FunctionComponent<OtpInputProps> = ({ length, value, name, disabled, type, onArcChange, ...rest }) => {
+export const OtpInput: FunctionComponent<OtpInputProps> = ({ size, length, value, name, disabled, type, onArcChange, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -51,5 +52,5 @@ export const OtpInput: FunctionComponent<OtpInputProps> = ({ length, value, name
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcChange]);
-  return h('arc-otp-input', { ref, length, value, name, disabled, type, ...rest });
+  return h('arc-otp-input', { ref, size, length, value, name, disabled, type, ...rest });
 };

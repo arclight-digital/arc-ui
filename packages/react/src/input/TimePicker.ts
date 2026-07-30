@@ -5,6 +5,7 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcTimePicker } from '@arclux/arc-ui/time-picker';
 
 export interface TimePickerProps {
+  size?: 'sm' | 'md' | 'lg';
   value?: string;
   name?: string;
   min?: string;

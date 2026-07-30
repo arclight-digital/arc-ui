@@ -1169,6 +1169,7 @@ export default {
  },
  "arc-color-picker": {
   "attrs": [
+   "size",
    "value",
    "name",
    "presets",
@@ -1177,10 +1178,18 @@ export default {
    "required",
    "readonly"
   ],
+  "enums": {
+   "size": [
+    "sm",
+    "md",
+    "lg"
+   ]
+  },
   "slug": "color-picker"
  },
  "arc-combobox": {
   "attrs": [
+   "size",
    "value",
    "placeholder",
    "label",
@@ -1189,6 +1198,13 @@ export default {
    "required",
    "readonly"
   ],
+  "enums": {
+   "size": [
+    "sm",
+    "md",
+    "lg"
+   ]
+  },
   "slug": "combobox"
  },
  "arc-copy-button": {
@@ -1200,6 +1216,7 @@ export default {
  },
  "arc-date-picker": {
   "attrs": [
+   "size",
    "value",
    "name",
    "min",
@@ -1213,10 +1230,18 @@ export default {
    "required",
    "readonly"
   ],
+  "enums": {
+   "size": [
+    "sm",
+    "md",
+    "lg"
+   ]
+  },
   "slug": "date-picker"
  },
  "arc-date-range-picker": {
   "attrs": [
+   "size",
    "locale",
    "first-day-of-week",
    "start",
@@ -1233,6 +1258,13 @@ export default {
    "open",
    "readonly"
   ],
+  "enums": {
+   "size": [
+    "sm",
+    "md",
+    "lg"
+   ]
+  },
   "slug": "date-range-picker"
  },
  "arc-fieldset": {
@@ -1376,6 +1408,7 @@ export default {
  },
  "arc-multi-select": {
   "attrs": [
+   "size",
    "value",
    "placeholder",
    "label",
@@ -1384,10 +1417,18 @@ export default {
    "required",
    "readonly"
   ],
+  "enums": {
+   "size": [
+    "sm",
+    "md",
+    "lg"
+   ]
+  },
   "slug": "multi-select"
  },
  "arc-number-input": {
   "attrs": [
+   "size",
    "value",
    "min",
    "max",
@@ -1398,10 +1439,18 @@ export default {
    "required",
    "readonly"
   ],
+  "enums": {
+   "size": [
+    "sm",
+    "md",
+    "lg"
+   ]
+  },
   "slug": "number-input"
  },
  "arc-otp-input": {
   "attrs": [
+   "size",
    "length",
    "value",
    "name",
@@ -1411,6 +1460,11 @@ export default {
    "readonly"
   ],
   "enums": {
+   "size": [
+    "sm",
+    "md",
+    "lg"
+   ],
    "type": [
     "number",
     "text"
@@ -1443,6 +1497,7 @@ export default {
  },
  "arc-pin-input": {
   "attrs": [
+   "size",
    "length",
    "value",
    "name",
@@ -1455,6 +1510,11 @@ export default {
    "readonly"
   ],
   "enums": {
+   "size": [
+    "sm",
+    "md",
+    "lg"
+   ],
    "type": [
     "number",
     "alphanumeric",
@@ -1495,6 +1555,7 @@ export default {
  },
  "arc-range-slider": {
   "attrs": [
+   "size",
    "min",
    "max",
    "step",
@@ -1507,10 +1568,18 @@ export default {
    "required",
    "readonly"
   ],
+  "enums": {
+   "size": [
+    "sm",
+    "md",
+    "lg"
+   ]
+  },
   "slug": "range-slider"
  },
  "arc-rating": {
   "attrs": [
+   "size",
    "value",
    "max",
    "name",
@@ -1518,6 +1587,13 @@ export default {
    "readonly",
    "required"
   ],
+  "enums": {
+   "size": [
+    "sm",
+    "md",
+    "lg"
+   ]
+  },
   "slug": "rating"
  },
  "arc-search": {
@@ -1562,6 +1638,7 @@ export default {
  },
  "arc-slider": {
   "attrs": [
+   "size",
    "value",
    "min",
    "max",
@@ -1572,6 +1649,13 @@ export default {
    "required",
    "readonly"
   ],
+  "enums": {
+   "size": [
+    "sm",
+    "md",
+    "lg"
+   ]
+  },
   "slug": "slider"
  },
  "arc-sortable-list": {
@@ -1608,6 +1692,7 @@ export default {
  },
  "arc-tag-input": {
   "attrs": [
+   "size",
    "value",
    "suggestions",
    "delimiter",
@@ -1621,6 +1706,13 @@ export default {
    "required",
    "readonly"
   ],
+  "enums": {
+   "size": [
+    "sm",
+    "md",
+    "lg"
+   ]
+  },
   "slug": "tag-input"
  },
  "arc-textarea": {
@@ -1671,6 +1763,7 @@ export default {
  },
  "arc-time-picker": {
   "attrs": [
+   "size",
    "value",
    "name",
    "min",
@@ -1684,6 +1777,13 @@ export default {
    "required",
    "readonly"
   ],
+  "enums": {
+   "size": [
+    "sm",
+    "md",
+    "lg"
+   ]
+  },
   "slug": "time-picker"
  },
  "arc-toggle": {
@@ -1707,6 +1807,7 @@ export default {
  },
  "arc-transfer-list": {
   "attrs": [
+   "size",
    "options",
    "value",
    "name",
@@ -1717,6 +1818,13 @@ export default {
    "required",
    "readonly"
   ],
+  "enums": {
+   "size": [
+    "sm",
+    "md",
+    "lg"
+   ]
+  },
   "slug": "transfer-list"
  },
  "arc-app-shell": {

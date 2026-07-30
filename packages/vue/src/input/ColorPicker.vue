@@ -5,12 +5,14 @@ import '@arclux/arc-ui/color-picker';
 defineOptions({ name: 'ColorPicker' });
 
 const props = withDefaults(defineProps<{
+  size?: 'sm' | 'md' | 'lg';
   value?: string;
   name?: string;
   presets?: string[];
   disabled?: boolean;
   label?: string;
 }>(), {
+  size: 'md',
   value: '#4d7ef7',
   name: '',
   presets: () => ([]),
@@ -34,6 +36,7 @@ function onArcChange(payload: CustomEvent) {
 
 <template>
   <arc-color-picker
+    :size="props.size"
     :value="props.value"
     :name="props.name"
     :presets="props.presets"

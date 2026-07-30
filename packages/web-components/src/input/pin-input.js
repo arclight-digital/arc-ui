@@ -15,6 +15,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @prop {string} label - Label text displayed above the input boxes in uppercase accent font.
  * @prop {boolean} disabled - Disables all boxes, reducing opacity to 40% and blocking input.
  * @prop {boolean} readonly - Prevents entering, deleting, or pasting characters while the boxes stay focusable and the value still submits.
+ * @prop {'sm' | 'md' | 'lg'} size - Control size. `md` is the default; `sm` and `lg` scale the digit boxes.
  * @fires arc-change - Fired on every character entry or deletion. `event.detail.value` contains the current partial value.
  * @fires arc-complete - Fired when all boxes are filled. `event.detail.value` contains the full value string.
  * @slot none
@@ -25,6 +26,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  */
 export class ArcPinInput extends FormControlMixin(LitElement) {
   static properties = {
+    size: { type: String, reflect: true },
     length:    { type: Number },
     value:     { type: String, reflect: true },
     name:      { type: String, reflect: true },
@@ -92,6 +94,10 @@ export class ArcPinInput extends FormControlMixin(LitElement) {
         -moz-appearance: textfield;
       }
 
+      /* Sizes. md is the base rule above, so an unrecognised value lands on it. */
+      :host([size="sm"]) .pin__box { width: 34px; height: 40px; font-size: var(--_text-md); }
+      :host([size="lg"]) .pin__box { width: 50px; height: 58px; font-size: var(--_text-xl); }
+
       .pin__box::-webkit-outer-spin-button,
       .pin__box::-webkit-inner-spin-button {
         -webkit-appearance: none;
@@ -142,6 +148,7 @@ export class ArcPinInput extends FormControlMixin(LitElement) {
 
   constructor() {
     super();
+    this.size = 'md';
     this.length = 4;
     this.value = '';
     this.name = '';

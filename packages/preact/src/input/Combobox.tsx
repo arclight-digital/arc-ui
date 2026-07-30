@@ -5,6 +5,7 @@ import { useLayoutEffect, useRef } from 'preact/hooks';
 import '@arclux/arc-ui/combobox';
 
 export interface ComboboxProps {
+  size?: 'sm' | 'md' | 'lg';
   value?: string;
   placeholder?: string;
   label?: string;
@@ -40,7 +41,7 @@ export interface ComboboxProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Combobox: FunctionComponent<ComboboxProps> = ({ value, placeholder, label, name, disabled, onArcInput, onArcChange, children, ...rest }) => {
+export const Combobox: FunctionComponent<ComboboxProps> = ({ size, value, placeholder, label, name, disabled, onArcInput, onArcChange, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -58,5 +59,5 @@ export const Combobox: FunctionComponent<ComboboxProps> = ({ value, placeholder,
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcInput, onArcChange]);
-  return h('arc-combobox', { ref, value, placeholder, label, name, disabled, ...rest }, children);
+  return h('arc-combobox', { ref, size, value, placeholder, label, name, disabled, ...rest }, children);
 };

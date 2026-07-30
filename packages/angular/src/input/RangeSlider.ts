@@ -15,6 +15,13 @@ import { ArcRangeSlider } from '@arclux/arc-ui/range-slider';
 export class RangeSlider {
   private readonly _el: ArcRangeSlider = inject(ElementRef).nativeElement;
 
+  @Input() set size(value: 'sm' | 'md' | 'lg') {
+    this._el.size = value;
+  }
+  get size(): 'sm' | 'md' | 'lg' {
+    return this._el.size;
+  }
+
   @Input() set min(value: number) {
     this._el.min = value;
   }

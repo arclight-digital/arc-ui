@@ -2215,6 +2215,11 @@
       "description": "Full-featured color picker with a saturation/lightness area, hue slider, hex input, and optional\npreset swatches.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the color changes via any input method. `event.detail.value` contains the hex string.\n\n### **CSS Parts:**\n - **picker**\n- **label**\n- **area**\n- **hue-track**\n- **hex-row**\n- **preview**\n- **hex-input**\n- **presets**",
       "attributes": [
         {
+          "name": "size",
+          "description": "Control size. `md` is the default; `sm` and `lg` scale the swatch and trigger.",
+          "values": [{ "name": "sm" }, { "name": "md" }, { "name": "lg" }]
+        },
+        {
           "name": "value",
           "description": "Current color as a 6-digit hex string (e.g. `#4d7ef7`). Reflected as an attribute.",
           "values": []
@@ -2244,6 +2249,11 @@
       "name": "arc-combobox",
       "description": "Searchable dropdown with type-ahead filtering.\n---\n\n\n### **Events:**\n - **arc-input** - Fired on every keystroke in the filter input. `event.detail.value` contains the current query text.\n- **arc-change** - Fired when an option is selected. `event.detail.value` contains the selected option value.\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **label**\n- **wrapper**\n- **input**\n- **listbox**\n- **option**",
       "attributes": [
+        {
+          "name": "size",
+          "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
+          "values": [{ "name": "sm" }, { "name": "md" }, { "name": "lg" }]
+        },
         {
           "name": "value",
           "description": "The currently selected option value. Reflected as an attribute so it can be read from the DOM. Updated automatically when the user selects an option.",
@@ -2291,6 +2301,11 @@
       "name": "arc-date-picker",
       "description": "Calendar-based date picker with keyboard navigation.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when a date is selected\n\n### **CSS Parts:**\n - **wrapper**\n- **label**\n- **input-wrapper**\n- **input**\n- **dropdown**",
       "attributes": [
+        {
+          "name": "size",
+          "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
+          "values": [{ "name": "sm" }, { "name": "md" }, { "name": "lg" }]
+        },
         {
           "name": "value",
           "description": "The selected date as an ISO string (YYYY-MM-DD). Set this to pre-select a date. Updated when the user picks a date from the calendar.",
@@ -2346,6 +2361,11 @@
       "name": "arc-date-range-picker",
       "description": "Dual-calendar picker for selecting a start/end date range with presets and full keyboard\nnavigation.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when a complete range is committed (second day clicked or preset applied). detail: { start, end }\n\n### **CSS Parts:**\n - **calendar**\n- **panel-title**\n- **day**\n- **wrapper**\n- **label**\n- **input-wrapper**\n- **input**\n- **panel**\n- **presets**\n- **preset**\n- **header**",
       "attributes": [
+        {
+          "name": "size",
+          "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
+          "values": [{ "name": "sm" }, { "name": "md" }, { "name": "lg" }]
+        },
         {
           "name": "locale",
           "description": "BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language.",
@@ -2737,6 +2757,11 @@
       "description": "Multi-value select with tag chips, inline search filtering, and keyboard navigation.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the selected values change\n- **arc-input** - Fired on every keystroke in the filter input. `event.detail.value` contains the current query text.\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **label**\n- **control**\n- **tag**\n- **input**\n- **dropdown**\n- **option**",
       "attributes": [
         {
+          "name": "size",
+          "description": "Control size. `md` is the default; `sm` and `lg` scale the control height and padding.",
+          "values": [{ "name": "sm" }, { "name": "md" }, { "name": "lg" }]
+        },
+        {
           "name": "value",
           "description": "Array of selected option values. Updated when items are toggled and emitted via `arc-change`.",
           "values": [{ "name": "string[]" }]
@@ -2766,6 +2791,11 @@
       "name": "arc-number-input",
       "description": "A numeric stepper input with decrement and increment buttons flanking a central text field,\nsupporting min/max clamping, step increments, and keyboard shortcuts.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the numeric value changes via buttons or keyboard\n\n### **CSS Parts:**\n - **wrapper**\n- **label**\n- **controls**\n- **decrement**\n- **field**\n- **increment**",
       "attributes": [
+        {
+          "name": "size",
+          "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
+          "values": [{ "name": "sm" }, { "name": "md" }, { "name": "lg" }]
+        },
         {
           "name": "value",
           "description": "Current numeric value. Reflected as an attribute and updated on user interaction.",
@@ -2806,6 +2836,11 @@
       "name": "arc-otp-input",
       "description": "A one-time password input that renders a row of individual character boxes with auto-advance,\npaste support, and configurable length and input type.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when any digit changes\n\n### **CSS Parts:**\n - **otp**\n- **box**",
       "attributes": [
+        {
+          "name": "size",
+          "description": "Control size. `md` is the default; `sm` and `lg` scale the digit boxes.",
+          "values": [{ "name": "sm" }, { "name": "md" }, { "name": "lg" }]
+        },
         {
           "name": "length",
           "description": "Number of individual character boxes to render. Reflected as an attribute.",
@@ -2894,6 +2929,11 @@
       "name": "arc-pin-input",
       "description": "One-character-per-box input for PINs, OTPs, and verification codes with auto-advance, paste\nsupport, and optional masking.\n---\n\n\n### **Events:**\n - **arc-change** - Fired on every character entry or deletion. `event.detail.value` contains the current partial value.\n- **arc-complete** - Fired when all boxes are filled. `event.detail.value` contains the full value string.\n\n### **CSS Parts:**\n - **pin**\n- **label**\n- **boxes**\n- **box**",
       "attributes": [
+        {
+          "name": "size",
+          "description": "Control size. `md` is the default; `sm` and `lg` scale the digit boxes.",
+          "values": [{ "name": "sm" }, { "name": "md" }, { "name": "lg" }]
+        },
         {
           "name": "length",
           "description": "Number of input boxes to render. Determines the expected code length.",
@@ -2995,6 +3035,11 @@
       "description": "Dual-thumb range slider for selecting a numeric interval within a defined range, with\naccent-primary fill between the thumbs and live value display.\n---\n\n\n### **Events:**\n - **arc-input** - Fired continuously as the user drags either thumb. Detail contains `{ low, high }`. Use for real-time filtering or preview.\n- **arc-change** - Fired once when the user releases a thumb, indicating the final committed range. Detail contains `{ low, high }`. Use for persisting to a database or triggering an expensive operation.\n\n### **CSS Parts:**\n - **range-slider**\n- **header**\n- **label**\n- **values**\n- **track**\n- **rail**\n- **fill**\n- **thumb-low**\n- **thumb-high**",
       "attributes": [
         {
+          "name": "size",
+          "description": "Control size. `md` is the default; `sm` and `lg` scale the track and thumbs.",
+          "values": [{ "name": "sm" }, { "name": "md" }, { "name": "lg" }]
+        },
+        {
           "name": "min",
           "description": "Minimum allowed value at the left edge of the track.",
           "values": []
@@ -3044,6 +3089,11 @@
       "name": "arc-rating",
       "description": "A star-based rating input with hover preview, keyboard navigation, filled/unfilled SVG stars,\nand configurable max value.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the rating value changes\n\n### **CSS Parts:**\n - **star**\n- **rating**",
       "attributes": [
+        {
+          "name": "size",
+          "description": "Control size. `md` is the default; `sm` and `lg` scale the star glyphs.",
+          "values": [{ "name": "sm" }, { "name": "md" }, { "name": "lg" }]
+        },
         {
           "name": "value",
           "description": "Current rating value. Reflected as an attribute and updated on user interaction.",
@@ -3177,6 +3227,11 @@
       "description": "Range input slider with a label, live numeric value display, accent-primary fill track, and\ncustomisable min/max/step.\n---\n\n\n### **Events:**\n - **arc-input** - Fired continuously as the user drags the thumb. Use for real-time preview updates like adjusting opacity, volume, or a CSS property live.\n- **arc-change** - Fired once when the user releases the thumb, indicating the final committed value. Use for persisting the value to a database or triggering an expensive operation.\n\n### **CSS Parts:**\n - **slider**\n- **header**\n- **label**\n- **value**\n- **track**\n- **input**",
       "attributes": [
         {
+          "name": "size",
+          "description": "Control size. `md` is the default; `sm` and `lg` scale the track and thumb.",
+          "values": [{ "name": "sm" }, { "name": "md" }, { "name": "lg" }]
+        },
+        {
           "name": "value",
           "description": "Current slider value. Reflected as an attribute and updated on user interaction.",
           "values": []
@@ -3263,6 +3318,11 @@
       "name": "arc-tag-input",
       "description": "Free-text token entry field with optional autocomplete suggestions, delimiter splitting, and\nduplicate rejection.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when a tag is added or removed; detail contains `{ value }`\n- **arc-input** - Fired as the user types; detail contains `{ query }`\n\n### **CSS Parts:**\n - **label**\n- **field**\n- **tag**\n- **input**\n- **dropdown**\n- **option**\n- **error**",
       "attributes": [
+        {
+          "name": "size",
+          "description": "Control size. `md` is the default; `sm` and `lg` scale the field height and padding.",
+          "values": [{ "name": "sm" }, { "name": "md" }, { "name": "lg" }]
+        },
         {
           "name": "value",
           "description": "Array of current tags. Updated on add/remove and emitted via `arc-change`.",
@@ -3422,6 +3482,11 @@
       "description": "Scrollable column-based time picker with 12h/24h format support.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when a time is selected. Detail contains { value: \"HH:MM\" } in 24-hour format.\n\n### **CSS Parts:**\n - **wrapper**\n- **label**\n- **input-wrapper**\n- **input**\n- **dropdown**",
       "attributes": [
         {
+          "name": "size",
+          "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
+          "values": [{ "name": "sm" }, { "name": "md" }, { "name": "lg" }]
+        },
+        {
           "name": "value",
           "description": "The selected time in 24-hour \"HH:MM\" format (e.g. \"14:30\"). Set this to pre-select a time. Updated when the user picks a time.",
           "values": []
@@ -3510,6 +3575,11 @@
       "name": "arc-transfer-list",
       "description": "Dual-listbox for moving items between an available and a selected pane, ideal for permissions\nand settings UIs.\n---\n\n\n### **Events:**\n - **arc-change** - Fired after every move with `{ value }` -- the current array of selected values.\n\n### **CSS Parts:**\n - **pane**\n- **pane-header**\n- **search**\n- **listbox**\n- **option**\n- **controls**",
       "attributes": [
+        {
+          "name": "size",
+          "description": "Control size. `md` is the default; `sm` and `lg` scale the row height and list panels.",
+          "values": [{ "name": "sm" }, { "name": "md" }, { "name": "lg" }]
+        },
         {
           "name": "options",
           "description": "The full universe of items. Items whose value is in `value` render in the Selected pane; the rest render in Available.",

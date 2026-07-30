@@ -5,6 +5,7 @@ import { useLayoutEffect, useRef } from 'preact/hooks';
 import '@arclux/arc-ui/tag-input';
 
 export interface TagInputProps {
+  size?: 'sm' | 'md' | 'lg';
   value?: string[];
   suggestions?: string[];
   delimiter?: string;
@@ -44,7 +45,7 @@ export interface TagInputProps {
   [key: `on${string}`]: unknown;
 }
 
-export const TagInput: FunctionComponent<TagInputProps> = ({ value, suggestions, delimiter, maxTags, allowCustom, label, placeholder, name, disabled, error, onArcChange, onArcInput, ...rest }) => {
+export const TagInput: FunctionComponent<TagInputProps> = ({ size, value, suggestions, delimiter, maxTags, allowCustom, label, placeholder, name, disabled, error, onArcChange, onArcInput, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -62,5 +63,5 @@ export const TagInput: FunctionComponent<TagInputProps> = ({ value, suggestions,
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcChange, onArcInput]);
-  return h('arc-tag-input', { ref, value, suggestions, delimiter, maxTags, allowCustom, label, placeholder, name, disabled, error, ...rest });
+  return h('arc-tag-input', { ref, size, value, suggestions, delimiter, maxTags, allowCustom, label, placeholder, name, disabled, error, ...rest });
 };

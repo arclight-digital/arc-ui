@@ -12,6 +12,7 @@ declare module 'solid-js' {
 }
 
 export interface SliderProps {
+  size?: 'sm' | 'md' | 'lg';
   value?: number;
   min?: number;
   max?: number;
@@ -49,9 +50,9 @@ export interface SliderProps {
 }
 
 export const Slider: Component<SliderProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'min', 'max', 'step', 'name', 'disabled', 'label', 'onArcInput', 'onArcChange']);
+  const [local, rest] = splitProps(props, ['size', 'value', 'min', 'max', 'step', 'name', 'disabled', 'label', 'onArcInput', 'onArcChange']);
   return (
-    <arc-slider value={local.value} min={local.min} max={local.max} step={local.step} name={local.name} disabled={local.disabled} label={local.label} on:arc-input={local.onArcInput} on:arc-change={local.onArcChange} {...rest}>
+    <arc-slider size={local.size} value={local.value} min={local.min} max={local.max} step={local.step} name={local.name} disabled={local.disabled} label={local.label} on:arc-input={local.onArcInput} on:arc-change={local.onArcChange} {...rest}>
     </arc-slider>
   );
 };

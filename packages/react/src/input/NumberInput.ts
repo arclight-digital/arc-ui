@@ -5,6 +5,7 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcNumberInput } from '@arclux/arc-ui/number-input';
 
 export interface NumberInputProps {
+  size?: 'sm' | 'md' | 'lg';
   value?: number;
   min?: number;
   max?: number;

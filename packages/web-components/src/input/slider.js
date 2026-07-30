@@ -14,6 +14,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @prop {string} label - Label text displayed above the slider with the current value shown on the right.
  * @prop {boolean} disabled - Disables interaction, reducing opacity to 40% and blocking pointer events.
  * @prop {boolean} readonly - Prevents dragging and arrow-key changes while the thumb stays focusable and the value still submits.
+ * @prop {'sm' | 'md' | 'lg'} size - Control size. `md` is the default; `sm` and `lg` scale the track and thumb.
  * @fires {CustomEvent<{ value: number }>} arc-input - Fired continuously as the user drags the thumb. Use for real-time preview updates like adjusting opacity, volume, or a CSS property live.
  * @fires {CustomEvent<{ value: number }>} arc-change - Fired once when the user releases the thumb, indicating the final committed value. Use for persisting the value to a database or triggering an expensive operation.
  * @slot none
@@ -26,6 +27,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  */
 export class ArcSlider extends FormControlMixin(LitElement) {
   static properties = {
+    size: { type: String, reflect: true },
     value:    { type: Number, reflect: true },
     min:      { type: Number },
     max:      { type: Number },
@@ -126,6 +128,17 @@ export class ArcSlider extends FormControlMixin(LitElement) {
         box-shadow: 0 0 6px rgba(var(--interactive-rgb), 0.3);
       }
 
+      /* Sizes — the track thickness and the thumb, since a slider has no text
+         to scale. md is the base rule above. The two thumb pseudo-elements
+         cannot be combined into one selector: a browser that doesn't recognise
+         one drops the whole rule. */
+      :host([size="sm"]) input[type="range"] { height: 4px; }
+      :host([size="sm"]) input[type="range"]::-webkit-slider-thumb { width: 16px; height: 16px; }
+      :host([size="sm"]) input[type="range"]::-moz-range-thumb { width: 16px; height: 16px; }
+      :host([size="lg"]) input[type="range"] { height: 8px; }
+      :host([size="lg"]) input[type="range"]::-webkit-slider-thumb { width: 26px; height: 26px; }
+      :host([size="lg"]) input[type="range"]::-moz-range-thumb { width: 26px; height: 26px; }
+
       input[type="range"]:hover::-webkit-slider-thumb,
       input[type="range"]:focus::-webkit-slider-thumb {
         box-shadow:
@@ -174,6 +187,7 @@ export class ArcSlider extends FormControlMixin(LitElement) {
 
   constructor() {
     super();
+    this.size = 'md';
     this.value = 0;
     this.min = 0;
     this.max = 100;

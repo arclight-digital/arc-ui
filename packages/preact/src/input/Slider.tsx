@@ -5,6 +5,7 @@ import { useLayoutEffect, useRef } from 'preact/hooks';
 import '@arclux/arc-ui/slider';
 
 export interface SliderProps {
+  size?: 'sm' | 'md' | 'lg';
   value?: number;
   min?: number;
   max?: number;
@@ -41,7 +42,7 @@ export interface SliderProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Slider: FunctionComponent<SliderProps> = ({ value, min, max, step, name, disabled, label, onArcInput, onArcChange, ...rest }) => {
+export const Slider: FunctionComponent<SliderProps> = ({ size, value, min, max, step, name, disabled, label, onArcInput, onArcChange, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -59,5 +60,5 @@ export const Slider: FunctionComponent<SliderProps> = ({ value, min, max, step, 
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcInput, onArcChange]);
-  return h('arc-slider', { ref, value, min, max, step, name, disabled, label, ...rest });
+  return h('arc-slider', { ref, size, value, min, max, step, name, disabled, label, ...rest });
 };

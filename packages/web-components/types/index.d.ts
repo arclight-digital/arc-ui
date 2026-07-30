@@ -438,6 +438,8 @@ export declare class ArcCollapsible extends LitElement {
  * Events: arc-change
  */
 export declare class ArcColorPicker extends LitElement {
+  /** Control size. `md` is the default; `sm` and `lg` scale the swatch and trigger. @default 'md' */
+  size: 'sm' | 'md' | 'lg';
   /** Current color as a 6-digit hex string (e.g. `#4d7ef7`). Reflected as an attribute. @default '#4d7ef7' */
   value: string;
   /** @default '' */
@@ -498,6 +500,8 @@ export declare class ArcColumn extends LitElement {
  * Events: arc-input, arc-change
  */
 export declare class ArcCombobox extends LitElement {
+  /** Control size. `md` is the default; `sm` and `lg` scale the field padding. @default 'md' */
+  size: 'sm' | 'md' | 'lg';
   /** The currently selected option value. Reflected as an attribute so it can be read from the DOM. Updated automatically when the user selects an option. @default '' */
   value: string;
   /** Placeholder text shown in the input when no value is entered. @default '' */
@@ -735,6 +739,8 @@ export declare class ArcDataTable extends LitElement {
  * Events: arc-change
  */
 export declare class ArcDatePicker extends LitElement {
+  /** Control size. `md` is the default; `sm` and `lg` scale the field padding. @default 'md' */
+  size: 'sm' | 'md' | 'lg';
   /** The selected date as an ISO string (YYYY-MM-DD). Set this to pre-select a date. Updated when the user picks a date from the calendar. @default '' */
   value: string;
   /** @default '' */
@@ -779,6 +785,8 @@ export declare class ArcDateRangePicker extends LitElement {
   autoValidates: boolean;
   /** Read-derived ISO 8601 interval ("start/end") when both dates are set, otherwise an empty string. This is the value submitted with forms. Assigning "start/end" sets both dates. */
   value: string;
+  /** Control size. `md` is the default; `sm` and `lg` scale the field padding. @default 'md' */
+  size: 'sm' | 'md' | 'lg';
   /** BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language. @default '' */
   locale: string;
   /** Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention. @default 0 */
@@ -1468,6 +1476,8 @@ export declare class ArcModal extends LitElement {
  * Events: arc-change, arc-input
  */
 export declare class ArcMultiSelect extends LitElement {
+  /** Control size. `md` is the default; `sm` and `lg` scale the control height and padding. @default 'md' */
+  size: 'sm' | 'md' | 'lg';
   /** Array of selected option values. Updated when items are toggled and emitted via `arc-change`. @default [] */
   value: string[];
   /** Hint text shown inside the control when no items are selected and the input is empty. @default '' */
@@ -1558,6 +1568,8 @@ export declare class ArcNumberFormat extends LitElement {
  * Events: arc-change
  */
 export declare class ArcNumberInput extends LitElement {
+  /** Control size. `md` is the default; `sm` and `lg` scale the field padding. @default 'md' */
+  size: 'sm' | 'md' | 'lg';
   /** Current numeric value. Reflected as an attribute and updated on user interaction. @default 0 */
   value: number;
   /** Minimum allowed value. The decrement button is disabled when the value reaches this limit. @default undefined */
@@ -1606,6 +1618,8 @@ export declare class ArcOption extends LitElement {
  * Events: arc-change
  */
 export declare class ArcOtpInput extends LitElement {
+  /** Control size. `md` is the default; `sm` and `lg` scale the digit boxes. @default 'md' */
+  size: 'sm' | 'md' | 'lg';
   /** Number of individual character boxes to render. Reflected as an attribute. @default 6 */
   length: number;
   /** The concatenated value of all boxes. Reflected as an attribute and updated on every input. @default '' */
@@ -1726,6 +1740,8 @@ export declare class ArcPasswordInput extends LitElement {
  * Events: arc-change, arc-complete
  */
 export declare class ArcPinInput extends LitElement {
+  /** Control size. `md` is the default; `sm` and `lg` scale the digit boxes. @default 'md' */
+  size: 'sm' | 'md' | 'lg';
   /** Number of input boxes to render. Determines the expected code length. @default 4 */
   length: number;
   /** Current combined value across all boxes. Reflected as an attribute. @default '' */
@@ -1882,6 +1898,8 @@ export declare class ArcRail extends LitElement {
  * Events: arc-input, arc-change
  */
 export declare class ArcRangeSlider extends LitElement {
+  /** Control size. `md` is the default; `sm` and `lg` scale the track and thumbs. @default 'md' */
+  size: 'sm' | 'md' | 'lg';
   /** Minimum allowed value at the left edge of the track. @default 0 */
   min: number;
   /** Maximum allowed value at the right edge of the track. @default 100 */
@@ -1920,6 +1938,8 @@ export declare class ArcRangeSlider extends LitElement {
  * Events: arc-change
  */
 export declare class ArcRating extends LitElement {
+  /** Control size. `md` is the default; `sm` and `lg` scale the star glyphs. @default 'md' */
+  size: 'sm' | 'md' | 'lg';
   /** Current rating value. Reflected as an attribute and updated on user interaction. @default 0 */
   value: number;
   /** Maximum number of stars to render. Determines the upper bound of the rating scale. @default 5 */
@@ -2201,6 +2221,8 @@ export declare class ArcSkipLink extends LitElement {
  * Events: arc-input, arc-change
  */
 export declare class ArcSlider extends LitElement {
+  /** Control size. `md` is the default; `sm` and `lg` scale the track and thumb. @default 'md' */
+  size: 'sm' | 'md' | 'lg';
   /** Current slider value. Reflected as an attribute and updated on user interaction. @default 0 */
   value: number;
   /** Minimum allowed value at the left edge of the track. @default 0 */
@@ -2492,6 +2514,8 @@ export declare class ArcTag extends LitElement {
  * Events: arc-change, arc-input
  */
 export declare class ArcTagInput extends LitElement {
+  /** Control size. `md` is the default; `sm` and `lg` scale the field height and padding. @default 'md' */
+  size: 'sm' | 'md' | 'lg';
   /** Array of current tags. Updated on add/remove and emitted via `arc-change`. @default [] */
   value: string[];
   /** Autocomplete candidates. When non-empty, typing filters them into a dropdown listbox. @default [] */
@@ -2609,6 +2633,8 @@ export declare class ArcTimeAgo extends LitElement {
  * Events: arc-change
  */
 export declare class ArcTimePicker extends LitElement {
+  /** Control size. `md` is the default; `sm` and `lg` scale the field padding. @default 'md' */
+  size: 'sm' | 'md' | 'lg';
   /** The selected time in 24-hour "HH:MM" format (e.g. "14:30"). Set this to pre-select a time. Updated when the user picks a time. @default '' */
   value: string;
   /** @default '' */
@@ -2764,6 +2790,8 @@ export declare class ArcTopBar extends LitElement {
  * Events: arc-change
  */
 export declare class ArcTransferList extends LitElement {
+  /** Control size. `md` is the default; `sm` and `lg` scale the row height and list panels. @default 'md' */
+  size: 'sm' | 'md' | 'lg';
   /** The full universe of items. Items whose value is in `value` render in the Selected pane; the rest render in Available. @default [] */
   options: Array<{value:string,label:string,disabled?:boolean}>;
   /** Values currently in the Selected pane, kept in options order. Updated after every move and emitted via `arc-change`. @default [] */

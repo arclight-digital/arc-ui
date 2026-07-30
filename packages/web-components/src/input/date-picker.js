@@ -19,6 +19,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @prop {boolean} open - Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.
  * @prop {string} locale - BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language.
  * @prop {number} firstDayOfWeek - Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention, so most of the world gets Monday and the US gets Sunday without configuring anything.
+ * @prop {'sm' | 'md' | 'lg'} size - Control size. `md` is the default; `sm` and `lg` scale the field padding.
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired when a date is selected
  * @slot none
  * @csspart wrapper
@@ -29,6 +30,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  */
 export class ArcDatePicker extends FormControlMixin(LitElement) {
   static properties = {
+    size: { type: String, reflect: true },
     value:       { type: String, reflect: true },
     name:        { type: String, reflect: true },
     min:         { type: String },
@@ -87,6 +89,10 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
         cursor: pointer;
         transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
       }
+
+      /* Sizes. md is the base rule above, so an unrecognised value lands on it. */
+      :host([size="sm"]) input { padding: var(--space-xs) var(--space-sm); padding-inline-end: 32px; }
+      :host([size="lg"]) input { padding: var(--space-md) var(--space-lg); padding-inline-end: 40px; font-size: var(--_text-md); }
 
       input::placeholder { color: var(--text-muted); }
       input:hover:not(:focus) { border-color: var(--border-bright); }
@@ -303,6 +309,7 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
 
   constructor() {
     super();
+    this.size = 'md';
     this.value = '';
     this.name = '';
     this.min = '';

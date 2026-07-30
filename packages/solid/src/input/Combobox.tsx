@@ -12,6 +12,7 @@ declare module 'solid-js' {
 }
 
 export interface ComboboxProps {
+  size?: 'sm' | 'md' | 'lg';
   value?: string;
   placeholder?: string;
   label?: string;
@@ -48,9 +49,9 @@ export interface ComboboxProps {
 }
 
 export const Combobox: Component<ComboboxProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'placeholder', 'label', 'name', 'disabled', 'onArcInput', 'onArcChange', 'children']);
+  const [local, rest] = splitProps(props, ['size', 'value', 'placeholder', 'label', 'name', 'disabled', 'onArcInput', 'onArcChange', 'children']);
   return (
-    <arc-combobox value={local.value} placeholder={local.placeholder} label={local.label} name={local.name} disabled={local.disabled} on:arc-input={local.onArcInput} on:arc-change={local.onArcChange} {...rest}>
+    <arc-combobox size={local.size} value={local.value} placeholder={local.placeholder} label={local.label} name={local.name} disabled={local.disabled} on:arc-input={local.onArcInput} on:arc-change={local.onArcChange} {...rest}>
       {local.children}
     </arc-combobox>
   );

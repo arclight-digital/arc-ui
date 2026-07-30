@@ -4,6 +4,7 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
+    size?: 'sm' | 'md' | 'lg';
     value?: string;
     name?: string;
     min?: string;
@@ -41,7 +42,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = $bindable(''), name = '', min = '', max = '', step = 1, format = '12h', placeholder = 'Select time', disabled = false, label = '', open = false, ...rest }: Props = $props();
+  let { size = 'md', value = $bindable(''), name = '', min = '', max = '', step = 1, format = '12h', placeholder = 'Select time', disabled = false, label = '', open = false, ...rest }: Props = $props();
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
@@ -55,7 +56,7 @@
   }
 </script>
 
-<arc-time-picker {value} {name} {min} {max} {step} {format} {placeholder} {disabled} {label} {open} {...rest}
+<arc-time-picker {size} {value} {name} {min} {max} {step} {format} {placeholder} {disabled} {label} {open} {...rest}
   onarc-change={__onArcChange}
 >
 </arc-time-picker>

@@ -5,6 +5,7 @@ import { useLayoutEffect, useRef } from 'preact/hooks';
 import '@arclux/arc-ui/time-picker';
 
 export interface TimePickerProps {
+  size?: 'sm' | 'md' | 'lg';
   value?: string;
   name?: string;
   min?: string;
@@ -43,7 +44,7 @@ export interface TimePickerProps {
   [key: `on${string}`]: unknown;
 }
 
-export const TimePicker: FunctionComponent<TimePickerProps> = ({ value, name, min, max, step, format, placeholder, disabled, label, open, onArcChange, ...rest }) => {
+export const TimePicker: FunctionComponent<TimePickerProps> = ({ size, value, name, min, max, step, format, placeholder, disabled, label, open, onArcChange, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -56,5 +57,5 @@ export const TimePicker: FunctionComponent<TimePickerProps> = ({ value, name, mi
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcChange]);
-  return h('arc-time-picker', { ref, value, name, min, max, step, format, placeholder, disabled, label, open, ...rest });
+  return h('arc-time-picker', { ref, size, value, name, min, max, step, format, placeholder, disabled, label, open, ...rest });
 };

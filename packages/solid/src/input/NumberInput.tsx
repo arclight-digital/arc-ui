@@ -12,6 +12,7 @@ declare module 'solid-js' {
 }
 
 export interface NumberInputProps {
+  size?: 'sm' | 'md' | 'lg';
   value?: number;
   min?: number;
   max?: number;
@@ -48,9 +49,9 @@ export interface NumberInputProps {
 }
 
 export const NumberInput: Component<NumberInputProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'min', 'max', 'step', 'label', 'name', 'disabled', 'onArcChange']);
+  const [local, rest] = splitProps(props, ['size', 'value', 'min', 'max', 'step', 'label', 'name', 'disabled', 'onArcChange']);
   return (
-    <arc-number-input value={local.value} min={local.min} max={local.max} step={local.step} label={local.label} name={local.name} disabled={local.disabled} on:arc-change={local.onArcChange} {...rest}>
+    <arc-number-input size={local.size} value={local.value} min={local.min} max={local.max} step={local.step} label={local.label} name={local.name} disabled={local.disabled} on:arc-change={local.onArcChange} {...rest}>
     </arc-number-input>
   );
 };

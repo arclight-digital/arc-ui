@@ -16,6 +16,7 @@ let numberInputIdCounter = 0;
  * @prop {string} label - Label text displayed above the control in uppercase accent font.
  * @prop {boolean} disabled - Disables interaction, reducing opacity to 40% and blocking pointer events.
  * @prop {boolean} readonly - Prevents value changes from typing, stepper buttons, and arrow keys while keeping the field focusable and its value submitted.
+ * @prop {'sm' | 'md' | 'lg'} size - Control size. `md` is the default; `sm` and `lg` scale the field padding.
  * @fires {CustomEvent<{ value: number }>} arc-change - Fired when the numeric value changes via buttons or keyboard
  * @slot none
  * @csspart wrapper
@@ -27,6 +28,7 @@ let numberInputIdCounter = 0;
  */
 export class ArcNumberInput extends FormControlMixin(LitElement) {
   static properties = {
+    size: { type: String, reflect: true },
     value:    { type: Number, reflect: true },
     min:      { type: Number },
     max:      { type: Number },
@@ -137,6 +139,10 @@ export class ArcNumberInput extends FormControlMixin(LitElement) {
         -moz-appearance: textfield;
       }
 
+      /* Sizes. md is the base rule above, so an unrecognised value lands on it. */
+      :host([size="sm"]) .number-input__field { padding: var(--space-xs); font-size: var(--_text-sm); }
+      :host([size="lg"]) .number-input__field { padding: var(--space-md) var(--space-sm); font-size: var(--_text-md); }
+
       .number-input__field::-webkit-inner-spin-button,
       .number-input__field::-webkit-outer-spin-button {
         -webkit-appearance: none;
@@ -158,6 +164,7 @@ export class ArcNumberInput extends FormControlMixin(LitElement) {
 
   constructor() {
     super();
+    this.size = 'md';
     this.value = 0;
     this.min = undefined;
     this.max = undefined;

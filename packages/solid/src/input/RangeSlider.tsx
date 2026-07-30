@@ -12,6 +12,7 @@ declare module 'solid-js' {
 }
 
 export interface RangeSliderProps {
+  size?: 'sm' | 'md' | 'lg';
   min?: number;
   max?: number;
   step?: number;
@@ -51,9 +52,9 @@ export interface RangeSliderProps {
 }
 
 export const RangeSlider: Component<RangeSliderProps> = (props) => {
-  const [local, rest] = splitProps(props, ['min', 'max', 'step', 'low', 'high', 'name', 'disabled', 'label', 'showValues', 'onArcInput', 'onArcChange']);
+  const [local, rest] = splitProps(props, ['size', 'min', 'max', 'step', 'low', 'high', 'name', 'disabled', 'label', 'showValues', 'onArcInput', 'onArcChange']);
   return (
-    <arc-range-slider min={local.min} max={local.max} step={local.step} low={local.low} high={local.high} name={local.name} disabled={local.disabled} label={local.label} prop:showValues={local.showValues} on:arc-input={local.onArcInput} on:arc-change={local.onArcChange} {...rest}>
+    <arc-range-slider size={local.size} min={local.min} max={local.max} step={local.step} low={local.low} high={local.high} name={local.name} disabled={local.disabled} label={local.label} prop:showValues={local.showValues} on:arc-input={local.onArcInput} on:arc-change={local.onArcChange} {...rest}>
     </arc-range-slider>
   );
 };

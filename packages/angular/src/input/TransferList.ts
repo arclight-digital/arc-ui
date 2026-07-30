@@ -14,6 +14,13 @@ import { ArcTransferList } from '@arclux/arc-ui/transfer-list';
 export class TransferList {
   private readonly _el: ArcTransferList = inject(ElementRef).nativeElement;
 
+  @Input() set size(value: 'sm' | 'md' | 'lg') {
+    this._el.size = value;
+  }
+  get size(): 'sm' | 'md' | 'lg' {
+    return this._el.size;
+  }
+
   @Input() set options(value: Array<{value:string,label:string,disabled?:boolean}>) {
     this._el.options = value;
   }

@@ -5,6 +5,7 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcRating } from '@arclux/arc-ui/rating';
 
 export interface RatingProps {
+  size?: 'sm' | 'md' | 'lg';
   value?: number;
   max?: number;
   name?: string;

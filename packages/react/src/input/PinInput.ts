@@ -5,6 +5,7 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcPinInput } from '@arclux/arc-ui/pin-input';
 
 export interface PinInputProps {
+  size?: 'sm' | 'md' | 'lg';
   length?: number;
   value?: string;
   name?: string;

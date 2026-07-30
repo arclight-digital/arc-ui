@@ -199,6 +199,7 @@ declare module 'react' {
         heading?: string;
       };
       'arc-color-picker': ArcBaseAttributes & {
+        size?: 'sm' | 'md' | 'lg';
         value?: string;
         name?: string;
         presets?: string;
@@ -220,6 +221,7 @@ declare module 'react' {
         width?: string;
       };
       'arc-combobox': ArcBaseAttributes & {
+        size?: 'sm' | 'md' | 'lg';
         value?: string;
         placeholder?: string;
         label?: string;
@@ -311,6 +313,7 @@ declare module 'react' {
         'row-height'?: number | string;
       };
       'arc-date-picker': ArcBaseAttributes & {
+        size?: 'sm' | 'md' | 'lg';
         value?: string;
         name?: string;
         min?: string;
@@ -325,6 +328,7 @@ declare module 'react' {
         readonly?: boolean;
       };
       'arc-date-range-picker': ArcBaseAttributes & {
+        size?: 'sm' | 'md' | 'lg';
         locale?: string;
         'first-day-of-week'?: number | string;
         start?: string;
@@ -599,6 +603,7 @@ declare module 'react' {
         closable?: boolean;
       };
       'arc-multi-select': ArcBaseAttributes & {
+        size?: 'sm' | 'md' | 'lg';
         value?: string;
         placeholder?: string;
         label?: string;
@@ -630,6 +635,7 @@ declare module 'react' {
         notation?: 'standard' | 'compact';
       };
       'arc-number-input': ArcBaseAttributes & {
+        size?: 'sm' | 'md' | 'lg';
         value?: number | string;
         min?: number | string;
         max?: number | string;
@@ -646,6 +652,7 @@ declare module 'react' {
         selected?: boolean;
       };
       'arc-otp-input': ArcBaseAttributes & {
+        size?: 'sm' | 'md' | 'lg';
         length?: number | string;
         value?: string;
         name?: string;
@@ -689,6 +696,7 @@ declare module 'react' {
         readonly?: boolean;
       };
       'arc-pin-input': ArcBaseAttributes & {
+        size?: 'sm' | 'md' | 'lg';
         length?: number | string;
         value?: string;
         name?: string;
@@ -746,6 +754,7 @@ declare module 'react' {
         expanded?: boolean;
       };
       'arc-range-slider': ArcBaseAttributes & {
+        size?: 'sm' | 'md' | 'lg';
         min?: number | string;
         max?: number | string;
         step?: number | string;
@@ -759,6 +768,7 @@ declare module 'react' {
         readonly?: boolean;
       };
       'arc-rating': ArcBaseAttributes & {
+        size?: 'sm' | 'md' | 'lg';
         value?: number | string;
         max?: number | string;
         name?: string;
@@ -864,6 +874,7 @@ declare module 'react' {
         target?: string;
       };
       'arc-slider': ArcBaseAttributes & {
+        size?: 'sm' | 'md' | 'lg';
         value?: number | string;
         min?: number | string;
         max?: number | string;
@@ -977,6 +988,7 @@ declare module 'react' {
         color?: string;
       };
       'arc-tag-input': ArcBaseAttributes & {
+        size?: 'sm' | 'md' | 'lg';
         value?: string;
         suggestions?: string;
         delimiter?: string;
@@ -1020,6 +1032,7 @@ declare module 'react' {
         locale?: string;
       };
       'arc-time-picker': ArcBaseAttributes & {
+        size?: 'sm' | 'md' | 'lg';
         value?: string;
         name?: string;
         min?: string;
@@ -1077,6 +1090,7 @@ declare module 'react' {
         'nav-align'?: 'left' | 'center' | 'right';
       };
       'arc-transfer-list': ArcBaseAttributes & {
+        size?: 'sm' | 'md' | 'lg';
         options?: string;
         value?: string;
         name?: string;

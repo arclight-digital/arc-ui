@@ -14,6 +14,13 @@ import { ArcTagInput } from '@arclux/arc-ui/tag-input';
 export class TagInput {
   private readonly _el: ArcTagInput = inject(ElementRef).nativeElement;
 
+  @Input() set size(value: 'sm' | 'md' | 'lg') {
+    this._el.size = value;
+  }
+  get size(): 'sm' | 'md' | 'lg' {
+    return this._el.size;
+  }
+
   @Input() set value(value: string[]) {
     this._el.value = value;
   }

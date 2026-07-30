@@ -5,12 +5,14 @@ import '@arclux/arc-ui/otp-input';
 defineOptions({ name: 'OtpInput' });
 
 const props = withDefaults(defineProps<{
+  size?: 'sm' | 'md' | 'lg';
   length?: number;
   value?: string;
   name?: string;
   disabled?: boolean;
   type?: 'number' | 'text';
 }>(), {
+  size: 'md',
   length: 6,
   value: '',
   name: '',
@@ -34,6 +36,7 @@ function onArcChange(payload: CustomEvent) {
 
 <template>
   <arc-otp-input
+    :size="props.size"
     :length="props.length"
     :value="props.value"
     :name="props.name"

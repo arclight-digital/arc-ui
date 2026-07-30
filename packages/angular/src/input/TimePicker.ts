@@ -14,6 +14,13 @@ import { ArcTimePicker } from '@arclux/arc-ui/time-picker';
 export class TimePicker {
   private readonly _el: ArcTimePicker = inject(ElementRef).nativeElement;
 
+  @Input() set size(value: 'sm' | 'md' | 'lg') {
+    this._el.size = value;
+  }
+  get size(): 'sm' | 'md' | 'lg' {
+    return this._el.size;
+  }
+
   @Input() set value(value: string) {
     this._el.value = value;
   }

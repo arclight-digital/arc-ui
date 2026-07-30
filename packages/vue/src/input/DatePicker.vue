@@ -5,6 +5,7 @@ import '@arclux/arc-ui/date-picker';
 defineOptions({ name: 'DatePicker' });
 
 const props = withDefaults(defineProps<{
+  size?: 'sm' | 'md' | 'lg';
   value?: string;
   name?: string;
   min?: string;
@@ -16,6 +17,7 @@ const props = withDefaults(defineProps<{
   locale?: string;
   firstDayOfWeek?: number;
 }>(), {
+  size: 'md',
   value: '',
   name: '',
   min: '',
@@ -44,6 +46,7 @@ function onArcChange(payload: CustomEvent) {
 
 <template>
   <arc-date-picker
+    :size="props.size"
     :value="props.value"
     :name="props.name"
     :min="props.min"

@@ -12,6 +12,7 @@ declare module 'solid-js' {
 }
 
 export interface MultiSelectProps {
+  size?: 'sm' | 'md' | 'lg';
   value?: string[];
   placeholder?: string;
   label?: string;
@@ -48,9 +49,9 @@ export interface MultiSelectProps {
 }
 
 export const MultiSelect: Component<MultiSelectProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'placeholder', 'label', 'name', 'disabled', 'onArcChange', 'onArcInput', 'children']);
+  const [local, rest] = splitProps(props, ['size', 'value', 'placeholder', 'label', 'name', 'disabled', 'onArcChange', 'onArcInput', 'children']);
   return (
-    <arc-multi-select value={local.value} placeholder={local.placeholder} label={local.label} name={local.name} disabled={local.disabled} on:arc-change={local.onArcChange} on:arc-input={local.onArcInput} {...rest}>
+    <arc-multi-select size={local.size} value={local.value} placeholder={local.placeholder} label={local.label} name={local.name} disabled={local.disabled} on:arc-change={local.onArcChange} on:arc-input={local.onArcInput} {...rest}>
       {local.children}
     </arc-multi-select>
   );

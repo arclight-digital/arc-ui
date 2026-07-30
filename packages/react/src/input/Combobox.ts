@@ -5,6 +5,7 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcCombobox } from '@arclux/arc-ui/combobox';
 
 export interface ComboboxProps {
+  size?: 'sm' | 'md' | 'lg';
   value?: string;
   placeholder?: string;
   label?: string;

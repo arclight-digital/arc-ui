@@ -12,6 +12,7 @@ declare module 'solid-js' {
 }
 
 export interface DateRangePickerProps {
+  size?: 'sm' | 'md' | 'lg';
   locale?: string;
   firstDayOfWeek?: number;
   start?: string;
@@ -55,9 +56,9 @@ export interface DateRangePickerProps {
 }
 
 export const DateRangePicker: Component<DateRangePickerProps> = (props) => {
-  const [local, rest] = splitProps(props, ['locale', 'firstDayOfWeek', 'start', 'end', 'name', 'min', 'max', 'months', 'presets', 'placeholder', 'disabled', 'required', 'label', 'open', 'onArcChange']);
+  const [local, rest] = splitProps(props, ['size', 'locale', 'firstDayOfWeek', 'start', 'end', 'name', 'min', 'max', 'months', 'presets', 'placeholder', 'disabled', 'required', 'label', 'open', 'onArcChange']);
   return (
-    <arc-date-range-picker locale={local.locale} prop:firstDayOfWeek={local.firstDayOfWeek} start={local.start} end={local.end} name={local.name} min={local.min} max={local.max} months={local.months} presets={local.presets} placeholder={local.placeholder} disabled={local.disabled} required={local.required} label={local.label} open={local.open} on:arc-change={local.onArcChange} {...rest}>
+    <arc-date-range-picker size={local.size} locale={local.locale} prop:firstDayOfWeek={local.firstDayOfWeek} start={local.start} end={local.end} name={local.name} min={local.min} max={local.max} months={local.months} presets={local.presets} placeholder={local.placeholder} disabled={local.disabled} required={local.required} label={local.label} open={local.open} on:arc-change={local.onArcChange} {...rest}>
     </arc-date-range-picker>
   );
 };

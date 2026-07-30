@@ -5,6 +5,7 @@ import '@arclux/arc-ui/number-input';
 defineOptions({ name: 'NumberInput' });
 
 const props = withDefaults(defineProps<{
+  size?: 'sm' | 'md' | 'lg';
   value?: number;
   min?: number;
   max?: number;
@@ -13,6 +14,7 @@ const props = withDefaults(defineProps<{
   name?: string;
   disabled?: boolean;
 }>(), {
+  size: 'md',
   value: 0,
   step: 1,
   label: '',
@@ -36,6 +38,7 @@ function onArcChange(payload: CustomEvent) {
 
 <template>
   <arc-number-input
+    :size="props.size"
     :value="props.value"
     :min="props.min"
     :max="props.max"
