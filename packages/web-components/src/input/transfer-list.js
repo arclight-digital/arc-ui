@@ -84,7 +84,7 @@ export class ArcTransferList extends FormControlMixin(LitElement) {
 
       .tl__pane-label {
         font-family: var(--font-label);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         font-weight: var(--font-label-weight, 600);
         letter-spacing: 1px;
         text-transform: uppercase;
@@ -93,7 +93,7 @@ export class ArcTransferList extends FormControlMixin(LitElement) {
 
       .tl__pane-count {
         font-family: var(--font-mono);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         color: var(--text-muted);
         white-space: nowrap;
       }
@@ -102,7 +102,7 @@ export class ArcTransferList extends FormControlMixin(LitElement) {
         margin: var(--space-sm) var(--space-sm) 0;
         min-height: 32px;
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-primary);
         background: var(--surface-primary);
         border: 1px solid var(--border-default);
@@ -137,7 +137,7 @@ export class ArcTransferList extends FormControlMixin(LitElement) {
         padding: var(--space-xs) var(--space-sm);
         min-height: 32px;
         border-radius: var(--radius-sm);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-primary);
         cursor: pointer;
         user-select: none;
@@ -213,7 +213,7 @@ export class ArcTransferList extends FormControlMixin(LitElement) {
       .tl__empty {
         padding: var(--space-lg) var(--space-md);
         text-align: center;
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-ghost);
       }
 

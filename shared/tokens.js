@@ -107,7 +107,14 @@ export const tokens = {
     sectionTitle: 'var(--text-xs)',
     uiAccent:     '16px',
     code:         '14px',
-    labelInline:  'var(--text-xs)',
+    // 10px, not var(--text-xs) (12px). The two sources disagreed: shared-styles
+    // declared 10px on :host, which shadows :root, so web-component consumers
+    // saw 10px while the standalone CSS build — which has no shadow root and
+    // read this token — saw 12px. Same component, two label sizes depending on
+    // which package you installed. Settled on 10px because that is what the
+    // canonical Lit components have been rendering; if 12px was the intent, this
+    // is the one line to change.
+    labelInline:  '10px',
   },
 
   /* Context weights, derived from the role weights above rather than restated.
@@ -134,6 +141,9 @@ export const tokens = {
     sectionTitle: '4px',
     uiAccent:     '1px',
     wordmark:     'clamp(8px, 1.2vw, 14px)',
+    // Was spelled only in the :root template and in shared-styles.js, never in
+    // the tree — so the generated :host layer had no way to know about it.
+    labelInline:  '3px',
   },
 
   lineHeight: {
@@ -156,6 +166,10 @@ export const tokens = {
 
   /* ── Radii ── */
   radius: {
+    // Four components read --radius-xs (breadcrumb, link, notification-panel)
+    // and the scale had no such step, so the declaration was invalid at
+    // computed-value time and those corners rendered square.
+    xs:   '2px',
     sm:   '4px',
     md:   '10px',
     lg:   '14px',
@@ -390,6 +404,25 @@ export const cssVariables = `
   --text-2xl: ${tokens.fontSize['2xl']};
   --text-3xl: ${tokens.fontSize['3xl']};
 
+  /* Private mirrors of the size scale. Components read these rather than the
+     public --text-* names, because shared-styles.js has to declare a working
+     default on :host and a token cannot fall back to itself:
+     --text-md: var(--text-md, 17px) is a self-reference and invalid. Declaring
+     the public name on :host instead is what made an override at :root
+     unreachable — a value set on the host always beats one inherited into it.
+     The indirection gives components a name that is only ever declared, and
+     consumers a name that is only ever read.
+
+     Emitted here as well as on :host so the standalone CSS build resolves them:
+     there is no shadow root there, so :root is the only declaration site. */
+  --_text-xs: var(--text-xs);
+  --_text-sm: var(--text-sm);
+  --_text-md: var(--text-md);
+  --_text-lg: var(--text-lg);
+  --_text-xl: var(--text-xl);
+  --_text-2xl: var(--text-2xl);
+  --_text-3xl: var(--text-3xl);
+
   --display-xl-size: ${tokens.fontSize.displayXl};
   --display-xl-weight: ${tokens.fontWeight.displayXl};
   --display-xl-spacing: ${tokens.letterSpacing.displayXl};
@@ -411,7 +444,7 @@ export const cssVariables = `
   --code-size: ${tokens.fontSize.code};
   --code-lh: ${tokens.lineHeight.code};
   --label-inline-size: ${tokens.fontSize.labelInline};
-  --label-inline-spacing: 3px;
+  --label-inline-spacing: ${tokens.letterSpacing.labelInline};
   --field-weight: ${tokens.fontWeight.field};
 
   --touch-min: ${tokens.touch.min};
@@ -426,6 +459,7 @@ export const cssVariables = `
   --space-3xl: ${tokens.space['3xl']};
   --space-4xl: ${tokens.space['4xl']};
 
+  --radius-xs: ${tokens.radius.xs};
   --radius-sm: ${tokens.radius.sm};
   --radius-md: ${tokens.radius.md};
   --radius-lg: ${tokens.radius.lg};
@@ -663,32 +697,59 @@ const gradientVarMap = {
   borderGlow: '--gradient-border-glow', ambient: '--gradient-ambient',
 };
 
-function renderOverrides(t, indent = '  ') {
+function renderOverrides(t, indent = '  ', label = 'theme') {
   const lines = [];
   const add = (name, val) => lines.push(`${indent}${name}: ${val};`);
 
-  if (t.color) for (const [k, v] of Object.entries(t.color)) if (colorVarMap[k]) add(colorVarMap[k], v);
-  if (t.rgb)   for (const [k, v] of Object.entries(t.rgb))   if (rgbVarMap[k])   add(rgbVarMap[k], v);
-  if (t.shadow) for (const [k, v] of Object.entries(t.shadow)) if (shadowVarMap[k]) add(shadowVarMap[k], v);
+  // Unknown keys used to be dropped on the floor: every branch below was
+  // `if (varMap[k]) add(...)`, so a typo in a theme override, or a token added
+  // to the tree without a matching entry in the var map, silently produced no
+  // CSS. The theme looked applied and one value was quietly missing. Collect
+  // them instead and fail the build.
+  const unknown = [];
+  const mapped = (map, group) => (k, v) => {
+    if (map[k]) add(map[k], v);
+    else unknown.push(`${group}.${k}`);
+  };
 
-  if (t.gradient) for (const [k, v] of Object.entries(t.gradient)) if (gradientVarMap[k]) add(gradientVarMap[k], v);
+  if (t.color)    for (const [k, v] of Object.entries(t.color))    mapped(colorVarMap, 'color')(k, v);
+  if (t.rgb)      for (const [k, v] of Object.entries(t.rgb))      mapped(rgbVarMap, 'rgb')(k, v);
+  if (t.shadow)   for (const [k, v] of Object.entries(t.shadow))   mapped(shadowVarMap, 'shadow')(k, v);
+  if (t.gradient) for (const [k, v] of Object.entries(t.gradient)) mapped(gradientVarMap, 'gradient')(k, v);
 
   if (t.glow) {
-    if (t.glow.primary)   add('--glow-primary', t.glow.primary);
-    if (t.glow.secondary) add('--glow-secondary', t.glow.secondary);
-    if (t.glow.white)  add('--glow-white', t.glow.white);
+    const glowVar = { primary: '--glow-primary', secondary: '--glow-secondary', white: '--glow-white' };
+    for (const [k, v] of Object.entries(t.glow)) mapped(glowVar, 'glow')(k, v);
   }
-  if (t.glowCard?.hover) add('--glow-card-hover', t.glowCard.hover);
-
+  if (t.glowCard) {
+    for (const [k, v] of Object.entries(t.glowCard)) mapped({ hover: '--glow-card-hover' }, 'glowCard')(k, v);
+  }
   if (t.glowLine) {
-    if (t.glowLine.white) add('--glow-line-white', t.glowLine.white);
-    if (t.glowLine.primary) add('--glow-line-blue', t.glowLine.primary);
+    const lineVar = { white: '--glow-line-white', primary: '--glow-line-blue' };
+    for (const [k, v] of Object.entries(t.glowLine)) mapped(lineVar, 'glowLine')(k, v);
+  }
+  if (t.utility) {
+    const utilVar = {
+      bgHover: '--bg-hover',
+      accentTextMix: '--accent-text-mix',
+      overlayBackdrop: '--overlay-backdrop',
+    };
+    for (const [k, v] of Object.entries(t.utility)) mapped(utilVar, 'utility')(k, v);
   }
 
-  if (t.utility) {
-    if (t.utility.bgHover)          add('--bg-hover', t.utility.bgHover);
-    if (t.utility.accentTextMix)       add('--accent-text-mix', t.utility.accentTextMix);
-    if (t.utility.overlayBackdrop)  add('--overlay-backdrop', t.utility.overlayBackdrop);
+  for (const group of Object.keys(t)) {
+    if (!['color', 'rgb', 'shadow', 'gradient', 'glow', 'glowCard', 'glowLine', 'utility'].includes(group)) {
+      unknown.push(group);
+    }
+  }
+
+  if (unknown.length) {
+    throw new Error(
+      `tokens.js: ${label} declares ${unknown.length} value(s) with nowhere to go: ` +
+      `${unknown.join(', ')}. Add them to the matching var map in tokens.js, or ` +
+      `remove them from the theme — silently dropping them is how themes end up ` +
+      `half-applied.`,
+    );
   }
 
   return lines.join('\n');
@@ -712,10 +773,8 @@ function renderOverrides(t, indent = '  ') {
  *
  * @param {string[]} tags - Custom element tags ARC defines.
  */
-function renderUndefinedGuard(tags) {
-  if (!tags.length) return '';
-
-  // Wrap the selector list so the generated CSS stays readable at ~190 tags.
+/** Wrap a tag list into indented, ~96-column selector lines. */
+function wrapTagList(tags) {
   const lines = [];
   let current = '';
   for (const tag of tags) {
@@ -728,6 +787,72 @@ function renderUndefinedGuard(tags) {
     }
   }
   if (current) lines.push(current);
+  return lines.join('\n');
+}
+
+/**
+ * Tokens the forwarding rule must not touch.
+ *
+ * The font compositions are composed on :host *from slots* — and the slots are
+ * deliberately not declared there, so they already inherit from :root. A
+ * consumer overriding --font-body-family works today; forwarding the composed
+ * --font-body on top of that would add nothing and would put the composition's
+ * literal defaults at the mercy of base.css being complete.
+ *
+ * The private size mirrors are excluded for the same reason: --_text-md already
+ * reads the public --text-md, which inherits.
+ */
+const NOT_FORWARDED = /^--(font-(body|label|mono|display|quote|accent)$|_text-)/;
+
+/**
+ * Re-expose the :host static token layer to a :root override.
+ *
+ * The problem this solves: every token the :host layer declares is *set on the
+ * host element*, and a value set on an element always beats one inherited into
+ * it. So `:root { --space-md: 20px }` could not reach a component — the tokens
+ * were overridable per instance but not globally, which is backwards from what
+ * consumers expect and from what the docs imply.
+ *
+ * The fix is one rule in the document, not a rename of ~2166 var() reads.
+ * `--space-md: inherit` on the host takes the value from :root, and because the
+ * cascade weighs *encapsulation context before specificity* for normal
+ * declarations, this zero-specificity :where() rule in the outer tree beats the
+ * :host declaration in the shadow tree. Per-instance overrides keep working,
+ * since a consumer's own `arc-card { … }` outranks :where() on specificity.
+ *
+ * This can only live in base.css. `inherit` makes the token take the parent's
+ * value, so shipping the rule without the :root declarations it forwards would
+ * leave every token guaranteed-invalid. base.css is the file that declares them.
+ *
+ * @param {string[]} tags - ARC's own custom element names.
+ */
+function renderTokenForwarding(tags) {
+  if (!tags.length) return '';
+
+  // Derived from the :host layer itself rather than a hand-kept list, so a token
+  // added to the tree is forwarded automatically.
+  const names = [...generateHostTokensCSS('').matchAll(/^(--[a-zA-Z0-9_-]+)\s*:/gm)]
+    .map((m) => m[1])
+    .filter((n) => !NOT_FORWARDED.test(n));
+
+  const decls = [...new Set(names)].map((n) => `  ${n}: inherit;`).join('\n');
+
+  return `/* Let a :root override reach into shadow DOM.
+   Each of these is also declared on :host by every component — which is what
+   makes a component render correctly with no base.css at all — and a value set
+   on the host beats one inherited into it. Without this rule
+   \`:root { --space-md: 20px }\` would be silently ignored.
+   Scoped to ARC's own tags: this must never be a universal selector, which
+   would push these values onto every element in the consumer's page. */
+:where(
+${wrapTagList(tags)}
+) {
+${decls}
+}`;
+}
+
+function renderUndefinedGuard(tags) {
+  if (!tags.length) return '';
 
   return `/* Prevent FOUC — hide ARC elements until they upgrade.
    Fade-in transition provided by :host styles in each component.
@@ -735,11 +860,172 @@ function renderUndefinedGuard(tags) {
    page, and scoped to ARC tags so we never hide elements we don't own. */
 @media (scripting: enabled) {
   :is(
-${lines.join('\n')}
+${wrapTagList(tags)}
   ):not(:defined) {
     opacity: 0;
   }
 }`;
+}
+
+/* ────────────────────────────────────────────────────────────────────────────
+ * The :host static token layer
+ *
+ * Every component adopts these into its shadow root, so they are what makes a
+ * component render correctly when base.css is not loaded at all — which is the
+ * documented quick start: `npm install @arclux/arc-ui lit` and use the tags. The
+ * declarations therefore cannot simply be deleted in favour of :root.
+ *
+ * They used to be hand-written in packages/web-components/src/shared-styles.js,
+ * a second copy of values that also live here. Nineteen of the eighty-one had
+ * drifted, two of them visibly: --text-3xl shipped the 2xl value, and
+ * --label-inline-size disagreed by 2px between the two builds. Generating the
+ * block from this tree makes that class of bug impossible rather than fixed.
+ *
+ * Three mechanical rules turn a :root value into its :host form. They are the
+ * whole reason this is generated rather than copied:
+ *
+ *   1. A reference to the public size scale, var(--text-N), becomes a reference
+ *      to the private mirror, var(--_text-N). Components must never read the
+ *      public name — see the note beside the mirrors above.
+ *   2. A reference to a role weight, var(--font-X-weight), gains that role's
+ *      literal as a fallback, because base.css is what declares the slot.
+ *   3. Anything else is emitted unchanged.
+ *
+ * Colors are deliberately absent: they are themed, and a literal on :host would
+ * pin a component to one theme and defeat the light/dark switch.
+ * ──────────────────────────────────────────────────────────────────────────── */
+
+/** Rule 1: components read the private mirror of the size scale. */
+function privatiseScale(value) {
+  return String(value).replace(/var\(--text-((?:xs|sm|md|lg|xl|2xl|3xl))\)/g, 'var(--_text-$1)');
+}
+
+/** Rule 2: a role-weight reference carries the role's literal as its fallback. */
+function weightWithFallback(value) {
+  return String(value).replace(
+    /var\(--font-([a-z]+)-weight\)/g,
+    (whole, role) => {
+      const literal = tokens.font[role]?.weight;
+      return literal === undefined ? whole : `var(--font-${role}-weight, ${literal})`;
+    },
+  );
+}
+
+const hostValue = (value) => weightWithFallback(privatiseScale(value));
+
+/**
+ * Generate the declarations for the `:host` static token layer.
+ *
+ * Returns declaration lines only — no selector — so shared-styles.js can keep
+ * its own prose around them.
+ *
+ * @param {string} [indent='    ']
+ */
+export function generateHostTokensCSS(indent = '    ') {
+  const out = [];
+  const add = (name, value) => out.push(`${indent}${name}: ${hostValue(value)};`);
+  const blank = () => out.push('');
+  const note = (text) => out.push(`${indent}/* ${text} */`);
+
+  note('Generated from shared/tokens.js by scripts/generate-host-tokens.js.');
+  note('Do not edit by hand — edit the token tree instead.');
+  blank();
+
+  // ── Font roles, composed from the slots rather than from literal faces. A
+  // value on :host beats one inherited from :root, so spelling a typeface here
+  // would make --font-<role>-family on the document root unreachable. Only the
+  // slots are inherited; the composition is local.
+  for (const [role, def] of Object.entries(tokens.font)) {
+    if (!def.family) continue;
+    add(`--font-${role}`, `var(--font-${role}-family, ${def.family}), var(--font-${role}-fallback, ${def.fallback})`);
+  }
+  // display has no family of its own: it follows body until assigned one.
+  add(
+    '--font-display',
+    `var(--font-display-family, var(--font-body-family, ${tokens.font.body.family})), ` +
+    `var(--font-display-fallback, var(--font-body-fallback, ${tokens.font.body.fallback}))`,
+  );
+  add('--font-accent', 'var(--font-label)');
+  blank();
+
+  // ── The size scale, as private mirrors of the public names. The public name
+  // must not be declared here: that is what made a :root override unreachable,
+  // and a token cannot fall back to itself.
+  note('Private mirrors: components read these, consumers override --text-*.');
+  for (const step of ['xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl']) {
+    out.push(`${indent}--_text-${step}: var(--text-${step}, ${tokens.fontSize[step]});`);
+  }
+  blank();
+
+  // ── Typography contexts.
+  const contexts = [
+    ['display-xl', 'displayXl'],
+    ['heading', 'heading'],
+    ['body', 'body'],
+    ['wordmark', 'wordmark'],
+    ['section-title', 'sectionTitle'],
+    ['ui-accent', 'uiAccent'],
+    ['code', 'code'],
+    ['label-inline', 'labelInline'],
+  ];
+  for (const [cssName, key] of contexts) {
+    if (tokens.fontSize[key] !== undefined) add(`--${cssName}-size`, tokens.fontSize[key]);
+    // --field-weight is deliberately never emitted: it bottoms out in a literal
+    // rather than a role slot, so a value here would beat the one inherited from
+    // :root. The fields spell var(--field-weight, 400) at the point of use.
+    if (key !== 'field' && tokens.fontWeight[key] !== undefined) {
+      add(`--${cssName}-weight`, tokens.fontWeight[key]);
+    }
+    if (tokens.letterSpacing[key] !== undefined) add(`--${cssName}-spacing`, tokens.letterSpacing[key]);
+    if (tokens.lineHeight[key] !== undefined) add(`--${cssName}-lh`, tokens.lineHeight[key]);
+  }
+  blank();
+
+  const group = (label, entries) => {
+    note(label);
+    for (const [name, value] of entries) add(name, value);
+    blank();
+  };
+
+  group('Spacing', Object.entries(tokens.space).map(([k, v]) => [`--space-${k}`, v]));
+  group('Radii', Object.entries(tokens.radius).map(([k, v]) => [`--radius-${k}`, v]));
+  group('Transitions and motion', [
+    ...Object.entries(tokens.transition).map(([k, v]) => [`--transition-${k}`, v]),
+    ['--ease-out-expo', tokens.easing.outExpo],
+    ['--ease-in-out', tokens.easing.inOut],
+    ['--duration-enter', tokens.duration.enter],
+    ['--duration-exit', tokens.duration.exit],
+  ]);
+  group('Z-index', Object.entries(tokens.zIndex).map(([k, v]) => [`--z-${k}`, v]));
+  group('Glow and focus', [
+    ['--glow-hover', tokens.glowHover],
+    ['--focus-ring', tokens.focus.ring],
+    ['--focus-glow', tokens.focus.glow],
+  ]);
+  group('Semantic aliases', [
+    ['--interactive', 'var(--accent-primary)'],
+    ['--interactive-rgb', 'var(--accent-primary-rgb)'],
+    ['--interactive-hover', 'var(--glow-hover)'],
+    ['--interactive-active', 'var(--glow-primary)'],
+    ['--interactive-focus', 'var(--focus-glow)'],
+    ['--interactive-focus-ring', 'var(--focus-ring)'],
+    ['--interactive-muted', 'var(--text-ghost)'],
+    ['--surface-base', 'var(--bg-deep)'],
+    ['--surface-primary', 'var(--bg-surface)'],
+    ['--surface-raised', 'var(--bg-card)'],
+    ['--surface-overlay', 'var(--bg-elevated)'],
+    ['--surface-hover', 'var(--bg-hover)'],
+    ['--divider', 'var(--border-subtle)'],
+  ]);
+  group('Interactive and layout', [
+    ['--touch-min', tokens.touch.min],
+    ['--touch-pad', tokens.touch.pad],
+    ['--max-width', tokens.layout.maxWidth],
+    ['--max-width-sm', tokens.layout.maxWidthSm],
+    ['--nav-height', tokens.layout.navHeight],
+  ]);
+
+  return out.join('\n').replace(/\n+$/, '');
 }
 
 /**
@@ -751,6 +1037,7 @@ ${lines.join('\n')}
  */
 export function generateTokensCSS({ tags = [] } = {}) {
   const undefinedGuard = renderUndefinedGuard(tags);
+  const tokenForwarding = renderTokenForwarding(tags);
 
   const touchBlock = [
     '@media (pointer: coarse) {',
@@ -791,6 +1078,8 @@ ${lightVars}
 ${lightVarsNested}
   }
 }
+
+${tokenForwarding}
 
 /* Fixed Dark — always-dark regions (nav, footer) */
 .theme-fixed {

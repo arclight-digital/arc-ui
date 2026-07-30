@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { monthNames, weekdayNames, firstDayOfWeek, weekdayOffset } from '../shared/date-names.js';
 
 /**
  * Interactive month-view calendar grid for date selection with min/max constraints, keyboard
@@ -21,9 +22,13 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart grid
  * @csspart dow
  * @csspart day
+ * @prop {string} locale - BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language.
+ * @prop {number} firstDayOfWeek - Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention.
  */
 export class ArcCalendar extends LitElement {
   static properties = {
+    locale:      { type: String },
+    firstDayOfWeek: { type: Number, attribute: 'first-day-of-week' },
     value:  { type: String },
     min:    { type: String },
     max:    { type: String },
@@ -57,7 +62,7 @@ export class ArcCalendar extends LitElement {
 
       .calendar__title {
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         font-weight: 600;
         color: var(--text-primary);
       }
@@ -99,7 +104,7 @@ export class ArcCalendar extends LitElement {
 
       .calendar__dow {
         font-family: var(--font-mono);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         font-weight: 600;
         color: var(--text-muted);
         padding: var(--space-xs) 0;
@@ -114,7 +119,7 @@ export class ArcCalendar extends LitElement {
         height: 36px;
         margin: 0 auto;
         font-family: var(--font-mono);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-secondary);
         background: none;
         border: none;
@@ -170,12 +175,11 @@ export class ArcCalendar extends LitElement {
     `,
   ];
 
-  static _DAYS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
-  static _MONTHS = ['January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'];
 
   constructor() {
     super();
+    this.locale = '';
+    this.firstDayOfWeek = 0;
     const now = new Date();
     this.value = '';
     this.min = '';
@@ -184,6 +188,11 @@ export class ArcCalendar extends LitElement {
     this.year = now.getFullYear();
     this._focusedDay = null;
   }
+  /** The week's first day: an explicit prop, else whatever the locale says. */
+  get _firstDay() {
+    return this.firstDayOfWeek || firstDayOfWeek(this.locale || undefined);
+  }
+
 
   get _todayISO() {
     const d = new Date();
@@ -201,7 +210,8 @@ export class ArcCalendar extends LitElement {
   }
 
   _getCalendarDays() {
-    const firstDay = new Date(this.year, this.month, 1).getDay();
+    // Leading blanks count from the locale's first day, not from Sunday.
+    const firstDay = weekdayOffset(new Date(this.year, this.month, 1), this._firstDay);
     const daysInMonth = new Date(this.year, this.month + 1, 0).getDate();
     const daysInPrev = new Date(this.year, this.month, 0).getDate();
 
@@ -328,7 +338,7 @@ export class ArcCalendar extends LitElement {
               <path d="M6.5 1.5L3 5L6.5 8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>
-          <span class="calendar__title" part="title">${ArcCalendar._MONTHS[this.month]} ${this.year}</span>
+          <span class="calendar__title" part="title">${monthNames('long', this.locale || undefined)[this.month]} ${this.year}</span>
           <button class="calendar__nav" @click=${this._nextMonth} aria-label="Next month" part="nav-next">
             <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
               <path d="M3.5 1.5L7 5L3.5 8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -338,7 +348,7 @@ export class ArcCalendar extends LitElement {
 
         <div class="calendar__grid" role="grid" part="grid">
           <div class="calendar__row" role="row">
-            ${ArcCalendar._DAYS.map(d => html`<div class="calendar__dow" role="columnheader" part="dow">${d}</div>`)}
+            ${weekdayNames('short', this.locale || undefined, this._firstDay).map(d => html`<div class="calendar__dow" role="columnheader" part="dow">${d}</div>`)}
           </div>
 
           ${weeks.map(week => html`
@@ -359,7 +369,7 @@ export class ArcCalendar extends LitElement {
                     ?disabled=${isDisabled}
                     @click=${() => this._selectDate(iso)}
                     role="gridcell"
-                    aria-label="${ArcCalendar._MONTHS[month]} ${day}, ${year}"
+                    aria-label="${monthNames('long', this.locale || undefined)[month]} ${day}, ${year}"
                     aria-selected=${isSelected ? 'true' : 'false'}
                     part="day"
                   >${day}</button>

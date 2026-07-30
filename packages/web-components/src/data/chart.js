@@ -84,7 +84,7 @@ export class ArcChart extends LitElement {
       .axis-text {
         fill: var(--text-muted);
         font-family: var(--font-body);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
       }
 
       .line {
@@ -137,7 +137,7 @@ export class ArcChart extends LitElement {
         border-radius: var(--radius-md);
         box-shadow: var(--shadow-md);
         font-family: var(--font-body);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         white-space: nowrap;
       }
 
@@ -163,8 +163,8 @@ export class ArcChart extends LitElement {
       .tooltip-value {
         color: var(--text-primary);
         font-family: var(--font-mono);
-        margin-left: auto;
-        padding-left: var(--space-md);
+        margin-inline-start: auto;
+        padding-inline-start: var(--space-md);
       }
 
       .chip {
@@ -188,7 +188,7 @@ export class ArcChart extends LitElement {
         gap: 6px;
         color: var(--text-secondary);
         font-family: var(--font-body);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
       }
 
       .empty {
@@ -198,7 +198,7 @@ export class ArcChart extends LitElement {
         height: 100%;
         color: var(--text-muted);
         font-family: var(--font-body);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
       }
 
       .sr-only {

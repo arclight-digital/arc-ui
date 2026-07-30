@@ -1,5 +1,8 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { PositionController } from '../shared/position-controller.js';
+import { ListboxController } from '../shared/listbox-controller.js';
+import { managedPanelStyles } from '../shared/position-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 import { ClickOutsideController } from '../shared/click-outside.js';
 import '../shared/option.js';
@@ -31,7 +34,6 @@ export class ArcCombobox extends FormControlMixin(LitElement) {
     disabled:     { type: Boolean, reflect: true },
     _query:       { state: true },
     _open:        { state: true },
-    _activeIndex: { state: true },
     _options:     { state: true },
   };
 
@@ -51,7 +53,7 @@ export class ArcCombobox extends FormControlMixin(LitElement) {
 
       .combobox__label {
         display: block;
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         font-weight: 600;
         color: var(--text-secondary);
         margin-bottom: var(--space-xs);
@@ -66,7 +68,7 @@ export class ArcCombobox extends FormControlMixin(LitElement) {
         width: 100%;
         box-sizing: border-box;
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         font-weight: var(--field-weight, 400);
         color: var(--text-primary);
         background: var(--surface-raised);
@@ -101,8 +103,8 @@ export class ArcCombobox extends FormControlMixin(LitElement) {
       .combobox__listbox {
         position: absolute;
         top: calc(100% + 4px);
-        left: 0;
-        right: 0;
+        inset-inline-start: 0;
+        inset-inline-end: 0;
         max-height: 220px;
         overflow-y: auto;
         overflow-x: hidden;
@@ -130,9 +132,9 @@ export class ArcCombobox extends FormControlMixin(LitElement) {
       .combobox__option {
         display: block;
         width: 100%;
-        text-align: left;
+        text-align: start;
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-primary);
         background: none;
         border: none;
@@ -150,14 +152,9 @@ export class ArcCombobox extends FormControlMixin(LitElement) {
         color: var(--interactive);
       }
 
-      .combobox__option:focus-visible {
-        outline: none;
-        box-shadow: var(--interactive-focus);
-      }
-
       .combobox__empty {
         padding: var(--space-sm) var(--space-md);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-muted);
       }
 
@@ -173,6 +170,8 @@ export class ArcCombobox extends FormControlMixin(LitElement) {
         }
       }
     `,
+    // animate: false — this panel has its own keyframe entrance.
+    managedPanelStyles('combobox__listbox', { animate: false }),
   ];
 
   static _idCounter = 0;
@@ -186,11 +185,25 @@ export class ArcCombobox extends FormControlMixin(LitElement) {
     this.disabled = false;
     this._query = '';
     this._open = false;
-    this._activeIndex = -1;
     this._options = [];
     this._comboId = `combobox-${++ArcCombobox._idCounter}`;
     this._clickOutside = new ClickOutsideController(this, {
       onClickOutside: () => { this._open = false; },
+    });
+    this._position = new PositionController(this, {
+      anchor: () => this.shadowRoot?.querySelector('.combobox__wrapper'),
+      floating: () => this.shadowRoot?.querySelector('.combobox__listbox'),
+      matchWidth: true,
+      offset: 4,
+    });
+    this._listbox = new ListboxController(this, {
+      getItemCount: () => this._filteredItems.length,
+      isOpen: () => this._open,
+      onOpen: () => { this._open = true; },
+      onClose: () => { this._open = false; },
+      onSelect: (i) => this._selectItem(this._filteredItems[i]),
+      optionId: (i) => `${this._comboId}-opt-${i}`,
+      scrollContainer: () => this.shadowRoot?.querySelector('.combobox__listbox'),
     });
   }
 
@@ -228,7 +241,7 @@ export class ArcCombobox extends FormControlMixin(LitElement) {
   _onInput(e) {
     this._query = e.target.value;
     this._open = true;
-    this._activeIndex = -1;
+    this._listbox.reset();
     this.dispatchEvent(new CustomEvent('arc-input', {
       detail: { value: this._query },
       bubbles: true,
@@ -245,7 +258,7 @@ export class ArcCombobox extends FormControlMixin(LitElement) {
     this.value = item.value;
     this._query = item.label;
     this._open = false;
-    this._activeIndex = -1;
+    this._listbox.reset();
 
     this.dispatchEvent(new CustomEvent('arc-change', {
       detail: { value: item.value, item },
@@ -255,44 +268,16 @@ export class ArcCombobox extends FormControlMixin(LitElement) {
   }
 
   _onKeyDown(e) {
-    const items = this._filteredItems;
-
-    switch (e.key) {
-      case 'ArrowDown':
-        e.preventDefault();
-        if (!this._open) { this._open = true; return; }
-        this._activeIndex = Math.min(this._activeIndex + 1, items.length - 1);
-        break;
-      case 'ArrowUp':
-        e.preventDefault();
-        this._activeIndex = Math.max(this._activeIndex - 1, 0);
-        break;
-      case 'Enter':
-        e.preventDefault();
-        if (this._activeIndex >= 0 && items[this._activeIndex]) {
-          this._selectItem(items[this._activeIndex]);
-        }
-        break;
-      case 'Escape':
-        this._open = false;
-        this._activeIndex = -1;
-        break;
-      case 'Home':
-        if (this._open && items.length > 0 && !this._query) {
-          e.preventDefault();
-          this._activeIndex = 0;
-        }
-        break;
-      case 'End':
-        if (this._open && items.length > 0 && !this._query) {
-          e.preventDefault();
-          this._activeIndex = items.length - 1;
-        }
-        break;
-    }
+    // Home/End belong to the text cursor while there is a query to move through;
+    // ListboxController only gets them when the field is empty.
+    if ((e.key === 'Home' || e.key === 'End') && this._query) return;
+    this._listbox.handleKeydown(e);
   }
 
   updated(changed) {
+    if (changed.has('_open')) {
+      this._open ? this._position.show() : this._position.hide();
+    }
     if (changed.has('value')) {
       this._updateFormValue();
       if (!this._open) {
@@ -304,12 +289,15 @@ export class ArcCombobox extends FormControlMixin(LitElement) {
       if (this._open) this._clickOutside.activate();
       else this._clickOutside.deactivate();
     }
+    // Filtering can leave fewer options than the active index, which would point
+    // aria-activedescendant at an option that no longer exists.
+    if (changed.has('_query') || changed.has('_options')) this._listbox.clampToCount();
   }
 
   render() {
     const filtered = this._filteredItems;
     const listboxId = `${this._comboId}-listbox`;
-    const activeId = this._activeIndex >= 0 ? `${this._comboId}-opt-${this._activeIndex}` : undefined;
+    const activeId = this._listbox.activeDescendantId;
 
     return html`
       <div class="combobox__slot-host">
@@ -344,14 +332,14 @@ export class ArcCombobox extends FormControlMixin(LitElement) {
         >
           ${filtered.length > 0
             ? filtered.map((item, i) => html`
-                <button
+                <div
                   id="${this._comboId}-opt-${i}"
-                  class="combobox__option ${i === this._activeIndex ? 'combobox__option--active' : ''} ${item.value === this.value ? 'combobox__option--selected' : ''}"
+                  class="combobox__option ${i === this._listbox.activeIndex ? 'combobox__option--active' : ''} ${item.value === this.value ? 'combobox__option--selected' : ''}"
                   role="option"
                   aria-selected=${item.value === this.value ? 'true' : 'false'}
                   @click=${() => this._selectItem(item)}
                   part="option"
-                >${item.label}</button>
+                >${item.label}</div>
               `)
             : html`<div class="combobox__empty">No results found</div>`
           }

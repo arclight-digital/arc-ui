@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { ClickOutsideController } from '../shared/click-outside.js';
 
 /**
  * Dims the entire page except a targeted element, which gets an accent-primary glow ring and
@@ -45,16 +46,18 @@ export class ArcSpotlight extends LitElement {
     this.active = false;
     this.padding = 8;
     this._rect = null;
-    this._onDocClick = (e) => {
-      const el = this.target ? document.querySelector(this.target) : null;
-      if (!el || !el.contains(e.target)) this._dismiss();
-    };
+    this._clickOutside = new ClickOutsideController(this, {
+      // The spotlight is a ring drawn around some *other* element, so "inside"
+      // is that element rather than this host. A target that has gone away
+      // leaves no inside at all, and the next click dismisses.
+      boundary: () => (this.target ? document.querySelector(this.target) : null),
+      onClickOutside: () => this._dismiss(),
+    });
     this._onScroll = () => this._updatePosition();
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    document.removeEventListener('click', this._onDocClick);
     document.removeEventListener('scroll', this._onScroll, true);
   }
 
@@ -62,10 +65,10 @@ export class ArcSpotlight extends LitElement {
     if (changed.has('active') || changed.has('target')) {
       this._updatePosition();
       if (this.active) {
-        requestAnimationFrame(() => document.addEventListener('click', this._onDocClick));
+        this._clickOutside.activate();
         document.addEventListener('scroll', this._onScroll, { capture: true, passive: true });
       } else {
-        document.removeEventListener('click', this._onDocClick);
+        this._clickOutside.deactivate();
         document.removeEventListener('scroll', this._onScroll, true);
       }
     }

@@ -4,7 +4,9 @@
  * generate.js — Unified code generation pipeline
  *
  * Runs all generation steps in order:
- *   1. Tokens    — shared/tokens.js → shared/base.css
+ *   1. Tokens    — shared/tokens.js → shared/base.css (the :root layer) and
+ *                  src/generated/host-tokens.js (the :host layer every component
+ *                  adopts). Both from one tree so they cannot drift.
  *   2. Icons     — vendored icon modules from upstream libraries (gitignored,
  *                  so fresh checkouts — e.g. the CI release runner — must
  *                  regenerate them before packing the npm tarball)
@@ -33,6 +35,7 @@ const steps = [
   { name: 'Requires', cmd: 'node',  args: ['scripts/check-child-registrations.js'] },
   { name: 'Events',   cmd: 'node',  args: ['scripts/check-event-conventions.js'] },
   { name: 'Tokens',   cmd: 'node',  args: ['scripts/generate-base-css.js'] },
+  { name: 'HostTokens', cmd: 'node', args: ['scripts/generate-host-tokens.js'] },
   { name: 'Icons',    cmd: 'node',  args: ['scripts/generate-icons.js'] },
   { name: 'Register', cmd: 'node',  args: ['scripts/generate-registrations.js'] },
   { name: 'Brand',    cmd: 'node',  args: ['scripts/generate-brand-assets.js'] },

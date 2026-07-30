@@ -1,6 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { MenuKeyboardController } from '../shared/menu-keyboard.js';
+import { PositionController } from '../shared/position-controller.js';
+import { ClickOutsideController } from '../shared/click-outside.js';
+import { managedPanelStyles } from '../shared/position-styles.js';
 import { setTriggerAria, deepActiveElement } from '../shared/trigger-aria.js';
 import '../shared/menu-item.js';
 import '../shared/menu-divider.js';
@@ -41,11 +44,15 @@ export class ArcDropdownMenu extends LitElement {
         cursor: pointer;
       }
 
+      /* Resting position for a panel PositionController hasn't adopted — the
+         static HTML export and anything pre-upgrade. Once managed the panel is
+         in the top layer at fixed viewport coordinates, and flips above the
+         trigger when there's no room below. */
       .dropdown__panel {
         position: absolute;
         z-index: 100;
         top: calc(100% + var(--space-xs));
-        left: 0;
+        inset-inline-start: 0;
         /* max-content rather than shrink-to-fit — an abspos panel otherwise sizes
            against the width available from its positioned ancestor, so a narrow
            container squeezes it to min-width and the items truncate. See the
@@ -84,9 +91,9 @@ export class ArcDropdownMenu extends LitElement {
         background: transparent;
         color: var(--text-secondary);
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         cursor: pointer;
-        text-align: left;
+        text-align: start;
         transition: background var(--transition-fast), color var(--transition-fast);
         outline: none;
       }
@@ -107,7 +114,7 @@ export class ArcDropdownMenu extends LitElement {
 
       .dropdown__item-shortcut {
         font-family: var(--font-mono);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-muted);
         opacity: 0.6;
       }
@@ -128,6 +135,9 @@ export class ArcDropdownMenu extends LitElement {
         }
       }
     `,
+    // The menu slides down rather than scaling; closedTransform keeps that
+    // entrance instead of normalising it to the default scale.
+    managedPanelStyles('dropdown__panel', { closedTransform: 'translateY(-4px)' }),
   ];
 
   constructor() {
@@ -136,11 +146,21 @@ export class ArcDropdownMenu extends LitElement {
     this._children = [];
     this._openedFrom = null;
     this._lastFocusedIndex = -1;
-    this._onDocumentClick = this._onDocumentClick.bind(this);
+    this._clickOutside = new ClickOutsideController(this, {
+      // _close(false): the pointer chose a new target, so don't yank focus back.
+      onClickOutside: () => this._close(false),
+    });
     this._menuKb = new MenuKeyboardController(this, {
       getItemCount: () => this._menuItems.length,
       onSelect: (i) => this._selectItem(this._menuItems[i], i),
       onClose: () => this._close(),
+    });
+    this._position = new PositionController(this, {
+      anchor: () => this.shadowRoot?.querySelector('.dropdown__trigger'),
+      floating: () => this.shadowRoot?.querySelector('.dropdown__panel'),
+      // Left-aligned with the trigger, matching the resting CSS (left: 0).
+      align: () => 'start',
+      offset: 4,
     });
   }
 
@@ -155,16 +175,23 @@ export class ArcDropdownMenu extends LitElement {
 
   updated(changed) {
     if (changed.has('open')) {
+      this.open ? this._position.show() : this._position.hide();
+    }
+    // Items arriving from the slot change the panel's height, and with it
+    // whether the panel still fits below the trigger.
+    if (changed.has('_children') && this.open) this._position.show();
+    if (changed.has('open')) {
       this._syncTriggerAria();
       if (this.open) {
         this._openedFrom = deepActiveElement();
         this._menuKb.reset();
-        requestAnimationFrame(() => {
-          document.addEventListener('click', this._onDocumentClick);
-          this._menuKb.attach();
-        });
+        this._clickOutside.activate();
+        // The keyboard controller still waits a frame: it attaches a keydown
+        // listener, and the Enter or Space that opened the menu would otherwise
+        // arrive at the freshly opened menu as an item activation.
+        requestAnimationFrame(() => this._menuKb.attach());
       } else {
-        document.removeEventListener('click', this._onDocumentClick);
+        this._clickOutside.deactivate();
         this._menuKb.detach();
       }
     }
@@ -176,19 +203,6 @@ export class ArcDropdownMenu extends LitElement {
       this.shadowRoot.querySelector(`#dropdown-item-${idx}`)?.focus();
     }
     this._lastFocusedIndex = idx;
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    document.removeEventListener('click', this._onDocumentClick);
-  }
-
-  _onDocumentClick(e) {
-    const path = e.composedPath();
-    if (!path.includes(this)) {
-      // Pointer chose a new target — don't yank focus back
-      this._close(false);
-    }
   }
 
   _syncTriggerAria() {

@@ -94,7 +94,7 @@ export class ArcToast extends LitElement {
         box-shadow: var(--shadow-overlay);
         animation: toast-in 300ms var(--ease-out-expo);
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-secondary);
         overflow: hidden;
       }
@@ -104,14 +104,14 @@ export class ArcToast extends LitElement {
         content: '';
         position: absolute;
         bottom: 0;
-        left: 0;
-        right: 0;
+        inset-inline-start: 0;
+        inset-inline-end: 0;
         height: 2px;
         background: linear-gradient(90deg, transparent, var(--_status-color), transparent);
       }
 
       .toast__icon {
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         flex-shrink: 0;
         line-height: 1;
         color: var(--_status-color);
@@ -139,8 +139,8 @@ export class ArcToast extends LitElement {
 
       @media (max-width: 640px) { /* --breakpoint-sm */
         .toast-container {
-          right: var(--space-sm);
-          left: var(--space-sm);
+          inset-inline-end: var(--space-sm);
+          inset-inline-start: var(--space-sm);
           max-width: none;
         }
       }

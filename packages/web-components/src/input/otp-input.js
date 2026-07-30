@@ -42,7 +42,7 @@ export class ArcOtpInput extends FormControlMixin(LitElement) {
         height: 52px;
         text-align: center;
         font-family: var(--font-mono);
-        font-size: var(--text-md);
+        font-size: var(--_text-md);
         font-weight: 600;
         color: var(--text-primary);
         background: var(--surface-raised);

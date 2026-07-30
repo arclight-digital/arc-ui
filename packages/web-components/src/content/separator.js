@@ -66,14 +66,14 @@ export class ArcSeparator extends LitElement {
       :host([orientation="vertical"][variant="dashed"]) .separator {
         background: none;
         border-top: none;
-        border-left: 1px dashed var(--border-default);
+        border-inline-start: 1px dashed var(--border-default);
         width: 0;
       }
 
       :host([orientation="vertical"][variant="dotted"]) .separator {
         background: none;
         border-top: none;
-        border-left: 1px dotted var(--border-default);
+        border-inline-start: 1px dotted var(--border-default);
         width: 0;
       }
 
@@ -119,7 +119,7 @@ export class ArcSeparator extends LitElement {
 
       .separator__label {
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-muted);
         white-space: nowrap;
         flex-shrink: 0;

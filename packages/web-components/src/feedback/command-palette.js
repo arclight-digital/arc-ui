@@ -1,8 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { MenuKeyboardController } from '../shared/menu-keyboard.js';
-import { lockScroll, unlockScroll } from '../shared/scroll-lock.js';
-import { trapTabKey, deepActiveElement } from '../shared/focus-trap.js';
+import { OverlayMixin } from '../shared/overlay-mixin.js';
 import '../content/icon.js';
 
 /**
@@ -27,7 +26,7 @@ import '../content/icon.js';
  * @csspart group-heading
  * @csspart footer
  */
-export class ArcCommandPalette extends LitElement {
+export class ArcCommandPalette extends OverlayMixin(LitElement) {
   static properties = {
     open:          { type: Boolean, reflect: true },
     placeholder:   { type: String },
@@ -107,7 +106,7 @@ export class ArcCommandPalette extends LitElement {
         border: none;
         outline: none;
         font-family: var(--font-body);
-        font-size: var(--text-md);
+        font-size: var(--_text-md);
         color: var(--text-primary);
         caret-color: var(--accent-primary);
       }
@@ -126,7 +125,7 @@ export class ArcCommandPalette extends LitElement {
         padding: var(--space-lg);
         text-align: center;
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-muted);
       }
 
@@ -139,7 +138,7 @@ export class ArcCommandPalette extends LitElement {
       .palette__group-heading {
         padding: var(--space-sm) var(--space-sm) var(--space-xs);
         font-family: var(--font-label);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         letter-spacing: 0.12em;
         text-transform: uppercase;
         color: var(--text-ghost);
@@ -155,9 +154,9 @@ export class ArcCommandPalette extends LitElement {
         background: transparent;
         color: var(--text-secondary);
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         cursor: pointer;
-        text-align: left;
+        text-align: start;
         transition: background var(--transition-fast), color var(--transition-fast);
         outline: none;
       }
@@ -179,7 +178,7 @@ export class ArcCommandPalette extends LitElement {
 
       .palette__item-shortcut {
         font-family: var(--font-mono);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         color: var(--text-muted);
         opacity: 0.6;
       }
@@ -191,7 +190,7 @@ export class ArcCommandPalette extends LitElement {
         padding: var(--space-sm);
         border-top: 1px solid var(--border-default);
         font-family: var(--font-mono);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         color: var(--text-muted);
       }
 
@@ -203,7 +202,7 @@ export class ArcCommandPalette extends LitElement {
         border: 1px solid var(--border-default);
         border-radius: var(--radius-sm);
         font-family: var(--font-mono);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
       }
 
       .palette__slot-host { display: none; }
@@ -231,13 +230,6 @@ export class ArcCommandPalette extends LitElement {
       onSelect: (i) => this._selectItem(this._filteredItems[i]),
       onClose: () => this._close(),
     });
-    this._onTabKeydown = this._onTabKeydown.bind(this);
-  }
-
-  _onTabKeydown(e) {
-    if (e.key !== 'Tab') return;
-    const dialog = this.shadowRoot.querySelector('.palette__dialog');
-    if (dialog) trapTabKey(e, dialog);
   }
 
   _onSlotChange(e) {
@@ -298,39 +290,24 @@ export class ArcCommandPalette extends LitElement {
   }
 
   updated(changed) {
+    super.updated(changed);
     if (this.open) {
       const focused = this.shadowRoot.querySelector('.palette__item.is-focused');
       if (focused) focused.scrollIntoView({ block: 'nearest' });
     }
     if (changed.has('open')) {
       if (this.open) {
-        this._previousFocus = deepActiveElement();
+        // Scroll lock, Tab trapping, Escape, and focus save/restore are
+        // OverlayMixin's. The search input is the dialog's first focusable
+        // child, so the mixin's focusFirst lands on it — no explicit focus call.
         this._query = '';
         this._menuKb.reset();
         this._menuKb.focusedIndex = 0;
         this._menuKb.attach();
-        document.addEventListener('keydown', this._onTabKeydown);
-        lockScroll(this);
-        this.updateComplete.then(() => {
-          const input = this.shadowRoot.querySelector('.palette__input');
-          if (input) input.focus();
-        });
       } else {
         this._menuKb.detach();
-        document.removeEventListener('keydown', this._onTabKeydown);
-        unlockScroll(this);
-        if (changed.get('open') && this._previousFocus?.isConnected) {
-          this._previousFocus.focus();
-        }
-        this._previousFocus = null;
       }
     }
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    document.removeEventListener('keydown', this._onTabKeydown);
-    unlockScroll(this);
   }
 
   _onInput(e) {
@@ -357,10 +334,6 @@ export class ArcCommandPalette extends LitElement {
     this.open = false;
   }
 
-  _backdropClick() {
-    this._close();
-  }
-
   render() {
     const filtered = this._filteredItems;
 
@@ -368,7 +341,7 @@ export class ArcCommandPalette extends LitElement {
       <div class="palette__slot-host">
         <slot @slotchange=${this._onSlotChange}></slot>
       </div>
-      <div class="palette__backdrop" @click=${this._backdropClick} part="backdrop"></div>
+      <div class="palette__backdrop" @click=${this._handleBackdropClick} part="backdrop"></div>
       <div
         class="palette__dialog"
         role="dialog"

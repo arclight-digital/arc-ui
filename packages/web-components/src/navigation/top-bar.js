@@ -51,8 +51,8 @@ export class ArcTopBar extends LitElement {
       :host([fixed]) {
         position: fixed;
         top: 0;
-        left: 0;
-        right: 0;
+        inset-inline-start: 0;
+        inset-inline-end: 0;
       }
 
       .topbar {
@@ -82,8 +82,8 @@ export class ArcTopBar extends LitElement {
       .topbar__glow {
         position: absolute;
         bottom: -1px;
-        left: 20%;
-        right: 20%;
+        inset-inline-start: 20%;
+        inset-inline-end: 20%;
         height: 1px;
         background: linear-gradient(90deg, transparent, rgba(var(--accent-secondary-rgb), 0.2), rgba(var(--accent-primary-rgb), 0.15), transparent);
         opacity: 0;

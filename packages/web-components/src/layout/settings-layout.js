@@ -35,7 +35,7 @@ export class ArcSettingsLayout extends LitElement {
       .settings-layout--left .nav {
         padding: var(--space-lg);
         background: var(--surface-raised);
-        border-right: 1px solid var(--divider);
+        border-inline-end: 1px solid var(--divider);
       }
 
       .settings-layout--left .content {
@@ -68,7 +68,7 @@ export class ArcSettingsLayout extends LitElement {
         }
 
         .settings-layout--left .nav {
-          border-right: none;
+          border-inline-end: none;
           border-bottom: 1px solid var(--divider);
         }
       }

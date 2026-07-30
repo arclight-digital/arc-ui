@@ -43,7 +43,7 @@ export class ArcLabel extends LitElement {
         align-items: baseline;
         gap: var(--space-xs);
         font-family: var(--font-label);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         font-weight: var(--font-label-weight, 600);
         text-transform: uppercase;
         letter-spacing: 0.08em;
@@ -54,7 +54,7 @@ export class ArcLabel extends LitElement {
       }
 
       :host([size="sm"]) .label { font-size: 10px; }
-      :host([size="lg"]) .label { font-size: var(--text-sm); }
+      :host([size="lg"]) .label { font-size: var(--_text-sm); }
 
       .label__required {
         color: var(--status-error, #ef4444);
@@ -64,14 +64,14 @@ export class ArcLabel extends LitElement {
       .label__tooltip {
         display: inline-flex;
         align-items: center;
-        margin-left: var(--space-xs);
+        margin-inline-start: var(--space-xs);
       }
 
       .label__tooltip--empty { display: none; }
 
       .description {
         font-family: var(--font-body);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         color: var(--text-muted);
         line-height: 1.5;
         margin-bottom: var(--space-xs);

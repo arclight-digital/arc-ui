@@ -87,7 +87,7 @@ export class ArcToolbar extends LitElement {
         align-items: center;
         gap: var(--space-sm);
         flex-shrink: 0;
-        margin-left: auto;
+        margin-inline-start: auto;
       }
 
       /* Overflow collapse prevents slotted items from forcing the row wider */
@@ -110,7 +110,7 @@ export class ArcToolbar extends LitElement {
         position: absolute;
         z-index: var(--z-dropdown);
         top: calc(100% + var(--space-xs));
-        right: 0;
+        inset-inline-end: 0;
         /* Sizes to its widest collapsed action rather than to the width available
            from a narrow positioned ancestor — a toolbar in a sidebar is exactly
            the case that squeezed it. See the note in navigation/menubar.js. */
@@ -150,9 +150,9 @@ export class ArcToolbar extends LitElement {
         background: transparent;
         color: var(--text-secondary);
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         cursor: pointer;
-        text-align: left;
+        text-align: start;
         transition: background var(--transition-fast), color var(--transition-fast);
         outline: none;
       }

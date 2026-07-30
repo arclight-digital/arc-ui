@@ -112,10 +112,10 @@ export class ArcRadioGroup extends FormControlMixin(LitElement) {
       /* Sizes */
       :host([size="sm"]) .radio__circle { width: 14px; height: 14px; }
       :host([size="sm"]) .radio__dot { width: 6px; height: 6px; }
-      :host([size="sm"]) .radio__label { font-size: var(--text-sm); }
+      :host([size="sm"]) .radio__label { font-size: var(--_text-sm); }
       :host([size="lg"]) .radio__circle { width: 22px; height: 22px; }
       :host([size="lg"]) .radio__dot { width: 10px; height: 10px; }
-      :host([size="lg"]) .radio__label { font-size: var(--text-md); }
+      :host([size="lg"]) .radio__label { font-size: var(--_text-md); }
 
       .radio-group__slot-host { display: none; }
 

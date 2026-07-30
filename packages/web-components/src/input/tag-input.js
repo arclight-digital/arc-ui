@@ -1,5 +1,8 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { PositionController } from '../shared/position-controller.js';
+import { ListboxController } from '../shared/listbox-controller.js';
+import { managedPanelStyles } from '../shared/position-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 import { ClickOutsideController } from '../shared/click-outside.js';
 
@@ -43,7 +46,6 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
     error:        { type: String },
     _query:       { state: true },
     _open:        { state: true },
-    _activeIndex: { state: true },
     _focused:     { state: true },
     _shakeValue:  { state: true },
   };
@@ -65,7 +67,7 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
       .ti__label {
         display: block;
         font-family: var(--font-label);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         font-weight: var(--font-label-weight, 600);
         letter-spacing: 1px;
         text-transform: uppercase;
@@ -107,7 +109,7 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
         display: inline-flex;
         align-items: center;
         gap: var(--space-xs);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         font-weight: 500;
         color: var(--text-primary);
         background: var(--surface-overlay);
@@ -141,7 +143,7 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
         color: var(--text-muted);
         cursor: pointer;
         border-radius: var(--radius-full);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         line-height: 1;
         padding: 0;
         transition: color var(--transition-fast), background var(--transition-fast);
@@ -162,7 +164,7 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
         flex: 1;
         min-width: 60px;
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-primary);
         background: none;
         border: none;
@@ -186,8 +188,8 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
       .ti__dropdown {
         position: absolute;
         top: calc(100% + var(--space-xs));
-        left: 0;
-        right: 0;
+        inset-inline-start: 0;
+        inset-inline-end: 0;
         max-height: 220px;
         overflow-y: auto;
         overflow-x: hidden;
@@ -215,9 +217,9 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
       .ti__option {
         display: block;
         width: 100%;
-        text-align: left;
+        text-align: start;
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-primary);
         background: none;
         border: none;
@@ -239,7 +241,7 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
       .ti__error {
         display: block;
         margin-top: var(--space-xs);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         color: var(--color-error);
         line-height: 1.4;
       }
@@ -254,6 +256,8 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
         }
       }
     `,
+    // animate: false — this panel has its own keyframe entrance.
+    managedPanelStyles('ti__dropdown', { animate: false }),
   ];
 
   static _idCounter = 0;
@@ -272,7 +276,6 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
     this.error = '';
     this._query = '';
     this._open = false;
-    this._activeIndex = -1;
     this._focused = false;
     this._shakeValue = null;
     this._shakeTimer = 0;
@@ -282,6 +285,23 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
         this._open = false;
         this._focused = false;
       },
+    });
+    this._position = new PositionController(this, {
+      anchor: () => this.shadowRoot?.querySelector('.ti__field'),
+      floating: () => this.shadowRoot?.querySelector('.ti__dropdown'),
+      matchWidth: true,
+      offset: 4,
+    });
+    this._listbox = new ListboxController(this, {
+      getItemCount: () => this._filteredSuggestions.length,
+      isOpen: () => this._open,
+      // Only open on a direction key when there is something to show — an empty
+      // suggestion list would otherwise open a blank panel.
+      onOpen: () => { if ((this.suggestions || []).length > 0) this._open = true; },
+      onClose: () => { this._open = false; },
+      onSelect: (i) => this._commit(this._filteredSuggestions[i]),
+      optionId: (i) => `${this._tiId}-option-${i}`,
+      scrollContainer: () => this.shadowRoot?.querySelector('.ti__dropdown'),
     });
   }
 
@@ -310,12 +330,18 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
   }
 
   updated(changed) {
+    if (changed.has('_open')) {
+      this._open ? this._position.show() : this._position.hide();
+    }
     if (changed.has('value')) {
       this._updateFormValue();
     }
     if (changed.has('_open')) {
       if (this._open) this._clickOutside.activate();
       else this._clickOutside.deactivate();
+    }
+    if (changed.has('_query') || changed.has('suggestions') || changed.has('value')) {
+      this._listbox.clampToCount();
     }
   }
 
@@ -359,7 +385,7 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
 
     this.value = [...(this.value || []), finalValue];
     this._query = '';
-    this._activeIndex = -1;
+    this._listbox.reset();
     this._emitChange();
     return true;
   }
@@ -392,7 +418,7 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
       this._query = raw;
     }
     this._open = (this.suggestions || []).length > 0;
-    this._activeIndex = -1;
+    this._listbox.reset();
     this.dispatchEvent(new CustomEvent('arc-input', {
       detail: { query: this._query },
       bubbles: true,
@@ -412,44 +438,15 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
       return;
     }
 
-    const items = this._filteredSuggestions;
+    // The listbox declines Enter when no option is active, which is what leaves
+    // the "commit whatever was typed" case below reachable.
+    const textKeys = (e.key === 'Home' || e.key === 'End') && this._query;
+    if (!textKeys && this._listbox.handleKeydown(e)) return;
 
     switch (e.key) {
-      case 'ArrowDown':
-        e.preventDefault();
-        if (!this._open) {
-          if ((this.suggestions || []).length > 0) this._open = true;
-          return;
-        }
-        this._activeIndex = Math.min(this._activeIndex + 1, items.length - 1);
-        break;
-      case 'ArrowUp':
-        e.preventDefault();
-        this._activeIndex = Math.max(this._activeIndex - 1, 0);
-        break;
       case 'Enter':
         e.preventDefault();
-        if (this._open && this._activeIndex >= 0 && items[this._activeIndex]) {
-          this._commit(items[this._activeIndex]);
-        } else {
-          this._commit(this._query);
-        }
-        break;
-      case 'Escape':
-        this._open = false;
-        this._activeIndex = -1;
-        break;
-      case 'Home':
-        if (this._open && items.length > 0 && !this._query) {
-          e.preventDefault();
-          this._activeIndex = 0;
-        }
-        break;
-      case 'End':
-        if (this._open && items.length > 0 && !this._query) {
-          e.preventDefault();
-          this._activeIndex = items.length - 1;
-        }
+        this._commit(this._query);
         break;
       case 'ArrowLeft':
         if (e.target.selectionStart === 0 && e.target.selectionEnd === 0 && (this.value || []).length > 0) {
@@ -513,7 +510,7 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
     const hasError = !!this.error;
     const inputId = `${this._tiId}-input`;
     const listboxId = `${this._tiId}-listbox`;
-    const activeId = dropdownOpen && this._activeIndex >= 0 ? `${this._tiId}-option-${this._activeIndex}` : undefined;
+    const activeId = dropdownOpen && this._listbox.activeIndex >= 0 ? `${this._tiId}-option-${this._listbox.activeIndex}` : undefined;
     const placeholder = atMax
       ? '-- max reached'
       : (tags.length === 0 && !this._query ? this.placeholder : '');
@@ -566,14 +563,14 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
         part="dropdown"
       >
         ${filtered.map((item, i) => html`
-          <button
+          <div
             id="${this._tiId}-option-${i}"
-            class="ti__option ${i === this._activeIndex ? 'ti__option--active' : ''}"
+            class="ti__option ${i === this._listbox.activeIndex ? 'ti__option--active' : ''}"
             role="option"
-            aria-selected=${String(i === this._activeIndex)}
+            aria-selected=${String((this.value || []).includes(item))}
             @click=${() => this._commit(item)}
             part="option"
-          >${item}</button>
+          >${item}</div>
         `)}
       </div>
       ${hasError ? html`<span class="ti__error" role="alert" part="error">${this.error}</span>` : ''}

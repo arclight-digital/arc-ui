@@ -42,7 +42,7 @@ export class ArcTable extends LitElement {
       table {
         width: 100%;
         border-collapse: collapse;
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-primary);
       }
 
@@ -51,11 +51,11 @@ export class ArcTable extends LitElement {
       }
 
       th {
-        text-align: left;
+        text-align: start;
         padding: var(--space-sm) var(--space-md);
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         letter-spacing: 2px;
         text-transform: uppercase;
         color: var(--text-ghost);
@@ -72,12 +72,12 @@ export class ArcTable extends LitElement {
         border-bottom: 1px solid var(--divider);
         color: var(--text-secondary);
         line-height: 1.5;
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
       }
 
       :host([density="compact"]) td {
         padding: var(--space-xs) var(--space-sm);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
       }
 
       tr:last-child td {

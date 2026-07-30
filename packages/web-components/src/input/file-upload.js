@@ -66,7 +66,7 @@ export class ArcFileUpload extends LitElement {
       }
 
       .upload-icon {
-        font-size: var(--text-md);
+        font-size: var(--_text-md);
         color: var(--text-muted);
         line-height: 1;
         transition: color var(--transition-fast);
@@ -77,12 +77,12 @@ export class ArcFileUpload extends LitElement {
       }
 
       .upload-text {
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-secondary);
       }
 
       .upload-hint {
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-muted);
       }
 
@@ -111,14 +111,14 @@ export class ArcFileUpload extends LitElement {
         background: var(--surface-raised);
         border: 1px solid var(--border-subtle);
         border-radius: var(--radius-md);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-secondary);
       }
 
       .file-icon {
         flex-shrink: 0;
         color: var(--text-muted);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
       }
 
       .file-name {
@@ -132,7 +132,7 @@ export class ArcFileUpload extends LitElement {
       .file-size {
         flex-shrink: 0;
         color: var(--text-muted);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
       }
 
       .file-remove {
@@ -141,7 +141,7 @@ export class ArcFileUpload extends LitElement {
         border: none;
         color: var(--text-muted);
         cursor: pointer;
-        font-size: var(--text-md);
+        font-size: var(--_text-md);
         padding: 2px calc(var(--space-xs) + 2px); /* cosmetic 2px vertical for tight remove button */
         border-radius: var(--radius-sm);
         line-height: 1;
@@ -160,7 +160,7 @@ export class ArcFileUpload extends LitElement {
 
       .error-message {
         margin-top: var(--space-xs);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--color-error);
       }
 

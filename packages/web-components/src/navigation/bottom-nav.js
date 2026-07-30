@@ -35,8 +35,8 @@ export class ArcBottomNav extends LitElement {
       .bottom-nav {
         position: fixed;
         bottom: 0;
-        left: 0;
-        right: 0;
+        inset-inline-start: 0;
+        inset-inline-end: 0;
         z-index: 100;
         display: flex;
         background: var(--surface-overlay);

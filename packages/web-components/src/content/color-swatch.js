@@ -48,7 +48,7 @@ export class ArcColorSwatch extends LitElement {
 
       .swatch__label {
         font-family: var(--font-mono);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-muted);
         text-align: center;
         max-width: 80px;

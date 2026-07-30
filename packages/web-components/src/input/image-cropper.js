@@ -92,7 +92,7 @@ export class ArcImageCropper extends LitElement {
         justify-content: center;
         padding: var(--space-md);
         text-align: center;
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--color-error);
       }
 
@@ -163,7 +163,7 @@ export class ArcImageCropper extends LitElement {
 
       .zoom__label {
         font-family: var(--font-label);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         font-weight: var(--font-label-weight, 600);
         letter-spacing: 1px;
         text-transform: uppercase;
@@ -177,7 +177,7 @@ export class ArcImageCropper extends LitElement {
         font-weight: 600;
         color: var(--interactive);
         min-width: 5ch;
-        text-align: right;
+        text-align: end;
       }
 
       input[type="range"] {

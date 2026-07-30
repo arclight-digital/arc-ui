@@ -1,5 +1,9 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { monthNames, weekdayNames, firstDayOfWeek, weekdayOffset } from '../shared/date-names.js';
+import { ClickOutsideController } from '../shared/click-outside.js';
+import { PositionController } from '../shared/position-controller.js';
+import { managedPanelStyles } from '../shared/position-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 
 /**
@@ -13,6 +17,8 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @prop {boolean} disabled - Disables the date picker, reducing opacity and preventing the calendar from opening.
  * @prop {string} label - Label text rendered above the input in uppercase accent font styling.
  * @prop {boolean} open - Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.
+ * @prop {string} locale - BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language.
+ * @prop {number} firstDayOfWeek - Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention, so most of the world gets Monday and the US gets Sunday without configuring anything.
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired when a date is selected
  * @csspart wrapper
  * @csspart label
@@ -30,6 +36,8 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
     disabled:    { type: Boolean, reflect: true },
     label:       { type: String },
     open:        { type: Boolean, reflect: true },
+    locale:      { type: String },
+    firstDayOfWeek: { type: Number, attribute: 'first-day-of-week' },
     _viewMonth:  { state: true },
     _viewYear:   { state: true },
     _mode:       { state: true },
@@ -51,7 +59,7 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
       label {
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         letter-spacing: 1px;
         text-transform: uppercase;
         color: var(--text-muted);
@@ -65,13 +73,13 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
 
       input {
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-primary);
         background: var(--surface-raised);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-md);
         padding: var(--space-sm) var(--space-md);
-        padding-right: 36px;
+        padding-inline-end: 36px;
         outline: none;
         width: 100%;
         box-sizing: border-box;
@@ -85,16 +93,16 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
 
       .calendar-icon {
         position: absolute;
-        right: var(--space-sm);
+        inset-inline-end: var(--space-sm);
         color: var(--text-muted);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         pointer-events: none;
       }
 
       .dropdown {
         position: absolute;
         top: 100%;
-        left: 0;
+        inset-inline-start: 0;
         z-index: var(--z-dropdown);
         margin-top: var(--space-xs);
         background: var(--surface-raised);
@@ -122,7 +130,7 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
       .calendar-title {
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         letter-spacing: 1.5px;
         text-transform: uppercase;
         color: var(--text-primary);
@@ -156,7 +164,7 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
         justify-content: center;
         padding: var(--space-sm) var(--space-xs);
         font-family: var(--font-label);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         font-weight: 500;
         letter-spacing: 1px;
         text-transform: uppercase;
@@ -189,7 +197,7 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
         border: none;
         color: var(--text-secondary);
         cursor: pointer;
-        font-size: var(--text-md);
+        font-size: var(--_text-md);
         padding: var(--space-xs);
         border-radius: var(--radius-sm);
         line-height: 1;
@@ -214,7 +222,7 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
       }
 
       .weekday {
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         font-weight: 600;
         color: var(--text-muted);
         padding: var(--space-xs) 0;
@@ -235,7 +243,7 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
         width: 36px;
         height: 36px;
         margin: 0 auto;
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-secondary);
         background: none;
         border: none;
@@ -288,6 +296,8 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
         .dropdown { animation: none; }
       }
     `,
+    // animate: false — this panel has its own keyframe entrance.
+    managedPanelStyles('dropdown', { animate: false }),
   ];
 
   constructor() {
@@ -300,14 +310,28 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
     this.disabled = false;
     this.label = '';
     this.open = false;
+    this.locale = '';
+    this.firstDayOfWeek = 0;
     this._mode = 'days'; // 'days' | 'months' | 'years'
     this._focusedIso = null;
 
     this._viewMonth = null;
     this._viewYear = null;
 
-    this._handleOutsideClick = this._handleOutsideClick.bind(this);
     this._handleEscape = this._handleEscape.bind(this);
+    this._clickOutside = new ClickOutsideController(this, {
+      onClickOutside: () => { this.open = false; },
+      when: () => this.open,
+    });
+    this._position = new PositionController(this, {
+      anchor: () => this.shadowRoot?.querySelector('.input-wrapper'),
+      floating: () => this.shadowRoot?.querySelector('.dropdown'),
+      // The calendar sizes to its own content (min-width: 280px) and hangs off
+      // the input's left edge — matching the input's width instead would squash
+      // a narrow field's calendar or stretch a wide one's.
+      align: () => 'start',
+      offset: 4,
+    });
   }
 
   connectedCallback() {
@@ -317,20 +341,12 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
       this._viewMonth = today.getMonth();
       this._viewYear = today.getFullYear();
     }
-    document.addEventListener('click', this._handleOutsideClick);
     document.addEventListener('keydown', this._handleEscape);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    document.removeEventListener('click', this._handleOutsideClick);
     document.removeEventListener('keydown', this._handleEscape);
-  }
-
-  _handleOutsideClick(e) {
-    if (this.open && !e.composedPath().includes(this)) {
-      this.open = false;
-    }
   }
 
   _handleEscape(e) {
@@ -424,10 +440,13 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
     return `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
   }
 
+  /** The week's first day: an explicit prop, else whatever the locale says. */
+  get _firstDay() {
+    return this.firstDayOfWeek || firstDayOfWeek(this.locale || undefined);
+  }
+
   _getMonthName(month) {
-    const names = ['January', 'February', 'March', 'April', 'May', 'June',
-      'July', 'August', 'September', 'October', 'November', 'December'];
-    return names[month];
+    return monthNames('long', this.locale || undefined)[month];
   }
 
   _formatDisplay(isoDate) {
@@ -440,7 +459,8 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
   _buildCalendarDays() {
     const year = this._viewYear;
     const month = this._viewMonth;
-    const firstDay = new Date(year, month, 1).getDay();
+    // Leading blanks are counted from the locale's first day, not from Sunday.
+    const firstDay = weekdayOffset(new Date(year, month, 1), this._firstDay);
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const daysInPrevMonth = new Date(year, month, 0).getDate();
 
@@ -541,6 +561,10 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
   }
 
   updated(changed) {
+    if (changed.has('open')) {
+      this.open ? this._position.show() : this._position.hide();
+      this.open ? this._clickOutside.activate() : this._clickOutside.deactivate();
+    }
     if (changed.has('value')) {
       this._updateFormValue();
     }
@@ -553,7 +577,7 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
   }
 
   render() {
-    const weekdays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+    const weekdays = weekdayNames('short', this.locale || undefined, this._firstDay);
     const days = this._buildCalendarDays();
     const tabStopIso = this._getTabStopIso(days);
 
@@ -609,7 +633,7 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
               </div>
             ` : this._mode === 'months' ? html`
               <div class="picker-grid">
-                ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'].map((name, i) => html`
+                ${monthNames('short', this.locale || undefined).map((name, i) => html`
                   <button
                     class="picker-cell ${i === this._viewMonth ? 'current' : ''}"
                     @click=${() => this._selectMonth(i)}

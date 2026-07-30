@@ -41,12 +41,12 @@ export class ArcProgressToast extends LitElement {
       :host([position="bottom-right"]) .progress-toast-container,
       :host(:not([position="top-right"])) .progress-toast-container {
         bottom: var(--space-lg);
-        right: var(--space-lg);
+        inset-inline-end: var(--space-lg);
       }
 
       :host([position="top-right"]) .progress-toast-container {
         top: var(--space-lg);
-        right: var(--space-lg);
+        inset-inline-end: var(--space-lg);
       }
 
       .progress-toast {
@@ -65,7 +65,7 @@ export class ArcProgressToast extends LitElement {
 
       .progress-toast__message {
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-secondary);
         margin-bottom: var(--space-sm);
         display: flex;

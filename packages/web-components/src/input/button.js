@@ -93,13 +93,13 @@ export class ArcButton extends LitElement {
 
       /* Sizes */
       :host([size="sm"]) .btn,
-      :host([size="sm"]) .btn-slot::slotted(a) { font-size: var(--text-xs); padding: var(--space-xs) var(--space-md); }
+      :host([size="sm"]) .btn-slot::slotted(a) { font-size: var(--_text-xs); padding: var(--space-xs) var(--space-md); }
       :host(:not([size="lg"]):not([size="sm"])) .btn,
       :host(:not([size="lg"]):not([size="sm"])) .btn-slot::slotted(a),
       :host([size="md"]) .btn,
-      :host([size="md"]) .btn-slot::slotted(a) { font-size: var(--text-xs); padding: var(--space-sm) var(--space-lg); }
+      :host([size="md"]) .btn-slot::slotted(a) { font-size: var(--_text-xs); padding: var(--space-sm) var(--space-lg); }
       :host([size="lg"]) .btn,
-      :host([size="lg"]) .btn-slot::slotted(a) { font-size: var(--text-xs); padding: var(--space-md) var(--space-xl); letter-spacing: 3px; }
+      :host([size="lg"]) .btn-slot::slotted(a) { font-size: var(--_text-xs); padding: var(--space-md) var(--space-xl); letter-spacing: 3px; }
 
       /* Default → primary */
       :host(:not([variant="ghost"]):not([variant="secondary"])) .btn,

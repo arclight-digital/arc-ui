@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { monthNames, weekdayNames, firstDayOfWeek, weekdayOffset } from '../shared/date-names.js';
 
 /**
  * Scheduling calendar with month and week views that renders all-day and multi-day event chips
@@ -29,9 +30,13 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart dows
  * @csspart dow
  * @csspart grid
+ * @prop {string} locale - BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language.
+ * @prop {number} firstDayOfWeek - Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention.
  */
 export class ArcEventCalendar extends LitElement {
   static properties = {
+    locale:      { type: String },
+    firstDayOfWeek: { type: Number, attribute: 'first-day-of-week' },
     events: { type: Array },
     view:   { type: String, reflect: true },
     date:   { type: String },
@@ -89,7 +94,7 @@ export class ArcEventCalendar extends LitElement {
         border: 1px solid var(--border-default);
         border-radius: var(--radius-sm);
         font-family: var(--font-body);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         font-weight: var(--font-body-weight, 500);
         color: var(--text-secondary);
         cursor: pointer;
@@ -105,7 +110,7 @@ export class ArcEventCalendar extends LitElement {
       .cal__title {
         flex: 1;
         text-align: center;
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         font-weight: 600;
         color: var(--text-primary);
         min-width: 140px;
@@ -124,7 +129,7 @@ export class ArcEventCalendar extends LitElement {
         background: none;
         border: none;
         font-family: var(--font-body);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         font-weight: var(--font-body-weight, 500);
         color: var(--text-secondary);
         cursor: pointer;
@@ -141,7 +146,7 @@ export class ArcEventCalendar extends LitElement {
       }
 
       .cal__view + .cal__view {
-        border-left: 1px solid var(--border-default);
+        border-inline-start: 1px solid var(--border-default);
       }
 
       .cal__nav:focus-visible,
@@ -161,7 +166,7 @@ export class ArcEventCalendar extends LitElement {
 
       .cal__dow {
         font-family: var(--font-mono);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         font-weight: 600;
         color: var(--text-muted);
         text-transform: uppercase;
@@ -199,7 +204,7 @@ export class ArcEventCalendar extends LitElement {
         flex: none;
         align-self: flex-start;
         font-family: var(--font-mono);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         color: var(--text-secondary);
         background: none;
         border: none;
@@ -250,9 +255,9 @@ export class ArcEventCalendar extends LitElement {
         border: none;
         border-radius: var(--radius-sm);
         font-family: var(--font-body);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         color: var(--text-primary);
-        text-align: left;
+        text-align: start;
         cursor: pointer;
         transition: background var(--transition-fast);
       }
@@ -268,13 +273,13 @@ export class ArcEventCalendar extends LitElement {
 
       /* Multi-day spans: square the inner edges so the chip reads as continuous. */
       .cal__chip--cont {
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
+        border-start-start-radius: 0;
+        border-end-start-radius: 0;
       }
 
       .cal__chip--extends {
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
+        border-start-end-radius: 0;
+        border-end-end-radius: 0;
       }
 
       .cal__dot {
@@ -298,9 +303,9 @@ export class ArcEventCalendar extends LitElement {
         border: none;
         border-radius: var(--radius-sm);
         font-family: var(--font-body);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         color: var(--text-muted);
-        text-align: left;
+        text-align: start;
         cursor: pointer;
         transition: background var(--transition-fast), color var(--transition-fast);
       }
@@ -327,20 +332,22 @@ export class ArcEventCalendar extends LitElement {
     `,
   ];
 
-  static _DAYS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
-  static _MONTHS = ['January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'];
-  static _MONTHS_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
   constructor() {
     super();
+    this.locale = '';
+    this.firstDayOfWeek = 0;
     this.events = [];
     this.view = 'month';
     // Resolved to today in connectedCallback so the constructor stays deterministic.
     this.date = '';
     this._focusedIso = '';
   }
+  /** The week's first day: an explicit prop, else whatever the locale says. */
+  get _firstDay() {
+    return this.firstDayOfWeek || firstDayOfWeek(this.locale || undefined);
+  }
+
 
   connectedCallback() {
     super.connectedCallback();
@@ -386,7 +393,7 @@ export class ArcEventCalendar extends LitElement {
     const anchor = this._anchorISO;
     if (this.view === 'week') {
       const a = this._parseISO(anchor);
-      const start = this._addDays(a, -a.getDay());
+      const start = this._addDays(a, -weekdayOffset(a, this._firstDay));
       return iso >= this._toISO(start) && iso <= this._toISO(this._addDays(start, 6));
     }
     return iso.slice(0, 7) === anchor.slice(0, 7);
@@ -395,7 +402,7 @@ export class ArcEventCalendar extends LitElement {
   _visibleDays(anchor) {
     const days = [];
     if (this.view === 'week') {
-      const start = this._addDays(anchor, -anchor.getDay());
+      const start = this._addDays(anchor, -weekdayOffset(anchor, this._firstDay));
       for (let i = 0; i < 7; i++) {
         const d = this._addDays(start, i);
         days.push({ d, iso: this._toISO(d), outside: false });
@@ -403,7 +410,7 @@ export class ArcEventCalendar extends LitElement {
       return days;
     }
     const first = new Date(anchor.getFullYear(), anchor.getMonth(), 1);
-    const start = this._addDays(first, -first.getDay());
+    const start = this._addDays(first, -weekdayOffset(first, this._firstDay));
     for (let i = 0; i < 42; i++) {
       const d = this._addDays(start, i);
       days.push({ d, iso: this._toISO(d), outside: d.getMonth() !== anchor.getMonth() });
@@ -419,7 +426,8 @@ export class ArcEventCalendar extends LitElement {
   }
 
   _periodTitle(anchor, days) {
-    const { _MONTHS: M, _MONTHS_SHORT: S } = ArcEventCalendar;
+    const M = monthNames('long', this.locale || undefined);
+    const S = monthNames('short', this.locale || undefined);
     if (this.view !== 'week') return `${M[anchor.getMonth()]} ${anchor.getFullYear()}`;
     const a = days[0].d;
     const b = days[6].d;
@@ -566,7 +574,7 @@ export class ArcEventCalendar extends LitElement {
   }
 
   _renderCell({ d, iso, outside }, todayIso, focusIso, maxChips) {
-    const { _MONTHS: M } = ArcEventCalendar;
+    const M = monthNames('long', this.locale || undefined);
     const evs = this._eventsForDay(iso);
     const visible = maxChips ? evs.slice(0, maxChips) : evs;
     const hidden = evs.length - visible.length;
@@ -636,7 +644,7 @@ export class ArcEventCalendar extends LitElement {
         </div>
 
         <div class="cal__dows" part="dows">
-          ${ArcEventCalendar._DAYS.map(dow => html`<div class="cal__dow" part="dow">${dow}</div>`)}
+          ${weekdayNames('short', this.locale || undefined, this._firstDay).map(dow => html`<div class="cal__dow" part="dow">${dow}</div>`)}
         </div>
 
         <div

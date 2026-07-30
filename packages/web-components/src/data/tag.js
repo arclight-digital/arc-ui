@@ -38,7 +38,7 @@ export class ArcTag extends LitElement {
         gap: var(--space-xs);
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         letter-spacing: 2px;
         text-transform: uppercase;
         color: var(--text-muted);
@@ -89,8 +89,8 @@ export class ArcTag extends LitElement {
       :host([variant="error"]) .tag:hover { box-shadow: 0 0 12px rgba(var(--color-error-rgb), 0.15); }
 
       /* Sizes */
-      :host([size="sm"]) .tag { font-size: calc(var(--text-xs) - 1px); padding: 2px var(--space-sm); letter-spacing: 1.5px; }
-      :host([size="lg"]) .tag { font-size: var(--text-sm); padding: var(--space-sm) var(--space-lg); }
+      :host([size="sm"]) .tag { font-size: calc(var(--_text-xs) - 1px); padding: 2px var(--space-sm); letter-spacing: 1.5px; }
+      :host([size="lg"]) .tag { font-size: var(--_text-sm); padding: var(--space-sm) var(--space-lg); }
 
       .tag__label {
         display: inline-flex;
@@ -107,7 +107,7 @@ export class ArcTag extends LitElement {
         cursor: pointer;
         padding: var(--touch-pad);
         margin: calc(var(--touch-pad) * -1);
-        margin-left: var(--space-xs);
+        margin-inline-start: var(--space-xs);
         border-radius: var(--radius-full);
         opacity: 0.6;
         transition: opacity var(--transition-fast), background var(--transition-fast);

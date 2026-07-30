@@ -54,7 +54,7 @@ export class ArcNavigationMenu extends LitElement {
         align-items: center;
         gap: var(--space-xs);
         font-family: var(--font-label);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         font-weight: var(--font-label-weight, 600);
         letter-spacing: 2px;
         text-transform: uppercase;
@@ -160,7 +160,7 @@ export class ArcNavigationMenu extends LitElement {
       .nav__dropdown {
         position: absolute;
         top: 100%;
-        left: 0;
+        inset-inline-start: 0;
         min-width: 280px;
         background: var(--surface-raised);
         border: 1px solid var(--border-default);
@@ -184,7 +184,7 @@ export class ArcNavigationMenu extends LitElement {
 
       .nav__dropdown-item {
         display: block;
-        text-align: left;
+        text-align: start;
         background: none;
         border: none;
         padding: var(--touch-pad) var(--space-md);
@@ -207,7 +207,7 @@ export class ArcNavigationMenu extends LitElement {
 
       .nav__dropdown-label {
         display: block;
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         font-weight: 500;
         color: var(--text-primary);
         margin-bottom: 2px; /* cosmetic micro-spacing */
@@ -215,7 +215,7 @@ export class ArcNavigationMenu extends LitElement {
 
       .nav__dropdown-desc {
         display: block;
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-muted);
         line-height: 1.4;
       }
@@ -250,8 +250,8 @@ export class ArcNavigationMenu extends LitElement {
         display: none;
         position: fixed;
         top: var(--nav-height);
-        left: 0;
-        right: 0;
+        inset-inline-start: 0;
+        inset-inline-end: 0;
         max-height: calc(100dvh - var(--nav-height));
         overflow-x: hidden;
         overflow-y: auto;
@@ -490,7 +490,7 @@ export class ArcNavigationMenu extends LitElement {
 
       .mobile-child-desc {
         display: block;
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-muted);
         line-height: 1.4;
         margin-top: 2px;

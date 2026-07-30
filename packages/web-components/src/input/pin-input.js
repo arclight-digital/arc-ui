@@ -63,7 +63,7 @@ export class ArcPinInput extends FormControlMixin(LitElement) {
 
       .pin__separator {
         font-family: var(--font-mono);
-        font-size: var(--text-lg);
+        font-size: var(--_text-lg);
         color: var(--text-ghost);
         user-select: none;
         line-height: 1;
@@ -75,7 +75,7 @@ export class ArcPinInput extends FormControlMixin(LitElement) {
         height: 48px;
         text-align: center;
         font-family: var(--font-mono);
-        font-size: var(--text-lg);
+        font-size: var(--_text-lg);
         font-weight: 600;
         color: var(--text-primary);
         background: var(--surface-raised);

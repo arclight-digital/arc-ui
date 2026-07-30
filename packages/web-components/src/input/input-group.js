@@ -52,18 +52,18 @@ export class ArcInputGroup extends LitElement {
         background: var(--surface-overlay);
         border-color: inherit;
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-muted);
         white-space: nowrap;
         user-select: none;
       }
 
       .input-group__addon--prefix {
-        border-right: 1px solid var(--border-default);
+        border-inline-end: 1px solid var(--border-default);
       }
 
       .input-group__addon--suffix {
-        border-left: 1px solid var(--border-default);
+        border-inline-start: 1px solid var(--border-default);
       }
 
       .input-group__addon--empty { display: none; }
@@ -87,7 +87,7 @@ export class ArcInputGroup extends LitElement {
       }
 
       /* Sizes */
-      :host([size="sm"]) .input-group__addon { padding: 0 var(--space-sm); font-size: var(--text-xs); }
+      :host([size="sm"]) .input-group__addon { padding: 0 var(--space-sm); font-size: var(--_text-xs); }
       :host([size="lg"]) .input-group__addon { padding: 0 var(--space-lg); font-size: var(--body-size); }
 
       @media (prefers-reduced-motion: reduce) {

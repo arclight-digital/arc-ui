@@ -77,7 +77,7 @@ export class ArcToggle extends FormControlMixin(LitElement) {
       .toggle__thumb {
         position: absolute;
         top: 3px;
-        left: 3px;
+        inset-inline-start: 3px;
         width: 16px;
         height: 16px;
         border-radius: var(--radius-full);
@@ -100,7 +100,7 @@ export class ArcToggle extends FormControlMixin(LitElement) {
       :host([size="sm"]) .toggle__track { width: 34px; height: 18px; }
       :host([size="sm"]) .toggle__thumb { width: 12px; height: 12px; top: 2px; left: 2px; }
       :host([size="sm"][checked]) .toggle__thumb { transform: translateX(16px); }
-      :host([size="sm"]) .toggle__label { font-size: var(--text-sm); }
+      :host([size="sm"]) .toggle__label { font-size: var(--_text-sm); }
       :host([size="lg"]) .toggle__track { width: 56px; height: 30px; }
       :host([size="lg"]) .toggle__thumb { width: 22px; height: 22px; top: 3px; left: 3px; }
       :host([size="lg"][checked]) .toggle__thumb { transform: translateX(26px); }

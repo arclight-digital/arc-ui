@@ -29,7 +29,7 @@ export class ArcConnectionStatus extends LitElement {
         gap: var(--space-sm);
         padding: var(--space-sm);
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         transition: all var(--transition-base);
         overflow: hidden;
         max-height: 0;

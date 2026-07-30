@@ -60,7 +60,7 @@ export class ArcDataTable extends LitElement {
       table {
         width: 100%;
         border-collapse: collapse;
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-primary);
       }
 
@@ -72,11 +72,11 @@ export class ArcDataTable extends LitElement {
       }
 
       th {
-        text-align: left;
+        text-align: start;
         padding: var(--space-sm) var(--space-md);
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         letter-spacing: 1px;
         text-transform: uppercase;
         color: var(--text-muted);
@@ -126,7 +126,7 @@ export class ArcDataTable extends LitElement {
         display: inline-block;
         width: 1em;
         text-align: center;
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         opacity: 0.5;
         transition: opacity var(--transition-fast);
       }
@@ -194,7 +194,7 @@ export class ArcDataTable extends LitElement {
         content: '';
         position: absolute;
         top: 2px;
-        left: 5px;
+        inset-inline-start: 5px;
         width: 4px;
         height: 8px;
         border: solid var(--text-primary);

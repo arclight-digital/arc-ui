@@ -37,7 +37,7 @@ export class ArcScrollSpy extends LitElement {
       .scroll-spy__heading {
         display: block;
         width: 100%;
-        text-align: left;
+        text-align: start;
         cursor: pointer;
         position: sticky;
         top: 0;
@@ -58,7 +58,7 @@ export class ArcScrollSpy extends LitElement {
       .scroll-spy__heading-text {
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         letter-spacing: 3px;
         text-transform: uppercase;
         background: var(--gradient-accent-text);
@@ -84,7 +84,7 @@ export class ArcScrollSpy extends LitElement {
         display: flex;
         align-items: center;
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         line-height: 1.4;
         color: var(--text-ghost);
         text-decoration: none;
@@ -98,7 +98,7 @@ export class ArcScrollSpy extends LitElement {
         background: none;
         border: none;
         width: 100%;
-        text-align: left;
+        text-align: start;
         min-height: var(--touch-min);
       }
 
@@ -114,7 +114,7 @@ export class ArcScrollSpy extends LitElement {
       }
 
       .scroll-spy__link--nested {
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         color: var(--text-ghost);
       }
 

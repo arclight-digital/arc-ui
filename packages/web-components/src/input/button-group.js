@@ -72,7 +72,7 @@ export class ArcButtonGroup extends LitElement {
 
       /* Collapse borders between items */
       :host(:not([orientation="vertical"])) ::slotted(:not(:first-child)) {
-        margin-left: -1px;
+        margin-inline-start: -1px;
       }
 
       :host([orientation="vertical"]) ::slotted(:not(:first-child)) {

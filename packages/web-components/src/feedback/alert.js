@@ -51,8 +51,8 @@ export class ArcAlert extends LitElement {
         content: '';
         position: absolute;
         top: 0;
-        left: 0;
-        right: 0;
+        inset-inline-start: 0;
+        inset-inline-end: 0;
         height: 2px;
         background: linear-gradient(90deg, transparent, var(--_status-color), transparent);
         box-shadow: 0 0 12px rgba(var(--_status-rgb), 0.15);
@@ -66,7 +66,7 @@ export class ArcAlert extends LitElement {
         align-items: center;
         justify-content: center;
         border-radius: var(--radius-md);
-        font-size: var(--text-md);
+        font-size: var(--_text-md);
         transition: box-shadow var(--transition-base);
         background: rgba(var(--_status-rgb), 0.08);
         border: 1px solid rgba(var(--_status-rgb), 0.15);
@@ -79,23 +79,23 @@ export class ArcAlert extends LitElement {
       .alert__heading {
         font-family: var(--font-body);
         font-weight: 600;
-        font-size: var(--text-md);
+        font-size: var(--_text-md);
         color: var(--text-primary);
         margin: 0 0 var(--space-xs);
       }
 
       .alert__content {
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         line-height: 1.6;
         color: var(--text-secondary);
       }
 
       /* Compact variant */
       :host([density="compact"]) .alert { padding: var(--space-sm) var(--space-md); gap: var(--space-sm); }
-      :host([density="compact"]) .alert__icon-wrap { width: 24px; height: 24px; font-size: var(--text-sm); }
-      :host([density="compact"]) .alert__heading { font-size: var(--text-sm); margin-bottom: 2px; }
-      :host([density="compact"]) .alert__content { font-size: var(--text-xs); }
+      :host([density="compact"]) .alert__icon-wrap { width: 24px; height: 24px; font-size: var(--_text-sm); }
+      :host([density="compact"]) .alert__heading { font-size: var(--_text-sm); margin-bottom: 2px; }
+      :host([density="compact"]) .alert__content { font-size: var(--_text-xs); }
 
 
       @media (prefers-reduced-motion: reduce) {

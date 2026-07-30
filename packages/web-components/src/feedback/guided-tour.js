@@ -60,7 +60,7 @@ export class ArcGuidedTour extends LitElement {
 
       .tour__counter {
         font-family: var(--font-label);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         font-weight: var(--font-label-weight, 600);
         letter-spacing: 1px;
         text-transform: uppercase;
@@ -73,13 +73,13 @@ export class ArcGuidedTour extends LitElement {
 
       .tour__title {
         font-weight: 600;
-        font-size: var(--text-md);
+        font-size: var(--_text-md);
         color: var(--text-primary);
         margin-bottom: var(--space-xs);
       }
 
       .tour__content {
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-secondary);
         line-height: 1.6;
         margin-bottom: var(--space-md);

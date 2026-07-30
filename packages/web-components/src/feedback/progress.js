@@ -112,7 +112,7 @@ export class ArcProgress extends LitElement {
 
       .progress__value {
         font-family: var(--font-mono);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         color: var(--text-muted);
       }
 

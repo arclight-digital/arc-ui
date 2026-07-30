@@ -65,7 +65,7 @@ export class ArcSidebar extends LitElement {
         content: '';
         position: absolute;
         top: 0;
-        right: 0;
+        inset-inline-end: 0;
         width: 80%;
         height: 50%;
         background: radial-gradient(
@@ -81,7 +81,7 @@ export class ArcSidebar extends LitElement {
         content: '';
         position: absolute;
         top: 0;
-        right: 0;
+        inset-inline-end: 0;
         bottom: 0;
         width: 1px;
         background: var(--divider);
@@ -120,7 +120,7 @@ export class ArcSidebar extends LitElement {
         display: block;
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         letter-spacing: 2px;
         text-transform: uppercase;
         background: var(--gradient-accent-text);
@@ -138,7 +138,7 @@ export class ArcSidebar extends LitElement {
         gap: var(--space-xs);
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         letter-spacing: 2px;
         text-transform: uppercase;
         padding: var(--space-sm);
@@ -150,7 +150,7 @@ export class ArcSidebar extends LitElement {
         user-select: none;
         transition: background var(--transition-fast);
         width: 100%;
-        text-align: left;
+        text-align: start;
       }
 
       .sidebar__toggle:hover {
@@ -172,12 +172,12 @@ export class ArcSidebar extends LitElement {
 
       .sidebar__toggle-count {
         font-family: var(--font-mono);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         font-weight: var(--font-mono-weight, 400);
         letter-spacing: 0;
         color: var(--text-ghost);
         -webkit-text-fill-color: var(--text-ghost);
-        margin-left: auto;
+        margin-inline-start: auto;
       }
 
       .sidebar__chevron {
@@ -209,7 +209,7 @@ export class ArcSidebar extends LitElement {
         align-items: center;
         justify-content: space-between;
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         font-weight: 400;
         color: var(--text-muted);
         text-decoration: none;
@@ -222,13 +222,13 @@ export class ArcSidebar extends LitElement {
           box-shadow var(--transition-fast);
         border: none;
         background: none;
-        text-align: left;
+        text-align: start;
       }
 
       .sidebar__link-arrow {
         opacity: 0;
         color: var(--text-ghost);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         flex-shrink: 0;
         transition: opacity var(--transition-fast), transform var(--transition-fast), color var(--transition-fast);
         transform: translateX(-2px);
@@ -269,7 +269,7 @@ export class ArcSidebar extends LitElement {
       }
 
       .sidebar__link--nested {
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         color: var(--text-ghost);
       }
 

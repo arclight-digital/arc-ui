@@ -51,12 +51,12 @@ export class ArcSpeedDial extends LitElement {
 
       :host([position="bottom-right"]) .speed-dial {
         bottom: var(--space-xl);
-        right: var(--space-xl);
+        inset-inline-end: var(--space-xl);
       }
 
       :host([position="bottom-left"]) .speed-dial {
         bottom: var(--space-xl);
-        left: var(--space-xl);
+        inset-inline-start: var(--space-xl);
       }
 
       :host([direction="down"]) .speed-dial {

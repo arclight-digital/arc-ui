@@ -162,15 +162,15 @@ export class ArcPasswordInput extends FormControlMixin(LitElement) {
       }
 
       .input-group__error {
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         color: var(--color-error);
         line-height: 1.4;
       }
 
       /* Sizes */
-      :host([size="sm"]) .input-group__field { padding: var(--space-xs) var(--space-sm); font-size: var(--text-sm); }
+      :host([size="sm"]) .input-group__field { padding: var(--space-xs) var(--space-sm); font-size: var(--_text-sm); }
       :host([size="sm"]) .input-group__label { font-size: calc(var(--label-inline-size) - 1px); }
-      :host([size="lg"]) .input-group__field { padding: var(--space-md) var(--space-lg); font-size: var(--text-md); }
+      :host([size="lg"]) .input-group__field { padding: var(--space-md) var(--space-lg); font-size: var(--_text-md); }
 
       .input-group__field {
         font-family: var(--font-body);
@@ -196,7 +196,7 @@ export class ArcPasswordInput extends FormControlMixin(LitElement) {
         width: 28px;
         height: 28px;
         flex-shrink: 0;
-        margin-right: var(--space-sm);
+        margin-inline-end: var(--space-sm);
         border: none;
         background: none;
         padding: 0;
@@ -244,7 +244,7 @@ export class ArcPasswordInput extends FormControlMixin(LitElement) {
       .strength--4 .strength__segment--on { background: var(--color-success); }
 
       .strength__label {
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         color: var(--text-muted);
         line-height: 1.4;
         min-height: 1.4em;

@@ -1,5 +1,8 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { monthNames, weekdayNames, firstDayOfWeek, weekdayOffset } from '../shared/date-names.js';
+import { PositionController } from '../shared/position-controller.js';
+import { managedPanelStyles } from '../shared/position-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 import { ClickOutsideController } from '../shared/click-outside.js';
 
@@ -33,12 +36,16 @@ import { ClickOutsideController } from '../shared/click-outside.js';
  * @csspart presets
  * @csspart preset
  * @csspart header
+ * @prop {string} locale - BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language.
+ * @prop {number} firstDayOfWeek - Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention.
  */
 export class ArcDateRangePicker extends FormControlMixin(LitElement) {
   /** Runs its own constraint logic — owns the whole validity flag set. */
   static autoValidates = false;
 
   static properties = {
+    locale:      { type: String },
+    firstDayOfWeek: { type: Number, attribute: 'first-day-of-week' },
     start:       { type: String },
     end:         { type: String },
     name:        { type: String, reflect: true },
@@ -73,7 +80,7 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
       label {
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         letter-spacing: 1px;
         text-transform: uppercase;
         color: var(--text-muted);
@@ -87,13 +94,13 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
 
       input {
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-primary);
         background: var(--surface-raised);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-md);
         padding: var(--space-sm) var(--space-md);
-        padding-right: 36px;
+        padding-inline-end: 36px;
         outline: none;
         width: 100%;
         min-height: var(--touch-min);
@@ -108,16 +115,16 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
 
       .calendar-icon {
         position: absolute;
-        right: var(--space-sm);
+        inset-inline-end: var(--space-sm);
         color: var(--text-muted);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         pointer-events: none;
       }
 
       .dropdown {
         position: absolute;
         top: 100%;
-        left: 0;
+        inset-inline-start: 0;
         z-index: var(--z-dropdown);
         margin-top: var(--space-xs);
         background: var(--surface-raised);
@@ -148,13 +155,13 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
         flex: 0 0 auto;
         min-width: 132px;
         padding: var(--space-xs);
-        border-right: 1px solid var(--border-default);
+        border-inline-end: 1px solid var(--border-default);
       }
 
       .preset {
         font-family: var(--font-body);
-        font-size: var(--text-sm);
-        text-align: left;
+        font-size: var(--_text-sm);
+        text-align: start;
         color: var(--text-secondary);
         background: none;
         border: none;
@@ -192,7 +199,7 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
         border: none;
         color: var(--text-secondary);
         cursor: pointer;
-        font-size: var(--text-md);
+        font-size: var(--_text-md);
         padding: var(--space-xs) var(--space-sm);
         border-radius: var(--radius-sm);
         line-height: 1;
@@ -226,7 +233,7 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
       .panel-title {
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         letter-spacing: 1.5px;
         text-transform: uppercase;
         color: var(--text-primary);
@@ -243,7 +250,7 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
       }
 
       .weekday {
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         font-weight: 600;
         color: var(--text-muted);
         padding: var(--space-xs) 0;
@@ -265,7 +272,7 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
         width: 100%;
         height: 36px;
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-secondary);
         background: none;
         border: none;
@@ -338,13 +345,14 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
         .day, .preset, .nav-btn, input { transition: none; }
       }
     `,
+    managedPanelStyles('dropdown', { animate: false }),
   ];
 
-  static _MONTHS = ['January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'];
 
   constructor() {
     super();
+    this.locale = '';
+    this.firstDayOfWeek = 0;
     this.start = '';
     this.end = '';
     this.name = '';
@@ -368,7 +376,20 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
       when: () => this.open,
     });
     this._handleEscape = this._handleEscape.bind(this);
+    this._position = new PositionController(this, {
+      anchor: () => this.shadowRoot?.querySelector('.input-wrapper'),
+      floating: () => this.shadowRoot?.querySelector('.dropdown'),
+      // Two calendars side by side size to their own content, left-aligned with
+      // the field — same as date-picker.
+      align: () => 'start',
+      offset: 4,
+    });
   }
+  /** The week's first day: an explicit prop, else whatever the locale says. */
+  get _firstDay() {
+    return this.firstDayOfWeek || firstDayOfWeek(this.locale || undefined);
+  }
+
 
   /** ISO 8601 interval ("start/end") when the range is complete, else ''. */
   get value() {
@@ -537,7 +558,8 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
   /** Day cells for one panel; outside-month cells render as hidden fillers
       so a date never appears twice across adjacent panels. */
   _buildPanelDays(year, month) {
-    const firstDay = new Date(year, month, 1).getDay();
+    // Leading blanks count from the locale's first day, not from Sunday.
+    const firstDay = weekdayOffset(new Date(year, month, 1), this._firstDay);
     const daysInMonth = new Date(year, month + 1, 0).getDate();
 
     const today = new Date();
@@ -586,7 +608,7 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
   /** Human-readable label, e.g. "July 13, 2026, range start" */
   _dayAriaLabel(iso, suffix = '') {
     const [y, m, d] = iso.split('-').map(Number);
-    return `${ArcDateRangePicker._MONTHS[m - 1]} ${d}, ${y}${suffix}`;
+    return `${monthNames('long', this.locale || undefined)[m - 1]} ${d}, ${y}${suffix}`;
   }
 
   /** Page the view so the given date is visible, keeping it in the
@@ -672,6 +694,9 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
   }
 
   updated(changed) {
+    if (changed.has('open')) {
+      this.open ? this._position.show() : this._position.hide();
+    }
     if (changed.has('start') || changed.has('end')) {
       this._updateFormValue();
     }
@@ -691,7 +716,7 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
   }
 
   _renderPanel(panel, tabStopIso, range) {
-    const weekdays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+    const weekdays = weekdayNames('short', this.locale || undefined, this._firstDay);
     const days = this._buildPanelDays(panel.year, panel.month);
     const committed = Boolean(this.start && this.end);
 
@@ -700,10 +725,10 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
         class="panel"
         part="calendar"
         role="group"
-        aria-label="${ArcDateRangePicker._MONTHS[panel.month]} ${panel.year}"
+        aria-label="${monthNames('long', this.locale || undefined)[panel.month]} ${panel.year}"
       >
         <div class="panel-title" part="panel-title">
-          ${ArcDateRangePicker._MONTHS[panel.month]} ${panel.year}
+          ${monthNames('long', this.locale || undefined)[panel.month]} ${panel.year}
         </div>
         <div class="weekdays">
           ${weekdays.map(d => html`<span class="weekday">${d}</span>`)}

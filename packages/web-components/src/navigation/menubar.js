@@ -1,6 +1,8 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { ClickOutsideController } from '../shared/click-outside.js';
+import { PositionController } from '../shared/position-controller.js';
+import { managedPanelStyles } from '../shared/position-styles.js';
 
 /**
  * Desktop-application-style menu bar (File / Edit / View) with nested submenus, keyboard shortcuts
@@ -43,7 +45,7 @@ export class ArcMenubar extends LitElement {
         border: 1px solid var(--border-default);
         border-radius: var(--radius-md);
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
       }
 
       .top {
@@ -117,14 +119,13 @@ export class ArcMenubar extends LitElement {
         animation: menu-in 120ms var(--ease-out-expo);
       }
 
-      .menu--top {
+      /* Resting positions, for menus PositionController hasn't adopted — the
+         static HTML export and anything pre-upgrade. Once managed, the panels
+         are in the top layer at fixed coordinates and PositionController owns
+         the flip that .menu--flipped used to encode. */
+      .menu--top:not([data-managed]) {
         top: calc(100% + var(--space-xs));
-        left: 0;
-      }
-
-      .menu--top.menu--flipped {
-        left: auto;
-        right: 0;
+        inset-inline-start: 0;
       }
 
       /* Anchored to the full-width item row: left 100% is the item's right
@@ -132,19 +133,11 @@ export class ArcMenubar extends LitElement {
          padding + border so the submenu clears the parent panel, minus a
          4px overlap for visual continuity (never enough to reach item text:
          the panel padding alone is 8px). Top offset cancels the panel's own
-         padding so the first submenu item aligns with the parent item. */
-      .menu--sub {
+         padding so the first submenu item aligns with the parent item.
+         PositionController reproduces both numbers as offset/crossOffset. */
+      .menu--sub:not([data-managed]) {
         top: calc(-1 * var(--space-sm) - 1px);
-        left: calc(100% + var(--space-sm) + 1px - var(--space-xs));
-      }
-
-      .menu--sub.menu--flipped {
-        left: auto;
-        right: calc(100% + var(--space-sm) + 1px - var(--space-xs));
-      }
-
-      .menu--measuring {
-        visibility: hidden;
+        inset-inline-start: calc(100% + var(--space-sm) + 1px - var(--space-xs));
       }
 
       @keyframes menu-in {
@@ -171,7 +164,7 @@ export class ArcMenubar extends LitElement {
         background: transparent;
         color: var(--text-secondary);
         font: inherit;
-        text-align: left;
+        text-align: start;
         border-radius: var(--radius-sm);
         cursor: pointer;
         transition: background var(--transition-fast), color var(--transition-fast);
@@ -206,9 +199,9 @@ export class ArcMenubar extends LitElement {
       /* gap + margin keeps at least var(--space-lg) between label and shortcut */
       .item__shortcut {
         flex-shrink: 0;
-        margin-left: var(--space-md);
+        margin-inline-start: var(--space-md);
         font-family: var(--font-mono);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         color: var(--text-ghost);
       }
 
@@ -234,6 +227,9 @@ export class ArcMenubar extends LitElement {
         }
       }
     `,
+    // animate: false — menus are created and destroyed rather than toggled, and
+    // they have their own menu-in keyframes.
+    managedPanelStyles('menu', { animate: false }),
   ];
 
   constructor() {
@@ -243,8 +239,9 @@ export class ArcMenubar extends LitElement {
     this._focusedTop = 0;
     this._activePath = [];
     this._expandedPath = [];
-    // submenu/top-menu key -> boolean (true = flipped away from natural side)
-    this._flip = new Map();
+    // menu key -> PositionController. One per open menu: a menubar has the
+    // top-level menu and every expanded submenu on screen at once.
+    this._positions = new Map();
     this._focusAfterUpdate = null;
     this._hoverTimer = null;
     this._clickOutside = new ClickOutsideController(this, {
@@ -263,7 +260,6 @@ export class ArcMenubar extends LitElement {
       this._openTop = -1;
       this._activePath = [];
       this._expandedPath = [];
-      this._flip.clear();
       this._cancelHoverTimer();
       const enabled = this._enabledTop();
       this._focusedTop = enabled.length ? enabled[0] : 0;
@@ -274,43 +270,67 @@ export class ArcMenubar extends LitElement {
     if (this._openTop >= 0) this._clickOutside.activate();
     else this._clickOutside.deactivate();
 
-    // Measure each newly rendered menu invisibly, then flip it away from a
-    // viewport-right overflow (same measure-after-render approach as context-menu).
-    let remeasured = false;
-    const live = new Set();
-    for (const menu of this.shadowRoot.querySelectorAll('.menu[data-menu-key]')) {
-      const key = menu.dataset.menuKey;
-      live.add(key);
-      if (!this._flip.has(key)) {
-        const rect = menu.getBoundingClientRect();
-        let flip = rect.right > window.innerWidth - 8;
-        if (flip) {
-          // Mirror the measured resting offset around the anchor and only
-          // flip when the flipped position actually stays on-screen.
-          const wrap = menu.parentElement.getBoundingClientRect();
-          const flippedLeft = menu.classList.contains('menu--sub')
-            ? wrap.left - (rect.left - wrap.right) - rect.width
-            : wrap.right - (rect.left - wrap.left) - rect.width;
-          flip = flippedLeft >= 8;
-        }
-        this._flip.set(key, flip);
-        remeasured = true;
-      }
-    }
-    for (const key of [...this._flip.keys()]) {
-      if (!live.has(key)) this._flip.delete(key); // re-measure on next open
-    }
-    if (remeasured) {
-      // Menus are still visibility:hidden (unfocusable) until the flip pass
-      // renders; keep any pending focus for the next update.
-      this.requestUpdate();
-      return;
-    }
+    this._positionOpenMenus();
 
     if (this._focusAfterUpdate) {
       const el = this.shadowRoot.getElementById(this._focusAfterUpdate);
       this._focusAfterUpdate = null;
       el?.focus();
+    }
+  }
+
+  /**
+   * Position every open menu, and retire the controllers of menus that closed.
+   *
+   * A menubar has several panels open at once — the top-level menu plus one
+   * submenu per level of the expanded path — so it keeps one PositionController
+   * per menu key rather than the single controller every other floating
+   * component needs. Each is anchored to its own parent: a top-level menu to the
+   * `.top` cell holding its trigger, a submenu to the `.item-wrap` row that
+   * opened it.
+   *
+   * This replaces a hand-rolled two-pass measure: menus used to render
+   * visibility:hidden, get measured for a right-edge overflow, then re-render
+   * with a `menu--flipped` class. The controller writes coordinates before the
+   * browser paints, so there is no invisible first pass to hide and no extra
+   * render to schedule — and submenus now flip on the vertical axis too, which
+   * the old logic never did.
+   */
+  _positionOpenMenus() {
+    const live = new Set();
+
+    for (const menu of this.shadowRoot.querySelectorAll('.menu[data-menu-key]')) {
+      const key = menu.dataset.menuKey;
+      live.add(key);
+
+      let controller = this._positions.get(key);
+      if (!controller) {
+        const sub = menu.classList.contains('menu--sub');
+        controller = new PositionController(this, {
+          floating: () => this.shadowRoot?.querySelector(`.menu[data-menu-key="${key}"]`),
+          anchor: () =>
+            this.shadowRoot?.querySelector(`.menu[data-menu-key="${key}"]`)?.parentElement,
+          // Submenus fly out sideways; top-level menus drop down.
+          placement: () => (sub ? 'right' : 'bottom'),
+          align: () => 'start',
+          // Both carried over from the resting CSS these replace: a submenu sits
+          // 5px clear of the parent panel's inner edge (padding + border, less a
+          // 4px overlap for continuity) and 9px above the item row, cancelling
+          // the parent panel's own padding so the first submenu item lines up
+          // with the item that opened it.
+          offset: sub ? 5 : 4,
+          crossOffset: sub ? -9 : 0,
+        });
+        this._positions.set(key, controller);
+      }
+      controller.show();
+    }
+
+    for (const [key, controller] of this._positions) {
+      if (!live.has(key)) {
+        controller.hide();
+        this._positions.delete(key);
+      }
     }
   }
 
@@ -385,7 +405,6 @@ export class ArcMenubar extends LitElement {
     this._focusedTop = t;
     this._activePath = [];
     this._expandedPath = [];
-    this._flip.clear();
     if (entry === 'first' || entry === 'last') this._enterMenu(entry);
     else if (focusTrigger) this._focusAfterUpdate = this._triggerId(t);
   }
@@ -397,7 +416,6 @@ export class ArcMenubar extends LitElement {
     this._openTop = -1;
     this._activePath = [];
     this._expandedPath = [];
-    this._flip.clear();
     this._focusedTop = t;
     if (restoreFocus) this._focusAfterUpdate = this._triggerId(t);
   }
@@ -667,11 +685,9 @@ export class ArcMenubar extends LitElement {
   _renderMenu(items, basePath, label) {
     const sub = basePath.length > 0;
     const key = `${sub ? 's' : 't'}${this._openTop}${sub ? '-' + basePath.join('-') : ''}`;
-    const flipped = this._flip.get(key) === true;
-    const measured = this._flip.has(key);
     return html`
       <div
-        class="menu ${sub ? 'menu--sub' : 'menu--top'} ${flipped ? 'menu--flipped' : ''} ${measured ? '' : 'menu--measuring'}"
+        class="menu ${sub ? 'menu--sub' : 'menu--top'}"
         role="menu"
         part="menu"
         aria-label=${label || nothing}

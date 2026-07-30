@@ -67,7 +67,7 @@ export class ArcValueCard extends LitElement {
       .card__desc {
         color: var(--text-secondary);
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         line-height: 1.7;
         margin: 0;
       }

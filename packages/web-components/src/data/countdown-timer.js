@@ -44,7 +44,7 @@ export class ArcCountdownTimer extends LitElement {
         display: block;
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         letter-spacing: 2px;
         text-transform: uppercase;
         text-align: center;
@@ -84,7 +84,7 @@ export class ArcCountdownTimer extends LitElement {
       .segment-label {
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         letter-spacing: 2px;
         text-transform: uppercase;
         color: var(--text-ghost);
@@ -93,7 +93,7 @@ export class ArcCountdownTimer extends LitElement {
 
       .separator {
         color: var(--text-ghost);
-        font-size: var(--text-xl);
+        font-size: var(--_text-xl);
         font-weight: 200;
         user-select: none;
       }
@@ -101,7 +101,7 @@ export class ArcCountdownTimer extends LitElement {
       .expired-text {
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
-        font-size: var(--text-xl);
+        font-size: var(--_text-xl);
         letter-spacing: 2px;
         text-transform: uppercase;
         color: var(--text-muted);

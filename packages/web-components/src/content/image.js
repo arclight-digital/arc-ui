@@ -102,7 +102,7 @@ export class ArcImage extends LitElement {
         background: var(--surface-overlay);
         color: var(--text-muted);
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
       }
 
       .fallback__icon {

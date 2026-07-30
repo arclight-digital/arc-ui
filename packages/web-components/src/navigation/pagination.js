@@ -50,7 +50,7 @@ export class ArcPagination extends LitElement {
         background: transparent;
         color: var(--text-secondary);
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         cursor: pointer;
         transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast), transform var(--ease-out-expo);
         user-select: none;
@@ -87,7 +87,7 @@ export class ArcPagination extends LitElement {
       /* Compact: show current/total between prev/next */
       .pagination__compact-label {
         font-family: var(--font-mono);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-muted);
         padding: 0 var(--space-sm);
         white-space: nowrap;
@@ -100,7 +100,7 @@ export class ArcPagination extends LitElement {
         min-width: var(--touch-min);
         min-height: var(--touch-min);
         color: var(--text-muted);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         user-select: none;
       }
 

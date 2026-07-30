@@ -39,7 +39,7 @@ export class ArcRail extends LitElement {
         align-items: center;
         width: 48px;
         background: var(--surface-primary);
-        border-right: 1px solid var(--divider);
+        border-inline-end: 1px solid var(--divider);
         height: 100%;
         padding: var(--space-sm) 0;
         gap: var(--space-xs);

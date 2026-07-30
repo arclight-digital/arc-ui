@@ -45,7 +45,7 @@ export class ArcTruncate extends LitElement {
         cursor: pointer;
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         letter-spacing: 1px;
         text-transform: uppercase;
         color: var(--interactive);

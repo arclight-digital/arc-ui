@@ -39,13 +39,13 @@ export class ArcVirtualList extends LitElement {
       .virtual-list__viewport {
         position: absolute;
         top: 0;
-        left: 0;
+        inset-inline-start: 0;
         width: 100%;
       }
 
       ::slotted(*) {
         position: absolute;
-        left: 0;
+        inset-inline-start: 0;
         width: 100%;
       }
     `,

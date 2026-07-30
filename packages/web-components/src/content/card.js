@@ -86,8 +86,8 @@ export class ArcCard extends LitElement {
         content: '';
         position: absolute;
         top: calc(-1 * var(--space-md) / 2);
-        left: var(--space-md);
-        right: var(--space-md);
+        inset-inline-start: var(--space-md);
+        inset-inline-end: var(--space-md);
         height: 1px;
         background: var(--divider-glow);
         opacity: 0.5;

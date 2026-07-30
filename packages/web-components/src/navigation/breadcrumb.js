@@ -32,7 +32,7 @@ export class ArcBreadcrumb extends LitElement {
         align-items: center;
         gap: var(--space-xs);
         font-family: var(--font-label);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         font-weight: var(--font-label-weight, 600);
         letter-spacing: 2px;
         text-transform: uppercase;
@@ -88,7 +88,7 @@ export class ArcBreadcrumb extends LitElement {
 
       .breadcrumb__separator {
         color: var(--text-ghost);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         user-select: none;
       }
 

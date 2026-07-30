@@ -92,7 +92,7 @@ export class ArcAppShell extends LitElement {
         overflow-y: auto;
         padding: 0 var(--space-lg) var(--space-md) 0;
         margin-bottom: var(--space-xl);
-        border-left: 1px solid var(--border-subtle);
+        border-inline-start: 1px solid var(--border-subtle);
       }
 
       .shell__toc--empty { display: none; }
@@ -113,7 +113,7 @@ export class ArcAppShell extends LitElement {
       :host([mobile]) .shell__sidebar {
         position: fixed;
         top: 0;
-        left: 0;
+        inset-inline-start: 0;
         bottom: 0;
         z-index: 99;
         height: auto;

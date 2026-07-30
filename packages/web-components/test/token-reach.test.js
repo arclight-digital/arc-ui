@@ -1,0 +1,147 @@
+import { expect } from '@esm-bundle/chai';
+import '../src/input/button.register.js';
+import '../src/content/card.register.js';
+import { cleanup } from './helpers.js';
+
+/**
+ * A :root override has to reach into shadow DOM.
+ *
+ * Every token in the :host static layer is *set on the host element*, and a value
+ * set on an element always beats one inherited into it — so
+ * `:root { --space-md: 20px }` was silently ignored by every component. base.css
+ * now carries a `:where(<every arc tag>) { --space-md: inherit; … }` rule, which
+ * wins because the cascade weighs encapsulation context before specificity for
+ * normal declarations.
+ *
+ * These tests load the real generated base.css and use real ARC tags, because
+ * the forwarding selector is a fixed list built from the component sources — a
+ * test-only element would not be in it and would prove nothing.
+ */
+let sheet;
+let cssText;
+
+before(async () => {
+  cssText = await (await fetch(new URL('../src/base.css', import.meta.url))).text();
+  sheet = new CSSStyleSheet();
+  sheet.replaceSync(cssText);
+  document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+});
+
+after(() => {
+  document.adoptedStyleSheets = document.adoptedStyleSheets.filter((s) => s !== sheet);
+});
+
+/** The value a component's shadow tree would see for `token`. */
+function seen(el, token) {
+  return getComputedStyle(el).getPropertyValue(token).trim();
+}
+
+async function mountButton() {
+  const el = document.createElement('arc-button');
+  el.textContent = 'Go';
+  document.body.appendChild(el);
+  await el.updateComplete;
+  return el;
+}
+
+describe('a :root override reaches components', () => {
+  const touched = ['--space-md', '--radius-md', '--z-dropdown', '--touch-min', '--body-size'];
+  afterEach(() => {
+    for (const t of touched) document.documentElement.style.removeProperty(t);
+    cleanup();
+  });
+
+  const cases = [
+    ['--space-md', '16px', '31px'],
+    ['--radius-md', '10px', '3px'],
+    ['--z-dropdown', '1000', '42'],
+    ['--touch-min', '24px', '55px'],
+    ['--body-size', '17px', '23px'],
+  ];
+
+  for (const [token, def, override] of cases) {
+    it(`forwards ${token}`, async () => {
+      const el = await mountButton();
+      expect(seen(el, token), `${token} default`).to.equal(def);
+
+      document.documentElement.style.setProperty(token, override);
+      await el.updateComplete;
+      expect(seen(el, token), `${token} after :root override`).to.equal(override);
+    });
+  }
+
+  it('reaches a second, unrelated component too', async () => {
+    const card = document.createElement('arc-card');
+    document.body.appendChild(card);
+    await card.updateComplete;
+
+    document.documentElement.style.setProperty('--space-md', '31px');
+    await card.updateComplete;
+    expect(seen(card, '--space-md')).to.equal('31px');
+  });
+
+  it('still lets a single instance win over :root', async () => {
+    // A consumer's own selector outranks :where() on specificity, so per-instance
+    // theming keeps working — before this rule it was the only thing that did.
+    const el = await mountButton();
+    document.documentElement.style.setProperty('--space-md', '31px');
+    el.style.setProperty('--space-md', '7px');
+    await el.updateComplete;
+    expect(seen(el, '--space-md')).to.equal('7px');
+  });
+
+  it('leaves the defaults alone when nothing is overridden', async () => {
+    const el = await mountButton();
+    expect(seen(el, '--space-md')).to.equal('16px');
+    expect(seen(el, '--radius-md')).to.equal('10px');
+    expect(seen(el, '--touch-min')).to.equal('24px');
+  });
+});
+
+describe('the forwarding rule is scoped and complete', () => {
+  afterEach(cleanup);
+
+  function rule() {
+    const from = cssText.indexOf('Let a :root override');
+    return cssText.slice(from, cssText.indexOf('\n}', from));
+  }
+
+  it('never uses a universal selector', async () => {
+    // A universal selector would push ARC's token values onto every element in
+    // the consumer's page, including elements ARC does not own.
+    const selector = rule().slice(rule().indexOf(':where('));
+    expect(selector).to.not.match(/\*/);
+    expect(selector).to.include('arc-');
+  });
+
+  it('covers a broad sample of ARC tags', async () => {
+    const selector = rule();
+    for (const tag of ['arc-button', 'arc-card', 'arc-select', 'arc-modal', 'arc-tooltip']) {
+      expect(selector, tag).to.include(tag);
+    }
+  });
+
+  it('does not forward the font compositions', async () => {
+    // Their override surface is the --font-*-family slot, which already inherits
+    // because it is deliberately not declared on :host.
+    for (const n of ['--font-body', '--font-label', '--font-mono', '--font-display']) {
+      expect(rule(), n).to.not.include(`${n}: inherit`);
+    }
+  });
+
+  it('does not forward the private size mirrors', async () => {
+    expect(rule()).to.not.match(/--_text-[a-z0-9]+: inherit/);
+  });
+
+  it('lets a font slot override reach a component without being forwarded', async () => {
+    const el = await mountButton();
+    const before = seen(el, '--font-body');
+    document.documentElement.style.setProperty('--font-body-family', 'Times');
+    await el.updateComplete;
+    const after = seen(el, '--font-body');
+
+    expect(after, 'composition picked up the slot').to.not.equal(before);
+    expect(after).to.include('Times');
+    document.documentElement.style.removeProperty('--font-body-family');
+  });
+});

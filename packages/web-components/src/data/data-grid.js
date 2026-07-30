@@ -66,7 +66,7 @@ export class ArcDataGrid extends LitElement {
         width: 100%;
         border-collapse: separate; /* required so sticky cells keep their borders while scrolling */
         border-spacing: 0;
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-primary);
       }
 
@@ -79,11 +79,11 @@ export class ArcDataGrid extends LitElement {
       thead tr { background: var(--surface-overlay); }
 
       th {
-        text-align: left;
+        text-align: start;
         padding: var(--space-sm) var(--space-md);
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         letter-spacing: 1px;
         text-transform: uppercase;
         color: var(--text-muted);
@@ -106,10 +106,10 @@ export class ArcDataGrid extends LitElement {
       .sort-indicator {
         display: inline-block;
         width: 1.6em;
-        margin-left: var(--space-sm);
-        font-size: var(--text-xs);
+        margin-inline-start: var(--space-sm);
+        font-size: var(--_text-xs);
         vertical-align: middle;
-        text-align: left;
+        text-align: start;
       }
 
       .sort-indicator--idle {
@@ -123,7 +123,7 @@ export class ArcDataGrid extends LitElement {
       .sort-index {
         font-size: 0.75em;
         vertical-align: super;
-        margin-left: 1px;
+        margin-inline-start: 1px;
       }
 
       td {
@@ -209,7 +209,7 @@ export class ArcDataGrid extends LitElement {
         content: '';
         position: absolute;
         top: 2px;
-        left: 5px;
+        inset-inline-start: 5px;
         width: 4px;
         height: 8px;
         border: solid var(--text-primary);
@@ -221,7 +221,7 @@ export class ArcDataGrid extends LitElement {
         content: '';
         position: absolute;
         top: 6px;
-        left: 3px;
+        inset-inline-start: 3px;
         width: 8px;
         height: 2px;
         background: var(--text-primary);
@@ -232,7 +232,7 @@ export class ArcDataGrid extends LitElement {
         width: 100%;
         box-sizing: border-box;
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         font-weight: 300;
         color: var(--text-primary);
         background: var(--surface-raised);

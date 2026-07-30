@@ -73,7 +73,7 @@ export class ArcForm extends LitElement {
 
       .form-errors__title {
         font-family: var(--font-label);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         font-weight: var(--font-label-weight, 600);
         letter-spacing: 1px;
         text-transform: uppercase;
@@ -84,7 +84,7 @@ export class ArcForm extends LitElement {
       .form-errors__list {
         margin: 0;
         padding: 0 0 0 var(--space-md);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--color-error);
         line-height: 1.6;
       }

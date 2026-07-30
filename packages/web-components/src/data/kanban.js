@@ -75,7 +75,7 @@ export class ArcKanban extends LitElement {
 
       .kanban__column-title {
         font-family: var(--font-label);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         font-weight: var(--font-label-weight, 600);
         letter-spacing: 2px;
         text-transform: uppercase;
@@ -84,7 +84,7 @@ export class ArcKanban extends LitElement {
 
       .kanban__count {
         font-family: var(--font-mono);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         line-height: 1.4;
         color: var(--text-muted);
         background: var(--surface-hover);
@@ -153,8 +153,8 @@ export class ArcKanban extends LitElement {
       .kanban__card--over-after::after {
         content: '';
         position: absolute;
-        left: 0;
-        right: 0;
+        inset-inline-start: 0;
+        inset-inline-end: 0;
         height: 2px;
         background: var(--interactive);
         border-radius: var(--radius-full);
@@ -165,7 +165,7 @@ export class ArcKanban extends LitElement {
       .kanban__card--over-after::after   { bottom: calc(-1px - var(--space-sm) / 2); }
 
       .kanban__card-label {
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         font-weight: 500;
         line-height: 1.4;
         color: var(--text-primary);
@@ -173,7 +173,7 @@ export class ArcKanban extends LitElement {
 
       .kanban__card-desc {
         margin: 0;
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         line-height: 1.5;
         color: var(--text-secondary);
         display: -webkit-box;
@@ -197,7 +197,7 @@ export class ArcKanban extends LitElement {
       .kanban__ghost {
         position: fixed;
         top: 0;
-        left: 0;
+        inset-inline-start: 0;
         z-index: var(--z-max);
         display: flex;
         flex-direction: column;

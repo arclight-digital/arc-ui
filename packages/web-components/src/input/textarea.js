@@ -58,7 +58,7 @@ export class ArcTextarea extends FormControlMixin(LitElement) {
       label {
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         letter-spacing: 1px;
         text-transform: uppercase;
         color: var(--text-muted);
@@ -66,7 +66,7 @@ export class ArcTextarea extends FormControlMixin(LitElement) {
 
       textarea {
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         font-weight: var(--field-weight, 400);
         line-height: 1.5;
         color: var(--text-primary);
@@ -82,9 +82,9 @@ export class ArcTextarea extends FormControlMixin(LitElement) {
       }
 
       /* Sizes */
-      :host([size="sm"]) textarea { font-size: var(--text-xs); padding: var(--space-xs) var(--space-sm); }
-      :host([size="sm"]) label { font-size: calc(var(--text-xs) - 1px); }
-      :host([size="lg"]) textarea { font-size: var(--text-md); padding: var(--space-md) var(--space-lg); }
+      :host([size="sm"]) textarea { font-size: var(--_text-xs); padding: var(--space-xs) var(--space-sm); }
+      :host([size="sm"]) label { font-size: calc(var(--_text-xs) - 1px); }
+      :host([size="lg"]) textarea { font-size: var(--_text-md); padding: var(--space-md) var(--space-lg); }
 
       :host([auto-resize]) textarea { resize: none; overflow: hidden; }
 
@@ -131,15 +131,15 @@ export class ArcTextarea extends FormControlMixin(LitElement) {
       }
 
       .error-message {
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         color: var(--color-error);
         line-height: 1.4;
       }
 
       .char-count {
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         color: var(--text-muted);
-        margin-left: auto;
+        margin-inline-start: auto;
       }
 
       .char-count.at-limit {

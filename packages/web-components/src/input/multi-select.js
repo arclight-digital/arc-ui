@@ -1,5 +1,8 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { PositionController } from '../shared/position-controller.js';
+import { ListboxController } from '../shared/listbox-controller.js';
+import { managedPanelStyles } from '../shared/position-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 import { ClickOutsideController } from '../shared/click-outside.js';
 import '../shared/option.js';
@@ -32,7 +35,6 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
     disabled:     { type: Boolean, reflect: true },
     _query:       { state: true },
     _open:        { state: true },
-    _activeIndex: { state: true },
     _focused:     { state: true },
     _options:     { state: true },
   };
@@ -54,7 +56,7 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
       .ms__label {
         display: block;
         font-family: var(--font-label);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         font-weight: var(--font-label-weight, 600);
         letter-spacing: 1px;
         text-transform: uppercase;
@@ -91,7 +93,7 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
         display: inline-flex;
         align-items: center;
         gap: var(--space-xs);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         font-weight: 500;
         color: var(--text-primary);
         background: var(--surface-overlay);
@@ -112,7 +114,7 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
         color: var(--text-muted);
         cursor: pointer;
         border-radius: var(--radius-full);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         line-height: 1;
         padding: 0;
         transition: color var(--transition-fast), background var(--transition-fast);
@@ -133,7 +135,7 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
         flex: 1;
         min-width: 60px;
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         font-weight: var(--field-weight, 400);
         color: var(--text-primary);
         background: none;
@@ -154,8 +156,8 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
       .ms__dropdown {
         position: absolute;
         top: calc(100% + var(--space-xs));
-        left: 0;
-        right: 0;
+        inset-inline-start: 0;
+        inset-inline-end: 0;
         max-height: 220px;
         overflow-y: auto;
         overflow-x: hidden;
@@ -185,9 +187,9 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
         align-items: center;
         gap: var(--space-sm);
         width: 100%;
-        text-align: left;
+        text-align: start;
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-primary);
         background: none;
         border: none;
@@ -199,11 +201,6 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
       .ms__option:hover,
       .ms__option--active {
         background: rgba(var(--interactive-rgb), 0.1);
-      }
-
-      .ms__option:focus-visible {
-        outline: none;
-        box-shadow: var(--interactive-focus);
       }
 
       .ms__check {
@@ -220,7 +217,7 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
 
       .ms__empty {
         padding: var(--space-sm) var(--space-md);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-muted);
       }
 
@@ -236,6 +233,8 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
         }
       }
     `,
+    // animate: false — this panel has its own keyframe entrance.
+    managedPanelStyles('ms__dropdown', { animate: false }),
   ];
 
   static _idCounter = 0;
@@ -249,7 +248,6 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
     this.disabled = false;
     this._query = '';
     this._open = false;
-    this._activeIndex = -1;
     this._focused = false;
     this._options = [];
     this._msId = `multi-select-${++ArcMultiSelect._idCounter}`;
@@ -258,6 +256,21 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
         this._open = false;
         this._focused = false;
       },
+    });
+    this._position = new PositionController(this, {
+      anchor: () => this.shadowRoot?.querySelector('.ms__control'),
+      floating: () => this.shadowRoot?.querySelector('.ms__dropdown'),
+      matchWidth: true,
+      offset: 4,
+    });
+    this._listbox = new ListboxController(this, {
+      getItemCount: () => this._filteredItems.length,
+      isOpen: () => this._open,
+      onOpen: () => { this._open = true; },
+      onClose: () => { this._open = false; },
+      onSelect: (i) => this._toggleItem(this._filteredItems[i]),
+      optionId: (i) => `${this._msId}-option-${i}`,
+      scrollContainer: () => this.shadowRoot?.querySelector('.ms__dropdown'),
     });
   }
 
@@ -286,12 +299,18 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
   }
 
   updated(changed) {
+    if (changed.has('_open')) {
+      this._open ? this._position.show() : this._position.hide();
+    }
     if (changed.has('value')) {
       this._updateFormValue();
     }
     if (changed.has('_open')) {
       if (this._open) this._clickOutside.activate();
       else this._clickOutside.deactivate();
+    }
+    if (changed.has('_query') || changed.has('_options') || changed.has('suggestions')) {
+      this._listbox.clampToCount();
     }
   }
 
@@ -324,7 +343,7 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
 
     this.value = current;
     this._query = '';
-    this._activeIndex = -1;
+    this._listbox.reset();
 
     this.dispatchEvent(new CustomEvent('arc-change', {
       detail: { value: this.value },
@@ -348,7 +367,7 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
   _onInput(e) {
     this._query = e.target.value;
     this._open = true;
-    this._activeIndex = -1;
+    this._listbox.reset();
     this.dispatchEvent(new CustomEvent('arc-input', {
       detail: { value: this._query },
       bubbles: true,
@@ -362,40 +381,12 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
   }
 
   _onKeyDown(e) {
-    const items = this._filteredItems;
+    // Home/End move the text cursor while there is a query; the listbox only
+    // gets them when the field is empty.
+    const textKeys = (e.key === 'Home' || e.key === 'End') && this._query;
+    if (!textKeys && this._listbox.handleKeydown(e)) return;
 
     switch (e.key) {
-      case 'ArrowDown':
-        e.preventDefault();
-        if (!this._open) { this._open = true; return; }
-        this._activeIndex = Math.min(this._activeIndex + 1, items.length - 1);
-        break;
-      case 'ArrowUp':
-        e.preventDefault();
-        this._activeIndex = Math.max(this._activeIndex - 1, 0);
-        break;
-      case 'Enter':
-        e.preventDefault();
-        if (this._activeIndex >= 0 && items[this._activeIndex]) {
-          this._toggleItem(items[this._activeIndex]);
-        }
-        break;
-      case 'Escape':
-        this._open = false;
-        this._activeIndex = -1;
-        break;
-      case 'Home':
-        if (this._open && items.length > 0 && !this._query) {
-          e.preventDefault();
-          this._activeIndex = 0;
-        }
-        break;
-      case 'End':
-        if (this._open && items.length > 0 && !this._query) {
-          e.preventDefault();
-          this._activeIndex = items.length - 1;
-        }
-        break;
       case 'ArrowLeft':
         if (e.target.selectionStart === 0 && e.target.selectionEnd === 0 && (this.value || []).length > 0) {
           e.preventDefault();
@@ -460,7 +451,7 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
     const selected = this.value || [];
     const showPlaceholder = selected.length === 0 && !this._query;
     const listboxId = `${this._msId}-listbox`;
-    const activeId = this._activeIndex >= 0 ? `${this._msId}-option-${this._activeIndex}` : undefined;
+    const activeId = this._listbox.activeIndex >= 0 ? `${this._msId}-option-${this._listbox.activeIndex}` : undefined;
 
     return html`
       <div class="ms__slot-host">
@@ -514,9 +505,9 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
           ? filtered.map((item, i) => {
               const checked = this._isSelected(item);
               return html`
-                <button
+                <div
                   id="${this._msId}-option-${i}"
-                  class="ms__option ${i === this._activeIndex ? 'ms__option--active' : ''}"
+                  class="ms__option ${i === this._listbox.activeIndex ? 'ms__option--active' : ''}"
                   role="option"
                   aria-selected=${String(checked)}
                   @click=${() => this._toggleItem(item)}
@@ -526,7 +517,7 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
                     <path d="M3.5 8L6.5 11L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
                   ${item.label}
-                </button>
+                </div>
               `;
             })
           : html`<div class="ms__empty">No results found</div>`

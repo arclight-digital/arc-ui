@@ -101,11 +101,11 @@ export class ArcThemeToggle extends LitElement {
       /* ── Label ── */
       .theme-toggle__label {
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         text-transform: capitalize;
         user-select: none;
         width: 32px;
-        text-align: left;
+        text-align: start;
       }
 
       :host([icon-only]) .theme-toggle__label {

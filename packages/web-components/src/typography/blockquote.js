@@ -38,8 +38,8 @@ export class ArcBlockquote extends LitElement {
         content: '';
         position: absolute;
         top: 0;
-        left: var(--space-lg);
-        right: var(--space-lg);
+        inset-inline-start: var(--space-lg);
+        inset-inline-end: var(--space-lg);
         height: 1px;
         background: linear-gradient(90deg, transparent, var(--accent-primary), var(--accent-secondary), transparent);
         opacity: 0.4;
@@ -50,7 +50,7 @@ export class ArcBlockquote extends LitElement {
         content: '\u201C';
         position: absolute;
         top: -8px;
-        left: var(--space-md);
+        inset-inline-start: var(--space-md);
         font-size: 64px;
         font-weight: var(--font-quote-weight, 200);
         line-height: 1;
@@ -62,7 +62,7 @@ export class ArcBlockquote extends LitElement {
 
       .quote {
         font-family: var(--font-body);
-        font-size: var(--text-lg);
+        font-size: var(--_text-lg);
         font-weight: 400;
         font-style: italic;
         color: var(--text-primary);
@@ -80,7 +80,7 @@ export class ArcBlockquote extends LitElement {
         margin-top: var(--space-md);
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         letter-spacing: 2px;
         text-transform: uppercase;
         color: var(--text-muted);

@@ -31,13 +31,13 @@ export class ArcInlineMessage extends LitElement {
       .inline-message__icon {
         color: var(--_status-color);
         flex-shrink: 0;
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         line-height: 1.6;
       }
 
       .inline-message__content {
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-muted);
         line-height: 1.6;
       }

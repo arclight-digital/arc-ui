@@ -112,15 +112,15 @@ export class ArcInput extends FormControlMixin(LitElement) {
       }
 
       .input-group__error {
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         color: var(--color-error);
         line-height: 1.4;
       }
 
       /* Sizes */
-      :host([size="sm"]) .input-group__field { padding: var(--space-xs) var(--space-sm); font-size: var(--text-sm); }
+      :host([size="sm"]) .input-group__field { padding: var(--space-xs) var(--space-sm); font-size: var(--_text-sm); }
       :host([size="sm"]) .input-group__label { font-size: calc(var(--label-inline-size) - 1px); }
-      :host([size="lg"]) .input-group__field { padding: var(--space-md) var(--space-lg); font-size: var(--text-md); }
+      :host([size="lg"]) .input-group__field { padding: var(--space-md) var(--space-lg); font-size: var(--_text-md); }
 
       .input-group__field {
         font-family: var(--font-body);

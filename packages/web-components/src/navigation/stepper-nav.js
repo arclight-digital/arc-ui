@@ -63,7 +63,7 @@ export class ArcStepperNav extends LitElement {
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         font-weight: 600;
         border: 2px solid var(--border-default);
         color: var(--text-muted);

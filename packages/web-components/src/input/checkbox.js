@@ -109,10 +109,10 @@ export class ArcCheckbox extends FormControlMixin(LitElement) {
       /* Sizes */
       :host([size="sm"]) .checkbox__box { width: 14px; height: 14px; }
       :host([size="sm"]) .checkbox__icon { width: 10px; height: 10px; }
-      :host([size="sm"]) .checkbox__label { font-size: var(--text-sm); }
+      :host([size="sm"]) .checkbox__label { font-size: var(--_text-sm); }
       :host([size="lg"]) .checkbox__box { width: 22px; height: 22px; }
       :host([size="lg"]) .checkbox__icon { width: 14px; height: 14px; }
-      :host([size="lg"]) .checkbox__label { font-size: var(--text-md); }
+      :host([size="lg"]) .checkbox__label { font-size: var(--_text-md); }
 
       .checkbox__box:focus-visible {
         outline: none;

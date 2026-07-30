@@ -85,7 +85,7 @@ export class ArcFieldset extends LitElement {
 
       .fieldset__description {
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-muted);
         line-height: 1.5;
         margin-top: var(--space-xs);
@@ -101,7 +101,7 @@ export class ArcFieldset extends LitElement {
 
       .fieldset__error {
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--status-error, #ef4444);
         margin-top: var(--space-sm);
         padding: 0 var(--space-xs);

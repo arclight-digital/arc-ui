@@ -63,7 +63,7 @@ export class ArcCtaBanner extends LitElement {
       .cta__eyebrow {
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         letter-spacing: 4px;
         text-transform: uppercase;
         background: var(--gradient-accent-text);
@@ -85,7 +85,7 @@ export class ArcCtaBanner extends LitElement {
 
       .cta__body {
         color: var(--text-secondary);
-        font-size: var(--text-md);
+        font-size: var(--_text-md);
         max-width: 480px;
         text-wrap: balance;
         line-height: 1.7;

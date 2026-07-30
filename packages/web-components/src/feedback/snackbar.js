@@ -47,12 +47,12 @@ export class ArcSnackbar extends LitElement {
 
       :host([position="bottom-left"]) .snackbar-container {
         bottom: var(--space-lg);
-        left: var(--space-lg);
+        inset-inline-start: var(--space-lg);
       }
 
       :host([position="bottom-right"]) .snackbar-container {
         bottom: var(--space-lg);
-        right: var(--space-lg);
+        inset-inline-end: var(--space-lg);
       }
 
       .snackbar {
@@ -66,7 +66,7 @@ export class ArcSnackbar extends LitElement {
         border: 1px solid var(--border-default);
         box-shadow: var(--shadow-overlay);
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-secondary);
         min-width: 300px;
         max-width: 560px;

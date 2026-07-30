@@ -92,12 +92,12 @@ export class ArcScrollToTop extends LitElement {
       :host(:not([position="bottom-left"])) .scroll-to-top,
       :host([position="bottom-right"]) .scroll-to-top {
         bottom: var(--_offset);
-        right: var(--_offset);
+        inset-inline-end: var(--_offset);
       }
 
       :host([position="bottom-left"]) .scroll-to-top {
         bottom: var(--_offset);
-        left: var(--_offset);
+        inset-inline-start: var(--_offset);
       }
 
       @media (prefers-reduced-motion: reduce) {

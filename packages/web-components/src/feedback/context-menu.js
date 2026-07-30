@@ -1,6 +1,7 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { deepActiveElement } from '../shared/trigger-aria.js';
+import { PositionController } from '../shared/position-controller.js';
 import '../shared/menu-item.js';
 import '../shared/menu-divider.js';
 import '../content/icon.js';
@@ -24,12 +25,12 @@ import '../content/separator.js';
 export class ArcContextMenu extends LitElement {
   static properties = {
     open:           { type: Boolean, reflect: true },
-    _x:             { state: true },
-    _y:             { state: true },
     _activeIndex:   { state: true },
     _children:      { state: true },
-    _positioned:    { state: true },
   };
+  // _x/_y are deliberately not reactive state: PositionController writes the
+  // menu's coordinates to its inline style, and a re-render driven by them would
+  // rewrite the whole style attribute and wipe what the controller just wrote.
 
   static styles = [
     tokenStyles,
@@ -53,7 +54,7 @@ export class ArcContextMenu extends LitElement {
         box-shadow: var(--shadow-overlay);
         padding: var(--space-xs) 0;
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         animation: menu-in 100ms ease-out;
         outline: none;
       }
@@ -75,7 +76,7 @@ export class ArcContextMenu extends LitElement {
         border: none;
         background: none;
         width: 100%;
-        text-align: left;
+        text-align: start;
         font-family: inherit;
         font-size: inherit;
         line-height: 1.5;
@@ -108,7 +109,7 @@ export class ArcContextMenu extends LitElement {
         flex-shrink: 0;
         width: 16px;
         text-align: center;
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
       }
 
       .item-label {
@@ -117,7 +118,7 @@ export class ArcContextMenu extends LitElement {
 
       .item-shortcut {
         flex-shrink: 0;
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-muted);
         font-family: var(--font-mono);
       }
@@ -141,11 +142,20 @@ export class ArcContextMenu extends LitElement {
     this._y = 0;
     this._activeIndex = -1;
     this._children = [];
-    this._positioned = false;
     this._returnFocus = null;
 
     this._handleContextMenu = this._handleContextMenu.bind(this);
     this._parentRef = null;
+    this._position = new PositionController(this, {
+      // A context menu has no anchor element — it hangs off the pointer, so the
+      // anchor is a zero-size box at the click.
+      anchor: () => ({ x: this._x, y: this._y }),
+      floating: () => this.shadowRoot?.querySelector('.menu'),
+      // Down and to the right of the cursor, as a context menu does; flip turns
+      // it upward or leftward near an edge rather than sliding it off the click.
+      align: () => 'start',
+      offset: 0,
+    });
   }
 
   connectedCallback() {
@@ -162,6 +172,15 @@ export class ArcContextMenu extends LitElement {
       this._parentRef.removeEventListener('contextmenu', this._handleContextMenu);
       this._parentRef = null;
     }
+  }
+
+  updated(changed) {
+    if (changed.has('open')) {
+      this.open ? this._position.show() : this._position.hide();
+    }
+    // Items arriving from the slot resize the menu, which changes where it has
+    // to sit to stay on screen.
+    if (changed.has('_children') && this.open) this._position.show();
   }
 
   _onSlotChange(e) {
@@ -184,7 +203,6 @@ export class ArcContextMenu extends LitElement {
     this._x = e.clientX;
     this._y = e.clientY;
     this._activeIndex = -1;
-    this._positioned = false;
 
     this.open = true;
 
@@ -193,20 +211,11 @@ export class ArcContextMenu extends LitElement {
       composed: true,
     }));
 
-    // Render the menu invisibly first, measure its real size, then
-    // position it against the viewport and reveal it.
+    // PositionController measures and writes coordinates from updated(), before
+    // the browser paints, so there is no longer a first frame at the wrong place
+    // to hide behind a visibility gate.
     this.updateComplete.then(() => {
-      const menu = this.shadowRoot.querySelector('.menu');
-      if (menu) {
-        const vw = window.innerWidth;
-        const vh = window.innerHeight;
-        if (this._x + menu.offsetWidth > vw) this._x = Math.max(8, vw - menu.offsetWidth - 8);
-        if (this._y + menu.offsetHeight > vh) this._y = Math.max(8, vh - menu.offsetHeight - 8);
-      }
-      this._positioned = true;
-      this.updateComplete.then(() => {
-        this.shadowRoot.querySelector('.menu')?.focus();
-      });
+      this.shadowRoot.querySelector('.menu')?.focus();
     });
   }
 
@@ -300,7 +309,6 @@ export class ArcContextMenu extends LitElement {
         role="menu"
         tabindex="-1"
         aria-activedescendant=${this._activeIndex >= 0 ? `ctx-item-${this._activeIndex}` : nothing}
-        style="left: ${this._x}px; top: ${this._y}px; visibility: ${this._positioned ? 'visible' : 'hidden'}"
         @keydown=${this._handleKeydown}
       >
         ${this._children.map((child, i) => {

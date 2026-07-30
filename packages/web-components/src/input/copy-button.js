@@ -38,7 +38,7 @@ export class ArcCopyButton extends LitElement {
         padding: var(--touch-pad) var(--space-sm);
         min-height: var(--touch-min);
         font-family: var(--font-body);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         line-height: 1;
         transition:
           background var(--transition-fast),

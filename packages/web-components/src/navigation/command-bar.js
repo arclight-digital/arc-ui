@@ -36,7 +36,10 @@ export class ArcCommandBar extends LitElement {
         display: flex;
         align-items: center;
         gap: var(--space-sm);
-        background: var(--bg-inset);
+        /* --bg-inset was never declared anywhere, so this resolved to nothing
+           and the field rendered transparent. --surface-primary is what the
+           other field-like surfaces use. */
+        background: var(--surface-primary);
         border: 1px solid var(--border-subtle);
         border-radius: var(--radius-md);
         padding: var(--space-xs) var(--space-sm);
@@ -67,7 +70,7 @@ export class ArcCommandBar extends LitElement {
         font: inherit;
         color: var(--text-primary);
         flex: 1;
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
       }
 
       .command-bar__input::placeholder {

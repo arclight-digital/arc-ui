@@ -42,7 +42,7 @@ export class ArcCallout extends LitElement {
         border: 1px solid rgba(var(--_status-rgb), 0.12);
         background: rgba(var(--_status-rgb), 0.04);
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         line-height: 1.7;
         color: var(--text-secondary);
       }
@@ -62,7 +62,7 @@ export class ArcCallout extends LitElement {
 
       .callout__label {
         font-family: var(--font-label);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         font-weight: var(--font-label-weight, 600);
         letter-spacing: 1.5px;
         text-transform: uppercase;

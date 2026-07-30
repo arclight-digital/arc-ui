@@ -47,11 +47,11 @@ export class ArcAvatarGroup extends LitElement {
         justify-content: center;
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         letter-spacing: 0.5px;
         color: var(--text-ghost);
         user-select: none;
-        padding-left: var(--space-sm);
+        padding-inline-start: var(--space-sm);
       }
 
       :host([overlap="sm"]) .group__overflow { padding-left: var(--space-xs); }

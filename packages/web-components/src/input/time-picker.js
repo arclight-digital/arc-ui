@@ -1,5 +1,8 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { ClickOutsideController } from '../shared/click-outside.js';
+import { PositionController } from '../shared/position-controller.js';
+import { managedPanelStyles } from '../shared/position-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 
 /**
@@ -55,7 +58,7 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
       label {
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         letter-spacing: 1px;
         text-transform: uppercase;
         color: var(--text-muted);
@@ -69,13 +72,13 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
 
       input {
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-primary);
         background: var(--surface-raised);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-md);
         padding: var(--space-sm) var(--space-md);
-        padding-right: 36px;
+        padding-inline-end: 36px;
         outline: none;
         width: 100%;
         box-sizing: border-box;
@@ -89,16 +92,16 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
 
       .clock-icon {
         position: absolute;
-        right: var(--space-sm);
+        inset-inline-end: var(--space-sm);
         color: var(--text-muted);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         pointer-events: none;
       }
 
       .dropdown {
         position: absolute;
         top: 100%;
-        left: 0;
+        inset-inline-start: 0;
         z-index: var(--z-dropdown);
         margin-top: var(--space-xs);
         background: var(--surface-raised);
@@ -147,7 +150,7 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
       .column-label {
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         letter-spacing: 1px;
         text-transform: uppercase;
         color: var(--text-muted);
@@ -163,7 +166,7 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
         min-width: 48px;
         padding: var(--space-xs) var(--space-sm);
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-secondary);
         background: none;
         border: none;
@@ -199,14 +202,16 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
         display: flex;
         align-items: center;
         color: var(--border-default);
-        font-size: var(--text-sm);
-        padding-top: calc(var(--text-xs) + var(--space-xs) + var(--space-xs) + var(--space-xs));
+        font-size: var(--_text-sm);
+        padding-top: calc(var(--_text-xs) + var(--space-xs) + var(--space-xs) + var(--space-xs));
       }
 
       @media (prefers-reduced-motion: reduce) {
         .dropdown { animation: none; }
       }
     `,
+    // animate: false — this panel has its own keyframe entrance.
+    managedPanelStyles('dropdown', { animate: false }),
   ];
 
   constructor() {
@@ -226,27 +231,30 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
     this._selectedPeriod = 'AM';
     this._focusedColumn = 'hour';
 
-    this._handleOutsideClick = this._handleOutsideClick.bind(this);
     this._handleEscape = this._handleEscape.bind(this);
+    this._clickOutside = new ClickOutsideController(this, {
+      onClickOutside: () => { this.open = false; },
+      when: () => this.open,
+    });
+    this._position = new PositionController(this, {
+      anchor: () => this.shadowRoot?.querySelector('.input-wrapper'),
+      floating: () => this.shadowRoot?.querySelector('.dropdown'),
+      // Content-sized columns, left-aligned with the input — same reasoning as
+      // date-picker.
+      align: () => 'start',
+      offset: 4,
+    });
   }
 
   connectedCallback() {
     super.connectedCallback();
     this._syncFromValue();
-    document.addEventListener('click', this._handleOutsideClick);
     document.addEventListener('keydown', this._handleEscape);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    document.removeEventListener('click', this._handleOutsideClick);
     document.removeEventListener('keydown', this._handleEscape);
-  }
-
-  _handleOutsideClick(e) {
-    if (this.open && !e.composedPath().includes(this)) {
-      this.open = false;
-    }
   }
 
   _handleEscape(e) {
@@ -456,6 +464,10 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
   }
 
   updated(changed) {
+    if (changed.has('open')) {
+      this.open ? this._position.show() : this._position.hide();
+      this.open ? this._clickOutside.activate() : this._clickOutside.deactivate();
+    }
     if (changed.has('value')) {
       this._updateFormValue();
     }

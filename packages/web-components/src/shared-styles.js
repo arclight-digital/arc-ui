@@ -1,4 +1,5 @@
 import { css } from 'lit';
+import { hostTokens, hostTouchTokens } from './generated/host-tokens.js';
 
 /**
  * Shared CSS custom properties injected into every ARC UI component's shadow DOM.
@@ -8,7 +9,10 @@ import { css } from 'lit';
  * dark/light/auto themes and .theme-fixed overrides.
  *
  * Only static tokens (typography, spacing, radii, transitions, layout) live here
- * as fallback defaults.
+ * as fallback defaults, and they are GENERATED from shared/tokens.js rather than
+ * written here — see generated/host-tokens.js. This block used to be a second,
+ * hand-maintained copy of values that also live in the token tree, and nineteen
+ * of the eighty-one had drifted apart, two of them visibly. Edit the tree.
  */
 export const tokenStyles = css`
   *, *::before, *::after {
@@ -17,130 +21,29 @@ export const tokenStyles = css`
     box-sizing: border-box;
   }
 
+  /* Neutralise the UA stylesheet for [popover]. PositionController promotes
+     floating panels to the top layer, and the UA rules for a popover include
+     a solid border, padding, a canvas background and inset:0/margin:auto —
+     enough to inflate a measured panel by 14px and to paint a border no
+     component asked for. :where() keeps this at zero specificity so it beats
+     the UA origin but loses to every rule a component writes for itself. */
+  :where([popover]) {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    inset: auto;
+    width: auto;
+    height: auto;
+    background: none;
+    color: inherit;
+    overflow: visible;
+  }
+
   :host {
     transition: opacity 150ms ease;
 
-    /* Composed here so components still render sensibly without base.css, but
-       composed *from the role slots* rather than from literal faces. A value
-       set on :host beats one inherited from :root, so spelling the typeface out
-       here would make --font-body-family on the document root unreachable —
-       which is exactly what it used to do. Only the slots are inherited; the
-       composition is local. */
-    --font-body: var(--font-body-family, 'Host Grotesk'), var(--font-body-fallback, system-ui, sans-serif);
-    --font-label: var(--font-label-family, 'Tektur'), var(--font-label-fallback, system-ui, sans-serif);
-    --font-mono: var(--font-mono-family, 'JetBrains Mono'), var(--font-mono-fallback, ui-monospace, monospace);
-    --font-display: var(--font-display-family, var(--font-body-family, 'Host Grotesk')), var(--font-display-fallback, var(--font-body-fallback, system-ui, sans-serif));
-    --font-quote: var(--font-quote-family, Georgia), var(--font-quote-fallback, serif);
-    --font-accent: var(--font-label);
-
-    /* The role *weight* slots are deliberately absent from this block, for the
-       same reason the family slots are: a value declared on :host beats one
-       inherited from :root, so declaring them here would make an override on
-       the document root unreachable. There is nothing to compose them into
-       either — a weight is used directly, not built into a stack — so the
-       components spell the fallback at the point of use instead:
-
-           font-weight: var(--font-label-weight, 600);
-
-       base.css declares the real values at :root. The literal is what keeps a
-       component looking right when base.css is not loaded at all. */
-
-    --text-xs: 12px;
-    --text-sm: 16px;
-    --text-md: 17px;
-    --text-xl: clamp(22px, 2.5vw, 26px);
-
-    --display-xl-size: clamp(36px, 5vw, 52px);
-    --display-xl-weight: var(--font-display-weight, 500);
-    --display-xl-spacing: -1px;
-    --heading-size: clamp(22px, 2.5vw, 26px);
-    --heading-weight: var(--font-display-weight, 500);
-    --text-3xl: clamp(28px, 3vw, 36px);
-    --text-lg: clamp(18px, 1.5vw, 20px);
-    --body-size: 17px;
-    --body-weight: var(--font-body-weight, 500);
-    --body-lh: 1.7;
-    --wordmark-size: clamp(20px, 2.5vw, 28px);
-    --wordmark-weight: var(--font-display-weight, 500);
-    --wordmark-spacing: clamp(8px, 1.2vw, 14px);
-    --section-title-size: 12px;
-    --section-title-weight: var(--font-label-weight, 600);
-    --section-title-spacing: 4px;
-    --ui-accent-size: 16px;
-    --ui-accent-weight: var(--font-label-weight, 600);
-    --ui-accent-spacing: 1px;
-    --code-size: 14px;
-    --code-lh: 1.8;
-    --label-inline-size: 10px;
-    --label-inline-spacing: 3px;
-    /* --field-weight is deliberately not declared here. It bottoms out in a
-       literal rather than in a role slot, so a value on :host would beat the
-       one inherited from :root and make the override unreachable — the trap
-       described above. The fields spell var(--field-weight, 400) instead. */
-
-    --space-xs: 4px;
-    --space-sm: 8px;
-    --space-md: 16px;
-    --space-lg: 24px;
-    --space-xl: 40px;
-    --space-2xl: 64px;
-    --space-3xl: 96px;
-    --space-4xl: 128px;
-
-    --radius-sm: 4px;
-    --radius-md: 10px;
-    --radius-lg: 14px;
-    --radius-xl: 20px;
-    --radius-full: 9999px;
-
-    --transition-fast: 120ms ease;
-    --transition-base: 200ms ease;
-    --transition-slow: 400ms ease;
-
-    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
-    --duration-enter: 500ms;
-    --duration-exit: 300ms;
-
-    --z-base: 0;
-    --z-dropdown: 1000;
-    --z-tooltip: 1100;
-    --z-overlay: 1200;
-    --z-modal: 1300;
-    --z-toast: 1400;
-    --z-max: 9999;
-
-    --glow-hover: 0 0 12px rgba(var(--accent-primary-rgb), 0.15);
-    --focus-ring: 0 0 0 1px rgba(var(--accent-primary-rgb), 0.25);
-    --focus-glow: 0 0 0 1px rgba(var(--accent-primary-rgb), 0.2), 0 0 6px rgba(var(--accent-primary-rgb), 0.35), 0 0 16px rgba(var(--accent-primary-rgb), 0.2), 0 0 40px rgba(var(--accent-secondary-rgb), 0.12);
-
-    /* ── Semantic aliases ── */
-    --interactive: var(--accent-primary);
-    --interactive-rgb: var(--accent-primary-rgb);
-    --interactive-hover: var(--glow-hover);
-    --interactive-active: var(--glow-primary);
-    --interactive-focus: var(--focus-glow);
-    --interactive-focus-ring: var(--focus-ring);
-    --interactive-muted: var(--text-ghost);
-    --surface-base: var(--bg-deep);
-    --surface-primary: var(--bg-surface);
-    --surface-raised: var(--bg-card);
-    --surface-overlay: var(--bg-elevated);
-    --surface-hover: var(--bg-hover);
-    --divider: var(--border-subtle);
-
-    --touch-min: 24px;
-    --touch-pad: 4px;
-
-    --max-width: 1120px;
-    --max-width-sm: 720px;
-    --nav-height: 64px;
+    ${hostTokens}
   }
 
-  @media (pointer: coarse) {
-    :host {
-      --touch-min: 36px;
-      --touch-pad: 8px;
-    }
-  }
+  ${hostTouchTokens}
 `;

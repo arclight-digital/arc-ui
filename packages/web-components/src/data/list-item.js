@@ -57,7 +57,7 @@ export class ArcListItem extends LitElement {
         border: none;
         background: none;
         width: 100%;
-        text-align: left;
+        text-align: start;
       }
 
       .item:hover {
@@ -104,7 +104,7 @@ export class ArcListItem extends LitElement {
       }
 
       .item__description {
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-muted);
         line-height: 1.4;
       }

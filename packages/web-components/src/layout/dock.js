@@ -41,8 +41,8 @@ export class ArcDock extends LitElement {
       /* Bottom */
       :host([position="bottom"]) .dock {
         bottom: 0;
-        left: 0;
-        right: 0;
+        inset-inline-start: 0;
+        inset-inline-end: 0;
         border-top: 1px solid var(--border-subtle);
         border-bottom: none;
       }

@@ -104,15 +104,15 @@ export class ArcAvatar extends LitElement {
       :host([shape="rounded"]) .avatar,
       :host([shape="rounded"]) .avatar__img { border-radius: var(--radius-lg); }
 
-      :host([size="sm"]) .avatar__initials { font-size: var(--text-xs); }
-      :host([size="md"]) .avatar__initials { font-size: var(--text-sm); }
-      :host([size="lg"]) .avatar__initials { font-size: var(--text-lg); }
+      :host([size="sm"]) .avatar__initials { font-size: var(--_text-xs); }
+      :host([size="md"]) .avatar__initials { font-size: var(--_text-sm); }
+      :host([size="lg"]) .avatar__initials { font-size: var(--_text-lg); }
 
       /* Status indicator */
       .avatar__status {
         position: absolute;
         bottom: 0;
-        right: 0;
+        inset-inline-end: 0;
         width: 10px;
         height: 10px;
         border-radius: var(--radius-full);

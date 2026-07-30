@@ -78,8 +78,8 @@ export class ArcSortableList extends LitElement {
       .sortable__item--over-after::after {
         content: '';
         position: absolute;
-        left: var(--space-sm);
-        right: var(--space-sm);
+        inset-inline-start: var(--space-sm);
+        inset-inline-end: var(--space-sm);
         height: 2px;
         background: var(--interactive);
         border-radius: var(--radius-full);

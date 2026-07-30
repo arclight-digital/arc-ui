@@ -26,13 +26,13 @@ export class ArcProse extends LitElement {
       }
 
       /* Size variants */
-      :host([size="sm"]) { font-size: var(--text-sm); }
+      :host([size="sm"]) { font-size: var(--_text-sm); }
       :host([size="md"]), :host(:not([size="lg"]):not([size="sm"])) { font-size: var(--body-size); }
-      :host([size="lg"]) { font-size: var(--text-lg); }
+      :host([size="lg"]) { font-size: var(--_text-lg); }
 
       /* Direct-child block elements via ::slotted */
       ::slotted(h1) {
-        font-size: var(--text-3xl) !important;
+        font-size: var(--_text-3xl) !important;
         font-weight: var(--heading-weight) !important;
         color: var(--text-primary) !important;
         margin-top: var(--space-2xl) !important;
@@ -48,14 +48,14 @@ export class ArcProse extends LitElement {
         line-height: 1.4 !important;
       }
       ::slotted(h3) {
-        font-size: var(--text-lg) !important;
+        font-size: var(--_text-lg) !important;
         font-weight: 600 !important;
         color: var(--text-primary) !important;
         margin-top: var(--space-lg) !important;
         margin-bottom: var(--space-sm) !important;
       }
       ::slotted(h4) {
-        font-size: var(--text-md) !important;
+        font-size: var(--_text-md) !important;
         font-weight: 600 !important;
         color: var(--text-primary) !important;
         margin-top: var(--space-lg) !important;
@@ -68,7 +68,7 @@ export class ArcProse extends LitElement {
       ::slotted(ul),
       ::slotted(ol) {
         margin-bottom: var(--space-md) !important;
-        padding-left: var(--space-lg) !important;
+        padding-inline-start: var(--space-lg) !important;
         color: var(--text-secondary) !important;
       }
       ::slotted(blockquote) {
@@ -106,7 +106,7 @@ export class ArcProse extends LitElement {
         width: 100% !important;
         border-collapse: collapse !important;
         margin: var(--space-lg) 0 !important;
-        font-size: var(--text-sm) !important;
+        font-size: var(--_text-sm) !important;
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -184,7 +184,7 @@ export class ArcProse extends LitElement {
       arc-prose th,
       arc-prose td {
         padding: 8px 16px;
-        text-align: left;
+        text-align: start;
         border-bottom: 1px solid var(--divider);
       }
       arc-prose th {

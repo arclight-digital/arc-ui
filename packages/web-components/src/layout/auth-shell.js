@@ -62,7 +62,7 @@ export class ArcAuthShell extends LitElement {
       .auth-shell--centered .footer {
         margin-top: var(--space-lg);
         color: var(--text-muted);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         text-align: center;
       }
 
@@ -101,7 +101,7 @@ export class ArcAuthShell extends LitElement {
       .auth-shell--split .footer {
         margin-top: var(--space-lg);
         color: var(--text-muted);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         text-align: center;
       }
 

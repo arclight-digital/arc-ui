@@ -82,7 +82,7 @@ export class ArcNumberInput extends FormControlMixin(LitElement) {
         border: none;
         color: var(--text-muted);
         cursor: pointer;
-        font-size: var(--text-md);
+        font-size: var(--_text-md);
         font-family: var(--font-body);
         font-weight: 600;
         line-height: 1;
@@ -129,8 +129,8 @@ export class ArcNumberInput extends FormControlMixin(LitElement) {
         color: var(--text-primary);
         background: transparent;
         border: none;
-        border-left: 1px solid var(--divider);
-        border-right: 1px solid var(--divider);
+        border-inline-start: 1px solid var(--divider);
+        border-inline-end: 1px solid var(--divider);
         padding: var(--space-sm) var(--space-xs);
         box-sizing: border-box;
         -moz-appearance: textfield;

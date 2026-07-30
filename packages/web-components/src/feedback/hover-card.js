@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { positionStyles } from '../shared/position-styles.js';
+import { PositionController } from '../shared/position-controller.js';
 import { setTriggerAria } from '../shared/trigger-aria.js';
 
 /**
@@ -81,6 +82,11 @@ export class ArcHoverCard extends LitElement {
     this._openTimeout = null;
     this._closeTimeout = null;
     this._onKeyDown = this._onKeyDown.bind(this);
+    this._position = new PositionController(this, {
+      anchor: () => this.shadowRoot?.querySelector('.hovercard__trigger'),
+      floating: () => this.shadowRoot?.querySelector('.hovercard__card'),
+      placement: () => this.position,
+    });
   }
 
   connectedCallback() {
@@ -104,7 +110,9 @@ export class ArcHoverCard extends LitElement {
   updated(changed) {
     if (changed.has('_visible')) {
       this._syncTriggerAria();
+      this._visible ? this._position.show() : this._position.hide();
     }
+    if (changed.has('position') && this._visible) this._position.show();
   }
 
   _syncTriggerAria() {

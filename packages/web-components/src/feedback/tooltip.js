@@ -1,5 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { PositionController } from '../shared/position-controller.js';
+import { managedPanelStyles } from '../shared/position-styles.js';
 import { setTriggerAria } from '../shared/trigger-aria.js';
 
 /**
@@ -42,7 +44,7 @@ export class ArcTooltip extends LitElement {
         border-radius: var(--radius-sm);
         padding: var(--space-xs) var(--space-sm);
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-primary);
         white-space: nowrap;
         pointer-events: none;
@@ -56,8 +58,8 @@ export class ArcTooltip extends LitElement {
         content: '';
         position: absolute;
         top: 0;
-        left: 0;
-        right: 0;
+        inset-inline-start: 0;
+        inset-inline-end: 0;
         height: 1px;
         background: var(--divider-glow);
       }
@@ -85,41 +87,45 @@ export class ArcTooltip extends LitElement {
         transform: rotate(45deg);
       }
 
-      /* Positions */
-      :host(:not([position="bottom"]):not([position="left"]):not([position="right"])) .tooltip__popup,
-      :host([position="top"]) .tooltip__popup {
+      /* Positions — the resting fallback, for a popup PositionController has
+         not adopted: the static HTML export and anything pre-upgrade. Scoped
+         off managed popups because the controller writes fixed viewport
+         coordinates, which the translateX(-50%) centring here would shift the
+         popup half its own width away from. */
+      :host(:not([position="bottom"]):not([position="left"]):not([position="right"])) .tooltip__popup:not([data-managed]),
+      :host([position="top"]) .tooltip__popup:not([data-managed]) {
         bottom: calc(100% + 8px);
         left: 50%;
         transform: translateX(-50%);
       }
-      :host(:not([position="bottom"]):not([position="left"]):not([position="right"])) .tooltip__arrow,
-      :host([position="top"]) .tooltip__arrow {
+      :host(:not([position="bottom"]):not([position="left"]):not([position="right"])) .tooltip__popup:not([data-managed]) .tooltip__arrow,
+      :host([position="top"]) .tooltip__popup:not([data-managed]) .tooltip__arrow {
         bottom: -5px;
         left: 50%;
         transform: translateX(-50%) rotate(45deg);
         border-top: none;
-        border-left: none;
+        border-inline-start: none;
       }
 
-      :host([position="bottom"]) .tooltip__popup {
+      :host([position="bottom"]) .tooltip__popup:not([data-managed]) {
         top: calc(100% + 8px);
         left: 50%;
         transform: translateX(-50%);
       }
-      :host([position="bottom"]) .tooltip__arrow {
+      :host([position="bottom"]) .tooltip__popup:not([data-managed]) .tooltip__arrow {
         top: -5px;
         left: 50%;
         transform: translateX(-50%) rotate(45deg);
         border-bottom: none;
-        border-right: none;
+        border-inline-end: none;
       }
 
-      :host([position="left"]) .tooltip__popup {
+      :host([position="left"]) .tooltip__popup:not([data-managed]) {
         right: calc(100% + 8px);
         top: 50%;
         transform: translateY(-50%);
       }
-      :host([position="left"]) .tooltip__arrow {
+      :host([position="left"]) .tooltip__popup:not([data-managed]) .tooltip__arrow {
         right: -5px;
         top: 50%;
         transform: translateY(-50%) rotate(45deg);
@@ -127,17 +133,49 @@ export class ArcTooltip extends LitElement {
         border-left: none;
       }
 
-      :host([position="right"]) .tooltip__popup {
+      :host([position="right"]) .tooltip__popup:not([data-managed]) {
         left: calc(100% + 8px);
         top: 50%;
         transform: translateY(-50%);
       }
-      :host([position="right"]) .tooltip__arrow {
+      :host([position="right"]) .tooltip__popup:not([data-managed]) .tooltip__arrow {
         left: -5px;
         top: 50%;
         transform: translateY(-50%) rotate(45deg);
         border-top: none;
         border-right: none;
+      }
+
+      /* Arrow for a managed popup. Keyed on data-placement — the side the
+         popup actually landed on — so the arrow follows a flip instead of
+         pointing at nothing. */
+      .tooltip__popup[data-managed][data-placement="top"] .tooltip__arrow {
+        bottom: -5px;
+        left: 50%;
+        transform: translateX(-50%) rotate(45deg);
+        border-top: none;
+        border-inline-start: none;
+      }
+      .tooltip__popup[data-managed][data-placement="bottom"] .tooltip__arrow {
+        top: -5px;
+        left: 50%;
+        transform: translateX(-50%) rotate(45deg);
+        border-bottom: none;
+        border-inline-end: none;
+      }
+      .tooltip__popup[data-managed][data-placement="left"] .tooltip__arrow {
+        inset-inline-end: -5px;
+        top: 50%;
+        transform: translateY(-50%) rotate(45deg);
+        border-bottom: none;
+        border-inline-start: none;
+      }
+      .tooltip__popup[data-managed][data-placement="right"] .tooltip__arrow {
+        inset-inline-start: -5px;
+        top: 50%;
+        transform: translateY(-50%) rotate(45deg);
+        border-top: none;
+        border-inline-end: none;
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -150,6 +188,14 @@ export class ArcTooltip extends LitElement {
         }
       }
     `,
+    // scale: 1 — a tooltip cross-fades rather than scaling, but it still needs
+    // the allow-discrete treatment or the fade is lost to display:none in the
+    // top layer.
+    managedPanelStyles('tooltip__popup', {
+      openCls: 'is-visible',
+      scale: 1,
+      duration: 'var(--transition-fast)',
+    }),
   ];
 
   static _idCounter = 0;
@@ -163,6 +209,12 @@ export class ArcTooltip extends LitElement {
     this._showTimeout = null;
     this._tooltipId = `tooltip-${++ArcTooltip._idCounter}`;
     this._onKeyDown = this._onKeyDown.bind(this);
+    this._position = new PositionController(this, {
+      anchor: () => this.shadowRoot?.querySelector('.tooltip__trigger'),
+      floating: () => this.shadowRoot?.querySelector('.tooltip__popup'),
+      placement: () => this.position,
+      fallbackPlacement: 'top',
+    });
   }
 
   connectedCallback() {
@@ -189,6 +241,14 @@ export class ArcTooltip extends LitElement {
     // Re-added after every render: the popup's class attribute binding
     // rewrites the whole attribute and would otherwise drop the marker.
     this.shadowRoot.querySelector('.tooltip__popup')?.classList.add('is-managed');
+
+    if (changed.has('_visible')) {
+      this._visible ? this._position.show() : this._position.hide();
+    }
+    // Content changes resize the popup, which can change which side it fits on.
+    if ((changed.has('content') || changed.has('position')) && this._visible) {
+      this._position.show();
+    }
   }
 
   /**

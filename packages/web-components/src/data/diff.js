@@ -64,8 +64,8 @@ export class ArcDiff extends LitElement {
       .diff__line-number {
         color: var(--text-ghost);
         user-select: none;
-        padding-right: var(--space-sm);
-        text-align: right;
+        padding-inline-end: var(--space-sm);
+        text-align: end;
         min-width: 3ch;
         flex-shrink: 0;
       }
@@ -90,7 +90,7 @@ export class ArcDiff extends LitElement {
       }
 
       :host([mode="side-by-side"]) .diff__pane + .diff__pane {
-        border-left: 1px solid var(--divider);
+        border-inline-start: 1px solid var(--divider);
       }
 
       @media (prefers-reduced-motion: reduce) {

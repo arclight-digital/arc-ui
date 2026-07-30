@@ -1,5 +1,8 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { ClickOutsideController } from '../shared/click-outside.js';
+import { PositionController } from '../shared/position-controller.js';
+import { managedPanelStyles } from '../shared/position-styles.js';
 
 /**
  * Each breadcrumb segment doubles as a dropdown showing sibling pages at that hierarchy level.
@@ -38,7 +41,7 @@ export class ArcBreadcrumbMenu extends LitElement {
         align-items: center;
         gap: var(--space-xs);
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
       }
 
       .breadcrumb-menu__item {
@@ -88,7 +91,7 @@ export class ArcBreadcrumbMenu extends LitElement {
       .breadcrumb-menu__dropdown {
         position: absolute;
         top: 100%;
-        left: 0;
+        inset-inline-start: 0;
         margin-top: var(--space-xs);
         background: var(--surface-overlay);
         border: 1px solid var(--border-default);
@@ -110,13 +113,13 @@ export class ArcBreadcrumbMenu extends LitElement {
         border-radius: var(--radius-sm);
         color: var(--text-secondary);
         text-decoration: none;
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         transition: background var(--transition-fast), color var(--transition-fast);
         cursor: pointer;
         background: none;
         border: none;
         width: 100%;
-        text-align: left;
+        text-align: start;
         font: inherit;
       }
 
@@ -125,6 +128,10 @@ export class ArcBreadcrumbMenu extends LitElement {
         color: var(--text-primary);
       }
     `,
+    // animate: false — the dropdown is created and destroyed per open crumb
+    // rather than toggled, so there is no open state for an enter transition to
+    // key on. Asking for one would leave the panel stuck at opacity 0.
+    managedPanelStyles('breadcrumb-menu__dropdown', { animate: false }),
   ];
 
   constructor() {
@@ -132,21 +139,26 @@ export class ArcBreadcrumbMenu extends LitElement {
     this.label = 'Breadcrumb';
     this.items = [];
     this._openIndex = -1;
-    this._onDocClick = this._onDocClick.bind(this);
+    this._clickOutside = new ClickOutsideController(this, {
+      onClickOutside: () => { this._openIndex = -1; },
+    });
+    this._position = new PositionController(this, {
+      // Only one crumb's dropdown is rendered at a time, so "the dropdown" is
+      // unambiguous, and its anchor is the crumb it was rendered inside.
+      floating: () => this.shadowRoot?.querySelector('.breadcrumb-menu__dropdown'),
+      anchor: () =>
+        this.shadowRoot?.querySelector('.breadcrumb-menu__dropdown')?.parentElement,
+      align: () => 'start',
+      offset: 4,
+    });
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-    document.addEventListener('click', this._onDocClick);
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    document.removeEventListener('click', this._onDocClick);
-  }
-
-  _onDocClick() {
-    this._openIndex = -1;
+  updated(changed) {
+    if (changed.has('_openIndex')) {
+      const open = this._openIndex >= 0;
+      open ? this._position.show() : this._position.hide();
+      open ? this._clickOutside.activate() : this._clickOutside.deactivate();
+    }
   }
 
   _toggleDropdown(index, e) {

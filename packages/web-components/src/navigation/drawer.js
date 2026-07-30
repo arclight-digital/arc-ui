@@ -57,7 +57,7 @@ export class ArcDrawer extends OverlayMixin(LitElement) {
         width: 300px;
         max-width: 85vw;
         background: var(--surface-primary);
-        border-right: 1px solid var(--border-subtle);
+        border-inline-end: 1px solid var(--border-subtle);
         display: flex;
         flex-direction: column;
         transition: transform var(--transition-base) var(--ease-out-expo);
@@ -93,7 +93,7 @@ export class ArcDrawer extends OverlayMixin(LitElement) {
       .drawer__title {
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         letter-spacing: 2px;
         text-transform: uppercase;
         color: var(--text-primary);

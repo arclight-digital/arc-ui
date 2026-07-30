@@ -1,6 +1,8 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { positionStyles } from '../shared/position-styles.js';
+import { PositionController } from '../shared/position-controller.js';
+import { ClickOutsideController } from '../shared/click-outside.js';
 import { setTriggerAria, deepActiveElement } from '../shared/trigger-aria.js';
 
 /**
@@ -83,22 +85,31 @@ export class ArcPopover extends LitElement {
     this.position = 'bottom';
     this.trigger = '';
     this._openedFrom = null;
-    this._onDocumentClick = this._onDocumentClick.bind(this);
     this._onKeyDown = this._onKeyDown.bind(this);
+    this._clickOutside = new ClickOutsideController(this, {
+      // _close(false): the pointer chose a new target, so don't yank focus back
+      // to the trigger.
+      onClickOutside: () => this._close(false),
+    });
+    this._position = new PositionController(this, {
+      anchor: () => this.shadowRoot?.querySelector('.popover__trigger'),
+      floating: () => this.shadowRoot?.querySelector('.popover__panel'),
+      placement: () => this.position,
+    });
   }
 
   updated(changed) {
+    if (changed.has('open') || changed.has('position')) {
+      this.open ? this._position.show() : this._position.hide();
+    }
     if (changed.has('open')) {
       this._syncTriggerAria();
       if (this.open) {
         this._openedFrom = deepActiveElement();
-        // Defer so the opening click doesn't immediately close
-        requestAnimationFrame(() => {
-          document.addEventListener('click', this._onDocumentClick);
-        });
+        this._clickOutside.activate();
         document.addEventListener('keydown', this._onKeyDown);
       } else {
-        document.removeEventListener('click', this._onDocumentClick);
+        this._clickOutside.deactivate();
         document.removeEventListener('keydown', this._onKeyDown);
       }
     }
@@ -106,16 +117,7 @@ export class ArcPopover extends LitElement {
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    document.removeEventListener('click', this._onDocumentClick);
     document.removeEventListener('keydown', this._onKeyDown);
-  }
-
-  _onDocumentClick(e) {
-    const path = e.composedPath();
-    if (!path.includes(this)) {
-      // Pointer chose a new target — don't yank focus back
-      this._close(false);
-    }
   }
 
   _syncTriggerAria() {

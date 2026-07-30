@@ -44,7 +44,7 @@ export class ArcSwitchGroup extends LitElement {
 
       legend {
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         font-weight: 600;
         color: var(--text-secondary);
         padding: 0;

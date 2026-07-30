@@ -47,7 +47,7 @@ export class ArcCollapsible extends LitElement {
         color: var(--text-primary);
         background: none;
         border: none;
-        text-align: left;
+        text-align: start;
         transition: background var(--transition-fast);
       }
 
@@ -66,7 +66,7 @@ export class ArcCollapsible extends LitElement {
         align-items: center;
         justify-content: center;
         color: var(--text-muted);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         flex-shrink: 0;
         transition: transform var(--transition-slow);
         transform: rotate(0deg);

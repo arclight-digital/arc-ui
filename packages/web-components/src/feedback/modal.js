@@ -1,7 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import { lockScroll, unlockScroll } from '../shared/scroll-lock.js';
-import { trapTabKey, focusFirst, deepActiveElement } from '../shared/focus-trap.js';
+import { OverlayMixin } from '../shared/overlay-mixin.js';
 
 /**
  * General-purpose focus-trapping overlay with backdrop blur, slide-up animation, and ESC-to-close
@@ -26,7 +25,7 @@ import { trapTabKey, focusFirst, deepActiveElement } from '../shared/focus-trap.
  * @csspart body
  * @csspart footer
  */
-export class ArcModal extends LitElement {
+export class ArcModal extends OverlayMixin(LitElement) {
   static properties = {
     open:       { type: Boolean, reflect: true },
     heading:    { type: String },
@@ -112,15 +111,15 @@ export class ArcModal extends LitElement {
         content: '';
         position: absolute;
         bottom: 0;
-        left: var(--space-lg);
-        right: var(--space-lg);
+        inset-inline-start: var(--space-lg);
+        inset-inline-end: var(--space-lg);
         height: 1px;
         background: var(--divider-glow);
         opacity: 0.5;
       }
 
       .modal__heading {
-        font-size: var(--text-md);
+        font-size: var(--_text-md);
         font-weight: 600;
         color: var(--text-primary);
         margin: 0;
@@ -147,8 +146,8 @@ export class ArcModal extends LitElement {
         content: '';
         position: absolute;
         top: 0;
-        left: var(--space-lg);
-        right: var(--space-lg);
+        inset-inline-start: var(--space-lg);
+        inset-inline-end: var(--space-lg);
         height: 1px;
         background: var(--divider-glow);
         opacity: 0.5;
@@ -168,58 +167,29 @@ export class ArcModal extends LitElement {
     this.size = 'md';
     this.fullscreen = false;
     this.closable = true;
-    this._handleKeydown = this._handleKeydown.bind(this);
   }
 
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    document.removeEventListener('keydown', this._handleKeydown);
-    unlockScroll(this);
-  }
-
-  _handleKeydown(e) {
-    if (e.key === 'Escape' && this.closable) {
-      this._close();
-      return;
-    }
-    // Focus trap — composed-tree aware, sees slotted body/footer content
-    if (e.key === 'Tab') {
-      const dialog = this.shadowRoot.querySelector('.modal__dialog');
-      if (dialog) trapTabKey(e, dialog);
-    }
-  }
-
+  /**
+   * The single gate on dismissal.
+   *
+   * OverlayMixin routes Escape and backdrop clicks here, and the X button only
+   * renders when closable, so guarding once covers every path. A modal with
+   * closable=false is genuinely undismissable — the caller has to resolve it
+   * through its own footer actions.
+   */
   _close() {
+    if (!this.closable) return;
     // Cancelable: a consumer with unsaved state can preventDefault() to veto.
     if (!this.dispatchEvent(new CustomEvent('arc-close', { bubbles: true, composed: true, cancelable: true }))) return;
     this.open = false;
   }
 
-  _backdropClick(e) {
-    if (e.target === e.currentTarget && this.closable) {
-      this._close();
-    }
-  }
-
   updated(changed) {
-    if (changed.has('open')) {
-      if (this.open) {
-        this._previousFocus = deepActiveElement();
-        document.addEventListener('keydown', this._handleKeydown);
-        lockScroll(this);
-        this.dispatchEvent(new CustomEvent('arc-open', { bubbles: true, composed: true }));
-        this.updateComplete.then(() => {
-          const dialog = this.shadowRoot.querySelector('.modal__dialog');
-          if (dialog && !dialog.contains(deepActiveElement())) focusFirst(dialog);
-        });
-      } else {
-        document.removeEventListener('keydown', this._handleKeydown);
-        unlockScroll(this);
-        if (changed.get('open') && this._previousFocus?.isConnected) {
-          this._previousFocus.focus();
-        }
-        this._previousFocus = null;
-      }
+    // Focus trap, scroll lock, Escape and focus restore all come from
+    // OverlayMixin; this only adds the open event.
+    super.updated(changed);
+    if (changed.has('open') && this.open) {
+      this.dispatchEvent(new CustomEvent('arc-open', { bubbles: true, composed: true }));
     }
   }
 
@@ -227,7 +197,7 @@ export class ArcModal extends LitElement {
     return html`
       <div
         class="modal__backdrop"
-        @click=${this._backdropClick}
+        @click=${this._handleBackdropClick}
         part="backdrop"
       >
         <div

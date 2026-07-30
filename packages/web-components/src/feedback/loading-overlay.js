@@ -55,7 +55,7 @@ export class ArcLoadingOverlay extends LitElement {
 
       .loading-overlay__message {
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-muted);
       }
 

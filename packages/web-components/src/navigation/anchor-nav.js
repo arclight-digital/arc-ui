@@ -44,7 +44,7 @@ export class ArcAnchorNav extends LitElement {
       .anchor-nav__link {
         padding: var(--space-xs) var(--space-sm);
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-muted);
         text-decoration: none;
         border-radius: var(--radius-sm);
@@ -52,7 +52,7 @@ export class ArcAnchorNav extends LitElement {
         cursor: pointer;
         background: none;
         border: none;
-        text-align: left;
+        text-align: start;
       }
 
       .anchor-nav__link:hover {
@@ -73,7 +73,7 @@ export class ArcAnchorNav extends LitElement {
       ::slotted(*) {
         padding: var(--space-xs) var(--space-sm);
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-muted);
         text-decoration: none;
         border-radius: var(--radius-sm);

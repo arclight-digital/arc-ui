@@ -35,8 +35,8 @@ export class ArcSticky extends LitElement {
       .sentinel {
         position: absolute;
         top: -1px;
-        left: 0;
-        right: 0;
+        inset-inline-start: 0;
+        inset-inline-end: 0;
         height: 1px;
         pointer-events: none;
         visibility: hidden;

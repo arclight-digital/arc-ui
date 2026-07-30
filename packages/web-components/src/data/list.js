@@ -54,8 +54,8 @@ export class ArcList extends LitElement {
       }
 
       /* Sizes */
-      :host([size="sm"]) { font-size: var(--text-sm); }
-      :host([size="lg"]) { font-size: var(--text-lg); }
+      :host([size="sm"]) { font-size: var(--_text-sm); }
+      :host([size="lg"]) { font-size: var(--_text-lg); }
     `,
   ];
 

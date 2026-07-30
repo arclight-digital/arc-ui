@@ -43,7 +43,7 @@ export class ArcTabs extends LitElement {
       .tabs__tab {
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         letter-spacing: 2px;
         text-transform: uppercase;
         color: var(--text-ghost);
@@ -111,7 +111,7 @@ export class ArcTabs extends LitElement {
       :host([orientation="vertical"]) .tabs__list {
         flex-direction: column;
         border-bottom: none;
-        border-right: 1px solid var(--divider);
+        border-inline-end: 1px solid var(--divider);
         overflow-y: auto;
         overflow-x: hidden;
         min-width: 180px;
@@ -120,14 +120,14 @@ export class ArcTabs extends LitElement {
       :host([orientation="vertical"]) .tabs__tab {
         border-bottom: none;
         margin-bottom: 0;
-        border-right: 2px solid transparent;
-        margin-right: -1px;
-        text-align: left;
+        border-inline-end: 2px solid transparent;
+        margin-inline-end: -1px;
+        text-align: start;
       }
 
       :host([orientation="vertical"]) .tabs__tab[aria-selected="true"] {
         border-bottom-color: transparent;
-        border-right-color: var(--interactive);
+        border-inline-end-color: var(--interactive);
       }
 
       :host([orientation="vertical"]) .tabs__panel {
@@ -138,12 +138,12 @@ export class ArcTabs extends LitElement {
 
       /* Vertical + Pills variant */
       :host([orientation="vertical"][variant="pills"]) .tabs__list {
-        border-right: none;
+        border-inline-end: none;
       }
 
       :host([orientation="vertical"][variant="pills"]) .tabs__tab {
-        border-right: none;
-        margin-right: 0;
+        border-inline-end: none;
+        margin-inline-end: 0;
       }
 
       @media (prefers-reduced-motion: reduce) {

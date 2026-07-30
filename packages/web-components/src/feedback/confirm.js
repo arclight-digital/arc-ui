@@ -37,7 +37,7 @@ export class ArcConfirm extends LitElement {
       :host { display: contents; }
 
       .confirm__message {
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-secondary);
         line-height: 1.6;
       }

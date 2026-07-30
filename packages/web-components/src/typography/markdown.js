@@ -224,9 +224,9 @@ export class ArcMarkdown extends LitElement {
         margin-bottom: var(--space-md);
       }
 
-      .markdown h1 { font-size: var(--text-3xl); font-weight: 600; }
+      .markdown h1 { font-size: var(--_text-3xl); font-weight: 600; }
       .markdown h2 { font-size: var(--heading-size); font-weight: 600; }
-      .markdown h3 { font-size: var(--text-lg); font-weight: 600; }
+      .markdown h3 { font-size: var(--_text-lg); font-weight: 600; }
       .markdown h4 { font-size: var(--body-size); font-weight: 600; }
       .markdown h5 { font-size: var(--body-size); font-weight: 500; }
       .markdown h6 { font-size: var(--code-size); font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
@@ -298,7 +298,7 @@ export class ArcMarkdown extends LitElement {
       .markdown ul,
       .markdown ol {
         margin: 0 0 var(--space-md) 0;
-        padding-left: var(--space-lg);
+        padding-inline-start: var(--space-lg);
         color: var(--text-secondary);
       }
 

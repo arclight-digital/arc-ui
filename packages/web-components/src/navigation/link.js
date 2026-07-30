@@ -79,7 +79,7 @@ export class ArcLink extends LitElement {
       :host([variant="nav"]) .link,
       :host([variant="nav"]) .link-slot::slotted(a) {
         color: var(--text-secondary);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         display: inline-flex;
         align-items: center;
         gap: var(--space-xs);
@@ -106,7 +106,7 @@ export class ArcLink extends LitElement {
         display: inline-block;
         width: 12px;
         height: 12px;
-        margin-left: 2px; /* cosmetic micro-spacing for external icon */
+        margin-inline-start: 2px; /* cosmetic micro-spacing for external icon */
         vertical-align: middle;
         opacity: 0.6;
       }

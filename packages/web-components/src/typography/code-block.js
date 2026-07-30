@@ -142,13 +142,13 @@ export class ArcCodeBlock extends LitElement {
 
       .code-block__filename {
         font-family: var(--font-mono);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-muted);
       }
 
       .code-block__lang {
         font-family: var(--font-mono);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         color: var(--text-ghost);
         text-transform: uppercase;
         letter-spacing: 1px;
@@ -160,7 +160,7 @@ export class ArcCodeBlock extends LitElement {
 
       .code-block__body {
         padding: var(--space-md);
-        padding-right: calc(var(--space-md) + 80px);
+        padding-inline-end: calc(var(--space-md) + 80px);
         overflow-x: auto;
         overflow-y: hidden;
       }
@@ -185,7 +185,7 @@ export class ArcCodeBlock extends LitElement {
       .code-block__copy {
         position: absolute;
         top: var(--space-sm);
-        right: var(--space-sm);
+        inset-inline-end: var(--space-sm);
         z-index: 1;
         border-radius: var(--radius-sm);
         opacity: 0.75;
@@ -265,7 +265,7 @@ export class ArcCodeBlock extends LitElement {
         left: 50%;
         transform: translateX(-50%);
         font-family: var(--font-mono);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-muted);
       }
 
@@ -280,19 +280,19 @@ export class ArcCodeBlock extends LitElement {
         flex: 1;
         min-width: 0;
         padding: var(--space-sm);
-        padding-right: var(--space-xs);
+        padding-inline-end: var(--space-xs);
       }
 
       :host([variant="basic"]) .code-block__copy {
         position: static;
         flex-shrink: 0;
         order: 1;
-        margin-left: var(--space-sm);
+        margin-inline-start: var(--space-sm);
       }
 
       .code-block__meta {
         font-family: var(--font-mono);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         color: var(--text-ghost);
       }
 

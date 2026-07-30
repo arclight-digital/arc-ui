@@ -25,15 +25,15 @@ export class ArcStatusBar extends LitElement {
       :host {
         display: block;
         font-family: var(--font-mono);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-muted);
       }
 
       :host([position='fixed']) {
         position: fixed;
         bottom: 0;
-        left: 0;
-        right: 0;
+        inset-inline-start: 0;
+        inset-inline-end: 0;
         z-index: 100;
       }
 
@@ -67,7 +67,7 @@ export class ArcStatusBar extends LitElement {
         align-items: center;
         gap: var(--space-sm);
         flex-shrink: 0;
-        margin-left: auto;
+        margin-inline-start: auto;
       }
     `,
   ];

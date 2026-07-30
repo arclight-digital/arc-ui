@@ -1,5 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { PositionController } from '../shared/position-controller.js';
+import { ClickOutsideController } from '../shared/click-outside.js';
 
 /**
  * Notification dropdown panel triggered by a button.
@@ -60,10 +62,15 @@ export class ArcNotificationPanel extends LitElement {
         transform-origin: top right;
         pointer-events: none;
 
-        /* closing transition — slightly faster */
+        /* closing transition — slightly faster.
+           display and overlay ride along with allow-discrete so the panel keeps
+           painting through the close once PositionController has promoted it to
+           the top layer, where "closed" means display:none. */
         transition:
           opacity 120ms ease-in,
-          transform 120ms ease-in;
+          transform 120ms ease-in,
+          display 120ms allow-discrete,
+          overlay 120ms allow-discrete;
       }
 
       :host([position='top-left']) .panel {
@@ -78,15 +85,26 @@ export class ArcNotificationPanel extends LitElement {
         /* opening transition — cubic overshoot for a pop feel */
         transition:
           opacity 180ms ease-out,
-          transform 250ms cubic-bezier(0.34, 1.56, 0.64, 1);
+          transform 250ms cubic-bezier(0.34, 1.56, 0.64, 1),
+          display 180ms allow-discrete,
+          overlay 180ms allow-discrete;
+      }
+
+      /* A managed panel opens from display:none, which has no previous style to
+         interpolate from; @starting-style supplies one so the pop still plays. */
+      @starting-style {
+        :host([open]) .panel[data-managed] {
+          opacity: 0;
+          transform: translateY(-6px) scale(0.97);
+        }
       }
 
       :host([position='top-right']) .panel {
-        right: 0;
+        inset-inline-end: 0;
       }
 
       :host([position='top-left']) .panel {
-        left: 0;
+        inset-inline-start: 0;
       }
 
       /* ---- Header ---- */
@@ -98,7 +116,7 @@ export class ArcNotificationPanel extends LitElement {
         padding: var(--space-md);
         font-family: var(--font-body);
         font-weight: 600;
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-primary);
       }
 
@@ -150,28 +168,36 @@ export class ArcNotificationPanel extends LitElement {
     this.open = false;
     this.position = 'top-right';
     this.maxHeight = '400px';
-    this._onOutsideClick = this._onOutsideClick.bind(this);
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    document.removeEventListener('click', this._onOutsideClick, true);
+    this._clickOutside = new ClickOutsideController(this, {
+      onClickOutside: () => { this.open = false; },
+    });
+    this._position = new PositionController(this, {
+      anchor: () => this.shadowRoot?.querySelector('.trigger'),
+      floating: () => this.shadowRoot?.querySelector('.panel'),
+      // This component's `position` names a corner rather than a side: the panel
+      // always hangs below the trigger, and top-left/top-right choose which of
+      // its edges lines up. Anything unrecognised aligns like top-right, the
+      // same fallback the CSS gives.
+      align: () => (this.position === 'top-left' ? 'start' : 'end'),
+      fallbackAlign: 'end',
+    });
   }
 
   updated(changedProperties) {
     this.style.setProperty('--max-height', this.maxHeight);
 
+    if (changedProperties.has('open') || changedProperties.has('position')) {
+      this.open ? this._position.show() : this._position.hide();
+    }
+
     if (changedProperties.has('open')) {
       if (this.open) {
-        // Defer so we don't catch the same click that opened the panel
-        requestAnimationFrame(() => {
-          document.addEventListener('click', this._onOutsideClick, true);
-        });
+        this._clickOutside.activate();
         this.dispatchEvent(
           new CustomEvent('arc-open', { bubbles: true, composed: true })
         );
       } else {
-        document.removeEventListener('click', this._onOutsideClick, true);
+        this._clickOutside.deactivate();
         if (changedProperties.get('open') === true) {
           this.dispatchEvent(
             new CustomEvent('arc-close', { bubbles: true, composed: true })
@@ -183,13 +209,6 @@ export class ArcNotificationPanel extends LitElement {
 
   _onTriggerClick() {
     this.open = !this.open;
-  }
-
-  _onOutsideClick(e) {
-    const path = e.composedPath();
-    if (!path.includes(this)) {
-      this.open = false;
-    }
   }
 
   render() {

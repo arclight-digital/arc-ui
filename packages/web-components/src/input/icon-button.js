@@ -97,11 +97,11 @@ export class ArcIconButton extends LitElement {
 
       /* Sizes — with text */
       .btn--has-text { min-height: var(--touch-min); }
-      :host([size="xs"]) .btn--has-text { padding: var(--space-xs) var(--space-sm); font-size: var(--text-xs); }
-      :host([size="sm"]) .btn--has-text { padding: calc(var(--space-xs) + 2px) calc(var(--space-sm) + 2px); font-size: var(--text-xs); }
+      :host([size="xs"]) .btn--has-text { padding: var(--space-xs) var(--space-sm); font-size: var(--_text-xs); }
+      :host([size="sm"]) .btn--has-text { padding: calc(var(--space-xs) + 2px) calc(var(--space-sm) + 2px); font-size: var(--_text-xs); }
       :host(:not([size="lg"]):not([size="sm"]):not([size="xs"])) .btn--has-text,
-      :host([size="md"]) .btn--has-text { padding: var(--space-xs) var(--space-sm); font-size: var(--text-xs); }
-      :host([size="lg"]) .btn--has-text { padding: var(--space-sm) var(--space-md); font-size: var(--text-xs); }
+      :host([size="md"]) .btn--has-text { padding: var(--space-xs) var(--space-sm); font-size: var(--_text-xs); }
+      :host([size="lg"]) .btn--has-text { padding: var(--space-sm) var(--space-md); font-size: var(--_text-xs); }
 
       /* Default → ghost */
       :host(:not([variant="primary"]):not([variant="secondary"])) .btn,

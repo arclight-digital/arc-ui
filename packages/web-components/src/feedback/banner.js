@@ -54,8 +54,8 @@ export class ArcBanner extends LitElement {
         content: '';
         position: absolute;
         bottom: 0;
-        left: 0;
-        right: 0;
+        inset-inline-start: 0;
+        inset-inline-end: 0;
         height: 2px;
         background: linear-gradient(90deg, transparent, var(--_status-color), transparent);
       }
@@ -63,14 +63,14 @@ export class ArcBanner extends LitElement {
       .banner__icon {
         color: var(--_status-color);
         flex-shrink: 0;
-        font-size: var(--text-md);
+        font-size: var(--_text-md);
         line-height: 1;
       }
 
       .banner__message {
         flex: 1;
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-secondary);
       }
 

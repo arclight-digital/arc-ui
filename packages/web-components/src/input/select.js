@@ -2,6 +2,9 @@ import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 import { ClickOutsideController } from '../shared/click-outside.js';
+import { PositionController } from '../shared/position-controller.js';
+import { ListboxController } from '../shared/listbox-controller.js';
+import { managedPanelStyles } from '../shared/position-styles.js';
 import '../shared/option.js';
 
 /**
@@ -93,7 +96,7 @@ export class ArcSelect extends FormControlMixin(LitElement) {
       .select__placeholder { color: var(--text-ghost); }
 
       .select__chevron {
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         color: var(--text-muted);
         transition: transform var(--transition-fast) var(--ease-out-expo);
       }
@@ -104,11 +107,16 @@ export class ArcSelect extends FormControlMixin(LitElement) {
         to { opacity: 1; transform: translateY(0); }
       }
 
+      /* Resting position for a dropdown PositionController hasn't adopted:
+         pre-upgrade and in prism's static HTML export. Once managed, the
+         controller writes fixed viewport coordinates and the panel paints in
+         the top layer, so it no longer clips at a viewport edge or inside an
+         overflow:hidden ancestor. */
       .select__dropdown {
         position: absolute;
         top: 100%;
-        left: 0;
-        right: 0;
+        inset-inline-start: 0;
+        inset-inline-end: 0;
         margin-top: var(--space-xs);
         background: var(--surface-overlay);
         border: 1px solid var(--border-default);
@@ -144,19 +152,15 @@ export class ArcSelect extends FormControlMixin(LitElement) {
         background: none;
         border: none;
         cursor: pointer;
-        text-align: left;
+        text-align: start;
         transition: background var(--transition-fast), color var(--transition-fast);
       }
 
       .select__option:hover,
-      .select__option:focus-visible {
+      .select__option--active {
         background: rgba(var(--interactive-rgb), 0.08);
         color: var(--text-primary);
         outline: none;
-      }
-
-      .select__option:active {
-        transform: scale(0.97);
       }
 
       .select__option[aria-selected="true"] {
@@ -164,9 +168,9 @@ export class ArcSelect extends FormControlMixin(LitElement) {
       }
 
       /* Sizes */
-      :host([size="sm"]) .select__trigger { padding: var(--space-xs) var(--space-sm); font-size: var(--text-sm); }
+      :host([size="sm"]) .select__trigger { padding: var(--space-xs) var(--space-sm); font-size: var(--_text-sm); }
       :host([size="sm"]) .select__label { font-size: calc(var(--label-inline-size) - 1px); }
-      :host([size="lg"]) .select__trigger { padding: var(--space-md) var(--space-lg); font-size: var(--text-md); }
+      :host([size="lg"]) .select__trigger { padding: var(--space-md) var(--space-lg); font-size: var(--_text-md); }
 
       /* Error state */
       .select--error .select__trigger {
@@ -180,7 +184,7 @@ export class ArcSelect extends FormControlMixin(LitElement) {
       }
 
       .select__error {
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         color: var(--color-error);
         line-height: 1.4;
         margin-top: var(--space-xs);
@@ -198,6 +202,9 @@ export class ArcSelect extends FormControlMixin(LitElement) {
         }
       }
     `,
+    // animate: false — the dropdown has its own dropdown-in keyframes, and a
+    // declared transform beside them is redundant at best.
+    managedPanelStyles('select__dropdown', { animate: false }),
   ];
 
   static _idCounter = 0;
@@ -217,6 +224,33 @@ export class ArcSelect extends FormControlMixin(LitElement) {
     this._clickOutside = new ClickOutsideController(this, {
       onClickOutside: () => { this.open = false; },
     });
+    this._position = new PositionController(this, {
+      anchor: () => this.shadowRoot?.querySelector('.select__trigger'),
+      floating: () => this.shadowRoot?.querySelector('.select__dropdown'),
+      // The dropdown belongs directly under its trigger and spans its width, so
+      // there is no cross-axis alignment choice to make — only whether it has
+      // room below, which flip decides.
+      matchWidth: true,
+      offset: 4,
+    });
+    this._listbox = new ListboxController(this, {
+      getItemCount: () => this._options.length,
+      isOpen: () => this.open,
+      onOpen: () => { this.open = true; },
+      onClose: () => {
+        this.open = false;
+        // Virtual focus means the trigger never lost real focus, so there is
+        // nothing to restore — but a click-opened select may not have had it.
+        this.shadowRoot.querySelector('.select__trigger')?.focus();
+      },
+      onSelect: (i) => this._selectOption(this._options[i]),
+      optionId: (i) => `${this._selectId}-opt-${i}`,
+      scrollContainer: () => this.shadowRoot?.querySelector('.select__dropdown'),
+      // A select has no text field of its own, so letter keys can mean
+      // "jump to the option starting with this" — as a native select does.
+      typeahead: true,
+      getItemLabel: (i) => this._options[i]?.label ?? '',
+    });
   }
 
   updated(changed) {
@@ -224,8 +258,24 @@ export class ArcSelect extends FormControlMixin(LitElement) {
       this._updateFormValue();
     }
     if (changed.has('open')) {
-      if (this.open) this._clickOutside.activate();
-      else this._clickOutside.deactivate();
+      if (this.open) {
+        this._clickOutside.activate();
+        this._position.show();
+        // Open onto the selected option, so arrowing starts from where the user
+        // already is rather than from the top of the list.
+        const selected = this._options.findIndex(o => o.value === this.value);
+        if (selected >= 0) this._listbox.setActive(selected);
+      } else {
+        this._clickOutside.deactivate();
+        this._position.hide();
+        this._listbox.reset();
+      }
+    }
+    // Options arriving or filtering out changes the panel's height, which can
+    // change whether it still fits below the trigger.
+    if (changed.has('_options')) {
+      this._listbox.clampToCount();
+      if (this.open) this._position.show();
     }
   }
 
@@ -250,33 +300,17 @@ export class ArcSelect extends FormControlMixin(LitElement) {
   }
 
   _handleTriggerKeydown(e) {
-    if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      this.open = true;
-      this.updateComplete.then(() => {
-        this.shadowRoot.querySelector('.select__option')?.focus();
-      });
-    } else if (e.key === 'Escape') {
-      this.open = false;
-    }
-  }
+    if (this._listbox.handleKeydown(e)) return;
 
-  _handleOptionKeydown(e, opt, index) {
-    if (e.key === 'ArrowDown') {
+    // Space and Enter open a closed select, and Space selects the active option
+    // in an open one. Enter-when-open is already handled above.
+    if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      const next = this.shadowRoot.querySelectorAll('.select__option')[index + 1];
-      next?.focus();
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      const prev = this.shadowRoot.querySelectorAll('.select__option')[index - 1];
-      if (prev) prev.focus();
-      else this.shadowRoot.querySelector('.select__trigger')?.focus();
-    } else if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      this._selectOption(opt);
-    } else if (e.key === 'Escape') {
-      this.open = false;
-      this.shadowRoot.querySelector('.select__trigger')?.focus();
+      if (!this.open) {
+        this.open = true;
+      } else if (this._listbox.activeIndex >= 0) {
+        this._selectOption(this._options[this._listbox.activeIndex]);
+      }
     }
   }
 
@@ -306,6 +340,7 @@ export class ArcSelect extends FormControlMixin(LitElement) {
           aria-expanded=${this.open ? 'true' : 'false'}
           aria-haspopup="listbox"
           aria-controls=${listboxId}
+          aria-activedescendant=${this._listbox.activeDescendantId || nothing}
           aria-labelledby=${this.label ? labelId : nothing}
           aria-label=${this.label ? nothing : this.placeholder || 'Select an option'}
           @click=${this._toggleOpen}
@@ -320,14 +355,14 @@ export class ArcSelect extends FormControlMixin(LitElement) {
         </button>
         <div id=${listboxId} class="select__dropdown" role="listbox" part="dropdown">
           ${this._options.map((opt, i) => html`
-            <button
-              class="select__option"
+            <div
+              id="${this._selectId}-opt-${i}"
+              class="select__option ${i === this._listbox.activeIndex ? 'select__option--active' : ''}"
               role="option"
               aria-selected=${opt.value === this.value ? 'true' : 'false'}
-              tabindex="-1"
               @click=${() => this._selectOption(opt)}
-              @keydown=${(e) => this._handleOptionKeydown(e, opt, i)}
-            >${opt.label}</button>
+              part="option"
+            >${opt.label}</div>
           `)}
         </div>
         ${hasError ? html`<span class="select__error" role="alert" part="error">${this.error}</span>` : ''}

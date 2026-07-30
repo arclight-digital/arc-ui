@@ -40,8 +40,8 @@ export class ArcAccordion extends LitElement {
         content: '';
         position: absolute;
         top: 0;
-        left: var(--space-md);
-        right: var(--space-md);
+        inset-inline-start: var(--space-md);
+        inset-inline-end: var(--space-md);
         height: 1px;
         background: var(--divider-glow);
         opacity: 0.4;
@@ -56,12 +56,12 @@ export class ArcAccordion extends LitElement {
         padding: var(--space-lg);
         cursor: pointer;
         font-family: var(--font-body);
-        font-size: var(--text-md);
+        font-size: var(--_text-md);
         font-weight: 600;
         color: var(--text-primary);
         background: none;
         border: none;
-        text-align: left;
+        text-align: start;
         transition: background var(--transition-fast), box-shadow var(--transition-fast), transform var(--ease-out-expo);
         min-height: var(--touch-min);
       }
@@ -105,7 +105,7 @@ export class ArcAccordion extends LitElement {
       .accordion__body p {
         color: var(--text-secondary);
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         line-height: 1.75;
         padding: var(--space-md);
         margin: 0;

@@ -41,7 +41,7 @@ export class ArcComparison extends LitElement {
       .header-cell {
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         letter-spacing: 1px;
         text-transform: uppercase;
         color: var(--text-primary);
@@ -51,7 +51,7 @@ export class ArcComparison extends LitElement {
       }
 
       .header-cell--feature {
-        text-align: left;
+        text-align: start;
       }
 
       .header-cell--highlight {
@@ -75,14 +75,14 @@ export class ArcComparison extends LitElement {
         padding: var(--space-sm) var(--space-md);
         text-align: center;
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-secondary);
         border-bottom: 1px solid var(--divider);
         transition: background var(--transition-fast);
       }
 
       .cell--feature {
-        text-align: left;
+        text-align: start;
         color: var(--text-secondary);
       }
 

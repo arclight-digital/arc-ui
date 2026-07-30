@@ -58,7 +58,7 @@ export class ArcResizable extends LitElement {
       /* Horizontal: handle on right edge */
       :host([direction="horizontal"]) .handle {
         top: 0;
-        right: 0;
+        inset-inline-end: 0;
         width: 4px;
         height: 100%;
         cursor: col-resize;
@@ -67,7 +67,7 @@ export class ArcResizable extends LitElement {
       /* Vertical: handle on bottom edge */
       :host([direction="vertical"]) .handle {
         bottom: 0;
-        left: 0;
+        inset-inline-start: 0;
         height: 4px;
         width: 100%;
         cursor: row-resize;
@@ -92,16 +92,16 @@ export class ArcResizable extends LitElement {
 
       :host([direction="horizontal"]) .handle::before {
         top: 0;
-        left: -4px;
-        right: -4px;
+        inset-inline-start: -4px;
+        inset-inline-end: -4px;
         bottom: 0;
       }
 
       :host([direction="vertical"]) .handle::before {
-        left: 0;
+        inset-inline-start: 0;
         top: -4px;
         bottom: -4px;
-        right: 0;
+        inset-inline-end: 0;
       }
 
       @media (prefers-reduced-motion: reduce) {

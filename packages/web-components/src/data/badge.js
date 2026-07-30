@@ -30,7 +30,7 @@ export class ArcBadge extends LitElement {
         gap: var(--space-xs);
         font-family: var(--font-mono);
         font-weight: 500;
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         letter-spacing: normal;
         text-transform: none;
         color: var(--text-muted);
@@ -87,8 +87,8 @@ export class ArcBadge extends LitElement {
       :host([variant="info"]:hover) .badge { box-shadow: 0 0 12px rgba(var(--color-info-rgb), 0.15); }
 
       /* Sizes */
-      :host([size="sm"]) .badge { font-size: calc(var(--text-xs) - 1px); padding: 2px var(--space-xs); }
-      :host([size="lg"]) .badge { font-size: var(--text-sm); padding: var(--space-sm) var(--space-md); }
+      :host([size="sm"]) .badge { font-size: calc(var(--_text-xs) - 1px); padding: 2px var(--space-xs); }
+      :host([size="lg"]) .badge { font-size: var(--_text-sm); padding: var(--space-sm) var(--space-md); }
 
       @media (prefers-reduced-motion: reduce) {
         :host *,

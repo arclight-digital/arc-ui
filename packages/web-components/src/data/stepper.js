@@ -55,7 +55,7 @@ export class ArcStepper extends LitElement {
         align-items: center;
         justify-content: center;
         font-family: var(--font-label);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         font-weight: 700;
         letter-spacing: 1px;
         flex-shrink: 0;
@@ -111,13 +111,13 @@ export class ArcStepper extends LitElement {
       }
 
       .step__line--left {
-        left: calc(-1 * var(--space-xs) - var(--space-sm));
-        right: calc(50% + 20px);
+        inset-inline-start: calc(-1 * var(--space-xs) - var(--space-sm));
+        inset-inline-end: calc(50% + 20px);
       }
 
       .step__line--right {
-        left: calc(50% + 20px);
-        right: calc(-1 * var(--space-xs) - var(--space-sm));
+        inset-inline-start: calc(50% + 20px);
+        inset-inline-end: calc(-1 * var(--space-xs) - var(--space-sm));
       }
 
       .step--completed .step__line--left,
@@ -132,7 +132,7 @@ export class ArcStepper extends LitElement {
       .step__label {
         margin-top: var(--space-md);
         font-family: var(--font-label);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         font-weight: var(--font-label-weight, 600);
         letter-spacing: 2px;
         text-transform: uppercase;
@@ -150,7 +150,7 @@ export class ArcStepper extends LitElement {
       }
 
       .step__check {
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         line-height: 1;
       }
 

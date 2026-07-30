@@ -75,8 +75,8 @@ export class ArcSheet extends OverlayMixin(LitElement) {
       :host(:not([side="right"])) .sheet__panel,
       :host([side="bottom"]) .sheet__panel {
         bottom: 0;
-        left: 0;
-        right: 0;
+        inset-inline-start: 0;
+        inset-inline-end: 0;
         max-height: 80vh;
         border-radius: var(--radius-xl) var(--radius-xl) 0 0;
         transform: translateY(100%);
@@ -90,7 +90,7 @@ export class ArcSheet extends OverlayMixin(LitElement) {
       /* Right sheet */
       :host([side="right"]) .sheet__panel {
         top: 0;
-        right: 0;
+        inset-inline-end: 0;
         bottom: 0;
         width: 400px;
         max-width: 90vw;
@@ -113,7 +113,7 @@ export class ArcSheet extends OverlayMixin(LitElement) {
 
       .sheet__heading {
         font-family: var(--font-body);
-        font-size: var(--text-md);
+        font-size: var(--_text-md);
         font-weight: 600;
         color: var(--text-primary);
         margin: 0;

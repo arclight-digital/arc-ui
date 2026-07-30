@@ -81,7 +81,7 @@ export class ArcCarousel extends LitElement {
                     box-shadow var(--transition-fast),
                     opacity var(--transition-fast);
         opacity: 0.85;
-        font-size: var(--text-md);
+        font-size: var(--_text-md);
         line-height: 1;
         padding: 0;
       }

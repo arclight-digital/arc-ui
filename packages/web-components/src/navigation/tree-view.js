@@ -50,9 +50,9 @@ export class ArcTreeView extends LitElement {
         align-items: center;
         gap: var(--space-xs);
         width: 100%;
-        text-align: left;
+        text-align: start;
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-secondary);
         background: none;
         border: none;
@@ -99,7 +99,7 @@ export class ArcTreeView extends LitElement {
       .tree__icon {
         display: inline-flex;
         flex-shrink: 0;
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
       }
 
       .tree__label {
@@ -110,7 +110,7 @@ export class ArcTreeView extends LitElement {
 
       .tree__line {
         position: absolute;
-        left: 11px;
+        inset-inline-start: 11px;
         top: 0;
         bottom: 0;
         width: 1px;

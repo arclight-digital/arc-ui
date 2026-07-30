@@ -70,7 +70,7 @@ export class ArcStat extends LitElement {
         align-items: center;
         gap: 4px;
         font-family: var(--font-mono);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         font-weight: 500;
         margin-top: var(--space-xs);
       }

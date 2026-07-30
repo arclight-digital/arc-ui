@@ -1,5 +1,8 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { ClickOutsideController } from '../shared/click-outside.js';
+import { PositionController } from '../shared/position-controller.js';
+import { managedPanelStyles } from '../shared/position-styles.js';
 
 /**
  * Search input with a magnifying glass icon, clear button, loading spinner, and autocomplete
@@ -55,7 +58,7 @@ export class ArcSearch extends LitElement {
 
       .search__label {
         display: block;
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         font-weight: 600;
         color: var(--text-secondary);
         margin-bottom: var(--space-xs);
@@ -70,7 +73,7 @@ export class ArcSearch extends LitElement {
 
       .search__icon {
         position: absolute;
-        left: var(--space-sm);
+        inset-inline-start: var(--space-sm);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -84,7 +87,7 @@ export class ArcSearch extends LitElement {
         width: 100%;
         box-sizing: border-box;
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-primary);
         background: var(--surface-raised);
         border: 1px solid var(--border-default);
@@ -106,7 +109,7 @@ export class ArcSearch extends LitElement {
 
       .search__clear {
         position: absolute;
-        right: var(--space-sm);
+        inset-inline-end: var(--space-sm);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -117,7 +120,7 @@ export class ArcSearch extends LitElement {
         color: var(--text-muted);
         cursor: pointer;
         border-radius: var(--radius-full);
-        font-size: var(--text-md);
+        font-size: var(--_text-md);
         padding: 0;
         transition: color var(--transition-fast), background var(--transition-fast);
       }
@@ -134,7 +137,7 @@ export class ArcSearch extends LitElement {
 
       .search__spinner {
         position: absolute;
-        right: var(--space-sm);
+        inset-inline-end: var(--space-sm);
         width: 18px;
         height: 18px;
         border: 2px solid var(--border-default);
@@ -150,8 +153,8 @@ export class ArcSearch extends LitElement {
       .search__suggestions {
         position: absolute;
         top: calc(100% + 4px);
-        left: 0;
-        right: 0;
+        inset-inline-start: 0;
+        inset-inline-end: 0;
         max-height: 220px;
         overflow-y: auto;
         background: var(--surface-raised);
@@ -170,9 +173,9 @@ export class ArcSearch extends LitElement {
       .search__suggestion {
         display: block;
         width: 100%;
-        text-align: left;
+        text-align: start;
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-primary);
         background: none;
         border: none;
@@ -203,6 +206,7 @@ export class ArcSearch extends LitElement {
         }
       }
     `,
+    managedPanelStyles('search__suggestions', { openCls: 'search__suggestions--open', animate: false }),
   ];
 
   constructor() {
@@ -215,28 +219,28 @@ export class ArcSearch extends LitElement {
     this.open = false;
     this._activeIndex = -1;
     this._suggestions = [];
-    this._onDocClick = this._onDocClick.bind(this);
+    this._clickOutside = new ClickOutsideController(this, {
+      onClickOutside: () => { this.open = false; },
+    });
+    this._position = new PositionController(this, {
+      anchor: () => this.shadowRoot?.querySelector('.search__wrapper'),
+      floating: () => this.shadowRoot?.querySelector('.search__suggestions'),
+      matchWidth: true,
+      offset: 4,
+    });
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-    document.addEventListener('click', this._onDocClick, true);
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    document.removeEventListener('click', this._onDocClick, true);
+  updated() {
+    // The panel is only really open when there is something to show, which is
+    // the same condition render() uses for the --open class.
+    const showing = this.open && this._suggestions.length > 0;
+    showing ? this._position.show() : this._position.hide();
+    showing ? this._clickOutside.activate() : this._clickOutside.deactivate();
   }
 
   _onSlotChange(e) {
     this._suggestions = e.target.assignedElements({ flatten: true })
       .filter(el => el.tagName === 'ARC-SUGGESTION');
-  }
-
-  _onDocClick(e) {
-    if (!e.composedPath().includes(this)) {
-      this.open = false;
-    }
   }
 
   get _hasSuggestions() {
