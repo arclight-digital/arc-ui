@@ -157,7 +157,12 @@ describe('logical properties for RTL', () => {
     'shared/position-controller.js',  // JS-measured viewport coordinates
   ];
 
-  it('leaves no physical inline-axis declarations in component CSS', async () => {
+  // ~185 component files. Fetched one after another this took longer than
+  // Mocha's 2s default on a CI runner — green on every developer machine, red
+  // in the one place it had to be right. The fetches are now concurrent, which
+  // is the actual fix; the raised timeout is only headroom for a cold runner.
+  it('leaves no physical inline-axis declarations in component CSS', async function sweep() {
+    this.timeout(15_000);
     const res = await fetch(new URL('../custom-elements.json', import.meta.url));
     // Fall back to a fixed sweep if the manifest is not served.
     const paths = res.ok
@@ -165,12 +170,12 @@ describe('logical properties for RTL', () => {
       : [];
     expect(paths.length, 'found component paths to sweep').to.be.greaterThan(20);
 
-    const offenders = [];
-    for (const path of paths) {
-      if (ALLOWED.some((a) => path.endsWith(a))) continue;
+    const sweepable = paths.filter((p) => !ALLOWED.some((a) => p.endsWith(a)));
+    const perFile = await Promise.all(sweepable.map(async (path) => {
       const r = await fetch(new URL(`../${path}`, import.meta.url));
-      if (!r.ok) continue;
+      if (!r.ok) return [];
       const src = await r.text();
+      const found = [];
       let selector = '';
       for (const line of src.split('\n')) {
         const trimmed = line.trim();
@@ -180,9 +185,13 @@ describe('logical properties for RTL', () => {
         // its border belongs on the physical right. Same for a resolved
         // data-placement. These are the codemod's deliberate carve-outs.
         if (/\[(?:position|data-placement)\s*=\s*"(?:left|right)"\]/.test(selector)) continue;
-        if (PHYSICAL.test(line)) offenders.push(`${path}: ${trimmed}`);
+        if (PHYSICAL.test(line)) found.push(`${path}: ${trimmed}`);
       }
-    }
+      return found;
+    }));
+    // Sorted so the failure message is stable rather than ordered by whichever
+    // fetch happened to resolve first.
+    const offenders = perFile.flat().sort();
     expect(offenders, `\n  ${offenders.join('\n  ')}\n`).to.deep.equal([]);
   });
 
