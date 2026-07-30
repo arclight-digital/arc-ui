@@ -69,10 +69,13 @@ const FRAMEWORKS = [
   {
     name: 'preact',
     ext: 'tsx',
-    // Typed *and* rendered — the JSX passthrough is explicit here.
-    hasDefault: (s) => /\bchildren\?:/.test(s) && /\{\s*children\s*\}/.test(s),
+    // Typed *and* rendered — children pass as h()'s third argument (prism v3
+    // renders custom elements via h('arc-x', props, children), since preact's
+    // JSX.IntrinsicElements has no entry for them and the literal form
+    // doesn't compile).
+    hasDefault: (s) => /\bchildren\?:/.test(s) && /,\s*children\)/.test(s),
     namedSlotOutlets: false,
-    fix: 'declare `children?: preact.ComponentChildren` and render `{children}`',
+    fix: "declare `children?: preact.ComponentChildren` and pass children to h()",
   },
   {
     name: 'solid',

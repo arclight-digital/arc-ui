@@ -37,6 +37,7 @@ const steps = [
   { name: 'Register', cmd: 'node',  args: ['scripts/generate-registrations.js'] },
   { name: 'Brand',    cmd: 'node',  args: ['scripts/generate-brand-assets.js'] },
   { name: 'Prism',    cmd: 'npx',   args: ['prism', '--strict'] },
+  { name: 'WrapperExports', cmd: 'node', args: ['scripts/generate-wrapper-exports.js'] },
   { name: 'Manifest', cmd: 'node',  args: ['scripts/generate-manifest.js'] },
   { name: 'Types',    cmd: 'node',  args: ['scripts/generate-types.js'] },
   { name: 'ModuleTypes', cmd: 'node', args: ['scripts/generate-module-types.js'] },
