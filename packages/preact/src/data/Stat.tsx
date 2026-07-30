@@ -8,7 +8,6 @@ export interface StatProps {
   label?: string;
   trend?: 'up' | 'down' | 'neutral';
   change?: string;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -36,5 +35,5 @@ export interface StatProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Stat: FunctionComponent<StatProps> = ({ value, label, trend, change, children, ...rest }) =>
-  h('arc-stat', { value, label, trend, change, ...rest }, children);
+export const Stat: FunctionComponent<StatProps> = ({ value, label, trend, change, ...rest }) =>
+  h('arc-stat', { value, label, trend, change, ...rest });

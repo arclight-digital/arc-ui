@@ -9,6 +9,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {'left' | 'right'} align - Shifts the gradient origin so it fades from one edge instead of both. Useful for asymmetric layouts where the divider should visually connect to content on one side.
  * @prop {boolean} vertical - Renders the divider as a vertical line. Switches to `inline-flex` display and rotates gradient directions to run top-to-bottom. Use inside flex rows to separate inline content.
  * @prop {string} label - Text displayed in the center of the divider, splitting it into two lines. Common use: 'OR' between form options. Only applies to horizontal dividers.
+ * @slot none
  * @csspart divider
  * @csspart line
  * @csspart label

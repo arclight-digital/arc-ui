@@ -14,7 +14,6 @@
     open?: boolean;
     locale?: string;
     firstDayOfWeek?: number;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -42,7 +41,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = $bindable(''), name = '', min = '', max = '', placeholder = 'Select date', disabled = false, label = '', open = false, locale = '', firstDayOfWeek = 0, children, ...rest }: Props = $props();
+  let { value = $bindable(''), name = '', min = '', max = '', placeholder = 'Select date', disabled = false, label = '', open = false, locale = '', firstDayOfWeek = 0, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {
@@ -66,5 +65,4 @@
 <arc-date-picker {value} {name} {min} {max} {placeholder} {disabled} {label} {open} {locale} bind:this={__el} {...rest}
   onarc-change={__onArcChange}
 >
-  {@render children?.()}
 </arc-date-picker>

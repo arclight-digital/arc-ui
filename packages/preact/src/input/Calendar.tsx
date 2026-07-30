@@ -14,7 +14,6 @@ export interface CalendarProps {
   year?: number;
   onArcMonthChange?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -42,7 +41,7 @@ export interface CalendarProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Calendar: FunctionComponent<CalendarProps> = ({ locale, firstDayOfWeek, value, min, max, month, year, onArcMonthChange, onArcChange, children, ...rest }) => {
+export const Calendar: FunctionComponent<CalendarProps> = ({ locale, firstDayOfWeek, value, min, max, month, year, onArcMonthChange, onArcChange, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -60,5 +59,5 @@ export const Calendar: FunctionComponent<CalendarProps> = ({ locale, firstDayOfW
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcMonthChange, onArcChange]);
-  return h('arc-calendar', { ref, locale, firstDayOfWeek, value, min, max, month, year, ...rest }, children);
+  return h('arc-calendar', { ref, locale, firstDayOfWeek, value, min, max, month, year, ...rest });
 };

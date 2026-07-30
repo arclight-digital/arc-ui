@@ -6,7 +6,7 @@ import { ArcImage } from '@arclux/arc-ui/image';
 @Component({
   selector: 'arc-image',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class Image {
   private readonly _el: ArcImage = inject(ElementRef).nativeElement;

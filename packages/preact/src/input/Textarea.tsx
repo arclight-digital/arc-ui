@@ -19,7 +19,6 @@ export interface TextareaProps {
   error?: string;
   onArcInput?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -47,7 +46,7 @@ export interface TextareaProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Textarea: FunctionComponent<TextareaProps> = ({ value, name, placeholder, label, rows, maxlength, disabled, readonly, resize, size, autoResize, error, onArcInput, onArcChange, children, ...rest }) => {
+export const Textarea: FunctionComponent<TextareaProps> = ({ value, name, placeholder, label, rows, maxlength, disabled, readonly, resize, size, autoResize, error, onArcInput, onArcChange, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -65,5 +64,5 @@ export const Textarea: FunctionComponent<TextareaProps> = ({ value, name, placeh
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcInput, onArcChange]);
-  return h('arc-textarea', { ref, value, name, placeholder, label, rows, maxlength, disabled, readonly, resize, size, autoResize, error, ...rest }, children);
+  return h('arc-textarea', { ref, value, name, placeholder, label, rows, maxlength, disabled, readonly, resize, size, autoResize, error, ...rest });
 };

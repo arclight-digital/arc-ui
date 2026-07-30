@@ -25,6 +25,7 @@ const num = (v) => {
  * @prop {'number' | 'percent' | 'currency'} valueFormat - How values are formatted in tooltips, the axis, and the accessible data table, via Intl.NumberFormat. Percent expects fractional data (0.24 → 24%). Axis numbers are abbreviated (1.2k, 3.4M).
  * @prop {string} currency - ISO 4217 currency code used when value-format="currency".
  * @fires arc-mark-click - Fired when a mark (bar, stacked segment, line point column, or donut segment) is clicked. detail: { seriesIndex, index, value }. Indices refer to displayed series after any "Other" folding; a folded donut segment reports seriesIndex -1.
+ * @slot none
  * @csspart axis
  * @csspart tooltip
  * @csspart chart

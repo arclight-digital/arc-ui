@@ -8,7 +8,6 @@ export interface ProgressToastProps {
   position?: 'top-right' | 'bottom-right';
   onArcComplete?: (e: CustomEvent) => void;
   onArcCancel?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -36,7 +35,7 @@ export interface ProgressToastProps {
   [key: `on${string}`]: unknown;
 }
 
-export const ProgressToast: FunctionComponent<ProgressToastProps> = ({ position, onArcComplete, onArcCancel, children, ...rest }) => {
+export const ProgressToast: FunctionComponent<ProgressToastProps> = ({ position, onArcComplete, onArcCancel, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -54,5 +53,5 @@ export const ProgressToast: FunctionComponent<ProgressToastProps> = ({ position,
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcComplete, onArcCancel]);
-  return h('arc-progress-toast', { ref, position, ...rest }, children);
+  return h('arc-progress-toast', { ref, position, ...rest });
 };

@@ -6,7 +6,7 @@ import { ArcSpotlight } from '@arclux/arc-ui/spotlight';
 @Component({
   selector: 'arc-spotlight',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class Spotlight {
   private readonly _el: ArcSpotlight = inject(ElementRef).nativeElement;

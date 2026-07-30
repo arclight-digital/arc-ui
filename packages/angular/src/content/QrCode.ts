@@ -6,7 +6,7 @@ import { ArcQrCode } from '@arclux/arc-ui/qr-code';
 @Component({
   selector: 'arc-qr-code',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class QrCode {
   private readonly _el: ArcQrCode = inject(ElementRef).nativeElement;

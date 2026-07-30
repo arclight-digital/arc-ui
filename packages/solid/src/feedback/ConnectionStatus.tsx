@@ -14,7 +14,6 @@ declare module 'solid-js' {
 export interface ConnectionStatusProps {
   onArcOnline?: (e: CustomEvent) => void;
   onArcOffline?: (e: CustomEvent) => void;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -43,10 +42,9 @@ export interface ConnectionStatusProps {
 }
 
 export const ConnectionStatus: Component<ConnectionStatusProps> = (props) => {
-  const [local, rest] = splitProps(props, ['onArcOnline', 'onArcOffline', 'children']);
+  const [local, rest] = splitProps(props, ['onArcOnline', 'onArcOffline']);
   return (
     <arc-connection-status on:arc-online={local.onArcOnline} on:arc-offline={local.onArcOffline} {...rest}>
-      {local.children}
     </arc-connection-status>
   );
 };

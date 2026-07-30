@@ -9,7 +9,6 @@ export interface SpotlightProps {
   active?: boolean;
   padding?: number;
   onArcClose?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -37,7 +36,7 @@ export interface SpotlightProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Spotlight: FunctionComponent<SpotlightProps> = ({ target, active, padding, onArcClose, children, ...rest }) => {
+export const Spotlight: FunctionComponent<SpotlightProps> = ({ target, active, padding, onArcClose, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -50,5 +49,5 @@ export const Spotlight: FunctionComponent<SpotlightProps> = ({ target, active, p
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcClose]);
-  return h('arc-spotlight', { ref, target, active, padding, ...rest }, children);
+  return h('arc-spotlight', { ref, target, active, padding, ...rest });
 };

@@ -27,7 +27,6 @@ export interface DateRangePickerProps {
   label?: string;
   open?: boolean;
   onArcChange?: (e: CustomEvent) => void;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -56,10 +55,9 @@ export interface DateRangePickerProps {
 }
 
 export const DateRangePicker: Component<DateRangePickerProps> = (props) => {
-  const [local, rest] = splitProps(props, ['locale', 'firstDayOfWeek', 'start', 'end', 'name', 'min', 'max', 'months', 'presets', 'placeholder', 'disabled', 'required', 'label', 'open', 'onArcChange', 'children']);
+  const [local, rest] = splitProps(props, ['locale', 'firstDayOfWeek', 'start', 'end', 'name', 'min', 'max', 'months', 'presets', 'placeholder', 'disabled', 'required', 'label', 'open', 'onArcChange']);
   return (
     <arc-date-range-picker locale={local.locale} prop:firstDayOfWeek={local.firstDayOfWeek} start={local.start} end={local.end} name={local.name} min={local.min} max={local.max} months={local.months} presets={local.presets} placeholder={local.placeholder} disabled={local.disabled} required={local.required} label={local.label} open={local.open} on:arc-change={local.onArcChange} {...rest}>
-      {local.children}
     </arc-date-range-picker>
   );
 };

@@ -56,6 +56,5 @@ function onArcChange(payload: CustomEvent) {
     :open="props.open"
     @arc-change="onArcChange"
   >
-    <slot />
   </arc-time-picker>
 </template>

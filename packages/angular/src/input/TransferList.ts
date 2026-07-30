@@ -6,7 +6,7 @@ import { ArcTransferList } from '@arclux/arc-ui/transfer-list';
 @Component({
   selector: 'arc-transfer-list',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
   host: {
     '(arc-change)': '_onArcChange($event)',
   },

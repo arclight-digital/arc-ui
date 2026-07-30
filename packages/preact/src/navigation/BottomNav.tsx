@@ -8,7 +8,6 @@ export interface BottomNavProps {
   items?: Array<{label: string, icon?: string, value: string}>;
   value?: string;
   onArcChange?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -36,7 +35,7 @@ export interface BottomNavProps {
   [key: `on${string}`]: unknown;
 }
 
-export const BottomNav: FunctionComponent<BottomNavProps> = ({ items, value, onArcChange, children, ...rest }) => {
+export const BottomNav: FunctionComponent<BottomNavProps> = ({ items, value, onArcChange, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -49,5 +48,5 @@ export const BottomNav: FunctionComponent<BottomNavProps> = ({ items, value, onA
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcChange]);
-  return h('arc-bottom-nav', { ref, items, value, ...rest }, children);
+  return h('arc-bottom-nav', { ref, items, value, ...rest });
 };

@@ -36,6 +36,7 @@ function statusStyle(variant) {
  * @fires arc-close - Fired when a toast notification is dismissed. detail: { id } — the id show() returned.
  * @fires arc-queue-change - Fired whenever the visible or queued count changes. detail: { visible, queued }.
  * @fires arc-queue-overflow - Fired when the queue exceeds queueLimit and the oldest queued entries are dropped. detail: { dropped }.
+ * @slot none
  * @csspart container
  * @csspart toast
  * @csspart action

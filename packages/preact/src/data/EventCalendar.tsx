@@ -13,7 +13,6 @@ export interface EventCalendarProps {
   onArcPeriodChange?: (e: CustomEvent) => void;
   onArcDateClick?: (e: CustomEvent) => void;
   onArcEventClick?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -41,7 +40,7 @@ export interface EventCalendarProps {
   [key: `on${string}`]: unknown;
 }
 
-export const EventCalendar: FunctionComponent<EventCalendarProps> = ({ locale, firstDayOfWeek, events, view, date, onArcPeriodChange, onArcDateClick, onArcEventClick, children, ...rest }) => {
+export const EventCalendar: FunctionComponent<EventCalendarProps> = ({ locale, firstDayOfWeek, events, view, date, onArcPeriodChange, onArcDateClick, onArcEventClick, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -64,5 +63,5 @@ export const EventCalendar: FunctionComponent<EventCalendarProps> = ({ locale, f
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcPeriodChange, onArcDateClick, onArcEventClick]);
-  return h('arc-event-calendar', { ref, locale, firstDayOfWeek, events, view, date, ...rest }, children);
+  return h('arc-event-calendar', { ref, locale, firstDayOfWeek, events, view, date, ...rest });
 };

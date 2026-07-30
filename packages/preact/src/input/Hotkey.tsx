@@ -9,7 +9,6 @@ export interface HotkeyProps {
   disabled?: boolean;
   global?: boolean;
   onArcHotkeyTrigger?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -37,7 +36,7 @@ export interface HotkeyProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Hotkey: FunctionComponent<HotkeyProps> = ({ keys, disabled, global, onArcHotkeyTrigger, children, ...rest }) => {
+export const Hotkey: FunctionComponent<HotkeyProps> = ({ keys, disabled, global, onArcHotkeyTrigger, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -50,5 +49,5 @@ export const Hotkey: FunctionComponent<HotkeyProps> = ({ keys, disabled, global,
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcHotkeyTrigger]);
-  return h('arc-hotkey', { ref, keys, disabled, global, ...rest }, children);
+  return h('arc-hotkey', { ref, keys, disabled, global, ...rest });
 };

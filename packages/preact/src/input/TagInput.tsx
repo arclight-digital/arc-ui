@@ -17,7 +17,6 @@ export interface TagInputProps {
   error?: string;
   onArcChange?: (e: CustomEvent) => void;
   onArcInput?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -45,7 +44,7 @@ export interface TagInputProps {
   [key: `on${string}`]: unknown;
 }
 
-export const TagInput: FunctionComponent<TagInputProps> = ({ value, suggestions, delimiter, maxTags, allowCustom, label, placeholder, name, disabled, error, onArcChange, onArcInput, children, ...rest }) => {
+export const TagInput: FunctionComponent<TagInputProps> = ({ value, suggestions, delimiter, maxTags, allowCustom, label, placeholder, name, disabled, error, onArcChange, onArcInput, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -63,5 +62,5 @@ export const TagInput: FunctionComponent<TagInputProps> = ({ value, suggestions,
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcChange, onArcInput]);
-  return h('arc-tag-input', { ref, value, suggestions, delimiter, maxTags, allowCustom, label, placeholder, name, disabled, error, ...rest }, children);
+  return h('arc-tag-input', { ref, value, suggestions, delimiter, maxTags, allowCustom, label, placeholder, name, disabled, error, ...rest });
 };

@@ -11,7 +11,6 @@ export interface ColorPickerProps {
   disabled?: boolean;
   label?: string;
   onArcChange?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -39,7 +38,7 @@ export interface ColorPickerProps {
   [key: `on${string}`]: unknown;
 }
 
-export const ColorPicker: FunctionComponent<ColorPickerProps> = ({ value, name, presets, disabled, label, onArcChange, children, ...rest }) => {
+export const ColorPicker: FunctionComponent<ColorPickerProps> = ({ value, name, presets, disabled, label, onArcChange, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -52,5 +51,5 @@ export const ColorPicker: FunctionComponent<ColorPickerProps> = ({ value, name, 
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcChange]);
-  return h('arc-color-picker', { ref, value, name, presets, disabled, label, ...rest }, children);
+  return h('arc-color-picker', { ref, value, name, presets, disabled, label, ...rest });
 };

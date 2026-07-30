@@ -6,7 +6,7 @@ import { ArcTable } from '@arclux/arc-ui/table';
 @Component({
   selector: 'arc-table',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class Table {
   private readonly _el: ArcTable = inject(ElementRef).nativeElement;

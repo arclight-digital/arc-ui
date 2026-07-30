@@ -22,7 +22,6 @@ export interface ChartProps {
   valueFormat?: 'number' | 'percent' | 'currency';
   currency?: string;
   onArcMarkClick?: (e: CustomEvent) => void;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -51,10 +50,9 @@ export interface ChartProps {
 }
 
 export const Chart: Component<ChartProps> = (props) => {
-  const [local, rest] = splitProps(props, ['type', 'series', 'labels', 'stacked', 'hideLegend', 'hideAxis', 'height', 'valueFormat', 'currency', 'onArcMarkClick', 'children']);
+  const [local, rest] = splitProps(props, ['type', 'series', 'labels', 'stacked', 'hideLegend', 'hideAxis', 'height', 'valueFormat', 'currency', 'onArcMarkClick']);
   return (
     <arc-chart type={local.type} series={local.series} labels={local.labels} stacked={local.stacked} prop:hideLegend={local.hideLegend} prop:hideAxis={local.hideAxis} height={local.height} prop:valueFormat={local.valueFormat} currency={local.currency} on:arc-mark-click={local.onArcMarkClick} {...rest}>
-      {local.children}
     </arc-chart>
   );
 };

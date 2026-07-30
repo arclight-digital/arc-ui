@@ -13,6 +13,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {number} width - SVG viewport width in pixels.
  * @prop {number} height - SVG viewport height in pixels.
  * @prop {boolean} fill - When true and type is "line", fills the area beneath the curve with a semi-transparent accent color.
+ * @slot none
  * @csspart area
  * @csspart line
  * @csspart bar

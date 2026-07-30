@@ -8,6 +8,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @tag arc-connection-status
  * @fires {CustomEvent<void>} arc-online - Fired when the browser regains network connectivity
  * @fires {CustomEvent<void>} arc-offline - Fired when the browser loses network connectivity
+ * @slot none
  * @csspart status
  * @csspart dot
  * @csspart label

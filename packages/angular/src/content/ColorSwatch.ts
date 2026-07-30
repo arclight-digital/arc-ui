@@ -6,7 +6,7 @@ import { ArcColorSwatch } from '@arclux/arc-ui/color-swatch';
 @Component({
   selector: 'arc-color-swatch',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class ColorSwatch {
   private readonly _el: ArcColorSwatch = inject(ElementRef).nativeElement;

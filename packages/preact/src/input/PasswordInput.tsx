@@ -18,7 +18,6 @@ export interface PasswordInputProps {
   onArcStrengthChange?: (e: CustomEvent) => void;
   onArcInput?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -46,7 +45,7 @@ export interface PasswordInputProps {
   [key: `on${string}`]: unknown;
 }
 
-export const PasswordInput: FunctionComponent<PasswordInputProps> = ({ name, label, placeholder, value, disabled, required, error, size, autocomplete, showStrength, onArcStrengthChange, onArcInput, onArcChange, children, ...rest }) => {
+export const PasswordInput: FunctionComponent<PasswordInputProps> = ({ name, label, placeholder, value, disabled, required, error, size, autocomplete, showStrength, onArcStrengthChange, onArcInput, onArcChange, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -69,5 +68,5 @@ export const PasswordInput: FunctionComponent<PasswordInputProps> = ({ name, lab
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcStrengthChange, onArcInput, onArcChange]);
-  return h('arc-password-input', { ref, name, label, placeholder, value, disabled, required, error, size, autocomplete, showStrength, ...rest }, children);
+  return h('arc-password-input', { ref, name, label, placeholder, value, disabled, required, error, size, autocomplete, showStrength, ...rest });
 };

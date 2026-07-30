@@ -8,7 +8,6 @@ export interface BottomNavProps {
   items?: Array<{label: string, icon?: string, value: string}>;
   value?: string;
   className?: string;
-  children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;
 }
 

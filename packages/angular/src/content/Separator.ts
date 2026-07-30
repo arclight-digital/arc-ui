@@ -6,7 +6,7 @@ import { ArcSeparator } from '@arclux/arc-ui/separator';
 @Component({
   selector: 'arc-separator',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class Separator {
   private readonly _el: ArcSeparator = inject(ElementRef).nativeElement;

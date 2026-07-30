@@ -11,7 +11,6 @@ export interface ToastProps {
   dedupe?: boolean;
   queueLimit?: number;
   className?: string;
-  children?: React.ReactNode;
   onArcQueueOverflow?: (e: CustomEvent) => void;
   onArcQueueChange?: (e: CustomEvent) => void;
   onArcClose?: (e: CustomEvent) => void;

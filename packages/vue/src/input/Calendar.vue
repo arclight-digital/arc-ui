@@ -57,6 +57,5 @@ function onArcChange(payload: CustomEvent) {
     @arc-month-change="onArcMonthChange"
     @arc-change="onArcChange"
   >
-    <slot />
   </arc-calendar>
 </template>

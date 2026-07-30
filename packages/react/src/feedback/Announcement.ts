@@ -8,7 +8,6 @@ export interface AnnouncementProps {
   politeness?: 'polite' | 'assertive';
   message?: string;
   className?: string;
-  children?: React.ReactNode;
 }
 
 export const Announcement = createComponent({

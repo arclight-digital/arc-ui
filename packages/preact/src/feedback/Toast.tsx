@@ -13,7 +13,6 @@ export interface ToastProps {
   onArcQueueOverflow?: (e: CustomEvent) => void;
   onArcQueueChange?: (e: CustomEvent) => void;
   onArcClose?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -41,7 +40,7 @@ export interface ToastProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Toast: FunctionComponent<ToastProps> = ({ position, duration, maxVisible, dedupe, queueLimit, onArcQueueOverflow, onArcQueueChange, onArcClose, children, ...rest }) => {
+export const Toast: FunctionComponent<ToastProps> = ({ position, duration, maxVisible, dedupe, queueLimit, onArcQueueOverflow, onArcQueueChange, onArcClose, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -64,5 +63,5 @@ export const Toast: FunctionComponent<ToastProps> = ({ position, duration, maxVi
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcQueueOverflow, onArcQueueChange, onArcClose]);
-  return h('arc-toast', { ref, position, duration, maxVisible, dedupe, queueLimit, ...rest }, children);
+  return h('arc-toast', { ref, position, duration, maxVisible, dedupe, queueLimit, ...rest });
 };

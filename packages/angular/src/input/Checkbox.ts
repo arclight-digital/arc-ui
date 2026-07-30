@@ -6,7 +6,7 @@ import { ArcCheckbox } from '@arclux/arc-ui/checkbox';
 @Component({
   selector: 'arc-checkbox',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
   host: {
     '(arc-change)': '_onArcChange($event)',
   },

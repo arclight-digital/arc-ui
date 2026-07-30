@@ -6,7 +6,7 @@ import { ArcDialog } from '@arclux/arc-ui/dialog';
 @Component({
   selector: 'arc-dialog',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class Dialog {
   private readonly _el: ArcDialog = inject(ElementRef).nativeElement;

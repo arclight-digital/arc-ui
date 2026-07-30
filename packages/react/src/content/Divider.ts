@@ -10,7 +10,6 @@ export interface DividerProps {
   vertical?: boolean;
   label?: string;
   className?: string;
-  children?: React.ReactNode;
 }
 
 export const Divider = createComponent({

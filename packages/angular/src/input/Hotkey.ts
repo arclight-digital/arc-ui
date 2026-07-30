@@ -6,7 +6,7 @@ import { ArcHotkey } from '@arclux/arc-ui/hotkey';
 @Component({
   selector: 'arc-hotkey',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class Hotkey {
   private readonly _el: ArcHotkey = inject(ElementRef).nativeElement;

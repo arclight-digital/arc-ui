@@ -6,7 +6,7 @@ import { ArcFileUpload } from '@arclux/arc-ui/file-upload';
 @Component({
   selector: 'arc-file-upload',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class FileUpload {
   private readonly _el: ArcFileUpload = inject(ElementRef).nativeElement;

@@ -10,6 +10,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {'sm' | 'md' | 'lg'} size - Controls avatar dimensions: `sm` (32px), `md` (40px), `lg` (56px).
  * @prop {'online' | 'offline' | 'busy' | 'away'} status - Shows a status indicator dot. Options: 'online', 'offline', 'busy', 'away'.
  * @prop {'circle' | 'square' | 'rounded'} shape - Controls the avatar shape. Options: 'circle', 'square', 'rounded'.
+ * @slot none
  * @csspart img
  * @csspart initials
  * @csspart avatar

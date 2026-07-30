@@ -8,7 +8,6 @@
     smooth?: boolean;
     position?: 'bottom-right' | 'bottom-left';
     offset?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -36,9 +35,8 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { threshold = 300, smooth = true, position = 'bottom-right', offset = 'var(--space-lg)', children, ...rest }: Props = $props();
+  let { threshold = 300, smooth = true, position = 'bottom-right', offset = 'var(--space-lg)', ...rest }: Props = $props();
 </script>
 
 <arc-scroll-to-top {threshold} {smooth} {position} {offset} {...rest}>
-  {@render children?.()}
 </arc-scroll-to-top>

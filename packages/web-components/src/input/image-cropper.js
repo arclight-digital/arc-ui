@@ -19,6 +19,7 @@ const ARROW_KEYS = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'];
  * @prop {number} aspect - Crop aspect ratio as width/height (e.g. `1`, `16/9`). `0` allows free-form cropping.
  * @prop {number} zoom - Image zoom factor, clamped to 1-4. Scales the image around its center; also settable via the built-in slider.
  * @fires arc-crop-change - Fired when the crop changes (drag, resize, keyboard, zoom, stage resize). `event.detail` is `{ x, y, width, height }` in natural image pixels, debounced to animation frames.
+ * @slot none
  * @csspart stage
  * @csspart image
  * @csspart skeleton

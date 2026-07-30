@@ -11,7 +11,6 @@
     max?: string;
     month?: number;
     year?: number;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -39,7 +38,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { locale = '', firstDayOfWeek = 0, value = $bindable(''), min = '', max = '', month = $bindable(), year = $bindable(), children, ...rest }: Props = $props();
+  let { locale = '', firstDayOfWeek = 0, value = $bindable(''), min = '', max = '', month = $bindable(), year = $bindable(), ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {
@@ -72,5 +71,4 @@
   onarc-month-change={__onArcMonthChange}
   onarc-change={__onArcChange}
 >
-  {@render children?.()}
 </arc-calendar>

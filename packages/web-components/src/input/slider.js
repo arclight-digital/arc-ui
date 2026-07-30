@@ -16,6 +16,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @prop {boolean} readonly - Prevents dragging and arrow-key changes while the thumb stays focusable and the value still submits.
  * @fires {CustomEvent<{ value: number }>} arc-input - Fired continuously as the user drags the thumb. Use for real-time preview updates like adjusting opacity, volume, or a CSS property live.
  * @fires {CustomEvent<{ value: number }>} arc-change - Fired once when the user releases the thumb, indicating the final committed value. Use for persisting the value to a database or triggering an expensive operation.
+ * @slot none
  * @csspart slider
  * @csspart header
  * @csspart label

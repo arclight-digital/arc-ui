@@ -7,7 +7,6 @@ export interface ColorSwatchProps {
   color?: string;
   label?: string;
   size?: 'sm' | 'md' | 'lg';
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -35,5 +34,5 @@ export interface ColorSwatchProps {
   [key: `on${string}`]: unknown;
 }
 
-export const ColorSwatch: FunctionComponent<ColorSwatchProps> = ({ color, label, size, children, ...rest }) =>
-  h('arc-color-swatch', { color, label, size, ...rest }, children);
+export const ColorSwatch: FunctionComponent<ColorSwatchProps> = ({ color, label, size, ...rest }) =>
+  h('arc-color-swatch', { color, label, size, ...rest });

@@ -49,6 +49,5 @@ function onArcChange(payload: CustomEvent) {
     :value="props.value"
     @arc-change="onArcChange"
   >
-    <slot />
   </arc-checkbox>
 </template>

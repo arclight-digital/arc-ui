@@ -41,6 +41,14 @@ for (const mod of manifest.modules) {
     if (decl.events) {
       decl.events = decl.events.filter((e) => e.name);
     }
+    // `@slot none` is prism's spelling for "this component has no default slot
+    // and its wrappers take no children" — the name of an absence, which the
+    // analyzer has no reason to know and records as a slot called "none".
+    // Left in, every downstream reader repeats it: the manifest, the VS Code
+    // and JetBrains data, the docs tables. Nothing here has a slot named none.
+    if (decl.slots) {
+      decl.slots = decl.slots.filter((s) => s.name !== 'none');
+    }
   }
 }
 

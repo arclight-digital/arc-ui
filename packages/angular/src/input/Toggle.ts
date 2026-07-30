@@ -6,7 +6,7 @@ import { ArcToggle } from '@arclux/arc-ui/toggle';
 @Component({
   selector: 'arc-toggle',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
   host: {
     '(arc-change)': '_onArcChange($event)',
   },

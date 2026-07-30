@@ -18,6 +18,7 @@ import './icon-button.js';
  * @prop {boolean} disabled - Disables the whole control, preventing interaction and reducing opacity.
  * @prop {boolean} readonly - Prevents moving items between panes while the lists stay focusable and filterable; the selected values still submit with the form.
  * @fires {CustomEvent<{ value: string[] }>} arc-change - Fired after every move with `{ value }` -- the current array of selected values.
+ * @slot none
  * @csspart pane
  * @csspart pane-header
  * @csspart search

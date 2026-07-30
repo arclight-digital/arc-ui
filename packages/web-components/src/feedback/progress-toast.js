@@ -10,6 +10,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {'top-right' | 'bottom-right'} position - Anchors the progress toast stack to a fixed corner of the viewport.
  * @fires arc-complete - Fired when a progress toast operation reaches 100%. Detail contains { id } with the operation identifier.
  * @fires arc-cancel - Fired when the user clicks the cancel button on a progress toast. Detail contains { id } with the operation identifier.
+ * @slot none
  * @csspart container
  * @csspart toast
  * @csspart cancel

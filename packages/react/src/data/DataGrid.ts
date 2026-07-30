@@ -13,7 +13,6 @@ export interface DataGridProps {
   virtual?: boolean;
   rowHeight?: number;
   className?: string;
-  children?: React.ReactNode;
   onArcSort?: (e: CustomEvent) => void;
   onArcSelect?: (e: CustomEvent) => void;
   onArcCellChange?: (e: CustomEvent) => void;

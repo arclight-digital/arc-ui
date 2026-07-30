@@ -9,7 +9,6 @@ export interface SeparatorProps {
   label?: string;
   variant?: 'line' | 'dashed' | 'dotted' | 'fade';
   className?: string;
-  children?: React.ReactNode;
 }
 
 export const Separator = createComponent({

@@ -14,6 +14,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {string} fallback - URL of a fallback image to display if the primary `src` fails to load.
  * @fires {CustomEvent<void>} arc-load - Fired when the image successfully loads.
  * @fires {CustomEvent<void>} arc-error - Fired when the image fails to load.
+ * @slot none
  * @csspart wrapper
  * @csspart fallback
  * @csspart image

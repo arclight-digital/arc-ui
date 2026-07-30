@@ -7,7 +7,6 @@
     heading?: string;
     highlight?: boolean;
     values?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -35,9 +34,8 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { heading = '', highlight = false, values = '[]', children, ...rest }: Props = $props();
+  let { heading = '', highlight = false, values = '[]', ...rest }: Props = $props();
 </script>
 
 <arc-comparison-column {heading} {highlight} {values} {...rest}>
-  {@render children?.()}
 </arc-comparison-column>

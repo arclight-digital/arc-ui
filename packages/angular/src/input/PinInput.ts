@@ -6,7 +6,7 @@ import { ArcPinInput } from '@arclux/arc-ui/pin-input';
 @Component({
   selector: 'arc-pin-input',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
   host: {
     '(arc-change)': '_onArcChange($event)',
     '(arc-complete)': '_onArcComplete($event)',

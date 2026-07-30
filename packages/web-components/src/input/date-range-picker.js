@@ -25,6 +25,7 @@ import { ClickOutsideController } from '../shared/click-outside.js';
  * @prop {boolean} disabled - Disables the picker, reducing opacity and preventing the popup from opening.
  * @prop {boolean} open - Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.
  * @fires {CustomEvent<{ start: string, end: string }>} arc-change - Fired when a complete range is committed (second day clicked or preset applied). detail: { start, end }
+ * @slot none
  * @csspart calendar
  * @csspart panel-title
  * @csspart day

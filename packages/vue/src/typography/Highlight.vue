@@ -21,6 +21,5 @@ const props = withDefaults(defineProps<{
     :query="props.query"
     :caseSensitive="props.caseSensitive"
   >
-    <slot />
   </arc-highlight>
 </template>

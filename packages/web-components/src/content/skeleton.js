@@ -9,6 +9,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {string} width - CSS width value (e.g. "200px", "100%")
  * @prop {string} height - CSS height value; circle auto-matches width when omitted
  * @prop {number} count - Renders multiple skeleton items stacked vertically with spacing. Useful for placeholder lists.
+ * @slot none
  * @csspart skeleton
  */
 export class ArcSkeleton extends LitElement {

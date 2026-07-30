@@ -13,6 +13,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {number} high - Threshold above which the value is considered high. Used for color zone calculation.
  * @prop {number} optimum - The optimal value. Determines which end of the range is "good" for color zone logic.
  * @prop {string} label - Label text displayed in the header row alongside the current percentage.
+ * @slot none
  * @csspart meter
  * @csspart header
  * @csspart label

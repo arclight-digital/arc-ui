@@ -11,6 +11,7 @@ import { managedPanelStyles } from '../shared/position-styles.js';
  * @tag arc-menubar
  * @prop {Array<{label:string,disabled?:boolean,items:Array<{label?:string,shortcut?:string,disabled?:boolean,divider?:boolean,items?:Array<{label:string,shortcut?:string,disabled?:boolean}>}>}>} items - The menu structure. Entries with an `items` array become submenus (one further nesting level supported); `{ divider: true }` renders a separator. Set via JavaScript — this is a property, not an HTML attribute.
  * @fires arc-select - Fired when a leaf menu item is activated. `detail.path` is the array of labels from the top-level menu to the selected leaf, e.g. `["File", "Export", "PNG"]`.
+ * @slot none
  * @csspart menu
  * @csspart divider
  * @csspart item

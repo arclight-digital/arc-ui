@@ -8,6 +8,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {string} original - The original text to compare (split by newlines).
  * @prop {string} revised - The modified text to compare (split by newlines).
  * @prop {'inline' | 'side-by-side'} mode - Display mode: 'inline' renders changes in a single column, 'side-by-side' renders two panes in a grid.
+ * @slot none
  * @csspart line
  * @csspart line-number
  * @csspart prefix

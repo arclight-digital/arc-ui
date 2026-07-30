@@ -6,7 +6,7 @@ import { ArcConnectionStatus } from '@arclux/arc-ui/connection-status';
 @Component({
   selector: 'arc-connection-status',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class ConnectionStatus {
   private readonly _el: ArcConnectionStatus = inject(ElementRef).nativeElement;

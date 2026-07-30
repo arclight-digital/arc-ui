@@ -25,6 +25,5 @@ const emit = defineEmits<{
     @arc-action="(payload: CustomEvent) => emit('arc-action', payload)"
     @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"
   >
-    <slot />
   </arc-snackbar>
 </template>

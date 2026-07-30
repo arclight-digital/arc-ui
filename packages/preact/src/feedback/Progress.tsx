@@ -10,7 +10,6 @@ export interface ProgressProps {
   indeterminate?: boolean;
   showValue?: boolean;
   label?: string;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -38,5 +37,5 @@ export interface ProgressProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Progress: FunctionComponent<ProgressProps> = ({ value, variant, size, indeterminate, showValue, label, children, ...rest }) =>
-  h('arc-progress', { value, variant, size, indeterminate, showValue, label, ...rest }, children);
+export const Progress: FunctionComponent<ProgressProps> = ({ value, variant, size, indeterminate, showValue, label, ...rest }) =>
+  h('arc-progress', { value, variant, size, indeterminate, showValue, label, ...rest });

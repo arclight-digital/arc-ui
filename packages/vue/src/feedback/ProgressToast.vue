@@ -22,6 +22,5 @@ const emit = defineEmits<{
     @arc-complete="(payload: CustomEvent) => emit('arc-complete', payload)"
     @arc-cancel="(payload: CustomEvent) => emit('arc-cancel', payload)"
   >
-    <slot />
   </arc-progress-toast>
 </template>

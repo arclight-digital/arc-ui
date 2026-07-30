@@ -15,7 +15,6 @@ export interface DiffProps {
   original?: string;
   revised?: string;
   mode?: 'inline' | 'side-by-side';
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -44,10 +43,9 @@ export interface DiffProps {
 }
 
 export const Diff: Component<DiffProps> = (props) => {
-  const [local, rest] = splitProps(props, ['original', 'revised', 'mode', 'children']);
+  const [local, rest] = splitProps(props, ['original', 'revised', 'mode']);
   return (
     <arc-diff original={local.original} revised={local.revised} mode={local.mode} {...rest}>
-      {local.children}
     </arc-diff>
   );
 };

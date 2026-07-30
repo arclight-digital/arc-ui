@@ -21,7 +21,6 @@ export interface CalendarProps {
   year?: number;
   onArcMonthChange?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -50,10 +49,9 @@ export interface CalendarProps {
 }
 
 export const Calendar: Component<CalendarProps> = (props) => {
-  const [local, rest] = splitProps(props, ['locale', 'firstDayOfWeek', 'value', 'min', 'max', 'month', 'year', 'onArcMonthChange', 'onArcChange', 'children']);
+  const [local, rest] = splitProps(props, ['locale', 'firstDayOfWeek', 'value', 'min', 'max', 'month', 'year', 'onArcMonthChange', 'onArcChange']);
   return (
     <arc-calendar locale={local.locale} prop:firstDayOfWeek={local.firstDayOfWeek} value={local.value} min={local.min} max={local.max} month={local.month} year={local.year} on:arc-month-change={local.onArcMonthChange} on:arc-change={local.onArcChange} {...rest}>
-      {local.children}
     </arc-calendar>
   );
 };

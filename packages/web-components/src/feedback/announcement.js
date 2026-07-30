@@ -7,6 +7,7 @@ import { LitElement, html, css } from 'lit';
  * @tag arc-announcement
  * @prop {'polite' | 'assertive'} politeness - Controls the ARIA live region politeness level. Polite waits for the screen reader to finish before announcing; assertive interrupts immediately.
  * @prop {string} message - The text to announce to screen readers. Each time this property changes, a new announcement is triggered.
+ * @slot none
  * @csspart region
  */
 export class ArcAnnouncement extends LitElement {

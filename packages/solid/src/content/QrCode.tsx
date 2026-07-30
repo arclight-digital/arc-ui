@@ -18,7 +18,6 @@ export interface QrCodeProps {
   label?: string;
   quietZone?: number;
   contrast?: boolean;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -47,10 +46,9 @@ export interface QrCodeProps {
 }
 
 export const QrCode: Component<QrCodeProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'size', 'level', 'label', 'quietZone', 'contrast', 'children']);
+  const [local, rest] = splitProps(props, ['value', 'size', 'level', 'label', 'quietZone', 'contrast']);
   return (
     <arc-qr-code value={local.value} size={local.size} level={local.level} label={local.label} prop:quietZone={local.quietZone} contrast={local.contrast} {...rest}>
-      {local.children}
     </arc-qr-code>
   );
 };

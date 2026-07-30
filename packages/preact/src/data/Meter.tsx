@@ -11,7 +11,6 @@ export interface MeterProps {
   high?: number;
   optimum?: number;
   label?: string;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -39,5 +38,5 @@ export interface MeterProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Meter: FunctionComponent<MeterProps> = ({ value, min, max, low, high, optimum, label, children, ...rest }) =>
-  h('arc-meter', { value, min, max, low, high, optimum, label, ...rest }, children);
+export const Meter: FunctionComponent<MeterProps> = ({ value, min, max, low, high, optimum, label, ...rest }) =>
+  h('arc-meter', { value, min, max, low, high, optimum, label, ...rest });

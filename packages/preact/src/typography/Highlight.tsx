@@ -7,7 +7,6 @@ export interface HighlightProps {
   text?: string;
   query?: string;
   caseSensitive?: boolean;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -35,5 +34,5 @@ export interface HighlightProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Highlight: FunctionComponent<HighlightProps> = ({ text, query, caseSensitive, children, ...rest }) =>
-  h('arc-highlight', { text, query, caseSensitive, ...rest }, children);
+export const Highlight: FunctionComponent<HighlightProps> = ({ text, query, caseSensitive, ...rest }) =>
+  h('arc-highlight', { text, query, caseSensitive, ...rest });

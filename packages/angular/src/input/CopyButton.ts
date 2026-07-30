@@ -6,7 +6,7 @@ import { ArcCopyButton } from '@arclux/arc-ui/copy-button';
 @Component({
   selector: 'arc-copy-button',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class CopyButton {
   private readonly _el: ArcCopyButton = inject(ElementRef).nativeElement;

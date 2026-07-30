@@ -18,6 +18,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @fires arc-sort - Fired when the user changes sorting. detail: { sort } with the full multi-sort array in priority order
  * @fires arc-cell-change - Fired when an inline cell edit is committed. detail: { rowIndex, key, value, row } — rowIndex refers to the original rows array
  * @fires arc-select - Fired when row selection changes. detail: { value, selectedIndices } — sorted indices into the original rows array
+ * @slot none
  * @csspart header-cell
  * @csspart cell
  * @csspart editor

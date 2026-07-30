@@ -9,7 +9,6 @@ export interface SpotlightProps {
   active?: boolean;
   padding?: number;
   className?: string;
-  children?: React.ReactNode;
   onArcClose?: (e: CustomEvent) => void;
 }
 

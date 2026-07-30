@@ -21,6 +21,5 @@ const props = withDefaults(defineProps<{
     :highlight="props.highlight"
     :values="props.values"
   >
-    <slot />
   </arc-comparison-column>
 </template>

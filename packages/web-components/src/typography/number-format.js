@@ -11,6 +11,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {string} currency - ISO 4217 currency code, used when type is "currency"
  * @prop {number} decimals - Number of decimal places (defaults: 0 for number, 2 for currency, 1 for percent)
  * @prop {'standard' | 'compact'} notation - Number notation — compact gives "12.3K", "1.2M"
+ * @slot none
  * @csspart number
  */
 export class ArcNumberFormat extends LitElement {

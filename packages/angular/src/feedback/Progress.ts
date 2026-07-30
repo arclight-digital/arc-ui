@@ -6,7 +6,7 @@ import { ArcProgress } from '@arclux/arc-ui/progress';
 @Component({
   selector: 'arc-progress',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class Progress {
   private readonly _el: ArcProgress = inject(ElementRef).nativeElement;

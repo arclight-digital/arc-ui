@@ -8,6 +8,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {string} value - The text string to copy to the clipboard when the button is clicked.
  * @prop {boolean} disabled - Disables the button, preventing clicks and reducing visual opacity.
  * @fires {CustomEvent<{ value: string }>} arc-copy - Fired when text is successfully copied to the clipboard. `event.detail.value` contains the copied string.
+ * @slot none
  * @csspart button
  * @csspart icon
  * @csspart label

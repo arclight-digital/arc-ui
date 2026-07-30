@@ -6,7 +6,7 @@ import { ArcGuidedTour } from '@arclux/arc-ui/guided-tour';
 @Component({
   selector: 'arc-guided-tour',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class GuidedTour {
   private readonly _el: ArcGuidedTour = inject(ElementRef).nativeElement;

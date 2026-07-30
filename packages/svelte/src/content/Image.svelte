@@ -10,7 +10,6 @@
     fit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down';
     loading?: 'lazy' | 'eager';
     fallback?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -38,9 +37,8 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { src = '', alt = '', aspect, fit = 'cover', loading = 'lazy', fallback = '', children, ...rest }: Props = $props();
+  let { src = '', alt = '', aspect, fit = 'cover', loading = 'lazy', fallback = '', ...rest }: Props = $props();
 </script>
 
 <arc-image {src} {alt} {aspect} {fit} {loading} {fallback} {...rest}>
-  {@render children?.()}
 </arc-image>

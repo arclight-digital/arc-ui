@@ -6,7 +6,7 @@ import { ArcDivider } from '@arclux/arc-ui/divider';
 @Component({
   selector: 'arc-divider',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class Divider {
   private readonly _el: ArcDivider = inject(ElementRef).nativeElement;

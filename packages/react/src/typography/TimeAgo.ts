@@ -9,7 +9,6 @@ export interface TimeAgoProps {
   live?: boolean;
   locale?: string;
   className?: string;
-  children?: React.ReactNode;
 }
 
 export const TimeAgo = createComponent({

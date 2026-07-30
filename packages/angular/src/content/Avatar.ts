@@ -6,7 +6,7 @@ import { ArcAvatar } from '@arclux/arc-ui/avatar';
 @Component({
   selector: 'arc-avatar',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class Avatar {
   private readonly _el: ArcAvatar = inject(ElementRef).nativeElement;

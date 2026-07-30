@@ -19,6 +19,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @prop {string} label - Label text rendered above the input in uppercase accent font styling.
  * @prop {boolean} open - Whether the time dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired when a time is selected. Detail contains { value: "HH:MM" } in 24-hour format.
+ * @slot none
  * @csspart wrapper
  * @csspart label
  * @csspart input-wrapper

@@ -8,6 +8,5 @@ defineOptions({ name: 'MenuDivider' });
 
 <template>
   <arc-menu-divider>
-    <slot />
   </arc-menu-divider>
 </template>

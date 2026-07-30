@@ -13,7 +13,6 @@ export interface TransferListProps {
   sourceLabel?: string;
   targetLabel?: string;
   onArcChange?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -41,7 +40,7 @@ export interface TransferListProps {
   [key: `on${string}`]: unknown;
 }
 
-export const TransferList: FunctionComponent<TransferListProps> = ({ options, value, name, disabled, searchable, sourceLabel, targetLabel, onArcChange, children, ...rest }) => {
+export const TransferList: FunctionComponent<TransferListProps> = ({ options, value, name, disabled, searchable, sourceLabel, targetLabel, onArcChange, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -54,5 +53,5 @@ export const TransferList: FunctionComponent<TransferListProps> = ({ options, va
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcChange]);
-  return h('arc-transfer-list', { ref, options, value, name, disabled, searchable, sourceLabel, targetLabel, ...rest }, children);
+  return h('arc-transfer-list', { ref, options, value, name, disabled, searchable, sourceLabel, targetLabel, ...rest });
 };

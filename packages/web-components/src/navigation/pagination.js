@@ -11,6 +11,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {number} siblings - Number of page buttons to show on each side of the current page before ellipsis truncation kicks in.
  * @prop {boolean} compact - Shows only previous/next buttons with a 'current / total' label. Hides individual page numbers.
  * @fires {CustomEvent<{ value: number }>} arc-change - Fired when the current page changes
+ * @slot none
  * @csspart prev
  * @csspart next
  * @csspart pagination

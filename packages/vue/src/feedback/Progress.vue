@@ -30,6 +30,5 @@ const props = withDefaults(defineProps<{
     :showValue="props.showValue"
     :label="props.label"
   >
-    <slot />
   </arc-progress>
 </template>

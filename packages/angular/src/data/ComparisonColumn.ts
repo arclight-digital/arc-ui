@@ -6,7 +6,7 @@ import { ArcComparisonColumn } from '@arclux/arc-ui/comparison-column';
 @Component({
   selector: 'arc-comparison-column',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class ComparisonColumn {
   private readonly _el: ArcComparisonColumn = inject(ElementRef).nativeElement;

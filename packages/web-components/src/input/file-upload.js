@@ -11,6 +11,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {boolean} disabled - Disables the dropzone, preventing drag-and-drop and click interactions. Reduces opacity to 0.4.
  * @fires arc-change - Fired when files are added or dropped
  * @fires arc-remove - Fired when a file is removed from the list
+ * @slot none
  * @csspart wrapper
  * @csspart dropzone
  * @csspart error

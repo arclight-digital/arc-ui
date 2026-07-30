@@ -7,7 +7,6 @@
     keys?: string;
     disabled?: boolean;
     global?: boolean;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -35,9 +34,8 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { keys = '', disabled = false, global = false, children, ...rest }: Props = $props();
+  let { keys = '', disabled = false, global = false, ...rest }: Props = $props();
 </script>
 
 <arc-hotkey {keys} {disabled} {global} {...rest}>
-  {@render children?.()}
 </arc-hotkey>

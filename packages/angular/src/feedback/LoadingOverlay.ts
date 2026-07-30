@@ -6,7 +6,7 @@ import { ArcLoadingOverlay } from '@arclux/arc-ui/loading-overlay';
 @Component({
   selector: 'arc-loading-overlay',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class LoadingOverlay {
   private readonly _el: ArcLoadingOverlay = inject(ElementRef).nativeElement;

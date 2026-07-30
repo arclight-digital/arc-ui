@@ -15,7 +15,6 @@ export interface ChartProps {
   valueFormat?: 'number' | 'percent' | 'currency';
   currency?: string;
   onArcMarkClick?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -43,7 +42,7 @@ export interface ChartProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Chart: FunctionComponent<ChartProps> = ({ type, series, labels, stacked, hideLegend, hideAxis, height, valueFormat, currency, onArcMarkClick, children, ...rest }) => {
+export const Chart: FunctionComponent<ChartProps> = ({ type, series, labels, stacked, hideLegend, hideAxis, height, valueFormat, currency, onArcMarkClick, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -56,5 +55,5 @@ export const Chart: FunctionComponent<ChartProps> = ({ type, series, labels, sta
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcMarkClick]);
-  return h('arc-chart', { ref, type, series, labels, stacked, hideLegend, hideAxis, height, valueFormat, currency, ...rest }, children);
+  return h('arc-chart', { ref, type, series, labels, stacked, hideLegend, hideAxis, height, valueFormat, currency, ...rest });
 };

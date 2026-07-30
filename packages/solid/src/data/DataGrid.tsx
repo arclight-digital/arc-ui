@@ -22,7 +22,6 @@ export interface DataGridProps {
   onArcSort?: (e: CustomEvent) => void;
   onArcSelect?: (e: CustomEvent) => void;
   onArcCellChange?: (e: CustomEvent) => void;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -51,10 +50,9 @@ export interface DataGridProps {
 }
 
 export const DataGrid: Component<DataGridProps> = (props) => {
-  const [local, rest] = splitProps(props, ['columns', 'rows', 'sort', 'manualSort', 'selectable', 'virtual', 'rowHeight', 'onArcSort', 'onArcSelect', 'onArcCellChange', 'children']);
+  const [local, rest] = splitProps(props, ['columns', 'rows', 'sort', 'manualSort', 'selectable', 'virtual', 'rowHeight', 'onArcSort', 'onArcSelect', 'onArcCellChange']);
   return (
     <arc-data-grid columns={local.columns} rows={local.rows} sort={local.sort} prop:manualSort={local.manualSort} selectable={local.selectable} virtual={local.virtual} prop:rowHeight={local.rowHeight} on:arc-sort={local.onArcSort} on:arc-select={local.onArcSelect} on:arc-cell-change={local.onArcCellChange} {...rest}>
-      {local.children}
     </arc-data-grid>
   );
 };

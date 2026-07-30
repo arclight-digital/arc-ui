@@ -6,7 +6,7 @@ import { ArcEventCalendar } from '@arclux/arc-ui/event-calendar';
 @Component({
   selector: 'arc-event-calendar',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
   host: {
     '(arc-period-change)': '_onArcPeriodChange($event)',
     '(arc-date-click)': '_onArcDateClick($event)',

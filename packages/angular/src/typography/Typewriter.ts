@@ -6,7 +6,7 @@ import { ArcTypewriter } from '@arclux/arc-ui/typewriter';
 @Component({
   selector: 'arc-typewriter',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class Typewriter {
   private readonly _el: ArcTypewriter = inject(ElementRef).nativeElement;

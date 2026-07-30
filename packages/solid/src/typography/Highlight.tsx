@@ -15,7 +15,6 @@ export interface HighlightProps {
   text?: string;
   query?: string;
   caseSensitive?: boolean;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -44,10 +43,9 @@ export interface HighlightProps {
 }
 
 export const Highlight: Component<HighlightProps> = (props) => {
-  const [local, rest] = splitProps(props, ['text', 'query', 'caseSensitive', 'children']);
+  const [local, rest] = splitProps(props, ['text', 'query', 'caseSensitive']);
   return (
     <arc-highlight text={local.text} query={local.query} prop:caseSensitive={local.caseSensitive} {...rest}>
-      {local.children}
     </arc-highlight>
   );
 };

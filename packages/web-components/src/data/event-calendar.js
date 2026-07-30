@@ -13,6 +13,7 @@ import { monthNames, weekdayNames, firstDayOfWeek, weekdayOffset } from '../shar
  * @fires arc-event-click - Fired when an event chip is clicked or activated. `event.detail.event` contains the original event object.
  * @fires arc-date-click - Fired when a day cell or a "+N more" overflow button is activated. `event.detail.date` contains the ISO date string.
  * @fires {CustomEvent<{ view: 'month' | 'week', date: string }>} arc-period-change - Fired when the visible period or view changes (navigation buttons, Today, view toggle, or keyboard). `event.detail` contains `{ view, date }`.
+ * @slot none
  * @csspart event
  * @csspart day
  * @csspart day-number

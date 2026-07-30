@@ -9,7 +9,6 @@
     events?: Array<{date:string,end?:string,label:string,color?:number}>;
     view?: 'month' | 'week';
     date?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -37,7 +36,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { locale = '', firstDayOfWeek = 0, events = [], view = $bindable('month'), date = $bindable(''), children, ...rest }: Props = $props();
+  let { locale = '', firstDayOfWeek = 0, events = [], view = $bindable('month'), date = $bindable(''), ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {
@@ -70,5 +69,4 @@
   onarc-period-change={__onArcPeriodChange}
   onarc-date-click={__onArcDateClick}
 >
-  {@render children?.()}
 </arc-event-calendar>

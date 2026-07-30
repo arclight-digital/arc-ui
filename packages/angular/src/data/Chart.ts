@@ -6,7 +6,7 @@ import { ArcChart } from '@arclux/arc-ui/chart';
 @Component({
   selector: 'arc-chart',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class Chart {
   private readonly _el: ArcChart = inject(ElementRef).nativeElement;

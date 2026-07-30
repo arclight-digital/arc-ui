@@ -21,6 +21,5 @@ const props = withDefaults(defineProps<{
     :label="props.label"
     :variant="props.variant"
   >
-    <slot />
   </arc-separator>
 </template>

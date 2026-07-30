@@ -20,7 +20,6 @@ export interface DateRangePickerProps {
   label?: string;
   open?: boolean;
   className?: string;
-  children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;
 }
 

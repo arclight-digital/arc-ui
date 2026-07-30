@@ -9,7 +9,6 @@ export interface HotkeyProps {
   disabled?: boolean;
   global?: boolean;
   className?: string;
-  children?: React.ReactNode;
   onArcHotkeyTrigger?: (e: CustomEvent) => void;
 }
 

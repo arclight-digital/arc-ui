@@ -6,7 +6,7 @@ import { ArcRating } from '@arclux/arc-ui/rating';
 @Component({
   selector: 'arc-rating',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
   host: {
     '(arc-change)': '_onArcChange($event)',
   },

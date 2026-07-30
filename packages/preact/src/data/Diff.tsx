@@ -7,7 +7,6 @@ export interface DiffProps {
   original?: string;
   revised?: string;
   mode?: 'inline' | 'side-by-side';
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -35,5 +34,5 @@ export interface DiffProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Diff: FunctionComponent<DiffProps> = ({ original, revised, mode, children, ...rest }) =>
-  h('arc-diff', { original, revised, mode, ...rest }, children);
+export const Diff: FunctionComponent<DiffProps> = ({ original, revised, mode, ...rest }) =>
+  h('arc-diff', { original, revised, mode, ...rest });

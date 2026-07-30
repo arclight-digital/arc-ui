@@ -9,7 +9,6 @@
     maxVisible?: number;
     dedupe?: boolean;
     queueLimit?: number;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -37,7 +36,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { position = 'top-right', duration = 4000, maxVisible = 3, dedupe = true, queueLimit = 20, children, ...rest }: Props = $props();
+  let { position = 'top-right', duration = 4000, maxVisible = 3, dedupe = true, queueLimit = 20, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {
@@ -49,5 +48,4 @@
 </script>
 
 <arc-toast {position} {duration} {dedupe} bind:this={__el} {...rest}>
-  {@render children?.()}
 </arc-toast>

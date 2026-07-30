@@ -21,6 +21,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @prop {boolean} autoResize - Automatically grows the textarea height to fit its content. Disables manual resize when enabled.
  * @fires {CustomEvent<{ value: string }>} arc-input - Fired on each keystroke with { value } detail
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired on blur when value has changed
+ * @slot none
  * @csspart wrapper
  * @csspart label
  * @csspart textarea

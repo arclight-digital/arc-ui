@@ -12,6 +12,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @prop {'sm' | 'md' | 'lg'} size - Controls the toggle size.
  * @prop {string} name - Form field name submitted with the toggle value. When set, the component participates in native `<form>` submission.
  * @fires {CustomEvent<{ checked: boolean }>} arc-change - Fired when the toggle state changes
+ * @slot none
  * @csspart toggle
  * @csspart track
  * @csspart thumb

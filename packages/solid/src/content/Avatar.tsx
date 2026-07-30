@@ -17,7 +17,6 @@ export interface AvatarProps {
   size?: 'sm' | 'md' | 'lg';
   shape?: 'circle' | 'square' | 'rounded';
   status?: 'online' | 'offline' | 'busy' | 'away';
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -46,10 +45,9 @@ export interface AvatarProps {
 }
 
 export const Avatar: Component<AvatarProps> = (props) => {
-  const [local, rest] = splitProps(props, ['src', 'name', 'size', 'shape', 'status', 'children']);
+  const [local, rest] = splitProps(props, ['src', 'name', 'size', 'shape', 'status']);
   return (
     <arc-avatar src={local.src} name={local.name} size={local.size} shape={local.shape} status={local.status} {...rest}>
-      {local.children}
     </arc-avatar>
   );
 };

@@ -6,7 +6,7 @@ import { ArcCountdownTimer } from '@arclux/arc-ui/countdown-timer';
 @Component({
   selector: 'arc-countdown-timer',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class CountdownTimer {
   private readonly _el: ArcCountdownTimer = inject(ElementRef).nativeElement;

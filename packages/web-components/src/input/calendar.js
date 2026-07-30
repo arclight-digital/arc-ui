@@ -14,6 +14,7 @@ import { monthNames, weekdayNames, firstDayOfWeek, weekdayOffset } from '../shar
  * @prop {number} year - The currently displayed year. Defaults to the current year.
  * @fires arc-change - Fired when a date is selected. `event.detail.value` contains the ISO date string (YYYY-MM-DD).
  * @fires {CustomEvent<{ month: number, year: number }>} arc-month-change - Fired when the visible month or year changes via the navigation buttons.
+ * @slot none
  * @csspart calendar
  * @csspart header
  * @csspart nav-prev

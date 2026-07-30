@@ -21,6 +21,5 @@ const props = withDefaults(defineProps<{
     :label="props.label"
     :size="props.size"
   >
-    <slot />
   </arc-color-swatch>
 </template>

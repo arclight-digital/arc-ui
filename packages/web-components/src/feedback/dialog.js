@@ -16,6 +16,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {'default' | 'error'} variant - Visual variant — error adds red accent line, glow border, and red confirm button
  * @fires {CustomEvent<void>} arc-confirm - Fired when the confirm button is clicked
  * @fires {CustomEvent<void>} arc-cancel - Fired when cancel, escape, or backdrop click occurs
+ * @slot none
  * @csspart body
  * @csspart cancel
  * @csspart confirm

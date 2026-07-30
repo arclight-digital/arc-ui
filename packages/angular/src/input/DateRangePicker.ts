@@ -6,7 +6,7 @@ import { ArcDateRangePicker } from '@arclux/arc-ui/date-range-picker';
 @Component({
   selector: 'arc-date-range-picker',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
   host: {
     '(arc-change)': '_onArcChange($event)',
   },

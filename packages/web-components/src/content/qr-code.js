@@ -14,6 +14,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {string} label - Accessible description announced to screen readers (falls back to "QR code"). Describe the purpose, not the encoded value — the value is never exposed by default since it may be a secret.
  * @prop {number} quietZone - Width of the empty border around the code, measured in modules. Scanners rely on this margin to find the code; keep at least 2 against busy backgrounds.
  * @prop {boolean} contrast - Renders the code on a white rounded card with forced dark modules, guaranteeing dark-on-light scanability in both themes. Overrides --qr-fg/--qr-bg. Recommended for scan-critical codes.
+ * @slot none
  * @csspart svg
  * @csspart card
  */

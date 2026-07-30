@@ -16,6 +16,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @prop {string} name - The form field name submitted when the checkbox lives inside a <form>. Required for native form submission and useful for serializing checkbox group values on the server.
  * @prop {string} value - The value sent with the form when the checkbox is checked. Defaults to "on" if omitted, matching native checkbox behaviour. Set explicit values when multiple checkboxes share the same name to distinguish them in the submitted data.
  * @fires {CustomEvent<{ checked: boolean }>} arc-change - Fired when the checked state changes
+ * @slot none
  * @csspart checkbox
  * @csspart box
  * @csspart label

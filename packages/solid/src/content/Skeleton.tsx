@@ -16,7 +16,6 @@ export interface SkeletonProps {
   width?: string;
   height?: string;
   count?: number;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -45,10 +44,9 @@ export interface SkeletonProps {
 }
 
 export const Skeleton: Component<SkeletonProps> = (props) => {
-  const [local, rest] = splitProps(props, ['variant', 'width', 'height', 'count', 'children']);
+  const [local, rest] = splitProps(props, ['variant', 'width', 'height', 'count']);
   return (
     <arc-skeleton variant={local.variant} width={local.width} height={local.height} count={local.count} {...rest}>
-      {local.children}
     </arc-skeleton>
   );
 };

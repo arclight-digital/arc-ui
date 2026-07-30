@@ -12,6 +12,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {number} decimals - Number of fixed decimal places
  * @prop {'number' | 'currency' | 'percent'} format - Controls how the number is formatted using Intl.NumberFormat. Use currency with a prefix like $ or percent with a suffix like %.
  * @prop {string} locale - BCP 47 locale tag passed to Intl.NumberFormat for locale-aware number formatting (thousands separators, decimal marks).
+ * @slot none
  * @csspart value
  */
 export class ArcAnimatedNumber extends LitElement {

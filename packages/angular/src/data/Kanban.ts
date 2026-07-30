@@ -6,7 +6,7 @@ import { ArcKanban } from '@arclux/arc-ui/kanban';
 @Component({
   selector: 'arc-kanban',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class Kanban {
   private readonly _el: ArcKanban = inject(ElementRef).nativeElement;

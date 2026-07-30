@@ -6,7 +6,7 @@ import { ArcPagination } from '@arclux/arc-ui/pagination';
 @Component({
   selector: 'arc-pagination',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class Pagination {
   private readonly _el: ArcPagination = inject(ElementRef).nativeElement;

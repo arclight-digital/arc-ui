@@ -14,7 +14,6 @@ declare module 'solid-js' {
 export interface SpinnerProps {
   size?: 'sm' | 'md' | 'lg';
   variant?: 'primary' | 'secondary' | 'white';
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -43,10 +42,9 @@ export interface SpinnerProps {
 }
 
 export const Spinner: Component<SpinnerProps> = (props) => {
-  const [local, rest] = splitProps(props, ['size', 'variant', 'children']);
+  const [local, rest] = splitProps(props, ['size', 'variant']);
   return (
     <arc-spinner size={local.size} variant={local.variant} {...rest}>
-      {local.children}
     </arc-spinner>
   );
 };

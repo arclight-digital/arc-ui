@@ -9,6 +9,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {'horizontal' | 'vertical'} orientation - Controls the divider direction. Vertical separators display as inline-flex with full parent height.
  * @prop {string} label - Optional text displayed centered between two line segments. Only applies to horizontal orientation.
  * @prop {'line' | 'dashed' | 'dotted' | 'fade'} variant - Controls the line style. Fade uses a gradient that tapers to transparent at both ends.
+ * @slot none
  * @csspart separator
  * @csspart line
  * @csspart label

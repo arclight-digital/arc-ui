@@ -6,7 +6,7 @@ import { ArcColorPicker } from '@arclux/arc-ui/color-picker';
 @Component({
   selector: 'arc-color-picker',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
   host: {
     '(arc-change)': '_onArcChange($event)',
   },

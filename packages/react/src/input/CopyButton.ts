@@ -8,7 +8,6 @@ export interface CopyButtonProps {
   value?: string;
   disabled?: boolean;
   className?: string;
-  children?: React.ReactNode;
   onArcCopy?: (e: CustomEvent) => void;
   onClick?: (e: Event) => void;
 }

@@ -9,7 +9,6 @@
     presets?: string[];
     disabled?: boolean;
     label?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -37,7 +36,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = $bindable('#4d7ef7'), name = '', presets = [], disabled = false, label = '', children, ...rest }: Props = $props();
+  let { value = $bindable('#4d7ef7'), name = '', presets = [], disabled = false, label = '', ...rest }: Props = $props();
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
@@ -54,5 +53,4 @@
 <arc-color-picker {value} {name} {presets} {disabled} {label} {...rest}
   onarc-change={__onArcChange}
 >
-  {@render children?.()}
 </arc-color-picker>

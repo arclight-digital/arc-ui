@@ -70,6 +70,5 @@ function onArcChange(payload: CustomEvent) {
     :open="props.open"
     @arc-change="onArcChange"
   >
-    <slot />
   </arc-date-range-picker>
 </template>

@@ -13,6 +13,7 @@ import { isEditingTarget } from '../shared/editing-target.js';
  * @prop {boolean} disabled - Temporarily suspends the shortcut listener.
  * @prop {boolean} global - When true, attaches to `window` instead of `document` and skips input/textarea filtering.
  * @fires {CustomEvent<{ keys: string }>} arc-hotkey-trigger - Fired when the full key pattern is matched. `event.detail.keys` contains the matched pattern string.
+ * @slot none
  */
 export class ArcHotkey extends LitElement {
   static properties = {

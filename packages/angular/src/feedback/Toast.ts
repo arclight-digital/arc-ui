@@ -6,7 +6,7 @@ import { ArcToast } from '@arclux/arc-ui/toast';
 @Component({
   selector: 'arc-toast',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class Toast {
   private readonly _el: ArcToast = inject(ElementRef).nativeElement;

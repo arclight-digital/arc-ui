@@ -10,7 +10,6 @@ export interface ImageCropperProps {
   aspect?: number;
   zoom?: number;
   onArcCropChange?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -38,7 +37,7 @@ export interface ImageCropperProps {
   [key: `on${string}`]: unknown;
 }
 
-export const ImageCropper: FunctionComponent<ImageCropperProps> = ({ src, height, aspect, zoom, onArcCropChange, children, ...rest }) => {
+export const ImageCropper: FunctionComponent<ImageCropperProps> = ({ src, height, aspect, zoom, onArcCropChange, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -51,5 +50,5 @@ export const ImageCropper: FunctionComponent<ImageCropperProps> = ({ src, height
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcCropChange]);
-  return h('arc-image-cropper', { ref, src, height, aspect, zoom, ...rest }, children);
+  return h('arc-image-cropper', { ref, src, height, aspect, zoom, ...rest });
 };

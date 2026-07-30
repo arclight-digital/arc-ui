@@ -11,6 +11,7 @@ import '../content/spinner.js';
  * @prop {boolean} active - Controls whether the loading overlay is visible. When true, the overlay fades in and blocks interaction with the content behind it.
  * @prop {string} message - Optional text displayed below the spinner. Use it to communicate what is loading or the current progress step.
  * @prop {boolean} global - When true, the overlay uses fixed positioning to cover the entire viewport instead of just its parent container. Includes a focus trap in this mode.
+ * @slot none
  * @csspart overlay
  * @csspart spinner
  * @csspart message

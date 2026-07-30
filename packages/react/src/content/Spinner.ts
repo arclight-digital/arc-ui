@@ -8,7 +8,6 @@ export interface SpinnerProps {
   size?: 'sm' | 'md' | 'lg';
   variant?: 'primary' | 'secondary' | 'white';
   className?: string;
-  children?: React.ReactNode;
 }
 
 export const Spinner = createComponent({

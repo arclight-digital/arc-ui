@@ -20,7 +20,6 @@ export interface ToastProps {
   onArcQueueOverflow?: (e: CustomEvent) => void;
   onArcQueueChange?: (e: CustomEvent) => void;
   onArcClose?: (e: CustomEvent) => void;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -49,10 +48,9 @@ export interface ToastProps {
 }
 
 export const Toast: Component<ToastProps> = (props) => {
-  const [local, rest] = splitProps(props, ['position', 'duration', 'maxVisible', 'dedupe', 'queueLimit', 'onArcQueueOverflow', 'onArcQueueChange', 'onArcClose', 'children']);
+  const [local, rest] = splitProps(props, ['position', 'duration', 'maxVisible', 'dedupe', 'queueLimit', 'onArcQueueOverflow', 'onArcQueueChange', 'onArcClose']);
   return (
     <arc-toast position={local.position} duration={local.duration} prop:maxVisible={local.maxVisible} dedupe={local.dedupe} prop:queueLimit={local.queueLimit} on:arc-queue-overflow={local.onArcQueueOverflow} on:arc-queue-change={local.onArcQueueChange} on:arc-close={local.onArcClose} {...rest}>
-      {local.children}
     </arc-toast>
   );
 };

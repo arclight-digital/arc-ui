@@ -6,7 +6,7 @@ import { ArcAnimatedNumber } from '@arclux/arc-ui/animated-number';
 @Component({
   selector: 'arc-animated-number',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class AnimatedNumber {
   private readonly _el: ArcAnimatedNumber = inject(ElementRef).nativeElement;

@@ -18,6 +18,5 @@ const props = withDefaults(defineProps<{
     :politeness="props.politeness"
     :message="props.message"
   >
-    <slot />
   </arc-announcement>
 </template>

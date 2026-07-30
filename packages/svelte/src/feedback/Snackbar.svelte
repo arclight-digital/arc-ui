@@ -6,7 +6,6 @@
   interface Props {
     position?: 'bottom-center' | 'bottom-left' | 'bottom-right';
     duration?: number;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -34,9 +33,8 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { position = 'bottom-center', duration = 5000, children, ...rest }: Props = $props();
+  let { position = 'bottom-center', duration = 5000, ...rest }: Props = $props();
 </script>
 
 <arc-snackbar {position} {duration} {...rest}>
-  {@render children?.()}
 </arc-snackbar>

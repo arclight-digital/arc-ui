@@ -16,7 +16,6 @@ export interface TimePickerProps {
   label?: string;
   open?: boolean;
   className?: string;
-  children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;
   onClick?: (e: Event) => void;
 }

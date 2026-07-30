@@ -6,7 +6,7 @@ import { ArcDiff } from '@arclux/arc-ui/diff';
 @Component({
   selector: 'arc-diff',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class Diff {
   private readonly _el: ArcDiff = inject(ElementRef).nativeElement;

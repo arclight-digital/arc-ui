@@ -10,7 +10,6 @@ export interface ScrollIndicatorProps {
   size?: 'sm' | 'md' | 'lg';
   color?: 'accent' | 'gradient';
   className?: string;
-  children?: React.ReactNode;
 }
 
 export const ScrollIndicator = createComponent({

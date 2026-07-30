@@ -10,7 +10,6 @@ export interface CountdownTimerProps {
   expired?: string;
   hideZeroSegments?: boolean;
   onArcExpired?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -38,7 +37,7 @@ export interface CountdownTimerProps {
   [key: `on${string}`]: unknown;
 }
 
-export const CountdownTimer: FunctionComponent<CountdownTimerProps> = ({ target, label, expired, hideZeroSegments, onArcExpired, children, ...rest }) => {
+export const CountdownTimer: FunctionComponent<CountdownTimerProps> = ({ target, label, expired, hideZeroSegments, onArcExpired, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -51,5 +50,5 @@ export const CountdownTimer: FunctionComponent<CountdownTimerProps> = ({ target,
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcExpired]);
-  return h('arc-countdown-timer', { ref, target, label, expired, hideZeroSegments, ...rest }, children);
+  return h('arc-countdown-timer', { ref, target, label, expired, hideZeroSegments, ...rest });
 };

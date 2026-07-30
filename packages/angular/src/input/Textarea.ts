@@ -6,7 +6,7 @@ import { ArcTextarea } from '@arclux/arc-ui/textarea';
 @Component({
   selector: 'arc-textarea',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
   host: {
     '(arc-input)': '_onArcInput($event)',
     '(arc-change)': '_onArcChange($event)',

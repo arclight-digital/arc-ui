@@ -10,6 +10,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {boolean} smooth - Use smooth scrolling animation. Falls back to instant when prefers-reduced-motion is set.
  * @prop {'bottom-right' | 'bottom-left'} position - Corner placement.
  * @prop {string} offset - Distance from viewport edges. Accepts any CSS length value.
+ * @slot none
  * @csspart button
  */
 export class ArcScrollToTop extends LitElement {

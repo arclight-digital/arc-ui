@@ -10,6 +10,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {string} expired - Text shown when the countdown reaches zero
  * @prop {boolean} hideZeroSegments - Hide leading segments that are zero
  * @fires {CustomEvent<void>} arc-expired - Fired when the countdown reaches zero
+ * @slot none
  * @csspart separator
  * @csspart segment
  * @csspart number

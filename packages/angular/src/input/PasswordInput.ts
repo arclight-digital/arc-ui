@@ -6,7 +6,7 @@ import { ArcPasswordInput } from '@arclux/arc-ui/password-input';
 @Component({
   selector: 'arc-password-input',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
   host: {
     '(arc-input)': '_onArcInput($event)',
     '(arc-change)': '_onArcChange($event)',

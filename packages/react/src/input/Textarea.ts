@@ -18,7 +18,6 @@ export interface TextareaProps {
   autoResize?: boolean;
   error?: string;
   className?: string;
-  children?: React.ReactNode;
   onArcInput?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
 }

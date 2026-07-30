@@ -6,7 +6,7 @@ import { ArcStat } from '@arclux/arc-ui/stat';
 @Component({
   selector: 'arc-stat',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class Stat {
   private readonly _el: ArcStat = inject(ElementRef).nativeElement;

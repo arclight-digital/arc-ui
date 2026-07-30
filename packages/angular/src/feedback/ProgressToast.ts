@@ -6,7 +6,7 @@ import { ArcProgressToast } from '@arclux/arc-ui/progress-toast';
 @Component({
   selector: 'arc-progress-toast',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class ProgressToast {
   private readonly _el: ArcProgressToast = inject(ElementRef).nativeElement;

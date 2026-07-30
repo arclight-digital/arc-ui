@@ -16,7 +16,6 @@ export interface GuidedTourProps {
   onArcChange?: (e: CustomEvent) => void;
   onArcComplete?: (e: CustomEvent) => void;
   onArcClose?: (e: CustomEvent) => void;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -45,10 +44,9 @@ export interface GuidedTourProps {
 }
 
 export const GuidedTour: Component<GuidedTourProps> = (props) => {
-  const [local, rest] = splitProps(props, ['open', 'onArcChange', 'onArcComplete', 'onArcClose', 'children']);
+  const [local, rest] = splitProps(props, ['open', 'onArcChange', 'onArcComplete', 'onArcClose']);
   return (
     <arc-guided-tour open={local.open} on:arc-change={local.onArcChange} on:arc-complete={local.onArcComplete} on:arc-close={local.onArcClose} {...rest}>
-      {local.children}
     </arc-guided-tour>
   );
 };

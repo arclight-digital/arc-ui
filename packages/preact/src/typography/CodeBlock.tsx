@@ -8,7 +8,6 @@ export interface CodeBlockProps {
   filename?: string;
   code?: string;
   variant?: 'default' | 'window' | 'basic';
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -36,5 +35,5 @@ export interface CodeBlockProps {
   [key: `on${string}`]: unknown;
 }
 
-export const CodeBlock: FunctionComponent<CodeBlockProps> = ({ language, filename, code, variant, children, ...rest }) =>
-  h('arc-code-block', { language, filename, code, variant, ...rest }, children);
+export const CodeBlock: FunctionComponent<CodeBlockProps> = ({ language, filename, code, variant, ...rest }) =>
+  h('arc-code-block', { language, filename, code, variant, ...rest });

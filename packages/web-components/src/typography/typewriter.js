@@ -12,6 +12,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {boolean} loop - Loop the animation indefinitely
  * @prop {number} pauseEnd - Milliseconds to pause at the end before looping
  * @fires {CustomEvent<void>} arc-complete - Fired when the typing animation finishes revealing all characters
+ * @slot none
  * @csspart text
  */
 export class ArcTypewriter extends LitElement {

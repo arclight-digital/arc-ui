@@ -56,6 +56,5 @@ function onArcChange(payload: CustomEvent) {
     :firstDayOfWeek="props.firstDayOfWeek"
     @arc-change="onArcChange"
   >
-    <slot />
   </arc-date-picker>
 </template>

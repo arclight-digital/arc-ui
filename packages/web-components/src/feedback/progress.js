@@ -12,6 +12,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {boolean} indeterminate - When true, the bar pulses or the spinner loops without a fixed endpoint. Use this when the total work is unknown. Switch to determinate (indeterminate=false) and set a value as soon as real progress data becomes available.
  * @prop {string} label - Accessible label text applied as aria-label on the underlying progressbar role element. This is the only way screen readers can convey the purpose of the indicator. Always provide a meaningful label such as "Uploading report.pdf" rather than a generic "Loading".
  * @prop {boolean} showValue - Displays the current percentage value next to the label.
+ * @slot none
  * @csspart progress
  * @csspart label
  * @csspart spinner

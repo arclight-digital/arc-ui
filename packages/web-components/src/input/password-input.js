@@ -77,6 +77,7 @@ function scorePassword(pw) {
  * @fires {CustomEvent<{ value: string }>} arc-input - Fired on each keystroke with { value } detail
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired on blur when value has changed, with { value } detail
  * @fires arc-strength-change - Fired when the strength score changes (only while show-strength is set), with { score } detail (0-4)
+ * @slot none
  * @csspart strength
  * @csspart label
  * @csspart field

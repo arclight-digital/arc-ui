@@ -12,6 +12,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @prop {boolean} disabled - Disables interaction, reducing opacity to 40% and blocking pointer events.
  * @prop {boolean} readonly - Prevents interaction while maintaining full visual appearance. Useful for displaying existing ratings.
  * @fires {CustomEvent<{ value: number }>} arc-change - Fired when the rating value changes
+ * @slot none
  * @csspart star
  * @csspart rating
  */

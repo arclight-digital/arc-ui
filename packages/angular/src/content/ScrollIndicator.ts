@@ -6,7 +6,7 @@ import { ArcScrollIndicator } from '@arclux/arc-ui/scroll-indicator';
 @Component({
   selector: 'arc-scroll-indicator',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class ScrollIndicator {
   private readonly _el: ArcScrollIndicator = inject(ElementRef).nativeElement;

@@ -10,7 +10,6 @@ export interface FileUploadProps {
   maxSize?: number;
   disabled?: boolean;
   className?: string;
-  children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;
   onArcRemove?: (e: CustomEvent) => void;
 }

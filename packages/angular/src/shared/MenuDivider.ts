@@ -6,7 +6,7 @@ import { ArcMenuDivider } from '@arclux/arc-ui/menu-divider';
 @Component({
   selector: 'arc-menu-divider',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class MenuDivider {
   private readonly _el: ArcMenuDivider = inject(ElementRef).nativeElement;

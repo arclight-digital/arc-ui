@@ -6,7 +6,7 @@ import { ArcTagInput } from '@arclux/arc-ui/tag-input';
 @Component({
   selector: 'arc-tag-input',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
   host: {
     '(arc-change)': '_onArcChange($event)',
   },

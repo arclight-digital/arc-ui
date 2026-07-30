@@ -16,7 +16,6 @@ export interface SpotlightProps {
   active?: boolean;
   padding?: number;
   onArcClose?: (e: CustomEvent) => void;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -45,10 +44,9 @@ export interface SpotlightProps {
 }
 
 export const Spotlight: Component<SpotlightProps> = (props) => {
-  const [local, rest] = splitProps(props, ['target', 'active', 'padding', 'onArcClose', 'children']);
+  const [local, rest] = splitProps(props, ['target', 'active', 'padding', 'onArcClose']);
   return (
     <arc-spotlight target={local.target} active={local.active} padding={local.padding} on:arc-close={local.onArcClose} {...rest}>
-      {local.children}
     </arc-spotlight>
   );
 };

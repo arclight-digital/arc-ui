@@ -9,7 +9,6 @@ export interface ThemeToggleProps {
   disabled?: boolean;
   iconOnly?: boolean;
   onArcChange?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -37,7 +36,7 @@ export interface ThemeToggleProps {
   [key: `on${string}`]: unknown;
 }
 
-export const ThemeToggle: FunctionComponent<ThemeToggleProps> = ({ theme, disabled, iconOnly, onArcChange, children, ...rest }) => {
+export const ThemeToggle: FunctionComponent<ThemeToggleProps> = ({ theme, disabled, iconOnly, onArcChange, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -50,5 +49,5 @@ export const ThemeToggle: FunctionComponent<ThemeToggleProps> = ({ theme, disabl
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcChange]);
-  return h('arc-theme-toggle', { ref, theme, disabled, iconOnly, ...rest }, children);
+  return h('arc-theme-toggle', { ref, theme, disabled, iconOnly, ...rest });
 };

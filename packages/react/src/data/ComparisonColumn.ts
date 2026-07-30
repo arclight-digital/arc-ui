@@ -9,7 +9,6 @@ export interface ComparisonColumnProps {
   highlight?: boolean;
   values?: string;
   className?: string;
-  children?: React.ReactNode;
 }
 
 export const ComparisonColumn = createComponent({

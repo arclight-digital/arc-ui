@@ -10,6 +10,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {boolean} disabled - Prevents cycling and reduces opacity to 40%.
  * @prop {boolean} iconOnly - Renders the button as a compact circle without the theme name label. Attribute name is `icon-only`.
  * @fires {CustomEvent<{ value: 'dark' | 'light' | 'auto' }>} arc-change - Fired when the theme is toggled, with { theme } detail
+ * @slot none
  * @csspart button
  * @csspart icon
  * @csspart label

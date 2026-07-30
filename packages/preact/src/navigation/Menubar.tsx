@@ -7,7 +7,6 @@ import '@arclux/arc-ui/menubar';
 export interface MenubarProps {
   items?: Array<{label:string,disabled?:boolean,items:Array<{label?:string,shortcut?:string,disabled?:boolean,divider?:boolean,items?:Array<{label:string,shortcut?:string,disabled?:boolean}>}>}>;
   onArcSelect?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -35,7 +34,7 @@ export interface MenubarProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Menubar: FunctionComponent<MenubarProps> = ({ items, onArcSelect, children, ...rest }) => {
+export const Menubar: FunctionComponent<MenubarProps> = ({ items, onArcSelect, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -48,5 +47,5 @@ export const Menubar: FunctionComponent<MenubarProps> = ({ items, onArcSelect, c
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcSelect]);
-  return h('arc-menubar', { ref, items, ...rest }, children);
+  return h('arc-menubar', { ref, items, ...rest });
 };

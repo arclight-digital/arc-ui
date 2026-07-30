@@ -6,7 +6,7 @@ import { ArcThemeToggle } from '@arclux/arc-ui/theme-toggle';
 @Component({
   selector: 'arc-theme-toggle',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class ThemeToggle {
   private readonly _el: ArcThemeToggle = inject(ElementRef).nativeElement;

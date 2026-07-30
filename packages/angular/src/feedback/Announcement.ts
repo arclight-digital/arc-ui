@@ -6,7 +6,7 @@ import { ArcAnnouncement } from '@arclux/arc-ui/announcement';
 @Component({
   selector: 'arc-announcement',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class Announcement {
   private readonly _el: ArcAnnouncement = inject(ElementRef).nativeElement;

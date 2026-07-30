@@ -16,7 +16,6 @@ export interface TableProps {
   rows?: string[][];
   striped?: boolean;
   density?: 'default' | 'compact';
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -45,10 +44,9 @@ export interface TableProps {
 }
 
 export const Table: Component<TableProps> = (props) => {
-  const [local, rest] = splitProps(props, ['columns', 'rows', 'striped', 'density', 'children']);
+  const [local, rest] = splitProps(props, ['columns', 'rows', 'striped', 'density']);
   return (
     <arc-table columns={local.columns} rows={local.rows} striped={local.striped} density={local.density} {...rest}>
-      {local.children}
     </arc-table>
   );
 };

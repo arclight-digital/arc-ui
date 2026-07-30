@@ -29,6 +29,5 @@ const props = withDefaults(defineProps<{
     :decimals="props.decimals"
     :notation="props.notation"
   >
-    <slot />
   </arc-number-format>
 </template>

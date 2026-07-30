@@ -8,7 +8,6 @@ export interface DividerProps {
   align?: 'left' | 'right';
   vertical?: boolean;
   label?: string;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -36,5 +35,5 @@ export interface DividerProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Divider: FunctionComponent<DividerProps> = ({ variant, align, vertical, label, children, ...rest }) =>
-  h('arc-divider', { variant, align, vertical, label, ...rest }, children);
+export const Divider: FunctionComponent<DividerProps> = ({ variant, align, vertical, label, ...rest }) =>
+  h('arc-divider', { variant, align, vertical, label, ...rest });

@@ -16,7 +16,6 @@ export interface DatePickerProps {
   locale?: string;
   firstDayOfWeek?: number;
   className?: string;
-  children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;
 }
 

@@ -36,6 +36,5 @@ const emit = defineEmits<{
     @arc-queue-change="(payload: CustomEvent) => emit('arc-queue-change', payload)"
     @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"
   >
-    <slot />
   </arc-toast>
 </template>

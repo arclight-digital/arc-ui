@@ -24,6 +24,5 @@ const props = withDefaults(defineProps<{
     :code="props.code"
     :variant="props.variant"
   >
-    <slot />
   </arc-code-block>
 </template>

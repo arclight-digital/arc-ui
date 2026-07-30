@@ -7,6 +7,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @tag arc-spinner
  * @prop {'sm' | 'md' | 'lg'} size - Spinner dimensions: sm (16px), md (24px), lg (40px)
  * @prop {'primary' | 'secondary' | 'white'} variant - Colour of the spinner ring
+ * @slot none
  * @csspart spinner
  */
 export class ArcSpinner extends LitElement {

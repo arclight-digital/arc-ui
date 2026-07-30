@@ -6,7 +6,7 @@ import { ArcTimeAgo } from '@arclux/arc-ui/time-ago';
 @Component({
   selector: 'arc-time-ago',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class TimeAgo {
   private readonly _el: ArcTimeAgo = inject(ElementRef).nativeElement;

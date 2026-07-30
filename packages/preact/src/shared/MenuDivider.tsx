@@ -4,7 +4,6 @@ import { h, type FunctionComponent } from 'preact';
 import '@arclux/arc-ui/menu-divider';
 
 export interface MenuDividerProps {
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -32,5 +31,5 @@ export interface MenuDividerProps {
   [key: `on${string}`]: unknown;
 }
 
-export const MenuDivider: FunctionComponent<MenuDividerProps> = ({ children, ...rest }) =>
-  h('arc-menu-divider', { ...rest }, children);
+export const MenuDivider: FunctionComponent<MenuDividerProps> = ({ ...rest }) =>
+  h('arc-menu-divider', { ...rest });

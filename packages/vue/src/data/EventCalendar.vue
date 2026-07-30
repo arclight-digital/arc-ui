@@ -54,6 +54,5 @@ function onArcDateClick(payload: CustomEvent) {
     @arc-date-click="onArcDateClick"
     @arc-event-click="(payload: CustomEvent) => emit('arc-event-click', payload)"
   >
-    <slot />
   </arc-event-calendar>
 </template>

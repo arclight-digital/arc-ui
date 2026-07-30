@@ -6,7 +6,7 @@ import { ArcSpinner } from '@arclux/arc-ui/spinner';
 @Component({
   selector: 'arc-spinner',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class Spinner {
   private readonly _el: ArcSpinner = inject(ElementRef).nativeElement;

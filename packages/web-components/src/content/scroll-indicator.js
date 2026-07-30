@@ -10,6 +10,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {'top' | 'bottom'} position - Which edge the indicator sticks to.
  * @prop {'sm' | 'md' | 'lg'} size - Bar thickness: sm (2px), md (3px), lg (4px).
  * @prop {'accent' | 'gradient'} color - Fill color mode. Accent uses `--accent-primary`. Gradient blends from primary to secondary.
+ * @slot none
  * @csspart bar
  * @csspart fill
  */

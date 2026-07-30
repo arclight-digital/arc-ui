@@ -10,6 +10,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {number} value - Zero-based index of the active dot.
  * @prop {boolean} clickable - When true, dots become interactive tap targets that dispatch arc-change on click.
  * @fires {CustomEvent<{ value: number }>} arc-change - Fired when a dot is clicked (clickable mode only) with detail: { value }.
+ * @slot none
  * @csspart base
  * @csspart dot
  */

@@ -17,6 +17,7 @@ let numberInputIdCounter = 0;
  * @prop {boolean} disabled - Disables interaction, reducing opacity to 40% and blocking pointer events.
  * @prop {boolean} readonly - Prevents value changes from typing, stepper buttons, and arrow keys while keeping the field focusable and its value submitted.
  * @fires {CustomEvent<{ value: number }>} arc-change - Fired when the numeric value changes via buttons or keyboard
+ * @slot none
  * @csspart wrapper
  * @csspart label
  * @csspart controls

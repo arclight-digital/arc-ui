@@ -15,7 +15,6 @@ export interface ComparisonColumnProps {
   heading?: string;
   highlight?: boolean;
   values?: string;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -44,10 +43,9 @@ export interface ComparisonColumnProps {
 }
 
 export const ComparisonColumn: Component<ComparisonColumnProps> = (props) => {
-  const [local, rest] = splitProps(props, ['heading', 'highlight', 'values', 'children']);
+  const [local, rest] = splitProps(props, ['heading', 'highlight', 'values']);
   return (
     <arc-comparison-column heading={local.heading} highlight={local.highlight} values={local.values} {...rest}>
-      {local.children}
     </arc-comparison-column>
   );
 };

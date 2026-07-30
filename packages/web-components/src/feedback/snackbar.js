@@ -12,6 +12,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {number} duration - Time in milliseconds before the snackbar auto-dismisses. Can be overridden per-show via the duration option. Set to 0 to persist until manually dismissed.
  * @fires arc-close - Fired when the snackbar is dismissed, either by auto-timeout or user interaction
  * @fires arc-action - Fired when the user clicks the action button (e.g. "Undo")
+ * @slot none
  * @csspart container
  * @csspart snackbar
  * @csspart action

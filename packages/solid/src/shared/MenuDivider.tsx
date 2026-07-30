@@ -12,7 +12,6 @@ declare module 'solid-js' {
 }
 
 export interface MenuDividerProps {
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -41,10 +40,9 @@ export interface MenuDividerProps {
 }
 
 export const MenuDivider: Component<MenuDividerProps> = (props) => {
-  const [local, rest] = splitProps(props, ['children']);
+  const [local, rest] = splitProps(props, []);
   return (
     <arc-menu-divider {...rest}>
-      {local.children}
     </arc-menu-divider>
   );
 };

@@ -17,6 +17,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @prop {boolean} disabled - Disables interaction, reducing opacity and blocking pointer events.
  * @fires {CustomEvent<{ low: number, high: number }>} arc-input - Fired continuously as the user drags either thumb. Detail contains `{ low, high }`. Use for real-time filtering or preview.
  * @fires {CustomEvent<{ low: number, high: number }>} arc-change - Fired once when the user releases a thumb, indicating the final committed range. Detail contains `{ low, high }`. Use for persisting to a database or triggering an expensive operation.
+ * @slot none
  * @csspart range-slider
  * @csspart header
  * @csspart label

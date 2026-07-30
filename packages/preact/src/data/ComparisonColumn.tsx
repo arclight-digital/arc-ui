@@ -7,7 +7,6 @@ export interface ComparisonColumnProps {
   heading?: string;
   highlight?: boolean;
   values?: string;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -35,5 +34,5 @@ export interface ComparisonColumnProps {
   [key: `on${string}`]: unknown;
 }
 
-export const ComparisonColumn: FunctionComponent<ComparisonColumnProps> = ({ heading, highlight, values, children, ...rest }) =>
-  h('arc-comparison-column', { heading, highlight, values, ...rest }, children);
+export const ComparisonColumn: FunctionComponent<ComparisonColumnProps> = ({ heading, highlight, values, ...rest }) =>
+  h('arc-comparison-column', { heading, highlight, values, ...rest });

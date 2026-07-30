@@ -15,7 +15,6 @@ export interface ColorSwatchProps {
   color?: string;
   label?: string;
   size?: 'sm' | 'md' | 'lg';
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -44,10 +43,9 @@ export interface ColorSwatchProps {
 }
 
 export const ColorSwatch: Component<ColorSwatchProps> = (props) => {
-  const [local, rest] = splitProps(props, ['color', 'label', 'size', 'children']);
+  const [local, rest] = splitProps(props, ['color', 'label', 'size']);
   return (
     <arc-color-swatch color={local.color} label={local.label} size={local.size} {...rest}>
-      {local.children}
     </arc-color-swatch>
   );
 };

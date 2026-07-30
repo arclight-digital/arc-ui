@@ -15,6 +15,7 @@ import './tag.js';
  * @prop {boolean} disabled - Disables all pointer and keyboard interaction and dims the board.
  * @fires arc-card-move - Fired when a card is dropped in a new position (pointer or keyboard). detail: { cardId, fromColumn, toColumn, index } where index is the final position in the target column.
  * @fires arc-card-click - Fired when a card is clicked without being dragged. detail: { cardId, columnId }.
+ * @slot none
  * @csspart card-label
  * @csspart card-description
  * @csspart card

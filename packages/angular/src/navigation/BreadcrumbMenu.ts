@@ -6,7 +6,7 @@ import { ArcBreadcrumbMenu } from '@arclux/arc-ui/breadcrumb-menu';
 @Component({
   selector: 'arc-breadcrumb-menu',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class BreadcrumbMenu {
   private readonly _el: ArcBreadcrumbMenu = inject(ElementRef).nativeElement;

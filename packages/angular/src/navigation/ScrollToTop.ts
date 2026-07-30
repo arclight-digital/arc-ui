@@ -6,7 +6,7 @@ import { ArcScrollToTop } from '@arclux/arc-ui/scroll-to-top';
 @Component({
   selector: 'arc-scroll-to-top',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class ScrollToTop {
   private readonly _el: ArcScrollToTop = inject(ElementRef).nativeElement;

@@ -11,6 +11,7 @@ import { ClickOutsideController } from '../shared/click-outside.js';
  * @prop {boolean} active - Controls whether the spotlight overlay is visible. Set to true to activate the dimming overlay and highlight the target element.
  * @prop {number} padding - Padding in pixels around the target element cutout. Increase for larger glow rings or to give the target more breathing room.
  * @fires {CustomEvent<void>} arc-close - Fired when the user clicks outside the highlighted element to dismiss the spotlight
+ * @slot none
  * @csspart ring
  */
 export class ArcSpotlight extends LitElement {

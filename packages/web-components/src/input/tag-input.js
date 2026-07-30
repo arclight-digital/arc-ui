@@ -24,6 +24,7 @@ import { ClickOutsideController } from '../shared/click-outside.js';
  * @prop {string} error - Error message shown below the field; also applies error styling to the border.
  * @fires {CustomEvent<{ value: string[] }>} arc-change - Fired when a tag is added or removed; detail contains `{ value }`
  * @fires arc-input - Fired as the user types; detail contains `{ query }`
+ * @slot none
  * @csspart label
  * @csspart field
  * @csspart tag

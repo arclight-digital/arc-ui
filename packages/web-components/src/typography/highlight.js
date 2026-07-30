@@ -8,6 +8,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {string} text - The full text to display and search within
  * @prop {string} query - The search query to highlight within the text
  * @prop {boolean} caseSensitive - Whether matching should be case-sensitive
+ * @slot none
  * @csspart text
  * @csspart mark
  */

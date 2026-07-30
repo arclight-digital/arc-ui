@@ -7,7 +7,6 @@
     theme?: 'dark' | 'light' | 'auto';
     disabled?: boolean;
     iconOnly?: boolean;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -35,7 +34,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { theme = 'auto', disabled = false, iconOnly = false, children, ...rest }: Props = $props();
+  let { theme = 'auto', disabled = false, iconOnly = false, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {
@@ -46,5 +45,4 @@
 </script>
 
 <arc-theme-toggle {theme} {disabled} bind:this={__el} {...rest}>
-  {@render children?.()}
 </arc-theme-toggle>

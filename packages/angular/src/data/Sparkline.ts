@@ -6,7 +6,7 @@ import { ArcSparkline } from '@arclux/arc-ui/sparkline';
 @Component({
   selector: 'arc-sparkline',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class Sparkline {
   private readonly _el: ArcSparkline = inject(ElementRef).nativeElement;

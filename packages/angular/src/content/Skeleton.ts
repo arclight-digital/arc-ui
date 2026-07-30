@@ -6,7 +6,7 @@ import { ArcSkeleton } from '@arclux/arc-ui/skeleton';
 @Component({
   selector: 'arc-skeleton',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class Skeleton {
   private readonly _el: ArcSkeleton = inject(ElementRef).nativeElement;

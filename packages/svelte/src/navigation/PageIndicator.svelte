@@ -7,7 +7,6 @@
     count?: number;
     value?: number;
     clickable?: boolean;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -35,7 +34,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { count = 0, value = $bindable(0), clickable = false, children, ...rest }: Props = $props();
+  let { count = 0, value = $bindable(0), clickable = false, ...rest }: Props = $props();
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
@@ -52,5 +51,4 @@
 <arc-page-indicator {count} {value} {clickable} {...rest}
   onarc-change={__onArcChange}
 >
-  {@render children?.()}
 </arc-page-indicator>

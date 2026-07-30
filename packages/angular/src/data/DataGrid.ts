@@ -6,7 +6,7 @@ import { ArcDataGrid } from '@arclux/arc-ui/data-grid';
 @Component({
   selector: 'arc-data-grid',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
   host: {
     '(arc-sort)': '_onArcSort($event)',
   },

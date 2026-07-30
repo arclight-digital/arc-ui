@@ -6,7 +6,7 @@ import { ArcCalendar } from '@arclux/arc-ui/calendar';
 @Component({
   selector: 'arc-calendar',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
   host: {
     '(arc-month-change)': '_onArcMonthChange($event)',
     '(arc-change)': '_onArcChange($event)',

@@ -6,7 +6,7 @@ import { ArcTimePicker } from '@arclux/arc-ui/time-picker';
 @Component({
   selector: 'arc-time-picker',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
   host: {
     '(arc-change)': '_onArcChange($event)',
   },

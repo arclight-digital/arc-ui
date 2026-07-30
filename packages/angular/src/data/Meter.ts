@@ -6,7 +6,7 @@ import { ArcMeter } from '@arclux/arc-ui/meter';
 @Component({
   selector: 'arc-meter',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class Meter {
   private readonly _el: ArcMeter = inject(ElementRef).nativeElement;

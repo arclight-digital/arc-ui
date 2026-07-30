@@ -6,7 +6,7 @@ import { ArcNumberInput } from '@arclux/arc-ui/number-input';
 @Component({
   selector: 'arc-number-input',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
   host: {
     '(arc-change)': '_onArcChange($event)',
   },

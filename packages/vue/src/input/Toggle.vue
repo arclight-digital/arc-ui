@@ -41,6 +41,5 @@ function onArcChange(payload: CustomEvent) {
     :name="props.name"
     @arc-change="onArcChange"
   >
-    <slot />
   </arc-toggle>
 </template>

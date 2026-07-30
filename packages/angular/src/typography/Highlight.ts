@@ -6,7 +6,7 @@ import { ArcHighlight } from '@arclux/arc-ui/highlight';
 @Component({
   selector: 'arc-highlight',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class Highlight {
   private readonly _el: ArcHighlight = inject(ElementRef).nativeElement;

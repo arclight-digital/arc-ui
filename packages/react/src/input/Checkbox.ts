@@ -13,7 +13,6 @@ export interface CheckboxProps {
   name?: string;
   value?: string;
   className?: string;
-  children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;
 }
 

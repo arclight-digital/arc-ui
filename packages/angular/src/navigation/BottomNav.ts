@@ -6,7 +6,7 @@ import { ArcBottomNav } from '@arclux/arc-ui/bottom-nav';
 @Component({
   selector: 'arc-bottom-nav',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
   host: {
     '(arc-change)': '_onArcChange($event)',
   },

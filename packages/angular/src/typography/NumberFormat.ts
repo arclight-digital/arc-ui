@@ -6,7 +6,7 @@ import { ArcNumberFormat } from '@arclux/arc-ui/number-format';
 @Component({
   selector: 'arc-number-format',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class NumberFormat {
   private readonly _el: ArcNumberFormat = inject(ElementRef).nativeElement;

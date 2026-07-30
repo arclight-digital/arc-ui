@@ -15,7 +15,6 @@ export interface SeparatorProps {
   orientation?: 'horizontal' | 'vertical';
   label?: string;
   variant?: 'line' | 'dashed' | 'dotted' | 'fade';
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -44,10 +43,9 @@ export interface SeparatorProps {
 }
 
 export const Separator: Component<SeparatorProps> = (props) => {
-  const [local, rest] = splitProps(props, ['orientation', 'label', 'variant', 'children']);
+  const [local, rest] = splitProps(props, ['orientation', 'label', 'variant']);
   return (
     <arc-separator orientation={local.orientation} label={local.label} variant={local.variant} {...rest}>
-      {local.children}
     </arc-separator>
   );
 };

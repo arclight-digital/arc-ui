@@ -6,7 +6,7 @@ import { ArcImageCropper } from '@arclux/arc-ui/image-cropper';
 @Component({
   selector: 'arc-image-cropper',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class ImageCropper {
   private readonly _el: ArcImageCropper = inject(ElementRef).nativeElement;

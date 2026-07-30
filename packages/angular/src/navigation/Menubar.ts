@@ -6,7 +6,7 @@ import { ArcMenubar } from '@arclux/arc-ui/menubar';
 @Component({
   selector: 'arc-menubar',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class Menubar {
   private readonly _el: ArcMenubar = inject(ElementRef).nativeElement;

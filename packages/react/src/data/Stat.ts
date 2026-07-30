@@ -10,7 +10,6 @@ export interface StatProps {
   trend?: 'up' | 'down' | 'neutral';
   change?: string;
   className?: string;
-  children?: React.ReactNode;
 }
 
 export const Stat = createComponent({

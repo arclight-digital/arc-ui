@@ -13,6 +13,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @prop {boolean} readonly - Prevents typing, pasting, and clearing digits while the boxes stay focusable and the value still submits.
  * @prop {'number' | 'text'} type - Input mode. `number` filters non-digits and uses the numeric keyboard; `text` allows any character.
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired when any digit changes
+ * @slot none
  * @csspart otp
  * @csspart box
  */

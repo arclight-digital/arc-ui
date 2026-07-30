@@ -7,7 +7,6 @@ export interface TimeAgoProps {
   datetime?: string;
   live?: boolean;
   locale?: string;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -35,5 +34,5 @@ export interface TimeAgoProps {
   [key: `on${string}`]: unknown;
 }
 
-export const TimeAgo: FunctionComponent<TimeAgoProps> = ({ datetime, live, locale, children, ...rest }) =>
-  h('arc-time-ago', { datetime, live, locale, ...rest }, children);
+export const TimeAgo: FunctionComponent<TimeAgoProps> = ({ datetime, live, locale, ...rest }) =>
+  h('arc-time-ago', { datetime, live, locale, ...rest });

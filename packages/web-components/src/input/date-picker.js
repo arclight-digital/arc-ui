@@ -20,6 +20,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @prop {string} locale - BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language.
  * @prop {number} firstDayOfWeek - Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention, so most of the world gets Monday and the US gets Sunday without configuring anything.
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired when a date is selected
+ * @slot none
  * @csspart wrapper
  * @csspart label
  * @csspart input-wrapper

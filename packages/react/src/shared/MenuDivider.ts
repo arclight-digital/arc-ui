@@ -6,7 +6,6 @@ import { ArcMenuDivider } from '@arclux/arc-ui/menu-divider';
 
 export interface MenuDividerProps {
   className?: string;
-  children?: React.ReactNode;
 }
 
 export const MenuDivider = createComponent({

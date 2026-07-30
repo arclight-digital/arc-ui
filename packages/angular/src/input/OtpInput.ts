@@ -6,7 +6,7 @@ import { ArcOtpInput } from '@arclux/arc-ui/otp-input';
 @Component({
   selector: 'arc-otp-input',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
   host: {
     '(arc-change)': '_onArcChange($event)',
   },

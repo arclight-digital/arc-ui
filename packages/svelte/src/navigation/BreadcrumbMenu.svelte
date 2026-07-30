@@ -6,7 +6,6 @@
   interface Props {
     items?: Array<{label: string, href?: string, siblings?: Array<{label: string, href?: string}>}>;
     label?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -34,9 +33,8 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { items = [], label = 'Breadcrumb', children, ...rest }: Props = $props();
+  let { items = [], label = 'Breadcrumb', ...rest }: Props = $props();
 </script>
 
 <arc-breadcrumb-menu {items} {label} {...rest}>
-  {@render children?.()}
 </arc-breadcrumb-menu>

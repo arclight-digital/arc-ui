@@ -11,7 +11,6 @@ export interface AvatarProps {
   shape?: 'circle' | 'square' | 'rounded';
   status?: 'online' | 'offline' | 'busy' | 'away';
   className?: string;
-  children?: React.ReactNode;
 }
 
 export const Avatar = createComponent({

@@ -17,6 +17,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @prop {boolean} readonly - Prevents entering, deleting, or pasting characters while the boxes stay focusable and the value still submits.
  * @fires arc-change - Fired on every character entry or deletion. `event.detail.value` contains the current partial value.
  * @fires arc-complete - Fired when all boxes are filled. `event.detail.value` contains the full value string.
+ * @slot none
  * @csspart pin
  * @csspart label
  * @csspart boxes

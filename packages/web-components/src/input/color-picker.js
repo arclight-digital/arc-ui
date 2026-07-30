@@ -13,6 +13,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @prop {boolean} disabled - Disables all interaction, reducing opacity to 40% and blocking pointer events.
  * @prop {boolean} readonly - Prevents changing the color via the area, hue slider, hex input, or swatches while the picker stays focusable and the value still submits.
  * @fires arc-change - Fired when the color changes via any input method. `event.detail.value` contains the hex string.
+ * @slot none
  * @csspart picker
  * @csspart label
  * @csspart area

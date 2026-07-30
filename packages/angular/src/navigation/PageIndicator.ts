@@ -6,7 +6,7 @@ import { ArcPageIndicator } from '@arclux/arc-ui/page-indicator';
 @Component({
   selector: 'arc-page-indicator',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
   host: {
     '(arc-change)': '_onArcChange($event)',
   },

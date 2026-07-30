@@ -9,6 +9,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {string[][]} rows - Array of row arrays. Each inner array contains cell values in column order.
  * @prop {boolean} striped - Alternating row backgrounds for improved scanability.
  * @prop {'default' | 'compact'} density - Row density. 'compact' reduces cell padding for dense data displays.
+ * @slot none
  * @csspart table-wrap
  * @csspart table
  * @csspart head

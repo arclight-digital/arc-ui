@@ -26,6 +26,5 @@ const emit = defineEmits<{
     :global="props.global"
     @arc-hotkey-trigger="(payload: CustomEvent) => emit('arc-hotkey-trigger', payload)"
   >
-    <slot />
   </arc-hotkey>
 </template>

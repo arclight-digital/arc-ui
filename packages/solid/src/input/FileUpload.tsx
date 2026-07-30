@@ -18,7 +18,6 @@ export interface FileUploadProps {
   disabled?: boolean;
   onArcChange?: (e: CustomEvent) => void;
   onArcRemove?: (e: CustomEvent) => void;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -47,10 +46,9 @@ export interface FileUploadProps {
 }
 
 export const FileUpload: Component<FileUploadProps> = (props) => {
-  const [local, rest] = splitProps(props, ['accept', 'multiple', 'maxSize', 'disabled', 'onArcChange', 'onArcRemove', 'children']);
+  const [local, rest] = splitProps(props, ['accept', 'multiple', 'maxSize', 'disabled', 'onArcChange', 'onArcRemove']);
   return (
     <arc-file-upload accept={local.accept} multiple={local.multiple} prop:maxSize={local.maxSize} disabled={local.disabled} on:arc-change={local.onArcChange} on:arc-remove={local.onArcRemove} {...rest}>
-      {local.children}
     </arc-file-upload>
   );
 };

@@ -6,7 +6,7 @@ import { ArcCodeBlock } from '@arclux/arc-ui/code-block';
 @Component({
   selector: 'arc-code-block',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class CodeBlock {
   private readonly _el: ArcCodeBlock = inject(ElementRef).nativeElement;

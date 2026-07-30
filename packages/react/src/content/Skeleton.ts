@@ -10,7 +10,6 @@ export interface SkeletonProps {
   height?: string;
   count?: number;
   className?: string;
-  children?: React.ReactNode;
 }
 
 export const Skeleton = createComponent({

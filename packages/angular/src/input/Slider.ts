@@ -6,7 +6,7 @@ import { ArcSlider } from '@arclux/arc-ui/slider';
 @Component({
   selector: 'arc-slider',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
   host: {
     '(arc-input)': '_onArcInput($event)',
     '(arc-change)': '_onArcChange($event)',

@@ -23,7 +23,6 @@ export interface DatePickerProps {
   locale?: string;
   firstDayOfWeek?: number;
   onArcChange?: (e: CustomEvent) => void;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -52,10 +51,9 @@ export interface DatePickerProps {
 }
 
 export const DatePicker: Component<DatePickerProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'name', 'min', 'max', 'placeholder', 'disabled', 'label', 'open', 'locale', 'firstDayOfWeek', 'onArcChange', 'children']);
+  const [local, rest] = splitProps(props, ['value', 'name', 'min', 'max', 'placeholder', 'disabled', 'label', 'open', 'locale', 'firstDayOfWeek', 'onArcChange']);
   return (
     <arc-date-picker value={local.value} name={local.name} min={local.min} max={local.max} placeholder={local.placeholder} disabled={local.disabled} label={local.label} open={local.open} locale={local.locale} prop:firstDayOfWeek={local.firstDayOfWeek} on:arc-change={local.onArcChange} {...rest}>
-      {local.children}
     </arc-date-picker>
   );
 };

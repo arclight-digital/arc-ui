@@ -8,6 +8,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {string} datetime - ISO 8601 date string or any value parseable by new Date().
  * @prop {boolean} live - Auto-update the relative time on an adaptive interval.
  * @prop {string} locale - BCP 47 locale tag for Intl.RelativeTimeFormat output.
+ * @slot none
  * @csspart time
  */
 export class ArcTimeAgo extends LitElement {

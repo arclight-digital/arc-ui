@@ -6,7 +6,7 @@ import { ArcSnackbar } from '@arclux/arc-ui/snackbar';
 @Component({
   selector: 'arc-snackbar',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
 })
 export class Snackbar {
   private readonly _el: ArcSnackbar = inject(ElementRef).nativeElement;

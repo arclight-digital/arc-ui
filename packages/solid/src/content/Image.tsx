@@ -20,7 +20,6 @@ export interface ImageProps {
   fallback?: string;
   onArcLoad?: (e: CustomEvent) => void;
   onArcError?: (e: CustomEvent) => void;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -49,10 +48,9 @@ export interface ImageProps {
 }
 
 export const Image: Component<ImageProps> = (props) => {
-  const [local, rest] = splitProps(props, ['src', 'alt', 'aspect', 'fit', 'loading', 'fallback', 'onArcLoad', 'onArcError', 'children']);
+  const [local, rest] = splitProps(props, ['src', 'alt', 'aspect', 'fit', 'loading', 'fallback', 'onArcLoad', 'onArcError']);
   return (
     <arc-image src={local.src} alt={local.alt} aspect={local.aspect} fit={local.fit} loading={local.loading} fallback={local.fallback} on:arc-load={local.onArcLoad} on:arc-error={local.onArcError} {...rest}>
-      {local.children}
     </arc-image>
   );
 };

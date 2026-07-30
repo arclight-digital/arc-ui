@@ -24,6 +24,5 @@ const props = withDefaults(defineProps<{
     :size="props.size"
     :color="props.color"
   >
-    <slot />
   </arc-scroll-indicator>
 </template>

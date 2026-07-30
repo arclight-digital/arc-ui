@@ -16,7 +16,6 @@ export interface PasswordInputProps {
   autocomplete?: string;
   showStrength?: boolean;
   className?: string;
-  children?: React.ReactNode;
   onArcStrengthChange?: (e: CustomEvent) => void;
   onArcInput?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;

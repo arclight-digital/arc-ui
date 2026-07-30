@@ -6,7 +6,7 @@ import { ArcRangeSlider } from '@arclux/arc-ui/range-slider';
 @Component({
   selector: 'arc-range-slider',
   standalone: true,
-  template: `<ng-content />`,
+  template: ``,
   host: {
     '(arc-input)': '_onArcInput($event)',
     '(arc-change)': '_onArcChange($event)',

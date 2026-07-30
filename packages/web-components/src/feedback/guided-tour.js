@@ -13,6 +13,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @fires {CustomEvent<{ step: number }>} arc-change - Fired when the tour advances or goes back to a different step. Detail contains { step } with the new step index.
  * @fires {CustomEvent<void>} arc-complete - Fired when the user finishes the last step of the tour
  * @fires {CustomEvent<void>} arc-close - Fired when the user skips or closes the tour before completing all steps
+ * @slot none
  * @csspart ring
  * @csspart tooltip
  * @csspart counter

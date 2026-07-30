@@ -146,6 +146,10 @@ for (const tier of TIERS) {
     for (const m of source.matchAll(/^\s*\*\s*@slot\s+(\S*)/gm)) {
       const slot = m[1];
       if (!slot || slot === '-') declaresDefault = true;
+      // `@slot none` is prism's reserved spelling for "this component has no
+      // default slot and its wrappers take no children". It names the absence,
+      // so there is nothing for a wrapper to carry.
+      else if (slot === 'none') continue;
       // Skip interpolated names — arc-virtual-list's `item-${index}` is a family
       // of runtime slot names, not a literal one, and no wrapper can express it.
       else if (!slot.includes('$')) declaredNamed.push(slot);

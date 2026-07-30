@@ -33,6 +33,5 @@ const props = withDefaults(defineProps<{
     :decimals="props.decimals"
     :locale="props.locale"
   >
-    <slot />
   </arc-animated-number>
 </template>

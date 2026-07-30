@@ -9,6 +9,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {string} label - Label below the value
  * @prop {'up' | 'down' | 'neutral'} trend - Shows a trend indicator arrow below the label.
  * @prop {string} change - Text displayed next to the trend arrow, typically a percentage like '+12%' or '-3.5%'.
+ * @slot none
  * @csspart stat
  * @csspart value
  * @csspart label
