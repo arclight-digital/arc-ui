@@ -83,6 +83,24 @@ const SHADOW_STYLE = /(<template shadowroot(?:mode)?="[^"]*"[^>]*>)<style>([\s\S
 /** `<arc-icon name="…">`, the only attribute that needs resolving before render. */
 const ICON_NAME = /<arc-icon\b[^>]*\bname=["']([^"']+)["']/g;
 
+/** Opening tag of a shadow root, used to find each root's byte span. */
+const SHADOW_OPEN = /<template shadowroot(?:mode)?="[^"]*"[^>]*>/g;
+
+/**
+ * Components that are closed until something opens them.
+ *
+ * These are the overlay-mixin set — everything that renders into the top layer
+ * and is invisible until a user asks for it. Nothing inside one can appear in a
+ * first paint, so server-rendering their contents is bytes spent on markup no
+ * measurement and no reader ever sees.
+ *
+ * On this site that is not a rounding error. A component page carries 427
+ * shadow roots and 174 of them are `arc-command-item` inside the ⌘K palette —
+ * 30K of the 99K of shadow markup, for a panel that is display:none until a
+ * keystroke that cannot happen before the JS has loaded anyway.
+ */
+const DEFERRED_HOSTS = ['arc-command-palette', 'arc-modal', 'arc-sheet', 'arc-drawer'];
+
 /**
  * `ARC_DSD=0 pnpm build` skips the pass, which is how the before/after numbers
  * above were taken; `ARC_DSD_LIFT=0` keeps the stylesheets inline, which is how
@@ -93,6 +111,7 @@ const ICON_NAME = /<arc-icon\b[^>]*\bname=["']([^"']+)["']/g;
 export default function arcDsd({
   enabled = process.env.ARC_DSD !== '0',
   lift = process.env.ARC_DSD_LIFT !== '0',
+  deferredHosts = DEFERRED_HOSTS,
 } = {}) {
   return {
     name: 'arc-dsd',
@@ -131,6 +150,8 @@ export default function arcDsd({
         const failures = [];
         let rendered = 0;
         let roots = 0;
+        let keptRoots = 0;
+        let deferred = 0;
         let before = 0;
         let after = 0;
 
@@ -157,6 +178,11 @@ export default function arcDsd({
             .replace(/^\s*<!--lit-part [^>]*-->/, '')
             .replace(/<!--\/lit-part-->\s*$/, '');
 
+          const capped = capShadowRoots(out, deferredHosts);
+          out = capped.page;
+          keptRoots += capped.kept;
+          deferred += capped.dropped;
+
           if (lift) {
             const used = new Set();
             out = liftStylesheets(out, sheets, used);
@@ -182,7 +208,8 @@ export default function arcDsd({
 
         const kb = (n) => `${(n / 1024).toFixed(0)}K`;
         logger.info(
-          `${rendered} pages, ${roots} shadow roots from ${registered} components`
+          `${rendered} pages, ${keptRoots} shadow roots kept from ${registered} components; ` +
+          `${deferred} deferred inside closed overlays`
         );
         logger.info(
           `html ${kb(before)} -> ${kb(after)}; ` +
@@ -201,6 +228,110 @@ export default function arcDsd({
       },
     },
   };
+}
+
+/**
+ * Every top-level shadow root in the page, in document order, with its span.
+ *
+ * Top-level because a root's content can hold further roots, and those belong
+ * to it — dropping the outer one takes them with it.
+ */
+function shadowRoots(page) {
+  const roots = [];
+  SHADOW_OPEN.lastIndex = 0;
+  let match;
+  while ((match = SHADOW_OPEN.exec(page)) !== null) {
+    let depth = 1;
+    let i = match.index + match[0].length;
+    while (depth > 0) {
+      const open = page.indexOf('<template', i);
+      const close = page.indexOf('</template>', i);
+      if (close === -1) break;
+      if (open !== -1 && open < close) { depth++; i = open + 9; }
+      else { depth--; i = close + 11; }
+    }
+    roots.push({ start: match.index, end: i });
+    SHADOW_OPEN.lastIndex = i;
+  }
+  return roots;
+}
+
+/** Byte spans of every `<tag>…</tag>` in the page, nesting-aware. */
+function elementSpans(page, tag) {
+  const spans = [];
+  const open = new RegExp(`<${tag}(?=[\\s/>])`, 'g');
+  const close = `</${tag}>`;
+  let match;
+  while ((match = open.exec(page)) !== null) {
+    let depth = 1;
+    let i = match.index + tag.length + 1;
+    while (depth > 0) {
+      const nextOpen = page.indexOf(`<${tag}`, i);
+      const nextClose = page.indexOf(close, i);
+      if (nextClose === -1) break;
+      if (nextOpen !== -1 && nextOpen < nextClose) { depth++; i = nextOpen + tag.length + 1; }
+      else { depth--; i = nextClose + close.length; }
+    }
+    spans.push([match.index, i]);
+    open.lastIndex = i;
+  }
+  return spans;
+}
+
+/**
+ * Drop the shadow roots that cannot contribute to a first paint, marking the
+ * elements that lost one so the FOUC guard still covers them.
+ *
+ * The rule is what is *visible*, not where it sits in the document. An earlier
+ * attempt cut by position — shell plus the first N examples — and the numbers
+ * said it was aimed at the wrong thing: 393 of a component page's 427 roots are
+ * already before its first section heading, so a positional cut recovered 22K
+ * of 104K. The weight is not a below-the-fold tail. It is two dense lists, and
+ * one of them is inside a closed overlay.
+ *
+ * Deferring what is closed is free in a way a positional cut is not: nothing
+ * about the first screen changes, because none of it was on the first screen.
+ */
+function capShadowRoots(page, deferredHosts) {
+  const hidden = deferredHosts.flatMap((tag) => elementSpans(page, tag));
+  if (hidden.length === 0) return { page, kept: shadowRoots(page).length, dropped: 0 };
+
+  const roots = shadowRoots(page);
+  const drop = roots.filter(({ start }) =>
+    hidden.some(([from, to]) => start >= from && start < to)
+  );
+  if (drop.length === 0) return { page, kept: roots.length, dropped: 0 };
+
+  // Only the overlay hosts get marked, not everything beneath them: a closed
+  // overlay is display:none, so one mark hides its whole subtree. Marking the
+  // descendants instead was measurably wrong — the FOUC guard's `opacity: 0`
+  // keeps an element in layout, so 174 un-upgraded command items still occupied
+  // the page until JS collapsed them, and LCP went from 784ms to 2540ms.
+  //
+  // An overlay's own root is the first one at or after its opening tag.
+  const ownRoots = new Set();
+  for (const [from] of hidden) {
+    const own = roots.find(({ start }) => start >= from);
+    if (own) ownRoots.add(own.start);
+  }
+
+  // Back to front, so earlier offsets stay valid.
+  let out = page;
+  let marked = 0;
+  for (let i = drop.length - 1; i >= 0; i--) {
+    const { start, end } = drop[i];
+    out = out.slice(0, start) + out.slice(end);
+    if (!ownRoots.has(start)) continue;
+    // lit-ssr emits the template immediately after its host's opening tag, so
+    // the character before it closes that tag. Marking there avoids parsing an
+    // attribute list that legitimately contains '>' (the examples carry setup
+    // scripts full of arrow functions).
+    if (out[start - 1] === '>') {
+      out = `${out.slice(0, start - 1)} data-arc-closed${out.slice(start - 1)}`;
+      marked++;
+    }
+  }
+  return { page: out, kept: roots.length - drop.length, dropped: marked };
 }
 
 /** Walk up from a resolved file to the directory holding its package.json. */

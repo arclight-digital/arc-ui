@@ -11,7 +11,16 @@
    finished content for the whole of that window, which is precisely the
    opposite of what server rendering is for. CSS cannot detect a declarative
    shadow root (the browser consumes the <template> during parsing, leaving no
-   selectable trace), so the page has to say so, once, at the root. */
+   selectable trace), so the page has to say so.
+
+   `data-arc-defer` is the other half of that, and the reason the root switch
+   is not enough on its own. A page can be *partly* server-rendered — the shell
+   and the first screen, with the long tail left to the client, which is the
+   only way to keep the payload from doubling — and then the root attribute
+   makes one claim about elements in both states. An element the server skipped
+   carries this attribute and is hidden until it upgrades, exactly as it would
+   be on a page with no server rendering at all. Set by the build, never by
+   hand. */
 @media (scripting: enabled) {
   :root:not([data-arc-ssr]) :is(
   arc-accordion, arc-accordion-item, arc-alert, arc-anchor-nav, arc-animated-number,
@@ -47,8 +56,19 @@
   arc-timeline, arc-timeline-item, arc-toast, arc-toggle, arc-toolbar, arc-tooltip, arc-top-bar,
   arc-transfer-list, arc-tree-item, arc-tree-view, arc-truncate, arc-typewriter, arc-value-card,
   arc-virtual-list
-  ):not(:defined) {
+  ):not(:defined),
+  [data-arc-defer]:not(:defined) {
     opacity: 0;
+  }
+
+  /* A closed overlay, left un-rendered by the build because nothing inside one
+     can reach a first paint. `opacity: 0` is wrong here and measurably so: it
+     keeps the element in layout, so an un-upgraded command palette held 174
+     items' worth of page until its JS arrived and collapsed them — LCP 784ms to
+     2540ms. Closed means occupying nothing, which is what it will be once it
+     upgrades. Set by the build, never by hand. */
+  [data-arc-closed]:not(:defined) {
+    display: none;
   }
 }
 
