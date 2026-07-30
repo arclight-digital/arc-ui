@@ -84,7 +84,12 @@ export class ArcConnectionStatus extends LitElement {
 
   constructor() {
     super();
-    this.online = navigator.onLine;
+    // Optimistic default rather than `navigator.onLine`, because the
+    // constructor also runs on the server, where there is no navigator — it
+    // was the one place in the library that threw under SSR. connectedCallback
+    // reads the real value, and does so on the first client render, which is
+    // the earliest moment the answer exists.
+    this.online = true;
     this._visible = false;
     this._onOnline = this._onOnline.bind(this);
     this._onOffline = this._onOffline.bind(this);

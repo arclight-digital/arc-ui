@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "version": "2.11.1",
-  "description": "ARC UI \u2014 ARC Radiant Components. A framework-agnostic design system built with Lit Web Components.",
+  "description": "ARC UI — ARC Radiant Components. A framework-agnostic design system built with Lit Web Components.",
   "engines": {
     "node": ">=24.0.0",
     "pnpm": ">=10.0.0"
@@ -34,6 +34,7 @@
     "check:events": "node scripts/check-event-conventions.js",
     "check:icon-names": "node scripts/check-icon-names.js",
     "check:doc-claims": "node scripts/check-doc-claims.js",
+    "check:ssr": "node scripts/check-ssr.js",
     "check:wrapper-types": "node scripts/check-wrapper-types.js",
     "publish-all": "pnpm -r publish --access public",
     "smoke:wrappers": "node scripts/smoke-test-wrappers.js"

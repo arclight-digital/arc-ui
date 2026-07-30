@@ -888,8 +888,8 @@
     "access": "public"
   },
   "peerDependencies": {
-    "lit": "^3.3.0",
     "@shikijs/langs": "^3.22.0",
+    "lit": "^3.3.0",
     "shiki": "^3.0.0"
   },
   "peerDependenciesMeta": {
@@ -901,8 +901,9 @@
     }
   },
   "devDependencies": {
-    "lit": "^3.3.0",
+    "@lit-labs/ssr": "^4.1.0",
     "@shikijs/langs": "^3.22.0",
+    "lit": "^3.3.0",
     "shiki": "^3.0.0"
   }
 }

@@ -7679,6 +7679,10 @@
               "kind": "field",
               "name": "online",
               "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
               "attribute": "online"
             }
           ],
@@ -7701,6 +7705,10 @@
           "attributes": [
             {
               "name": "online",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
               "fieldName": "online"
             }
           ],

@@ -4201,7 +4201,8 @@
             {
               "name": "online",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "true"
               }
             }
           ],
@@ -4221,7 +4222,8 @@
           "js": {
             "properties": [
               {
-                "name": "online"
+                "name": "online",
+                "type": "boolean"
               }
             ],
             "events": [

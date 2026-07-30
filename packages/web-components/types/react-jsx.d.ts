@@ -264,7 +264,7 @@ declare module 'react' {
         variant?: 'default' | 'error';
       };
       'arc-connection-status': ArcBaseAttributes & {
-        online?: string;
+        online?: boolean;
       };
       'arc-container': ArcBaseAttributes & {
         narrow?: boolean;

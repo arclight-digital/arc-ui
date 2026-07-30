@@ -80,8 +80,16 @@ export class ArcAnimatedNumber extends LitElement {
     return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
   }
 
-  /** Check if the user prefers reduced motion. */
+  /**
+   * Check if the user prefers reduced motion.
+   *
+   * Guarded on `window` rather than assuming it: this is reachable from
+   * willUpdate, which Lit also runs on the server. Treating the server as
+   * "reduced motion" is the right default anyway — there is no animation to
+   * run there, only a final value to render.
+   */
   _prefersReducedMotion() {
+    if (typeof window === 'undefined') return true;
     return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   }
 

@@ -618,7 +618,8 @@ export declare class ArcConfirm extends LitElement {
  * Events: arc-online, arc-offline
  */
 export declare class ArcConnectionStatus extends LitElement {
-  online: unknown;
+  /** @default true */
+  online: boolean;
 }
 
 /**

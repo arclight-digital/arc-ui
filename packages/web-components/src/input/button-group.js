@@ -86,6 +86,13 @@ export class ArcButtonGroup extends LitElement {
     this.orientation = 'horizontal';
     this.size = 'md';
     this.variant = '';
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    // Not in the constructor: that also runs on the server, where the element
+    // shim has no `style` and this threw. connectedCallback is client-only and
+    // still lands before first paint.
     this.style.setProperty('--_group-radius', '10px');
   }
 
