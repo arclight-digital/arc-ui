@@ -2,4 +2,5 @@
 import { ArcKanban } from './kanban.js';
 import './tag.register.js';
 if (!customElements.get('arc-kanban')) customElements.define('arc-kanban', ArcKanban);
+ArcKanban[Symbol.for('tagName')] = 'arc-kanban';
 export { ArcKanban };

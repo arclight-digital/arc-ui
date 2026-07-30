@@ -46,27 +46,21 @@ const CLIENT_ONLY = {
 };
 
 /**
- * Blocked by @lit-labs/ssr 4.1.0 (latest at time of writing), not by us.
+ * Failures attributable to @lit-labs/ssr rather than to a component.
  *
- *   TypeError: element.getRootNode is not a function
- *     at addElementToEventPath (@lit-labs/ssr/lib/render-value.js)
+ * Empty, and the history is worth keeping. Eleven components once failed here
+ * with "element.getRootNode is not a function" and were recorded as an
+ * upstream regression in @lit-labs/ssr 4.x. That was wrong. The cause was two
+ * copies of @lit-labs/ssr-dom-shim in the local tree — the components resolved
+ * one, the renderer expected the other, and the element shim they met had no
+ * getRootNode. A clean reinstall deduped it and all eleven render.
  *
- * Its event-path bookkeeping calls getRootNode() on its own element shim,
- * which does not implement it. Triggered by an event binding on a nested
- * custom element in certain host/slot arrangements — arc-callout has the same
- * shape and renders fine, so it is narrower than "any nested component".
- *
- * Kept separate from CLIENT_ONLY on purpose: these components are not
- * client-only, they are waiting on a fix upstream, and conflating the two
- * would lose that distinction the moment someone reads the list.
+ * The lesson is about this check, not about lit: a dependency-resolution
+ * artifact is indistinguishable from a library bug from inside a single
+ * install, and the way it was caught was trying to reduce it to a minimal
+ * reproduction and failing to reproduce it at all.
  */
-const UPSTREAM_BLOCKED = {
-  'element.getRootNode is not a function': [
-    'arc-chip', 'arc-code-block', 'arc-command-bar', 'arc-confirm', 'arc-dialog',
-    'arc-drawer', 'arc-loading-overlay', 'arc-modal', 'arc-sheet',
-    'arc-speed-dial', 'arc-transfer-list',
-  ],
-};
+const UPSTREAM_BLOCKED = {};
 
 /** Whether this failure is the known upstream one for this tag. */
 function isUpstream(tag, message) {

@@ -29,7 +29,7 @@ const headings = [
         The component's content is in the initial HTML response.
       </p>
       <p>
-        <strong>174 of 186 components</strong> render this way today. This is optional: a consumer
+        <strong>185 of 186 components</strong> render this way today. This is optional: a consumer
         with no build step, or loading ARC from a CDN, needs none of it and loses nothing.
       </p>
     </section>
@@ -110,12 +110,7 @@ import '@arclux/arc-ui/register';`}</code></pre>
         <code>hostConnected</code>. Browser work belongs in those.
       </p>
       <ul>
-        <li><strong>174 components</strong> server-render, all emitting declarative shadow DOM.</li>
-        <li>
-          <strong>11 are blocked upstream</strong>, not by ARC: <code>@lit-labs/ssr</code> 4.1.0
-          calls <code>getRootNode()</code> on its own element shim, which does not implement it.
-          They work normally on the client.
-        </li>
+        <li><strong>185 components</strong> server-render, all emitting declarative shadow DOM.</li>
         <li>
           <strong><code>arc-markdown</code> is client-only by design.</strong> Its sanitiser needs
           <code>DOMParser</code>. Rendering unsanitised HTML on the server is not an option, and

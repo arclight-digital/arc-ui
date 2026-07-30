@@ -63,6 +63,11 @@ for (const [tag, comp] of components) {
 
   // Define the custom element (guarded so mixed barrel/per-component imports and HMR don't double-define)
   lines.push(`if (!customElements.get('${tag}')) customElements.define('${tag}', ${comp.className});`);
+  // A tag name cannot be recovered from a Lit constructor, so server-side
+  // renderers that receive the class have no way to know what to render.
+  // Symbol.for('tagName') is the convention they read — @astrojs/lit looks for
+  // exactly this, and without it every element renders as undefined.
+  lines.push(`${comp.className}[Symbol.for('tagName')] = '${tag}';`);
   lines.push(`export { ${comp.className} };`);
   lines.push('');
 

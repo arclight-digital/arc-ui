@@ -2,4 +2,5 @@
 import { ArcStepper } from './stepper.js';
 import './step.register.js';
 if (!customElements.get('arc-stepper')) customElements.define('arc-stepper', ArcStepper);
+ArcStepper[Symbol.for('tagName')] = 'arc-stepper';
 export { ArcStepper };

@@ -2,4 +2,5 @@
 import { ArcSearch } from './search.js';
 import './suggestion.register.js';
 if (!customElements.get('arc-search')) customElements.define('arc-search', ArcSearch);
+ArcSearch[Symbol.for('tagName')] = 'arc-search';
 export { ArcSearch };

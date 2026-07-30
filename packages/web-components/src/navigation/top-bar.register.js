@@ -2,4 +2,5 @@
 import { ArcTopBar } from './top-bar.js';
 import '../layout/container.register.js';
 if (!customElements.get('arc-top-bar')) customElements.define('arc-top-bar', ArcTopBar);
+ArcTopBar[Symbol.for('tagName')] = 'arc-top-bar';
 export { ArcTopBar };

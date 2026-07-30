@@ -1,4 +1,5 @@
 // Generated — do not edit
 import { ArcNumberFormat } from './number-format.js';
 if (!customElements.get('arc-number-format')) customElements.define('arc-number-format', ArcNumberFormat);
+ArcNumberFormat[Symbol.for('tagName')] = 'arc-number-format';
 export { ArcNumberFormat };

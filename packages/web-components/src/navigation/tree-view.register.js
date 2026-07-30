@@ -2,4 +2,5 @@
 import { ArcTreeView } from './tree-view.js';
 import './tree-item.register.js';
 if (!customElements.get('arc-tree-view')) customElements.define('arc-tree-view', ArcTreeView);
+ArcTreeView[Symbol.for('tagName')] = 'arc-tree-view';
 export { ArcTreeView };

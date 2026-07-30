@@ -1,4 +1,5 @@
 // Generated — do not edit
 import { ArcTagInput } from './tag-input.js';
 if (!customElements.get('arc-tag-input')) customElements.define('arc-tag-input', ArcTagInput);
+ArcTagInput[Symbol.for('tagName')] = 'arc-tag-input';
 export { ArcTagInput };

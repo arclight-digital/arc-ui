@@ -2,4 +2,5 @@
 import { ArcTabs } from './tabs.js';
 import './tab.register.js';
 if (!customElements.get('arc-tabs')) customElements.define('arc-tabs', ArcTabs);
+ArcTabs[Symbol.for('tagName')] = 'arc-tabs';
 export { ArcTabs };
