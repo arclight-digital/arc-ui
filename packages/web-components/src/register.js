@@ -55,7 +55,6 @@ import './data/timeline-item.register.js';
 import './data/timeline.register.js';
 import './data/value-card.register.js';
 import './typography/blockquote.register.js';
-import './typography/code-block.register.js';
 import './typography/gradient-text.register.js';
 import './typography/highlight.register.js';
 import './typography/kbd.register.js';

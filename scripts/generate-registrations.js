@@ -72,10 +72,18 @@ for (const [tag, comp] of components) {
 
 // ── 4. Generate top-level src/register.js ───────────────────────────────────
 
+// Components excluded from the register-everything entry for the same reason
+// prism.config.js keeps them out of the barrels: a bundler resolves the dynamic
+// imports of anything reachable from what you import, so a component with a
+// heavy optional dependency must not be reachable by default. arc-code-block
+// pulls shiki (13.6 MB); register it explicitly via
+// `@arclux/arc-ui/code-block`.
+const OPT_IN_ONLY = new Set(['code-block.js']);
+
 const registerAllLines = ['// Generated — do not edit'];
 for (const tier of TIERS) {
   const tierComponents = [...components.values()]
-    .filter(c => c.tier === tier)
+    .filter(c => c.tier === tier && !OPT_IN_ONLY.has(c.file))
     .sort((a, b) => a.file.localeCompare(b.file));
 
   for (const comp of tierComponents) {

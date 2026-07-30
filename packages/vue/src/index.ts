@@ -54,7 +54,6 @@ export { default as TimelineItem } from './data/TimelineItem.vue';
 export { default as Timeline } from './data/Timeline.vue';
 export { default as ValueCard } from './data/ValueCard.vue';
 export { default as Blockquote } from './typography/Blockquote.vue';
-export { default as CodeBlock } from './typography/CodeBlock.vue';
 export { default as GradientText } from './typography/GradientText.vue';
 export { default as Highlight } from './typography/Highlight.vue';
 export { default as Kbd } from './typography/Kbd.vue';

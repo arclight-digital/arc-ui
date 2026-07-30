@@ -165,8 +165,6 @@ export type { ValueCardProps } from './data/ValueCard.js';
 export { Blockquote } from './typography/Blockquote.js';
 export type { BlockquoteProps } from './typography/Blockquote.js';
 
-export { CodeBlock } from './typography/CodeBlock.js';
-export type { CodeBlockProps } from './typography/CodeBlock.js';
 
 export { GradientText } from './typography/GradientText.js';
 export type { GradientTextProps } from './typography/GradientText.js';

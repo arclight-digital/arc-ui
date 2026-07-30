@@ -54,7 +54,6 @@ export { TimelineItem } from './data/TimelineItem';
 export { Timeline } from './data/Timeline';
 export { ValueCard } from './data/ValueCard';
 export { Blockquote } from './typography/Blockquote';
-export { CodeBlock } from './typography/CodeBlock';
 export { GradientText } from './typography/GradientText';
 export { Highlight } from './typography/Highlight';
 export { Kbd } from './typography/Kbd';

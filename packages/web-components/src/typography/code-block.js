@@ -56,13 +56,37 @@ const LANG_IMPORT = {
   regex:       () => import('@shikijs/langs/regex'),
 };
 
+/**
+ * Say it once, when shiki isn't installed.
+ *
+ * shiki is an optional peer — it is 13.6 MB with its grammars, and every other
+ * component in the library reaches none of it — so its absence is a supported
+ * state, not an error. The code still renders; it just isn't coloured. But a
+ * missing highlighter that says nothing is indistinguishable from a broken
+ * theme or an unrecognised language, so it says something.
+ */
+let _warnedMissing = false;
+function warnMissingShiki(err) {
+  if (_warnedMissing) return;
+  _warnedMissing = true;
+  console.warn(
+    '[arc-code-block] shiki is not installed, so code renders without syntax ' +
+    'highlighting. Install it to enable highlighting:\n' +
+    '  npm install shiki @shikijs/langs\n' +
+    `(${err?.message ?? err})`
+  );
+}
+
 async function getHL(lang) {
   if (!_hlReady) {
     _hlReady = (async () => {
       const [{ createHighlighterCore, createCssVariablesTheme }, { createJavaScriptRegexEngine }] = await Promise.all([
         import('shiki/core'),
         import('shiki/engine/javascript'),
-      ]);
+      ]).catch((err) => {
+        warnMissingShiki(err);
+        throw err;
+      });
       const theme = createCssVariablesTheme({
         name: 'arc-tokens',
         variablePrefix: '--shiki-',
@@ -80,7 +104,14 @@ async function getHL(lang) {
   if (!_loadedLangs.has(lang)) {
     const loader = LANG_IMPORT[lang];
     if (!loader) return null;
-    await hl.loadLanguage(loader);
+    // The grammars are a second optional package, so they can be missing on
+    // their own — same supported state, same one-time explanation.
+    try {
+      await hl.loadLanguage(loader);
+    } catch (err) {
+      warnMissingShiki(err);
+      throw err;
+    }
     _loadedLangs.add(lang);
   }
   return hl;

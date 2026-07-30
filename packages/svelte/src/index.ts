@@ -54,7 +54,6 @@ export { default as TimelineItem } from './data/TimelineItem.svelte';
 export { default as Timeline } from './data/Timeline.svelte';
 export { default as ValueCard } from './data/ValueCard.svelte';
 export { default as Blockquote } from './typography/Blockquote.svelte';
-export { default as CodeBlock } from './typography/CodeBlock.svelte';
 export { default as GradientText } from './typography/GradientText.svelte';
 export { default as Highlight } from './typography/Highlight.svelte';
 export { default as Kbd } from './typography/Kbd.svelte';

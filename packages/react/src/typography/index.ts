@@ -3,8 +3,6 @@
 export { Blockquote } from './Blockquote.js';
 export type { BlockquoteProps } from './Blockquote.js';
 
-export { CodeBlock } from './CodeBlock.js';
-export type { CodeBlockProps } from './CodeBlock.js';
 
 export { GradientText } from './GradientText.js';
 export type { GradientTextProps } from './GradientText.js';

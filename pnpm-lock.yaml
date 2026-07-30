@@ -12,7 +12,7 @@ importers:
     devDependencies:
       '@arclux/prism':
         specifier: github:arclight-digital/prism#v3
-        version: https://codeload.github.com/arclight-digital/prism/tar.gz/e08ea64152c8750a394dbfa24bccb41b4deb4e5e
+        version: https://codeload.github.com/arclight-digital/prism/tar.gz/92c3374181170bc568ec1b348fb30aeba233719e
       '@axe-core/playwright':
         specifier: ^4.12.1
         version: 4.12.1(playwright-core@1.61.1)
@@ -227,19 +227,19 @@ importers:
 
   packages/web-components:
     dependencies:
-      '@shikijs/langs':
-        specifier: ^3.22.0
-        version: 3.22.0
       qrcode-generator:
         specifier: ^1.4.4
         version: 1.5.2
-      shiki:
-        specifier: ^3.0.0
-        version: 3.22.0
     devDependencies:
+      '@shikijs/langs':
+        specifier: ^3.22.0
+        version: 3.22.0
       lit:
         specifier: ^3.3.0
         version: 3.3.2
+      shiki:
+        specifier: ^3.0.0
+        version: 3.22.0
 
 packages:
 
@@ -271,9 +271,9 @@ packages:
       rxjs: ^6.5.3 || ^7.4.0
       zone.js: ~0.14.0
 
-  '@arclux/prism@https://codeload.github.com/arclight-digital/prism/tar.gz/e08ea64152c8750a394dbfa24bccb41b4deb4e5e':
-    resolution: {tarball: https://codeload.github.com/arclight-digital/prism/tar.gz/e08ea64152c8750a394dbfa24bccb41b4deb4e5e}
-    version: 2.9.0
+  '@arclux/prism@https://codeload.github.com/arclight-digital/prism/tar.gz/92c3374181170bc568ec1b348fb30aeba233719e':
+    resolution: {tarball: https://codeload.github.com/arclight-digital/prism/tar.gz/92c3374181170bc568ec1b348fb30aeba233719e}
+    version: 2.10.0
     engines: {node: '>=24'}
     hasBin: true
 
@@ -5173,7 +5173,7 @@ snapshots:
       tslib: 2.8.1
       zone.js: 0.14.10
 
-  '@arclux/prism@https://codeload.github.com/arclight-digital/prism/tar.gz/e08ea64152c8750a394dbfa24bccb41b4deb4e5e':
+  '@arclux/prism@https://codeload.github.com/arclight-digital/prism/tar.gz/92c3374181170bc568ec1b348fb30aeba233719e':
     dependencies:
       chokidar: 5.0.0
 

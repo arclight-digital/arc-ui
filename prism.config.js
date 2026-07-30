@@ -6,6 +6,14 @@ export default {
   // Ignore patterns
   ignore: ['**/shared-styles.js', '**/index.js', '**/icon-registry.js', '**/icon-library.js', '**/icons/**', '**/*.register.js', '**/register.js'],
 
+  // Kept out of every barrel, in every framework. arc-code-block is the only
+  // component with a heavy optional dependency (shiki + its grammars, 13.6 MB),
+  // and a bundler resolves the dynamic imports of anything in its module graph —
+  // so being re-exported from the barrel made shiki everyone's install, not just
+  // the install of consumers who render code. It is reached by its own subpath:
+  // `@arclux/arc-ui/code-block`.
+  barrelExclude: ['arc-code-block'],
+
   // Classification overrides. Highest precedence — beats the @arc-prism
   // JSDoc tag, which beats auto-detection. Lives here because JSDoc is
   // rewritten by codegen and overrides have twice been lost that way.
