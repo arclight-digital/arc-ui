@@ -33,6 +33,18 @@ const failOn = process.argv.find((a) => a.startsWith('--fail-on='))?.split('=')[
 // --pages=button,tabs audits only those slugs (fast iteration mode);
 // partial runs never overwrite the committed report.
 const onlyPages = process.argv.find((a) => a.startsWith('--pages='))?.split('=')[1]?.split(',');
+// --shard=2/4 audits one quarter of the pages. The audit is ~730s of the CI
+// job's ~825s — the docs build and the browser install are noise beside it — so
+// the only meaningful lever is running it in parallel across jobs. Sharded four
+// ways it is the length of the docs build plus a quarter of the pages.
+// A sharded run is partial by definition and never overwrites the report.
+const shardArg = process.argv.find((a) => a.startsWith('--shard='))?.split('=')[1];
+const [shardIndex, shardTotal] = shardArg ? shardArg.split('/').map(Number) : [1, 1];
+if (shardArg && (!Number.isInteger(shardIndex) || !Number.isInteger(shardTotal)
+    || shardIndex < 1 || shardTotal < 1 || shardIndex > shardTotal)) {
+  console.error(`a11y-audit: --shard=${shardArg} is not a valid i/n`);
+  process.exit(1);
+}
 const CONCURRENCY = Math.min(12, Math.max(4, os.cpus().length - 2));
 
 const MIME = {
@@ -65,6 +77,10 @@ let slugs = fs.readdirSync(path.join(distDir, 'docs/components'), { withFileType
   .map((d) => d.name)
   .sort();
 if (onlyPages) slugs = slugs.filter((slug) => onlyPages.includes(slug));
+// Striped, not sliced: page cost varies wildly — a data-grid page is many times
+// an arc-divider page — and alphabetical neighbours tend to be similar, so
+// contiguous blocks would leave one shard doing most of the work.
+if (shardTotal > 1) slugs = slugs.filter((_, i) => i % shardTotal === shardIndex - 1);
 
 const browser = await chromium.launch();
 const results = [];
@@ -151,7 +167,10 @@ const report = {
   totals,
   violations: allViolations.sort((a, b) => impactRank[b.impact] - impactRank[a.impact]),
 };
-if (!onlyPages) {
+// A partial run — a slug filter or one shard of several — describes some of the
+// site, and writing that over the committed report would read as the whole of
+// it, with every unaudited page silently "clean".
+if (!onlyPages && shardTotal === 1) {
   fs.mkdirSync(path.dirname(outFile), { recursive: true });
   fs.writeFileSync(outFile, JSON.stringify(report, null, 2) + '\n');
 }

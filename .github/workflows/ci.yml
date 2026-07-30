@@ -83,6 +83,17 @@ jobs:
 
   accessibility:
     runs-on: ubuntu-latest
+    # The audit is ~730s of this job's ~825s; the docs build and the browser
+    # install are noise beside it. Nothing inside the script is the bottleneck
+    # either — it is 164 pages × 2 themes of axe on a 4-vCPU runner — so the
+    # only real lever is running it in parallel. Four shards puts the job at
+    # roughly the docs build plus a quarter of the pages, with no page audited
+    # any less thoroughly than before.
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
+    name: accessibility (${{ matrix.shard }}/4)
     steps:
       - uses: actions/checkout@v7
 
@@ -116,4 +127,9 @@ jobs:
         run: pnpm build:docs
 
       - name: axe-core audit (fails on serious/critical)
-        run: pnpm audit:a11y
+        # Through env rather than interpolated into the command. The value is a
+        # literal from the matrix above and not attacker-controlled, but a run:
+        # line is the wrong place to learn that distinction by exception.
+        env:
+          SHARD: ${{ matrix.shard }}
+        run: pnpm audit:a11y -- --shard="$SHARD/4"
