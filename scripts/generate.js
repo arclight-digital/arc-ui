@@ -34,11 +34,14 @@ const steps = [
   // they need the generated wrappers to exist.
   { name: 'Requires', cmd: 'node',  args: ['scripts/check-child-registrations.js'] },
   { name: 'Events',   cmd: 'node',  args: ['scripts/check-event-conventions.js'] },
-  { name: 'IconNames', cmd: 'node', args: ['scripts/check-icon-names.js'] },
   { name: 'DocClaims', cmd: 'node', args: ['scripts/check-doc-claims.js'] },
   { name: 'Tokens',   cmd: 'node',  args: ['scripts/generate-base-css.js'] },
   { name: 'HostTokens', cmd: 'node', args: ['scripts/generate-host-tokens.js'] },
   { name: 'Icons',    cmd: 'node',  args: ['scripts/generate-icons.js'] },
+  // After Icons, not with the other source-level assertions: it reads the
+  // vendored icon resolvers, which are gitignored and produced by the step
+  // above. Run earlier, it passes locally and fails on every clean checkout.
+  { name: 'IconNames', cmd: 'node', args: ['scripts/check-icon-names.js'] },
   { name: 'Register', cmd: 'node',  args: ['scripts/generate-registrations.js'] },
   { name: 'Brand',    cmd: 'node',  args: ['scripts/generate-brand-assets.js'] },
   // --prune: prism reports orphaned output (wrappers/CSS/examples for a component
