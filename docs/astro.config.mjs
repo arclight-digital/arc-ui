@@ -5,8 +5,9 @@ export default defineConfig({
   site: 'https://arcui.dev',
   integrations: [
     sitemap({
-      // /docs/ is a redirect stub — keep it out of the index.
-      filter: (page) => page !== 'https://arcui.dev/docs/',
+      // /docs/ is a redirect stub — keep it out of the index. /dev/ holds
+      // internal eyeballing pages, which are noindex and not public docs.
+      filter: (page) => page !== 'https://arcui.dev/docs/' && !page.includes('/dev/'),
       // Emit slash-less URLs to match canonical tags and internal links
       // (the CDN serves both forms; these tags pick the canonical one).
       serialize: (item) =>

@@ -1,0 +1,236 @@
+---
+/**
+ * Size audit — an internal eyeballing page, not part of the public docs.
+ *
+ * 13 controls take a `size` prop; 14 form controls don't. The open question is
+ * what to do about the 14, and it can't be answered from the source: it needs
+ * looking at. So this renders the scale the 13 establish, then puts each of the
+ * 14 beside that scale at its current default, with measured heights.
+ *
+ * Kept out of the sitemap (astro.config.mjs filters /dev/) and marked noindex.
+ * Delete the file when the decision is made.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+/** Controls that already take `size`. These define what sm/md/lg mean. */
+const SIZED: { tag: string; attrs?: string; inner?: string }[] = [
+  { tag: 'arc-button', inner: 'Button' },
+  { tag: 'arc-icon-button', attrs: 'icon="check" label="Confirm"' },
+  { tag: 'arc-input', attrs: 'placeholder="Input"' },
+  { tag: 'arc-password-input', attrs: 'placeholder="Password"' },
+  { tag: 'arc-textarea', attrs: 'placeholder="Textarea" rows="2"' },
+  { tag: 'arc-select', attrs: 'placeholder="Select"', inner: '<arc-option value="a">One</arc-option>' },
+  { tag: 'arc-checkbox', attrs: 'label="Checkbox"' },
+  { tag: 'arc-toggle', attrs: 'label="Toggle"' },
+  { tag: 'arc-label', inner: 'Label' },
+  // Slotted children, not an options array — the group takes arc-radio elements.
+  { tag: 'arc-radio-group', attrs: 'name="ra"', inner: '<arc-radio value="a">One</arc-radio><arc-radio value="b">Two</arc-radio>' },
+  { tag: 'arc-button-group', inner: '<arc-button>A</arc-button><arc-button>B</arc-button>' },
+  { tag: 'arc-input-group', inner: '<arc-input placeholder="Grouped"></arc-input>' },
+  { tag: 'arc-switch-group', inner: '<arc-toggle label="One"></arc-toggle>' },
+];
+
+/** The 14 form controls with no `size` prop — the actual question. */
+const UNSIZED: { tag: string; attrs?: string; note?: string }[] = [
+  { tag: 'arc-combobox', attrs: 'placeholder="Combobox"' },
+  { tag: 'arc-multi-select', attrs: 'placeholder="Multi-select"' },
+  { tag: 'arc-tag-input', attrs: 'placeholder="Tag input"' },
+  { tag: 'arc-number-input', attrs: 'value="42"' },
+  { tag: 'arc-date-picker', attrs: 'placeholder="Date"' },
+  { tag: 'arc-date-range-picker', attrs: '' },
+  { tag: 'arc-time-picker', attrs: '' },
+  { tag: 'arc-color-picker', attrs: 'value="#4d7ef7"' },
+  { tag: 'arc-otp-input', attrs: 'length="4"' },
+  { tag: 'arc-pin-input', attrs: 'length="4"' },
+  { tag: 'arc-slider', attrs: 'value="40"', note: 'numeric — "empty" has no meaning' },
+  { tag: 'arc-range-slider', attrs: 'low="20" high="70"', note: 'numeric' },
+  { tag: 'arc-rating', attrs: 'value="3"', note: 'numeric' },
+  // `options` is an array, so it is set from the script below rather than as
+  // an attribute.
+  { tag: 'arc-transfer-list', note: 'composite — sizing may mean its rows, not its box' },
+];
+
+const SIZES = ['sm', 'md', 'lg'];
+---
+
+<BaseLayout title="Size audit — internal" description="Internal sizing comparison page." noindex>
+  <main class="audit">
+    <header class="audit__head">
+      <h1>Size audit</h1>
+      <p>
+        <strong>13 controls</strong> take <code>size</code>; <strong>14 form controls</strong> don't.
+        Numbers are measured <code>offsetHeight</code> in pixels, taken after fonts settle.
+      </p>
+      <label class="audit__guides">
+        <input type="checkbox" id="guides" /> Show height guides
+      </label>
+    </header>
+
+    <section>
+      <h2>The scale — what sm / md / lg currently mean</h2>
+      <div class="scale-head">
+        <span></span>
+        {SIZES.map((s) => <span class="scale-head__label">{s}</span>)}
+      </div>
+      {SIZED.map((c) => (
+        <div class="row" data-row>
+          <code class="row__tag">{c.tag}</code>
+          {SIZES.map((s) => (
+            <div class="cell" data-measure>
+              <Fragment set:html={`<${c.tag} size="${s}" ${c.attrs ?? ''}>${c.inner ?? ''}</${c.tag}>`} />
+              <span class="cell__px" data-px></span>
+            </div>
+          ))}
+        </div>
+      ))}
+    </section>
+
+    <section>
+      <h2>The 14 without <code>size</code></h2>
+      <p class="section__note">
+        Each renders at its only size, against the same three references. The question per row:
+        which column does it already match, and is that the one it should be?
+      </p>
+      <div class="scale-head">
+        <span></span>
+        <span class="scale-head__label">as it renders now</span>
+        {SIZES.map((s) => <span class="scale-head__label">arc-input {s}</span>)}
+      </div>
+      {UNSIZED.map((c) => (
+        <div class="row" data-row>
+          <code class="row__tag">
+            {c.tag}
+            {c.note && <em class="row__note">{c.note}</em>}
+          </code>
+          <div class="cell cell--subject" data-measure>
+            <Fragment set:html={`<${c.tag} ${c.attrs ?? ''}></${c.tag}>`} />
+            <span class="cell__px" data-px></span>
+          </div>
+          {SIZES.map((s) => (
+            <div class="cell cell--ref" data-measure>
+              <arc-input size={s} placeholder={s} />
+              <span class="cell__px" data-px></span>
+            </div>
+          ))}
+        </div>
+      ))}
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .audit {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--space-2xl) var(--space-lg) var(--space-3xl);
+    font-family: var(--font-body);
+  }
+  .audit__head h1 { font-family: var(--font-display); margin-bottom: var(--space-sm); }
+  .audit__head p { color: var(--text-secondary); max-width: 70ch; }
+  .audit__guides {
+    display: inline-flex; align-items: center; gap: var(--space-xs);
+    margin-top: var(--space-md); color: var(--text-secondary); font-size: var(--text-sm);
+  }
+  h2 {
+    font-family: var(--font-display);
+    margin: var(--space-2xl) 0 var(--space-xs);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--border-subtle);
+  }
+  .section__note { color: var(--text-secondary); max-width: 70ch; margin-bottom: var(--space-lg); }
+
+  .scale-head, .row {
+    display: grid;
+    grid-template-columns: 15rem repeat(3, 1fr);
+    gap: var(--space-md);
+    align-items: center;
+  }
+  /* The unsized section has a subject column plus three references. */
+  section:last-of-type .scale-head,
+  section:last-of-type .row {
+    grid-template-columns: 15rem repeat(4, 1fr);
+  }
+  .scale-head__label {
+    font-family: var(--font-label);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-tertiary);
+  }
+  .row {
+    padding: var(--space-md) 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .row__tag {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .row__note { font-family: var(--font-body); font-style: italic; color: var(--text-tertiary); font-size: var(--text-xs); }
+
+  .cell { position: relative; display: flex; align-items: center; gap: var(--space-sm); min-width: 0; }
+  .cell--ref { opacity: 0.55; }
+  .cell--subject::after {
+    /* Marks the column that is the actual subject of each row. */
+    content: '';
+    position: absolute;
+    inset-inline-start: calc(var(--space-sm) * -1);
+    inset-block: 0;
+    inline-size: 2px;
+    background: var(--accent-primary);
+    opacity: 0.5;
+  }
+  .cell__px {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-tertiary);
+    white-space: nowrap;
+  }
+
+  /* Height guides: a baseline rule through every control in a row. */
+  :global(.audit.guides) .cell > :first-child {
+    outline: 1px dashed rgba(var(--accent-primary-rgb), 0.5);
+    outline-offset: 0;
+  }
+</style>
+
+<script>
+  import '@arclux/arc-ui/register';
+
+  /** Array-valued props can't come from markup. */
+  function seedArrayProps() {
+    const transfer = document.querySelector('arc-transfer-list') as HTMLElement & {
+      options?: { value: string; label: string }[];
+    } | null;
+    if (transfer) {
+      transfer.options = [
+        { value: 'a', label: 'Alpha' },
+        { value: 'b', label: 'Beta' },
+        { value: 'c', label: 'Gamma' },
+      ];
+    }
+  }
+
+  async function measure() {
+    await customElements.whenDefined('arc-input');
+    seedArrayProps();
+    if (document.fonts?.ready) await document.fonts.ready;
+    // One frame, so the components have laid out.
+    await new Promise(requestAnimationFrame);
+
+    for (const cell of document.querySelectorAll('[data-measure]')) {
+      const el = cell.firstElementChild as HTMLElement | null;
+      const px = cell.querySelector('[data-px]');
+      if (el && px) px.textContent = `${Math.round(el.getBoundingClientRect().height)}px`;
+    }
+  }
+
+  measure();
+
+  document.getElementById('guides')?.addEventListener('change', (e) => {
+    document.querySelector('.audit')?.classList.toggle('guides', (e.target as HTMLInputElement).checked);
+  });
+</script>
