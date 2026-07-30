@@ -8,14 +8,14 @@ export const callout: ComponentDef = {
   interactivity: 'static',
   description: 'Styled callout box for tips, warnings, and info.',
 
-  overview: `Callout is an inline notification block for documentation and content pages. It draws attention to supplementary information — tips, warnings, important notes, and danger notices — using color-coded variants that are instantly recognizable. Each variant applies a distinct border color, tinted background, and icon color, so readers can identify the severity at a glance without reading the label.
+  overview: `Callout is an inline notification block for documentation and content pages. It draws attention to supplementary information — tips, warnings, important notes, and error notices — using color-coded variants that are instantly recognizable. Each variant applies a distinct border color, tinted background, and icon color, so readers can identify the severity at a glance without reading the label.
 
-The component ships with four variants: \`info\` (blue), \`warning\` (yellow/orange), \`tip\` (green), and \`danger\` (red). Each variant sets its own border color, background tint, and icon color via the design token system. The default variant is \`info\`. The variant color is applied through the container's border-color and a subtle background tint, providing a clear visual anchor that differentiates it from regular card content.
+The component ships with four variants: \`info\` (blue), \`warning\` (yellow/orange), \`tip\` (green), and \`error\` (red). Each variant sets its own border color, background tint, and icon color via the design token system. The default variant is \`info\`. The variant color is applied through the container's border-color and a subtle background tint, providing a clear visual anchor that differentiates it from regular card content.
 
-The icon slot lets you replace the default emoji icons with custom SVG or icon-font content. The default icon is determined automatically from the variant: info shows an info symbol, warning shows a caution symbol, tip shows a sparkle, and danger shows a stop sign. The default content slot accepts any HTML, making it suitable for rich content including inline code, links, and lists.`,
+The icon slot lets you replace the default emoji icons with custom SVG or icon-font content. The default icon is determined automatically from the variant: info shows an info symbol, warning shows a caution symbol, tip shows a sparkle, and error shows a stop sign. The default content slot accepts any HTML, making it suitable for rich content including inline code, links, and lists.`,
 
   features: [
-    'Four semantic variants: info, warning, tip, and danger with distinct color schemes',
+    'Four semantic variants: info, warning, tip, and error with distinct color schemes',
     'Automatic default icon per variant (info, caution, sparkle, stop) via _getDefaultIcon()',
     'Variant-colored border and subtle background tint for visual differentiation',
     'Tinted background using rgba alpha on each variant color for subtle emphasis',
@@ -29,14 +29,14 @@ The icon slot lets you replace the default emoji icons with custom SVG or icon-f
     do: [
       'Use info for general supplementary information and helpful context',
       'Use warning for actions that could cause unexpected results if ignored',
-      'Use danger sparingly — reserve it for destructive or irreversible actions',
+      'Use error sparingly — reserve it for destructive or irreversible actions',
       'Use tip for best practices, shortcuts, and recommended approaches',
       'Keep callout content concise — one to three sentences is ideal',
     ],
     dont: [
       'Do not Stack multiple callouts of the same variant back to back — consolidate the content',
       'Do not use callouts for primary page content; they are for supplementary information only',
-      'Do not use danger for minor notes — overuse dilutes its urgency',
+      'Do not use error for minor notes — overuse dilutes its urgency',
       'Do not remove the icon entirely without providing an alternative visual indicator',
       'Do not nest callouts inside other callouts; the visual nesting is confusing',
     ],

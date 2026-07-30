@@ -11,14 +11,14 @@ export const tag: ComponentDef = {
 
   overview: `Tag is a small, pill-shaped label component used to categorise, filter, or display metadata inline. It renders its content in uppercase with accent font styling and letter spacing, giving it a distinct visual weight that stands out against body text without overwhelming the layout. Tags are commonly seen in filter bars, resource cards, multi-select summaries, and anywhere compact labeling is needed.
 
-Six color variants are available: \`default\` (neutral border and muted text), \`primary\` (accent-primary tint), \`secondary\` (accent-secondary tint), \`success\` (green), \`warning\` (yellow), and \`danger\` (red). The accent and status variants gain a colored glow on hover, making them effective for interactive filtering scenarios where the user needs to distinguish active categories at a glance.
+Six color variants are available: \`default\` (neutral border and muted text), \`primary\` (accent-primary tint), \`secondary\` (accent-secondary tint), \`success\` (green), \`warning\` (yellow), and \`error\` (red). The accent and status variants gain a colored glow on hover, making them effective for interactive filtering scenarios where the user needs to distinguish active categories at a glance.
 
 For cases where the built-in variants don't cover your color needs, the \`color\` prop accepts an RGB triplet (e.g. \`"77, 126, 247"\`) and applies it as the tag's border, text, background tint, and hover glow. This is useful for category-specific colors that come from data rather than design tokens.
 
 When the \`removable\` prop is set, a small close button appears after the label. Clicking it fires an \`arc-remove\` event, allowing the parent component to handle removal logic (e.g. removing a filter, un-selecting a value). The remove button has its own hover state and focus ring, ensuring it is independently accessible for keyboard users.`,
 
   features: [
-    'Six color variants: default, primary, secondary, success, warning, and danger',
+    'Six color variants: default, primary, secondary, success, warning, and error',
     'Custom `color` prop accepting an RGB triplet for data-driven category colors',
     'Pill shape with full border-radius and uppercase letter-spaced text for visual distinction',
     'Optional remove button via `removable` prop, firing `arc-remove` on click',

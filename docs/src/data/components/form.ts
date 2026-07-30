@@ -13,6 +13,12 @@ export const form: ComponentDef = {
 
 Use Form whenever you collect more than a single field from the user — contact forms, login screens, settings panels, multi-step wizards. Wrapping fields in a Form gives you automatic required-field enforcement, pattern matching, and a consistent error-summary experience without writing imperative validation logic.
 
+**Validation comes from the controls.** Form does not re-derive whether a field is filled; it calls each control's \`checkValidity()\` and reads its \`validationMessage\`. So a control that understands its own emptiness — a multi-select with an empty array, a date range with one end set — is judged on its own terms, and a control you have written yourself participates as long as it is form-associated. Form only clears error text it wrote, so an error you set from a server response survives a later submit attempt.
+
+**Fields can sit anywhere inside the form.** Nesting a control inside Fieldset, Card, or any layout component makes no difference to whether it is found, validated, serialised, or disabled along with the form.
+
+**\`reset()\` restores, it does not empty.** Each control returns to the state it had when it first connected, which is what reset means in HTML — a field that shipped with a default value gets that value back, rather than being blanked.
+
 All ARC UI form controls (Input, Textarea, Select, Checkbox, Toggle, RadioGroup) implement the \`ElementInternals\` form-association API, so they participate in native \`FormData\` collection automatically. This means you can use them inside a plain \`<form action="/api/contact" method="POST">\` for zero-JS static site submissions, or wrap them in \`<arc-form>\` for the full JS validation + \`arc-submit\` experience. For completely framework-free sites, ARC UI ships a \`form.css\` stylesheet that applies the same design tokens to native HTML form elements.`,
 
   features: [
@@ -23,7 +29,9 @@ All ARC UI form controls (Input, Textarea, Select, Checkbox, Toggle, RadioGroup)
     'Coordinates `disabled` state — disabling the form disables every child field',
     'Works with any form-associated element, including native inputs and ARC UI components',
     'Prevents double-submission by disabling the submit button while `loading` is true',
-    'Reset support via `arc-reset` event and programmatic `.reset()` method',
+    'Reset support via `arc-reset` event and programmatic `.reset()` method — restores initial values rather than blanking fields',
+    'Finds controls at any depth, including inside Fieldset and layout components',
+    'Delegates validity to each control, so custom form-associated elements participate',
     'Keyboard-accessible — Enter key inside a single-line input triggers submission',
     'Pairs with Input, Textarea, Select, Checkbox, and RadioGroup without extra wiring',
   ],

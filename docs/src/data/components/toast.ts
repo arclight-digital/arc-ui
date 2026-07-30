@@ -14,10 +14,21 @@ export const toast: ComponentDef = {
 
 A single \`<arc-toast>\` element acts as the toaster: you place it once in your layout and call its \`show()\` method imperatively whenever a notification needs to appear. Each call pushes a new toast onto the stack. Multiple toasts stack vertically with consistent spacing, and each one exits with a scale-and-fade animation after the configured duration. This imperative API keeps your template clean — there is no need to manage an array of open notifications in your component state.
 
+**Queueing is built in.** \`max-visible\` (default 3) caps how many toasts are on screen at once; the rest wait and appear as slots free up, with \`queue-limit\` bounding the backlog. Set \`max-visible="0"\` for unbounded stacking. \`dedupe\` collapses a repeat of a message already showing into a "(×N)" counter on the existing toast — updated in place, so nothing flickers — and restarts its timer, so a message that keeps repeating stays on screen while it does. \`arc-queue-change\` reports the visible and queued counts; \`arc-queue-overflow\` fires when the backlog is full and the oldest queued toast is dropped.
+
+\`show()\` returns the id it assigned, and \`dismiss(id)\` removes that toast whether it is visible or still queued.
+
+Toasts can also be raised from anywhere without a reference to the element: dispatch an \`arc-toast\` event on \`document\` with the same options \`show()\` takes.
+
 Four built-in variants — info, success, warning, and error — apply a colored bottom-edge indicator and a matching icon so users can parse the severity at a glance. The six position options let you anchor the toast stack to any corner or center-edge of the viewport, and a responsive breakpoint ensures toasts span the full width on small screens. The container carries \`role="status"\` and \`aria-live="polite"\` so screen readers announce new messages without stealing focus.`,
 
   features: [
-    'Imperative show() API — call with message, variant, and optional duration',
+    'Imperative show() API — call with message, variant, and optional duration; returns the toast id',
+    '`max-visible` caps on-screen toasts (default 3) and queues the rest; `queue-limit` bounds the backlog',
+    '`dedupe` collapses a repeated message into a "(×N)" counter, updated in place',
+    '`dismiss(id)` removes a toast whether it is visible or still queued',
+    'Document-level `arc-toast` event raises a toast without a reference to the element',
+    '`arc-queue-change` and `arc-queue-overflow` report queue state',
     'Four variants (info, success, warning, error) with color-coded bottom indicators and icons',
     'Six position anchors: top-right, top-left, top-center, bottom-right, bottom-left, bottom-center',
     'Auto-dismiss after configurable duration (default 4 000 ms); pass 0 to persist',
