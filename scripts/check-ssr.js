@@ -92,24 +92,102 @@ function components() {
   return out.sort((a, b) => a.tag.localeCompare(b.tag));
 }
 
-/** A tagged-template literal built for one tag, since html`` can't take one dynamically. */
-function elementTemplate(tag) {
-  const text = `<${tag}></${tag}>`;
+/** A tagged-template literal built from markup, since html`` can't take one dynamically. */
+function markupTemplate(text) {
   return html(Object.assign([text], { raw: [text] }));
+}
+
+/**
+ * Attribute values to render each component *with*, derived from the manifest.
+ *
+ * A bare element is not enough, and believing it was cost real coverage.
+ * arc-icon only touches its SVG path when it has a `name`; the sanitizer behind
+ * that path called DOMParser, so every named icon threw in Node — and this
+ * check reported 185/186 the whole time, because `<arc-icon>` with no name
+ * returns a slot and never gets there. Property-dependent branches are where
+ * browser-only code hides, so they have to be rendered, not assumed.
+ */
+const MANIFEST = JSON.parse(
+  fs.readFileSync(path.join(WC, 'custom-elements.json'), 'utf-8')
+);
+
+/** Attributes whose value has to be a real icon name to exercise anything. */
+const ICON_ATTRIBUTE = /(^|-)icon$|^name$/;
+
+/** One icon that exists in both shipped libraries, used wherever a name is wanted. */
+const SAMPLE_ICON = 'check';
+
+/** A plausible value for one manifest attribute, or null to leave it off. */
+function sampleValue(tag, attr) {
+  const type = attr.type?.text ?? 'string';
+
+  // A union of string literals: the first is as good as any, and is a value the
+  // component documents rather than one it has to fall back from.
+  const literals = [...type.matchAll(/'([^']*)'/g)].map((m) => m[1]);
+  if (literals.length > 0) return literals[0];
+
+  // Structured types get skipped, not guessed. `string[]` still contains the
+  // word "string", and feeding "Example" to arc-table's `columns` produced a
+  // failure that said nothing about SSR — only about this function.
+  if (/\[\]|[<>{}]|\b(Array|Object|Record|Map|Set|Function)\b/.test(type)) return null;
+
+  if (/\bboolean\b/.test(type)) return '';
+  if (/\bnumber\b/.test(type)) return '1';
+  if (!/\bstring\b/.test(type)) return null; // anything else unrecognised
+
+  if (tag === 'arc-icon' && attr.name === 'name') return SAMPLE_ICON;
+  if (ICON_ATTRIBUTE.test(attr.name) && attr.name !== 'name') return SAMPLE_ICON;
+  return 'Example';
+}
+
+
+/** `<tag a="1" b>` built from the manifest, or null if the tag is not in it. */
+function populatedMarkup(tag) {
+  const decl = MANIFEST.modules
+    ?.flatMap((m) => m.declarations ?? [])
+    .find((d) => d.tagName === tag);
+  if (!decl?.attributes?.length) return null;
+
+  let out = `<${tag}`;
+  for (const attr of decl.attributes) {
+    const value = sampleValue(tag, attr);
+    if (value === null) continue;
+    out += value === '' ? ` ${attr.name}` : ` ${attr.name}="${value}"`;
+  }
+  return `${out}></${tag}>`;
 }
 
 const all = components();
 const results = [];
 
+// Icons resolve through a code-split dynamic import, so a named icon renders
+// only if it is already in memory — on the server there is no second pass to
+// fill it in later.
+const { iconRegistry } = await import(
+  pathToFileURL(path.join(SRC, 'content/icon-registry.js')).href
+);
+await iconRegistry.preload([SAMPLE_ICON]);
+
 for (const { tag, module } of all) {
   try {
     await import(pathToFileURL(module).href);
-    // A bare element is enough: the crash being looked for happens in the
-    // constructor or the first render, before any property matters.
-    const out = await collectResult(render(elementTemplate(tag)));
+    const out = await collectResult(render(markupTemplate(`<${tag}></${tag}>`)));
     results.push({ tag, ok: true, dsd: out.includes('shadowrootmode') });
   } catch (err) {
     results.push({ tag, ok: false, message: err?.message ?? String(err) });
+    continue;
+  }
+
+  // Second pass: the same element with its documented attributes set.
+  const markup = populatedMarkup(tag);
+  if (!markup) continue;
+  try {
+    await collectResult(render(markupTemplate(markup)));
+  } catch (err) {
+    const result = results[results.length - 1];
+    result.ok = false;
+    result.withProps = true;
+    result.message = err?.message ?? String(err);
   }
 }
 

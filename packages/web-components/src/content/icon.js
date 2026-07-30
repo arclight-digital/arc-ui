@@ -1,8 +1,8 @@
 import { LitElement, html, css, nothing } from 'lit';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { tokenStyles } from '../shared-styles.js';
 import { iconRegistry } from './icon-registry.js';
-
-const _svgCache = new Map();
+import { sanitizeSvg } from './sanitize-svg.js';
 
 /**
  * An unknown icon name used to render an empty box and say nothing, which is
@@ -26,36 +26,9 @@ function warnUnknownIcon(name) {
   );
 }
 
-/** Parse an SVG string into a sanitized SVG element, stripping scripts and event handlers. */
-function sanitizeSvg(svgStr) {
-  if (_svgCache.has(svgStr)) return _svgCache.get(svgStr).cloneNode(true);
-  const doc = new DOMParser().parseFromString(svgStr, 'image/svg+xml');
-  const svg = doc.querySelector('svg');
-  if (!svg) return null;
-  // Strip <script> and any elements with event handler attributes
-  for (const el of svg.querySelectorAll('script')) el.remove();
-  const walk = svg.querySelectorAll('*');
-  for (const el of walk) {
-    for (const attr of [...el.attributes]) {
-      if (attr.name.startsWith('on')) el.removeAttribute(attr.name);
-    }
-  }
-  _svgCache.set(svgStr, svg);
-  return svg.cloneNode(true);
-}
-
 /**
  * Renders icons from Phosphor (1,500+) or Lucide (1,900+) by name, with one-line library switching
  * and custom icon registration.
- *
- * Parse an SVG string into a sanitized SVG element, stripping scripts and event handlers. *\/
- * function sanitizeSvg(svgStr) { if (_svgCache.has(svgStr)) return
- * _svgCache.get(svgStr).cloneNode(true); const doc = new DOMParser().parseFromString(svgStr,
- * 'image/svg+xml'); const svg = doc.querySelector('svg'); if (!svg) return null; // Strip <script>
- * and any elements with event handler attributes for (const el of svg.querySelectorAll('script'))
- * el.remove(); const walk = svg.querySelectorAll('*'); for (const el of walk) { for (const attr of
- * [...el.attributes]) { if (attr.name.startsWith('on')) el.removeAttribute(attr.name); } }
- * _svgCache.set(svgStr, svg); return svg.cloneNode(true); }
  *
  * @tag arc-icon
  * @prop {string} name - Icon name to look up in the icon registry. When provided, renders the matching SVG. When empty, falls back to slotted content.
@@ -139,6 +112,14 @@ export class ArcIcon extends LitElement {
       this._svgContent = null;
       return;
     }
+    // Already in memory — resolved earlier, registered by hand, or inlined into
+    // the page by a server-side build. Taking the sync path keeps the first
+    // client render identical to the server's, which is what hydration needs.
+    const cached = iconRegistry.getSync(this.name);
+    if (cached !== null) {
+      this._svgContent = cached;
+      return;
+    }
     const currentName = this.name;
     const svg = await iconRegistry.get(this.name);
     // Guard against stale responses (name changed while loading)
@@ -149,7 +130,11 @@ export class ArcIcon extends LitElement {
   }
 
   render() {
-    const svgNode = this._svgContent ? sanitizeSvg(this._svgContent) : null;
+    // `updated()` does not run on the server, so `_svgContent` is never
+    // populated there — the registry's synchronous cache is the only way a
+    // named icon reaches the server's HTML. Client-side the two agree.
+    const source = this._svgContent ?? iconRegistry.getSync(this.name);
+    const svg = source ? sanitizeSvg(source) : null;
     return html`
       <span
         class="icon"
@@ -158,7 +143,7 @@ export class ArcIcon extends LitElement {
         aria-hidden=${this.label ? 'false' : 'true'}
         part="icon"
       >
-        ${svgNode ?? html`<slot></slot>`}
+        ${svg ? unsafeHTML(svg) : html`<slot></slot>`}
       </span>
     `;
   }

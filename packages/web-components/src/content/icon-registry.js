@@ -2,6 +2,13 @@ const _custom = {};
 let _libraryName = 'phosphor';
 
 /**
+ * Icons already resolved through `get()`, keyed by library and name so that
+ * switching libraries cannot serve the wrong glyph. Read by `getSync()`, which
+ * is what makes server-side rendering of a named icon possible at all.
+ */
+const _resolved = new Map();
+
+/**
  * Cross-library icon aliases.
  *
  * Phosphor and Lucide disagree about what common glyphs are called, and no
@@ -103,10 +110,43 @@ export const iconRegistry = {
       const load = resolver?.[aliasFor(name)] ?? resolver?.[name];
       if (!load) return null;
       const mod = await load();
+      _resolved.set(`${_libraryName}:${name}`, mod.default);
       return mod.default;
     } catch {
       return null;
     }
+  },
+
+  /**
+   * Look up an icon without awaiting — the source string if it is already in
+   * memory, otherwise null.
+   *
+   * `get()` is async because the icon sets are code-split one file per glyph,
+   * and 1,500 icons have no business being in anyone's bundle. But rendering is
+   * synchronous, and on the server there is no second chance: `updated()` never
+   * runs there, so an icon that is not resolvable *during render* is an icon
+   * that does not appear in the server's HTML at all.
+   *
+   * So this reads the cache that `get()` fills, plus anything registered
+   * through `set()`. Server-side, warm it with `preload()` first. Client-side
+   * it is a fast path — and, on a hydrated page whose icons were inlined at
+   * build time, the thing that makes the client's first render match the
+   * server's.
+   */
+  getSync(name) {
+    if (!name) return null;
+    if (_custom[name]) return _custom[name];
+    return _resolved.get(`${_libraryName}:${name}`) ?? null;
+  },
+
+  /**
+   * Resolve icons into the synchronous cache, for rendering that cannot await.
+   *
+   * Names that do not exist are skipped rather than throwing: a page listing
+   * the icons it uses should not fail to build over one typo.
+   */
+  async preload(names) {
+    await Promise.all([...new Set(names)].filter(Boolean).map((name) => this.get(name)));
   },
 
   /** List all icon names in a library (defaults to active). Returns a Promise<string[]>. */

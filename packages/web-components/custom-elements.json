@@ -1747,7 +1747,7 @@
           "type": {
             "text": "object"
           },
-          "default": "{ /** Select a built-in icon library: 'phosphor' (default) or 'lucide'. */ use(library) { if (library !== 'phosphor' && library !== 'lucide') { throw new Error(`Unknown icon library \"${library}\". Use \"phosphor\" or \"lucide\".`); } _libraryName = library; }, /** Register additional custom icons (merged on top of the active library). */ set(icons) { for (const [key, val] of Object.entries(icons)) { const kebab = key .replace(/([A-Z]+)([A-Z][a-z])/g, '$1-$2') .replace(/([a-z])([A-Z])/g, '$1-$2') .toLowerCase(); _custom[kebab] = val; } }, /** Look up an icon by kebab-case name. Returns a Promise<string|null>. */ async get(name) { // 1. Check custom icons first (instant) if (_custom[name]) return _custom[name]; // 2. Load resolver, then dynamic-import the single icon file try { const resolver = await getResolver(_libraryName); const load = resolver?.[aliasFor(name)] ?? resolver?.[name]; if (!load) return null; const mod = await load(); return mod.default; } catch { return null; } }, /** List all icon names in a library (defaults to active). Returns a Promise<string[]>. */ async list(library) { const lib = library || _libraryName; const names = await getManifest(lib); return [...Object.keys(_custom), ...names]; }, }"
+          "default": "{ /** Select a built-in icon library: 'phosphor' (default) or 'lucide'. */ use(library) { if (library !== 'phosphor' && library !== 'lucide') { throw new Error(`Unknown icon library \"${library}\". Use \"phosphor\" or \"lucide\".`); } _libraryName = library; }, /** Register additional custom icons (merged on top of the active library). */ set(icons) { for (const [key, val] of Object.entries(icons)) { const kebab = key .replace(/([A-Z]+)([A-Z][a-z])/g, '$1-$2') .replace(/([a-z])([A-Z])/g, '$1-$2') .toLowerCase(); _custom[kebab] = val; } }, /** Look up an icon by kebab-case name. Returns a Promise<string|null>. */ async get(name) { // 1. Check custom icons first (instant) if (_custom[name]) return _custom[name]; // 2. Load resolver, then dynamic-import the single icon file try { const resolver = await getResolver(_libraryName); const load = resolver?.[aliasFor(name)] ?? resolver?.[name]; if (!load) return null; const mod = await load(); _resolved.set(`${_libraryName}:${name}`, mod.default); return mod.default; } catch { return null; } }, /** * Look up an icon without awaiting — the source string if it is already in * memory, otherwise null. * * `get()` is async because the icon sets are code-split one file per glyph, * and 1,500 icons have no business being in anyone's bundle. But rendering is * synchronous, and on the server there is no second chance: `updated()` never * runs there, so an icon that is not resolvable *during render* is an icon * that does not appear in the server's HTML at all. * * So this reads the cache that `get()` fills, plus anything registered * through `set()`. Server-side, warm it with `preload()` first. Client-side * it is a fast path — and, on a hydrated page whose icons were inlined at * build time, the thing that makes the client's first render match the * server's. */ getSync(name) { if (!name) return null; if (_custom[name]) return _custom[name]; return _resolved.get(`${_libraryName}:${name}`) ?? null; }, /** * Resolve icons into the synchronous cache, for rendering that cannot await. * * Names that do not exist are skipped rather than throwing: a page listing * the icons it uses should not fail to build over one typo. */ async preload(names) { await Promise.all([...new Set(names)].filter(Boolean).map((name) => this.get(name))); }, /** List all icon names in a library (defaults to active). Returns a Promise<string[]>. */ async list(library) { const lib = library || _libraryName; const names = await getManifest(lib); return [...Object.keys(_custom), ...names]; }, }"
         }
       ],
       "exports": [
@@ -1767,7 +1767,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "Renders icons from Phosphor (1,500+) or Lucide (1,900+) by name, with one-line library switching\nand custom icon registration.\n\nParse an SVG string into a sanitized SVG element, stripping scripts and event handlers. *\\/\nfunction sanitizeSvg(svgStr) { if (_svgCache.has(svgStr)) return\n_svgCache.get(svgStr).cloneNode(true); const doc = new DOMParser().parseFromString(svgStr,\n'image/svg+xml'); const svg = doc.querySelector('svg'); if (!svg) return null; // Strip <script>\nand any elements with event handler attributes for (const el of svg.querySelectorAll('script'))\nel.remove(); const walk = svg.querySelectorAll('*'); for (const el of walk) { for (const attr of\n[...el.attributes]) { if (attr.name.startsWith('on')) el.removeAttribute(attr.name); } }\n_svgCache.set(svgStr, svg); return svg.cloneNode(true); }",
+          "description": "Renders icons from Phosphor (1,500+) or Lucide (1,900+) by name, with one-line library switching\nand custom icon registration.",
           "name": "ArcIcon",
           "cssParts": [
             {
@@ -2480,6 +2480,32 @@
           "declaration": {
             "name": "ArcQrCode",
             "module": "src/content/qr-code.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/content/sanitize-svg.js",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "sanitizeSvg",
+          "parameters": [
+            {
+              "name": "source"
+            }
+          ],
+          "description": "Sanitize an SVG source string, returning markup safe to pass to `unsafeHTML`,\nor `null` if it contains no `<svg>` root.\n\nEverything outside the outermost `<svg>…</svg>` is discarded, which drops the\nXML declaration and doctype that some icon sets ship with."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "sanitizeSvg",
+          "declaration": {
+            "name": "sanitizeSvg",
+            "module": "src/content/sanitize-svg.js"
           }
         }
       ]

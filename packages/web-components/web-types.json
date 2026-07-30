@@ -933,7 +933,7 @@
         },
         {
           "name": "arc-icon",
-          "description": "Renders icons from Phosphor (1,500+) or Lucide (1,900+) by name, with one-line library switching\nand custom icon registration.\n\nParse an SVG string into a sanitized SVG element, stripping scripts and event handlers. *\\/\nfunction sanitizeSvg(svgStr) { if (_svgCache.has(svgStr)) return\n_svgCache.get(svgStr).cloneNode(true); const doc = new DOMParser().parseFromString(svgStr,\n'image/svg+xml'); const svg = doc.querySelector('svg'); if (!svg) return null; // Strip <script>\nand any elements with event handler attributes for (const el of svg.querySelectorAll('script'))\nel.remove(); const walk = svg.querySelectorAll('*'); for (const el of walk) { for (const attr of\n[...el.attributes]) { if (attr.name.startsWith('on')) el.removeAttribute(attr.name); } }\n_svgCache.set(svgStr, svg); return svg.cloneNode(true); }\n---\n\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **icon**",
+          "description": "Renders icons from Phosphor (1,500+) or Lucide (1,900+) by name, with one-line library switching\nand custom icon registration.\n---\n\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **icon**",
           "doc-url": "",
           "attributes": [
             {
