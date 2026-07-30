@@ -6,7 +6,7 @@ interface Props {
     message?: string;
     confirmLabel?: string;
     cancelLabel?: string;
-    variant?: 'default' | 'danger';
+    variant?: 'default' | 'error';
     children?: Snippet;
     class?: string;
     id?: string;

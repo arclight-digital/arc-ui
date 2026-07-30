@@ -1,5 +1,4 @@
 import '@arclux/arc-ui/tag-input';
-import type { Snippet } from 'svelte';
 interface Props {
     value?: string[];
     suggestions?: string[];
@@ -11,7 +10,6 @@ interface Props {
     name?: string;
     disabled?: boolean;
     error?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

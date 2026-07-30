@@ -1,11 +1,9 @@
 import '@arclux/arc-ui/countdown-timer';
-import type { Snippet } from 'svelte';
 interface Props {
     target?: string;
     label?: string;
     expired?: string;
     hideZeroSegments?: boolean;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

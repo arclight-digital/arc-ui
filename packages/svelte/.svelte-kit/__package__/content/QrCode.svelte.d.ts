@@ -1,5 +1,4 @@
 import '@arclux/arc-ui/qr-code';
-import type { Snippet } from 'svelte';
 interface Props {
     value?: string;
     size?: number;
@@ -7,7 +6,6 @@ interface Props {
     label?: string;
     quietZone?: number;
     contrast?: boolean;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

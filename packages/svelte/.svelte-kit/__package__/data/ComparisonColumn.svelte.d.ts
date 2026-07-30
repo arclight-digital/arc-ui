@@ -1,10 +1,8 @@
 import '@arclux/arc-ui/comparison-column';
-import type { Snippet } from 'svelte';
 interface Props {
     heading?: string;
     highlight?: boolean;
     values?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

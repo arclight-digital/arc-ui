@@ -4,12 +4,13 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
+    locale?: string;
+    firstDayOfWeek?: number;
     value?: string;
     min?: string;
     max?: string;
     month?: number;
     year?: number;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -37,18 +38,25 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = $bindable(''), min = '', max = '', month = $bindable(), year = $bindable(), children, ...rest }: Props = $props();
+  let { locale = '', firstDayOfWeek = 0, value = $bindable(''), min = '', max = '', month = $bindable(), year = $bindable(), ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (firstDayOfWeek !== undefined) el.firstDayOfWeek = firstDayOfWeek;
+  });
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
   // have attached. These are declared after {...rest} below so they win.
-  function __onArcNavigate(e: Event) {
+  function __onArcMonthChange(e: Event) {
     const detail = (e as CustomEvent).detail as Record<string, unknown> | null;
     if (detail) {
       if ('month' in detail) month = detail.month as number;
       if ('year' in detail) year = detail.year as number;
     }
-    (rest['onarc-navigate'] as ((e: Event) => void) | undefined)?.(e);
+    (rest['onarc-month-change'] as ((e: Event) => void) | undefined)?.(e);
   }
   function __onArcChange(e: Event) {
     const detail = (e as CustomEvent).detail as Record<string, unknown> | null;
@@ -59,9 +67,8 @@
   }
 </script>
 
-<arc-calendar {value} {min} {max} {month} {year} {...rest}
-  onarc-navigate={__onArcNavigate}
+<arc-calendar {locale} {value} {min} {max} {month} {year} bind:this={__el} {...rest}
+  onarc-month-change={__onArcMonthChange}
   onarc-change={__onArcChange}
 >
-  {@render children?.()}
 </arc-calendar>

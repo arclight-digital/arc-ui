@@ -1,5 +1,4 @@
 import '@arclux/arc-ui/kanban';
-import type { Snippet } from 'svelte';
 interface Props {
     columns?: Array<{
         id: string;
@@ -14,7 +13,6 @@ interface Props {
         }>;
     }>;
     disabled?: boolean;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

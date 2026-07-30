@@ -1,10 +1,8 @@
 import '@arclux/arc-ui/separator';
-import type { Snippet } from 'svelte';
 interface Props {
     orientation?: 'horizontal' | 'vertical';
     label?: string;
     variant?: 'line' | 'dashed' | 'dotted' | 'fade';
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

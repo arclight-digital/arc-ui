@@ -1,7 +1,7 @@
 import '@arclux/arc-ui/tag';
 import type { Snippet } from 'svelte';
 interface Props {
-    variant?: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
+    variant?: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error';
     size?: 'sm' | 'md' | 'lg';
     removable?: boolean;
     disabled?: boolean;

@@ -8,7 +8,6 @@
     align?: 'left' | 'right';
     vertical?: boolean;
     label?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -36,9 +35,8 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { variant = 'subtle', align, vertical = false, label = '', children, ...rest }: Props = $props();
+  let { variant = 'subtle', align, vertical = false, label = '', ...rest }: Props = $props();
 </script>
 
 <arc-divider {variant} {align} {vertical} {label} {...rest}>
-  {@render children?.()}
 </arc-divider>

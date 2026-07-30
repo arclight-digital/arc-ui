@@ -1,10 +1,8 @@
 import '@arclux/arc-ui/color-swatch';
-import type { Snippet } from 'svelte';
 interface Props {
     color?: string;
     label?: string;
     size?: 'sm' | 'md' | 'lg';
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

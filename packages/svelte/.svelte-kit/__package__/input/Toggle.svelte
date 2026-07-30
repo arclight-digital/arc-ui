@@ -9,7 +9,6 @@
     size?: 'sm' | 'md' | 'lg';
     label?: string;
     name?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -37,7 +36,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { checked = $bindable(false), disabled = false, size = 'md', label = '', name = '', children, ...rest }: Props = $props();
+  let { checked = $bindable(false), disabled = false, size = 'md', label = '', name = '', ...rest }: Props = $props();
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
@@ -54,5 +53,4 @@
 <arc-toggle {checked} {disabled} {size} {label} {name} {...rest}
   onarc-change={__onArcChange}
 >
-  {@render children?.()}
 </arc-toggle>

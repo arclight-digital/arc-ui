@@ -1,5 +1,4 @@
 import '@arclux/arc-ui/data-grid';
-import type { Snippet } from 'svelte';
 interface Props {
     columns?: Array<{
         key: string;
@@ -19,7 +18,6 @@ interface Props {
     selectable?: boolean;
     virtual?: boolean;
     rowHeight?: number;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

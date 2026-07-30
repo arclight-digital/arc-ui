@@ -1,7 +1,5 @@
 import '@arclux/arc-ui/menu-divider';
-import type { Snippet } from 'svelte';
 interface Props {
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

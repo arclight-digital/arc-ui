@@ -1,5 +1,4 @@
 import '@arclux/arc-ui/password-input';
-import type { Snippet } from 'svelte';
 interface Props {
     name?: string;
     label?: string;
@@ -11,7 +10,6 @@ interface Props {
     size?: 'sm' | 'md' | 'lg';
     autocomplete?: string;
     showStrength?: boolean;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

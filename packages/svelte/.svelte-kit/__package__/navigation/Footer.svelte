@@ -4,7 +4,7 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
-    compact?: boolean;
+    density?: 'default' | 'compact';
     border?: boolean;
     contained?: string;
     align?: 'left' | 'center';
@@ -42,10 +42,10 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { compact = false, border = true, contained = 'null', align = 'left', logo, social, legal, children, ...rest }: Props = $props();
+  let { density = 'default', border = true, contained = 'null', align = 'left', logo, social, legal, children, ...rest }: Props = $props();
 </script>
 
-<arc-footer {compact} {border} {contained} {align} {...rest}>
+<arc-footer {density} {border} {contained} {align} {...rest}>
   {@render logo?.()}
   {@render social?.()}
   {@render legal?.()}

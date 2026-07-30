@@ -1,5 +1,4 @@
 import '@arclux/arc-ui/chart';
-import type { Snippet } from 'svelte';
 interface Props {
     type?: 'line' | 'area' | 'bar' | 'donut';
     series?: Array<{
@@ -13,7 +12,6 @@ interface Props {
     height?: number;
     valueFormat?: 'number' | 'percent' | 'currency';
     currency?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

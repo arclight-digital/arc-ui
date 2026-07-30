@@ -1,11 +1,9 @@
 import '@arclux/arc-ui/stat';
-import type { Snippet } from 'svelte';
 interface Props {
     value?: string;
     label?: string;
     trend?: 'up' | 'down' | 'neutral';
     change?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

@@ -1,10 +1,8 @@
 import '@arclux/arc-ui/theme-toggle';
-import type { Snippet } from 'svelte';
 interface Props {
     theme?: 'dark' | 'light' | 'auto';
     disabled?: boolean;
     iconOnly?: boolean;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

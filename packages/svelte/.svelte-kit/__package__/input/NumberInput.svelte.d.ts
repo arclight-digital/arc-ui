@@ -1,5 +1,4 @@
 import '@arclux/arc-ui/number-input';
-import type { Snippet } from 'svelte';
 interface Props {
     value?: number;
     min?: number;
@@ -8,7 +7,6 @@ interface Props {
     label?: string;
     name?: string;
     disabled?: boolean;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

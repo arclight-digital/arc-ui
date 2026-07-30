@@ -1,10 +1,8 @@
 import '@arclux/arc-ui/loading-overlay';
-import type { Snippet } from 'svelte';
 interface Props {
     active?: boolean;
     message?: string;
     global?: boolean;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

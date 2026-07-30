@@ -1,5 +1,4 @@
 import '@arclux/arc-ui/typewriter';
-import type { Snippet } from 'svelte';
 interface Props {
     text?: string;
     speed?: number;
@@ -8,7 +7,6 @@ interface Props {
     loop?: boolean;
     nowrap?: boolean;
     pauseEnd?: number;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

@@ -10,7 +10,6 @@
     indeterminate?: boolean;
     showValue?: boolean;
     label?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -38,7 +37,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = 0, variant = 'bar', size = 'md', indeterminate = false, showValue = false, label = '', children, ...rest }: Props = $props();
+  let { value = 0, variant = 'bar', size = 'md', indeterminate = false, showValue = false, label = '', ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {
@@ -49,5 +48,4 @@
 </script>
 
 <arc-progress {value} {variant} {size} {indeterminate} {label} bind:this={__el} {...rest}>
-  {@render children?.()}
 </arc-progress>

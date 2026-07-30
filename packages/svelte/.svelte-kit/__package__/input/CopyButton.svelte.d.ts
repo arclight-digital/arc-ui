@@ -1,9 +1,7 @@
 import '@arclux/arc-ui/copy-button';
-import type { Snippet } from 'svelte';
 interface Props {
     value?: string;
     disabled?: boolean;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

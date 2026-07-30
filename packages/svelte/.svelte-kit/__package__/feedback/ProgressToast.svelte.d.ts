@@ -1,8 +1,6 @@
 import '@arclux/arc-ui/progress-toast';
-import type { Snippet } from 'svelte';
 interface Props {
     position?: 'top-right' | 'bottom-right';
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

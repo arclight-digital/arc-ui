@@ -1,5 +1,4 @@
 import '@arclux/arc-ui/time-picker';
-import type { Snippet } from 'svelte';
 interface Props {
     value?: string;
     name?: string;
@@ -10,7 +9,7 @@ interface Props {
     placeholder?: string;
     disabled?: boolean;
     label?: string;
-    children?: Snippet;
+    open?: boolean;
     class?: string;
     id?: string;
     style?: string;

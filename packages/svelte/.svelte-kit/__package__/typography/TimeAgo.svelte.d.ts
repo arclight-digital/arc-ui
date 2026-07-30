@@ -1,10 +1,8 @@
 import '@arclux/arc-ui/time-ago';
-import type { Snippet } from 'svelte';
 interface Props {
     datetime?: string;
     live?: boolean;
     locale?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

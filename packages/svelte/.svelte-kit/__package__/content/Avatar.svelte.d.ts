@@ -1,12 +1,10 @@
 import '@arclux/arc-ui/avatar';
-import type { Snippet } from 'svelte';
 interface Props {
     src?: string;
     name?: string;
     size?: 'sm' | 'md' | 'lg';
     shape?: 'circle' | 'square' | 'rounded';
     status?: 'online' | 'offline' | 'busy' | 'away';
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

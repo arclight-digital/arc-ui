@@ -1,11 +1,9 @@
 import '@arclux/arc-ui/image-cropper';
-import type { Snippet } from 'svelte';
 interface Props {
     src?: string;
     height?: number;
     aspect?: number;
     zoom?: number;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

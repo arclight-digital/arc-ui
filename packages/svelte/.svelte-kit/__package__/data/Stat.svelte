@@ -8,7 +8,6 @@
     label?: string;
     trend?: 'up' | 'down' | 'neutral';
     change?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -36,9 +35,8 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = '', label = '', trend, change = '', children, ...rest }: Props = $props();
+  let { value = '', label = '', trend, change = '', ...rest }: Props = $props();
 </script>
 
 <arc-stat {value} {label} {trend} {change} {...rest}>
-  {@render children?.()}
 </arc-stat>

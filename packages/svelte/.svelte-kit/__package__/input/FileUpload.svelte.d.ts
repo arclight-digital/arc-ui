@@ -1,11 +1,9 @@
 import '@arclux/arc-ui/file-upload';
-import type { Snippet } from 'svelte';
 interface Props {
     accept?: string;
     multiple?: boolean;
     maxSize?: number;
     disabled?: boolean;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

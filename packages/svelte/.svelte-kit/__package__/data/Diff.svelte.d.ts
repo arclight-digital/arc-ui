@@ -1,10 +1,8 @@
 import '@arclux/arc-ui/diff';
-import type { Snippet } from 'svelte';
 interface Props {
     original?: string;
     revised?: string;
     mode?: 'inline' | 'side-by-side';
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

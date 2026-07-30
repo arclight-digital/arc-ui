@@ -1,11 +1,9 @@
 import '@arclux/arc-ui/scroll-to-top';
-import type { Snippet } from 'svelte';
 interface Props {
     threshold?: number;
     smooth?: boolean;
     position?: 'bottom-right' | 'bottom-left';
     offset?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

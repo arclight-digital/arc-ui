@@ -1,5 +1,4 @@
 import '@arclux/arc-ui/slider';
-import type { Snippet } from 'svelte';
 interface Props {
     value?: number;
     min?: number;
@@ -8,7 +7,6 @@ interface Props {
     name?: string;
     disabled?: boolean;
     label?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

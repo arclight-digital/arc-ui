@@ -1,12 +1,12 @@
 import '@arclux/arc-ui/calendar';
-import type { Snippet } from 'svelte';
 interface Props {
+    locale?: string;
+    firstDayOfWeek?: number;
     value?: string;
     min?: string;
     max?: string;
     month?: number;
     year?: number;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

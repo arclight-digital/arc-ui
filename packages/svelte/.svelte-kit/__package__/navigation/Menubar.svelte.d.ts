@@ -1,5 +1,4 @@
 import '@arclux/arc-ui/menubar';
-import type { Snippet } from 'svelte';
 interface Props {
     items?: Array<{
         label: string;
@@ -16,7 +15,6 @@ interface Props {
             }>;
         }>;
     }>;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

@@ -1,12 +1,10 @@
 import '@arclux/arc-ui/color-picker';
-import type { Snippet } from 'svelte';
 interface Props {
     value?: string;
     name?: string;
     presets?: string[];
     disabled?: boolean;
     label?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

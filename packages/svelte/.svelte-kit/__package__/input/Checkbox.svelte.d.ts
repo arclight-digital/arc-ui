@@ -1,5 +1,4 @@
 import '@arclux/arc-ui/checkbox';
-import type { Snippet } from 'svelte';
 interface Props {
     checked?: boolean;
     indeterminate?: boolean;
@@ -8,7 +7,6 @@ interface Props {
     label?: string;
     name?: string;
     value?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -35,6 +33,6 @@ interface Props {
     [key: `aria-${string}`]: unknown;
     [key: `on${string}`]: unknown;
 }
-declare const Checkbox: import("svelte").Component<Props, {}, "checked">;
+declare const Checkbox: import("svelte").Component<Props, {}, "value" | "checked">;
 type Checkbox = ReturnType<typeof Checkbox>;
 export default Checkbox;

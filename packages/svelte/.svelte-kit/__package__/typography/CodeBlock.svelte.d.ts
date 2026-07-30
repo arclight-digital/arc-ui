@@ -1,11 +1,9 @@
 import '@arclux/arc-ui/code-block';
-import type { Snippet } from 'svelte';
 interface Props {
     language?: string;
     filename?: string;
     code?: string;
     variant?: 'default' | 'window' | 'basic';
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

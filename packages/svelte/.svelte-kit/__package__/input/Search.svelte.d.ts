@@ -6,6 +6,7 @@ interface Props {
     label?: string;
     disabled?: boolean;
     loading?: boolean;
+    open?: boolean;
     children?: Snippet;
     class?: string;
     id?: string;

@@ -5,6 +5,7 @@
 
   interface Props {
     value?: string;
+    name?: string;
     placeholder?: string;
     label?: string;
     rows?: number;
@@ -15,7 +16,6 @@
     size?: 'sm' | 'md' | 'lg';
     autoResize?: boolean;
     error?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -43,7 +43,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = $bindable(''), placeholder = '', label = '', rows = 4, maxlength = 0, disabled = false, readonly = false, resize = 'vertical', size = 'md', autoResize = false, error = '', children, ...rest }: Props = $props();
+  let { value = $bindable(''), name = '', placeholder = '', label = '', rows = 4, maxlength = 0, disabled = false, readonly = false, resize = 'vertical', size = 'md', autoResize = false, error = '', ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {
@@ -71,9 +71,8 @@
   }
 </script>
 
-<arc-textarea {value} {placeholder} {label} {rows} {maxlength} {disabled} {readonly} {resize} {size} {error} bind:this={__el} {...rest}
+<arc-textarea {value} {name} {placeholder} {label} {rows} {maxlength} {disabled} {readonly} {resize} {size} {error} bind:this={__el} {...rest}
   onarc-input={__onArcInput}
   onarc-change={__onArcChange}
 >
-  {@render children?.()}
 </arc-textarea>

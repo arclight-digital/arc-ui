@@ -1,10 +1,8 @@
 import '@arclux/arc-ui/spotlight';
-import type { Snippet } from 'svelte';
 interface Props {
     target?: string;
     active?: boolean;
     padding?: number;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

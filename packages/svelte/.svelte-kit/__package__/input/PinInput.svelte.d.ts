@@ -1,5 +1,4 @@
 import '@arclux/arc-ui/pin-input';
-import type { Snippet } from 'svelte';
 interface Props {
     length?: number;
     value?: string;
@@ -9,7 +8,6 @@ interface Props {
     type?: 'number' | 'alphanumeric' | 'text';
     separator?: number;
     label?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

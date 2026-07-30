@@ -1,10 +1,8 @@
 import '@arclux/arc-ui/hotkey';
-import type { Snippet } from 'svelte';
 interface Props {
     keys?: string;
     disabled?: boolean;
     global?: boolean;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

@@ -11,7 +11,9 @@
     placeholder?: string;
     disabled?: boolean;
     label?: string;
-    children?: Snippet;
+    open?: boolean;
+    locale?: string;
+    firstDayOfWeek?: number;
     class?: string;
     id?: string;
     style?: string;
@@ -39,7 +41,14 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = $bindable(''), name = '', min = '', max = '', placeholder = 'Select date', disabled = false, label = '', children, ...rest }: Props = $props();
+  let { value = $bindable(''), name = '', min = '', max = '', placeholder = 'Select date', disabled = false, label = '', open = false, locale = '', firstDayOfWeek = 0, ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (firstDayOfWeek !== undefined) el.firstDayOfWeek = firstDayOfWeek;
+  });
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
@@ -53,8 +62,7 @@
   }
 </script>
 
-<arc-date-picker {value} {name} {min} {max} {placeholder} {disabled} {label} {...rest}
+<arc-date-picker {value} {name} {min} {max} {placeholder} {disabled} {label} {open} {locale} bind:this={__el} {...rest}
   onarc-change={__onArcChange}
 >
-  {@render children?.()}
 </arc-date-picker>

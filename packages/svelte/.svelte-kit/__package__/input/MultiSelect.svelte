@@ -49,10 +49,18 @@
     }
     (rest['onarc-change'] as ((e: Event) => void) | undefined)?.(e);
   }
+  function __onArcInput(e: Event) {
+    const detail = (e as CustomEvent).detail as Record<string, unknown> | null;
+    if (detail) {
+      if ('value' in detail) value = detail.value as string[];
+    }
+    (rest['onarc-input'] as ((e: Event) => void) | undefined)?.(e);
+  }
 </script>
 
 <arc-multi-select {value} {placeholder} {label} {name} {disabled} {...rest}
   onarc-change={__onArcChange}
+  onarc-input={__onArcInput}
 >
   {@render children?.()}
 </arc-multi-select>

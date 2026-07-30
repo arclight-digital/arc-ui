@@ -1,11 +1,9 @@
 import '@arclux/arc-ui/skeleton';
-import type { Snippet } from 'svelte';
 interface Props {
     variant?: 'text' | 'circle' | 'rect';
     width?: string;
     height?: string;
     count?: number;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

@@ -1,5 +1,4 @@
 import '@arclux/arc-ui/progress';
-import type { Snippet } from 'svelte';
 interface Props {
     value?: number;
     variant?: 'bar' | 'spinner';
@@ -7,7 +6,6 @@ interface Props {
     indeterminate?: boolean;
     showValue?: boolean;
     label?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

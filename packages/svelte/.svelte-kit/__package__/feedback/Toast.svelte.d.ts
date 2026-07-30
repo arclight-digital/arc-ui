@@ -1,9 +1,10 @@
 import '@arclux/arc-ui/toast';
-import type { Snippet } from 'svelte';
 interface Props {
     position?: 'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center';
     duration?: number;
-    children?: Snippet;
+    maxVisible?: number;
+    dedupe?: boolean;
+    queueLimit?: number;
     class?: string;
     id?: string;
     style?: string;

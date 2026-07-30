@@ -1,10 +1,8 @@
 import '@arclux/arc-ui/highlight';
-import type { Snippet } from 'svelte';
 interface Props {
     text?: string;
     query?: string;
     caseSensitive?: boolean;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

@@ -1,12 +1,10 @@
 import '@arclux/arc-ui/otp-input';
-import type { Snippet } from 'svelte';
 interface Props {
     length?: number;
     value?: string;
     name?: string;
     disabled?: boolean;
     type?: 'number' | 'text';
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

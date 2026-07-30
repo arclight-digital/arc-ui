@@ -2,7 +2,7 @@ import '@arclux/arc-ui/alert';
 import type { Snippet } from 'svelte';
 interface Props {
     variant?: 'info' | 'success' | 'warning' | 'error';
-    compact?: boolean;
+    density?: 'default' | 'compact';
     dismissible?: boolean;
     heading?: string;
     children?: Snippet;

@@ -1,11 +1,9 @@
 import '@arclux/arc-ui/divider';
-import type { Snippet } from 'svelte';
 interface Props {
     variant?: 'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient';
     align?: 'left' | 'right';
     vertical?: boolean;
     label?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

@@ -1,10 +1,8 @@
 import '@arclux/arc-ui/page-indicator';
-import type { Snippet } from 'svelte';
 interface Props {
     count?: number;
     value?: number;
     clickable?: boolean;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

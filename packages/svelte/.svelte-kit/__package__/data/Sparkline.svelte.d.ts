@@ -1,5 +1,4 @@
 import '@arclux/arc-ui/sparkline';
-import type { Snippet } from 'svelte';
 interface Props {
     data?: string;
     type?: 'line' | 'bar';
@@ -7,7 +6,6 @@ interface Props {
     width?: number;
     height?: number;
     fill?: boolean;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

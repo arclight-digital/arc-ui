@@ -9,6 +9,7 @@
     "prepack": "pnpm run build"
   },
   "peerDependencies": {
+    "@angular/common": ">=17.0.0 <22.0.0",
     "@angular/core": ">=17.0.0 <22.0.0",
     "@arclux/arc-ui": "workspace:^"
   },
@@ -33,6 +34,7 @@
     "directory": "dist"
   },
   "devDependencies": {
+    "@angular/common": "^17.3.12",
     "@angular/compiler-cli": "^17.3.12",
     "@angular/core": "^17.3.12",
     "@arclux/arc-ui": "workspace:*",

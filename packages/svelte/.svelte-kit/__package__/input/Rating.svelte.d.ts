@@ -1,12 +1,10 @@
 import '@arclux/arc-ui/rating';
-import type { Snippet } from 'svelte';
 interface Props {
     value?: number;
     max?: number;
     name?: string;
     disabled?: boolean;
     readonly?: boolean;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

@@ -1,6 +1,7 @@
 import '@arclux/arc-ui/event-calendar';
-import type { Snippet } from 'svelte';
 interface Props {
+    locale?: string;
+    firstDayOfWeek?: number;
     events?: Array<{
         date: string;
         end?: string;
@@ -9,7 +10,6 @@ interface Props {
     }>;
     view?: 'month' | 'week';
     date?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -36,6 +36,6 @@ interface Props {
     [key: `aria-${string}`]: unknown;
     [key: `on${string}`]: unknown;
 }
-declare const EventCalendar: import("svelte").Component<Props, {}, "date" | "view">;
+declare const EventCalendar: import("svelte").Component<Props, {}, "view" | "date">;
 type EventCalendar = ReturnType<typeof EventCalendar>;
 export default EventCalendar;

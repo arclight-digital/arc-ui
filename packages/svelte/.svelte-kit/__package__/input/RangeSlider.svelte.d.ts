@@ -1,5 +1,4 @@
 import '@arclux/arc-ui/range-slider';
-import type { Snippet } from 'svelte';
 interface Props {
     min?: number;
     max?: number;
@@ -10,7 +9,6 @@ interface Props {
     disabled?: boolean;
     label?: string;
     showValues?: boolean;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

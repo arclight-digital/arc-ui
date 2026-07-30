@@ -1,12 +1,10 @@
 import '@arclux/arc-ui/toggle';
-import type { Snippet } from 'svelte';
 interface Props {
     checked?: boolean;
     disabled?: boolean;
     size?: 'sm' | 'md' | 'lg';
     label?: string;
     name?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

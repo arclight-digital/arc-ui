@@ -1,11 +1,9 @@
 import '@arclux/arc-ui/pagination';
-import type { Snippet } from 'svelte';
 interface Props {
     total?: number;
     current?: number;
     siblings?: number;
     compact?: boolean;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

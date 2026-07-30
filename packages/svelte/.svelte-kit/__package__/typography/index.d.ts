@@ -1,5 +1,4 @@
 export { default as Blockquote } from './Blockquote.svelte';
-export { default as CodeBlock } from './CodeBlock.svelte';
 export { default as GradientText } from './GradientText.svelte';
 export { default as Highlight } from './Highlight.svelte';
 export { default as Kbd } from './Kbd.svelte';

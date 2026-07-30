@@ -1,7 +1,7 @@
 import '@arclux/arc-ui/textarea';
-import type { Snippet } from 'svelte';
 interface Props {
     value?: string;
+    name?: string;
     placeholder?: string;
     label?: string;
     rows?: number;
@@ -12,7 +12,6 @@ interface Props {
     size?: 'sm' | 'md' | 'lg';
     autoResize?: boolean;
     error?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

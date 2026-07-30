@@ -5,7 +5,7 @@
 
   interface Props {
     variant?: 'info' | 'success' | 'warning' | 'error';
-    compact?: boolean;
+    density?: 'default' | 'compact';
     dismissible?: boolean;
     heading?: string;
     children?: Snippet;
@@ -36,9 +36,9 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { variant = 'info', compact = false, dismissible = false, heading = '', children, ...rest }: Props = $props();
+  let { variant = 'info', density = 'default', dismissible = false, heading = '', children, ...rest }: Props = $props();
 </script>
 
-<arc-alert {variant} {compact} {dismissible} {heading} {...rest}>
+<arc-alert {variant} {density} {dismissible} {heading} {...rest}>
   {@render children?.()}
 </arc-alert>

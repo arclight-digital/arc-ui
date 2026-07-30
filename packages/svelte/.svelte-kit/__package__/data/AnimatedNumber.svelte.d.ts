@@ -1,5 +1,4 @@
 import '@arclux/arc-ui/animated-number';
-import type { Snippet } from 'svelte';
 interface Props {
     value?: number;
     duration?: number;
@@ -8,7 +7,6 @@ interface Props {
     suffix?: string;
     decimals?: number;
     locale?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

@@ -1,5 +1,4 @@
 import '@arclux/arc-ui/number-format';
-import type { Snippet } from 'svelte';
 interface Props {
     value?: number;
     type?: 'number' | 'currency' | 'percent' | 'compact';
@@ -7,7 +6,6 @@ interface Props {
     currency?: string;
     decimals?: number;
     notation?: 'standard' | 'compact';
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

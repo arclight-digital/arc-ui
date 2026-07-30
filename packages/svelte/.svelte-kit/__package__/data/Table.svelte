@@ -7,8 +7,7 @@
     columns?: string[];
     rows?: string[][];
     striped?: boolean;
-    compact?: boolean;
-    children?: Snippet;
+    density?: 'default' | 'compact';
     class?: string;
     id?: string;
     style?: string;
@@ -36,9 +35,8 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { columns = [], rows = [], striped = false, compact = false, children, ...rest }: Props = $props();
+  let { columns = [], rows = [], striped = false, density = 'default', ...rest }: Props = $props();
 </script>
 
-<arc-table {columns} {rows} {striped} {compact} {...rest}>
-  {@render children?.()}
+<arc-table {columns} {rows} {striped} {density} {...rest}>
 </arc-table>

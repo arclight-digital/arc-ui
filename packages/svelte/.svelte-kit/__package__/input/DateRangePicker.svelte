@@ -4,6 +4,8 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
+    locale?: string;
+    firstDayOfWeek?: number;
     start?: string;
     end?: string;
     name?: string;
@@ -15,7 +17,7 @@
     disabled?: boolean;
     required?: boolean;
     label?: string;
-    children?: Snippet;
+    open?: boolean;
     class?: string;
     id?: string;
     style?: string;
@@ -43,7 +45,14 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { start = $bindable(''), end = $bindable(''), name = '', min = '', max = '', months = 2, presets = [], placeholder = 'Select date range', disabled = false, required = false, label = '', children, ...rest }: Props = $props();
+  let { locale = '', firstDayOfWeek = 0, start = $bindable(''), end = $bindable(''), name = '', min = '', max = '', months = 2, presets = [], placeholder = 'Select date range', disabled = false, required = false, label = '', open = false, ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (firstDayOfWeek !== undefined) el.firstDayOfWeek = firstDayOfWeek;
+  });
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
@@ -58,8 +67,7 @@
   }
 </script>
 
-<arc-date-range-picker {start} {end} {name} {min} {max} {months} {presets} {placeholder} {disabled} {required} {label} {...rest}
+<arc-date-range-picker {locale} {start} {end} {name} {min} {max} {months} {presets} {placeholder} {disabled} {required} {label} {open} bind:this={__el} {...rest}
   onarc-change={__onArcChange}
 >
-  {@render children?.()}
 </arc-date-range-picker>

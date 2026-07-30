@@ -1,9 +1,7 @@
 import '@arclux/arc-ui/announcement';
-import type { Snippet } from 'svelte';
 interface Props {
     politeness?: 'polite' | 'assertive';
     message?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

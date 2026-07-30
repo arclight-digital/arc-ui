@@ -1,7 +1,7 @@
 import '@arclux/arc-ui/footer';
 import type { Snippet } from 'svelte';
 interface Props {
-    compact?: boolean;
+    density?: 'default' | 'compact';
     border?: boolean;
     contained?: string;
     align?: 'left' | 'center';

@@ -1,5 +1,4 @@
 import '@arclux/arc-ui/meter';
-import type { Snippet } from 'svelte';
 interface Props {
     value?: number;
     min?: number;
@@ -8,7 +7,6 @@ interface Props {
     high?: number;
     optimum?: number;
     label?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

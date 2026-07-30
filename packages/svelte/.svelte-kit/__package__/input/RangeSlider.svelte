@@ -13,7 +13,6 @@
     disabled?: boolean;
     label?: string;
     showValues?: boolean;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -41,7 +40,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { min = 0, max = 100, step = 1, low = $bindable(0), high = $bindable(100), name = '', disabled = false, label = '', showValues = true, children, ...rest }: Props = $props();
+  let { min = 0, max = 100, step = 1, low = $bindable(0), high = $bindable(100), name = '', disabled = false, label = '', showValues = true, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {
@@ -75,5 +74,4 @@
   onarc-input={__onArcInput}
   onarc-change={__onArcChange}
 >
-  {@render children?.()}
 </arc-range-slider>

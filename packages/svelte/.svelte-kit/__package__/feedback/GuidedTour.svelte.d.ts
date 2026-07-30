@@ -1,8 +1,6 @@
 import '@arclux/arc-ui/guided-tour';
-import type { Snippet } from 'svelte';
 interface Props {
     open?: boolean;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

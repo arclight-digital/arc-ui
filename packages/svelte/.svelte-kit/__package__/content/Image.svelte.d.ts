@@ -1,5 +1,4 @@
 import '@arclux/arc-ui/image';
-import type { Snippet } from 'svelte';
 interface Props {
     src?: string;
     alt?: string;
@@ -7,7 +6,6 @@ interface Props {
     fit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down';
     loading?: 'lazy' | 'eager';
     fallback?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

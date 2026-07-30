@@ -1,5 +1,4 @@
 import '@arclux/arc-ui/breadcrumb-menu';
-import type { Snippet } from 'svelte';
 interface Props {
     items?: Array<{
         label: string;
@@ -10,7 +9,6 @@ interface Props {
         }>;
     }>;
     label?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

@@ -1,35 +1,24 @@
 import '@arclux/arc-ui/virtual-list';
 import type { Snippet } from 'svelte';
 interface Props {
-    items?: unknown[];
+    /** The full data array. Only the visible slice is rendered. */
+    items: unknown[];
+    /** Renders one row. Called only for rows currently on screen. */
+    row: Snippet<[unknown, number]>;
+    /** Row height in pixels. Must match what actually renders. */
     itemHeight?: number;
+    /** Rows rendered above and below the viewport, to cover fast scrolling. */
     overscan?: number;
-    children?: Snippet;
+    /** Called when the visible range changes. `end` is exclusive. */
+    onrangechange?: (range: {
+        start: number;
+        end: number;
+    }) => void;
     class?: string;
     id?: string;
     style?: string;
-    title?: string;
-    role?: string;
-    slot?: string;
-    part?: string;
-    exportparts?: string;
-    dir?: string;
-    lang?: string;
-    translate?: string;
-    accesskey?: string;
-    enterkeyhint?: string;
-    inputmode?: string;
-    popover?: string;
-    contenteditable?: boolean | string;
-    tabindex?: number;
-    hidden?: boolean;
-    inert?: boolean;
-    draggable?: boolean;
-    spellcheck?: boolean;
-    autofocus?: boolean;
     [key: `data-${string}`]: unknown;
     [key: `aria-${string}`]: unknown;
-    [key: `on${string}`]: unknown;
 }
 declare const VirtualList: import("svelte").Component<Props, {}, "">;
 type VirtualList = ReturnType<typeof VirtualList>;

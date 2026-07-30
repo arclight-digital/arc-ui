@@ -1,5 +1,4 @@
 import '@arclux/arc-ui/transfer-list';
-import type { Snippet } from 'svelte';
 interface Props {
     options?: Array<{
         value: string;
@@ -12,7 +11,6 @@ interface Props {
     searchable?: boolean;
     sourceLabel?: string;
     targetLabel?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

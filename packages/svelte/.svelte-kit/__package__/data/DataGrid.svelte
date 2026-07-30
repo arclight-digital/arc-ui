@@ -11,7 +11,6 @@
     selectable?: boolean;
     virtual?: boolean;
     rowHeight?: number;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -39,7 +38,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { columns = [], rows = [], sort = $bindable([]), manualSort = false, selectable = false, virtual = false, rowHeight = 40, children, ...rest }: Props = $props();
+  let { columns = [], rows = [], sort = $bindable([]), manualSort = false, selectable = false, virtual = false, rowHeight = 40, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {
@@ -64,5 +63,4 @@
 <arc-data-grid {columns} {rows} {sort} {selectable} {virtual} bind:this={__el} {...rest}
   onarc-sort={__onArcSort}
 >
-  {@render children?.()}
 </arc-data-grid>

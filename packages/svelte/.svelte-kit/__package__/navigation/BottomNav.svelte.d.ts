@@ -1,5 +1,4 @@
 import '@arclux/arc-ui/bottom-nav';
-import type { Snippet } from 'svelte';
 interface Props {
     items?: Array<{
         label: string;
@@ -7,7 +6,6 @@ interface Props {
         value: string;
     }>;
     value?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

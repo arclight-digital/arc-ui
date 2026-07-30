@@ -4,7 +4,6 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -32,9 +31,8 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { children, ...rest }: Props = $props();
+  let { ...rest }: Props = $props();
 </script>
 
 <arc-menu-divider {...rest}>
-  {@render children?.()}
 </arc-menu-divider>

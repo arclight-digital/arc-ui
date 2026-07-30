@@ -1,11 +1,9 @@
 import '@arclux/arc-ui/scroll-indicator';
-import type { Snippet } from 'svelte';
 interface Props {
     target?: string;
     position?: 'top' | 'bottom';
     size?: 'sm' | 'md' | 'lg';
     color?: 'accent' | 'gradient';
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

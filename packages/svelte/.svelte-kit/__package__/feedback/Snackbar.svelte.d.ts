@@ -1,9 +1,7 @@
 import '@arclux/arc-ui/snackbar';
-import type { Snippet } from 'svelte';
 interface Props {
     position?: 'bottom-center' | 'bottom-left' | 'bottom-right';
     duration?: number;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

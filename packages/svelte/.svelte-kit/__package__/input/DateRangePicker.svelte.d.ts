@@ -1,6 +1,7 @@
 import '@arclux/arc-ui/date-range-picker';
-import type { Snippet } from 'svelte';
 interface Props {
+    locale?: string;
+    firstDayOfWeek?: number;
     start?: string;
     end?: string;
     name?: string;
@@ -15,7 +16,7 @@ interface Props {
     disabled?: boolean;
     required?: boolean;
     label?: string;
-    children?: Snippet;
+    open?: boolean;
     class?: string;
     id?: string;
     style?: string;

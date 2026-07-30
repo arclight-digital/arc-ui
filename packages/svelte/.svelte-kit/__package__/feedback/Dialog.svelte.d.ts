@@ -1,13 +1,11 @@
 import '@arclux/arc-ui/dialog';
-import type { Snippet } from 'svelte';
 interface Props {
     open?: boolean;
     heading?: string;
     message?: string;
     confirmLabel?: string;
     cancelLabel?: string;
-    variant?: 'default' | 'danger';
-    children?: Snippet;
+    variant?: 'default' | 'error';
     class?: string;
     id?: string;
     style?: string;

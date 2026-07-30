@@ -1,9 +1,7 @@
 import '@arclux/arc-ui/spinner';
-import type { Snippet } from 'svelte';
 interface Props {
     size?: 'sm' | 'md' | 'lg';
     variant?: 'primary' | 'secondary' | 'white';
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;

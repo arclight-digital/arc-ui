@@ -1,11 +1,9 @@
 import '@arclux/arc-ui/table';
-import type { Snippet } from 'svelte';
 interface Props {
     columns?: string[];
     rows?: string[][];
     striped?: boolean;
-    compact?: boolean;
-    children?: Snippet;
+    density?: 'default' | 'compact';
     class?: string;
     id?: string;
     style?: string;
