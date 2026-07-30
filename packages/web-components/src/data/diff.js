@@ -5,8 +5,8 @@ import { tokenStyles } from '../shared-styles.js';
  * Line-based text diff viewer with inline and side-by-side display modes.
  *
  * @tag arc-diff
- * @prop {string} before - The original text to compare (split by newlines).
- * @prop {string} after - The modified text to compare (split by newlines).
+ * @prop {string} original - The original text to compare (split by newlines).
+ * @prop {string} revised - The modified text to compare (split by newlines).
  * @prop {'inline' | 'side-by-side'} mode - Display mode: 'inline' renders changes in a single column, 'side-by-side' renders two panes in a grid.
  * @csspart line
  * @csspart line-number
@@ -15,8 +15,8 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcDiff extends LitElement {
   static properties = {
-    before: { type: String },
-    after:  { type: String },
+    original: { type: String },
+    revised:  { type: String },
     mode:   { type: String, reflect: true },
   };
 
@@ -103,8 +103,8 @@ export class ArcDiff extends LitElement {
 
   constructor() {
     super();
-    this.before = '';
-    this.after = '';
+    this.original = '';
+    this.revised = '';
     this.mode = 'inline';
   }
 
@@ -156,8 +156,8 @@ export class ArcDiff extends LitElement {
   }
 
   render() {
-    const beforeLines = (this.before || '').split('\n');
-    const afterLines = (this.after || '').split('\n');
+    const beforeLines = (this.original || '').split('\n');
+    const afterLines = (this.revised || '').split('\n');
     const ops = this._computeDiff(beforeLines, afterLines);
 
     if (this.mode === 'side-by-side') {

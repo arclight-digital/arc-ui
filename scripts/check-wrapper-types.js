@@ -22,37 +22,37 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, '..');
 
 /**
- * `file::TScode` → reason. All three are component props that shadow native
- * DOM members, so the element class is structurally not an HTMLElement and
- * @lit/react's createComponent rejects it. The fix is renaming the props —
- * a breaking change batched for v3.
+ * `file::TScode` → reason. Empty since v3 renamed the three props that
+ * shadowed native DOM members (diff.original/revised, nav-item.subItems,
+ * gradient-text.animated) — a prop shadowing an HTMLElement member makes the
+ * element structurally not an HTMLElement, and @lit/react's createComponent
+ * rejects the class. Add entries only for defects too breaking to fix now,
+ * with the plan.
  */
 const KNOWN_ERRORS = new Map([
-  ['packages/react/src/data/Diff.ts::TS2322',
-    'arc-diff props `before`/`after` shadow ChildNode.before()/after() — rename in v3'],
-  ['packages/react/src/navigation/NavItem.ts::TS2322',
-    'arc-nav-item getter `children` shadows ParentNode.children (navigation-menu depends on the Array it returns) — rename in v3'],
-  ['packages/react/src/typography/GradientText.ts::TS2322',
-    'arc-gradient-text prop `animate` shadows Element.animate() — rename in v3'],
+  // none
 ]);
 
-const TSC_ARGS = [
-  '--noEmit', '--skipLibCheck',
-  '--moduleResolution', 'bundler',
-  '--module', 'esnext',
-  '--target', 'es2022',
-  '--jsx', 'react-jsx',
-  'packages/react/src/index.ts',
-  'packages/web-components/types/react-jsx.d.ts',
+const TSC_RUNS = [
+  // The built packages compile with their own project configs — the same
+  // invocation `pnpm build` uses, so the check can't drift from the build.
+  ['-p', 'packages/react/tsconfig.json', '--noEmit'],
+  ['-p', 'packages/preact/tsconfig.json', '--noEmit'],
+  // The opt-in JSX augmentation ships from web-components and has no project.
+  ['--noEmit', '--skipLibCheck', '--moduleResolution', 'bundler',
+    '--module', 'esnext', '--target', 'es2022', '--jsx', 'react-jsx',
+    'packages/web-components/types/react-jsx.d.ts'],
 ];
 
 let output = '';
-try {
-  output = execFileSync(resolve(root, 'node_modules/.bin/tsc'), TSC_ARGS, {
-    cwd: root, encoding: 'utf-8',
-  });
-} catch (err) {
-  output = `${err.stdout ?? ''}${err.stderr ?? ''}`;
+for (const args of TSC_RUNS) {
+  try {
+    output += execFileSync(resolve(root, 'node_modules/.bin/tsc'), args, {
+      cwd: root, encoding: 'utf-8',
+    });
+  } catch (err) {
+    output += `${err.stdout ?? ''}${err.stderr ?? ''}`;
+  }
 }
 
 const seen = new Set();
@@ -83,4 +83,4 @@ if (unexpected > 0 || stale > 0) {
   process.exit(1);
 }
 
-console.log(`✓ React wrappers + react-jsx.d.ts compile (${KNOWN_ERRORS.size} known v3-batched errors baselined)`);
+console.log(`✓ react + preact wrappers and react-jsx.d.ts compile (${KNOWN_ERRORS.size} baselined)`);

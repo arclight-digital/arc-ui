@@ -48,8 +48,8 @@ Diff is designed for code review panels, changelog overlays, configuration compa
   },
 
   previewHtml: `<arc-diff
-  before="const name = 'World';\\nconsole.log('Hello');\\nreturn name;"
-  after="const name = 'ARC UI';\\nconsole.log('Hello');\\nconsole.log('Welcome');\\nreturn name;">
+  original="const name = 'World';\\nconsole.log('Hello');\\nreturn name;"
+  revised="const name = 'ARC UI';\\nconsole.log('Hello');\\nconsole.log('Welcome');\\nreturn name;">
 </arc-diff>`,
 
   tabs: [
@@ -57,10 +57,10 @@ Diff is designed for code review panels, changelog overlays, configuration compa
       label: 'Web Component',
       lang: 'html',
       code: `<arc-diff
-  before="const name = 'World';
+  original="const name = 'World';
 console.log('Hello');
 return name;"
-  after="const name = 'ARC UI';
+  revised="const name = 'ARC UI';
 console.log('Hello');
 console.log('Welcome');
 return name;">
@@ -68,10 +68,10 @@ return name;">
 
 <!-- Side-by-side mode -->
 <arc-diff mode="side-by-side"
-  before="line one
+  original="line one
 line two
 line three"
-  after="line one
+  revised="line one
 line 2
 line three
 line four">
@@ -86,10 +86,10 @@ export default function Example() {
   return (
     <>
       <Diff
-        before={\`const name = 'World';
+        original={\`const name = 'World';
       console.log('Hello');
       return name;\`}
-        after={\`const name = 'ARC UI';
+        revised={\`const name = 'ARC UI';
       console.log('Hello');
       console.log('Welcome');
       return name;\`}
@@ -97,8 +97,8 @@ export default function Example() {
 
       {/* Side-by-side mode */}
       <Diff mode="side-by-side"
-        before="line one\\nline two\\nline three"
-        after="line one\\nline 2\\nline three\\nline four"
+        original="line one\\nline two\\nline three"
+        revised="line one\\nline 2\\nline three\\nline four"
       />
     </>
   );
@@ -121,8 +121,8 @@ return name;\`;
 </script>
 
 <template>
-  <Diff :before="original" :after="modified" />
-  <Diff mode="side-by-side" :before="original" :after="modified" />
+  <Diff :original="original" :revised="modified" />
+  <Diff mode="side-by-side" :original="original" :revised="modified" />
 </template>`,
     },
     {
@@ -141,8 +141,8 @@ console.log('Welcome');
 return name;\`;
 </script>
 
-<Diff before={original} after={modified} />
-<Diff mode="side-by-side" before={original} after={modified} />`,
+<Diff original={original} revised={modified} />
+<Diff mode="side-by-side" original={original} revised={modified} />`,
     },
     {
       label: 'Angular',
@@ -188,8 +188,8 @@ console.log('Hello');
 console.log('Welcome');
 return name;\`;
 
-<Diff before={original} after={modified} />
-<Diff mode="side-by-side" before={original} after={modified} />`,
+<Diff original={original} revised={modified} />
+<Diff mode="side-by-side" original={original} revised={modified} />`,
     },
     {
       label: 'Preact',
@@ -205,8 +205,8 @@ console.log('Hello');
 console.log('Welcome');
 return name;\`;
 
-<Diff before={original} after={modified} />
-<Diff mode="side-by-side" before={original} after={modified} />`,
+<Diff original={original} revised={modified} />
+<Diff mode="side-by-side" original={original} revised={modified} />`,
     },
   ],
 

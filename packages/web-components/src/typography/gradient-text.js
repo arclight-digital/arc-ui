@@ -7,7 +7,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @tag arc-gradient-text
  * @prop {'accent' | 'display' | 'sunset' | 'ocean' | 'custom'} variant - Predefined gradient variant to apply
  * @prop {string} gradient - Custom CSS gradient string, used when variant is set to custom
- * @prop {boolean} animate - Animate the gradient with a shifting background-position cycle
+ * @prop {boolean} animated - Animate the gradient with a shifting background-position cycle
  * @slot - Default content.
  * @csspart text
  */
@@ -15,7 +15,7 @@ export class ArcGradientText extends LitElement {
   static properties = {
     variant:  { type: String, reflect: true },
     gradient: { type: String },
-    animate:  { type: Boolean, reflect: true },
+    animated: { type: Boolean, reflect: true },
   };
 
   static styles = [
@@ -64,7 +64,7 @@ export class ArcGradientText extends LitElement {
 
       /* --- Animation --- */
 
-      :host([animate]) .gradient-text {
+      :host([animated]) .gradient-text {
         background-size: 200% 200%;
         animation: gradient-shift 4s ease infinite;
       }
@@ -76,7 +76,7 @@ export class ArcGradientText extends LitElement {
       }
 
       @media (prefers-reduced-motion: reduce) {
-        :host([animate]) .gradient-text {
+        :host([animated]) .gradient-text {
           animation: none;
           background-size: 100% 100%;
         }
@@ -88,7 +88,7 @@ export class ArcGradientText extends LitElement {
     super();
     this.variant = 'accent';
     this.gradient = '';
-    this.animate = false;
+    this.animated = false;
   }
 
   render() {

@@ -12,7 +12,7 @@ export const gradientText: ComponentDef = {
 
 The component is fully inline and inherits the parent's font size, weight, and line height, so it can be dropped into any typographic context — a heading, a paragraph, a button label — without breaking layout. A subtle drop-shadow glow is applied by default using \`var(--accent-primary-rgb)\` for a polished look.
 
-Set \`animate\` to enable a smooth background-position cycle that shifts the gradient back and forth. The animation respects \`prefers-reduced-motion\` and disables itself automatically for users who prefer no motion. The \`text\` CSS part allows external overrides for filters, opacity, or additional styling.`,
+Set \`animated\` to enable a smooth background-position cycle that shifts the gradient back and forth. The animation respects \`prefers-reduced-motion\` and disables itself automatically for users who prefer no motion. The \`text\` CSS part allows external overrides for filters, opacity, or additional styling.`,
 
   features: [
     'Five built-in gradient variants: accent, display, sunset, ocean, and custom',
@@ -45,7 +45,7 @@ Set \`animate\` to enable a smooth background-position cycle that shifts the gra
   <arc-gradient-text variant="display">Display Gradient</arc-gradient-text>
   <arc-gradient-text variant="sunset">Sunset Gradient</arc-gradient-text>
   <arc-gradient-text variant="ocean">Ocean Gradient</arc-gradient-text>
-  <arc-gradient-text variant="accent" animate>Animated Gradient</arc-gradient-text>
+  <arc-gradient-text variant="accent" animated>Animated Gradient</arc-gradient-text>
 </div>`,
 
   tabs: [
@@ -69,7 +69,7 @@ Set \`animate\` to enable a smooth background-position cycle that shifts the gra
 </arc-gradient-text>
 
 <!-- Animated -->
-<arc-gradient-text variant="accent" animate>Animated Gradient</arc-gradient-text>`,
+<arc-gradient-text variant="accent" animated>Animated Gradient</arc-gradient-text>`,
     },
     {
       label: 'React',
@@ -79,7 +79,7 @@ Set \`animate\` to enable a smooth background-position cycle that shifts the gra
 function HeroHeading() {
   return (
     <h1 style={{ fontSize: '48px', fontWeight: 700 }}>
-      <GradientText variant="accent" animate>
+      <GradientText variant="accent" animated>
         Build Something Beautiful
       </GradientText>
     </h1>
@@ -100,7 +100,7 @@ import { GradientText } from '@arclux/arc-ui-vue';
 
 <template>
   <h1 style="font-size: 48px; font-weight: 700">
-    <GradientText variant="accent" animate>
+    <GradientText variant="accent" animated>
       Build Something Beautiful
     </GradientText>
   </h1>
@@ -114,7 +114,7 @@ import { GradientText } from '@arclux/arc-ui-vue';
 </script>
 
 <h1 style="font-size: 48px; font-weight: 700">
-  <GradientText variant="accent" animate>
+  <GradientText variant="accent" animated>
     Build Something Beautiful
   </GradientText>
 </h1>`,
@@ -129,7 +129,7 @@ import { GradientText } from '@arclux/arc-ui-angular';
   imports: [GradientText],
   template: \`
     <h1 style="font-size: 48px; font-weight: 700">
-      <arc-gradient-text variant="accent" animate>
+      <arc-gradient-text variant="accent" animated>
         Build Something Beautiful
       </arc-gradient-text>
     </h1>
@@ -145,7 +145,7 @@ export class HeroComponent {}`,
 export default function Example() {
   return (
     <h1 style={{ 'font-size': '48px', 'font-weight': 700 }}>
-      <GradientText variant="accent" animate>
+      <GradientText variant="accent" animated>
         Build Something Beautiful
       </GradientText>
     </h1>
@@ -160,7 +160,7 @@ export default function Example() {
 export default function Example() {
   return (
     <h1 style={{ fontSize: '48px', fontWeight: 700 }}>
-      <GradientText variant="accent" animate>
+      <GradientText variant="accent" animated>
         Build Something Beautiful
       </GradientText>
     </h1>

@@ -56,13 +56,13 @@ export class ArcNavItem extends LitElement {
       .join(' ');
   }
 
-  /** Nested arc-nav-item children for dropdown menus */
-  get children() {
+  /** Nested arc-nav-item children for dropdown menus. */
+  get subItems() {
     return [...this.querySelectorAll(':scope > arc-nav-item')];
   }
 
   get hasChildren() {
-    return this.children.length > 0;
+    return this.subItems.length > 0;
   }
 
   render() {

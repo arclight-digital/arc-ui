@@ -778,7 +778,7 @@ export class ArcNavigationMenu extends LitElement {
                   role="menu"
                   part="dropdown"
                 >
-                  ${item.children.map(child => html`
+                  ${item.subItems.map(child => html`
                     <a
                       class="nav__dropdown-item"
                       href=${child.resolvedHref}
@@ -838,7 +838,7 @@ export class ArcNavigationMenu extends LitElement {
                   </button>
                   <div class="mobile-children ${isExpanded ? 'mobile-children--open' : ''}">
                     <div class="mobile-children__inner">
-                      ${item.children.map(child => html`
+                      ${item.subItems.map(child => html`
                         <a
                           class="mobile-child"
                           href=${child.resolvedHref}
