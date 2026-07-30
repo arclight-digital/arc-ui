@@ -6,6 +6,8 @@ import { tokenStyles } from '../shared-styles.js';
  * Trigger is a primary icon-button.
  *
  * @tag arc-speed-dial
+ * @requires arc-icon
+ * @requires arc-icon-button
  * @prop {boolean} open - Whether the secondary actions are currently visible.
  * @prop {'up' | 'down' | 'left' | 'right'} direction - The direction in which child actions fan out from the trigger.
  * @prop {'bottom-right' | 'bottom-left'} position - Fixed viewport corner where the speed dial is anchored.

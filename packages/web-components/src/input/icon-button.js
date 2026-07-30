@@ -9,6 +9,7 @@ import '../content/icon.js';
  * primary variants.
  *
  * @tag arc-icon-button
+ * @requires arc-icon
  * @prop {string} name - Name of the arc-icon to render. When empty, the default slot is used for custom icon content.
  * @prop {string} text - Optional text label displayed next to the icon. When provided, the button expands from a square to a wider labeled button with uppercase styling.
  * @prop {'ghost' | 'secondary' | 'primary'} variant - Visual style variant. Ghost is transparent, secondary has a border with glow, primary has a solid accent-primary fill.

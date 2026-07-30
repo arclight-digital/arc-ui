@@ -9,6 +9,7 @@ import '../content/icon.js';
  * Spotlight-style command palette with search and keyboard shortcuts.
  *
  * @tag arc-command-palette
+ * @requires arc-icon
  * @requires arc-command-item
  * @requires arc-command-group
  * @prop {boolean} open - Controls whether the palette is visible. When set to true, the dialog animates in, the search input auto-focuses, and body scroll is locked. Set to false to close.

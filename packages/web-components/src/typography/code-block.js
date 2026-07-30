@@ -90,6 +90,8 @@ async function getHL(lang) {
  * Syntax-highlighted code display with optional filename and copy button.
  *
  * @tag arc-code-block
+ * @requires arc-status-bar
+ * @requires arc-copy-button
  * @prop {'default' | 'window' | 'basic'} variant - Visual variant. `default` shows the standard layout with optional filename header and status bar. `window` adds a macOS-style title bar with colored orbs and centered filename. `basic` strips all chrome for a compact, minimal display.
  * @prop {string} language - Programming language identifier (e.g. `js`, `css`, `html`). Displayed in uppercase in the header bar.
  * @prop {string} filename - Optional filename displayed in the header in monospace font. When empty, the header shows only the language.

@@ -6,6 +6,8 @@ import { tokenStyles } from '../shared-styles.js';
  * unsaved changes, session expiry, and discard decisions.
  *
  * @tag arc-dialog
+ * @requires arc-modal
+ * @requires arc-button
  * @prop {boolean} open - Whether the dialog is visible
  * @prop {string} heading - Dialog title text
  * @prop {string} message - Dialog body message

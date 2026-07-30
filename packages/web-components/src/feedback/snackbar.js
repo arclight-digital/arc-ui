@@ -6,6 +6,8 @@ import { tokenStyles } from '../shared-styles.js';
  * surface-base background with accent-colored action link. Slides up, auto-dismisses.
  *
  * @tag arc-snackbar
+ * @requires arc-button
+ * @requires arc-icon-button
  * @prop {'bottom-center' | 'bottom-left' | 'bottom-right'} position - Anchors the snackbar to a bottom edge of the viewport. Bottom-center is the conventional position for material-style snackbars.
  * @prop {number} duration - Time in milliseconds before the snackbar auto-dismisses. Can be overridden per-show via the duration option. Set to 0 to persist until manually dismissed.
  * @fires arc-dismiss - Fired when the snackbar is dismissed, either by auto-timeout or user interaction

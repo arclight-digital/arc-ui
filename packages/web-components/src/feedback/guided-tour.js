@@ -6,6 +6,7 @@ import { tokenStyles } from '../shared-styles.js';
  * counter uses accent-primary gradient text.
  *
  * @tag arc-guided-tour
+ * @requires arc-button
  * @prop steps - Array of step definitions. Each step specifies a CSS selector for the target element, a title for the popover heading, and content for the popover body.
  * @prop {number} active - Read-only property reflecting the zero-based index of the currently active step.
  * @prop {boolean} open - Controls whether the tour is active. Set to true to start the tour from the first step.

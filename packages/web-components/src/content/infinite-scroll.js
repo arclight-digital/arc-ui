@@ -7,6 +7,7 @@ import '../content/spinner.js';
  * bottom, with built-in loading spinner and end-of-list state.
  *
  * @tag arc-infinite-scroll
+ * @requires arc-spinner
  * @prop {number} threshold - Distance in pixels from the bottom of the content at which `arc-load-more` fires. Controls how eagerly new data is requested.
  * @prop {boolean} loading - When true, displays a spinner in the footer and suppresses additional `arc-load-more` events.
  * @prop {boolean} finished - When true, disconnects the observer and displays "No more items" text in the footer.

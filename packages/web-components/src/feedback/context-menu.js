@@ -10,6 +10,8 @@ import '../content/separator.js';
  * Right-click context menu with keyboard shortcuts.
  *
  * @tag arc-context-menu
+ * @requires arc-separator
+ * @requires arc-icon
  * @prop {boolean} open - Controls the visibility of the context menu. Set to true when the contextmenu event fires; set to false when the user selects an item, clicks the backdrop, or presses Escape.
  * @fires {CustomEvent<void>} arc-open - Fired when the context menu opens
  * @fires {CustomEvent<void>} arc-close - Fired when the context menu closes

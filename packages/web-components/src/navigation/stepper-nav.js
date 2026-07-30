@@ -6,6 +6,7 @@ import { tokenStyles } from '../shared-styles.js';
  * gradient lines with interactive routing.
  *
  * @tag arc-stepper-nav
+ * @requires arc-button
  * @prop {Array<string>} steps - Array of step labels displayed along the progress track.
  * @prop {number} active - Zero-based index of the currently active step.
  * @prop {boolean} linear - When true, prevents jumping to future steps — the user must complete each step sequentially.

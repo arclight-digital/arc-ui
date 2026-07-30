@@ -7,6 +7,7 @@ import '../data/tag.js';
  * state highlighted in accent-primary.
  *
  * @tag arc-chip
+ * @requires arc-tag
  * @prop {boolean} selected - Whether the chip is currently selected. Reflected as an attribute and toggled on click or keypress.
  * @prop {boolean} disabled - Disables interaction, reducing opacity to 40% and blocking pointer events.
  * @prop {string} value - Machine-readable identifier for this chip, included in the `arc-change` event detail.

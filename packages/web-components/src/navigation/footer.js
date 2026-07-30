@@ -7,6 +7,7 @@ import '../layout/container.register.js';
  * for a logo, navigational link groups, social icons, and copyright information.
  *
  * @tag arc-footer
+ * @requires arc-container
  * @prop {boolean} compact - Reduces internal padding and spacing throughout the footer. Use this in dashboard layouts or admin panels where vertical space is limited and the footer should feel lightweight rather than expansive.
  * @prop {boolean} border - Renders a subtle top border on the footer to visually separate it from the page content above. Enabled by default; disable it only when the footer sits against a dark background where the border would be redundant.
  * @prop {string} contained - Sets a max-width containment on the footer content. Accepts any CSS length value or named size token.

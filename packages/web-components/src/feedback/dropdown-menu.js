@@ -10,6 +10,7 @@ import '../content/separator.js';
  * Menu dropdown triggered by a button with keyboard navigation.
  *
  * @tag arc-dropdown-menu
+ * @requires arc-separator
  * @prop {boolean} open - Controls whether the menu panel is visible. Toggled by clicking the trigger. Set to false when the user selects an item, clicks outside, or presses Escape.
  * @fires {CustomEvent<void>} arc-close - Fired when the dropdown closes
  * @fires arc-select - Fired when a menu item is selected

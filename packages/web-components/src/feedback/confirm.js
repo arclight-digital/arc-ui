@@ -6,6 +6,8 @@ import { tokenStyles } from '../shared-styles.js';
  * promise. Same visual treatment as dialog.
  *
  * @tag arc-confirm
+ * @requires arc-modal
+ * @requires arc-button
  * @prop {boolean} open - Controls whether the confirmation dialog is visible. For declarative usage; the imperative API manages this automatically.
  * @prop {string} heading - The heading text displayed at the top of the confirmation dialog.
  * @prop {string} message - The body message explaining what the user is confirming. Used as the fallback for the default slot, so it is the simplest way to set the body and the only one available to the imperative `ArcConfirm.open()` API.

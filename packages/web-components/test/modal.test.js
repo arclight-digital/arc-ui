@@ -23,7 +23,13 @@ describe('arc-modal focus management', () => {
     await tick();
     const active = deepActive();
     expect(active).to.not.equal(document.body);
-    const insideModal = el.contains(active) || el.shadowRoot.contains(active);
+    // Containment must follow the composed tree: since arc-icon-button became
+    // a registered dependency of the modal, first focus lands on the close
+    // button *inside its shadow root*, which neither contains() can see.
+    let insideModal = false;
+    for (let node = active; node; node = node.getRootNode().host ?? null) {
+      if (el.contains(node) || el.shadowRoot.contains(node)) { insideModal = true; break; }
+    }
     expect(insideModal, `active element <${active.tagName}> should be inside the modal`).to.equal(true);
   });
 

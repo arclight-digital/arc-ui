@@ -7,6 +7,7 @@ import { OverlayMixin } from '../shared/overlay-mixin.js';
  * blurred backdrop, header, scrollable body, and footer slot.
  *
  * @tag arc-sheet
+ * @requires arc-icon-button
  * @prop {boolean} open - Controls whether the sheet is visible. Reflected as an attribute and toggleable programmatically.
  * @prop {'bottom' | 'right'} side - Which edge the panel slides in from. Bottom sheets have a max-height of 80vh; right sheets are 400px wide.
  * @prop {string} heading - Text displayed in the header row. Also used as the `aria-label` for the dialog panel.

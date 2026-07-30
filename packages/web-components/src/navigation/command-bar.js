@@ -6,6 +6,7 @@ import { tokenStyles } from '../shared-styles.js';
  * focus with glow ring.
  *
  * @tag arc-command-bar
+ * @requires arc-icon
  * @prop {string} placeholder - Placeholder text displayed when the input is empty. Use it to communicate the scope of the search.
  * @prop {string} value - The current value of the input. Set externally to control the input state programmatically.
  * @prop {string} icon - Icon name displayed before the input. Accepts any Phosphor icon name.
