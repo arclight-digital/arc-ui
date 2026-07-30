@@ -32,18 +32,9 @@ const root = path.resolve(__dirname, '..');
 const WC = path.join(root, 'packages/web-components');
 const SRC = path.join(WC, 'src');
 
-/**
- * Components that cannot be server-rendered *by our own design*, with the
- * reason. This list should stay near-empty; anything on it is content a
- * consumer cannot get into their initial payload.
- */
-const CLIENT_ONLY = {
-  'arc-markdown':
-    'Its sanitizer is DOMParser-based. Rendering unsanitized HTML on the server '
-    + 'is not an option, and rendering a different shape (escaped text) would '
-    + 'break hydration, which reconnects to the server DOM rather than '
-    + 're-rendering it. Needs a DOM-less sanitizer to lift.',
-};
+// Shared with the docs site's arc-dsd build pass, which skips registering these
+// so that lit-ssr leaves them alone. See scripts/ssr-client-only.js.
+import { CLIENT_ONLY } from './ssr-client-only.js';
 
 /**
  * Failures attributable to @lit-labs/ssr rather than to a component.

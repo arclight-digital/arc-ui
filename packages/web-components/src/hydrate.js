@@ -30,3 +30,31 @@
  * the payload.
  */
 import '@lit-labs/ssr-client/lit-element-hydrate-support.js';
+import { LitElement } from 'lit';
+
+/**
+ * Apply the hook ourselves if lit-element got there first.
+ *
+ * That module does not patch anything directly — it assigns
+ * `globalThis.litElementHydrateSupport`, which lit-element reads once, while
+ * *its own* module is evaluating. Import this file after lit-element has
+ * already run and the hook is set to a function nobody will ever call: no
+ * error, no warning, and every component renders a second copy of its template
+ * above the server's markup instead of adopting it. Two default slots then
+ * exist and only the first is assigned, so server-rendered content silently
+ * loses its slotted children.
+ *
+ * "Just import it first" is the documented advice and it is not sufficient.
+ * Module evaluation order is the bundler's to decide, and any dependency that
+ * reaches lit-element before this file wins — which is exactly what happened on
+ * arcui.dev, where the hook was set correctly and did nothing.
+ *
+ * The hook redefines `observedAttributes` as an *own* property of LitElement to
+ * append `defer-hydration`; unpatched, the accessor is inherited from
+ * ReactiveElement. That is the hook's own fingerprint, so this detects the real
+ * thing rather than a flag we set beside it — and unlike reading the getter, it
+ * does not force the class to finalize.
+ */
+if (!Object.prototype.hasOwnProperty.call(LitElement, 'observedAttributes')) {
+  globalThis.litElementHydrateSupport({ LitElement });
+}

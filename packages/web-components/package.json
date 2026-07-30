@@ -867,7 +867,8 @@
   },
   "sideEffects": [
     "./src/**/*.register.js",
-    "./src/register.js"
+    "./src/register.js",
+    "./src/hydrate.js"
   ],
   "dependencies": {
     "@lit-labs/ssr-client": "^1.1.8",

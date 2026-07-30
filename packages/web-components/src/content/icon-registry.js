@@ -9,6 +9,40 @@ let _libraryName = 'phosphor';
 const _resolved = new Map();
 
 /**
+ * The id of a JSON payload a server-side build may inline into the page:
+ * `{ "check": "<svg…>", … }` for exactly the icons that page renders.
+ *
+ * Without it, a server-rendered icon hydrates wrong. The server resolves the
+ * glyph and paints it; the client's first render happens before any dynamic
+ * import can finish, finds nothing in the cache, and returns the empty-slot
+ * fallback instead — a different tree from the one hydration is adopting.
+ * Reading a payload the page already carries makes the two identical, and
+ * removes the icon round-trips from load as a side effect.
+ *
+ * Read lazily rather than at module load, so it does not matter whether the
+ * payload tag comes before or after the bundle that registers the components.
+ */
+const ICON_PAYLOAD_ID = 'arc-icon-payload';
+let _payloadRead = false;
+
+function readInlinePayload() {
+  if (_payloadRead || typeof document === 'undefined') return;
+  _payloadRead = true;
+  const el = document.getElementById(ICON_PAYLOAD_ID);
+  if (!el) return;
+  try {
+    const icons = JSON.parse(el.textContent);
+    // Anything registered by hand wins: a consumer overriding an icon should
+    // not be undone by the build's snapshot of what the page happened to use.
+    for (const [name, svg] of Object.entries(icons)) {
+      if (!(name in _custom)) _custom[name] = svg;
+    }
+  } catch {
+    // A malformed payload should cost the icons their fast path, nothing more.
+  }
+}
+
+/**
  * Cross-library icon aliases.
  *
  * Phosphor and Lucide disagree about what common glyphs are called, and no
@@ -102,6 +136,7 @@ export const iconRegistry = {
 
   /** Look up an icon by kebab-case name. Returns a Promise<string|null>. */
   async get(name) {
+    readInlinePayload();
     // 1. Check custom icons first (instant)
     if (_custom[name]) return _custom[name];
     // 2. Load resolver, then dynamic-import the single icon file
@@ -135,6 +170,7 @@ export const iconRegistry = {
    */
   getSync(name) {
     if (!name) return null;
+    readInlinePayload();
     if (_custom[name]) return _custom[name];
     return _resolved.get(`${_libraryName}:${name}`) ?? null;
   },
