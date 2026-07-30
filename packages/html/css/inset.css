@@ -16,7 +16,7 @@
       .arc-inset[bleed] { margin: calc(-1 * var(--_pad)); }
       .arc-inset[bleed][data-space="xs"] { --_pad: var(--space-xs); }
       .arc-inset[bleed][data-space="sm"] { --_pad: var(--space-sm); }
-      .arc-inset[bleed]:not([data-space]),
+      .arc-inset[bleed]:not([data-data-space="xs"]):not([data-data-space="sm"]):not([data-data-space="lg"]):not([data-data-space="xl"]):not([data-data-space="2xl"]),
       .arc-inset[bleed][data-space="md"] { --_pad: var(--space-md); }
       .arc-inset[bleed][data-space="lg"] { --_pad: var(--space-lg); }
       .arc-inset[bleed][data-space="xl"] { --_pad: var(--space-xl); }

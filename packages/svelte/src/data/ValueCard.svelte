@@ -7,7 +7,8 @@
     icon?: string;
     heading?: string;
     description?: string;
-    children?: Snippet;
+    /** <slot name="icon"> — put slot="icon" on the element inside. */
+    icon_?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -35,9 +36,9 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { icon = '', heading = '', description = '', children, ...rest }: Props = $props();
+  let { icon = '', heading = '', description = '', icon_, ...rest }: Props = $props();
 </script>
 
 <arc-value-card {icon} {heading} {description} {...rest}>
-  {@render children?.()}
+  {@render icon_?.()}
 </arc-value-card>

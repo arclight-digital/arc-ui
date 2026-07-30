@@ -8,7 +8,6 @@
     width?: string;
     height?: string;
     count?: number;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -36,9 +35,8 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { variant = 'text', width = '', height = '', count = 1, children, ...rest }: Props = $props();
+  let { variant = 'text', width = '', height = '', count = 1, ...rest }: Props = $props();
 </script>
 
 <arc-skeleton {variant} {width} {height} {count} {...rest}>
-  {@render children?.()}
 </arc-skeleton>

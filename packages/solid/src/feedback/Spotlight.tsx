@@ -8,7 +8,6 @@ export interface SpotlightProps {
   active?: boolean;
   padding?: number;
   onArcDismiss?: (e: CustomEvent) => void;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -37,10 +36,9 @@ export interface SpotlightProps {
 }
 
 export const Spotlight: Component<SpotlightProps> = (props) => {
-  const [local, rest] = splitProps(props, ['target', 'active', 'padding', 'onArcDismiss', 'children']);
+  const [local, rest] = splitProps(props, ['target', 'active', 'padding', 'onArcDismiss']);
   return (
     <arc-spotlight target={local.target} active={local.active} padding={local.padding} on:arc-dismiss={local.onArcDismiss} {...rest}>
-      {local.children}
     </arc-spotlight>
   );
 };

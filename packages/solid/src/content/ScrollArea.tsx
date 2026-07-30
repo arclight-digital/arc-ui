@@ -37,7 +37,7 @@ export interface ScrollAreaProps {
 export const ScrollArea: Component<ScrollAreaProps> = (props) => {
   const [local, rest] = splitProps(props, ['maxHeight', 'orientation', 'children']);
   return (
-    <arc-scroll-area maxHeight={local.maxHeight} orientation={local.orientation} {...rest}>
+    <arc-scroll-area prop:maxHeight={local.maxHeight} orientation={local.orientation} {...rest}>
       {local.children}
     </arc-scroll-area>
   );

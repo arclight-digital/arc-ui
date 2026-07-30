@@ -7,6 +7,10 @@
     open?: boolean;
     side?: 'bottom' | 'right';
     heading?: string;
+    /** <slot name="header"> — put slot="header" on the element inside. */
+    header?: Snippet;
+    /** <slot name="footer"> — put slot="footer" on the element inside. */
+    footer?: Snippet;
     children?: Snippet;
     class?: string;
     id?: string;
@@ -35,9 +39,11 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { open = false, side = 'bottom', heading = '', children, ...rest }: Props = $props();
+  let { open = false, side = 'bottom', heading = '', header, footer, children, ...rest }: Props = $props();
 </script>
 
 <arc-sheet {open} {side} {heading} {...rest}>
+  {@render header?.()}
+  {@render footer?.()}
   {@render children?.()}
 </arc-sheet>

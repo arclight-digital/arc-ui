@@ -9,6 +9,10 @@
     disabled?: boolean;
     error?: string;
     variant?: 'default' | 'card';
+    /** <slot name="legend"> — put slot="legend" on the element inside. */
+    legend_?: Snippet;
+    /** <slot name="actions"> — put slot="actions" on the element inside. */
+    actions?: Snippet;
     children?: Snippet;
     class?: string;
     id?: string;
@@ -37,9 +41,11 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { legend = '', description = '', disabled = false, error = '', variant = 'default', children, ...rest }: Props = $props();
+  let { legend = '', description = '', disabled = false, error = '', variant = 'default', legend_, actions, children, ...rest }: Props = $props();
 </script>
 
 <arc-fieldset {legend} {description} {disabled} {error} {variant} {...rest}>
+  {@render legend_?.()}
+  {@render actions?.()}
   {@render children?.()}
 </arc-fieldset>

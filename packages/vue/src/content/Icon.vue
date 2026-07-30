@@ -21,6 +21,5 @@ const props = withDefaults(defineProps<{
     :size="props.size"
     :label="props.label"
   >
-    <slot />
   </arc-icon>
 </template>

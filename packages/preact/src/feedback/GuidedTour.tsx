@@ -9,7 +9,6 @@ export interface GuidedTourProps {
   onArcChange?: (e: CustomEvent) => void;
   onArcComplete?: (e: CustomEvent) => void;
   onArcDismiss?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -37,7 +36,7 @@ export interface GuidedTourProps {
   [key: `on${string}`]: unknown;
 }
 
-export const GuidedTour: FunctionComponent<GuidedTourProps> = ({ open, onArcChange, onArcComplete, onArcDismiss, children, ...rest }) => {
+export const GuidedTour: FunctionComponent<GuidedTourProps> = ({ open, onArcChange, onArcComplete, onArcDismiss, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -62,7 +61,6 @@ export const GuidedTour: FunctionComponent<GuidedTourProps> = ({ open, onArcChan
   }, [onArcChange, onArcComplete, onArcDismiss]);
   return (
     <arc-guided-tour ref={ref} open={open} {...rest}>
-      {children}
     </arc-guided-tour>
   );
 };

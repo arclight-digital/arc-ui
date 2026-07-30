@@ -571,7 +571,7 @@ export declare class ArcConfirm extends LitElement {
   open: boolean;
   /** The heading text displayed at the top of the confirmation dialog. @default '' */
   heading: string;
-  /** The body message explaining what the user is confirming. @default '' */
+  /** The body message explaining what the user is confirming. Used as the fallback for the default slot, so it is the simplest way to set the body and the only one available to the imperative `ArcConfirm.open()` API. @default '' */
   message: string;
   /** Label for the confirm button. Use a specific verb like "Delete" or "Publish" instead of generic "OK". @default 'Confirm' */
   confirmLabel: string;
@@ -1887,8 +1887,8 @@ export declare class ArcScrollToTop extends LitElement {
   threshold: number;
   /** Use smooth scrolling animation. Falls back to instant when prefers-reduced-motion is set. @default true */
   smooth: boolean;
-  /** Corner placement: "bottom-right" or "bottom-left". @default 'bottom-right' */
-  position: string;
+  /** Corner placement. @default 'bottom-right' */
+  position: 'bottom-right' | 'bottom-left';
   /** Distance from viewport edges. Accepts any CSS length value. @default 'var(--space-lg)' */
   offset: string;
 }

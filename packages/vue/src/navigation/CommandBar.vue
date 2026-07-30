@@ -44,6 +44,6 @@ function onArcSubmit(payload: CustomEvent) {
     @arc-input="onArcInput"
     @arc-submit="onArcSubmit"
   >
-    <slot />
+    <slot name="hint" />
   </arc-command-bar>
 </template>

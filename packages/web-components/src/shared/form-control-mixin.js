@@ -16,13 +16,28 @@
  *   - override _formResetState()/_applyFormState() when reset needs more than
  *     restoring `value` (e.g. checked flags, selected arrays)
  *   - may call _setValidity(flags, message, anchor) for constraint validation
+ *
+ * It also marks the host with `data-arc-editing` while a text-entry element in
+ * its shadow root holds focus. Retargeting means an outside listener sees
+ * `<arc-textarea>` rather than the `<textarea>` inside it, and no selector
+ * crosses a shadow boundary, so without the marker there is no way to tell from
+ * the outside that a keypress landed in a text field — which is how a bare-key
+ * shortcut ends up firing mid-sentence. See shared/editing-target.js, whose
+ * isEditingTarget() is the more reliable check where an event is available.
  */
+import { isEditingNode, setEditingMarker } from './editing-target.js';
+
 export const FormControlMixin = (superClass) => class extends superClass {
   static formAssociated = true;
 
   constructor() {
     super();
     this._internals = this.attachInternals();
+    // Bound once so the same reference removes cleanly on disconnect.
+    this.__onEditingFocusIn = (e) => {
+      setEditingMarker(this, isEditingNode(e.composedPath()[0]));
+    };
+    this.__onEditingFocusOut = () => setEditingMarker(this, false);
   }
 
   connectedCallback() {
@@ -31,6 +46,20 @@ export const FormControlMixin = (superClass) => class extends superClass {
     if (this.__resetState === undefined) {
       this.__resetState = this._formResetState();
     }
+    // focusin/focusout are composed, so they cross the shadow boundary and
+    // arrive here with the real focused node still at the head of the path.
+    // Focus moving between two elements inside fires focusout then focusin, so
+    // the marker is dropped and re-set within the same task — nothing can
+    // observe the gap.
+    this.addEventListener('focusin', this.__onEditingFocusIn);
+    this.addEventListener('focusout', this.__onEditingFocusOut);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback?.();
+    this.removeEventListener('focusin', this.__onEditingFocusIn);
+    this.removeEventListener('focusout', this.__onEditingFocusOut);
+    setEditingMarker(this, false);
   }
 
   /** State captured for form.reset(). Override for non-`value` controls. */

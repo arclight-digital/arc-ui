@@ -8,7 +8,6 @@ export interface KanbanProps {
   columns?: Array<{id:string,title?:string,limit?:number,items:Array<{id:string,label:string,description?:string,tag?:string,variant?:string}>}>;
   disabled?: boolean;
   className?: string;
-  children?: React.ReactNode;
   onArcCardMove?: (e: CustomEvent) => void;
   onArcCardClick?: (e: CustomEvent) => void;
 }

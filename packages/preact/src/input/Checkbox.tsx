@@ -13,7 +13,6 @@ export interface CheckboxProps {
   name?: string;
   value?: string;
   onArcChange?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -41,7 +40,7 @@ export interface CheckboxProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Checkbox: FunctionComponent<CheckboxProps> = ({ checked, indeterminate, disabled, size, label, name, value, onArcChange, children, ...rest }) => {
+export const Checkbox: FunctionComponent<CheckboxProps> = ({ checked, indeterminate, disabled, size, label, name, value, onArcChange, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -56,7 +55,6 @@ export const Checkbox: FunctionComponent<CheckboxProps> = ({ checked, indetermin
   }, [onArcChange]);
   return (
     <arc-checkbox ref={ref} checked={checked} indeterminate={indeterminate} disabled={disabled} size={size} label={label} name={name} value={value} {...rest}>
-      {children}
     </arc-checkbox>
   );
 };

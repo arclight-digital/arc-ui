@@ -33,6 +33,9 @@ const props = withDefaults(defineProps<{
     :menuPosition="props.menuPosition"
     :navAlign="props.navAlign"
   >
-    <slot />
+    <slot name="logo" />
+    <slot name="subtitle" />
+    <slot name="center" />
+    <slot name="actions" />
   </arc-top-bar>
 </template>

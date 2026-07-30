@@ -8,7 +8,6 @@ export interface SnackbarProps {
   position?: 'bottom-center' | 'bottom-left' | 'bottom-right';
   duration?: number;
   className?: string;
-  children?: React.ReactNode;
   onArcAction?: (e: CustomEvent) => void;
   onArcDismiss?: (e: CustomEvent) => void;
 }

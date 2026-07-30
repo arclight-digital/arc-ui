@@ -7,7 +7,7 @@ import '@arclux/arc-ui/footer';
   selector: 'arc-footer',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-footer [compact]="this.compact" [border]="this.border" [attr.contained]="this.contained" [attr.align]="this.align"><ng-content /></arc-footer>`,
+  template: `<arc-footer [compact]="this.compact" [border]="this.border" [attr.contained]="this.contained" [attr.align]="this.align"></arc-footer>`,
 })
 export class Footer {
   @Input() compact: boolean = false;

@@ -41,6 +41,5 @@ function onArcChange(payload: CustomEvent) {
     :readonly="props.readonly"
     @arc-change="onArcChange"
   >
-    <slot />
   </arc-rating>
 </template>

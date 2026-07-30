@@ -7,7 +7,6 @@ export interface VirtualListProps {
   items?: unknown[];
   itemHeight?: number;
   overscan?: number;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -35,8 +34,7 @@ export interface VirtualListProps {
   [key: `on${string}`]: unknown;
 }
 
-export const VirtualList: FunctionComponent<VirtualListProps> = ({ items, itemHeight, overscan, children, ...rest }) => (
+export const VirtualList: FunctionComponent<VirtualListProps> = ({ items, itemHeight, overscan, ...rest }) => (
   <arc-virtual-list items={items} itemHeight={itemHeight} overscan={overscan} {...rest}>
-    {children}
   </arc-virtual-list>
 );

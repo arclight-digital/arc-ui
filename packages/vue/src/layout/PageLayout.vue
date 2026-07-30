@@ -22,5 +22,7 @@ const props = withDefaults(defineProps<{
     :gap="props.gap"
   >
     <slot />
+    <slot name="sidebar" />
+    <slot name="aside" />
   </arc-page-layout>
 </template>

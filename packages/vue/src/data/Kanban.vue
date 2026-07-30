@@ -25,6 +25,5 @@ const emit = defineEmits<{
     @arc-card-move="(payload: CustomEvent) => emit('arc-card-move', payload)"
     @arc-card-click="(payload: CustomEvent) => emit('arc-card-click', payload)"
   >
-    <slot />
   </arc-kanban>
 </template>

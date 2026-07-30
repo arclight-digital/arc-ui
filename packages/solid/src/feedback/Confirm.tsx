@@ -43,7 +43,7 @@ export interface ConfirmProps {
 export const Confirm: Component<ConfirmProps> = (props) => {
   const [local, rest] = splitProps(props, ['open', 'heading', 'message', 'confirmLabel', 'cancelLabel', 'variant', 'onArcConfirm', 'onArcCancel', 'children']);
   return (
-    <arc-confirm open={local.open} heading={local.heading} message={local.message} confirmLabel={local.confirmLabel} cancelLabel={local.cancelLabel} variant={local.variant} on:arc-confirm={local.onArcConfirm} on:arc-cancel={local.onArcCancel} {...rest}>
+    <arc-confirm open={local.open} heading={local.heading} message={local.message} prop:confirmLabel={local.confirmLabel} prop:cancelLabel={local.cancelLabel} variant={local.variant} on:arc-confirm={local.onArcConfirm} on:arc-cancel={local.onArcCancel} {...rest}>
       {local.children}
     </arc-confirm>
   );

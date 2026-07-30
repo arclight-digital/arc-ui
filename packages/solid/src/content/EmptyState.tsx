@@ -6,7 +6,6 @@ import '@arclux/arc-ui/empty-state';
 export interface EmptyStateProps {
   heading?: string;
   description?: string;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -35,10 +34,9 @@ export interface EmptyStateProps {
 }
 
 export const EmptyState: Component<EmptyStateProps> = (props) => {
-  const [local, rest] = splitProps(props, ['heading', 'description', 'children']);
+  const [local, rest] = splitProps(props, ['heading', 'description']);
   return (
     <arc-empty-state heading={local.heading} description={local.description} {...rest}>
-      {local.children}
     </arc-empty-state>
   );
 };

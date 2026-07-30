@@ -5,7 +5,6 @@
 
   interface Props {
     label?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -33,9 +32,8 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { label = 'Navigation menu', children, ...rest }: Props = $props();
+  let { label = 'Navigation menu', ...rest }: Props = $props();
 </script>
 
 <arc-navigation-menu {label} {...rest}>
-  {@render children?.()}
 </arc-navigation-menu>

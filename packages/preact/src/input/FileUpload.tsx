@@ -11,7 +11,6 @@ export interface FileUploadProps {
   disabled?: boolean;
   onArcChange?: (e: CustomEvent) => void;
   onArcRemove?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -39,7 +38,7 @@ export interface FileUploadProps {
   [key: `on${string}`]: unknown;
 }
 
-export const FileUpload: FunctionComponent<FileUploadProps> = ({ accept, multiple, maxSize, disabled, onArcChange, onArcRemove, children, ...rest }) => {
+export const FileUpload: FunctionComponent<FileUploadProps> = ({ accept, multiple, maxSize, disabled, onArcChange, onArcRemove, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -59,7 +58,6 @@ export const FileUpload: FunctionComponent<FileUploadProps> = ({ accept, multipl
   }, [onArcChange, onArcRemove]);
   return (
     <arc-file-upload ref={ref} accept={accept} multiple={multiple} maxSize={maxSize} disabled={disabled} {...rest}>
-      {children}
     </arc-file-upload>
   );
 };

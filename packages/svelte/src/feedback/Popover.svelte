@@ -7,6 +7,8 @@
     open?: boolean;
     position?: 'top' | 'bottom' | 'left' | 'right';
     trigger?: string;
+    /** <slot name="trigger"> — put slot="trigger" on the element inside. */
+    trigger_?: Snippet;
     children?: Snippet;
     class?: string;
     id?: string;
@@ -35,9 +37,10 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { open = false, position = 'bottom', trigger = '', children, ...rest }: Props = $props();
+  let { open = false, position = 'bottom', trigger = '', trigger_, children, ...rest }: Props = $props();
 </script>
 
 <arc-popover {open} {position} {trigger} {...rest}>
+  {@render trigger_?.()}
   {@render children?.()}
 </arc-popover>

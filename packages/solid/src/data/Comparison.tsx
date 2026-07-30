@@ -5,7 +5,6 @@ import '@arclux/arc-ui/comparison';
 
 export interface ComparisonProps {
   features?: string;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -34,10 +33,9 @@ export interface ComparisonProps {
 }
 
 export const Comparison: Component<ComparisonProps> = (props) => {
-  const [local, rest] = splitProps(props, ['features', 'children']);
+  const [local, rest] = splitProps(props, ['features']);
   return (
     <arc-comparison features={local.features} {...rest}>
-      {local.children}
     </arc-comparison>
   );
 };

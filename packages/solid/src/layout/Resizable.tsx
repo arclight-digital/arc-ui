@@ -40,7 +40,7 @@ export interface ResizableProps {
 export const Resizable: Component<ResizableProps> = (props) => {
   const [local, rest] = splitProps(props, ['direction', 'minSize', 'maxSize', 'size', 'onArcResize', 'children']);
   return (
-    <arc-resizable direction={local.direction} minSize={local.minSize} maxSize={local.maxSize} size={local.size} on:arc-resize={local.onArcResize} {...rest}>
+    <arc-resizable direction={local.direction} prop:minSize={local.minSize} prop:maxSize={local.maxSize} size={local.size} on:arc-resize={local.onArcResize} {...rest}>
       {local.children}
     </arc-resizable>
   );

@@ -7,7 +7,6 @@ import { ArcMenubar } from '@arclux/arc-ui/menubar';
 export interface MenubarProps {
   items?: Array<{label:string,disabled?:boolean,items:Array<{label?:string,shortcut?:string,disabled?:boolean,divider?:boolean,items?:Array<{label:string,shortcut?:string,disabled?:boolean}>}>}>;
   className?: string;
-  children?: React.ReactNode;
   onArcSelect?: (e: CustomEvent) => void;
   onClick?: (e: Event) => void;
 }

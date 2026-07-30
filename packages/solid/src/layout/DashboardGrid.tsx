@@ -38,7 +38,7 @@ export interface DashboardGridProps {
 export const DashboardGrid: Component<DashboardGridProps> = (props) => {
   const [local, rest] = splitProps(props, ['columns', 'gap', 'minColumnWidth', 'children']);
   return (
-    <arc-dashboard-grid columns={local.columns} gap={local.gap} minColumnWidth={local.minColumnWidth} {...rest}>
+    <arc-dashboard-grid columns={local.columns} gap={local.gap} prop:minColumnWidth={local.minColumnWidth} {...rest}>
       {local.children}
     </arc-dashboard-grid>
   );

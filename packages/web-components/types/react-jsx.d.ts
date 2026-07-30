@@ -759,7 +759,7 @@ declare module 'react' {
       'arc-scroll-to-top': ArcBaseAttributes & {
         threshold?: number | string;
         smooth?: boolean;
-        position?: string;
+        position?: 'bottom-right' | 'bottom-left';
         offset?: string;
       };
       'arc-search': ArcBaseAttributes & {

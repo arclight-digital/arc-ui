@@ -21,6 +21,5 @@ const props = withDefaults(defineProps<{
     :message="props.message"
     :global="props.global"
   >
-    <slot />
   </arc-loading-overlay>
 </template>

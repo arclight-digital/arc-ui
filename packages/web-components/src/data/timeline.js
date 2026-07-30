@@ -99,7 +99,7 @@ export class ArcTimeline extends LitElement {
         margin: 0;
         font-family: var(--font-label);
         font-size: var(--text-xs);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         letter-spacing: 1.5px;
         text-transform: uppercase;
         color: var(--text-primary);
@@ -123,7 +123,7 @@ export class ArcTimeline extends LitElement {
         margin: var(--space-sm) 0 0;
         font-family: var(--font-label);
         font-size: var(--text-xs);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         letter-spacing: 2px;
         text-transform: uppercase;
         color: var(--text-ghost);

@@ -41,7 +41,7 @@ export interface CarouselProps {
 export const Carousel: Component<CarouselProps> = (props) => {
   const [local, rest] = splitProps(props, ['autoPlay', 'interval', 'loop', 'showDots', 'showArrows', 'onArcChange', 'children']);
   return (
-    <arc-carousel autoPlay={local.autoPlay} interval={local.interval} loop={local.loop} showDots={local.showDots} showArrows={local.showArrows} on:arc-change={local.onArcChange} {...rest}>
+    <arc-carousel prop:autoPlay={local.autoPlay} interval={local.interval} loop={local.loop} prop:showDots={local.showDots} prop:showArrows={local.showArrows} on:arc-change={local.onArcChange} {...rest}>
       {local.children}
     </arc-carousel>
   );

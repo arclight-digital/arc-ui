@@ -7,7 +7,7 @@ import '@arclux/arc-ui/meter';
   selector: 'arc-meter',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-meter [attr.value]="this.value" [attr.min]="this.min" [attr.max]="this.max" [attr.low]="this.low" [attr.high]="this.high" [attr.optimum]="this.optimum" [attr.label]="this.label"><ng-content /></arc-meter>`,
+  template: `<arc-meter [attr.value]="this.value" [attr.min]="this.min" [attr.max]="this.max" [attr.low]="this.low" [attr.high]="this.high" [attr.optimum]="this.optimum" [attr.label]="this.label"></arc-meter>`,
 })
 export class Meter {
   @Input() value: number = 0;

@@ -28,5 +28,7 @@ const props = withDefaults(defineProps<{
     :variant="props.variant"
   >
     <slot />
+    <slot name="legend" />
+    <slot name="actions" />
   </arc-fieldset>
 </template>

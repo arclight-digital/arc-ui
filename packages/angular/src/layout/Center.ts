@@ -7,7 +7,7 @@ import '@arclux/arc-ui/center';
   selector: 'arc-center',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-center [attr.maxWidth]="this.maxWidth" [intrinsic]="this.intrinsic" [text]="this.text"><ng-content /></arc-center>`,
+  template: `<arc-center [maxWidth]="this.maxWidth" [intrinsic]="this.intrinsic" [text]="this.text"><ng-content /></arc-center>`,
 })
 export class Center {
   @Input() maxWidth: string = '60ch';

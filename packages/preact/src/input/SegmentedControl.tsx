@@ -8,7 +8,6 @@ export interface SegmentedControlProps {
   value?: string;
   disabled?: boolean;
   onArcChange?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -36,7 +35,7 @@ export interface SegmentedControlProps {
   [key: `on${string}`]: unknown;
 }
 
-export const SegmentedControl: FunctionComponent<SegmentedControlProps> = ({ value, disabled, onArcChange, children, ...rest }) => {
+export const SegmentedControl: FunctionComponent<SegmentedControlProps> = ({ value, disabled, onArcChange, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -51,7 +50,6 @@ export const SegmentedControl: FunctionComponent<SegmentedControlProps> = ({ val
   }, [onArcChange]);
   return (
     <arc-segmented-control ref={ref} value={value} disabled={disabled} {...rest}>
-      {children}
     </arc-segmented-control>
   );
 };

@@ -11,7 +11,6 @@
     loop?: boolean;
     nowrap?: boolean;
     pauseEnd?: number;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -39,9 +38,15 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { text = '', speed = 50, delay = 0, cursor = true, loop = false, nowrap = false, pauseEnd = 2000, children, ...rest }: Props = $props();
+  let { text = '', speed = 50, delay = 0, cursor = true, loop = false, nowrap = false, pauseEnd = 2000, ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (pauseEnd !== undefined) el.pauseEnd = pauseEnd;
+  });
 </script>
 
-<arc-typewriter {text} {speed} {delay} {cursor} {loop} {nowrap} {pauseEnd} {...rest}>
-  {@render children?.()}
+<arc-typewriter {text} {speed} {delay} {cursor} {loop} {nowrap} bind:this={__el} {...rest}>
 </arc-typewriter>

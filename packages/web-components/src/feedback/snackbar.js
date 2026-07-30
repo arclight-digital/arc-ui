@@ -37,7 +37,7 @@ export class ArcSnackbar extends LitElement {
       }
 
       :host([position="bottom-center"]) .snackbar-container,
-      :host(:not([position])) .snackbar-container {
+      :host(:not([position="bottom-left"]):not([position="bottom-right"])) .snackbar-container {
         bottom: var(--space-lg);
         left: 50%;
         transform: translateX(-50%);

@@ -10,7 +10,6 @@ export interface ButtonProps {
   disabled?: boolean;
   loading?: boolean;
   type?: 'button' | 'submit' | 'reset';
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -38,8 +37,7 @@ export interface ButtonProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Button: FunctionComponent<ButtonProps> = ({ variant, size, href, disabled, loading, type, children, ...rest }) => (
+export const Button: FunctionComponent<ButtonProps> = ({ variant, size, href, disabled, loading, type, ...rest }) => (
   <arc-button variant={variant} size={size} href={href} disabled={disabled} loading={loading} type={type} {...rest}>
-    {children}
   </arc-button>
 );

@@ -38,7 +38,7 @@ export interface CenterProps {
 export const Center: Component<CenterProps> = (props) => {
   const [local, rest] = splitProps(props, ['maxWidth', 'intrinsic', 'text', 'children']);
   return (
-    <arc-center maxWidth={local.maxWidth} intrinsic={local.intrinsic} text={local.text} {...rest}>
+    <arc-center prop:maxWidth={local.maxWidth} intrinsic={local.intrinsic} text={local.text} {...rest}>
       {local.children}
     </arc-center>
   );

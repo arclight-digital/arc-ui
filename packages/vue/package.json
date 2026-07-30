@@ -1,6 +1,6 @@
 {
   "name": "@arclux/arc-ui-vue",
-  "version": "2.10.0",
+  "version": "2.11.0",
   "description": "Vue 3 wrappers for ARC UI Web Components.",
   "sideEffects": false,
   "type": "module",
@@ -43,6 +43,10 @@
     "./shared": {
       "types": "./src/shared/index.ts",
       "default": "./src/shared/index.ts"
+    },
+    "./*": {
+      "types": "./src/*.vue",
+      "default": "./src/*.vue"
     }
   },
   "files": [

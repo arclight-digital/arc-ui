@@ -39,6 +39,7 @@ const steps = [
   { name: 'DevSchema', cmd: 'node', args: ['scripts/generate-dev-schema.js'] },
   { name: 'Readme',   cmd: 'node',  args: ['scripts/generate-readme-stats.js'] },
   { name: 'Unions',   cmd: 'node',  args: ['scripts/check-prop-unions.js'] },
+  { name: 'Fallbacks', cmd: 'node', args: ['scripts/check-enum-fallbacks.js'] },
 ];
 
 const totalStart = performance.now();

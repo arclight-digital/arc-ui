@@ -27,7 +27,7 @@ export class ArcProse extends LitElement {
 
       /* Size variants */
       :host([size="sm"]) { font-size: var(--text-sm); }
-      :host([size="md"]), :host(:not([size])) { font-size: var(--body-size); }
+      :host([size="md"]), :host(:not([size="lg"]):not([size="sm"])) { font-size: var(--body-size); }
       :host([size="lg"]) { font-size: var(--text-lg); }
 
       /* Direct-child block elements via ::slotted */

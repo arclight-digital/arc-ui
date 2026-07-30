@@ -16,5 +16,8 @@ const props = withDefaults(defineProps<{
     :variant="props.variant"
   >
     <slot />
+    <slot name="logo" />
+    <slot name="footer" />
+    <slot name="aside" />
   </arc-auth-shell>
 </template>

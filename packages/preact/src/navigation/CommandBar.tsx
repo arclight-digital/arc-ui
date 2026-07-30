@@ -10,7 +10,6 @@ export interface CommandBarProps {
   icon?: string;
   onArcInput?: (e: CustomEvent) => void;
   onArcSubmit?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -38,7 +37,7 @@ export interface CommandBarProps {
   [key: `on${string}`]: unknown;
 }
 
-export const CommandBar: FunctionComponent<CommandBarProps> = ({ placeholder, value, icon, onArcInput, onArcSubmit, children, ...rest }) => {
+export const CommandBar: FunctionComponent<CommandBarProps> = ({ placeholder, value, icon, onArcInput, onArcSubmit, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -58,7 +57,6 @@ export const CommandBar: FunctionComponent<CommandBarProps> = ({ placeholder, va
   }, [onArcInput, onArcSubmit]);
   return (
     <arc-command-bar ref={ref} placeholder={placeholder} value={value} icon={icon} {...rest}>
-      {children}
     </arc-command-bar>
   );
 };

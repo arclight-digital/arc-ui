@@ -24,6 +24,5 @@ const props = withDefaults(defineProps<{
     :trend="props.trend"
     :change="props.change"
   >
-    <slot />
   </arc-stat>
 </template>

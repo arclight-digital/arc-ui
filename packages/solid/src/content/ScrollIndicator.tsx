@@ -8,7 +8,6 @@ export interface ScrollIndicatorProps {
   position?: 'top' | 'bottom';
   size?: 'sm' | 'md' | 'lg';
   color?: 'accent' | 'gradient';
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -37,10 +36,9 @@ export interface ScrollIndicatorProps {
 }
 
 export const ScrollIndicator: Component<ScrollIndicatorProps> = (props) => {
-  const [local, rest] = splitProps(props, ['target', 'position', 'size', 'color', 'children']);
+  const [local, rest] = splitProps(props, ['target', 'position', 'size', 'color']);
   return (
     <arc-scroll-indicator target={local.target} position={local.position} size={local.size} color={local.color} {...rest}>
-      {local.children}
     </arc-scroll-indicator>
   );
 };

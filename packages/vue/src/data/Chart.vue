@@ -44,6 +44,5 @@ const emit = defineEmits<{
     :currency="props.currency"
     @arc-mark-click="(payload: CustomEvent) => emit('arc-mark-click', payload)"
   >
-    <slot />
   </arc-chart>
 </template>

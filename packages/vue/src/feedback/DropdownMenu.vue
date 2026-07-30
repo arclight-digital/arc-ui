@@ -23,5 +23,6 @@ const emit = defineEmits<{
     @arc-select="(payload: CustomEvent) => emit('arc-select', payload)"
   >
     <slot />
+    <slot name="trigger" />
   </arc-dropdown-menu>
 </template>

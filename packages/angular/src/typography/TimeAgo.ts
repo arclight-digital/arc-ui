@@ -7,7 +7,7 @@ import '@arclux/arc-ui/time-ago';
   selector: 'arc-time-ago',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-time-ago [attr.datetime]="this.datetime" [live]="this.live" [attr.locale]="this.locale"><ng-content /></arc-time-ago>`,
+  template: `<arc-time-ago [attr.datetime]="this.datetime" [live]="this.live" [attr.locale]="this.locale"></arc-time-ago>`,
 })
 export class TimeAgo {
   @Input() datetime: string = '';

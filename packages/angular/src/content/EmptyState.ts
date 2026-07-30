@@ -7,7 +7,7 @@ import '@arclux/arc-ui/empty-state';
   selector: 'arc-empty-state',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-empty-state [attr.heading]="this.heading" [attr.description]="this.description"><ng-content /></arc-empty-state>`,
+  template: `<arc-empty-state [attr.heading]="this.heading" [attr.description]="this.description"></arc-empty-state>`,
 })
 export class EmptyState {
   @Input() heading: string = '';

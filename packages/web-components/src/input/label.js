@@ -44,7 +44,7 @@ export class ArcLabel extends LitElement {
         gap: var(--space-xs);
         font-family: var(--font-label);
         font-size: var(--text-xs);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         text-transform: uppercase;
         letter-spacing: 0.08em;
         color: var(--text-secondary);

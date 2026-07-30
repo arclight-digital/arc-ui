@@ -7,7 +7,6 @@
     events?: Array<{date:string,end?:string,label:string,color?:number}>;
     view?: 'month' | 'week';
     date?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -35,7 +34,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { events = [], view = $bindable('month'), date = $bindable(''), children, ...rest }: Props = $props();
+  let { events = [], view = $bindable('month'), date = $bindable(''), ...rest }: Props = $props();
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
@@ -61,5 +60,4 @@
   onarc-period-change={__onArcPeriodChange}
   onarc-date-click={__onArcDateClick}
 >
-  {@render children?.()}
 </arc-event-calendar>

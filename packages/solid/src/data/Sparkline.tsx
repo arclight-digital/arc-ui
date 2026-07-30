@@ -10,7 +10,6 @@ export interface SparklineProps {
   width?: number;
   height?: number;
   fill?: boolean;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -39,10 +38,9 @@ export interface SparklineProps {
 }
 
 export const Sparkline: Component<SparklineProps> = (props) => {
-  const [local, rest] = splitProps(props, ['data', 'type', 'color', 'width', 'height', 'fill', 'children']);
+  const [local, rest] = splitProps(props, ['data', 'type', 'color', 'width', 'height', 'fill']);
   return (
     <arc-sparkline data={local.data} type={local.type} color={local.color} width={local.width} height={local.height} fill={local.fill} {...rest}>
-      {local.children}
     </arc-sparkline>
   );
 };

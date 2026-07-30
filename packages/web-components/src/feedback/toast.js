@@ -60,7 +60,7 @@ export class ArcToast extends LitElement {
 
       /* Positions */
       :host([position="top-right"]) .toast-container,
-      :host(:not([position])) .toast-container {
+      :host(:not([position="bottom-center"]):not([position="bottom-left"]):not([position="bottom-right"]):not([position="top-center"]):not([position="top-left"])) .toast-container {
         top: var(--space-lg); right: var(--space-lg);
       }
       :host([position="top-left"]) .toast-container {

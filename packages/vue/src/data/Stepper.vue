@@ -15,6 +15,5 @@ const props = withDefaults(defineProps<{
   <arc-stepper
     :active="props.active"
   >
-    <slot />
   </arc-stepper>
 </template>

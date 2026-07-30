@@ -7,7 +7,6 @@ import '@arclux/arc-ui/sortable-list';
 export interface SortableListProps {
   disabled?: boolean;
   onArcChange?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -35,7 +34,7 @@ export interface SortableListProps {
   [key: `on${string}`]: unknown;
 }
 
-export const SortableList: FunctionComponent<SortableListProps> = ({ disabled, onArcChange, children, ...rest }) => {
+export const SortableList: FunctionComponent<SortableListProps> = ({ disabled, onArcChange, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -50,7 +49,6 @@ export const SortableList: FunctionComponent<SortableListProps> = ({ disabled, o
   }, [onArcChange]);
   return (
     <arc-sortable-list ref={ref} disabled={disabled} {...rest}>
-      {children}
     </arc-sortable-list>
   );
 };

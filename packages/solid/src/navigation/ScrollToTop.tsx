@@ -8,7 +8,6 @@ export interface ScrollToTopProps {
   smooth?: boolean;
   position?: 'bottom-right' | 'bottom-left';
   offset?: string;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -37,10 +36,9 @@ export interface ScrollToTopProps {
 }
 
 export const ScrollToTop: Component<ScrollToTopProps> = (props) => {
-  const [local, rest] = splitProps(props, ['threshold', 'smooth', 'position', 'offset', 'children']);
+  const [local, rest] = splitProps(props, ['threshold', 'smooth', 'position', 'offset']);
   return (
     <arc-scroll-to-top threshold={local.threshold} smooth={local.smooth} position={local.position} offset={local.offset} {...rest}>
-      {local.children}
     </arc-scroll-to-top>
   );
 };

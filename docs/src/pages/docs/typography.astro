@@ -17,6 +17,7 @@ const roles = [
     name: 'Text',
     reference: 'Host Grotesk',
     fallback: 'system-ui, sans-serif',
+    weight: '500',
     uses: 'Prose, inputs, descriptions, option lists, table cells. The default for everything that is not covered by another role.',
   },
   {
@@ -24,6 +25,7 @@ const roles = [
     name: 'Label',
     reference: 'Tektur',
     fallback: 'system-ui, sans-serif',
+    weight: '600',
     uses: 'Form labels, table headers, eyebrows, dividers, segment labels. Rendered small, uppercase and tracked, so it wants a face that holds up at 12px in caps.',
   },
   {
@@ -31,6 +33,7 @@ const roles = [
     name: 'Mono',
     reference: 'JetBrains Mono',
     fallback: 'ui-monospace, monospace',
+    weight: '400',
     uses: 'Code blocks, keyboard hints, command palette shortcuts, and tabular numerics — meter readouts, stat deltas, calendar day numbers.',
   },
   {
@@ -38,13 +41,15 @@ const roles = [
     name: 'Display',
     reference: 'follows Text',
     fallback: 'follows Text',
-    uses: 'Large headings and hero type. Inherits the Text role until you assign it a face of its own, so a display typeface is opt-in rather than assumed.',
+    weight: '500',
+    uses: 'Large headings and hero type. Inherits the Text role until you assign it a face of its own, so a display typeface is opt-in rather than assumed. The weight does not follow Text — large type usually wants its own.',
   },
   {
     slot: 'quote',
     name: 'Quote',
     reference: 'Georgia',
     fallback: 'serif',
+    weight: '200',
     uses: 'The decorative quotation glyph on arc-blockquote. Separate because it is the one place the system wants a serif.',
   },
 ];
@@ -76,18 +81,28 @@ const roles = [
         faces are yours.
       </p>
       <p class="docs-text">
-        Every role is three tokens: the family you assign, the fallback stack behind it, and the
-        composed value components actually consume.
+        Every role is four tokens: the family you assign, the fallback stack behind it, the weight
+        the role is set at, and the composed value components actually consume.
       </p>
       <Code
         lang="css"
         code={`--font-body-family:    'Host Grotesk';               /* assign this */
 --font-body-fallback:  system-ui, sans-serif;        /* rarely */
+--font-body-weight:    500;                          /* if your face disagrees */
 --font-body:           var(--font-body-family), var(--font-body-fallback);`}
       />
       <p class="docs-text">
         Override only <code>-family</code> and everything downstream — the fallback, and every
         component using that role — follows. Nothing here needs you to retype a font stack.
+      </p>
+      <p class="docs-text">
+        The weight is a separate knob because a face you assign will not always ship the weight
+        the role is set at. The Label role is set at 600 across some fifty components; point it at
+        a face whose heaviest cut is 500 and the browser synthesises the difference, which looks
+        like smeared type rather than like a missing weight. Setting
+        <code>--font-label-weight</code> once fixes all of them, including the derived context
+        tokens — <code>--section-title-weight</code> and <code>--ui-accent-weight</code> reference
+        the role rather than restating a number.
       </p>
     </section>
 
@@ -105,6 +120,7 @@ const roles = [
             <div class="role-meta">
               <span><strong>Reference</strong> {r.reference}</span>
               <span><strong>Fallback</strong> {r.fallback}</span>
+              <span><strong>Weight</strong> {r.weight}</span>
             </div>
           </arc-card>
         ))}
@@ -176,8 +192,8 @@ const roles = [
         lang="css"
         code={`@font-face {
   font-family: 'Inter';
-  src: url('/fonts/inter-variable.woff2') format('woff2-variations');
-  font-weight: 100 900;        /* one face for a variable font, not one per weight */
+  src: url('/fonts/inter-variable.woff2') format('woff2');
+  font-weight: 100 900;        /* the font's real axis range, not one face per weight */
   font-display: swap;
   font-style: normal;
 }
@@ -186,9 +202,16 @@ const roles = [
       />
       <p class="docs-text">
         Declare a variable font <strong>once</strong> with a weight range. Declaring the same file
-        under several discrete weights makes the browser render its default instance at every
-        weight, which silently flattens the hierarchy — components in this library ask for
-        weights from 200 to 800.
+        under several discrete weights is the most common way to get this wrong: a
+        <code>@font-face</code> naming a single weight gives the browser no way to set the
+        <code>wght</code> axis, so it renders the font's <em>default instance</em> for every one of
+        them. Nothing errors, every weight resolves, and the hierarchy is flat — components in this
+        library ask for weights from 200 to 800 and would all render identically.
+      </p>
+      <p class="docs-text">
+        Use the range the font actually has. Asking for a weight outside it gets you the nearest end
+        of the axis, so a face whose lightest cut is 300 cannot deliver the 200 some roles default
+        to — set <code>--font-quote-weight</code> and friends to something it can reach instead.
       </p>
       <p class="docs-text">
         Preload the faces used above the fold, and only those:
@@ -197,6 +220,37 @@ const roles = [
         lang="html"
         code={`<link rel="preload" href="/fonts/inter-variable.woff2" as="font" type="font/woff2" crossorigin />`}
       />
+
+      <h3 class="tier-heading">Use the family name the package registers, not the one you expect</h3>
+      <p class="docs-text">
+        Whatever loads your font decides what the family is <em>called</em>, and the assignment has
+        to use that exact string. This is the one mistake worth calling out, because it fails
+        quietly: an unknown family name is not an error, it is simply skipped, so the role falls
+        through to its fallback stack and the page renders in <code>system-ui</code> — which looks
+        close enough to a grotesque that it reads as "the font loaded" at a glance.
+      </p>
+      <p class="docs-text">
+        Fontsource's variable packages are where this usually happens. They register the family with
+        a <code>Variable</code> suffix:
+      </p>
+      <Code
+        lang="js"
+        code={`import '@fontsource-variable/host-grotesk';   // registers "Host Grotesk Variable"`}
+      />
+      <Code
+        lang="css"
+        code={`:root {
+  --font-body-family: 'Host Grotesk';            /* ✗ silently unused */
+  --font-body-family: 'Host Grotesk Variable';   /* ✓ what the package registered */
+}`}
+      />
+      <p class="docs-text">
+        The static Fontsource packages (<code>@fontsource/host-grotesk</code>) register the bare
+        name, so the two differ by more than the import path. To check which you have, look at
+        the <code>font-family</code> in the package's own CSS, or confirm in DevTools: the Computed
+        panel names the face actually used to render, and the Rendered Fonts section names the file
+        it came from. If that says <code>system-ui</code>, the name is wrong.
+      </p>
     </section>
 
     <section id="fallbacks">

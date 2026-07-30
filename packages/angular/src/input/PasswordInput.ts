@@ -7,7 +7,7 @@ import '@arclux/arc-ui/password-input';
   selector: 'arc-password-input',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-password-input [attr.name]="this.name" [attr.label]="this.label" [attr.placeholder]="this.placeholder" [attr.value]="this.value" [disabled]="this.disabled" [required]="this.required" [attr.error]="this.error" [attr.size]="this.size" [attr.autocomplete]="this.autocomplete" [showStrength]="this.showStrength" (arc-strength-change)="this.arcStrengthChange.emit($event)" (arc-input)="this.onArcInput($event)" (arc-change)="this.onArcChange($event)"><ng-content /></arc-password-input>`,
+  template: `<arc-password-input [attr.name]="this.name" [attr.label]="this.label" [attr.placeholder]="this.placeholder" [attr.value]="this.value" [disabled]="this.disabled" [required]="this.required" [attr.error]="this.error" [attr.size]="this.size" [attr.autocomplete]="this.autocomplete" [showStrength]="this.showStrength" (arc-strength-change)="this.arcStrengthChange.emit($event)" (arc-input)="this.onArcInput($event)" (arc-change)="this.onArcChange($event)"></arc-password-input>`,
 })
 export class PasswordInput {
   @Input() name: string = '';

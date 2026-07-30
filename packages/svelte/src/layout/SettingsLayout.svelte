@@ -5,6 +5,8 @@
 
   interface Props {
     navPosition?: 'left' | 'top';
+    /** <slot name="nav"> — put slot="nav" on the element inside. */
+    nav?: Snippet;
     children?: Snippet;
     class?: string;
     id?: string;
@@ -33,9 +35,17 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { navPosition = 'left', children, ...rest }: Props = $props();
+  let { navPosition = 'left', nav, children, ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (navPosition !== undefined) el.navPosition = navPosition;
+  });
 </script>
 
-<arc-settings-layout {navPosition} {...rest}>
+<arc-settings-layout bind:this={__el} {...rest}>
+  {@render nav?.()}
   {@render children?.()}
 </arc-settings-layout>

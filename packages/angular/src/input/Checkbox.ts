@@ -7,7 +7,7 @@ import '@arclux/arc-ui/checkbox';
   selector: 'arc-checkbox',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-checkbox [checked]="this.checked" [indeterminate]="this.indeterminate" [disabled]="this.disabled" [attr.size]="this.size" [attr.label]="this.label" [attr.name]="this.name" [attr.value]="this.value" (arc-change)="this.onArcChange($event)"><ng-content /></arc-checkbox>`,
+  template: `<arc-checkbox [checked]="this.checked" [indeterminate]="this.indeterminate" [disabled]="this.disabled" [attr.size]="this.size" [attr.label]="this.label" [attr.name]="this.name" [attr.value]="this.value" (arc-change)="this.onArcChange($event)"></arc-checkbox>`,
 })
 export class Checkbox {
   @Input() checked: boolean = false;

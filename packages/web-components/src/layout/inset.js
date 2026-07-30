@@ -33,7 +33,7 @@ export class ArcInset extends LitElement {
       :host([bleed]) { margin: calc(-1 * var(--_pad)); }
       :host([bleed][space="xs"]) { --_pad: var(--space-xs); }
       :host([bleed][space="sm"]) { --_pad: var(--space-sm); }
-      :host([bleed]:not([space])),
+      :host([bleed]:not([space="xs"]):not([space="sm"]):not([space="lg"]):not([space="xl"]):not([space="2xl"])),
       :host([bleed][space="md"]) { --_pad: var(--space-md); }
       :host([bleed][space="lg"]) { --_pad: var(--space-lg); }
       :host([bleed][space="xl"]) { --_pad: var(--space-xl); }

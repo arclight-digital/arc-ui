@@ -38,6 +38,7 @@ function onArcResize(payload: CustomEvent) {
     :maxRatio="props.maxRatio"
     @arc-resize="onArcResize"
   >
-    <slot />
+    <slot name="primary" />
+    <slot name="secondary" />
   </arc-split-pane>
 </template>

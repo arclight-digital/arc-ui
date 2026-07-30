@@ -38,6 +38,14 @@
 
   let { direction = 'horizontal', minSize = 100, maxSize = Infinity, size = $bindable(300), children, ...rest }: Props = $props();
 
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (minSize !== undefined) el.minSize = minSize;
+    if (maxSize !== undefined) el.maxSize = maxSize;
+  });
+
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
   // have attached. These are declared after {...rest} below so they win.
@@ -50,7 +58,7 @@
   }
 </script>
 
-<arc-resizable {direction} {minSize} {maxSize} {size} {...rest}
+<arc-resizable {direction} {size} bind:this={__el} {...rest}
   onarc-resize={__onArcResize}
 >
   {@render children?.()}

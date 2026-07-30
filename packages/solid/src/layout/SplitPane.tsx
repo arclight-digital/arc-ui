@@ -9,7 +9,6 @@ export interface SplitPaneProps {
   minRatio?: number;
   maxRatio?: number;
   onArcResize?: (e: CustomEvent) => void;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -38,10 +37,9 @@ export interface SplitPaneProps {
 }
 
 export const SplitPane: Component<SplitPaneProps> = (props) => {
-  const [local, rest] = splitProps(props, ['orientation', 'ratio', 'minRatio', 'maxRatio', 'onArcResize', 'children']);
+  const [local, rest] = splitProps(props, ['orientation', 'ratio', 'minRatio', 'maxRatio', 'onArcResize']);
   return (
-    <arc-split-pane orientation={local.orientation} ratio={local.ratio} minRatio={local.minRatio} maxRatio={local.maxRatio} on:arc-resize={local.onArcResize} {...rest}>
-      {local.children}
+    <arc-split-pane orientation={local.orientation} ratio={local.ratio} prop:minRatio={local.minRatio} prop:maxRatio={local.maxRatio} on:arc-resize={local.onArcResize} {...rest}>
     </arc-split-pane>
   );
 };

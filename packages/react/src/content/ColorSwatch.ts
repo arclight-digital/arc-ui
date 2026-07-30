@@ -9,7 +9,6 @@ export interface ColorSwatchProps {
   label?: string;
   size?: 'sm' | 'md' | 'lg';
   className?: string;
-  children?: React.ReactNode;
 }
 
 export const ColorSwatch = createComponent({

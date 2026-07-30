@@ -8,7 +8,6 @@ export interface ContextMenuProps {
   onArcOpen?: (e: CustomEvent) => void;
   onArcClose?: (e: CustomEvent) => void;
   onArcSelect?: (e: CustomEvent) => void;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -37,10 +36,9 @@ export interface ContextMenuProps {
 }
 
 export const ContextMenu: Component<ContextMenuProps> = (props) => {
-  const [local, rest] = splitProps(props, ['open', 'onArcOpen', 'onArcClose', 'onArcSelect', 'children']);
+  const [local, rest] = splitProps(props, ['open', 'onArcOpen', 'onArcClose', 'onArcSelect']);
   return (
     <arc-context-menu open={local.open} on:arc-open={local.onArcOpen} on:arc-close={local.onArcClose} on:arc-select={local.onArcSelect} {...rest}>
-      {local.children}
     </arc-context-menu>
   );
 };

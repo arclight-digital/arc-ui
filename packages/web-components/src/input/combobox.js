@@ -65,6 +65,7 @@ export class ArcCombobox extends FormControlMixin(LitElement) {
         box-sizing: border-box;
         font-family: var(--font-body);
         font-size: var(--text-sm);
+        font-weight: var(--field-weight, 400);
         color: var(--text-primary);
         background: var(--surface-raised);
         border: 1px solid var(--border-default);

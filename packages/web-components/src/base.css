@@ -127,26 +127,34 @@
   --opacity-visible: 1;
 
   /* Font role slots. Override only the -family token to assign a typeface;
-     the fallback and every component using the role follow automatically. */
+     the fallback and every component using the role follow automatically.
+     Each role also carries a -weight, for faces that do not ship the weight
+     the role is set at. */
   --font-body-family: 'Host Grotesk';
   --font-body-fallback: system-ui, sans-serif;
+  --font-body-weight: 500;
   --font-body: var(--font-body-family), var(--font-body-fallback);
 
   --font-label-family: 'Tektur';
   --font-label-fallback: system-ui, sans-serif;
+  --font-label-weight: 600;
   --font-label: var(--font-label-family), var(--font-label-fallback);
 
   --font-mono-family: 'JetBrains Mono';
   --font-mono-fallback: ui-monospace, monospace;
+  --font-mono-weight: 400;
   --font-mono: var(--font-mono-family), var(--font-mono-fallback);
 
-  /* Display follows the text role until it is assigned a face of its own. */
+  /* Display follows the text role until it is assigned a face of its own. Its
+     weight does not follow: large type usually wants its own. */
   --font-display-family: var(--font-body-family);
   --font-display-fallback: var(--font-body-fallback);
+  --font-display-weight: 500;
   --font-display: var(--font-display-family), var(--font-display-fallback);
 
   --font-quote-family: Georgia;
   --font-quote-fallback: serif;
+  --font-quote-weight: 200;
   --font-quote: var(--font-quote-family), var(--font-quote-fallback);
 
   /* --font-accent named the label role before the slots were split out.
@@ -162,27 +170,28 @@
   --text-3xl: clamp(36px, 5vw, 52px);
 
   --display-xl-size: var(--text-3xl);
-  --display-xl-weight: 500;
+  --display-xl-weight: var(--font-display-weight);
   --display-xl-spacing: -1px;
   --heading-size: var(--text-xl);
-  --heading-weight: 500;
+  --heading-weight: var(--font-display-weight);
   --heading-lh: 1.2;
   --body-size: var(--text-md);
-  --body-weight: 500;
+  --body-weight: var(--font-body-weight);
   --body-lh: 1.7;
   --wordmark-size: clamp(20px, 2.5vw, 28px);
-  --wordmark-weight: 500;
+  --wordmark-weight: var(--font-display-weight);
   --wordmark-spacing: clamp(8px, 1.2vw, 14px);
   --section-title-size: var(--text-xs);
-  --section-title-weight: 600;
+  --section-title-weight: var(--font-label-weight);
   --section-title-spacing: 4px;
   --ui-accent-size: 16px;
-  --ui-accent-weight: 600;
+  --ui-accent-weight: var(--font-label-weight);
   --ui-accent-spacing: 1px;
   --code-size: 14px;
   --code-lh: 1.8;
   --label-inline-size: var(--text-xs);
   --label-inline-spacing: 3px;
+  --field-weight: 400;
 
   --touch-min: 24px;
   --touch-pad: 4px;

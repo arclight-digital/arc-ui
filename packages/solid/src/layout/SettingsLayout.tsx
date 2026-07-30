@@ -36,7 +36,7 @@ export interface SettingsLayoutProps {
 export const SettingsLayout: Component<SettingsLayoutProps> = (props) => {
   const [local, rest] = splitProps(props, ['navPosition', 'children']);
   return (
-    <arc-settings-layout navPosition={local.navPosition} {...rest}>
+    <arc-settings-layout prop:navPosition={local.navPosition} {...rest}>
       {local.children}
     </arc-settings-layout>
   );

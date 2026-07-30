@@ -7,7 +7,10 @@
     items?: unknown[];
     itemHeight?: number;
     overscan?: number;
-    children?: Snippet;
+    /** <slot name="item-${index}"> — put slot="item-${index}" on the element inside. */
+    itemIndex?: Snippet;
+    /** <slot name="item-"> — put slot="item-" on the element inside. */
+    item?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -35,9 +38,17 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { items = [], itemHeight = 40, overscan = 5, children, ...rest }: Props = $props();
+  let { items = [], itemHeight = 40, overscan = 5, itemIndex, item, ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (itemHeight !== undefined) el.itemHeight = itemHeight;
+  });
 </script>
 
-<arc-virtual-list {items} {itemHeight} {overscan} {...rest}>
-  {@render children?.()}
+<arc-virtual-list {items} {overscan} bind:this={__el} {...rest}>
+  {@render itemIndex?.()}
+  {@render item?.()}
 </arc-virtual-list>

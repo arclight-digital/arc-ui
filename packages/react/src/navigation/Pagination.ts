@@ -10,7 +10,6 @@ export interface PaginationProps {
   siblings?: number;
   compact?: boolean;
   className?: string;
-  children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;
   onClick?: (e: Event) => void;
 }

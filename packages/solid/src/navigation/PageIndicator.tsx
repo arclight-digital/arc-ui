@@ -8,7 +8,6 @@ export interface PageIndicatorProps {
   value?: number;
   clickable?: boolean;
   onArcChange?: (e: CustomEvent) => void;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -37,10 +36,9 @@ export interface PageIndicatorProps {
 }
 
 export const PageIndicator: Component<PageIndicatorProps> = (props) => {
-  const [local, rest] = splitProps(props, ['count', 'value', 'clickable', 'onArcChange', 'children']);
+  const [local, rest] = splitProps(props, ['count', 'value', 'clickable', 'onArcChange']);
   return (
     <arc-page-indicator count={local.count} value={local.value} clickable={local.clickable} on:arc-change={local.onArcChange} {...rest}>
-      {local.children}
     </arc-page-indicator>
   );
 };

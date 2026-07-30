@@ -11,7 +11,6 @@ export interface MultiSelectProps {
   name?: string;
   disabled?: boolean;
   onArcChange?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -39,7 +38,7 @@ export interface MultiSelectProps {
   [key: `on${string}`]: unknown;
 }
 
-export const MultiSelect: FunctionComponent<MultiSelectProps> = ({ value, placeholder, label, name, disabled, onArcChange, children, ...rest }) => {
+export const MultiSelect: FunctionComponent<MultiSelectProps> = ({ value, placeholder, label, name, disabled, onArcChange, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -54,7 +53,6 @@ export const MultiSelect: FunctionComponent<MultiSelectProps> = ({ value, placeh
   }, [onArcChange]);
   return (
     <arc-multi-select ref={ref} value={value} placeholder={placeholder} label={label} name={name} disabled={disabled} {...rest}>
-      {children}
     </arc-multi-select>
   );
 };

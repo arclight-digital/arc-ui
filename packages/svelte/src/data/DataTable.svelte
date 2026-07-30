@@ -40,8 +40,17 @@
   }
 
   let { rows = [], sortable = false, selectable = false, sortColumn = '', sortDirection = 'asc', virtual = false, rowHeight = 40, children, ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (sortColumn !== undefined) el.sortColumn = sortColumn;
+    if (sortDirection !== undefined) el.sortDirection = sortDirection;
+    if (rowHeight !== undefined) el.rowHeight = rowHeight;
+  });
 </script>
 
-<arc-data-table {rows} {sortable} {selectable} {sortColumn} {sortDirection} {virtual} {rowHeight} {...rest}>
+<arc-data-table {rows} {sortable} {selectable} {virtual} bind:this={__el} {...rest}>
   {@render children?.()}
 </arc-data-table>

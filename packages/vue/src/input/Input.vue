@@ -68,6 +68,7 @@ function onArcChange(payload: CustomEvent) {
     @arc-input="onArcInput"
     @arc-change="onArcChange"
   >
-    <slot />
+    <slot name="prefix" />
+    <slot name="suffix" />
   </arc-input>
 </template>

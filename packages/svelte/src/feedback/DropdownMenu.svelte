@@ -5,6 +5,8 @@
 
   interface Props {
     open?: boolean;
+    /** <slot name="trigger"> — put slot="trigger" on the element inside. */
+    trigger?: Snippet;
     children?: Snippet;
     class?: string;
     id?: string;
@@ -33,9 +35,10 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { open = false, children, ...rest }: Props = $props();
+  let { open = false, trigger, children, ...rest }: Props = $props();
 </script>
 
 <arc-dropdown-menu {open} {...rest}>
+  {@render trigger?.()}
   {@render children?.()}
 </arc-dropdown-menu>

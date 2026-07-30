@@ -11,7 +11,6 @@ export interface ToastManagerProps {
   dedupe?: boolean;
   queueLimit?: number;
   className?: string;
-  children?: React.ReactNode;
   onArcQueueOverflow?: (e: CustomEvent) => void;
   onArcDismiss?: (e: CustomEvent) => void;
   onArcQueueChange?: (e: CustomEvent) => void;

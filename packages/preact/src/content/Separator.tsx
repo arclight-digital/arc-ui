@@ -7,7 +7,6 @@ export interface SeparatorProps {
   orientation?: 'horizontal' | 'vertical';
   label?: string;
   variant?: 'line' | 'dashed' | 'dotted' | 'fade';
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -35,8 +34,7 @@ export interface SeparatorProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Separator: FunctionComponent<SeparatorProps> = ({ orientation, label, variant, children, ...rest }) => (
+export const Separator: FunctionComponent<SeparatorProps> = ({ orientation, label, variant, ...rest }) => (
   <arc-separator orientation={orientation} label={label} variant={variant} {...rest}>
-    {children}
   </arc-separator>
 );

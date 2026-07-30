@@ -6,6 +6,8 @@
   interface Props {
     variant?: 'info' | 'warning' | 'tip' | 'danger';
     dismissible?: boolean;
+    /** <slot name="icon"> — put slot="icon" on the element inside. */
+    icon?: Snippet;
     children?: Snippet;
     class?: string;
     id?: string;
@@ -34,9 +36,10 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { variant = 'info', dismissible = false, children, ...rest }: Props = $props();
+  let { variant = 'info', dismissible = false, icon, children, ...rest }: Props = $props();
 </script>
 
 <arc-callout {variant} {dismissible} {...rest}>
+  {@render icon?.()}
   {@render children?.()}
 </arc-callout>

@@ -10,7 +10,6 @@ export interface ListItemProps {
   disabled?: boolean;
   href?: string;
   onArcItemSelect?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -38,7 +37,7 @@ export interface ListItemProps {
   [key: `on${string}`]: unknown;
 }
 
-export const ListItem: FunctionComponent<ListItemProps> = ({ value, selected, disabled, href, onArcItemSelect, children, ...rest }) => {
+export const ListItem: FunctionComponent<ListItemProps> = ({ value, selected, disabled, href, onArcItemSelect, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -53,7 +52,6 @@ export const ListItem: FunctionComponent<ListItemProps> = ({ value, selected, di
   }, [onArcItemSelect]);
   return (
     <arc-list-item ref={ref} value={value} selected={selected} disabled={disabled} href={href} {...rest}>
-      {children}
     </arc-list-item>
   );
 };

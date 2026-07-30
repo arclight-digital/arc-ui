@@ -7,7 +7,7 @@ import '@arclux/arc-ui/list-item';
   selector: 'arc-list-item',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-list-item [attr.value]="this.value" [selected]="this.selected" [disabled]="this.disabled" [attr.href]="this.href" (arc-item-select)="this.arcItemSelect.emit($event)"><ng-content /></arc-list-item>`,
+  template: `<arc-list-item [attr.value]="this.value" [selected]="this.selected" [disabled]="this.disabled" [attr.href]="this.href" (arc-item-select)="this.arcItemSelect.emit($event)"></arc-list-item>`,
 })
 export class ListItem {
   @Input() value: string = '';

@@ -21,6 +21,7 @@ const props = withDefaults(defineProps<{
     :itemHeight="props.itemHeight"
     :overscan="props.overscan"
   >
-    <slot />
+    <slot name="item-${index}" />
+    <slot name="item-" />
   </arc-virtual-list>
 </template>

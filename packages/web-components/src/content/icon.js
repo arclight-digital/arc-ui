@@ -62,7 +62,7 @@ export class ArcIcon extends LitElement {
       }
 
       :host([size="xs"]) { width: 12px; height: 12px; }
-      :host(:not([size])),
+      :host(:not([size="lg"]):not([size="md"]):not([size="xl"]):not([size="xs"])),
       :host([size="sm"]) { width: 16px; height: 16px; }
       :host([size="md"]) { width: 20px; height: 20px; }
       :host([size="lg"]) { width: 24px; height: 24px; }

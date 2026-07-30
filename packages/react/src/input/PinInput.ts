@@ -14,7 +14,6 @@ export interface PinInputProps {
   separator?: number;
   label?: string;
   className?: string;
-  children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;
   onArcComplete?: (e: CustomEvent) => void;
 }

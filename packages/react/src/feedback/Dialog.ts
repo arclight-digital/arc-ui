@@ -12,7 +12,6 @@ export interface DialogProps {
   cancelLabel?: string;
   variant?: 'default' | 'danger';
   className?: string;
-  children?: React.ReactNode;
   onArcConfirm?: (e: CustomEvent) => void;
   onArcCancel?: (e: CustomEvent) => void;
 }

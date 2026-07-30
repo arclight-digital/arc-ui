@@ -39,8 +39,15 @@
   }
 
   let { action = '', method = '', novalidate = false, loading = false, disabled = false, errorSummary = true, children, ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (errorSummary !== undefined) el.errorSummary = errorSummary;
+  });
 </script>
 
-<arc-form {action} {method} {novalidate} {loading} {disabled} {errorSummary} {...rest}>
+<arc-form {action} {method} {novalidate} {loading} {disabled} bind:this={__el} {...rest}>
   {@render children?.()}
 </arc-form>

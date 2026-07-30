@@ -40,7 +40,7 @@ export interface NotificationPanelProps {
 export const NotificationPanel: Component<NotificationPanelProps> = (props) => {
   const [local, rest] = splitProps(props, ['open', 'position', 'maxHeight', 'onArcOpen', 'onArcClose', 'children']);
   return (
-    <arc-notification-panel open={local.open} position={local.position} maxHeight={local.maxHeight} on:arc-open={local.onArcOpen} on:arc-close={local.onArcClose} {...rest}>
+    <arc-notification-panel open={local.open} position={local.position} prop:maxHeight={local.maxHeight} on:arc-open={local.onArcOpen} on:arc-close={local.onArcClose} {...rest}>
       {local.children}
     </arc-notification-panel>
   );

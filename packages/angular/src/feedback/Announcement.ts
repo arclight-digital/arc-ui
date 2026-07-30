@@ -7,7 +7,7 @@ import '@arclux/arc-ui/announcement';
   selector: 'arc-announcement',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-announcement [attr.politeness]="this.politeness" [attr.message]="this.message"><ng-content /></arc-announcement>`,
+  template: `<arc-announcement [attr.politeness]="this.politeness" [attr.message]="this.message"></arc-announcement>`,
 })
 export class Announcement {
   @Input() politeness: 'polite' | 'assertive' = 'polite';

@@ -13,7 +13,6 @@ export interface DialogProps {
   variant?: 'default' | 'danger';
   onArcConfirm?: (e: CustomEvent) => void;
   onArcCancel?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -41,7 +40,7 @@ export interface DialogProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Dialog: FunctionComponent<DialogProps> = ({ open, heading, message, confirmLabel, cancelLabel, variant, onArcConfirm, onArcCancel, children, ...rest }) => {
+export const Dialog: FunctionComponent<DialogProps> = ({ open, heading, message, confirmLabel, cancelLabel, variant, onArcConfirm, onArcCancel, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -61,7 +60,6 @@ export const Dialog: FunctionComponent<DialogProps> = ({ open, heading, message,
   }, [onArcConfirm, onArcCancel]);
   return (
     <arc-dialog ref={ref} open={open} heading={heading} message={message} confirmLabel={confirmLabel} cancelLabel={cancelLabel} variant={variant} {...rest}>
-      {children}
     </arc-dialog>
   );
 };

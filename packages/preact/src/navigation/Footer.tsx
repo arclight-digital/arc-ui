@@ -8,7 +8,6 @@ export interface FooterProps {
   border?: boolean;
   contained?: string;
   align?: 'left' | 'center';
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -36,8 +35,7 @@ export interface FooterProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Footer: FunctionComponent<FooterProps> = ({ compact, border, contained, align, children, ...rest }) => (
+export const Footer: FunctionComponent<FooterProps> = ({ compact, border, contained, align, ...rest }) => (
   <arc-footer compact={compact} border={border} contained={contained} align={align} {...rest}>
-    {children}
   </arc-footer>
 );

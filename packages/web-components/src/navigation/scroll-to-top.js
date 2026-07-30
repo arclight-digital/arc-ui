@@ -8,7 +8,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @tag arc-scroll-to-top
  * @prop {number} threshold - Scroll distance in pixels before the button becomes visible.
  * @prop {boolean} smooth - Use smooth scrolling animation. Falls back to instant when prefers-reduced-motion is set.
- * @prop {string} position - Corner placement: "bottom-right" or "bottom-left".
+ * @prop {'bottom-right' | 'bottom-left'} position - Corner placement.
  * @prop {string} offset - Distance from viewport edges. Accepts any CSS length value.
  * @csspart button
  */
@@ -89,7 +89,7 @@ export class ArcScrollToTop extends LitElement {
       }
 
       /* Position variants */
-      :host(:not([position])) .scroll-to-top,
+      :host(:not([position="bottom-left"])) .scroll-to-top,
       :host([position="bottom-right"]) .scroll-to-top {
         bottom: var(--_offset);
         right: var(--_offset);

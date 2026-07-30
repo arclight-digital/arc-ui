@@ -7,7 +7,7 @@ import '@arclux/arc-ui/data-table';
   selector: 'arc-data-table',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-data-table [rows]="this.rows" [sortable]="this.sortable" [selectable]="this.selectable" [attr.sortColumn]="this.sortColumn" [attr.sortDirection]="this.sortDirection" [virtual]="this.virtual" [attr.rowHeight]="this.rowHeight" (arc-sort)="this.arcSort.emit($event)" (arc-select-all)="this.arcSelectAll.emit($event)" (arc-row-select)="this.arcRowSelect.emit($event)"><ng-content /></arc-data-table>`,
+  template: `<arc-data-table [rows]="this.rows" [sortable]="this.sortable" [selectable]="this.selectable" [sortColumn]="this.sortColumn" [sortDirection]="this.sortDirection" [virtual]="this.virtual" [rowHeight]="this.rowHeight" (arc-sort)="this.arcSort.emit($event)" (arc-select-all)="this.arcSelectAll.emit($event)" (arc-row-select)="this.arcRowSelect.emit($event)"><ng-content /></arc-data-table>`,
 })
 export class DataTable {
   @Input() rows: Array<Record<string, any>> = [];

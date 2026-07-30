@@ -26,7 +26,7 @@ export class ArcDescriptionItem extends LitElement {
 
       .item__term {
         font-family: var(--font-label);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         font-size: var(--text-xs);
         letter-spacing: 2px;
         text-transform: uppercase;

@@ -6,7 +6,6 @@ import { ArcConnectionStatus } from '@arclux/arc-ui/connection-status';
 
 export interface ConnectionStatusProps {
   className?: string;
-  children?: React.ReactNode;
   onArcOnline?: (e: CustomEvent) => void;
   onArcOffline?: (e: CustomEvent) => void;
 }

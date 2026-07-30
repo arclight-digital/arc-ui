@@ -10,7 +10,10 @@
     disabled?: boolean;
     loading?: boolean;
     type?: 'button' | 'submit' | 'reset';
-    children?: Snippet;
+    /** <slot name="prefix"> — put slot="prefix" on the element inside. */
+    prefix?: Snippet;
+    /** <slot name="suffix"> — put slot="suffix" on the element inside. */
+    suffix?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -38,9 +41,10 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { variant = 'primary', size = 'md', href = '', disabled = false, loading = false, type = 'button', children, ...rest }: Props = $props();
+  let { variant = 'primary', size = 'md', href = '', disabled = false, loading = false, type = 'button', prefix, suffix, ...rest }: Props = $props();
 </script>
 
 <arc-button {variant} {size} {href} {disabled} {loading} {type} {...rest}>
-  {@render children?.()}
+  {@render prefix?.()}
+  {@render suffix?.()}
 </arc-button>

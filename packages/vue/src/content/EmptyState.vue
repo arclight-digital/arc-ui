@@ -18,6 +18,7 @@ const props = withDefaults(defineProps<{
     :heading="props.heading"
     :description="props.description"
   >
-    <slot />
+    <slot name="icon" />
+    <slot name="actions" />
   </arc-empty-state>
 </template>

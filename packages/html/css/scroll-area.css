@@ -14,7 +14,7 @@
 
       /* Orientation variants */
       .arc-scroll-area[data-orientation="vertical"] .scroll-area,
-      .arc-scroll-area:not([data-orientation]) .scroll-area {
+      .arc-scroll-area:not([data-data-orientation="both"]):not([data-data-orientation="horizontal"]) .scroll-area {
         overflow-y: auto;
         overflow-x: hidden;
       }

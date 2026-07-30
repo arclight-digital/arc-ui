@@ -7,7 +7,6 @@ export interface TimeAgoProps {
   datetime?: string;
   live?: boolean;
   locale?: string;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -36,10 +35,9 @@ export interface TimeAgoProps {
 }
 
 export const TimeAgo: Component<TimeAgoProps> = (props) => {
-  const [local, rest] = splitProps(props, ['datetime', 'live', 'locale', 'children']);
+  const [local, rest] = splitProps(props, ['datetime', 'live', 'locale']);
   return (
     <arc-time-ago datetime={local.datetime} live={local.live} locale={local.locale} {...rest}>
-      {local.children}
     </arc-time-ago>
   );
 };

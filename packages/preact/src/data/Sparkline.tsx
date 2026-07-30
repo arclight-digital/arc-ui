@@ -10,7 +10,6 @@ export interface SparklineProps {
   width?: number;
   height?: number;
   fill?: boolean;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -38,8 +37,7 @@ export interface SparklineProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Sparkline: FunctionComponent<SparklineProps> = ({ data, type, color, width, height, fill, children, ...rest }) => (
+export const Sparkline: FunctionComponent<SparklineProps> = ({ data, type, color, width, height, fill, ...rest }) => (
   <arc-sparkline data={data} type={type} color={color} width={width} height={height} fill={fill} {...rest}>
-    {children}
   </arc-sparkline>
 );

@@ -27,5 +27,6 @@ const emit = defineEmits<{
     @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"
   >
     <slot />
+    <slot name="trigger" />
   </arc-popover>
 </template>

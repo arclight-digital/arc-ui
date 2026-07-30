@@ -7,7 +7,7 @@ import '@arclux/arc-ui/hover-card';
   selector: 'arc-hover-card',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-hover-card [attr.position]="this.position" [attr.openDelay]="this.openDelay" [attr.closeDelay]="this.closeDelay" (arc-open)="this.arcOpen.emit($event)" (arc-close)="this.arcClose.emit($event)"><ng-content /></arc-hover-card>`,
+  template: `<arc-hover-card [attr.position]="this.position" [openDelay]="this.openDelay" [closeDelay]="this.closeDelay" (arc-open)="this.arcOpen.emit($event)" (arc-close)="this.arcClose.emit($event)"><ng-content /></arc-hover-card>`,
 })
 export class HoverCard {
   @Input() position: 'bottom' | 'top' | 'left' | 'right' = 'bottom';

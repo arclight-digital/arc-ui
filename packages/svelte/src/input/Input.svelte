@@ -15,7 +15,10 @@
     size?: 'sm' | 'md' | 'lg';
     multiline?: boolean;
     rows?: number;
-    children?: Snippet;
+    /** <slot name="prefix"> — put slot="prefix" on the element inside. */
+    prefix?: Snippet;
+    /** <slot name="suffix"> — put slot="suffix" on the element inside. */
+    suffix?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -43,7 +46,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { type = 'text', name = '', label = '', placeholder = '', value = $bindable(''), disabled = false, required = false, error = '', size = 'md', multiline = false, rows = 5, children, ...rest }: Props = $props();
+  let { type = 'text', name = '', label = '', placeholder = '', value = $bindable(''), disabled = false, required = false, error = '', size = 'md', multiline = false, rows = 5, prefix, suffix, ...rest }: Props = $props();
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
@@ -68,5 +71,6 @@
   onarc-input={__onArcInput}
   onarc-change={__onArcChange}
 >
-  {@render children?.()}
+  {@render prefix?.()}
+  {@render suffix?.()}
 </arc-input>

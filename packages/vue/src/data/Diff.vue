@@ -21,6 +21,5 @@ const props = withDefaults(defineProps<{
     :after="props.after"
     :mode="props.mode"
   >
-    <slot />
   </arc-diff>
 </template>

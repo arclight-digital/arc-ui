@@ -7,6 +7,16 @@
     heading?: string;
     description?: string;
     border?: boolean;
+    /** <slot name="above"> — put slot="above" on the element inside. */
+    above?: Snippet;
+    /** <slot name="aside"> — put slot="aside" on the element inside. */
+    aside?: Snippet;
+    /** <slot name="below"> — put slot="below" on the element inside. */
+    below?: Snippet;
+    /** <slot name="heading"> — put slot="heading" on the element inside. */
+    heading_?: Snippet;
+    /** <slot name="description"> — put slot="description" on the element inside. */
+    description_?: Snippet;
     children?: Snippet;
     class?: string;
     id?: string;
@@ -35,9 +45,14 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { heading = '', description = '', border = false, children, ...rest }: Props = $props();
+  let { heading = '', description = '', border = false, above, aside, below, heading_, description_, children, ...rest }: Props = $props();
 </script>
 
 <arc-page-header {heading} {description} {border} {...rest}>
+  {@render above?.()}
+  {@render aside?.()}
+  {@render below?.()}
+  {@render heading_?.()}
+  {@render description_?.()}
   {@render children?.()}
 </arc-page-header>

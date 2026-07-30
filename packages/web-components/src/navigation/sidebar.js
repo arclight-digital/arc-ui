@@ -119,7 +119,7 @@ export class ArcSidebar extends LitElement {
       .sidebar__heading {
         display: block;
         font-family: var(--font-label);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         font-size: var(--text-xs);
         letter-spacing: 2px;
         text-transform: uppercase;
@@ -137,7 +137,7 @@ export class ArcSidebar extends LitElement {
         align-items: center;
         gap: var(--space-xs);
         font-family: var(--font-label);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         font-size: var(--text-xs);
         letter-spacing: 2px;
         text-transform: uppercase;
@@ -173,7 +173,7 @@ export class ArcSidebar extends LitElement {
       .sidebar__toggle-count {
         font-family: var(--font-mono);
         font-size: var(--text-xs);
-        font-weight: 400;
+        font-weight: var(--font-mono-weight, 400);
         letter-spacing: 0;
         color: var(--text-ghost);
         -webkit-text-fill-color: var(--text-ghost);

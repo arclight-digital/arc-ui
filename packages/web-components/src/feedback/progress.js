@@ -36,7 +36,7 @@ export class ArcProgress extends LitElement {
 
       .progress__label {
         font-family: var(--font-label);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         font-size: var(--label-inline-size);
         letter-spacing: var(--label-inline-spacing);
         text-transform: uppercase;
@@ -54,7 +54,7 @@ export class ArcProgress extends LitElement {
       }
 
       :host([size="sm"]) .progress__track { height: 4px; }
-      :host(:not([size])) .progress__track,
+      :host(:not([size="lg"]):not([size="sm"])) .progress__track,
       :host([size="md"]) .progress__track { height: 8px; }
       :host([size="lg"]) .progress__track { height: 12px; }
 
@@ -77,7 +77,7 @@ export class ArcProgress extends LitElement {
       }
 
       :host([size="sm"]) .progress__spinner { width: 20px; height: 20px; }
-      :host(:not([size])) .progress__spinner,
+      :host(:not([size="lg"]):not([size="sm"])) .progress__spinner,
       :host([size="md"]) .progress__spinner { width: 32px; height: 32px; }
       :host([size="lg"]) .progress__spinner { width: 48px; height: 48px; }
 

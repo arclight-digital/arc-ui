@@ -6,6 +6,12 @@
   interface Props {
     sidebarOpen?: boolean;
     breakpoint?: number;
+    /** <slot name="topbar"> — put slot="topbar" on the element inside. */
+    topbar?: Snippet;
+    /** <slot name="sidebar"> — put slot="sidebar" on the element inside. */
+    sidebar?: Snippet;
+    /** <slot name="toc"> — put slot="toc" on the element inside. */
+    toc?: Snippet;
     children?: Snippet;
     class?: string;
     id?: string;
@@ -34,9 +40,19 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { sidebarOpen = false, breakpoint = 900, children, ...rest }: Props = $props();
+  let { sidebarOpen = false, breakpoint = 900, topbar, sidebar, toc, children, ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (sidebarOpen !== undefined) el.sidebarOpen = sidebarOpen;
+  });
 </script>
 
-<arc-app-shell {sidebarOpen} {breakpoint} {...rest}>
+<arc-app-shell {breakpoint} bind:this={__el} {...rest}>
+  {@render topbar?.()}
+  {@render sidebar?.()}
+  {@render toc?.()}
   {@render children?.()}
 </arc-app-shell>

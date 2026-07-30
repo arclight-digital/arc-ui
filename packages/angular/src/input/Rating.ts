@@ -7,7 +7,7 @@ import '@arclux/arc-ui/rating';
   selector: 'arc-rating',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-rating [attr.value]="this.value" [attr.max]="this.max" [attr.name]="this.name" [disabled]="this.disabled" [readonly]="this.readonly" (arc-change)="this.onArcChange($event)"><ng-content /></arc-rating>`,
+  template: `<arc-rating [attr.value]="this.value" [attr.max]="this.max" [attr.name]="this.name" [disabled]="this.disabled" [readonly]="this.readonly" (arc-change)="this.onArcChange($event)"></arc-rating>`,
 })
 export class Rating {
   @Input() value: number = 0;

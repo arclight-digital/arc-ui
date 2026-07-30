@@ -12,7 +12,6 @@ export interface SidebarProps {
   glow?: boolean;
   label?: string;
   className?: string;
-  children?: React.ReactNode;
 }
 
 export const Sidebar = createComponent({

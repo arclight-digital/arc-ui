@@ -21,6 +21,5 @@ const props = withDefaults(defineProps<{
     :live="props.live"
     :locale="props.locale"
   >
-    <slot />
   </arc-time-ago>
 </template>

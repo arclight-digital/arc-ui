@@ -7,7 +7,8 @@
     placeholder?: string;
     value?: string;
     icon?: string;
-    children?: Snippet;
+    /** <slot name="hint"> — put slot="hint" on the element inside. */
+    hint?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -35,7 +36,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { placeholder = 'Search…', value = $bindable(''), icon = 'magnifying-glass', children, ...rest }: Props = $props();
+  let { placeholder = 'Search…', value = $bindable(''), icon = 'magnifying-glass', hint, ...rest }: Props = $props();
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
@@ -60,5 +61,5 @@
   onarc-input={__onArcInput}
   onarc-submit={__onArcSubmit}
 >
-  {@render children?.()}
+  {@render hint?.()}
 </arc-command-bar>

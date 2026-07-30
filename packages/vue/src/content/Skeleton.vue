@@ -24,6 +24,5 @@ const props = withDefaults(defineProps<{
     :height="props.height"
     :count="props.count"
   >
-    <slot />
   </arc-skeleton>
 </template>

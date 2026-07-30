@@ -13,7 +13,6 @@ export interface NumberInputProps {
   name?: string;
   disabled?: boolean;
   onArcChange?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -41,7 +40,7 @@ export interface NumberInputProps {
   [key: `on${string}`]: unknown;
 }
 
-export const NumberInput: FunctionComponent<NumberInputProps> = ({ value, min, max, step, label, name, disabled, onArcChange, children, ...rest }) => {
+export const NumberInput: FunctionComponent<NumberInputProps> = ({ value, min, max, step, label, name, disabled, onArcChange, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -56,7 +55,6 @@ export const NumberInput: FunctionComponent<NumberInputProps> = ({ value, min, m
   }, [onArcChange]);
   return (
     <arc-number-input ref={ref} value={value} min={min} max={max} step={step} label={label} name={name} disabled={disabled} {...rest}>
-      {children}
     </arc-number-input>
   );
 };

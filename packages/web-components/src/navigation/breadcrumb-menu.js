@@ -96,7 +96,11 @@ export class ArcBreadcrumbMenu extends LitElement {
         box-shadow: var(--shadow-overlay);
         backdrop-filter: blur(12px);
         padding: var(--space-xs);
+        /* Sizes to its longest crumb rather than to the width available from a
+           narrow positioned ancestor. See the note in navigation/menubar.js. */
+        width: max-content;
         min-width: 160px;
+        max-width: var(--menu-max-width, min(420px, calc(100vw - 2 * var(--space-md))));
         z-index: 200;
       }
 

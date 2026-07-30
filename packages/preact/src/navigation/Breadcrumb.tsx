@@ -8,7 +8,6 @@ export interface BreadcrumbProps {
   separator?: string;
   label?: string;
   onArcNavigate?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -36,7 +35,7 @@ export interface BreadcrumbProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Breadcrumb: FunctionComponent<BreadcrumbProps> = ({ separator, label, onArcNavigate, children, ...rest }) => {
+export const Breadcrumb: FunctionComponent<BreadcrumbProps> = ({ separator, label, onArcNavigate, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -51,7 +50,6 @@ export const Breadcrumb: FunctionComponent<BreadcrumbProps> = ({ separator, labe
   }, [onArcNavigate]);
   return (
     <arc-breadcrumb ref={ref} separator={separator} label={label} {...rest}>
-      {children}
     </arc-breadcrumb>
   );
 };

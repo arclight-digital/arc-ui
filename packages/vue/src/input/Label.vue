@@ -25,5 +25,7 @@ const props = withDefaults(defineProps<{
     :disabled="props.disabled"
   >
     <slot />
+    <slot name="tooltip" />
+    <slot name="description" />
   </arc-label>
 </template>

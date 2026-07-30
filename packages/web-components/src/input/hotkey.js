@@ -1,4 +1,5 @@
 import { LitElement, css, nothing } from 'lit';
+import { isEditingTarget } from '../shared/editing-target.js';
 
 /**
  * Invisible keyboard shortcut listener that supports modifier combos (Ctrl+K) and chord sequences
@@ -98,13 +99,13 @@ export class ArcHotkey extends LitElement {
   _onKeydown(e) {
     if (this.disabled || !this._parsedChords.length) return;
 
-    // Skip if focus is in an input/textarea/contenteditable (unless global)
-    if (!this.global) {
-      const tag = e.target?.tagName;
-      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || e.target?.isContentEditable) {
-        return;
-      }
-    }
+    // Skip if focus is in a text-entry element (unless global).
+    //
+    // This used to read e.target.tagName, which is the retargeted host for any
+    // event out of a shadow root: a keypress in <arc-textarea> arrived as
+    // ARC-TEXTAREA, matched nothing, and the hotkey fired while the user was
+    // typing. isEditingTarget reads composedPath()[0] instead.
+    if (!this.global && isEditingTarget(e)) return;
 
     const expected = this._parsedChords[this._chordIndex];
     if (!expected) return;

@@ -31,6 +31,5 @@ const emit = defineEmits<{
     @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
     @arc-remove="(payload: CustomEvent) => emit('arc-remove', payload)"
   >
-    <slot />
   </arc-file-upload>
 </template>

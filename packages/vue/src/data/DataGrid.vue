@@ -51,6 +51,5 @@ function onArcSort(payload: CustomEvent) {
     @arc-selection-change="(payload: CustomEvent) => emit('arc-selection-change', payload)"
     @arc-cell-change="(payload: CustomEvent) => emit('arc-cell-change', payload)"
   >
-    <slot />
   </arc-data-grid>
 </template>

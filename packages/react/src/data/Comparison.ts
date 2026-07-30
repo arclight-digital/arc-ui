@@ -7,7 +7,6 @@ import { ArcComparison } from '@arclux/arc-ui/comparison';
 export interface ComparisonProps {
   features?: string;
   className?: string;
-  children?: React.ReactNode;
 }
 
 export const Comparison = createComponent({

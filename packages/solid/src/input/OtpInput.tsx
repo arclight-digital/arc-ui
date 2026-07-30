@@ -10,7 +10,6 @@ export interface OtpInputProps {
   disabled?: boolean;
   type?: 'number' | 'text';
   onArcChange?: (e: CustomEvent) => void;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -39,10 +38,9 @@ export interface OtpInputProps {
 }
 
 export const OtpInput: Component<OtpInputProps> = (props) => {
-  const [local, rest] = splitProps(props, ['length', 'value', 'name', 'disabled', 'type', 'onArcChange', 'children']);
+  const [local, rest] = splitProps(props, ['length', 'value', 'name', 'disabled', 'type', 'onArcChange']);
   return (
     <arc-otp-input length={local.length} value={local.value} name={local.name} disabled={local.disabled} type={local.type} on:arc-change={local.onArcChange} {...rest}>
-      {local.children}
     </arc-otp-input>
   );
 };

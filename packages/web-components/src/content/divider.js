@@ -28,7 +28,7 @@ export class ArcDivider extends LitElement {
 
       .divider { width: 100%; height: 1px; }
 
-      :host(:not([variant])) .divider,
+      :host(:not([variant="glow"]):not([variant="line-gradient"]):not([variant="line-primary"]):not([variant="line-white"])) .divider,
       :host([variant="subtle"]) .divider { background: var(--gradient-divider); }
 
       :host([variant="glow"]) .divider {
@@ -71,11 +71,11 @@ export class ArcDivider extends LitElement {
       :host([align="left"]) .divider { margin-inline: 0; }
       :host([align="right"]) .divider { margin-left: auto; margin-right: 0; }
 
-      :host([align="left"]:not([variant])) .divider,
+      :host([align="left"]:not([variant="glow"]):not([variant="line-gradient"]):not([variant="line-primary"]):not([variant="line-white"])) .divider,
       :host([align="left"][variant="subtle"]) .divider {
         background: linear-gradient(90deg, var(--border-default), transparent);
       }
-      :host([align="right"]:not([variant])) .divider,
+      :host([align="right"]:not([variant="glow"]):not([variant="line-gradient"]):not([variant="line-primary"]):not([variant="line-white"])) .divider,
       :host([align="right"][variant="subtle"]) .divider {
         background: linear-gradient(90deg, transparent, var(--border-default));
       }
@@ -112,7 +112,7 @@ export class ArcDivider extends LitElement {
       :host([vertical]) { display: inline-flex; width: auto; height: 100%; }
       :host([vertical]) .divider { width: 1px; height: 100%; }
 
-      :host([vertical]:not([variant])) .divider,
+      :host([vertical]:not([variant="glow"]):not([variant="line-gradient"]):not([variant="line-primary"]):not([variant="line-white"])) .divider,
       :host([vertical][variant="subtle"]) .divider {
         background: linear-gradient(180deg, transparent, var(--border-default), transparent);
       }
@@ -160,7 +160,7 @@ export class ArcDivider extends LitElement {
       .divider__label {
         font-family: var(--font-label);
         font-size: var(--text-xs);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         letter-spacing: 1.5px;
         text-transform: uppercase;
         color: var(--text-muted);

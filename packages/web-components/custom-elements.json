@@ -7377,6 +7377,12 @@
               "name": "confirm"
             }
           ],
+          "slots": [
+            {
+              "description": "Body content, for when the confirmation needs markup the `message` string cannot carry — a filename in `<code>`, an emphasised consequence, a short list of what is about to change. Falls back to `message` when nothing is slotted.",
+              "name": ""
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -7424,7 +7430,7 @@
                 "text": "string"
               },
               "default": "''",
-              "description": "The body message explaining what the user is confirming.",
+              "description": "The body message explaining what the user is confirming. Used as the fallback for the default slot, so it is the simplest way to set the body and the only one available to the imperative `ArcConfirm.open()` API.",
               "attribute": "message"
             },
             {
@@ -7508,7 +7514,7 @@
                 "text": "string"
               },
               "default": "''",
-              "description": "The body message explaining what the user is confirming.",
+              "description": "The body message explaining what the user is confirming. Used as the fallback for the default slot, so it is the simplest way to set the body and the only one available to the imperative `ArcConfirm.open()` API.",
               "fieldName": "message"
             },
             {
@@ -23092,10 +23098,10 @@
               "name": "position",
               "privacy": "public",
               "type": {
-                "text": "string"
+                "text": "'bottom-right' | 'bottom-left'"
               },
               "default": "'bottom-right'",
-              "description": "Corner placement: \"bottom-right\" or \"bottom-left\".",
+              "description": "Corner placement.",
               "attribute": "position",
               "reflects": true
             },
@@ -23133,10 +23139,10 @@
             {
               "name": "position",
               "type": {
-                "text": "string"
+                "text": "'bottom-right' | 'bottom-left'"
               },
               "default": "'bottom-right'",
-              "description": "Corner placement: \"bottom-right\" or \"bottom-left\".",
+              "description": "Corner placement.",
               "fieldName": "position"
             },
             {
@@ -24737,6 +24743,93 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/shared/editing-target.js",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "isEditingNode",
+          "parameters": [
+            {
+              "name": "node",
+              "type": {
+                "text": "EventTarget | null | undefined"
+              }
+            }
+          ],
+          "description": "True when `node` is an element the user types or selects text into.",
+          "return": {
+            "type": {
+              "text": "boolean"
+            }
+          }
+        },
+        {
+          "kind": "function",
+          "name": "isEditingTarget",
+          "parameters": [
+            {
+              "name": "eventOrNode",
+              "type": {
+                "text": "Event | EventTarget | null | undefined"
+              }
+            }
+          ],
+          "description": "True when a keyboard event originated in a text-entry element, looking through\nshadow boundaries.\n\nAccepts an event or a node, so it is usable both from an event handler and\nagainst `document.activeElement`.",
+          "return": {
+            "type": {
+              "text": "boolean"
+            }
+          }
+        },
+        {
+          "kind": "function",
+          "name": "setEditingMarker",
+          "parameters": [
+            {
+              "name": "host",
+              "type": {
+                "text": "HTMLElement"
+              }
+            },
+            {
+              "name": "editing",
+              "type": {
+                "text": "boolean"
+              }
+            }
+          ],
+          "description": "Marks `host` while one of its shadow-root controls holds focus, so code\noutside can identify it with a selector.\n\nWired by the input components themselves; consumers do not call this."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "isEditingNode",
+          "declaration": {
+            "name": "isEditingNode",
+            "module": "src/shared/editing-target.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "isEditingTarget",
+          "declaration": {
+            "name": "isEditingTarget",
+            "module": "src/shared/editing-target.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "setEditingMarker",
+          "declaration": {
+            "name": "setEditingMarker",
+            "module": "src/shared/editing-target.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/shared/focus-trap.js",
       "declarations": [
         {
@@ -24823,7 +24916,7 @@
       "declarations": [
         {
           "kind": "mixin",
-          "description": "FormControlMixin — standard ElementInternals form participation for input\ncomponents. Gives every consumer:\n\n  - formAssociated + attachInternals (this._internals)\n  - native <form> value submission via _updateFormValue()\n  - formDisabledCallback: <fieldset disabled> / <form disabled> works\n  - formResetCallback: form.reset() restores the initial state\n  - formStateRestoreCallback: bfcache/autofill restore\n  - form/validity/validationMessage/checkValidity/reportValidity passthrough\n\nConsuming components:\n  - call _updateFormValue() whenever their public value changes\n  - override _formValue() when the submitted value isn't `this.value`\n    (e.g. checkbox submits value-when-checked / null)\n  - override _formResetState()/_applyFormState() when reset needs more than\n    restoring `value` (e.g. checked flags, selected arrays)\n  - may call _setValidity(flags, message, anchor) for constraint validation",
+          "description": "",
           "name": "FormControlMixin",
           "members": [
             {

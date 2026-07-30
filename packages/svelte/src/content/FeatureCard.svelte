@@ -9,7 +9,8 @@
     description?: string;
     href?: string;
     action?: string;
-    children?: Snippet;
+    /** <slot name="icon"> — put slot="icon" on the element inside. */
+    icon_?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -37,9 +38,9 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { icon = '', heading = '', description = '', href = '', action = '', children, ...rest }: Props = $props();
+  let { icon = '', heading = '', description = '', href = '', action = '', icon_, ...rest }: Props = $props();
 </script>
 
 <arc-feature-card {icon} {heading} {description} {href} {action} {...rest}>
-  {@render children?.()}
+  {@render icon_?.()}
 </arc-feature-card>

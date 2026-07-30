@@ -52,7 +52,7 @@ export class ArcBlockquote extends LitElement {
         top: -8px;
         left: var(--space-md);
         font-size: 64px;
-        font-weight: 200;
+        font-weight: var(--font-quote-weight, 200);
         line-height: 1;
         color: var(--text-ghost);
         opacity: 0.15;
@@ -79,7 +79,7 @@ export class ArcBlockquote extends LitElement {
         display: block;
         margin-top: var(--space-md);
         font-family: var(--font-label);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         font-size: var(--text-xs);
         letter-spacing: 2px;
         text-transform: uppercase;

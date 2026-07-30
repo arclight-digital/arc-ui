@@ -13,7 +13,6 @@ export interface TopBarProps {
   menuPosition?: string;
   navAlign?: string;
   className?: string;
-  children?: React.ReactNode;
 }
 
 export const TopBar = createComponent({

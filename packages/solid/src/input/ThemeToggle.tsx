@@ -8,7 +8,6 @@ export interface ThemeToggleProps {
   disabled?: boolean;
   iconOnly?: boolean;
   onArcChange?: (e: CustomEvent) => void;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -37,10 +36,9 @@ export interface ThemeToggleProps {
 }
 
 export const ThemeToggle: Component<ThemeToggleProps> = (props) => {
-  const [local, rest] = splitProps(props, ['theme', 'disabled', 'iconOnly', 'onArcChange', 'children']);
+  const [local, rest] = splitProps(props, ['theme', 'disabled', 'iconOnly', 'onArcChange']);
   return (
-    <arc-theme-toggle theme={local.theme} disabled={local.disabled} iconOnly={local.iconOnly} on:arc-change={local.onArcChange} {...rest}>
-      {local.children}
+    <arc-theme-toggle theme={local.theme} disabled={local.disabled} prop:iconOnly={local.iconOnly} on:arc-change={local.onArcChange} {...rest}>
     </arc-theme-toggle>
   );
 };

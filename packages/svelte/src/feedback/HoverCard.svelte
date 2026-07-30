@@ -7,6 +7,8 @@
     position?: 'bottom' | 'top' | 'left' | 'right';
     openDelay?: number;
     closeDelay?: number;
+    /** <slot name="content"> — put slot="content" on the element inside. */
+    content?: Snippet;
     children?: Snippet;
     class?: string;
     id?: string;
@@ -35,9 +37,18 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { position = 'bottom', openDelay = 400, closeDelay = 300, children, ...rest }: Props = $props();
+  let { position = 'bottom', openDelay = 400, closeDelay = 300, content, children, ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (openDelay !== undefined) el.openDelay = openDelay;
+    if (closeDelay !== undefined) el.closeDelay = closeDelay;
+  });
 </script>
 
-<arc-hover-card {position} {openDelay} {closeDelay} {...rest}>
+<arc-hover-card {position} bind:this={__el} {...rest}>
+  {@render content?.()}
   {@render children?.()}
 </arc-hover-card>

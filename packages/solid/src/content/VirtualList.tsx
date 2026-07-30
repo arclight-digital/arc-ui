@@ -7,7 +7,6 @@ export interface VirtualListProps {
   items?: unknown[];
   itemHeight?: number;
   overscan?: number;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -36,10 +35,9 @@ export interface VirtualListProps {
 }
 
 export const VirtualList: Component<VirtualListProps> = (props) => {
-  const [local, rest] = splitProps(props, ['items', 'itemHeight', 'overscan', 'children']);
+  const [local, rest] = splitProps(props, ['items', 'itemHeight', 'overscan']);
   return (
-    <arc-virtual-list items={local.items} itemHeight={local.itemHeight} overscan={local.overscan} {...rest}>
-      {local.children}
+    <arc-virtual-list items={local.items} prop:itemHeight={local.itemHeight} overscan={local.overscan} {...rest}>
     </arc-virtual-list>
   );
 };

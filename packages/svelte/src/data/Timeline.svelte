@@ -34,8 +34,15 @@
   }
 
   let { headingLevel = 3, children, ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (headingLevel !== undefined) el.headingLevel = headingLevel;
+  });
 </script>
 
-<arc-timeline {headingLevel} {...rest}>
+<arc-timeline bind:this={__el} {...rest}>
   {@render children?.()}
 </arc-timeline>

@@ -38,7 +38,7 @@ export interface DockProps {
 export const Dock: Component<DockProps> = (props) => {
   const [local, rest] = splitProps(props, ['position', 'autoHide', 'open', 'children']);
   return (
-    <arc-dock position={local.position} autoHide={local.autoHide} open={local.open} {...rest}>
+    <arc-dock position={local.position} prop:autoHide={local.autoHide} open={local.open} {...rest}>
       {local.children}
     </arc-dock>
   );

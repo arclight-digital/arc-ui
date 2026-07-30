@@ -15,7 +15,6 @@
     size?: 'sm' | 'md' | 'lg';
     autoResize?: boolean;
     error?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -43,7 +42,14 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = $bindable(''), placeholder = '', label = '', rows = 4, maxlength = 0, disabled = false, readonly = false, resize = 'vertical', size = 'md', autoResize = false, error = '', children, ...rest }: Props = $props();
+  let { value = $bindable(''), placeholder = '', label = '', rows = 4, maxlength = 0, disabled = false, readonly = false, resize = 'vertical', size = 'md', autoResize = false, error = '', ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (autoResize !== undefined) el.autoResize = autoResize;
+  });
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
@@ -64,9 +70,8 @@
   }
 </script>
 
-<arc-textarea {value} {placeholder} {label} {rows} {maxlength} {disabled} {readonly} {resize} {size} {autoResize} {error} {...rest}
+<arc-textarea {value} {placeholder} {label} {rows} {maxlength} {disabled} {readonly} {resize} {size} {error} bind:this={__el} {...rest}
   onarc-input={__onArcInput}
   onarc-change={__onArcChange}
 >
-  {@render children?.()}
 </arc-textarea>

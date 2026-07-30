@@ -13,7 +13,6 @@ export interface SliderProps {
   label?: string;
   onArcInput?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -42,10 +41,9 @@ export interface SliderProps {
 }
 
 export const Slider: Component<SliderProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'min', 'max', 'step', 'name', 'disabled', 'label', 'onArcInput', 'onArcChange', 'children']);
+  const [local, rest] = splitProps(props, ['value', 'min', 'max', 'step', 'name', 'disabled', 'label', 'onArcInput', 'onArcChange']);
   return (
     <arc-slider value={local.value} min={local.min} max={local.max} step={local.step} name={local.name} disabled={local.disabled} label={local.label} on:arc-input={local.onArcInput} on:arc-change={local.onArcChange} {...rest}>
-      {local.children}
     </arc-slider>
   );
 };

@@ -10,7 +10,7 @@
 
       /* Size variants */
       .arc-prose[data-size="sm"] { font-size: var(--text-sm); }
-      .arc-prose[data-size="md"], .arc-prose:not([data-size]) { font-size: var(--body-size); }
+      .arc-prose[data-size="md"], .arc-prose:not([data-data-size="lg"]):not([data-data-size="sm"]) { font-size: var(--body-size); }
       .arc-prose[data-size="lg"] { font-size: var(--text-lg); }
 
       /* Direct-child block elements via ::slotted */

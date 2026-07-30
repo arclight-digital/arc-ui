@@ -27,6 +27,6 @@ const props = withDefaults(defineProps<{
     :href="props.href"
     :action="props.action"
   >
-    <slot />
+    <slot name="icon" />
   </arc-feature-card>
 </template>

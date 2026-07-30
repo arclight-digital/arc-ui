@@ -10,7 +10,6 @@ export interface ButtonProps {
   disabled?: boolean;
   loading?: boolean;
   type?: 'button' | 'submit' | 'reset';
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -39,10 +38,9 @@ export interface ButtonProps {
 }
 
 export const Button: Component<ButtonProps> = (props) => {
-  const [local, rest] = splitProps(props, ['variant', 'size', 'href', 'disabled', 'loading', 'type', 'children']);
+  const [local, rest] = splitProps(props, ['variant', 'size', 'href', 'disabled', 'loading', 'type']);
   return (
     <arc-button variant={local.variant} size={local.size} href={local.href} disabled={local.disabled} loading={local.loading} type={local.type} {...rest}>
-      {local.children}
     </arc-button>
   );
 };

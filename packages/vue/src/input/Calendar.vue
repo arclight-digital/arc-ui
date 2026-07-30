@@ -53,6 +53,5 @@ function onArcChange(payload: CustomEvent) {
     @arc-navigate="onArcNavigate"
     @arc-change="onArcChange"
   >
-    <slot />
   </arc-calendar>
 </template>

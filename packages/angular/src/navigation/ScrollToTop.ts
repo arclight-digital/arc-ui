@@ -7,7 +7,7 @@ import '@arclux/arc-ui/scroll-to-top';
   selector: 'arc-scroll-to-top',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-scroll-to-top [attr.threshold]="this.threshold" [smooth]="this.smooth" [attr.position]="this.position" [attr.offset]="this.offset"><ng-content /></arc-scroll-to-top>`,
+  template: `<arc-scroll-to-top [attr.threshold]="this.threshold" [smooth]="this.smooth" [attr.position]="this.position" [attr.offset]="this.offset"></arc-scroll-to-top>`,
 })
 export class ScrollToTop {
   @Input() threshold: number = 300;

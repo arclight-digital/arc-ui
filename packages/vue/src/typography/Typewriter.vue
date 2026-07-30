@@ -38,6 +38,5 @@ const emit = defineEmits<{
     :pauseEnd="props.pauseEnd"
     @arc-complete="(payload: CustomEvent) => emit('arc-complete', payload)"
   >
-    <slot />
   </arc-typewriter>
 </template>

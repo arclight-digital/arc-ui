@@ -48,7 +48,7 @@ export class ArcNumberInput extends FormControlMixin(LitElement) {
 
       .number-input__label {
         font-family: var(--font-label);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         font-size: var(--label-inline-size);
         letter-spacing: var(--label-inline-spacing);
         text-transform: uppercase;
@@ -112,12 +112,19 @@ export class ArcNumberInput extends FormControlMixin(LitElement) {
         position: relative;
       }
 
+      /* The bordered control is a block-level flex child, so it takes the host's
+         full width. The field grows to absorb whatever that is — without this
+         the buttons and field total 128px and everything past that is empty
+         bordered box, which is what any form column wider than 128px produced.
+         56px stays the flex basis so the control keeps its natural size when
+         the host is sized to content. */
       .number-input__field {
-        width: 56px;
+        flex: 1 1 56px;
+        min-width: 0;
         text-align: center;
         font-family: var(--font-body);
         font-size: var(--body-size);
-        font-weight: 500;
+        font-weight: var(--field-weight, 400);
         color: var(--text-primary);
         background: transparent;
         border: none;

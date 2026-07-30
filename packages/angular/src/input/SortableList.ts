@@ -7,7 +7,7 @@ import '@arclux/arc-ui/sortable-list';
   selector: 'arc-sortable-list',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-sortable-list [disabled]="this.disabled" (arc-change)="this.arcChange.emit($event)"><ng-content /></arc-sortable-list>`,
+  template: `<arc-sortable-list [disabled]="this.disabled" (arc-change)="this.arcChange.emit($event)"></arc-sortable-list>`,
 })
 export class SortableList {
   @Input() disabled: boolean = false;

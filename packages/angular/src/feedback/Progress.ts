@@ -7,7 +7,7 @@ import '@arclux/arc-ui/progress';
   selector: 'arc-progress',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-progress [attr.value]="this.value" [attr.variant]="this.variant" [attr.size]="this.size" [indeterminate]="this.indeterminate" [showValue]="this.showValue" [attr.label]="this.label"><ng-content /></arc-progress>`,
+  template: `<arc-progress [attr.value]="this.value" [attr.variant]="this.variant" [attr.size]="this.size" [indeterminate]="this.indeterminate" [showValue]="this.showValue" [attr.label]="this.label"></arc-progress>`,
 })
 export class Progress {
   @Input() value: number = 0;

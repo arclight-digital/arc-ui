@@ -49,7 +49,7 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
 
       label {
         font-family: var(--font-label);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         font-size: var(--text-xs);
         letter-spacing: 1px;
         text-transform: uppercase;
@@ -120,7 +120,7 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
 
       .calendar-title {
         font-family: var(--font-label);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         font-size: var(--text-xs);
         letter-spacing: 1.5px;
         text-transform: uppercase;

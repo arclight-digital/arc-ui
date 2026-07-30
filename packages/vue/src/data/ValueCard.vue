@@ -21,6 +21,6 @@ const props = withDefaults(defineProps<{
     :heading="props.heading"
     :description="props.description"
   >
-    <slot />
+    <slot name="icon" />
   </arc-value-card>
 </template>

@@ -19,5 +19,8 @@ const props = withDefaults(defineProps<{
     :breakpoint="props.breakpoint"
   >
     <slot />
+    <slot name="topbar" />
+    <slot name="sidebar" />
+    <slot name="toc" />
   </arc-app-shell>
 </template>

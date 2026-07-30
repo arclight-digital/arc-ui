@@ -47,7 +47,7 @@ export class ArcSelect extends FormControlMixin(LitElement) {
       .select__label {
         display: block;
         font-family: var(--font-label);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         font-size: var(--label-inline-size);
         letter-spacing: var(--label-inline-spacing);
         text-transform: uppercase;
@@ -64,6 +64,7 @@ export class ArcSelect extends FormControlMixin(LitElement) {
         padding: var(--space-sm) var(--space-md);
         font-family: var(--font-body);
         font-size: var(--body-size);
+        font-weight: var(--field-weight, 400);
         color: var(--text-primary);
         background: var(--surface-primary);
         border: 1px solid var(--border-default);

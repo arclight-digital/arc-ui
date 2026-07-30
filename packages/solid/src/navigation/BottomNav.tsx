@@ -7,7 +7,6 @@ export interface BottomNavProps {
   items?: string;
   value?: string;
   onArcChange?: (e: CustomEvent) => void;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -36,10 +35,9 @@ export interface BottomNavProps {
 }
 
 export const BottomNav: Component<BottomNavProps> = (props) => {
-  const [local, rest] = splitProps(props, ['items', 'value', 'onArcChange', 'children']);
+  const [local, rest] = splitProps(props, ['items', 'value', 'onArcChange']);
   return (
     <arc-bottom-nav items={local.items} value={local.value} on:arc-change={local.onArcChange} {...rest}>
-      {local.children}
     </arc-bottom-nav>
   );
 };

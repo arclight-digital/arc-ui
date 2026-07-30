@@ -35,8 +35,15 @@
   }
 
   let { maxHeight = '', orientation = 'vertical', children, ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (maxHeight !== undefined) el.maxHeight = maxHeight;
+  });
 </script>
 
-<arc-scroll-area {maxHeight} {orientation} {...rest}>
+<arc-scroll-area {orientation} bind:this={__el} {...rest}>
   {@render children?.()}
 </arc-scroll-area>

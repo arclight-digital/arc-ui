@@ -15,7 +15,6 @@ export interface DataGridProps {
   onArcSort?: (e: CustomEvent) => void;
   onArcSelectionChange?: (e: CustomEvent) => void;
   onArcCellChange?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -43,7 +42,7 @@ export interface DataGridProps {
   [key: `on${string}`]: unknown;
 }
 
-export const DataGrid: FunctionComponent<DataGridProps> = ({ columns, rows, sort, manualSort, selectable, virtual, rowHeight, onArcSort, onArcSelectionChange, onArcCellChange, children, ...rest }) => {
+export const DataGrid: FunctionComponent<DataGridProps> = ({ columns, rows, sort, manualSort, selectable, virtual, rowHeight, onArcSort, onArcSelectionChange, onArcCellChange, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -68,7 +67,6 @@ export const DataGrid: FunctionComponent<DataGridProps> = ({ columns, rows, sort
   }, [onArcSort, onArcSelectionChange, onArcCellChange]);
   return (
     <arc-data-grid ref={ref} columns={columns} rows={rows} sort={sort} manualSort={manualSort} selectable={selectable} virtual={virtual} rowHeight={rowHeight} {...rest}>
-      {children}
     </arc-data-grid>
   );
 };

@@ -7,7 +7,7 @@ import '@arclux/arc-ui/page-layout';
   selector: 'arc-page-layout',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-page-layout [attr.layout]="this.layout" [attr.maxWidth]="this.maxWidth" [attr.gap]="this.gap"><ng-content /></arc-page-layout>`,
+  template: `<arc-page-layout [attr.layout]="this.layout" [maxWidth]="this.maxWidth" [attr.gap]="this.gap"><ng-content /></arc-page-layout>`,
 })
 export class PageLayout {
   @Input() layout: 'sidebar-left' | 'sidebar-right' | 'centered' | 'wide' = 'centered';

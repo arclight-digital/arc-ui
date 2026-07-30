@@ -11,7 +11,6 @@
     searchable?: boolean;
     sourceLabel?: string;
     targetLabel?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -39,7 +38,15 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { options = [], value = $bindable([]), name = '', disabled = false, searchable = false, sourceLabel = 'Available', targetLabel = 'Selected', children, ...rest }: Props = $props();
+  let { options = [], value = $bindable([]), name = '', disabled = false, searchable = false, sourceLabel = 'Available', targetLabel = 'Selected', ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (sourceLabel !== undefined) el.sourceLabel = sourceLabel;
+    if (targetLabel !== undefined) el.targetLabel = targetLabel;
+  });
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
@@ -53,8 +60,7 @@
   }
 </script>
 
-<arc-transfer-list {options} {value} {name} {disabled} {searchable} {sourceLabel} {targetLabel} {...rest}
+<arc-transfer-list {options} {value} {name} {disabled} {searchable} bind:this={__el} {...rest}
   onarc-change={__onArcChange}
 >
-  {@render children?.()}
 </arc-transfer-list>

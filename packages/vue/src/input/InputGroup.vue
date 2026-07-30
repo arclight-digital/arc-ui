@@ -16,5 +16,7 @@ const props = withDefaults(defineProps<{
     :size="props.size"
   >
     <slot />
+    <slot name="prefix" />
+    <slot name="suffix" />
   </arc-input-group>
 </template>

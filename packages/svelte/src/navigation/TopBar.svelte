@@ -11,7 +11,14 @@
     mobileMenu?: string;
     menuPosition?: string;
     navAlign?: string;
-    children?: Snippet;
+    /** <slot name="logo"> — put slot="logo" on the element inside. */
+    logo?: Snippet;
+    /** <slot name="subtitle"> — put slot="subtitle" on the element inside. */
+    subtitle?: Snippet;
+    /** <slot name="center"> — put slot="center" on the element inside. */
+    center?: Snippet;
+    /** <slot name="actions"> — put slot="actions" on the element inside. */
+    actions?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -39,9 +46,22 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { heading = '', fixed = false, contained = null, menuOpen = false, mobileMenu = 'sidebar', menuPosition = 'left', navAlign = 'center', children, ...rest }: Props = $props();
+  let { heading = '', fixed = false, contained = null, menuOpen = false, mobileMenu = 'sidebar', menuPosition = 'left', navAlign = 'center', logo, subtitle, center, actions, ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (menuOpen !== undefined) el.menuOpen = menuOpen;
+    if (mobileMenu !== undefined) el.mobileMenu = mobileMenu;
+    if (menuPosition !== undefined) el.menuPosition = menuPosition;
+    if (navAlign !== undefined) el.navAlign = navAlign;
+  });
 </script>
 
-<arc-top-bar {heading} {fixed} {contained} {menuOpen} {mobileMenu} {menuPosition} {navAlign} {...rest}>
-  {@render children?.()}
+<arc-top-bar {heading} {fixed} {contained} bind:this={__el} {...rest}>
+  {@render logo?.()}
+  {@render subtitle?.()}
+  {@render center?.()}
+  {@render actions?.()}
 </arc-top-bar>

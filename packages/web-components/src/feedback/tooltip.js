@@ -86,13 +86,13 @@ export class ArcTooltip extends LitElement {
       }
 
       /* Positions */
-      :host(:not([position])) .tooltip__popup,
+      :host(:not([position="bottom"]):not([position="left"]):not([position="right"])) .tooltip__popup,
       :host([position="top"]) .tooltip__popup {
         bottom: calc(100% + 8px);
         left: 50%;
         transform: translateX(-50%);
       }
-      :host(:not([position])) .tooltip__arrow,
+      :host(:not([position="bottom"]):not([position="left"]):not([position="right"])) .tooltip__arrow,
       :host([position="top"]) .tooltip__arrow {
         bottom: -5px;
         left: 50%;

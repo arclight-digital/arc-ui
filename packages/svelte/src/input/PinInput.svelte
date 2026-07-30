@@ -12,7 +12,6 @@
     type?: 'number' | 'alphanumeric' | 'text';
     separator?: number;
     label?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -40,7 +39,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { length = 4, value = $bindable(''), name = '', disabled = false, mask = false, type = 'number', separator = 0, label = '', children, ...rest }: Props = $props();
+  let { length = 4, value = $bindable(''), name = '', disabled = false, mask = false, type = 'number', separator = 0, label = '', ...rest }: Props = $props();
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
@@ -65,5 +64,4 @@
   onarc-change={__onArcChange}
   onarc-complete={__onArcComplete}
 >
-  {@render children?.()}
 </arc-pin-input>

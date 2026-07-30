@@ -73,12 +73,23 @@ export const tokens = {
    *   mono    — code, keyboard hints, and tabular numerics.
    *   display — large headings. Follows `text` until assigned separately.
    *   quote   — the decorative glyph on arc-blockquote.
+   *
+   * Each role carries a weight alongside its family. A face assigned to a role
+   * does not necessarily ship the weight the role is used at — plenty of display
+   * faces have no semibold, and the label role is set at 600 in fifty-odd
+   * components — so the weight has to be adjustable at the role, not compiled
+   * into each component. Values below are the weights those roles are already
+   * used at, so assigning nothing changes nothing.
    */
   font: {
-    body:  { family: "'Host Grotesk'",   fallback: 'system-ui, sans-serif' },
-    label: { family: "'Tektur'",         fallback: 'system-ui, sans-serif' },
-    mono:  { family: "'JetBrains Mono'", fallback: 'ui-monospace, monospace' },
-    quote: { family: 'Georgia',          fallback: 'serif' },
+    body:  { family: "'Host Grotesk'",   fallback: 'system-ui, sans-serif',   weight: 500 },
+    label: { family: "'Tektur'",         fallback: 'system-ui, sans-serif',   weight: 600 },
+    mono:  { family: "'JetBrains Mono'", fallback: 'ui-monospace, monospace', weight: 400 },
+    quote: { family: 'Georgia',          fallback: 'serif',                   weight: 200 },
+    // display has no family of its own — it follows body until assigned — but
+    // it does have its own weight, since large type usually wants a different
+    // one from body text even when it is the same face.
+    display: { weight: 500 },
   },
 
   fontSize: {
@@ -99,13 +110,23 @@ export const tokens = {
     labelInline:  'var(--text-xs)',
   },
 
+  /* Context weights, derived from the role weights above rather than restated.
+     Overriding --font-label-weight has to move every label-role context with
+     it, or the role knob only reaches half of what wears the role. Same rule as
+     the gradients and focus rings: compound tokens reference base tokens. */
   fontWeight: {
-    displayXl:    500,
-    heading:      500,
-    body:         500,
-    wordmark:     500,
-    sectionTitle: 600,
-    uiAccent:     600,
+    displayXl:    'var(--font-display-weight)',
+    heading:      'var(--font-display-weight)',
+    body:         'var(--font-body-weight)',
+    wordmark:     'var(--font-display-weight)',
+    sectionTitle: 'var(--font-label-weight)',
+    uiAccent:     'var(--font-label-weight)',
+    /* Field text: what the user typed, in the four text inputs. Its own context
+       rather than the body weight, because a form value wants the weight a
+       native input has (400) and body prose here is 500. Before this it was
+       hardcoded three different ways — 300 in arc-input, 400 in arc-select and
+       arc-textarea, 500 in arc-number-input — for the same kind of text. */
+    field:        400,
   },
 
   letterSpacing: {
@@ -327,26 +348,34 @@ export const cssVariables = `
   --opacity-visible: ${tokens.opacity.visible};
 
   /* Font role slots. Override only the -family token to assign a typeface;
-     the fallback and every component using the role follow automatically. */
+     the fallback and every component using the role follow automatically.
+     Each role also carries a -weight, for faces that do not ship the weight
+     the role is set at. */
   --font-body-family: ${tokens.font.body.family};
   --font-body-fallback: ${tokens.font.body.fallback};
+  --font-body-weight: ${tokens.font.body.weight};
   --font-body: var(--font-body-family), var(--font-body-fallback);
 
   --font-label-family: ${tokens.font.label.family};
   --font-label-fallback: ${tokens.font.label.fallback};
+  --font-label-weight: ${tokens.font.label.weight};
   --font-label: var(--font-label-family), var(--font-label-fallback);
 
   --font-mono-family: ${tokens.font.mono.family};
   --font-mono-fallback: ${tokens.font.mono.fallback};
+  --font-mono-weight: ${tokens.font.mono.weight};
   --font-mono: var(--font-mono-family), var(--font-mono-fallback);
 
-  /* Display follows the text role until it is assigned a face of its own. */
+  /* Display follows the text role until it is assigned a face of its own. Its
+     weight does not follow: large type usually wants its own. */
   --font-display-family: var(--font-body-family);
   --font-display-fallback: var(--font-body-fallback);
+  --font-display-weight: ${tokens.font.display.weight};
   --font-display: var(--font-display-family), var(--font-display-fallback);
 
   --font-quote-family: ${tokens.font.quote.family};
   --font-quote-fallback: ${tokens.font.quote.fallback};
+  --font-quote-weight: ${tokens.font.quote.weight};
   --font-quote: var(--font-quote-family), var(--font-quote-fallback);
 
   /* --font-accent named the label role before the slots were split out.
@@ -383,6 +412,7 @@ export const cssVariables = `
   --code-lh: ${tokens.lineHeight.code};
   --label-inline-size: ${tokens.fontSize.labelInline};
   --label-inline-spacing: 3px;
+  --field-weight: ${tokens.fontWeight.field};
 
   --touch-min: ${tokens.touch.min};
   --touch-pad: ${tokens.touch.pad};

@@ -7,7 +7,7 @@ import '@arclux/arc-ui/textarea';
   selector: 'arc-textarea',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-textarea [attr.value]="this.value" [attr.placeholder]="this.placeholder" [attr.label]="this.label" [attr.rows]="this.rows" [attr.maxlength]="this.maxlength" [disabled]="this.disabled" [readonly]="this.readonly" [attr.resize]="this.resize" [attr.size]="this.size" [autoResize]="this.autoResize" [attr.error]="this.error" (arc-input)="this.onArcInput($event)" (arc-change)="this.onArcChange($event)"><ng-content /></arc-textarea>`,
+  template: `<arc-textarea [attr.value]="this.value" [attr.placeholder]="this.placeholder" [attr.label]="this.label" [attr.rows]="this.rows" [attr.maxlength]="this.maxlength" [disabled]="this.disabled" [readonly]="this.readonly" [attr.resize]="this.resize" [attr.size]="this.size" [autoResize]="this.autoResize" [attr.error]="this.error" (arc-input)="this.onArcInput($event)" (arc-change)="this.onArcChange($event)"></arc-textarea>`,
 })
 export class Textarea {
   @Input() value: string = '';

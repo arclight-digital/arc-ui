@@ -7,6 +7,12 @@
     eyebrow?: string;
     headline?: string;
     nogradient?: boolean;
+    /** <slot name="actions"> — put slot="actions" on the element inside. */
+    actions?: Snippet;
+    /** <slot name="eyebrow"> — put slot="eyebrow" on the element inside. */
+    eyebrow_?: Snippet;
+    /** <slot name="headline"> — put slot="headline" on the element inside. */
+    headline_?: Snippet;
     children?: Snippet;
     class?: string;
     id?: string;
@@ -35,9 +41,12 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { eyebrow = '', headline = '', nogradient = false, children, ...rest }: Props = $props();
+  let { eyebrow = '', headline = '', nogradient = false, actions, eyebrow_, headline_, children, ...rest }: Props = $props();
 </script>
 
 <arc-cta-banner {eyebrow} {headline} {nogradient} {...rest}>
+  {@render actions?.()}
+  {@render eyebrow_?.()}
+  {@render headline_?.()}
   {@render children?.()}
 </arc-cta-banner>

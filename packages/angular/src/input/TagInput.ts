@@ -7,7 +7,7 @@ import '@arclux/arc-ui/tag-input';
   selector: 'arc-tag-input',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-tag-input [value]="this.value" [suggestions]="this.suggestions" [attr.delimiter]="this.delimiter" [attr.maxTags]="this.maxTags" [allowCustom]="this.allowCustom" [attr.label]="this.label" [attr.placeholder]="this.placeholder" [attr.name]="this.name" [disabled]="this.disabled" [attr.error]="this.error" (arc-change)="this.onArcChange($event)" (arc-input)="this.arcInput.emit($event)"><ng-content /></arc-tag-input>`,
+  template: `<arc-tag-input [value]="this.value" [suggestions]="this.suggestions" [attr.delimiter]="this.delimiter" [maxTags]="this.maxTags" [allowCustom]="this.allowCustom" [attr.label]="this.label" [attr.placeholder]="this.placeholder" [attr.name]="this.name" [disabled]="this.disabled" [attr.error]="this.error" (arc-change)="this.onArcChange($event)" (arc-input)="this.arcInput.emit($event)"></arc-tag-input>`,
 })
 export class TagInput {
   @Input() value: string[] = [];

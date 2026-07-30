@@ -24,6 +24,6 @@ const emit = defineEmits<{
     @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"
     @arc-select="(payload: CustomEvent) => emit('arc-select', payload)"
   >
-    <slot />
+    <slot name="content" />
   </arc-context-menu>
 </template>

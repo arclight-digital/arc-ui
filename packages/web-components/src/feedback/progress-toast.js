@@ -38,7 +38,7 @@ export class ArcProgressToast extends LitElement {
       }
 
       :host([position="bottom-right"]) .progress-toast-container,
-      :host(:not([position])) .progress-toast-container {
+      :host(:not([position="top-right"])) .progress-toast-container {
         bottom: var(--space-lg);
         right: var(--space-lg);
       }

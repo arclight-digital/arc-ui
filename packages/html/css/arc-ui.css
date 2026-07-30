@@ -85,26 +85,34 @@
   --opacity-visible: 1;
 
   /* Font role slots. Override only the -family token to assign a typeface;
-     the fallback and every component using the role follow automatically. */
+     the fallback and every component using the role follow automatically.
+     Each role also carries a -weight, for faces that do not ship the weight
+     the role is set at. */
   --font-body-family: 'Host Grotesk';
   --font-body-fallback: system-ui, sans-serif;
+  --font-body-weight: 500;
   --font-body: var(--font-body-family), var(--font-body-fallback);
 
   --font-label-family: 'Tektur';
   --font-label-fallback: system-ui, sans-serif;
+  --font-label-weight: 600;
   --font-label: var(--font-label-family), var(--font-label-fallback);
 
   --font-mono-family: 'JetBrains Mono';
   --font-mono-fallback: ui-monospace, monospace;
+  --font-mono-weight: 400;
   --font-mono: var(--font-mono-family), var(--font-mono-fallback);
 
-  /* Display follows the text role until it is assigned a face of its own. */
+  /* Display follows the text role until it is assigned a face of its own. Its
+     weight does not follow: large type usually wants its own. */
   --font-display-family: var(--font-body-family);
   --font-display-fallback: var(--font-body-fallback);
+  --font-display-weight: 500;
   --font-display: var(--font-display-family), var(--font-display-fallback);
 
   --font-quote-family: Georgia;
   --font-quote-fallback: serif;
+  --font-quote-weight: 200;
   --font-quote: var(--font-quote-family), var(--font-quote-fallback);
 
   /* --font-accent named the label role before the slots were split out.
@@ -120,27 +128,28 @@
   --text-3xl: clamp(36px, 5vw, 52px);
 
   --display-xl-size: var(--text-3xl);
-  --display-xl-weight: 500;
+  --display-xl-weight: var(--font-display-weight);
   --display-xl-spacing: -1px;
   --heading-size: var(--text-xl);
-  --heading-weight: 500;
+  --heading-weight: var(--font-display-weight);
   --heading-lh: 1.2;
   --body-size: var(--text-md);
-  --body-weight: 500;
+  --body-weight: var(--font-body-weight);
   --body-lh: 1.7;
   --wordmark-size: clamp(20px, 2.5vw, 28px);
-  --wordmark-weight: 500;
+  --wordmark-weight: var(--font-display-weight);
   --wordmark-spacing: clamp(8px, 1.2vw, 14px);
   --section-title-size: var(--text-xs);
-  --section-title-weight: 600;
+  --section-title-weight: var(--font-label-weight);
   --section-title-spacing: 4px;
   --ui-accent-size: 16px;
-  --ui-accent-weight: 600;
+  --ui-accent-weight: var(--font-label-weight);
   --ui-accent-spacing: 1px;
   --code-size: 14px;
   --code-lh: 1.8;
   --label-inline-size: var(--text-xs);
   --label-inline-spacing: 3px;
+  --field-weight: 400;
 
   --touch-min: 24px;
   --touch-pad: 4px;
@@ -286,7 +295,7 @@
         align-items: center;
         justify-content: center;
         font-family: var(--font-label);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         font-size: var(--text-sm);
         letter-spacing: 0.5px;
         color: var(--text-ghost);
@@ -372,7 +381,7 @@
 
       .arc-avatar .avatar__initials {
         font-family: var(--font-label);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         color: var(--text-primary);
         text-transform: uppercase;
         user-select: none;
@@ -452,7 +461,7 @@
       .arc-callout .callout__label {
         font-family: var(--font-label);
         font-size: var(--text-xs);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         letter-spacing: 1.5px;
         text-transform: uppercase;
         color: var(--_status-color);
@@ -640,7 +649,7 @@
 
       .arc-cta-banner .cta__eyebrow {
         font-family: var(--font-label);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         font-size: var(--text-xs);
         letter-spacing: 4px;
         text-transform: uppercase;
@@ -687,7 +696,7 @@
 
       .arc-divider .divider { width: 100%; height: 1px; }
 
-      .arc-divider:not([data-variant]) .divider,
+      .arc-divider:not([data-data-variant="glow"]):not([data-data-variant="line-gradient"]):not([data-data-variant="line-primary"]):not([data-data-variant="line-white"]) .divider,
       .arc-divider[data-variant="subtle"] .divider { background: var(--gradient-divider); }
 
       .arc-divider[data-variant="glow"] .divider {
@@ -730,11 +739,11 @@
       .arc-divider[data-align="left"] .divider { margin-inline: 0; }
       .arc-divider[data-align="right"] .divider { margin-left: auto; margin-right: 0; }
 
-      .arc-divider[data-align="left"]:not([data-variant]) .divider,
+      .arc-divider[data-align="left"]:not([data-data-variant="glow"]):not([data-data-variant="line-gradient"]):not([data-data-variant="line-primary"]):not([data-data-variant="line-white"]) .divider,
       .arc-divider[data-align="left"][data-variant="subtle"] .divider {
         background: linear-gradient(90deg, var(--border-default), transparent);
       }
-      .arc-divider[data-align="right"]:not([data-variant]) .divider,
+      .arc-divider[data-align="right"]:not([data-data-variant="glow"]):not([data-data-variant="line-gradient"]):not([data-data-variant="line-primary"]):not([data-data-variant="line-white"]) .divider,
       .arc-divider[data-align="right"][data-variant="subtle"] .divider {
         background: linear-gradient(90deg, transparent, var(--border-default));
       }
@@ -771,7 +780,7 @@
       .arc-divider[vertical] { display: inline-flex; width: auto; height: 100%; }
       .arc-divider[vertical] .divider { width: 1px; height: 100%; }
 
-      .arc-divider[vertical]:not([data-variant]) .divider,
+      .arc-divider[vertical]:not([data-data-variant="glow"]):not([data-data-variant="line-gradient"]):not([data-data-variant="line-primary"]):not([data-data-variant="line-white"]) .divider,
       .arc-divider[vertical][data-variant="subtle"] .divider {
         background: linear-gradient(180deg, transparent, var(--border-default), transparent);
       }
@@ -819,7 +828,7 @@
       .arc-divider .divider__label {
         font-family: var(--font-label);
         font-size: var(--text-xs);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         letter-spacing: 1.5px;
         text-transform: uppercase;
         color: var(--text-muted);
@@ -934,7 +943,7 @@
         gap: 6px;
         font-family: var(--font-label);
         font-size: var(--text-xs);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         letter-spacing: 1.5px;
         text-transform: uppercase;
         color: var(--text-ghost);
@@ -991,7 +1000,7 @@
       }
 
       .arc-icon[data-size="xs"] { width: 12px; height: 12px; }
-      .arc-icon:not([data-size]),
+      .arc-icon:not([data-data-size="lg"]):not([data-data-size="md"]):not([data-data-size="xl"]):not([data-data-size="xs"]),
       .arc-icon[data-size="sm"] { width: 16px; height: 16px; }
       .arc-icon[data-size="md"] { width: 20px; height: 20px; }
       .arc-icon[data-size="lg"] { width: 24px; height: 24px; }
@@ -1078,7 +1087,7 @@
 
       /* Orientation variants */
       .arc-scroll-area[data-orientation="vertical"] .scroll-area,
-      .arc-scroll-area:not([data-orientation]) .scroll-area {
+      .arc-scroll-area:not([data-data-orientation="both"]):not([data-data-orientation="horizontal"]) .scroll-area {
         overflow-y: auto;
         overflow-x: hidden;
       }
@@ -1545,7 +1554,7 @@
 
       .arc-comparison .header-cell {
         font-family: var(--font-label);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         font-size: var(--text-sm);
         letter-spacing: 1px;
         text-transform: uppercase;
@@ -1641,7 +1650,7 @@
 
       .arc-description-item .item__term {
         font-family: var(--font-label);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         font-size: var(--text-xs);
         letter-spacing: 2px;
         text-transform: uppercase;
@@ -1823,7 +1832,7 @@
 
       .arc-kv-pair .kv__key {
         font-family: var(--font-label);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         font-size: var(--text-xs);
         letter-spacing: 2px;
         text-transform: uppercase;
@@ -1997,7 +2006,7 @@
 
       .arc-stat .stat__label {
         font-family: var(--font-label);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         font-size: var(--label-inline-size);
         letter-spacing: var(--label-inline-spacing);
         text-transform: uppercase;
@@ -2134,7 +2143,7 @@
         margin-top: var(--space-md);
         font-family: var(--font-label);
         font-size: var(--text-xs);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         letter-spacing: 2px;
         text-transform: uppercase;
         color: var(--text-muted);
@@ -2198,7 +2207,7 @@
         text-align: left;
         padding: var(--space-sm) var(--space-md);
         font-family: var(--font-label);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         font-size: var(--text-xs);
         letter-spacing: 2px;
         text-transform: uppercase;
@@ -2263,7 +2272,7 @@
         align-items: center;
         gap: var(--space-xs);
         font-family: var(--font-label);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         font-size: var(--text-xs);
         letter-spacing: 2px;
         text-transform: uppercase;
@@ -2433,7 +2442,7 @@
         margin: 0;
         font-family: var(--font-label);
         font-size: var(--text-xs);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         letter-spacing: 1.5px;
         text-transform: uppercase;
         color: var(--text-primary);
@@ -2457,7 +2466,7 @@
         margin: var(--space-sm) 0 0;
         font-family: var(--font-label);
         font-size: var(--text-xs);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         letter-spacing: 2px;
         text-transform: uppercase;
         color: var(--text-ghost);
@@ -2566,7 +2575,7 @@
         top: -8px;
         left: var(--space-md);
         font-size: 64px;
-        font-weight: 200;
+        font-weight: var(--font-quote-weight, 200);
         line-height: 1;
         color: var(--text-ghost);
         opacity: 0.15;
@@ -2593,7 +2602,7 @@
         display: block;
         margin-top: var(--space-md);
         font-family: var(--font-label);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         font-size: var(--text-xs);
         letter-spacing: 2px;
         text-transform: uppercase;
@@ -2811,7 +2820,7 @@
       /* --- Variant gradients --- */
 
       .arc-gradient-text[data-variant="accent"] .gradient-text,
-      .arc-gradient-text:not([data-variant]) .gradient-text {
+      .arc-gradient-text:not([data-data-variant="display"]):not([data-data-variant="ocean"]):not([data-data-variant="sunset"]) .gradient-text {
         background: var(--gradient-accent-text);
         -webkit-background-clip: text;
         background-clip: text;
@@ -3038,7 +3047,7 @@
 
       /* Size variants */
       .arc-prose[data-size="sm"] { font-size: var(--text-sm); }
-      .arc-prose[data-size="md"], .arc-prose:not([data-size]) { font-size: var(--body-size); }
+      .arc-prose[data-size="md"], .arc-prose:not([data-data-size="lg"]):not([data-data-size="sm"]) { font-size: var(--body-size); }
       .arc-prose[data-size="lg"] { font-size: var(--text-lg); }
 
       /* Direct-child block elements via ::slotted */
@@ -3311,7 +3320,7 @@
         justify-content: center;
         gap: var(--space-sm);
         font-family: var(--font-label);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         text-transform: uppercase;
         letter-spacing: 2px;
         border: 1px solid transparent;
@@ -3332,26 +3341,26 @@
       /* Sizes */
       .arc-button[data-size="sm"] .btn,
       .arc-button[data-size="sm"] a { font-size: var(--text-xs); padding: var(--space-xs) var(--space-md); }
-      .arc-button:not([data-size]) .btn,
-      .arc-button:not([data-size]) a,
+      .arc-button:not([data-data-size="lg"]):not([data-data-size="sm"]) .btn,
+      .arc-button:not([data-data-size="lg"]):not([data-data-size="sm"]) a,
       .arc-button[data-size="md"] .btn,
       .arc-button[data-size="md"] a { font-size: var(--text-xs); padding: var(--space-sm) var(--space-lg); }
       .arc-button[data-size="lg"] .btn,
       .arc-button[data-size="lg"] a { font-size: var(--text-xs); padding: var(--space-md) var(--space-xl); letter-spacing: 3px; }
 
       /* Default → primary */
-      .arc-button:not([data-variant]) .btn,
-      .arc-button:not([data-variant]) a {
+      .arc-button:not([data-data-variant="ghost"]):not([data-data-variant="secondary"]) .btn,
+      .arc-button:not([data-data-variant="ghost"]):not([data-data-variant="secondary"]) a {
         background: var(--interactive);
         color: var(--surface-base);
         border-color: var(--interactive);
       }
-      .arc-button:not([data-variant]) .btn:hover,
-      .arc-button:not([data-variant]) a:hover { box-shadow: var(--interactive-active); }
+      .arc-button:not([data-data-variant="ghost"]):not([data-data-variant="secondary"]) .btn:hover,
+      .arc-button:not([data-data-variant="ghost"]):not([data-data-variant="secondary"]) a:hover { box-shadow: var(--interactive-active); }
 
       /* :active scale */
-      .arc-button:not([data-variant]) .btn:active,
-      .arc-button:not([data-variant]) a:active,
+      .arc-button:not([data-data-variant="ghost"]):not([data-data-variant="secondary"]) .btn:active,
+      .arc-button:not([data-data-variant="ghost"]):not([data-data-variant="secondary"]) a:active,
       .arc-button[data-variant="primary"] .btn:active,
       .arc-button[data-variant="primary"] a:active { transform: scale(0.97); box-shadow: 0 0 8px rgba(var(--interactive-rgb),0.5); }
       .arc-button[data-variant="secondary"] .btn:active,
@@ -3584,7 +3593,7 @@
       /* With text */
       .arc-icon-button .btn--has-text {
         font-family: var(--font-label);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         text-transform: uppercase;
         letter-spacing: 1.5px;
         white-space: nowrap;
@@ -3601,8 +3610,8 @@
       .arc-icon-button[data-size="xs"] a { width: 28px; height: 28px; border-radius: var(--radius-sm); }
       .arc-icon-button[data-size="sm"] .btn:not(.btn--has-text),
       .arc-icon-button[data-size="sm"] a { width: 32px; height: 32px; }
-      .arc-icon-button:not([data-size]) .btn:not(.btn--has-text),
-      .arc-icon-button:not([data-size]) a,
+      .arc-icon-button:not([data-data-size="lg"]):not([data-data-size="sm"]):not([data-data-size="xs"]) .btn:not(.btn--has-text),
+      .arc-icon-button:not([data-data-size="lg"]):not([data-data-size="sm"]):not([data-data-size="xs"]) a,
       .arc-icon-button[data-size="md"] .btn:not(.btn--has-text),
       .arc-icon-button[data-size="md"] a { width: 36px; height: 36px; }
       .arc-icon-button[data-size="lg"] .btn:not(.btn--has-text),
@@ -3612,26 +3621,26 @@
       .arc-icon-button .btn--has-text { min-height: var(--touch-min); }
       .arc-icon-button[data-size="xs"] .btn--has-text { padding: var(--space-xs) var(--space-sm); font-size: var(--text-xs); }
       .arc-icon-button[data-size="sm"] .btn--has-text { padding: calc(var(--space-xs) + 2px) calc(var(--space-sm) + 2px); font-size: var(--text-xs); }
-      .arc-icon-button:not([data-size]) .btn--has-text,
+      .arc-icon-button:not([data-data-size="lg"]):not([data-data-size="sm"]):not([data-data-size="xs"]) .btn--has-text,
       .arc-icon-button[data-size="md"] .btn--has-text { padding: var(--space-xs) var(--space-sm); font-size: var(--text-xs); }
       .arc-icon-button[data-size="lg"] .btn--has-text { padding: var(--space-sm) var(--space-md); font-size: var(--text-xs); }
 
       /* Default → ghost */
-      .arc-icon-button:not([data-variant]) .btn,
-      .arc-icon-button:not([data-variant]) a {
+      .arc-icon-button:not([data-data-variant="primary"]):not([data-data-variant="secondary"]) .btn,
+      .arc-icon-button:not([data-data-variant="primary"]):not([data-data-variant="secondary"]) a {
         background: transparent;
         color: var(--text-muted);
         border-color: transparent;
       }
-      .arc-icon-button:not([data-variant]) .btn:hover,
-      .arc-icon-button:not([data-variant]) a:hover {
+      .arc-icon-button:not([data-data-variant="primary"]):not([data-data-variant="secondary"]) .btn:hover,
+      .arc-icon-button:not([data-data-variant="primary"]):not([data-data-variant="secondary"]) a:hover {
         color: var(--text-primary);
         background: var(--surface-hover);
       }
 
       /* :active scale */
-      .arc-icon-button:not([data-variant]) .btn:active,
-      .arc-icon-button:not([data-variant]) a:active,
+      .arc-icon-button:not([data-data-variant="primary"]):not([data-data-variant="secondary"]) .btn:active,
+      .arc-icon-button:not([data-data-variant="primary"]):not([data-data-variant="secondary"]) a:active,
       .arc-icon-button[data-variant="ghost"] .btn:active,
       .arc-icon-button[data-variant="ghost"] a:active {
         transform: scale(0.93);
@@ -3751,7 +3760,7 @@
 
       .arc-input .input-group__label {
         font-family: var(--font-label);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         font-size: var(--label-inline-size);
         letter-spacing: var(--label-inline-spacing);
         text-transform: uppercase;
@@ -3810,7 +3819,7 @@
       .arc-input .input-group__field {
         font-family: var(--font-body);
         font-size: var(--body-size);
-        font-weight: 300;
+        font-weight: var(--field-weight, 400);
         color: var(--text-primary);
         background: transparent;
         border: none;
@@ -3875,7 +3884,7 @@
       .arc-slider .slider__label {
         font-family: var(--font-label);
         font-size: var(--text-xs);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         letter-spacing: 1px;
         text-transform: uppercase;
         color: var(--text-muted);
@@ -4039,7 +4048,7 @@
 
       .arc-textarea label {
         font-family: var(--font-label);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         font-size: var(--text-xs);
         letter-spacing: 1px;
         text-transform: uppercase;
@@ -4049,6 +4058,7 @@
       .arc-textarea textarea {
         font-family: var(--font-body);
         font-size: var(--text-sm);
+        font-weight: var(--field-weight, 400);
         line-height: 1.5;
         color: var(--text-primary);
         background: var(--surface-raised);
@@ -4073,7 +4083,7 @@
       .arc-textarea[data-resize="vertical"] textarea { resize: vertical; }
       .arc-textarea[data-resize="horizontal"] textarea { resize: horizontal; }
       .arc-textarea[data-resize="both"] textarea { resize: both; }
-      .arc-textarea:not([data-resize]) textarea { resize: vertical; }
+      .arc-textarea:not([data-data-resize="both"]):not([data-data-resize="horizontal"]):not([data-data-resize="none"]) textarea { resize: vertical; }
 
       .arc-textarea textarea::placeholder {
         color: var(--text-muted);
@@ -4146,7 +4156,7 @@
         gap: var(--space-xs);
         font-family: var(--font-label);
         font-size: var(--text-xs);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         letter-spacing: 2px;
         text-transform: uppercase;
         flex-wrap: wrap;
@@ -4561,7 +4571,7 @@
       .arc-sidebar .sidebar__heading {
         display: block;
         font-family: var(--font-label);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         font-size: var(--text-xs);
         letter-spacing: 2px;
         text-transform: uppercase;
@@ -4579,7 +4589,7 @@
         align-items: center;
         gap: var(--space-xs);
         font-family: var(--font-label);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         font-size: var(--text-xs);
         letter-spacing: 2px;
         text-transform: uppercase;
@@ -4615,7 +4625,7 @@
       .arc-sidebar .sidebar__toggle-count {
         font-family: var(--font-mono);
         font-size: var(--text-xs);
-        font-weight: 400;
+        font-weight: var(--font-mono-weight, 400);
         letter-spacing: 0;
         color: var(--text-ghost);
         -webkit-text-fill-color: var(--text-ghost);
@@ -4744,7 +4754,7 @@
         border-radius: var(--radius-full);
         font-family: var(--font-label);
         font-size: var(--text-sm);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         text-decoration: none;
         transition: transform var(--transition-fast) var(--ease-out-expo);
         white-space: nowrap;
@@ -5401,7 +5411,7 @@
       .arc-inset[bleed] { margin: calc(-1 * var(--_pad)); }
       .arc-inset[bleed][data-space="xs"] { --_pad: var(--space-xs); }
       .arc-inset[bleed][data-space="sm"] { --_pad: var(--space-sm); }
-      .arc-inset[bleed]:not([data-space]),
+      .arc-inset[bleed]:not([data-data-space="xs"]):not([data-data-space="sm"]):not([data-data-space="lg"]):not([data-data-space="xl"]):not([data-data-space="2xl"]),
       .arc-inset[bleed][data-space="md"] { --_pad: var(--space-md); }
       .arc-inset[bleed][data-space="lg"] { --_pad: var(--space-lg); }
       .arc-inset[bleed][data-space="xl"] { --_pad: var(--space-xl); }
@@ -5802,7 +5812,12 @@
         z-index: var(--z-dropdown);
         top: calc(100% + var(--space-xs));
         right: 0;
+        /* Sizes to its widest collapsed action rather than to the width available
+           from a narrow positioned ancestor — a toolbar in a sidebar is exactly
+           the case that squeezed it. See the note in navigation/menubar.js. */
+        width: max-content;
         min-width: 200px;
+        max-width: var(--menu-max-width, min(420px, calc(100vw - 2 * var(--space-md))));
         display: flex;
         flex-direction: column;
         background: var(--surface-raised);
@@ -6015,7 +6030,7 @@
 
       .arc-progress .progress__label {
         font-family: var(--font-label);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         font-size: var(--label-inline-size);
         letter-spacing: var(--label-inline-spacing);
         text-transform: uppercase;
@@ -6033,7 +6048,7 @@
       }
 
       .arc-progress[data-size="sm"] .progress__track { height: 4px; }
-      .arc-progress:not([data-size]) .progress__track,
+      .arc-progress:not([data-data-size="lg"]):not([data-data-size="sm"]) .progress__track,
       .arc-progress[data-size="md"] .progress__track { height: 8px; }
       .arc-progress[data-size="lg"] .progress__track { height: 12px; }
 
@@ -6056,7 +6071,7 @@
       }
 
       .arc-progress[data-size="sm"] .progress__spinner { width: 20px; height: 20px; }
-      .arc-progress:not([data-size]) .progress__spinner,
+      .arc-progress:not([data-data-size="lg"]):not([data-data-size="sm"]) .progress__spinner,
       .arc-progress[data-size="md"] .progress__spinner { width: 32px; height: 32px; }
       .arc-progress[data-size="lg"] .progress__spinner { width: 48px; height: 48px; }
 
@@ -6180,13 +6195,13 @@
       }
 
       /* Positions */
-      .arc-tooltip:not([data-position]) .tooltip__popup,
+      .arc-tooltip:not([data-data-position="bottom"]):not([data-data-position="left"]):not([data-data-position="right"]) .tooltip__popup,
       .arc-tooltip[data-position="top"] .tooltip__popup {
         bottom: calc(100% + 8px);
         left: 50%;
         transform: translateX(-50%);
       }
-      .arc-tooltip:not([data-position]) .tooltip__arrow,
+      .arc-tooltip:not([data-data-position="bottom"]):not([data-data-position="left"]):not([data-data-position="right"]) .tooltip__arrow,
       .arc-tooltip[data-position="top"] .tooltip__arrow {
         bottom: -5px;
         left: 50%;

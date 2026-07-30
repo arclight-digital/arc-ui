@@ -10,7 +10,6 @@ export interface ImageCropperProps {
   aspect?: number;
   zoom?: number;
   className?: string;
-  children?: React.ReactNode;
   onArcCropChange?: (e: CustomEvent) => void;
 }
 

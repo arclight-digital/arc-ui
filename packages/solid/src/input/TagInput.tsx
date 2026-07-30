@@ -16,7 +16,6 @@ export interface TagInputProps {
   error?: string;
   onArcChange?: (e: CustomEvent) => void;
   onArcInput?: (e: CustomEvent) => void;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -45,10 +44,9 @@ export interface TagInputProps {
 }
 
 export const TagInput: Component<TagInputProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'suggestions', 'delimiter', 'maxTags', 'allowCustom', 'label', 'placeholder', 'name', 'disabled', 'error', 'onArcChange', 'onArcInput', 'children']);
+  const [local, rest] = splitProps(props, ['value', 'suggestions', 'delimiter', 'maxTags', 'allowCustom', 'label', 'placeholder', 'name', 'disabled', 'error', 'onArcChange', 'onArcInput']);
   return (
-    <arc-tag-input value={local.value} suggestions={local.suggestions} delimiter={local.delimiter} maxTags={local.maxTags} allowCustom={local.allowCustom} label={local.label} placeholder={local.placeholder} name={local.name} disabled={local.disabled} error={local.error} on:arc-change={local.onArcChange} on:arc-input={local.onArcInput} {...rest}>
-      {local.children}
+    <arc-tag-input value={local.value} suggestions={local.suggestions} delimiter={local.delimiter} prop:maxTags={local.maxTags} prop:allowCustom={local.allowCustom} label={local.label} placeholder={local.placeholder} name={local.name} disabled={local.disabled} error={local.error} on:arc-change={local.onArcChange} on:arc-input={local.onArcInput} {...rest}>
     </arc-tag-input>
   );
 };

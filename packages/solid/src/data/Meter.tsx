@@ -11,7 +11,6 @@ export interface MeterProps {
   high?: number;
   optimum?: number;
   label?: string;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -40,10 +39,9 @@ export interface MeterProps {
 }
 
 export const Meter: Component<MeterProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'min', 'max', 'low', 'high', 'optimum', 'label', 'children']);
+  const [local, rest] = splitProps(props, ['value', 'min', 'max', 'low', 'high', 'optimum', 'label']);
   return (
     <arc-meter value={local.value} min={local.min} max={local.max} low={local.low} high={local.high} optimum={local.optimum} label={local.label} {...rest}>
-      {local.children}
     </arc-meter>
   );
 };

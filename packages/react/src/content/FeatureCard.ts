@@ -11,7 +11,6 @@ export interface FeatureCardProps {
   href?: string;
   action?: string;
   className?: string;
-  children?: React.ReactNode;
 }
 
 export const FeatureCard = createComponent({

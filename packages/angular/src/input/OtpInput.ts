@@ -7,7 +7,7 @@ import '@arclux/arc-ui/otp-input';
   selector: 'arc-otp-input',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-otp-input [attr.length]="this.length" [attr.value]="this.value" [attr.name]="this.name" [disabled]="this.disabled" [attr.type]="this.type" (arc-change)="this.onArcChange($event)"><ng-content /></arc-otp-input>`,
+  template: `<arc-otp-input [attr.length]="this.length" [attr.value]="this.value" [attr.name]="this.name" [disabled]="this.disabled" [attr.type]="this.type" (arc-change)="this.onArcChange($event)"></arc-otp-input>`,
 })
 export class OtpInput {
   @Input() length: number = 6;

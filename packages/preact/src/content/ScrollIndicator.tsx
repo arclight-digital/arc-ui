@@ -8,7 +8,6 @@ export interface ScrollIndicatorProps {
   position?: 'top' | 'bottom';
   size?: 'sm' | 'md' | 'lg';
   color?: 'accent' | 'gradient';
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -36,8 +35,7 @@ export interface ScrollIndicatorProps {
   [key: `on${string}`]: unknown;
 }
 
-export const ScrollIndicator: FunctionComponent<ScrollIndicatorProps> = ({ target, position, size, color, children, ...rest }) => (
+export const ScrollIndicator: FunctionComponent<ScrollIndicatorProps> = ({ target, position, size, color, ...rest }) => (
   <arc-scroll-indicator target={target} position={position} size={size} color={color} {...rest}>
-    {children}
   </arc-scroll-indicator>
 );

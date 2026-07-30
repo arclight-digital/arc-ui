@@ -9,7 +9,6 @@ export interface VirtualListProps {
   itemHeight?: number;
   overscan?: number;
   className?: string;
-  children?: React.ReactNode;
 }
 
 export const VirtualList = createComponent({

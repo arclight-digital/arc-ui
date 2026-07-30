@@ -8,7 +8,6 @@ export interface ToastProps {
   position?: 'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center';
   duration?: number;
   onArcDismiss?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -36,7 +35,7 @@ export interface ToastProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Toast: FunctionComponent<ToastProps> = ({ position, duration, onArcDismiss, children, ...rest }) => {
+export const Toast: FunctionComponent<ToastProps> = ({ position, duration, onArcDismiss, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -51,7 +50,6 @@ export const Toast: FunctionComponent<ToastProps> = ({ position, duration, onArc
   }, [onArcDismiss]);
   return (
     <arc-toast ref={ref} position={position} duration={duration} {...rest}>
-      {children}
     </arc-toast>
   );
 };

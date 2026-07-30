@@ -113,7 +113,7 @@ export class ArcPasswordInput extends FormControlMixin(LitElement) {
 
       .input-group__label {
         font-family: var(--font-label);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         font-size: var(--label-inline-size);
         letter-spacing: var(--label-inline-spacing);
         text-transform: uppercase;
@@ -172,7 +172,7 @@ export class ArcPasswordInput extends FormControlMixin(LitElement) {
       .input-group__field {
         font-family: var(--font-body);
         font-size: var(--body-size);
-        font-weight: 300;
+        font-weight: var(--field-weight, 400);
         color: var(--text-primary);
         background: transparent;
         border: none;

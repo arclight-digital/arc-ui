@@ -13,7 +13,6 @@
     disabled?: boolean;
     label?: string;
     showValues?: boolean;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -41,7 +40,14 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { min = 0, max = 100, step = 1, low = $bindable(0), high = $bindable(100), name = '', disabled = false, label = '', showValues = true, children, ...rest }: Props = $props();
+  let { min = 0, max = 100, step = 1, low = $bindable(0), high = $bindable(100), name = '', disabled = false, label = '', showValues = true, ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (showValues !== undefined) el.showValues = showValues;
+  });
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
@@ -64,9 +70,8 @@
   }
 </script>
 
-<arc-range-slider {min} {max} {step} {low} {high} {name} {disabled} {label} {showValues} {...rest}
+<arc-range-slider {min} {max} {step} {low} {high} {name} {disabled} {label} bind:this={__el} {...rest}
   onarc-input={__onArcInput}
   onarc-change={__onArcChange}
 >
-  {@render children?.()}
 </arc-range-slider>

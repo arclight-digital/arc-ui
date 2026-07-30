@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/JetBrains/web-types/master/schema/web-types.json",
   "name": "arc-ui-monorepo",
-  "version": "2.10.0",
+  "version": "2.11.0",
   "description-markup": "markdown",
   "contributions": {
     "html": {
@@ -3295,7 +3295,7 @@
         },
         {
           "name": "arc-confirm",
-          "description": "Programmatic confirmation API that wraps dialog. Call ArcConfirm.open() and await the returned\npromise. Same visual treatment as dialog.\n---\n\n\n### **Events:**\n - **arc-confirm** - Fired when the user clicks the confirm button\n- **arc-cancel** - Fired when the user clicks cancel, presses Escape, or clicks the backdrop\n\n### **CSS Parts:**\n - **message**\n- **cancel**\n- **confirm**",
+          "description": "Programmatic confirmation API that wraps dialog. Call ArcConfirm.open() and await the returned\npromise. Same visual treatment as dialog.\n---\n\n\n### **Events:**\n - **arc-confirm** - Fired when the user clicks the confirm button\n- **arc-cancel** - Fired when the user clicks cancel, presses Escape, or clicks the backdrop\n\n### **Slots:**\n - _default_ - Body content, for when the confirmation needs markup the `message` string cannot carry — a filename in `<code>`, an emphasised consequence, a short list of what is about to change. Falls back to `message` when nothing is slotted.\n\n### **CSS Parts:**\n - **message**\n- **cancel**\n- **confirm**",
           "doc-url": "",
           "attributes": [
             {
@@ -3310,7 +3310,7 @@
             },
             {
               "name": "message",
-              "description": "The body message explaining what the user is confirming.",
+              "description": "The body message explaining what the user is confirming. Used as the fallback for the default slot, so it is the simplest way to set the body and the only one available to the imperative `ArcConfirm.open()` API.",
               "value": { "type": "string", "default": "''" }
             },
             {
@@ -3330,6 +3330,12 @@
                 "type": "'default' | 'danger'",
                 "default": "'default'"
               }
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Body content, for when the confirmation needs markup the `message` string cannot carry — a filename in `<code>`, an emphasised consequence, a short list of what is about to change. Falls back to `message` when nothing is slotted."
             }
           ],
           "events": [
@@ -3354,7 +3360,7 @@
               },
               {
                 "name": "message",
-                "description": "The body message explaining what the user is confirming.",
+                "description": "The body message explaining what the user is confirming. Used as the fallback for the default slot, so it is the simplest way to set the body and the only one available to the imperative `ArcConfirm.open()` API.",
                 "type": "string"
               },
               {
@@ -9812,8 +9818,11 @@
             },
             {
               "name": "position",
-              "description": "Corner placement: \"bottom-right\" or \"bottom-left\".",
-              "value": { "type": "string", "default": "'bottom-right'" }
+              "description": "Corner placement.",
+              "value": {
+                "type": "'bottom-right' | 'bottom-left'",
+                "default": "'bottom-right'"
+              }
             },
             {
               "name": "offset",
@@ -9836,8 +9845,8 @@
               },
               {
                 "name": "position",
-                "description": "Corner placement: \"bottom-right\" or \"bottom-left\".",
-                "type": "string"
+                "description": "Corner placement.",
+                "type": "'bottom-right' | 'bottom-left'"
               },
               {
                 "name": "offset",

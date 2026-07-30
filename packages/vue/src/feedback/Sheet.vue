@@ -29,5 +29,7 @@ const emit = defineEmits<{
     @arc-open="(payload: CustomEvent) => emit('arc-open', payload)"
   >
     <slot />
+    <slot name="header" />
+    <slot name="footer" />
   </arc-sheet>
 </template>

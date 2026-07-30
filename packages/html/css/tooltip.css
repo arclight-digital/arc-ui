@@ -62,13 +62,13 @@
       }
 
       /* Positions */
-      .arc-tooltip:not([data-position]) .tooltip__popup,
+      .arc-tooltip:not([data-data-position="bottom"]):not([data-data-position="left"]):not([data-data-position="right"]) .tooltip__popup,
       .arc-tooltip[data-position="top"] .tooltip__popup {
         bottom: calc(100% + 8px);
         left: 50%;
         transform: translateX(-50%);
       }
-      .arc-tooltip:not([data-position]) .tooltip__arrow,
+      .arc-tooltip:not([data-data-position="bottom"]):not([data-data-position="left"]):not([data-data-position="right"]) .tooltip__arrow,
       .arc-tooltip[data-position="top"] .tooltip__arrow {
         bottom: -5px;
         left: 50%;

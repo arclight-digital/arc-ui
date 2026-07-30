@@ -17,7 +17,6 @@ export interface DateRangePickerProps {
   required?: boolean;
   label?: string;
   onArcChange?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -45,7 +44,7 @@ export interface DateRangePickerProps {
   [key: `on${string}`]: unknown;
 }
 
-export const DateRangePicker: FunctionComponent<DateRangePickerProps> = ({ start, end, name, min, max, months, presets, placeholder, disabled, required, label, onArcChange, children, ...rest }) => {
+export const DateRangePicker: FunctionComponent<DateRangePickerProps> = ({ start, end, name, min, max, months, presets, placeholder, disabled, required, label, onArcChange, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -60,7 +59,6 @@ export const DateRangePicker: FunctionComponent<DateRangePickerProps> = ({ start
   }, [onArcChange]);
   return (
     <arc-date-range-picker ref={ref} start={start} end={end} name={name} min={min} max={max} months={months} presets={presets} placeholder={placeholder} disabled={disabled} required={required} label={label} {...rest}>
-      {children}
     </arc-date-range-picker>
   );
 };

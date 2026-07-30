@@ -23,6 +23,5 @@ const emit = defineEmits<{
     :duration="props.duration"
     @arc-dismiss="(payload: CustomEvent) => emit('arc-dismiss', payload)"
   >
-    <slot />
   </arc-toast>
 </template>

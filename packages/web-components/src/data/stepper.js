@@ -133,7 +133,7 @@ export class ArcStepper extends LitElement {
         margin-top: var(--space-md);
         font-family: var(--font-label);
         font-size: var(--text-xs);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         letter-spacing: 2px;
         text-transform: uppercase;
         color: var(--text-muted);

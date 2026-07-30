@@ -9,7 +9,6 @@ export interface ListItemProps {
   disabled?: boolean;
   href?: string;
   onArcItemSelect?: (e: CustomEvent) => void;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -38,10 +37,9 @@ export interface ListItemProps {
 }
 
 export const ListItem: Component<ListItemProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'selected', 'disabled', 'href', 'onArcItemSelect', 'children']);
+  const [local, rest] = splitProps(props, ['value', 'selected', 'disabled', 'href', 'onArcItemSelect']);
   return (
     <arc-list-item value={local.value} selected={local.selected} disabled={local.disabled} href={local.href} on:arc-item-select={local.onArcItemSelect} {...rest}>
-      {local.children}
     </arc-list-item>
   );
 };

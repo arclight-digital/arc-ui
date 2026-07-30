@@ -8,7 +8,6 @@ export interface CopyButtonProps {
   value?: string;
   disabled?: boolean;
   onArcCopy?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -36,7 +35,7 @@ export interface CopyButtonProps {
   [key: `on${string}`]: unknown;
 }
 
-export const CopyButton: FunctionComponent<CopyButtonProps> = ({ value, disabled, onArcCopy, children, ...rest }) => {
+export const CopyButton: FunctionComponent<CopyButtonProps> = ({ value, disabled, onArcCopy, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -51,7 +50,6 @@ export const CopyButton: FunctionComponent<CopyButtonProps> = ({ value, disabled
   }, [onArcCopy]);
   return (
     <arc-copy-button ref={ref} value={value} disabled={disabled} {...rest}>
-      {children}
     </arc-copy-button>
   );
 };

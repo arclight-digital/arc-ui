@@ -7,7 +7,7 @@ import '@arclux/arc-ui/connection-status';
   selector: 'arc-connection-status',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-connection-status (arc-online)="this.arcOnline.emit($event)" (arc-offline)="this.arcOffline.emit($event)"><ng-content /></arc-connection-status>`,
+  template: `<arc-connection-status (arc-online)="this.arcOnline.emit($event)" (arc-offline)="this.arcOffline.emit($event)"></arc-connection-status>`,
 })
 export class ConnectionStatus {
   @Output() arcOnline = new EventEmitter<CustomEvent>();

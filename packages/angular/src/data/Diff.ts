@@ -7,7 +7,7 @@ import '@arclux/arc-ui/diff';
   selector: 'arc-diff',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-diff [attr.before]="this.before" [attr.after]="this.after" [attr.mode]="this.mode"><ng-content /></arc-diff>`,
+  template: `<arc-diff [attr.before]="this.before" [attr.after]="this.after" [attr.mode]="this.mode"></arc-diff>`,
 })
 export class Diff {
   @Input() before: string = '';

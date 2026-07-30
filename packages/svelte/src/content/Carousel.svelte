@@ -38,8 +38,17 @@
   }
 
   let { autoPlay = false, interval = 5000, loop = true, showDots = true, showArrows = true, children, ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (autoPlay !== undefined) el.autoPlay = autoPlay;
+    if (showDots !== undefined) el.showDots = showDots;
+    if (showArrows !== undefined) el.showArrows = showArrows;
+  });
 </script>
 
-<arc-carousel {autoPlay} {interval} {loop} {showDots} {showArrows} {...rest}>
+<arc-carousel {interval} {loop} bind:this={__el} {...rest}>
   {@render children?.()}
 </arc-carousel>

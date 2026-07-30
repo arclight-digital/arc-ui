@@ -70,7 +70,7 @@ export class ArcIconButton extends LitElement {
       /* With text */
       .btn--has-text {
         font-family: var(--font-label);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         text-transform: uppercase;
         letter-spacing: 1.5px;
         white-space: nowrap;
@@ -87,8 +87,8 @@ export class ArcIconButton extends LitElement {
       :host([size="xs"]) .btn-slot::slotted(a) { width: 28px; height: 28px; border-radius: var(--radius-sm); }
       :host([size="sm"]) .btn:not(.btn--has-text),
       :host([size="sm"]) .btn-slot::slotted(a) { width: 32px; height: 32px; }
-      :host(:not([size])) .btn:not(.btn--has-text),
-      :host(:not([size])) .btn-slot::slotted(a),
+      :host(:not([size="lg"]):not([size="sm"]):not([size="xs"])) .btn:not(.btn--has-text),
+      :host(:not([size="lg"]):not([size="sm"]):not([size="xs"])) .btn-slot::slotted(a),
       :host([size="md"]) .btn:not(.btn--has-text),
       :host([size="md"]) .btn-slot::slotted(a) { width: 36px; height: 36px; }
       :host([size="lg"]) .btn:not(.btn--has-text),
@@ -98,26 +98,26 @@ export class ArcIconButton extends LitElement {
       .btn--has-text { min-height: var(--touch-min); }
       :host([size="xs"]) .btn--has-text { padding: var(--space-xs) var(--space-sm); font-size: var(--text-xs); }
       :host([size="sm"]) .btn--has-text { padding: calc(var(--space-xs) + 2px) calc(var(--space-sm) + 2px); font-size: var(--text-xs); }
-      :host(:not([size])) .btn--has-text,
+      :host(:not([size="lg"]):not([size="sm"]):not([size="xs"])) .btn--has-text,
       :host([size="md"]) .btn--has-text { padding: var(--space-xs) var(--space-sm); font-size: var(--text-xs); }
       :host([size="lg"]) .btn--has-text { padding: var(--space-sm) var(--space-md); font-size: var(--text-xs); }
 
       /* Default → ghost */
-      :host(:not([variant])) .btn,
-      :host(:not([variant])) .btn-slot::slotted(a) {
+      :host(:not([variant="primary"]):not([variant="secondary"])) .btn,
+      :host(:not([variant="primary"]):not([variant="secondary"])) .btn-slot::slotted(a) {
         background: transparent;
         color: var(--text-muted);
         border-color: transparent;
       }
-      :host(:not([variant])) .btn:hover,
-      :host(:not([variant])) .btn-slot::slotted(a:hover) {
+      :host(:not([variant="primary"]):not([variant="secondary"])) .btn:hover,
+      :host(:not([variant="primary"]):not([variant="secondary"])) .btn-slot::slotted(a:hover) {
         color: var(--text-primary);
         background: var(--surface-hover);
       }
 
       /* :active scale */
-      :host(:not([variant])) .btn:active,
-      :host(:not([variant])) .btn-slot::slotted(a:active),
+      :host(:not([variant="primary"]):not([variant="secondary"])) .btn:active,
+      :host(:not([variant="primary"]):not([variant="secondary"])) .btn-slot::slotted(a:active),
       :host([variant="ghost"]) .btn:active,
       :host([variant="ghost"]) .btn-slot::slotted(a:active) {
         transform: scale(0.93);

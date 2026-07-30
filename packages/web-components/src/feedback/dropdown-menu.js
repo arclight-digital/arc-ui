@@ -45,7 +45,13 @@ export class ArcDropdownMenu extends LitElement {
         z-index: 100;
         top: calc(100% + var(--space-xs));
         left: 0;
+        /* max-content rather than shrink-to-fit — an abspos panel otherwise sizes
+           against the width available from its positioned ancestor, so a narrow
+           container squeezes it to min-width and the items truncate. See the
+           longer note in navigation/menubar.js. */
+        width: max-content;
         min-width: 200px;
+        max-width: var(--menu-max-width, min(420px, calc(100vw - 2 * var(--space-md))));
         background: var(--surface-raised);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-md);

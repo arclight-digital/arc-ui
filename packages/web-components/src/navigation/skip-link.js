@@ -34,7 +34,7 @@ export class ArcSkipLink extends LitElement {
         border-radius: var(--radius-full);
         font-family: var(--font-label);
         font-size: var(--text-sm);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         text-decoration: none;
         transition: transform var(--transition-fast) var(--ease-out-expo);
         white-space: nowrap;

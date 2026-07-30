@@ -5,7 +5,6 @@
 
   interface Props {
     position?: 'top-right' | 'bottom-right';
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -33,9 +32,8 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { position = 'bottom-right', children, ...rest }: Props = $props();
+  let { position = 'bottom-right', ...rest }: Props = $props();
 </script>
 
 <arc-progress-toast {position} {...rest}>
-  {@render children?.()}
 </arc-progress-toast>

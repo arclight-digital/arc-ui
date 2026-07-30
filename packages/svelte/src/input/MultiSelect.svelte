@@ -9,7 +9,6 @@
     label?: string;
     name?: string;
     disabled?: boolean;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -37,7 +36,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = $bindable([]), placeholder = '', label = '', name = '', disabled = false, children, ...rest }: Props = $props();
+  let { value = $bindable([]), placeholder = '', label = '', name = '', disabled = false, ...rest }: Props = $props();
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
@@ -54,5 +53,4 @@
 <arc-multi-select {value} {placeholder} {label} {name} {disabled} {...rest}
   onarc-change={__onArcChange}
 >
-  {@render children?.()}
 </arc-multi-select>

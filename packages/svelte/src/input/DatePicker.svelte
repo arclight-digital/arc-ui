@@ -11,7 +11,6 @@
     placeholder?: string;
     disabled?: boolean;
     label?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -39,7 +38,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = $bindable(''), name = '', min = '', max = '', placeholder = 'Select date', disabled = false, label = '', children, ...rest }: Props = $props();
+  let { value = $bindable(''), name = '', min = '', max = '', placeholder = 'Select date', disabled = false, label = '', ...rest }: Props = $props();
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
@@ -56,5 +55,4 @@
 <arc-date-picker {value} {name} {min} {max} {placeholder} {disabled} {label} {...rest}
   onarc-change={__onArcChange}
 >
-  {@render children?.()}
 </arc-date-picker>

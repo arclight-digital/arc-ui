@@ -10,7 +10,6 @@ export interface FooterProps {
   contained?: string;
   align?: 'left' | 'center';
   className?: string;
-  children?: React.ReactNode;
 }
 
 export const Footer = createComponent({

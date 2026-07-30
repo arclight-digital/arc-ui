@@ -1,3 +1,5 @@
+import { isEditingTarget } from './editing-target.js';
+
 /**
  * Shared keyboard navigation controller for menu-like components.
  * Handles ArrowUp/Down, Enter, Escape, Home, End.
@@ -39,9 +41,7 @@ export class MenuKeyboardController {
 
   /** True when the key event originates in a text-entry element (search input, etc.). */
   _isEditableTarget(e) {
-    const t = e.composedPath()[0];
-    if (!t || !t.tagName) return false;
-    return t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable;
+    return isEditingTarget(e);
   }
 
   _onKeyDown(e) {

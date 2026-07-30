@@ -8,7 +8,6 @@
     multiple?: boolean;
     maxSize?: number;
     disabled?: boolean;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -36,9 +35,15 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { accept = '', multiple = false, maxSize = 0, disabled = false, children, ...rest }: Props = $props();
+  let { accept = '', multiple = false, maxSize = 0, disabled = false, ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (maxSize !== undefined) el.maxSize = maxSize;
+  });
 </script>
 
-<arc-file-upload {accept} {multiple} {maxSize} {disabled} {...rest}>
-  {@render children?.()}
+<arc-file-upload {accept} {multiple} {disabled} bind:this={__el} {...rest}>
 </arc-file-upload>

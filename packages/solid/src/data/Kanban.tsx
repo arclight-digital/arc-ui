@@ -8,7 +8,6 @@ export interface KanbanProps {
   disabled?: boolean;
   onArcCardMove?: (e: CustomEvent) => void;
   onArcCardClick?: (e: CustomEvent) => void;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -37,10 +36,9 @@ export interface KanbanProps {
 }
 
 export const Kanban: Component<KanbanProps> = (props) => {
-  const [local, rest] = splitProps(props, ['columns', 'disabled', 'onArcCardMove', 'onArcCardClick', 'children']);
+  const [local, rest] = splitProps(props, ['columns', 'disabled', 'onArcCardMove', 'onArcCardClick']);
   return (
     <arc-kanban columns={local.columns} disabled={local.disabled} on:arc-card-move={local.onArcCardMove} on:arc-card-click={local.onArcCardClick} {...rest}>
-      {local.children}
     </arc-kanban>
   );
 };

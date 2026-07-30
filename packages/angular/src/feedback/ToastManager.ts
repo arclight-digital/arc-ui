@@ -7,7 +7,7 @@ import '@arclux/arc-ui/toast-manager';
   selector: 'arc-toast-manager',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-toast-manager [attr.position]="this.position" [attr.duration]="this.duration" [attr.maxVisible]="this.maxVisible" [dedupe]="this.dedupe" [attr.queueLimit]="this.queueLimit" (arc-queue-overflow)="this.arcQueueOverflow.emit($event)" (arc-dismiss)="this.arcDismiss.emit($event)" (arc-queue-change)="this.arcQueueChange.emit($event)"><ng-content /></arc-toast-manager>`,
+  template: `<arc-toast-manager [attr.position]="this.position" [attr.duration]="this.duration" [maxVisible]="this.maxVisible" [dedupe]="this.dedupe" [queueLimit]="this.queueLimit" (arc-queue-overflow)="this.arcQueueOverflow.emit($event)" (arc-dismiss)="this.arcDismiss.emit($event)" (arc-queue-change)="this.arcQueueChange.emit($event)"></arc-toast-manager>`,
 })
 export class ToastManager {
   @Input() position: 'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center' = 'top-right';

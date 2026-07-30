@@ -8,7 +8,8 @@
     direction?: 'up' | 'down' | 'left' | 'right';
     position?: 'bottom-right' | 'bottom-left';
     items?: string;
-    children?: Snippet;
+    /** <slot name="trigger"> — put slot="trigger" on the element inside. */
+    trigger?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -36,9 +37,9 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { open = false, direction = 'up', position = 'bottom-right', items = [], children, ...rest }: Props = $props();
+  let { open = false, direction = 'up', position = 'bottom-right', items = [], trigger, ...rest }: Props = $props();
 </script>
 
 <arc-speed-dial {open} {direction} {position} {items} {...rest}>
-  {@render children?.()}
+  {@render trigger?.()}
 </arc-speed-dial>

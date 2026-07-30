@@ -7,6 +7,12 @@
     open?: boolean;
     position?: 'top-right' | 'top-left';
     maxHeight?: string;
+    /** <slot name="trigger"> — put slot="trigger" on the element inside. */
+    trigger?: Snippet;
+    /** <slot name="header"> — put slot="header" on the element inside. */
+    header?: Snippet;
+    /** <slot name="footer"> — put slot="footer" on the element inside. */
+    footer?: Snippet;
     children?: Snippet;
     class?: string;
     id?: string;
@@ -35,9 +41,19 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { open = false, position = 'top-right', maxHeight = '400px', children, ...rest }: Props = $props();
+  let { open = false, position = 'top-right', maxHeight = '400px', trigger, header, footer, children, ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (maxHeight !== undefined) el.maxHeight = maxHeight;
+  });
 </script>
 
-<arc-notification-panel {open} {position} {maxHeight} {...rest}>
+<arc-notification-panel {open} {position} bind:this={__el} {...rest}>
+  {@render trigger?.()}
+  {@render header?.()}
+  {@render footer?.()}
   {@render children?.()}
 </arc-notification-panel>

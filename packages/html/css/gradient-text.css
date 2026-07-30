@@ -16,7 +16,7 @@
       /* --- Variant gradients --- */
 
       .arc-gradient-text[data-variant="accent"] .gradient-text,
-      .arc-gradient-text:not([data-variant]) .gradient-text {
+      .arc-gradient-text:not([data-data-variant="display"]):not([data-data-variant="ocean"]):not([data-data-variant="sunset"]) .gradient-text {
         background: var(--gradient-accent-text);
         -webkit-background-clip: text;
         background-clip: text;

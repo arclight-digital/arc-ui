@@ -11,7 +11,6 @@
     high?: number;
     optimum?: number;
     label?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -39,9 +38,8 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = 0, min = 0, max = 100, low = undefined, high = undefined, optimum = undefined, label = '', children, ...rest }: Props = $props();
+  let { value = 0, min = 0, max = 100, low = undefined, high = undefined, optimum = undefined, label = '', ...rest }: Props = $props();
 </script>
 
 <arc-meter {value} {min} {max} {low} {high} {optimum} {label} {...rest}>
-  {@render children?.()}
 </arc-meter>

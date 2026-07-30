@@ -10,7 +10,6 @@ export interface TableProps {
   striped?: boolean;
   compact?: boolean;
   className?: string;
-  children?: React.ReactNode;
 }
 
 export const Table = createComponent({

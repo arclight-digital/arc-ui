@@ -57,7 +57,7 @@ export class ArcScrollSpy extends LitElement {
 
       .scroll-spy__heading-text {
         font-family: var(--font-label);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         font-size: var(--text-xs);
         letter-spacing: 3px;
         text-transform: uppercase;

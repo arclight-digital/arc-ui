@@ -7,7 +7,7 @@ import '@arclux/arc-ui/input';
   selector: 'arc-input',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-input [attr.type]="this.type" [attr.name]="this.name" [attr.label]="this.label" [attr.placeholder]="this.placeholder" [attr.value]="this.value" [disabled]="this.disabled" [required]="this.required" [attr.error]="this.error" [attr.size]="this.size" [multiline]="this.multiline" [attr.rows]="this.rows" (arc-input)="this.onArcInput($event)" (arc-change)="this.onArcChange($event)"><ng-content /></arc-input>`,
+  template: `<arc-input [attr.type]="this.type" [attr.name]="this.name" [attr.label]="this.label" [attr.placeholder]="this.placeholder" [attr.value]="this.value" [disabled]="this.disabled" [required]="this.required" [attr.error]="this.error" [attr.size]="this.size" [multiline]="this.multiline" [attr.rows]="this.rows" (arc-input)="this.onArcInput($event)" (arc-change)="this.onArcChange($event)"></arc-input>`,
 })
 export class Input {
   @Input() type: 'text' | 'email' | 'tel' | 'url' | 'password' = 'text';

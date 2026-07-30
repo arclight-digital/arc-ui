@@ -13,7 +13,6 @@ export interface SliderProps {
   disabled?: boolean;
   label?: string;
   className?: string;
-  children?: React.ReactNode;
   onArcInput?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
 }

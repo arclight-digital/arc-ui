@@ -52,7 +52,7 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
         display: block;
         font-family: var(--font-label);
         font-size: var(--text-xs);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         letter-spacing: 1px;
         text-transform: uppercase;
         color: var(--text-muted);
@@ -131,6 +131,7 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
         min-width: 60px;
         font-family: var(--font-body);
         font-size: var(--text-sm);
+        font-weight: var(--field-weight, 400);
         color: var(--text-primary);
         background: none;
         border: none;

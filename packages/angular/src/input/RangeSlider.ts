@@ -7,7 +7,7 @@ import '@arclux/arc-ui/range-slider';
   selector: 'arc-range-slider',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-range-slider [attr.min]="this.min" [attr.max]="this.max" [attr.step]="this.step" [attr.low]="this.low" [attr.high]="this.high" [attr.name]="this.name" [disabled]="this.disabled" [attr.label]="this.label" [showValues]="this.showValues" (arc-input)="this.onArcInput($event)" (arc-change)="this.onArcChange($event)"><ng-content /></arc-range-slider>`,
+  template: `<arc-range-slider [attr.min]="this.min" [attr.max]="this.max" [attr.step]="this.step" [attr.low]="this.low" [attr.high]="this.high" [attr.name]="this.name" [disabled]="this.disabled" [attr.label]="this.label" [showValues]="this.showValues" (arc-input)="this.onArcInput($event)" (arc-change)="this.onArcChange($event)"></arc-range-slider>`,
 })
 export class RangeSlider {
   @Input() min: number = 0;

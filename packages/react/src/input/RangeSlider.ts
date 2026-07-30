@@ -15,7 +15,6 @@ export interface RangeSliderProps {
   label?: string;
   showValues?: boolean;
   className?: string;
-  children?: React.ReactNode;
   onArcInput?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
 }

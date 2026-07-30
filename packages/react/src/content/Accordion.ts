@@ -7,7 +7,6 @@ import { ArcAccordion } from '@arclux/arc-ui/accordion';
 export interface AccordionProps {
   multiple?: boolean;
   className?: string;
-  children?: React.ReactNode;
   onClick?: (e: Event) => void;
 }
 

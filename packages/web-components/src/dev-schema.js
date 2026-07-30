@@ -2117,6 +2117,12 @@ export default {
    "position",
    "offset"
   ],
+  "enums": {
+   "position": [
+    "bottom-right",
+    "bottom-left"
+   ]
+  },
   "slug": "scroll-to-top"
  },
  "arc-sidebar-link": {

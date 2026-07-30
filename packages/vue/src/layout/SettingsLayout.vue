@@ -16,5 +16,6 @@ const props = withDefaults(defineProps<{
     :navPosition="props.navPosition"
   >
     <slot />
+    <slot name="nav" />
   </arc-settings-layout>
 </template>

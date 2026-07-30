@@ -37,7 +37,7 @@ export interface AppShellProps {
 export const AppShell: Component<AppShellProps> = (props) => {
   const [local, rest] = splitProps(props, ['sidebarOpen', 'breakpoint', 'children']);
   return (
-    <arc-app-shell sidebarOpen={local.sidebarOpen} breakpoint={local.breakpoint} {...rest}>
+    <arc-app-shell prop:sidebarOpen={local.sidebarOpen} breakpoint={local.breakpoint} {...rest}>
       {local.children}
     </arc-app-shell>
   );

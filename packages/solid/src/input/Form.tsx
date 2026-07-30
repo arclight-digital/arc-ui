@@ -44,7 +44,7 @@ export interface FormProps {
 export const Form: Component<FormProps> = (props) => {
   const [local, rest] = splitProps(props, ['action', 'method', 'novalidate', 'loading', 'disabled', 'errorSummary', 'onArcInvalid', 'onArcSubmit', 'onArcReset', 'children']);
   return (
-    <arc-form action={local.action} method={local.method} novalidate={local.novalidate} loading={local.loading} disabled={local.disabled} errorSummary={local.errorSummary} on:arc-invalid={local.onArcInvalid} on:arc-submit={local.onArcSubmit} on:arc-reset={local.onArcReset} {...rest}>
+    <arc-form action={local.action} method={local.method} novalidate={local.novalidate} loading={local.loading} disabled={local.disabled} prop:errorSummary={local.errorSummary} on:arc-invalid={local.onArcInvalid} on:arc-submit={local.onArcSubmit} on:arc-reset={local.onArcReset} {...rest}>
       {local.children}
     </arc-form>
   );

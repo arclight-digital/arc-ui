@@ -82,7 +82,7 @@ export class ArcModal extends LitElement {
       }
 
       :host([size="sm"]) .modal__dialog { max-width: 400px; }
-      :host(:not([size])) .modal__dialog,
+      :host(:not([size="lg"]):not([size="sm"])) .modal__dialog,
       :host([size="md"]) .modal__dialog { max-width: 560px; }
       :host([size="lg"]) .modal__dialog { max-width: 720px; }
 

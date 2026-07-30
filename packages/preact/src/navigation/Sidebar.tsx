@@ -10,7 +10,6 @@ export interface SidebarProps {
   width?: string;
   glow?: boolean;
   label?: string;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -38,8 +37,7 @@ export interface SidebarProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Sidebar: FunctionComponent<SidebarProps> = ({ active, collapsed, position, width, glow, label, children, ...rest }) => (
+export const Sidebar: FunctionComponent<SidebarProps> = ({ active, collapsed, position, width, glow, label, ...rest }) => (
   <arc-sidebar active={active} collapsed={collapsed} position={position} width={width} glow={glow} label={label} {...rest}>
-    {children}
   </arc-sidebar>
 );

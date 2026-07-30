@@ -65,6 +65,5 @@ function onArcChange(payload: CustomEvent) {
     @arc-input="onArcInput"
     @arc-change="onArcChange"
   >
-    <slot />
   </arc-range-slider>
 </template>

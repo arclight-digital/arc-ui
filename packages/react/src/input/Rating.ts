@@ -11,7 +11,6 @@ export interface RatingProps {
   disabled?: boolean;
   readonly?: boolean;
   className?: string;
-  children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;
 }
 

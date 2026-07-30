@@ -13,7 +13,6 @@ export interface ToastManagerProps {
   onArcQueueOverflow?: (e: CustomEvent) => void;
   onArcDismiss?: (e: CustomEvent) => void;
   onArcQueueChange?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -41,7 +40,7 @@ export interface ToastManagerProps {
   [key: `on${string}`]: unknown;
 }
 
-export const ToastManager: FunctionComponent<ToastManagerProps> = ({ position, duration, maxVisible, dedupe, queueLimit, onArcQueueOverflow, onArcDismiss, onArcQueueChange, children, ...rest }) => {
+export const ToastManager: FunctionComponent<ToastManagerProps> = ({ position, duration, maxVisible, dedupe, queueLimit, onArcQueueOverflow, onArcDismiss, onArcQueueChange, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -66,7 +65,6 @@ export const ToastManager: FunctionComponent<ToastManagerProps> = ({ position, d
   }, [onArcQueueOverflow, onArcDismiss, onArcQueueChange]);
   return (
     <arc-toast-manager ref={ref} position={position} duration={duration} maxVisible={maxVisible} dedupe={dedupe} queueLimit={queueLimit} {...rest}>
-      {children}
     </arc-toast-manager>
   );
 };

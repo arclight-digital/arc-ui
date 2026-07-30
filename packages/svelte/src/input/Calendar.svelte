@@ -9,7 +9,6 @@
     max?: string;
     month?: number;
     year?: number;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -37,7 +36,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = $bindable(''), min = '', max = '', month = $bindable(now.getMonth()), year = $bindable(now.getFullYear()), children, ...rest }: Props = $props();
+  let { value = $bindable(''), min = '', max = '', month = $bindable(now.getMonth()), year = $bindable(now.getFullYear()), ...rest }: Props = $props();
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
@@ -63,5 +62,4 @@
   onarc-navigate={__onArcNavigate}
   onarc-change={__onArcChange}
 >
-  {@render children?.()}
 </arc-calendar>

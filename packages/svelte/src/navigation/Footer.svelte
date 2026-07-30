@@ -8,7 +8,12 @@
     border?: boolean;
     contained?: string;
     align?: 'left' | 'center';
-    children?: Snippet;
+    /** <slot name="logo"> — put slot="logo" on the element inside. */
+    logo?: Snippet;
+    /** <slot name="social"> — put slot="social" on the element inside. */
+    social?: Snippet;
+    /** <slot name="legal"> — put slot="legal" on the element inside. */
+    legal?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -36,9 +41,11 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { compact = false, border = true, contained = null, align = 'left', children, ...rest }: Props = $props();
+  let { compact = false, border = true, contained = null, align = 'left', logo, social, legal, ...rest }: Props = $props();
 </script>
 
 <arc-footer {compact} {border} {contained} {align} {...rest}>
-  {@render children?.()}
+  {@render logo?.()}
+  {@render social?.()}
+  {@render legal?.()}
 </arc-footer>

@@ -90,7 +90,7 @@ export class ArcEventCalendar extends LitElement {
         border-radius: var(--radius-sm);
         font-family: var(--font-body);
         font-size: var(--text-xs);
-        font-weight: 500;
+        font-weight: var(--font-body-weight, 500);
         color: var(--text-secondary);
         cursor: pointer;
         transition: background var(--transition-fast), color var(--transition-fast);
@@ -125,7 +125,7 @@ export class ArcEventCalendar extends LitElement {
         border: none;
         font-family: var(--font-body);
         font-size: var(--text-xs);
-        font-weight: 500;
+        font-weight: var(--font-body-weight, 500);
         color: var(--text-secondary);
         cursor: pointer;
         transition: background var(--transition-fast), color var(--transition-fast);

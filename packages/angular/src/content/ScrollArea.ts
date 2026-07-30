@@ -7,7 +7,7 @@ import '@arclux/arc-ui/scroll-area';
   selector: 'arc-scroll-area',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-scroll-area [attr.maxHeight]="this.maxHeight" [attr.orientation]="this.orientation"><ng-content /></arc-scroll-area>`,
+  template: `<arc-scroll-area [maxHeight]="this.maxHeight" [attr.orientation]="this.orientation"><ng-content /></arc-scroll-area>`,
 })
 export class ScrollArea {
   @Input() maxHeight: string = '';

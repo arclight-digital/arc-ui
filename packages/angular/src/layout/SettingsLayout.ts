@@ -7,7 +7,7 @@ import '@arclux/arc-ui/settings-layout';
   selector: 'arc-settings-layout',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-settings-layout [attr.navPosition]="this.navPosition"><ng-content /></arc-settings-layout>`,
+  template: `<arc-settings-layout [navPosition]="this.navPosition"><ng-content /></arc-settings-layout>`,
 })
 export class SettingsLayout {
   @Input() navPosition: 'left' | 'top' = 'left';

@@ -7,6 +7,10 @@
     layout?: 'sidebar-left' | 'sidebar-right' | 'centered' | 'wide';
     maxWidth?: string;
     gap?: string;
+    /** <slot name="sidebar"> — put slot="sidebar" on the element inside. */
+    sidebar?: Snippet;
+    /** <slot name="aside"> — put slot="aside" on the element inside. */
+    aside?: Snippet;
     children?: Snippet;
     class?: string;
     id?: string;
@@ -35,9 +39,18 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { layout = 'centered', maxWidth = '1120px', gap = 'var(--space-xl)', children, ...rest }: Props = $props();
+  let { layout = 'centered', maxWidth = '1120px', gap = 'var(--space-xl)', sidebar, aside, children, ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (maxWidth !== undefined) el.maxWidth = maxWidth;
+  });
 </script>
 
-<arc-page-layout {layout} {maxWidth} {gap} {...rest}>
+<arc-page-layout {layout} {gap} bind:this={__el} {...rest}>
+  {@render sidebar?.()}
+  {@render aside?.()}
   {@render children?.()}
 </arc-page-layout>

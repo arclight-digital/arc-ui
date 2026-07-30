@@ -22,8 +22,8 @@ export function positionStyles(cls, { offset = 'var(--space-sm)', scale = 0.95, 
   //   1. Host attribute:  :host([open]) .panel        (popover)
   //   2. Modifier class:  .panel.panel--visible        (hover-card)
   const openBottom = openCls
-    ? css`:host(:not([position])) .${unsafeCSS(openCls)},\n    :host([position="bottom"]) .${unsafeCSS(openCls)}`
-    : css`:host([open]:not([position])) .${c},\n    :host([open][position="bottom"]) .${c}`;
+    ? css`:host(:not([position="left"]):not([position="right"]):not([position="top"])) .${unsafeCSS(openCls)},\n    :host([position="bottom"]) .${unsafeCSS(openCls)}`
+    : css`:host([open]:not([position="left"]):not([position="right"]):not([position="top"])) .${c},\n    :host([open][position="bottom"]) .${c}`;
 
   const openTop = openCls
     ? css`:host([position="top"]) .${unsafeCSS(openCls)}`
@@ -38,7 +38,7 @@ export function positionStyles(cls, { offset = 'var(--space-sm)', scale = 0.95, 
     : css`:host([open][position="right"]) .${c}`;
 
   return css`
-    :host(:not([position])) .${c},
+    :host(:not([position="left"]):not([position="right"]):not([position="top"])) .${c},
     :host([position="bottom"]) .${c} {
       top: calc(100% + ${off});
       left: 50%;

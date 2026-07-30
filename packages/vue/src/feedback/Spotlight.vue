@@ -26,6 +26,5 @@ const emit = defineEmits<{
     :padding="props.padding"
     @arc-dismiss="(payload: CustomEvent) => emit('arc-dismiss', payload)"
   >
-    <slot />
   </arc-spotlight>
 </template>

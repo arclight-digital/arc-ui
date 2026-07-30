@@ -10,7 +10,6 @@ export interface ListItemProps {
   disabled?: boolean;
   href?: string;
   className?: string;
-  children?: React.ReactNode;
   onArcItemSelect?: (e: CustomEvent) => void;
 }
 

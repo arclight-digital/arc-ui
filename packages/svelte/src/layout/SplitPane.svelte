@@ -8,7 +8,10 @@
     ratio?: number;
     minRatio?: number;
     maxRatio?: number;
-    children?: Snippet;
+    /** <slot name="primary"> — put slot="primary" on the element inside. */
+    primary?: Snippet;
+    /** <slot name="secondary"> — put slot="secondary" on the element inside. */
+    secondary?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -36,7 +39,15 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { orientation = 'horizontal', ratio = $bindable(0.5), minRatio = 0.15, maxRatio = 0.85, children, ...rest }: Props = $props();
+  let { orientation = 'horizontal', ratio = $bindable(0.5), minRatio = 0.15, maxRatio = 0.85, primary, secondary, ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (minRatio !== undefined) el.minRatio = minRatio;
+    if (maxRatio !== undefined) el.maxRatio = maxRatio;
+  });
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
@@ -50,8 +61,9 @@
   }
 </script>
 
-<arc-split-pane {orientation} {ratio} {minRatio} {maxRatio} {...rest}
+<arc-split-pane {orientation} {ratio} bind:this={__el} {...rest}
   onarc-resize={__onArcResize}
 >
-  {@render children?.()}
+  {@render primary?.()}
+  {@render secondary?.()}
 </arc-split-pane>

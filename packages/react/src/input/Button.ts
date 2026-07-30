@@ -12,7 +12,6 @@ export interface ButtonProps {
   loading?: boolean;
   type?: 'button' | 'submit' | 'reset';
   className?: string;
-  children?: React.ReactNode;
   onClick?: (e: Event) => void;
 }
 

@@ -9,7 +9,6 @@ export interface DiffProps {
   after?: string;
   mode?: 'inline' | 'side-by-side';
   className?: string;
-  children?: React.ReactNode;
 }
 
 export const Diff = createComponent({

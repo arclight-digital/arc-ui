@@ -11,7 +11,6 @@ export interface SpeedDialProps {
   items?: string;
   onArcAction?: (e: CustomEvent) => void;
   onArcClose?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -39,7 +38,7 @@ export interface SpeedDialProps {
   [key: `on${string}`]: unknown;
 }
 
-export const SpeedDial: FunctionComponent<SpeedDialProps> = ({ open, direction, position, items, onArcAction, onArcClose, children, ...rest }) => {
+export const SpeedDial: FunctionComponent<SpeedDialProps> = ({ open, direction, position, items, onArcAction, onArcClose, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -59,7 +58,6 @@ export const SpeedDial: FunctionComponent<SpeedDialProps> = ({ open, direction, 
   }, [onArcAction, onArcClose]);
   return (
     <arc-speed-dial ref={ref} open={open} direction={direction} position={position} items={items} {...rest}>
-      {children}
     </arc-speed-dial>
   );
 };

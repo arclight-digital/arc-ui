@@ -22,5 +22,10 @@ const props = withDefaults(defineProps<{
     :border="props.border"
   >
     <slot />
+    <slot name="above" />
+    <slot name="aside" />
+    <slot name="below" />
+    <slot name="heading" />
+    <slot name="description" />
   </arc-page-header>
 </template>

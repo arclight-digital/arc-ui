@@ -8,7 +8,6 @@ export interface BreadcrumbMenuProps {
   items?: string;
   label?: string;
   className?: string;
-  children?: React.ReactNode;
   onArcNavigate?: (e: CustomEvent) => void;
 }
 

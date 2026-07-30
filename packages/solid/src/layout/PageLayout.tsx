@@ -38,7 +38,7 @@ export interface PageLayoutProps {
 export const PageLayout: Component<PageLayoutProps> = (props) => {
   const [local, rest] = splitProps(props, ['layout', 'maxWidth', 'gap', 'children']);
   return (
-    <arc-page-layout layout={local.layout} maxWidth={local.maxWidth} gap={local.gap} {...rest}>
+    <arc-page-layout layout={local.layout} prop:maxWidth={local.maxWidth} gap={local.gap} {...rest}>
       {local.children}
     </arc-page-layout>
   );

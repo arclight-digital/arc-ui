@@ -29,5 +29,8 @@ const emit = defineEmits<{
     @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"
   >
     <slot />
+    <slot name="trigger" />
+    <slot name="header" />
+    <slot name="footer" />
   </arc-notification-panel>
 </template>

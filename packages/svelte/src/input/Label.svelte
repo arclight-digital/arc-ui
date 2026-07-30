@@ -8,6 +8,10 @@
     required?: boolean;
     size?: 'sm' | 'md' | 'lg';
     disabled?: boolean;
+    /** <slot name="tooltip"> — put slot="tooltip" on the element inside. */
+    tooltip?: Snippet;
+    /** <slot name="description"> — put slot="description" on the element inside. */
+    description?: Snippet;
     children?: Snippet;
     class?: string;
     id?: string;
@@ -36,9 +40,11 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { for: forProp = '', required = false, size = 'md', disabled = false, children, ...rest }: Props = $props();
+  let { for: forProp = '', required = false, size = 'md', disabled = false, tooltip, description, children, ...rest }: Props = $props();
 </script>
 
 <arc-label for={forProp} {required} {size} {disabled} {...rest}>
+  {@render tooltip?.()}
+  {@render description?.()}
   {@render children?.()}
 </arc-label>

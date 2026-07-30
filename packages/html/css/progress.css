@@ -5,7 +5,7 @@
 
       .arc-progress .progress__label {
         font-family: var(--font-label);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         font-size: var(--label-inline-size);
         letter-spacing: var(--label-inline-spacing);
         text-transform: uppercase;
@@ -23,7 +23,7 @@
       }
 
       .arc-progress[data-size="sm"] .progress__track { height: 4px; }
-      .arc-progress:not([data-size]) .progress__track,
+      .arc-progress:not([data-data-size="lg"]):not([data-data-size="sm"]) .progress__track,
       .arc-progress[data-size="md"] .progress__track { height: 8px; }
       .arc-progress[data-size="lg"] .progress__track { height: 12px; }
 
@@ -46,7 +46,7 @@
       }
 
       .arc-progress[data-size="sm"] .progress__spinner { width: 20px; height: 20px; }
-      .arc-progress:not([data-size]) .progress__spinner,
+      .arc-progress:not([data-data-size="lg"]):not([data-data-size="sm"]) .progress__spinner,
       .arc-progress[data-size="md"] .progress__spinner { width: 32px; height: 32px; }
       .arc-progress[data-size="lg"] .progress__spinner { width: 48px; height: 48px; }
 

@@ -7,7 +7,7 @@ import '@arclux/arc-ui/spotlight';
   selector: 'arc-spotlight',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-spotlight [attr.target]="this.target" [active]="this.active" [attr.padding]="this.padding" (arc-dismiss)="this.arcDismiss.emit($event)"><ng-content /></arc-spotlight>`,
+  template: `<arc-spotlight [attr.target]="this.target" [active]="this.active" [attr.padding]="this.padding" (arc-dismiss)="this.arcDismiss.emit($event)"></arc-spotlight>`,
 })
 export class Spotlight {
   @Input() target: string = '';

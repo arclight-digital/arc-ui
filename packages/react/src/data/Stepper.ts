@@ -7,7 +7,6 @@ import { ArcStepper } from '@arclux/arc-ui/stepper';
 export interface StepperProps {
   active?: number;
   className?: string;
-  children?: React.ReactNode;
 }
 
 export const Stepper = createComponent({

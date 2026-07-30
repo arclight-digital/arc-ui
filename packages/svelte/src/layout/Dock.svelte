@@ -36,8 +36,15 @@
   }
 
   let { position = 'bottom', autoHide = false, open = false, children, ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (autoHide !== undefined) el.autoHide = autoHide;
+  });
 </script>
 
-<arc-dock {position} {autoHide} {open} {...rest}>
+<arc-dock {position} {open} bind:this={__el} {...rest}>
   {@render children?.()}
 </arc-dock>

@@ -8,12 +8,13 @@ import { tokenStyles } from '../shared-styles.js';
  * @tag arc-confirm
  * @prop {boolean} open - Controls whether the confirmation dialog is visible. For declarative usage; the imperative API manages this automatically.
  * @prop {string} heading - The heading text displayed at the top of the confirmation dialog.
- * @prop {string} message - The body message explaining what the user is confirming.
+ * @prop {string} message - The body message explaining what the user is confirming. Used as the fallback for the default slot, so it is the simplest way to set the body and the only one available to the imperative `ArcConfirm.open()` API.
  * @prop {string} confirmLabel - Label for the confirm button. Use a specific verb like "Delete" or "Publish" instead of generic "OK".
  * @prop {string} cancelLabel - Label for the cancel button. Use a specific alternative like "Keep" or "Go back" when possible.
  * @prop {'default' | 'danger'} variant - Controls the confirm button style. Use "danger" for destructive actions — the confirm button renders in the error colour.
  * @fires {CustomEvent<void>} arc-confirm - Fired when the user clicks the confirm button
  * @fires {CustomEvent<void>} arc-cancel - Fired when the user clicks cancel, presses Escape, or clicks the backdrop
+ * @slot - Body content, for when the confirmation needs markup the `message` string cannot carry — a filename in `<code>`, an emphasised consequence, a short list of what is about to change. Falls back to `message` when nothing is slotted.
  * @csspart message
  * @csspart cancel
  * @csspart confirm
@@ -37,6 +38,18 @@ export class ArcConfirm extends LitElement {
         font-size: var(--text-sm);
         color: var(--text-secondary);
         line-height: 1.6;
+      }
+
+      /* Slotted bodies are usually a sentence with one thing picked out of it —
+         most often the name of whatever is about to be deleted. Inherited
+         properties cross the shadow boundary on their own; these two do not,
+         and a filename in the UA's default monospace is the tell. */
+      .confirm__message ::slotted(code) {
+        font-family: var(--font-mono);
+        font-size: var(--code-size);
+      }
+      .confirm__message ::slotted(strong) {
+        color: var(--text-primary);
       }
     `,
   ];
@@ -101,7 +114,7 @@ export class ArcConfirm extends LitElement {
         closable
         @arc-close=${this._onModalClose}
       >
-        <div class="confirm__message" part="message">${this.message}</div>
+        <div class="confirm__message" part="message"><slot>${this.message}</slot></div>
         <div slot="footer">
           <arc-button variant="ghost" size="sm" @click=${this._cancel} part="cancel">${this.cancelLabel}</arc-button>
           <arc-button variant="primary" size="sm" @click=${this._confirm} part="confirm">${this.confirmLabel}</arc-button>

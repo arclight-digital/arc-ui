@@ -22,5 +22,8 @@ const props = withDefaults(defineProps<{
     :nogradient="props.nogradient"
   >
     <slot />
+    <slot name="actions" />
+    <slot name="eyebrow" />
+    <slot name="headline" />
   </arc-cta-banner>
 </template>

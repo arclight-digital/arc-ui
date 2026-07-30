@@ -7,6 +7,8 @@
     href?: string;
     padding?: 'none' | 'sm' | 'md' | 'lg';
     interactive?: boolean;
+    /** <slot name="footer"> — put slot="footer" on the element inside. */
+    footer?: Snippet;
     children?: Snippet;
     class?: string;
     id?: string;
@@ -35,9 +37,10 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { href = '', padding = 'md', interactive = false, children, ...rest }: Props = $props();
+  let { href = '', padding = 'md', interactive = false, footer, children, ...rest }: Props = $props();
 </script>
 
 <arc-card {href} {padding} {interactive} {...rest}>
+  {@render footer?.()}
   {@render children?.()}
 </arc-card>

@@ -2,6 +2,7 @@
 import DocsLayout from '../../layouts/DocsLayout.astro';
 
 const headings = [
+  { id: 'v2-11-0', label: 'v2.11.0' },
   { id: 'v2-10-0', label: 'v2.10.0' },
   { id: 'v2-9-0', label: 'v2.9.0' },
   { id: 'v2-8-0', label: 'v2.8.0' },
@@ -32,6 +33,180 @@ const headings = [
     <p class="page-desc">
       Release history for ARC UI. All packages are versioned together.
     </p>
+
+    <section id="v2-11-0">
+      <h2 class="docs-heading">v2.11.0 — Unknown Variants Fall Back, Weights You Assign</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <p class="docs-text">
+        <code>&lt;arc-button variant="outline"&gt;</code> rendered a button with no background, no
+        border and no padding, and said nothing about it. <code>outline</code> is a reasonable guess
+        at a variant name — it is not one of the three this library has, and the default styling was
+        selected by the <em>absence</em> of the attribute, so a reflected-but-unrecognised value
+        matched no rule and could not reach the default either. This release makes every enum-driven
+        default catch the values it does not recognise, across the whole library.
+      </p>
+
+      <h3 class="tier-heading">Fixed — An Unrecognised Enum Value No Longer Renders Nothing</h3>
+      <p class="docs-text">
+        Defaults were keyed on <code>:host(:not([variant]))</code>. They are now keyed on "not any of
+        the other members" — <code>:host(:not([variant="secondary"]):not([variant="ghost"]))</code>
+        — which matches an absent attribute, the default, and anything unrecognised alike. 39
+        selectors across 18 components: <code>arc-button</code>, <code>arc-icon-button</code>,
+        <code>arc-divider</code>, <code>arc-icon</code>, <code>arc-inset</code>,
+        <code>arc-modal</code>, <code>arc-sheet</code>, <code>arc-drawer</code>,
+        <code>arc-tooltip</code>, <code>arc-toast</code>, <code>arc-snackbar</code>,
+        <code>arc-progress</code>, <code>arc-progress-toast</code>, <code>arc-prose</code>,
+        <code>arc-scroll-area</code>, <code>arc-scroll-to-top</code>,
+        <code>arc-gradient-text</code>, <code>arc-textarea</code>, and every panel using the shared
+        position styles.
+      </p>
+      <p class="docs-text">
+        <code>arc-gradient-text variant="custom"</code> was a case of the same bug reachable without
+        a typo: <code>custom</code> is a documented member whose gradient arrives as an inline style,
+        so setting it without <code>gradient</code> left transparent text over no background —
+        invisible. It now falls back to the accent gradient.
+      </p>
+      <p class="docs-text">
+        A new generate-time check, <code>check-enum-fallbacks</code>, fails the build on any enum prop
+        that keys its default styling on attribute absence, so this cannot come back. Note that
+        <code>@arclux/arc-ui/dev</code> already warned about invalid enum values at the console — the
+        fix here is what keeps an unwarned production build looking right.
+      </p>
+
+      <h3 class="tier-heading">New — A Weight Per Typographic Role</h3>
+      <p class="docs-text">
+        The roles exposed a family and a fallback but not a weight, so the weight each role is set at
+        was compiled into every component — <code>arc-button</code> at 600, and fifty-odd others
+        besides. Assign a face whose heaviest cut is lighter than that and the browser synthesises
+        the difference, which reads as smeared type rather than as a missing weight.
+      </p>
+      <ul class="docs-list">
+        <li><strong><code>--font-body-weight</code></strong> — 500</li>
+        <li><strong><code>--font-label-weight</code></strong> — 600, and what 62 declarations across the library now reference</li>
+        <li><strong><code>--font-mono-weight</code></strong> — 400</li>
+        <li><strong><code>--font-display-weight</code></strong> — 500. Display follows the Text role for its family but not for its weight; large type usually wants its own.</li>
+        <li><strong><code>--font-quote-weight</code></strong> — 200</li>
+      </ul>
+      <p class="docs-text">
+        The existing context weights now reference the role rather than restating a number:
+        <code>--section-title-weight</code> and <code>--ui-accent-weight</code> follow
+        <code>--font-label-weight</code>; <code>--heading-weight</code>,
+        <code>--display-xl-weight</code> and <code>--wordmark-weight</code> follow
+        <code>--font-display-weight</code>; <code>--body-weight</code> follows
+        <code>--font-body-weight</code>. Overriding a role reaches everything wearing it, which is
+        the same rule the gradients and focus rings already followed. Defaults are unchanged, so
+        assigning nothing changes nothing.
+      </p>
+
+      <h3 class="tier-heading">Fixed — Field Text Was Three Different Weights</h3>
+      <p class="docs-text">
+        <code>arc-input</code> set its field text at 300, <code>arc-select</code> and
+        <code>arc-textarea</code> at 400, <code>arc-number-input</code> at 500 — the same kind of
+        text, to a user, at three weights. All seven text-entry surfaces (adding
+        <code>arc-password-input</code>, <code>arc-multi-select</code> and
+        <code>arc-combobox</code>) now read one new token, <code>--field-weight</code>, defaulting to
+        400. Field text is its own context rather than the body weight, because a form value wants
+        the weight a native input has.
+      </p>
+
+      <h3 class="tier-heading">New — Identifying an Editing Target Through a Shadow Boundary</h3>
+      <p class="docs-text">
+        A keypress inside <code>arc-textarea</code>'s <code>&lt;textarea&gt;</code> is retargeted on
+        the way out of the shadow root, so a document-level listener sees
+        <code>event.target</code> as <code>&lt;arc-textarea&gt;</code> — tag name
+        <code>ARC-TEXTAREA</code>, not <code>TEXTAREA</code>. The usual "am I typing?" guard fails,
+        and a space typed into a textarea fires the play/pause shortcut. No selector reaches across a
+        shadow boundary, so <code>matches()</code> could not rescue it either.
+      </p>
+      <ul class="docs-list">
+        <li><strong><code>@arclux/arc-ui/shared/editing-target</code></strong> — <code>isEditingTarget(eventOrNode)</code> reads <code>composedPath()[0]</code>, the pre-retargeting node, and accepts an event or a node. <code>isEditingNode(node)</code> is the node-only form. Both distinguish text-entry inputs from checkboxes, radios and ranges, where a bare-key shortcut is usually meant to fire.</li>
+        <li><strong><code>data-arc-editing</code></strong> — every form control now carries this attribute on the host while a text field in its shadow root holds focus, so <code>e.target.matches('[data-arc-editing]')</code> works from a framework template or plain CSS with nothing imported.</li>
+      </ul>
+      <p class="docs-text">
+        <code>arc-hotkey</code> had this bug itself: it tested <code>e.target.tagName</code> and so
+        fired while the user was typing in any ARC input. It now uses
+        <code>isEditingTarget</code>, as does the shared menu keyboard controller.
+        <code>global</code> still opts out on purpose.
+      </p>
+
+      <h3 class="tier-heading">New — arc-confirm Takes a Default Slot</h3>
+      <p class="docs-text">
+        The body came only from the <code>message</code> string, so a confirmation could not put a
+        filename in <code>&lt;code&gt;</code> or emphasise the consequence. There is now a default
+        slot that <code>message</code> is the fallback for — the imperative
+        <code>ArcConfirm.open()</code> API is unchanged and still string-only. Slotted
+        <code>&lt;code&gt;</code> and <code>&lt;strong&gt;</code> are styled to match the dialog.
+      </p>
+
+      <h3 class="tier-heading">Fixed — Menu Items Truncating At 320px</h3>
+      <p class="docs-text">
+        Menu item labels are <code>flex: 1</code> with <code>text-overflow: ellipsis</code>, and the
+        panel was capped at a hard-coded <code>max-width: 320px</code> — not enough for an ordinary
+        label beside a shortcut, so "Ask for a change&nbsp;&nbsp;⌘K" ellipsed with the shortcut
+        gutter still visible next to it. The cap was also unreachable except through
+        <code>::part(menu)</code>, having no token behind it.
+      </p>
+      <p class="docs-text">
+        The panels now size to their widest item under a larger, viewport-relative cap you can
+        override with <code>--menu-max-width</code>. Sizing to content also decouples them from
+        shrink-to-fit, where an absolutely positioned box is measured against its containing block —
+        which made the width a function of what the menu was nested in rather than of what it holds.
+        Applied to <code>arc-menubar</code>, <code>arc-dropdown-menu</code>,
+        <code>arc-breadcrumb-menu</code> and <code>arc-toolbar</code>'s overflow panel.
+        <code>arc-popover</code>, <code>arc-hover-card</code> and
+        <code>arc-notification-panel</code> are deliberately unchanged — they hold arbitrary content,
+        and sizing those to max-content would lay a paragraph out on one line.
+      </p>
+
+      <h3 class="tier-heading">Fixed — arc-number-input Above 128px</h3>
+      <p class="docs-text">
+        The bordered control stretched to the host's width while its contents stayed at 128px,
+        leaving empty bordered box in any form column wider than that. The field now grows to absorb
+        the width, so the control fills its column like every other input.
+      </p>
+
+      <h3 class="tier-heading">New — Per-Component Imports in Every Framework Package</h3>
+      <p class="docs-text">
+        The framework packages published a barrel per tier and nothing finer, so importing one
+        component evaluated its whole tier — <code>arc-ui-svelte/typography</code> for
+        <code>Kbd</code> pulled in all twelve typography components and everything they import. Each
+        of the six packages now also exposes its components individually, as
+        <code>@arclux/arc-ui-svelte/typography/Kbd</code> or
+        <code>@arclux/arc-ui-react/content/Card</code>.
+      </p>
+      <p class="docs-text">
+        The tier barrels are unchanged and still resolve exactly as before — an explicit export key
+        wins over the wildcard.
+      </p>
+
+      <h3 class="tier-heading">Docs — The Family Name Is Not the One You Expect</h3>
+      <p class="docs-text">
+        The typography page now covers the mistake that costs people the most time: Fontsource's
+        variable packages register a <code>Variable</code> suffix, so
+        <code>@fontsource-variable/host-grotesk</code> is <code>"Host Grotesk Variable"</code> and
+        assigning <code>'Host Grotesk'</code> silently does nothing. An unknown family name is not an
+        error — it is skipped, the role falls through to its fallback stack, and
+        <code>system-ui</code> looks close enough to a grotesque to read as success.
+      </p>
+      <p class="docs-text">
+        This site was making the neighbouring mistake. Host Grotesk and Tektur are variable fonts and
+        were declared under five and three discrete weights, all pointing at the same file; a
+        <code>@font-face</code> naming a single weight gives the browser no way to set the
+        <code>wght</code> axis, so every weight rendered the font's default instance and the
+        hierarchy was flat. Each is now declared once with its real axis range.
+      </p>
+
+      <h3 class="tier-heading">Build</h3>
+      <p class="docs-text">
+        Prism 2.7.0, whose new <code>slot-name-remapped</code> diagnostic reports the eight slots
+        that deliberately share a name with a prop — the pairing that lets
+        <code>arc-cta-banner</code> take an <code>eyebrow</code> string or an
+        <code>eyebrow</code> slot. Svelte derives a snippet prop name from the slot, so it can only
+        have one of them; those consumers use <code>&#123;#snippet eyebrow_()&#125;</code>. Recorded
+        as accepted findings rather than renaming slots in every framework to suit one.
+      </p>
+    </section>
 
     <section id="v2-10-0">
       <h2 class="docs-heading">v2.10.0 — Typed to the Leaf, Typography You Assign</h2>

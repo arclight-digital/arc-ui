@@ -7,7 +7,7 @@ import '@arclux/arc-ui/chart';
   selector: 'arc-chart',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-chart [attr.type]="this.type" [series]="this.series" [labels]="this.labels" [stacked]="this.stacked" [hideLegend]="this.hideLegend" [hideAxis]="this.hideAxis" [attr.height]="this.height" [attr.valueFormat]="this.valueFormat" [attr.currency]="this.currency" (arc-mark-click)="this.arcMarkClick.emit($event)"><ng-content /></arc-chart>`,
+  template: `<arc-chart [attr.type]="this.type" [series]="this.series" [labels]="this.labels" [stacked]="this.stacked" [hideLegend]="this.hideLegend" [hideAxis]="this.hideAxis" [attr.height]="this.height" [valueFormat]="this.valueFormat" [attr.currency]="this.currency" (arc-mark-click)="this.arcMarkClick.emit($event)"></arc-chart>`,
 })
 export class Chart {
   @Input() type: 'line' | 'area' | 'bar' | 'donut' = 'line';

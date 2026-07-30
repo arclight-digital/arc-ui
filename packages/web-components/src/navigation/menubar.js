@@ -91,8 +91,24 @@ export class ArcMenubar extends LitElement {
       .menu {
         position: absolute;
         z-index: var(--z-dropdown);
+        /* 320px was too narrow for an ordinary label+shortcut row: labels are
+           flex: 1 with text-overflow: ellipsis, so anything longer than the
+           panel is truncated, and "Ask for a change  ⌘K" is not a long label.
+           The cap is now both larger and overridable — it was a hard-coded
+           number with no token behind it, so a consumer could only reach it
+           through ::part(menu).
+
+           width: max-content makes the panel size to its widest item rather
+           than to whatever shrink-to-fit resolves against its containing block.
+           An absolutely positioned box is sized
+             min(max(min-content, available), max-content)
+           where "available" comes from the nearest positioned ancestor — here
+           the trigger — so the panel's width was a function of what it happened
+           to be nested in rather than of what it contains. The viewport-relative
+           max-width keeps it from overflowing a genuinely narrow screen. */
+        width: max-content;
         min-width: 200px;
-        max-width: 320px;
+        max-width: var(--menu-max-width, min(420px, calc(100vw - 2 * var(--space-md))));
         background: var(--surface-raised);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-md);

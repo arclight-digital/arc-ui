@@ -33,34 +33,50 @@ export const tokenStyles = css`
     --font-quote: var(--font-quote-family, Georgia), var(--font-quote-fallback, serif);
     --font-accent: var(--font-label);
 
+    /* The role *weight* slots are deliberately absent from this block, for the
+       same reason the family slots are: a value declared on :host beats one
+       inherited from :root, so declaring them here would make an override on
+       the document root unreachable. There is nothing to compose them into
+       either — a weight is used directly, not built into a stack — so the
+       components spell the fallback at the point of use instead:
+
+           font-weight: var(--font-label-weight, 600);
+
+       base.css declares the real values at :root. The literal is what keeps a
+       component looking right when base.css is not loaded at all. */
+
     --text-xs: 12px;
     --text-sm: 16px;
     --text-md: 17px;
     --text-xl: clamp(22px, 2.5vw, 26px);
 
     --display-xl-size: clamp(36px, 5vw, 52px);
-    --display-xl-weight: 500;
+    --display-xl-weight: var(--font-display-weight, 500);
     --display-xl-spacing: -1px;
     --heading-size: clamp(22px, 2.5vw, 26px);
-    --heading-weight: 500;
+    --heading-weight: var(--font-display-weight, 500);
     --text-3xl: clamp(28px, 3vw, 36px);
     --text-lg: clamp(18px, 1.5vw, 20px);
     --body-size: 17px;
-    --body-weight: 500;
+    --body-weight: var(--font-body-weight, 500);
     --body-lh: 1.7;
     --wordmark-size: clamp(20px, 2.5vw, 28px);
-    --wordmark-weight: 500;
+    --wordmark-weight: var(--font-display-weight, 500);
     --wordmark-spacing: clamp(8px, 1.2vw, 14px);
     --section-title-size: 12px;
-    --section-title-weight: 600;
+    --section-title-weight: var(--font-label-weight, 600);
     --section-title-spacing: 4px;
     --ui-accent-size: 16px;
-    --ui-accent-weight: 600;
+    --ui-accent-weight: var(--font-label-weight, 600);
     --ui-accent-spacing: 1px;
     --code-size: 14px;
     --code-lh: 1.8;
     --label-inline-size: 10px;
     --label-inline-spacing: 3px;
+    /* --field-weight is deliberately not declared here. It bottoms out in a
+       literal rather than in a role slot, so a value on :host would beat the
+       one inherited from :root and make the override unreachable — the trap
+       described above. The fields spell var(--field-weight, 400) instead. */
 
     --space-xs: 4px;
     --space-sm: 8px;

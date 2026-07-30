@@ -1,6 +1,6 @@
 {
   "name": "@arclux/arc-ui",
-  "version": "2.10.0",
+  "version": "2.11.0",
   "description": "ARC UI — Lit Web Components implementing the Arclight design system.",
   "type": "module",
   "main": "src/index.js",
@@ -615,6 +615,10 @@
     "./shared/click-outside": {
       "types": "./types/shared/click-outside.d.ts",
       "default": "./src/shared/click-outside.js"
+    },
+    "./shared/editing-target": {
+      "types": "./types/shared/editing-target.d.ts",
+      "default": "./src/shared/editing-target.js"
     },
     "./shared/focus-trap": {
       "types": "./types/shared/focus-trap.d.ts",

@@ -8,7 +8,6 @@ export interface DividerProps {
   align?: 'left' | 'right';
   vertical?: boolean;
   label?: string;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -37,10 +36,9 @@ export interface DividerProps {
 }
 
 export const Divider: Component<DividerProps> = (props) => {
-  const [local, rest] = splitProps(props, ['variant', 'align', 'vertical', 'label', 'children']);
+  const [local, rest] = splitProps(props, ['variant', 'align', 'vertical', 'label']);
   return (
     <arc-divider variant={local.variant} align={local.align} vertical={local.vertical} label={local.label} {...rest}>
-      {local.children}
     </arc-divider>
   );
 };

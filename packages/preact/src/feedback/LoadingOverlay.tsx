@@ -7,7 +7,6 @@ export interface LoadingOverlayProps {
   active?: boolean;
   message?: string;
   global?: boolean;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -35,8 +34,7 @@ export interface LoadingOverlayProps {
   [key: `on${string}`]: unknown;
 }
 
-export const LoadingOverlay: FunctionComponent<LoadingOverlayProps> = ({ active, message, global, children, ...rest }) => (
+export const LoadingOverlay: FunctionComponent<LoadingOverlayProps> = ({ active, message, global, ...rest }) => (
   <arc-loading-overlay active={active} message={message} global={global} {...rest}>
-    {children}
   </arc-loading-overlay>
 );

@@ -40,7 +40,7 @@ export interface HoverCardProps {
 export const HoverCard: Component<HoverCardProps> = (props) => {
   const [local, rest] = splitProps(props, ['position', 'openDelay', 'closeDelay', 'onArcOpen', 'onArcClose', 'children']);
   return (
-    <arc-hover-card position={local.position} openDelay={local.openDelay} closeDelay={local.closeDelay} on:arc-open={local.onArcOpen} on:arc-close={local.onArcClose} {...rest}>
+    <arc-hover-card position={local.position} prop:openDelay={local.openDelay} prop:closeDelay={local.closeDelay} on:arc-open={local.onArcOpen} on:arc-close={local.onArcClose} {...rest}>
       {local.children}
     </arc-hover-card>
   );

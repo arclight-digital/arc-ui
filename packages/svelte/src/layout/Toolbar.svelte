@@ -8,6 +8,10 @@
     size?: 'md' | 'sm';
     border?: boolean;
     overflow?: boolean;
+    /** <slot name="start"> — put slot="start" on the element inside. */
+    start?: Snippet;
+    /** <slot name="end"> — put slot="end" on the element inside. */
+    end?: Snippet;
     children?: Snippet;
     class?: string;
     id?: string;
@@ -36,9 +40,11 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { sticky = false, size = 'md', border = true, overflow = false, children, ...rest }: Props = $props();
+  let { sticky = false, size = 'md', border = true, overflow = false, start, end, children, ...rest }: Props = $props();
 </script>
 
 <arc-toolbar {sticky} {size} {border} {overflow} {...rest}>
+  {@render start?.()}
+  {@render end?.()}
   {@render children?.()}
 </arc-toolbar>

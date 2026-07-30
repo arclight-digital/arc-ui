@@ -92,7 +92,7 @@ export class ArcAvatar extends LitElement {
 
       .avatar__initials {
         font-family: var(--font-label);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         color: var(--text-primary);
         text-transform: uppercase;
         user-select: none;

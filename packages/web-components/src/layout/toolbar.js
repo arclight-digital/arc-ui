@@ -111,7 +111,12 @@ export class ArcToolbar extends LitElement {
         z-index: var(--z-dropdown);
         top: calc(100% + var(--space-xs));
         right: 0;
+        /* Sizes to its widest collapsed action rather than to the width available
+           from a narrow positioned ancestor — a toolbar in a sidebar is exactly
+           the case that squeezed it. See the note in navigation/menubar.js. */
+        width: max-content;
         min-width: 200px;
+        max-width: var(--menu-max-width, min(420px, calc(100vw - 2 * var(--space-md))));
         display: flex;
         flex-direction: column;
         background: var(--surface-raised);

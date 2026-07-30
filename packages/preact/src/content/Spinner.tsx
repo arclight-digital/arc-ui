@@ -6,7 +6,6 @@ import '@arclux/arc-ui/spinner';
 export interface SpinnerProps {
   size?: 'sm' | 'md' | 'lg';
   variant?: 'primary' | 'secondary' | 'white';
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -34,8 +33,7 @@ export interface SpinnerProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Spinner: FunctionComponent<SpinnerProps> = ({ size, variant, children, ...rest }) => (
+export const Spinner: FunctionComponent<SpinnerProps> = ({ size, variant, ...rest }) => (
   <arc-spinner size={size} variant={variant} {...rest}>
-    {children}
   </arc-spinner>
 );

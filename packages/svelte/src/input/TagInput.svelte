@@ -14,7 +14,6 @@
     name?: string;
     disabled?: boolean;
     error?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -42,7 +41,15 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = $bindable([]), suggestions = [], delimiter = ',', maxTags = 0, allowCustom = true, label = '', placeholder = '', name = '', disabled = false, error = '', children, ...rest }: Props = $props();
+  let { value = $bindable([]), suggestions = [], delimiter = ',', maxTags = 0, allowCustom = true, label = '', placeholder = '', name = '', disabled = false, error = '', ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (maxTags !== undefined) el.maxTags = maxTags;
+    if (allowCustom !== undefined) el.allowCustom = allowCustom;
+  });
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
@@ -56,8 +63,7 @@
   }
 </script>
 
-<arc-tag-input {value} {suggestions} {delimiter} {maxTags} {allowCustom} {label} {placeholder} {name} {disabled} {error} {...rest}
+<arc-tag-input {value} {suggestions} {delimiter} {label} {placeholder} {name} {disabled} {error} bind:this={__el} {...rest}
   onarc-change={__onArcChange}
 >
-  {@render children?.()}
 </arc-tag-input>

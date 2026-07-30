@@ -5,6 +5,10 @@
 
   interface Props {
     position?: 'static' | 'fixed';
+    /** <slot name="start"> — put slot="start" on the element inside. */
+    start?: Snippet;
+    /** <slot name="end"> — put slot="end" on the element inside. */
+    end?: Snippet;
     children?: Snippet;
     class?: string;
     id?: string;
@@ -33,9 +37,11 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { position = 'static', children, ...rest }: Props = $props();
+  let { position = 'static', start, end, children, ...rest }: Props = $props();
 </script>
 
 <arc-status-bar {position} {...rest}>
+  {@render start?.()}
+  {@render end?.()}
   {@render children?.()}
 </arc-status-bar>

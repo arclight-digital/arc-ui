@@ -7,7 +7,6 @@ import { ArcNavigationMenu } from '@arclux/arc-ui/navigation-menu';
 export interface NavigationMenuProps {
   label?: string;
   className?: string;
-  children?: React.ReactNode;
   onArcMobileMenuToggle?: (e: CustomEvent) => void;
 }
 

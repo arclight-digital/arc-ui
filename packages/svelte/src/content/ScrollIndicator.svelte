@@ -8,7 +8,6 @@
     position?: 'top' | 'bottom';
     size?: 'sm' | 'md' | 'lg';
     color?: 'accent' | 'gradient';
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -36,9 +35,8 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { target = '', position = 'top', size = 'sm', color = 'accent', children, ...rest }: Props = $props();
+  let { target = '', position = 'top', size = 'sm', color = 'accent', ...rest }: Props = $props();
 </script>
 
 <arc-scroll-indicator {target} {position} {size} {color} {...rest}>
-  {@render children?.()}
 </arc-scroll-indicator>

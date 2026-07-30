@@ -6,7 +6,6 @@
   interface Props {
     size?: 'sm' | 'md' | 'lg';
     variant?: 'primary' | 'secondary' | 'white';
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -34,9 +33,8 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { size = 'md', variant = 'primary', children, ...rest }: Props = $props();
+  let { size = 'md', variant = 'primary', ...rest }: Props = $props();
 </script>
 
 <arc-spinner {size} {variant} {...rest}>
-  {@render children?.()}
 </arc-spinner>

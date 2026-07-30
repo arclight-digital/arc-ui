@@ -41,6 +41,5 @@ function onArcChange(payload: CustomEvent) {
     :disabled="props.disabled"
     @arc-change="onArcChange"
   >
-    <slot />
   </arc-multi-select>
 </template>

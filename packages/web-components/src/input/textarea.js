@@ -55,7 +55,7 @@ export class ArcTextarea extends FormControlMixin(LitElement) {
 
       label {
         font-family: var(--font-label);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         font-size: var(--text-xs);
         letter-spacing: 1px;
         text-transform: uppercase;
@@ -65,6 +65,7 @@ export class ArcTextarea extends FormControlMixin(LitElement) {
       textarea {
         font-family: var(--font-body);
         font-size: var(--text-sm);
+        font-weight: var(--field-weight, 400);
         line-height: 1.5;
         color: var(--text-primary);
         background: var(--surface-raised);
@@ -89,7 +90,7 @@ export class ArcTextarea extends FormControlMixin(LitElement) {
       :host([resize="vertical"]) textarea { resize: vertical; }
       :host([resize="horizontal"]) textarea { resize: horizontal; }
       :host([resize="both"]) textarea { resize: both; }
-      :host(:not([resize])) textarea { resize: vertical; }
+      :host(:not([resize="both"]):not([resize="horizontal"]):not([resize="none"])) textarea { resize: vertical; }
 
       textarea::placeholder {
         color: var(--text-muted);

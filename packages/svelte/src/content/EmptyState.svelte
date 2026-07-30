@@ -6,7 +6,10 @@
   interface Props {
     heading?: string;
     description?: string;
-    children?: Snippet;
+    /** <slot name="icon"> — put slot="icon" on the element inside. */
+    icon?: Snippet;
+    /** <slot name="actions"> — put slot="actions" on the element inside. */
+    actions?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -34,9 +37,10 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { heading = '', description = '', children, ...rest }: Props = $props();
+  let { heading = '', description = '', icon, actions, ...rest }: Props = $props();
 </script>
 
 <arc-empty-state {heading} {description} {...rest}>
-  {@render children?.()}
+  {@render icon?.()}
+  {@render actions?.()}
 </arc-empty-state>

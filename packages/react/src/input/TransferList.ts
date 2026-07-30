@@ -13,7 +13,6 @@ export interface TransferListProps {
   sourceLabel?: string;
   targetLabel?: string;
   className?: string;
-  children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;
 }
 

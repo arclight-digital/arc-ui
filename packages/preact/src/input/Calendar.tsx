@@ -12,7 +12,6 @@ export interface CalendarProps {
   year?: number;
   onArcNavigate?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -40,7 +39,7 @@ export interface CalendarProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Calendar: FunctionComponent<CalendarProps> = ({ value, min, max, month, year, onArcNavigate, onArcChange, children, ...rest }) => {
+export const Calendar: FunctionComponent<CalendarProps> = ({ value, min, max, month, year, onArcNavigate, onArcChange, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -60,7 +59,6 @@ export const Calendar: FunctionComponent<CalendarProps> = ({ value, min, max, mo
   }, [onArcNavigate, onArcChange]);
   return (
     <arc-calendar ref={ref} value={value} min={min} max={max} month={month} year={year} {...rest}>
-      {children}
     </arc-calendar>
   );
 };

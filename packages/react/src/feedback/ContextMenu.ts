@@ -7,7 +7,6 @@ import { ArcContextMenu } from '@arclux/arc-ui/context-menu';
 export interface ContextMenuProps {
   open?: boolean;
   className?: string;
-  children?: React.ReactNode;
   onArcOpen?: (e: CustomEvent) => void;
   onArcClose?: (e: CustomEvent) => void;
   onArcSelect?: (e: CustomEvent) => void;

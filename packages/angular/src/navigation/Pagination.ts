@@ -7,7 +7,7 @@ import '@arclux/arc-ui/pagination';
   selector: 'arc-pagination',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-pagination [attr.total]="this.total" [attr.current]="this.current" [attr.siblings]="this.siblings" [compact]="this.compact" (arc-change)="this.arcChange.emit($event)"><ng-content /></arc-pagination>`,
+  template: `<arc-pagination [attr.total]="this.total" [attr.current]="this.current" [attr.siblings]="this.siblings" [compact]="this.compact" (arc-change)="this.arcChange.emit($event)"></arc-pagination>`,
 })
 export class Pagination {
   @Input() total: number = 1;

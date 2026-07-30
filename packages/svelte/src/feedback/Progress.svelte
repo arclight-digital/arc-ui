@@ -10,7 +10,6 @@
     indeterminate?: boolean;
     showValue?: boolean;
     label?: string;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -38,9 +37,15 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = 0, variant = 'bar', size = 'md', indeterminate = false, showValue = false, label = '', children, ...rest }: Props = $props();
+  let { value = 0, variant = 'bar', size = 'md', indeterminate = false, showValue = false, label = '', ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (showValue !== undefined) el.showValue = showValue;
+  });
 </script>
 
-<arc-progress {value} {variant} {size} {indeterminate} {showValue} {label} {...rest}>
-  {@render children?.()}
+<arc-progress {value} {variant} {size} {indeterminate} {label} bind:this={__el} {...rest}>
 </arc-progress>

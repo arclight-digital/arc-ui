@@ -14,7 +14,6 @@
     size?: 'sm' | 'md' | 'lg';
     autocomplete?: string;
     showStrength?: boolean;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -42,7 +41,14 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { name = '', label = '', placeholder = '', value = $bindable(''), disabled = false, required = false, error = '', size = 'md', autocomplete = 'current-password', showStrength = false, children, ...rest }: Props = $props();
+  let { name = '', label = '', placeholder = '', value = $bindable(''), disabled = false, required = false, error = '', size = 'md', autocomplete = 'current-password', showStrength = false, ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (showStrength !== undefined) el.showStrength = showStrength;
+  });
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
@@ -63,9 +69,8 @@
   }
 </script>
 
-<arc-password-input {name} {label} {placeholder} {value} {disabled} {required} {error} {size} {autocomplete} {showStrength} {...rest}
+<arc-password-input {name} {label} {placeholder} {value} {disabled} {required} {error} {size} {autocomplete} bind:this={__el} {...rest}
   onarc-input={__onArcInput}
   onarc-change={__onArcChange}
 >
-  {@render children?.()}
 </arc-password-input>

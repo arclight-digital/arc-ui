@@ -7,7 +7,6 @@ export interface BreadcrumbMenuProps {
   items?: string;
   label?: string;
   onArcNavigate?: (e: CustomEvent) => void;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -36,10 +35,9 @@ export interface BreadcrumbMenuProps {
 }
 
 export const BreadcrumbMenu: Component<BreadcrumbMenuProps> = (props) => {
-  const [local, rest] = splitProps(props, ['items', 'label', 'onArcNavigate', 'children']);
+  const [local, rest] = splitProps(props, ['items', 'label', 'onArcNavigate']);
   return (
     <arc-breadcrumb-menu items={local.items} label={local.label} on:arc-navigate={local.onArcNavigate} {...rest}>
-      {local.children}
     </arc-breadcrumb-menu>
   );
 };

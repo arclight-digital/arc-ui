@@ -37,8 +37,15 @@
   }
 
   let { speed = 40, direction = 'left', pauseOnHover = true, gap = 'var(--space-xl)', children, ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (pauseOnHover !== undefined) el.pauseOnHover = pauseOnHover;
+  });
 </script>
 
-<arc-marquee {speed} {direction} {pauseOnHover} {gap} {...rest}>
+<arc-marquee {speed} {direction} {gap} bind:this={__el} {...rest}>
   {@render children?.()}
 </arc-marquee>

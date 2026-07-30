@@ -42,7 +42,7 @@ export class ArcTabs extends LitElement {
 
       .tabs__tab {
         font-family: var(--font-label);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         font-size: var(--text-xs);
         letter-spacing: 2px;
         text-transform: uppercase;

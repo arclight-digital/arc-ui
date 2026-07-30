@@ -7,7 +7,7 @@ import '@arclux/arc-ui/calendar';
   selector: 'arc-calendar',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-calendar [attr.value]="this.value" [attr.min]="this.min" [attr.max]="this.max" [attr.month]="this.month" [attr.year]="this.year" (arc-navigate)="this.onArcNavigate($event)" (arc-change)="this.onArcChange($event)"><ng-content /></arc-calendar>`,
+  template: `<arc-calendar [attr.value]="this.value" [attr.min]="this.min" [attr.max]="this.max" [attr.month]="this.month" [attr.year]="this.year" (arc-navigate)="this.onArcNavigate($event)" (arc-change)="this.onArcChange($event)"></arc-calendar>`,
 })
 export class Calendar {
   @Input() value: string = '';

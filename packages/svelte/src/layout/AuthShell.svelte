@@ -5,6 +5,12 @@
 
   interface Props {
     variant?: 'centered' | 'split';
+    /** <slot name="logo"> — put slot="logo" on the element inside. */
+    logo?: Snippet;
+    /** <slot name="footer"> — put slot="footer" on the element inside. */
+    footer?: Snippet;
+    /** <slot name="aside"> — put slot="aside" on the element inside. */
+    aside?: Snippet;
     children?: Snippet;
     class?: string;
     id?: string;
@@ -33,9 +39,12 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { variant = 'centered', children, ...rest }: Props = $props();
+  let { variant = 'centered', logo, footer, aside, children, ...rest }: Props = $props();
 </script>
 
 <arc-auth-shell {variant} {...rest}>
+  {@render logo?.()}
+  {@render footer?.()}
+  {@render aside?.()}
   {@render children?.()}
 </arc-auth-shell>

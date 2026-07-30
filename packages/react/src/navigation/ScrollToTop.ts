@@ -10,7 +10,6 @@ export interface ScrollToTopProps {
   position?: 'bottom-right' | 'bottom-left';
   offset?: string;
   className?: string;
-  children?: React.ReactNode;
   onClick?: (e: Event) => void;
 }
 

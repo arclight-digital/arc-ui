@@ -33,7 +33,7 @@ export class ArcScrollArea extends LitElement {
 
       /* Orientation variants */
       :host([orientation="vertical"]) .scroll-area,
-      :host(:not([orientation])) .scroll-area {
+      :host(:not([orientation="both"]):not([orientation="horizontal"])) .scroll-area {
         overflow-y: auto;
         overflow-x: hidden;
       }

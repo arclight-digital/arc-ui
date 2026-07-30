@@ -9,7 +9,6 @@ export interface PageIndicatorProps {
   value?: number;
   clickable?: boolean;
   onArcChange?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -37,7 +36,7 @@ export interface PageIndicatorProps {
   [key: `on${string}`]: unknown;
 }
 
-export const PageIndicator: FunctionComponent<PageIndicatorProps> = ({ count, value, clickable, onArcChange, children, ...rest }) => {
+export const PageIndicator: FunctionComponent<PageIndicatorProps> = ({ count, value, clickable, onArcChange, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -52,7 +51,6 @@ export const PageIndicator: FunctionComponent<PageIndicatorProps> = ({ count, va
   }, [onArcChange]);
   return (
     <arc-page-indicator ref={ref} count={count} value={value} clickable={clickable} {...rest}>
-      {children}
     </arc-page-indicator>
   );
 };

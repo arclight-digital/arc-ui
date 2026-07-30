@@ -36,7 +36,7 @@ export interface TimelineProps {
 export const Timeline: Component<TimelineProps> = (props) => {
   const [local, rest] = splitProps(props, ['headingLevel', 'children']);
   return (
-    <arc-timeline headingLevel={local.headingLevel} {...rest}>
+    <arc-timeline prop:headingLevel={local.headingLevel} {...rest}>
       {local.children}
     </arc-timeline>
   );

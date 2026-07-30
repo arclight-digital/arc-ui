@@ -7,7 +7,6 @@
     active?: boolean;
     message?: string;
     global?: boolean;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -35,9 +34,8 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { active = false, message = '', global = false, children, ...rest }: Props = $props();
+  let { active = false, message = '', global = false, ...rest }: Props = $props();
 </script>
 
 <arc-loading-overlay {active} {message} {global} {...rest}>
-  {@render children?.()}
 </arc-loading-overlay>

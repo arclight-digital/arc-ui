@@ -11,7 +11,6 @@ export interface ToggleProps {
   label?: string;
   name?: string;
   className?: string;
-  children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;
 }
 

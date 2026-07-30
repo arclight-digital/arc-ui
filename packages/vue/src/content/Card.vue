@@ -22,5 +22,6 @@ const props = withDefaults(defineProps<{
     :interactive="props.interactive"
   >
     <slot />
+    <slot name="footer" />
   </arc-card>
 </template>

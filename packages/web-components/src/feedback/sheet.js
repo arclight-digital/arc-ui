@@ -71,7 +71,7 @@ export class ArcSheet extends OverlayMixin(LitElement) {
       }
 
       /* Bottom sheet */
-      :host(:not([side])) .sheet__panel,
+      :host(:not([side="right"])) .sheet__panel,
       :host([side="bottom"]) .sheet__panel {
         bottom: 0;
         left: 0;
@@ -81,7 +81,7 @@ export class ArcSheet extends OverlayMixin(LitElement) {
         transform: translateY(100%);
       }
 
-      :host([open]:not([side])) .sheet__panel,
+      :host([open]:not([side="right"])) .sheet__panel,
       :host([open][side="bottom"]) .sheet__panel {
         transform: translateY(0);
       }
@@ -138,7 +138,7 @@ export class ArcSheet extends OverlayMixin(LitElement) {
       }
 
       /* Handle for bottom sheet */
-      :host(:not([side])) .sheet__handle,
+      :host(:not([side="right"])) .sheet__handle,
       :host([side="bottom"]) .sheet__handle {
         display: flex;
         justify-content: center;

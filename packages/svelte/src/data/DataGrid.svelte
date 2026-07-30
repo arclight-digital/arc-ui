@@ -11,7 +11,6 @@
     selectable?: boolean;
     virtual?: boolean;
     rowHeight?: number;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -39,7 +38,15 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { columns = [], rows = [], sort = $bindable([]), manualSort = false, selectable = false, virtual = false, rowHeight = 40, children, ...rest }: Props = $props();
+  let { columns = [], rows = [], sort = $bindable([]), manualSort = false, selectable = false, virtual = false, rowHeight = 40, ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (manualSort !== undefined) el.manualSort = manualSort;
+    if (rowHeight !== undefined) el.rowHeight = rowHeight;
+  });
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
@@ -53,8 +60,7 @@
   }
 </script>
 
-<arc-data-grid {columns} {rows} {sort} {manualSort} {selectable} {virtual} {rowHeight} {...rest}
+<arc-data-grid {columns} {rows} {sort} {selectable} {virtual} bind:this={__el} {...rest}
   onarc-sort={__onArcSort}
 >
-  {@render children?.()}
 </arc-data-grid>

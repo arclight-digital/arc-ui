@@ -5,7 +5,6 @@
 
   interface Props {
     active?: number;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -33,9 +32,8 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { active = 0, children, ...rest }: Props = $props();
+  let { active = 0, ...rest }: Props = $props();
 </script>
 
 <arc-stepper {active} {...rest}>
-  {@render children?.()}
 </arc-stepper>

@@ -73,7 +73,7 @@ export class ArcButton extends LitElement {
         justify-content: center;
         gap: var(--space-sm);
         font-family: var(--font-label);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         text-transform: uppercase;
         letter-spacing: 2px;
         border: 1px solid transparent;
@@ -94,26 +94,26 @@ export class ArcButton extends LitElement {
       /* Sizes */
       :host([size="sm"]) .btn,
       :host([size="sm"]) .btn-slot::slotted(a) { font-size: var(--text-xs); padding: var(--space-xs) var(--space-md); }
-      :host(:not([size])) .btn,
-      :host(:not([size])) .btn-slot::slotted(a),
+      :host(:not([size="lg"]):not([size="sm"])) .btn,
+      :host(:not([size="lg"]):not([size="sm"])) .btn-slot::slotted(a),
       :host([size="md"]) .btn,
       :host([size="md"]) .btn-slot::slotted(a) { font-size: var(--text-xs); padding: var(--space-sm) var(--space-lg); }
       :host([size="lg"]) .btn,
       :host([size="lg"]) .btn-slot::slotted(a) { font-size: var(--text-xs); padding: var(--space-md) var(--space-xl); letter-spacing: 3px; }
 
       /* Default → primary */
-      :host(:not([variant])) .btn,
-      :host(:not([variant])) .btn-slot::slotted(a) {
+      :host(:not([variant="ghost"]):not([variant="secondary"])) .btn,
+      :host(:not([variant="ghost"]):not([variant="secondary"])) .btn-slot::slotted(a) {
         background: var(--interactive);
         color: var(--surface-base);
         border-color: var(--interactive);
       }
-      :host(:not([variant])) .btn:hover,
-      :host(:not([variant])) .btn-slot::slotted(a:hover) { box-shadow: var(--interactive-active); }
+      :host(:not([variant="ghost"]):not([variant="secondary"])) .btn:hover,
+      :host(:not([variant="ghost"]):not([variant="secondary"])) .btn-slot::slotted(a:hover) { box-shadow: var(--interactive-active); }
 
       /* :active scale */
-      :host(:not([variant])) .btn:active,
-      :host(:not([variant])) .btn-slot::slotted(a:active),
+      :host(:not([variant="ghost"]):not([variant="secondary"])) .btn:active,
+      :host(:not([variant="ghost"]):not([variant="secondary"])) .btn-slot::slotted(a:active),
       :host([variant="primary"]) .btn:active,
       :host([variant="primary"]) .btn-slot::slotted(a:active) { transform: scale(0.97); box-shadow: 0 0 8px rgba(var(--interactive-rgb),0.5); }
       :host([variant="secondary"]) .btn:active,

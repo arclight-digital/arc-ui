@@ -32,6 +32,5 @@ function onArcChange(payload: CustomEvent) {
     :disabled="props.disabled"
     @arc-change="onArcChange"
   >
-    <slot />
   </arc-segmented-control>
 </template>

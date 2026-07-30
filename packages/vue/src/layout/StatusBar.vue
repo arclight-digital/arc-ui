@@ -16,5 +16,7 @@ const props = withDefaults(defineProps<{
     :position="props.position"
   >
     <slot />
+    <slot name="start" />
+    <slot name="end" />
   </arc-status-bar>
 </template>

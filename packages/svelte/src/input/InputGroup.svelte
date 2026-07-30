@@ -5,6 +5,10 @@
 
   interface Props {
     size?: 'sm' | 'md' | 'lg';
+    /** <slot name="prefix"> — put slot="prefix" on the element inside. */
+    prefix?: Snippet;
+    /** <slot name="suffix"> — put slot="suffix" on the element inside. */
+    suffix?: Snippet;
     children?: Snippet;
     class?: string;
     id?: string;
@@ -33,9 +37,11 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { size = 'md', children, ...rest }: Props = $props();
+  let { size = 'md', prefix, suffix, children, ...rest }: Props = $props();
 </script>
 
 <arc-input-group {size} {...rest}>
+  {@render prefix?.()}
+  {@render suffix?.()}
   {@render children?.()}
 </arc-input-group>

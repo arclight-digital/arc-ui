@@ -10,7 +10,6 @@ export interface QrCodeProps {
   label?: string;
   quietZone?: number;
   contrast?: boolean;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -38,8 +37,7 @@ export interface QrCodeProps {
   [key: `on${string}`]: unknown;
 }
 
-export const QrCode: FunctionComponent<QrCodeProps> = ({ value, size, level, label, quietZone, contrast, children, ...rest }) => (
+export const QrCode: FunctionComponent<QrCodeProps> = ({ value, size, level, label, quietZone, contrast, ...rest }) => (
   <arc-qr-code value={value} size={size} level={level} label={label} quietZone={quietZone} contrast={contrast} {...rest}>
-    {children}
   </arc-qr-code>
 );

@@ -24,5 +24,6 @@ const emit = defineEmits<{
     @arc-dismiss="(payload: CustomEvent) => emit('arc-dismiss', payload)"
   >
     <slot />
+    <slot name="icon" />
   </arc-callout>
 </template>

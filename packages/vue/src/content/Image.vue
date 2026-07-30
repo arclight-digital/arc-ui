@@ -37,6 +37,5 @@ const emit = defineEmits<{
     @arc-load="(payload: CustomEvent) => emit('arc-load', payload)"
     @arc-error="(payload: CustomEvent) => emit('arc-error', payload)"
   >
-    <slot />
   </arc-image>
 </template>

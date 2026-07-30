@@ -9,7 +9,6 @@
     maxVisible?: number;
     dedupe?: boolean;
     queueLimit?: number;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -37,9 +36,16 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { position = 'top-right', duration = 4000, maxVisible = 3, dedupe = true, queueLimit = 20, children, ...rest }: Props = $props();
+  let { position = 'top-right', duration = 4000, maxVisible = 3, dedupe = true, queueLimit = 20, ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (maxVisible !== undefined) el.maxVisible = maxVisible;
+    if (queueLimit !== undefined) el.queueLimit = queueLimit;
+  });
 </script>
 
-<arc-toast-manager {position} {duration} {maxVisible} {dedupe} {queueLimit} {...rest}>
-  {@render children?.()}
+<arc-toast-manager {position} {duration} {dedupe} bind:this={__el} {...rest}>
 </arc-toast-manager>

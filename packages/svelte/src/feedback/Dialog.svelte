@@ -10,7 +10,6 @@
     confirmLabel?: string;
     cancelLabel?: string;
     variant?: 'default' | 'danger';
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -38,9 +37,16 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { open = false, heading = '', message = '', confirmLabel = 'Confirm', cancelLabel = 'Cancel', variant = 'default', children, ...rest }: Props = $props();
+  let { open = false, heading = '', message = '', confirmLabel = 'Confirm', cancelLabel = 'Cancel', variant = 'default', ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (confirmLabel !== undefined) el.confirmLabel = confirmLabel;
+    if (cancelLabel !== undefined) el.cancelLabel = cancelLabel;
+  });
 </script>
 
-<arc-dialog {open} {heading} {message} {confirmLabel} {cancelLabel} {variant} {...rest}>
-  {@render children?.()}
+<arc-dialog {open} {heading} {message} {variant} bind:this={__el} {...rest}>
 </arc-dialog>

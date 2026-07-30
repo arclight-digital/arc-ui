@@ -6,7 +6,6 @@ import '@arclux/arc-ui/empty-state';
 export interface EmptyStateProps {
   heading?: string;
   description?: string;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -34,8 +33,7 @@ export interface EmptyStateProps {
   [key: `on${string}`]: unknown;
 }
 
-export const EmptyState: FunctionComponent<EmptyStateProps> = ({ heading, description, children, ...rest }) => (
+export const EmptyState: FunctionComponent<EmptyStateProps> = ({ heading, description, ...rest }) => (
   <arc-empty-state heading={heading} description={description} {...rest}>
-    {children}
   </arc-empty-state>
 );

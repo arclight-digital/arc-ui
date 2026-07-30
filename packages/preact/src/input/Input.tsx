@@ -18,7 +18,6 @@ export interface InputProps {
   rows?: number;
   onArcInput?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -46,7 +45,7 @@ export interface InputProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Input: FunctionComponent<InputProps> = ({ type, name, label, placeholder, value, disabled, required, error, size, multiline, rows, onArcInput, onArcChange, children, ...rest }) => {
+export const Input: FunctionComponent<InputProps> = ({ type, name, label, placeholder, value, disabled, required, error, size, multiline, rows, onArcInput, onArcChange, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -66,7 +65,6 @@ export const Input: FunctionComponent<InputProps> = ({ type, name, label, placeh
   }, [onArcInput, onArcChange]);
   return (
     <arc-input ref={ref} type={type} name={name} label={label} placeholder={placeholder} value={value} disabled={disabled} required={required} error={error} size={size} multiline={multiline} rows={rows} {...rest}>
-      {children}
     </arc-input>
   );
 };

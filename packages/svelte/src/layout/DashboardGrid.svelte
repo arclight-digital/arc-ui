@@ -36,8 +36,15 @@
   }
 
   let { columns = 0, gap = 'var(--space-lg)', minColumnWidth = '280px', children, ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (minColumnWidth !== undefined) el.minColumnWidth = minColumnWidth;
+  });
 </script>
 
-<arc-dashboard-grid {columns} {gap} {minColumnWidth} {...rest}>
+<arc-dashboard-grid {columns} {gap} bind:this={__el} {...rest}>
   {@render children?.()}
 </arc-dashboard-grid>

@@ -10,7 +10,7 @@
       }
 
       .arc-icon[data-size="xs"] { width: 12px; height: 12px; }
-      .arc-icon:not([data-size]),
+      .arc-icon:not([data-data-size="lg"]):not([data-data-size="md"]):not([data-data-size="xl"]):not([data-data-size="xs"]),
       .arc-icon[data-size="sm"] { width: 16px; height: 16px; }
       .arc-icon[data-size="md"] { width: 20px; height: 20px; }
       .arc-icon[data-size="lg"] { width: 24px; height: 24px; }

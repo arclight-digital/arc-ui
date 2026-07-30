@@ -36,7 +36,7 @@ export class ArcGradientText extends LitElement {
       /* --- Variant gradients --- */
 
       :host([variant="accent"]) .gradient-text,
-      :host(:not([variant])) .gradient-text {
+      :host(:not([variant="display"]):not([variant="ocean"]):not([variant="sunset"])) .gradient-text {
         background: var(--gradient-accent-text);
         -webkit-background-clip: text;
         background-clip: text;

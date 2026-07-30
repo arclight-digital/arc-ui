@@ -7,7 +7,6 @@ export interface IconProps {
   name?: string;
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   label?: string;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -36,10 +35,9 @@ export interface IconProps {
 }
 
 export const Icon: Component<IconProps> = (props) => {
-  const [local, rest] = splitProps(props, ['name', 'size', 'label', 'children']);
+  const [local, rest] = splitProps(props, ['name', 'size', 'label']);
   return (
     <arc-icon name={local.name} size={local.size} label={local.label} {...rest}>
-      {local.children}
     </arc-icon>
   );
 };

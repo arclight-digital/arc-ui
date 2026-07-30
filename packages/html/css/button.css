@@ -37,7 +37,7 @@
         justify-content: center;
         gap: var(--space-sm);
         font-family: var(--font-label);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         text-transform: uppercase;
         letter-spacing: 2px;
         border: 1px solid transparent;
@@ -58,26 +58,26 @@
       /* Sizes */
       .arc-button[data-size="sm"] .btn,
       .arc-button[data-size="sm"] a { font-size: var(--text-xs); padding: var(--space-xs) var(--space-md); }
-      .arc-button:not([data-size]) .btn,
-      .arc-button:not([data-size]) a,
+      .arc-button:not([data-data-size="lg"]):not([data-data-size="sm"]) .btn,
+      .arc-button:not([data-data-size="lg"]):not([data-data-size="sm"]) a,
       .arc-button[data-size="md"] .btn,
       .arc-button[data-size="md"] a { font-size: var(--text-xs); padding: var(--space-sm) var(--space-lg); }
       .arc-button[data-size="lg"] .btn,
       .arc-button[data-size="lg"] a { font-size: var(--text-xs); padding: var(--space-md) var(--space-xl); letter-spacing: 3px; }
 
       /* Default → primary */
-      .arc-button:not([data-variant]) .btn,
-      .arc-button:not([data-variant]) a {
+      .arc-button:not([data-data-variant="ghost"]):not([data-data-variant="secondary"]) .btn,
+      .arc-button:not([data-data-variant="ghost"]):not([data-data-variant="secondary"]) a {
         background: var(--interactive);
         color: var(--surface-base);
         border-color: var(--interactive);
       }
-      .arc-button:not([data-variant]) .btn:hover,
-      .arc-button:not([data-variant]) a:hover { box-shadow: var(--interactive-active); }
+      .arc-button:not([data-data-variant="ghost"]):not([data-data-variant="secondary"]) .btn:hover,
+      .arc-button:not([data-data-variant="ghost"]):not([data-data-variant="secondary"]) a:hover { box-shadow: var(--interactive-active); }
 
       /* :active scale */
-      .arc-button:not([data-variant]) .btn:active,
-      .arc-button:not([data-variant]) a:active,
+      .arc-button:not([data-data-variant="ghost"]):not([data-data-variant="secondary"]) .btn:active,
+      .arc-button:not([data-data-variant="ghost"]):not([data-data-variant="secondary"]) a:active,
       .arc-button[data-variant="primary"] .btn:active,
       .arc-button[data-variant="primary"] a:active { transform: scale(0.97); box-shadow: 0 0 8px rgba(var(--interactive-rgb),0.5); }
       .arc-button[data-variant="secondary"] .btn:active,

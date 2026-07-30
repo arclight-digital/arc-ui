@@ -11,7 +11,6 @@ export interface TopBarProps {
   mobileMenu?: string;
   menuPosition?: string;
   navAlign?: string;
-  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -40,10 +39,9 @@ export interface TopBarProps {
 }
 
 export const TopBar: Component<TopBarProps> = (props) => {
-  const [local, rest] = splitProps(props, ['heading', 'fixed', 'contained', 'menuOpen', 'mobileMenu', 'menuPosition', 'navAlign', 'children']);
+  const [local, rest] = splitProps(props, ['heading', 'fixed', 'contained', 'menuOpen', 'mobileMenu', 'menuPosition', 'navAlign']);
   return (
-    <arc-top-bar heading={local.heading} fixed={local.fixed} contained={local.contained} menuOpen={local.menuOpen} mobileMenu={local.mobileMenu} menuPosition={local.menuPosition} navAlign={local.navAlign} {...rest}>
-      {local.children}
+    <arc-top-bar heading={local.heading} fixed={local.fixed} contained={local.contained} prop:menuOpen={local.menuOpen} prop:mobileMenu={local.mobileMenu} prop:menuPosition={local.menuPosition} prop:navAlign={local.navAlign} {...rest}>
     </arc-top-bar>
   );
 };

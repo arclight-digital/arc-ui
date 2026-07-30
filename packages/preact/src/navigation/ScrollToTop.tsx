@@ -8,7 +8,6 @@ export interface ScrollToTopProps {
   smooth?: boolean;
   position?: 'bottom-right' | 'bottom-left';
   offset?: string;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -36,8 +35,7 @@ export interface ScrollToTopProps {
   [key: `on${string}`]: unknown;
 }
 
-export const ScrollToTop: FunctionComponent<ScrollToTopProps> = ({ threshold, smooth, position, offset, children, ...rest }) => (
+export const ScrollToTop: FunctionComponent<ScrollToTopProps> = ({ threshold, smooth, position, offset, ...rest }) => (
   <arc-scroll-to-top threshold={threshold} smooth={smooth} position={position} offset={offset} {...rest}>
-    {children}
   </arc-scroll-to-top>
 );

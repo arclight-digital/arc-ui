@@ -6,7 +6,6 @@
   interface Props {
     position?: 'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center';
     duration?: number;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -34,9 +33,8 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { position = 'top-right', duration = 4000, children, ...rest }: Props = $props();
+  let { position = 'top-right', duration = 4000, ...rest }: Props = $props();
 </script>
 
 <arc-toast {position} {duration} {...rest}>
-  {@render children?.()}
 </arc-toast>

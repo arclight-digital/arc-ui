@@ -7,7 +7,7 @@ import '@arclux/arc-ui/stepper';
   selector: 'arc-stepper',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-stepper [attr.active]="this.active"><ng-content /></arc-stepper>`,
+  template: `<arc-stepper [attr.active]="this.active"></arc-stepper>`,
 })
 export class Stepper {
   @Input() active: number = 0;

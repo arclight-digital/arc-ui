@@ -39,7 +39,7 @@ export interface MarqueeProps {
 export const Marquee: Component<MarqueeProps> = (props) => {
   const [local, rest] = splitProps(props, ['speed', 'direction', 'pauseOnHover', 'gap', 'children']);
   return (
-    <arc-marquee speed={local.speed} direction={local.direction} pauseOnHover={local.pauseOnHover} gap={local.gap} {...rest}>
+    <arc-marquee speed={local.speed} direction={local.direction} prop:pauseOnHover={local.pauseOnHover} gap={local.gap} {...rest}>
       {local.children}
     </arc-marquee>
   );

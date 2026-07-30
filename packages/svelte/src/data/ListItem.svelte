@@ -8,7 +8,12 @@
     selected?: boolean;
     disabled?: boolean;
     href?: string;
-    children?: Snippet;
+    /** <slot name="prefix"> — put slot="prefix" on the element inside. */
+    prefix?: Snippet;
+    /** <slot name="description"> — put slot="description" on the element inside. */
+    description?: Snippet;
+    /** <slot name="suffix"> — put slot="suffix" on the element inside. */
+    suffix?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -36,9 +41,11 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = '', selected = false, disabled = false, href = '', children, ...rest }: Props = $props();
+  let { value = '', selected = false, disabled = false, href = '', prefix, description, suffix, ...rest }: Props = $props();
 </script>
 
 <arc-list-item {value} {selected} {disabled} {href} {...rest}>
-  {@render children?.()}
+  {@render prefix?.()}
+  {@render description?.()}
+  {@render suffix?.()}
 </arc-list-item>

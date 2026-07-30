@@ -5,7 +5,6 @@
 
   interface Props {
     disabled?: boolean;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -33,9 +32,8 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { disabled = false, children, ...rest }: Props = $props();
+  let { disabled = false, ...rest }: Props = $props();
 </script>
 
 <arc-sortable-list {disabled} {...rest}>
-  {@render children?.()}
 </arc-sortable-list>

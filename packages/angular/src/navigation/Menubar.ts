@@ -7,7 +7,7 @@ import '@arclux/arc-ui/menubar';
   selector: 'arc-menubar',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-menubar [items]="this.items" (arc-select)="this.arcSelect.emit($event)"><ng-content /></arc-menubar>`,
+  template: `<arc-menubar [items]="this.items" (arc-select)="this.arcSelect.emit($event)"></arc-menubar>`,
 })
 export class Menubar {
   @Input() items: Array<{label:string,disabled?:boolean,items:Array<{label?:string,shortcut?:string,disabled?:boolean,divider?:boolean,items?:Array<{label:string,shortcut?:string,disabled?:boolean}>}>}> = [];

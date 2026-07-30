@@ -36,8 +36,15 @@
   }
 
   let { maxWidth = '60ch', intrinsic = false, text = false, children, ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (maxWidth !== undefined) el.maxWidth = maxWidth;
+  });
 </script>
 
-<arc-center {maxWidth} {intrinsic} {text} {...rest}>
+<arc-center {intrinsic} {text} bind:this={__el} {...rest}>
   {@render children?.()}
 </arc-center>

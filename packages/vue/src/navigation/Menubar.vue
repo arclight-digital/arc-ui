@@ -20,6 +20,5 @@ const emit = defineEmits<{
     :items="props.items"
     @arc-select="(payload: CustomEvent) => emit('arc-select', payload)"
   >
-    <slot />
   </arc-menubar>
 </template>

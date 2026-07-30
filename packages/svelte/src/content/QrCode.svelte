@@ -10,7 +10,6 @@
     label?: string;
     quietZone?: number;
     contrast?: boolean;
-    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -38,9 +37,15 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = '', size = 160, level = 'M', label = '', quietZone = 2, contrast = false, children, ...rest }: Props = $props();
+  let { value = '', size = 160, level = 'M', label = '', quietZone = 2, contrast = false, ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (quietZone !== undefined) el.quietZone = quietZone;
+  });
 </script>
 
-<arc-qr-code {value} {size} {level} {label} {quietZone} {contrast} {...rest}>
-  {@render children?.()}
+<arc-qr-code {value} {size} {level} {label} {contrast} bind:this={__el} {...rest}>
 </arc-qr-code>

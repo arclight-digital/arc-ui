@@ -5,7 +5,8 @@
 
   interface Props {
     open?: boolean;
-    children?: Snippet;
+    /** <slot name="content"> — put slot="content" on the element inside. */
+    content?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -33,9 +34,9 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { open = false, children, ...rest }: Props = $props();
+  let { open = false, content, ...rest }: Props = $props();
 </script>
 
 <arc-context-menu {open} {...rest}>
-  {@render children?.()}
+  {@render content?.()}
 </arc-context-menu>

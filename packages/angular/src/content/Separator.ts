@@ -7,7 +7,7 @@ import '@arclux/arc-ui/separator';
   selector: 'arc-separator',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-separator [attr.orientation]="this.orientation" [attr.label]="this.label" [attr.variant]="this.variant"><ng-content /></arc-separator>`,
+  template: `<arc-separator [attr.orientation]="this.orientation" [attr.label]="this.label" [attr.variant]="this.variant"></arc-separator>`,
 })
 export class Separator {
   @Input() orientation: 'horizontal' | 'vertical' = 'horizontal';

@@ -8,7 +8,6 @@ export interface TableProps {
   rows?: string[][];
   striped?: boolean;
   compact?: boolean;
-  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -36,8 +35,7 @@ export interface TableProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Table: FunctionComponent<TableProps> = ({ columns, rows, striped, compact, children, ...rest }) => (
+export const Table: FunctionComponent<TableProps> = ({ columns, rows, striped, compact, ...rest }) => (
   <arc-table columns={columns} rows={rows} striped={striped} compact={compact} {...rest}>
-    {children}
   </arc-table>
 );
