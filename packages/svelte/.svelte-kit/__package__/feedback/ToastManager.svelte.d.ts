@@ -1,0 +1,38 @@
+import '@arclux/arc-ui/toast-manager';
+import type { Snippet } from 'svelte';
+interface Props {
+    position?: 'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center';
+    duration?: number;
+    maxVisible?: number;
+    dedupe?: boolean;
+    queueLimit?: number;
+    children?: Snippet;
+    class?: string;
+    id?: string;
+    style?: string;
+    title?: string;
+    role?: string;
+    slot?: string;
+    part?: string;
+    exportparts?: string;
+    dir?: string;
+    lang?: string;
+    translate?: string;
+    accesskey?: string;
+    enterkeyhint?: string;
+    inputmode?: string;
+    popover?: string;
+    contenteditable?: boolean | string;
+    tabindex?: number;
+    hidden?: boolean;
+    inert?: boolean;
+    draggable?: boolean;
+    spellcheck?: boolean;
+    autofocus?: boolean;
+    [key: `data-${string}`]: unknown;
+    [key: `aria-${string}`]: unknown;
+    [key: `on${string}`]: unknown;
+}
+declare const ToastManager: import("svelte").Component<Props, {}, "">;
+type ToastManager = ReturnType<typeof ToastManager>;
+export default ToastManager;

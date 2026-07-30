@@ -1,0 +1,41 @@
+import '@arclux/arc-ui/event-calendar';
+import type { Snippet } from 'svelte';
+interface Props {
+    events?: Array<{
+        date: string;
+        end?: string;
+        label: string;
+        color?: number;
+    }>;
+    view?: 'month' | 'week';
+    date?: string;
+    children?: Snippet;
+    class?: string;
+    id?: string;
+    style?: string;
+    title?: string;
+    role?: string;
+    slot?: string;
+    part?: string;
+    exportparts?: string;
+    dir?: string;
+    lang?: string;
+    translate?: string;
+    accesskey?: string;
+    enterkeyhint?: string;
+    inputmode?: string;
+    popover?: string;
+    contenteditable?: boolean | string;
+    tabindex?: number;
+    hidden?: boolean;
+    inert?: boolean;
+    draggable?: boolean;
+    spellcheck?: boolean;
+    autofocus?: boolean;
+    [key: `data-${string}`]: unknown;
+    [key: `aria-${string}`]: unknown;
+    [key: `on${string}`]: unknown;
+}
+declare const EventCalendar: import("svelte").Component<Props, {}, "date" | "view">;
+type EventCalendar = ReturnType<typeof EventCalendar>;
+export default EventCalendar;

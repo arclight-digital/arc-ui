@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/context-menu';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-context-menu': Record<string, unknown>;
+    }
+  }
+}
+
 export interface ContextMenuProps {
   open?: boolean;
   onArcOpen?: (e: CustomEvent) => void;

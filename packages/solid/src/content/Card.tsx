@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/card';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-card': Record<string, unknown>;
+    }
+  }
+}
+
 export interface CardProps {
   href?: string;
   padding?: 'none' | 'sm' | 'md' | 'lg';

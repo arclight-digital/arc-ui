@@ -1,0 +1,46 @@
+import '@arclux/arc-ui/page-header';
+import type { Snippet } from 'svelte';
+interface Props {
+    heading?: string;
+    description?: string;
+    border?: boolean;
+    /** <slot name="above"> — put slot="above" on the element inside. */
+    above?: Snippet;
+    /** <slot name="aside"> — put slot="aside" on the element inside. */
+    aside?: Snippet;
+    /** <slot name="below"> — put slot="below" on the element inside. */
+    below?: Snippet;
+    /** <slot name="heading"> — put slot="heading" on the element inside. */
+    heading_?: Snippet;
+    /** <slot name="description"> — put slot="description" on the element inside. */
+    description_?: Snippet;
+    children?: Snippet;
+    class?: string;
+    id?: string;
+    style?: string;
+    title?: string;
+    role?: string;
+    slot?: string;
+    part?: string;
+    exportparts?: string;
+    dir?: string;
+    lang?: string;
+    translate?: string;
+    accesskey?: string;
+    enterkeyhint?: string;
+    inputmode?: string;
+    popover?: string;
+    contenteditable?: boolean | string;
+    tabindex?: number;
+    hidden?: boolean;
+    inert?: boolean;
+    draggable?: boolean;
+    spellcheck?: boolean;
+    autofocus?: boolean;
+    [key: `data-${string}`]: unknown;
+    [key: `aria-${string}`]: unknown;
+    [key: `on${string}`]: unknown;
+}
+declare const PageHeader: import("svelte").Component<Props, {}, "">;
+type PageHeader = ReturnType<typeof PageHeader>;
+export default PageHeader;

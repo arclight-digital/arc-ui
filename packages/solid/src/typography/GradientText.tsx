@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/gradient-text';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-gradient-text': Record<string, unknown>;
+    }
+  }
+}
+
 export interface GradientTextProps {
   variant?: 'accent' | 'display' | 'sunset' | 'ocean' | 'custom';
   gradient?: string;

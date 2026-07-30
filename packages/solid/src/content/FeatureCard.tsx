@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/feature-card';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-feature-card': Record<string, unknown>;
+    }
+  }
+}
+
 export interface FeatureCardProps {
   icon?: string;
   heading?: string;

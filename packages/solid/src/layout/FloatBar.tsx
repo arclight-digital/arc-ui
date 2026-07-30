@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/float-bar';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-float-bar': Record<string, unknown>;
+    }
+  }
+}
+
 export interface FloatBarProps {
   open?: boolean;
   position?: 'bottom' | 'top';

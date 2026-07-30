@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/date-range-picker';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-date-range-picker': Record<string, unknown>;
+    }
+  }
+}
+
 export interface DateRangePickerProps {
   start?: string;
   end?: string;

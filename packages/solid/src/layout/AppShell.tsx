@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/app-shell';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-app-shell': Record<string, unknown>;
+    }
+  }
+}
+
 export interface AppShellProps {
   sidebarOpen?: boolean;
   breakpoint?: number;

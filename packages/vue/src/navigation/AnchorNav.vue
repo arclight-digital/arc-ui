@@ -7,7 +7,7 @@ defineOptions({ name: 'AnchorNav' });
 const props = withDefaults(defineProps<{
   orientation?: 'vertical' | 'horizontal';
   value?: string;
-  items?: string;
+  items?: Array<{label: string, value: string}>;
 }>(), {
   orientation: 'horizontal',
   value: '',

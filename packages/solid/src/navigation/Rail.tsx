@@ -3,8 +3,16 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/rail';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-rail': Record<string, unknown>;
+    }
+  }
+}
+
 export interface RailProps {
-  items?: string;
+  items?: Array<{icon: string, label: string, value: string}>;
   value?: string;
   expanded?: boolean;
   onArcChange?: (e: CustomEvent) => void;

@@ -5,7 +5,7 @@ import '@arclux/arc-ui/bottom-nav';
 defineOptions({ name: 'BottomNav' });
 
 const props = withDefaults(defineProps<{
-  items?: string;
+  items?: Array<{label: string, icon?: string, value: string}>;
   value?: string;
 }>(), {
   items: () => ([]),

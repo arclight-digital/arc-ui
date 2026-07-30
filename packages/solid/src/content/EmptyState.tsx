@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/empty-state';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-empty-state': Record<string, unknown>;
+    }
+  }
+}
+
 export interface EmptyStateProps {
   heading?: string;
   description?: string;

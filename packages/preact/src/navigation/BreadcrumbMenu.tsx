@@ -5,7 +5,7 @@ import { useLayoutEffect, useRef } from 'preact/hooks';
 import '@arclux/arc-ui/breadcrumb-menu';
 
 export interface BreadcrumbMenuProps {
-  items?: string;
+  items?: Array<{label: string, href?: string, siblings?: Array<{label: string, href?: string}>}>;
   label?: string;
   onArcNavigate?: (e: CustomEvent) => void;
   children?: preact.ComponentChildren;

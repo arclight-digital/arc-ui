@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/stat';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-stat': Record<string, unknown>;
+    }
+  }
+}
+
 export interface StatProps {
   value?: string;
   label?: string;

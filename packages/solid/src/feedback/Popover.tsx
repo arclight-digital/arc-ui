@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/popover';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-popover': Record<string, unknown>;
+    }
+  }
+}
+
 export interface PopoverProps {
   open?: boolean;
   position?: 'top' | 'bottom' | 'left' | 'right';

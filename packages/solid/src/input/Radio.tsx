@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/radio';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-radio': Record<string, unknown>;
+    }
+  }
+}
+
 export interface RadioProps {
   value?: string;
   disabled?: boolean;

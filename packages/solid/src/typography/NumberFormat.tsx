@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/number-format';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-number-format': Record<string, unknown>;
+    }
+  }
+}
+
 export interface NumberFormatProps {
   value?: number;
   type?: 'number' | 'currency' | 'percent' | 'compact';

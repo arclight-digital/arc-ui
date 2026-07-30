@@ -3,11 +3,19 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/speed-dial';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-speed-dial': Record<string, unknown>;
+    }
+  }
+}
+
 export interface SpeedDialProps {
   open?: boolean;
   direction?: 'up' | 'down' | 'left' | 'right';
   position?: 'bottom-right' | 'bottom-left';
-  items?: string;
+  items?: Array<{icon: string, label: string, value?: string}>;
   onArcAction?: (e: CustomEvent) => void;
   onArcClose?: (e: CustomEvent) => void;
   class?: string;

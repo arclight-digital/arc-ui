@@ -673,6 +673,13 @@ export default {
    "trend",
    "change"
   ],
+  "enums": {
+   "trend": [
+    "up",
+    "down",
+    "neutral"
+   ]
+  },
   "slug": "stat"
  },
  "arc-step": {
@@ -1752,6 +1759,13 @@ export default {
    "padding"
   ],
   "enums": {
+   "size": [
+    "sm",
+    "md",
+    "lg",
+    "xl",
+    "full"
+   ],
    "padding": [
     "none",
     "sm",
@@ -2240,6 +2254,13 @@ export default {
    "menu-position",
    "nav-align"
   ],
+  "enums": {
+   "nav-align": [
+    "left",
+    "center",
+    "right"
+   ]
+  },
   "slug": "top-bar"
  },
  "arc-tree-item": {

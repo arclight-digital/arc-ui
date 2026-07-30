@@ -5,7 +5,7 @@ import '@arclux/arc-ui/breadcrumb-menu';
 defineOptions({ name: 'BreadcrumbMenu' });
 
 const props = withDefaults(defineProps<{
-  items?: string;
+  items?: Array<{label: string, href?: string, siblings?: Array<{label: string, href?: string}>}>;
   label?: string;
 }>(), {
   items: () => ([]),

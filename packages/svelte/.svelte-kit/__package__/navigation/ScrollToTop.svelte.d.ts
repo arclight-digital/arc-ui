@@ -1,0 +1,37 @@
+import '@arclux/arc-ui/scroll-to-top';
+import type { Snippet } from 'svelte';
+interface Props {
+    threshold?: number;
+    smooth?: boolean;
+    position?: 'bottom-right' | 'bottom-left';
+    offset?: string;
+    children?: Snippet;
+    class?: string;
+    id?: string;
+    style?: string;
+    title?: string;
+    role?: string;
+    slot?: string;
+    part?: string;
+    exportparts?: string;
+    dir?: string;
+    lang?: string;
+    translate?: string;
+    accesskey?: string;
+    enterkeyhint?: string;
+    inputmode?: string;
+    popover?: string;
+    contenteditable?: boolean | string;
+    tabindex?: number;
+    hidden?: boolean;
+    inert?: boolean;
+    draggable?: boolean;
+    spellcheck?: boolean;
+    autofocus?: boolean;
+    [key: `data-${string}`]: unknown;
+    [key: `aria-${string}`]: unknown;
+    [key: `on${string}`]: unknown;
+}
+declare const ScrollToTop: import("svelte").Component<Props, {}, "">;
+type ScrollToTop = ReturnType<typeof ScrollToTop>;
+export default ScrollToTop;

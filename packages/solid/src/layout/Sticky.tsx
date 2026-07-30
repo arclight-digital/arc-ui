@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/sticky';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-sticky': Record<string, unknown>;
+    }
+  }
+}
+
 export interface StickyProps {
   offset?: string;
   onArcStuck?: (e: CustomEvent) => void;

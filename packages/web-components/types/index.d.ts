@@ -44,7 +44,7 @@ export declare class ArcAnchorNav extends LitElement {
   /** The value of the currently active link. Controls which item is highlighted. @default '' */
   value: string;
   /** Declarative list of items to render. Each object needs a label (display text) and value (identifier). Alternative to slotting children. @default [] */
-  items: unknown[];
+  items: Array<{label: string, value: string}>;
 }
 
 /**
@@ -182,7 +182,7 @@ export declare class ArcBlockquote extends LitElement {
  */
 export declare class ArcBottomNav extends LitElement {
   /** Array of navigation items, each with a label, icon name, and value identifier. @default [] */
-  items: unknown[];
+  items: Array<{label: string, icon?: string, value: string}>;
   /** The value of the currently active item. Controls which item is highlighted. @default '' */
   value: string;
 }
@@ -218,7 +218,7 @@ export declare class ArcBreadcrumbMenu extends LitElement {
   /** @default 'Breadcrumb' */
   label: string;
   /** Array of breadcrumb items. Each item has a label and href. Optionally include a siblings array to enable a dropdown at that level. @default [] */
-  items: unknown[];
+  items: Array<{label: string, href?: string, siblings?: Array<{label: string, href?: string}>}>;
 }
 
 /**
@@ -595,8 +595,8 @@ export declare class ArcConnectionStatus extends LitElement {
 export declare class ArcContainer extends LitElement {
   /** Use the narrow max-width (720px vs 1120px) @default false */
   narrow: boolean;
-  /** Controls the maximum width. Options: 'sm', 'md', 'lg', 'xl', 'full'. @default 'md' */
-  size: string;
+  /** Controls the maximum width. @default 'md' */
+  size: 'sm' | 'md' | 'lg' | 'xl' | 'full';
   /** Controls inline padding. @default 'md' */
   padding: 'none' | 'sm' | 'md' | 'lg';
 }
@@ -1760,7 +1760,7 @@ export declare class ArcRadioGroup extends LitElement {
  */
 export declare class ArcRail extends LitElement {
   /** Array of navigation items, each with an icon name, text label, and value identifier. @default [] */
-  items: unknown[];
+  items: Array<{icon: string, label: string, value: string}>;
   /** The value of the currently active item. Controls which icon receives the accent glow. @default '' */
   value: string;
   /** When true, the Rail widens to show text labels beside each icon. Can be toggled on hover or set permanently. @default false */
@@ -2138,7 +2138,7 @@ export declare class ArcSpeedDial extends LitElement {
   /** Fixed viewport corner where the speed dial is anchored. @default 'bottom-right' */
   position: 'bottom-right' | 'bottom-left';
   /** Array of secondary action items to display when the speed dial is open. Each item needs an icon and label. @default [] */
-  items: unknown[];
+  items: Array<{icon: string, label: string, value?: string}>;
 }
 
 /**
@@ -2214,8 +2214,8 @@ export declare class ArcStat extends LitElement {
   value: string;
   /** Label below the value @default '' */
   label: string;
-  /** Shows a trend indicator arrow below the label. Options: 'up', 'down', 'neutral'. @default '' */
-  trend: string;
+  /** Shows a trend indicator arrow below the label. @default '' */
+  trend: 'up' | 'down' | 'neutral';
   /** Text displayed next to the trend arrow, typically a percentage like '+12%' or '-3.5%'. @default '' */
   change: string;
 }
@@ -2590,8 +2590,8 @@ export declare class ArcTopBar extends LitElement {
   mobileMenu: string;
   /** Position of the mobile menu panel when mobile-menu is active. @default 'left' */
   menuPosition: string;
-  /** Controls the alignment of content in the center slot. Options: 'left', 'center', 'right'. Pulls nav toward the brand or actions without reordering DOM. @default 'center' */
-  navAlign: string;
+  /** Controls the alignment of content in the center slot. Pulls nav toward the brand or actions without reordering DOM. @default 'center' */
+  navAlign: 'left' | 'center' | 'right';
 }
 
 /**

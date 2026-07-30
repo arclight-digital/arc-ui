@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/timeline-item';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-timeline-item': Record<string, unknown>;
+    }
+  }
+}
+
 export interface TimelineItemProps {
   heading?: string;
   date?: string;

@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/aspect-grid';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-aspect-grid': Record<string, unknown>;
+    }
+  }
+}
+
 export interface AspectGridProps {
   columns?: number;
   ratio?: '1/1' | '16/9' | '4/3';

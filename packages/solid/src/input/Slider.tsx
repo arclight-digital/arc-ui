@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/slider';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-slider': Record<string, unknown>;
+    }
+  }
+}
+
 export interface SliderProps {
   value?: number;
   min?: number;

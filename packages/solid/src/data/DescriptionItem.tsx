@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/description-item';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-description-item': Record<string, unknown>;
+    }
+  }
+}
+
 export interface DescriptionItemProps {
   term?: string;
   children?: JSX.Element;

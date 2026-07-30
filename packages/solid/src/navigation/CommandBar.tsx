@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/command-bar';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-command-bar': Record<string, unknown>;
+    }
+  }
+}
+
 export interface CommandBarProps {
   placeholder?: string;
   value?: string;

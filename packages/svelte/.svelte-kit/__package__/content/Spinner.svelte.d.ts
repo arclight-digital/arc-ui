@@ -1,0 +1,35 @@
+import '@arclux/arc-ui/spinner';
+import type { Snippet } from 'svelte';
+interface Props {
+    size?: 'sm' | 'md' | 'lg';
+    variant?: 'primary' | 'secondary' | 'white';
+    children?: Snippet;
+    class?: string;
+    id?: string;
+    style?: string;
+    title?: string;
+    role?: string;
+    slot?: string;
+    part?: string;
+    exportparts?: string;
+    dir?: string;
+    lang?: string;
+    translate?: string;
+    accesskey?: string;
+    enterkeyhint?: string;
+    inputmode?: string;
+    popover?: string;
+    contenteditable?: boolean | string;
+    tabindex?: number;
+    hidden?: boolean;
+    inert?: boolean;
+    draggable?: boolean;
+    spellcheck?: boolean;
+    autofocus?: boolean;
+    [key: `data-${string}`]: unknown;
+    [key: `aria-${string}`]: unknown;
+    [key: `on${string}`]: unknown;
+}
+declare const Spinner: import("svelte").Component<Props, {}, "">;
+type Spinner = ReturnType<typeof Spinner>;
+export default Spinner;

@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/select';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-select': Record<string, unknown>;
+    }
+  }
+}
+
 export interface SelectProps {
   value?: string;
   placeholder?: string;

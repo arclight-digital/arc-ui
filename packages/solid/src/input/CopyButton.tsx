@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/copy-button';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-copy-button': Record<string, unknown>;
+    }
+  }
+}
+
 export interface CopyButtonProps {
   value?: string;
   disabled?: boolean;

@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/kv-pair';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-kv-pair': Record<string, unknown>;
+    }
+  }
+}
+
 export interface KvPairProps {
   label?: string;
   children?: JSX.Element;

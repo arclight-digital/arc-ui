@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/progress';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-progress': Record<string, unknown>;
+    }
+  }
+}
+
 export interface ProgressProps {
   value?: number;
   variant?: 'bar' | 'spinner';

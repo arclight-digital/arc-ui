@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/tag-input';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-tag-input': Record<string, unknown>;
+    }
+  }
+}
+
 export interface TagInputProps {
   value?: string[];
   suggestions?: string[];

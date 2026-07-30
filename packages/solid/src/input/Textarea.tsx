@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/textarea';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-textarea': Record<string, unknown>;
+    }
+  }
+}
+
 export interface TextareaProps {
   value?: string;
   placeholder?: string;

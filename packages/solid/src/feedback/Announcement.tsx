@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/announcement';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-announcement': Record<string, unknown>;
+    }
+  }
+}
+
 export interface AnnouncementProps {
   politeness?: 'polite' | 'assertive';
   message?: string;

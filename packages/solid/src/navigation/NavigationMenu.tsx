@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/navigation-menu';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-navigation-menu': Record<string, unknown>;
+    }
+  }
+}
+
 export interface NavigationMenuProps {
   label?: string;
   onArcMobileMenuToggle?: (e: CustomEvent) => void;

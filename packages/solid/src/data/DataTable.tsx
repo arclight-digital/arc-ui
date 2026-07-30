@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/data-table';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-data-table': Record<string, unknown>;
+    }
+  }
+}
+
 export interface DataTableProps {
   rows?: Array<Record<string, any>>;
   sortable?: boolean;

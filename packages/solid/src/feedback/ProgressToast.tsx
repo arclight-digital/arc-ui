@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/progress-toast';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-progress-toast': Record<string, unknown>;
+    }
+  }
+}
+
 export interface ProgressToastProps {
   position?: 'top-right' | 'bottom-right';
   onArcComplete?: (e: CustomEvent) => void;

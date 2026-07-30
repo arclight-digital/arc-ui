@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/menu-divider';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-menu-divider': Record<string, unknown>;
+    }
+  }
+}
+
 export interface MenuDividerProps {
   children?: JSX.Element;
   class?: string;

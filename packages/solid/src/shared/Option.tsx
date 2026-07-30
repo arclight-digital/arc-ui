@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/option';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-option': Record<string, unknown>;
+    }
+  }
+}
+
 export interface OptionProps {
   value?: string;
   disabled?: boolean;

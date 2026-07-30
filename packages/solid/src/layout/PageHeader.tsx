@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/page-header';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-page-header': Record<string, unknown>;
+    }
+  }
+}
+
 export interface PageHeaderProps {
   heading?: string;
   description?: string;

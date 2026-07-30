@@ -3,10 +3,18 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/anchor-nav';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-anchor-nav': Record<string, unknown>;
+    }
+  }
+}
+
 export interface AnchorNavProps {
   orientation?: 'vertical' | 'horizontal';
   value?: string;
-  items?: string;
+  items?: Array<{label: string, value: string}>;
   onArcChange?: (e: CustomEvent) => void;
   children?: JSX.Element;
   class?: string;

@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/scroll-to-top';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-scroll-to-top': Record<string, unknown>;
+    }
+  }
+}
+
 export interface ScrollToTopProps {
   threshold?: number;
   smooth?: boolean;

@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/guided-tour';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-guided-tour': Record<string, unknown>;
+    }
+  }
+}
+
 export interface GuidedTourProps {
   open?: boolean;
   onArcChange?: (e: CustomEvent) => void;

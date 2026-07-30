@@ -1,0 +1,36 @@
+import '@arclux/arc-ui/hotkey';
+import type { Snippet } from 'svelte';
+interface Props {
+    keys?: string;
+    disabled?: boolean;
+    global?: boolean;
+    children?: Snippet;
+    class?: string;
+    id?: string;
+    style?: string;
+    title?: string;
+    role?: string;
+    slot?: string;
+    part?: string;
+    exportparts?: string;
+    dir?: string;
+    lang?: string;
+    translate?: string;
+    accesskey?: string;
+    enterkeyhint?: string;
+    inputmode?: string;
+    popover?: string;
+    contenteditable?: boolean | string;
+    tabindex?: number;
+    hidden?: boolean;
+    inert?: boolean;
+    draggable?: boolean;
+    spellcheck?: boolean;
+    autofocus?: boolean;
+    [key: `data-${string}`]: unknown;
+    [key: `aria-${string}`]: unknown;
+    [key: `on${string}`]: unknown;
+}
+declare const Hotkey: import("svelte").Component<Props, {}, "">;
+type Hotkey = ReturnType<typeof Hotkey>;
+export default Hotkey;

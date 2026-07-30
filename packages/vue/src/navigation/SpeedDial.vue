@@ -8,7 +8,7 @@ const props = withDefaults(defineProps<{
   open?: boolean;
   direction?: 'up' | 'down' | 'left' | 'right';
   position?: 'bottom-right' | 'bottom-left';
-  items?: string;
+  items?: Array<{icon: string, label: string, value?: string}>;
 }>(), {
   open: false,
   direction: 'up',

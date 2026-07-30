@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/inset';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-inset': Record<string, unknown>;
+    }
+  }
+}
+
 export interface InsetProps {
   space?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
   bleed?: boolean;

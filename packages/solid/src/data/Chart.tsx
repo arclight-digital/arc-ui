@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/chart';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-chart': Record<string, unknown>;
+    }
+  }
+}
+
 export interface ChartProps {
   type?: 'line' | 'area' | 'bar' | 'donut';
   series?: Array<{label:string,data:number[]}>;

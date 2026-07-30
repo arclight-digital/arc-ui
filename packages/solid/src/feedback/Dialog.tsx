@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/dialog';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-dialog': Record<string, unknown>;
+    }
+  }
+}
+
 export interface DialogProps {
   open?: boolean;
   heading?: string;

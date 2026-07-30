@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/dropdown-menu';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-dropdown-menu': Record<string, unknown>;
+    }
+  }
+}
+
 export interface DropdownMenuProps {
   open?: boolean;
   onArcClose?: (e: CustomEvent) => void;

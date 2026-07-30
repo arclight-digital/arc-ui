@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/dashboard-grid';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-dashboard-grid': Record<string, unknown>;
+    }
+  }
+}
+
 export interface DashboardGridProps {
   columns?: number;
   gap?: string;

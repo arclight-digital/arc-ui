@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/drawer';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-drawer': Record<string, unknown>;
+    }
+  }
+}
+
 export interface DrawerProps {
   open?: boolean;
   position?: 'left' | 'right';

@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/banner';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-banner': Record<string, unknown>;
+    }
+  }
+}
+
 export interface BannerProps {
   variant?: 'info' | 'success' | 'warning' | 'error';
   dismissible?: boolean;

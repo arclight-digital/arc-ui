@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/toggle';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-toggle': Record<string, unknown>;
+    }
+  }
+}
+
 export interface ToggleProps {
   checked?: boolean;
   disabled?: boolean;

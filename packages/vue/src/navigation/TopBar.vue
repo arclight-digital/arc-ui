@@ -11,7 +11,7 @@ const props = withDefaults(defineProps<{
   menuOpen?: boolean;
   mobileMenu?: string;
   menuPosition?: string;
-  navAlign?: string;
+  navAlign?: 'left' | 'center' | 'right';
 }>(), {
   heading: '',
   fixed: false,

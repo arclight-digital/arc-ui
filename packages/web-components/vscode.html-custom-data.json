@@ -1315,8 +1315,12 @@
         },
         {
           "name": "trend",
-          "description": "Shows a trend indicator arrow below the label. Options: 'up', 'down', 'neutral'.",
-          "values": []
+          "description": "Shows a trend indicator arrow below the label.",
+          "values": [
+            { "name": "up" },
+            { "name": "down" },
+            { "name": "neutral" }
+          ]
         },
         {
           "name": "change",
@@ -3594,8 +3598,14 @@
         },
         {
           "name": "size",
-          "description": "Controls the maximum width. Options: 'sm', 'md', 'lg', 'xl', 'full'.",
-          "values": []
+          "description": "Controls the maximum width.",
+          "values": [
+            { "name": "sm" },
+            { "name": "md" },
+            { "name": "lg" },
+            { "name": "xl" },
+            { "name": "full" }
+          ]
         },
         {
           "name": "padding",
@@ -3939,7 +3949,10 @@
         {
           "name": "items",
           "description": "Declarative list of items to render. Each object needs a label (display text) and value (identifier). Alternative to slotting children.",
-          "values": [{ "name": "array" }]
+          "values": [
+            { "name": "Array<{label: string" },
+            { "name": "value: string}>" }
+          ]
         }
       ],
       "references": []
@@ -3951,7 +3964,11 @@
         {
           "name": "items",
           "description": "Array of navigation items, each with a label, icon name, and value identifier.",
-          "values": [{ "name": "array" }]
+          "values": [
+            { "name": "Array<{label: string" },
+            { "name": "icon?: string" },
+            { "name": "value: string}>" }
+          ]
         },
         {
           "name": "value",
@@ -3980,7 +3997,12 @@
         {
           "name": "items",
           "description": "Array of breadcrumb items. Each item has a label and href. Optionally include a siblings array to enable a dropdown at that level.",
-          "values": [{ "name": "array" }]
+          "values": [
+            { "name": "Array<{label: string" },
+            { "name": "href?: string" },
+            { "name": "siblings?: Array<{label: string" },
+            { "name": "href?: string}>}>" }
+          ]
         },
         { "name": "label", "values": [] }
       ],
@@ -4225,7 +4247,11 @@
         {
           "name": "items",
           "description": "Array of navigation items, each with an icon name, text label, and value identifier.",
-          "values": [{ "name": "array" }]
+          "values": [
+            { "name": "Array<{icon: string" },
+            { "name": "label: string" },
+            { "name": "value: string}>" }
+          ]
         },
         {
           "name": "value",
@@ -4400,7 +4426,11 @@
         {
           "name": "items",
           "description": "Array of secondary action items to display when the speed dial is open. Each item needs an icon and label.",
-          "values": [{ "name": "array" }]
+          "values": [
+            { "name": "Array<{icon: string" },
+            { "name": "label: string" },
+            { "name": "value?: string}>" }
+          ]
         }
       ],
       "references": []
@@ -4523,8 +4553,12 @@
         },
         {
           "name": "nav-align",
-          "description": "Controls the alignment of content in the center slot. Options: 'left', 'center', 'right'. Pulls nav toward the brand or actions without reordering DOM.",
-          "values": []
+          "description": "Controls the alignment of content in the center slot. Pulls nav toward the brand or actions without reordering DOM.",
+          "values": [
+            { "name": "left" },
+            { "name": "center" },
+            { "name": "right" }
+          ]
         }
       ],
       "references": []

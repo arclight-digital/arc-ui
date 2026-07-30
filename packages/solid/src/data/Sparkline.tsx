@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/sparkline';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-sparkline': Record<string, unknown>;
+    }
+  }
+}
+
 export interface SparklineProps {
   data?: string;
   type?: 'line' | 'bar';

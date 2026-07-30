@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/countdown-timer';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-countdown-timer': Record<string, unknown>;
+    }
+  }
+}
+
 export interface CountdownTimerProps {
   target?: string;
   label?: string;

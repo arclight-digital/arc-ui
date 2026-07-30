@@ -1,0 +1,36 @@
+import '@arclux/arc-ui/banner';
+import type { Snippet } from 'svelte';
+interface Props {
+    variant?: 'info' | 'success' | 'warning' | 'error';
+    dismissible?: boolean;
+    sticky?: boolean;
+    children?: Snippet;
+    class?: string;
+    id?: string;
+    style?: string;
+    title?: string;
+    role?: string;
+    slot?: string;
+    part?: string;
+    exportparts?: string;
+    dir?: string;
+    lang?: string;
+    translate?: string;
+    accesskey?: string;
+    enterkeyhint?: string;
+    inputmode?: string;
+    popover?: string;
+    contenteditable?: boolean | string;
+    tabindex?: number;
+    hidden?: boolean;
+    inert?: boolean;
+    draggable?: boolean;
+    spellcheck?: boolean;
+    autofocus?: boolean;
+    [key: `data-${string}`]: unknown;
+    [key: `aria-${string}`]: unknown;
+    [key: `on${string}`]: unknown;
+}
+declare const Banner: import("svelte").Component<Props, {}, "">;
+type Banner = ReturnType<typeof Banner>;
+export default Banner;

@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/section';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-section': Record<string, unknown>;
+    }
+  }
+}
+
 export interface SectionProps {
   label?: string;
   children?: JSX.Element;

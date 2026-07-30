@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/marquee';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-marquee': Record<string, unknown>;
+    }
+  }
+}
+
 export interface MarqueeProps {
   speed?: number;
   direction?: 'left' | 'right';

@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/stack';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-stack': Record<string, unknown>;
+    }
+  }
+}
+
 export interface StackProps {
   direction?: 'vertical' | 'horizontal';
   gap?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';

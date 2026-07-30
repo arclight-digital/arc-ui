@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/rating';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-rating': Record<string, unknown>;
+    }
+  }
+}
+
 export interface RatingProps {
   value?: number;
   max?: number;

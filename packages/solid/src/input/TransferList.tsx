@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/transfer-list';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-transfer-list': Record<string, unknown>;
+    }
+  }
+}
+
 export interface TransferListProps {
   options?: Array<{value:string,label:string,disabled?:boolean}>;
   value?: string[];

@@ -1,0 +1,51 @@
+import '@arclux/arc-ui/data-grid';
+import type { Snippet } from 'svelte';
+interface Props {
+    columns?: Array<{
+        key: string;
+        label: string;
+        sortable?: boolean;
+        editable?: boolean;
+        pinned?: boolean;
+        width?: string;
+        align?: string;
+    }>;
+    rows?: Array<Record<string, any>>;
+    sort?: Array<{
+        key: string;
+        direction: 'asc' | 'desc';
+    }>;
+    manualSort?: boolean;
+    selectable?: boolean;
+    virtual?: boolean;
+    rowHeight?: number;
+    children?: Snippet;
+    class?: string;
+    id?: string;
+    style?: string;
+    title?: string;
+    role?: string;
+    slot?: string;
+    part?: string;
+    exportparts?: string;
+    dir?: string;
+    lang?: string;
+    translate?: string;
+    accesskey?: string;
+    enterkeyhint?: string;
+    inputmode?: string;
+    popover?: string;
+    contenteditable?: boolean | string;
+    tabindex?: number;
+    hidden?: boolean;
+    inert?: boolean;
+    draggable?: boolean;
+    spellcheck?: boolean;
+    autofocus?: boolean;
+    [key: `data-${string}`]: unknown;
+    [key: `aria-${string}`]: unknown;
+    [key: `on${string}`]: unknown;
+}
+declare const DataGrid: import("svelte").Component<Props, {}, "sort">;
+type DataGrid = ReturnType<typeof DataGrid>;
+export default DataGrid;

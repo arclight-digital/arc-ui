@@ -3,8 +3,16 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/bottom-nav';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-bottom-nav': Record<string, unknown>;
+    }
+  }
+}
+
 export interface BottomNavProps {
-  items?: string;
+  items?: Array<{label: string, icon?: string, value: string}>;
   value?: string;
   onArcChange?: (e: CustomEvent) => void;
   children?: JSX.Element;

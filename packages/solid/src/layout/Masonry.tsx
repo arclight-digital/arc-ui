@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/masonry';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-masonry': Record<string, unknown>;
+    }
+  }
+}
+
 export interface MasonryProps {
   columns?: number;
   gap?: 'sm' | 'md' | 'lg';

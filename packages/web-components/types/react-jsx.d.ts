@@ -258,7 +258,7 @@ declare module 'react' {
       };
       'arc-container': ArcBaseAttributes & {
         narrow?: boolean;
-        size?: string;
+        size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
         padding?: 'none' | 'sm' | 'md' | 'lg';
       };
       'arc-context-menu': ArcBaseAttributes & {
@@ -885,7 +885,7 @@ declare module 'react' {
       'arc-stat': ArcBaseAttributes & {
         value?: string;
         label?: string;
-        trend?: string;
+        trend?: 'up' | 'down' | 'neutral';
         change?: string;
       };
       'arc-status-bar': ArcBaseAttributes & {
@@ -1030,7 +1030,7 @@ declare module 'react' {
         'menu-open'?: boolean;
         'mobile-menu'?: string;
         'menu-position'?: string;
-        'nav-align'?: string;
+        'nav-align'?: 'left' | 'center' | 'right';
       };
       'arc-transfer-list': ArcBaseAttributes & {
         options?: string;

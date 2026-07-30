@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/icon';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-icon': Record<string, unknown>;
+    }
+  }
+}
+
 export interface IconProps {
   name?: string;
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';

@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/scroll-indicator';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-scroll-indicator': Record<string, unknown>;
+    }
+  }
+}
+
 export interface ScrollIndicatorProps {
   target?: string;
   position?: 'top' | 'bottom';

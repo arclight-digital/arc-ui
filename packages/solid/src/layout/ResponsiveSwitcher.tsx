@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/responsive-switcher';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-responsive-switcher': Record<string, unknown>;
+    }
+  }
+}
+
 export interface ResponsiveSwitcherProps {
   threshold?: string;
   gap?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';

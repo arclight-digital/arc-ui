@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/spotlight';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-spotlight': Record<string, unknown>;
+    }
+  }
+}
+
 export interface SpotlightProps {
   target?: string;
   active?: boolean;

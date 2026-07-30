@@ -5,7 +5,7 @@ import '@arclux/arc-ui/rail';
 defineOptions({ name: 'Rail' });
 
 const props = withDefaults(defineProps<{
-  items?: string;
+  items?: Array<{icon: string, label: string, value: string}>;
   value?: string;
   expanded?: boolean;
 }>(), {

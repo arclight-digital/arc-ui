@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/truncate';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-truncate': Record<string, unknown>;
+    }
+  }
+}
+
 export interface TruncateProps {
   lines?: number;
   expanded?: boolean;

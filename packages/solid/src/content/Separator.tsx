@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/separator';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-separator': Record<string, unknown>;
+    }
+  }
+}
+
 export interface SeparatorProps {
   orientation?: 'horizontal' | 'vertical';
   label?: string;

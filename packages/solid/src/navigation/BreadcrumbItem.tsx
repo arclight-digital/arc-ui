@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/breadcrumb-item';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-breadcrumb-item': Record<string, unknown>;
+    }
+  }
+}
+
 export interface BreadcrumbItemProps {
   href?: string;
   children?: JSX.Element;

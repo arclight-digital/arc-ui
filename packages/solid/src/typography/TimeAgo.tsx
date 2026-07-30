@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/time-ago';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-time-ago': Record<string, unknown>;
+    }
+  }
+}
+
 export interface TimeAgoProps {
   datetime?: string;
   live?: boolean;

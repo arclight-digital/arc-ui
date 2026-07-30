@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/value-card';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-value-card': Record<string, unknown>;
+    }
+  }
+}
+
 export interface ValueCardProps {
   icon?: string;
   heading?: string;

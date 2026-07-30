@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/kbd';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-kbd': Record<string, unknown>;
+    }
+  }
+}
+
 export interface KbdProps {
   children?: JSX.Element;
   class?: string;

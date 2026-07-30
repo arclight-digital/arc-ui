@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/avatar';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-avatar': Record<string, unknown>;
+    }
+  }
+}
+
 export interface AvatarProps {
   src?: string;
   name?: string;

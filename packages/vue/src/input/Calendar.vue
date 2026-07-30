@@ -14,8 +14,6 @@ const props = withDefaults(defineProps<{
   value: '',
   min: '',
   max: '',
-  month: 'now.getMonth()',
-  year: 'now.getFullYear()',
 });
 
 const emit = defineEmits<{

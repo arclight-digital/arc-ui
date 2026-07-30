@@ -1,0 +1,47 @@
+import '@arclux/arc-ui/date-range-picker';
+import type { Snippet } from 'svelte';
+interface Props {
+    start?: string;
+    end?: string;
+    name?: string;
+    min?: string;
+    max?: string;
+    months?: number;
+    presets?: Array<{
+        label: string;
+        days: number;
+    }>;
+    placeholder?: string;
+    disabled?: boolean;
+    required?: boolean;
+    label?: string;
+    children?: Snippet;
+    class?: string;
+    id?: string;
+    style?: string;
+    title?: string;
+    role?: string;
+    slot?: string;
+    part?: string;
+    exportparts?: string;
+    dir?: string;
+    lang?: string;
+    translate?: string;
+    accesskey?: string;
+    enterkeyhint?: string;
+    inputmode?: string;
+    popover?: string;
+    contenteditable?: boolean | string;
+    tabindex?: number;
+    hidden?: boolean;
+    inert?: boolean;
+    draggable?: boolean;
+    spellcheck?: boolean;
+    autofocus?: boolean;
+    [key: `data-${string}`]: unknown;
+    [key: `aria-${string}`]: unknown;
+    [key: `on${string}`]: unknown;
+}
+declare const DateRangePicker: import("svelte").Component<Props, {}, "start" | "end">;
+type DateRangePicker = ReturnType<typeof DateRangePicker>;
+export default DateRangePicker;

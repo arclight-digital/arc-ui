@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/image';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-image': Record<string, unknown>;
+    }
+  }
+}
+
 export interface ImageProps {
   src?: string;
   alt?: string;

@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/alert';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-alert': Record<string, unknown>;
+    }
+  }
+}
+
 export interface AlertProps {
   variant?: 'info' | 'success' | 'warning' | 'error';
   compact?: boolean;

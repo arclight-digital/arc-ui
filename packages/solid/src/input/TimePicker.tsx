@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/time-picker';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-time-picker': Record<string, unknown>;
+    }
+  }
+}
+
 export interface TimePickerProps {
   value?: string;
   name?: string;

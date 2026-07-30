@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/sidebar';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-sidebar': Record<string, unknown>;
+    }
+  }
+}
+
 export interface SidebarProps {
   active?: string;
   collapsed?: boolean;

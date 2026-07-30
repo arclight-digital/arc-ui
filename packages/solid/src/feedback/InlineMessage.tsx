@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/inline-message';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-inline-message': Record<string, unknown>;
+    }
+  }
+}
+
 export interface InlineMessageProps {
   variant?: 'info' | 'success' | 'warning' | 'error';
   children?: JSX.Element;

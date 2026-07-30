@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/tooltip';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-tooltip': Record<string, unknown>;
+    }
+  }
+}
+
 export interface TooltipProps {
   content?: string;
   position?: 'top' | 'bottom' | 'left' | 'right';

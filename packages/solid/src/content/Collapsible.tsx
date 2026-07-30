@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/collapsible';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-collapsible': Record<string, unknown>;
+    }
+  }
+}
+
 export interface CollapsibleProps {
   open?: boolean;
   heading?: string;

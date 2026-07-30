@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/list';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-list': Record<string, unknown>;
+    }
+  }
+}
+
 export interface ListProps {
   variant?: 'default' | 'bordered' | 'separated';
   size?: 'sm' | 'md' | 'lg';

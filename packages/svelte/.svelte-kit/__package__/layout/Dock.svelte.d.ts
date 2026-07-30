@@ -1,0 +1,36 @@
+import '@arclux/arc-ui/dock';
+import type { Snippet } from 'svelte';
+interface Props {
+    position?: 'bottom' | 'left' | 'right';
+    autoHide?: boolean;
+    open?: boolean;
+    children?: Snippet;
+    class?: string;
+    id?: string;
+    style?: string;
+    title?: string;
+    role?: string;
+    slot?: string;
+    part?: string;
+    exportparts?: string;
+    dir?: string;
+    lang?: string;
+    translate?: string;
+    accesskey?: string;
+    enterkeyhint?: string;
+    inputmode?: string;
+    popover?: string;
+    contenteditable?: boolean | string;
+    tabindex?: number;
+    hidden?: boolean;
+    inert?: boolean;
+    draggable?: boolean;
+    spellcheck?: boolean;
+    autofocus?: boolean;
+    [key: `data-${string}`]: unknown;
+    [key: `aria-${string}`]: unknown;
+    [key: `on${string}`]: unknown;
+}
+declare const Dock: import("svelte").Component<Props, {}, "">;
+type Dock = ReturnType<typeof Dock>;
+export default Dock;

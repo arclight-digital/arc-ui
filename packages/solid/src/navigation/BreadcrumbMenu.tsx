@@ -3,8 +3,16 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/breadcrumb-menu';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-breadcrumb-menu': Record<string, unknown>;
+    }
+  }
+}
+
 export interface BreadcrumbMenuProps {
-  items?: string;
+  items?: Array<{label: string, href?: string, siblings?: Array<{label: string, href?: string}>}>;
   label?: string;
   onArcNavigate?: (e: CustomEvent) => void;
   children?: JSX.Element;

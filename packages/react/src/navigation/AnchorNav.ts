@@ -7,7 +7,7 @@ import { ArcAnchorNav } from '@arclux/arc-ui/anchor-nav';
 export interface AnchorNavProps {
   orientation?: 'vertical' | 'horizontal';
   value?: string;
-  items?: string;
+  items?: Array<{label: string, value: string}>;
   className?: string;
   children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;

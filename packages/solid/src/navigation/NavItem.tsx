@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/nav-item';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-nav-item': Record<string, unknown>;
+    }
+  }
+}
+
 export interface NavItemProps {
   href?: string;
   active?: boolean;

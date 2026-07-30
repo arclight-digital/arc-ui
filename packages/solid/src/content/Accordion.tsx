@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/accordion';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-accordion': Record<string, unknown>;
+    }
+  }
+}
+
 export interface AccordionProps {
   multiple?: boolean;
   children?: JSX.Element;

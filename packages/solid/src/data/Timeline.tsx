@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/timeline';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-timeline': Record<string, unknown>;
+    }
+  }
+}
+
 export interface TimelineProps {
   headingLevel?: number;
   children?: JSX.Element;

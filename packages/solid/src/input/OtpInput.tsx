@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/otp-input';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-otp-input': Record<string, unknown>;
+    }
+  }
+}
+
 export interface OtpInputProps {
   length?: number;
   value?: string;

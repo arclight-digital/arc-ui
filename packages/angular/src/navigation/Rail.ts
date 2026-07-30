@@ -14,10 +14,10 @@ import { ArcRail } from '@arclux/arc-ui/rail';
 export class Rail {
   private readonly _el: ArcRail = inject(ElementRef).nativeElement;
 
-  @Input() set items(value: string) {
+  @Input() set items(value: Array<{icon: string, label: string, value: string}>) {
     this._el.items = value;
   }
-  get items(): string {
+  get items(): Array<{icon: string, label: string, value: string}> {
     return this._el.items;
   }
 

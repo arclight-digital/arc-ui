@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/footer';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-footer': Record<string, unknown>;
+    }
+  }
+}
+
 export interface FooterProps {
   compact?: boolean;
   border?: boolean;

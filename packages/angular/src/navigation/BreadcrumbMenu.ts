@@ -11,10 +11,10 @@ import { ArcBreadcrumbMenu } from '@arclux/arc-ui/breadcrumb-menu';
 export class BreadcrumbMenu {
   private readonly _el: ArcBreadcrumbMenu = inject(ElementRef).nativeElement;
 
-  @Input() set items(value: string) {
+  @Input() set items(value: Array<{label: string, href?: string, siblings?: Array<{label: string, href?: string}>}>) {
     this._el.items = value;
   }
-  get items(): string {
+  get items(): Array<{label: string, href?: string, siblings?: Array<{label: string, href?: string}>}> {
     return this._el.items;
   }
 

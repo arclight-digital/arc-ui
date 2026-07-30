@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/modal';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-modal': Record<string, unknown>;
+    }
+  }
+}
+
 export interface ModalProps {
   open?: boolean;
   heading?: string;

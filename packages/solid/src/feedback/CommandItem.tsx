@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/command-item';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-command-item': Record<string, unknown>;
+    }
+  }
+}
+
 export interface CommandItemProps {
   shortcut?: string;
   icon?: string;

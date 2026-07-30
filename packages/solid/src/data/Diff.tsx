@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/diff';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-diff': Record<string, unknown>;
+    }
+  }
+}
+
 export interface DiffProps {
   original?: string;
   revised?: string;

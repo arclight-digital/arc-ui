@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/stepper-nav';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-stepper-nav': Record<string, unknown>;
+    }
+  }
+}
+
 export interface StepperNavProps {
   steps?: Array<string>;
   active?: number;

@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/hover-card';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-hover-card': Record<string, unknown>;
+    }
+  }
+}
+
 export interface HoverCardProps {
   position?: 'bottom' | 'top' | 'left' | 'right';
   openDelay?: number;

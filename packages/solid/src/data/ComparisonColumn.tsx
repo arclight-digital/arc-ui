@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/comparison-column';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-comparison-column': Record<string, unknown>;
+    }
+  }
+}
+
 export interface ComparisonColumnProps {
   heading?: string;
   highlight?: boolean;

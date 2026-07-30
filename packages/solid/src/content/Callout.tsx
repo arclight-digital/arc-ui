@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/callout';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-callout': Record<string, unknown>;
+    }
+  }
+}
+
 export interface CalloutProps {
   variant?: 'info' | 'warning' | 'tip' | 'danger';
   dismissible?: boolean;

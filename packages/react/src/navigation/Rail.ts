@@ -5,7 +5,7 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcRail } from '@arclux/arc-ui/rail';
 
 export interface RailProps {
-  items?: string;
+  items?: Array<{icon: string, label: string, value: string}>;
   value?: string;
   expanded?: boolean;
   className?: string;

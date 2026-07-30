@@ -5946,10 +5946,10 @@
               "name": "trend",
               "privacy": "public",
               "type": {
-                "text": "string"
+                "text": "'up' | 'down' | 'neutral'"
               },
               "default": "''",
-              "description": "Shows a trend indicator arrow below the label. Options: 'up', 'down', 'neutral'.",
+              "description": "Shows a trend indicator arrow below the label.",
               "attribute": "trend",
               "reflects": true
             },
@@ -5987,10 +5987,10 @@
             {
               "name": "trend",
               "type": {
-                "text": "string"
+                "text": "'up' | 'down' | 'neutral'"
               },
               "default": "''",
-              "description": "Shows a trend indicator arrow below the label. Options: 'up', 'down', 'neutral'.",
+              "description": "Shows a trend indicator arrow below the label.",
               "fieldName": "trend"
             },
             {
@@ -19626,10 +19626,10 @@
               "name": "size",
               "privacy": "public",
               "type": {
-                "text": "string"
+                "text": "'sm' | 'md' | 'lg' | 'xl' | 'full'"
               },
               "default": "'md'",
-              "description": "Controls the maximum width. Options: 'sm', 'md', 'lg', 'xl', 'full'.",
+              "description": "Controls the maximum width.",
               "attribute": "size",
               "reflects": true
             },
@@ -19659,10 +19659,10 @@
             {
               "name": "size",
               "type": {
-                "text": "string"
+                "text": "'sm' | 'md' | 'lg' | 'xl' | 'full'"
               },
               "default": "'md'",
-              "description": "Controls the maximum width. Options: 'sm', 'md', 'lg', 'xl', 'full'.",
+              "description": "Controls the maximum width.",
               "fieldName": "size"
             },
             {
@@ -21301,7 +21301,7 @@
               "name": "items",
               "privacy": "public",
               "type": {
-                "text": "array"
+                "text": "Array<{label: string, value: string}>"
               },
               "default": "[]",
               "description": "Declarative list of items to render. Each object needs a label (display text) and value (identifier). Alternative to slotting children.",
@@ -21339,7 +21339,7 @@
             {
               "name": "items",
               "type": {
-                "text": "array"
+                "text": "Array<{label: string, value: string}>"
               },
               "default": "[]",
               "description": "Declarative list of items to render. Each object needs a label (display text) and value (identifier). Alternative to slotting children.",
@@ -21393,7 +21393,7 @@
               "name": "items",
               "privacy": "public",
               "type": {
-                "text": "array"
+                "text": "Array<{label: string, icon?: string, value: string}>"
               },
               "default": "[]",
               "description": "Array of navigation items, each with a label, icon name, and value identifier.",
@@ -21425,7 +21425,7 @@
             {
               "name": "items",
               "type": {
-                "text": "array"
+                "text": "Array<{label: string, icon?: string, value: string}>"
               },
               "default": "[]",
               "description": "Array of navigation items, each with a label, icon name, and value identifier.",
@@ -21574,7 +21574,7 @@
               "name": "items",
               "privacy": "public",
               "type": {
-                "text": "array"
+                "text": "Array<{label: string, href?: string, siblings?: Array<{label: string, href?: string}>}>"
               },
               "default": "[]",
               "description": "Array of breadcrumb items. Each item has a label and href. Optionally include a siblings array to enable a dropdown at that level.",
@@ -21594,7 +21594,7 @@
             {
               "name": "items",
               "type": {
-                "text": "array"
+                "text": "Array<{label: string, href?: string, siblings?: Array<{label: string, href?: string}>}>"
               },
               "default": "[]",
               "description": "Array of breadcrumb items. Each item has a label and href. Optionally include a siblings array to enable a dropdown at that level.",
@@ -22867,7 +22867,7 @@
               "name": "items",
               "privacy": "public",
               "type": {
-                "text": "array"
+                "text": "Array<{icon: string, label: string, value: string}>"
               },
               "default": "[]",
               "description": "Array of navigation items, each with an icon name, text label, and value identifier.",
@@ -22911,7 +22911,7 @@
             {
               "name": "items",
               "type": {
-                "text": "array"
+                "text": "Array<{icon: string, label: string, value: string}>"
               },
               "default": "[]",
               "description": "Array of navigation items, each with an icon name, text label, and value identifier.",
@@ -23720,7 +23720,7 @@
               "name": "items",
               "privacy": "public",
               "type": {
-                "text": "array"
+                "text": "Array<{icon: string, label: string, value?: string}>"
               },
               "default": "[]",
               "description": "Array of secondary action items to display when the speed dial is open. Each item needs an icon and label.",
@@ -23778,7 +23778,7 @@
             {
               "name": "items",
               "type": {
-                "text": "array"
+                "text": "Array<{icon: string, label: string, value?: string}>"
               },
               "default": "[]",
               "description": "Array of secondary action items to display when the speed dial is open. Each item needs an icon and label.",
@@ -24333,10 +24333,10 @@
               "name": "navAlign",
               "privacy": "public",
               "type": {
-                "text": "string"
+                "text": "'left' | 'center' | 'right'"
               },
               "default": "'center'",
-              "description": "Controls the alignment of content in the center slot. Options: 'left', 'center', 'right'. Pulls nav toward the brand or actions without reordering DOM.",
+              "description": "Controls the alignment of content in the center slot. Pulls nav toward the brand or actions without reordering DOM.",
               "attribute": "nav-align"
             }
           ],
@@ -24414,10 +24414,10 @@
             {
               "name": "nav-align",
               "type": {
-                "text": "string"
+                "text": "'left' | 'center' | 'right'"
               },
               "default": "'center'",
-              "description": "Controls the alignment of content in the center slot. Options: 'left', 'center', 'right'. Pulls nav toward the brand or actions without reordering DOM.",
+              "description": "Controls the alignment of content in the center slot. Pulls nav toward the brand or actions without reordering DOM.",
               "fieldName": "navAlign"
             }
           ],

@@ -11,7 +11,7 @@ export interface TopBarProps {
   menuOpen?: boolean;
   mobileMenu?: string;
   menuPosition?: string;
-  navAlign?: string;
+  navAlign?: 'left' | 'center' | 'right';
   className?: string;
 }
 

@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/comparison';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-comparison': Record<string, unknown>;
+    }
+  }
+}
+
 export interface ComparisonProps {
   features?: string;
   children?: JSX.Element;

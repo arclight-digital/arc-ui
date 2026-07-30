@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/virtual-list';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-virtual-list': Record<string, unknown>;
+    }
+  }
+}
+
 export interface VirtualListProps {
   items?: unknown[];
   itemHeight?: number;

@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/code-block';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-code-block': Record<string, unknown>;
+    }
+  }
+}
+
 export interface CodeBlockProps {
   language?: string;
   filename?: string;

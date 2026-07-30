@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/avatar-group';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-avatar-group': Record<string, unknown>;
+    }
+  }
+}
+
 export interface AvatarGroupProps {
   max?: number;
   overlap?: 'sm' | 'md' | 'lg';

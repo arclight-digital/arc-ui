@@ -14,7 +14,6 @@ const props = withDefaults(defineProps<{
 }>(), {
   src: '',
   alt: '',
-  aspect: '',
   fit: 'cover',
   loading: 'lazy',
   fallback: '',

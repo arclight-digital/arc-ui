@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/input';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-input': Record<string, unknown>;
+    }
+  }
+}
+
 export interface InputProps {
   type?: 'text' | 'email' | 'tel' | 'url' | 'password';
   name?: string;

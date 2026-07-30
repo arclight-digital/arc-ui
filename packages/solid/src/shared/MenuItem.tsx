@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/menu-item';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-menu-item': Record<string, unknown>;
+    }
+  }
+}
+
 export interface MenuItemProps {
   shortcut?: string;
   disabled?: boolean;

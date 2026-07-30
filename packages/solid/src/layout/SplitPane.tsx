@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/split-pane';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-split-pane': Record<string, unknown>;
+    }
+  }
+}
+
 export interface SplitPaneProps {
   orientation?: 'horizontal' | 'vertical';
   ratio?: number;

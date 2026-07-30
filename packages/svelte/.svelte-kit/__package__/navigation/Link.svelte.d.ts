@@ -1,0 +1,38 @@
+import '@arclux/arc-ui/link';
+import type { Snippet } from 'svelte';
+interface Props {
+    href?: string;
+    variant?: 'default' | 'muted' | 'nav';
+    underline?: 'hover' | 'always' | 'never';
+    active?: boolean;
+    external?: boolean;
+    children?: Snippet;
+    class?: string;
+    id?: string;
+    style?: string;
+    title?: string;
+    role?: string;
+    slot?: string;
+    part?: string;
+    exportparts?: string;
+    dir?: string;
+    lang?: string;
+    translate?: string;
+    accesskey?: string;
+    enterkeyhint?: string;
+    inputmode?: string;
+    popover?: string;
+    contenteditable?: boolean | string;
+    tabindex?: number;
+    hidden?: boolean;
+    inert?: boolean;
+    draggable?: boolean;
+    spellcheck?: boolean;
+    autofocus?: boolean;
+    [key: `data-${string}`]: unknown;
+    [key: `aria-${string}`]: unknown;
+    [key: `on${string}`]: unknown;
+}
+declare const Link: import("svelte").Component<Props, {}, "">;
+type Link = ReturnType<typeof Link>;
+export default Link;

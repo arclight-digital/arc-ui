@@ -5,7 +5,7 @@ import { useLayoutEffect, useRef } from 'preact/hooks';
 import '@arclux/arc-ui/bottom-nav';
 
 export interface BottomNavProps {
-  items?: string;
+  items?: Array<{label: string, icon?: string, value: string}>;
   value?: string;
   onArcChange?: (e: CustomEvent) => void;
   children?: preact.ComponentChildren;

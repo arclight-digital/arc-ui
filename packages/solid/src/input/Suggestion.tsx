@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/suggestion';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-suggestion': Record<string, unknown>;
+    }
+  }
+}
+
 export interface SuggestionProps {
   value?: string;
   children?: JSX.Element;

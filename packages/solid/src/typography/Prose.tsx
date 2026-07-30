@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/prose';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-prose': Record<string, unknown>;
+    }
+  }
+}
+
 export interface ProseProps {
   size?: 'sm' | 'md' | 'lg';
   children?: JSX.Element;

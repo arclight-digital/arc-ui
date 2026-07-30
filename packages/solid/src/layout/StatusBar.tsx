@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/status-bar';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-status-bar': Record<string, unknown>;
+    }
+  }
+}
+
 export interface StatusBarProps {
   position?: 'static' | 'fixed';
   children?: JSX.Element;

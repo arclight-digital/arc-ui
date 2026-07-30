@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/dock';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-dock': Record<string, unknown>;
+    }
+  }
+}
+
 export interface DockProps {
   position?: 'bottom' | 'left' | 'right';
   autoHide?: boolean;

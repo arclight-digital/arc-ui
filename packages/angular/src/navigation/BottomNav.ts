@@ -14,10 +14,10 @@ import { ArcBottomNav } from '@arclux/arc-ui/bottom-nav';
 export class BottomNav {
   private readonly _el: ArcBottomNav = inject(ElementRef).nativeElement;
 
-  @Input() set items(value: string) {
+  @Input() set items(value: Array<{label: string, icon?: string, value: string}>) {
     this._el.items = value;
   }
-  get items(): string {
+  get items(): Array<{label: string, icon?: string, value: string}> {
     return this._el.items;
   }
 

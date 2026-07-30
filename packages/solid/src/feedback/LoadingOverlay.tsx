@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/loading-overlay';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-loading-overlay': Record<string, unknown>;
+    }
+  }
+}
+
 export interface LoadingOverlayProps {
   active?: boolean;
   message?: string;

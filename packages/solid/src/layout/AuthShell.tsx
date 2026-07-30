@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/auth-shell';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-auth-shell': Record<string, unknown>;
+    }
+  }
+}
+
 export interface AuthShellProps {
   variant?: 'centered' | 'split';
   children?: JSX.Element;

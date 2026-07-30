@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/password-input';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-password-input': Record<string, unknown>;
+    }
+  }
+}
+
 export interface PasswordInputProps {
   name?: string;
   label?: string;

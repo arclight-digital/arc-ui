@@ -1,0 +1,36 @@
+import '@arclux/arc-ui/diff';
+import type { Snippet } from 'svelte';
+interface Props {
+    original?: string;
+    revised?: string;
+    mode?: 'inline' | 'side-by-side';
+    children?: Snippet;
+    class?: string;
+    id?: string;
+    style?: string;
+    title?: string;
+    role?: string;
+    slot?: string;
+    part?: string;
+    exportparts?: string;
+    dir?: string;
+    lang?: string;
+    translate?: string;
+    accesskey?: string;
+    enterkeyhint?: string;
+    inputmode?: string;
+    popover?: string;
+    contenteditable?: boolean | string;
+    tabindex?: number;
+    hidden?: boolean;
+    inert?: boolean;
+    draggable?: boolean;
+    spellcheck?: boolean;
+    autofocus?: boolean;
+    [key: `data-${string}`]: unknown;
+    [key: `aria-${string}`]: unknown;
+    [key: `on${string}`]: unknown;
+}
+declare const Diff: import("svelte").Component<Props, {}, "">;
+type Diff = ReturnType<typeof Diff>;
+export default Diff;

@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/pin-input';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-pin-input': Record<string, unknown>;
+    }
+  }
+}
+
 export interface PinInputProps {
   length?: number;
   value?: string;

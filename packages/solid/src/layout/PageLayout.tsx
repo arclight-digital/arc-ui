@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/page-layout';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-page-layout': Record<string, unknown>;
+    }
+  }
+}
+
 export interface PageLayoutProps {
   layout?: 'sidebar-left' | 'sidebar-right' | 'centered' | 'wide';
   maxWidth?: string;

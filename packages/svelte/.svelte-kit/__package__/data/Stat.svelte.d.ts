@@ -1,0 +1,37 @@
+import '@arclux/arc-ui/stat';
+import type { Snippet } from 'svelte';
+interface Props {
+    value?: string;
+    label?: string;
+    trend?: 'up' | 'down' | 'neutral';
+    change?: string;
+    children?: Snippet;
+    class?: string;
+    id?: string;
+    style?: string;
+    title?: string;
+    role?: string;
+    slot?: string;
+    part?: string;
+    exportparts?: string;
+    dir?: string;
+    lang?: string;
+    translate?: string;
+    accesskey?: string;
+    enterkeyhint?: string;
+    inputmode?: string;
+    popover?: string;
+    contenteditable?: boolean | string;
+    tabindex?: number;
+    hidden?: boolean;
+    inert?: boolean;
+    draggable?: boolean;
+    spellcheck?: boolean;
+    autofocus?: boolean;
+    [key: `data-${string}`]: unknown;
+    [key: `aria-${string}`]: unknown;
+    [key: `on${string}`]: unknown;
+}
+declare const Stat: import("svelte").Component<Props, {}, "">;
+type Stat = ReturnType<typeof Stat>;
+export default Stat;

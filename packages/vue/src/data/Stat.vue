@@ -12,7 +12,6 @@ const props = withDefaults(defineProps<{
 }>(), {
   value: '',
   label: '',
-  trend: '',
   change: '',
 });
 </script>

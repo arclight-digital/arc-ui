@@ -53,10 +53,10 @@ export class TopBar {
     return this._el.menuPosition;
   }
 
-  @Input() set navAlign(value: string) {
+  @Input() set navAlign(value: 'left' | 'center' | 'right') {
     this._el.navAlign = value;
   }
-  get navAlign(): string {
+  get navAlign(): 'left' | 'center' | 'right' {
     return this._el.navAlign;
   }
 }

@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/qr-code';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-qr-code': Record<string, unknown>;
+    }
+  }
+}
+
 export interface QrCodeProps {
   value?: string;
   size?: number;

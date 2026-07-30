@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/chip';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-chip': Record<string, unknown>;
+    }
+  }
+}
+
 export interface ChipProps {
   selected?: boolean;
   disabled?: boolean;

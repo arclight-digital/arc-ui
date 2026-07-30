@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/sidebar-link';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-sidebar-link': Record<string, unknown>;
+    }
+  }
+}
+
 export interface SidebarLinkProps {
   href?: string;
   active?: boolean;

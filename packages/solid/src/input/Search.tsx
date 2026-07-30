@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/search';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-search': Record<string, unknown>;
+    }
+  }
+}
+
 export interface SearchProps {
   value?: string;
   placeholder?: string;

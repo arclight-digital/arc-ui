@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/tree-item';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-tree-item': Record<string, unknown>;
+    }
+  }
+}
+
 export interface TreeItemProps {
   label?: string;
   icon?: string;

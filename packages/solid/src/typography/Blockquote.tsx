@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/blockquote';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-blockquote': Record<string, unknown>;
+    }
+  }
+}
+
 export interface BlockquoteProps {
   cite?: string;
   variant?: 'default' | 'accent';

@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/number-input';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-number-input': Record<string, unknown>;
+    }
+  }
+}
+
 export interface NumberInputProps {
   value?: number;
   min?: number;

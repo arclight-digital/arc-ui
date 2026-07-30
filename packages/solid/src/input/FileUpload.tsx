@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/file-upload';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-file-upload': Record<string, unknown>;
+    }
+  }
+}
+
 export interface FileUploadProps {
   accept?: string;
   multiple?: boolean;

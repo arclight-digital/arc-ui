@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/tree-view';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-tree-view': Record<string, unknown>;
+    }
+  }
+}
+
 export interface TreeViewProps {
   onArcToggle?: (e: CustomEvent) => void;
   onArcSelect?: (e: CustomEvent) => void;

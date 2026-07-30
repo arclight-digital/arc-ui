@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/notification-panel';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-notification-panel': Record<string, unknown>;
+    }
+  }
+}
+
 export interface NotificationPanelProps {
   open?: boolean;
   position?: 'top-right' | 'top-left';

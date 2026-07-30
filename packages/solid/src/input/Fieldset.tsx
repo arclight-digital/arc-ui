@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/fieldset';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-fieldset': Record<string, unknown>;
+    }
+  }
+}
+
 export interface FieldsetProps {
   legend?: string;
   description?: string;

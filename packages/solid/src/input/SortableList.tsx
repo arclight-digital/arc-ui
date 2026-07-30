@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/sortable-list';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-sortable-list': Record<string, unknown>;
+    }
+  }
+}
+
 export interface SortableListProps {
   disabled?: boolean;
   onArcChange?: (e: CustomEvent) => void;

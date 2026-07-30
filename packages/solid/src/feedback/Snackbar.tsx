@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/snackbar';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-snackbar': Record<string, unknown>;
+    }
+  }
+}
+
 export interface SnackbarProps {
   position?: 'bottom-center' | 'bottom-left' | 'bottom-right';
   duration?: number;

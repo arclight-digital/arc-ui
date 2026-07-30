@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/label';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-label': Record<string, unknown>;
+    }
+  }
+}
+
 export interface LabelProps {
   for?: string;
   required?: boolean;

@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/image-cropper';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-image-cropper': Record<string, unknown>;
+    }
+  }
+}
+
 export interface ImageCropperProps {
   src?: string;
   height?: number;

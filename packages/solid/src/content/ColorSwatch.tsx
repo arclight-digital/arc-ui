@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/color-swatch';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-color-swatch': Record<string, unknown>;
+    }
+  }
+}
+
 export interface ColorSwatchProps {
   color?: string;
   label?: string;

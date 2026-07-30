@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/markdown';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-markdown': Record<string, unknown>;
+    }
+  }
+}
+
 export interface MarkdownProps {
   content?: string;
   children?: JSX.Element;

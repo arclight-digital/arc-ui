@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/description-list';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-description-list': Record<string, unknown>;
+    }
+  }
+}
+
 export interface DescriptionListProps {
   columns?: number;
   dividers?: boolean;

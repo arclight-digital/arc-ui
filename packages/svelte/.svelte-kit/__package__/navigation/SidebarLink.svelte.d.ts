@@ -1,0 +1,36 @@
+import '@arclux/arc-ui/sidebar-link';
+import type { Snippet } from 'svelte';
+interface Props {
+    href?: string;
+    active?: boolean;
+    level?: number;
+    children?: Snippet;
+    class?: string;
+    id?: string;
+    style?: string;
+    title?: string;
+    role?: string;
+    slot?: string;
+    part?: string;
+    exportparts?: string;
+    dir?: string;
+    lang?: string;
+    translate?: string;
+    accesskey?: string;
+    enterkeyhint?: string;
+    inputmode?: string;
+    popover?: string;
+    contenteditable?: boolean | string;
+    tabindex?: number;
+    hidden?: boolean;
+    inert?: boolean;
+    draggable?: boolean;
+    spellcheck?: boolean;
+    autofocus?: boolean;
+    [key: `data-${string}`]: unknown;
+    [key: `aria-${string}`]: unknown;
+    [key: `on${string}`]: unknown;
+}
+declare const SidebarLink: import("svelte").Component<Props, {}, "">;
+type SidebarLink = ReturnType<typeof SidebarLink>;
+export default SidebarLink;

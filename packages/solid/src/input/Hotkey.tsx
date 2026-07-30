@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/hotkey';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-hotkey': Record<string, unknown>;
+    }
+  }
+}
+
 export interface HotkeyProps {
   keys?: string;
   disabled?: boolean;

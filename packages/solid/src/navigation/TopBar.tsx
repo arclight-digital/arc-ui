@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/top-bar';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-top-bar': Record<string, unknown>;
+    }
+  }
+}
+
 export interface TopBarProps {
   heading?: string;
   fixed?: boolean;
@@ -10,7 +18,7 @@ export interface TopBarProps {
   menuOpen?: boolean;
   mobileMenu?: string;
   menuPosition?: string;
-  navAlign?: string;
+  navAlign?: 'left' | 'center' | 'right';
   class?: string;
   id?: string;
   style?: string;

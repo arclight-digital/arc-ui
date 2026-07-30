@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/animated-number';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-animated-number': Record<string, unknown>;
+    }
+  }
+}
+
 export interface AnimatedNumberProps {
   value?: number;
   duration?: number;

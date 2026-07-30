@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/table';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-table': Record<string, unknown>;
+    }
+  }
+}
+
 export interface TableProps {
   columns?: string[];
   rows?: string[][];

@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/sheet';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-sheet': Record<string, unknown>;
+    }
+  }
+}
+
 export interface SheetProps {
   open?: boolean;
   side?: 'bottom' | 'right';

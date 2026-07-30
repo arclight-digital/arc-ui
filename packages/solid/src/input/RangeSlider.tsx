@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/range-slider';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-range-slider': Record<string, unknown>;
+    }
+  }
+}
+
 export interface RangeSliderProps {
   min?: number;
   max?: number;

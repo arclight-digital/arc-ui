@@ -5,7 +5,7 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcBottomNav } from '@arclux/arc-ui/bottom-nav';
 
 export interface BottomNavProps {
-  items?: string;
+  items?: Array<{label: string, icon?: string, value: string}>;
   value?: string;
   className?: string;
   children?: React.ReactNode;

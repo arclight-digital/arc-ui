@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/skeleton';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-skeleton': Record<string, unknown>;
+    }
+  }
+}
+
 export interface SkeletonProps {
   variant?: 'text' | 'circle' | 'rect';
   width?: string;

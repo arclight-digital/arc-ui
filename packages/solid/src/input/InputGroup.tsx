@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/input-group';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-input-group': Record<string, unknown>;
+    }
+  }
+}
+
 export interface InputGroupProps {
   size?: 'sm' | 'md' | 'lg';
   children?: JSX.Element;

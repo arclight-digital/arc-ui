@@ -5,7 +5,7 @@ import { useLayoutEffect, useRef } from 'preact/hooks';
 import '@arclux/arc-ui/rail';
 
 export interface RailProps {
-  items?: string;
+  items?: Array<{icon: string, label: string, value: string}>;
   value?: string;
   expanded?: boolean;
   onArcChange?: (e: CustomEvent) => void;

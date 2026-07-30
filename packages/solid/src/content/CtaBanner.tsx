@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/cta-banner';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-cta-banner': Record<string, unknown>;
+    }
+  }
+}
+
 export interface CtaBannerProps {
   eyebrow?: string;
   headline?: string;

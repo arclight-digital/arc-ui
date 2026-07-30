@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/highlight';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-highlight': Record<string, unknown>;
+    }
+  }
+}
+
 export interface HighlightProps {
   text?: string;
   query?: string;

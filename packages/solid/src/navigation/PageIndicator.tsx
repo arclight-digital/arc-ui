@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/page-indicator';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-page-indicator': Record<string, unknown>;
+    }
+  }
+}
+
 export interface PageIndicatorProps {
   count?: number;
   value?: number;

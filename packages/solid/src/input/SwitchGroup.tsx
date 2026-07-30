@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/switch-group';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-switch-group': Record<string, unknown>;
+    }
+  }
+}
+
 export interface SwitchGroupProps {
   label?: string;
   orientation?: 'vertical' | 'horizontal';

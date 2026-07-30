@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/aspect-ratio';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-aspect-ratio': Record<string, unknown>;
+    }
+  }
+}
+
 export interface AspectRatioProps {
   ratio?: string;
   children?: JSX.Element;

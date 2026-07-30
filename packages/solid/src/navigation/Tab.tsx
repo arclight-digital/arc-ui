@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/tab';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-tab': Record<string, unknown>;
+    }
+  }
+}
+
 export interface TabProps {
   label?: string;
   children?: JSX.Element;

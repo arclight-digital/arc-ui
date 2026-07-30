@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/confirm';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-confirm': Record<string, unknown>;
+    }
+  }
+}
+
 export interface ConfirmProps {
   open?: boolean;
   heading?: string;

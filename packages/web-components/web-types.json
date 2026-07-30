@@ -3266,9 +3266,9 @@
             },
             {
               "name": "trend",
-              "description": "Shows a trend indicator arrow below the label. Options: 'up', 'down', 'neutral'.",
+              "description": "Shows a trend indicator arrow below the label.",
               "value": {
-                "type": "string",
+                "type": "'up' | 'down' | 'neutral'",
                 "default": "''"
               }
             },
@@ -3296,8 +3296,8 @@
               },
               {
                 "name": "trend",
-                "description": "Shows a trend indicator arrow below the label. Options: 'up', 'down', 'neutral'.",
-                "type": "string"
+                "description": "Shows a trend indicator arrow below the label.",
+                "type": "'up' | 'down' | 'neutral'"
               },
               {
                 "name": "change",
@@ -10165,9 +10165,9 @@
             },
             {
               "name": "size",
-              "description": "Controls the maximum width. Options: 'sm', 'md', 'lg', 'xl', 'full'.",
+              "description": "Controls the maximum width.",
               "value": {
-                "type": "string",
+                "type": "'sm' | 'md' | 'lg' | 'xl' | 'full'",
                 "default": "'md'"
               }
             },
@@ -10196,8 +10196,8 @@
               },
               {
                 "name": "size",
-                "description": "Controls the maximum width. Options: 'sm', 'md', 'lg', 'xl', 'full'.",
-                "type": "string"
+                "description": "Controls the maximum width.",
+                "type": "'sm' | 'md' | 'lg' | 'xl' | 'full'"
               },
               {
                 "name": "padding",
@@ -11121,7 +11121,7 @@
               "name": "items",
               "description": "Declarative list of items to render. Each object needs a label (display text) and value (identifier). Alternative to slotting children.",
               "value": {
-                "type": "array",
+                "type": "Array<{label: string, value: string}>",
                 "default": "[]"
               }
             }
@@ -11154,7 +11154,7 @@
               {
                 "name": "items",
                 "description": "Declarative list of items to render. Each object needs a label (display text) and value (identifier). Alternative to slotting children.",
-                "type": "array"
+                "type": "Array<{label: string, value: string}>"
               }
             ],
             "events": [
@@ -11175,7 +11175,7 @@
               "name": "items",
               "description": "Array of navigation items, each with a label, icon name, and value identifier.",
               "value": {
-                "type": "array",
+                "type": "Array<{label: string, icon?: string, value: string}>",
                 "default": "[]"
               }
             },
@@ -11200,7 +11200,7 @@
               {
                 "name": "items",
                 "description": "Array of navigation items, each with a label, icon name, and value identifier.",
-                "type": "array"
+                "type": "Array<{label: string, icon?: string, value: string}>"
               },
               {
                 "name": "value",
@@ -11266,7 +11266,7 @@
               "name": "items",
               "description": "Array of breadcrumb items. Each item has a label and href. Optionally include a siblings array to enable a dropdown at that level.",
               "value": {
-                "type": "array",
+                "type": "Array<{label: string, href?: string, siblings?: Array<{label: string, href?: string}>}>",
                 "default": "[]"
               }
             },
@@ -11294,7 +11294,7 @@
               {
                 "name": "items",
                 "description": "Array of breadcrumb items. Each item has a label and href. Optionally include a siblings array to enable a dropdown at that level.",
-                "type": "array"
+                "type": "Array<{label: string, href?: string, siblings?: Array<{label: string, href?: string}>}>"
               }
             ],
             "events": [
@@ -11997,7 +11997,7 @@
               "name": "items",
               "description": "Array of navigation items, each with an icon name, text label, and value identifier.",
               "value": {
-                "type": "array",
+                "type": "Array<{icon: string, label: string, value: string}>",
                 "default": "[]"
               }
             },
@@ -12036,7 +12036,7 @@
               {
                 "name": "items",
                 "description": "Array of navigation items, each with an icon name, text label, and value identifier.",
-                "type": "array"
+                "type": "Array<{icon: string, label: string, value: string}>"
               },
               {
                 "name": "value",
@@ -12488,7 +12488,7 @@
               "name": "items",
               "description": "Array of secondary action items to display when the speed dial is open. Each item needs an icon and label.",
               "value": {
-                "type": "array",
+                "type": "Array<{icon: string, label: string, value?: string}>",
                 "default": "[]"
               }
             }
@@ -12534,7 +12534,7 @@
               {
                 "name": "items",
                 "description": "Array of secondary action items to display when the speed dial is open. Each item needs an icon and label.",
-                "type": "array"
+                "type": "Array<{icon: string, label: string, value?: string}>"
               }
             ],
             "events": [
@@ -12853,9 +12853,9 @@
             },
             {
               "name": "nav-align",
-              "description": "Controls the alignment of content in the center slot. Options: 'left', 'center', 'right'. Pulls nav toward the brand or actions without reordering DOM.",
+              "description": "Controls the alignment of content in the center slot. Pulls nav toward the brand or actions without reordering DOM.",
               "value": {
-                "type": "string",
+                "type": "'left' | 'center' | 'right'",
                 "default": "'center'"
               }
             }
@@ -12922,8 +12922,8 @@
               },
               {
                 "name": "navAlign",
-                "description": "Controls the alignment of content in the center slot. Options: 'left', 'center', 'right'. Pulls nav toward the brand or actions without reordering DOM.",
-                "type": "string"
+                "description": "Controls the alignment of content in the center slot. Pulls nav toward the brand or actions without reordering DOM.",
+                "type": "'left' | 'center' | 'right'"
               }
             ],
             "events": [

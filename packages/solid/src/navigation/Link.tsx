@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/link';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-link': Record<string, unknown>;
+    }
+  }
+}
+
 export interface LinkProps {
   href?: string;
   variant?: 'default' | 'muted' | 'nav';

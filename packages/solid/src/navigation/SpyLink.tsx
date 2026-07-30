@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/spy-link';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-spy-link': Record<string, unknown>;
+    }
+  }
+}
+
 export interface SpyLinkProps {
   target?: string;
   level?: number;

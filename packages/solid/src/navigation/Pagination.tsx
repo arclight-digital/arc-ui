@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/pagination';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-pagination': Record<string, unknown>;
+    }
+  }
+}
+
 export interface PaginationProps {
   total?: number;
   current?: number;

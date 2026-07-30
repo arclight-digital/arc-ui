@@ -1,0 +1,34 @@
+import '@arclux/arc-ui/inline-message';
+import type { Snippet } from 'svelte';
+interface Props {
+    variant?: 'info' | 'success' | 'warning' | 'error';
+    children?: Snippet;
+    class?: string;
+    id?: string;
+    style?: string;
+    title?: string;
+    role?: string;
+    slot?: string;
+    part?: string;
+    exportparts?: string;
+    dir?: string;
+    lang?: string;
+    translate?: string;
+    accesskey?: string;
+    enterkeyhint?: string;
+    inputmode?: string;
+    popover?: string;
+    contenteditable?: boolean | string;
+    tabindex?: number;
+    hidden?: boolean;
+    inert?: boolean;
+    draggable?: boolean;
+    spellcheck?: boolean;
+    autofocus?: boolean;
+    [key: `data-${string}`]: unknown;
+    [key: `aria-${string}`]: unknown;
+    [key: `on${string}`]: unknown;
+}
+declare const InlineMessage: import("svelte").Component<Props, {}, "">;
+type InlineMessage = ReturnType<typeof InlineMessage>;
+export default InlineMessage;

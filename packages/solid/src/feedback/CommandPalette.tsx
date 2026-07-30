@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/command-palette';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-command-palette': Record<string, unknown>;
+    }
+  }
+}
+
 export interface CommandPaletteProps {
   open?: boolean;
   placeholder?: string;

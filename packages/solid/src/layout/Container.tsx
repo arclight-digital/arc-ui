@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/container';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-container': Record<string, unknown>;
+    }
+  }
+}
+
 export interface ContainerProps {
   narrow?: boolean;
   size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';

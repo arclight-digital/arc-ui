@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/carousel';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-carousel': Record<string, unknown>;
+    }
+  }
+}
+
 export interface CarouselProps {
   autoPlay?: boolean;
   interval?: number;

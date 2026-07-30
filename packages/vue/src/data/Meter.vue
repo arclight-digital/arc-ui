@@ -16,9 +16,6 @@ const props = withDefaults(defineProps<{
   value: 0,
   min: 0,
   max: 100,
-  low: 'undefined',
-  high: 'undefined',
-  optimum: 'undefined',
   label: '',
 });
 </script>

@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/color-picker';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-color-picker': Record<string, unknown>;
+    }
+  }
+}
+
 export interface ColorPickerProps {
   value?: string;
   name?: string;

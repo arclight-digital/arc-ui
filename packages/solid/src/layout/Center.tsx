@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/center';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-center': Record<string, unknown>;
+    }
+  }
+}
+
 export interface CenterProps {
   maxWidth?: string;
   intrinsic?: boolean;

@@ -28,10 +28,10 @@ export class AnchorNav {
     return this._el.value;
   }
 
-  @Input() set items(value: string) {
+  @Input() set items(value: Array<{label: string, value: string}>) {
     this._el.items = value;
   }
-  get items(): string {
+  get items(): Array<{label: string, value: string}> {
     return this._el.items;
   }
 

@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/infinite-scroll';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-infinite-scroll': Record<string, unknown>;
+    }
+  }
+}
+
 export interface InfiniteScrollProps {
   threshold?: number;
   loading?: boolean;

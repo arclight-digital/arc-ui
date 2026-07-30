@@ -5,7 +5,7 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcBreadcrumbMenu } from '@arclux/arc-ui/breadcrumb-menu';
 
 export interface BreadcrumbMenuProps {
-  items?: string;
+  items?: Array<{label: string, href?: string, siblings?: Array<{label: string, href?: string}>}>;
   label?: string;
   className?: string;
   children?: React.ReactNode;

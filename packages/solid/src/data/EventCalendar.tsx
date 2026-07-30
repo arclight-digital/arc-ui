@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/event-calendar';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-event-calendar': Record<string, unknown>;
+    }
+  }
+}
+
 export interface EventCalendarProps {
   events?: Array<{date:string,end?:string,label:string,color?:number}>;
   view?: 'month' | 'week';

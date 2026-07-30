@@ -1,0 +1,37 @@
+import '@arclux/arc-ui/code-block';
+import type { Snippet } from 'svelte';
+interface Props {
+    language?: string;
+    filename?: string;
+    code?: string;
+    variant?: 'default' | 'window' | 'basic';
+    children?: Snippet;
+    class?: string;
+    id?: string;
+    style?: string;
+    title?: string;
+    role?: string;
+    slot?: string;
+    part?: string;
+    exportparts?: string;
+    dir?: string;
+    lang?: string;
+    translate?: string;
+    accesskey?: string;
+    enterkeyhint?: string;
+    inputmode?: string;
+    popover?: string;
+    contenteditable?: boolean | string;
+    tabindex?: number;
+    hidden?: boolean;
+    inert?: boolean;
+    draggable?: boolean;
+    spellcheck?: boolean;
+    autofocus?: boolean;
+    [key: `data-${string}`]: unknown;
+    [key: `aria-${string}`]: unknown;
+    [key: `on${string}`]: unknown;
+}
+declare const CodeBlock: import("svelte").Component<Props, {}, "">;
+type CodeBlock = ReturnType<typeof CodeBlock>;
+export default CodeBlock;

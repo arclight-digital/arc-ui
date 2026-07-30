@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/column';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-column': Record<string, unknown>;
+    }
+  }
+}
+
 export interface ColumnProps {
   field?: string;
   key?: string;

@@ -14,8 +14,6 @@ const props = withDefaults(defineProps<{
   disabled?: boolean;
 }>(), {
   value: 0,
-  min: 'undefined',
-  max: 'undefined',
   step: 1,
   label: '',
   name: '',

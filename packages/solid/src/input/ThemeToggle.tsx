@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/theme-toggle';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-theme-toggle': Record<string, unknown>;
+    }
+  }
+}
+
 export interface ThemeToggleProps {
   theme?: 'dark' | 'light' | 'auto';
   disabled?: boolean;

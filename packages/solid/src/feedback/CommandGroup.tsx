@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/command-group';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-command-group': Record<string, unknown>;
+    }
+  }
+}
+
 export interface CommandGroupProps {
   heading?: string;
   children?: JSX.Element;

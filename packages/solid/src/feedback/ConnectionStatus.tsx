@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/connection-status';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-connection-status': Record<string, unknown>;
+    }
+  }
+}
+
 export interface ConnectionStatusProps {
   onArcOnline?: (e: CustomEvent) => void;
   onArcOffline?: (e: CustomEvent) => void;

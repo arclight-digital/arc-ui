@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/combobox';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-combobox': Record<string, unknown>;
+    }
+  }
+}
+
 export interface ComboboxProps {
   value?: string;
   placeholder?: string;

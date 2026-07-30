@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/icon-button';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-icon-button': Record<string, unknown>;
+    }
+  }
+}
+
 export interface IconButtonProps {
   name?: string;
   text?: string;

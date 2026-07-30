@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/key-value';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-key-value': Record<string, unknown>;
+    }
+  }
+}
+
 export interface KeyValueProps {
   layout?: 'horizontal' | 'stacked';
   dividers?: boolean;

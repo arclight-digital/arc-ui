@@ -8,7 +8,7 @@ export interface SpeedDialProps {
   open?: boolean;
   direction?: 'up' | 'down' | 'left' | 'right';
   position?: 'bottom-right' | 'bottom-left';
-  items?: string;
+  items?: Array<{icon: string, label: string, value?: string}>;
   className?: string;
   onArcAction?: (e: CustomEvent) => void;
   onArcClose?: (e: CustomEvent) => void;

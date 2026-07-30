@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/skip-link';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-skip-link': Record<string, unknown>;
+    }
+  }
+}
+
 export interface SkipLinkProps {
   target?: string;
   children?: JSX.Element;

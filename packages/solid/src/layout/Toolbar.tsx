@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/toolbar';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-toolbar': Record<string, unknown>;
+    }
+  }
+}
+
 export interface ToolbarProps {
   sticky?: boolean;
   size?: 'md' | 'sm';

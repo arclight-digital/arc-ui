@@ -1,0 +1,38 @@
+import '@arclux/arc-ui/otp-input';
+import type { Snippet } from 'svelte';
+interface Props {
+    length?: number;
+    value?: string;
+    name?: string;
+    disabled?: boolean;
+    type?: 'number' | 'text';
+    children?: Snippet;
+    class?: string;
+    id?: string;
+    style?: string;
+    title?: string;
+    role?: string;
+    slot?: string;
+    part?: string;
+    exportparts?: string;
+    dir?: string;
+    lang?: string;
+    translate?: string;
+    accesskey?: string;
+    enterkeyhint?: string;
+    inputmode?: string;
+    popover?: string;
+    contenteditable?: boolean | string;
+    tabindex?: number;
+    hidden?: boolean;
+    inert?: boolean;
+    draggable?: boolean;
+    spellcheck?: boolean;
+    autofocus?: boolean;
+    [key: `data-${string}`]: unknown;
+    [key: `aria-${string}`]: unknown;
+    [key: `on${string}`]: unknown;
+}
+declare const OtpInput: import("svelte").Component<Props, {}, "value">;
+type OtpInput = ReturnType<typeof OtpInput>;
+export default OtpInput;

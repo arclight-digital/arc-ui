@@ -1,0 +1,35 @@
+import '@arclux/arc-ui/blockquote';
+import type { Snippet } from 'svelte';
+interface Props {
+    cite?: string;
+    variant?: 'default' | 'accent';
+    children?: Snippet;
+    class?: string;
+    id?: string;
+    style?: string;
+    title?: string;
+    role?: string;
+    slot?: string;
+    part?: string;
+    exportparts?: string;
+    dir?: string;
+    lang?: string;
+    translate?: string;
+    accesskey?: string;
+    enterkeyhint?: string;
+    inputmode?: string;
+    popover?: string;
+    contenteditable?: boolean | string;
+    tabindex?: number;
+    hidden?: boolean;
+    inert?: boolean;
+    draggable?: boolean;
+    spellcheck?: boolean;
+    autofocus?: boolean;
+    [key: `data-${string}`]: unknown;
+    [key: `aria-${string}`]: unknown;
+    [key: `on${string}`]: unknown;
+}
+declare const Blockquote: import("svelte").Component<Props, {}, "">;
+type Blockquote = ReturnType<typeof Blockquote>;
+export default Blockquote;

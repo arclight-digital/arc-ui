@@ -3,6 +3,14 @@
 import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/form';
 
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-form': Record<string, unknown>;
+    }
+  }
+}
+
 export interface FormProps {
   action?: string;
   method?: string;
