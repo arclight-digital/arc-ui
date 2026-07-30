@@ -17,7 +17,7 @@ export interface ConfirmProps {
   message?: string;
   confirmLabel?: string;
   cancelLabel?: string;
-  variant?: 'default' | 'danger';
+  variant?: 'default' | 'error';
   onArcConfirm?: (e: CustomEvent) => void;
   onArcCancel?: (e: CustomEvent) => void;
   children?: JSX.Element;

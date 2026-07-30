@@ -14,6 +14,7 @@ const props = withDefaults(defineProps<{
   placeholder?: string;
   disabled?: boolean;
   label?: string;
+  open?: boolean;
 }>(), {
   value: '',
   name: '',
@@ -24,6 +25,7 @@ const props = withDefaults(defineProps<{
   placeholder: 'Select time',
   disabled: false,
   label: '',
+  open: false,
 });
 
 const emit = defineEmits<{
@@ -51,6 +53,7 @@ function onArcChange(payload: CustomEvent) {
     :placeholder="props.placeholder"
     :disabled="props.disabled"
     :label="props.label"
+    :open="props.open"
     @arc-change="onArcChange"
   >
     <slot />

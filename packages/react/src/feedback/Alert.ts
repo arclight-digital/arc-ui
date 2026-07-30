@@ -6,7 +6,7 @@ import { ArcAlert } from '@arclux/arc-ui/alert';
 
 export interface AlertProps {
   variant?: 'info' | 'success' | 'warning' | 'error';
-  compact?: boolean;
+  density?: 'default' | 'compact';
   dismissible?: boolean;
   heading?: string;
   className?: string;

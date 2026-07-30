@@ -11,10 +11,10 @@ import { ArcCallout } from '@arclux/arc-ui/callout';
 export class Callout {
   private readonly _el: ArcCallout = inject(ElementRef).nativeElement;
 
-  @Input() set variant(value: 'info' | 'warning' | 'tip' | 'danger') {
+  @Input() set variant(value: 'info' | 'tip' | 'warning' | 'error') {
     this._el.variant = value;
   }
-  get variant(): 'info' | 'warning' | 'tip' | 'danger' {
+  get variant(): 'info' | 'tip' | 'warning' | 'error' {
     return this._el.variant;
   }
 

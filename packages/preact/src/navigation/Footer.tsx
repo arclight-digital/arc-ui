@@ -4,7 +4,7 @@ import { h, type FunctionComponent } from 'preact';
 import '@arclux/arc-ui/footer';
 
 export interface FooterProps {
-  compact?: boolean;
+  density?: 'default' | 'compact';
   border?: boolean;
   contained?: string;
   align?: 'left' | 'center';
@@ -36,5 +36,5 @@ export interface FooterProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Footer: FunctionComponent<FooterProps> = ({ compact, border, contained, align, children, ...rest }) =>
-  h('arc-footer', { compact, border, contained, align, ...rest }, children);
+export const Footer: FunctionComponent<FooterProps> = ({ density, border, contained, align, children, ...rest }) =>
+  h('arc-footer', { density, border, contained, align, ...rest }, children);

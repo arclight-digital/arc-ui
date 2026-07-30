@@ -238,7 +238,7 @@
               "name": "variant",
               "description": "Semantic variant that controls the colour scheme, top accent bar, and default icon",
               "value": {
-                "type": "'info' | 'warning' | 'tip' | 'danger'",
+                "type": "'info' | 'tip' | 'warning' | 'error'",
                 "default": "'info'"
               }
             },
@@ -272,7 +272,7 @@
               {
                 "name": "variant",
                 "description": "Semantic variant that controls the colour scheme, top accent bar, and default icon",
-                "type": "'info' | 'warning' | 'tip' | 'danger'"
+                "type": "'info' | 'tip' | 'warning' | 'error'"
               },
               {
                 "name": "dismissible",
@@ -3364,7 +3364,7 @@
         },
         {
           "name": "arc-table",
-          "description": "Data-driven table with striped and compact variants, powered by columns and rows props.\n---\n\n\n### **CSS Parts:**\n - **table-wrap**\n- **table**\n- **head**\n- **body**\n- **row**\n- **cell**",
+          "description": "Data-driven table with striped and compact-density variants, powered by columns and rows props.\n---\n\n\n### **CSS Parts:**\n - **table-wrap**\n- **table**\n- **head**\n- **body**\n- **row**\n- **cell**",
           "doc-url": "",
           "attributes": [
             {
@@ -3392,11 +3392,11 @@
               }
             },
             {
-              "name": "compact",
-              "description": "Reduced cell padding for dense data displays.",
+              "name": "density",
+              "description": "Row density. 'compact' reduces cell padding for dense data displays.",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "'default' | 'compact'",
+                "default": "'default'"
               }
             }
           ],
@@ -3419,9 +3419,9 @@
                 "type": "boolean"
               },
               {
-                "name": "compact",
-                "description": "Reduced cell padding for dense data displays.",
-                "type": "boolean"
+                "name": "density",
+                "description": "Row density. 'compact' reduces cell padding for dense data displays.",
+                "type": "'default' | 'compact'"
               }
             ],
             "events": []
@@ -3434,9 +3434,9 @@
           "attributes": [
             {
               "name": "variant",
-              "description": "Colour variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and danger provide semantic status colours.",
+              "description": "Colour variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and error provide semantic status colours.",
               "value": {
-                "type": "'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger'",
+                "type": "'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error'",
                 "default": "'default'"
               }
             },
@@ -3490,8 +3490,8 @@
             "properties": [
               {
                 "name": "variant",
-                "description": "Colour variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and danger provide semantic status colours.",
-                "type": "'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger'"
+                "description": "Colour variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and error provide semantic status colours.",
+                "type": "'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error'"
               },
               {
                 "name": "size",
@@ -3673,11 +3673,11 @@
               }
             },
             {
-              "name": "compact",
-              "description": "Reduces padding and font sizes for inline or space-constrained usage.",
+              "name": "density",
+              "description": "Visual density. 'compact' reduces padding and font sizes for inline or space-constrained usage.",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "'default' | 'compact'",
+                "default": "'default'"
               }
             },
             {
@@ -3718,9 +3718,9 @@
                 "type": "'info' | 'success' | 'warning' | 'error'"
               },
               {
-                "name": "compact",
-                "description": "Reduces padding and font sizes for inline or space-constrained usage.",
-                "type": "boolean"
+                "name": "density",
+                "description": "Visual density. 'compact' reduces padding and font sizes for inline or space-constrained usage.",
+                "type": "'default' | 'compact'"
               },
               {
                 "name": "dismissible",
@@ -4057,9 +4057,9 @@
             },
             {
               "name": "variant",
-              "description": "Controls the confirm button style. Use \"danger\" for destructive actions — the confirm button renders in the error colour.",
+              "description": "Controls the confirm button style. Use \"error\" for destructive actions — the confirm button renders in the error colour.",
               "value": {
-                "type": "'default' | 'danger'",
+                "type": "'default' | 'error'",
                 "default": "'default'"
               }
             }
@@ -4110,8 +4110,8 @@
               },
               {
                 "name": "variant",
-                "description": "Controls the confirm button style. Use \"danger\" for destructive actions — the confirm button renders in the error colour.",
-                "type": "'default' | 'danger'"
+                "description": "Controls the confirm button style. Use \"error\" for destructive actions — the confirm button renders in the error colour.",
+                "type": "'default' | 'error'"
               }
             ],
             "events": [
@@ -4286,9 +4286,9 @@
             },
             {
               "name": "variant",
-              "description": "Visual variant — danger adds red accent line, glow border, and red confirm button",
+              "description": "Visual variant — error adds red accent line, glow border, and red confirm button",
               "value": {
-                "type": "'default' | 'danger'",
+                "type": "'default' | 'error'",
                 "default": "'default'"
               }
             }
@@ -4334,8 +4334,8 @@
               },
               {
                 "name": "variant",
-                "description": "Visual variant — danger adds red accent line, glow border, and red confirm button",
-                "type": "'default' | 'danger'"
+                "description": "Visual variant — error adds red accent line, glow border, and red confirm button",
+                "type": "'default' | 'error'"
               }
             ],
             "events": [
@@ -5832,6 +5832,20 @@
                 "type": "string",
                 "default": "''"
               }
+            },
+            {
+              "name": "required",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
+            },
+            {
+              "name": "readonly",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
             }
           ],
           "events": [
@@ -5886,6 +5900,14 @@
               },
               {
                 "name": "validationMessage"
+              },
+              {
+                "name": "required",
+                "type": "boolean"
+              },
+              {
+                "name": "readonly",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -6010,6 +6032,20 @@
                 "type": "string",
                 "default": "''"
               }
+            },
+            {
+              "name": "required",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
+            },
+            {
+              "name": "readonly",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
             }
           ],
           "events": [
@@ -6046,6 +6082,11 @@
                 "type": "string"
               },
               {
+                "name": "readonly",
+                "description": "Prevents changing the color via the area, hue slider, hex input, or swatches while the picker stays focusable and the value still submits.",
+                "type": "boolean"
+              },
+              {
                 "name": "form"
               },
               {
@@ -6053,6 +6094,10 @@
               },
               {
                 "name": "validationMessage"
+              },
+              {
+                "name": "required",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -6107,6 +6152,20 @@
                 "type": "boolean",
                 "default": "false"
               }
+            },
+            {
+              "name": "required",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
+            },
+            {
+              "name": "readonly",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
             }
           ],
           "slots": [
@@ -6154,6 +6213,11 @@
                 "type": "boolean"
               },
               {
+                "name": "readonly",
+                "description": "Prevents typing and selecting an option while the input stays focusable; the list can still be opened for viewing and the value still submits.",
+                "type": "boolean"
+              },
+              {
                 "name": "form"
               },
               {
@@ -6161,6 +6225,10 @@
               },
               {
                 "name": "validationMessage"
+              },
+              {
+                "name": "required",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -6287,6 +6355,28 @@
                 "type": "string",
                 "default": "''"
               }
+            },
+            {
+              "name": "open",
+              "description": "Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
+            },
+            {
+              "name": "required",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
+            },
+            {
+              "name": "readonly",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
             }
           ],
           "events": [
@@ -6333,6 +6423,11 @@
                 "type": "string"
               },
               {
+                "name": "open",
+                "description": "Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.",
+                "type": "boolean"
+              },
+              {
                 "name": "form"
               },
               {
@@ -6340,6 +6435,14 @@
               },
               {
                 "name": "validationMessage"
+              },
+              {
+                "name": "required",
+                "type": "boolean"
+              },
+              {
+                "name": "readonly",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -6443,6 +6546,21 @@
                 "type": "string",
                 "default": "''"
               }
+            },
+            {
+              "name": "open",
+              "description": "Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
+            },
+            {
+              "name": "readonly",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
             }
           ],
           "events": [
@@ -6515,6 +6633,11 @@
                 "type": "string"
               },
               {
+                "name": "open",
+                "description": "Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.",
+                "type": "boolean"
+              },
+              {
                 "name": "form"
               },
               {
@@ -6522,6 +6645,10 @@
               },
               {
                 "name": "validationMessage"
+              },
+              {
+                "name": "readonly",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -7233,6 +7360,13 @@
                 "type": "number",
                 "default": "5"
               }
+            },
+            {
+              "name": "readonly",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
             }
           ],
           "slots": [
@@ -7311,6 +7445,11 @@
                 "name": "rows",
                 "description": "Number of visible text rows when `multiline` is true. Controls the initial height of the textarea. Ignored for single-line inputs.",
                 "type": "number"
+              },
+              {
+                "name": "readonly",
+                "description": "Prevents the user from editing the value while keeping the field focusable, and the value is still submitted with the form.",
+                "type": "boolean"
               },
               {
                 "name": "form"
@@ -7456,6 +7595,20 @@
                 "type": "boolean",
                 "default": "false"
               }
+            },
+            {
+              "name": "required",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
+            },
+            {
+              "name": "readonly",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
             }
           ],
           "slots": [
@@ -7503,6 +7656,11 @@
                 "type": "boolean"
               },
               {
+                "name": "readonly",
+                "description": "Prevents toggling options or removing chips while the control stays focusable; the dropdown can still be opened for viewing and the values still submit.",
+                "type": "boolean"
+              },
+              {
                 "name": "form"
               },
               {
@@ -7510,6 +7668,10 @@
               },
               {
                 "name": "validationMessage"
+              },
+              {
+                "name": "required",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -7585,6 +7747,20 @@
                 "type": "boolean",
                 "default": "false"
               }
+            },
+            {
+              "name": "required",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
+            },
+            {
+              "name": "readonly",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
             }
           ],
           "events": [
@@ -7631,6 +7807,11 @@
                 "type": "boolean"
               },
               {
+                "name": "readonly",
+                "description": "Prevents value changes from typing, stepper buttons, and arrow keys while keeping the field focusable and its value submitted.",
+                "type": "boolean"
+              },
+              {
                 "name": "form"
               },
               {
@@ -7638,6 +7819,10 @@
               },
               {
                 "name": "validationMessage"
+              },
+              {
+                "name": "required",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -7692,6 +7877,20 @@
                 "type": "'number' | 'text'",
                 "default": "'number'"
               }
+            },
+            {
+              "name": "required",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
+            },
+            {
+              "name": "readonly",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
             }
           ],
           "events": [
@@ -7728,6 +7927,11 @@
                 "type": "'number' | 'text'"
               },
               {
+                "name": "readonly",
+                "description": "Prevents typing, pasting, and clearing digits while the boxes stay focusable and the value still submits.",
+                "type": "boolean"
+              },
+              {
                 "name": "form"
               },
               {
@@ -7735,6 +7939,10 @@
               },
               {
                 "name": "validationMessage"
+              },
+              {
+                "name": "required",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -7830,6 +8038,13 @@
                 "type": "boolean",
                 "default": "false"
               }
+            },
+            {
+              "name": "readonly",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
             }
           ],
           "events": [
@@ -7909,6 +8124,10 @@
               },
               {
                 "name": "validationMessage"
+              },
+              {
+                "name": "readonly",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -7997,6 +8216,20 @@
                 "type": "string",
                 "default": "''"
               }
+            },
+            {
+              "name": "required",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
+            },
+            {
+              "name": "readonly",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
             }
           ],
           "events": [
@@ -8053,6 +8286,11 @@
                 "type": "string"
               },
               {
+                "name": "readonly",
+                "description": "Prevents entering, deleting, or pasting characters while the boxes stay focusable and the value still submits.",
+                "type": "boolean"
+              },
+              {
                 "name": "form"
               },
               {
@@ -8060,6 +8298,10 @@
               },
               {
                 "name": "validationMessage"
+              },
+              {
+                "name": "required",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -8120,6 +8362,20 @@
                 "type": "'vertical' | 'horizontal'",
                 "default": "'vertical'"
               }
+            },
+            {
+              "name": "required",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
+            },
+            {
+              "name": "readonly",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
             }
           ],
           "slots": [
@@ -8170,6 +8426,14 @@
               },
               {
                 "name": "validationMessage"
+              },
+              {
+                "name": "required",
+                "type": "boolean"
+              },
+              {
+                "name": "readonly",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -8304,6 +8568,20 @@
                 "type": "boolean",
                 "default": "true"
               }
+            },
+            {
+              "name": "required",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
+            },
+            {
+              "name": "readonly",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
             }
           ],
           "events": [
@@ -8372,6 +8650,14 @@
               },
               {
                 "name": "validationMessage"
+              },
+              {
+                "name": "required",
+                "type": "boolean"
+              },
+              {
+                "name": "readonly",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -8431,6 +8717,13 @@
                 "type": "boolean",
                 "default": "false"
               }
+            },
+            {
+              "name": "required",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
             }
           ],
           "events": [
@@ -8474,6 +8767,10 @@
               },
               {
                 "name": "validationMessage"
+              },
+              {
+                "name": "required",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -8525,6 +8822,14 @@
             {
               "name": "loading",
               "description": "Shows a spinning indicator in place of the clear button to signal in-progress loading.",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
+            },
+            {
+              "name": "open",
+              "description": "Whether the suggestion dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.",
               "value": {
                 "type": "boolean",
                 "default": "false"
@@ -8584,6 +8889,11 @@
               {
                 "name": "loading",
                 "description": "Shows a spinning indicator in place of the clear button to signal in-progress loading.",
+                "type": "boolean"
+              },
+              {
+                "name": "open",
+                "description": "Whether the suggestion dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.",
                 "type": "boolean"
               }
             ],
@@ -8736,6 +9046,20 @@
                 "type": "boolean",
                 "default": "false"
               }
+            },
+            {
+              "name": "required",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
+            },
+            {
+              "name": "readonly",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
             }
           ],
           "slots": [
@@ -8801,6 +9125,14 @@
               },
               {
                 "name": "validationMessage"
+              },
+              {
+                "name": "required",
+                "type": "boolean"
+              },
+              {
+                "name": "readonly",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -8871,6 +9203,20 @@
                 "type": "string",
                 "default": "''"
               }
+            },
+            {
+              "name": "required",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
+            },
+            {
+              "name": "readonly",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
             }
           ],
           "events": [
@@ -8922,6 +9268,11 @@
                 "type": "string"
               },
               {
+                "name": "readonly",
+                "description": "Prevents dragging and arrow-key changes while the thumb stays focusable and the value still submits.",
+                "type": "boolean"
+              },
+              {
                 "name": "form"
               },
               {
@@ -8929,6 +9280,10 @@
               },
               {
                 "name": "validationMessage"
+              },
+              {
+                "name": "required",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -9179,6 +9534,20 @@
                 "type": "string",
                 "default": "''"
               }
+            },
+            {
+              "name": "required",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
+            },
+            {
+              "name": "readonly",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
             }
           ],
           "events": [
@@ -9246,6 +9615,11 @@
                 "type": "string"
               },
               {
+                "name": "readonly",
+                "description": "Prevents adding or removing tags while the field stays focusable and the tags still submit with the form.",
+                "type": "boolean"
+              },
+              {
                 "name": "form"
               },
               {
@@ -9253,6 +9627,10 @@
               },
               {
                 "name": "validationMessage"
+              },
+              {
+                "name": "required",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -9277,6 +9655,14 @@
             {
               "name": "value",
               "description": "The current text content of the textarea. Updated on every keystroke and emitted via `arc-input` and `arc-change` events.",
+              "value": {
+                "type": "string",
+                "default": "''"
+              }
+            },
+            {
+              "name": "name",
+              "description": "Form field name submitted with the value. Required for native form integration via ElementInternals.",
               "value": {
                 "type": "string",
                 "default": "''"
@@ -9361,6 +9747,13 @@
                 "type": "string",
                 "default": "''"
               }
+            },
+            {
+              "name": "required",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
             }
           ],
           "events": [
@@ -9380,6 +9773,11 @@
               {
                 "name": "value",
                 "description": "The current text content of the textarea. Updated on every keystroke and emitted via `arc-input` and `arc-change` events.",
+                "type": "string"
+              },
+              {
+                "name": "name",
+                "description": "Form field name submitted with the value. Required for native form integration via ElementInternals.",
                 "type": "string"
               },
               {
@@ -9440,6 +9838,10 @@
               },
               {
                 "name": "validationMessage"
+              },
+              {
+                "name": "required",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -9595,6 +9997,28 @@
                 "type": "string",
                 "default": "''"
               }
+            },
+            {
+              "name": "open",
+              "description": "Whether the time dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
+            },
+            {
+              "name": "required",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
+            },
+            {
+              "name": "readonly",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
             }
           ],
           "events": [
@@ -9651,6 +10075,11 @@
                 "type": "string"
               },
               {
+                "name": "open",
+                "description": "Whether the time dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.",
+                "type": "boolean"
+              },
+              {
                 "name": "form"
               },
               {
@@ -9658,6 +10087,14 @@
               },
               {
                 "name": "validationMessage"
+              },
+              {
+                "name": "required",
+                "type": "boolean"
+              },
+              {
+                "name": "readonly",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -9713,6 +10150,20 @@
                 "type": "string",
                 "default": "''"
               }
+            },
+            {
+              "name": "required",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
+            },
+            {
+              "name": "readonly",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
             }
           ],
           "events": [
@@ -9757,6 +10208,14 @@
               },
               {
                 "name": "validationMessage"
+              },
+              {
+                "name": "required",
+                "type": "boolean"
+              },
+              {
+                "name": "readonly",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -9828,6 +10287,20 @@
                 "type": "string",
                 "default": "'Selected'"
               }
+            },
+            {
+              "name": "required",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
+            },
+            {
+              "name": "readonly",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
             }
           ],
           "events": [
@@ -9875,6 +10348,11 @@
                 "type": "string"
               },
               {
+                "name": "readonly",
+                "description": "Prevents moving items between panes while the lists stay focusable and filterable; the selected values still submit with the form.",
+                "type": "boolean"
+              },
+              {
                 "name": "form"
               },
               {
@@ -9882,6 +10360,10 @@
               },
               {
                 "name": "validationMessage"
+              },
+              {
+                "name": "required",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -11528,11 +12010,11 @@
           "doc-url": "",
           "attributes": [
             {
-              "name": "compact",
-              "description": "Reduces internal padding and spacing throughout the footer. Use this in dashboard layouts or admin panels where vertical space is limited and the footer should feel lightweight rather than expansive.",
+              "name": "density",
+              "description": "Visual density. 'compact' reduces internal padding and spacing throughout the footer — for dashboard layouts or admin panels where vertical space is limited.",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "'default' | 'compact'",
+                "default": "'default'"
               }
             },
             {
@@ -11579,9 +12061,9 @@
           "js": {
             "properties": [
               {
-                "name": "compact",
-                "description": "Reduces internal padding and spacing throughout the footer. Use this in dashboard layouts or admin panels where vertical space is limited and the footer should feel lightweight rather than expansive.",
-                "type": "boolean"
+                "name": "density",
+                "description": "Visual density. 'compact' reduces internal padding and spacing throughout the footer — for dashboard layouts or admin panels where vertical space is limited.",
+                "type": "'default' | 'compact'"
               },
               {
                 "name": "border",

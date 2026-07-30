@@ -10,7 +10,7 @@ export interface ConfirmProps {
   message?: string;
   confirmLabel?: string;
   cancelLabel?: string;
-  variant?: 'default' | 'danger';
+  variant?: 'default' | 'error';
   className?: string;
   children?: React.ReactNode;
   onArcConfirm?: (e: CustomEvent) => void;

@@ -22,7 +22,7 @@
         padding-inline: 0;
       }
 
-      .arc-footer[compact] .footer {
+      .arc-footer[data-density="compact"] .footer {
         padding: var(--space-md);
       }
 
@@ -30,7 +30,7 @@
         margin-bottom: var(--space-xl);
       }
 
-      .arc-footer[compact] .footer__brand {
+      .arc-footer[data-density="compact"] .footer__brand {
         margin-bottom: var(--space-md);
       }
 
@@ -41,7 +41,7 @@
         margin-bottom: var(--space-xl);
       }
 
-      .arc-footer[compact] .footer__columns {
+      .arc-footer[data-density="compact"] .footer__columns {
         gap: var(--space-md);
         margin-bottom: var(--space-md);
       }
@@ -53,7 +53,7 @@
         margin-bottom: var(--space-lg);
       }
 
-      .arc-footer[compact] .footer__social {
+      .arc-footer[data-density="compact"] .footer__social {
         margin-bottom: var(--space-sm);
       }
 

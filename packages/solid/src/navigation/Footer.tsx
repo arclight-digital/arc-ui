@@ -12,7 +12,7 @@ declare module 'solid-js' {
 }
 
 export interface FooterProps {
-  compact?: boolean;
+  density?: 'default' | 'compact';
   border?: boolean;
   contained?: string;
   align?: 'left' | 'center';
@@ -45,9 +45,9 @@ export interface FooterProps {
 }
 
 export const Footer: Component<FooterProps> = (props) => {
-  const [local, rest] = splitProps(props, ['compact', 'border', 'contained', 'align', 'children']);
+  const [local, rest] = splitProps(props, ['density', 'border', 'contained', 'align', 'children']);
   return (
-    <arc-footer compact={local.compact} border={local.border} contained={local.contained} align={local.align} {...rest}>
+    <arc-footer density={local.density} border={local.border} contained={local.contained} align={local.align} {...rest}>
       {local.children}
     </arc-footer>
   );

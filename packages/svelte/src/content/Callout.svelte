@@ -4,7 +4,7 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
-    variant?: 'info' | 'warning' | 'tip' | 'danger';
+    variant?: 'info' | 'tip' | 'warning' | 'error';
     dismissible?: boolean;
     /** <slot name="icon"> — put slot="icon" on the element inside. */
     icon?: Snippet;

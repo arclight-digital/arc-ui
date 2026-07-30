@@ -18,11 +18,11 @@ export class Alert {
     return this._el.variant;
   }
 
-  @Input() set compact(value: boolean) {
-    this._el.compact = value;
+  @Input() set density(value: 'default' | 'compact') {
+    this._el.density = value;
   }
-  get compact(): boolean {
-    return this._el.compact;
+  get density(): 'default' | 'compact' {
+    return this._el.density;
   }
 
   @Input() set dismissible(value: boolean) {

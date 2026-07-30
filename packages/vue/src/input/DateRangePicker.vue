@@ -16,6 +16,7 @@ const props = withDefaults(defineProps<{
   disabled?: boolean;
   required?: boolean;
   label?: string;
+  open?: boolean;
 }>(), {
   start: '',
   end: '',
@@ -28,6 +29,7 @@ const props = withDefaults(defineProps<{
   disabled: false,
   required: false,
   label: '',
+  open: false,
 });
 
 const emit = defineEmits<{
@@ -59,6 +61,7 @@ function onArcChange(payload: CustomEvent) {
     :disabled="props.disabled"
     :required="props.required"
     :label="props.label"
+    :open="props.open"
     @arc-change="onArcChange"
   >
     <slot />

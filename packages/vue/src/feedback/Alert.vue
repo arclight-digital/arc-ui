@@ -6,12 +6,12 @@ defineOptions({ name: 'Alert' });
 
 const props = withDefaults(defineProps<{
   variant?: 'info' | 'success' | 'warning' | 'error';
-  compact?: boolean;
+  density?: 'default' | 'compact';
   dismissible?: boolean;
   heading?: string;
 }>(), {
   variant: 'info',
-  compact: false,
+  density: 'default',
   dismissible: false,
   heading: '',
 });
@@ -24,7 +24,7 @@ const emit = defineEmits<{
 <template>
   <arc-alert
     :variant="props.variant"
-    :compact="props.compact"
+    :density="props.density"
     :dismissible="props.dismissible"
     :heading="props.heading"
     @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"

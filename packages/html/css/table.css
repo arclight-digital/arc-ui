@@ -37,7 +37,7 @@
         white-space: nowrap;
       }
 
-      .arc-table[compact] th {
+      .arc-table[data-density="compact"] th {
         padding: var(--space-xs) var(--space-sm);
       }
 
@@ -49,7 +49,7 @@
         font-size: var(--text-sm);
       }
 
-      .arc-table[compact] td {
+      .arc-table[data-density="compact"] td {
         padding: var(--space-xs) var(--space-sm);
         font-size: var(--text-sm);
       }

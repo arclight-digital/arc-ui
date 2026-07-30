@@ -10,12 +10,14 @@ const props = withDefaults(defineProps<{
   label?: string;
   disabled?: boolean;
   loading?: boolean;
+  open?: boolean;
 }>(), {
   value: '',
   placeholder: 'Search...',
   label: '',
   disabled: false,
   loading: false,
+  open: false,
 });
 
 const emit = defineEmits<{
@@ -56,6 +58,7 @@ function onArcSelect(payload: CustomEvent) {
     :label="props.label"
     :disabled="props.disabled"
     :loading="props.loading"
+    :open="props.open"
     @arc-input="onArcInput"
     @arc-clear="(payload: CustomEvent) => emit('arc-clear', payload)"
     @arc-change="onArcChange"

@@ -32,10 +32,10 @@ export class Table {
     return this._el.striped;
   }
 
-  @Input() set compact(value: boolean) {
-    this._el.compact = value;
+  @Input() set density(value: 'default' | 'compact') {
+    this._el.density = value;
   }
-  get compact(): boolean {
-    return this._el.compact;
+  get density(): 'default' | 'compact' {
+    return this._el.density;
   }
 }

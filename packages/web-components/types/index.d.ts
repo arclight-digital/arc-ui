@@ -26,8 +26,8 @@ export declare class ArcAccordionItem extends LitElement {
 export declare class ArcAlert extends LitElement {
   /** Controls the semantic colour palette and icon. Use "info" for neutral guidance, "success" for confirmations, "warning" for caution states, and "error" for failures or blocking issues. @default 'info' */
   variant: 'info' | 'success' | 'warning' | 'error';
-  /** Reduces padding and font sizes for inline or space-constrained usage. @default false */
-  compact: boolean;
+  /** Visual density. 'compact' reduces padding and font sizes for inline or space-constrained usage. @default 'default' */
+  density: 'default' | 'compact';
   /** When true, renders a close button in the top-right corner. Clicking it removes the alert from the DOM and fires an "arc-close" event that parent components can listen to. @default false */
   dismissible: boolean;
   /** Optional bold heading rendered above the body slot. Use it for a scannable one-line summary so users can quickly gauge the alert's importance before reading the full message. @default '' */
@@ -274,7 +274,7 @@ export declare class ArcCalendar extends LitElement {
  */
 export declare class ArcCallout extends LitElement {
   /** Semantic variant that controls the colour scheme, top accent bar, and default icon @default 'info' */
-  variant: 'info' | 'warning' | 'tip' | 'danger';
+  variant: 'info' | 'tip' | 'warning' | 'error';
   /** Shows a close button that removes the callout. Fires an arc-close event on close. @default false */
   dismissible: boolean;
 }
@@ -366,9 +366,17 @@ export declare class ArcCheckbox extends LitElement {
   value: string;
   /** @default true */
   formAssociated: boolean;
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, } */
+  properties: Record<string, unknown>;
+  /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
+  autoValidates: boolean;
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
+  /** @default false */
+  required: boolean;
+  /** @default false */
+  readonly: boolean;
 }
 
 /**
@@ -436,11 +444,19 @@ export declare class ArcColorPicker extends LitElement {
   disabled: boolean;
   /** Label text displayed above the picker in uppercase accent font. @default '' */
   label: string;
+  /** Prevents changing the color via the area, hue slider, hex input, or swatches while the picker stays focusable and the value still submits. @default false */
+  readonly: boolean;
   /** @default true */
   formAssociated: boolean;
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, } */
+  properties: Record<string, unknown>;
+  /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
+  autoValidates: boolean;
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
+  /** @default false */
+  required: boolean;
 }
 
 /**
@@ -488,11 +504,19 @@ export declare class ArcCombobox extends LitElement {
   name: string;
   /** Disables the input and prevents interaction. The host element receives reduced opacity and pointer-events: none. @default false */
   disabled: boolean;
+  /** Prevents typing and selecting an option while the input stays focusable; the list can still be opened for viewing and the value still submits. @default false */
+  readonly: boolean;
   /** @default true */
   formAssociated: boolean;
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, } */
+  properties: Record<string, unknown>;
+  /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
+  autoValidates: boolean;
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
+  /** @default false */
+  required: boolean;
 }
 
 /**
@@ -577,8 +601,8 @@ export declare class ArcConfirm extends LitElement {
   confirmLabel: string;
   /** Label for the cancel button. Use a specific alternative like "Keep" or "Go back" when possible. @default 'Cancel' */
   cancelLabel: string;
-  /** Controls the confirm button style. Use "danger" for destructive actions — the confirm button renders in the error colour. @default 'default' */
-  variant: 'default' | 'danger';
+  /** Controls the confirm button style. Use "error" for destructive actions — the confirm button renders in the error colour. @default 'default' */
+  variant: 'default' | 'error';
 }
 
 /**
@@ -721,11 +745,21 @@ export declare class ArcDatePicker extends LitElement {
   disabled: boolean;
   /** Label text rendered above the input in uppercase accent font styling. @default '' */
   label: string;
+  /** Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS. @default false */
+  open: boolean;
   /** @default true */
   formAssociated: boolean;
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, } */
+  properties: Record<string, unknown>;
+  /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
+  autoValidates: boolean;
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
+  /** @default false */
+  required: boolean;
+  /** @default false */
+  readonly: boolean;
 }
 
 /**
@@ -733,6 +767,8 @@ export declare class ArcDatePicker extends LitElement {
  * Events: arc-change
  */
 export declare class ArcDateRangePicker extends LitElement {
+  /** Runs its own constraint logic — owns the whole validity flag set. @default false */
+  autoValidates: boolean;
   /** Read-derived ISO 8601 interval ("start/end") when both dates are set, otherwise an empty string. This is the value submitted with forms. Assigning "start/end" sets both dates. */
   value: string;
   /** Range start date as an ISO string (YYYY-MM-DD). Empty when unset. Set both start and end to pre-select a range. @default '' */
@@ -757,11 +793,17 @@ export declare class ArcDateRangePicker extends LitElement {
   required: boolean;
   /** Label text rendered above the input in uppercase accent font styling. @default '' */
   label: string;
+  /** Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS. @default false */
+  open: boolean;
   /** @default true */
   formAssociated: boolean;
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, } */
+  properties: Record<string, unknown>;
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
+  /** @default false */
+  readonly: boolean;
 }
 
 /**
@@ -797,8 +839,8 @@ export declare class ArcDialog extends LitElement {
   confirmLabel: string;
   /** Text for the cancel button @default 'Cancel' */
   cancelLabel: string;
-  /** Visual variant — danger adds red accent line, glow border, and red confirm button @default 'default' */
-  variant: 'default' | 'danger';
+  /** Visual variant — error adds red accent line, glow border, and red confirm button @default 'default' */
+  variant: 'default' | 'error';
 }
 
 /**
@@ -947,8 +989,8 @@ export declare class ArcFloatBar extends LitElement {
  * `<arc-footer>`
  */
 export declare class ArcFooter extends LitElement {
-  /** Reduces internal padding and spacing throughout the footer. Use this in dashboard layouts or admin panels where vertical space is limited and the footer should feel lightweight rather than expansive. @default false */
-  compact: boolean;
+  /** Visual density. 'compact' reduces internal padding and spacing throughout the footer — for dashboard layouts or admin panels where vertical space is limited. @default 'default' */
+  density: 'default' | 'compact';
   /** Renders a subtle top border on the footer to visually separate it from the page content above. Enabled by default; disable it only when the footer sits against a dark background where the border would be redundant. @default true */
   border: boolean;
   /** Sets a max-width containment on the footer content. Accepts any CSS length value or named size token. @default null */
@@ -1143,6 +1185,8 @@ export declare class ArcInlineMessage extends LitElement {
  * Events: arc-input, arc-change
  */
 export declare class ArcInput extends LitElement {
+  /** Runs its own constraint logic — owns the whole validity flag set. @default false */
+  autoValidates: boolean;
   /** The HTML input type. Controls browser validation behaviour and which virtual keyboard appears on mobile devices. Ignored when `multiline` is true. @default 'text' */
   type: 'text' | 'email' | 'tel' | 'url' | 'password';
   /** The `name` attribute sent with form data on submission. Also used by the Form component to track field state and validation. @default '' */
@@ -1165,8 +1209,12 @@ export declare class ArcInput extends LitElement {
   multiline: boolean;
   /** Number of visible text rows when `multiline` is true. Controls the initial height of the textarea. Ignored for single-line inputs. @default 5 */
   rows: number;
+  /** Prevents the user from editing the value while keeping the field focusable, and the value is still submitted with the form. @default false */
+  readonly: boolean;
   /** @default true */
   formAssociated: boolean;
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, } */
+  properties: Record<string, unknown>;
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
@@ -1414,11 +1462,19 @@ export declare class ArcMultiSelect extends LitElement {
   name: string;
   /** Disables the control, preventing interaction and reducing opacity to 50%. @default false */
   disabled: boolean;
+  /** Prevents toggling options or removing chips while the control stays focusable; the dropdown can still be opened for viewing and the values still submit. @default false */
+  readonly: boolean;
   /** @default true */
   formAssociated: boolean;
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, } */
+  properties: Record<string, unknown>;
+  /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
+  autoValidates: boolean;
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
+  /** @default false */
+  required: boolean;
 }
 
 /**
@@ -1500,11 +1556,19 @@ export declare class ArcNumberInput extends LitElement {
   name: string;
   /** Disables interaction, reducing opacity to 40% and blocking pointer events. @default false */
   disabled: boolean;
+  /** Prevents value changes from typing, stepper buttons, and arrow keys while keeping the field focusable and its value submitted. @default false */
+  readonly: boolean;
   /** @default true */
   formAssociated: boolean;
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, } */
+  properties: Record<string, unknown>;
+  /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
+  autoValidates: boolean;
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
+  /** @default false */
+  required: boolean;
 }
 
 /**
@@ -1536,11 +1600,19 @@ export declare class ArcOtpInput extends LitElement {
   disabled: boolean;
   /** Input mode. `number` filters non-digits and uses the numeric keyboard; `text` allows any character. @default 'number' */
   type: 'number' | 'text';
+  /** Prevents typing, pasting, and clearing digits while the boxes stay focusable and the value still submits. @default false */
+  readonly: boolean;
   /** @default true */
   formAssociated: boolean;
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, } */
+  properties: Record<string, unknown>;
+  /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
+  autoValidates: boolean;
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
+  /** @default false */
+  required: boolean;
 }
 
 /**
@@ -1600,6 +1672,8 @@ export declare class ArcPagination extends LitElement {
  * Events: arc-strength-change, arc-input, arc-change
  */
 export declare class ArcPasswordInput extends LitElement {
+  /** Runs its own constraint logic — owns the whole validity flag set. @default false */
+  autoValidates: boolean;
   /** The `name` attribute sent with form data on submission. Also used by the Form component to track field state. @default '' */
   name: string;
   /** Visible label rendered above the field. Automatically associated with the input via a generated id. @default '' */
@@ -1622,9 +1696,13 @@ export declare class ArcPasswordInput extends LitElement {
   showStrength: boolean;
   /** @default true */
   formAssociated: boolean;
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, } */
+  properties: Record<string, unknown>;
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
+  /** @default false */
+  readonly: boolean;
 }
 
 /**
@@ -1648,11 +1726,19 @@ export declare class ArcPinInput extends LitElement {
   separator: number;
   /** Label text displayed above the input boxes in uppercase accent font. @default '' */
   label: string;
+  /** Prevents entering, deleting, or pasting characters while the boxes stay focusable and the value still submits. @default false */
+  readonly: boolean;
   /** @default true */
   formAssociated: boolean;
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, } */
+  properties: Record<string, unknown>;
+  /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
+  autoValidates: boolean;
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
+  /** @default false */
+  required: boolean;
 }
 
 /**
@@ -1749,9 +1835,17 @@ export declare class ArcRadioGroup extends LitElement {
   orientation: 'vertical' | 'horizontal';
   /** @default true */
   formAssociated: boolean;
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, } */
+  properties: Record<string, unknown>;
+  /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
+  autoValidates: boolean;
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
+  /** @default false */
+  required: boolean;
+  /** @default false */
+  readonly: boolean;
 }
 
 /**
@@ -1792,9 +1886,17 @@ export declare class ArcRangeSlider extends LitElement {
   showValues: boolean;
   /** @default true */
   formAssociated: boolean;
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, } */
+  properties: Record<string, unknown>;
+  /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
+  autoValidates: boolean;
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
+  /** @default false */
+  required: boolean;
+  /** @default false */
+  readonly: boolean;
 }
 
 /**
@@ -1814,9 +1916,15 @@ export declare class ArcRating extends LitElement {
   readonly: boolean;
   /** @default true */
   formAssociated: boolean;
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, } */
+  properties: Record<string, unknown>;
+  /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
+  autoValidates: boolean;
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
+  /** @default false */
+  required: boolean;
 }
 
 /**
@@ -1908,6 +2016,8 @@ export declare class ArcSearch extends LitElement {
   disabled: boolean;
   /** Shows a spinning indicator in place of the clear button to signal in-progress loading. @default false */
   loading: boolean;
+  /** Whether the suggestion dropdown is visible. Reflected so it can be opened programmatically or styled from CSS. @default false */
+  open: boolean;
 }
 
 /**
@@ -1952,9 +2062,17 @@ export declare class ArcSelect extends LitElement {
   open: boolean;
   /** @default true */
   formAssociated: boolean;
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, } */
+  properties: Record<string, unknown>;
+  /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
+  autoValidates: boolean;
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
+  /** @default false */
+  required: boolean;
+  /** @default false */
+  readonly: boolean;
 }
 
 /**
@@ -2081,11 +2199,19 @@ export declare class ArcSlider extends LitElement {
   disabled: boolean;
   /** Label text displayed above the slider with the current value shown on the right. @default '' */
   label: string;
+  /** Prevents dragging and arrow-key changes while the thumb stays focusable and the value still submits. @default false */
+  readonly: boolean;
   /** @default true */
   formAssociated: boolean;
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, } */
+  properties: Record<string, unknown>;
+  /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
+  autoValidates: boolean;
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
+  /** @default false */
+  required: boolean;
 }
 
 /**
@@ -2309,8 +2435,8 @@ export declare class ArcTable extends LitElement {
   rows: string[][];
   /** Alternating row backgrounds for improved scanability. @default false */
   striped: boolean;
-  /** Reduced cell padding for dense data displays. @default false */
-  compact: boolean;
+  /** Row density. 'compact' reduces cell padding for dense data displays. @default 'default' */
+  density: 'default' | 'compact';
 }
 
 /**
@@ -2333,8 +2459,8 @@ export declare class ArcTabs extends LitElement {
  * Events: arc-remove
  */
 export declare class ArcTag extends LitElement {
-  /** Colour variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and danger provide semantic status colours. @default 'default' */
-  variant: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
+  /** Colour variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and error provide semantic status colours. @default 'default' */
+  variant: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error';
   /** Controls the tag size. @default 'md' */
   size: 'sm' | 'md' | 'lg';
   /** When true, shows a close button that fires `arc-remove` when clicked. @default false */
@@ -2370,11 +2496,19 @@ export declare class ArcTagInput extends LitElement {
   disabled: boolean;
   /** Error message shown below the field; also applies error styling to the border. @default '' */
   error: string;
+  /** Prevents adding or removing tags while the field stays focusable and the tags still submit with the form. @default false */
+  readonly: boolean;
   /** @default true */
   formAssociated: boolean;
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, } */
+  properties: Record<string, unknown>;
+  /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
+  autoValidates: boolean;
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
+  /** @default false */
+  required: boolean;
 }
 
 /**
@@ -2394,6 +2528,8 @@ export declare class ArcText extends LitElement {
 export declare class ArcTextarea extends LitElement {
   /** The current text content of the textarea. Updated on every keystroke and emitted via `arc-input` and `arc-change` events. @default '' */
   value: string;
+  /** Form field name submitted with the value. Required for native form integration via ElementInternals. @default '' */
+  name: string;
   /** Hint text displayed inside the field when it is empty. Use it to show example input -- never as a substitute for the label. @default '' */
   placeholder: string;
   /** Visible label rendered above the textarea in uppercase. Automatically linked to the field via `aria-labelledby`, ensuring screen readers announce it correctly. @default '' */
@@ -2416,9 +2552,15 @@ export declare class ArcTextarea extends LitElement {
   error: string;
   /** @default true */
   formAssociated: boolean;
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, } */
+  properties: Record<string, unknown>;
+  /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
+  autoValidates: boolean;
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
+  /** @default false */
+  required: boolean;
 }
 
 /**
@@ -2469,11 +2611,21 @@ export declare class ArcTimePicker extends LitElement {
   disabled: boolean;
   /** Label text rendered above the input in uppercase accent font styling. @default '' */
   label: string;
+  /** Whether the time dropdown is visible. Reflected so it can be opened programmatically or styled from CSS. @default false */
+  open: boolean;
   /** @default true */
   formAssociated: boolean;
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, } */
+  properties: Record<string, unknown>;
+  /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
+  autoValidates: boolean;
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
+  /** @default false */
+  required: boolean;
+  /** @default false */
+  readonly: boolean;
 }
 
 /**
@@ -2541,9 +2693,17 @@ export declare class ArcToggle extends LitElement {
   name: string;
   /** @default true */
   formAssociated: boolean;
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, } */
+  properties: Record<string, unknown>;
+  /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
+  autoValidates: boolean;
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
+  /** @default false */
+  required: boolean;
+  /** @default false */
+  readonly: boolean;
 }
 
 /**
@@ -2613,11 +2773,19 @@ export declare class ArcTransferList extends LitElement {
   sourceLabel: string;
   /** Heading for the right (selected) pane. Attribute: `target-label`. @default 'Selected' */
   targetLabel: string;
+  /** Prevents moving items between panes while the lists stay focusable and filterable; the selected values still submit with the form. @default false */
+  readonly: boolean;
   /** @default true */
   formAssociated: boolean;
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, } */
+  properties: Record<string, unknown>;
+  /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
+  autoValidates: boolean;
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
+  /** @default false */
+  required: boolean;
 }
 
 /**

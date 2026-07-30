@@ -12,7 +12,7 @@ declare module 'solid-js' {
 }
 
 export interface TagProps {
-  variant?: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
+  variant?: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error';
   size?: 'sm' | 'md' | 'lg';
   removable?: boolean;
   disabled?: boolean;

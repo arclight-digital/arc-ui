@@ -5,7 +5,7 @@ import '@arclux/arc-ui/callout';
 defineOptions({ name: 'Callout' });
 
 const props = withDefaults(defineProps<{
-  variant?: 'info' | 'warning' | 'tip' | 'danger';
+  variant?: 'info' | 'tip' | 'warning' | 'error';
   dismissible?: boolean;
 }>(), {
   variant: 'info',

@@ -6,7 +6,7 @@ import '@arclux/arc-ui/alert';
 
 export interface AlertProps {
   variant?: 'info' | 'success' | 'warning' | 'error';
-  compact?: boolean;
+  density?: 'default' | 'compact';
   dismissible?: boolean;
   heading?: string;
   onArcClose?: (e: CustomEvent) => void;
@@ -38,7 +38,7 @@ export interface AlertProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Alert: FunctionComponent<AlertProps> = ({ variant, compact, dismissible, heading, onArcClose, children, ...rest }) => {
+export const Alert: FunctionComponent<AlertProps> = ({ variant, density, dismissible, heading, onArcClose, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -51,5 +51,5 @@ export const Alert: FunctionComponent<AlertProps> = ({ variant, compact, dismiss
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcClose]);
-  return h('arc-alert', { ref, variant, compact, dismissible, heading, ...rest }, children);
+  return h('arc-alert', { ref, variant, density, dismissible, heading, ...rest }, children);
 };

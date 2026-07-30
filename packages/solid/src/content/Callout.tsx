@@ -12,7 +12,7 @@ declare module 'solid-js' {
 }
 
 export interface CalloutProps {
-  variant?: 'info' | 'warning' | 'tip' | 'danger';
+  variant?: 'info' | 'tip' | 'warning' | 'error';
   dismissible?: boolean;
   onArcClose?: (e: CustomEvent) => void;
   children?: JSX.Element;

@@ -13,6 +13,7 @@ declare module 'solid-js' {
 
 export interface TextareaProps {
   value?: string;
+  name?: string;
   placeholder?: string;
   label?: string;
   rows?: number;
@@ -54,9 +55,9 @@ export interface TextareaProps {
 }
 
 export const Textarea: Component<TextareaProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'placeholder', 'label', 'rows', 'maxlength', 'disabled', 'readonly', 'resize', 'size', 'autoResize', 'error', 'onArcInput', 'onArcChange', 'children']);
+  const [local, rest] = splitProps(props, ['value', 'name', 'placeholder', 'label', 'rows', 'maxlength', 'disabled', 'readonly', 'resize', 'size', 'autoResize', 'error', 'onArcInput', 'onArcChange', 'children']);
   return (
-    <arc-textarea value={local.value} placeholder={local.placeholder} label={local.label} rows={local.rows} maxlength={local.maxlength} disabled={local.disabled} readonly={local.readonly} resize={local.resize} size={local.size} prop:autoResize={local.autoResize} error={local.error} on:arc-input={local.onArcInput} on:arc-change={local.onArcChange} {...rest}>
+    <arc-textarea value={local.value} name={local.name} placeholder={local.placeholder} label={local.label} rows={local.rows} maxlength={local.maxlength} disabled={local.disabled} readonly={local.readonly} resize={local.resize} size={local.size} prop:autoResize={local.autoResize} error={local.error} on:arc-input={local.onArcInput} on:arc-change={local.onArcChange} {...rest}>
       {local.children}
     </arc-textarea>
   );

@@ -8,7 +8,7 @@ export interface TableProps {
   columns?: string[];
   rows?: string[][];
   striped?: boolean;
-  compact?: boolean;
+  density?: 'default' | 'compact';
   className?: string;
   children?: React.ReactNode;
 }

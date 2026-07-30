@@ -91,6 +91,13 @@ export class DateRangePicker {
     return this._el.label;
   }
 
+  @Input() set open(value: boolean) {
+    this._el.open = value;
+  }
+  get open(): boolean {
+    return this._el.open;
+  }
+
   @Output() startChange = new EventEmitter<string>();
 
   @Output() endChange = new EventEmitter<string>();

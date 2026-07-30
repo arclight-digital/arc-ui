@@ -6,6 +6,7 @@ import '@arclux/arc-ui/textarea';
 
 export interface TextareaProps {
   value?: string;
+  name?: string;
   placeholder?: string;
   label?: string;
   rows?: number;
@@ -46,7 +47,7 @@ export interface TextareaProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Textarea: FunctionComponent<TextareaProps> = ({ value, placeholder, label, rows, maxlength, disabled, readonly, resize, size, autoResize, error, onArcInput, onArcChange, children, ...rest }) => {
+export const Textarea: FunctionComponent<TextareaProps> = ({ value, name, placeholder, label, rows, maxlength, disabled, readonly, resize, size, autoResize, error, onArcInput, onArcChange, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -64,5 +65,5 @@ export const Textarea: FunctionComponent<TextareaProps> = ({ value, placeholder,
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcInput, onArcChange]);
-  return h('arc-textarea', { ref, value, placeholder, label, rows, maxlength, disabled, readonly, resize, size, autoResize, error, ...rest }, children);
+  return h('arc-textarea', { ref, value, name, placeholder, label, rows, maxlength, disabled, readonly, resize, size, autoResize, error, ...rest }, children);
 };

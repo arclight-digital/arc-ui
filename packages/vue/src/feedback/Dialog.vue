@@ -10,7 +10,7 @@ const props = withDefaults(defineProps<{
   message?: string;
   confirmLabel?: string;
   cancelLabel?: string;
-  variant?: 'default' | 'danger';
+  variant?: 'default' | 'error';
 }>(), {
   open: false,
   heading: '',

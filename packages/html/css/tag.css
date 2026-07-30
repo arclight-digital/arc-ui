@@ -47,7 +47,7 @@
         background: rgba(var(--color-warning-rgb), 0.06);
       }
 
-      .arc-tag[data-variant="danger"] .tag {
+      .arc-tag[data-variant="error"] .tag {
         border-color: rgba(var(--color-error-rgb), 0.2);
         color: color-mix(in srgb, var(--color-error), var(--text-primary) var(--accent-text-mix, 0%));
         background: rgba(var(--color-error-rgb), 0.06);
@@ -58,7 +58,7 @@
       .arc-tag[data-variant="secondary"] .tag:hover { box-shadow: 0 0 12px rgba(var(--accent-secondary-rgb), 0.15); }
       .arc-tag[data-variant="success"] .tag:hover { box-shadow: 0 0 12px rgba(var(--color-success-rgb), 0.15); }
       .arc-tag[data-variant="warning"] .tag:hover { box-shadow: 0 0 12px rgba(var(--color-warning-rgb), 0.15); }
-      .arc-tag[data-variant="danger"] .tag:hover { box-shadow: 0 0 12px rgba(var(--color-error-rgb), 0.15); }
+      .arc-tag[data-variant="error"] .tag:hover { box-shadow: 0 0 12px rgba(var(--color-error-rgb), 0.15); }
 
       /* Sizes */
       .arc-tag[data-size="sm"] .tag { font-size: calc(var(--text-xs) - 1px); padding: 2px var(--space-sm); letter-spacing: 1.5px; }

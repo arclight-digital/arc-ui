@@ -11,10 +11,10 @@ import { ArcTag } from '@arclux/arc-ui/tag';
 export class Tag {
   private readonly _el: ArcTag = inject(ElementRef).nativeElement;
 
-  @Input() set variant(value: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger') {
+  @Input() set variant(value: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error') {
     this._el.variant = value;
   }
-  get variant(): 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger' {
+  get variant(): 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error' {
     return this._el.variant;
   }
 

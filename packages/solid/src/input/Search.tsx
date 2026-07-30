@@ -17,6 +17,7 @@ export interface SearchProps {
   label?: string;
   disabled?: boolean;
   loading?: boolean;
+  open?: boolean;
   onArcInput?: (e: CustomEvent) => void;
   onArcClear?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
@@ -50,9 +51,9 @@ export interface SearchProps {
 }
 
 export const Search: Component<SearchProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'placeholder', 'label', 'disabled', 'loading', 'onArcInput', 'onArcClear', 'onArcChange', 'onArcSelect', 'children']);
+  const [local, rest] = splitProps(props, ['value', 'placeholder', 'label', 'disabled', 'loading', 'open', 'onArcInput', 'onArcClear', 'onArcChange', 'onArcSelect', 'children']);
   return (
-    <arc-search value={local.value} placeholder={local.placeholder} label={local.label} disabled={local.disabled} loading={local.loading} on:arc-input={local.onArcInput} on:arc-clear={local.onArcClear} on:arc-change={local.onArcChange} on:arc-select={local.onArcSelect} {...rest}>
+    <arc-search value={local.value} placeholder={local.placeholder} label={local.label} disabled={local.disabled} loading={local.loading} open={local.open} on:arc-input={local.onArcInput} on:arc-clear={local.onArcClear} on:arc-change={local.onArcChange} on:arc-select={local.onArcSelect} {...rest}>
       {local.children}
     </arc-search>
   );

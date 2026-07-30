@@ -46,10 +46,10 @@ export class Dialog {
     return this._el.cancelLabel;
   }
 
-  @Input() set variant(value: 'default' | 'danger') {
+  @Input() set variant(value: 'default' | 'error') {
     this._el.variant = value;
   }
-  get variant(): 'default' | 'danger' {
+  get variant(): 'default' | 'error' {
     return this._el.variant;
   }
 }

@@ -63,6 +63,13 @@ export class DatePicker {
     return this._el.label;
   }
 
+  @Input() set open(value: boolean) {
+    this._el.open = value;
+  }
+  get open(): boolean {
+    return this._el.open;
+  }
+
   @Output() valueChange = new EventEmitter<string>();
 
   _onArcChange(event: CustomEvent) {

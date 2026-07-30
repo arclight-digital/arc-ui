@@ -15,6 +15,7 @@
     disabled?: boolean;
     required?: boolean;
     label?: string;
+    open?: boolean;
     children?: Snippet;
     class?: string;
     id?: string;
@@ -43,7 +44,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { start = $bindable(''), end = $bindable(''), name = '', min = '', max = '', months = 2, presets = [], placeholder = 'Select date range', disabled = false, required = false, label = '', children, ...rest }: Props = $props();
+  let { start = $bindable(''), end = $bindable(''), name = '', min = '', max = '', months = 2, presets = [], placeholder = 'Select date range', disabled = false, required = false, label = '', open = false, children, ...rest }: Props = $props();
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
@@ -58,7 +59,7 @@
   }
 </script>
 
-<arc-date-range-picker {start} {end} {name} {min} {max} {months} {presets} {placeholder} {disabled} {required} {label} {...rest}
+<arc-date-range-picker {start} {end} {name} {min} {max} {months} {presets} {placeholder} {disabled} {required} {label} {open} {...rest}
   onarc-change={__onArcChange}
 >
   {@render children?.()}

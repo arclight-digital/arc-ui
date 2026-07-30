@@ -473,7 +473,7 @@
               "name": "variant",
               "privacy": "public",
               "type": {
-                "text": "'info' | 'warning' | 'tip' | 'danger'"
+                "text": "'info' | 'tip' | 'warning' | 'error'"
               },
               "default": "'info'",
               "description": "Semantic variant that controls the colour scheme, top accent bar, and default icon",
@@ -506,7 +506,7 @@
             {
               "name": "variant",
               "type": {
-                "text": "'info' | 'warning' | 'tip' | 'danger'"
+                "text": "'info' | 'tip' | 'warning' | 'error'"
               },
               "default": "'info'",
               "description": "Semantic variant that controls the colour scheme, top accent bar, and default icon",
@@ -6154,7 +6154,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "Data-driven table with striped and compact variants, powered by columns and rows props.",
+          "description": "Data-driven table with striped and compact-density variants, powered by columns and rows props.",
           "name": "ArcTable",
           "cssParts": [
             {
@@ -6213,14 +6213,14 @@
             },
             {
               "kind": "field",
-              "name": "compact",
+              "name": "density",
               "privacy": "public",
               "type": {
-                "text": "boolean"
+                "text": "'default' | 'compact'"
               },
-              "default": "false",
-              "description": "Reduced cell padding for dense data displays.",
-              "attribute": "compact",
+              "default": "'default'",
+              "description": "Row density. 'compact' reduces cell padding for dense data displays.",
+              "attribute": "density",
               "reflects": true
             }
           ],
@@ -6253,13 +6253,13 @@
               "fieldName": "striped"
             },
             {
-              "name": "compact",
+              "name": "density",
               "type": {
-                "text": "boolean"
+                "text": "'default' | 'compact'"
               },
-              "default": "false",
-              "description": "Reduced cell padding for dense data displays.",
-              "fieldName": "compact"
+              "default": "'default'",
+              "description": "Row density. 'compact' reduces cell padding for dense data displays.",
+              "fieldName": "density"
             }
           ],
           "superclass": {
@@ -6312,10 +6312,10 @@
               "name": "variant",
               "privacy": "public",
               "type": {
-                "text": "'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger'"
+                "text": "'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error'"
               },
               "default": "'default'",
-              "description": "Colour variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and danger provide semantic status colours.",
+              "description": "Colour variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and error provide semantic status colours.",
               "attribute": "variant",
               "reflects": true
             },
@@ -6380,10 +6380,10 @@
             {
               "name": "variant",
               "type": {
-                "text": "'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger'"
+                "text": "'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error'"
               },
               "default": "'default'",
-              "description": "Colour variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and danger provide semantic status colours.",
+              "description": "Colour variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and error provide semantic status colours.",
               "fieldName": "variant"
             },
             {
@@ -6767,14 +6767,14 @@
             },
             {
               "kind": "field",
-              "name": "compact",
+              "name": "density",
               "privacy": "public",
               "type": {
-                "text": "boolean"
+                "text": "'default' | 'compact'"
               },
-              "default": "false",
-              "description": "Reduces padding and font sizes for inline or space-constrained usage.",
-              "attribute": "compact",
+              "default": "'default'",
+              "description": "Visual density. 'compact' reduces padding and font sizes for inline or space-constrained usage.",
+              "attribute": "density",
               "reflects": true
             },
             {
@@ -6821,13 +6821,13 @@
               "fieldName": "variant"
             },
             {
-              "name": "compact",
+              "name": "density",
               "type": {
-                "text": "boolean"
+                "text": "'default' | 'compact'"
               },
-              "default": "false",
-              "description": "Reduces padding and font sizes for inline or space-constrained usage.",
-              "fieldName": "compact"
+              "default": "'default'",
+              "description": "Visual density. 'compact' reduces padding and font sizes for inline or space-constrained usage.",
+              "fieldName": "density"
             },
             {
               "name": "dismissible",
@@ -7453,10 +7453,10 @@
               "name": "variant",
               "privacy": "public",
               "type": {
-                "text": "'default' | 'danger'"
+                "text": "'default' | 'error'"
               },
               "default": "'default'",
-              "description": "Controls the confirm button style. Use \"danger\" for destructive actions — the confirm button renders in the error colour.",
+              "description": "Controls the confirm button style. Use \"error\" for destructive actions — the confirm button renders in the error colour.",
               "attribute": "variant",
               "reflects": true
             }
@@ -7531,10 +7531,10 @@
             {
               "name": "variant",
               "type": {
-                "text": "'default' | 'danger'"
+                "text": "'default' | 'error'"
               },
               "default": "'default'",
-              "description": "Controls the confirm button style. Use \"danger\" for destructive actions — the confirm button renders in the error colour.",
+              "description": "Controls the confirm button style. Use \"error\" for destructive actions — the confirm button renders in the error colour.",
               "fieldName": "variant"
             }
           ],
@@ -7803,10 +7803,10 @@
               "name": "variant",
               "privacy": "public",
               "type": {
-                "text": "'default' | 'danger'"
+                "text": "'default' | 'error'"
               },
               "default": "'default'",
-              "description": "Visual variant — danger adds red accent line, glow border, and red confirm button",
+              "description": "Visual variant — error adds red accent line, glow border, and red confirm button",
               "attribute": "variant",
               "reflects": true
             }
@@ -7876,10 +7876,10 @@
             {
               "name": "variant",
               "type": {
-                "text": "'default' | 'danger'"
+                "text": "'default' | 'error'"
               },
               "default": "'default'",
-              "description": "Visual variant — danger adds red accent line, glow border, and red confirm button",
+              "description": "Visual variant — error adds red accent line, glow border, and red confirm button",
               "fieldName": "variant"
             }
           ],
@@ -10464,7 +10464,8 @@
               },
               "default": "''",
               "description": "The form field name submitted when the checkbox lives inside a <form>. Required for native form submission and useful for serializing checkbox group values on the server.",
-              "attribute": "name"
+              "attribute": "name",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -10485,6 +10486,34 @@
               },
               "static": true,
               "default": "true",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "properties",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, }",
+              "description": "Lit merges static properties up the prototype chain, so every consumer\ngets these without declaring them. `required` participates in constraint\nvalidation below; `readonly` reflects for styling and is enforced by\neach component's interaction handlers (the mixin can't know which\ngestures mutate state).",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "autoValidates",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "true",
+              "description": "Components that run their own constraint-validation logic (pattern\nchecks, range checks) opt out of the automatic required sync by\noverriding this to false, and own the whole validity flag set instead.",
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -10566,6 +10595,36 @@
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
               }
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "required",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "readonly",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "readonly",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             }
           ],
           "events": [
@@ -10640,6 +10699,30 @@
               "default": "''",
               "description": "The value sent with the form when the checkbox is checked. Defaults to \"on\" if omitted, matching native checkbox behaviour. Set explicit values when multiple checkboxes share the same name to distinguish them in the submitted data.",
               "fieldName": "value"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "required",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "readonly",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             }
           ],
           "mixins": [
@@ -10874,12 +10957,56 @@
             },
             {
               "kind": "field",
+              "name": "readonly",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "readonly",
+              "reflects": true,
+              "description": "Prevents changing the color via the area, hue slider, hex input, or swatches while the picker stays focusable and the value still submits.",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
               "name": "formAssociated",
               "type": {
                 "text": "boolean"
               },
               "static": true,
               "default": "true",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "properties",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, }",
+              "description": "Lit merges static properties up the prototype chain, so every consumer\ngets these without declaring them. `required` participates in constraint\nvalidation below; `readonly` reflects for styling and is enforced by\neach component's interaction handlers (the mixin can't know which\ngestures mutate state).",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "autoValidates",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "true",
+              "description": "Components that run their own constraint-validation logic (pattern\nchecks, range checks) opt out of the automatic required sync by\noverriding this to false, and own the whole validity flag set instead.",
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -10961,6 +11088,21 @@
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
               }
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "required",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             }
           ],
           "events": [
@@ -11016,6 +11158,30 @@
               "default": "''",
               "description": "Label text displayed above the picker in uppercase accent font.",
               "fieldName": "label"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "required",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "readonly",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             }
           ],
           "mixins": [
@@ -11134,12 +11300,56 @@
             },
             {
               "kind": "field",
+              "name": "readonly",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "readonly",
+              "reflects": true,
+              "description": "Prevents typing and selecting an option while the input stays focusable; the list can still be opened for viewing and the value still submits.",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
               "name": "formAssociated",
               "type": {
                 "text": "boolean"
               },
               "static": true,
               "default": "true",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "properties",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, }",
+              "description": "Lit merges static properties up the prototype chain, so every consumer\ngets these without declaring them. `required` participates in constraint\nvalidation below; `readonly` reflects for styling and is enforced by\neach component's interaction handlers (the mixin can't know which\ngestures mutate state).",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "autoValidates",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "true",
+              "description": "Components that run their own constraint-validation logic (pattern\nchecks, range checks) opt out of the automatic required sync by\noverriding this to false, and own the whole validity flag set instead.",
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -11221,6 +11431,21 @@
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
               }
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "required",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             }
           ],
           "events": [
@@ -11283,6 +11508,30 @@
               "default": "false",
               "description": "Disables the input and prevents interaction. The host element receives reduced opacity and pointer-events: none.",
               "fieldName": "disabled"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "required",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "readonly",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             }
           ],
           "mixins": [
@@ -11437,7 +11686,8 @@
               },
               "default": "''",
               "description": "The selected date as an ISO string (YYYY-MM-DD). Set this to pre-select a date. Updated when the user picks a date from the calendar.",
-              "attribute": "value"
+              "attribute": "value",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -11508,12 +11758,52 @@
             },
             {
               "kind": "field",
+              "name": "open",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.",
+              "attribute": "open",
+              "reflects": true
+            },
+            {
+              "kind": "field",
               "name": "formAssociated",
               "type": {
                 "text": "boolean"
               },
               "static": true,
               "default": "true",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "properties",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, }",
+              "description": "Lit merges static properties up the prototype chain, so every consumer\ngets these without declaring them. `required` participates in constraint\nvalidation below; `readonly` reflects for styling and is enforced by\neach component's interaction handlers (the mixin can't know which\ngestures mutate state).",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "autoValidates",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "true",
+              "description": "Components that run their own constraint-validation logic (pattern\nchecks, range checks) opt out of the automatic required sync by\noverriding this to false, and own the whole validity flag set instead.",
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -11595,6 +11885,36 @@
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
               }
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "required",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "readonly",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "readonly",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             }
           ],
           "events": [
@@ -11668,6 +11988,39 @@
               "default": "''",
               "description": "Label text rendered above the input in uppercase accent font styling.",
               "fieldName": "label"
+            },
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.",
+              "fieldName": "open"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "required",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "readonly",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             }
           ],
           "mixins": [
@@ -11739,6 +12092,20 @@
             }
           ],
           "members": [
+            {
+              "kind": "field",
+              "name": "autoValidates",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "false",
+              "description": "Runs its own constraint logic — owns the whole validity flag set.",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
             {
               "kind": "field",
               "name": "value",
@@ -11856,9 +12223,13 @@
                 "text": "boolean"
               },
               "default": "false",
-              "description": "Marks the control invalid (valueMissing) until a complete range is selected.",
               "attribute": "required",
-              "reflects": true
+              "reflects": true,
+              "description": "Marks the control invalid (valueMissing) until a complete range is selected.",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             },
             {
               "kind": "field",
@@ -11873,12 +12244,38 @@
             },
             {
               "kind": "field",
+              "name": "open",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.",
+              "attribute": "open",
+              "reflects": true
+            },
+            {
+              "kind": "field",
               "name": "formAssociated",
               "type": {
                 "text": "boolean"
               },
               "static": true,
               "default": "true",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "properties",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, }",
+              "description": "Lit merges static properties up the prototype chain, so every consumer\ngets these without declaring them. `required` participates in constraint\nvalidation below; `readonly` reflects for styling and is enforced by\neach component's interaction handlers (the mixin can't know which\ngestures mutate state).",
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -11956,6 +12353,21 @@
             {
               "kind": "method",
               "name": "reportValidity",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "readonly",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "readonly",
+              "reflects": true,
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -12059,8 +12471,12 @@
                 "text": "boolean"
               },
               "default": "false",
+              "fieldName": "required",
               "description": "Marks the control invalid (valueMissing) until a complete range is selected.",
-              "fieldName": "required"
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             },
             {
               "name": "label",
@@ -12070,6 +12486,27 @@
               "default": "''",
               "description": "Label text rendered above the input in uppercase accent font styling.",
               "fieldName": "label"
+            },
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.",
+              "fieldName": "open"
+            },
+            {
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "readonly",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             }
           ],
           "mixins": [
@@ -13214,6 +13651,20 @@
           "members": [
             {
               "kind": "field",
+              "name": "autoValidates",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "false",
+              "description": "Runs its own constraint logic — owns the whole validity flag set.",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
               "name": "type",
               "privacy": "public",
               "type": {
@@ -13232,7 +13683,8 @@
               },
               "default": "''",
               "description": "The `name` attribute sent with form data on submission. Also used by the Form component to track field state and validation.",
-              "attribute": "name"
+              "attribute": "name",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -13287,9 +13739,13 @@
                 "text": "boolean"
               },
               "default": "false",
-              "description": "Marks the field as required. Displays a required indicator next to the label and triggers native constraint validation on form submission.",
               "attribute": "required",
-              "reflects": true
+              "reflects": true,
+              "description": "Marks the field as required. Displays a required indicator next to the label and triggers native constraint validation on form submission.",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             },
             {
               "kind": "field",
@@ -13339,12 +13795,42 @@
             },
             {
               "kind": "field",
+              "name": "readonly",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "readonly",
+              "reflects": true,
+              "description": "Prevents the user from editing the value while keeping the field focusable, and the value is still submitted with the form.",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
               "name": "formAssociated",
               "type": {
                 "text": "boolean"
               },
               "static": true,
               "default": "true",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "properties",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, }",
+              "description": "Lit merges static properties up the prototype chain, so every consumer\ngets these without declaring them. `required` participates in constraint\nvalidation below; `readonly` reflects for styling and is enforced by\neach component's interaction handlers (the mixin can't know which\ngestures mutate state).",
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -13505,8 +13991,12 @@
                 "text": "boolean"
               },
               "default": "false",
+              "fieldName": "required",
               "description": "Marks the field as required. Displays a required indicator next to the label and triggers native constraint validation on form submission.",
-              "fieldName": "required"
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             },
             {
               "name": "error",
@@ -13543,6 +14033,18 @@
               "default": "5",
               "description": "Number of visible text rows when `multiline` is true. Controls the initial height of the textarea. Ignored for single-line inputs.",
               "fieldName": "rows"
+            },
+            {
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "readonly",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             }
           ],
           "mixins": [
@@ -13798,12 +14300,56 @@
             },
             {
               "kind": "field",
+              "name": "readonly",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "readonly",
+              "reflects": true,
+              "description": "Prevents toggling options or removing chips while the control stays focusable; the dropdown can still be opened for viewing and the values still submit.",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
               "name": "formAssociated",
               "type": {
                 "text": "boolean"
               },
               "static": true,
               "default": "true",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "properties",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, }",
+              "description": "Lit merges static properties up the prototype chain, so every consumer\ngets these without declaring them. `required` participates in constraint\nvalidation below; `readonly` reflects for styling and is enforced by\neach component's interaction handlers (the mixin can't know which\ngestures mutate state).",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "autoValidates",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "true",
+              "description": "Components that run their own constraint-validation logic (pattern\nchecks, range checks) opt out of the automatic required sync by\noverriding this to false, and own the whole validity flag set instead.",
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -13885,6 +14431,21 @@
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
               }
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "required",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             }
           ],
           "events": [
@@ -13947,6 +14508,30 @@
               "default": "false",
               "description": "Disables the control, preventing interaction and reducing opacity to 50%.",
               "fieldName": "disabled"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "required",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "readonly",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             }
           ],
           "mixins": [
@@ -14084,12 +14669,56 @@
             },
             {
               "kind": "field",
+              "name": "readonly",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "readonly",
+              "reflects": true,
+              "description": "Prevents value changes from typing, stepper buttons, and arrow keys while keeping the field focusable and its value submitted.",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
               "name": "formAssociated",
               "type": {
                 "text": "boolean"
               },
               "static": true,
               "default": "true",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "properties",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, }",
+              "description": "Lit merges static properties up the prototype chain, so every consumer\ngets these without declaring them. `required` participates in constraint\nvalidation below; `readonly` reflects for styling and is enforced by\neach component's interaction handlers (the mixin can't know which\ngestures mutate state).",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "autoValidates",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "true",
+              "description": "Components that run their own constraint-validation logic (pattern\nchecks, range checks) opt out of the automatic required sync by\noverriding this to false, and own the whole validity flag set instead.",
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -14171,6 +14800,21 @@
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
               }
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "required",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             }
           ],
           "events": [
@@ -14244,6 +14888,30 @@
               "default": "false",
               "description": "Disables interaction, reducing opacity to 40% and blocking pointer events.",
               "fieldName": "disabled"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "required",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "readonly",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             }
           ],
           "mixins": [
@@ -14348,12 +15016,56 @@
             },
             {
               "kind": "field",
+              "name": "readonly",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "readonly",
+              "reflects": true,
+              "description": "Prevents typing, pasting, and clearing digits while the boxes stay focusable and the value still submits.",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
               "name": "formAssociated",
               "type": {
                 "text": "boolean"
               },
               "static": true,
               "default": "true",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "properties",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, }",
+              "description": "Lit merges static properties up the prototype chain, so every consumer\ngets these without declaring them. `required` participates in constraint\nvalidation below; `readonly` reflects for styling and is enforced by\neach component's interaction handlers (the mixin can't know which\ngestures mutate state).",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "autoValidates",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "true",
+              "description": "Components that run their own constraint-validation logic (pattern\nchecks, range checks) opt out of the automatic required sync by\noverriding this to false, and own the whole validity flag set instead.",
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -14435,6 +15147,21 @@
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
               }
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "required",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             }
           ],
           "events": [
@@ -14490,6 +15217,30 @@
               "default": "'number'",
               "description": "Input mode. `number` filters non-digits and uses the numeric keyboard; `text` allows any character.",
               "fieldName": "type"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "required",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "readonly",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             }
           ],
           "mixins": [
@@ -14548,6 +15299,20 @@
           "members": [
             {
               "kind": "field",
+              "name": "autoValidates",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "false",
+              "description": "Runs its own constraint logic — owns the whole validity flag set.",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
               "name": "name",
               "privacy": "public",
               "type": {
@@ -14555,7 +15320,8 @@
               },
               "default": "''",
               "description": "The `name` attribute sent with form data on submission. Also used by the Form component to track field state.",
-              "attribute": "name"
+              "attribute": "name",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -14610,9 +15376,13 @@
                 "text": "boolean"
               },
               "default": "false",
-              "description": "Marks the field as required and enables native constraint validation on form submission.",
               "attribute": "required",
-              "reflects": true
+              "reflects": true,
+              "description": "Marks the field as required and enables native constraint validation on form submission.",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             },
             {
               "kind": "field",
@@ -14674,6 +15444,20 @@
               }
             },
             {
+              "kind": "field",
+              "name": "properties",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, }",
+              "description": "Lit merges static properties up the prototype chain, so every consumer\ngets these without declaring them. `required` participates in constraint\nvalidation below; `readonly` reflects for styling and is enforced by\neach component's interaction handlers (the mixin can't know which\ngestures mutate state).",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
               "kind": "method",
               "name": "formDisabledCallback",
               "parameters": [
@@ -14745,6 +15529,21 @@
             {
               "kind": "method",
               "name": "reportValidity",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "readonly",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "readonly",
+              "reflects": true,
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -14826,8 +15625,12 @@
                 "text": "boolean"
               },
               "default": "false",
+              "fieldName": "required",
               "description": "Marks the field as required and enables native constraint validation on form submission.",
-              "fieldName": "required"
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             },
             {
               "name": "error",
@@ -14864,6 +15667,18 @@
               "default": "false",
               "description": "Renders a four-segment strength meter with a Weak / Fair / Good / Strong label under the field, scored by a built-in heuristic (length, character variety, common-pattern penalties).",
               "fieldName": "showStrength"
+            },
+            {
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "readonly",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             }
           ],
           "mixins": [
@@ -15008,12 +15823,56 @@
             },
             {
               "kind": "field",
+              "name": "readonly",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "readonly",
+              "reflects": true,
+              "description": "Prevents entering, deleting, or pasting characters while the boxes stay focusable and the value still submits.",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
               "name": "formAssociated",
               "type": {
                 "text": "boolean"
               },
               "static": true,
               "default": "true",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "properties",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, }",
+              "description": "Lit merges static properties up the prototype chain, so every consumer\ngets these without declaring them. `required` participates in constraint\nvalidation below; `readonly` reflects for styling and is enforced by\neach component's interaction handlers (the mixin can't know which\ngestures mutate state).",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "autoValidates",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "true",
+              "description": "Components that run their own constraint-validation logic (pattern\nchecks, range checks) opt out of the automatic required sync by\noverriding this to false, and own the whole validity flag set instead.",
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -15091,6 +15950,21 @@
             {
               "kind": "method",
               "name": "reportValidity",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "required",
+              "reflects": true,
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -15184,6 +16058,30 @@
               "default": "''",
               "description": "Label text displayed above the input boxes in uppercase accent font.",
               "fieldName": "label"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "required",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "readonly",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             }
           ],
           "mixins": [
@@ -15258,7 +16156,8 @@
               },
               "default": "''",
               "description": "The form field name submitted with the selected value. Required for native form integration — without it, the selection will not appear in FormData.",
-              "attribute": "name"
+              "attribute": "name",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -15304,6 +16203,34 @@
               },
               "static": true,
               "default": "true",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "properties",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, }",
+              "description": "Lit merges static properties up the prototype chain, so every consumer\ngets these without declaring them. `required` participates in constraint\nvalidation below; `readonly` reflects for styling and is enforced by\neach component's interaction handlers (the mixin can't know which\ngestures mutate state).",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "autoValidates",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "true",
+              "description": "Components that run their own constraint-validation logic (pattern\nchecks, range checks) opt out of the automatic required sync by\noverriding this to false, and own the whole validity flag set instead.",
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -15385,6 +16312,36 @@
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
               }
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "required",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "readonly",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "readonly",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             }
           ],
           "events": [
@@ -15441,6 +16398,30 @@
               "default": "'vertical'",
               "description": "Controls the layout direction of the radio options. Vertical stacks options top-to-bottom and maps Arrow Up/Down to navigation. Horizontal places options in a row and maps Arrow Left/Right.",
               "fieldName": "orientation"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "required",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "readonly",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             }
           ],
           "mixins": [
@@ -15720,6 +16701,34 @@
               }
             },
             {
+              "kind": "field",
+              "name": "properties",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, }",
+              "description": "Lit merges static properties up the prototype chain, so every consumer\ngets these without declaring them. `required` participates in constraint\nvalidation below; `readonly` reflects for styling and is enforced by\neach component's interaction handlers (the mixin can't know which\ngestures mutate state).",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "autoValidates",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "true",
+              "description": "Components that run their own constraint-validation logic (pattern\nchecks, range checks) opt out of the automatic required sync by\noverriding this to false, and own the whole validity flag set instead.",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
               "kind": "method",
               "name": "formDisabledCallback",
               "parameters": [
@@ -15778,6 +16787,36 @@
             {
               "kind": "method",
               "name": "reportValidity",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "required",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "readonly",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "readonly",
+              "reflects": true,
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -15880,6 +16919,30 @@
               "default": "true",
               "description": "Whether to display the numeric \"low – high\" readout in the header.",
               "fieldName": "showValues"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "required",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "readonly",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             }
           ],
           "mixins": [
@@ -15979,9 +17042,13 @@
                 "text": "boolean"
               },
               "default": "false",
-              "description": "Prevents interaction while maintaining full visual appearance. Useful for displaying existing ratings.",
               "attribute": "readonly",
-              "reflects": true
+              "reflects": true,
+              "description": "Prevents interaction while maintaining full visual appearance. Useful for displaying existing ratings.",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             },
             {
               "kind": "field",
@@ -15991,6 +17058,34 @@
               },
               "static": true,
               "default": "true",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "properties",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, }",
+              "description": "Lit merges static properties up the prototype chain, so every consumer\ngets these without declaring them. `required` participates in constraint\nvalidation below; `readonly` reflects for styling and is enforced by\neach component's interaction handlers (the mixin can't know which\ngestures mutate state).",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "autoValidates",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "true",
+              "description": "Components that run their own constraint-validation logic (pattern\nchecks, range checks) opt out of the automatic required sync by\noverriding this to false, and own the whole validity flag set instead.",
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -16072,6 +17167,21 @@
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
               }
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "required",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             }
           ],
           "events": [
@@ -16125,8 +17235,24 @@
                 "text": "boolean"
               },
               "default": "false",
+              "fieldName": "readonly",
               "description": "Prevents interaction while maintaining full visual appearance. Useful for displaying existing ratings.",
-              "fieldName": "readonly"
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "required",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             }
           ],
           "mixins": [
@@ -16251,6 +17377,18 @@
               "description": "Shows a spinning indicator in place of the clear button to signal in-progress loading.",
               "attribute": "loading",
               "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "open",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the suggestion dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.",
+              "attribute": "open",
+              "reflects": true
             }
           ],
           "events": [
@@ -16328,6 +17466,15 @@
               "default": "false",
               "description": "Shows a spinning indicator in place of the clear button to signal in-progress loading.",
               "fieldName": "loading"
+            },
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the suggestion dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.",
+              "fieldName": "open"
             }
           ],
           "superclass": {
@@ -16520,7 +17667,8 @@
               },
               "default": "''",
               "description": "Form field name submitted with the selected value. Required for native form integration via ElementInternals.",
-              "attribute": "name"
+              "attribute": "name",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -16577,6 +17725,34 @@
               },
               "static": true,
               "default": "true",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "properties",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, }",
+              "description": "Lit merges static properties up the prototype chain, so every consumer\ngets these without declaring them. `required` participates in constraint\nvalidation below; `readonly` reflects for styling and is enforced by\neach component's interaction handlers (the mixin can't know which\ngestures mutate state).",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "autoValidates",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "true",
+              "description": "Components that run their own constraint-validation logic (pattern\nchecks, range checks) opt out of the automatic required sync by\noverriding this to false, and own the whole validity flag set instead.",
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -16654,6 +17830,36 @@
             {
               "kind": "method",
               "name": "reportValidity",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "required",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "readonly",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "readonly",
+              "reflects": true,
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -16741,6 +17947,30 @@
               "default": "false",
               "description": "Controls whether the dropdown is visible. Set programmatically to open or close the dropdown. Automatically set to `false` when an option is selected or the user clicks outside.",
               "fieldName": "open"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "required",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "readonly",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             }
           ],
           "mixins": [
@@ -16878,12 +18108,56 @@
             },
             {
               "kind": "field",
+              "name": "readonly",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "readonly",
+              "reflects": true,
+              "description": "Prevents dragging and arrow-key changes while the thumb stays focusable and the value still submits.",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
               "name": "formAssociated",
               "type": {
                 "text": "boolean"
               },
               "static": true,
               "default": "true",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "properties",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, }",
+              "description": "Lit merges static properties up the prototype chain, so every consumer\ngets these without declaring them. `required` participates in constraint\nvalidation below; `readonly` reflects for styling and is enforced by\neach component's interaction handlers (the mixin can't know which\ngestures mutate state).",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "autoValidates",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "true",
+              "description": "Components that run their own constraint-validation logic (pattern\nchecks, range checks) opt out of the automatic required sync by\noverriding this to false, and own the whole validity flag set instead.",
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -16961,6 +18235,21 @@
             {
               "kind": "method",
               "name": "reportValidity",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "required",
+              "reflects": true,
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -17045,6 +18334,30 @@
               "default": "''",
               "description": "Label text displayed above the slider with the current value shown on the right.",
               "fieldName": "label"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "required",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "readonly",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             }
           ],
           "mixins": [
@@ -17493,12 +18806,56 @@
             },
             {
               "kind": "field",
+              "name": "readonly",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "readonly",
+              "reflects": true,
+              "description": "Prevents adding or removing tags while the field stays focusable and the tags still submit with the form.",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
               "name": "formAssociated",
               "type": {
                 "text": "boolean"
               },
               "static": true,
               "default": "true",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "properties",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, }",
+              "description": "Lit merges static properties up the prototype chain, so every consumer\ngets these without declaring them. `required` participates in constraint\nvalidation below; `readonly` reflects for styling and is enforced by\neach component's interaction handlers (the mixin can't know which\ngestures mutate state).",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "autoValidates",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "true",
+              "description": "Components that run their own constraint-validation logic (pattern\nchecks, range checks) opt out of the automatic required sync by\noverriding this to false, and own the whole validity flag set instead.",
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -17576,6 +18933,21 @@
             {
               "kind": "method",
               "name": "reportValidity",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "required",
+              "reflects": true,
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -17688,6 +19060,30 @@
               "default": "''",
               "description": "Error message shown below the field; also applies error styling to the border.",
               "fieldName": "error"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "required",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "readonly",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             }
           ],
           "mixins": [
@@ -17754,6 +19150,18 @@
             },
             {
               "kind": "field",
+              "name": "name",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Form field name submitted with the value. Required for native form integration via ElementInternals.",
+              "attribute": "name",
+              "reflects": true
+            },
+            {
+              "kind": "field",
               "name": "placeholder",
               "privacy": "public",
               "type": {
@@ -17816,9 +19224,13 @@
                 "text": "boolean"
               },
               "default": "false",
-              "description": "Allows the user to select and copy text but prevents editing. The field has a subtle background change to indicate its read-only state.",
               "attribute": "readonly",
-              "reflects": true
+              "reflects": true,
+              "description": "Allows the user to select and copy text but prevents editing. The field has a subtle background change to indicate its read-only state.",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             },
             {
               "kind": "field",
@@ -17875,6 +19287,34 @@
               },
               "static": true,
               "default": "true",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "properties",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, }",
+              "description": "Lit merges static properties up the prototype chain, so every consumer\ngets these without declaring them. `required` participates in constraint\nvalidation below; `readonly` reflects for styling and is enforced by\neach component's interaction handlers (the mixin can't know which\ngestures mutate state).",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "autoValidates",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "true",
+              "description": "Components that run their own constraint-validation logic (pattern\nchecks, range checks) opt out of the automatic required sync by\noverriding this to false, and own the whole validity flag set instead.",
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -17956,6 +19396,21 @@
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
               }
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "required",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             }
           ],
           "events": [
@@ -17983,6 +19438,15 @@
               "default": "''",
               "description": "The current text content of the textarea. Updated on every keystroke and emitted via `arc-input` and `arc-change` events.",
               "fieldName": "value"
+            },
+            {
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Form field name submitted with the value. Required for native form integration via ElementInternals.",
+              "fieldName": "name"
             },
             {
               "name": "placeholder",
@@ -18035,8 +19499,12 @@
                 "text": "boolean"
               },
               "default": "false",
+              "fieldName": "readonly",
               "description": "Allows the user to select and copy text but prevents editing. The field has a subtle background change to indicate its read-only state.",
-              "fieldName": "readonly"
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             },
             {
               "name": "resize",
@@ -18073,6 +19541,18 @@
               "default": "''",
               "description": "Error message string. When non-empty, the textarea border turns red and the message is displayed below the field with `role=\"alert\"` for screen reader announcement.",
               "fieldName": "error"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "required",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             }
           ],
           "mixins": [
@@ -18343,12 +19823,52 @@
             },
             {
               "kind": "field",
+              "name": "open",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the time dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.",
+              "attribute": "open",
+              "reflects": true
+            },
+            {
+              "kind": "field",
               "name": "formAssociated",
               "type": {
                 "text": "boolean"
               },
               "static": true,
               "default": "true",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "properties",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, }",
+              "description": "Lit merges static properties up the prototype chain, so every consumer\ngets these without declaring them. `required` participates in constraint\nvalidation below; `readonly` reflects for styling and is enforced by\neach component's interaction handlers (the mixin can't know which\ngestures mutate state).",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "autoValidates",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "true",
+              "description": "Components that run their own constraint-validation logic (pattern\nchecks, range checks) opt out of the automatic required sync by\noverriding this to false, and own the whole validity flag set instead.",
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -18426,6 +19946,36 @@
             {
               "kind": "method",
               "name": "reportValidity",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "required",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "readonly",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "readonly",
+              "reflects": true,
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -18521,6 +20071,39 @@
               "default": "''",
               "description": "Label text rendered above the input in uppercase accent font styling.",
               "fieldName": "label"
+            },
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the time dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.",
+              "fieldName": "open"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "required",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "readonly",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             }
           ],
           "mixins": [
@@ -18627,7 +20210,8 @@
               },
               "default": "''",
               "description": "Form field name submitted with the toggle value. When set, the component participates in native `<form>` submission.",
-              "attribute": "name"
+              "attribute": "name",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -18637,6 +20221,34 @@
               },
               "static": true,
               "default": "true",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "properties",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, }",
+              "description": "Lit merges static properties up the prototype chain, so every consumer\ngets these without declaring them. `required` participates in constraint\nvalidation below; `readonly` reflects for styling and is enforced by\neach component's interaction handlers (the mixin can't know which\ngestures mutate state).",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "autoValidates",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "true",
+              "description": "Components that run their own constraint-validation logic (pattern\nchecks, range checks) opt out of the automatic required sync by\noverriding this to false, and own the whole validity flag set instead.",
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -18718,6 +20330,36 @@
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
               }
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "required",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "readonly",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "readonly",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             }
           ],
           "events": [
@@ -18774,6 +20416,30 @@
               "default": "''",
               "description": "Form field name submitted with the toggle value. When set, the component participates in native `<form>` submission.",
               "fieldName": "name"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "required",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "readonly",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             }
           ],
           "mixins": [
@@ -18912,12 +20578,56 @@
             },
             {
               "kind": "field",
+              "name": "readonly",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "readonly",
+              "reflects": true,
+              "description": "Prevents moving items between panes while the lists stay focusable and filterable; the selected values still submit with the form.",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
               "name": "formAssociated",
               "type": {
                 "text": "boolean"
               },
               "static": true,
               "default": "true",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "properties",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, }",
+              "description": "Lit merges static properties up the prototype chain, so every consumer\ngets these without declaring them. `required` participates in constraint\nvalidation below; `readonly` reflects for styling and is enforced by\neach component's interaction handlers (the mixin can't know which\ngestures mutate state).",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "autoValidates",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "true",
+              "description": "Components that run their own constraint-validation logic (pattern\nchecks, range checks) opt out of the automatic required sync by\noverriding this to false, and own the whole validity flag set instead.",
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -18999,6 +20709,21 @@
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
               }
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "required",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             }
           ],
           "events": [
@@ -19073,6 +20798,30 @@
               "default": "'Selected'",
               "description": "Heading for the right (selected) pane. Attribute: `target-label`.",
               "fieldName": "targetLabel"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "required",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "readonly",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
             }
           ],
           "mixins": [
@@ -22040,14 +23789,14 @@
           "members": [
             {
               "kind": "field",
-              "name": "compact",
+              "name": "density",
               "privacy": "public",
               "type": {
-                "text": "boolean"
+                "text": "'default' | 'compact'"
               },
-              "default": "false",
-              "description": "Reduces internal padding and spacing throughout the footer. Use this in dashboard layouts or admin panels where vertical space is limited and the footer should feel lightweight rather than expansive.",
-              "attribute": "compact",
+              "default": "'default'",
+              "description": "Visual density. 'compact' reduces internal padding and spacing throughout the footer — for dashboard layouts or admin panels where vertical space is limited.",
+              "attribute": "density",
               "reflects": true
             },
             {
@@ -22089,13 +23838,13 @@
           ],
           "attributes": [
             {
-              "name": "compact",
+              "name": "density",
               "type": {
-                "text": "boolean"
+                "text": "'default' | 'compact'"
               },
-              "default": "false",
-              "description": "Reduces internal padding and spacing throughout the footer. Use this in dashboard layouts or admin panels where vertical space is limited and the footer should feel lightweight rather than expansive.",
-              "fieldName": "compact"
+              "default": "'default'",
+              "description": "Visual density. 'compact' reduces internal padding and spacing throughout the footer — for dashboard layouts or admin panels where vertical space is limited.",
+              "fieldName": "density"
             },
             {
               "name": "border",
@@ -24942,6 +26691,26 @@
               "default": "true"
             },
             {
+              "kind": "field",
+              "name": "properties",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, }",
+              "description": "Lit merges static properties up the prototype chain, so every consumer\ngets these without declaring them. `required` participates in constraint\nvalidation below; `readonly` reflects for styling and is enforced by\neach component's interaction handlers (the mixin can't know which\ngestures mutate state)."
+            },
+            {
+              "kind": "field",
+              "name": "autoValidates",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "true",
+              "description": "Components that run their own constraint-validation logic (pattern\nchecks, range checks) opt out of the automatic required sync by\noverriding this to false, and own the whole validity flag set instead."
+            },
+            {
               "kind": "method",
               "name": "formDisabledCallback",
               "parameters": [
@@ -24985,6 +26754,46 @@
             {
               "kind": "method",
               "name": "reportValidity"
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "required",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "readonly",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "readonly",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "required"
+            },
+            {
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "readonly"
             }
           ],
           "parameters": [

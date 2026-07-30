@@ -6,6 +6,7 @@ import { ArcTextarea } from '@arclux/arc-ui/textarea';
 
 export interface TextareaProps {
   value?: string;
+  name?: string;
   placeholder?: string;
   label?: string;
   rows?: number;

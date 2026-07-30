@@ -12,6 +12,7 @@ export interface DatePickerProps {
   placeholder?: string;
   disabled?: boolean;
   label?: string;
+  open?: boolean;
   className?: string;
   children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;

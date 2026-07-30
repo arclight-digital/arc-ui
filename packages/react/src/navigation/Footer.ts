@@ -5,7 +5,7 @@ import { createComponent } from '@lit/react';
 import { ArcFooter } from '@arclux/arc-ui/footer';
 
 export interface FooterProps {
-  compact?: boolean;
+  density?: 'default' | 'compact';
   border?: boolean;
   contained?: string;
   align?: 'left' | 'center';

@@ -10,6 +10,7 @@ export interface SearchProps {
   label?: string;
   disabled?: boolean;
   loading?: boolean;
+  open?: boolean;
   onArcInput?: (e: CustomEvent) => void;
   onArcClear?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
@@ -42,7 +43,7 @@ export interface SearchProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Search: FunctionComponent<SearchProps> = ({ value, placeholder, label, disabled, loading, onArcInput, onArcClear, onArcChange, onArcSelect, children, ...rest }) => {
+export const Search: FunctionComponent<SearchProps> = ({ value, placeholder, label, disabled, loading, open, onArcInput, onArcClear, onArcChange, onArcSelect, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -70,5 +71,5 @@ export const Search: FunctionComponent<SearchProps> = ({ value, placeholder, lab
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcInput, onArcClear, onArcChange, onArcSelect]);
-  return h('arc-search', { ref, value, placeholder, label, disabled, loading, ...rest }, children);
+  return h('arc-search', { ref, value, placeholder, label, disabled, loading, open, ...rest }, children);
 };

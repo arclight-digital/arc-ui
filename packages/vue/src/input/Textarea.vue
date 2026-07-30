@@ -6,6 +6,7 @@ defineOptions({ name: 'Textarea' });
 
 const props = withDefaults(defineProps<{
   value?: string;
+  name?: string;
   placeholder?: string;
   label?: string;
   rows?: number;
@@ -18,6 +19,7 @@ const props = withDefaults(defineProps<{
   error?: string;
 }>(), {
   value: '',
+  name: '',
   placeholder: '',
   label: '',
   rows: 4,
@@ -55,6 +57,7 @@ function onArcChange(payload: CustomEvent) {
 <template>
   <arc-textarea
     :value="props.value"
+    :name="props.name"
     :placeholder="props.placeholder"
     :label="props.label"
     :rows="props.rows"

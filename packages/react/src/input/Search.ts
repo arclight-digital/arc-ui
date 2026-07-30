@@ -10,6 +10,7 @@ export interface SearchProps {
   label?: string;
   disabled?: boolean;
   loading?: boolean;
+  open?: boolean;
   className?: string;
   children?: React.ReactNode;
   onArcInput?: (e: CustomEvent) => void;

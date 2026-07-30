@@ -9,6 +9,7 @@
     label?: string;
     disabled?: boolean;
     loading?: boolean;
+    open?: boolean;
     children?: Snippet;
     class?: string;
     id?: string;
@@ -37,7 +38,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = $bindable(''), placeholder = 'Search...', label = '', disabled = false, loading = false, children, ...rest }: Props = $props();
+  let { value = $bindable(''), placeholder = 'Search...', label = '', disabled = false, loading = false, open = false, children, ...rest }: Props = $props();
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
@@ -65,7 +66,7 @@
   }
 </script>
 
-<arc-search {value} {placeholder} {label} {disabled} {loading} {...rest}
+<arc-search {value} {placeholder} {label} {disabled} {loading} {open} {...rest}
   onarc-input={__onArcInput}
   onarc-change={__onArcChange}
   onarc-select={__onArcSelect}

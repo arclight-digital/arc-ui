@@ -36,7 +36,7 @@ declare module 'react' {
       };
       'arc-alert': ArcBaseAttributes & {
         variant?: 'info' | 'success' | 'warning' | 'error';
-        compact?: boolean;
+        density?: 'default' | 'compact';
         dismissible?: boolean;
         heading?: string;
       };
@@ -134,7 +134,7 @@ declare module 'react' {
         year?: number | string;
       };
       'arc-callout': ArcBaseAttributes & {
-        variant?: 'info' | 'warning' | 'tip' | 'danger';
+        variant?: 'info' | 'tip' | 'warning' | 'error';
         dismissible?: boolean;
       };
       'arc-card': ArcBaseAttributes & {
@@ -173,6 +173,8 @@ declare module 'react' {
         label?: string;
         name?: string;
         value?: string;
+        required?: boolean;
+        readonly?: boolean;
       };
       'arc-chip': ArcBaseAttributes & {
         selected?: boolean;
@@ -200,6 +202,8 @@ declare module 'react' {
         presets?: string;
         disabled?: boolean;
         label?: string;
+        required?: boolean;
+        readonly?: boolean;
       };
       'arc-color-swatch': ArcBaseAttributes & {
         color?: string;
@@ -219,6 +223,8 @@ declare module 'react' {
         label?: string;
         name?: string;
         disabled?: boolean;
+        required?: boolean;
+        readonly?: boolean;
       };
       'arc-command-bar': ArcBaseAttributes & {
         placeholder?: string;
@@ -251,7 +257,7 @@ declare module 'react' {
         message?: string;
         'confirm-label'?: string;
         'cancel-label'?: string;
-        variant?: 'default' | 'danger';
+        variant?: 'default' | 'error';
       };
       'arc-connection-status': ArcBaseAttributes & {
         online?: string;
@@ -310,6 +316,9 @@ declare module 'react' {
         placeholder?: string;
         disabled?: boolean;
         label?: string;
+        open?: boolean;
+        required?: boolean;
+        readonly?: boolean;
       };
       'arc-date-range-picker': ArcBaseAttributes & {
         start?: string;
@@ -323,6 +332,8 @@ declare module 'react' {
         disabled?: boolean;
         required?: boolean;
         label?: string;
+        open?: boolean;
+        readonly?: boolean;
       };
       'arc-description-item': ArcBaseAttributes & {
         term?: string;
@@ -337,7 +348,7 @@ declare module 'react' {
         message?: string;
         'confirm-label'?: string;
         'cancel-label'?: string;
-        variant?: 'default' | 'danger';
+        variant?: 'default' | 'error';
       };
       'arc-diff': ArcBaseAttributes & {
         original?: string;
@@ -397,7 +408,7 @@ declare module 'react' {
         position?: 'bottom' | 'top';
       };
       'arc-footer': ArcBaseAttributes & {
-        compact?: boolean;
+        density?: 'default' | 'compact';
         border?: boolean;
         contained?: string;
         align?: 'left' | 'center';
@@ -488,6 +499,7 @@ declare module 'react' {
         size?: 'sm' | 'md' | 'lg';
         multiline?: boolean;
         rows?: number | string;
+        readonly?: boolean;
       };
       'arc-input-group': ArcBaseAttributes & {
         size?: 'sm' | 'md' | 'lg';
@@ -584,6 +596,8 @@ declare module 'react' {
         label?: string;
         name?: string;
         disabled?: boolean;
+        required?: boolean;
+        readonly?: boolean;
       };
       'arc-nav-item': ArcBaseAttributes & {
         href?: string;
@@ -615,6 +629,8 @@ declare module 'react' {
         label?: string;
         name?: string;
         disabled?: boolean;
+        required?: boolean;
+        readonly?: boolean;
       };
       'arc-option': ArcBaseAttributes & {
         value?: string;
@@ -627,6 +643,8 @@ declare module 'react' {
         name?: string;
         disabled?: boolean;
         type?: 'number' | 'text';
+        required?: boolean;
+        readonly?: boolean;
       };
       'arc-page-header': ArcBaseAttributes & {
         heading?: string;
@@ -660,6 +678,7 @@ declare module 'react' {
         size?: 'sm' | 'md' | 'lg';
         autocomplete?: string;
         'show-strength'?: boolean;
+        readonly?: boolean;
       };
       'arc-pin-input': ArcBaseAttributes & {
         length?: number | string;
@@ -670,6 +689,8 @@ declare module 'react' {
         type?: 'number' | 'alphanumeric' | 'text';
         separator?: number | string;
         label?: string;
+        required?: boolean;
+        readonly?: boolean;
       };
       'arc-popover': ArcBaseAttributes & {
         open?: boolean;
@@ -708,6 +729,8 @@ declare module 'react' {
         disabled?: boolean;
         size?: 'sm' | 'md' | 'lg';
         orientation?: 'vertical' | 'horizontal';
+        required?: boolean;
+        readonly?: boolean;
       };
       'arc-rail': ArcBaseAttributes & {
         items?: string;
@@ -724,6 +747,8 @@ declare module 'react' {
         disabled?: boolean;
         label?: string;
         'show-values'?: boolean;
+        required?: boolean;
+        readonly?: boolean;
       };
       'arc-rating': ArcBaseAttributes & {
         value?: number | string;
@@ -731,6 +756,7 @@ declare module 'react' {
         name?: string;
         disabled?: boolean;
         readonly?: boolean;
+        required?: boolean;
       };
       'arc-resizable': ArcBaseAttributes & {
         direction?: 'horizontal' | 'vertical';
@@ -768,6 +794,7 @@ declare module 'react' {
         label?: string;
         disabled?: boolean;
         loading?: boolean;
+        open?: boolean;
       };
       'arc-section': ArcBaseAttributes & {
         label?: string;
@@ -785,6 +812,8 @@ declare module 'react' {
         size?: 'sm' | 'md' | 'lg';
         error?: string;
         open?: boolean;
+        required?: boolean;
+        readonly?: boolean;
       };
       'arc-separator': ArcBaseAttributes & {
         orientation?: 'horizontal' | 'vertical';
@@ -834,6 +863,8 @@ declare module 'react' {
         name?: string;
         disabled?: boolean;
         label?: string;
+        required?: boolean;
+        readonly?: boolean;
       };
       'arc-snackbar': ArcBaseAttributes & {
         position?: 'bottom-center' | 'bottom-left' | 'bottom-right';
@@ -922,7 +953,7 @@ declare module 'react' {
         columns?: string;
         rows?: string;
         striped?: boolean;
-        compact?: boolean;
+        density?: 'default' | 'compact';
       };
       'arc-tabs': ArcBaseAttributes & {
         selected?: number | string;
@@ -931,7 +962,7 @@ declare module 'react' {
         orientation?: 'horizontal' | 'vertical';
       };
       'arc-tag': ArcBaseAttributes & {
-        variant?: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
+        variant?: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error';
         size?: 'sm' | 'md' | 'lg';
         removable?: boolean;
         disabled?: boolean;
@@ -948,6 +979,8 @@ declare module 'react' {
         name?: string;
         disabled?: boolean;
         error?: string;
+        required?: boolean;
+        readonly?: boolean;
       };
       'arc-text': ArcBaseAttributes & {
         variant?: 'display' | 'heading' | 'body' | 'muted' | 'ghost' | 'accent' | 'label' | 'wordmark' | 'code';
@@ -955,6 +988,7 @@ declare module 'react' {
       };
       'arc-textarea': ArcBaseAttributes & {
         value?: string;
+        name?: string;
         placeholder?: string;
         label?: string;
         rows?: number | string;
@@ -965,6 +999,7 @@ declare module 'react' {
         size?: 'sm' | 'md' | 'lg';
         'auto-resize'?: boolean;
         error?: string;
+        required?: boolean;
       };
       'arc-theme-toggle': ArcBaseAttributes & {
         theme?: 'dark' | 'light' | 'auto';
@@ -986,6 +1021,9 @@ declare module 'react' {
         placeholder?: string;
         disabled?: boolean;
         label?: string;
+        open?: boolean;
+        required?: boolean;
+        readonly?: boolean;
       };
       'arc-timeline': ArcBaseAttributes & {
         'heading-level'?: number | string;
@@ -1011,6 +1049,8 @@ declare module 'react' {
         size?: 'sm' | 'md' | 'lg';
         label?: string;
         name?: string;
+        required?: boolean;
+        readonly?: boolean;
       };
       'arc-toolbar': ArcBaseAttributes & {
         sticky?: boolean;
@@ -1040,6 +1080,8 @@ declare module 'react' {
         searchable?: boolean;
         'source-label'?: string;
         'target-label'?: string;
+        required?: boolean;
+        readonly?: boolean;
       };
       'arc-tree-item': ArcBaseAttributes & {
         label?: string;

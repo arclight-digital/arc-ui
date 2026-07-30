@@ -22,6 +22,13 @@ export class Textarea {
     return this._el.value;
   }
 
+  @Input() set name(value: string) {
+    this._el.name = value;
+  }
+  get name(): string {
+    return this._el.name;
+  }
+
   @Input() set placeholder(value: string) {
     this._el.placeholder = value;
   }

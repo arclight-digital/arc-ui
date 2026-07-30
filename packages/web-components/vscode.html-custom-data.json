@@ -105,9 +105,9 @@
           "description": "Semantic variant that controls the colour scheme, top accent bar, and default icon",
           "values": [
             { "name": "info" },
-            { "name": "warning" },
             { "name": "tip" },
-            { "name": "danger" }
+            { "name": "warning" },
+            { "name": "error" }
           ]
         },
         {
@@ -1352,7 +1352,7 @@
     },
     {
       "name": "arc-table",
-      "description": "Data-driven table with striped and compact variants, powered by columns and rows props.\n---\n\n\n### **CSS Parts:**\n - **table-wrap**\n- **table**\n- **head**\n- **body**\n- **row**\n- **cell**",
+      "description": "Data-driven table with striped and compact-density variants, powered by columns and rows props.\n---\n\n\n### **CSS Parts:**\n - **table-wrap**\n- **table**\n- **head**\n- **body**\n- **row**\n- **cell**",
       "attributes": [
         {
           "name": "columns",
@@ -1370,9 +1370,9 @@
           "values": []
         },
         {
-          "name": "compact",
-          "description": "Reduced cell padding for dense data displays.",
-          "values": []
+          "name": "density",
+          "description": "Row density. 'compact' reduces cell padding for dense data displays.",
+          "values": [{ "name": "default" }, { "name": "compact" }]
         }
       ],
       "references": []
@@ -1383,14 +1383,14 @@
       "attributes": [
         {
           "name": "variant",
-          "description": "Colour variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and danger provide semantic status colours.",
+          "description": "Colour variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and error provide semantic status colours.",
           "values": [
             { "name": "default" },
             { "name": "primary" },
             { "name": "secondary" },
             { "name": "success" },
             { "name": "warning" },
-            { "name": "danger" }
+            { "name": "error" }
           ]
         },
         {
@@ -1464,9 +1464,9 @@
           ]
         },
         {
-          "name": "compact",
-          "description": "Reduces padding and font sizes for inline or space-constrained usage.",
-          "values": []
+          "name": "density",
+          "description": "Visual density. 'compact' reduces padding and font sizes for inline or space-constrained usage.",
+          "values": [{ "name": "default" }, { "name": "compact" }]
         },
         {
           "name": "dismissible",
@@ -1607,8 +1607,8 @@
         },
         {
           "name": "variant",
-          "description": "Controls the confirm button style. Use \"danger\" for destructive actions — the confirm button renders in the error colour.",
-          "values": [{ "name": "default" }, { "name": "danger" }]
+          "description": "Controls the confirm button style. Use \"error\" for destructive actions — the confirm button renders in the error colour.",
+          "values": [{ "name": "default" }, { "name": "error" }]
         }
       ],
       "references": []
@@ -1658,8 +1658,8 @@
         },
         {
           "name": "variant",
-          "description": "Visual variant — danger adds red accent line, glow border, and red confirm button",
-          "values": [{ "name": "default" }, { "name": "danger" }]
+          "description": "Visual variant — error adds red accent line, glow border, and red confirm button",
+          "values": [{ "name": "default" }, { "name": "error" }]
         }
       ],
       "references": []
@@ -2186,7 +2186,9 @@
           "name": "value",
           "description": "The value sent with the form when the checkbox is checked. Defaults to \"on\" if omitted, matching native checkbox behaviour. Set explicit values when multiple checkboxes share the same name to distinguish them in the submitted data.",
           "values": []
-        }
+        },
+        { "name": "required", "values": [] },
+        { "name": "readonly", "values": [] }
       ],
       "references": []
     },
@@ -2236,7 +2238,9 @@
           "name": "label",
           "description": "Label text displayed above the picker in uppercase accent font.",
           "values": []
-        }
+        },
+        { "name": "required", "values": [] },
+        { "name": "readonly", "values": [] }
       ],
       "references": []
     },
@@ -2264,7 +2268,9 @@
           "name": "disabled",
           "description": "Disables the input and prevents interaction. The host element receives reduced opacity and pointer-events: none.",
           "values": []
-        }
+        },
+        { "name": "required", "values": [] },
+        { "name": "readonly", "values": [] }
       ],
       "references": []
     },
@@ -2319,7 +2325,14 @@
           "name": "label",
           "description": "Label text rendered above the input in uppercase accent font styling.",
           "values": []
-        }
+        },
+        {
+          "name": "open",
+          "description": "Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.",
+          "values": []
+        },
+        { "name": "required", "values": [] },
+        { "name": "readonly", "values": [] }
       ],
       "references": []
     },
@@ -2384,7 +2397,13 @@
           "name": "label",
           "description": "Label text rendered above the input in uppercase accent font styling.",
           "values": []
-        }
+        },
+        {
+          "name": "open",
+          "description": "Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.",
+          "values": []
+        },
+        { "name": "readonly", "values": [] }
       ],
       "references": []
     },
@@ -2665,7 +2684,8 @@
           "name": "rows",
           "description": "Number of visible text rows when `multiline` is true. Controls the initial height of the textarea. Ignored for single-line inputs.",
           "values": []
-        }
+        },
+        { "name": "readonly", "values": [] }
       ],
       "references": []
     },
@@ -2720,7 +2740,9 @@
           "name": "disabled",
           "description": "Disables the control, preventing interaction and reducing opacity to 50%.",
           "values": []
-        }
+        },
+        { "name": "required", "values": [] },
+        { "name": "readonly", "values": [] }
       ],
       "references": []
     },
@@ -2758,7 +2780,9 @@
           "name": "disabled",
           "description": "Disables interaction, reducing opacity to 40% and blocking pointer events.",
           "values": []
-        }
+        },
+        { "name": "required", "values": [] },
+        { "name": "readonly", "values": [] }
       ],
       "references": []
     },
@@ -2786,7 +2810,9 @@
           "name": "type",
           "description": "Input mode. `number` filters non-digits and uses the numeric keyboard; `text` allows any character.",
           "values": [{ "name": "number" }, { "name": "text" }]
-        }
+        },
+        { "name": "required", "values": [] },
+        { "name": "readonly", "values": [] }
       ],
       "references": []
     },
@@ -2843,7 +2869,8 @@
           "name": "show-strength",
           "description": "Renders a four-segment strength meter with a Weak / Fair / Good / Strong label under the field, scored by a built-in heuristic (length, character variety, common-pattern penalties).",
           "values": []
-        }
+        },
+        { "name": "readonly", "values": [] }
       ],
       "references": []
     },
@@ -2890,7 +2917,9 @@
           "name": "label",
           "description": "Label text displayed above the input boxes in uppercase accent font.",
           "values": []
-        }
+        },
+        { "name": "required", "values": [] },
+        { "name": "readonly", "values": [] }
       ],
       "references": []
     },
@@ -2922,7 +2951,9 @@
           "name": "orientation",
           "description": "Controls the layout direction of the radio options. Vertical stacks options top-to-bottom and maps Arrow Up/Down to navigation. Horizontal places options in a row and maps Arrow Left/Right.",
           "values": [{ "name": "vertical" }, { "name": "horizontal" }]
-        }
+        },
+        { "name": "required", "values": [] },
+        { "name": "readonly", "values": [] }
       ],
       "references": []
     },
@@ -2987,7 +3018,9 @@
           "name": "show-values",
           "description": "Whether to display the numeric \"low – high\" readout in the header.",
           "values": []
-        }
+        },
+        { "name": "required", "values": [] },
+        { "name": "readonly", "values": [] }
       ],
       "references": []
     },
@@ -3015,7 +3048,8 @@
           "name": "readonly",
           "description": "Prevents interaction while maintaining full visual appearance. Useful for displaying existing ratings.",
           "values": []
-        }
+        },
+        { "name": "required", "values": [] }
       ],
       "references": []
     },
@@ -3046,6 +3080,11 @@
         {
           "name": "loading",
           "description": "Shows a spinning indicator in place of the clear button to signal in-progress loading.",
+          "values": []
+        },
+        {
+          "name": "open",
+          "description": "Whether the suggestion dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.",
           "values": []
         }
       ],
@@ -3111,7 +3150,9 @@
           "name": "open",
           "description": "Controls whether the dropdown is visible. Set programmatically to open or close the dropdown. Automatically set to `false` when an option is selected or the user clicks outside.",
           "values": []
-        }
+        },
+        { "name": "required", "values": [] },
+        { "name": "readonly", "values": [] }
       ],
       "references": []
     },
@@ -3149,7 +3190,9 @@
           "name": "label",
           "description": "Label text displayed above the slider with the current value shown on the right.",
           "values": []
-        }
+        },
+        { "name": "required", "values": [] },
+        { "name": "readonly", "values": [] }
       ],
       "references": []
     },
@@ -3253,7 +3296,9 @@
           "name": "error",
           "description": "Error message shown below the field; also applies error styling to the border.",
           "values": []
-        }
+        },
+        { "name": "required", "values": [] },
+        { "name": "readonly", "values": [] }
       ],
       "references": []
     },
@@ -3264,6 +3309,11 @@
         {
           "name": "value",
           "description": "The current text content of the textarea. Updated on every keystroke and emitted via `arc-input` and `arc-change` events.",
+          "values": []
+        },
+        {
+          "name": "name",
+          "description": "Form field name submitted with the value. Required for native form integration via ElementInternals.",
           "values": []
         },
         {
@@ -3320,7 +3370,8 @@
           "name": "error",
           "description": "Error message string. When non-empty, the textarea border turns red and the message is displayed below the field with `role=\"alert\"` for screen reader announcement.",
           "values": []
-        }
+        },
+        { "name": "required", "values": [] }
       ],
       "references": []
     },
@@ -3394,7 +3445,14 @@
           "name": "label",
           "description": "Label text rendered above the input in uppercase accent font styling.",
           "values": []
-        }
+        },
+        {
+          "name": "open",
+          "description": "Whether the time dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.",
+          "values": []
+        },
+        { "name": "required", "values": [] },
+        { "name": "readonly", "values": [] }
       ],
       "references": []
     },
@@ -3426,7 +3484,9 @@
           "name": "name",
           "description": "Form field name submitted with the toggle value. When set, the component participates in native `<form>` submission.",
           "values": []
-        }
+        },
+        { "name": "required", "values": [] },
+        { "name": "readonly", "values": [] }
       ],
       "references": []
     },
@@ -3472,7 +3532,9 @@
           "name": "target-label",
           "description": "Heading for the right (selected) pane. Attribute: `target-label`.",
           "values": []
-        }
+        },
+        { "name": "required", "values": [] },
+        { "name": "readonly", "values": [] }
       ],
       "references": []
     },
@@ -4070,9 +4132,9 @@
       "description": "Page footer with branding, link columns, and legal text. Provides a structured layout with slots\nfor a logo, navigational link groups, social icons, and copyright information.\n---\n\n\n### **Slots:**\n - **logo**\n- _default_ - Default content.\n- **social**\n- **legal**\n\n### **CSS Parts:**\n - **brand**\n- **columns**\n- **social**\n- **legal**\n- **base**",
       "attributes": [
         {
-          "name": "compact",
-          "description": "Reduces internal padding and spacing throughout the footer. Use this in dashboard layouts or admin panels where vertical space is limited and the footer should feel lightweight rather than expansive.",
-          "values": []
+          "name": "density",
+          "description": "Visual density. 'compact' reduces internal padding and spacing throughout the footer — for dashboard layouts or admin panels where vertical space is limited.",
+          "values": [{ "name": "default" }, { "name": "compact" }]
         },
         {
           "name": "border",

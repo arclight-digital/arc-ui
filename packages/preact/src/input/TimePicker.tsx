@@ -14,6 +14,7 @@ export interface TimePickerProps {
   placeholder?: string;
   disabled?: boolean;
   label?: string;
+  open?: boolean;
   onArcChange?: (e: CustomEvent) => void;
   children?: preact.ComponentChildren;
   class?: string;
@@ -43,7 +44,7 @@ export interface TimePickerProps {
   [key: `on${string}`]: unknown;
 }
 
-export const TimePicker: FunctionComponent<TimePickerProps> = ({ value, name, min, max, step, format, placeholder, disabled, label, onArcChange, children, ...rest }) => {
+export const TimePicker: FunctionComponent<TimePickerProps> = ({ value, name, min, max, step, format, placeholder, disabled, label, open, onArcChange, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -56,5 +57,5 @@ export const TimePicker: FunctionComponent<TimePickerProps> = ({ value, name, mi
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcChange]);
-  return h('arc-time-picker', { ref, value, name, min, max, step, format, placeholder, disabled, label, ...rest }, children);
+  return h('arc-time-picker', { ref, value, name, min, max, step, format, placeholder, disabled, label, open, ...rest }, children);
 };

@@ -8,12 +8,12 @@ const props = withDefaults(defineProps<{
   columns?: string[];
   rows?: string[][];
   striped?: boolean;
-  compact?: boolean;
+  density?: 'default' | 'compact';
 }>(), {
   columns: () => ([]),
   rows: () => ([]),
   striped: false,
-  compact: false,
+  density: 'default',
 });
 </script>
 
@@ -22,7 +22,7 @@ const props = withDefaults(defineProps<{
     :columns="props.columns"
     :rows="props.rows"
     :striped="props.striped"
-    :compact="props.compact"
+    :density="props.density"
   >
     <slot />
   </arc-table>
