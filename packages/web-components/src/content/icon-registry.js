@@ -1,6 +1,43 @@
 const _custom = {};
 let _libraryName = 'phosphor';
 
+/**
+ * Cross-library icon aliases.
+ *
+ * Phosphor and Lucide disagree about what common glyphs are called, and no
+ * single spelling exists in both: Phosphor has `caret-right` and no
+ * `chevron-right`; Lucide has `chevron-right` and no `caret-right`. A component
+ * that hard-codes either name therefore renders *nothing* under the other
+ * library — `get()` returns null and arc-icon draws an empty box, with no error.
+ * arc-transfer-list shipped exactly that: four Lucide names under the Phosphor
+ * default, so its move buttons were blank.
+ *
+ * ARC UI's own components use the Lucide spelling as the canonical name and
+ * this maps it to whatever the active library calls it. Consumer names are
+ * unaffected: an unaliased name still resolves directly, so `iconRegistry.use()`
+ * never changes what a name means for anyone else.
+ *
+ * Covered by scripts/check-icon-names.js, which fails the build if a component
+ * asks for a name that is missing from either library after aliasing.
+ */
+const ALIASES = {
+  phosphor: {
+    'chevron-left': 'caret-left',
+    'chevron-right': 'caret-right',
+    'chevron-up': 'caret-up',
+    'chevron-down': 'caret-down',
+    'chevrons-left': 'caret-double-left',
+    'chevrons-right': 'caret-double-right',
+  },
+  lucide: {
+    'dots-three': 'ellipsis',
+  },
+};
+
+function aliasFor(name) {
+  return ALIASES[_libraryName]?.[name] ?? name;
+}
+
 // Lazy-loaded resolvers — each is a map of { name: () => import('./name.js') }
 // Using static import paths so Vite/Rollup can analyze and chunk them.
 let _phosphorResolver;
@@ -63,7 +100,7 @@ export const iconRegistry = {
     // 2. Load resolver, then dynamic-import the single icon file
     try {
       const resolver = await getResolver(_libraryName);
-      const load = resolver?.[name];
+      const load = resolver?.[aliasFor(name)] ?? resolver?.[name];
       if (!load) return null;
       const mod = await load();
       return mod.default;

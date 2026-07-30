@@ -34,6 +34,7 @@ const steps = [
   // they need the generated wrappers to exist.
   { name: 'Requires', cmd: 'node',  args: ['scripts/check-child-registrations.js'] },
   { name: 'Events',   cmd: 'node',  args: ['scripts/check-event-conventions.js'] },
+  { name: 'IconNames', cmd: 'node', args: ['scripts/check-icon-names.js'] },
   { name: 'Tokens',   cmd: 'node',  args: ['scripts/generate-base-css.js'] },
   { name: 'HostTokens', cmd: 'node', args: ['scripts/generate-host-tokens.js'] },
   { name: 'Icons',    cmd: 'node',  args: ['scripts/generate-icons.js'] },

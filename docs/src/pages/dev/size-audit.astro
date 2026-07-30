@@ -116,6 +116,23 @@ const SIZES = ['sm', 'md', 'lg'];
     </section>
 
     <section>
+      <h2>arc-transfer-list, given room</h2>
+      <p class="section__note">
+        A two-pane picker can't be judged in a 15rem column — it scales its row height and how much
+        list is visible, and neither reads at that width. Same three sizes, full width each.
+      </p>
+      {SIZES.map((s) => (
+        <div class="tl-block">
+          <h3 class="ref-block__size">{s}</h3>
+          <div data-measure>
+            <arc-transfer-list size={s} data-tl />
+            <span class="cell__px" data-px></span>
+          </div>
+        </div>
+      ))}
+    </section>
+
+    <section>
       <h2>Against the reference</h2>
       <p class="section__note">
         The same 14 at each size, directly under <code>arc-input</code> at that size. Any row whose
@@ -165,12 +182,17 @@ const SIZES = ['sm', 'md', 'lg'];
 
   .scale-head, .row {
     display: grid;
-    grid-template-columns: 15rem repeat(3, 1fr);
+    /* minmax(0, 1fr), not 1fr: a bare 1fr track refuses to go below its
+       content's min-content, so one greedy control widens its whole row and
+       nothing lines up with the rows above and below. */
+    grid-template-columns: 15rem repeat(3, minmax(0, 1fr));
     gap: var(--space-md);
     align-items: center;
   }
 
   .ref-block { margin-block: var(--space-2xl); }
+  .tl-block { margin-block: var(--space-xl); }
+  .tl-block [data-measure] { display: flex; align-items: flex-start; gap: var(--space-sm); }
   .ref-block__size {
     font-family: var(--font-label);
     font-size: var(--text-xs);
@@ -180,7 +202,8 @@ const SIZES = ['sm', 'md', 'lg'];
     margin-bottom: var(--space-sm);
   }
   .ref-strip {
-    display: flex;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
     gap: var(--space-sm);
     padding-bottom: var(--space-md);
@@ -214,7 +237,19 @@ const SIZES = ['sm', 'md', 'lg'];
   }
   .row__note { font-family: var(--font-body); font-style: italic; color: var(--text-tertiary); font-size: var(--text-xs); }
 
-  .cell { position: relative; display: flex; align-items: center; gap: var(--space-sm); min-width: 0; }
+  /* Grid, not flex: a flex cell sizes each control to its *content*, so a
+     control whose text changes — a slider's value readout mid-drag — changes
+     width as you use it, and a long label makes its control wider than the
+     next one along. A definite column gives every control the same box, which
+     is the entire point of a comparison page. */
+  .cell {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--space-sm);
+    min-width: 0;
+  }
   .cell__px {
     font-family: var(--font-mono);
     font-size: var(--text-xs);
@@ -234,15 +269,12 @@ const SIZES = ['sm', 'md', 'lg'];
 
   /** Array-valued props can't come from markup. */
   function seedArrayProps() {
-    const transfer = document.querySelector('arc-transfer-list') as HTMLElement & {
-      options?: { value: string; label: string }[];
-    } | null;
-    if (transfer) {
-      transfer.options = [
-        { value: 'a', label: 'Alpha' },
-        { value: 'b', label: 'Beta' },
-        { value: 'c', label: 'Gamma' },
-      ];
+    const options = [
+      'Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon', 'Zeta', 'Eta', 'Theta',
+    ].map((label, i) => ({ value: String(i), label }));
+
+    for (const el of document.querySelectorAll('arc-transfer-list')) {
+      (el as HTMLElement & { options?: unknown[] }).options = options;
     }
   }
 

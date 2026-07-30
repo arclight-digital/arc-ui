@@ -87,7 +87,7 @@ export class ArcSearch extends LitElement {
         width: 100%;
         box-sizing: border-box;
         font-family: var(--font-body);
-        font-size: var(--_text-sm);
+        font-size: var(--body-size);
         color: var(--text-primary);
         background: var(--surface-raised);
         border: 1px solid var(--border-default);

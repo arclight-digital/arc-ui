@@ -70,7 +70,7 @@ export class ArcCombobox extends FormControlMixin(LitElement) {
         width: 100%;
         box-sizing: border-box;
         font-family: var(--font-body);
-        font-size: var(--_text-sm);
+        font-size: var(--body-size);
         font-weight: var(--field-weight, 400);
         color: var(--text-primary);
         background: var(--surface-raised);
@@ -83,7 +83,7 @@ export class ArcCombobox extends FormControlMixin(LitElement) {
       }
 
       /* Sizes. md is the base rule above, so an unrecognised value lands on it. */
-      :host([size="sm"]) .combobox__input { padding: var(--space-xs) var(--space-sm); }
+      :host([size="sm"]) .combobox__input { padding: var(--space-xs) var(--space-sm); font-size: var(--_text-sm); }
       :host([size="lg"]) .combobox__input { padding: var(--space-md) var(--space-lg); font-size: var(--_text-md); }
 
       .combobox__input::placeholder {

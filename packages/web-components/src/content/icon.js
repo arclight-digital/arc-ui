@@ -4,6 +4,28 @@ import { iconRegistry } from './icon-registry.js';
 
 const _svgCache = new Map();
 
+/**
+ * An unknown icon name used to render an empty box and say nothing, which is
+ * how arc-transfer-list shipped four blank buttons: the names it asked for
+ * exist in Lucide but not in the default Phosphor library, and nothing
+ * anywhere reported it. A missing glyph is never intentional, so it is worth
+ * one line in the console.
+ *
+ * Once per name, not per element — a table with fifty rows of the same broken
+ * icon should not produce fifty lines.
+ */
+const _warnedIcons = new Set();
+function warnUnknownIcon(name) {
+  if (_warnedIcons.has(name)) return;
+  _warnedIcons.add(name);
+  console.warn(
+    `[arc-icon] No icon named "${name}" in the active library. ` +
+    'Check the spelling against the library in use (Phosphor by default, ' +
+    'Lucide via iconRegistry.use("lucide")), or register it yourself with ' +
+    'iconRegistry.set({ "' + name + '": "<svg…>" }).'
+  );
+}
+
 /** Parse an SVG string into a sanitized SVG element, stripping scripts and event handlers. */
 function sanitizeSvg(svgStr) {
   if (_svgCache.has(svgStr)) return _svgCache.get(svgStr).cloneNode(true);
@@ -122,6 +144,7 @@ export class ArcIcon extends LitElement {
     // Guard against stale responses (name changed while loading)
     if (this.name === currentName) {
       this._svgContent = svg;
+      if (svg === null) warnUnknownIcon(currentName);
     }
   }
 

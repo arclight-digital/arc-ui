@@ -76,7 +76,7 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
 
       input {
         font-family: var(--font-body);
-        font-size: var(--_text-sm);
+        font-size: var(--body-size);
         color: var(--text-primary);
         background: var(--surface-raised);
         border: 1px solid var(--border-default);
@@ -91,7 +91,7 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
       }
 
       /* Sizes. md is the base rule above, so an unrecognised value lands on it. */
-      :host([size="sm"]) input { padding: var(--space-xs) var(--space-sm); padding-inline-end: 32px; }
+      :host([size="sm"]) input { padding: var(--space-xs) var(--space-sm); padding-inline-end: 32px; font-size: var(--_text-sm); }
       :host([size="lg"]) input { padding: var(--space-md) var(--space-lg); padding-inline-end: 40px; font-size: var(--_text-md); }
 
       input::placeholder { color: var(--text-muted); }

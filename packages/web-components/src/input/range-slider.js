@@ -77,6 +77,11 @@ export class ArcRangeSlider extends FormControlMixin(LitElement) {
         font-size: var(--code-size);
         color: var(--interactive);
         font-weight: 600;
+        /* The readout changes on every pointermove. Proportional digits make it
+           a different width each frame, which is visible as the label beside it
+           shifting — and, anywhere the control is sized to its content, as the
+           whole slider breathing while you drag. */
+        font-variant-numeric: tabular-nums;
       }
 
       .range-slider__track {

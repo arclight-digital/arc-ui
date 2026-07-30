@@ -124,6 +124,15 @@ export class ArcNumberInput extends FormControlMixin(LitElement) {
          the host is sized to content. */
       .number-input__field {
         flex: 1 1 56px;
+        /* min-width:0 lets the field shrink, but an input's *intrinsic* width
+           still comes from the UA's size=20 default (~215px), and that is what
+           the host reports as its min-content. So arc-number-input advertised
+           a 287px minimum it did not actually need: in any 1fr grid column or
+           flex row it demanded that much and pushed everything around it
+           wider, while shrinking happily when given an explicit width.
+           Declaring the width makes the advertised minimum match the real one;
+           flex-grow still fills whatever space there is. */
+        width: 56px;
         min-width: 0;
         text-align: center;
         font-family: var(--font-body);

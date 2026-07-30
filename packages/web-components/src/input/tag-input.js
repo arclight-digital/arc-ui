@@ -96,6 +96,8 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
       /* Sizes. The field wraps its tags, so height is a floor rather than a
          fixed value — md is the base rule above, which uses --touch-min. */
       :host([size="sm"]) .ti__field { min-height: 32px; padding: 2px var(--space-xs); }
+      :host([size="sm"]) .ti__input { font-size: var(--_text-sm); }
+      :host([size="lg"]) .ti__input { font-size: var(--_text-md); }
       :host([size="lg"]) .ti__field { min-height: 52px; padding: var(--space-sm) var(--space-md); }
 
       .ti__field:hover:not(.ti__field--focused) {
@@ -172,7 +174,7 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
         flex: 1;
         min-width: 60px;
         font-family: var(--font-body);
-        font-size: var(--_text-sm);
+        font-size: var(--body-size);
         color: var(--text-primary);
         background: none;
         border: none;

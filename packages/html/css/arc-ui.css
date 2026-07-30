@@ -3891,6 +3891,9 @@
         font-size: var(--code-size);
         color: var(--interactive);
         font-weight: 600;
+        /* Updates on every pointermove — proportional digits would change its
+           width each frame and shift the label beside it. */
+        font-variant-numeric: tabular-nums;
       }
 
       .arc-slider .slider__track {

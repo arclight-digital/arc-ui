@@ -84,6 +84,8 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
       /* Sizes. The control wraps its chips, so height is a floor rather than a
          fixed value — md is the base rule above. */
       :host([size="sm"]) .ms__control { min-height: 32px; padding: 2px var(--space-xs); }
+      :host([size="sm"]) .ms__input { font-size: var(--_text-sm); }
+      :host([size="lg"]) .ms__input { font-size: var(--_text-md); }
       :host([size="lg"]) .ms__control { min-height: 46px; padding: var(--space-sm) var(--space-md); }
 
       .ms__control:hover:not(.ms__control--focused) {
@@ -142,7 +144,7 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
         flex: 1;
         min-width: 60px;
         font-family: var(--font-body);
-        font-size: var(--_text-sm);
+        font-size: var(--body-size);
         font-weight: var(--field-weight, 400);
         color: var(--text-primary);
         background: none;
