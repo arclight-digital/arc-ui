@@ -28487,6 +28487,15 @@
           "description": "Components closed until something opens them.\n\nThe overlay-mixin set: everything rendered into the top layer and invisible\nuntil asked for. Nothing inside one can appear in a first paint, so rendering\ntheir contents spends bytes on markup no reader and no metric ever sees. On\narcui.dev that was 174 of a page's 427 roots — the whole ⌘K palette."
         },
         {
+          "kind": "variable",
+          "name": "LIST_BUDGETS",
+          "type": {
+            "text": "object"
+          },
+          "default": "{ 'arc-sidebar-link': 25, }",
+          "description": "Long repeated lists, and how many of each to render.\n\nA navigation sidebar listing every page is real, visible content — unlike a\nclosed overlay — but only the first screenful of it can be in a first paint,\nand the rest scrolls inside its own container. On arcui.dev the sidebar is\n175 `arc-sidebar-link` roots and 30K of the 99K of shadow markup a component\npage carries; the twenty-odd that are actually visible carry the paint.\n\nThe remainder are marked `data-arc-defer`, which keeps the FOUC guard's\n`opacity: 0` — layout is held, so nothing shifts when they upgrade; they fade\nin. That is the opposite treatment from a closed overlay, which must occupy\nnothing, and getting the two confused is measurable: marking deferred\nelements `display: none` would collapse a sidebar mid-paint."
+        },
+        {
           "kind": "function",
           "name": "renderDeclarativeShadowDOM",
           "parameters": [
@@ -28502,7 +28511,7 @@
               "default": "{}",
               "optional": true,
               "type": {
-                "text": "@param {boolean} [options.lift=true] Lift shadow stylesheets into shared\n *   files instead of inlining a copy per component instance. Strongly\n *   recommended: browsers share one constructable stylesheet per component\n *   type, declarative shadow DOM cannot express that, and inlining measured at\n *   89% of all output bytes.\n * @param {string} [options.stylesheetPath='/_arc'] URL prefix the lifted\n *   stylesheets are linked with. The caller serves them from here.\n * @param {string[]} [options.closedOverlays=CLOSED_OVERLAYS] Hosts whose\n *   contents are left for the client. Pass `[]` to render everything.\n * @param {boolean} [options.inlineIcons=true] Embed the icons the page uses, so\n *   the client's first render matches the server's instead of falling back to\n *   an empty slot while a dynamic import resolves.\n * "
+                "text": "@param {boolean} [options.lift=true] Lift shadow stylesheets into shared\n *   files instead of inlining a copy per component instance. Strongly\n *   recommended: browsers share one constructable stylesheet per component\n *   type, declarative shadow DOM cannot express that, and inlining measured at\n *   89% of all output bytes.\n * @param {string} [options.stylesheetPath='/_arc'] URL prefix the lifted\n *   stylesheets are linked with. The caller serves them from here.\n * @param {string[]} [options.closedOverlays=CLOSED_OVERLAYS] Hosts whose\n *   contents are left for the client. Pass `[]` to render everything.\n * @param {Record<string, number>} [options.listBudgets=LIST_BUDGETS] How many\n *   of each repeated component to render before deferring the rest to the\n *   client. Pass {} to render every one.\n * @param {boolean} [options.inlineIcons=true] Embed the icons the page uses, so\n *   the client's first render matches the server's instead of falling back to\n *   an empty slot while a dynamic import resolves.\n * "
               }
             }
           ],
@@ -28520,6 +28529,14 @@
           "name": "CLOSED_OVERLAYS",
           "declaration": {
             "name": "CLOSED_OVERLAYS",
+            "module": "src/ssr.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "LIST_BUDGETS",
+          "declaration": {
+            "name": "LIST_BUDGETS",
             "module": "src/ssr.js"
           }
         },

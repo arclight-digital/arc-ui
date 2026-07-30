@@ -46,3 +46,61 @@
  * hydrated correctly.
  */
 import '@lit-labs/ssr-client/lit-element-hydrate-support.js';
+
+/**
+ * Say so, once, when this module lost the race described above.
+ *
+ * The failure is silent by construction. Nothing throws, the page looks
+ * approximately right, and the only symptom is that every component holds the
+ * server's markup *and* a second client-rendered copy above it — so each has
+ * two default slots, of which only the first is assigned. On arcui.dev that
+ * surfaced as nine critical and forty-one serious axe violations, and it took
+ * an afternoon to trace. A consumer without an accessibility gate would simply
+ * ship it.
+ *
+ * The signal is the hook's own fingerprint on each class as it is defined:
+ * `defer-hydration` appears in `observedAttributes` only if lit-element
+ * consumed `globalThis.litElementHydrateSupport` while evaluating. That is
+ * per-class, needs no DOM inspection, and is the same measurement that
+ * diagnosed the original bug.
+ *
+ * Deliberately *not* checked: whether any components were defined before this
+ * module ran. Registration is commonly deferred behind a dynamic import of the
+ * barrel, so "we observed none" is normal rather than broken, and warning on it
+ * would cry wolf at exactly the consumers doing it right.
+ *
+ * Gated on `data-arc-ssr`, so a page that never server-rendered — where none of
+ * this matters — stays quiet.
+ */
+if (typeof customElements !== 'undefined' && typeof document !== 'undefined') {
+  const define = customElements.define.bind(customElements);
+  let warned = false;
+
+  customElements.define = function arcHydrationOrderCheck(name, constructor, options) {
+    define(name, constructor, options);
+    if (warned || !name.startsWith('arc-')) return;
+    if (!document.documentElement?.hasAttribute('data-arc-ssr')) return;
+
+    let patched;
+    try {
+      // Read after defining, which is when the browser reads it too.
+      patched = constructor.observedAttributes?.includes?.('defer-hydration');
+    } catch {
+      return; // Not a Lit element; nothing to say about it.
+    }
+    if (patched !== false) return;
+
+    warned = true;
+    console.warn(
+      `[arc-ui] Hydration support loaded too late: <${name}> was defined `
+      + 'without it, so Lit will render a second copy of every component over '
+      + "the server's markup instead of adopting it.\n"
+      + 'Importing @arclux/arc-ui/hydrate first is not sufficient on its own — '
+      + "a bundler hoists a chunk's cross-chunk imports above its own inlined "
+      + 'code, so a small module gets inlined into the entry and runs after the '
+      + 'component chunks it was meant to precede.\n'
+      + 'Force it into a chunk of its own (Rollup/Vite: manualChunks) so it '
+      + 'becomes a cross-chunk import too, and keeps its source order.'
+    );
+  };
+}

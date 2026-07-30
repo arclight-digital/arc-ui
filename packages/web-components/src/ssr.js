@@ -61,6 +61,25 @@ export const CLOSED_OVERLAYS = [
   'arc-drawer',
 ];
 
+/**
+ * Long repeated lists, and how many of each to render.
+ *
+ * A navigation sidebar listing every page is real, visible content — unlike a
+ * closed overlay — but only the first screenful of it can be in a first paint,
+ * and the rest scrolls inside its own container. On arcui.dev the sidebar is
+ * 175 `arc-sidebar-link` roots and 30K of the 99K of shadow markup a component
+ * page carries; the twenty-odd that are actually visible carry the paint.
+ *
+ * The remainder are marked `data-arc-defer`, which keeps the FOUC guard's
+ * `opacity: 0` — layout is held, so nothing shifts when they upgrade; they fade
+ * in. That is the opposite treatment from a closed overlay, which must occupy
+ * nothing, and getting the two confused is measurable: marking deferred
+ * elements `display: none` would collapse a sidebar mid-paint.
+ */
+export const LIST_BUDGETS = {
+  'arc-sidebar-link': 25,
+};
+
 /** Opening tag of a shadow root, used to find each root's byte span. */
 const SHADOW_OPEN = /<template shadowroot(?:mode)?="[^"]*"[^>]*>/g;
 
@@ -130,6 +149,9 @@ async function prepare() {
  *   stylesheets are linked with. The caller serves them from here.
  * @param {string[]} [options.closedOverlays=CLOSED_OVERLAYS] Hosts whose
  *   contents are left for the client. Pass `[]` to render everything.
+ * @param {Record<string, number>} [options.listBudgets=LIST_BUDGETS] How many
+ *   of each repeated component to render before deferring the rest to the
+ *   client. Pass {} to render every one.
  * @param {boolean} [options.inlineIcons=true] Embed the icons the page uses, so
  *   the client's first render matches the server's instead of falling back to
  *   an empty slot while a dynamic import resolves.
@@ -141,6 +163,7 @@ export async function renderDeclarativeShadowDOM(source, options = {}) {
     lift = true,
     stylesheetPath = '/_arc',
     closedOverlays = CLOSED_OVERLAYS,
+    listBudgets = LIST_BUDGETS,
     inlineIcons = true,
     stylesheets = new Map(),
   } = options;
@@ -163,7 +186,8 @@ export async function renderDeclarativeShadowDOM(source, options = {}) {
     .replace(/<!--\/lit-part-->\s*$/, '');
 
   const capped = closeOverlays(out, closedOverlays);
-  out = capped.html;
+  const trimmed = trimLists(capped.html, listBudgets);
+  out = trimmed.html;
 
   if (lift) {
     const used = new Set();
@@ -177,8 +201,46 @@ export async function renderDeclarativeShadowDOM(source, options = {}) {
     html: out,
     stylesheets,
     roots: (out.match(/shadowrootmode/g) || []).length,
-    deferred: capped.deferred,
+    deferred: capped.deferred + trimmed.deferred,
   };
+}
+
+/**
+ * Trim long repeated lists to their budget, marking what was dropped.
+ *
+ * Runs after the overlay pass, so anything already inside a closed overlay is
+ * gone and does not spend budget. The host tag is read backwards from the
+ * template, which lit-ssr emits immediately after its host's opening tag.
+ */
+function trimLists(page, budgets) {
+  const tags = Object.keys(budgets);
+  if (tags.length === 0) return { html: page, deferred: 0 };
+
+  const roots = shadowRoots(page);
+  const seen = new Map();
+  const drop = [];
+  for (const root of roots) {
+    const before = page.slice(Math.max(0, root.start - 200), root.start);
+    const tag = before.match(/<([a-z][a-z0-9-]*)[^<>]*>$/)?.[1];
+    if (!tag || !(tag in budgets)) continue;
+    const count = (seen.get(tag) ?? 0) + 1;
+    seen.set(tag, count);
+    if (count > budgets[tag]) drop.push(root);
+  }
+  if (drop.length === 0) return { html: page, deferred: 0 };
+
+  let out = page;
+  let marked = 0;
+  // Back to front, so earlier offsets stay valid.
+  for (let i = drop.length - 1; i >= 0; i--) {
+    const { start, end } = drop[i];
+    out = out.slice(0, start) + out.slice(end);
+    if (out[start - 1] === '>') {
+      out = `${out.slice(0, start - 1)} data-arc-defer${out.slice(start - 1)}`;
+      marked++;
+    }
+  }
+  return { html: out, deferred: marked };
 }
 
 /** Every top-level shadow root, in document order, with its byte span. */

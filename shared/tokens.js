@@ -879,13 +879,20 @@ function renderUndefinedGuard(tags) {
    shadow root (the browser consumes the <template> during parsing, leaving no
    selectable trace), so the page has to say so.
 
-   \`data-arc-closed\` below is the other half of that, because a page can be
+   The two attributes below are the other half of that, because a page can be
    *partly* server-rendered and then the root attribute alone makes one claim
-   about elements in two different states. */
+   about elements in two different states.
+
+   \`data-arc-defer\` marks an element the build chose not to render — long
+   repeated lists, where only the first screenful can matter. It keeps the
+   guard's \`opacity: 0\`, which holds the element's layout so nothing shifts
+   when it upgrades; it simply fades in like it would on a page with no server
+   rendering at all. Set by the build, never by hand. */
 @media (scripting: enabled) {
   :root:not([data-arc-ssr]) :is(
 ${wrapTagList(tags)}
-  ):not(:defined) {
+  ):not(:defined),
+  [data-arc-defer]:not(:defined) {
     opacity: 0;
   }
 
