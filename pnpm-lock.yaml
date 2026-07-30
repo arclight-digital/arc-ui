@@ -120,6 +120,7 @@ importers:
       zone.js:
         specifier: ~0.14.10
         version: 0.14.10
+    publishDirectory: dist
 
   packages/brand:
     dependencies:
