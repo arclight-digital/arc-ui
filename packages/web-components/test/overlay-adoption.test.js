@@ -273,3 +273,60 @@ describe('no component hand-rolls an outside-click listener', () => {
     }
   });
 });
+
+describe('dialog and confirm: the variant prop actually does something', () => {
+  // Colours live at :root only — never on :host, so a component pinned to one
+  // theme is impossible. That means this block needs base.css loaded to see any
+  // colour at all.
+  let sheet;
+  before(async () => {
+    const cssText = await (await fetch(new URL('../src/base.css', import.meta.url))).text();
+    sheet = new CSSStyleSheet();
+    sheet.replaceSync(cssText);
+    document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+  });
+  after(() => {
+    document.adoptedStyleSheets = document.adoptedStyleSheets.filter((s) => s !== sheet);
+  });
+  afterEach(cleanup);
+
+  // Both components documented and reflected `variant: 'default' | 'error'` and
+  // neither read it — the confirm button was hardcoded to primary. Implemented
+  // rather than deleted: it is documented behaviour a consumer may rely on.
+  const cases = ['arc-dialog', 'arc-confirm'];
+
+  for (const tag of cases) {
+    it(`${tag} recolours its confirm button for variant="error"`, async () => {
+      await import(`../src/feedback/${tag.replace('arc-', '')}.register.js`);
+      const el = mount(`<${tag} heading="Careful" message="Sure?"></${tag}>`);
+      await el.updateComplete;
+      el.open = true;
+      await el.updateComplete;
+      await tick();
+
+      const confirm = el.shadowRoot.querySelector('arc-button[part="confirm"]');
+      expect(confirm, 'confirm button rendered').to.not.equal(null);
+      const before = getComputedStyle(confirm).getPropertyValue('--accent-primary').trim();
+
+      el.variant = 'error';
+      await el.updateComplete;
+      const after = getComputedStyle(confirm).getPropertyValue('--accent-primary').trim();
+
+      expect(after, 'accent moved to the error colour').to.not.equal(before);
+      expect(after).to.not.equal('');
+    });
+
+    it(`${tag} leaves the default variant alone`, async () => {
+      await import(`../src/feedback/${tag.replace('arc-', '')}.register.js`);
+      const el = mount(`<${tag} heading="Hi" message="ok"></${tag}>`);
+      await el.updateComplete;
+      el.open = true;
+      await el.updateComplete;
+      await tick();
+
+      const confirm = el.shadowRoot.querySelector('arc-button[part="confirm"]');
+      expect(getComputedStyle(confirm).getPropertyValue('--accent-primary').trim())
+        .to.equal('rgb(77, 126, 247)');
+    });
+  }
+});

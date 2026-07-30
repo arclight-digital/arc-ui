@@ -53,6 +53,15 @@ export class ArcConfirm extends LitElement {
       .confirm__message ::slotted(strong) {
         color: var(--text-primary);
       }
+
+      /* variant="error" recolours the confirm button by moving the accent tokens
+         it reads, rather than by adding a fourth arc-button variant. The button
+         resolves --interactive from --accent-primary in its own context, so
+         setting them on the instance is enough. */
+      :host([variant="error"]) arc-button[part="confirm"] {
+        --accent-primary: var(--color-error);
+        --accent-primary-rgb: var(--color-error-rgb);
+      }
     `,
   ];
 
