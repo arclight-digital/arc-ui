@@ -53,10 +53,6 @@
       "types": "./types/index.d.ts",
       "default": "./src/content/aspect-ratio.register.js"
     },
-    "./astro-router": {
-      "types": "./types/astro-router.d.ts",
-      "default": "./src/astro-router.js"
-    },
     "./auth-shell": {
       "types": "./types/index.d.ts",
       "default": "./src/layout/auth-shell.register.js"
@@ -872,8 +868,7 @@
   "sideEffects": [
     "./src/**/*.register.js",
     "./src/register.js",
-    "./src/hydrate.js",
-    "./src/astro-router.js"
+    "./src/hydrate.js"
   ],
   "dependencies": {
     "@lit-labs/ssr-client": "^1.1.8",
