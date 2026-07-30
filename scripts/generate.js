@@ -39,7 +39,12 @@ const steps = [
   { name: 'Icons',    cmd: 'node',  args: ['scripts/generate-icons.js'] },
   { name: 'Register', cmd: 'node',  args: ['scripts/generate-registrations.js'] },
   { name: 'Brand',    cmd: 'node',  args: ['scripts/generate-brand-assets.js'] },
-  { name: 'Prism',    cmd: 'npx',   args: ['prism', '--strict'] },
+  // --prune: prism reports orphaned output (wrappers/CSS/examples for a component
+  // that no longer exists) but keeps it unless asked to delete. Reporting alone
+  // meant deletions were finished by hand and sometimes not at all — the six
+  // ToastManager wrapper files outlived their component until they were noticed.
+  // Regenerating is the moment the orphan is known; delete it there.
+  { name: 'Prism',    cmd: 'npx',   args: ['prism', '--strict', '--prune'] },
   { name: 'WrapperExports', cmd: 'node', args: ['scripts/generate-wrapper-exports.js'] },
   { name: 'Manifest', cmd: 'node',  args: ['scripts/generate-manifest.js'] },
   { name: 'Types',    cmd: 'node',  args: ['scripts/generate-types.js'] },
