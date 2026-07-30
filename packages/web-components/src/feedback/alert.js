@@ -8,6 +8,7 @@ import { getStatusIcon } from '../status-utils.js';
  * timely, prominent feedback to users.
  *
  * @tag arc-alert
+ * @requires arc-icon-button
  * @prop {'info' | 'success' | 'warning' | 'error'} variant - Controls the semantic colour palette and icon. Use "info" for neutral guidance, "success" for confirmations, "warning" for caution states, and "error" for failures or blocking issues.
  * @prop {boolean} dismissible - When true, renders a close button in the top-right corner. Clicking it removes the alert from the DOM and fires an "arc-dismiss" event that parent components can listen to.
  * @prop {string} heading - Optional bold heading rendered above the body slot. Use it for a scannable one-line summary so users can quickly gauge the alert's importance before reading the full message.
@@ -125,7 +126,7 @@ export class ArcAlert extends LitElement {
   render() {
     return html`
       <div class="alert" role=${this.variant === 'error' || this.variant === 'warning' ? 'alert' : 'status'} part="alert">
-        <div class="alert__icon-wrap" part="icon">${getStatusIcon(this.variant)}</div>
+        <div class="alert__icon-wrap" aria-hidden="true" part="icon">${getStatusIcon(this.variant)}</div>
         <div class="alert__body">
           ${this.heading ? html`<p class="alert__heading" part="heading">${this.heading}</p>` : ''}
           <div class="alert__content" part="content"><slot></slot></div>
