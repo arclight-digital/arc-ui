@@ -869,9 +869,17 @@ function renderUndefinedGuard(tags) {
   return `/* Prevent FOUC — hide ARC elements until they upgrade.
    Fade-in transition provided by :host styles in each component.
    Gated on scripting so no-JS visitors get visible content instead of a blank
-   page, and scoped to ARC tags so we never hide elements we don't own. */
+   page, and scoped to ARC tags so we never hide elements we don't own.
+
+   Opted out of by \`<html data-arc-ssr>\`. A server-rendered element arrives
+   with its shadow root already attached and its content already painted, but
+   it stays :not(:defined) until the JS upgrades it — so this rule would hide
+   finished content for the whole of that window, which is precisely the
+   opposite of what server rendering is for. CSS cannot detect a declarative
+   shadow root (the browser consumes the <template> during parsing, leaving no
+   selectable trace), so the page has to say so, once, at the root. */
 @media (scripting: enabled) {
-  :is(
+  :root:not([data-arc-ssr]) :is(
 ${wrapTagList(tags)}
   ):not(:defined) {
     opacity: 0;

@@ -10006,6 +10006,12 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/hydrate.js",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/input/button-group.js",
       "declarations": [
         {

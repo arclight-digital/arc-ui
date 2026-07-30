@@ -349,6 +349,10 @@
       "types": "./types/index.d.ts",
       "default": "./src/feedback/hover-card.register.js"
     },
+    "./hydrate": {
+      "types": "./types/hydrate.d.ts",
+      "default": "./src/hydrate.js"
+    },
     "./icon": {
       "types": "./types/index.d.ts",
       "default": "./src/content/icon.register.js"
@@ -866,6 +870,7 @@
     "./src/register.js"
   ],
   "dependencies": {
+    "@lit-labs/ssr-client": "^1.1.8",
     "qrcode-generator": "^1.4.4"
   },
   "license": "MIT",

@@ -1,0 +1,185 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+
+const headings = [
+  { id: 'overview', label: 'Overview' },
+  { id: 'what-it-fixes', label: 'What it fixes' },
+  { id: 'usage', label: 'Rendering and hydrating' },
+  { id: 'fouc', label: 'The FOUC guard' },
+  { id: 'coverage', label: 'Component coverage' },
+  { id: 'frameworks', label: 'Framework support' },
+];
+---
+
+<DocsLayout
+  title="Server Rendering"
+  description="Server-render ARC UI components to declarative shadow DOM, and hydrate them without a flash."
+  activeSlug="server-rendering"
+  headings={headings}
+  breadcrumbs={[{ label: 'Server Rendering' }]}
+>
+  <div class="prose-page">
+    <h1>Server Rendering</h1>
+
+    <section id="overview">
+      <p>
+        ARC UI components server-render through <code>@lit-labs/ssr</code> into
+        <strong>declarative shadow DOM</strong> — a <code>&lt;template shadowrootmode="open"&gt;</code>
+        the browser turns into a real shadow root while parsing, before any JavaScript runs.
+        The component's content is in the initial HTML response.
+      </p>
+      <p>
+        <strong>174 of 186 components</strong> render this way today. This is optional: a consumer
+        with no build step, or loading ARC from a CDN, needs none of it and loses nothing.
+      </p>
+    </section>
+
+    <section id="what-it-fixes">
+      <h2>What it fixes</h2>
+      <p>
+        Most ARC components take their content from properties rather than slots. With JavaScript
+        disabled, or before it loads, this is an empty unknown tag — no heading, no description,
+        nothing for a crawler to read:
+      </p>
+      <pre><code>{`<arc-feature-card
+  heading="Fast by default"
+  description="Ships 40% less JavaScript"
+></arc-feature-card>`}</code></pre>
+      <p>
+        <strong>65 of 185 components</strong> are shaped like this — they have no default slot at
+        all, so there is no markup to fall back to. Server rendering is the only thing that puts
+        their content in the payload. Slot-driven components already degrade gracefully, and gain
+        less from it.
+      </p>
+    </section>
+
+    <section id="usage">
+      <h2>Rendering and hydrating</h2>
+      <p>On the server, render as you would any Lit template:</p>
+      <pre><code>{`import { render } from '@lit-labs/ssr';
+import { collectResult } from '@lit-labs/ssr/lib/render-result.js';
+import { html } from 'lit';
+import '@arclux/arc-ui/feature-card';
+
+const markup = await collectResult(render(html\`
+  <arc-feature-card heading="Fast by default"></arc-feature-card>
+\`));`}</code></pre>
+
+      <p>
+        On the client, import the hydration entry <strong>before any component</strong>:
+      </p>
+      <pre><code>{`import '@arclux/arc-ui/hydrate';   // first — order matters
+import '@arclux/arc-ui/register';`}</code></pre>
+
+      <p>
+        Without it, the moment an element upgrades Lit renders its template from scratch into the
+        shadow root the server already filled — discarding identical DOM and producing the exact
+        flash server rendering exists to avoid. With it, Lit <em>adopts</em> the existing nodes and
+        renders nothing.
+      </p>
+      <p>
+        Import order matters because hydration support patches <code>LitElement</code>'s update
+        path. A component class defined before the patch never receives it.
+      </p>
+    </section>
+
+    <section id="fouc">
+      <h2>The FOUC guard</h2>
+      <p>
+        <code>base.css</code> hides ARC elements until they upgrade, so a page never flashes
+        unstyled custom elements. A server-rendered element is un-upgraded but <em>finished</em>,
+        so that rule would hide completed content for the whole hydration window — turning server
+        rendering into a longer blank screen rather than a shorter one.
+      </p>
+      <p>Opt the page out at the root:</p>
+      <pre><code>{`<html data-arc-ssr>`}</code></pre>
+      <p>
+        This is a root-level switch rather than something automatic because CSS cannot detect a
+        declarative shadow root: the browser consumes the <code>&lt;template&gt;</code> during
+        parsing and leaves no selectable trace of it.
+      </p>
+    </section>
+
+    <section id="coverage">
+      <h2>Component coverage</h2>
+      <p>
+        <code>pnpm check:ssr</code> renders every component in Node and fails on any that throws;
+        it runs in CI. Server-side, Lit runs the constructor, <code>willUpdate</code> and
+        <code>render</code> — and none of <code>connectedCallback</code>,
+        <code>firstUpdated</code>, <code>updated</code>, or a reactive controller's
+        <code>hostConnected</code>. Browser work belongs in those.
+      </p>
+      <ul>
+        <li><strong>174 components</strong> server-render, all emitting declarative shadow DOM.</li>
+        <li>
+          <strong>11 are blocked upstream</strong>, not by ARC: <code>@lit-labs/ssr</code> 4.1.0
+          calls <code>getRootNode()</code> on its own element shim, which does not implement it.
+          They work normally on the client.
+        </li>
+        <li>
+          <strong><code>arc-markdown</code> is client-only by design.</strong> Its sanitiser needs
+          <code>DOMParser</code>. Rendering unsanitised HTML on the server is not an option, and
+          rendering different markup would break hydration, which reconnects to the server's DOM
+          rather than re-rendering it.
+        </li>
+      </ul>
+      <p>
+        Support is a property of the library, not of individual components — there is no
+        per-component opt-in to track, because nearly everything works. You opt in per page.
+      </p>
+    </section>
+
+    <section id="frameworks">
+      <h2>Framework support</h2>
+      <p>
+        Declarative shadow DOM has to be produced by Lit's server renderer. A framework's own SSR
+        emits <code>&lt;arc-feature-card&gt;</code> as an unknown tag and knows nothing about its
+        shadow content, so the framework needs an integration to call into Lit SSR.
+      </p>
+      <ul>
+        <li>
+          <strong>Plain HTML, Lit, or any server that renders templates</strong> — fully supported
+          today, as above.
+        </li>
+        <li>
+          <strong>React</strong> — <code>@lit-labs/ssr-react</code> exists for this and is the
+          supported path.
+        </li>
+        <li>
+          <strong>Vue, Svelte, Solid, Angular, Preact</strong> — no Lit SSR integration exists.
+          Their SSR output contains the element tag without its shadow content, and the component
+          renders on the client at upgrade. Everything still works; the content simply is not in
+          the initial payload.
+        </li>
+      </ul>
+      <p>
+        Hydration support and the FOUC opt-out apply to every one of these, since both are
+        properties of the element rather than of the framework around it.
+      </p>
+    </section>
+  </div>
+</DocsLayout>
+
+<style>
+  .prose-page { max-width: 70ch; }
+  .prose-page h1 { font-family: var(--font-display); margin-bottom: var(--space-lg); }
+  .prose-page h2 {
+    font-family: var(--font-display);
+    margin: var(--space-2xl) 0 var(--space-md);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--border-subtle);
+  }
+  .prose-page p { color: var(--text-secondary); line-height: 1.7; margin-bottom: var(--space-md); }
+  .prose-page ul { color: var(--text-secondary); line-height: 1.7; padding-inline-start: var(--space-lg); margin-bottom: var(--space-md); }
+  .prose-page li { margin-bottom: var(--space-sm); }
+  .prose-page pre {
+    background: var(--surface-raised);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    overflow-x: auto;
+    margin-bottom: var(--space-md);
+  }
+  .prose-page code { font-family: var(--font-mono); font-size: var(--_text-sm); }
+  .prose-page strong { color: var(--text-primary); }
+</style>

@@ -230,6 +230,9 @@ importers:
 
   packages/web-components:
     dependencies:
+      '@lit-labs/ssr-client':
+        specifier: ^1.1.8
+        version: 1.1.8
       qrcode-generator:
         specifier: ^1.4.4
         version: 1.5.2
