@@ -16,7 +16,12 @@ export default defineConfig({
   ],
   vite: {
     ssr: {
-      noExternal: ['lit', '@lit/reactive-element', 'lit-html', 'lit-element', '@arclux/arc-ui', '@arclux/brand', 'shiki', '@shikijs/core', '@shikijs/engine-javascript', '@shikijs/engine-oniguruma', '@shikijs/types', '@shikijs/vscode-textmate'],
+      // lit and its packages are deliberately absent. They were here from the
+      // first commit with no recorded reason, and bundling them gives Astro's
+      // server chunk a second copy of Lit — including a second custom-element
+      // registry, which is what made @astrojs/lit unable to find any ARC
+      // element. The site builds and audits identically without them.
+      noExternal: ['@arclux/arc-ui', '@arclux/brand', 'shiki', '@shikijs/core', '@shikijs/engine-javascript', '@shikijs/engine-oniguruma', '@shikijs/types', '@shikijs/vscode-textmate'],
     },
   },
 });
