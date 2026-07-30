@@ -63,6 +63,12 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
 
+      # The per-icon modules are generated and gitignored — a fresh checkout
+      # packs a web-components tarball without them, which is the v2.3.0
+      # broken-publish all over again (the smoke test caught it here).
+      - name: Generate vendored icons
+        run: pnpm generate:icons
+
       # Compiles all six wrapper packages with their real toolchains —
       # including ng-packagr, whose strictTemplates pass is the Angular
       # verification (a scratch Angular consumer would cost a full CLI).

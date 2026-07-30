@@ -19,7 +19,7 @@
  */
 
 import { execFileSync } from 'node:child_process';
-import { mkdtempSync, writeFileSync, mkdirSync, readFileSync, readdirSync, rmSync } from 'node:fs';
+import { mkdtempSync, writeFileSync, mkdirSync, readFileSync, readdirSync, rmSync, existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -32,6 +32,14 @@ const run = (cmd, args, cwd) =>
   execFileSync(cmd, args, { cwd, encoding: 'utf-8', stdio: ['ignore', 'pipe', 'pipe'] });
 
 console.log(`  scratch: ${scratch}`);
+
+// The per-icon modules are generated and gitignored; packing without them
+// produces the broken tarball that shipped as v2.3.0. Fail here, with the
+// fix, instead of three steps later inside a scratch app's bundler output.
+if (!existsSync(resolve(root, 'packages/web-components/src/icons/phosphor/_resolver.js'))) {
+  console.error('✗ generated icon modules missing — run `pnpm generate:icons` first');
+  process.exit(1);
+}
 
 // ── 1. Pack the tarballs (prepack builds dist/ in every package) ────────────
 const tarballs = {};
