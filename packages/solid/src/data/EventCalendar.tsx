@@ -12,6 +12,8 @@ declare module 'solid-js' {
 }
 
 export interface EventCalendarProps {
+  locale?: string;
+  firstDayOfWeek?: number;
   events?: Array<{date:string,end?:string,label:string,color?:number}>;
   view?: 'month' | 'week';
   date?: string;
@@ -47,9 +49,9 @@ export interface EventCalendarProps {
 }
 
 export const EventCalendar: Component<EventCalendarProps> = (props) => {
-  const [local, rest] = splitProps(props, ['events', 'view', 'date', 'onArcPeriodChange', 'onArcDateClick', 'onArcEventClick', 'children']);
+  const [local, rest] = splitProps(props, ['locale', 'firstDayOfWeek', 'events', 'view', 'date', 'onArcPeriodChange', 'onArcDateClick', 'onArcEventClick', 'children']);
   return (
-    <arc-event-calendar events={local.events} view={local.view} date={local.date} on:arc-period-change={local.onArcPeriodChange} on:arc-date-click={local.onArcDateClick} on:arc-event-click={local.onArcEventClick} {...rest}>
+    <arc-event-calendar locale={local.locale} prop:firstDayOfWeek={local.firstDayOfWeek} events={local.events} view={local.view} date={local.date} on:arc-period-change={local.onArcPeriodChange} on:arc-date-click={local.onArcDateClick} on:arc-event-click={local.onArcEventClick} {...rest}>
       {local.children}
     </arc-event-calendar>
   );

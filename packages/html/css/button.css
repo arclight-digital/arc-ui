@@ -57,13 +57,13 @@
 
       /* Sizes */
       .arc-button[data-size="sm"] .btn,
-      .arc-button[data-size="sm"] a { font-size: var(--text-xs); padding: var(--space-xs) var(--space-md); }
+      .arc-button[data-size="sm"] a { font-size: var(--_text-xs); padding: var(--space-xs) var(--space-md); }
       .arc-button:not([data-data-size="lg"]):not([data-data-size="sm"]) .btn,
       .arc-button:not([data-data-size="lg"]):not([data-data-size="sm"]) a,
       .arc-button[data-size="md"] .btn,
-      .arc-button[data-size="md"] a { font-size: var(--text-xs); padding: var(--space-sm) var(--space-lg); }
+      .arc-button[data-size="md"] a { font-size: var(--_text-xs); padding: var(--space-sm) var(--space-lg); }
       .arc-button[data-size="lg"] .btn,
-      .arc-button[data-size="lg"] a { font-size: var(--text-xs); padding: var(--space-md) var(--space-xl); letter-spacing: 3px; }
+      .arc-button[data-size="lg"] a { font-size: var(--_text-xs); padding: var(--space-md) var(--space-xl); letter-spacing: 3px; }
 
       /* Default → primary */
       .arc-button:not([data-data-variant="ghost"]):not([data-data-variant="secondary"]) .btn,

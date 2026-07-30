@@ -13,6 +13,8 @@ export interface DatePickerProps {
   disabled?: boolean;
   label?: string;
   open?: boolean;
+  locale?: string;
+  firstDayOfWeek?: number;
   className?: string;
   children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;

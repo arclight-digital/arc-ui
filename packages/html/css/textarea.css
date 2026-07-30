@@ -13,7 +13,7 @@
       .arc-textarea label {
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         letter-spacing: 1px;
         text-transform: uppercase;
         color: var(--text-muted);
@@ -21,7 +21,7 @@
 
       .arc-textarea textarea {
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         font-weight: var(--field-weight, 400);
         line-height: 1.5;
         color: var(--text-primary);
@@ -37,9 +37,9 @@
       }
 
       /* Sizes */
-      .arc-textarea[data-size="sm"] textarea { font-size: var(--text-xs); padding: var(--space-xs) var(--space-sm); }
-      .arc-textarea[data-size="sm"] label { font-size: calc(var(--text-xs) - 1px); }
-      .arc-textarea[data-size="lg"] textarea { font-size: var(--text-md); padding: var(--space-md) var(--space-lg); }
+      .arc-textarea[data-size="sm"] textarea { font-size: var(--_text-xs); padding: var(--space-xs) var(--space-sm); }
+      .arc-textarea[data-size="sm"] label { font-size: calc(var(--_text-xs) - 1px); }
+      .arc-textarea[data-size="lg"] textarea { font-size: var(--_text-md); padding: var(--space-md) var(--space-lg); }
 
       .arc-textarea[auto-resize] textarea { resize: none; overflow: hidden; }
 
@@ -86,15 +86,15 @@
       }
 
       .arc-textarea .error-message {
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         color: var(--color-error);
         line-height: 1.4;
       }
 
       .arc-textarea .char-count {
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         color: var(--text-muted);
-        margin-left: auto;
+        margin-inline-start: auto;
       }
 
       .arc-textarea .char-count.at-limit {

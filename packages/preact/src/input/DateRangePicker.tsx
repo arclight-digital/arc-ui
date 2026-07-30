@@ -5,6 +5,8 @@ import { useLayoutEffect, useRef } from 'preact/hooks';
 import '@arclux/arc-ui/date-range-picker';
 
 export interface DateRangePickerProps {
+  locale?: string;
+  firstDayOfWeek?: number;
   start?: string;
   end?: string;
   name?: string;
@@ -46,7 +48,7 @@ export interface DateRangePickerProps {
   [key: `on${string}`]: unknown;
 }
 
-export const DateRangePicker: FunctionComponent<DateRangePickerProps> = ({ start, end, name, min, max, months, presets, placeholder, disabled, required, label, open, onArcChange, children, ...rest }) => {
+export const DateRangePicker: FunctionComponent<DateRangePickerProps> = ({ locale, firstDayOfWeek, start, end, name, min, max, months, presets, placeholder, disabled, required, label, open, onArcChange, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -59,5 +61,5 @@ export const DateRangePicker: FunctionComponent<DateRangePickerProps> = ({ start
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcChange]);
-  return h('arc-date-range-picker', { ref, start, end, name, min, max, months, presets, placeholder, disabled, required, label, open, ...rest }, children);
+  return h('arc-date-range-picker', { ref, locale, firstDayOfWeek, start, end, name, min, max, months, presets, placeholder, disabled, required, label, open, ...rest }, children);
 };

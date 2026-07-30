@@ -5,6 +5,8 @@ import { useLayoutEffect, useRef } from 'preact/hooks';
 import '@arclux/arc-ui/calendar';
 
 export interface CalendarProps {
+  locale?: string;
+  firstDayOfWeek?: number;
   value?: string;
   min?: string;
   max?: string;
@@ -40,7 +42,7 @@ export interface CalendarProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Calendar: FunctionComponent<CalendarProps> = ({ value, min, max, month, year, onArcMonthChange, onArcChange, children, ...rest }) => {
+export const Calendar: FunctionComponent<CalendarProps> = ({ locale, firstDayOfWeek, value, min, max, month, year, onArcMonthChange, onArcChange, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -58,5 +60,5 @@ export const Calendar: FunctionComponent<CalendarProps> = ({ value, min, max, mo
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcMonthChange, onArcChange]);
-  return h('arc-calendar', { ref, value, min, max, month, year, ...rest }, children);
+  return h('arc-calendar', { ref, locale, firstDayOfWeek, value, min, max, month, year, ...rest }, children);
 };

@@ -15,6 +15,20 @@ import { ArcCalendar } from '@arclux/arc-ui/calendar';
 export class Calendar {
   private readonly _el: ArcCalendar = inject(ElementRef).nativeElement;
 
+  @Input() set locale(value: string) {
+    this._el.locale = value;
+  }
+  get locale(): string {
+    return this._el.locale;
+  }
+
+  @Input() set firstDayOfWeek(value: number) {
+    this._el.firstDayOfWeek = value;
+  }
+  get firstDayOfWeek(): number {
+    return this._el.firstDayOfWeek;
+  }
+
   @Input() set value(value: string) {
     this._el.value = value;
   }

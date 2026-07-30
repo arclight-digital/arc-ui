@@ -13,6 +13,8 @@ export interface DatePickerProps {
   disabled?: boolean;
   label?: string;
   open?: boolean;
+  locale?: string;
+  firstDayOfWeek?: number;
   onArcChange?: (e: CustomEvent) => void;
   children?: preact.ComponentChildren;
   class?: string;
@@ -42,7 +44,7 @@ export interface DatePickerProps {
   [key: `on${string}`]: unknown;
 }
 
-export const DatePicker: FunctionComponent<DatePickerProps> = ({ value, name, min, max, placeholder, disabled, label, open, onArcChange, children, ...rest }) => {
+export const DatePicker: FunctionComponent<DatePickerProps> = ({ value, name, min, max, placeholder, disabled, label, open, locale, firstDayOfWeek, onArcChange, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -55,5 +57,5 @@ export const DatePicker: FunctionComponent<DatePickerProps> = ({ value, name, mi
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcChange]);
-  return h('arc-date-picker', { ref, value, name, min, max, placeholder, disabled, label, open, ...rest }, children);
+  return h('arc-date-picker', { ref, value, name, min, max, placeholder, disabled, label, open, locale, firstDayOfWeek, ...rest }, children);
 };

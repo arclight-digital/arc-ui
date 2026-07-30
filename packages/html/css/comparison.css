@@ -19,7 +19,7 @@
       .arc-comparison .header-cell {
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         letter-spacing: 1px;
         text-transform: uppercase;
         color: var(--text-primary);
@@ -29,7 +29,7 @@
       }
 
       .arc-comparison .header-cell--feature {
-        text-align: left;
+        text-align: start;
       }
 
       .arc-comparison .header-cell--highlight {
@@ -53,14 +53,14 @@
         padding: var(--space-sm) var(--space-md);
         text-align: center;
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-secondary);
         border-bottom: 1px solid var(--divider);
         transition: background var(--transition-fast);
       }
 
       .arc-comparison .cell--feature {
-        text-align: left;
+        text-align: start;
         color: var(--text-secondary);
       }
 

@@ -57,15 +57,15 @@
       }
 
       .arc-input .input-group__error {
-        font-size: var(--text-xs);
+        font-size: var(--_text-xs);
         color: var(--color-error);
         line-height: 1.4;
       }
 
       /* Sizes */
-      .arc-input[data-size="sm"] .input-group__field { padding: var(--space-xs) var(--space-sm); font-size: var(--text-sm); }
+      .arc-input[data-size="sm"] .input-group__field { padding: var(--space-xs) var(--space-sm); font-size: var(--_text-sm); }
       .arc-input[data-size="sm"] .input-group__label { font-size: calc(var(--label-inline-size) - 1px); }
-      .arc-input[data-size="lg"] .input-group__field { padding: var(--space-md) var(--space-lg); font-size: var(--text-md); }
+      .arc-input[data-size="lg"] .input-group__field { padding: var(--space-md) var(--space-lg); font-size: var(--_text-md); }
 
       .arc-input .input-group__field {
         font-family: var(--font-body);

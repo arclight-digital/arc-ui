@@ -44,14 +44,14 @@
       .arc-separator[data-orientation="vertical"][data-variant="dashed"] .separator {
         background: none;
         border-top: none;
-        border-left: 1px dashed var(--border-default);
+        border-inline-start: 1px dashed var(--border-default);
         width: 0;
       }
 
       .arc-separator[data-orientation="vertical"][data-variant="dotted"] .separator {
         background: none;
         border-top: none;
-        border-left: 1px dotted var(--border-default);
+        border-inline-start: 1px dotted var(--border-default);
         width: 0;
       }
 
@@ -97,7 +97,7 @@
 
       .arc-separator .separator__label {
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-muted);
         white-space: nowrap;
         flex-shrink: 0;

@@ -36,7 +36,7 @@
       .arc-auth-shell .auth-shell--centered .footer {
         margin-top: var(--space-lg);
         color: var(--text-muted);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         text-align: center;
       }
 
@@ -75,7 +75,7 @@
       .arc-auth-shell .auth-shell--split .footer {
         margin-top: var(--space-lg);
         color: var(--text-muted);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         text-align: center;
       }
 

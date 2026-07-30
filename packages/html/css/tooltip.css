@@ -18,7 +18,7 @@
         border-radius: var(--radius-sm);
         padding: var(--space-xs) var(--space-sm);
         font-family: var(--font-body);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
         color: var(--text-primary);
         white-space: nowrap;
         pointer-events: none;
@@ -32,8 +32,8 @@
         content: '';
         position: absolute;
         top: 0;
-        left: 0;
-        right: 0;
+        inset-inline-start: 0;
+        inset-inline-end: 0;
         height: 1px;
         background: var(--divider-glow);
       }
@@ -61,41 +61,45 @@
         transform: rotate(45deg);
       }
 
-      /* Positions */
-      .arc-tooltip:not([data-data-position="bottom"]):not([data-data-position="left"]):not([data-data-position="right"]) .tooltip__popup,
-      .arc-tooltip[data-position="top"] .tooltip__popup {
+      /* Positions — the resting fallback, for a popup PositionController has
+         not adopted: the static HTML export and anything pre-upgrade. Scoped
+         off managed popups because the controller writes fixed viewport
+         coordinates, which the translateX(-50%) centring here would shift the
+         popup half its own width away from. */
+      .arc-tooltip:not([data-data-position="bottom"]):not([data-data-position="left"]):not([data-data-position="right"]) .tooltip__popup:not([data-managed]),
+      .arc-tooltip[data-position="top"] .tooltip__popup:not([data-managed]) {
         bottom: calc(100% + 8px);
         left: 50%;
         transform: translateX(-50%);
       }
-      .arc-tooltip:not([data-data-position="bottom"]):not([data-data-position="left"]):not([data-data-position="right"]) .tooltip__arrow,
-      .arc-tooltip[data-position="top"] .tooltip__arrow {
+      .arc-tooltip:not([data-data-position="bottom"]):not([data-data-position="left"]):not([data-data-position="right"]) .tooltip__popup:not([data-managed]) .tooltip__arrow,
+      .arc-tooltip[data-position="top"] .tooltip__popup:not([data-managed]) .tooltip__arrow {
         bottom: -5px;
         left: 50%;
         transform: translateX(-50%) rotate(45deg);
         border-top: none;
-        border-left: none;
+        border-inline-start: none;
       }
 
-      .arc-tooltip[data-position="bottom"] .tooltip__popup {
+      .arc-tooltip[data-position="bottom"] .tooltip__popup:not([data-managed]) {
         top: calc(100% + 8px);
         left: 50%;
         transform: translateX(-50%);
       }
-      .arc-tooltip[data-position="bottom"] .tooltip__arrow {
+      .arc-tooltip[data-position="bottom"] .tooltip__popup:not([data-managed]) .tooltip__arrow {
         top: -5px;
         left: 50%;
         transform: translateX(-50%) rotate(45deg);
         border-bottom: none;
-        border-right: none;
+        border-inline-end: none;
       }
 
-      .arc-tooltip[data-position="left"] .tooltip__popup {
+      .arc-tooltip[data-position="left"] .tooltip__popup:not([data-managed]) {
         right: calc(100% + 8px);
         top: 50%;
         transform: translateY(-50%);
       }
-      .arc-tooltip[data-position="left"] .tooltip__arrow {
+      .arc-tooltip[data-position="left"] .tooltip__popup:not([data-managed]) .tooltip__arrow {
         right: -5px;
         top: 50%;
         transform: translateY(-50%) rotate(45deg);
@@ -103,17 +107,49 @@
         border-left: none;
       }
 
-      .arc-tooltip[data-position="right"] .tooltip__popup {
+      .arc-tooltip[data-position="right"] .tooltip__popup:not([data-managed]) {
         left: calc(100% + 8px);
         top: 50%;
         transform: translateY(-50%);
       }
-      .arc-tooltip[data-position="right"] .tooltip__arrow {
+      .arc-tooltip[data-position="right"] .tooltip__popup:not([data-managed]) .tooltip__arrow {
         left: -5px;
         top: 50%;
         transform: translateY(-50%) rotate(45deg);
         border-top: none;
         border-right: none;
+      }
+
+      /* Arrow for a managed popup. Keyed on data-placement — the side the
+         popup actually landed on — so the arrow follows a flip instead of
+         pointing at nothing. */
+      .arc-tooltip .tooltip__popup[data-managed][data-placement="top"] .tooltip__arrow {
+        bottom: -5px;
+        left: 50%;
+        transform: translateX(-50%) rotate(45deg);
+        border-top: none;
+        border-inline-start: none;
+      }
+      .arc-tooltip .tooltip__popup[data-managed][data-placement="bottom"] .tooltip__arrow {
+        top: -5px;
+        left: 50%;
+        transform: translateX(-50%) rotate(45deg);
+        border-bottom: none;
+        border-inline-end: none;
+      }
+      .arc-tooltip .tooltip__popup[data-managed][data-placement="left"] .tooltip__arrow {
+        inset-inline-end: -5px;
+        top: 50%;
+        transform: translateY(-50%) rotate(45deg);
+        border-bottom: none;
+        border-inline-start: none;
+      }
+      .arc-tooltip .tooltip__popup[data-managed][data-placement="right"] .tooltip__arrow {
+        inset-inline-start: -5px;
+        top: 50%;
+        transform: translateY(-50%) rotate(45deg);
+        border-top: none;
+        border-inline-end: none;
       }
 
       @media (prefers-reduced-motion: reduce) {

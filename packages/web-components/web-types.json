@@ -2623,6 +2623,22 @@
           "doc-url": "",
           "attributes": [
             {
+              "name": "locale",
+              "description": "BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language.",
+              "value": {
+                "type": "string",
+                "default": "''"
+              }
+            },
+            {
+              "name": "first-day-of-week",
+              "description": "Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention.",
+              "value": {
+                "type": "number",
+                "default": "0"
+              }
+            },
+            {
               "name": "events",
               "description": "The event objects to display. `date` (and optional `end` for multi-day spans) are ISO strings (YYYY-MM-DD). `color` indexes the fixed `--chart-N` palette and defaults to 1. Set via JavaScript property, not an attribute.",
               "value": {
@@ -2666,6 +2682,16 @@
           ],
           "js": {
             "properties": [
+              {
+                "name": "locale",
+                "description": "BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language.",
+                "type": "string"
+              },
+              {
+                "name": "firstDayOfWeek",
+                "description": "Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention.",
+                "type": "number"
+              },
               {
                 "name": "events",
                 "description": "The event objects to display. `date` (and optional `end` for multi-day spans) are ISO strings (YYYY-MM-DD). `color` indexes the fixed `--chart-N` palette and defaults to 1. Set via JavaScript property, not an attribute.",
@@ -5680,6 +5706,22 @@
           "doc-url": "",
           "attributes": [
             {
+              "name": "locale",
+              "description": "BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language.",
+              "value": {
+                "type": "string",
+                "default": "''"
+              }
+            },
+            {
+              "name": "first-day-of-week",
+              "description": "Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention.",
+              "value": {
+                "type": "number",
+                "default": "0"
+              }
+            },
+            {
               "name": "value",
               "description": "The selected date as an ISO string (YYYY-MM-DD). Empty string means no date is selected.",
               "value": {
@@ -5732,6 +5774,16 @@
           ],
           "js": {
             "properties": [
+              {
+                "name": "locale",
+                "description": "BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language.",
+                "type": "string"
+              },
+              {
+                "name": "firstDayOfWeek",
+                "description": "Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention.",
+                "type": "number"
+              },
               {
                 "name": "value",
                 "description": "The selected date as an ISO string (YYYY-MM-DD). Empty string means no date is selected.",
@@ -6365,6 +6417,22 @@
               }
             },
             {
+              "name": "locale",
+              "description": "BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language.",
+              "value": {
+                "type": "string",
+                "default": "''"
+              }
+            },
+            {
+              "name": "first-day-of-week",
+              "description": "Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention, so most of the world gets Monday and the US gets Sunday without configuring anything.",
+              "value": {
+                "type": "number",
+                "default": "0"
+              }
+            },
+            {
               "name": "required",
               "value": {
                 "type": "boolean",
@@ -6428,6 +6496,16 @@
                 "type": "boolean"
               },
               {
+                "name": "locale",
+                "description": "BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language.",
+                "type": "string"
+              },
+              {
+                "name": "firstDayOfWeek",
+                "description": "Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention, so most of the world gets Monday and the US gets Sunday without configuring anything.",
+                "type": "number"
+              },
+              {
                 "name": "form"
               },
               {
@@ -6459,6 +6537,22 @@
           "description": "Dual-calendar picker for selecting a start/end date range with presets and full keyboard\nnavigation.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when a complete range is committed (second day clicked or preset applied). detail: { start, end }\n\n### **CSS Parts:**\n - **calendar**\n- **panel-title**\n- **day**\n- **wrapper**\n- **label**\n- **input-wrapper**\n- **input**\n- **panel**\n- **presets**\n- **preset**\n- **header**",
           "doc-url": "",
           "attributes": [
+            {
+              "name": "locale",
+              "description": "BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language.",
+              "value": {
+                "type": "string",
+                "default": "''"
+              }
+            },
+            {
+              "name": "first-day-of-week",
+              "description": "Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention.",
+              "value": {
+                "type": "number",
+                "default": "0"
+              }
+            },
             {
               "name": "start",
               "description": "Range start date as an ISO string (YYYY-MM-DD). Empty when unset. Set both start and end to pre-select a range.",
@@ -6576,6 +6670,16 @@
                 "name": "value",
                 "description": "Read-derived ISO 8601 interval (\"start/end\") when both dates are set, otherwise an empty string. This is the value submitted with forms. Assigning \"start/end\" sets both dates.",
                 "type": "string"
+              },
+              {
+                "name": "locale",
+                "description": "BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language.",
+                "type": "string"
+              },
+              {
+                "name": "firstDayOfWeek",
+                "description": "Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention.",
+                "type": "number"
               },
               {
                 "name": "start",

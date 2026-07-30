@@ -51,7 +51,7 @@
 
       /* Collapse borders between items */
       .arc-button-group:not([data-orientation="vertical"]) :not(:first-child) {
-        margin-left: -1px;
+        margin-inline-start: -1px;
       }
 
       .arc-button-group[data-orientation="vertical"] :not(:first-child) {

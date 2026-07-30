@@ -127,6 +127,8 @@ declare module 'react' {
         variant?: string;
       };
       'arc-calendar': ArcBaseAttributes & {
+        locale?: string;
+        'first-day-of-week'?: number | string;
         value?: string;
         min?: string;
         max?: string;
@@ -317,10 +319,14 @@ declare module 'react' {
         disabled?: boolean;
         label?: string;
         open?: boolean;
+        locale?: string;
+        'first-day-of-week'?: number | string;
         required?: boolean;
         readonly?: boolean;
       };
       'arc-date-range-picker': ArcBaseAttributes & {
+        locale?: string;
+        'first-day-of-week'?: number | string;
         start?: string;
         end?: string;
         name?: string;
@@ -379,6 +385,8 @@ declare module 'react' {
         description?: string;
       };
       'arc-event-calendar': ArcBaseAttributes & {
+        locale?: string;
+        'first-day-of-week'?: number | string;
         events?: string;
         view?: 'month' | 'week';
         date?: string;

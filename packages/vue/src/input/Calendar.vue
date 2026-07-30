@@ -5,12 +5,16 @@ import '@arclux/arc-ui/calendar';
 defineOptions({ name: 'Calendar' });
 
 const props = withDefaults(defineProps<{
+  locale?: string;
+  firstDayOfWeek?: number;
   value?: string;
   min?: string;
   max?: string;
   month?: number;
   year?: number;
 }>(), {
+  locale: '',
+  firstDayOfWeek: 0,
   value: '',
   min: '',
   max: '',
@@ -43,6 +47,8 @@ function onArcChange(payload: CustomEvent) {
 
 <template>
   <arc-calendar
+    :locale="props.locale"
+    :firstDayOfWeek="props.firstDayOfWeek"
     :value="props.value"
     :min="props.min"
     :max="props.max"

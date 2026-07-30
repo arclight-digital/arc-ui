@@ -8,7 +8,7 @@
     .arc-avatar .avatar__img { transition: none; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .arc-avatar .avatar { transition: border-color 200ms ease, box-shadow 200ms ease; }
+    .arc-avatar .avatar { transition: border-color inherit, box-shadow inherit; }
   }
   @media (prefers-reduced-motion: reduce) {
     .arc-avatar .avatar:hover { transform: none; }
@@ -17,11 +17,11 @@
     .arc-avatar[data-status="online"] .avatar__status { animation: none; }
   }
   .arc-avatar .avatar:hover { border-color: rgb(56, 56, 108);
-        box-shadow: 0 0 12px rgba(130, 164, 250, 0.15);
+        box-shadow: inherit;
         transform: scale(1.05); }
 </style>
 <span class="arc-avatar" style="display: inline-flex; position: relative">
-  <div class="avatar" style="display: inline-flex; align-items: center; justify-content: center; border-radius: 9999px; border: 1px solid rgb(42, 42, 92); overflow: hidden; background: rgb(26, 26, 80); position: relative" role="img">
+  <div class="avatar" style="display: inline-flex; align-items: center; justify-content: center; border-radius: inherit; border: 1px solid rgb(42, 42, 92); overflow: hidden; background: inherit; position: relative" role="img">
     Avatar
   </div>
 </span>

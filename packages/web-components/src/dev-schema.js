@@ -567,6 +567,8 @@ export default {
  },
  "arc-event-calendar": {
   "attrs": [
+   "locale",
+   "first-day-of-week",
    "events",
    "view",
    "date"
@@ -1143,6 +1145,8 @@ export default {
  },
  "arc-calendar": {
   "attrs": [
+   "locale",
+   "first-day-of-week",
    "value",
    "min",
    "max",
@@ -1221,6 +1225,8 @@ export default {
    "disabled",
    "label",
    "open",
+   "locale",
+   "first-day-of-week",
    "required",
    "readonly"
   ],
@@ -1228,6 +1234,8 @@ export default {
  },
  "arc-date-range-picker": {
   "attrs": [
+   "locale",
+   "first-day-of-week",
    "start",
    "end",
    "name",

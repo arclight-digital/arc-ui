@@ -5,6 +5,8 @@ import '@arclux/arc-ui/date-range-picker';
 defineOptions({ name: 'DateRangePicker' });
 
 const props = withDefaults(defineProps<{
+  locale?: string;
+  firstDayOfWeek?: number;
   start?: string;
   end?: string;
   name?: string;
@@ -18,6 +20,8 @@ const props = withDefaults(defineProps<{
   label?: string;
   open?: boolean;
 }>(), {
+  locale: '',
+  firstDayOfWeek: 0,
   start: '',
   end: '',
   name: '',
@@ -50,6 +54,8 @@ function onArcChange(payload: CustomEvent) {
 
 <template>
   <arc-date-range-picker
+    :locale="props.locale"
+    :firstDayOfWeek="props.firstDayOfWeek"
     :start="props.start"
     :end="props.end"
     :name="props.name"

@@ -13,6 +13,8 @@ const props = withDefaults(defineProps<{
   disabled?: boolean;
   label?: string;
   open?: boolean;
+  locale?: string;
+  firstDayOfWeek?: number;
 }>(), {
   value: '',
   name: '',
@@ -22,6 +24,8 @@ const props = withDefaults(defineProps<{
   disabled: false,
   label: '',
   open: false,
+  locale: '',
+  firstDayOfWeek: 0,
 });
 
 const emit = defineEmits<{
@@ -48,6 +52,8 @@ function onArcChange(payload: CustomEvent) {
     :disabled="props.disabled"
     :label="props.label"
     :open="props.open"
+    :locale="props.locale"
+    :firstDayOfWeek="props.firstDayOfWeek"
     @arc-change="onArcChange"
   >
     <slot />

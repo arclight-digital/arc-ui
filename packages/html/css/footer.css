@@ -67,15 +67,15 @@
         position: relative;
         padding-top: var(--space-md);
         color: var(--text-muted);
-        font-size: var(--text-sm);
+        font-size: var(--_text-sm);
       }
 
       .arc-footer .footer__legal::before {
         content: '';
         position: absolute;
         top: 0;
-        left: 0;
-        right: 0;
+        inset-inline-start: 0;
+        inset-inline-end: 0;
         height: 1px;
         background: var(--gradient-divider-glow);
       }

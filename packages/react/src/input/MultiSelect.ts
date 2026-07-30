@@ -14,7 +14,6 @@ export interface MultiSelectProps {
   children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;
   onArcInput?: (e: CustomEvent) => void;
-  onClick?: (e: Event) => void;
 }
 
 export const MultiSelect = createComponent({
@@ -24,6 +23,5 @@ export const MultiSelect = createComponent({
   events: {
     onArcChange: 'arc-change' as EventName<CustomEvent>,
     onArcInput: 'arc-input' as EventName<CustomEvent>,
-    onClick: 'click' as EventName<Event>,
   },
 });

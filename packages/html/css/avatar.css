@@ -77,15 +77,15 @@
       .arc-avatar[data-shape="rounded"] .avatar,
       .arc-avatar[data-shape="rounded"] .avatar__img { border-radius: var(--radius-lg); }
 
-      .arc-avatar[data-size="sm"] .avatar__initials { font-size: var(--text-xs); }
-      .arc-avatar[data-size="md"] .avatar__initials { font-size: var(--text-sm); }
-      .arc-avatar[data-size="lg"] .avatar__initials { font-size: var(--text-lg); }
+      .arc-avatar[data-size="sm"] .avatar__initials { font-size: var(--_text-xs); }
+      .arc-avatar[data-size="md"] .avatar__initials { font-size: var(--_text-sm); }
+      .arc-avatar[data-size="lg"] .avatar__initials { font-size: var(--_text-lg); }
 
       /* Status indicator */
       .arc-avatar .avatar__status {
         position: absolute;
         bottom: 0;
-        right: 0;
+        inset-inline-end: 0;
         width: 10px;
         height: 10px;
         border-radius: var(--radius-full);

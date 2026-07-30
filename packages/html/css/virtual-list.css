@@ -15,12 +15,12 @@
       .arc-virtual-list .virtual-list__viewport {
         position: absolute;
         top: 0;
-        left: 0;
+        inset-inline-start: 0;
         width: 100%;
       }
 
       .arc-virtual-list * {
         position: absolute;
-        left: 0;
+        inset-inline-start: 0;
         width: 100%;
       }

@@ -256,6 +256,10 @@ export declare class ArcButtonGroup extends LitElement {
  * Events: arc-month-change, arc-change
  */
 export declare class ArcCalendar extends LitElement {
+  /** BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language. @default '' */
+  locale: string;
+  /** Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention. @default 0 */
+  firstDayOfWeek: number;
   /** The selected date as an ISO string (YYYY-MM-DD). Empty string means no date is selected. @default '' */
   value: string;
   /** Minimum selectable date as an ISO string. Days before this date are disabled. @default '' */
@@ -747,6 +751,10 @@ export declare class ArcDatePicker extends LitElement {
   label: string;
   /** Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS. @default false */
   open: boolean;
+  /** BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language. @default '' */
+  locale: string;
+  /** Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention, so most of the world gets Monday and the US gets Sunday without configuring anything. @default 0 */
+  firstDayOfWeek: number;
   /** @default true */
   formAssociated: boolean;
   /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, } */
@@ -771,6 +779,10 @@ export declare class ArcDateRangePicker extends LitElement {
   autoValidates: boolean;
   /** Read-derived ISO 8601 interval ("start/end") when both dates are set, otherwise an empty string. This is the value submitted with forms. Assigning "start/end" sets both dates. */
   value: string;
+  /** BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language. @default '' */
+  locale: string;
+  /** Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention. @default 0 */
+  firstDayOfWeek: number;
   /** Range start date as an ISO string (YYYY-MM-DD). Empty when unset. Set both start and end to pre-select a range. @default '' */
   start: string;
   /** Range end date as an ISO string (YYYY-MM-DD). Empty when unset or while an end date is pending. @default '' */
@@ -919,6 +931,10 @@ export declare class ArcEmptyState extends LitElement {
  * Events: arc-period-change, arc-date-click, arc-event-click
  */
 export declare class ArcEventCalendar extends LitElement {
+  /** BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language. @default '' */
+  locale: string;
+  /** Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention. @default 0 */
+  firstDayOfWeek: number;
   /** The event objects to display. `date` (and optional `end` for multi-day spans) are ISO strings (YYYY-MM-DD). `color` indexes the fixed `--chart-N` palette and defaults to 1. Set via JavaScript property, not an attribute. @default [] */
   events: Array<{date:string,end?:string,label:string,color?:number}>;
   /** Which period layout to render. Also switchable by the user via the header view toggle. @default 'month' */

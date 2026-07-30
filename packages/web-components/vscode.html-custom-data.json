@@ -1075,6 +1075,16 @@
       "description": "Scheduling calendar with month and week views that renders all-day and multi-day event chips\ncolored by the chart palette.\n---\n\n\n### **Events:**\n - **arc-period-change** - Fired when the visible period or view changes (navigation buttons, Today, view toggle, or keyboard). `event.detail` contains `{ view, date }`.\n- **arc-date-click** - Fired when a day cell or a \"+N more\" overflow button is activated. `event.detail.date` contains the ISO date string.\n- **arc-event-click** - Fired when an event chip is clicked or activated. `event.detail.event` contains the original event object.\n\n### **CSS Parts:**\n - **event**\n- **day**\n- **day-number**\n- **events**\n- **more**\n- **calendar**\n- **header**\n- **nav-prev**\n- **nav-next**\n- **today**\n- **title**\n- **view-toggle**\n- **view-month**\n- **view-week**\n- **dows**\n- **dow**\n- **grid**",
       "attributes": [
         {
+          "name": "locale",
+          "description": "BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language.",
+          "values": []
+        },
+        {
+          "name": "first-day-of-week",
+          "description": "Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention.",
+          "values": []
+        },
+        {
           "name": "events",
           "description": "The event objects to display. `date` (and optional `end` for multi-day spans) are ISO strings (YYYY-MM-DD). `color` indexes the fixed `--chart-N` palette and defaults to 1. Set via JavaScript property, not an attribute.",
           "values": [
@@ -2121,6 +2131,16 @@
       "description": "Interactive month-view calendar grid for date selection with min/max constraints, keyboard\nnavigation, and today highlighting.\n---\n\n\n### **Events:**\n - **arc-month-change** - Fired when the visible month or year changes via the navigation buttons.\n- **arc-change** - Fired when a date is selected. `event.detail.value` contains the ISO date string (YYYY-MM-DD).\n\n### **CSS Parts:**\n - **calendar**\n- **header**\n- **nav-prev**\n- **title**\n- **nav-next**\n- **grid**\n- **dow**\n- **day**",
       "attributes": [
         {
+          "name": "locale",
+          "description": "BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language.",
+          "values": []
+        },
+        {
+          "name": "first-day-of-week",
+          "description": "Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention.",
+          "values": []
+        },
+        {
           "name": "value",
           "description": "The selected date as an ISO string (YYYY-MM-DD). Empty string means no date is selected.",
           "values": []
@@ -2331,6 +2351,16 @@
           "description": "Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.",
           "values": []
         },
+        {
+          "name": "locale",
+          "description": "BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language.",
+          "values": []
+        },
+        {
+          "name": "first-day-of-week",
+          "description": "Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention, so most of the world gets Monday and the US gets Sunday without configuring anything.",
+          "values": []
+        },
         { "name": "required", "values": [] },
         { "name": "readonly", "values": [] }
       ],
@@ -2340,6 +2370,16 @@
       "name": "arc-date-range-picker",
       "description": "Dual-calendar picker for selecting a start/end date range with presets and full keyboard\nnavigation.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when a complete range is committed (second day clicked or preset applied). detail: { start, end }\n\n### **CSS Parts:**\n - **calendar**\n- **panel-title**\n- **day**\n- **wrapper**\n- **label**\n- **input-wrapper**\n- **input**\n- **panel**\n- **presets**\n- **preset**\n- **header**",
       "attributes": [
+        {
+          "name": "locale",
+          "description": "BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language.",
+          "values": []
+        },
+        {
+          "name": "first-day-of-week",
+          "description": "Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention.",
+          "values": []
+        },
         {
           "name": "start",
           "description": "Range start date as an ISO string (YYYY-MM-DD). Empty when unset. Set both start and end to pre-select a range.",

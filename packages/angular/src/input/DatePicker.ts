@@ -70,6 +70,20 @@ export class DatePicker {
     return this._el.open;
   }
 
+  @Input() set locale(value: string) {
+    this._el.locale = value;
+  }
+  get locale(): string {
+    return this._el.locale;
+  }
+
+  @Input() set firstDayOfWeek(value: number) {
+    this._el.firstDayOfWeek = value;
+  }
+  get firstDayOfWeek(): number {
+    return this._el.firstDayOfWeek;
+  }
+
   @Output() valueChange = new EventEmitter<string>();
 
   _onArcChange(event: CustomEvent) {

@@ -4836,6 +4836,28 @@
           "members": [
             {
               "kind": "field",
+              "name": "locale",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language.",
+              "attribute": "locale"
+            },
+            {
+              "kind": "field",
+              "name": "firstDayOfWeek",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "description": "Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention.",
+              "attribute": "first-day-of-week"
+            },
+            {
+              "kind": "field",
               "name": "events",
               "privacy": "public",
               "type": {
@@ -4893,6 +4915,24 @@
             }
           ],
           "attributes": [
+            {
+              "name": "locale",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language.",
+              "fieldName": "locale"
+            },
+            {
+              "name": "first-day-of-week",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "description": "Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention.",
+              "fieldName": "firstDayOfWeek"
+            },
             {
               "name": "events",
               "type": {
@@ -7332,6 +7372,12 @@
               "fieldName": "placeholder"
             }
           ],
+          "mixins": [
+            {
+              "name": "OverlayMixin",
+              "module": "/src/shared/overlay-mixin.js"
+            }
+          ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
@@ -8594,6 +8640,12 @@
               "default": "true",
               "description": "When `true`, renders the built-in X close button and allows dismissal via Escape key and backdrop click. Set to `false` for critical decision modals where the user must explicitly choose an action from the footer buttons.",
               "fieldName": "closable"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "OverlayMixin",
+              "module": "/src/shared/overlay-mixin.js"
             }
           ],
           "superclass": {
@@ -9932,6 +9984,42 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/generated/host-tokens.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "hostTokens",
+          "default": "css` /* Generated from shared/tokens.js by scripts/generate-host-tokens.js. */ /* Do not edit by hand — edit the token tree instead. */ --font-body: var(--font-body-family, 'Host Grotesk'), var(--font-body-fallback, system-ui, sans-serif); --font-label: var(--font-label-family, 'Tektur'), var(--font-label-fallback, system-ui, sans-serif); --font-mono: var(--font-mono-family, 'JetBrains Mono'), var(--font-mono-fallback, ui-monospace, monospace); --font-quote: var(--font-quote-family, Georgia), var(--font-quote-fallback, serif); --font-display: var(--font-display-family, var(--font-body-family, 'Host Grotesk')), var(--font-display-fallback, var(--font-body-fallback, system-ui, sans-serif)); --font-accent: var(--font-label); /* Private mirrors: components read these, consumers override --text-*. */ --_text-xs: var(--text-xs, 12px); --_text-sm: var(--text-sm, 16px); --_text-md: var(--text-md, 17px); --_text-lg: var(--text-lg, clamp(18px, 1.5vw, 20px)); --_text-xl: var(--text-xl, clamp(22px, 2.5vw, 26px)); --_text-2xl: var(--text-2xl, clamp(28px, 3vw, 36px)); --_text-3xl: var(--text-3xl, clamp(36px, 5vw, 52px)); --display-xl-size: var(--_text-3xl); --display-xl-weight: var(--font-display-weight, 500); --display-xl-spacing: -1px; --heading-size: var(--_text-xl); --heading-weight: var(--font-display-weight, 500); --heading-lh: 1.2; --body-size: var(--_text-md); --body-weight: var(--font-body-weight, 500); --body-lh: 1.7; --wordmark-size: clamp(20px, 2.5vw, 28px); --wordmark-weight: var(--font-display-weight, 500); --wordmark-spacing: clamp(8px, 1.2vw, 14px); --section-title-size: var(--_text-xs); --section-title-weight: var(--font-label-weight, 600); --section-title-spacing: 4px; --ui-accent-size: 16px; --ui-accent-weight: var(--font-label-weight, 600); --ui-accent-spacing: 1px; --code-size: 14px; --code-lh: 1.8; --label-inline-size: 10px; --label-inline-spacing: 3px; /* Spacing */ --space-xs: 4px; --space-sm: 8px; --space-md: 16px; --space-lg: 24px; --space-xl: 40px; --space-2xl: 64px; --space-3xl: 96px; --space-4xl: 128px; /* Radii */ --radius-xs: 2px; --radius-sm: 4px; --radius-md: 10px; --radius-lg: 14px; --radius-xl: 20px; --radius-full: 9999px; /* Transitions and motion */ --transition-fast: 120ms ease; --transition-base: 200ms ease; --transition-slow: 400ms ease; --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1); --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1); --duration-enter: 500ms; --duration-exit: 300ms; /* Z-index */ --z-base: 0; --z-dropdown: 1000; --z-tooltip: 1100; --z-overlay: 1200; --z-modal: 1300; --z-toast: 1400; --z-max: 9999; /* Glow and focus */ --glow-hover: 0 0 12px rgba(var(--accent-primary-rgb), 0.15); --focus-ring: 0 0 0 1px rgba(var(--accent-primary-rgb),0.25); --focus-glow: 0 0 0 1px rgba(var(--accent-primary-rgb),0.2), 0 0 6px rgba(var(--accent-primary-rgb),0.35), 0 0 16px rgba(var(--accent-primary-rgb),0.2), 0 0 40px rgba(var(--accent-secondary-rgb),0.12); /* Semantic aliases */ --interactive: var(--accent-primary); --interactive-rgb: var(--accent-primary-rgb); --interactive-hover: var(--glow-hover); --interactive-active: var(--glow-primary); --interactive-focus: var(--focus-glow); --interactive-focus-ring: var(--focus-ring); --interactive-muted: var(--text-ghost); --surface-base: var(--bg-deep); --surface-primary: var(--bg-surface); --surface-raised: var(--bg-card); --surface-overlay: var(--bg-elevated); --surface-hover: var(--bg-hover); --divider: var(--border-subtle); /* Interactive and layout */ --touch-min: 24px; --touch-pad: 4px; --max-width: 1120px; --max-width-sm: 720px; --nav-height: 64px; `",
+          "description": "The static token layer every component adopts into its shadow root.\n\nThese are what make a component render correctly with no base.css loaded at\nall, which is the documented quick start. Colors are deliberately absent: they\nare themed, and a literal here would pin a component to one theme."
+        },
+        {
+          "kind": "variable",
+          "name": "hostTouchTokens",
+          "default": "css` @media (pointer: coarse) { :host { --touch-min: 36px; --touch-pad: 8px; } } `",
+          "description": "Touch targets grow on coarse pointers. Kept separate because it is a media\nquery rather than a declaration list, so it cannot live inside :host { }."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "hostTokens",
+          "declaration": {
+            "name": "hostTokens",
+            "module": "src/generated/host-tokens.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "hostTouchTokens",
+          "declaration": {
+            "name": "hostTouchTokens",
+            "module": "src/generated/host-tokens.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/input/button-group.js",
       "declarations": [
         {
@@ -10244,6 +10332,28 @@
           "members": [
             {
               "kind": "field",
+              "name": "locale",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language.",
+              "attribute": "locale"
+            },
+            {
+              "kind": "field",
+              "name": "firstDayOfWeek",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "description": "Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention.",
+              "attribute": "first-day-of-week"
+            },
+            {
+              "kind": "field",
               "name": "value",
               "privacy": "public",
               "type": {
@@ -10313,6 +10423,24 @@
             }
           ],
           "attributes": [
+            {
+              "name": "locale",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language.",
+              "fieldName": "locale"
+            },
+            {
+              "name": "first-day-of-week",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "description": "Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention.",
+              "fieldName": "firstDayOfWeek"
+            },
             {
               "name": "value",
               "type": {
@@ -11770,6 +11898,28 @@
             },
             {
               "kind": "field",
+              "name": "locale",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language.",
+              "attribute": "locale"
+            },
+            {
+              "kind": "field",
+              "name": "firstDayOfWeek",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "description": "Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention, so most of the world gets Monday and the US gets Sunday without configuring anything.",
+              "attribute": "first-day-of-week"
+            },
+            {
+              "kind": "field",
               "name": "formAssociated",
               "type": {
                 "text": "boolean"
@@ -11999,6 +12149,24 @@
               "fieldName": "open"
             },
             {
+              "name": "locale",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language.",
+              "fieldName": "locale"
+            },
+            {
+              "name": "first-day-of-week",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "description": "Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention, so most of the world gets Monday and the US gets Sunday without configuring anything.",
+              "fieldName": "firstDayOfWeek"
+            },
+            {
               "name": "required",
               "type": {
                 "text": "boolean"
@@ -12113,6 +12281,28 @@
               "type": {
                 "text": "string"
               }
+            },
+            {
+              "kind": "field",
+              "name": "locale",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language.",
+              "attribute": "locale"
+            },
+            {
+              "kind": "field",
+              "name": "firstDayOfWeek",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "description": "Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention.",
+              "attribute": "first-day-of-week"
             },
             {
               "kind": "field",
@@ -12384,6 +12574,24 @@
             }
           ],
           "attributes": [
+            {
+              "name": "locale",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language.",
+              "fieldName": "locale"
+            },
+            {
+              "name": "first-day-of-week",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "description": "Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention.",
+              "fieldName": "firstDayOfWeek"
+            },
             {
               "name": "start",
               "type": {
@@ -26469,7 +26677,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "ClickOutsideController — shared reactive controller for dismiss-on-outside-click.\n\nAttaches a single capture-phase pointerdown listener on the document only\nwhile active (call activate()/deactivate() as the overlay opens/closes, or\npass `when` to derive it). Uses composedPath() so clicks inside shadow DOM\nand slotted content are correctly treated as \"inside\".\n\n  this._clickOutside = new ClickOutsideController(this, {\n    onClickOutside: () => this._close(),\n    when: () => this._open,          // optional; defaults to always-on-while-activated\n  });\n  // in updated(): open ? this._clickOutside.activate() : this._clickOutside.deactivate()",
+          "description": "ClickOutsideController — shared reactive controller for dismiss-on-outside-click.\n\nAttaches a single capture-phase pointerdown listener on the document only\nwhile active (call activate()/deactivate() as the overlay opens/closes, or\npass `when` to derive it). Uses composedPath() so clicks inside shadow DOM\nand slotted content are correctly treated as \"inside\".\n\n  this._clickOutside = new ClickOutsideController(this, {\n    onClickOutside: () => this._close(),\n    when: () => this._open,          // optional; defaults to always-on-while-activated\n  });\n  // in updated(): open ? this._clickOutside.activate() : this._clickOutside.deactivate()\n\n## Why pointerdown, and why no requestAnimationFrame\n\nComponents that hand-rolled this listened for `click` and had to defer the\nsubscription by a frame, or the very click that opened them closed them again.\npointerdown avoids that entirely: a click-triggered open happens on pointerup,\nso by the time the listener exists the opening gesture is already over and the\nnext pointerdown is a genuinely new interaction. Any adopter can drop its\nrAF dance.",
           "name": "ClickOutsideController",
           "members": [
             {
@@ -26499,6 +26707,164 @@
           "declaration": {
             "name": "ClickOutsideController",
             "module": "src/shared/click-outside.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/shared/date-names.js",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "defaultLocale",
+          "description": "The locale a component should use when it has not been told one."
+        },
+        {
+          "kind": "function",
+          "name": "monthNames",
+          "parameters": [
+            {
+              "name": "style",
+              "default": "'long'",
+              "optional": true,
+              "type": {
+                "text": "'long' | 'short' | 'narrow'"
+              }
+            },
+            {
+              "name": "locale",
+              "default": "defaultLocale()",
+              "optional": true,
+              "type": {
+                "text": "string"
+              }
+            }
+          ],
+          "description": "Month names.",
+          "return": {
+            "type": {
+              "text": "string[]"
+            }
+          }
+        },
+        {
+          "kind": "function",
+          "name": "weekdayNames",
+          "parameters": [
+            {
+              "name": "style",
+              "default": "'short'",
+              "optional": true,
+              "type": {
+                "text": "'long' | 'short' | 'narrow'"
+              }
+            },
+            {
+              "name": "locale",
+              "default": "defaultLocale()",
+              "optional": true,
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "firstDay",
+              "default": "firstDayOfWeek(locale)",
+              "description": "1 = Monday … 7 = Sunday. Defaults to the locale's.",
+              "optional": true,
+              "type": {
+                "text": "number"
+              }
+            }
+          ],
+          "description": "Weekday names, ordered from this locale's first day of the week.",
+          "return": {
+            "type": {
+              "text": "string[]"
+            }
+          }
+        },
+        {
+          "kind": "function",
+          "name": "firstDayOfWeek",
+          "parameters": [
+            {
+              "name": "locale",
+              "default": "defaultLocale()",
+              "optional": true,
+              "type": {
+                "text": "string"
+              }
+            }
+          ],
+          "description": "The locale's first day of the week, 1 = Monday … 7 = Sunday."
+        },
+        {
+          "kind": "function",
+          "name": "weekdayOffset",
+          "parameters": [
+            {
+              "name": "date",
+              "type": {
+                "text": "Date"
+              }
+            },
+            {
+              "name": "firstDay",
+              "description": "1 = Monday … 7 = Sunday.",
+              "type": {
+                "text": "number"
+              }
+            }
+          ],
+          "description": "How far into the week a date sits, counting from `firstDay`.\n\nThis is the number of blank cells a month grid needs before its first day.\nDoing it here rather than in each calendar is the point: `date.getDay()` is\nSunday-based, and every component that mixed it with a non-Sunday first day\ngot the offset wrong.",
+          "return": {
+            "type": {
+              "text": "number"
+            }
+          }
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "defaultLocale",
+          "declaration": {
+            "name": "defaultLocale",
+            "module": "src/shared/date-names.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "monthNames",
+          "declaration": {
+            "name": "monthNames",
+            "module": "src/shared/date-names.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "weekdayNames",
+          "declaration": {
+            "name": "weekdayNames",
+            "module": "src/shared/date-names.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "firstDayOfWeek",
+          "declaration": {
+            "name": "firstDayOfWeek",
+            "module": "src/shared/date-names.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "weekdayOffset",
+          "declaration": {
+            "name": "weekdayOffset",
+            "module": "src/shared/date-names.js"
           }
         }
       ]
@@ -26816,6 +27182,98 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/shared/listbox-controller.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ListboxController",
+          "members": [
+            {
+              "kind": "field",
+              "name": "activeIndex",
+              "description": "The active (virtually focused) option index, or -1 for none.",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "activeDescendantId",
+              "description": "The value for `aria-activedescendant` on the focused control, or an empty\nstring when nothing is active. Empty rather than absent because a stale id\npointing at a removed option is worse than none — assistive technology\nannounces nothing at all.",
+              "readonly": true
+            },
+            {
+              "kind": "method",
+              "name": "setActive",
+              "parameters": [
+                {
+                  "name": "index"
+                }
+              ],
+              "description": "Move virtual focus, and queue a scroll so the option stays visible."
+            },
+            {
+              "kind": "method",
+              "name": "reset",
+              "description": "Clear virtual focus — on close, or when the option set changes wholesale."
+            },
+            {
+              "kind": "method",
+              "name": "clampToCount",
+              "description": "Keep the active index inside the current option set.\n\nCall after the options change — filtering a combobox down to fewer items\nthan the active index would otherwise leave `aria-activedescendant` pointing\nat an option that no longer exists."
+            },
+            {
+              "kind": "method",
+              "name": "handleKeydown",
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "KeyboardEvent"
+                  }
+                }
+              ],
+              "description": "Handle a listbox navigation key.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hostUpdated",
+              "description": "Scroll the active option into view after the render that marked it active.\n\n`block: 'nearest'` so an option already on screen doesn't yank the list, and\nscoped to the listbox: scrollIntoView on an element inside a top-layer panel\nwould otherwise be free to scroll the page behind it."
+            },
+            {
+              "kind": "method",
+              "name": "hostDisconnected"
+            },
+            {
+              "kind": "field",
+              "name": "host",
+              "default": "host"
+            },
+            {
+              "kind": "field",
+              "name": "opts",
+              "default": "opts"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ListboxController",
+          "declaration": {
+            "name": "ListboxController",
+            "module": "src/shared/listbox-controller.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/shared/menu-divider.js",
       "declarations": [
         {
@@ -27050,6 +27508,59 @@
           "declaration": {
             "name": "ArcOption",
             "module": "src/shared/option.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/shared/position-controller.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PositionController",
+          "members": [
+            {
+              "kind": "field",
+              "name": "placement",
+              "description": "The resolved side the panel is currently on. Null while hidden.",
+              "readonly": true
+            },
+            {
+              "kind": "method",
+              "name": "show",
+              "description": "Promote the panel to the top layer and position it.\n\nIdempotent: calling it while shown just repositions, which is what a\ncomponent wants when its content changes size (an option list filtering\ndown, a picker switching months)."
+            },
+            {
+              "kind": "method",
+              "name": "hide",
+              "description": "Demote the panel out of the top layer and stop tracking."
+            },
+            {
+              "kind": "method",
+              "name": "hostDisconnected"
+            },
+            {
+              "kind": "field",
+              "name": "host",
+              "default": "host"
+            },
+            {
+              "kind": "field",
+              "name": "opts",
+              "default": "opts"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PositionController",
+          "declaration": {
+            "name": "PositionController",
+            "module": "src/shared/position-controller.js"
           }
         }
       ]

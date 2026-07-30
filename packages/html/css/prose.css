@@ -9,13 +9,13 @@
       }
 
       /* Size variants */
-      .arc-prose[data-size="sm"] { font-size: var(--text-sm); }
+      .arc-prose[data-size="sm"] { font-size: var(--_text-sm); }
       .arc-prose[data-size="md"], .arc-prose:not([data-data-size="lg"]):not([data-data-size="sm"]) { font-size: var(--body-size); }
-      .arc-prose[data-size="lg"] { font-size: var(--text-lg); }
+      .arc-prose[data-size="lg"] { font-size: var(--_text-lg); }
 
       /* Direct-child block elements via ::slotted */
       .arc-prose h1 {
-        font-size: var(--text-3xl) !important;
+        font-size: var(--_text-3xl) !important;
         font-weight: var(--heading-weight) !important;
         color: var(--text-primary) !important;
         margin-top: var(--space-2xl) !important;
@@ -31,14 +31,14 @@
         line-height: 1.4 !important;
       }
       .arc-prose h3 {
-        font-size: var(--text-lg) !important;
+        font-size: var(--_text-lg) !important;
         font-weight: 600 !important;
         color: var(--text-primary) !important;
         margin-top: var(--space-lg) !important;
         margin-bottom: var(--space-sm) !important;
       }
       .arc-prose h4 {
-        font-size: var(--text-md) !important;
+        font-size: var(--_text-md) !important;
         font-weight: 600 !important;
         color: var(--text-primary) !important;
         margin-top: var(--space-lg) !important;
@@ -51,7 +51,7 @@
       .arc-prose ul,
       .arc-prose ol {
         margin-bottom: var(--space-md) !important;
-        padding-left: var(--space-lg) !important;
+        padding-inline-start: var(--space-lg) !important;
         color: var(--text-secondary) !important;
       }
       .arc-prose blockquote {
@@ -89,7 +89,7 @@
         width: 100% !important;
         border-collapse: collapse !important;
         margin: var(--space-lg) 0 !important;
-        font-size: var(--text-sm) !important;
+        font-size: var(--_text-sm) !important;
       }
 
       @media (prefers-reduced-motion: reduce) {

@@ -2,7 +2,7 @@
 <!-- arc-card — self-contained, no external CSS needed -->
 <style>
   @media (max-width: 768px) {
-    .arc-card .card__inner { padding: 24px 16px; }
+    .arc-card .card__inner { padding: inherit inherit; }
   }
   @media (prefers-reduced-motion: reduce) {
     .arc-card *,
@@ -14,11 +14,11 @@
   .arc-card:not([data-href]):not([data-interactive]) .card:not(.card--linked):hover { background: rgb(30, 30, 78); }
   .arc-card:not([data-href]):not([data-interactive]) .card:not(.card--linked):hover .card__inner { box-shadow: none; }
   .arc-card a:focus-visible { outline: none;
-        box-shadow: 0 0 0 1px rgba(130, 164, 250,0.2), 0 0 6px rgba(130, 164, 250,0.35), 0 0 16px rgba(130, 164, 250,0.2), 0 0 40px rgba(139, 92, 246,0.12);
-        border-radius: 10px; }
+        box-shadow: inherit;
+        border-radius: inherit; }
 </style>
 <div class="arc-card" style="display: block">
-  <div><div class="card__inner" style="padding: 24px"><div style="flex: 1">
+  <div><div class="card__inner" style="padding: inherit"><div style="flex: 1">
     <slot ></slot>
   </div>
   <div>

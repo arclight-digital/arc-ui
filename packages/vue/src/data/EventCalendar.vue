@@ -5,10 +5,14 @@ import '@arclux/arc-ui/event-calendar';
 defineOptions({ name: 'EventCalendar' });
 
 const props = withDefaults(defineProps<{
+  locale?: string;
+  firstDayOfWeek?: number;
   events?: Array<{date:string,end?:string,label:string,color?:number}>;
   view?: 'month' | 'week';
   date?: string;
 }>(), {
+  locale: '',
+  firstDayOfWeek: 0,
   events: () => ([]),
   view: 'month',
   date: '',
@@ -41,6 +45,8 @@ function onArcDateClick(payload: CustomEvent) {
 
 <template>
   <arc-event-calendar
+    :locale="props.locale"
+    :firstDayOfWeek="props.firstDayOfWeek"
     :events="props.events"
     :view="props.view"
     :date="props.date"

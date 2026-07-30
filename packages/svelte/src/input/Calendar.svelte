@@ -4,6 +4,8 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
+    locale?: string;
+    firstDayOfWeek?: number;
     value?: string;
     min?: string;
     max?: string;
@@ -37,7 +39,14 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = $bindable(''), min = '', max = '', month = $bindable(), year = $bindable(), children, ...rest }: Props = $props();
+  let { locale = '', firstDayOfWeek = 0, value = $bindable(''), min = '', max = '', month = $bindable(), year = $bindable(), children, ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (firstDayOfWeek !== undefined) el.firstDayOfWeek = firstDayOfWeek;
+  });
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
@@ -59,7 +68,7 @@
   }
 </script>
 
-<arc-calendar {value} {min} {max} {month} {year} {...rest}
+<arc-calendar {locale} {value} {min} {max} {month} {year} bind:this={__el} {...rest}
   onarc-month-change={__onArcMonthChange}
   onarc-change={__onArcChange}
 >

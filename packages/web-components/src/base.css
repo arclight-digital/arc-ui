@@ -169,6 +169,25 @@
   --text-2xl: clamp(28px, 3vw, 36px);
   --text-3xl: clamp(36px, 5vw, 52px);
 
+  /* Private mirrors of the size scale. Components read these rather than the
+     public --text-* names, because shared-styles.js has to declare a working
+     default on :host and a token cannot fall back to itself:
+     --text-md: var(--text-md, 17px) is a self-reference and invalid. Declaring
+     the public name on :host instead is what made an override at :root
+     unreachable — a value set on the host always beats one inherited into it.
+     The indirection gives components a name that is only ever declared, and
+     consumers a name that is only ever read.
+
+     Emitted here as well as on :host so the standalone CSS build resolves them:
+     there is no shadow root there, so :root is the only declaration site. */
+  --_text-xs: var(--text-xs);
+  --_text-sm: var(--text-sm);
+  --_text-md: var(--text-md);
+  --_text-lg: var(--text-lg);
+  --_text-xl: var(--text-xl);
+  --_text-2xl: var(--text-2xl);
+  --_text-3xl: var(--text-3xl);
+
   --display-xl-size: var(--text-3xl);
   --display-xl-weight: var(--font-display-weight);
   --display-xl-spacing: -1px;
@@ -189,7 +208,7 @@
   --ui-accent-spacing: 1px;
   --code-size: 14px;
   --code-lh: 1.8;
-  --label-inline-size: var(--text-xs);
+  --label-inline-size: 10px;
   --label-inline-spacing: 3px;
   --field-weight: 400;
 
@@ -205,6 +224,7 @@
   --space-3xl: 96px;
   --space-4xl: 128px;
 
+  --radius-xs: 2px;
   --radius-sm: 4px;
   --radius-md: 10px;
   --radius-lg: 14px;
@@ -338,8 +358,8 @@
   --glow-line-white: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.15), transparent);
   --glow-line-blue: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.6), transparent);
   --bg-hover: rgba(55, 105, 235, 0.04);
-  --accent-text-mix: 55%;
   --overlay-backdrop: rgba(20, 20, 40, 0.25);
+  --accent-text-mix: 55%;
 }
 
 @media (prefers-color-scheme: light) {
@@ -386,9 +406,124 @@
     --glow-line-white: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.15), transparent);
     --glow-line-blue: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.6), transparent);
     --bg-hover: rgba(55, 105, 235, 0.04);
-    --accent-text-mix: 55%;
     --overlay-backdrop: rgba(20, 20, 40, 0.25);
+    --accent-text-mix: 55%;
   }
+}
+
+/* Let a :root override reach into shadow DOM.
+   Each of these is also declared on :host by every component — which is what
+   makes a component render correctly with no base.css at all — and a value set
+   on the host beats one inherited into it. Without this rule
+   `:root { --space-md: 20px }` would be silently ignored.
+   Scoped to ARC's own tags: this must never be a universal selector, which
+   would push these values onto every element in the consumer's page. */
+:where(
+  arc-accordion, arc-accordion-item, arc-alert, arc-anchor-nav, arc-animated-number,
+  arc-announcement, arc-app-shell, arc-aspect-grid, arc-aspect-ratio, arc-auth-shell, arc-avatar,
+  arc-avatar-group, arc-badge, arc-banner, arc-blockquote, arc-bottom-nav, arc-breadcrumb,
+  arc-breadcrumb-item, arc-breadcrumb-menu, arc-button, arc-button-group, arc-calendar,
+  arc-callout, arc-card, arc-carousel, arc-center, arc-chart, arc-checkbox, arc-chip,
+  arc-cluster, arc-code-block, arc-collapsible, arc-color-picker, arc-color-swatch, arc-column,
+  arc-combobox, arc-command-bar, arc-command-group, arc-command-item, arc-command-palette,
+  arc-comparison, arc-comparison-column, arc-confirm, arc-connection-status, arc-container,
+  arc-context-menu, arc-copy-button, arc-countdown-timer, arc-cta-banner, arc-dashboard-grid,
+  arc-data-grid, arc-data-table, arc-date-picker, arc-date-range-picker, arc-description-item,
+  arc-description-list, arc-dialog, arc-diff, arc-divider, arc-dock, arc-drawer,
+  arc-dropdown-menu, arc-empty-state, arc-event-calendar, arc-feature-card, arc-fieldset,
+  arc-file-upload, arc-float-bar, arc-footer, arc-form, arc-gradient-text, arc-guided-tour,
+  arc-highlight, arc-hotkey, arc-hover-card, arc-icon, arc-icon-button, arc-icon-library,
+  arc-image, arc-image-cropper, arc-infinite-scroll, arc-inline-message, arc-input,
+  arc-input-group, arc-inset, arc-kanban, arc-kbd, arc-key-value, arc-kv-pair, arc-label,
+  arc-link, arc-list, arc-list-item, arc-loading-overlay, arc-markdown, arc-marquee, arc-masonry,
+  arc-menu-divider, arc-menu-item, arc-menubar, arc-meter, arc-modal, arc-multi-select,
+  arc-nav-item, arc-navigation-menu, arc-notification-panel, arc-number-format, arc-number-input,
+  arc-option, arc-otp-input, arc-page-header, arc-page-indicator, arc-page-layout,
+  arc-pagination, arc-password-input, arc-pin-input, arc-popover, arc-progress,
+  arc-progress-toast, arc-prose, arc-qr-code, arc-radio, arc-radio-group, arc-rail,
+  arc-range-slider, arc-rating, arc-resizable, arc-responsive-switcher, arc-scroll-area,
+  arc-scroll-indicator, arc-scroll-spy, arc-scroll-to-top, arc-search, arc-section,
+  arc-segmented-control, arc-select, arc-separator, arc-settings-layout, arc-sheet, arc-sidebar,
+  arc-sidebar-link, arc-sidebar-section, arc-skeleton, arc-skip-link, arc-slider, arc-snackbar,
+  arc-sortable-list, arc-sparkline, arc-speed-dial, arc-spinner, arc-split-pane, arc-spotlight,
+  arc-spy-link, arc-stack, arc-stat, arc-status-bar, arc-step, arc-stepper, arc-stepper-nav,
+  arc-sticky, arc-suggestion, arc-switch-group, arc-tab, arc-table, arc-tabs, arc-tag,
+  arc-tag-input, arc-text, arc-textarea, arc-theme-toggle, arc-time-ago, arc-time-picker,
+  arc-timeline, arc-timeline-item, arc-toast, arc-toast-manager, arc-toggle, arc-toolbar,
+  arc-tooltip, arc-top-bar, arc-transfer-list, arc-tree-item, arc-tree-view, arc-truncate,
+  arc-typewriter, arc-value-card, arc-virtual-list
+) {
+  --display-xl-size: inherit;
+  --display-xl-weight: inherit;
+  --display-xl-spacing: inherit;
+  --heading-size: inherit;
+  --heading-weight: inherit;
+  --heading-lh: inherit;
+  --body-size: inherit;
+  --body-weight: inherit;
+  --body-lh: inherit;
+  --wordmark-size: inherit;
+  --wordmark-weight: inherit;
+  --wordmark-spacing: inherit;
+  --section-title-size: inherit;
+  --section-title-weight: inherit;
+  --section-title-spacing: inherit;
+  --ui-accent-size: inherit;
+  --ui-accent-weight: inherit;
+  --ui-accent-spacing: inherit;
+  --code-size: inherit;
+  --code-lh: inherit;
+  --label-inline-size: inherit;
+  --label-inline-spacing: inherit;
+  --space-xs: inherit;
+  --space-sm: inherit;
+  --space-md: inherit;
+  --space-lg: inherit;
+  --space-xl: inherit;
+  --space-2xl: inherit;
+  --space-3xl: inherit;
+  --space-4xl: inherit;
+  --radius-xs: inherit;
+  --radius-sm: inherit;
+  --radius-md: inherit;
+  --radius-lg: inherit;
+  --radius-xl: inherit;
+  --radius-full: inherit;
+  --transition-fast: inherit;
+  --transition-base: inherit;
+  --transition-slow: inherit;
+  --ease-out-expo: inherit;
+  --ease-in-out: inherit;
+  --duration-enter: inherit;
+  --duration-exit: inherit;
+  --z-base: inherit;
+  --z-dropdown: inherit;
+  --z-tooltip: inherit;
+  --z-overlay: inherit;
+  --z-modal: inherit;
+  --z-toast: inherit;
+  --z-max: inherit;
+  --glow-hover: inherit;
+  --focus-ring: inherit;
+  --focus-glow: inherit;
+  --interactive: inherit;
+  --interactive-rgb: inherit;
+  --interactive-hover: inherit;
+  --interactive-active: inherit;
+  --interactive-focus: inherit;
+  --interactive-focus-ring: inherit;
+  --interactive-muted: inherit;
+  --surface-base: inherit;
+  --surface-primary: inherit;
+  --surface-raised: inherit;
+  --surface-overlay: inherit;
+  --surface-hover: inherit;
+  --divider: inherit;
+  --touch-min: inherit;
+  --touch-pad: inherit;
+  --max-width: inherit;
+  --max-width-sm: inherit;
+  --nav-height: inherit;
 }
 
 /* Fixed Dark — always-dark regions (nav, footer) */
