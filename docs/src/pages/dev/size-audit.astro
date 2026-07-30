@@ -16,7 +16,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 /** Controls that already take `size`. These define what sm/md/lg mean. */
 const SIZED: { tag: string; attrs?: string; inner?: string }[] = [
   { tag: 'arc-button', inner: 'Button' },
-  { tag: 'arc-icon-button', attrs: 'icon="check" label="Confirm"' },
+  // `name`, not `icon` — arc-icon-button names its glyph the way arc-icon does.
+  { tag: 'arc-icon-button', attrs: 'name="check" label="Confirm"' },
   { tag: 'arc-input', attrs: 'placeholder="Input"' },
   { tag: 'arc-password-input', attrs: 'placeholder="Password"' },
   { tag: 'arc-textarea', attrs: 'placeholder="Textarea" rows="2"' },

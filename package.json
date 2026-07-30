@@ -33,6 +33,7 @@
     "check:child-registrations": "node scripts/check-child-registrations.js",
     "check:events": "node scripts/check-event-conventions.js",
     "check:icon-names": "node scripts/check-icon-names.js",
+    "check:doc-claims": "node scripts/check-doc-claims.js",
     "check:wrapper-types": "node scripts/check-wrapper-types.js",
     "publish-all": "pnpm -r publish --access public",
     "smoke:wrappers": "node scripts/smoke-test-wrappers.js"
