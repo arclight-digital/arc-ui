@@ -879,19 +879,13 @@ function renderUndefinedGuard(tags) {
    shadow root (the browser consumes the <template> during parsing, leaving no
    selectable trace), so the page has to say so.
 
-   \`data-arc-defer\` is the other half of that, and the reason the root switch
-   is not enough on its own. A page can be *partly* server-rendered — the shell
-   and the first screen, with the long tail left to the client, which is the
-   only way to keep the payload from doubling — and then the root attribute
-   makes one claim about elements in both states. An element the server skipped
-   carries this attribute and is hidden until it upgrades, exactly as it would
-   be on a page with no server rendering at all. Set by the build, never by
-   hand. */
+   \`data-arc-closed\` below is the other half of that, because a page can be
+   *partly* server-rendered and then the root attribute alone makes one claim
+   about elements in two different states. */
 @media (scripting: enabled) {
   :root:not([data-arc-ssr]) :is(
 ${wrapTagList(tags)}
-  ):not(:defined),
-  [data-arc-defer]:not(:defined) {
+  ):not(:defined) {
     opacity: 0;
   }
 

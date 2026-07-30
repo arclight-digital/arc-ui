@@ -21,7 +21,7 @@
  * So this is HTML in, HTML out, and it does not care what produced the input —
  * Nuxt, SvelteKit, Angular Universal, Next, Astro, or a string you assembled by
  * hand. It is the same code that server-renders arcui.dev, where it runs over
- * 177 pages and 42,613 shadow roots on every build.
+ * 177 pages and 43,620 shadow roots on every build.
  *
  * ## What it does
  *
@@ -44,6 +44,7 @@
  * `docs/astro.config.mjs` in this repo shows why an import statement alone is
  * not enough.
  */
+import { CLIENT_ONLY } from './ssr-client-only.js';
 
 /**
  * Components closed until something opens them.
@@ -93,6 +94,19 @@ async function prepare() {
     lit = { render: ssr.render, collectResult, html, unsafeStatic };
   }
   if (!registered) {
+    // The barrel is all-or-nothing, so a client-only component would be defined
+    // here and then throw on the first page that contains it — while check-ssr,
+    // which honours the same list, reported the build as clean. Failing loudly
+    // is the only version of this that cannot drift quietly.
+    const names = Object.keys(CLIENT_ONLY);
+    if (names.length > 0) {
+      throw new Error(
+        `@arclux/arc-ui/ssr registers components through the ./register.js `
+        + `barrel, which cannot skip the ${names.length} client-only `
+        + `component(s): ${names.join(', ')}. Give it a registration path that `
+        + `omits them before adding an entry to src/ssr-client-only.js.`,
+      );
+    }
     // @lit-labs/ssr installs the DOM shim on import, so it has to be loaded
     // before any component class is defined — which the order here guarantees.
     await import('./register.js');

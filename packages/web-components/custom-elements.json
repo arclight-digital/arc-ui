@@ -28450,6 +28450,31 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/ssr-client-only.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "CLIENT_ONLY",
+          "type": {
+            "text": "object"
+          },
+          "default": "{}",
+          "description": "Components that cannot be server-rendered *by our own design*, with the reason.\n\n**Empty, and worth keeping empty.** Anything listed here is content a consumer\ncannot get into their initial payload.\n\nIt lives in the package rather than in scripts/ because two things depend on\nit and they are not both build tooling: scripts/check-ssr.js, which asserts\nthe list is neither short nor stale, and src/ssr.js, which must not define a\ncomponent that would throw the moment a page containing it is rendered.\n\n`arc-markdown` was the last entry. Its sanitiser was DOMParser-based and its\nrender used an `.innerHTML` property binding — which the server has nothing\nto serialise, so it emitted an empty div. Both are fixed; see\nsrc/shared/sanitize-markup.js.\n\n**Adding an entry is not just a matter of editing this object.** src/ssr.js\nregisters components through the `./register.js` barrel, which is all-or-\nnothing, so it asserts this list is empty rather than silently defining\nsomething that throws. A new entry has to come with a registration path that\ncan skip it."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "CLIENT_ONLY",
+          "declaration": {
+            "name": "CLIENT_ONLY",
+            "module": "src/ssr-client-only.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/ssr.js",
       "declarations": [
         {

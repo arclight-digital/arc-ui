@@ -32,9 +32,9 @@ const root = path.resolve(__dirname, '..');
 const WC = path.join(root, 'packages/web-components');
 const SRC = path.join(WC, 'src');
 
-// Shared with the docs site's arc-dsd build pass, which skips registering these
-// so that lit-ssr leaves them alone. See scripts/ssr-client-only.js.
-import { CLIENT_ONLY } from './ssr-client-only.js';
+// Shared with @arclux/arc-ui/ssr, which refuses to register a component on this
+// list. One copy, in the package, because both readers depend on it being true.
+import { CLIENT_ONLY } from '../packages/web-components/src/ssr-client-only.js';
 
 /**
  * Failures attributable to @lit-labs/ssr rather than to a component.
