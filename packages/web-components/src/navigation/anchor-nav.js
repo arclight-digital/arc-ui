@@ -8,7 +8,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @tag arc-anchor-nav
  * @prop {'vertical' | 'horizontal'} orientation - Layout direction. Vertical renders a column of links; horizontal renders a row.
  * @prop {string} value - The value of the currently active link. Controls which item is highlighted.
- * @prop items - Declarative list of items to render. Each object needs a label (display text) and value (identifier). Alternative to slotting children.
+ * @prop {Array<{label: string, value: string}>} items - Declarative list of items to render. Each object needs a label (display text) and value (identifier). Alternative to slotting children.
  * @fires arc-change - Fired when a link is selected with detail: { value }.
  * @slot - Default content.
  * @csspart base

@@ -11,7 +11,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {boolean} open - Whether the secondary actions are currently visible.
  * @prop {'up' | 'down' | 'left' | 'right'} direction - The direction in which child actions fan out from the trigger.
  * @prop {'bottom-right' | 'bottom-left'} position - Fixed viewport corner where the speed dial is anchored.
- * @prop items - Array of secondary action items to display when the speed dial is open. Each item needs an icon and label.
+ * @prop {Array<{icon: string, label: string, value?: string}>} items - Array of secondary action items to display when the speed dial is open. Each item needs an icon and label.
  * @fires arc-open - Fired when the speed dial expands.
  * @fires {CustomEvent<void>} arc-close - Fired when the speed dial collapses.
  * @fires arc-action - Fired when a secondary action is selected with detail: { index }.

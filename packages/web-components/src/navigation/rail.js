@@ -7,7 +7,7 @@ import { tokenStyles } from '../shared-styles.js';
  *
  * @tag arc-rail
  * @requires arc-icon-button
- * @prop items - Array of navigation items, each with an icon name, text label, and value identifier.
+ * @prop {Array<{icon: string, label: string, value: string}>} items - Array of navigation items, each with an icon name, text label, and value identifier.
  * @prop {string} value - The value of the currently active item. Controls which icon receives the accent glow.
  * @prop {boolean} expanded - When true, the Rail widens to show text labels beside each icon. Can be toggled on hover or set permanently.
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired when an item is selected with detail: { value }.

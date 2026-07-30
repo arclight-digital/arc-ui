@@ -11,7 +11,7 @@ import '../layout/container.register.js';
  * @prop {string} heading - Brand text displayed in the top-left corner next to the optional logo slot. Rendered with the accent font family (Tektur), uppercase, and wide letter-spacing. Keep this to one or two words that identify the application.
  * @prop {boolean} fixed - When true, the bar uses position: fixed so it stays at the top of the viewport while content scrolls underneath. Automatically applied when TopBar is placed inside an AppShell. Be sure to add matching top padding to the content below to prevent overlap.
  * @prop {boolean} menuOpen - Reflects whether the mobile hamburger menu is open. Toggling this value updates the aria-expanded attribute on the menu button. Typically managed by AppShell in response to the arc-sidebar-toggle event rather than set directly.
- * @prop {string} navAlign - Controls the alignment of content in the center slot. Options: 'left', 'center', 'right'. Pulls nav toward the brand or actions without reordering DOM.
+ * @prop {'left' | 'center' | 'right'} navAlign - Controls the alignment of content in the center slot. Pulls nav toward the brand or actions without reordering DOM.
  * @prop {string} contained - Sets a max-width containment on the top bar content area. Accepts any CSS length or named size.
  * @prop {string} mobileMenu - Controls the mobile menu behavior. When set to a value like "nav", the hamburger toggles an inline navigation panel instead of triggering sidebar toggle.
  * @prop {string} menuPosition - Position of the mobile menu panel when mobile-menu is active.

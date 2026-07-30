@@ -7,7 +7,7 @@ import { tokenStyles } from '../shared-styles.js';
  *
  * @tag arc-bottom-nav
  * @requires arc-icon
- * @prop items - Array of navigation items, each with a label, icon name, and value identifier.
+ * @prop {Array<{label: string, icon?: string, value: string}>} items - Array of navigation items, each with a label, icon name, and value identifier.
  * @prop {string} value - The value of the currently active item. Controls which item is highlighted.
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired when an item is tapped with detail: { value }.
  * @csspart base

@@ -6,7 +6,7 @@ import { tokenStyles } from '../shared-styles.js';
  * Dropdown panels match dropdown-menu styling.
  *
  * @tag arc-breadcrumb-menu
- * @prop items - Array of breadcrumb items. Each item has a label and href. Optionally include a siblings array to enable a dropdown at that level.
+ * @prop {Array<{label: string, href?: string, siblings?: Array<{label: string, href?: string}>}>} items - Array of breadcrumb items. Each item has a label and href. Optionally include a siblings array to enable a dropdown at that level.
  * @fires arc-navigate - Fired when a breadcrumb link or dropdown item is clicked with detail: { href }.
  * @csspart base
  * @csspart separator

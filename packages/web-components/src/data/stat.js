@@ -7,7 +7,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @tag arc-stat
  * @prop {string} value - The stat value (e.g. "99%")
  * @prop {string} label - Label below the value
- * @prop {string} trend - Shows a trend indicator arrow below the label. Options: 'up', 'down', 'neutral'.
+ * @prop {'up' | 'down' | 'neutral'} trend - Shows a trend indicator arrow below the label.
  * @prop {string} change - Text displayed next to the trend arrow, typically a percentage like '+12%' or '-3.5%'.
  * @csspart stat
  * @csspart value
