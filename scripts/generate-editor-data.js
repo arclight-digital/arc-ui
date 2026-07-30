@@ -38,4 +38,17 @@ for (const file of ['vscode.html-custom-data.json', 'vscode.css-custom-data.json
   writeFileSync(path, readFileSync(path, 'utf-8').replaceAll(' - undefined', ''));
 }
 
+// The JetBrains generator reads `package.json` from process.cwd() — the
+// monorepo root — so it stamps web-types.json with the private root package's
+// name and version. JetBrains keys web-types association off `name`, so the
+// wrong name breaks the integration outright, and the root version stamp is
+// what let a bump land without a regenerate and fail the v2.11.1 release
+// gate. Stamp both from the package that actually ships the file.
+const webTypesPath = resolve(wcDir, 'web-types.json');
+const wcPkg = JSON.parse(readFileSync(resolve(wcDir, 'package.json'), 'utf-8'));
+const webTypes = JSON.parse(readFileSync(webTypesPath, 'utf-8'));
+webTypes.name = wcPkg.name;
+webTypes.version = wcPkg.version;
+writeFileSync(webTypesPath, JSON.stringify(webTypes, null, 2) + '\n');
+
 console.log('✓ vscode.html-custom-data.json + vscode.css-custom-data.json + web-types.json');

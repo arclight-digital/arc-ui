@@ -26,6 +26,12 @@ import { execFileSync } from 'node:child_process';
 import { performance } from 'node:perf_hooks';
 
 const steps = [
+  // Source-level assertions run first: they validate the hand-written inputs
+  // to everything below, and failing here beats failing after the 35s prism
+  // step. The output-level checks (Unions/Fallbacks/Slots) stay at the end —
+  // they need the generated wrappers to exist.
+  { name: 'Requires', cmd: 'node',  args: ['scripts/check-child-registrations.js'] },
+  { name: 'Events',   cmd: 'node',  args: ['scripts/check-event-conventions.js'] },
   { name: 'Tokens',   cmd: 'node',  args: ['scripts/generate-base-css.js'] },
   { name: 'Icons',    cmd: 'node',  args: ['scripts/generate-icons.js'] },
   { name: 'Register', cmd: 'node',  args: ['scripts/generate-registrations.js'] },
@@ -41,6 +47,7 @@ const steps = [
   { name: 'Unions',   cmd: 'node',  args: ['scripts/check-prop-unions.js'] },
   { name: 'Fallbacks', cmd: 'node', args: ['scripts/check-enum-fallbacks.js'] },
   { name: 'Slots',    cmd: 'node',  args: ['scripts/check-wrapper-slots.js'] },
+  { name: 'WrapperTypes', cmd: 'node', args: ['scripts/check-wrapper-types.js'] },
 ];
 
 const totalStart = performance.now();

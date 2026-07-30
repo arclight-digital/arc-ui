@@ -30,6 +30,9 @@
     "check:unions": "node scripts/check-prop-unions.js",
     "check:enum-fallbacks": "node scripts/check-enum-fallbacks.js",
     "check:wrapper-slots": "node scripts/check-wrapper-slots.js",
+    "check:child-registrations": "node scripts/check-child-registrations.js",
+    "check:events": "node scripts/check-event-conventions.js",
+    "check:wrapper-types": "node scripts/check-wrapper-types.js",
     "publish-all": "pnpm -r publish --access public"
   },
   "license": "MIT",
