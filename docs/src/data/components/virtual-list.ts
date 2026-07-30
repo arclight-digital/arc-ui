@@ -9,20 +9,31 @@ export const virtualList: ComponentDef = {
   description:
     'Windowed list that renders only visible items for efficient scrolling through thousands of rows. Fixed item height with configurable overscan.',
 
-  overview: `VirtualList implements windowed rendering for large datasets. Instead of mounting every item in the DOM, it calculates which items are visible based on the scroll position and item height, then renders only those items plus a configurable overscan buffer. This keeps DOM node count constant regardless of list size, enabling smooth 60fps scrolling through tens of thousands of items.
+  overview: `VirtualList renders only the rows that are on screen. A spacer div stands in for the full list height (\`items.length × itemHeight\`), so the scrollbar behaves as if every row existed, while the DOM holds a screenful plus a configurable overscan buffer. Scroll handling is throttled with \`requestAnimationFrame\`. DOM node count stays constant whether the array holds a hundred rows or a million.
 
-The component uses absolute positioning within a spacer div whose height equals the total list height (\`items.length × itemHeight\`). As the user scrolls, a \`requestAnimationFrame\`-throttled handler recalculates the visible window and repositions rendered items. The overscan prop (default: 5) controls how many extra items are rendered above and below the viewport to prevent flicker during fast scrolling.
+**Rows come from one of two places**, because "render a row" means something different inside a framework than outside one.
 
-Items are rendered via named slots (\`item-0\`, \`item-1\`, etc.), giving you full control over item templates. The \`visibleRange\` getter exposes the current start/end indices for external template rendering loops.`,
+In plain JS, HTML or Lit, give it a \`renderItem\` callback. It is called only for rows currently on screen, and can return anything Lit can render — a template, a DOM node, a string:
+
+\`\`\`js
+list.items = data;
+list.renderItem = (item, index) => \`\${index + 1}. \${item.name}\`;
+\`\`\`
+
+In a framework, use the wrapper's own idiom — a \`renderItem\` prop in React, Preact and Solid, a \`row\` scoped slot in Vue, a \`row\` snippet in Svelte, a \`rowTemplate\` in Angular. These wrappers are not thin pass-throughs like the rest of the library: each listens for \`arc-range-change\`, tracks the visible range itself, and renders exactly those rows. The element owns the scroll geometry; your framework owns the rows, so a React row is a real React element.
+
+Working directly with the element, you can also drive it yourself: it renders an \`item-N\` slot for each index in the visible range and fires \`arc-range-change\` (with \`{ start, end }\`, \`end\` exclusive) whenever that range moves — once per row crossed, not once per frame. \`visibleRange\` reads the same values on demand, and \`scrollToIndex(n)\` jumps to a row.`,
 
   features: [
-    'Windowed rendering — only visible items are in the DOM',
-    'Handles tens of thousands of items with constant DOM node count',
+    'Windowed rendering — a row does not exist until it is on screen',
+    'Handles hundreds of thousands of items with constant DOM node count',
+    '`renderItem` callback for plain JS, HTML and Lit',
+    'Framework wrappers render rows natively — real React elements, real Svelte markup',
+    '`arc-range-change` fires once per row crossed, not once per frame',
     'rAF-throttled scroll handler for smooth 60fps performance',
     'Configurable overscan buffer to prevent flicker during fast scrolling',
     'Fixed item height for predictable layout calculations',
-    'Named slot pattern for flexible item templates',
-    '`visibleRange` getter for external rendering integration',
+    '`visibleRange` getter and `scrollToIndex()` for driving it yourself',
     'Exposed CSS parts: spacer, item',
   ],
 
@@ -32,12 +43,14 @@ Items are rendered via named slots (\`item-0\`, \`item-1\`, etc.), giving you fu
       'Set `item-height` to match the actual rendered height of each item',
       'Use overscan of 3-10 items — higher values reduce flicker but increase DOM nodes',
       'Combine with arc-list-item for consistent styling within the virtual container',
+      'Set `items` as a property, not an attribute — an array stringifies as an attribute',
     ],
     dont: [
       'Do not use for short lists under 50 items — the overhead is not worth it',
       'Do not mix different item heights — virtual-list requires fixed row height',
       'Do not nest scrollable containers inside virtual-list items',
       'Do not forget to set a fixed height on the virtual-list host element',
+      'Do not put all N items in the light DOM and let the component hide them — that is what this component exists to avoid',
     ],
   },
 
@@ -47,31 +60,20 @@ Items are rendered via named slots (\`item-0\`, \`item-1\`, etc.), giving you fu
   const vl = document.getElementById('vl-demo');
   if (!vl) return;
 
-  function syncSlots() {
-    const { start, end } = vl.visibleRange;
-    for (const child of [...vl.children]) {
-      const idx = parseInt(child.slot?.replace('item-', ''), 10);
-      if (isNaN(idx) || idx < start || idx >= end) child.remove();
-    }
-    for (let i = start; i < end; i++) {
-      if (!vl.querySelector('[slot="item-' + i + '"]')) {
-        const div = document.createElement('div');
-        div.slot = 'item-' + i;
-        div.style.cssText = 'display:flex;align-items:center;padding:0 16px;height:100%;font-family:var(--font-body);font-size:var(--text-sm);color:var(--text-secondary);border-bottom:1px solid var(--border-subtle);';
-        div.textContent = 'Item ' + (i + 1);
-        vl.appendChild(div);
-      }
-    }
-  }
+  const rowStyle = 'display:flex;align-items:center;padding:0 16px;height:100%;font-family:var(--font-body);font-size:var(--text-sm);color:var(--text-secondary);border-bottom:1px solid var(--border-subtle);';
 
-  vl.addEventListener('scroll', () => requestAnimationFrame(syncSlots));
+  vl.renderItem = (item) => {
+    const div = document.createElement('div');
+    div.style.cssText = rowStyle;
+    div.textContent = item.label;
+    return div;
+  };
 
-  // Wait for element to have layout before setting items
+  // Wait for the element to have layout before setting items
   const ro = new ResizeObserver((entries) => {
     if (entries[0].contentRect.height > 0) {
       ro.disconnect();
       vl.items = Array.from({ length: 1000 }, (_, i) => ({ label: 'Item ' + (i + 1) }));
-      vl.updateComplete.then(syncSlots);
     }
   });
   ro.observe(vl);
@@ -90,58 +92,41 @@ Items are rendered via named slots (\`item-0\`, \`item-1\`, etc.), giving you fu
 
 <script type="module">
   const vl = document.getElementById('my-list');
-  const data = Array.from({ length: 10000 }, (_, i) => \`Row \${i + 1}\`);
-  vl.items = data;
 
-  // Sync slotted DOM elements to the visible window
-  function syncSlots() {
-    const { start, end } = vl.visibleRange;
-    // Remove items that scrolled out of view
-    for (const child of [...vl.children]) {
-      const idx = parseInt(child.slot.replace('item-', ''), 10);
-      if (idx < start || idx >= end) child.remove();
-    }
-    // Add items that scrolled into view
-    for (let i = start; i < end; i++) {
-      if (!vl.querySelector(\`[slot="item-\${i}"]\`)) {
-        const div = document.createElement('div');
-        div.slot = \`item-\${i}\`;
-        div.textContent = data[i];
-        vl.appendChild(div);
-      }
-    }
-  }
-
-  vl.addEventListener('scroll', () => requestAnimationFrame(syncSlots));
-  vl.updateComplete.then(syncSlots);
+  // Both are properties, not attributes: an array and a function
+  // cannot survive being stringified into markup.
+  vl.items = Array.from({ length: 10000 }, (_, i) => \`Row \${i + 1}\`);
+  vl.renderItem = (item, index) => {
+    const div = document.createElement('div');
+    div.textContent = \`\${index + 1}. \${item}\`;
+    return div;
+  };
 </script>`,
     },
     {
       label: 'React',
       lang: 'tsx',
-      code: `import { useRef, useEffect, useCallback } from 'react';
-import { VirtualList } from '@arclux/arc-ui-react';
+      code: `import { VirtualList } from '@arclux/arc-ui-react';
 
-const data = Array.from({ length: 10000 }, (_, i) => \`Row \${i + 1}\`);
+const data = Array.from({ length: 10000 }, (_, i) => ({ name: \`Row \${i + 1}\` }));
 
 function MyVirtualList() {
-  const ref = useRef<any>(null);
-  const [range, setRange] = useState({ start: 0, end: 20 });
-
-  const onScroll = useCallback(() => {
-    const vl = ref.current;
-    if (vl) setRange({ ...vl.visibleRange });
-  }, []);
-
   return (
-    <VirtualList ref={ref} items={data} item-height={48} style={{ height: '400px' }}
-      onScroll={onScroll}>
-      {data.slice(range.start, range.end).map((label, i) => (
-        <div key={range.start + i} slot={\`item-\${range.start + i}\`}>{label}</div>
-      ))}
-    </VirtualList>
+    <VirtualList
+      items={data}
+      itemHeight={48}
+      overscan={5}
+      style={{ height: '400px' }}
+      renderItem={(item, index) => (
+        <div className="row">{index + 1}. {item.name}</div>
+      )}
+    />
   );
-}`,
+}
+
+// renderItem is called only for rows on screen. The wrapper tracks the
+// visible range itself, so these are real React elements — hooks, context
+// and event handlers all work as they would anywhere else.`,
     },
     {
       label: 'Vue',
@@ -156,7 +141,12 @@ const items = Array.from({ length: 10000 }, (_, i) => ({
 </script>
 
 <template>
-  <VirtualList :items="items" item-height="48" :overscan="5" style="height: 400px" />
+  <!-- Rows come from the \`row\` scoped slot, instantiated only when visible -->
+  <VirtualList :items="items" :item-height="48" :overscan="5" style="height: 400px">
+    <template #row="{ item, index }">
+      <div class="row">{{ index + 1 }}. {{ item.name }}</div>
+    </template>
+  </VirtualList>
 </template>`,
     },
     {
@@ -171,7 +161,12 @@ const items = Array.from({ length: 10000 }, (_, i) => ({
   }));
 </script>
 
-<VirtualList {items} item-height={48} overscan={5} style="height: 400px" />`,
+<!-- Rows come from the \`row\` snippet, rendered only when visible -->
+<VirtualList {items} itemHeight={48} overscan={5} style="height: 400px">
+  {#snippet row(item, index)}
+    <div class="row">{index + 1}. {item.name}</div>
+  {/snippet}
+</VirtualList>`,
     },
     {
       label: 'Angular',
@@ -182,7 +177,18 @@ import { VirtualList } from '@arclux/arc-ui-angular';
 @Component({
   imports: [VirtualList],
   template: \`
-    <arc-virtual-list [items]="items" item-height="48" [overscan]="5" style="height: 400px" />
+    <arc-virtual-list
+      [items]="items"
+      [itemHeight]="48"
+      [overscan]="5"
+      [rowTemplate]="row"
+      style="height: 400px"
+    >
+      <!-- Instantiated only for rows on screen -->
+      <ng-template #row let-item let-i="index">
+        <div class="row">{{ i + 1 }}. {{ item.name }}</div>
+      </ng-template>
+    </arc-virtual-list>
   \`,
 })
 export class LargeListComponent {
@@ -202,7 +208,13 @@ const items = Array.from({ length: 10000 }, (_, i) => ({
   name: \`Row \${i + 1}\`,
 }));
 
-<VirtualList items={items} item-height={48} overscan={5} style={{ height: '400px' }} />`,
+<VirtualList
+  items={items}
+  itemHeight={48}
+  overscan={5}
+  style={{ height: '400px' }}
+  renderItem={(item, index) => <div class="row">{index + 1}. {item.name}</div>}
+/>`,
     },
     {
       label: 'Preact',
@@ -214,7 +226,13 @@ const items = Array.from({ length: 10000 }, (_, i) => ({
   name: \`Row \${i + 1}\`,
 }));
 
-<VirtualList items={items} item-height={48} overscan={5} style={{ height: '400px' }} />`,
+<VirtualList
+  items={items}
+  itemHeight={48}
+  overscan={5}
+  style={{ height: '400px' }}
+  renderItem={(item, index) => <div class="row">{index + 1}. {item.name}</div>}
+/>`,
     },
   ],
 
