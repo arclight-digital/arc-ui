@@ -35,4 +35,10 @@ for (const pkg of packages) {
   }
 }
 
+// web-types.json stamps the version it was generated from, so a bump alone
+// leaves it behind and the release workflow's generate-diff gate fails before
+// it publishes anything — which is exactly how v2.11.1 stalled.
+console.log('\nRegenerating version-stamped output…');
+execSync('node scripts/generate.js', { cwd: root, stdio: 'inherit' });
+
 console.log(`\nAll packages bumped to v${version}`);
