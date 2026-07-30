@@ -46,7 +46,7 @@ const headings = [
   description="Ships 40% less JavaScript"
 ></arc-feature-card>`}</code></pre>
       <p>
-        <strong>65 of 185 components</strong> are shaped like this — they have no default slot at
+        <strong>65 of 186 components</strong> are shaped like this — they have no default slot at
         all, so there is no markup to fall back to. Server rendering is the only thing that puts
         their content in the payload. Slot-driven components already degrade gracefully, and gain
         less from it.
@@ -110,43 +110,53 @@ import '@arclux/arc-ui/register';`}</code></pre>
         <code>hostConnected</code>. Browser work belongs in those.
       </p>
       <ul>
-        <li><strong>185 components</strong> server-render, all emitting declarative shadow DOM.</li>
+        <li><strong>All 186 components</strong> server-render, every one emitting declarative shadow DOM.</li>
         <li>
-          <strong><code>arc-markdown</code> is client-only by design.</strong> Its sanitiser needs
-          <code>DOMParser</code>. Rendering unsanitised HTML on the server is not an option, and
-          rendering different markup would break hydration, which reconnects to the server's DOM
-          rather than re-rendering it.
+          There are no client-only components. <code>arc-markdown</code> was the last one — its
+          sanitiser needed <code>DOMParser</code> and its render used an <code>.innerHTML</code>
+          property binding, which the server has nothing to serialise. Both are fixed.
         </li>
       </ul>
       <p>
         Support is a property of the library, not of individual components — there is no
-        per-component opt-in to track, because nearly everything works. You opt in per page.
+        per-component opt-in to track, because everything works. You opt in per page.
       </p>
     </section>
 
     <section id="frameworks">
       <h2>Framework support</h2>
       <p>
-        Declarative shadow DOM has to be produced by Lit's server renderer. A framework's own SSR
-        emits <code>&lt;arc-feature-card&gt;</code> as an unknown tag and knows nothing about its
-        shadow content, so the framework needs an integration to call into Lit SSR.
+        Every framework integration for Lit SSR works from the component graph, which is why only
+        React ever had one. Nothing about the problem needs the graph: a framework's server render
+        produces HTML, and every <code>&lt;arc-*&gt;</code> in that HTML can be rendered to a
+        declarative shadow root by reading the markup alone.
       </p>
+      <p>
+        So <code>@arclux/arc-ui/ssr</code> takes HTML and returns HTML, and does not care what
+        produced it.
+      </p>
+      <arc-code-block language="js" code={`import { renderDeclarativeShadowDOM } from '@arclux/arc-ui/ssr';
+
+const { html, stylesheets } = await renderDeclarativeShadowDOM(pageHtml);
+// serve html; write each stylesheet under /_arc`} />
       <ul>
         <li>
-          <strong>Plain HTML, Lit, or any server that renders templates</strong> — fully supported
-          today, as above.
+          <strong>Nuxt, SvelteKit, Angular Universal, Next, Astro, or a string you built by
+          hand</strong> — pipe the rendered HTML through it. This is the same code that renders
+          this site, over 177 pages and 43,620 shadow roots on every build.
         </li>
         <li>
-          <strong>React</strong> — <code>@lit-labs/ssr-react</code> exists for this and is the
-          supported path.
-        </li>
-        <li>
-          <strong>Vue, Svelte, Solid, Angular, Preact</strong> — no Lit SSR integration exists.
-          Their SSR output contains the element tag without its shadow content, and the component
-          renders on the client at upgrade. Everything still works; the content simply is not in
-          the initial payload.
+          <strong>React</strong> — <code>@lit-labs/ssr-react</code> also works, if you would rather
+          render through the component graph.
         </li>
       </ul>
+      <p>
+        It needs <code>@lit-labs/ssr</code>, an optional peer dependency: install it in the project
+        that server-renders. Two things are on the caller. Serve the returned stylesheets from the
+        path they were linked with, and import <code>@arclux/arc-ui/hydrate</code> on the client
+        <em>before any component is defined</em> — on a bundler that usually means forcing it into
+        its own chunk, since an import statement alone does not control evaluation order.
+      </p>
       <p>
         Hydration support and the FOUC opt-out apply to every one of these, since both are
         properties of the element rather than of the framework around it.

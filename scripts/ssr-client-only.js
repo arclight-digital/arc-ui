@@ -10,11 +10,4 @@
  * This should stay near-empty. Anything on it is content a consumer cannot get
  * into their initial payload.
  */
-export const CLIENT_ONLY = {
-  'arc-markdown':
-    'Its sanitizer is DOMParser-based. Rendering unsanitized HTML on the server '
-    + 'is not an option, and rendering a different shape (escaped text) would '
-    + 'break hydration, which reconnects to the server DOM rather than '
-    + 're-rendering it. Needs a DOM-less sanitizer to lift — arc-icon\'s '
-    + 'sanitize-svg.js is the shape that would work.',
-};
+export const CLIENT_ONLY = {};
