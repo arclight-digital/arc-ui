@@ -20,5 +20,6 @@ const emit = defineEmits<{
     :disabled="props.disabled"
     @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
   >
+    <slot />
   </arc-sortable-list>
 </template>

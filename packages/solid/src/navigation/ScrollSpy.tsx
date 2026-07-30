@@ -7,6 +7,7 @@ export interface ScrollSpyProps {
   active?: string;
   offset?: number;
   onArcChange?: (e: CustomEvent) => void;
+  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -35,9 +36,10 @@ export interface ScrollSpyProps {
 }
 
 export const ScrollSpy: Component<ScrollSpyProps> = (props) => {
-  const [local, rest] = splitProps(props, ['active', 'offset', 'onArcChange']);
+  const [local, rest] = splitProps(props, ['active', 'offset', 'onArcChange', 'children']);
   return (
     <arc-scroll-spy active={local.active} offset={local.offset} on:arc-change={local.onArcChange} {...rest}>
+      {local.children}
     </arc-scroll-spy>
   );
 };

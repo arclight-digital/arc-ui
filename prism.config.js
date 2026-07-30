@@ -78,39 +78,19 @@ export default {
         'repair two. arc-column falls back via `fieldName` (field || key).',
     },
 
-    // ── slot-name-remapped ──
+    // Nothing here for the eight slots that share a name with a prop
+    // (arc-cta-banner's `eyebrow`, arc-page-header's `heading`, …). That pairing
+    // — prop for the plain string, slot to override it with markup — is the
+    // library's standard escape hatch, and since 2.8.0 prism reports it as
+    // informational with the right advice rather than as something to waive:
+    // the slot keeps its real name everywhere, and Svelte consumers write
+    // `{#snippet eyebrow_()}` because Svelte derives the snippet prop from the
+    // slot name and the prop already has it.
     //
-    // Every entry below is a slot deliberately sharing its name with a prop:
-    // the prop takes a plain string, the slot overrides it with markup. That
-    // pairing is the library's standard escape hatch and appears on eight
-    // components, so the Svelte wrapper has two things wanting one prop name
-    // and suffixes the snippet (`eyebrow` → `eyebrow_`).
-    //
-    // Prism's message reads "is not a valid identifier", which is true of the
-    // `icon-left` → `iconLeft` case the diagnostic was written for but not of
-    // these — `eyebrow` is a perfectly good identifier, it is just taken. Its
-    // suggested fix (rename the slot to `eyebrow_`) would put a trailing
-    // underscore in the public HTML API of every framework to repair one, so
-    // it is declined. Svelte consumers use `{#snippet eyebrow_()}`; everyone
-    // else uses `slot="eyebrow"`. Documented per component.
-    { code: 'slot-name-remapped', tag: 'arc-cta-banner',  prop: 'eyebrow_',     note: 'Slot pairs with the `eyebrow` prop.' },
-    { code: 'slot-name-remapped', tag: 'arc-cta-banner',  prop: 'headline_',    note: 'Slot pairs with the `headline` prop.' },
-    { code: 'slot-name-remapped', tag: 'arc-feature-card', prop: 'icon_',       note: 'Slot pairs with the `icon` prop.' },
-    { code: 'slot-name-remapped', tag: 'arc-value-card',  prop: 'icon_',        note: 'Slot pairs with the `icon` prop.' },
-    { code: 'slot-name-remapped', tag: 'arc-fieldset',    prop: 'legend_',      note: 'Slot pairs with the `legend` prop.' },
-    { code: 'slot-name-remapped', tag: 'arc-page-header', prop: 'heading_',     note: 'Slot pairs with the `heading` prop.' },
-    { code: 'slot-name-remapped', tag: 'arc-page-header', prop: 'description_', note: 'Slot pairs with the `description` prop.' },
-    { code: 'slot-name-remapped', tag: 'arc-popover',     prop: 'trigger_',     note: 'Slot pairs with the `trigger` prop.' },
-
-    // arc-virtual-list is a different case: its slot names are computed per row
-    // (`item-0`, `item-1`, …), so there is no fixed name for a Svelte snippet
-    // prop to be. Prism reads the `@slot item-${index}` doc entry and the
-    // `name="item-${index}"` template literal as two literal slot names, which
-    // is the closest either can get. Svelte snippet props are static, so the
-    // wrapper structurally cannot express an indexed slot family — Svelte
-    // consumers use the web component directly for this one.
-    { code: 'slot-name-remapped', tag: 'arc-virtual-list', prop: 'itemIndex', note: 'Per-row slot family; no static snippet name exists.' },
-    { code: 'slot-name-remapped', tag: 'arc-virtual-list', prop: 'item',      note: 'Per-row slot family; no static snippet name exists.' },
+    // 2.7.0 raised these as strict `slot-name-remapped` findings claiming the
+    // names were "not valid identifiers", so they were waived here. They are no
+    // longer emitted, and an acknowledgement for a code prism does not emit is
+    // itself reported — so these entries are gone rather than left to rot.
   ],
 
   // Two-way binding opt-outs. Bindings are derived by convention — an event

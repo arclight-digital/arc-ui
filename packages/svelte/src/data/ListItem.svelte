@@ -14,6 +14,7 @@
     description?: Snippet;
     /** <slot name="suffix"> — put slot="suffix" on the element inside. */
     suffix?: Snippet;
+    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -41,11 +42,12 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = '', selected = false, disabled = false, href = '', prefix, description, suffix, ...rest }: Props = $props();
+  let { value = '', selected = false, disabled = false, href = '', prefix, description, suffix, children, ...rest }: Props = $props();
 </script>
 
 <arc-list-item {value} {selected} {disabled} {href} {...rest}>
   {@render prefix?.()}
   {@render description?.()}
   {@render suffix?.()}
+  {@render children?.()}
 </arc-list-item>

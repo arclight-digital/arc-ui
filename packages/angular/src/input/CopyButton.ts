@@ -7,7 +7,7 @@ import '@arclux/arc-ui/copy-button';
   selector: 'arc-copy-button',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-copy-button [attr.value]="this.value" [disabled]="this.disabled" (arc-copy)="this.arcCopy.emit($event)"></arc-copy-button>`,
+  template: `<arc-copy-button [attr.value]="this.value" [disabled]="this.disabled" (arc-copy)="this.arcCopy.emit($event)"><ng-content /></arc-copy-button>`,
 })
 export class CopyButton {
   @Input() value: string = '';

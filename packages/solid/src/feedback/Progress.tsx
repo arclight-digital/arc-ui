@@ -10,6 +10,7 @@ export interface ProgressProps {
   indeterminate?: boolean;
   showValue?: boolean;
   label?: string;
+  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -38,9 +39,10 @@ export interface ProgressProps {
 }
 
 export const Progress: Component<ProgressProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'variant', 'size', 'indeterminate', 'showValue', 'label']);
+  const [local, rest] = splitProps(props, ['value', 'variant', 'size', 'indeterminate', 'showValue', 'label', 'children']);
   return (
     <arc-progress value={local.value} variant={local.variant} size={local.size} indeterminate={local.indeterminate} prop:showValue={local.showValue} label={local.label} {...rest}>
+      {local.children}
     </arc-progress>
   );
 };

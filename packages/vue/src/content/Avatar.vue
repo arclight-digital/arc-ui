@@ -27,5 +27,6 @@ const props = withDefaults(defineProps<{
     :shape="props.shape"
     :status="props.status"
   >
+    <slot />
   </arc-avatar>
 </template>

@@ -8,6 +8,7 @@ export interface CodeBlockProps {
   filename?: string;
   code?: string;
   variant?: 'default' | 'window' | 'basic';
+  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -36,9 +37,10 @@ export interface CodeBlockProps {
 }
 
 export const CodeBlock: Component<CodeBlockProps> = (props) => {
-  const [local, rest] = splitProps(props, ['language', 'filename', 'code', 'variant']);
+  const [local, rest] = splitProps(props, ['language', 'filename', 'code', 'variant', 'children']);
   return (
     <arc-code-block language={local.language} filename={local.filename} code={local.code} variant={local.variant} {...rest}>
+      {local.children}
     </arc-code-block>
   );
 };

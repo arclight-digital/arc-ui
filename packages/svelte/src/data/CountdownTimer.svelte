@@ -8,6 +8,7 @@
     label?: string;
     expired?: string;
     hideZeroSegments?: boolean;
+    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -35,7 +36,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { target = '', label = '', expired = 'Expired', hideZeroSegments = false, ...rest }: Props = $props();
+  let { target = '', label = '', expired = 'Expired', hideZeroSegments = false, children, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {
@@ -46,4 +47,5 @@
 </script>
 
 <arc-countdown-timer {target} {label} {expired} bind:this={__el} {...rest}>
+  {@render children?.()}
 </arc-countdown-timer>

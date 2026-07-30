@@ -24,6 +24,7 @@ const props = withDefaults(defineProps<{
     :contained="props.contained"
     :align="props.align"
   >
+    <slot />
     <slot name="logo" />
     <slot name="social" />
     <slot name="legal" />

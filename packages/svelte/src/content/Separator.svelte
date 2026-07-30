@@ -7,6 +7,7 @@
     orientation?: 'horizontal' | 'vertical';
     label?: string;
     variant?: 'line' | 'dashed' | 'dotted' | 'fade';
+    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -34,8 +35,9 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { orientation = 'horizontal', label = '', variant = 'line', ...rest }: Props = $props();
+  let { orientation = 'horizontal', label = '', variant = 'line', children, ...rest }: Props = $props();
 </script>
 
 <arc-separator {orientation} {label} {variant} {...rest}>
+  {@render children?.()}
 </arc-separator>

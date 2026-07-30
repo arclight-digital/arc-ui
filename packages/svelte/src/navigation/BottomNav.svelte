@@ -6,6 +6,7 @@
   interface Props {
     items?: string;
     value?: string;
+    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -33,7 +34,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { items = [], value = $bindable(''), ...rest }: Props = $props();
+  let { items = [], value = $bindable(''), children, ...rest }: Props = $props();
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
@@ -50,4 +51,5 @@
 <arc-bottom-nav {items} {value} {...rest}
   onarc-change={__onArcChange}
 >
+  {@render children?.()}
 </arc-bottom-nav>

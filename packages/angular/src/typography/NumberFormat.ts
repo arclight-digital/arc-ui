@@ -7,7 +7,7 @@ import '@arclux/arc-ui/number-format';
   selector: 'arc-number-format',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-number-format [attr.value]="this.value" [attr.type]="this.type" [attr.locale]="this.locale" [attr.currency]="this.currency" [attr.decimals]="this.decimals" [attr.notation]="this.notation"></arc-number-format>`,
+  template: `<arc-number-format [attr.value]="this.value" [attr.type]="this.type" [attr.locale]="this.locale" [attr.currency]="this.currency" [attr.decimals]="this.decimals" [attr.notation]="this.notation"><ng-content /></arc-number-format>`,
 })
 export class NumberFormat {
   @Input() value: number = 0;

@@ -6,6 +6,7 @@ import '@arclux/arc-ui/announcement';
 export interface AnnouncementProps {
   politeness?: 'polite' | 'assertive';
   message?: string;
+  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -33,7 +34,8 @@ export interface AnnouncementProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Announcement: FunctionComponent<AnnouncementProps> = ({ politeness, message, ...rest }) => (
+export const Announcement: FunctionComponent<AnnouncementProps> = ({ politeness, message, children, ...rest }) => (
   <arc-announcement politeness={politeness} message={message} {...rest}>
+    {children}
   </arc-announcement>
 );

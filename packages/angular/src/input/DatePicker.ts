@@ -7,7 +7,7 @@ import '@arclux/arc-ui/date-picker';
   selector: 'arc-date-picker',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-date-picker [attr.value]="this.value" [attr.name]="this.name" [attr.min]="this.min" [attr.max]="this.max" [attr.placeholder]="this.placeholder" [disabled]="this.disabled" [attr.label]="this.label" (arc-change)="this.onArcChange($event)"></arc-date-picker>`,
+  template: `<arc-date-picker [attr.value]="this.value" [attr.name]="this.name" [attr.min]="this.min" [attr.max]="this.max" [attr.placeholder]="this.placeholder" [disabled]="this.disabled" [attr.label]="this.label" (arc-change)="this.onArcChange($event)"><ng-content /></arc-date-picker>`,
 })
 export class DatePicker {
   @Input() value: string = '';

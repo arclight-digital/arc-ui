@@ -8,6 +8,7 @@ export interface StatProps {
   label?: string;
   trend?: 'up' | 'down' | 'neutral';
   change?: string;
+  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -36,9 +37,10 @@ export interface StatProps {
 }
 
 export const Stat: Component<StatProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'label', 'trend', 'change']);
+  const [local, rest] = splitProps(props, ['value', 'label', 'trend', 'change', 'children']);
   return (
     <arc-stat value={local.value} label={local.label} trend={local.trend} change={local.change} {...rest}>
+      {local.children}
     </arc-stat>
   );
 };

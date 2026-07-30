@@ -12,6 +12,7 @@ export interface ProgressProps {
   showValue?: boolean;
   label?: string;
   className?: string;
+  children?: React.ReactNode;
 }
 
 export const Progress = createComponent({

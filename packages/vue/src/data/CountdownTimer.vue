@@ -29,5 +29,6 @@ const emit = defineEmits<{
     :hideZeroSegments="props.hideZeroSegments"
     @arc-expired="(payload: CustomEvent) => emit('arc-expired', payload)"
   >
+    <slot />
   </arc-countdown-timer>
 </template>

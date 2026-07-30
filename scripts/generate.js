@@ -40,6 +40,7 @@ const steps = [
   { name: 'Readme',   cmd: 'node',  args: ['scripts/generate-readme-stats.js'] },
   { name: 'Unions',   cmd: 'node',  args: ['scripts/check-prop-unions.js'] },
   { name: 'Fallbacks', cmd: 'node', args: ['scripts/check-enum-fallbacks.js'] },
+  { name: 'Slots',    cmd: 'node',  args: ['scripts/check-wrapper-slots.js'] },
 ];
 
 const totalStart = performance.now();

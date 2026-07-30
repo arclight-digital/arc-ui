@@ -24,5 +24,6 @@ const props = withDefaults(defineProps<{
     :striped="props.striped"
     :compact="props.compact"
   >
+    <slot />
   </arc-table>
 </template>

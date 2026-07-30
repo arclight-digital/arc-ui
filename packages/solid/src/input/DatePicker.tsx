@@ -12,6 +12,7 @@ export interface DatePickerProps {
   disabled?: boolean;
   label?: string;
   onArcChange?: (e: CustomEvent) => void;
+  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -40,9 +41,10 @@ export interface DatePickerProps {
 }
 
 export const DatePicker: Component<DatePickerProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'name', 'min', 'max', 'placeholder', 'disabled', 'label', 'onArcChange']);
+  const [local, rest] = splitProps(props, ['value', 'name', 'min', 'max', 'placeholder', 'disabled', 'label', 'onArcChange', 'children']);
   return (
     <arc-date-picker value={local.value} name={local.name} min={local.min} max={local.max} placeholder={local.placeholder} disabled={local.disabled} label={local.label} on:arc-change={local.onArcChange} {...rest}>
+      {local.children}
     </arc-date-picker>
   );
 };

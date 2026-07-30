@@ -7,7 +7,7 @@ import '@arclux/arc-ui/breadcrumb';
   selector: 'arc-breadcrumb',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-breadcrumb [attr.separator]="this.separator" [attr.label]="this.label" (arc-navigate)="this.arcNavigate.emit($event)"></arc-breadcrumb>`,
+  template: `<arc-breadcrumb [attr.separator]="this.separator" [attr.label]="this.label" (arc-navigate)="this.arcNavigate.emit($event)"><ng-content /></arc-breadcrumb>`,
 })
 export class Breadcrumb {
   @Input() separator: string = '/';

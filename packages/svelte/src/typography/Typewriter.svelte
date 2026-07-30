@@ -11,6 +11,7 @@
     loop?: boolean;
     nowrap?: boolean;
     pauseEnd?: number;
+    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -38,7 +39,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { text = '', speed = 50, delay = 0, cursor = true, loop = false, nowrap = false, pauseEnd = 2000, ...rest }: Props = $props();
+  let { text = '', speed = 50, delay = 0, cursor = true, loop = false, nowrap = false, pauseEnd = 2000, children, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {
@@ -49,4 +50,5 @@
 </script>
 
 <arc-typewriter {text} {speed} {delay} {cursor} {loop} {nowrap} bind:this={__el} {...rest}>
+  {@render children?.()}
 </arc-typewriter>

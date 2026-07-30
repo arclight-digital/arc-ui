@@ -9,6 +9,7 @@ export interface IconProps {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   label?: string;
   className?: string;
+  children?: React.ReactNode;
 }
 
 export const Icon = createComponent({

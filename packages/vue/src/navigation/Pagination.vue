@@ -29,5 +29,6 @@ const emit = defineEmits<{
     :compact="props.compact"
     @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
   >
+    <slot />
   </arc-pagination>
 </template>

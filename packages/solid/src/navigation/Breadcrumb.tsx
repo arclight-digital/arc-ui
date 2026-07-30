@@ -7,6 +7,7 @@ export interface BreadcrumbProps {
   separator?: string;
   label?: string;
   onArcNavigate?: (e: CustomEvent) => void;
+  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -35,9 +36,10 @@ export interface BreadcrumbProps {
 }
 
 export const Breadcrumb: Component<BreadcrumbProps> = (props) => {
-  const [local, rest] = splitProps(props, ['separator', 'label', 'onArcNavigate']);
+  const [local, rest] = splitProps(props, ['separator', 'label', 'onArcNavigate', 'children']);
   return (
     <arc-breadcrumb separator={local.separator} label={local.label} on:arc-navigate={local.onArcNavigate} {...rest}>
+      {local.children}
     </arc-breadcrumb>
   );
 };

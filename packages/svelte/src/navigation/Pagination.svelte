@@ -8,6 +8,7 @@
     current?: number;
     siblings?: number;
     compact?: boolean;
+    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -35,8 +36,9 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { total = 1, current = 1, siblings = 1, compact = false, ...rest }: Props = $props();
+  let { total = 1, current = 1, siblings = 1, compact = false, children, ...rest }: Props = $props();
 </script>
 
 <arc-pagination {total} {current} {siblings} {compact} {...rest}>
+  {@render children?.()}
 </arc-pagination>

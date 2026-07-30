@@ -11,6 +11,7 @@ export interface ColorPickerProps {
   disabled?: boolean;
   label?: string;
   className?: string;
+  children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;
 }
 

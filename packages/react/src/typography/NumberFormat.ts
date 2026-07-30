@@ -12,6 +12,7 @@ export interface NumberFormatProps {
   decimals?: number;
   notation?: 'standard' | 'compact';
   className?: string;
+  children?: React.ReactNode;
 }
 
 export const NumberFormat = createComponent({

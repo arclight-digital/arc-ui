@@ -10,6 +10,7 @@ export interface ToggleProps {
   label?: string;
   name?: string;
   onArcChange?: (e: CustomEvent) => void;
+  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -38,9 +39,10 @@ export interface ToggleProps {
 }
 
 export const Toggle: Component<ToggleProps> = (props) => {
-  const [local, rest] = splitProps(props, ['checked', 'disabled', 'size', 'label', 'name', 'onArcChange']);
+  const [local, rest] = splitProps(props, ['checked', 'disabled', 'size', 'label', 'name', 'onArcChange', 'children']);
   return (
     <arc-toggle checked={local.checked} disabled={local.disabled} size={local.size} label={local.label} name={local.name} on:arc-change={local.onArcChange} {...rest}>
+      {local.children}
     </arc-toggle>
   );
 };

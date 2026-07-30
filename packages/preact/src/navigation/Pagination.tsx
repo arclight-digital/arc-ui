@@ -10,6 +10,7 @@ export interface PaginationProps {
   siblings?: number;
   compact?: boolean;
   onArcChange?: (e: CustomEvent) => void;
+  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -37,7 +38,7 @@ export interface PaginationProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Pagination: FunctionComponent<PaginationProps> = ({ total, current, siblings, compact, onArcChange, ...rest }) => {
+export const Pagination: FunctionComponent<PaginationProps> = ({ total, current, siblings, compact, onArcChange, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -52,6 +53,7 @@ export const Pagination: FunctionComponent<PaginationProps> = ({ total, current,
   }, [onArcChange]);
   return (
     <arc-pagination ref={ref} total={total} current={current} siblings={siblings} compact={compact} {...rest}>
+      {children}
     </arc-pagination>
   );
 };

@@ -7,6 +7,7 @@ export interface IconProps {
   name?: string;
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   label?: string;
+  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -34,7 +35,8 @@ export interface IconProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Icon: FunctionComponent<IconProps> = ({ name, size, label, ...rest }) => (
+export const Icon: FunctionComponent<IconProps> = ({ name, size, label, children, ...rest }) => (
   <arc-icon name={name} size={size} label={label} {...rest}>
+    {children}
   </arc-icon>
 );

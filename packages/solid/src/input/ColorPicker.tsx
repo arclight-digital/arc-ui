@@ -10,6 +10,7 @@ export interface ColorPickerProps {
   disabled?: boolean;
   label?: string;
   onArcChange?: (e: CustomEvent) => void;
+  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -38,9 +39,10 @@ export interface ColorPickerProps {
 }
 
 export const ColorPicker: Component<ColorPickerProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'name', 'presets', 'disabled', 'label', 'onArcChange']);
+  const [local, rest] = splitProps(props, ['value', 'name', 'presets', 'disabled', 'label', 'onArcChange', 'children']);
   return (
     <arc-color-picker value={local.value} name={local.name} presets={local.presets} disabled={local.disabled} label={local.label} on:arc-change={local.onArcChange} {...rest}>
+      {local.children}
     </arc-color-picker>
   );
 };

@@ -6,6 +6,7 @@ import '@arclux/arc-ui/navigation-menu';
 export interface NavigationMenuProps {
   label?: string;
   onArcMobileMenuToggle?: (e: CustomEvent) => void;
+  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -34,9 +35,10 @@ export interface NavigationMenuProps {
 }
 
 export const NavigationMenu: Component<NavigationMenuProps> = (props) => {
-  const [local, rest] = splitProps(props, ['label', 'onArcMobileMenuToggle']);
+  const [local, rest] = splitProps(props, ['label', 'onArcMobileMenuToggle', 'children']);
   return (
     <arc-navigation-menu label={local.label} on:arc-mobile-menu-toggle={local.onArcMobileMenuToggle} {...rest}>
+      {local.children}
     </arc-navigation-menu>
   );
 };

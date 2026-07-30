@@ -9,6 +9,7 @@
     name?: string;
     disabled?: boolean;
     readonly?: boolean;
+    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -36,7 +37,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = $bindable(0), max = 5, name = '', disabled = false, readonly = false, ...rest }: Props = $props();
+  let { value = $bindable(0), max = 5, name = '', disabled = false, readonly = false, children, ...rest }: Props = $props();
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
@@ -53,4 +54,5 @@
 <arc-rating {value} {max} {name} {disabled} {readonly} {...rest}
   onarc-change={__onArcChange}
 >
+  {@render children?.()}
 </arc-rating>

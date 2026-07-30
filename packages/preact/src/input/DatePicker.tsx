@@ -13,6 +13,7 @@ export interface DatePickerProps {
   disabled?: boolean;
   label?: string;
   onArcChange?: (e: CustomEvent) => void;
+  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -40,7 +41,7 @@ export interface DatePickerProps {
   [key: `on${string}`]: unknown;
 }
 
-export const DatePicker: FunctionComponent<DatePickerProps> = ({ value, name, min, max, placeholder, disabled, label, onArcChange, ...rest }) => {
+export const DatePicker: FunctionComponent<DatePickerProps> = ({ value, name, min, max, placeholder, disabled, label, onArcChange, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -55,6 +56,7 @@ export const DatePicker: FunctionComponent<DatePickerProps> = ({ value, name, mi
   }, [onArcChange]);
   return (
     <arc-date-picker ref={ref} value={value} name={name} min={min} max={max} placeholder={placeholder} disabled={disabled} label={label} {...rest}>
+      {children}
     </arc-date-picker>
   );
 };

@@ -10,6 +10,7 @@ export interface CountdownTimerProps {
   expired?: string;
   hideZeroSegments?: boolean;
   className?: string;
+  children?: React.ReactNode;
   onArcExpired?: (e: CustomEvent) => void;
 }
 

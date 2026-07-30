@@ -7,7 +7,7 @@ import '@arclux/arc-ui/countdown-timer';
   selector: 'arc-countdown-timer',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-countdown-timer [attr.target]="this.target" [attr.label]="this.label" [attr.expired]="this.expired" [hideZeroSegments]="this.hideZeroSegments" (arc-expired)="this.arcExpired.emit($event)"></arc-countdown-timer>`,
+  template: `<arc-countdown-timer [attr.target]="this.target" [attr.label]="this.label" [attr.expired]="this.expired" [hideZeroSegments]="this.hideZeroSegments" (arc-expired)="this.arcExpired.emit($event)"><ng-content /></arc-countdown-timer>`,
 })
 export class CountdownTimer {
   @Input() target: string = '';

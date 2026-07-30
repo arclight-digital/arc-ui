@@ -7,7 +7,7 @@ import '@arclux/arc-ui/spinner';
   selector: 'arc-spinner',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-spinner [attr.size]="this.size" [attr.variant]="this.variant"></arc-spinner>`,
+  template: `<arc-spinner [attr.size]="this.size" [attr.variant]="this.variant"><ng-content /></arc-spinner>`,
 })
 export class Spinner {
   @Input() size: 'sm' | 'md' | 'lg' = 'md';

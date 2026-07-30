@@ -7,6 +7,7 @@
     datetime?: string;
     live?: boolean;
     locale?: string;
+    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -34,8 +35,9 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { datetime = '', live = true, locale = 'en-US', ...rest }: Props = $props();
+  let { datetime = '', live = true, locale = 'en-US', children, ...rest }: Props = $props();
 </script>
 
 <arc-time-ago {datetime} {live} {locale} {...rest}>
+  {@render children?.()}
 </arc-time-ago>

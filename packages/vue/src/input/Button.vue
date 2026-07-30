@@ -30,6 +30,7 @@ const props = withDefaults(defineProps<{
     :loading="props.loading"
     :type="props.type"
   >
+    <slot />
     <slot name="prefix" />
     <slot name="suffix" />
   </arc-button>

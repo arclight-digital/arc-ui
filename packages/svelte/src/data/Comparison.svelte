@@ -5,6 +5,7 @@
 
   interface Props {
     features?: string;
+    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -32,8 +33,9 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { features = '[]', ...rest }: Props = $props();
+  let { features = '[]', children, ...rest }: Props = $props();
 </script>
 
 <arc-comparison {features} {...rest}>
+  {@render children?.()}
 </arc-comparison>

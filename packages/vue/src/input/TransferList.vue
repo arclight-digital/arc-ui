@@ -47,5 +47,6 @@ function onArcChange(payload: CustomEvent) {
     :targetLabel="props.targetLabel"
     @arc-change="onArcChange"
   >
+    <slot />
   </arc-transfer-list>
 </template>

@@ -11,6 +11,7 @@
     suffix?: string;
     decimals?: number;
     locale?: string;
+    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -38,8 +39,9 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = 0, duration = 1000, format = 'number', prefix = '', suffix = '', decimals = 0, locale = 'en-US', ...rest }: Props = $props();
+  let { value = 0, duration = 1000, format = 'number', prefix = '', suffix = '', decimals = 0, locale = 'en-US', children, ...rest }: Props = $props();
 </script>
 
 <arc-animated-number {value} {duration} {format} {prefix} {suffix} {decimals} {locale} {...rest}>
+  {@render children?.()}
 </arc-animated-number>

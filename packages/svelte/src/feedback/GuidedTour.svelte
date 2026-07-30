@@ -5,6 +5,7 @@
 
   interface Props {
     open?: boolean;
+    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -32,8 +33,9 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { open = false, ...rest }: Props = $props();
+  let { open = false, children, ...rest }: Props = $props();
 </script>
 
 <arc-guided-tour {open} {...rest}>
+  {@render children?.()}
 </arc-guided-tour>

@@ -11,6 +11,7 @@ export interface AnimatedNumberProps {
   suffix?: string;
   decimals?: number;
   locale?: string;
+  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -38,7 +39,8 @@ export interface AnimatedNumberProps {
   [key: `on${string}`]: unknown;
 }
 
-export const AnimatedNumber: FunctionComponent<AnimatedNumberProps> = ({ value, duration, format, prefix, suffix, decimals, locale, ...rest }) => (
+export const AnimatedNumber: FunctionComponent<AnimatedNumberProps> = ({ value, duration, format, prefix, suffix, decimals, locale, children, ...rest }) => (
   <arc-animated-number value={value} duration={duration} format={format} prefix={prefix} suffix={suffix} decimals={decimals} locale={locale} {...rest}>
+    {children}
   </arc-animated-number>
 );

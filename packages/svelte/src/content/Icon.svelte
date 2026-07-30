@@ -7,6 +7,7 @@
     name?: string;
     size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
     label?: string;
+    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -34,8 +35,9 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { name = '', size = 'sm', label = '', ...rest }: Props = $props();
+  let { name = '', size = 'sm', label = '', children, ...rest }: Props = $props();
 </script>
 
 <arc-icon {name} {size} {label} {...rest}>
+  {@render children?.()}
 </arc-icon>

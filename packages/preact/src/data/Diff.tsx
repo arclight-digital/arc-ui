@@ -7,6 +7,7 @@ export interface DiffProps {
   before?: string;
   after?: string;
   mode?: 'inline' | 'side-by-side';
+  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -34,7 +35,8 @@ export interface DiffProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Diff: FunctionComponent<DiffProps> = ({ before, after, mode, ...rest }) => (
+export const Diff: FunctionComponent<DiffProps> = ({ before, after, mode, children, ...rest }) => (
   <arc-diff before={before} after={after} mode={mode} {...rest}>
+    {children}
   </arc-diff>
 );

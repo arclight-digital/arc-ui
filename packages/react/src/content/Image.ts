@@ -12,6 +12,7 @@ export interface ImageProps {
   loading?: 'lazy' | 'eager';
   fallback?: string;
   className?: string;
+  children?: React.ReactNode;
   onArcLoad?: (e: CustomEvent) => void;
   onArcError?: (e: CustomEvent) => void;
 }

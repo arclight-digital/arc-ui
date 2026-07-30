@@ -6,6 +6,7 @@
   interface Props {
     separator?: string;
     label?: string;
+    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -33,8 +34,9 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { separator = '/', label = 'Breadcrumb', ...rest }: Props = $props();
+  let { separator = '/', label = 'Breadcrumb', children, ...rest }: Props = $props();
 </script>
 
 <arc-breadcrumb {separator} {label} {...rest}>
+  {@render children?.()}
 </arc-breadcrumb>

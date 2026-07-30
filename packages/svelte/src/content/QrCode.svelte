@@ -10,6 +10,7 @@
     label?: string;
     quietZone?: number;
     contrast?: boolean;
+    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -37,7 +38,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = '', size = 160, level = 'M', label = '', quietZone = 2, contrast = false, ...rest }: Props = $props();
+  let { value = '', size = 160, level = 'M', label = '', quietZone = 2, contrast = false, children, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {
@@ -48,4 +49,5 @@
 </script>
 
 <arc-qr-code {value} {size} {level} {label} {contrast} bind:this={__el} {...rest}>
+  {@render children?.()}
 </arc-qr-code>

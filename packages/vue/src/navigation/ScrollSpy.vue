@@ -23,5 +23,6 @@ const emit = defineEmits<{
     :offset="props.offset"
     @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
   >
+    <slot />
   </arc-scroll-spy>
 </template>

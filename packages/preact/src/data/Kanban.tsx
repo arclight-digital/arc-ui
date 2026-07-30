@@ -9,6 +9,7 @@ export interface KanbanProps {
   disabled?: boolean;
   onArcCardMove?: (e: CustomEvent) => void;
   onArcCardClick?: (e: CustomEvent) => void;
+  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -36,7 +37,7 @@ export interface KanbanProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Kanban: FunctionComponent<KanbanProps> = ({ columns, disabled, onArcCardMove, onArcCardClick, ...rest }) => {
+export const Kanban: FunctionComponent<KanbanProps> = ({ columns, disabled, onArcCardMove, onArcCardClick, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -56,6 +57,7 @@ export const Kanban: FunctionComponent<KanbanProps> = ({ columns, disabled, onAr
   }, [onArcCardMove, onArcCardClick]);
   return (
     <arc-kanban ref={ref} columns={columns} disabled={disabled} {...rest}>
+      {children}
     </arc-kanban>
   );
 };

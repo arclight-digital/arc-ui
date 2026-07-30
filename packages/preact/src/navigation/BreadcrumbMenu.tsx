@@ -8,6 +8,7 @@ export interface BreadcrumbMenuProps {
   items?: string;
   label?: string;
   onArcNavigate?: (e: CustomEvent) => void;
+  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -35,7 +36,7 @@ export interface BreadcrumbMenuProps {
   [key: `on${string}`]: unknown;
 }
 
-export const BreadcrumbMenu: FunctionComponent<BreadcrumbMenuProps> = ({ items, label, onArcNavigate, ...rest }) => {
+export const BreadcrumbMenu: FunctionComponent<BreadcrumbMenuProps> = ({ items, label, onArcNavigate, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -50,6 +51,7 @@ export const BreadcrumbMenu: FunctionComponent<BreadcrumbMenuProps> = ({ items, 
   }, [onArcNavigate]);
   return (
     <arc-breadcrumb-menu ref={ref} items={items} label={label} {...rest}>
+      {children}
     </arc-breadcrumb-menu>
   );
 };

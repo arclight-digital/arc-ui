@@ -5,6 +5,7 @@ import '@arclux/arc-ui/stepper';
 
 export interface StepperProps {
   active?: number;
+  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -32,7 +33,8 @@ export interface StepperProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Stepper: FunctionComponent<StepperProps> = ({ active, ...rest }) => (
+export const Stepper: FunctionComponent<StepperProps> = ({ active, children, ...rest }) => (
   <arc-stepper active={active} {...rest}>
+    {children}
   </arc-stepper>
 );

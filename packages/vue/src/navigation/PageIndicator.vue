@@ -35,5 +35,6 @@ function onArcChange(payload: CustomEvent) {
     :clickable="props.clickable"
     @arc-change="onArcChange"
   >
+    <slot />
   </arc-page-indicator>
 </template>

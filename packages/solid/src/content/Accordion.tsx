@@ -5,6 +5,7 @@ import '@arclux/arc-ui/accordion';
 
 export interface AccordionProps {
   multiple?: boolean;
+  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -33,9 +34,10 @@ export interface AccordionProps {
 }
 
 export const Accordion: Component<AccordionProps> = (props) => {
-  const [local, rest] = splitProps(props, ['multiple']);
+  const [local, rest] = splitProps(props, ['multiple', 'children']);
   return (
     <arc-accordion multiple={local.multiple} {...rest}>
+      {local.children}
     </arc-accordion>
   );
 };

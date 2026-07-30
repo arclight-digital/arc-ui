@@ -12,6 +12,7 @@ export interface DialogProps {
   variant?: 'default' | 'danger';
   onArcConfirm?: (e: CustomEvent) => void;
   onArcCancel?: (e: CustomEvent) => void;
+  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -40,9 +41,10 @@ export interface DialogProps {
 }
 
 export const Dialog: Component<DialogProps> = (props) => {
-  const [local, rest] = splitProps(props, ['open', 'heading', 'message', 'confirmLabel', 'cancelLabel', 'variant', 'onArcConfirm', 'onArcCancel']);
+  const [local, rest] = splitProps(props, ['open', 'heading', 'message', 'confirmLabel', 'cancelLabel', 'variant', 'onArcConfirm', 'onArcCancel', 'children']);
   return (
     <arc-dialog open={local.open} heading={local.heading} message={local.message} prop:confirmLabel={local.confirmLabel} prop:cancelLabel={local.cancelLabel} variant={local.variant} on:arc-confirm={local.onArcConfirm} on:arc-cancel={local.onArcCancel} {...rest}>
+      {local.children}
     </arc-dialog>
   );
 };

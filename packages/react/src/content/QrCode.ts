@@ -12,6 +12,7 @@ export interface QrCodeProps {
   quietZone?: number;
   contrast?: boolean;
   className?: string;
+  children?: React.ReactNode;
 }
 
 export const QrCode = createComponent({

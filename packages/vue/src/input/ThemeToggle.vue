@@ -26,5 +26,6 @@ const emit = defineEmits<{
     :iconOnly="props.iconOnly"
     @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
   >
+    <slot />
   </arc-theme-toggle>
 </template>

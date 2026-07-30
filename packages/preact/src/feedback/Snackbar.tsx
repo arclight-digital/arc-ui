@@ -9,6 +9,7 @@ export interface SnackbarProps {
   duration?: number;
   onArcAction?: (e: CustomEvent) => void;
   onArcDismiss?: (e: CustomEvent) => void;
+  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -36,7 +37,7 @@ export interface SnackbarProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Snackbar: FunctionComponent<SnackbarProps> = ({ position, duration, onArcAction, onArcDismiss, ...rest }) => {
+export const Snackbar: FunctionComponent<SnackbarProps> = ({ position, duration, onArcAction, onArcDismiss, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -56,6 +57,7 @@ export const Snackbar: FunctionComponent<SnackbarProps> = ({ position, duration,
   }, [onArcAction, onArcDismiss]);
   return (
     <arc-snackbar ref={ref} position={position} duration={duration} {...rest}>
+      {children}
     </arc-snackbar>
   );
 };

@@ -16,6 +16,7 @@ export interface RangeSliderProps {
   showValues?: boolean;
   onArcInput?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
+  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -43,7 +44,7 @@ export interface RangeSliderProps {
   [key: `on${string}`]: unknown;
 }
 
-export const RangeSlider: FunctionComponent<RangeSliderProps> = ({ min, max, step, low, high, name, disabled, label, showValues, onArcInput, onArcChange, ...rest }) => {
+export const RangeSlider: FunctionComponent<RangeSliderProps> = ({ min, max, step, low, high, name, disabled, label, showValues, onArcInput, onArcChange, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -63,6 +64,7 @@ export const RangeSlider: FunctionComponent<RangeSliderProps> = ({ min, max, ste
   }, [onArcInput, onArcChange]);
   return (
     <arc-range-slider ref={ref} min={min} max={max} step={step} low={low} high={high} name={name} disabled={disabled} label={label} showValues={showValues} {...rest}>
+      {children}
     </arc-range-slider>
   );
 };

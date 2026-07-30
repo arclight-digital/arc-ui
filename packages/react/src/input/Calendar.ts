@@ -11,6 +11,7 @@ export interface CalendarProps {
   month?: number;
   year?: number;
   className?: string;
+  children?: React.ReactNode;
   onArcNavigate?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
   onClick?: (e: Event) => void;

@@ -15,5 +15,6 @@ const props = withDefaults(defineProps<{
   <arc-comparison
     :features="props.features"
   >
+    <slot />
   </arc-comparison>
 </template>

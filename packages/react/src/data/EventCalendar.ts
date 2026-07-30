@@ -9,6 +9,7 @@ export interface EventCalendarProps {
   view?: 'month' | 'week';
   date?: string;
   className?: string;
+  children?: React.ReactNode;
   onArcPeriodChange?: (e: CustomEvent) => void;
   onArcDateClick?: (e: CustomEvent) => void;
   onArcEventClick?: (e: CustomEvent) => void;

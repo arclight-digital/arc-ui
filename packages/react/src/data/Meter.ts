@@ -13,6 +13,7 @@ export interface MeterProps {
   optimum?: number;
   label?: string;
   className?: string;
+  children?: React.ReactNode;
 }
 
 export const Meter = createComponent({

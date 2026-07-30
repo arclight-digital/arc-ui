@@ -7,7 +7,7 @@ import '@arclux/arc-ui/sparkline';
   selector: 'arc-sparkline',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-sparkline [attr.data]="this.data" [attr.type]="this.type" [attr.color]="this.color" [attr.width]="this.width" [attr.height]="this.height" [fill]="this.fill"></arc-sparkline>`,
+  template: `<arc-sparkline [attr.data]="this.data" [attr.type]="this.type" [attr.color]="this.color" [attr.width]="this.width" [attr.height]="this.height" [fill]="this.fill"><ng-content /></arc-sparkline>`,
 })
 export class Sparkline {
   @Input() data: string = '';

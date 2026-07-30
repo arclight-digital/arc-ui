@@ -7,6 +7,7 @@
     open?: boolean;
     /** <slot name="content"> — put slot="content" on the element inside. */
     content?: Snippet;
+    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -34,9 +35,10 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { open = false, content, ...rest }: Props = $props();
+  let { open = false, content, children, ...rest }: Props = $props();
 </script>
 
 <arc-context-menu {open} {...rest}>
   {@render content?.()}
+  {@render children?.()}
 </arc-context-menu>

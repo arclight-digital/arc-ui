@@ -7,6 +7,7 @@ export interface LoadingOverlayProps {
   active?: boolean;
   message?: string;
   global?: boolean;
+  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -35,9 +36,10 @@ export interface LoadingOverlayProps {
 }
 
 export const LoadingOverlay: Component<LoadingOverlayProps> = (props) => {
-  const [local, rest] = splitProps(props, ['active', 'message', 'global']);
+  const [local, rest] = splitProps(props, ['active', 'message', 'global', 'children']);
   return (
     <arc-loading-overlay active={local.active} message={local.message} global={local.global} {...rest}>
+      {local.children}
     </arc-loading-overlay>
   );
 };

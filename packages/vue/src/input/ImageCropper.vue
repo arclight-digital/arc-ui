@@ -29,5 +29,6 @@ const emit = defineEmits<{
     :zoom="props.zoom"
     @arc-crop-change="(payload: CustomEvent) => emit('arc-crop-change', payload)"
   >
+    <slot />
   </arc-image-cropper>
 </template>

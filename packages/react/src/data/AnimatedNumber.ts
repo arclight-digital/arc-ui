@@ -13,6 +13,7 @@ export interface AnimatedNumberProps {
   decimals?: number;
   locale?: string;
   className?: string;
+  children?: React.ReactNode;
 }
 
 export const AnimatedNumber = createComponent({

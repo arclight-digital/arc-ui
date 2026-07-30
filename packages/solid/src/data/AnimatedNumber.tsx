@@ -11,6 +11,7 @@ export interface AnimatedNumberProps {
   suffix?: string;
   decimals?: number;
   locale?: string;
+  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -39,9 +40,10 @@ export interface AnimatedNumberProps {
 }
 
 export const AnimatedNumber: Component<AnimatedNumberProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'duration', 'format', 'prefix', 'suffix', 'decimals', 'locale']);
+  const [local, rest] = splitProps(props, ['value', 'duration', 'format', 'prefix', 'suffix', 'decimals', 'locale', 'children']);
   return (
     <arc-animated-number value={local.value} duration={local.duration} format={local.format} prefix={local.prefix} suffix={local.suffix} decimals={local.decimals} locale={local.locale} {...rest}>
+      {local.children}
     </arc-animated-number>
   );
 };

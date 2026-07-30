@@ -14,6 +14,7 @@
     prefix?: Snippet;
     /** <slot name="suffix"> — put slot="suffix" on the element inside. */
     suffix?: Snippet;
+    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -41,10 +42,11 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { variant = 'primary', size = 'md', href = '', disabled = false, loading = false, type = 'button', prefix, suffix, ...rest }: Props = $props();
+  let { variant = 'primary', size = 'md', href = '', disabled = false, loading = false, type = 'button', prefix, suffix, children, ...rest }: Props = $props();
 </script>
 
 <arc-button {variant} {size} {href} {disabled} {loading} {type} {...rest}>
   {@render prefix?.()}
   {@render suffix?.()}
+  {@render children?.()}
 </arc-button>

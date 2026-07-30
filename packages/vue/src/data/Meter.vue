@@ -33,5 +33,6 @@ const props = withDefaults(defineProps<{
     :optimum="props.optimum"
     :label="props.label"
   >
+    <slot />
   </arc-meter>
 </template>

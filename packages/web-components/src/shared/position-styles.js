@@ -17,13 +17,30 @@ export function positionStyles(cls, { offset = 'var(--space-sm)', scale = 0.95, 
   const off = unsafeCSS(offset);
   const s = unsafeCSS(scale);
 
-  // Build selectors for the "open" state transforms.
-  // Two modes:
+  // The default branch is selected by "not one of the other three", so one
+  // selector covers an absent attribute, position="bottom", and any unrecognised
+  // value. The explicit :host([position="bottom"]) branch is kept beside it so
+  // prism can still infer `bottom` as a union member from the CSS.
+  //
+  // The invariant to preserve when touching these: the open rule must outrank the
+  // closed rule for *every* value the closed rule matches. Both use the same
+  // shape, so :host([open]…) is one attribute selector more specific than
+  // :host(…) in each branch. Widening only the closed rule would silently invert
+  // that for the values the widening adds — the panel would keep its closed
+  // transform while open. Covered by the positionStyles cases in
+  // test/enum-fallback-sweep.test.js, which read the stylesheet directly because
+  // the components animate `transform` and a post-open read returns an
+  // interpolated value rather than the resolved one.
+  //
+  // Two open mechanisms:
   //   1. Host attribute:  :host([open]) .panel        (popover)
   //   2. Modifier class:  .panel.panel--visible        (hover-card)
+  const notOther = unsafeCSS(
+    ':not([position="left"]):not([position="right"]):not([position="top"])',
+  );
   const openBottom = openCls
-    ? css`:host(:not([position="left"]):not([position="right"]):not([position="top"])) .${unsafeCSS(openCls)},\n    :host([position="bottom"]) .${unsafeCSS(openCls)}`
-    : css`:host([open]:not([position="left"]):not([position="right"]):not([position="top"])) .${c},\n    :host([open][position="bottom"]) .${c}`;
+    ? css`:host(${notOther}) .${unsafeCSS(openCls)},\n    :host([position="bottom"]) .${unsafeCSS(openCls)}`
+    : css`:host([open]${notOther}) .${c},\n    :host([open][position="bottom"]) .${c}`;
 
   const openTop = openCls
     ? css`:host([position="top"]) .${unsafeCSS(openCls)}`
@@ -38,7 +55,7 @@ export function positionStyles(cls, { offset = 'var(--space-sm)', scale = 0.95, 
     : css`:host([open][position="right"]) .${c}`;
 
   return css`
-    :host(:not([position="left"]):not([position="right"]):not([position="top"])) .${c},
+    :host(${notOther}) .${c},
     :host([position="bottom"]) .${c} {
       top: calc(100% + ${off});
       left: 50%;

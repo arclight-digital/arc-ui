@@ -7,7 +7,7 @@ import '@arclux/arc-ui/dialog';
   selector: 'arc-dialog',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-dialog [open]="this.open" [attr.heading]="this.heading" [attr.message]="this.message" [confirmLabel]="this.confirmLabel" [cancelLabel]="this.cancelLabel" [attr.variant]="this.variant" (arc-confirm)="this.arcConfirm.emit($event)" (arc-cancel)="this.arcCancel.emit($event)"></arc-dialog>`,
+  template: `<arc-dialog [open]="this.open" [attr.heading]="this.heading" [attr.message]="this.message" [confirmLabel]="this.confirmLabel" [cancelLabel]="this.cancelLabel" [attr.variant]="this.variant" (arc-confirm)="this.arcConfirm.emit($event)" (arc-cancel)="this.arcCancel.emit($event)"><ng-content /></arc-dialog>`,
 })
 export class Dialog {
   @Input() open: boolean = false;

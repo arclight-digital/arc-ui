@@ -10,6 +10,7 @@ export interface SidebarProps {
   width?: string;
   glow?: boolean;
   label?: string;
+  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -38,9 +39,10 @@ export interface SidebarProps {
 }
 
 export const Sidebar: Component<SidebarProps> = (props) => {
-  const [local, rest] = splitProps(props, ['active', 'collapsed', 'position', 'width', 'glow', 'label']);
+  const [local, rest] = splitProps(props, ['active', 'collapsed', 'position', 'width', 'glow', 'label', 'children']);
   return (
     <arc-sidebar active={local.active} collapsed={local.collapsed} position={local.position} width={local.width} glow={local.glow} label={local.label} {...rest}>
+      {local.children}
     </arc-sidebar>
   );
 };

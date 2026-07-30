@@ -8,6 +8,7 @@ export interface FooterProps {
   border?: boolean;
   contained?: string;
   align?: 'left' | 'center';
+  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -36,9 +37,10 @@ export interface FooterProps {
 }
 
 export const Footer: Component<FooterProps> = (props) => {
-  const [local, rest] = splitProps(props, ['compact', 'border', 'contained', 'align']);
+  const [local, rest] = splitProps(props, ['compact', 'border', 'contained', 'align', 'children']);
   return (
     <arc-footer compact={local.compact} border={local.border} contained={local.contained} align={local.align} {...rest}>
+      {local.children}
     </arc-footer>
   );
 };

@@ -24,5 +24,6 @@ const props = withDefaults(defineProps<{
     :position="props.position"
     :offset="props.offset"
   >
+    <slot />
   </arc-scroll-to-top>
 </template>

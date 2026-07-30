@@ -9,6 +9,7 @@ export interface ThemeToggleProps {
   disabled?: boolean;
   iconOnly?: boolean;
   className?: string;
+  children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;
   onClick?: (e: Event) => void;
 }

@@ -13,6 +13,7 @@
     height?: number;
     valueFormat?: 'number' | 'percent' | 'currency';
     currency?: string;
+    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -40,7 +41,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { type = 'line', series = [], labels = [], stacked = false, hideLegend = false, hideAxis = false, height = 260, valueFormat = 'number', currency = 'USD', ...rest }: Props = $props();
+  let { type = 'line', series = [], labels = [], stacked = false, hideLegend = false, hideAxis = false, height = 260, valueFormat = 'number', currency = 'USD', children, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {
@@ -53,4 +54,5 @@
 </script>
 
 <arc-chart {type} {series} {labels} {stacked} {height} {currency} bind:this={__el} {...rest}>
+  {@render children?.()}
 </arc-chart>

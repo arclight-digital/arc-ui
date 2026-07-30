@@ -23,5 +23,6 @@ const emit = defineEmits<{
     :label="props.label"
     @arc-navigate="(payload: CustomEvent) => emit('arc-navigate', payload)"
   >
+    <slot />
   </arc-breadcrumb>
 </template>

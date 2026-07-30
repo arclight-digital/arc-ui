@@ -41,5 +41,6 @@ function onArcChange(payload: CustomEvent) {
     :type="props.type"
     @arc-change="onArcChange"
   >
+    <slot />
   </arc-otp-input>
 </template>

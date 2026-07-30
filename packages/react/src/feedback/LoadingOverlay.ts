@@ -9,6 +9,7 @@ export interface LoadingOverlayProps {
   message?: string;
   global?: boolean;
   className?: string;
+  children?: React.ReactNode;
 }
 
 export const LoadingOverlay = createComponent({

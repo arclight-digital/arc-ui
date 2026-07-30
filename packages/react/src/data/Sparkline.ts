@@ -12,6 +12,7 @@ export interface SparklineProps {
   height?: number;
   fill?: boolean;
   className?: string;
+  children?: React.ReactNode;
 }
 
 export const Sparkline = createComponent({

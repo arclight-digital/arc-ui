@@ -5,6 +5,7 @@
 
   interface Props {
     items?: Array<{label:string,disabled?:boolean,items:Array<{label?:string,shortcut?:string,disabled?:boolean,divider?:boolean,items?:Array<{label:string,shortcut?:string,disabled?:boolean}>}>}>;
+    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -32,8 +33,9 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { items = [], ...rest }: Props = $props();
+  let { items = [], children, ...rest }: Props = $props();
 </script>
 
 <arc-menubar {items} {...rest}>
+  {@render children?.()}
 </arc-menubar>

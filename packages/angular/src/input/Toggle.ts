@@ -7,7 +7,7 @@ import '@arclux/arc-ui/toggle';
   selector: 'arc-toggle',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-toggle [checked]="this.checked" [disabled]="this.disabled" [attr.size]="this.size" [attr.label]="this.label" [attr.name]="this.name" (arc-change)="this.onArcChange($event)"></arc-toggle>`,
+  template: `<arc-toggle [checked]="this.checked" [disabled]="this.disabled" [attr.size]="this.size" [attr.label]="this.label" [attr.name]="this.name" (arc-change)="this.onArcChange($event)"><ng-content /></arc-toggle>`,
 })
 export class Toggle {
   @Input() checked: boolean = false;

@@ -10,6 +10,7 @@ export interface CodeBlockProps {
   code?: string;
   variant?: 'default' | 'window' | 'basic';
   className?: string;
+  children?: React.ReactNode;
 }
 
 export const CodeBlock = createComponent({

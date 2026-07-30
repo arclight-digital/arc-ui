@@ -6,6 +6,7 @@ import '@arclux/arc-ui/announcement';
 export interface AnnouncementProps {
   politeness?: 'polite' | 'assertive';
   message?: string;
+  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -34,9 +35,10 @@ export interface AnnouncementProps {
 }
 
 export const Announcement: Component<AnnouncementProps> = (props) => {
-  const [local, rest] = splitProps(props, ['politeness', 'message']);
+  const [local, rest] = splitProps(props, ['politeness', 'message', 'children']);
   return (
     <arc-announcement politeness={local.politeness} message={local.message} {...rest}>
+      {local.children}
     </arc-announcement>
   );
 };

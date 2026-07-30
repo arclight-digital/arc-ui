@@ -7,7 +7,7 @@ import '@arclux/arc-ui/scroll-indicator';
   selector: 'arc-scroll-indicator',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-scroll-indicator [attr.target]="this.target" [attr.position]="this.position" [attr.size]="this.size" [attr.color]="this.color"></arc-scroll-indicator>`,
+  template: `<arc-scroll-indicator [attr.target]="this.target" [attr.position]="this.position" [attr.size]="this.size" [attr.color]="this.color"><ng-content /></arc-scroll-indicator>`,
 })
 export class ScrollIndicator {
   @Input() target: string = '';

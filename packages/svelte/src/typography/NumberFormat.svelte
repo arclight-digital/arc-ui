@@ -10,6 +10,7 @@
     currency?: string;
     decimals?: number;
     notation?: 'standard' | 'compact';
+    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -37,8 +38,9 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = 0, type = 'number', locale = 'en-US', currency = 'USD', decimals = undefined, notation = 'standard', ...rest }: Props = $props();
+  let { value = 0, type = 'number', locale = 'en-US', currency = 'USD', decimals = undefined, notation = 'standard', children, ...rest }: Props = $props();
 </script>
 
 <arc-number-format {value} {type} {locale} {currency} {decimals} {notation} {...rest}>
+  {@render children?.()}
 </arc-number-format>

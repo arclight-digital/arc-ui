@@ -36,5 +36,6 @@ const emit = defineEmits<{
     @arc-dismiss="(payload: CustomEvent) => emit('arc-dismiss', payload)"
     @arc-queue-change="(payload: CustomEvent) => emit('arc-queue-change', payload)"
   >
+    <slot />
   </arc-toast-manager>
 </template>

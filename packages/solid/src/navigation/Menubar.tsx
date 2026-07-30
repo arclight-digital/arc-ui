@@ -6,6 +6,7 @@ import '@arclux/arc-ui/menubar';
 export interface MenubarProps {
   items?: Array<{label:string,disabled?:boolean,items:Array<{label?:string,shortcut?:string,disabled?:boolean,divider?:boolean,items?:Array<{label:string,shortcut?:string,disabled?:boolean}>}>}>;
   onArcSelect?: (e: CustomEvent) => void;
+  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -34,9 +35,10 @@ export interface MenubarProps {
 }
 
 export const Menubar: Component<MenubarProps> = (props) => {
-  const [local, rest] = splitProps(props, ['items', 'onArcSelect']);
+  const [local, rest] = splitProps(props, ['items', 'onArcSelect', 'children']);
   return (
     <arc-menubar items={local.items} on:arc-select={local.onArcSelect} {...rest}>
+      {local.children}
     </arc-menubar>
   );
 };

@@ -15,6 +15,7 @@
     size?: 'sm' | 'md' | 'lg';
     autoResize?: boolean;
     error?: string;
+    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -42,7 +43,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = $bindable(''), placeholder = '', label = '', rows = 4, maxlength = 0, disabled = false, readonly = false, resize = 'vertical', size = 'md', autoResize = false, error = '', ...rest }: Props = $props();
+  let { value = $bindable(''), placeholder = '', label = '', rows = 4, maxlength = 0, disabled = false, readonly = false, resize = 'vertical', size = 'md', autoResize = false, error = '', children, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {
@@ -74,4 +75,5 @@
   onarc-input={__onArcInput}
   onarc-change={__onArcChange}
 >
+  {@render children?.()}
 </arc-textarea>

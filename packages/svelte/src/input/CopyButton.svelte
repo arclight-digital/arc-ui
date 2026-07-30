@@ -6,6 +6,7 @@
   interface Props {
     value?: string;
     disabled?: boolean;
+    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -33,8 +34,9 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = '', disabled = false, ...rest }: Props = $props();
+  let { value = '', disabled = false, children, ...rest }: Props = $props();
 </script>
 
 <arc-copy-button {value} {disabled} {...rest}>
+  {@render children?.()}
 </arc-copy-button>

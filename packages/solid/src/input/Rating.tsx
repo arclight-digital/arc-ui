@@ -10,6 +10,7 @@ export interface RatingProps {
   disabled?: boolean;
   readonly?: boolean;
   onArcChange?: (e: CustomEvent) => void;
+  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -38,9 +39,10 @@ export interface RatingProps {
 }
 
 export const Rating: Component<RatingProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'max', 'name', 'disabled', 'readonly', 'onArcChange']);
+  const [local, rest] = splitProps(props, ['value', 'max', 'name', 'disabled', 'readonly', 'onArcChange', 'children']);
   return (
     <arc-rating value={local.value} max={local.max} name={local.name} disabled={local.disabled} readonly={local.readonly} on:arc-change={local.onArcChange} {...rest}>
+      {local.children}
     </arc-rating>
   );
 };

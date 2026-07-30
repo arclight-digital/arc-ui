@@ -7,7 +7,7 @@ import '@arclux/arc-ui/highlight';
   selector: 'arc-highlight',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-highlight [attr.text]="this.text" [attr.query]="this.query" [caseSensitive]="this.caseSensitive"></arc-highlight>`,
+  template: `<arc-highlight [attr.text]="this.text" [attr.query]="this.query" [caseSensitive]="this.caseSensitive"><ng-content /></arc-highlight>`,
 })
 export class Highlight {
   @Input() text: string = '';

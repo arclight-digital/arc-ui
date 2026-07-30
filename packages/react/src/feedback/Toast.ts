@@ -8,6 +8,7 @@ export interface ToastProps {
   position?: 'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center';
   duration?: number;
   className?: string;
+  children?: React.ReactNode;
   onArcDismiss?: (e: CustomEvent) => void;
 }
 

@@ -23,5 +23,6 @@ const props = withDefaults(defineProps<{
     :vertical="props.vertical"
     :label="props.label"
   >
+    <slot />
   </arc-divider>
 </template>

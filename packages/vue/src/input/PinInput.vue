@@ -59,5 +59,6 @@ function onArcComplete(payload: CustomEvent) {
     @arc-change="onArcChange"
     @arc-complete="onArcComplete"
   >
+    <slot />
   </arc-pin-input>
 </template>

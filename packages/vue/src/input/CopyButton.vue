@@ -23,5 +23,6 @@ const emit = defineEmits<{
     :disabled="props.disabled"
     @arc-copy="(payload: CustomEvent) => emit('arc-copy', payload)"
   >
+    <slot />
   </arc-copy-button>
 </template>

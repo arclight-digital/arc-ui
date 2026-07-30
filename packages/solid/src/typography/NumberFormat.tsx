@@ -10,6 +10,7 @@ export interface NumberFormatProps {
   currency?: string;
   decimals?: number;
   notation?: 'standard' | 'compact';
+  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -38,9 +39,10 @@ export interface NumberFormatProps {
 }
 
 export const NumberFormat: Component<NumberFormatProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'type', 'locale', 'currency', 'decimals', 'notation']);
+  const [local, rest] = splitProps(props, ['value', 'type', 'locale', 'currency', 'decimals', 'notation', 'children']);
   return (
     <arc-number-format value={local.value} type={local.type} locale={local.locale} currency={local.currency} decimals={local.decimals} notation={local.notation} {...rest}>
+      {local.children}
     </arc-number-format>
   );
 };

@@ -11,6 +11,7 @@ export interface OtpInputProps {
   disabled?: boolean;
   type?: 'number' | 'text';
   onArcChange?: (e: CustomEvent) => void;
+  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -38,7 +39,7 @@ export interface OtpInputProps {
   [key: `on${string}`]: unknown;
 }
 
-export const OtpInput: FunctionComponent<OtpInputProps> = ({ length, value, name, disabled, type, onArcChange, ...rest }) => {
+export const OtpInput: FunctionComponent<OtpInputProps> = ({ length, value, name, disabled, type, onArcChange, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -53,6 +54,7 @@ export const OtpInput: FunctionComponent<OtpInputProps> = ({ length, value, name
   }, [onArcChange]);
   return (
     <arc-otp-input ref={ref} length={length} value={value} name={name} disabled={disabled} type={type} {...rest}>
+      {children}
     </arc-otp-input>
   );
 };

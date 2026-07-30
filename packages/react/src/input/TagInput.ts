@@ -16,6 +16,7 @@ export interface TagInputProps {
   disabled?: boolean;
   error?: string;
   className?: string;
+  children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;
   onArcInput?: (e: CustomEvent) => void;
 }

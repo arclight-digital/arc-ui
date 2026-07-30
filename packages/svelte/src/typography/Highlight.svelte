@@ -7,6 +7,7 @@
     text?: string;
     query?: string;
     caseSensitive?: boolean;
+    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -34,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { text = '', query = '', caseSensitive = false, ...rest }: Props = $props();
+  let { text = '', query = '', caseSensitive = false, children, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {
@@ -45,4 +46,5 @@
 </script>
 
 <arc-highlight {text} {query} bind:this={__el} {...rest}>
+  {@render children?.()}
 </arc-highlight>

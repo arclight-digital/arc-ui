@@ -11,6 +11,7 @@
     searchable?: boolean;
     sourceLabel?: string;
     targetLabel?: string;
+    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -38,7 +39,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { options = [], value = $bindable([]), name = '', disabled = false, searchable = false, sourceLabel = 'Available', targetLabel = 'Selected', ...rest }: Props = $props();
+  let { options = [], value = $bindable([]), name = '', disabled = false, searchable = false, sourceLabel = 'Available', targetLabel = 'Selected', children, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {
@@ -63,4 +64,5 @@
 <arc-transfer-list {options} {value} {name} {disabled} {searchable} bind:this={__el} {...rest}
   onarc-change={__onArcChange}
 >
+  {@render children?.()}
 </arc-transfer-list>

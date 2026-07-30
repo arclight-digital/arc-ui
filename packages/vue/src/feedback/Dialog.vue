@@ -37,5 +37,6 @@ const emit = defineEmits<{
     @arc-confirm="(payload: CustomEvent) => emit('arc-confirm', payload)"
     @arc-cancel="(payload: CustomEvent) => emit('arc-cancel', payload)"
   >
+    <slot />
   </arc-dialog>
 </template>

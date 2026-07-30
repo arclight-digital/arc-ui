@@ -5,6 +5,7 @@
 
   interface Props {
     multiple?: boolean;
+    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -32,8 +33,9 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { multiple = false, ...rest }: Props = $props();
+  let { multiple = false, children, ...rest }: Props = $props();
 </script>
 
 <arc-accordion {multiple} {...rest}>
+  {@render children?.()}
 </arc-accordion>

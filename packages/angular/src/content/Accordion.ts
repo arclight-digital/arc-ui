@@ -7,7 +7,7 @@ import '@arclux/arc-ui/accordion';
   selector: 'arc-accordion',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-accordion [multiple]="this.multiple"></arc-accordion>`,
+  template: `<arc-accordion [multiple]="this.multiple"><ng-content /></arc-accordion>`,
 })
 export class Accordion {
   @Input() multiple: boolean = false;

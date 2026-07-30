@@ -5,6 +5,7 @@ import '@arclux/arc-ui/stepper';
 
 export interface StepperProps {
   active?: number;
+  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -33,9 +34,10 @@ export interface StepperProps {
 }
 
 export const Stepper: Component<StepperProps> = (props) => {
-  const [local, rest] = splitProps(props, ['active']);
+  const [local, rest] = splitProps(props, ['active', 'children']);
   return (
     <arc-stepper active={local.active} {...rest}>
+      {local.children}
     </arc-stepper>
   );
 };

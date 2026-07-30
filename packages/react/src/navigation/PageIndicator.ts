@@ -9,6 +9,7 @@ export interface PageIndicatorProps {
   value?: number;
   clickable?: boolean;
   className?: string;
+  children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;
 }
 

@@ -13,6 +13,7 @@ export interface ImageProps {
   fallback?: string;
   onArcLoad?: (e: CustomEvent) => void;
   onArcError?: (e: CustomEvent) => void;
+  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -40,7 +41,7 @@ export interface ImageProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Image: FunctionComponent<ImageProps> = ({ src, alt, aspect, fit, loading, fallback, onArcLoad, onArcError, ...rest }) => {
+export const Image: FunctionComponent<ImageProps> = ({ src, alt, aspect, fit, loading, fallback, onArcLoad, onArcError, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -60,6 +61,7 @@ export const Image: FunctionComponent<ImageProps> = ({ src, alt, aspect, fit, lo
   }, [onArcLoad, onArcError]);
   return (
     <arc-image ref={ref} src={src} alt={alt} aspect={aspect} fit={fit} loading={loading} fallback={fallback} {...rest}>
+      {children}
     </arc-image>
   );
 };

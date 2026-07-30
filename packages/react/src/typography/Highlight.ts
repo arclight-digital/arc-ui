@@ -9,6 +9,7 @@ export interface HighlightProps {
   query?: string;
   caseSensitive?: boolean;
   className?: string;
+  children?: React.ReactNode;
 }
 
 export const Highlight = createComponent({

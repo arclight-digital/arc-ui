@@ -8,6 +8,7 @@
     multiple?: boolean;
     maxSize?: number;
     disabled?: boolean;
+    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -35,7 +36,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { accept = '', multiple = false, maxSize = 0, disabled = false, ...rest }: Props = $props();
+  let { accept = '', multiple = false, maxSize = 0, disabled = false, children, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {
@@ -46,4 +47,5 @@
 </script>
 
 <arc-file-upload {accept} {multiple} {disabled} bind:this={__el} {...rest}>
+  {@render children?.()}
 </arc-file-upload>

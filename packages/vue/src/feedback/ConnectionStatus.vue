@@ -16,5 +16,6 @@ const emit = defineEmits<{
     @arc-online="(payload: CustomEvent) => emit('arc-online', payload)"
     @arc-offline="(payload: CustomEvent) => emit('arc-offline', payload)"
   >
+    <slot />
   </arc-connection-status>
 </template>

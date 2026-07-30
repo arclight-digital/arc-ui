@@ -7,7 +7,7 @@ import '@arclux/arc-ui/pin-input';
   selector: 'arc-pin-input',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-pin-input [attr.length]="this.length" [attr.value]="this.value" [attr.name]="this.name" [disabled]="this.disabled" [mask]="this.mask" [attr.type]="this.type" [attr.separator]="this.separator" [attr.label]="this.label" (arc-change)="this.onArcChange($event)" (arc-complete)="this.onArcComplete($event)"></arc-pin-input>`,
+  template: `<arc-pin-input [attr.length]="this.length" [attr.value]="this.value" [attr.name]="this.name" [disabled]="this.disabled" [mask]="this.mask" [attr.type]="this.type" [attr.separator]="this.separator" [attr.label]="this.label" (arc-change)="this.onArcChange($event)" (arc-complete)="this.onArcComplete($event)"><ng-content /></arc-pin-input>`,
 })
 export class PinInput {
   @Input() length: number = 4;

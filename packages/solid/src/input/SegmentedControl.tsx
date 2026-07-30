@@ -7,6 +7,7 @@ export interface SegmentedControlProps {
   value?: string;
   disabled?: boolean;
   onArcChange?: (e: CustomEvent) => void;
+  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -35,9 +36,10 @@ export interface SegmentedControlProps {
 }
 
 export const SegmentedControl: Component<SegmentedControlProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'disabled', 'onArcChange']);
+  const [local, rest] = splitProps(props, ['value', 'disabled', 'onArcChange', 'children']);
   return (
     <arc-segmented-control value={local.value} disabled={local.disabled} on:arc-change={local.onArcChange} {...rest}>
+      {local.children}
     </arc-segmented-control>
   );
 };

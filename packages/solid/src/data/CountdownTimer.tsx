@@ -9,6 +9,7 @@ export interface CountdownTimerProps {
   expired?: string;
   hideZeroSegments?: boolean;
   onArcExpired?: (e: CustomEvent) => void;
+  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -37,9 +38,10 @@ export interface CountdownTimerProps {
 }
 
 export const CountdownTimer: Component<CountdownTimerProps> = (props) => {
-  const [local, rest] = splitProps(props, ['target', 'label', 'expired', 'hideZeroSegments', 'onArcExpired']);
+  const [local, rest] = splitProps(props, ['target', 'label', 'expired', 'hideZeroSegments', 'onArcExpired', 'children']);
   return (
     <arc-countdown-timer target={local.target} label={local.label} expired={local.expired} prop:hideZeroSegments={local.hideZeroSegments} on:arc-expired={local.onArcExpired} {...rest}>
+      {local.children}
     </arc-countdown-timer>
   );
 };

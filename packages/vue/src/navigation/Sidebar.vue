@@ -30,5 +30,6 @@ const props = withDefaults(defineProps<{
     :glow="props.glow"
     :label="props.label"
   >
+    <slot />
   </arc-sidebar>
 </template>

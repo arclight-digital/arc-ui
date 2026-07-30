@@ -9,6 +9,7 @@ export interface ContextMenuProps {
   onArcOpen?: (e: CustomEvent) => void;
   onArcClose?: (e: CustomEvent) => void;
   onArcSelect?: (e: CustomEvent) => void;
+  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -36,7 +37,7 @@ export interface ContextMenuProps {
   [key: `on${string}`]: unknown;
 }
 
-export const ContextMenu: FunctionComponent<ContextMenuProps> = ({ open, onArcOpen, onArcClose, onArcSelect, ...rest }) => {
+export const ContextMenu: FunctionComponent<ContextMenuProps> = ({ open, onArcOpen, onArcClose, onArcSelect, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -61,6 +62,7 @@ export const ContextMenu: FunctionComponent<ContextMenuProps> = ({ open, onArcOp
   }, [onArcOpen, onArcClose, onArcSelect]);
   return (
     <arc-context-menu ref={ref} open={open} {...rest}>
+      {children}
     </arc-context-menu>
   );
 };

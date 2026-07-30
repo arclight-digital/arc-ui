@@ -11,6 +11,7 @@ export interface EventCalendarProps {
   onArcPeriodChange?: (e: CustomEvent) => void;
   onArcDateClick?: (e: CustomEvent) => void;
   onArcEventClick?: (e: CustomEvent) => void;
+  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -38,7 +39,7 @@ export interface EventCalendarProps {
   [key: `on${string}`]: unknown;
 }
 
-export const EventCalendar: FunctionComponent<EventCalendarProps> = ({ events, view, date, onArcPeriodChange, onArcDateClick, onArcEventClick, ...rest }) => {
+export const EventCalendar: FunctionComponent<EventCalendarProps> = ({ events, view, date, onArcPeriodChange, onArcDateClick, onArcEventClick, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -63,6 +64,7 @@ export const EventCalendar: FunctionComponent<EventCalendarProps> = ({ events, v
   }, [onArcPeriodChange, onArcDateClick, onArcEventClick]);
   return (
     <arc-event-calendar ref={ref} events={events} view={view} date={date} {...rest}>
+      {children}
     </arc-event-calendar>
   );
 };

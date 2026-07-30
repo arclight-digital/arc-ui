@@ -7,7 +7,7 @@ import '@arclux/arc-ui/avatar';
   selector: 'arc-avatar',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-avatar [attr.src]="this.src" [attr.name]="this.name" [attr.size]="this.size" [attr.shape]="this.shape" [attr.status]="this.status"></arc-avatar>`,
+  template: `<arc-avatar [attr.src]="this.src" [attr.name]="this.name" [attr.size]="this.size" [attr.shape]="this.shape" [attr.status]="this.status"><ng-content /></arc-avatar>`,
 })
 export class Avatar {
   @Input() src: string = '';

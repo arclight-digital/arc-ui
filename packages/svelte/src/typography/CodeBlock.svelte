@@ -8,6 +8,7 @@
     filename?: string;
     code?: string;
     variant?: 'default' | 'window' | 'basic';
+    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -35,8 +36,9 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { language = '', filename = '', code = '', variant = 'default', ...rest }: Props = $props();
+  let { language = '', filename = '', code = '', variant = 'default', children, ...rest }: Props = $props();
 </script>
 
 <arc-code-block {language} {filename} {code} {variant} {...rest}>
+  {@render children?.()}
 </arc-code-block>

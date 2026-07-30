@@ -15,6 +15,7 @@ export interface ChartProps {
   valueFormat?: 'number' | 'percent' | 'currency';
   currency?: string;
   className?: string;
+  children?: React.ReactNode;
   onArcMarkClick?: (e: CustomEvent) => void;
 }
 

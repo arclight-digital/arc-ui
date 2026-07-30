@@ -13,6 +13,7 @@ export interface TypewriterProps {
   nowrap?: boolean;
   pauseEnd?: number;
   className?: string;
+  children?: React.ReactNode;
   onArcComplete?: (e: CustomEvent) => void;
 }
 

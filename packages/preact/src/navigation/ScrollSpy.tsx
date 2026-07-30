@@ -8,6 +8,7 @@ export interface ScrollSpyProps {
   active?: string;
   offset?: number;
   onArcChange?: (e: CustomEvent) => void;
+  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -35,7 +36,7 @@ export interface ScrollSpyProps {
   [key: `on${string}`]: unknown;
 }
 
-export const ScrollSpy: FunctionComponent<ScrollSpyProps> = ({ active, offset, onArcChange, ...rest }) => {
+export const ScrollSpy: FunctionComponent<ScrollSpyProps> = ({ active, offset, onArcChange, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -50,6 +51,7 @@ export const ScrollSpy: FunctionComponent<ScrollSpyProps> = ({ active, offset, o
   }, [onArcChange]);
   return (
     <arc-scroll-spy ref={ref} active={active} offset={offset} {...rest}>
+      {children}
     </arc-scroll-spy>
   );
 };

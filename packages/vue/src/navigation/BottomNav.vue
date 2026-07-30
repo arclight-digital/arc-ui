@@ -32,5 +32,6 @@ function onArcChange(payload: CustomEvent) {
     :value="props.value"
     @arc-change="onArcChange"
   >
+    <slot />
   </arc-bottom-nav>
 </template>

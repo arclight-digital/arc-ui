@@ -7,6 +7,7 @@
     color?: string;
     label?: string;
     size?: 'sm' | 'md' | 'lg';
+    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -34,8 +35,9 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { color = '#4d7ef7', label = '', size = 'md', ...rest }: Props = $props();
+  let { color = '#4d7ef7', label = '', size = 'md', children, ...rest }: Props = $props();
 </script>
 
 <arc-color-swatch {color} {label} {size} {...rest}>
+  {@render children?.()}
 </arc-color-swatch>

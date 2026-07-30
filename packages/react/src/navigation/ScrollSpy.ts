@@ -8,6 +8,7 @@ export interface ScrollSpyProps {
   active?: string;
   offset?: number;
   className?: string;
+  children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;
   onClick?: (e: Event) => void;
 }

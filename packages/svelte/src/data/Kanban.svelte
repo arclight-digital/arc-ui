@@ -6,6 +6,7 @@
   interface Props {
     columns?: Array<{id:string,title?:string,limit?:number,items:Array<{id:string,label:string,description?:string,tag?:string,variant?:string}>}>;
     disabled?: boolean;
+    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -33,8 +34,9 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { columns = [], disabled = false, ...rest }: Props = $props();
+  let { columns = [], disabled = false, children, ...rest }: Props = $props();
 </script>
 
 <arc-kanban {columns} {disabled} {...rest}>
+  {@render children?.()}
 </arc-kanban>

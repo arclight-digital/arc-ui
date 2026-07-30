@@ -17,6 +17,7 @@ export interface PasswordInputProps {
   onArcStrengthChange?: (e: CustomEvent) => void;
   onArcInput?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
+  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -45,9 +46,10 @@ export interface PasswordInputProps {
 }
 
 export const PasswordInput: Component<PasswordInputProps> = (props) => {
-  const [local, rest] = splitProps(props, ['name', 'label', 'placeholder', 'value', 'disabled', 'required', 'error', 'size', 'autocomplete', 'showStrength', 'onArcStrengthChange', 'onArcInput', 'onArcChange']);
+  const [local, rest] = splitProps(props, ['name', 'label', 'placeholder', 'value', 'disabled', 'required', 'error', 'size', 'autocomplete', 'showStrength', 'onArcStrengthChange', 'onArcInput', 'onArcChange', 'children']);
   return (
     <arc-password-input name={local.name} label={local.label} placeholder={local.placeholder} value={local.value} disabled={local.disabled} required={local.required} error={local.error} size={local.size} autocomplete={local.autocomplete} prop:showStrength={local.showStrength} on:arc-strength-change={local.onArcStrengthChange} on:arc-input={local.onArcInput} on:arc-change={local.onArcChange} {...rest}>
+      {local.children}
     </arc-password-input>
   );
 };

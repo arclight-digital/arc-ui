@@ -7,7 +7,7 @@ import '@arclux/arc-ui/transfer-list';
   selector: 'arc-transfer-list',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-transfer-list [options]="this.options" [value]="this.value" [attr.name]="this.name" [disabled]="this.disabled" [searchable]="this.searchable" [sourceLabel]="this.sourceLabel" [targetLabel]="this.targetLabel" (arc-change)="this.onArcChange($event)"></arc-transfer-list>`,
+  template: `<arc-transfer-list [options]="this.options" [value]="this.value" [attr.name]="this.name" [disabled]="this.disabled" [searchable]="this.searchable" [sourceLabel]="this.sourceLabel" [targetLabel]="this.targetLabel" (arc-change)="this.onArcChange($event)"><ng-content /></arc-transfer-list>`,
 })
 export class TransferList {
   @Input() options: Array<{value:string,label:string,disabled?:boolean}> = [];

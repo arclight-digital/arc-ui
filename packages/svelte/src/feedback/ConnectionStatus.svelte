@@ -4,6 +4,7 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
+    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -31,8 +32,9 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { ...rest }: Props = $props();
+  let { children, ...rest }: Props = $props();
 </script>
 
 <arc-connection-status {...rest}>
+  {@render children?.()}
 </arc-connection-status>

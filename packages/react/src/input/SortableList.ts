@@ -7,6 +7,7 @@ import { ArcSortableList } from '@arclux/arc-ui/sortable-list';
 export interface SortableListProps {
   disabled?: boolean;
   className?: string;
+  children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;
 }
 

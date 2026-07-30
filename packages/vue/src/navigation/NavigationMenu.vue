@@ -20,5 +20,6 @@ const emit = defineEmits<{
     :label="props.label"
     @arc-mobile-menu-toggle="(payload: CustomEvent) => emit('arc-mobile-menu-toggle', payload)"
   >
+    <slot />
   </arc-navigation-menu>
 </template>

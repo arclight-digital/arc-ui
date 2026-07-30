@@ -7,6 +7,7 @@
     target?: string;
     active?: boolean;
     padding?: number;
+    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -34,8 +35,9 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { target = '', active = false, padding = 8, ...rest }: Props = $props();
+  let { target = '', active = false, padding = 8, children, ...rest }: Props = $props();
 </script>
 
 <arc-spotlight {target} {active} {padding} {...rest}>
+  {@render children?.()}
 </arc-spotlight>

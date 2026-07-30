@@ -10,6 +10,7 @@ export interface NumberFormatProps {
   currency?: string;
   decimals?: number;
   notation?: 'standard' | 'compact';
+  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -37,7 +38,8 @@ export interface NumberFormatProps {
   [key: `on${string}`]: unknown;
 }
 
-export const NumberFormat: FunctionComponent<NumberFormatProps> = ({ value, type, locale, currency, decimals, notation, ...rest }) => (
+export const NumberFormat: FunctionComponent<NumberFormatProps> = ({ value, type, locale, currency, decimals, notation, children, ...rest }) => (
   <arc-number-format value={value} type={type} locale={locale} currency={currency} decimals={decimals} notation={notation} {...rest}>
+    {children}
   </arc-number-format>
 );

@@ -7,6 +7,7 @@ import '@arclux/arc-ui/connection-status';
 export interface ConnectionStatusProps {
   onArcOnline?: (e: CustomEvent) => void;
   onArcOffline?: (e: CustomEvent) => void;
+  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -34,7 +35,7 @@ export interface ConnectionStatusProps {
   [key: `on${string}`]: unknown;
 }
 
-export const ConnectionStatus: FunctionComponent<ConnectionStatusProps> = ({ onArcOnline, onArcOffline, ...rest }) => {
+export const ConnectionStatus: FunctionComponent<ConnectionStatusProps> = ({ onArcOnline, onArcOffline, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -54,6 +55,7 @@ export const ConnectionStatus: FunctionComponent<ConnectionStatusProps> = ({ onA
   }, [onArcOnline, onArcOffline]);
   return (
     <arc-connection-status ref={ref} {...rest}>
+      {children}
     </arc-connection-status>
   );
 };

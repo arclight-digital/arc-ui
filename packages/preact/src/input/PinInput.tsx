@@ -15,6 +15,7 @@ export interface PinInputProps {
   label?: string;
   onArcChange?: (e: CustomEvent) => void;
   onArcComplete?: (e: CustomEvent) => void;
+  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -42,7 +43,7 @@ export interface PinInputProps {
   [key: `on${string}`]: unknown;
 }
 
-export const PinInput: FunctionComponent<PinInputProps> = ({ length, value, name, disabled, mask, type, separator, label, onArcChange, onArcComplete, ...rest }) => {
+export const PinInput: FunctionComponent<PinInputProps> = ({ length, value, name, disabled, mask, type, separator, label, onArcChange, onArcComplete, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -62,6 +63,7 @@ export const PinInput: FunctionComponent<PinInputProps> = ({ length, value, name
   }, [onArcChange, onArcComplete]);
   return (
     <arc-pin-input ref={ref} length={length} value={value} name={name} disabled={disabled} mask={mask} type={type} separator={separator} label={label} {...rest}>
+      {children}
     </arc-pin-input>
   );
 };

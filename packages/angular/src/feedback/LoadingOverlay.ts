@@ -7,7 +7,7 @@ import '@arclux/arc-ui/loading-overlay';
   selector: 'arc-loading-overlay',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-loading-overlay [active]="this.active" [attr.message]="this.message" [global]="this.global"></arc-loading-overlay>`,
+  template: `<arc-loading-overlay [active]="this.active" [attr.message]="this.message" [global]="this.global"><ng-content /></arc-loading-overlay>`,
 })
 export class LoadingOverlay {
   @Input() active: boolean = false;

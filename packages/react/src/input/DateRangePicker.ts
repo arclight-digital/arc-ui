@@ -17,6 +17,7 @@ export interface DateRangePickerProps {
   required?: boolean;
   label?: string;
   className?: string;
+  children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;
 }
 

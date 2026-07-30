@@ -11,6 +11,7 @@ export interface MultiSelectProps {
   name?: string;
   disabled?: boolean;
   className?: string;
+  children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;
   onClick?: (e: Event) => void;
 }

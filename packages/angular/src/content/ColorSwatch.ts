@@ -7,7 +7,7 @@ import '@arclux/arc-ui/color-swatch';
   selector: 'arc-color-swatch',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-color-swatch [attr.color]="this.color" [attr.label]="this.label" [attr.size]="this.size"></arc-color-swatch>`,
+  template: `<arc-color-swatch [attr.color]="this.color" [attr.label]="this.label" [attr.size]="this.size"><ng-content /></arc-color-swatch>`,
 })
 export class ColorSwatch {
   @Input() color: string = '#4d7ef7';

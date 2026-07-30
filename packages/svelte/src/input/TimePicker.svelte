@@ -13,6 +13,7 @@
     placeholder?: string;
     disabled?: boolean;
     label?: string;
+    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -40,7 +41,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = $bindable(''), name = '', min = '', max = '', step = 1, format = '12h', placeholder = 'Select time', disabled = false, label = '', ...rest }: Props = $props();
+  let { value = $bindable(''), name = '', min = '', max = '', step = 1, format = '12h', placeholder = 'Select time', disabled = false, label = '', children, ...rest }: Props = $props();
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
@@ -57,4 +58,5 @@
 <arc-time-picker {value} {name} {min} {max} {step} {format} {placeholder} {disabled} {label} {...rest}
   onarc-change={__onArcChange}
 >
+  {@render children?.()}
 </arc-time-picker>

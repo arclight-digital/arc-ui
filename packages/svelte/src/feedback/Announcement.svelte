@@ -6,6 +6,7 @@
   interface Props {
     politeness?: 'polite' | 'assertive';
     message?: string;
+    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -33,8 +34,9 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { politeness = 'polite', message = '', ...rest }: Props = $props();
+  let { politeness = 'polite', message = '', children, ...rest }: Props = $props();
 </script>
 
 <arc-announcement {politeness} {message} {...rest}>
+  {@render children?.()}
 </arc-announcement>

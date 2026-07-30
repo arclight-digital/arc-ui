@@ -11,6 +11,7 @@ export interface ToggleProps {
   label?: string;
   name?: string;
   onArcChange?: (e: CustomEvent) => void;
+  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -38,7 +39,7 @@ export interface ToggleProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Toggle: FunctionComponent<ToggleProps> = ({ checked, disabled, size, label, name, onArcChange, ...rest }) => {
+export const Toggle: FunctionComponent<ToggleProps> = ({ checked, disabled, size, label, name, onArcChange, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -53,6 +54,7 @@ export const Toggle: FunctionComponent<ToggleProps> = ({ checked, disabled, size
   }, [onArcChange]);
   return (
     <arc-toggle ref={ref} checked={checked} disabled={disabled} size={size} label={label} name={name} {...rest}>
+      {children}
     </arc-toggle>
   );
 };

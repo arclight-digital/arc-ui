@@ -14,6 +14,7 @@
     size?: 'sm' | 'md' | 'lg';
     autocomplete?: string;
     showStrength?: boolean;
+    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -41,7 +42,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { name = '', label = '', placeholder = '', value = $bindable(''), disabled = false, required = false, error = '', size = 'md', autocomplete = 'current-password', showStrength = false, ...rest }: Props = $props();
+  let { name = '', label = '', placeholder = '', value = $bindable(''), disabled = false, required = false, error = '', size = 'md', autocomplete = 'current-password', showStrength = false, children, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {
@@ -73,4 +74,5 @@
   onarc-input={__onArcInput}
   onarc-change={__onArcChange}
 >
+  {@render children?.()}
 </arc-password-input>

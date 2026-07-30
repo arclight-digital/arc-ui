@@ -29,6 +29,7 @@ const emit = defineEmits<{
     :href="props.href"
     @arc-item-select="(payload: CustomEvent) => emit('arc-item-select', payload)"
   >
+    <slot />
     <slot name="prefix" />
     <slot name="description" />
     <slot name="suffix" />

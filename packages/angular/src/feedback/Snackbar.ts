@@ -7,7 +7,7 @@ import '@arclux/arc-ui/snackbar';
   selector: 'arc-snackbar',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-snackbar [attr.position]="this.position" [attr.duration]="this.duration" (arc-action)="this.arcAction.emit($event)" (arc-dismiss)="this.arcDismiss.emit($event)"></arc-snackbar>`,
+  template: `<arc-snackbar [attr.position]="this.position" [attr.duration]="this.duration" (arc-action)="this.arcAction.emit($event)" (arc-dismiss)="this.arcDismiss.emit($event)"><ng-content /></arc-snackbar>`,
 })
 export class Snackbar {
   @Input() position: 'bottom-center' | 'bottom-left' | 'bottom-right' = 'bottom-center';

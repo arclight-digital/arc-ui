@@ -41,5 +41,6 @@ function onArcChange(payload: CustomEvent) {
     :label="props.label"
     @arc-change="onArcChange"
   >
+    <slot />
   </arc-color-picker>
 </template>

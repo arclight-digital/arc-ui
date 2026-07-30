@@ -7,7 +7,7 @@ import '@arclux/arc-ui/color-picker';
   selector: 'arc-color-picker',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-color-picker [attr.value]="this.value" [attr.name]="this.name" [presets]="this.presets" [disabled]="this.disabled" [attr.label]="this.label" (arc-change)="this.onArcChange($event)"></arc-color-picker>`,
+  template: `<arc-color-picker [attr.value]="this.value" [attr.name]="this.name" [presets]="this.presets" [disabled]="this.disabled" [attr.label]="this.label" (arc-change)="this.onArcChange($event)"><ng-content /></arc-color-picker>`,
 })
 export class ColorPicker {
   @Input() value: string = '#4d7ef7';

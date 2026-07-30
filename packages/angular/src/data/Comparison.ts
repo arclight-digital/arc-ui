@@ -7,7 +7,7 @@ import '@arclux/arc-ui/comparison';
   selector: 'arc-comparison',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-comparison [attr.features]="this.features"></arc-comparison>`,
+  template: `<arc-comparison [attr.features]="this.features"><ng-content /></arc-comparison>`,
 })
 export class Comparison {
   @Input() features: string = '[]';

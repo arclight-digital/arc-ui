@@ -30,5 +30,6 @@ const props = withDefaults(defineProps<{
     :height="props.height"
     :fill="props.fill"
   >
+    <slot />
   </arc-sparkline>
 </template>

@@ -12,6 +12,7 @@ export interface CheckboxProps {
   name?: string;
   value?: string;
   onArcChange?: (e: CustomEvent) => void;
+  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -40,9 +41,10 @@ export interface CheckboxProps {
 }
 
 export const Checkbox: Component<CheckboxProps> = (props) => {
-  const [local, rest] = splitProps(props, ['checked', 'indeterminate', 'disabled', 'size', 'label', 'name', 'value', 'onArcChange']);
+  const [local, rest] = splitProps(props, ['checked', 'indeterminate', 'disabled', 'size', 'label', 'name', 'value', 'onArcChange', 'children']);
   return (
     <arc-checkbox checked={local.checked} indeterminate={local.indeterminate} disabled={local.disabled} size={local.size} label={local.label} name={local.name} value={local.value} on:arc-change={local.onArcChange} {...rest}>
+      {local.children}
     </arc-checkbox>
   );
 };

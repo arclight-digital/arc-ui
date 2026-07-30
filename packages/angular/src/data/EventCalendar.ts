@@ -7,7 +7,7 @@ import '@arclux/arc-ui/event-calendar';
   selector: 'arc-event-calendar',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-event-calendar [events]="this.events" [attr.view]="this.view" [attr.date]="this.date" (arc-period-change)="this.onArcPeriodChange($event)" (arc-date-click)="this.onArcDateClick($event)" (arc-event-click)="this.arcEventClick.emit($event)"></arc-event-calendar>`,
+  template: `<arc-event-calendar [events]="this.events" [attr.view]="this.view" [attr.date]="this.date" (arc-period-change)="this.onArcPeriodChange($event)" (arc-date-click)="this.onArcDateClick($event)" (arc-event-click)="this.arcEventClick.emit($event)"><ng-content /></arc-event-calendar>`,
 })
 export class EventCalendar {
   @Input() events: Array<{date:string,end?:string,label:string,color?:number}> = [];

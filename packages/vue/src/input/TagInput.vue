@@ -58,5 +58,6 @@ function onArcChange(payload: CustomEvent) {
     @arc-change="onArcChange"
     @arc-input="(payload: CustomEvent) => emit('arc-input', payload)"
   >
+    <slot />
   </arc-tag-input>
 </template>

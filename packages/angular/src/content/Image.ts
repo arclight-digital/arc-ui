@@ -7,7 +7,7 @@ import '@arclux/arc-ui/image';
   selector: 'arc-image',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-image [attr.src]="this.src" [attr.alt]="this.alt" [attr.aspect]="this.aspect" [attr.fit]="this.fit" [attr.loading]="this.loading" [attr.fallback]="this.fallback" (arc-load)="this.arcLoad.emit($event)" (arc-error)="this.arcError.emit($event)"></arc-image>`,
+  template: `<arc-image [attr.src]="this.src" [attr.alt]="this.alt" [attr.aspect]="this.aspect" [attr.fit]="this.fit" [attr.loading]="this.loading" [attr.fallback]="this.fallback" (arc-load)="this.arcLoad.emit($event)" (arc-error)="this.arcError.emit($event)"><ng-content /></arc-image>`,
 })
 export class Image {
   @Input() src: string = '';

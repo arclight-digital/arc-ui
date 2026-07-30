@@ -7,7 +7,7 @@ import '@arclux/arc-ui/context-menu';
   selector: 'arc-context-menu',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `<arc-context-menu [open]="this.open" (arc-open)="this.arcOpen.emit($event)" (arc-close)="this.arcClose.emit($event)" (arc-select)="this.arcSelect.emit($event)"></arc-context-menu>`,
+  template: `<arc-context-menu [open]="this.open" (arc-open)="this.arcOpen.emit($event)" (arc-close)="this.arcClose.emit($event)" (arc-select)="this.arcSelect.emit($event)"><ng-content /></arc-context-menu>`,
 })
 export class ContextMenu {
   @Input() open: boolean = false;

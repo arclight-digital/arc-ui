@@ -15,5 +15,6 @@ const props = withDefaults(defineProps<{
   <arc-accordion
     :multiple="props.multiple"
   >
+    <slot />
   </arc-accordion>
 </template>

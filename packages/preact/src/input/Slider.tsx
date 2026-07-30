@@ -14,6 +14,7 @@ export interface SliderProps {
   label?: string;
   onArcInput?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
+  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -41,7 +42,7 @@ export interface SliderProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Slider: FunctionComponent<SliderProps> = ({ value, min, max, step, name, disabled, label, onArcInput, onArcChange, ...rest }) => {
+export const Slider: FunctionComponent<SliderProps> = ({ value, min, max, step, name, disabled, label, onArcInput, onArcChange, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -61,6 +62,7 @@ export const Slider: FunctionComponent<SliderProps> = ({ value, min, max, step, 
   }, [onArcInput, onArcChange]);
   return (
     <arc-slider ref={ref} value={value} min={min} max={max} step={step} name={name} disabled={disabled} label={label} {...rest}>
+      {children}
     </arc-slider>
   );
 };

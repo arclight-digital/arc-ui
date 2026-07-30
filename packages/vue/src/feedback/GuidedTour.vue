@@ -24,5 +24,6 @@ const emit = defineEmits<{
     @arc-complete="(payload: CustomEvent) => emit('arc-complete', payload)"
     @arc-dismiss="(payload: CustomEvent) => emit('arc-dismiss', payload)"
   >
+    <slot />
   </arc-guided-tour>
 </template>

@@ -18,5 +18,6 @@ const props = withDefaults(defineProps<{
     :size="props.size"
     :variant="props.variant"
   >
+    <slot />
   </arc-spinner>
 </template>

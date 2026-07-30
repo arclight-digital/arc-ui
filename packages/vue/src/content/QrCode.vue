@@ -30,5 +30,6 @@ const props = withDefaults(defineProps<{
     :quietZone="props.quietZone"
     :contrast="props.contrast"
   >
+    <slot />
   </arc-qr-code>
 </template>

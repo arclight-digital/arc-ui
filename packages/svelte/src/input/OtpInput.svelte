@@ -9,6 +9,7 @@
     name?: string;
     disabled?: boolean;
     type?: 'number' | 'text';
+    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -36,7 +37,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { length = 6, value = $bindable(''), name = '', disabled = false, type = 'number', ...rest }: Props = $props();
+  let { length = 6, value = $bindable(''), name = '', disabled = false, type = 'number', children, ...rest }: Props = $props();
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
@@ -53,4 +54,5 @@
 <arc-otp-input {length} {value} {name} {disabled} {type} {...rest}
   onarc-change={__onArcChange}
 >
+  {@render children?.()}
 </arc-otp-input>

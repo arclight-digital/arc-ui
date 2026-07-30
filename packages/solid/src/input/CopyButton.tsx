@@ -7,6 +7,7 @@ export interface CopyButtonProps {
   value?: string;
   disabled?: boolean;
   onArcCopy?: (e: CustomEvent) => void;
+  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -35,9 +36,10 @@ export interface CopyButtonProps {
 }
 
 export const CopyButton: Component<CopyButtonProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'disabled', 'onArcCopy']);
+  const [local, rest] = splitProps(props, ['value', 'disabled', 'onArcCopy', 'children']);
   return (
     <arc-copy-button value={local.value} disabled={local.disabled} on:arc-copy={local.onArcCopy} {...rest}>
+      {local.children}
     </arc-copy-button>
   );
 };

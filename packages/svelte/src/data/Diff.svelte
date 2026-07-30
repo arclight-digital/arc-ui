@@ -7,6 +7,7 @@
     before?: string;
     after?: string;
     mode?: 'inline' | 'side-by-side';
+    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -34,8 +35,9 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { before = '', after = '', mode = 'inline', ...rest }: Props = $props();
+  let { before = '', after = '', mode = 'inline', children, ...rest }: Props = $props();
 </script>
 
 <arc-diff {before} {after} {mode} {...rest}>
+  {@render children?.()}
 </arc-diff>

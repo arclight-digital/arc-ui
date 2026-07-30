@@ -7,6 +7,7 @@ export interface ProgressToastProps {
   position?: 'top-right' | 'bottom-right';
   onArcComplete?: (e: CustomEvent) => void;
   onArcCancel?: (e: CustomEvent) => void;
+  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -35,9 +36,10 @@ export interface ProgressToastProps {
 }
 
 export const ProgressToast: Component<ProgressToastProps> = (props) => {
-  const [local, rest] = splitProps(props, ['position', 'onArcComplete', 'onArcCancel']);
+  const [local, rest] = splitProps(props, ['position', 'onArcComplete', 'onArcCancel', 'children']);
   return (
     <arc-progress-toast position={local.position} on:arc-complete={local.onArcComplete} on:arc-cancel={local.onArcCancel} {...rest}>
+      {local.children}
     </arc-progress-toast>
   );
 };

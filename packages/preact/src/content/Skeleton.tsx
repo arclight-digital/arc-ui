@@ -8,6 +8,7 @@ export interface SkeletonProps {
   width?: string;
   height?: string;
   count?: number;
+  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -35,7 +36,8 @@ export interface SkeletonProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Skeleton: FunctionComponent<SkeletonProps> = ({ variant, width, height, count, ...rest }) => (
+export const Skeleton: FunctionComponent<SkeletonProps> = ({ variant, width, height, count, children, ...rest }) => (
   <arc-skeleton variant={variant} width={width} height={height} count={count} {...rest}>
+    {children}
   </arc-skeleton>
 );
