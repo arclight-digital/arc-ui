@@ -1053,12 +1053,12 @@
       "description": "Line-based text diff viewer with inline and side-by-side display modes.\n---\n\n\n### **CSS Parts:**\n - **line**\n- **line-number**\n- **prefix**\n- **container**",
       "attributes": [
         {
-          "name": "before",
+          "name": "original",
           "description": "The original text to compare (split by newlines).",
           "values": []
         },
         {
-          "name": "after",
+          "name": "revised",
           "description": "The modified text to compare (split by newlines).",
           "values": []
         },
@@ -4664,7 +4664,7 @@
           "values": []
         },
         {
-          "name": "animate",
+          "name": "animated",
           "description": "Animate the gradient with a shifting background-position cycle",
           "values": []
         }

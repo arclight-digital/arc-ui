@@ -6,7 +6,7 @@
   interface Props {
     variant?: 'accent' | 'display' | 'sunset' | 'ocean' | 'custom';
     gradient?: string;
-    animate?: boolean;
+    animated?: boolean;
     children?: Snippet;
     class?: string;
     id?: string;
@@ -35,9 +35,9 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { variant = 'accent', gradient = '', animate = false, children, ...rest }: Props = $props();
+  let { variant = 'accent', gradient = '', animated = false, children, ...rest }: Props = $props();
 </script>
 
-<arc-gradient-text {variant} {gradient} {animate} {...rest}>
+<arc-gradient-text {variant} {gradient} {animated} {...rest}>
   {@render children?.()}
 </arc-gradient-text>

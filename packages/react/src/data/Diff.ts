@@ -5,8 +5,8 @@ import { createComponent } from '@lit/react';
 import { ArcDiff } from '@arclux/arc-ui/diff';
 
 export interface DiffProps {
-  before?: string;
-  after?: string;
+  original?: string;
+  revised?: string;
   mode?: 'inline' | 'side-by-side';
   className?: string;
   children?: React.ReactNode;

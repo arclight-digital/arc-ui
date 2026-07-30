@@ -806,9 +806,9 @@ export declare class ArcDialog extends LitElement {
  */
 export declare class ArcDiff extends LitElement {
   /** The original text to compare (split by newlines). @default '' */
-  before: string;
+  original: string;
   /** The modified text to compare (split by newlines). @default '' */
-  after: string;
+  revised: string;
   /** Display mode: 'inline' renders changes in a single column, 'side-by-side' renders two panes in a grid. @default 'inline' */
   mode: 'inline' | 'side-by-side';
 }
@@ -985,7 +985,7 @@ export declare class ArcGradientText extends LitElement {
   /** Custom CSS gradient string, used when variant is set to custom @default '' */
   gradient: string;
   /** Animate the gradient with a shifting background-position cycle @default false */
-  animate: boolean;
+  animated: boolean;
 }
 
 /**
@@ -1428,8 +1428,8 @@ export declare class ArcNavItem extends LitElement {
   /** Destination, preferring the explicit attribute over an anchor child. Authoring `<arc-nav-item><a href="/docs">Docs</a></arc-nav-item>` makes the pre-upgrade markup a working link list, which is what no-JS visitors and anyone on a slow connection actually see — arc-navigation-menu hides this light DOM only once it has upgraded and re-rendered it into shadow DOM. */
   resolvedHref: unknown;
   label: unknown;
-  /** Nested arc-nav-item children for dropdown menus */
-  children: unknown;
+  /** Nested arc-nav-item children for dropdown menus. */
+  subItems: unknown;
   hasChildren: unknown;
   /** Destination URL for the nav item. Required for leaf items that navigate. Omit on parent items that serve only as dropdown triggers. @default '' */
   href: string;

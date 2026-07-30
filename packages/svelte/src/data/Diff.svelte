@@ -4,8 +4,8 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
-    before?: string;
-    after?: string;
+    original?: string;
+    revised?: string;
     mode?: 'inline' | 'side-by-side';
     children?: Snippet;
     class?: string;
@@ -35,9 +35,9 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { before = '', after = '', mode = 'inline', children, ...rest }: Props = $props();
+  let { original = '', revised = '', mode = 'inline', children, ...rest }: Props = $props();
 </script>
 
-<arc-diff {before} {after} {mode} {...rest}>
+<arc-diff {original} {revised} {mode} {...rest}>
   {@render children?.()}
 </arc-diff>

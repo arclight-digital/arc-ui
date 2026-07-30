@@ -2848,7 +2848,7 @@
 
       /* --- Animation --- */
 
-      .arc-gradient-text[animate] .gradient-text {
+      .arc-gradient-text[animated] .gradient-text {
         background-size: 200% 200%;
         animation: gradient-shift 4s ease infinite;
       }
@@ -2860,7 +2860,7 @@
       }
 
       @media (prefers-reduced-motion: reduce) {
-        .arc-gradient-text[animate] .gradient-text {
+        .arc-gradient-text[animated] .gradient-text {
           animation: none;
           background-size: 100% 100%;
         }

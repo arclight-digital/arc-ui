@@ -553,8 +553,8 @@ export default {
  },
  "arc-diff": {
   "attrs": [
-   "before",
-   "after",
+   "original",
+   "revised",
    "mode"
   ],
   "enums": {
@@ -2307,7 +2307,7 @@ export default {
   "attrs": [
    "variant",
    "gradient",
-   "animate"
+   "animated"
   ],
   "enums": {
    "variant": [

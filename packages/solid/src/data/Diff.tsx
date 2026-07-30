@@ -4,8 +4,8 @@ import { splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/diff';
 
 export interface DiffProps {
-  before?: string;
-  after?: string;
+  original?: string;
+  revised?: string;
   mode?: 'inline' | 'side-by-side';
   children?: JSX.Element;
   class?: string;
@@ -36,9 +36,9 @@ export interface DiffProps {
 }
 
 export const Diff: Component<DiffProps> = (props) => {
-  const [local, rest] = splitProps(props, ['before', 'after', 'mode', 'children']);
+  const [local, rest] = splitProps(props, ['original', 'revised', 'mode', 'children']);
   return (
-    <arc-diff before={local.before} after={local.after} mode={local.mode} {...rest}>
+    <arc-diff original={local.original} revised={local.revised} mode={local.mode} {...rest}>
       {local.children}
     </arc-diff>
   );

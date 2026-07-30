@@ -7,11 +7,11 @@ defineOptions({ name: 'GradientText' });
 const props = withDefaults(defineProps<{
   variant?: 'accent' | 'display' | 'sunset' | 'ocean' | 'custom';
   gradient?: string;
-  animate?: boolean;
+  animated?: boolean;
 }>(), {
   variant: 'accent',
   gradient: '',
-  animate: false,
+  animated: false,
 });
 </script>
 
@@ -19,7 +19,7 @@ const props = withDefaults(defineProps<{
   <arc-gradient-text
     :variant="props.variant"
     :gradient="props.gradient"
-    :animate="props.animate"
+    :animated="props.animated"
   >
     <slot />
   </arc-gradient-text>

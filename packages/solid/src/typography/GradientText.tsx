@@ -6,7 +6,7 @@ import '@arclux/arc-ui/gradient-text';
 export interface GradientTextProps {
   variant?: 'accent' | 'display' | 'sunset' | 'ocean' | 'custom';
   gradient?: string;
-  animate?: boolean;
+  animated?: boolean;
   children?: JSX.Element;
   class?: string;
   id?: string;
@@ -36,9 +36,9 @@ export interface GradientTextProps {
 }
 
 export const GradientText: Component<GradientTextProps> = (props) => {
-  const [local, rest] = splitProps(props, ['variant', 'gradient', 'animate', 'children']);
+  const [local, rest] = splitProps(props, ['variant', 'gradient', 'animated', 'children']);
   return (
-    <arc-gradient-text variant={local.variant} gradient={local.gradient} animate={local.animate} {...rest}>
+    <arc-gradient-text variant={local.variant} gradient={local.gradient} animated={local.animated} {...rest}>
       {local.children}
     </arc-gradient-text>
   );

@@ -5,20 +5,20 @@ import '@arclux/arc-ui/diff';
 defineOptions({ name: 'Diff' });
 
 const props = withDefaults(defineProps<{
-  before?: string;
-  after?: string;
+  original?: string;
+  revised?: string;
   mode?: 'inline' | 'side-by-side';
 }>(), {
-  before: '',
-  after: '',
+  original: '',
+  revised: '',
   mode: 'inline',
 });
 </script>
 
 <template>
   <arc-diff
-    :before="props.before"
-    :after="props.after"
+    :original="props.original"
+    :revised="props.revised"
     :mode="props.mode"
   >
     <slot />

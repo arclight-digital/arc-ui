@@ -2581,7 +2581,7 @@
           "doc-url": "",
           "attributes": [
             {
-              "name": "before",
+              "name": "original",
               "description": "The original text to compare (split by newlines).",
               "value": {
                 "type": "string",
@@ -2589,7 +2589,7 @@
               }
             },
             {
-              "name": "after",
+              "name": "revised",
               "description": "The modified text to compare (split by newlines).",
               "value": {
                 "type": "string",
@@ -2609,12 +2609,12 @@
           "js": {
             "properties": [
               {
-                "name": "before",
+                "name": "original",
                 "description": "The original text to compare (split by newlines).",
                 "type": "string"
               },
               {
-                "name": "after",
+                "name": "revised",
                 "description": "The modified text to compare (split by newlines).",
                 "type": "string"
               },
@@ -11767,8 +11767,8 @@
                 "name": "label"
               },
               {
-                "name": "children",
-                "description": "Nested arc-nav-item children for dropdown menus"
+                "name": "subItems",
+                "description": "Nested arc-nav-item children for dropdown menus."
               },
               {
                 "name": "hasChildren"
@@ -13312,7 +13312,7 @@
               }
             },
             {
-              "name": "animate",
+              "name": "animated",
               "description": "Animate the gradient with a shifting background-position cycle",
               "value": {
                 "type": "boolean",
@@ -13340,7 +13340,7 @@
                 "type": "string"
               },
               {
-                "name": "animate",
+                "name": "animated",
                 "description": "Animate the gradient with a shifting background-position cycle",
                 "type": "boolean"
               }

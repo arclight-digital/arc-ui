@@ -340,8 +340,8 @@ declare module 'react' {
         variant?: 'default' | 'danger';
       };
       'arc-diff': ArcBaseAttributes & {
-        before?: string;
-        after?: string;
+        original?: string;
+        revised?: string;
         mode?: 'inline' | 'side-by-side';
       };
       'arc-divider': ArcBaseAttributes & {
@@ -413,7 +413,7 @@ declare module 'react' {
       'arc-gradient-text': ArcBaseAttributes & {
         variant?: 'accent' | 'display' | 'sunset' | 'ocean' | 'custom';
         gradient?: string;
-        animate?: boolean;
+        animated?: boolean;
       };
       'arc-guided-tour': ArcBaseAttributes & {
         steps?: string;

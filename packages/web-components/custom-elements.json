@@ -4698,25 +4698,25 @@
           "members": [
             {
               "kind": "field",
-              "name": "before",
+              "name": "original",
               "privacy": "public",
               "type": {
                 "text": "string"
               },
               "default": "''",
               "description": "The original text to compare (split by newlines).",
-              "attribute": "before"
+              "attribute": "original"
             },
             {
               "kind": "field",
-              "name": "after",
+              "name": "revised",
               "privacy": "public",
               "type": {
                 "text": "string"
               },
               "default": "''",
               "description": "The modified text to compare (split by newlines).",
-              "attribute": "after"
+              "attribute": "revised"
             },
             {
               "kind": "field",
@@ -4733,22 +4733,22 @@
           ],
           "attributes": [
             {
-              "name": "before",
+              "name": "original",
               "type": {
                 "text": "string"
               },
               "default": "''",
               "description": "The original text to compare (split by newlines).",
-              "fieldName": "before"
+              "fieldName": "original"
             },
             {
-              "name": "after",
+              "name": "revised",
               "type": {
                 "text": "string"
               },
               "default": "''",
               "description": "The modified text to compare (split by newlines).",
-              "fieldName": "after"
+              "fieldName": "revised"
             },
             {
               "name": "mode",
@@ -22388,8 +22388,8 @@
             },
             {
               "kind": "field",
-              "name": "children",
-              "description": "Nested arc-nav-item children for dropdown menus",
+              "name": "subItems",
+              "description": "Nested arc-nav-item children for dropdown menus.",
               "readonly": true
             },
             {
@@ -25974,14 +25974,14 @@
             },
             {
               "kind": "field",
-              "name": "animate",
+              "name": "animated",
               "privacy": "public",
               "type": {
                 "text": "boolean"
               },
               "default": "false",
               "description": "Animate the gradient with a shifting background-position cycle",
-              "attribute": "animate",
+              "attribute": "animated",
               "reflects": true
             }
           ],
@@ -26005,13 +26005,13 @@
               "fieldName": "gradient"
             },
             {
-              "name": "animate",
+              "name": "animated",
               "type": {
                 "text": "boolean"
               },
               "default": "false",
               "description": "Animate the gradient with a shifting background-position cycle",
-              "fieldName": "animate"
+              "fieldName": "animated"
             }
           ],
           "superclass": {
