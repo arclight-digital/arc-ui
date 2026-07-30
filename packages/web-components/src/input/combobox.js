@@ -192,6 +192,20 @@ export class ArcCombobox extends FormControlMixin(LitElement) {
     });
   }
 
+  /**
+   * The visible text is derived from `value` only when a matching option
+   * exists, so restoring `value` alone leaves stale text after form.reset()
+   * clears it — capture and restore the query alongside the value.
+   */
+  _formResetState() {
+    return { value: this.value, query: this._query };
+  }
+
+  _applyFormState(state) {
+    this.value = state.value ?? '';
+    this._query = state.query ?? '';
+  }
+
   _onSlotChange(e) {
     this._options = e.target.assignedElements({ flatten: true })
       .filter(el => el.tagName === 'ARC-OPTION');

@@ -31,6 +31,7 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
     _query:       { state: true },
     _open:        { state: true },
     _activeIndex: { state: true },
+    _focused:     { state: true },
     _options:     { state: true },
   };
 

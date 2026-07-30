@@ -117,7 +117,7 @@ export class ArcSelect extends FormControlMixin(LitElement) {
         max-height: 240px;
         overflow-y: auto;
         overflow-x: hidden;
-        z-index: 100;
+        z-index: var(--z-dropdown);
         display: none;
       }
 
