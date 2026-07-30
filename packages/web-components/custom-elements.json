@@ -3141,7 +3141,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "Windowed list that renders only visible items for efficient scrolling through thousands of rows.\nFixed item height with configurable overscan.",
+          "description": "Windowed list that renders only the visible slice of a large array.\nFixed row height with configurable overscan.\n\nTwo ways to supply rows, because \"render a row\" means something different\ninside a framework than it does outside one:\n\n  - `renderItem` — a callback returning the row's content. The component\n    mounts only the visible rows, so a million-row array puts a screenful of\n    nodes in the DOM. This is the direct path: plain JS, HTML, Lit.\n  - windowed slots — the component renders an `item-N` slot for each index in\n    the visible range only, and announces that range as it scrolls. (Spelled\n    without the tag on purpose: prism scans this whole file for slot markup,\n    and a literal one in a comment invents a slot named `item-N`.)\n    Whoever owns\n    the light DOM supplies just those rows. This is how the framework\n    wrappers do it, so a React consumer writes JSX and a Svelte consumer\n    writes markup, rather than a callback returning nodes their framework\n    didn't create.\n\nBoth paths share one geometry engine, so scrolling behaves identically.\n`renderItem` wins if both are present.",
           "name": "ArcVirtualList",
           "cssParts": [
             {
@@ -3158,9 +3158,19 @@
           ],
           "members": [
             {
+              "kind": "method",
+              "name": "scrollToIndex",
+              "parameters": [
+                {
+                  "name": "index"
+                }
+              ],
+              "description": "Scroll a row into view. Clamped to the list."
+            },
+            {
               "kind": "field",
               "name": "visibleRange",
-              "description": "Returns the range of currently rendered indices for external template rendering",
+              "description": "The range of currently rendered indices. `end` is exclusive.",
               "readonly": true
             },
             {
@@ -3176,13 +3186,23 @@
             },
             {
               "kind": "field",
+              "name": "renderItem",
+              "privacy": "public",
+              "type": {
+                "text": "Function"
+              },
+              "default": "null",
+              "description": "`(item, index) => unknown` returning one row's content. Anything Lit can render: a template, a DOM node, a string. When set, rows come from here and the slots are not used."
+            },
+            {
+              "kind": "field",
               "name": "itemHeight",
               "privacy": "public",
               "type": {
                 "text": "number"
               },
               "default": "40",
-              "description": "Height in pixels of each item row. Must match the actual rendered height.",
+              "description": "Height in pixels of each row. Must match what actually renders.",
               "attribute": "item-height"
             },
             {
@@ -3193,8 +3213,17 @@
                 "text": "number"
               },
               "default": "5",
-              "description": "Number of extra items to render above and below the visible window to reduce flicker.",
+              "description": "Rows rendered above and below the visible window to cover fast scrolling.",
               "attribute": "overscan"
+            }
+          ],
+          "events": [
+            {
+              "name": "arc-range-change",
+              "type": {
+                "text": "CustomEvent<{value: {start: number, end: number}, start: number, end: number}>"
+              },
+              "description": "Fired when the visible range changes. `end` is exclusive."
             }
           ],
           "attributes": [
@@ -3213,7 +3242,7 @@
                 "text": "number"
               },
               "default": "40",
-              "description": "Height in pixels of each item row. Must match the actual rendered height.",
+              "description": "Height in pixels of each row. Must match what actually renders.",
               "fieldName": "itemHeight"
             },
             {
@@ -3222,7 +3251,7 @@
                 "text": "number"
               },
               "default": "5",
-              "description": "Number of extra items to render above and below the visible window to reduce flicker.",
+              "description": "Rows rendered above and below the visible window to cover fast scrolling.",
               "fieldName": "overscan"
             }
           ],

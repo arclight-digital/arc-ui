@@ -2,13 +2,34 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
- * Windowed list that renders only visible items for efficient scrolling through thousands of rows.
- * Fixed item height with configurable overscan.
+ * Windowed list that renders only the visible slice of a large array.
+ * Fixed row height with configurable overscan.
+ *
+ * Two ways to supply rows, because "render a row" means something different
+ * inside a framework than it does outside one:
+ *
+ *   - `renderItem` — a callback returning the row's content. The component
+ *     mounts only the visible rows, so a million-row array puts a screenful of
+ *     nodes in the DOM. This is the direct path: plain JS, HTML, Lit.
+ *   - windowed slots — the component renders an `item-N` slot for each index in
+ *     the visible range only, and announces that range as it scrolls. (Spelled
+ *     without the tag on purpose: prism scans this whole file for slot markup,
+ *     and a literal one in a comment invents a slot named `item-N`.)
+ *     Whoever owns
+ *     the light DOM supplies just those rows. This is how the framework
+ *     wrappers do it, so a React consumer writes JSX and a Svelte consumer
+ *     writes markup, rather than a callback returning nodes their framework
+ *     didn't create.
+ *
+ * Both paths share one geometry engine, so scrolling behaves identically.
+ * `renderItem` wins if both are present.
  *
  * @tag arc-virtual-list
  * @prop {Array} items - The full data array. Only the visible slice is rendered at any given time.
- * @prop {number} itemHeight - Height in pixels of each item row. Must match the actual rendered height.
- * @prop {number} overscan - Number of extra items to render above and below the visible window to reduce flicker.
+ * @prop {Function} renderItem - `(item, index) => unknown` returning one row's content. Anything Lit can render: a template, a DOM node, a string. When set, rows come from here and the slots are not used.
+ * @prop {number} itemHeight - Height in pixels of each row. Must match what actually renders.
+ * @prop {number} overscan - Rows rendered above and below the visible window to cover fast scrolling.
+ * @fires {CustomEvent<{value: {start: number, end: number}, start: number, end: number}>} arc-range-change - Fired when the visible range changes. `end` is exclusive.
  * @slot item-${index}
  * @csspart spacer
  * @csspart item
@@ -16,6 +37,9 @@ import { tokenStyles } from '../shared-styles.js';
 export class ArcVirtualList extends LitElement {
   static properties = {
     items:      { type: Array },
+    // Attribute is off: a function can't survive a round trip through one, and
+    // leaving it on invites `render-item="handleRow"` that silently sets a string.
+    renderItem: { attribute: false },
     itemHeight: { type: Number, attribute: 'item-height' },
     overscan:   { type: Number },
     _startIndex: { state: true },
@@ -36,9 +60,8 @@ export class ArcVirtualList extends LitElement {
         width: 100%;
       }
 
-      .virtual-list__viewport {
+      .virtual-list__row {
         position: absolute;
-        top: 0;
         inset-inline-start: 0;
         width: 100%;
       }
@@ -54,6 +77,7 @@ export class ArcVirtualList extends LitElement {
   constructor() {
     super();
     this.items = [];
+    this.renderItem = null;
     this.itemHeight = 40;
     this.overscan = 5;
     this._startIndex = 0;
@@ -104,9 +128,32 @@ export class ArcVirtualList extends LitElement {
     const rawStart = Math.floor(scrollTop / this.itemHeight);
     const rawVisible = Math.ceil(viewHeight / this.itemHeight);
 
-    this._startIndex = Math.max(0, rawStart - this.overscan);
-    const endIndex = Math.min(total, rawStart + rawVisible + this.overscan);
-    this._visibleCount = endIndex - this._startIndex;
+    const start = Math.max(0, rawStart - this.overscan);
+    const end = Math.min(total, rawStart + rawVisible + this.overscan);
+    const count = Math.max(0, end - start);
+
+    // Announce only real movement. The scroll handler fires on every frame of a
+    // drag, and a consumer re-rendering rows on each one — which is exactly what
+    // the wrappers do — would rebuild an unchanged window sixty times a second.
+    const moved = start !== this._startIndex || count !== this._visibleCount;
+    this._startIndex = start;
+    this._visibleCount = count;
+    if (moved) {
+      this.dispatchEvent(new CustomEvent('arc-range-change', {
+        detail: { value: { start, end: start + count }, start, end: start + count },
+        bubbles: true,
+        composed: true,
+      }));
+    }
+  }
+
+  /** Scroll a row into view. Clamped to the list. */
+  scrollToIndex(index) {
+    const total = this.items?.length || 0;
+    if (!total) return;
+    const clamped = Math.min(Math.max(0, index), total - 1);
+    this.scrollTop = clamped * this.itemHeight;
+    this._recalc();
   }
 
   render() {
@@ -118,13 +165,15 @@ export class ArcVirtualList extends LitElement {
       <div class="virtual-list__spacer" style="height:${totalHeight}px" part="spacer">
         ${visibleItems.map((item, i) => {
           const index = this._startIndex + i;
-          const top = index * this.itemHeight;
           return html`
             <div
-              style="position:absolute;top:${top}px;left:0;width:100%;height:${this.itemHeight}px;"
+              class="virtual-list__row"
+              style="top:${index * this.itemHeight}px;height:${this.itemHeight}px;"
               part="item"
             >
-              <slot name="item-${index}"></slot>
+              ${this.renderItem
+                ? this.renderItem(item, index)
+                : html`<slot name="item-${index}"></slot>`}
             </div>
           `;
         })}
@@ -132,7 +181,7 @@ export class ArcVirtualList extends LitElement {
     `;
   }
 
-  /** Returns the range of currently rendered indices for external template rendering */
+  /** The range of currently rendered indices. `end` is exclusive. */
   get visibleRange() {
     return {
       start: this._startIndex,

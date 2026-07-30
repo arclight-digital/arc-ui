@@ -18,6 +18,13 @@ export class VirtualList {
     return this._el.items;
   }
 
+  @Input() set renderItem(value: Function) {
+    this._el.renderItem = value;
+  }
+  get renderItem(): Function {
+    return this._el.renderItem;
+  }
+
   @Input() set itemHeight(value: number) {
     this._el.itemHeight = value;
   }

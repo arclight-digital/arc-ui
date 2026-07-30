@@ -2861,15 +2861,18 @@ export declare class ArcValueCard extends LitElement {
 
 /**
  * `<arc-virtual-list>`
+ * Events: arc-range-change
  */
 export declare class ArcVirtualList extends LitElement {
-  /** Returns the range of currently rendered indices for external template rendering */
+  /** The range of currently rendered indices. `end` is exclusive. */
   visibleRange: unknown;
   /** The full data array. Only the visible slice is rendered at any given time. @default [] */
   items: Array;
-  /** Height in pixels of each item row. Must match the actual rendered height. @default 40 */
+  /** `(item, index) => unknown` returning one row's content. Anything Lit can render: a template, a DOM node, a string. When set, rows come from here and the slots are not used. @default null */
+  renderItem: Function;
+  /** Height in pixels of each row. Must match what actually renders. @default 40 */
   itemHeight: number;
-  /** Number of extra items to render above and below the visible window to reduce flicker. @default 5 */
+  /** Rows rendered above and below the visible window to cover fast scrolling. @default 5 */
   overscan: number;
 }
 
@@ -3095,6 +3098,7 @@ declare global {
     'arc-period-change': CustomEvent<{ view: 'month' | 'week', date: string }>;
     'arc-queue-change': CustomEvent;
     'arc-queue-overflow': CustomEvent;
+    'arc-range-change': CustomEvent<{value: {start: number, end: number}, start: number, end: number}>;
     'arc-remove': CustomEvent;
     'arc-reset': CustomEvent<void>;
     'arc-resize': CustomEvent<{ ratio: number }> | CustomEvent<{ size: number }>;

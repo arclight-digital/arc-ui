@@ -703,7 +703,7 @@
     },
     {
       "name": "arc-virtual-list",
-      "description": "Windowed list that renders only visible items for efficient scrolling through thousands of rows.\nFixed item height with configurable overscan.\n---\n\n\n### **Slots:**\n - **item-${index}**\n\n### **CSS Parts:**\n - **spacer**\n- **item**",
+      "description": "Windowed list that renders only the visible slice of a large array.\nFixed row height with configurable overscan.\n\nTwo ways to supply rows, because \"render a row\" means something different\ninside a framework than it does outside one:\n\n  - `renderItem` — a callback returning the row's content. The component\n    mounts only the visible rows, so a million-row array puts a screenful of\n    nodes in the DOM. This is the direct path: plain JS, HTML, Lit.\n  - windowed slots — the component renders an `item-N` slot for each index in\n    the visible range only, and announces that range as it scrolls. (Spelled\n    without the tag on purpose: prism scans this whole file for slot markup,\n    and a literal one in a comment invents a slot named `item-N`.)\n    Whoever owns\n    the light DOM supplies just those rows. This is how the framework\n    wrappers do it, so a React consumer writes JSX and a Svelte consumer\n    writes markup, rather than a callback returning nodes their framework\n    didn't create.\n\nBoth paths share one geometry engine, so scrolling behaves identically.\n`renderItem` wins if both are present.\n---\n\n\n### **Events:**\n - **arc-range-change** - Fired when the visible range changes. `end` is exclusive.\n\n### **Methods:**\n - **scrollToIndex(index)** - Scroll a row into view. Clamped to the list.\n\n### **Slots:**\n - **item-${index}**\n\n### **CSS Parts:**\n - **spacer**\n- **item**",
       "attributes": [
         {
           "name": "items",
@@ -712,12 +712,12 @@
         },
         {
           "name": "item-height",
-          "description": "Height in pixels of each item row. Must match the actual rendered height.",
+          "description": "Height in pixels of each row. Must match what actually renders.",
           "values": []
         },
         {
           "name": "overscan",
-          "description": "Number of extra items to render above and below the visible window to reduce flicker.",
+          "description": "Rows rendered above and below the visible window to cover fast scrolling.",
           "values": []
         }
       ],

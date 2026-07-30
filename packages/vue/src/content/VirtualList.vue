@@ -6,20 +6,28 @@ defineOptions({ name: 'VirtualList' });
 
 const props = withDefaults(defineProps<{
   items?: unknown[];
+  renderItem?: Function;
   itemHeight?: number;
   overscan?: number;
 }>(), {
   items: () => ([]),
+  renderItem: 'null',
   itemHeight: 40,
   overscan: 5,
 });
+
+const emit = defineEmits<{
+  'arc-range-change': [event: CustomEvent];
+}>();
 </script>
 
 <template>
   <arc-virtual-list
     :items="props.items"
+    :renderItem="props.renderItem"
     :itemHeight="props.itemHeight"
     :overscan="props.overscan"
+    @arc-range-change="(payload: CustomEvent) => emit('arc-range-change', payload)"
   >
     <slot />
   </arc-virtual-list>

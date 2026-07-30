@@ -5,6 +5,7 @@
 
   interface Props {
     items?: unknown[];
+    renderItem?: Function;
     itemHeight?: number;
     overscan?: number;
     children?: Snippet;
@@ -35,12 +36,13 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { items = [], itemHeight = 40, overscan = 5, children, ...rest }: Props = $props();
+  let { items = [], renderItem = 'null', itemHeight = 40, overscan = 5, children, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {
     const el = __el as unknown as Record<string, unknown> | undefined;
     if (!el) return;
+    if (renderItem !== undefined) el.renderItem = renderItem;
     if (itemHeight !== undefined) el.itemHeight = itemHeight;
   });
 </script>
