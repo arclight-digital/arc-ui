@@ -13,7 +13,8 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @prop {boolean} readonly - Prevents typing, pasting, and clearing digits while the boxes stay focusable and the value still submits.
  * @prop {'number' | 'text'} type - Input mode. `number` filters non-digits and uses the numeric keyboard; `text` allows any character.
  * @prop {'sm' | 'md' | 'lg'} size - Control size. `md` is the default; `sm` and `lg` scale the digit boxes.
- * @fires {CustomEvent<{ value: string }>} arc-change - Fired when any digit changes
+ * @fires {CustomEvent<{ value: string }>} arc-input - Fired on every digit entered or deleted, with the partial value.
+ * @fires {CustomEvent<{ value: string }>} arc-change - Fired when the code is complete — every box filled. That is the commit for a fixed-length code.
  * @slot none
  * @csspart otp
  * @csspart box
@@ -135,11 +136,21 @@ export class ArcOtpInput extends FormControlMixin(LitElement) {
     inputs.forEach(input => chars.push(input.value));
     this.value = chars.join('');
     this._updateFormValue();
-    this.dispatchEvent(new CustomEvent('arc-change', {
+    // Every digit is an edit; only a full code is a committed value. Firing
+    // arc-change per keystroke — which this did — meant a consumer that
+    // submitted on arc-change submitted five incomplete codes first.
+    this.dispatchEvent(new CustomEvent('arc-input', {
       detail: { value: this.value },
       bubbles: true,
       composed: true,
     }));
+    if (this.value.length === this.length) {
+      this.dispatchEvent(new CustomEvent('arc-change', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }));
+    }
   }
 
   _onInput(e, index) {

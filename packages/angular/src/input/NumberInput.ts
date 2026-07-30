@@ -8,6 +8,7 @@ import { ArcNumberInput } from '@arclux/arc-ui/number-input';
   standalone: true,
   template: ``,
   host: {
+    '(arc-input)': '_onArcInput($event)',
     '(arc-change)': '_onArcChange($event)',
   },
 })
@@ -71,6 +72,14 @@ export class NumberInput {
   }
 
   @Output() valueChange = new EventEmitter<number>();
+
+  _onArcInput(event: CustomEvent) {
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('value' in detail) {
+      this.valueChange.emit(detail.value as number);
+    }
+  }
 
   _onArcChange(event: CustomEvent) {
     const detail = event.detail as Record<string, unknown> | null;

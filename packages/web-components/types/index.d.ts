@@ -435,7 +435,7 @@ export declare class ArcCollapsible extends LitElement {
 
 /**
  * `<arc-color-picker>`
- * Events: arc-change
+ * Events: arc-input, arc-change
  */
 export declare class ArcColorPicker extends LitElement {
   /** Control size. `md` is the default; `sm` and `lg` scale the swatch and trigger. @default 'md' */
@@ -1565,7 +1565,7 @@ export declare class ArcNumberFormat extends LitElement {
 
 /**
  * `<arc-number-input>`
- * Events: arc-change
+ * Events: arc-input, arc-change
  */
 export declare class ArcNumberInput extends LitElement {
   /** Control size. `md` is the default; `sm` and `lg` scale the field padding. @default 'md' */
@@ -1615,7 +1615,7 @@ export declare class ArcOption extends LitElement {
 
 /**
  * `<arc-otp-input>`
- * Events: arc-change
+ * Events: arc-input, arc-change
  */
 export declare class ArcOtpInput extends LitElement {
   /** Control size. `md` is the default; `sm` and `lg` scale the digit boxes. @default 'md' */
@@ -1737,7 +1737,7 @@ export declare class ArcPasswordInput extends LitElement {
 
 /**
  * `<arc-pin-input>`
- * Events: arc-change, arc-complete
+ * Events: arc-input, arc-change, arc-complete
  */
 export declare class ArcPinInput extends LitElement {
   /** Control size. `md` is the default; `sm` and `lg` scale the digit boxes. @default 'md' */

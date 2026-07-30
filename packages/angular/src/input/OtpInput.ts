@@ -8,6 +8,7 @@ import { ArcOtpInput } from '@arclux/arc-ui/otp-input';
   standalone: true,
   template: ``,
   host: {
+    '(arc-input)': '_onArcInput($event)',
     '(arc-change)': '_onArcChange($event)',
   },
 })
@@ -57,6 +58,14 @@ export class OtpInput {
   }
 
   @Output() valueChange = new EventEmitter<string>();
+
+  _onArcInput(event: CustomEvent) {
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('value' in detail) {
+      this.valueChange.emit(detail.value as string);
+    }
+  }
 
   _onArcChange(event: CustomEvent) {
     const detail = event.detail as Record<string, unknown> | null;

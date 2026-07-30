@@ -13,7 +13,8 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @prop {boolean} disabled - Disables all interaction, reducing opacity to 40% and blocking pointer events.
  * @prop {boolean} readonly - Prevents changing the color via the area, hue slider, hex input, or swatches while the picker stays focusable and the value still submits.
  * @prop {'sm' | 'md' | 'lg'} size - Control size. `md` is the default; `sm` and `lg` scale the swatch and trigger.
- * @fires arc-change - Fired when the color changes via any input method. `event.detail.value` contains the hex string.
+ * @fires arc-input - Fired continuously as the colour changes, including every frame of a drag across the saturation area or hue track. Use for live previews. `event.detail.value` contains the hex string.
+ * @fires arc-change - Fired once the colour is committed: the pointer released after a drag, a preset clicked, or a valid hex typed and blurred. Use for anything expensive. `event.detail.value` contains the hex string.
  * @slot none
  * @csspart picker
  * @csspart label
@@ -290,12 +291,28 @@ export class ArcColorPicker extends FormControlMixin(LitElement) {
     return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
   }
 
+  /**
+   * Called on every pointermove while dragging the saturation area or the hue
+   * track, so this is the continuous edit — arc-input. The commit is
+   * pointerup, which fires arc-change once. Dragging across the area used to
+   * emit arc-change on every frame, so anything expensive on that listener —
+   * a save, a network call — ran hundreds of times per drag.
+   */
   _updateFromHSL() {
     const hex = this._hslToHex(this._hue, this._sat, this._lit);
     this.value = hex;
     this._hexInput = hex;
-    this.dispatchEvent(new CustomEvent('arc-change', {
+    this.dispatchEvent(new CustomEvent('arc-input', {
       detail: { value: hex },
+      bubbles: true,
+      composed: true,
+    }));
+  }
+
+  /** The committed value, after a drag ends or a discrete pick. */
+  _commit() {
+    this.dispatchEvent(new CustomEvent('arc-change', {
+      detail: { value: this.value },
       bubbles: true,
       composed: true,
     }));
@@ -360,12 +377,16 @@ export class ArcColorPicker extends FormControlMixin(LitElement) {
   }
 
   _onPointerUp() {
+    const wasDragging = this._draggingArea || this._draggingHue;
     this._draggingArea = false;
     this._draggingHue = false;
     this._areaEl = null;
     this._hueTrackEl = null;
     window.removeEventListener('pointermove', this._onPointerMoveBound);
     window.removeEventListener('pointerup', this._onPointerUpBound);
+    // Releasing the pointer is the commit. Guarded, because this handler is
+    // also reached by a pointerup that never dragged anything.
+    if (wasDragging) this._commit();
   }
 
   /* ---- Hex input ---- */
@@ -383,11 +404,14 @@ export class ArcColorPicker extends FormControlMixin(LitElement) {
       this.value = hex;
       this._hexInput = hex;
       this._parseHex(hex);
-      this.dispatchEvent(new CustomEvent('arc-change', {
+      // Typing in the hex field is edit-and-commit in one: this runs on blur
+      // or Enter, never per keystroke.
+      this.dispatchEvent(new CustomEvent('arc-input', {
         detail: { value: hex },
         bubbles: true,
         composed: true,
       }));
+      this._commit();
     } else {
       this._hexInput = this.value;
     }
@@ -401,16 +425,18 @@ export class ArcColorPicker extends FormControlMixin(LitElement) {
 
   /* ---- Preset swatch ---- */
 
+  /** A discrete pick: edit and commit in one click, so both fire. */
   _selectPreset(hex) {
     if (this.readonly) return;
     this.value = hex.toLowerCase();
     this._hexInput = this.value;
     this._parseHex(this.value);
-    this.dispatchEvent(new CustomEvent('arc-change', {
+    this.dispatchEvent(new CustomEvent('arc-input', {
       detail: { value: this.value },
       bubbles: true,
       composed: true,
     }));
+    this._commit();
   }
 
   /* ---- Render ---- */

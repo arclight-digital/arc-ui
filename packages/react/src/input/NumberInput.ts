@@ -14,6 +14,7 @@ export interface NumberInputProps {
   name?: string;
   disabled?: boolean;
   className?: string;
+  onArcInput?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
   onClick?: (e: Event) => void;
 }
@@ -23,6 +24,7 @@ export const NumberInput = createComponent({
   elementClass: ArcNumberInput,
   react: React,
   events: {
+    onArcInput: 'arc-input' as EventName<CustomEvent>,
     onArcChange: 'arc-change' as EventName<CustomEvent>,
     onClick: 'click' as EventName<Event>,
   },

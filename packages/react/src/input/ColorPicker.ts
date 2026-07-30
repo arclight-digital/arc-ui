@@ -12,6 +12,7 @@ export interface ColorPickerProps {
   disabled?: boolean;
   label?: string;
   className?: string;
+  onArcInput?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
 }
 
@@ -20,6 +21,7 @@ export const ColorPicker = createComponent({
   elementClass: ArcColorPicker,
   react: React,
   events: {
+    onArcInput: 'arc-input' as EventName<CustomEvent>,
     onArcChange: 'arc-change' as EventName<CustomEvent>,
   },
 });

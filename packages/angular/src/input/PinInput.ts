@@ -8,6 +8,7 @@ import { ArcPinInput } from '@arclux/arc-ui/pin-input';
   standalone: true,
   template: ``,
   host: {
+    '(arc-input)': '_onArcInput($event)',
     '(arc-change)': '_onArcChange($event)',
     '(arc-complete)': '_onArcComplete($event)',
   },
@@ -79,6 +80,14 @@ export class PinInput {
   }
 
   @Output() valueChange = new EventEmitter<string>();
+
+  _onArcInput(event: CustomEvent) {
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('value' in detail) {
+      this.valueChange.emit(detail.value as string);
+    }
+  }
 
   _onArcChange(event: CustomEvent) {
     const detail = event.detail as Record<string, unknown> | null;

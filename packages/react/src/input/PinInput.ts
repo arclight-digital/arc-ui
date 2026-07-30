@@ -15,6 +15,7 @@ export interface PinInputProps {
   separator?: number;
   label?: string;
   className?: string;
+  onArcInput?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
   onArcComplete?: (e: CustomEvent) => void;
 }
@@ -24,6 +25,7 @@ export const PinInput = createComponent({
   elementClass: ArcPinInput,
   react: React,
   events: {
+    onArcInput: 'arc-input' as EventName<CustomEvent>,
     onArcChange: 'arc-change' as EventName<CustomEvent>,
     onArcComplete: 'arc-complete' as EventName<CustomEvent>,
   },

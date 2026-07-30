@@ -17,7 +17,8 @@ let numberInputIdCounter = 0;
  * @prop {boolean} disabled - Disables interaction, reducing opacity to 40% and blocking pointer events.
  * @prop {boolean} readonly - Prevents value changes from typing, stepper buttons, and arrow keys while keeping the field focusable and its value submitted.
  * @prop {'sm' | 'md' | 'lg'} size - Control size. `md` is the default; `sm` and `lg` scale the field padding.
- * @fires {CustomEvent<{ value: number }>} arc-change - Fired when the numeric value changes via buttons or keyboard
+ * @fires {CustomEvent<{ value: number }>} arc-input - Fired on every edit, including each keystroke while typing. Use for live previews.
+ * @fires {CustomEvent<{ value: number }>} arc-change - Fired when the value is committed: blur or Enter after typing, or immediately on a stepper click or arrow key, which are edit and commit in one gesture.
  * @slot none
  * @csspart wrapper
  * @csspart label
@@ -209,11 +210,26 @@ export class ArcNumberInput extends FormControlMixin(LitElement) {
     return clamped;
   }
 
-  _setValue(newValue) {
+  /**
+   * @param {number} newValue
+   * @param {{ commit?: boolean }} [opts] - `commit: false` while the user is
+   *   still typing, so only arc-input fires.
+   *
+   * Mirrors the native control: typing emits `input` alone, while a spinner
+   * click or an arrow key emits `input` *and* `change`, because each of those
+   * is both an edit and a commit in one gesture.
+   */
+  _setValue(newValue, { commit = true } = {}) {
     const clamped = this._clamp(newValue);
     if (clamped === this.value) return;
     this.value = clamped;
     this._updateFormValue();
+    this.dispatchEvent(new CustomEvent('arc-input', {
+      detail: { value: this.value },
+      bubbles: true,
+      composed: true,
+    }));
+    if (!commit) return;
     this.dispatchEvent(new CustomEvent('arc-change', {
       detail: { value: this.value },
       bubbles: true,
@@ -231,10 +247,20 @@ export class ArcNumberInput extends FormControlMixin(LitElement) {
     this._setValue(this.value + this.step);
   }
 
+  /** The field's `change` — blur or Enter. A commit. */
   _handleInput(e) {
     const parsed = parseFloat(e.target.value);
     if (!isNaN(parsed)) {
       this._setValue(parsed);
+    }
+  }
+
+  /** The field's `input` — every keystroke. Not a commit. */
+  _handleTyping(e) {
+    if (this.readonly) return;
+    const parsed = parseFloat(e.target.value);
+    if (!isNaN(parsed)) {
+      this._setValue(parsed, { commit: false });
     }
   }
 
@@ -279,6 +305,7 @@ export class ArcNumberInput extends FormControlMixin(LitElement) {
             .value=${String(this.value)}
             ?disabled=${this.disabled}
             ?readonly=${this.readonly}
+            @input=${this._handleTyping}
             @change=${this._handleInput}
             @keydown=${this._handleKeydown}
             part="field"

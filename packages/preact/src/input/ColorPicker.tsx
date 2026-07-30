@@ -11,6 +11,7 @@ export interface ColorPickerProps {
   presets?: string[];
   disabled?: boolean;
   label?: string;
+  onArcInput?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
   class?: string;
   id?: string;
@@ -39,18 +40,23 @@ export interface ColorPickerProps {
   [key: `on${string}`]: unknown;
 }
 
-export const ColorPicker: FunctionComponent<ColorPickerProps> = ({ size, value, name, presets, disabled, label, onArcChange, ...rest }) => {
+export const ColorPicker: FunctionComponent<ColorPickerProps> = ({ size, value, name, presets, disabled, label, onArcInput, onArcChange, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
     const listeners: Array<[string, EventListener]> = [];
+    if (onArcInput) {
+      const fn: EventListener = (e) => onArcInput(e as CustomEvent);
+      el.addEventListener('arc-input', fn);
+      listeners.push(['arc-input', fn]);
+    }
     if (onArcChange) {
       const fn: EventListener = (e) => onArcChange(e as CustomEvent);
       el.addEventListener('arc-change', fn);
       listeners.push(['arc-change', fn]);
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
-  }, [onArcChange]);
+  }, [onArcInput, onArcChange]);
   return h('arc-color-picker', { ref, size, value, name, presets, disabled, label, ...rest });
 };

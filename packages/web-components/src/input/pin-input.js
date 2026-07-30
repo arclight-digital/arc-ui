@@ -16,8 +16,9 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @prop {boolean} disabled - Disables all boxes, reducing opacity to 40% and blocking input.
  * @prop {boolean} readonly - Prevents entering, deleting, or pasting characters while the boxes stay focusable and the value still submits.
  * @prop {'sm' | 'md' | 'lg'} size - Control size. `md` is the default; `sm` and `lg` scale the digit boxes.
- * @fires arc-change - Fired on every character entry or deletion. `event.detail.value` contains the current partial value.
- * @fires arc-complete - Fired when all boxes are filled. `event.detail.value` contains the full value string.
+ * @fires arc-input - Fired on every character entry or deletion. `event.detail.value` contains the current partial value.
+ * @fires arc-change - Fired when the pin is complete — every box filled. That is the commit for a fixed-length value.
+ * @fires arc-complete - Fired alongside arc-change when all boxes are filled. The more specific name, kept for consumers that auto-submit.
  * @slot none
  * @csspart pin
  * @csspart label
@@ -205,13 +206,23 @@ export class ArcPinInput extends FormControlMixin(LitElement) {
     const val = this._buildValue();
     this.value = val;
     this._updateFormValue();
-    this.dispatchEvent(new CustomEvent('arc-change', {
+    // Every character is an edit; only a full pin is a committed value. This
+    // fired arc-change per keystroke, so a consumer submitting on arc-change
+    // submitted every incomplete prefix first.
+    this.dispatchEvent(new CustomEvent('arc-input', {
       detail: { value: val },
       bubbles: true,
       composed: true,
     }));
 
     if (val.length === this.length) {
+      this.dispatchEvent(new CustomEvent('arc-change', {
+        detail: { value: val },
+        bubbles: true,
+        composed: true,
+      }));
+      // arc-complete predates the contract and stays: it is the more specific
+      // name, and consumers listen for it to auto-submit.
       this.dispatchEvent(new CustomEvent('arc-complete', {
         detail: { value: val },
         bubbles: true,

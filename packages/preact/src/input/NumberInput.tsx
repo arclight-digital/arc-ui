@@ -13,6 +13,7 @@ export interface NumberInputProps {
   label?: string;
   name?: string;
   disabled?: boolean;
+  onArcInput?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
   class?: string;
   id?: string;
@@ -41,18 +42,23 @@ export interface NumberInputProps {
   [key: `on${string}`]: unknown;
 }
 
-export const NumberInput: FunctionComponent<NumberInputProps> = ({ size, value, min, max, step, label, name, disabled, onArcChange, ...rest }) => {
+export const NumberInput: FunctionComponent<NumberInputProps> = ({ size, value, min, max, step, label, name, disabled, onArcInput, onArcChange, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
     const listeners: Array<[string, EventListener]> = [];
+    if (onArcInput) {
+      const fn: EventListener = (e) => onArcInput(e as CustomEvent);
+      el.addEventListener('arc-input', fn);
+      listeners.push(['arc-input', fn]);
+    }
     if (onArcChange) {
       const fn: EventListener = (e) => onArcChange(e as CustomEvent);
       el.addEventListener('arc-change', fn);
       listeners.push(['arc-change', fn]);
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
-  }, [onArcChange]);
+  }, [onArcInput, onArcChange]);
   return h('arc-number-input', { ref, size, value, min, max, step, label, name, disabled, ...rest });
 };

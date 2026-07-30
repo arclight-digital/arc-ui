@@ -6042,7 +6042,7 @@
         },
         {
           "name": "arc-color-picker",
-          "description": "Full-featured color picker with a saturation/lightness area, hue slider, hex input, and optional\npreset swatches.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the color changes via any input method. `event.detail.value` contains the hex string.\n\n### **CSS Parts:**\n - **picker**\n- **label**\n- **area**\n- **hue-track**\n- **hex-row**\n- **preview**\n- **hex-input**\n- **presets**",
+          "description": "Full-featured color picker with a saturation/lightness area, hue slider, hex input, and optional\npreset swatches.\n---\n\n\n### **Events:**\n - **arc-input** - Fired continuously as the colour changes, including every frame of a drag across the saturation area or hue track. Use for live previews. `event.detail.value` contains the hex string.\n- **arc-change** - Fired once the colour is committed: the pointer released after a drag, a preset clicked, or a valid hex typed and blurred. Use for anything expensive. `event.detail.value` contains the hex string.\n\n### **CSS Parts:**\n - **picker**\n- **label**\n- **area**\n- **hue-track**\n- **hex-row**\n- **preview**\n- **hex-input**\n- **presets**",
           "doc-url": "",
           "attributes": [
             {
@@ -6110,9 +6110,14 @@
           "slots": [],
           "events": [
             {
+              "name": "arc-input",
+              "type": "CustomEvent",
+              "description": "Fired continuously as the colour changes, including every frame of a drag across the saturation area or hue track. Use for live previews. `event.detail.value` contains the hex string."
+            },
+            {
               "name": "arc-change",
               "type": "CustomEvent",
-              "description": "Fired when the color changes via any input method. `event.detail.value` contains the hex string."
+              "description": "Fired once the colour is committed: the pointer released after a drag, a preset clicked, or a valid hex typed and blurred. Use for anything expensive. `event.detail.value` contains the hex string."
             }
           ],
           "js": {
@@ -6167,9 +6172,14 @@
             ],
             "events": [
               {
+                "name": "arc-input",
+                "type": "CustomEvent",
+                "description": "Fired continuously as the colour changes, including every frame of a drag across the saturation area or hue track. Use for live previews. `event.detail.value` contains the hex string."
+              },
+              {
                 "name": "arc-change",
                 "type": "CustomEvent",
-                "description": "Fired when the color changes via any input method. `event.detail.value` contains the hex string."
+                "description": "Fired once the colour is committed: the pointer released after a drag, a preset clicked, or a valid hex typed and blurred. Use for anything expensive. `event.detail.value` contains the hex string."
               }
             ]
           }
@@ -7865,7 +7875,7 @@
         },
         {
           "name": "arc-number-input",
-          "description": "A numeric stepper input with decrement and increment buttons flanking a central text field,\nsupporting min/max clamping, step increments, and keyboard shortcuts.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the numeric value changes via buttons or keyboard\n\n### **CSS Parts:**\n - **wrapper**\n- **label**\n- **controls**\n- **decrement**\n- **field**\n- **increment**",
+          "description": "A numeric stepper input with decrement and increment buttons flanking a central text field,\nsupporting min/max clamping, step increments, and keyboard shortcuts.\n---\n\n\n### **Events:**\n - **arc-input** - Fired on every edit, including each keystroke while typing. Use for live previews.\n- **arc-change** - Fired when the value is committed: blur or Enter after typing, or immediately on a stepper click or arrow key, which are edit and commit in one gesture.\n\n### **CSS Parts:**\n - **wrapper**\n- **label**\n- **controls**\n- **decrement**\n- **field**\n- **increment**",
           "doc-url": "",
           "attributes": [
             {
@@ -7949,9 +7959,14 @@
           "slots": [],
           "events": [
             {
+              "name": "arc-input",
+              "type": "CustomEvent<{ value: number }>",
+              "description": "Fired on every edit, including each keystroke while typing. Use for live previews."
+            },
+            {
               "name": "arc-change",
               "type": "CustomEvent<{ value: number }>",
-              "description": "Fired when the numeric value changes via buttons or keyboard"
+              "description": "Fired when the value is committed: blur or Enter after typing, or immediately on a stepper click or arrow key, which are edit and commit in one gesture."
             }
           ],
           "js": {
@@ -8016,16 +8031,21 @@
             ],
             "events": [
               {
+                "name": "arc-input",
+                "type": "CustomEvent<{ value: number }>",
+                "description": "Fired on every edit, including each keystroke while typing. Use for live previews."
+              },
+              {
                 "name": "arc-change",
                 "type": "CustomEvent<{ value: number }>",
-                "description": "Fired when the numeric value changes via buttons or keyboard"
+                "description": "Fired when the value is committed: blur or Enter after typing, or immediately on a stepper click or arrow key, which are edit and commit in one gesture."
               }
             ]
           }
         },
         {
           "name": "arc-otp-input",
-          "description": "A one-time password input that renders a row of individual character boxes with auto-advance,\npaste support, and configurable length and input type.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when any digit changes\n\n### **CSS Parts:**\n - **otp**\n- **box**",
+          "description": "A one-time password input that renders a row of individual character boxes with auto-advance,\npaste support, and configurable length and input type.\n---\n\n\n### **Events:**\n - **arc-input** - Fired on every digit entered or deleted, with the partial value.\n- **arc-change** - Fired when the code is complete — every box filled. That is the commit for a fixed-length code.\n\n### **CSS Parts:**\n - **otp**\n- **box**",
           "doc-url": "",
           "attributes": [
             {
@@ -8093,9 +8113,14 @@
           "slots": [],
           "events": [
             {
+              "name": "arc-input",
+              "type": "CustomEvent<{ value: string }>",
+              "description": "Fired on every digit entered or deleted, with the partial value."
+            },
+            {
               "name": "arc-change",
               "type": "CustomEvent<{ value: string }>",
-              "description": "Fired when any digit changes"
+              "description": "Fired when the code is complete — every box filled. That is the commit for a fixed-length code."
             }
           ],
           "js": {
@@ -8150,9 +8175,14 @@
             ],
             "events": [
               {
+                "name": "arc-input",
+                "type": "CustomEvent<{ value: string }>",
+                "description": "Fired on every digit entered or deleted, with the partial value."
+              },
+              {
                 "name": "arc-change",
                 "type": "CustomEvent<{ value: string }>",
-                "description": "Fired when any digit changes"
+                "description": "Fired when the code is complete — every box filled. That is the commit for a fixed-length code."
               }
             ]
           }
@@ -8355,7 +8385,7 @@
         },
         {
           "name": "arc-pin-input",
-          "description": "One-character-per-box input for PINs, OTPs, and verification codes with auto-advance, paste\nsupport, and optional masking.\n---\n\n\n### **Events:**\n - **arc-change** - Fired on every character entry or deletion. `event.detail.value` contains the current partial value.\n- **arc-complete** - Fired when all boxes are filled. `event.detail.value` contains the full value string.\n\n### **CSS Parts:**\n - **pin**\n- **label**\n- **boxes**\n- **box**",
+          "description": "One-character-per-box input for PINs, OTPs, and verification codes with auto-advance, paste\nsupport, and optional masking.\n---\n\n\n### **Events:**\n - **arc-input** - Fired on every character entry or deletion. `event.detail.value` contains the current partial value.\n- **arc-change** - Fired when the pin is complete — every box filled. That is the commit for a fixed-length value.\n- **arc-complete** - Fired alongside arc-change when all boxes are filled. The more specific name, kept for consumers that auto-submit.\n\n### **CSS Parts:**\n - **pin**\n- **label**\n- **boxes**\n- **box**",
           "doc-url": "",
           "attributes": [
             {
@@ -8447,14 +8477,19 @@
           "slots": [],
           "events": [
             {
-              "name": "arc-change",
+              "name": "arc-input",
               "type": "CustomEvent",
               "description": "Fired on every character entry or deletion. `event.detail.value` contains the current partial value."
             },
             {
+              "name": "arc-change",
+              "type": "CustomEvent",
+              "description": "Fired when the pin is complete — every box filled. That is the commit for a fixed-length value."
+            },
+            {
               "name": "arc-complete",
               "type": "CustomEvent",
-              "description": "Fired when all boxes are filled. `event.detail.value` contains the full value string."
+              "description": "Fired alongside arc-change when all boxes are filled. The more specific name, kept for consumers that auto-submit."
             }
           ],
           "js": {
@@ -8524,14 +8559,19 @@
             ],
             "events": [
               {
-                "name": "arc-change",
+                "name": "arc-input",
                 "type": "CustomEvent",
                 "description": "Fired on every character entry or deletion. `event.detail.value` contains the current partial value."
               },
               {
+                "name": "arc-change",
+                "type": "CustomEvent",
+                "description": "Fired when the pin is complete — every box filled. That is the commit for a fixed-length value."
+              },
+              {
                 "name": "arc-complete",
                 "type": "CustomEvent",
-                "description": "Fired when all boxes are filled. `event.detail.value` contains the full value string."
+                "description": "Fired alongside arc-change when all boxes are filled. The more specific name, kept for consumers that auto-submit."
               }
             ]
           }

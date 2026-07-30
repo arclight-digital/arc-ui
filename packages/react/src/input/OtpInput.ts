@@ -12,6 +12,7 @@ export interface OtpInputProps {
   disabled?: boolean;
   type?: 'number' | 'text';
   className?: string;
+  onArcInput?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
 }
 
@@ -20,6 +21,7 @@ export const OtpInput = createComponent({
   elementClass: ArcOtpInput,
   react: React,
   events: {
+    onArcInput: 'arc-input' as EventName<CustomEvent>,
     onArcChange: 'arc-change' as EventName<CustomEvent>,
   },
 });

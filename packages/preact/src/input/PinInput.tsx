@@ -14,6 +14,7 @@ export interface PinInputProps {
   type?: 'number' | 'alphanumeric' | 'text';
   separator?: number;
   label?: string;
+  onArcInput?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
   onArcComplete?: (e: CustomEvent) => void;
   class?: string;
@@ -43,12 +44,17 @@ export interface PinInputProps {
   [key: `on${string}`]: unknown;
 }
 
-export const PinInput: FunctionComponent<PinInputProps> = ({ size, length, value, name, disabled, mask, type, separator, label, onArcChange, onArcComplete, ...rest }) => {
+export const PinInput: FunctionComponent<PinInputProps> = ({ size, length, value, name, disabled, mask, type, separator, label, onArcInput, onArcChange, onArcComplete, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
     const listeners: Array<[string, EventListener]> = [];
+    if (onArcInput) {
+      const fn: EventListener = (e) => onArcInput(e as CustomEvent);
+      el.addEventListener('arc-input', fn);
+      listeners.push(['arc-input', fn]);
+    }
     if (onArcChange) {
       const fn: EventListener = (e) => onArcChange(e as CustomEvent);
       el.addEventListener('arc-change', fn);
@@ -60,6 +66,6 @@ export const PinInput: FunctionComponent<PinInputProps> = ({ size, length, value
       listeners.push(['arc-complete', fn]);
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
-  }, [onArcChange, onArcComplete]);
+  }, [onArcInput, onArcChange, onArcComplete]);
   return h('arc-pin-input', { ref, size, length, value, name, disabled, mask, type, separator, label, ...rest });
 };

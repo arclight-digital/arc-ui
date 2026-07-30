@@ -21,6 +21,7 @@ export interface PinInputProps {
   type?: 'number' | 'alphanumeric' | 'text';
   separator?: number;
   label?: string;
+  onArcInput?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
   onArcComplete?: (e: CustomEvent) => void;
   class?: string;
@@ -51,9 +52,9 @@ export interface PinInputProps {
 }
 
 export const PinInput: Component<PinInputProps> = (props) => {
-  const [local, rest] = splitProps(props, ['size', 'length', 'value', 'name', 'disabled', 'mask', 'type', 'separator', 'label', 'onArcChange', 'onArcComplete']);
+  const [local, rest] = splitProps(props, ['size', 'length', 'value', 'name', 'disabled', 'mask', 'type', 'separator', 'label', 'onArcInput', 'onArcChange', 'onArcComplete']);
   return (
-    <arc-pin-input size={local.size} length={local.length} value={local.value} name={local.name} disabled={local.disabled} mask={local.mask} type={local.type} separator={local.separator} label={local.label} on:arc-change={local.onArcChange} on:arc-complete={local.onArcComplete} {...rest}>
+    <arc-pin-input size={local.size} length={local.length} value={local.value} name={local.name} disabled={local.disabled} mask={local.mask} type={local.type} separator={local.separator} label={local.label} on:arc-input={local.onArcInput} on:arc-change={local.onArcChange} on:arc-complete={local.onArcComplete} {...rest}>
     </arc-pin-input>
   );
 };

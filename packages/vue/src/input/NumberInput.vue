@@ -23,10 +23,18 @@ const props = withDefaults(defineProps<{
 });
 
 const emit = defineEmits<{
+  'arc-input': [event: CustomEvent];
   'arc-change': [event: CustomEvent];
   'update:value': [value: number];
 }>();
 
+function onArcInput(payload: CustomEvent) {
+  emit('arc-input', payload);
+  const detail = payload.detail as Record<string, unknown> | null;
+  if (detail) {
+    if ('value' in detail) emit('update:value', detail.value as number);
+  }
+}
 function onArcChange(payload: CustomEvent) {
   emit('arc-change', payload);
   const detail = payload.detail as Record<string, unknown> | null;
@@ -46,6 +54,7 @@ function onArcChange(payload: CustomEvent) {
     :label="props.label"
     :name="props.name"
     :disabled="props.disabled"
+    @arc-input="onArcInput"
     @arc-change="onArcChange"
   >
   </arc-number-input>

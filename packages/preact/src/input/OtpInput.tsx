@@ -11,6 +11,7 @@ export interface OtpInputProps {
   name?: string;
   disabled?: boolean;
   type?: 'number' | 'text';
+  onArcInput?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
   class?: string;
   id?: string;
@@ -39,18 +40,23 @@ export interface OtpInputProps {
   [key: `on${string}`]: unknown;
 }
 
-export const OtpInput: FunctionComponent<OtpInputProps> = ({ size, length, value, name, disabled, type, onArcChange, ...rest }) => {
+export const OtpInput: FunctionComponent<OtpInputProps> = ({ size, length, value, name, disabled, type, onArcInput, onArcChange, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
     const listeners: Array<[string, EventListener]> = [];
+    if (onArcInput) {
+      const fn: EventListener = (e) => onArcInput(e as CustomEvent);
+      el.addEventListener('arc-input', fn);
+      listeners.push(['arc-input', fn]);
+    }
     if (onArcChange) {
       const fn: EventListener = (e) => onArcChange(e as CustomEvent);
       el.addEventListener('arc-change', fn);
       listeners.push(['arc-change', fn]);
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
-  }, [onArcChange]);
+  }, [onArcInput, onArcChange]);
   return h('arc-otp-input', { ref, size, length, value, name, disabled, type, ...rest });
 };

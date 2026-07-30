@@ -11228,11 +11228,18 @@
           ],
           "events": [
             {
+              "name": "arc-input",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Fired continuously as the colour changes, including every frame of a drag across the saturation area or hue track. Use for live previews. `event.detail.value` contains the hex string."
+            },
+            {
               "name": "arc-change",
               "type": {
                 "text": "CustomEvent"
               },
-              "description": "Fired when the color changes via any input method. `event.detail.value` contains the hex string."
+              "description": "Fired once the colour is committed: the pointer released after a drag, a preset clicked, or a valid hex typed and blurred. Use for anything expensive. `event.detail.value` contains the hex string."
             }
           ],
           "attributes": [
@@ -15132,11 +15139,18 @@
           ],
           "events": [
             {
+              "name": "arc-input",
+              "type": {
+                "text": "CustomEvent<{ value: number }>"
+              },
+              "description": "Fired on every edit, including each keystroke while typing. Use for live previews."
+            },
+            {
               "name": "arc-change",
               "type": {
                 "text": "CustomEvent<{ value: number }>"
               },
-              "description": "Fired when the numeric value changes via buttons or keyboard"
+              "description": "Fired when the value is committed: blur or Enter after typing, or immediately on a stepper click or arrow key, which are edit and commit in one gesture."
             }
           ],
           "attributes": [
@@ -15501,11 +15515,18 @@
           ],
           "events": [
             {
+              "name": "arc-input",
+              "type": {
+                "text": "CustomEvent<{ value: string }>"
+              },
+              "description": "Fired on every digit entered or deleted, with the partial value."
+            },
+            {
               "name": "arc-change",
               "type": {
                 "text": "CustomEvent<{ value: string }>"
               },
-              "description": "Fired when any digit changes"
+              "description": "Fired when the code is complete — every box filled. That is the commit for a fixed-length code."
             }
           ],
           "attributes": [
@@ -16331,18 +16352,25 @@
           ],
           "events": [
             {
-              "name": "arc-change",
+              "name": "arc-input",
               "type": {
                 "text": "CustomEvent"
               },
               "description": "Fired on every character entry or deletion. `event.detail.value` contains the current partial value."
             },
             {
+              "name": "arc-change",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Fired when the pin is complete — every box filled. That is the commit for a fixed-length value."
+            },
+            {
               "name": "arc-complete",
               "type": {
                 "text": "CustomEvent"
               },
-              "description": "Fired when all boxes are filled. `event.detail.value` contains the full value string."
+              "description": "Fired alongside arc-change when all boxes are filled. The more specific name, kept for consumers that auto-submit."
             }
           ],
           "attributes": [
