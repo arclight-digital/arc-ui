@@ -100,6 +100,9 @@ export class ArcForm extends LitElement {
     this.disabled = false;
     this.errorSummary = true;
     this._errors = [];
+    // Controls this form has written an error onto, so it can clear its own
+    // messages without clobbering ones the consumer set.
+    this._flagged = new WeakSet();
     this._onKeyDown = this._onKeyDown.bind(this);
   }
 
@@ -139,7 +142,14 @@ export class ArcForm extends LitElement {
         if (el.tagName?.startsWith('ARC-') && el.constructor?.formAssociated) {
           controls.push(el);
         }
-        if (!el.shadowRoot && el.children?.length) {
+        // Descend unconditionally. An element's `children` are its *light* DOM
+        // whether or not it has a shadow root, so the old `!el.shadowRoot`
+        // guard didn't skip shadow content — it skipped the light content of
+        // every wrapper that has a shadow root, which is every ARC layout
+        // component. Controls inside <arc-fieldset>, <arc-card> or any grid
+        // were invisible to the form: not validated, not serialised, not
+        // disabled with it.
+        if (el.children?.length) {
           gather([...el.children]);
         }
       }
@@ -172,10 +182,9 @@ export class ArcForm extends LitElement {
 
     for (const control of controls) {
       const name = control.getAttribute('name') || control.label || control.tagName.toLowerCase();
-      const tag = control.tagName.toLowerCase();
 
-      if (tag === 'arc-checkbox' || tag === 'arc-toggle') {
-        values[name] = control.checked ?? false;
+      if (typeof control.checked === 'boolean') {
+        values[name] = control.checked;
         if (control.checked) {
           formData.append(name, 'on');
         }
@@ -184,22 +193,24 @@ export class ArcForm extends LitElement {
         formData.append(name, control.value ?? '');
       }
 
-      const required = control.hasAttribute('required');
-      if (required) {
-        const empty = (tag === 'arc-checkbox' || tag === 'arc-toggle')
-          ? !control.checked
-          : !control.value || control.value.trim() === '';
-
-        if (empty) {
-          errors.push({ name, message: `${control.label || name} is required` });
-          if (typeof control.error !== 'undefined') {
-            control.error = `${control.label || name} is required`;
-          }
-        } else {
-          if (typeof control.error !== 'undefined') {
-            control.error = '';
-          }
+      // Ask the control, don't re-derive. Every form-associated ARC control
+      // runs constraint validation through FormControlMixin (or owns the flags
+      // itself via autoValidates = false), so its own validity is the answer.
+      // The form used to re-implement `required` here with a string trim that
+      // only understood text and checkboxes — it called a date range with both
+      // ends unset valid, and a multi-select's array `[]` truthy-non-empty.
+      if (control.checkValidity && !control.checkValidity()) {
+        const message = control.validationMessage || `${control.label || name} is required`;
+        errors.push({ name, message });
+        if (typeof control.error !== 'undefined') {
+          control.error = message;
+          this._flagged.add(control);
         }
+      } else if (this._flagged.has(control)) {
+        // Only clear what this form put there. A consumer's own error string —
+        // a server-side rejection, say — survives a later submit.
+        control.error = '';
+        this._flagged.delete(control);
       }
     }
 
@@ -260,7 +271,18 @@ export class ArcForm extends LitElement {
     }
   }
 
-  /** Reset error states on child controls */
+  /**
+   * Reset every child control to the state it had when it first connected,
+   * and clear error display.
+   *
+   * Delegates to each control's formResetCallback — the same path a native
+   * form.reset() takes, which never reaches these controls because they live
+   * in this element's light DOM rather than inside the shadow <form>. The form
+   * used to blank them instead (`value = ''`, `checked = false`), which is not
+   * what reset means: a control that shipped with a default lost it, and a
+   * non-string value (a multi-select's array, a date range's object) was left
+   * untouched entirely.
+   */
   reset() {
     const controls = this._getFormControls();
 
@@ -268,14 +290,10 @@ export class ArcForm extends LitElement {
       if (typeof control.error !== 'undefined') {
         control.error = '';
       }
-      if (typeof control.value === 'string') {
-        control.value = '';
-      }
-      if (typeof control.checked === 'boolean') {
-        control.checked = false;
-      }
+      control.formResetCallback?.();
     }
 
+    this._flagged = new WeakSet();
     this._errors = [];
 
     this.dispatchEvent(new CustomEvent('arc-reset', {

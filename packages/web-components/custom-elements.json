@@ -13002,7 +13002,7 @@
             {
               "kind": "method",
               "name": "reset",
-              "description": "Reset error states on child controls"
+              "description": "Reset every child control to the state it had when it first connected,\nand clear error display.\n\nDelegates to each control's formResetCallback — the same path a native\nform.reset() takes, which never reaches these controls because they live\nin this element's light DOM rather than inside the shadow <form>. The form\nused to blank them instead (`value = ''`, `checked = false`), which is not\nwhat reset means: a control that shipped with a default lost it, and a\nnon-string value (a multi-select's array, a date range's object) was left\nuntouched entirely."
             },
             {
               "kind": "field",

@@ -73,7 +73,6 @@ export class ArcConfirm extends LitElement {
     this.confirmLabel = 'Confirm';
     this.cancelLabel = 'Cancel';
     this.variant = 'default';
-    this._resolve = null;
   }
 
   /**
@@ -90,7 +89,6 @@ export class ArcConfirm extends LitElement {
     document.body.appendChild(el);
 
     return new Promise((resolve) => {
-      el._resolve = resolve;
       el.addEventListener('arc-confirm', () => {
         resolve(true);
         el.remove();

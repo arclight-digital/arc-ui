@@ -40,9 +40,12 @@ describe('arc-form submission wiring', () => {
     `);
     let resetFired = false;
     form.addEventListener('arc-reset', () => { resetFired = true; });
+    // Reset restores the initial state, it doesn't blank the form — the
+    // markup's value="a@b.c" is what this control resets *to*.
+    form.querySelector('arc-input').value = 'typed@b.c';
     innerButton(form.querySelector('arc-button')).click();
     expect(resetFired).to.equal(true);
-    expect(form.querySelector('arc-input').value).to.equal('');
+    expect(form.querySelector('arc-input').value).to.equal('a@b.c');
   });
 
   it('does nothing for type="button" clicks', async () => {
