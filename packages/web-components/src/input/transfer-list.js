@@ -228,20 +228,45 @@ export class ArcTransferList extends FormControlMixin(LitElement) {
         color: var(--text-ghost);
       }
 
+      /* Grouped by scope, not by direction.
+         Direction-grouped — move-one beside move-all, pointing the same way —
+         puts a single item and the entire list one pixel apart, and those two
+         mistakes are not equally cheap. Grouped by scope, a slip inside a group
+         moves the same amount of content the other way, which is one click to
+         undo, while the bulk pair sits apart and reads as secondary. */
       .tl__controls {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        gap: var(--space-xs);
+        gap: var(--space-md);
         flex-shrink: 0;
+      }
+
+      .tl__controls-group {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xs);
+      }
+
+      .tl__controls-group--bulk {
+        padding-block-start: var(--space-md);
+        border-block-start: 1px solid var(--border-subtle);
       }
 
       @container (max-width: 560px) {
         .tl {
           flex-direction: column;
         }
-        .tl__controls {
+        .tl__controls,
+        .tl__controls-group {
           flex-direction: row;
+        }
+        /* The divider follows the stacking direction. */
+        .tl__controls-group--bulk {
+          padding-block-start: 0;
+          border-block-start: none;
+          padding-inline-start: var(--space-md);
+          border-inline-start: 1px solid var(--border-subtle);
         }
         /* Rotate arrows so "right" reads as "down" toward the target pane */
         .tl__controls arc-icon-button {
@@ -585,38 +610,42 @@ export class ArcTransferList extends FormControlMixin(LitElement) {
       <div class="tl">
         ${this._renderPane('source')}
         <div class="tl__controls" part="controls" role="group" aria-label="Transfer controls">
-          <arc-icon-button
-            name="chevron-right"
-            size="sm"
-            variant="secondary"
-            label="Move checked to ${this.targetLabel}"
-            ?disabled=${disabled || this._checkedIn('source').length === 0}
-            @click=${(e) => this._moveChecked('source', e)}
-          ></arc-icon-button>
-          <arc-icon-button
-            name="chevrons-right"
-            size="sm"
-            variant="secondary"
-            label="Move all to ${this.targetLabel}"
-            ?disabled=${disabled || this._movableIn('source').length === 0}
-            @click=${(e) => this._moveAll('source', e)}
-          ></arc-icon-button>
-          <arc-icon-button
-            name="chevron-left"
-            size="sm"
-            variant="secondary"
-            label="Move checked to ${this.sourceLabel}"
-            ?disabled=${disabled || this._checkedIn('target').length === 0}
-            @click=${(e) => this._moveChecked('target', e)}
-          ></arc-icon-button>
-          <arc-icon-button
-            name="chevrons-left"
-            size="sm"
-            variant="secondary"
-            label="Move all to ${this.sourceLabel}"
-            ?disabled=${disabled || this._movableIn('target').length === 0}
-            @click=${(e) => this._moveAll('target', e)}
-          ></arc-icon-button>
+          <div class="tl__controls-group" role="group" aria-label="Move checked items">
+            <arc-icon-button
+              name="chevron-right"
+              size="sm"
+              variant="secondary"
+              label="Move checked to ${this.targetLabel}"
+              ?disabled=${disabled || this._checkedIn('source').length === 0}
+              @click=${(e) => this._moveChecked('source', e)}
+            ></arc-icon-button>
+            <arc-icon-button
+              name="chevron-left"
+              size="sm"
+              variant="secondary"
+              label="Move checked to ${this.sourceLabel}"
+              ?disabled=${disabled || this._checkedIn('target').length === 0}
+              @click=${(e) => this._moveChecked('target', e)}
+            ></arc-icon-button>
+          </div>
+          <div class="tl__controls-group tl__controls-group--bulk" role="group" aria-label="Move all items">
+            <arc-icon-button
+              name="chevrons-right"
+              size="sm"
+              variant="ghost"
+              label="Move all to ${this.targetLabel}"
+              ?disabled=${disabled || this._movableIn('source').length === 0}
+              @click=${(e) => this._moveAll('source', e)}
+            ></arc-icon-button>
+            <arc-icon-button
+              name="chevrons-left"
+              size="sm"
+              variant="ghost"
+              label="Move all to ${this.sourceLabel}"
+              ?disabled=${disabled || this._movableIn('target').length === 0}
+              @click=${(e) => this._moveAll('target', e)}
+            ></arc-icon-button>
+          </div>
         </div>
         ${this._renderPane('target')}
       </div>
