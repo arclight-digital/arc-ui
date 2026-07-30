@@ -17,7 +17,7 @@ const props = withDefaults(defineProps<{
 });
 
 const emit = defineEmits<{
-  'arc-item-select': [event: CustomEvent];
+  'arc-select': [event: CustomEvent];
 }>();
 </script>
 
@@ -27,7 +27,7 @@ const emit = defineEmits<{
     :selected="props.selected"
     :disabled="props.disabled"
     :href="props.href"
-    @arc-item-select="(payload: CustomEvent) => emit('arc-item-select', payload)"
+    @arc-select="(payload: CustomEvent) => emit('arc-select', payload)"
   >
     <slot />
     <slot name="prefix" />

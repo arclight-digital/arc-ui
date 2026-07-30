@@ -13,8 +13,7 @@ export interface DataTableProps {
   virtual?: boolean;
   rowHeight?: number;
   onArcSort?: (e: CustomEvent) => void;
-  onArcSelectAll?: (e: CustomEvent) => void;
-  onArcRowSelect?: (e: CustomEvent) => void;
+  onArcSelect?: (e: CustomEvent) => void;
   children?: preact.ComponentChildren;
   class?: string;
   id?: string;
@@ -43,7 +42,7 @@ export interface DataTableProps {
   [key: `on${string}`]: unknown;
 }
 
-export const DataTable: FunctionComponent<DataTableProps> = ({ rows, sortable, selectable, sortColumn, sortDirection, virtual, rowHeight, onArcSort, onArcSelectAll, onArcRowSelect, children, ...rest }) => {
+export const DataTable: FunctionComponent<DataTableProps> = ({ rows, sortable, selectable, sortColumn, sortDirection, virtual, rowHeight, onArcSort, onArcSelect, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -54,17 +53,12 @@ export const DataTable: FunctionComponent<DataTableProps> = ({ rows, sortable, s
       el.addEventListener('arc-sort', fn);
       listeners.push(['arc-sort', fn]);
     }
-    if (onArcSelectAll) {
-      const fn: EventListener = (e) => onArcSelectAll(e as CustomEvent);
-      el.addEventListener('arc-select-all', fn);
-      listeners.push(['arc-select-all', fn]);
-    }
-    if (onArcRowSelect) {
-      const fn: EventListener = (e) => onArcRowSelect(e as CustomEvent);
-      el.addEventListener('arc-row-select', fn);
-      listeners.push(['arc-row-select', fn]);
+    if (onArcSelect) {
+      const fn: EventListener = (e) => onArcSelect(e as CustomEvent);
+      el.addEventListener('arc-select', fn);
+      listeners.push(['arc-select', fn]);
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
-  }, [onArcSort, onArcSelectAll, onArcRowSelect]);
+  }, [onArcSort, onArcSelect]);
   return h('arc-data-table', { ref, rows, sortable, selectable, sortColumn, sortDirection, virtual, rowHeight, ...rest }, children);
 };

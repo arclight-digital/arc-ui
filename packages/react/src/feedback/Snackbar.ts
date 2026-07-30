@@ -10,7 +10,7 @@ export interface SnackbarProps {
   className?: string;
   children?: React.ReactNode;
   onArcAction?: (e: CustomEvent) => void;
-  onArcDismiss?: (e: CustomEvent) => void;
+  onArcClose?: (e: CustomEvent) => void;
 }
 
 export const Snackbar = createComponent({
@@ -19,6 +19,6 @@ export const Snackbar = createComponent({
   react: React,
   events: {
     onArcAction: 'arc-action' as EventName<CustomEvent>,
-    onArcDismiss: 'arc-dismiss' as EventName<CustomEvent>,
+    onArcClose: 'arc-close' as EventName<CustomEvent>,
   },
 });

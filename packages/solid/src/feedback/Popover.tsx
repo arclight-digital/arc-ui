@@ -15,6 +15,7 @@ export interface PopoverProps {
   open?: boolean;
   position?: 'top' | 'bottom' | 'left' | 'right';
   trigger?: string;
+  onArcOpen?: (e: CustomEvent) => void;
   onArcClose?: (e: CustomEvent) => void;
   children?: JSX.Element;
   class?: string;
@@ -45,9 +46,9 @@ export interface PopoverProps {
 }
 
 export const Popover: Component<PopoverProps> = (props) => {
-  const [local, rest] = splitProps(props, ['open', 'position', 'trigger', 'onArcClose', 'children']);
+  const [local, rest] = splitProps(props, ['open', 'position', 'trigger', 'onArcOpen', 'onArcClose', 'children']);
   return (
-    <arc-popover open={local.open} position={local.position} trigger={local.trigger} on:arc-close={local.onArcClose} {...rest}>
+    <arc-popover open={local.open} position={local.position} trigger={local.trigger} on:arc-open={local.onArcOpen} on:arc-close={local.onArcClose} {...rest}>
       {local.children}
     </arc-popover>
   );

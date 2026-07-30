@@ -8,7 +8,7 @@ export interface SnackbarProps {
   position?: 'bottom-center' | 'bottom-left' | 'bottom-right';
   duration?: number;
   onArcAction?: (e: CustomEvent) => void;
-  onArcDismiss?: (e: CustomEvent) => void;
+  onArcClose?: (e: CustomEvent) => void;
   children?: preact.ComponentChildren;
   class?: string;
   id?: string;
@@ -37,7 +37,7 @@ export interface SnackbarProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Snackbar: FunctionComponent<SnackbarProps> = ({ position, duration, onArcAction, onArcDismiss, children, ...rest }) => {
+export const Snackbar: FunctionComponent<SnackbarProps> = ({ position, duration, onArcAction, onArcClose, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -48,12 +48,12 @@ export const Snackbar: FunctionComponent<SnackbarProps> = ({ position, duration,
       el.addEventListener('arc-action', fn);
       listeners.push(['arc-action', fn]);
     }
-    if (onArcDismiss) {
-      const fn: EventListener = (e) => onArcDismiss(e as CustomEvent);
-      el.addEventListener('arc-dismiss', fn);
-      listeners.push(['arc-dismiss', fn]);
+    if (onArcClose) {
+      const fn: EventListener = (e) => onArcClose(e as CustomEvent);
+      el.addEventListener('arc-close', fn);
+      listeners.push(['arc-close', fn]);
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
-  }, [onArcAction, onArcDismiss]);
+  }, [onArcAction, onArcClose]);
   return h('arc-snackbar', { ref, position, duration, ...rest }, children);
 };

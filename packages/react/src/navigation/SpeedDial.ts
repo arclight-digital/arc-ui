@@ -10,8 +10,9 @@ export interface SpeedDialProps {
   position?: 'bottom-right' | 'bottom-left';
   items?: Array<{icon: string, label: string, value?: string}>;
   className?: string;
-  onArcAction?: (e: CustomEvent) => void;
   onArcClose?: (e: CustomEvent) => void;
+  onArcOpen?: (e: CustomEvent) => void;
+  onArcAction?: (e: CustomEvent) => void;
 }
 
 export const SpeedDial = createComponent({
@@ -19,7 +20,8 @@ export const SpeedDial = createComponent({
   elementClass: ArcSpeedDial,
   react: React,
   events: {
-    onArcAction: 'arc-action' as EventName<CustomEvent>,
     onArcClose: 'arc-close' as EventName<CustomEvent>,
+    onArcOpen: 'arc-open' as EventName<CustomEvent>,
+    onArcAction: 'arc-action' as EventName<CustomEvent>,
   },
 });

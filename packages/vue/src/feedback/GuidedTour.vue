@@ -13,7 +13,7 @@ const props = withDefaults(defineProps<{
 const emit = defineEmits<{
   'arc-change': [event: CustomEvent];
   'arc-complete': [event: CustomEvent];
-  'arc-dismiss': [event: CustomEvent];
+  'arc-close': [event: CustomEvent];
 }>();
 </script>
 
@@ -22,7 +22,7 @@ const emit = defineEmits<{
     :open="props.open"
     @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
     @arc-complete="(payload: CustomEvent) => emit('arc-complete', payload)"
-    @arc-dismiss="(payload: CustomEvent) => emit('arc-dismiss', payload)"
+    @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"
   >
     <slot />
   </arc-guided-tour>

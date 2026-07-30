@@ -20,11 +20,19 @@ const props = withDefaults(defineProps<{
 
 const emit = defineEmits<{
   'arc-change': [event: CustomEvent];
+  'arc-input': [event: CustomEvent];
   'update:value': [value: string[]];
 }>();
 
 function onArcChange(payload: CustomEvent) {
   emit('arc-change', payload);
+  const detail = payload.detail as Record<string, unknown> | null;
+  if (detail) {
+    if ('value' in detail) emit('update:value', detail.value as string[]);
+  }
+}
+function onArcInput(payload: CustomEvent) {
+  emit('arc-input', payload);
   const detail = payload.detail as Record<string, unknown> | null;
   if (detail) {
     if ('value' in detail) emit('update:value', detail.value as string[]);
@@ -40,6 +48,7 @@ function onArcChange(payload: CustomEvent) {
     :name="props.name"
     :disabled="props.disabled"
     @arc-change="onArcChange"
+    @arc-input="onArcInput"
   >
     <slot />
   </arc-multi-select>

@@ -9,7 +9,7 @@ export interface CalloutProps {
   dismissible?: boolean;
   className?: string;
   children?: React.ReactNode;
-  onArcDismiss?: (e: CustomEvent) => void;
+  onArcClose?: (e: CustomEvent) => void;
 }
 
 export const Callout = createComponent({
@@ -17,6 +17,6 @@ export const Callout = createComponent({
   elementClass: ArcCallout,
   react: React,
   events: {
-    onArcDismiss: 'arc-dismiss' as EventName<CustomEvent>,
+    onArcClose: 'arc-close' as EventName<CustomEvent>,
   },
 });

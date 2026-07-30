@@ -50,18 +50,18 @@
     }
     (rest['onarc-change'] as ((e: Event) => void) | undefined)?.(e);
   }
-  function __onArcItemSelect(e: Event) {
+  function __onArcSelect(e: Event) {
     const detail = (e as CustomEvent).detail as Record<string, unknown> | null;
     if (detail) {
       if ('value' in detail) value = detail.value as string;
     }
-    (rest['onarc-item-select'] as ((e: Event) => void) | undefined)?.(e);
+    (rest['onarc-select'] as ((e: Event) => void) | undefined)?.(e);
   }
 </script>
 
 <arc-list {variant} {size} {selectable} {multiple} {value} {label} {...rest}
   onarc-change={__onArcChange}
-  onarc-item-select={__onArcItemSelect}
+  onarc-select={__onArcSelect}
 >
   {@render children?.()}
 </arc-list>

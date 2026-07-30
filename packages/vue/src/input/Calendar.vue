@@ -17,15 +17,15 @@ const props = withDefaults(defineProps<{
 });
 
 const emit = defineEmits<{
-  'arc-navigate': [event: CustomEvent];
+  'arc-month-change': [event: CustomEvent];
   'arc-change': [event: CustomEvent];
   'update:value': [value: string];
   'update:month': [value: number];
   'update:year': [value: number];
 }>();
 
-function onArcNavigate(payload: CustomEvent) {
-  emit('arc-navigate', payload);
+function onArcMonthChange(payload: CustomEvent) {
+  emit('arc-month-change', payload);
   const detail = payload.detail as Record<string, unknown> | null;
   if (detail) {
     if ('month' in detail) emit('update:month', detail.month as number);
@@ -48,7 +48,7 @@ function onArcChange(payload: CustomEvent) {
     :max="props.max"
     :month="props.month"
     :year="props.year"
-    @arc-navigate="onArcNavigate"
+    @arc-month-change="onArcMonthChange"
     @arc-change="onArcChange"
   >
     <slot />

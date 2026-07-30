@@ -15,7 +15,7 @@ export interface SnackbarProps {
   position?: 'bottom-center' | 'bottom-left' | 'bottom-right';
   duration?: number;
   onArcAction?: (e: CustomEvent) => void;
-  onArcDismiss?: (e: CustomEvent) => void;
+  onArcClose?: (e: CustomEvent) => void;
   children?: JSX.Element;
   class?: string;
   id?: string;
@@ -45,9 +45,9 @@ export interface SnackbarProps {
 }
 
 export const Snackbar: Component<SnackbarProps> = (props) => {
-  const [local, rest] = splitProps(props, ['position', 'duration', 'onArcAction', 'onArcDismiss', 'children']);
+  const [local, rest] = splitProps(props, ['position', 'duration', 'onArcAction', 'onArcClose', 'children']);
   return (
-    <arc-snackbar position={local.position} duration={local.duration} on:arc-action={local.onArcAction} on:arc-dismiss={local.onArcDismiss} {...rest}>
+    <arc-snackbar position={local.position} duration={local.duration} on:arc-action={local.onArcAction} on:arc-close={local.onArcClose} {...rest}>
       {local.children}
     </arc-snackbar>
   );

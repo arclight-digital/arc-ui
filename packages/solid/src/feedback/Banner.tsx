@@ -15,7 +15,7 @@ export interface BannerProps {
   variant?: 'info' | 'success' | 'warning' | 'error';
   dismissible?: boolean;
   sticky?: boolean;
-  onArcDismiss?: (e: CustomEvent) => void;
+  onArcClose?: (e: CustomEvent) => void;
   children?: JSX.Element;
   class?: string;
   id?: string;
@@ -45,9 +45,9 @@ export interface BannerProps {
 }
 
 export const Banner: Component<BannerProps> = (props) => {
-  const [local, rest] = splitProps(props, ['variant', 'dismissible', 'sticky', 'onArcDismiss', 'children']);
+  const [local, rest] = splitProps(props, ['variant', 'dismissible', 'sticky', 'onArcClose', 'children']);
   return (
-    <arc-banner variant={local.variant} dismissible={local.dismissible} sticky={local.sticky} on:arc-dismiss={local.onArcDismiss} {...rest}>
+    <arc-banner variant={local.variant} dismissible={local.dismissible} sticky={local.sticky} on:arc-close={local.onArcClose} {...rest}>
       {local.children}
     </arc-banner>
   );

@@ -10,7 +10,7 @@ export interface SpotlightProps {
   padding?: number;
   className?: string;
   children?: React.ReactNode;
-  onArcDismiss?: (e: CustomEvent) => void;
+  onArcClose?: (e: CustomEvent) => void;
 }
 
 export const Spotlight = createComponent({
@@ -18,6 +18,6 @@ export const Spotlight = createComponent({
   elementClass: ArcSpotlight,
   react: React,
   events: {
-    onArcDismiss: 'arc-dismiss' as EventName<CustomEvent>,
+    onArcClose: 'arc-close' as EventName<CustomEvent>,
   },
 });

@@ -9,7 +9,7 @@ import { ArcList } from '@arclux/arc-ui/list';
   template: `<ng-content />`,
   host: {
     '(arc-change)': '_onArcChange($event)',
-    '(arc-item-select)': '_onArcItemSelect($event)',
+    '(arc-select)': '_onArcSelect($event)',
   },
 })
 export class List {
@@ -67,7 +67,7 @@ export class List {
     }
   }
 
-  _onArcItemSelect(event: CustomEvent) {
+  _onArcSelect(event: CustomEvent) {
     const detail = event.detail as Record<string, unknown> | null;
     if (!detail) return;
     if ('value' in detail) {

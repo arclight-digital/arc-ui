@@ -10,7 +10,7 @@ export interface CalendarProps {
   max?: string;
   month?: number;
   year?: number;
-  onArcNavigate?: (e: CustomEvent) => void;
+  onArcMonthChange?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
   children?: preact.ComponentChildren;
   class?: string;
@@ -40,16 +40,16 @@ export interface CalendarProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Calendar: FunctionComponent<CalendarProps> = ({ value, min, max, month, year, onArcNavigate, onArcChange, children, ...rest }) => {
+export const Calendar: FunctionComponent<CalendarProps> = ({ value, min, max, month, year, onArcMonthChange, onArcChange, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
     const listeners: Array<[string, EventListener]> = [];
-    if (onArcNavigate) {
-      const fn: EventListener = (e) => onArcNavigate(e as CustomEvent);
-      el.addEventListener('arc-navigate', fn);
-      listeners.push(['arc-navigate', fn]);
+    if (onArcMonthChange) {
+      const fn: EventListener = (e) => onArcMonthChange(e as CustomEvent);
+      el.addEventListener('arc-month-change', fn);
+      listeners.push(['arc-month-change', fn]);
     }
     if (onArcChange) {
       const fn: EventListener = (e) => onArcChange(e as CustomEvent);
@@ -57,6 +57,6 @@ export const Calendar: FunctionComponent<CalendarProps> = ({ value, min, max, mo
       listeners.push(['arc-change', fn]);
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
-  }, [onArcNavigate, onArcChange]);
+  }, [onArcMonthChange, onArcChange]);
   return h('arc-calendar', { ref, value, min, max, month, year, ...rest }, children);
 };

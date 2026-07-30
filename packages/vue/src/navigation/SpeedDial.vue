@@ -17,8 +17,9 @@ const props = withDefaults(defineProps<{
 });
 
 const emit = defineEmits<{
-  'arc-action': [event: CustomEvent];
   'arc-close': [event: CustomEvent];
+  'arc-open': [event: CustomEvent];
+  'arc-action': [event: CustomEvent];
 }>();
 </script>
 
@@ -28,8 +29,9 @@ const emit = defineEmits<{
     :direction="props.direction"
     :position="props.position"
     :items="props.items"
-    @arc-action="(payload: CustomEvent) => emit('arc-action', payload)"
     @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"
+    @arc-open="(payload: CustomEvent) => emit('arc-open', payload)"
+    @arc-action="(payload: CustomEvent) => emit('arc-action', payload)"
   >
     <slot name="trigger" />
   </arc-speed-dial>

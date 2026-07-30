@@ -21,14 +21,14 @@ export declare class ArcAccordionItem extends LitElement {
 
 /**
  * `<arc-alert>`
- * Events: arc-dismiss
+ * Events: arc-close
  */
 export declare class ArcAlert extends LitElement {
   /** Controls the semantic colour palette and icon. Use "info" for neutral guidance, "success" for confirmations, "warning" for caution states, and "error" for failures or blocking issues. @default 'info' */
   variant: 'info' | 'success' | 'warning' | 'error';
   /** Reduces padding and font sizes for inline or space-constrained usage. @default false */
   compact: boolean;
-  /** When true, renders a close button in the top-right corner. Clicking it removes the alert from the DOM and fires an "arc-dismiss" event that parent components can listen to. @default false */
+  /** When true, renders a close button in the top-right corner. Clicking it removes the alert from the DOM and fires an "arc-close" event that parent components can listen to. @default false */
   dismissible: boolean;
   /** Optional bold heading rendered above the body slot. Use it for a scannable one-line summary so users can quickly gauge the alert's importance before reading the full message. @default '' */
   heading: string;
@@ -155,12 +155,12 @@ export declare class ArcBadge extends LitElement {
 
 /**
  * `<arc-banner>`
- * Events: arc-dismiss
+ * Events: arc-close
  */
 export declare class ArcBanner extends LitElement {
   /** Controls the semantic colour palette and icon. Use "info" for neutral announcements, "success" for positive confirmations, "warning" for caution states, and "error" for outages or critical failures. @default 'info' */
   variant: 'info' | 'success' | 'warning' | 'error';
-  /** When true, renders a close button on the right side. Clicking it collapses the banner and fires an "arc-dismiss" event. @default false */
+  /** When true, renders a close button on the right side. Clicking it collapses the banner and fires an "arc-close" event. @default false */
   dismissible: boolean;
   /** When true, pins the banner to the top of the viewport with position: sticky so it remains visible as the user scrolls. @default false */
   sticky: boolean;
@@ -253,7 +253,7 @@ export declare class ArcButtonGroup extends LitElement {
 
 /**
  * `<arc-calendar>`
- * Events: arc-navigate, arc-change
+ * Events: arc-month-change, arc-change
  */
 export declare class ArcCalendar extends LitElement {
   /** The selected date as an ISO string (YYYY-MM-DD). Empty string means no date is selected. @default '' */
@@ -270,12 +270,12 @@ export declare class ArcCalendar extends LitElement {
 
 /**
  * `<arc-callout>`
- * Events: arc-dismiss
+ * Events: arc-close
  */
 export declare class ArcCallout extends LitElement {
   /** Semantic variant that controls the colour scheme, top accent bar, and default icon @default 'info' */
   variant: 'info' | 'warning' | 'tip' | 'danger';
-  /** Shows a close button that removes the callout. Fires an arc-dismiss event on close. @default false */
+  /** Shows a close button that removes the callout. Fires an arc-close event on close. @default false */
   dismissible: boolean;
 }
 
@@ -475,7 +475,7 @@ export declare class ArcColumn extends LitElement {
 
 /**
  * `<arc-combobox>`
- * Events: arc-change
+ * Events: arc-input, arc-change
  */
 export declare class ArcCombobox extends LitElement {
   /** The currently selected option value. Reflected as an attribute so it can be read from the DOM. Updated automatically when the user selects an option. @default '' */
@@ -662,7 +662,7 @@ export declare class ArcDashboardGrid extends LitElement {
 
 /**
  * `<arc-data-grid>`
- * Events: arc-sort, arc-selection-change, arc-cell-change
+ * Events: arc-sort, arc-select, arc-cell-change
  */
 export declare class ArcDataGrid extends LitElement {
   /** Column definitions. Each entry maps a `key` in your row objects to a rendered column with a `label` header. Optional flags enable sorting, inline editing, and left-edge pinning per column; `width` sets a fixed CSS width (required for accurate pinned offsets) and `align` controls text alignment. Pinned columns are always displayed first. Set via JavaScript property. @default [] */
@@ -673,7 +673,7 @@ export declare class ArcDataGrid extends LitElement {
   sort: Array<{key:string,direction:'asc'|'desc'}>;
   /** Skips internal sorting. Rows render in the order given, while headers still cycle the `sort` state and emit `arc-sort` — use this to implement server-side sorting. @default false */
   manualSort: boolean;
-  /** Adds a checkbox column with a select-all header checkbox (indeterminate when partially selected). Space toggles selection from the keyboard. Emits `arc-selection-change` with the selected row indices. @default false */
+  /** Adds a checkbox column with a select-all header checkbox (indeterminate when partially selected). Space toggles selection from the keyboard. Emits `arc-select` with the selected row indices. @default false */
   selectable: boolean;
   /** Enables virtual scrolling for large datasets. Only visible rows plus an overscan buffer are rendered, keeping performance constant regardless of row count. @default false */
   virtual: boolean;
@@ -683,14 +683,14 @@ export declare class ArcDataGrid extends LitElement {
 
 /**
  * `<arc-data-table>`
- * Events: arc-sort, arc-select-all, arc-row-select
+ * Events: arc-sort, arc-select
  */
 export declare class ArcDataTable extends LitElement {
   /** The data array that drives the table. Each object in the array becomes a row, and its keys are matched against the `key` attribute of each `arc-column` child. Set this property via JavaScript — it is not an HTML attribute. Changing this array triggers a re-render. @default [] */
   rows: Array<Record<string, any>>;
   /** Enables the sorting system at the table level. When true, columns that also have their own `sortable` attribute become clickable, toggling between ascending and descending order. The table performs client-side sorting by default and emits an `arc-sort` event with the active column key and direction. @default false */
   sortable: boolean;
-  /** Adds a checkbox column to the left of the table for row selection. A "select all" checkbox appears in the header. Selected rows receive a visual highlight. The component emits `arc-row-select` when an individual row is toggled and `arc-select-all` when the header checkbox is toggled. @default false */
+  /** Adds a checkbox column to the left of the table for row selection. A "select all" checkbox appears in the header. Selected rows receive a visual highlight. The component emits `arc-select` with the current selection (detail.value) when any row or the header checkbox is toggled; detail.all marks header toggles. @default false */
   selectable: boolean;
   /** The `key` of the currently sorted column. Set this attribute to pre-sort the table on a specific column when it first renders. Updated automatically when the user clicks a sortable column header. @default '' */
   sortColumn: string;
@@ -990,7 +990,7 @@ export declare class ArcGradientText extends LitElement {
 
 /**
  * `<arc-guided-tour>`
- * Events: arc-change, arc-complete, arc-dismiss
+ * Events: arc-change, arc-complete, arc-close
  */
 export declare class ArcGuidedTour extends LitElement {
   /** Array of step definitions. Each step specifies a CSS selector for the target element, a title for the popover heading, and content for the popover body. @default [] */
@@ -1276,7 +1276,7 @@ export declare class ArcList extends LitElement {
 
 /**
  * `<arc-list-item>`
- * Events: arc-item-select
+ * Events: arc-select
  */
 export declare class ArcListItem extends LitElement {
   /** Unique identifier used for selection tracking. @default '' */
@@ -1401,7 +1401,7 @@ export declare class ArcModal extends LitElement {
 
 /**
  * `<arc-multi-select>`
- * Events: arc-change
+ * Events: arc-change, arc-input
  */
 export declare class ArcMultiSelect extends LitElement {
   /** Array of selected option values. Updated when items are toggled and emitted via `arc-change`. @default [] */
@@ -1443,7 +1443,7 @@ export declare class ArcNavItem extends LitElement {
 
 /**
  * `<arc-navigation-menu>`
- * Events: arc-navigate, arc-mobile-menu-toggle
+ * Events: arc-mobile-menu-toggle, arc-navigate
  */
 export declare class ArcNavigationMenu extends LitElement {
   /** @default 'Navigation menu' */
@@ -1657,7 +1657,7 @@ export declare class ArcPinInput extends LitElement {
 
 /**
  * `<arc-popover>`
- * Events: arc-close, arc-open
+ * Events: arc-open, arc-close
  */
 export declare class ArcPopover extends LitElement {
   /** Whether the popover panel is currently visible. Reflected as an attribute. @default false */
@@ -2090,7 +2090,7 @@ export declare class ArcSlider extends LitElement {
 
 /**
  * `<arc-snackbar>`
- * Events: arc-action, arc-dismiss
+ * Events: arc-action, arc-close
  */
 export declare class ArcSnackbar extends LitElement {
   /** Anchors the snackbar to a bottom edge of the viewport. Bottom-center is the conventional position for material-style snackbars. @default 'bottom-center' */
@@ -2128,7 +2128,7 @@ export declare class ArcSparkline extends LitElement {
 
 /**
  * `<arc-speed-dial>`
- * Events: arc-action, arc-close, arc-open
+ * Events: arc-close, arc-open, arc-action
  */
 export declare class ArcSpeedDial extends LitElement {
   /** Whether the secondary actions are currently visible. @default false */
@@ -2168,7 +2168,7 @@ export declare class ArcSplitPane extends LitElement {
 
 /**
  * `<arc-spotlight>`
- * Events: arc-dismiss
+ * Events: arc-close
  */
 export declare class ArcSpotlight extends LitElement {
   /** CSS selector for the element to highlight. The first matching element will be spotlighted with a glow ring and elevated z-index. @default '' */
@@ -2498,7 +2498,7 @@ export declare class ArcTimelineItem extends LitElement {
 
 /**
  * `<arc-toast>`
- * Events: arc-dismiss
+ * Events: arc-close
  */
 export declare class ArcToast extends LitElement {
   /** Anchors the toast stack to a fixed edge of the viewport. Top-right is the most conventional position for web applications. Bottom positions work well for media players or editors where the top area is occupied by toolbars. @default 'top-right' */
@@ -2509,7 +2509,7 @@ export declare class ArcToast extends LitElement {
 
 /**
  * `<arc-toast-manager>`
- * Events: arc-queue-overflow, arc-dismiss, arc-queue-change
+ * Events: arc-queue-overflow, arc-close, arc-queue-change
  */
 export declare class ArcToastManager extends LitElement {
   /** Forwarded to the inner arc-toast. Anchors the toast stack to a fixed edge of the viewport. @default 'top-right' */
@@ -2904,18 +2904,17 @@ declare global {
     'arc-copy': CustomEvent<{ value: string }>;
     'arc-crop-change': CustomEvent;
     'arc-date-click': CustomEvent;
-    'arc-dismiss': CustomEvent;
     'arc-error': CustomEvent<void>;
     'arc-event-click': CustomEvent;
     'arc-expired': CustomEvent<void>;
     'arc-hotkey-trigger': CustomEvent<{ keys: string }>;
     'arc-input': CustomEvent;
     'arc-invalid': CustomEvent;
-    'arc-item-select': CustomEvent;
     'arc-load': CustomEvent<void>;
     'arc-load-more': CustomEvent<void>;
     'arc-mark-click': CustomEvent;
     'arc-mobile-menu-toggle': CustomEvent;
+    'arc-month-change': CustomEvent<{ month: number, year: number }>;
     'arc-navigate': CustomEvent;
     'arc-offline': CustomEvent<void>;
     'arc-online': CustomEvent<void>;
@@ -2927,10 +2926,7 @@ declare global {
     'arc-remove': CustomEvent;
     'arc-reset': CustomEvent<void>;
     'arc-resize': CustomEvent<{ ratio: number }> | CustomEvent<{ size: number }>;
-    'arc-row-select': CustomEvent;
     'arc-select': CustomEvent;
-    'arc-select-all': CustomEvent;
-    'arc-selection-change': CustomEvent;
     'arc-sidebar-toggle': CustomEvent;
     'arc-sort': CustomEvent;
     'arc-strength-change': CustomEvent;

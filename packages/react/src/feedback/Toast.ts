@@ -9,7 +9,7 @@ export interface ToastProps {
   duration?: number;
   className?: string;
   children?: React.ReactNode;
-  onArcDismiss?: (e: CustomEvent) => void;
+  onArcClose?: (e: CustomEvent) => void;
 }
 
 export const Toast = createComponent({
@@ -17,6 +17,6 @@ export const Toast = createComponent({
   elementClass: ArcToast,
   react: React,
   events: {
-    onArcDismiss: 'arc-dismiss' as EventName<CustomEvent>,
+    onArcClose: 'arc-close' as EventName<CustomEvent>,
   },
 });

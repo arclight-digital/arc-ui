@@ -10,7 +10,7 @@ export interface GuidedTourProps {
   children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;
   onArcComplete?: (e: CustomEvent) => void;
-  onArcDismiss?: (e: CustomEvent) => void;
+  onArcClose?: (e: CustomEvent) => void;
 }
 
 export const GuidedTour = createComponent({
@@ -20,6 +20,6 @@ export const GuidedTour = createComponent({
   events: {
     onArcChange: 'arc-change' as EventName<CustomEvent>,
     onArcComplete: 'arc-complete' as EventName<CustomEvent>,
-    onArcDismiss: 'arc-dismiss' as EventName<CustomEvent>,
+    onArcClose: 'arc-close' as EventName<CustomEvent>,
   },
 });

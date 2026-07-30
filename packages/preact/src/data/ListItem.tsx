@@ -9,7 +9,7 @@ export interface ListItemProps {
   selected?: boolean;
   disabled?: boolean;
   href?: string;
-  onArcItemSelect?: (e: CustomEvent) => void;
+  onArcSelect?: (e: CustomEvent) => void;
   children?: preact.ComponentChildren;
   class?: string;
   id?: string;
@@ -38,18 +38,18 @@ export interface ListItemProps {
   [key: `on${string}`]: unknown;
 }
 
-export const ListItem: FunctionComponent<ListItemProps> = ({ value, selected, disabled, href, onArcItemSelect, children, ...rest }) => {
+export const ListItem: FunctionComponent<ListItemProps> = ({ value, selected, disabled, href, onArcSelect, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
     const listeners: Array<[string, EventListener]> = [];
-    if (onArcItemSelect) {
-      const fn: EventListener = (e) => onArcItemSelect(e as CustomEvent);
-      el.addEventListener('arc-item-select', fn);
-      listeners.push(['arc-item-select', fn]);
+    if (onArcSelect) {
+      const fn: EventListener = (e) => onArcSelect(e as CustomEvent);
+      el.addEventListener('arc-select', fn);
+      listeners.push(['arc-select', fn]);
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
-  }, [onArcItemSelect]);
+  }, [onArcSelect]);
   return h('arc-list-item', { ref, value, selected, disabled, href, ...rest }, children);
 };

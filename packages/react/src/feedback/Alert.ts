@@ -11,7 +11,7 @@ export interface AlertProps {
   heading?: string;
   className?: string;
   children?: React.ReactNode;
-  onArcDismiss?: (e: CustomEvent) => void;
+  onArcClose?: (e: CustomEvent) => void;
 }
 
 export const Alert = createComponent({
@@ -19,6 +19,6 @@ export const Alert = createComponent({
   elementClass: ArcAlert,
   react: React,
   events: {
-    onArcDismiss: 'arc-dismiss' as EventName<CustomEvent>,
+    onArcClose: 'arc-close' as EventName<CustomEvent>,
   },
 });

@@ -8,7 +8,7 @@ import { ArcCalendar } from '@arclux/arc-ui/calendar';
   standalone: true,
   template: `<ng-content />`,
   host: {
-    '(arc-navigate)': '_onArcNavigate($event)',
+    '(arc-month-change)': '_onArcMonthChange($event)',
     '(arc-change)': '_onArcChange($event)',
   },
 })
@@ -56,7 +56,7 @@ export class Calendar {
 
   @Output() yearChange = new EventEmitter<number>();
 
-  _onArcNavigate(event: CustomEvent) {
+  _onArcMonthChange(event: CustomEvent) {
     const detail = event.detail as Record<string, unknown> | null;
     if (!detail) return;
     if ('month' in detail) {

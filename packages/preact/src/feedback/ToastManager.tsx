@@ -11,7 +11,7 @@ export interface ToastManagerProps {
   dedupe?: boolean;
   queueLimit?: number;
   onArcQueueOverflow?: (e: CustomEvent) => void;
-  onArcDismiss?: (e: CustomEvent) => void;
+  onArcClose?: (e: CustomEvent) => void;
   onArcQueueChange?: (e: CustomEvent) => void;
   children?: preact.ComponentChildren;
   class?: string;
@@ -41,7 +41,7 @@ export interface ToastManagerProps {
   [key: `on${string}`]: unknown;
 }
 
-export const ToastManager: FunctionComponent<ToastManagerProps> = ({ position, duration, maxVisible, dedupe, queueLimit, onArcQueueOverflow, onArcDismiss, onArcQueueChange, children, ...rest }) => {
+export const ToastManager: FunctionComponent<ToastManagerProps> = ({ position, duration, maxVisible, dedupe, queueLimit, onArcQueueOverflow, onArcClose, onArcQueueChange, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -52,10 +52,10 @@ export const ToastManager: FunctionComponent<ToastManagerProps> = ({ position, d
       el.addEventListener('arc-queue-overflow', fn);
       listeners.push(['arc-queue-overflow', fn]);
     }
-    if (onArcDismiss) {
-      const fn: EventListener = (e) => onArcDismiss(e as CustomEvent);
-      el.addEventListener('arc-dismiss', fn);
-      listeners.push(['arc-dismiss', fn]);
+    if (onArcClose) {
+      const fn: EventListener = (e) => onArcClose(e as CustomEvent);
+      el.addEventListener('arc-close', fn);
+      listeners.push(['arc-close', fn]);
     }
     if (onArcQueueChange) {
       const fn: EventListener = (e) => onArcQueueChange(e as CustomEvent);
@@ -63,6 +63,6 @@ export const ToastManager: FunctionComponent<ToastManagerProps> = ({ position, d
       listeners.push(['arc-queue-change', fn]);
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
-  }, [onArcQueueOverflow, onArcDismiss, onArcQueueChange]);
+  }, [onArcQueueOverflow, onArcClose, onArcQueueChange]);
   return h('arc-toast-manager', { ref, position, duration, maxVisible, dedupe, queueLimit, ...rest }, children);
 };

@@ -10,7 +10,7 @@ export interface BannerProps {
   sticky?: boolean;
   className?: string;
   children?: React.ReactNode;
-  onArcDismiss?: (e: CustomEvent) => void;
+  onArcClose?: (e: CustomEvent) => void;
 }
 
 export const Banner = createComponent({
@@ -18,6 +18,6 @@ export const Banner = createComponent({
   elementClass: ArcBanner,
   react: React,
   events: {
-    onArcDismiss: 'arc-dismiss' as EventName<CustomEvent>,
+    onArcClose: 'arc-close' as EventName<CustomEvent>,
   },
 });

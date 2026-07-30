@@ -7,7 +7,7 @@ import '@arclux/arc-ui/callout';
 export interface CalloutProps {
   variant?: 'info' | 'warning' | 'tip' | 'danger';
   dismissible?: boolean;
-  onArcDismiss?: (e: CustomEvent) => void;
+  onArcClose?: (e: CustomEvent) => void;
   children?: preact.ComponentChildren;
   class?: string;
   id?: string;
@@ -36,18 +36,18 @@ export interface CalloutProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Callout: FunctionComponent<CalloutProps> = ({ variant, dismissible, onArcDismiss, children, ...rest }) => {
+export const Callout: FunctionComponent<CalloutProps> = ({ variant, dismissible, onArcClose, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
     const listeners: Array<[string, EventListener]> = [];
-    if (onArcDismiss) {
-      const fn: EventListener = (e) => onArcDismiss(e as CustomEvent);
-      el.addEventListener('arc-dismiss', fn);
-      listeners.push(['arc-dismiss', fn]);
+    if (onArcClose) {
+      const fn: EventListener = (e) => onArcClose(e as CustomEvent);
+      el.addEventListener('arc-close', fn);
+      listeners.push(['arc-close', fn]);
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
-  }, [onArcDismiss]);
+  }, [onArcClose]);
   return h('arc-callout', { ref, variant, dismissible, ...rest }, children);
 };

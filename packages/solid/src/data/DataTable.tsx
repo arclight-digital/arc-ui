@@ -20,8 +20,7 @@ export interface DataTableProps {
   virtual?: boolean;
   rowHeight?: number;
   onArcSort?: (e: CustomEvent) => void;
-  onArcSelectAll?: (e: CustomEvent) => void;
-  onArcRowSelect?: (e: CustomEvent) => void;
+  onArcSelect?: (e: CustomEvent) => void;
   children?: JSX.Element;
   class?: string;
   id?: string;
@@ -51,9 +50,9 @@ export interface DataTableProps {
 }
 
 export const DataTable: Component<DataTableProps> = (props) => {
-  const [local, rest] = splitProps(props, ['rows', 'sortable', 'selectable', 'sortColumn', 'sortDirection', 'virtual', 'rowHeight', 'onArcSort', 'onArcSelectAll', 'onArcRowSelect', 'children']);
+  const [local, rest] = splitProps(props, ['rows', 'sortable', 'selectable', 'sortColumn', 'sortDirection', 'virtual', 'rowHeight', 'onArcSort', 'onArcSelect', 'children']);
   return (
-    <arc-data-table rows={local.rows} sortable={local.sortable} selectable={local.selectable} prop:sortColumn={local.sortColumn} prop:sortDirection={local.sortDirection} virtual={local.virtual} prop:rowHeight={local.rowHeight} on:arc-sort={local.onArcSort} on:arc-select-all={local.onArcSelectAll} on:arc-row-select={local.onArcRowSelect} {...rest}>
+    <arc-data-table rows={local.rows} sortable={local.sortable} selectable={local.selectable} prop:sortColumn={local.sortColumn} prop:sortDirection={local.sortDirection} virtual={local.virtual} prop:rowHeight={local.rowHeight} on:arc-sort={local.onArcSort} on:arc-select={local.onArcSelect} {...rest}>
       {local.children}
     </arc-data-table>
   );

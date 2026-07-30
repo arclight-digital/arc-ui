@@ -8,7 +8,7 @@ export interface GuidedTourProps {
   open?: boolean;
   onArcChange?: (e: CustomEvent) => void;
   onArcComplete?: (e: CustomEvent) => void;
-  onArcDismiss?: (e: CustomEvent) => void;
+  onArcClose?: (e: CustomEvent) => void;
   children?: preact.ComponentChildren;
   class?: string;
   id?: string;
@@ -37,7 +37,7 @@ export interface GuidedTourProps {
   [key: `on${string}`]: unknown;
 }
 
-export const GuidedTour: FunctionComponent<GuidedTourProps> = ({ open, onArcChange, onArcComplete, onArcDismiss, children, ...rest }) => {
+export const GuidedTour: FunctionComponent<GuidedTourProps> = ({ open, onArcChange, onArcComplete, onArcClose, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -53,12 +53,12 @@ export const GuidedTour: FunctionComponent<GuidedTourProps> = ({ open, onArcChan
       el.addEventListener('arc-complete', fn);
       listeners.push(['arc-complete', fn]);
     }
-    if (onArcDismiss) {
-      const fn: EventListener = (e) => onArcDismiss(e as CustomEvent);
-      el.addEventListener('arc-dismiss', fn);
-      listeners.push(['arc-dismiss', fn]);
+    if (onArcClose) {
+      const fn: EventListener = (e) => onArcClose(e as CustomEvent);
+      el.addEventListener('arc-close', fn);
+      listeners.push(['arc-close', fn]);
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
-  }, [onArcChange, onArcComplete, onArcDismiss]);
+  }, [onArcChange, onArcComplete, onArcClose]);
   return h('arc-guided-tour', { ref, open, ...rest }, children);
 };

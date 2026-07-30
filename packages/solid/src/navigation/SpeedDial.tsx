@@ -16,8 +16,9 @@ export interface SpeedDialProps {
   direction?: 'up' | 'down' | 'left' | 'right';
   position?: 'bottom-right' | 'bottom-left';
   items?: Array<{icon: string, label: string, value?: string}>;
-  onArcAction?: (e: CustomEvent) => void;
   onArcClose?: (e: CustomEvent) => void;
+  onArcOpen?: (e: CustomEvent) => void;
+  onArcAction?: (e: CustomEvent) => void;
   class?: string;
   id?: string;
   style?: string;
@@ -46,9 +47,9 @@ export interface SpeedDialProps {
 }
 
 export const SpeedDial: Component<SpeedDialProps> = (props) => {
-  const [local, rest] = splitProps(props, ['open', 'direction', 'position', 'items', 'onArcAction', 'onArcClose']);
+  const [local, rest] = splitProps(props, ['open', 'direction', 'position', 'items', 'onArcClose', 'onArcOpen', 'onArcAction']);
   return (
-    <arc-speed-dial open={local.open} direction={local.direction} position={local.position} items={local.items} on:arc-action={local.onArcAction} on:arc-close={local.onArcClose} {...rest}>
+    <arc-speed-dial open={local.open} direction={local.direction} position={local.position} items={local.items} on:arc-close={local.onArcClose} on:arc-open={local.onArcOpen} on:arc-action={local.onArcAction} {...rest}>
     </arc-speed-dial>
   );
 };

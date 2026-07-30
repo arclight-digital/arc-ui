@@ -13,7 +13,7 @@ const props = withDefaults(defineProps<{
 });
 
 const emit = defineEmits<{
-  'arc-dismiss': [event: CustomEvent];
+  'arc-close': [event: CustomEvent];
 }>();
 </script>
 
@@ -21,7 +21,7 @@ const emit = defineEmits<{
   <arc-callout
     :variant="props.variant"
     :dismissible="props.dismissible"
-    @arc-dismiss="(payload: CustomEvent) => emit('arc-dismiss', payload)"
+    @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"
   >
     <slot />
     <slot name="icon" />

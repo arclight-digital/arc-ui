@@ -20,7 +20,7 @@ const props = withDefaults(defineProps<{
 
 const emit = defineEmits<{
   'arc-queue-overflow': [event: CustomEvent];
-  'arc-dismiss': [event: CustomEvent];
+  'arc-close': [event: CustomEvent];
   'arc-queue-change': [event: CustomEvent];
 }>();
 </script>
@@ -33,7 +33,7 @@ const emit = defineEmits<{
     :dedupe="props.dedupe"
     :queueLimit="props.queueLimit"
     @arc-queue-overflow="(payload: CustomEvent) => emit('arc-queue-overflow', payload)"
-    @arc-dismiss="(payload: CustomEvent) => emit('arc-dismiss', payload)"
+    @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"
     @arc-queue-change="(payload: CustomEvent) => emit('arc-queue-change', payload)"
   >
     <slot />

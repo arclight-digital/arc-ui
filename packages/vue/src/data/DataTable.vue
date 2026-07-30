@@ -24,8 +24,7 @@ const props = withDefaults(defineProps<{
 
 const emit = defineEmits<{
   'arc-sort': [event: CustomEvent];
-  'arc-select-all': [event: CustomEvent];
-  'arc-row-select': [event: CustomEvent];
+  'arc-select': [event: CustomEvent];
 }>();
 </script>
 
@@ -39,8 +38,7 @@ const emit = defineEmits<{
     :virtual="props.virtual"
     :rowHeight="props.rowHeight"
     @arc-sort="(payload: CustomEvent) => emit('arc-sort', payload)"
-    @arc-select-all="(payload: CustomEvent) => emit('arc-select-all', payload)"
-    @arc-row-select="(payload: CustomEvent) => emit('arc-row-select', payload)"
+    @arc-select="(payload: CustomEvent) => emit('arc-select', payload)"
   >
     <slot />
   </arc-data-table>

@@ -42,13 +42,13 @@
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
   // have attached. These are declared after {...rest} below so they win.
-  function __onArcNavigate(e: Event) {
+  function __onArcMonthChange(e: Event) {
     const detail = (e as CustomEvent).detail as Record<string, unknown> | null;
     if (detail) {
       if ('month' in detail) month = detail.month as number;
       if ('year' in detail) year = detail.year as number;
     }
-    (rest['onarc-navigate'] as ((e: Event) => void) | undefined)?.(e);
+    (rest['onarc-month-change'] as ((e: Event) => void) | undefined)?.(e);
   }
   function __onArcChange(e: Event) {
     const detail = (e as CustomEvent).detail as Record<string, unknown> | null;
@@ -60,7 +60,7 @@
 </script>
 
 <arc-calendar {value} {min} {max} {month} {year} {...rest}
-  onarc-navigate={__onArcNavigate}
+  onarc-month-change={__onArcMonthChange}
   onarc-change={__onArcChange}
 >
   {@render children?.()}

@@ -16,7 +16,7 @@ export interface AlertProps {
   compact?: boolean;
   dismissible?: boolean;
   heading?: string;
-  onArcDismiss?: (e: CustomEvent) => void;
+  onArcClose?: (e: CustomEvent) => void;
   children?: JSX.Element;
   class?: string;
   id?: string;
@@ -46,9 +46,9 @@ export interface AlertProps {
 }
 
 export const Alert: Component<AlertProps> = (props) => {
-  const [local, rest] = splitProps(props, ['variant', 'compact', 'dismissible', 'heading', 'onArcDismiss', 'children']);
+  const [local, rest] = splitProps(props, ['variant', 'compact', 'dismissible', 'heading', 'onArcClose', 'children']);
   return (
-    <arc-alert variant={local.variant} compact={local.compact} dismissible={local.dismissible} heading={local.heading} on:arc-dismiss={local.onArcDismiss} {...rest}>
+    <arc-alert variant={local.variant} compact={local.compact} dismissible={local.dismissible} heading={local.heading} on:arc-close={local.onArcClose} {...rest}>
       {local.children}
     </arc-alert>
   );

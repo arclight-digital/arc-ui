@@ -17,6 +17,7 @@ export interface ComboboxProps {
   label?: string;
   name?: string;
   disabled?: boolean;
+  onArcInput?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
   children?: JSX.Element;
   class?: string;
@@ -47,9 +48,9 @@ export interface ComboboxProps {
 }
 
 export const Combobox: Component<ComboboxProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'placeholder', 'label', 'name', 'disabled', 'onArcChange', 'children']);
+  const [local, rest] = splitProps(props, ['value', 'placeholder', 'label', 'name', 'disabled', 'onArcInput', 'onArcChange', 'children']);
   return (
-    <arc-combobox value={local.value} placeholder={local.placeholder} label={local.label} name={local.name} disabled={local.disabled} on:arc-change={local.onArcChange} {...rest}>
+    <arc-combobox value={local.value} placeholder={local.placeholder} label={local.label} name={local.name} disabled={local.disabled} on:arc-input={local.onArcInput} on:arc-change={local.onArcChange} {...rest}>
       {local.children}
     </arc-combobox>
   );

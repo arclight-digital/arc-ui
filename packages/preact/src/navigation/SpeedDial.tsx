@@ -9,8 +9,9 @@ export interface SpeedDialProps {
   direction?: 'up' | 'down' | 'left' | 'right';
   position?: 'bottom-right' | 'bottom-left';
   items?: Array<{icon: string, label: string, value?: string}>;
-  onArcAction?: (e: CustomEvent) => void;
   onArcClose?: (e: CustomEvent) => void;
+  onArcOpen?: (e: CustomEvent) => void;
+  onArcAction?: (e: CustomEvent) => void;
   class?: string;
   id?: string;
   style?: string;
@@ -38,23 +39,28 @@ export interface SpeedDialProps {
   [key: `on${string}`]: unknown;
 }
 
-export const SpeedDial: FunctionComponent<SpeedDialProps> = ({ open, direction, position, items, onArcAction, onArcClose, ...rest }) => {
+export const SpeedDial: FunctionComponent<SpeedDialProps> = ({ open, direction, position, items, onArcClose, onArcOpen, onArcAction, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
     const listeners: Array<[string, EventListener]> = [];
-    if (onArcAction) {
-      const fn: EventListener = (e) => onArcAction(e as CustomEvent);
-      el.addEventListener('arc-action', fn);
-      listeners.push(['arc-action', fn]);
-    }
     if (onArcClose) {
       const fn: EventListener = (e) => onArcClose(e as CustomEvent);
       el.addEventListener('arc-close', fn);
       listeners.push(['arc-close', fn]);
     }
+    if (onArcOpen) {
+      const fn: EventListener = (e) => onArcOpen(e as CustomEvent);
+      el.addEventListener('arc-open', fn);
+      listeners.push(['arc-open', fn]);
+    }
+    if (onArcAction) {
+      const fn: EventListener = (e) => onArcAction(e as CustomEvent);
+      el.addEventListener('arc-action', fn);
+      listeners.push(['arc-action', fn]);
+    }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
-  }, [onArcAction, onArcClose]);
+  }, [onArcClose, onArcOpen, onArcAction]);
   return h('arc-speed-dial', { ref, open, direction, position, items, ...rest });
 };

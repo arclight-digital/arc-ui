@@ -231,7 +231,7 @@
         },
         {
           "name": "arc-callout",
-          "description": "Styled callout box for tips, warnings, and info.\n---\n\n\n### **Events:**\n - **arc-dismiss** - Fired when the dismiss button is clicked on a dismissible callout.\n\n### **Slots:**\n - **icon**\n- _default_ - Default content.\n\n### **CSS Parts:**\n - **callout**\n- **header**\n- **icon**\n- **label**\n- **dismiss**\n- **content**",
+          "description": "Styled callout box for tips, warnings, and info.\n---\n\n\n### **Events:**\n - **arc-close** - Fired when the dismiss button is clicked on a dismissible callout.\n\n### **Slots:**\n - **icon**\n- _default_ - Default content.\n\n### **CSS Parts:**\n - **callout**\n- **header**\n- **icon**\n- **label**\n- **dismiss**\n- **content**",
           "doc-url": "",
           "attributes": [
             {
@@ -244,7 +244,7 @@
             },
             {
               "name": "dismissible",
-              "description": "Shows a close button that removes the callout. Fires an arc-dismiss event on close.",
+              "description": "Shows a close button that removes the callout. Fires an arc-close event on close.",
               "value": {
                 "type": "boolean",
                 "default": "false"
@@ -262,7 +262,7 @@
           ],
           "events": [
             {
-              "name": "arc-dismiss",
+              "name": "arc-close",
               "type": "CustomEvent<void>",
               "description": "Fired when the dismiss button is clicked on a dismissible callout."
             }
@@ -276,13 +276,13 @@
               },
               {
                 "name": "dismissible",
-                "description": "Shows a close button that removes the callout. Fires an arc-dismiss event on close.",
+                "description": "Shows a close button that removes the callout. Fires an arc-close event on close.",
                 "type": "boolean"
               }
             ],
             "events": [
               {
-                "name": "arc-dismiss",
+                "name": "arc-close",
                 "type": "CustomEvent<void>",
                 "description": "Fired when the dismiss button is clicked on a dismissible callout."
               }
@@ -2222,7 +2222,7 @@
         },
         {
           "name": "arc-data-grid",
-          "description": "A spreadsheet-grade grid for working with tabular data: inline cell editing, multi-column\nsorting, pinned columns, row selection, and virtualized rendering. Columns are defined as a\nJavaScript array, and the grid implements the full WAI-ARIA grid keyboard pattern with a single\ntab stop.\n---\n\n\n### **Events:**\n - **arc-sort** - Fired when the user changes sorting. detail: { sort } with the full multi-sort array in priority order\n- **arc-selection-change** - Fired when row selection changes. detail: { selectedIndices } — indices into the original rows array\n- **arc-cell-change** - Fired when an inline cell edit is committed. detail: { rowIndex, key, value, row } — rowIndex refers to the original rows array\n\n### **CSS Parts:**\n - **header-cell**\n- **cell**\n- **editor**\n- **row**\n- **wrapper**\n- **table**\n- **header**\n- **body**",
+          "description": "A spreadsheet-grade grid for working with tabular data: inline cell editing, multi-column\nsorting, pinned columns, row selection, and virtualized rendering. Columns are defined as a\nJavaScript array, and the grid implements the full WAI-ARIA grid keyboard pattern with a single\ntab stop.\n---\n\n\n### **Events:**\n - **arc-sort** - Fired when the user changes sorting. detail: { sort } with the full multi-sort array in priority order\n- **arc-select** - Fired when row selection changes. detail: { value, selectedIndices } — sorted indices into the original rows array\n- **arc-cell-change** - Fired when an inline cell edit is committed. detail: { rowIndex, key, value, row } — rowIndex refers to the original rows array\n\n### **CSS Parts:**\n - **header-cell**\n- **cell**\n- **editor**\n- **row**\n- **wrapper**\n- **table**\n- **header**\n- **body**",
           "doc-url": "",
           "attributes": [
             {
@@ -2259,7 +2259,7 @@
             },
             {
               "name": "selectable",
-              "description": "Adds a checkbox column with a select-all header checkbox (indeterminate when partially selected). Space toggles selection from the keyboard. Emits `arc-selection-change` with the selected row indices.",
+              "description": "Adds a checkbox column with a select-all header checkbox (indeterminate when partially selected). Space toggles selection from the keyboard. Emits `arc-select` with the selected row indices.",
               "value": {
                 "type": "boolean",
                 "default": "false"
@@ -2289,9 +2289,9 @@
               "description": "Fired when the user changes sorting. detail: { sort } with the full multi-sort array in priority order"
             },
             {
-              "name": "arc-selection-change",
+              "name": "arc-select",
               "type": "CustomEvent",
-              "description": "Fired when row selection changes. detail: { selectedIndices } — indices into the original rows array"
+              "description": "Fired when row selection changes. detail: { value, selectedIndices } — sorted indices into the original rows array"
             },
             {
               "name": "arc-cell-change",
@@ -2323,7 +2323,7 @@
               },
               {
                 "name": "selectable",
-                "description": "Adds a checkbox column with a select-all header checkbox (indeterminate when partially selected). Space toggles selection from the keyboard. Emits `arc-selection-change` with the selected row indices.",
+                "description": "Adds a checkbox column with a select-all header checkbox (indeterminate when partially selected). Space toggles selection from the keyboard. Emits `arc-select` with the selected row indices.",
                 "type": "boolean"
               },
               {
@@ -2344,9 +2344,9 @@
                 "description": "Fired when the user changes sorting. detail: { sort } with the full multi-sort array in priority order"
               },
               {
-                "name": "arc-selection-change",
+                "name": "arc-select",
                 "type": "CustomEvent",
-                "description": "Fired when row selection changes. detail: { selectedIndices } — indices into the original rows array"
+                "description": "Fired when row selection changes. detail: { value, selectedIndices } — sorted indices into the original rows array"
               },
               {
                 "name": "arc-cell-change",
@@ -2358,7 +2358,7 @@
         },
         {
           "name": "arc-data-table",
-          "description": "A data-driven table component that renders rows from a JavaScript array. Declarative column\ndefinitions via `arc-column` children control which fields appear, their headers, widths, and\nsort behavior. Built-in support for column sorting, row selection with checkboxes, and an\nempty-state fallback.\n---\n\n\n### **Events:**\n - **arc-sort** - Fired when a sortable column header is clicked\n- **arc-select-all** - Fired when the select-all checkbox is toggled\n- **arc-row-select** - Fired when an individual row checkbox is toggled\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **row**\n- **cell**\n- **wrapper**\n- **table**\n- **head**\n- **body**",
+          "description": "A data-driven table component that renders rows from a JavaScript array. Declarative column\ndefinitions via `arc-column` children control which fields appear, their headers, widths, and\nsort behavior. Built-in support for column sorting, row selection with checkboxes, and an\nempty-state fallback.\n---\n\n\n### **Events:**\n - **arc-sort** - Fired when a sortable column header is clicked\n- **arc-select** - Fired when row selection changes. detail: { value, selected, row, index } — value is the sorted selected indices; detail.all is true for header select-all toggles\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **row**\n- **cell**\n- **wrapper**\n- **table**\n- **head**\n- **body**",
           "doc-url": "",
           "attributes": [
             {
@@ -2379,7 +2379,7 @@
             },
             {
               "name": "selectable",
-              "description": "Adds a checkbox column to the left of the table for row selection. A \"select all\" checkbox appears in the header. Selected rows receive a visual highlight. The component emits `arc-row-select` when an individual row is toggled and `arc-select-all` when the header checkbox is toggled.",
+              "description": "Adds a checkbox column to the left of the table for row selection. A \"select all\" checkbox appears in the header. Selected rows receive a visual highlight. The component emits `arc-select` with the current selection (detail.value) when any row or the header checkbox is toggled; detail.all marks header toggles.",
               "value": {
                 "type": "boolean",
                 "default": "false"
@@ -2431,14 +2431,9 @@
               "description": "Fired when a sortable column header is clicked"
             },
             {
-              "name": "arc-select-all",
+              "name": "arc-select",
               "type": "CustomEvent",
-              "description": "Fired when the select-all checkbox is toggled"
-            },
-            {
-              "name": "arc-row-select",
-              "type": "CustomEvent",
-              "description": "Fired when an individual row checkbox is toggled"
+              "description": "Fired when row selection changes. detail: { value, selected, row, index } — value is the sorted selected indices; detail.all is true for header select-all toggles"
             }
           ],
           "js": {
@@ -2455,7 +2450,7 @@
               },
               {
                 "name": "selectable",
-                "description": "Adds a checkbox column to the left of the table for row selection. A \"select all\" checkbox appears in the header. Selected rows receive a visual highlight. The component emits `arc-row-select` when an individual row is toggled and `arc-select-all` when the header checkbox is toggled.",
+                "description": "Adds a checkbox column to the left of the table for row selection. A \"select all\" checkbox appears in the header. Selected rows receive a visual highlight. The component emits `arc-select` with the current selection (detail.value) when any row or the header checkbox is toggled; detail.all marks header toggles.",
                 "type": "boolean"
               },
               {
@@ -2486,14 +2481,9 @@
                 "description": "Fired when a sortable column header is clicked"
               },
               {
-                "name": "arc-select-all",
+                "name": "arc-select",
                 "type": "CustomEvent",
-                "description": "Fired when the select-all checkbox is toggled"
-              },
-              {
-                "name": "arc-row-select",
-                "type": "CustomEvent",
-                "description": "Fired when an individual row checkbox is toggled"
+                "description": "Fired when row selection changes. detail: { value, selected, row, index } — value is the sorted selected indices; detail.all is true for header select-all toggles"
               }
             ]
           }
@@ -2851,7 +2841,7 @@
         },
         {
           "name": "arc-list-item",
-          "description": "Individual row within an arc-list. Supports prefix/suffix slots, a description slot for\nsecondary text, links, and selection state.\n---\n\n\n### **Events:**\n - **arc-item-select**\n\n### **Slots:**\n - **prefix**\n- _default_ - Default content.\n- **description**\n- **suffix**\n\n### **CSS Parts:**\n - **label**\n- **description**\n- **item**",
+          "description": "Individual row within an arc-list. Supports prefix/suffix slots, a description slot for\nsecondary text, links, and selection state.\n---\n\n\n### **Events:**\n - **arc-select**\n\n### **Slots:**\n - **prefix**\n- _default_ - Default content.\n- **description**\n- **suffix**\n\n### **CSS Parts:**\n - **label**\n- **description**\n- **item**",
           "doc-url": "",
           "attributes": [
             {
@@ -2904,7 +2894,7 @@
           ],
           "events": [
             {
-              "name": "arc-item-select",
+              "name": "arc-select",
               "type": "CustomEvent"
             }
           ],
@@ -2933,7 +2923,7 @@
             ],
             "events": [
               {
-                "name": "arc-item-select",
+                "name": "arc-select",
                 "type": "CustomEvent"
               }
             ]
@@ -3671,7 +3661,7 @@
         },
         {
           "name": "arc-alert",
-          "description": "Contextual alert banner with four semantic variants and optional dismiss button for delivering\ntimely, prominent feedback to users.\n---\n\n\n### **Events:**\n - **arc-dismiss** - Fired when a dismissible alert is closed\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **alert**\n- **icon**\n- **heading**\n- **content**\n- **dismiss**",
+          "description": "Contextual alert banner with four semantic variants and optional dismiss button for delivering\ntimely, prominent feedback to users.\n---\n\n\n### **Events:**\n - **arc-close** - Fired when a dismissible alert is closed\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **alert**\n- **icon**\n- **heading**\n- **content**\n- **dismiss**",
           "doc-url": "",
           "attributes": [
             {
@@ -3692,7 +3682,7 @@
             },
             {
               "name": "dismissible",
-              "description": "When true, renders a close button in the top-right corner. Clicking it removes the alert from the DOM and fires an \"arc-dismiss\" event that parent components can listen to.",
+              "description": "When true, renders a close button in the top-right corner. Clicking it removes the alert from the DOM and fires an \"arc-close\" event that parent components can listen to.",
               "value": {
                 "type": "boolean",
                 "default": "false"
@@ -3715,7 +3705,7 @@
           ],
           "events": [
             {
-              "name": "arc-dismiss",
+              "name": "arc-close",
               "type": "CustomEvent<void>",
               "description": "Fired when a dismissible alert is closed"
             }
@@ -3734,7 +3724,7 @@
               },
               {
                 "name": "dismissible",
-                "description": "When true, renders a close button in the top-right corner. Clicking it removes the alert from the DOM and fires an \"arc-dismiss\" event that parent components can listen to.",
+                "description": "When true, renders a close button in the top-right corner. Clicking it removes the alert from the DOM and fires an \"arc-close\" event that parent components can listen to.",
                 "type": "boolean"
               },
               {
@@ -3745,7 +3735,7 @@
             ],
             "events": [
               {
-                "name": "arc-dismiss",
+                "name": "arc-close",
                 "type": "CustomEvent<void>",
                 "description": "Fired when a dismissible alert is closed"
               }
@@ -3793,7 +3783,7 @@
         },
         {
           "name": "arc-banner",
-          "description": "Full-width persistent strip pinned to viewport or section top. Uses semantic variants like alert\nbut edge-to-edge with no border-radius and a subtle gradient wash.\n---\n\n\n### **Events:**\n - **arc-dismiss** - Fired when a dismissible banner is closed by the user\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **banner**\n- **icon**\n- **message**\n- **dismiss**",
+          "description": "Full-width persistent strip pinned to viewport or section top. Uses semantic variants like alert\nbut edge-to-edge with no border-radius and a subtle gradient wash.\n---\n\n\n### **Events:**\n - **arc-close** - Fired when a dismissible banner is closed by the user\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **banner**\n- **icon**\n- **message**\n- **dismiss**",
           "doc-url": "",
           "attributes": [
             {
@@ -3806,7 +3796,7 @@
             },
             {
               "name": "dismissible",
-              "description": "When true, renders a close button on the right side. Clicking it collapses the banner and fires an \"arc-dismiss\" event.",
+              "description": "When true, renders a close button on the right side. Clicking it collapses the banner and fires an \"arc-close\" event.",
               "value": {
                 "type": "boolean",
                 "default": "false"
@@ -3829,7 +3819,7 @@
           ],
           "events": [
             {
-              "name": "arc-dismiss",
+              "name": "arc-close",
               "type": "CustomEvent<void>",
               "description": "Fired when a dismissible banner is closed by the user"
             }
@@ -3843,7 +3833,7 @@
               },
               {
                 "name": "dismissible",
-                "description": "When true, renders a close button on the right side. Clicking it collapses the banner and fires an \"arc-dismiss\" event.",
+                "description": "When true, renders a close button on the right side. Clicking it collapses the banner and fires an \"arc-close\" event.",
                 "type": "boolean"
               },
               {
@@ -3854,7 +3844,7 @@
             ],
             "events": [
               {
-                "name": "arc-dismiss",
+                "name": "arc-close",
                 "type": "CustomEvent<void>",
                 "description": "Fired when a dismissible banner is closed by the user"
               }
@@ -4421,7 +4411,7 @@
         },
         {
           "name": "arc-guided-tour",
-          "description": "Multi-step onboarding that composes spotlight with popover-styled tooltips at each step. Step\ncounter uses accent-primary gradient text.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the tour advances or goes back to a different step. Detail contains { step } with the new step index.\n- **arc-complete** - Fired when the user finishes the last step of the tour\n- **arc-dismiss** - Fired when the user skips or closes the tour before completing all steps\n\n### **CSS Parts:**\n - **ring**\n- **tooltip**\n- **counter**\n- **title**\n- **content**\n- **controls**\n- **prev**\n- **next**",
+          "description": "Multi-step onboarding that composes spotlight with popover-styled tooltips at each step. Step\ncounter uses accent-primary gradient text.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the tour advances or goes back to a different step. Detail contains { step } with the new step index.\n- **arc-complete** - Fired when the user finishes the last step of the tour\n- **arc-close** - Fired when the user skips or closes the tour before completing all steps\n\n### **CSS Parts:**\n - **ring**\n- **tooltip**\n- **counter**\n- **title**\n- **content**\n- **controls**\n- **prev**\n- **next**",
           "doc-url": "",
           "attributes": [
             {
@@ -4461,7 +4451,7 @@
               "description": "Fired when the user finishes the last step of the tour"
             },
             {
-              "name": "arc-dismiss",
+              "name": "arc-close",
               "type": "CustomEvent<void>",
               "description": "Fired when the user skips or closes the tour before completing all steps"
             }
@@ -4496,7 +4486,7 @@
                 "description": "Fired when the user finishes the last step of the tour"
               },
               {
-                "name": "arc-dismiss",
+                "name": "arc-close",
                 "type": "CustomEvent<void>",
                 "description": "Fired when the user skips or closes the tour before completing all steps"
               }
@@ -4873,7 +4863,7 @@
         },
         {
           "name": "arc-popover",
-          "description": "Floating content panel anchored to a trigger element, with four placement positions and\nautomatic outside-click dismissal.\n---\n\n\n### **Events:**\n - **arc-close** - Fired when the popover closes.\n- **arc-open** - Fired when the popover opens.\n\n### **Slots:**\n - **trigger**\n- _default_ - Default content.\n\n### **CSS Parts:**\n - **trigger**\n- **panel**",
+          "description": "Floating content panel anchored to a trigger element, with four placement positions and\nautomatic outside-click dismissal.\n---\n\n\n### **Events:**\n - **arc-open** - Fired when the popover opens.\n- **arc-close** - Fired when the popover closes.\n\n### **Slots:**\n - **trigger**\n- _default_ - Default content.\n\n### **CSS Parts:**\n - **trigger**\n- **panel**",
           "doc-url": "",
           "attributes": [
             {
@@ -4912,13 +4902,14 @@
           ],
           "events": [
             {
+              "name": "arc-open",
+              "type": "CustomEvent",
+              "description": "Fired when the popover opens."
+            },
+            {
               "name": "arc-close",
               "type": "CustomEvent<void>",
               "description": "Fired when the popover closes."
-            },
-            {
-              "name": "arc-open",
-              "description": "Fired when the popover opens."
             }
           ],
           "js": {
@@ -4941,13 +4932,14 @@
             ],
             "events": [
               {
+                "name": "arc-open",
+                "type": "CustomEvent",
+                "description": "Fired when the popover opens."
+              },
+              {
                 "name": "arc-close",
                 "type": "CustomEvent<void>",
                 "description": "Fired when the popover closes."
-              },
-              {
-                "name": "arc-open",
-                "description": "Fired when the popover opens."
               }
             ]
           }
@@ -5179,7 +5171,7 @@
         },
         {
           "name": "arc-snackbar",
-          "description": "Bottom-anchored single-line notification with optional action button. Darker than toast —\nsurface-base background with accent-colored action link. Slides up, auto-dismisses.\n---\n\n\n### **Events:**\n - **arc-action** - Fired when the user clicks the action button (e.g. \"Undo\")\n- **arc-dismiss** - Fired when the snackbar is dismissed, either by auto-timeout or user interaction\n\n### **CSS Parts:**\n - **container**\n- **snackbar**\n- **action**\n- **dismiss**",
+          "description": "Bottom-anchored single-line notification with optional action button. Darker than toast —\nsurface-base background with accent-colored action link. Slides up, auto-dismisses.\n---\n\n\n### **Events:**\n - **arc-action** - Fired when the user clicks the action button (e.g. \"Undo\")\n- **arc-close** - Fired when the snackbar is dismissed, either by auto-timeout or user interaction\n\n### **CSS Parts:**\n - **container**\n- **snackbar**\n- **action**\n- **dismiss**",
           "doc-url": "",
           "attributes": [
             {
@@ -5206,7 +5198,7 @@
               "description": "Fired when the user clicks the action button (e.g. \"Undo\")"
             },
             {
-              "name": "arc-dismiss",
+              "name": "arc-close",
               "type": "CustomEvent",
               "description": "Fired when the snackbar is dismissed, either by auto-timeout or user interaction"
             }
@@ -5231,7 +5223,7 @@
                 "description": "Fired when the user clicks the action button (e.g. \"Undo\")"
               },
               {
-                "name": "arc-dismiss",
+                "name": "arc-close",
                 "type": "CustomEvent",
                 "description": "Fired when the snackbar is dismissed, either by auto-timeout or user interaction"
               }
@@ -5240,7 +5232,7 @@
         },
         {
           "name": "arc-spotlight",
-          "description": "Dims the entire page except a targeted element, which gets an accent-primary glow ring and\nelevated z-index. For onboarding and feature discovery.\n---\n\n\n### **Events:**\n - **arc-dismiss** - Fired when the user clicks outside the highlighted element to dismiss the spotlight\n\n### **CSS Parts:**\n - **ring**",
+          "description": "Dims the entire page except a targeted element, which gets an accent-primary glow ring and\nelevated z-index. For onboarding and feature discovery.\n---\n\n\n### **Events:**\n - **arc-close** - Fired when the user clicks outside the highlighted element to dismiss the spotlight\n\n### **CSS Parts:**\n - **ring**",
           "doc-url": "",
           "attributes": [
             {
@@ -5270,7 +5262,7 @@
           ],
           "events": [
             {
-              "name": "arc-dismiss",
+              "name": "arc-close",
               "type": "CustomEvent<void>",
               "description": "Fired when the user clicks outside the highlighted element to dismiss the spotlight"
             }
@@ -5295,7 +5287,7 @@
             ],
             "events": [
               {
-                "name": "arc-dismiss",
+                "name": "arc-close",
                 "type": "CustomEvent<void>",
                 "description": "Fired when the user clicks outside the highlighted element to dismiss the spotlight"
               }
@@ -5304,7 +5296,7 @@
         },
         {
           "name": "arc-toast-manager",
-          "description": "Policy layer over Toast that caps how many notifications show at once, queues the overflow FIFO,\ndeduplicates repeated messages, and lets any component fire toasts via a document-level event.\n\nQueueing/stacking policy layer over arc-toast. Composes an internal <arc-toast> (which owns\nrendering, timers, and a11y) and adds: max-visible capping with a FIFO queue, message+variant\ndeduplication, queue overflow trimming, and a document-level `arc-toast` event channel.\nComposition notes (same-package couplings, kept deliberately minimal): - arc-toast.show() does\nnot return an id, so after each show() we read the id it just assigned from its internal counter\n(`_counter`). - arc-toast has no public dismiss method, so dismiss()/clear() call its internal\n`_dismiss(id)`. - arc-toast has no update API for a visible toast, so a dedupe hit on a visible\ntoast is re-shown with a \"(×N)\" suffix and the stale entry is dismissed — the least hacky option\navailable (mutating arc-toast's internal reactive state from outside would be worse).\n---\n\n\n### **Events:**\n - **arc-queue-overflow** - Fired when the queue exceeds queueLimit and oldest queued entries are dropped. detail: { dropped } — how many were dropped.\n- **arc-dismiss** - Fired when a managed toast is dismissed. detail: { id } — the id returned by show().\n- **arc-queue-change** - Fired whenever the visible or queued count changes. detail: { visible, queued }.\n\n### **Methods:**\n - **show(options)** - Show a toast. Accepts the same options object as arc-toast.show()\n({ message, variant, duration, action, actionLabel, persistent }).\nReturns a manager id usable with dismiss().\n- **dismiss(id)** - Dismiss a toast (visible or queued) by manager id.\n- **clear()** - Dismiss all visible toasts and flush the queue.",
+          "description": "Policy layer over Toast that caps how many notifications show at once, queues the overflow FIFO,\ndeduplicates repeated messages, and lets any component fire toasts via a document-level event.\n\nQueueing/stacking policy layer over arc-toast. Composes an internal <arc-toast> (which owns\nrendering, timers, and a11y) and adds: max-visible capping with a FIFO queue, message+variant\ndeduplication, queue overflow trimming, and a document-level `arc-toast` event channel.\nComposition notes (same-package couplings, kept deliberately minimal): - arc-toast.show() does\nnot return an id, so after each show() we read the id it just assigned from its internal counter\n(`_counter`). - arc-toast has no public dismiss method, so dismiss()/clear() call its internal\n`_dismiss(id)`. - arc-toast has no update API for a visible toast, so a dedupe hit on a visible\ntoast is re-shown with a \"(×N)\" suffix and the stale entry is dismissed — the least hacky option\navailable (mutating arc-toast's internal reactive state from outside would be worse).\n---\n\n\n### **Events:**\n - **arc-queue-overflow** - Fired when the queue exceeds queueLimit and oldest queued entries are dropped. detail: { dropped } — how many were dropped.\n- **arc-close** - Fired when a managed toast is dismissed. detail: { id } — the id returned by show().\n- **arc-queue-change** - Fired whenever the visible or queued count changes. detail: { visible, queued }.\n\n### **Methods:**\n - **show(options)** - Show a toast. Accepts the same options object as arc-toast.show()\n({ message, variant, duration, action, actionLabel, persistent }).\nReturns a manager id usable with dismiss().\n- **dismiss(id)** - Dismiss a toast (visible or queued) by manager id.\n- **clear()** - Dismiss all visible toasts and flush the queue.",
           "doc-url": "",
           "attributes": [
             {
@@ -5355,7 +5347,7 @@
               "description": "Fired when the queue exceeds queueLimit and oldest queued entries are dropped. detail: { dropped } — how many were dropped."
             },
             {
-              "name": "arc-dismiss",
+              "name": "arc-close",
               "type": "CustomEvent",
               "description": "Fired when a managed toast is dismissed. detail: { id } — the id returned by show()."
             },
@@ -5400,7 +5392,7 @@
                 "description": "Fired when the queue exceeds queueLimit and oldest queued entries are dropped. detail: { dropped } — how many were dropped."
               },
               {
-                "name": "arc-dismiss",
+                "name": "arc-close",
                 "type": "CustomEvent",
                 "description": "Fired when a managed toast is dismissed. detail: { id } — the id returned by show()."
               },
@@ -5414,7 +5406,7 @@
         },
         {
           "name": "arc-toast",
-          "description": "Stack-managed notification toasts with auto-dismiss, variant-colored indicators, configurable\nposition, and smooth enter/exit animations.\n\nReturns inline style string setting --_status-color/rgb for a given variant *\\/ function\nstatusStyle(variant) { const map = { info: { color: 'var(--accent-primary)', rgb:\n'var(--accent-primary-rgb)' }, success: { color: 'var(--color-success)', rgb:\n'var(--color-success-rgb)' }, warning: { color: 'var(--color-warning)', rgb:\n'var(--color-warning-rgb)' }, error: { color: 'var(--color-error)', rgb:\n'var(--color-error-rgb)' }, }; const v = map[variant] || map.info; return\n`--_status-color:${v.color};--_status-rgb:${v.rgb}`; }\n---\n\n\n### **Events:**\n - **arc-dismiss** - Fired when a toast notification is dismissed\n\n### **CSS Parts:**\n - **container**\n- **toast**\n- **action**\n- **dismiss**",
+          "description": "Stack-managed notification toasts with auto-dismiss, variant-colored indicators, configurable\nposition, and smooth enter/exit animations.\n\nReturns inline style string setting --_status-color/rgb for a given variant *\\/ function\nstatusStyle(variant) { const map = { info: { color: 'var(--accent-primary)', rgb:\n'var(--accent-primary-rgb)' }, success: { color: 'var(--color-success)', rgb:\n'var(--color-success-rgb)' }, warning: { color: 'var(--color-warning)', rgb:\n'var(--color-warning-rgb)' }, error: { color: 'var(--color-error)', rgb:\n'var(--color-error-rgb)' }, }; const v = map[variant] || map.info; return\n`--_status-color:${v.color};--_status-rgb:${v.rgb}`; }\n---\n\n\n### **Events:**\n - **arc-close** - Fired when a toast notification is dismissed\n\n### **CSS Parts:**\n - **container**\n- **toast**\n- **action**\n- **dismiss**",
           "doc-url": "",
           "attributes": [
             {
@@ -5436,7 +5428,7 @@
           ],
           "events": [
             {
-              "name": "arc-dismiss",
+              "name": "arc-close",
               "type": "CustomEvent",
               "description": "Fired when a toast notification is dismissed"
             }
@@ -5456,7 +5448,7 @@
             ],
             "events": [
               {
-                "name": "arc-dismiss",
+                "name": "arc-close",
                 "type": "CustomEvent",
                 "description": "Fired when a toast notification is dismissed"
               }
@@ -5684,7 +5676,7 @@
         },
         {
           "name": "arc-calendar",
-          "description": "Interactive month-view calendar grid for date selection with min/max constraints, keyboard\nnavigation, and today highlighting.\n---\n\n\n### **Events:**\n - **arc-navigate** - Fired when the visible month or year changes via the navigation buttons.\n- **arc-change** - Fired when a date is selected. `event.detail.value` contains the ISO date string (YYYY-MM-DD).\n\n### **CSS Parts:**\n - **calendar**\n- **header**\n- **nav-prev**\n- **title**\n- **nav-next**\n- **grid**\n- **dow**\n- **day**",
+          "description": "Interactive month-view calendar grid for date selection with min/max constraints, keyboard\nnavigation, and today highlighting.\n---\n\n\n### **Events:**\n - **arc-month-change** - Fired when the visible month or year changes via the navigation buttons.\n- **arc-change** - Fired when a date is selected. `event.detail.value` contains the ISO date string (YYYY-MM-DD).\n\n### **CSS Parts:**\n - **calendar**\n- **header**\n- **nav-prev**\n- **title**\n- **nav-next**\n- **grid**\n- **dow**\n- **day**",
           "doc-url": "",
           "attributes": [
             {
@@ -5728,7 +5720,7 @@
           ],
           "events": [
             {
-              "name": "arc-navigate",
+              "name": "arc-month-change",
               "type": "CustomEvent<{ month: number, year: number }>",
               "description": "Fired when the visible month or year changes via the navigation buttons."
             },
@@ -5768,7 +5760,7 @@
             ],
             "events": [
               {
-                "name": "arc-navigate",
+                "name": "arc-month-change",
                 "type": "CustomEvent<{ month: number, year: number }>",
                 "description": "Fired when the visible month or year changes via the navigation buttons."
               },
@@ -6074,7 +6066,7 @@
         },
         {
           "name": "arc-combobox",
-          "description": "Searchable dropdown with type-ahead filtering.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when an option is selected. `event.detail.value` contains the selected option value.\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **label**\n- **wrapper**\n- **input**\n- **listbox**\n- **option**",
+          "description": "Searchable dropdown with type-ahead filtering.\n---\n\n\n### **Events:**\n - **arc-input** - Fired on every keystroke in the filter input. `event.detail.value` contains the current query text.\n- **arc-change** - Fired when an option is selected. `event.detail.value` contains the selected option value.\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **label**\n- **wrapper**\n- **input**\n- **listbox**\n- **option**",
           "doc-url": "",
           "attributes": [
             {
@@ -6125,6 +6117,11 @@
           ],
           "events": [
             {
+              "name": "arc-input",
+              "type": "CustomEvent",
+              "description": "Fired on every keystroke in the filter input. `event.detail.value` contains the current query text."
+            },
+            {
               "name": "arc-change",
               "type": "CustomEvent",
               "description": "Fired when an option is selected. `event.detail.value` contains the selected option value."
@@ -6167,6 +6164,11 @@
               }
             ],
             "events": [
+              {
+                "name": "arc-input",
+                "type": "CustomEvent",
+                "description": "Fired on every keystroke in the filter input. `event.detail.value` contains the current query text."
+              },
               {
                 "name": "arc-change",
                 "type": "CustomEvent",
@@ -7413,7 +7415,7 @@
         },
         {
           "name": "arc-multi-select",
-          "description": "Multi-value select with tag chips, inline search filtering, and keyboard navigation.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the selected values change\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **label**\n- **control**\n- **tag**\n- **input**\n- **dropdown**\n- **option**",
+          "description": "Multi-value select with tag chips, inline search filtering, and keyboard navigation.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the selected values change\n- **arc-input** - Fired on every keystroke in the filter input. `event.detail.value` contains the current query text.\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **label**\n- **control**\n- **tag**\n- **input**\n- **dropdown**\n- **option**",
           "doc-url": "",
           "attributes": [
             {
@@ -7467,6 +7469,11 @@
               "name": "arc-change",
               "type": "CustomEvent<{ value: string[] }>",
               "description": "Fired when the selected values change"
+            },
+            {
+              "name": "arc-input",
+              "type": "CustomEvent<{ value: string }>",
+              "description": "Fired on every keystroke in the filter input. `event.detail.value` contains the current query text."
             }
           ],
           "js": {
@@ -7510,6 +7517,11 @@
                 "name": "arc-change",
                 "type": "CustomEvent<{ value: string[] }>",
                 "description": "Fired when the selected values change"
+              },
+              {
+                "name": "arc-input",
+                "type": "CustomEvent<{ value: string }>",
+                "description": "Fired on every keystroke in the filter input. `event.detail.value` contains the current query text."
               }
             ]
           }
@@ -11799,7 +11811,7 @@
         },
         {
           "name": "arc-navigation-menu",
-          "description": "Horizontal navigation bar with hover-triggered dropdown sub-menus and full keyboard\naccessibility. Designed for marketing sites, documentation hubs, and product landing pages where\ntop-level sections expand into categorised link lists.\n---\n\n\n### **Events:**\n - **arc-navigate** - Fired when a navigation item is selected\n- **arc-mobile-menu-toggle** - Dispatched on the document when the mobile hamburger button is clicked. Listen on document to toggle your mobile navigation state.\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **nav**\n- **item**\n- **trigger**\n- **dropdown**\n- **dropdown-item**",
+          "description": "Horizontal navigation bar with hover-triggered dropdown sub-menus and full keyboard\naccessibility. Designed for marketing sites, documentation hubs, and product landing pages where\ntop-level sections expand into categorised link lists.\n---\n\n\n### **Events:**\n - **arc-mobile-menu-toggle** - Fired when the mobile hamburger button is clicked. Bubbles composed from the host, so listening on the element or on document both work.\n- **arc-navigate** - Fired when a navigation item is selected\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **nav**\n- **item**\n- **trigger**\n- **dropdown**\n- **dropdown-item**",
           "doc-url": "",
           "attributes": [
             {
@@ -11818,13 +11830,13 @@
           ],
           "events": [
             {
-              "name": "arc-navigate",
-              "description": "Fired when a navigation item is selected"
-            },
-            {
               "name": "arc-mobile-menu-toggle",
               "type": "CustomEvent<{ value: boolean }>",
-              "description": "Dispatched on the document when the mobile hamburger button is clicked. Listen on document to toggle your mobile navigation state."
+              "description": "Fired when the mobile hamburger button is clicked. Bubbles composed from the host, so listening on the element or on document both work."
+            },
+            {
+              "name": "arc-navigate",
+              "description": "Fired when a navigation item is selected"
             }
           ],
           "js": {
@@ -11836,13 +11848,13 @@
             ],
             "events": [
               {
-                "name": "arc-navigate",
-                "description": "Fired when a navigation item is selected"
-              },
-              {
                 "name": "arc-mobile-menu-toggle",
                 "type": "CustomEvent<{ value: boolean }>",
-                "description": "Dispatched on the document when the mobile hamburger button is clicked. Listen on document to toggle your mobile navigation state."
+                "description": "Fired when the mobile hamburger button is clicked. Bubbles composed from the host, so listening on the element or on document both work."
+              },
+              {
+                "name": "arc-navigate",
+                "description": "Fired when a navigation item is selected"
               }
             ]
           }
@@ -12457,7 +12469,7 @@
         },
         {
           "name": "arc-speed-dial",
-          "description": "Floating action button that fans out secondary actions with staggered scale-in animation.\nTrigger is a primary icon-button.\n---\n\n\n### **Events:**\n - **arc-action** - Fired when a secondary action is selected with detail: { index }.\n- **arc-close** - Fired when the speed dial collapses.\n- **arc-open** - Fired when the speed dial expands.\n\n### **Slots:**\n - **trigger**\n\n### **CSS Parts:**\n - **base**\n- **actions**\n- **action**\n- **trigger**",
+          "description": "Floating action button that fans out secondary actions with staggered scale-in animation.\nTrigger is a primary icon-button.\n---\n\n\n### **Events:**\n - **arc-close** - Fired when the speed dial collapses.\n- **arc-open** - Fired when the speed dial expands.\n- **arc-action** - Fired when a secondary action is selected with detail: { index }.\n\n### **Slots:**\n - **trigger**\n\n### **CSS Parts:**\n - **base**\n- **actions**\n- **action**\n- **trigger**",
           "doc-url": "",
           "attributes": [
             {
@@ -12500,18 +12512,19 @@
           ],
           "events": [
             {
-              "name": "arc-action",
-              "type": "CustomEvent",
-              "description": "Fired when a secondary action is selected with detail: { index }."
-            },
-            {
               "name": "arc-close",
               "type": "CustomEvent<void>",
               "description": "Fired when the speed dial collapses."
             },
             {
               "name": "arc-open",
+              "type": "CustomEvent",
               "description": "Fired when the speed dial expands."
+            },
+            {
+              "name": "arc-action",
+              "type": "CustomEvent",
+              "description": "Fired when a secondary action is selected with detail: { index }."
             }
           ],
           "js": {
@@ -12539,18 +12552,19 @@
             ],
             "events": [
               {
-                "name": "arc-action",
-                "type": "CustomEvent",
-                "description": "Fired when a secondary action is selected with detail: { index }."
-              },
-              {
                 "name": "arc-close",
                 "type": "CustomEvent<void>",
                 "description": "Fired when the speed dial collapses."
               },
               {
                 "name": "arc-open",
+                "type": "CustomEvent",
                 "description": "Fired when the speed dial expands."
+              },
+              {
+                "name": "arc-action",
+                "type": "CustomEvent",
+                "description": "Fired when a secondary action is selected with detail: { index }."
               }
             ]
           }

@@ -18,6 +18,7 @@ export interface MultiSelectProps {
   name?: string;
   disabled?: boolean;
   onArcChange?: (e: CustomEvent) => void;
+  onArcInput?: (e: CustomEvent) => void;
   children?: JSX.Element;
   class?: string;
   id?: string;
@@ -47,9 +48,9 @@ export interface MultiSelectProps {
 }
 
 export const MultiSelect: Component<MultiSelectProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'placeholder', 'label', 'name', 'disabled', 'onArcChange', 'children']);
+  const [local, rest] = splitProps(props, ['value', 'placeholder', 'label', 'name', 'disabled', 'onArcChange', 'onArcInput', 'children']);
   return (
-    <arc-multi-select value={local.value} placeholder={local.placeholder} label={local.label} name={local.name} disabled={local.disabled} on:arc-change={local.onArcChange} {...rest}>
+    <arc-multi-select value={local.value} placeholder={local.placeholder} label={local.label} name={local.name} disabled={local.disabled} on:arc-change={local.onArcChange} on:arc-input={local.onArcInput} {...rest}>
       {local.children}
     </arc-multi-select>
   );

@@ -488,14 +488,14 @@
                 "text": "boolean"
               },
               "default": "false",
-              "description": "Shows a close button that removes the callout. Fires an arc-dismiss event on close.",
+              "description": "Shows a close button that removes the callout. Fires an arc-close event on close.",
               "attribute": "dismissible",
               "reflects": true
             }
           ],
           "events": [
             {
-              "name": "arc-dismiss",
+              "name": "arc-close",
               "type": {
                 "text": "CustomEvent<void>"
               },
@@ -518,7 +518,7 @@
                 "text": "boolean"
               },
               "default": "false",
-              "description": "Shows a close button that removes the callout. Fires an arc-dismiss event on close.",
+              "description": "Shows a close button that removes the callout. Fires an arc-close event on close.",
               "fieldName": "dismissible"
             }
           ],
@@ -4162,7 +4162,7 @@
                 "text": "boolean"
               },
               "default": "false",
-              "description": "Adds a checkbox column with a select-all header checkbox (indeterminate when partially selected). Space toggles selection from the keyboard. Emits `arc-selection-change` with the selected row indices.",
+              "description": "Adds a checkbox column with a select-all header checkbox (indeterminate when partially selected). Space toggles selection from the keyboard. Emits `arc-select` with the selected row indices.",
               "attribute": "selectable",
               "reflects": true
             },
@@ -4199,11 +4199,11 @@
               "description": "Fired when the user changes sorting. detail: { sort } with the full multi-sort array in priority order"
             },
             {
-              "name": "arc-selection-change",
+              "name": "arc-select",
               "type": {
                 "text": "CustomEvent"
               },
-              "description": "Fired when row selection changes. detail: { selectedIndices } — indices into the original rows array"
+              "description": "Fired when row selection changes. detail: { value, selectedIndices } — sorted indices into the original rows array"
             },
             {
               "name": "arc-cell-change",
@@ -4256,7 +4256,7 @@
                 "text": "boolean"
               },
               "default": "false",
-              "description": "Adds a checkbox column with a select-all header checkbox (indeterminate when partially selected). Space toggles selection from the keyboard. Emits `arc-selection-change` with the selected row indices.",
+              "description": "Adds a checkbox column with a select-all header checkbox (indeterminate when partially selected). Space toggles selection from the keyboard. Emits `arc-select` with the selected row indices.",
               "fieldName": "selectable"
             },
             {
@@ -4363,7 +4363,7 @@
                 "text": "boolean"
               },
               "default": "false",
-              "description": "Adds a checkbox column to the left of the table for row selection. A \"select all\" checkbox appears in the header. Selected rows receive a visual highlight. The component emits `arc-row-select` when an individual row is toggled and `arc-select-all` when the header checkbox is toggled.",
+              "description": "Adds a checkbox column to the left of the table for row selection. A \"select all\" checkbox appears in the header. Selected rows receive a visual highlight. The component emits `arc-select` with the current selection (detail.value) when any row or the header checkbox is toggled; detail.all marks header toggles.",
               "attribute": "selectable",
               "reflects": true
             },
@@ -4423,18 +4423,11 @@
               "description": "Fired when a sortable column header is clicked"
             },
             {
-              "name": "arc-select-all",
+              "name": "arc-select",
               "type": {
                 "text": "CustomEvent"
               },
-              "description": "Fired when the select-all checkbox is toggled"
-            },
-            {
-              "name": "arc-row-select",
-              "type": {
-                "text": "CustomEvent"
-              },
-              "description": "Fired when an individual row checkbox is toggled"
+              "description": "Fired when row selection changes. detail: { value, selected, row, index } — value is the sorted selected indices; detail.all is true for header select-all toggles"
             }
           ],
           "attributes": [
@@ -4462,7 +4455,7 @@
                 "text": "boolean"
               },
               "default": "false",
-              "description": "Adds a checkbox column to the left of the table for row selection. A \"select all\" checkbox appears in the header. Selected rows receive a visual highlight. The component emits `arc-row-select` when an individual row is toggled and `arc-select-all` when the header checkbox is toggled.",
+              "description": "Adds a checkbox column to the left of the table for row selection. A \"select all\" checkbox appears in the header. Selected rows receive a visual highlight. The component emits `arc-select` with the current selection (detail.value) when any row or the header checkbox is toggled; detail.all marks header toggles.",
               "fieldName": "selectable"
             },
             {
@@ -5301,7 +5294,7 @@
           ],
           "events": [
             {
-              "name": "arc-item-select",
+              "name": "arc-select",
               "type": {
                 "text": "CustomEvent"
               }
@@ -6792,7 +6785,7 @@
                 "text": "boolean"
               },
               "default": "false",
-              "description": "When true, renders a close button in the top-right corner. Clicking it removes the alert from the DOM and fires an \"arc-dismiss\" event that parent components can listen to.",
+              "description": "When true, renders a close button in the top-right corner. Clicking it removes the alert from the DOM and fires an \"arc-close\" event that parent components can listen to.",
               "attribute": "dismissible",
               "reflects": true
             },
@@ -6810,7 +6803,7 @@
           ],
           "events": [
             {
-              "name": "arc-dismiss",
+              "name": "arc-close",
               "type": {
                 "text": "CustomEvent<void>"
               },
@@ -6842,7 +6835,7 @@
                 "text": "boolean"
               },
               "default": "false",
-              "description": "When true, renders a close button in the top-right corner. Clicking it removes the alert from the DOM and fires an \"arc-dismiss\" event that parent components can listen to.",
+              "description": "When true, renders a close button in the top-right corner. Clicking it removes the alert from the DOM and fires an \"arc-close\" event that parent components can listen to.",
               "fieldName": "dismissible"
             },
             {
@@ -7000,7 +6993,7 @@
                 "text": "boolean"
               },
               "default": "false",
-              "description": "When true, renders a close button on the right side. Clicking it collapses the banner and fires an \"arc-dismiss\" event.",
+              "description": "When true, renders a close button on the right side. Clicking it collapses the banner and fires an \"arc-close\" event.",
               "attribute": "dismissible",
               "reflects": true
             },
@@ -7019,7 +7012,7 @@
           ],
           "events": [
             {
-              "name": "arc-dismiss",
+              "name": "arc-close",
               "type": {
                 "text": "CustomEvent<void>"
               },
@@ -7042,7 +7035,7 @@
                 "text": "boolean"
               },
               "default": "false",
-              "description": "When true, renders a close button on the right side. Clicking it collapses the banner and fires an \"arc-dismiss\" event.",
+              "description": "When true, renders a close button on the right side. Clicking it collapses the banner and fires an \"arc-close\" event.",
               "fieldName": "dismissible"
             },
             {
@@ -8089,7 +8082,7 @@
               "description": "Fired when the user finishes the last step of the tour"
             },
             {
-              "name": "arc-dismiss",
+              "name": "arc-close",
               "type": {
                 "text": "CustomEvent<void>"
               },
@@ -8827,15 +8820,18 @@
           ],
           "events": [
             {
+              "name": "arc-open",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Fired when the popover opens."
+            },
+            {
               "name": "arc-close",
               "type": {
                 "text": "CustomEvent<void>"
               },
               "description": "Fired when the popover closes."
-            },
-            {
-              "description": "Fired when the popover opens.",
-              "name": "arc-open"
             }
           ],
           "attributes": [
@@ -9391,7 +9387,7 @@
               "description": "Fired when the user clicks the action button (e.g. \"Undo\")"
             },
             {
-              "name": "arc-dismiss",
+              "name": "arc-close",
               "type": {
                 "text": "CustomEvent"
               },
@@ -9488,7 +9484,7 @@
           ],
           "events": [
             {
-              "name": "arc-dismiss",
+              "name": "arc-close",
               "type": {
                 "text": "CustomEvent<void>"
               },
@@ -9644,7 +9640,7 @@
               "description": "Fired when the queue exceeds queueLimit and oldest queued entries are dropped. detail: { dropped } — how many were dropped."
             },
             {
-              "name": "arc-dismiss",
+              "name": "arc-close",
               "type": {
                 "text": "CustomEvent"
               },
@@ -9782,7 +9778,7 @@
           ],
           "events": [
             {
-              "name": "arc-dismiss",
+              "name": "arc-close",
               "type": {
                 "text": "CustomEvent"
               },
@@ -10302,7 +10298,7 @@
           ],
           "events": [
             {
-              "name": "arc-navigate",
+              "name": "arc-month-change",
               "type": {
                 "text": "CustomEvent<{ month: number, year: number }>"
               },
@@ -11228,6 +11224,13 @@
             }
           ],
           "events": [
+            {
+              "name": "arc-input",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Fired on every keystroke in the filter input. `event.detail.value` contains the current query text."
+            },
             {
               "name": "arc-change",
               "type": {
@@ -13891,6 +13894,13 @@
                 "text": "CustomEvent<{ value: string[] }>"
               },
               "description": "Fired when the selected values change"
+            },
+            {
+              "name": "arc-input",
+              "type": {
+                "text": "CustomEvent<{ value: string }>"
+              },
+              "description": "Fired on every keystroke in the filter input. `event.detail.value` contains the current query text."
             }
           ],
           "attributes": [
@@ -22547,15 +22557,15 @@
           ],
           "events": [
             {
-              "description": "Fired when a navigation item is selected",
-              "name": "arc-navigate"
-            },
-            {
+              "name": "arc-mobile-menu-toggle",
               "type": {
                 "text": "CustomEvent<{ value: boolean }>"
               },
-              "description": "Dispatched on the document when the mobile hamburger button is clicked. Listen on document to toggle your mobile navigation state.",
-              "name": "arc-mobile-menu-toggle"
+              "description": "Fired when the mobile hamburger button is clicked. Bubbles composed from the host, so listening on the element or on document both work."
+            },
+            {
+              "description": "Fired when a navigation item is selected",
+              "name": "arc-navigate"
             }
           ],
           "attributes": [
@@ -23729,13 +23739,6 @@
           ],
           "events": [
             {
-              "name": "arc-action",
-              "type": {
-                "text": "CustomEvent"
-              },
-              "description": "Fired when a secondary action is selected with detail: { index }."
-            },
-            {
               "name": "arc-close",
               "type": {
                 "text": "CustomEvent<void>"
@@ -23743,8 +23746,18 @@
               "description": "Fired when the speed dial collapses."
             },
             {
-              "description": "Fired when the speed dial expands.",
-              "name": "arc-open"
+              "name": "arc-open",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Fired when the speed dial expands."
+            },
+            {
+              "name": "arc-action",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Fired when a secondary action is selected with detail: { index }."
             }
           ],
           "attributes": [

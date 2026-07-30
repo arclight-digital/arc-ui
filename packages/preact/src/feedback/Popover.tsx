@@ -8,6 +8,7 @@ export interface PopoverProps {
   open?: boolean;
   position?: 'top' | 'bottom' | 'left' | 'right';
   trigger?: string;
+  onArcOpen?: (e: CustomEvent) => void;
   onArcClose?: (e: CustomEvent) => void;
   children?: preact.ComponentChildren;
   class?: string;
@@ -37,18 +38,23 @@ export interface PopoverProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Popover: FunctionComponent<PopoverProps> = ({ open, position, trigger, onArcClose, children, ...rest }) => {
+export const Popover: FunctionComponent<PopoverProps> = ({ open, position, trigger, onArcOpen, onArcClose, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
     const listeners: Array<[string, EventListener]> = [];
+    if (onArcOpen) {
+      const fn: EventListener = (e) => onArcOpen(e as CustomEvent);
+      el.addEventListener('arc-open', fn);
+      listeners.push(['arc-open', fn]);
+    }
     if (onArcClose) {
       const fn: EventListener = (e) => onArcClose(e as CustomEvent);
       el.addEventListener('arc-close', fn);
       listeners.push(['arc-close', fn]);
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
-  }, [onArcClose]);
+  }, [onArcOpen, onArcClose]);
   return h('arc-popover', { ref, open, position, trigger, ...rest }, children);
 };

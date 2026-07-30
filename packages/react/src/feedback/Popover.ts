@@ -10,6 +10,7 @@ export interface PopoverProps {
   trigger?: string;
   className?: string;
   children?: React.ReactNode;
+  onArcOpen?: (e: CustomEvent) => void;
   onArcClose?: (e: CustomEvent) => void;
 }
 
@@ -18,6 +19,7 @@ export const Popover = createComponent({
   elementClass: ArcPopover,
   react: React,
   events: {
+    onArcOpen: 'arc-open' as EventName<CustomEvent>,
     onArcClose: 'arc-close' as EventName<CustomEvent>,
   },
 });

@@ -65,11 +65,16 @@ export class Checkbox {
 
   @Output() checkedChange = new EventEmitter<boolean>();
 
+  @Output() valueChange = new EventEmitter<string>();
+
   _onArcChange(event: CustomEvent) {
     const detail = event.detail as Record<string, unknown> | null;
     if (!detail) return;
     if ('checked' in detail) {
       this.checkedChange.emit(detail.checked as boolean);
+    }
+    if ('value' in detail) {
+      this.valueChange.emit(detail.value as string);
     }
   }
 }

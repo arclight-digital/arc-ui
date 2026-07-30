@@ -18,7 +18,7 @@ export interface ToastManagerProps {
   dedupe?: boolean;
   queueLimit?: number;
   onArcQueueOverflow?: (e: CustomEvent) => void;
-  onArcDismiss?: (e: CustomEvent) => void;
+  onArcClose?: (e: CustomEvent) => void;
   onArcQueueChange?: (e: CustomEvent) => void;
   children?: JSX.Element;
   class?: string;
@@ -49,9 +49,9 @@ export interface ToastManagerProps {
 }
 
 export const ToastManager: Component<ToastManagerProps> = (props) => {
-  const [local, rest] = splitProps(props, ['position', 'duration', 'maxVisible', 'dedupe', 'queueLimit', 'onArcQueueOverflow', 'onArcDismiss', 'onArcQueueChange', 'children']);
+  const [local, rest] = splitProps(props, ['position', 'duration', 'maxVisible', 'dedupe', 'queueLimit', 'onArcQueueOverflow', 'onArcClose', 'onArcQueueChange', 'children']);
   return (
-    <arc-toast-manager position={local.position} duration={local.duration} prop:maxVisible={local.maxVisible} dedupe={local.dedupe} prop:queueLimit={local.queueLimit} on:arc-queue-overflow={local.onArcQueueOverflow} on:arc-dismiss={local.onArcDismiss} on:arc-queue-change={local.onArcQueueChange} {...rest}>
+    <arc-toast-manager position={local.position} duration={local.duration} prop:maxVisible={local.maxVisible} dedupe={local.dedupe} prop:queueLimit={local.queueLimit} on:arc-queue-overflow={local.onArcQueueOverflow} on:arc-close={local.onArcClose} on:arc-queue-change={local.onArcQueueChange} {...rest}>
       {local.children}
     </arc-toast-manager>
   );

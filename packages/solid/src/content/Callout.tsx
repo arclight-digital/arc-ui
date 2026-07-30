@@ -14,7 +14,7 @@ declare module 'solid-js' {
 export interface CalloutProps {
   variant?: 'info' | 'warning' | 'tip' | 'danger';
   dismissible?: boolean;
-  onArcDismiss?: (e: CustomEvent) => void;
+  onArcClose?: (e: CustomEvent) => void;
   children?: JSX.Element;
   class?: string;
   id?: string;
@@ -44,9 +44,9 @@ export interface CalloutProps {
 }
 
 export const Callout: Component<CalloutProps> = (props) => {
-  const [local, rest] = splitProps(props, ['variant', 'dismissible', 'onArcDismiss', 'children']);
+  const [local, rest] = splitProps(props, ['variant', 'dismissible', 'onArcClose', 'children']);
   return (
-    <arc-callout variant={local.variant} dismissible={local.dismissible} on:arc-dismiss={local.onArcDismiss} {...rest}>
+    <arc-callout variant={local.variant} dismissible={local.dismissible} on:arc-close={local.onArcClose} {...rest}>
       {local.children}
     </arc-callout>
   );

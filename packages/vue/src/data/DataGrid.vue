@@ -24,7 +24,7 @@ const props = withDefaults(defineProps<{
 
 const emit = defineEmits<{
   'arc-sort': [event: CustomEvent];
-  'arc-selection-change': [event: CustomEvent];
+  'arc-select': [event: CustomEvent];
   'arc-cell-change': [event: CustomEvent];
   'update:sort': [value: Array<{key:string,direction:'asc'|'desc'}>];
 }>();
@@ -48,7 +48,7 @@ function onArcSort(payload: CustomEvent) {
     :virtual="props.virtual"
     :rowHeight="props.rowHeight"
     @arc-sort="onArcSort"
-    @arc-selection-change="(payload: CustomEvent) => emit('arc-selection-change', payload)"
+    @arc-select="(payload: CustomEvent) => emit('arc-select', payload)"
     @arc-cell-change="(payload: CustomEvent) => emit('arc-cell-change', payload)"
   >
     <slot />

@@ -10,6 +10,7 @@ export interface ComboboxProps {
   label?: string;
   name?: string;
   disabled?: boolean;
+  onArcInput?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
   children?: preact.ComponentChildren;
   class?: string;
@@ -39,18 +40,23 @@ export interface ComboboxProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Combobox: FunctionComponent<ComboboxProps> = ({ value, placeholder, label, name, disabled, onArcChange, children, ...rest }) => {
+export const Combobox: FunctionComponent<ComboboxProps> = ({ value, placeholder, label, name, disabled, onArcInput, onArcChange, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
     const listeners: Array<[string, EventListener]> = [];
+    if (onArcInput) {
+      const fn: EventListener = (e) => onArcInput(e as CustomEvent);
+      el.addEventListener('arc-input', fn);
+      listeners.push(['arc-input', fn]);
+    }
     if (onArcChange) {
       const fn: EventListener = (e) => onArcChange(e as CustomEvent);
       el.addEventListener('arc-change', fn);
       listeners.push(['arc-change', fn]);
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
-  }, [onArcChange]);
+  }, [onArcInput, onArcChange]);
   return h('arc-combobox', { ref, value, placeholder, label, name, disabled, ...rest }, children);
 };

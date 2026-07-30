@@ -13,7 +13,7 @@ export interface DataGridProps {
   virtual?: boolean;
   rowHeight?: number;
   onArcSort?: (e: CustomEvent) => void;
-  onArcSelectionChange?: (e: CustomEvent) => void;
+  onArcSelect?: (e: CustomEvent) => void;
   onArcCellChange?: (e: CustomEvent) => void;
   children?: preact.ComponentChildren;
   class?: string;
@@ -43,7 +43,7 @@ export interface DataGridProps {
   [key: `on${string}`]: unknown;
 }
 
-export const DataGrid: FunctionComponent<DataGridProps> = ({ columns, rows, sort, manualSort, selectable, virtual, rowHeight, onArcSort, onArcSelectionChange, onArcCellChange, children, ...rest }) => {
+export const DataGrid: FunctionComponent<DataGridProps> = ({ columns, rows, sort, manualSort, selectable, virtual, rowHeight, onArcSort, onArcSelect, onArcCellChange, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -54,10 +54,10 @@ export const DataGrid: FunctionComponent<DataGridProps> = ({ columns, rows, sort
       el.addEventListener('arc-sort', fn);
       listeners.push(['arc-sort', fn]);
     }
-    if (onArcSelectionChange) {
-      const fn: EventListener = (e) => onArcSelectionChange(e as CustomEvent);
-      el.addEventListener('arc-selection-change', fn);
-      listeners.push(['arc-selection-change', fn]);
+    if (onArcSelect) {
+      const fn: EventListener = (e) => onArcSelect(e as CustomEvent);
+      el.addEventListener('arc-select', fn);
+      listeners.push(['arc-select', fn]);
     }
     if (onArcCellChange) {
       const fn: EventListener = (e) => onArcCellChange(e as CustomEvent);
@@ -65,6 +65,6 @@ export const DataGrid: FunctionComponent<DataGridProps> = ({ columns, rows, sort
       listeners.push(['arc-cell-change', fn]);
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
-  }, [onArcSort, onArcSelectionChange, onArcCellChange]);
+  }, [onArcSort, onArcSelect, onArcCellChange]);
   return h('arc-data-grid', { ref, columns, rows, sort, manualSort, selectable, virtual, rowHeight, ...rest }, children);
 };

@@ -15,7 +15,7 @@ export interface DataGridProps {
   className?: string;
   children?: React.ReactNode;
   onArcSort?: (e: CustomEvent) => void;
-  onArcSelectionChange?: (e: CustomEvent) => void;
+  onArcSelect?: (e: CustomEvent) => void;
   onArcCellChange?: (e: CustomEvent) => void;
 }
 
@@ -25,7 +25,7 @@ export const DataGrid = createComponent({
   react: React,
   events: {
     onArcSort: 'arc-sort' as EventName<CustomEvent>,
-    onArcSelectionChange: 'arc-selection-change' as EventName<CustomEvent>,
+    onArcSelect: 'arc-select' as EventName<CustomEvent>,
     onArcCellChange: 'arc-cell-change' as EventName<CustomEvent>,
   },
 });

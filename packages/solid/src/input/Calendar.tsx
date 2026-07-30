@@ -17,7 +17,7 @@ export interface CalendarProps {
   max?: string;
   month?: number;
   year?: number;
-  onArcNavigate?: (e: CustomEvent) => void;
+  onArcMonthChange?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
   children?: JSX.Element;
   class?: string;
@@ -48,9 +48,9 @@ export interface CalendarProps {
 }
 
 export const Calendar: Component<CalendarProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'min', 'max', 'month', 'year', 'onArcNavigate', 'onArcChange', 'children']);
+  const [local, rest] = splitProps(props, ['value', 'min', 'max', 'month', 'year', 'onArcMonthChange', 'onArcChange', 'children']);
   return (
-    <arc-calendar value={local.value} min={local.min} max={local.max} month={local.month} year={local.year} on:arc-navigate={local.onArcNavigate} on:arc-change={local.onArcChange} {...rest}>
+    <arc-calendar value={local.value} min={local.min} max={local.max} month={local.month} year={local.year} on:arc-month-change={local.onArcMonthChange} on:arc-change={local.onArcChange} {...rest}>
       {local.children}
     </arc-calendar>
   );

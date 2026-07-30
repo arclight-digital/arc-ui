@@ -19,7 +19,7 @@ export interface ListProps {
   value?: string;
   label?: string;
   onArcChange?: (e: CustomEvent) => void;
-  onArcItemSelect?: (e: CustomEvent) => void;
+  onArcSelect?: (e: CustomEvent) => void;
   children?: JSX.Element;
   class?: string;
   id?: string;
@@ -49,9 +49,9 @@ export interface ListProps {
 }
 
 export const List: Component<ListProps> = (props) => {
-  const [local, rest] = splitProps(props, ['variant', 'size', 'selectable', 'multiple', 'value', 'label', 'onArcChange', 'onArcItemSelect', 'children']);
+  const [local, rest] = splitProps(props, ['variant', 'size', 'selectable', 'multiple', 'value', 'label', 'onArcChange', 'onArcSelect', 'children']);
   return (
-    <arc-list variant={local.variant} size={local.size} selectable={local.selectable} multiple={local.multiple} value={local.value} label={local.label} on:arc-change={local.onArcChange} on:arc-item-select={local.onArcItemSelect} {...rest}>
+    <arc-list variant={local.variant} size={local.size} selectable={local.selectable} multiple={local.multiple} value={local.value} label={local.label} on:arc-change={local.onArcChange} on:arc-select={local.onArcSelect} {...rest}>
       {local.children}
     </arc-list>
   );

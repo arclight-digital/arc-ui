@@ -7,7 +7,7 @@ import '@arclux/arc-ui/toast';
 export interface ToastProps {
   position?: 'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center';
   duration?: number;
-  onArcDismiss?: (e: CustomEvent) => void;
+  onArcClose?: (e: CustomEvent) => void;
   children?: preact.ComponentChildren;
   class?: string;
   id?: string;
@@ -36,18 +36,18 @@ export interface ToastProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Toast: FunctionComponent<ToastProps> = ({ position, duration, onArcDismiss, children, ...rest }) => {
+export const Toast: FunctionComponent<ToastProps> = ({ position, duration, onArcClose, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
     const listeners: Array<[string, EventListener]> = [];
-    if (onArcDismiss) {
-      const fn: EventListener = (e) => onArcDismiss(e as CustomEvent);
-      el.addEventListener('arc-dismiss', fn);
-      listeners.push(['arc-dismiss', fn]);
+    if (onArcClose) {
+      const fn: EventListener = (e) => onArcClose(e as CustomEvent);
+      el.addEventListener('arc-close', fn);
+      listeners.push(['arc-close', fn]);
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
-  }, [onArcDismiss]);
+  }, [onArcClose]);
   return h('arc-toast', { ref, position, duration, ...rest }, children);
 };

@@ -12,6 +12,7 @@ export interface ComboboxProps {
   disabled?: boolean;
   className?: string;
   children?: React.ReactNode;
+  onArcInput?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
 }
 
@@ -20,6 +21,7 @@ export const Combobox = createComponent({
   elementClass: ArcCombobox,
   react: React,
   events: {
+    onArcInput: 'arc-input' as EventName<CustomEvent>,
     onArcChange: 'arc-change' as EventName<CustomEvent>,
   },
 });

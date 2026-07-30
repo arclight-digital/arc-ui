@@ -9,6 +9,7 @@ import { ArcMultiSelect } from '@arclux/arc-ui/multi-select';
   template: `<ng-content />`,
   host: {
     '(arc-change)': '_onArcChange($event)',
+    '(arc-input)': '_onArcInput($event)',
   },
 })
 export class MultiSelect {
@@ -52,6 +53,14 @@ export class MultiSelect {
   @Output() valueChange = new EventEmitter<string[]>();
 
   _onArcChange(event: CustomEvent) {
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('value' in detail) {
+      this.valueChange.emit(detail.value as string[]);
+    }
+  }
+
+  _onArcInput(event: CustomEvent) {
     const detail = event.detail as Record<string, unknown> | null;
     if (!detail) return;
     if ('value' in detail) {

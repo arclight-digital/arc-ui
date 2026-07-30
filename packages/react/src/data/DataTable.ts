@@ -15,8 +15,7 @@ export interface DataTableProps {
   className?: string;
   children?: React.ReactNode;
   onArcSort?: (e: CustomEvent) => void;
-  onArcSelectAll?: (e: CustomEvent) => void;
-  onArcRowSelect?: (e: CustomEvent) => void;
+  onArcSelect?: (e: CustomEvent) => void;
 }
 
 export const DataTable = createComponent({
@@ -25,7 +24,6 @@ export const DataTable = createComponent({
   react: React,
   events: {
     onArcSort: 'arc-sort' as EventName<CustomEvent>,
-    onArcSelectAll: 'arc-select-all' as EventName<CustomEvent>,
-    onArcRowSelect: 'arc-row-select' as EventName<CustomEvent>,
+    onArcSelect: 'arc-select' as EventName<CustomEvent>,
   },
 });

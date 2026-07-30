@@ -13,7 +13,7 @@ export interface ToastManagerProps {
   className?: string;
   children?: React.ReactNode;
   onArcQueueOverflow?: (e: CustomEvent) => void;
-  onArcDismiss?: (e: CustomEvent) => void;
+  onArcClose?: (e: CustomEvent) => void;
   onArcQueueChange?: (e: CustomEvent) => void;
 }
 
@@ -23,7 +23,7 @@ export const ToastManager = createComponent({
   react: React,
   events: {
     onArcQueueOverflow: 'arc-queue-overflow' as EventName<CustomEvent>,
-    onArcDismiss: 'arc-dismiss' as EventName<CustomEvent>,
+    onArcClose: 'arc-close' as EventName<CustomEvent>,
     onArcQueueChange: 'arc-queue-change' as EventName<CustomEvent>,
   },
 });

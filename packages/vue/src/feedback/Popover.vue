@@ -15,6 +15,7 @@ const props = withDefaults(defineProps<{
 });
 
 const emit = defineEmits<{
+  'arc-open': [event: CustomEvent];
   'arc-close': [event: CustomEvent];
 }>();
 </script>
@@ -24,6 +25,7 @@ const emit = defineEmits<{
     :open="props.open"
     :position="props.position"
     :trigger="props.trigger"
+    @arc-open="(payload: CustomEvent) => emit('arc-open', payload)"
     @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"
   >
     <slot />

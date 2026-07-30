@@ -25,6 +25,7 @@ const props = withDefaults(defineProps<{
 const emit = defineEmits<{
   'arc-change': [event: CustomEvent];
   'update:checked': [value: boolean];
+  'update:value': [value: string];
 }>();
 
 function onArcChange(payload: CustomEvent) {
@@ -32,6 +33,7 @@ function onArcChange(payload: CustomEvent) {
   const detail = payload.detail as Record<string, unknown> | null;
   if (detail) {
     if ('checked' in detail) emit('update:checked', detail.checked as boolean);
+    if ('value' in detail) emit('update:value', detail.value as string);
   }
 }
 </script>

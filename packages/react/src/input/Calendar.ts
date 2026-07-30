@@ -12,7 +12,7 @@ export interface CalendarProps {
   year?: number;
   className?: string;
   children?: React.ReactNode;
-  onArcNavigate?: (e: CustomEvent) => void;
+  onArcMonthChange?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
   onClick?: (e: Event) => void;
 }
@@ -22,7 +22,7 @@ export const Calendar = createComponent({
   elementClass: ArcCalendar,
   react: React,
   events: {
-    onArcNavigate: 'arc-navigate' as EventName<CustomEvent>,
+    onArcMonthChange: 'arc-month-change' as EventName<CustomEvent>,
     onArcChange: 'arc-change' as EventName<CustomEvent>,
     onClick: 'click' as EventName<Event>,
   },
