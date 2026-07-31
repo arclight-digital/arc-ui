@@ -3,23 +3,12 @@
 /**
  * generate.js — Unified code generation pipeline
  *
- * Runs all generation steps in order:
- *   1. Tokens    — shared/tokens.js → shared/base.css (the :root layer) and
- *                  src/generated/host-tokens.js (the :host layer every component
- *                  adopts). Both from one tree so they cannot drift.
- *   2. Icons     — vendored icon modules from upstream libraries (gitignored,
- *                  so fresh checkouts — e.g. the CI release runner — must
- *                  regenerate them before packing the npm tarball)
- *   3. Register  — Auto-generate .register.js files
- *   4. Brand     — Generate brand assets
- *   5. Prism     — Generate framework wrappers + HTML/CSS
- *   6. Manifest  — custom-elements.json via @custom-elements-manifest/analyzer
- *   7. Types     — types/index.d.ts generated from the manifest
- *   8. ModuleTypes — types/**.d.ts for exported non-element modules, from JSDoc
- *   9. Exports   — Sync package.json exports map, attaching a "types" condition
- *                  to every subpath. Runs last of the type steps because it
- *                  asserts the declaration files exist.
- *  10. Readme    — README component counts synced from docs data
+ * One command regenerates everything derived from source: tokens CSS, icons,
+ * registrations, framework wrappers, manifest, types, exports, editor data.
+ * Checks from scripts/checks/ are interleaved where their inputs exist —
+ * source assertions before the expensive prism step, output assertions after.
+ * The phase list below is the ordering contract; each phase's comment says
+ * why it sits where it does.
  *
  * Usage: node scripts/generate.js
  */
@@ -27,109 +16,146 @@
 import { execFileSync } from 'node:child_process';
 import { performance } from 'node:perf_hooks';
 
-const steps = [
-  // Source-level assertions run first: they validate the hand-written inputs
-  // to everything below, and failing here beats failing after the 35s prism
-  // step. The output-level checks (Unions/Fallbacks/Slots) stay at the end —
-  // they need the generated wrappers to exist.
-  { name: 'Requires', cmd: 'node',  args: ['scripts/check-child-registrations.js'] },
-  { name: 'Events',   cmd: 'node',  args: ['scripts/check-event-conventions.js'] },
-  { name: 'DocClaims', cmd: 'node', args: ['scripts/check-doc-claims.js'] },
-  { name: 'Tokens',   cmd: 'node',  args: ['scripts/generate-base-css.js'] },
-  { name: 'HostTokens', cmd: 'node', args: ['scripts/generate-host-tokens.js'] },
-  { name: 'Breakpoints', cmd: 'node', args: ['scripts/generate-breakpoints.js'] },
-  { name: 'Utilities', cmd: 'node', args: ['scripts/generate-utilities.js'] },
-  { name: 'Icons',    cmd: 'node',  args: ['scripts/generate-icons.js'] },
-  // After Icons, not with the other source-level assertions: it reads the
-  // vendored icon resolvers, which are gitignored and produced by the step
-  // above. Run earlier, it passes locally and fails on every clean checkout.
-  { name: 'IconNames', cmd: 'node', args: ['scripts/check-icon-names.js'] },
-  { name: 'Register', cmd: 'node',  args: ['scripts/generate-registrations.js'] },
-  { name: 'Brand',    cmd: 'node',  args: ['scripts/generate-brand-assets.js'] },
-  // --prune: prism reports orphaned output (wrappers/CSS/examples for a component
-  // that no longer exists) but keeps it unless asked to delete. Reporting alone
-  // meant deletions were finished by hand and sometimes not at all — the six
-  // ToastManager wrapper files outlived their component until they were noticed.
-  // Regenerating is the moment the orphan is known; delete it there.
-  { name: 'Prism',    cmd: 'npx',   args: ['prism', '--strict', '--prune'] },
-  { name: 'WrapperExports', cmd: 'node', args: ['scripts/generate-wrapper-exports.js'] },
-  { name: 'Manifest', cmd: 'node',  args: ['scripts/generate-manifest.js'] },
-  { name: 'Types',    cmd: 'node',  args: ['scripts/generate-types.js'] },
-  { name: 'ModuleTypes', cmd: 'node', args: ['scripts/generate-module-types.js'] },
-  { name: 'Exports',  cmd: 'node',  args: ['scripts/generate-exports.js'] },
-  { name: 'Editor',   cmd: 'node',  args: ['scripts/generate-editor-data.js'] },
-  { name: 'DevSchema', cmd: 'node', args: ['scripts/generate-dev-schema.js'] },
-  { name: 'Readme',   cmd: 'node',  args: ['scripts/generate-readme-stats.js'] },
-  { name: 'Unions',   cmd: 'node',  args: ['scripts/check-prop-unions.js'] },
-  { name: 'Fallbacks', cmd: 'node', args: ['scripts/check-enum-fallbacks.js'] },
-  { name: 'Slots',    cmd: 'node',  args: ['scripts/check-wrapper-slots.js'] },
-  { name: 'WrapperTypes', cmd: 'node', args: ['scripts/check-wrapper-types.js'] },
-  { name: 'Motion',   cmd: 'node',  args: ['scripts/check-motion-tokens.js'] },
-  { name: 'Focus',    cmd: 'node',  args: ['scripts/check-focus-ring.js'] },
+const gen = (name) => ({ name, cmd: 'node', args: [`scripts/generate/${name}.js`] });
+const check = (name) => ({ name, cmd: 'node', args: [`scripts/checks/${name}.js`] });
+
+const phases = [
+  {
+    // Validate the hand-written inputs to everything below — failing here
+    // beats failing after the 35s prism step. breakpoint-drift used to run
+    // as a hidden dynamic import at the end of generate/breakpoints.js; it
+    // reads only hand-written source and tokens.js, so it asserts here.
+    title: 'Assert sources',
+    steps: [
+      check('child-registrations'),
+      check('event-conventions'),
+      check('doc-claims'),
+      check('breakpoint-drift'),
+    ],
+  },
+  {
+    // shared/tokens.js → the :root layer (base.css), the :host layer every
+    // component adopts, breakpoint constants, and the utility classes.
+    // One tree, four outputs, so they cannot drift.
+    title: 'Tokens',
+    steps: [gen('base-css'), gen('host-tokens'), gen('breakpoints'), gen('utilities')],
+  },
+  {
+    // Vendored icon modules are gitignored — fresh checkouts (e.g. the CI
+    // release runner) must regenerate them before packing the npm tarball.
+    // icon-names reads the vendored resolvers, so it belongs here and not
+    // with the other source assertions: run earlier, it passes locally and
+    // fails on every clean checkout.
+    title: 'Icons',
+    steps: [gen('icons'), check('icon-names')],
+  },
+  {
+    // --prune: prism reports orphaned output (wrappers/CSS/examples for a
+    // component that no longer exists) but keeps it unless asked to delete.
+    // Reporting alone meant deletions were finished by hand and sometimes not
+    // at all — the six ToastManager wrapper files outlived their component
+    // until they were noticed. Regenerating is the moment the orphan is
+    // known; delete it there.
+    title: 'Components',
+    steps: [
+      gen('registrations'),
+      gen('brand-assets'),
+      { name: 'prism', cmd: 'npx', args: ['prism', '--strict', '--prune'] },
+    ],
+  },
+  {
+    // exports runs last of the type steps: it attaches a "types" condition
+    // to every subpath and asserts the declaration files exist.
+    title: 'Manifest & types',
+    steps: [gen('wrapper-exports'), gen('manifest'), gen('types'), gen('module-types'), gen('exports')],
+  },
+  {
+    title: 'Editor & docs data',
+    steps: [gen('editor-data'), gen('dev-schema'), gen('readme-stats')],
+  },
+  {
+    // These assert against the generated wrappers, so they can only run
+    // after prism has produced them.
+    title: 'Assert output',
+    steps: [
+      check('prop-unions'),
+      check('enum-fallbacks'),
+      check('wrapper-slots'),
+      check('wrapper-types'),
+      check('motion-tokens'),
+      check('focus-ring'),
+    ],
+  },
 ];
+
+/**
+ * Steps run quiet, but a finding on a *successful* step is still a finding,
+ * and swallowing stdout wholesale meant those scrolled into a pipe nobody
+ * read. Prism prefixes its report headings with a literal `prism: warning:` /
+ * `prism: accepted:` precisely so this match can be exact rather than a guess
+ * at its prose — earlier versions were matched heuristically and a reworded
+ * heading silently hid a real finding twice.
+ *
+ * Prism additionally runs under --strict, so anything it could not act on
+ * fails the step outright. Findings we have decided about are waived in
+ * prism.config.js `acknowledge`, where they still print and where a stale
+ * entry is itself a strict failure. Only the headings carry the prefix; the
+ * findings themselves are indented beneath one — take the heading and its
+ * block, or the summary would say "1 accepted finding" without ever saying
+ * which.
+ */
+function extractFindings(stdout) {
+  const reported = [];
+  let inBlock = false;
+  for (const line of stdout.split('\n')) {
+    if (/^\s*prism: (warning|accepted):/.test(line)) {
+      inBlock = true;
+      reported.push(line);
+    } else if (inBlock && /^\s+\S/.test(line)) {
+      reported.push(line);
+    } else {
+      inBlock = false;
+      if (/\bwarn(ing)?\b/i.test(line)) reported.push(line);
+    }
+  }
+  // An acknowledged finding is a recorded decision, not an outstanding one —
+  // counting them together would make a clean run read as a dirty one, which
+  // is how a summary line stops being worth reading. Count headings only;
+  // the block beneath one is detail, not extra findings.
+  return {
+    reported,
+    warnings: reported.filter(
+      (l) => /^\s*prism: warning:/.test(l) || (!/^\s+\S/.test(l) && /\bwarn(ing)?\b/i.test(l)),
+    ).length,
+    accepted: reported.filter((l) => /^\s*prism: accepted:/.test(l)).length,
+  };
+}
 
 const totalStart = performance.now();
 let failed = false;
 let warned = 0;
 let accepted = 0;
 
-console.log('\n  ARC UI — Generate\n');
+console.log('\n  ARC UI — Generate');
 
-for (const step of steps) {
-  const start = performance.now();
-  process.stdout.write(`  ${step.name.padEnd(10)} `);
-
-  try {
-    const out = execFileSync(step.cmd, step.args, { stdio: ['inherit', 'pipe', 'pipe'] });
-    const ms = Math.round(performance.now() - start);
-    console.log(`done  ${ms}ms`);
-
-    // Steps run quiet, but a finding on a *successful* step is still a finding,
-    // and swallowing stdout wholesale meant those scrolled into a pipe nobody
-    // read. Prism prefixes its report headings with a literal `prism: warning:`
-    // / `prism: accepted:` precisely so this match can be exact rather than a
-    // guess at its prose — earlier versions were matched heuristically and a
-    // reworded heading silently hid a real finding twice.
-    //
-    // Prism additionally runs under --strict, so anything it could not act on
-    // fails this step outright. Findings we have decided about are waived in
-    // prism.config.js `acknowledge`, where they still print and where a stale
-    // entry is itself a strict failure.
-    // Only the headings carry the prefix; the findings themselves are indented
-    // beneath one. Take the heading and its block, or the summary would say
-    // "1 accepted finding" without ever saying which.
-    const lines = out.toString().split('\n');
-    const reported = [];
-    let inBlock = false;
-    for (const line of lines) {
-      const heading = /^\s*prism: (warning|accepted):/.test(line);
-      if (heading) {
-        inBlock = true;
-        reported.push(line);
-        continue;
-      }
-      if (inBlock) {
-        if (/^\s+\S/.test(line)) reported.push(line);
-        else inBlock = false;
-        continue;
-      }
-      if (/\bwarn(ing)?\b/i.test(line)) reported.push(line);
+outer: for (const phase of phases) {
+  console.log(`\n  ${phase.title}`);
+  for (const step of phase.steps) {
+    const start = performance.now();
+    process.stdout.write(`    ${step.name.padEnd(22)} `);
+    try {
+      const out = execFileSync(step.cmd, step.args, { stdio: ['inherit', 'pipe', 'pipe'] });
+      console.log(`done  ${Math.round(performance.now() - start)}ms`);
+      const findings = extractFindings(out.toString());
+      for (const line of findings.reported) console.log(`      ${line.trim()}`);
+      warned += findings.warnings;
+      accepted += findings.accepted;
+    } catch (err) {
+      console.log(`FAIL  ${Math.round(performance.now() - start)}ms`);
+      console.error(`\n${err.stderr?.toString() || err.message}\n`);
+      failed = true;
+      break outer;
     }
-    for (const line of reported) console.log(`             ${line.trim()}`);
-    // An acknowledged finding is a recorded decision, not an outstanding one.
-    // Counting them together would make a clean run read as a dirty one, which
-    // is how a summary line stops being worth reading.
-    // Count headings only — the block beneath one is detail, not extra findings.
-    warned += reported.filter(
-      (l) => /^\s*prism: warning:/.test(l) || (!/^\s+\S/.test(l) && /\bwarn(ing)?\b/i.test(l)),
-    ).length;
-    accepted += reported.filter((l) => /^\s*prism: accepted:/.test(l)).length;
-  } catch (err) {
-    const ms = Math.round(performance.now() - start);
-    console.log(`FAIL  ${ms}ms`);
-    console.error(`\n${err.stderr?.toString() || err.message}\n`);
-    failed = true;
-    break;
   }
 }
 

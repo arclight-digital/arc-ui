@@ -14,11 +14,11 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const wcDir = resolve(__dirname, '../packages/web-components');
+const wcDir = resolve(__dirname, '../../packages/web-components');
 const manifest = JSON.parse(readFileSync(resolve(wcDir, 'custom-elements.json'), 'utf-8'));
 
 // tag → docs slug (sub-components resolve to their parent's page)
-const docsDataDir = resolve(__dirname, '../docs/src/data/components');
+const docsDataDir = resolve(__dirname, '../../docs/src/data/components');
 const slugByTag = new Map();
 for (const file of readdirSync(docsDataDir)) {
   if (!file.endsWith('.ts') || file === '_types.ts' || file === 'index.ts') continue;

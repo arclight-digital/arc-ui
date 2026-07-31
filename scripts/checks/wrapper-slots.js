@@ -26,7 +26,7 @@
  * findings about slot *renaming* while silently dropping the default slot in 111
  * components. What a generator warns about is what it knows it did.
  *
- * Run via: pnpm run check:wrapper-slots (and as part of pnpm generate)
+ * Run via: pnpm check wrapper-slots (and as part of pnpm generate)
  */
 
 import fs from 'node:fs';
@@ -34,7 +34,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const root = path.join(__dirname, '..');
+const root = path.join(__dirname, '..', '..');
 const SRC = path.join(root, 'packages', 'web-components', 'src');
 const TIERS = ['content', 'data', 'feedback', 'input', 'layout', 'navigation', 'typography', 'shared'];
 

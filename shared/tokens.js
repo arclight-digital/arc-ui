@@ -302,7 +302,7 @@ export const tokens = {
      * arc-app-shell's `breakpoint` default. They have to agree: move one and
      * you get two hamburgers at once or none at all. A media query cannot read
      * a CSS custom property, so the shared value has to reach the components as
-     * a build-time constant — see scripts/generate-breakpoints.js.
+     * a build-time constant — see scripts/generate/breakpoints.js.
      */
     navCollapse: '900px',
   },
@@ -1222,7 +1222,7 @@ export function generateHostTokensCSS(indent = '    ') {
   const blank = () => out.push('');
   const note = (text) => out.push(`${indent}/* ${text} */`);
 
-  note('Generated from shared/tokens.js by scripts/generate-host-tokens.js.');
+  note('Generated from shared/tokens.js by scripts/generate/host-tokens.js.');
   note('Do not edit by hand — edit the token tree instead.');
   blank();
 
@@ -1338,7 +1338,7 @@ export function generateHostTokensCSS(indent = '    ') {
  * Generate the full tokens.css content from JS data.
  *
  * @param {{ tags?: string[] }} [options] - `tags` scopes the :not(:defined)
- *   guard. Supplied by scripts/generate-base-css.js from the component sources;
+ *   guard. Supplied by scripts/generate/base-css.js from the component sources;
  *   omitting it drops the guard rather than emitting an unscoped one.
  */
 export function generateTokensCSS({ tags = [] } = {}) {

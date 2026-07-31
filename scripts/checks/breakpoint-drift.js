@@ -25,15 +25,15 @@
  * a nearby comment are checked, so an unrelated media query at the same width
  * is not accidentally conscripted.
  *
- * Run via: pnpm run check:breakpoints (and as part of pnpm generate)
+ * Run via: pnpm check breakpoint-drift (and as part of pnpm generate)
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { tokens } from '../shared/tokens.js';
+import { tokens } from '../../shared/tokens.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const SRC = path.join(__dirname, '..', 'packages', 'web-components', 'src');
+const SRC = path.join(__dirname, '..', '..', 'packages', 'web-components', 'src');
 
 const expected = Number.parseFloat(tokens.breakpoint.navCollapse);
 const MARKER = 'nav-collapse:';
@@ -63,7 +63,7 @@ for (const file of sources(SRC)) {
     // marker sits in a comment that may run several lines before it.
     const window = lines.slice(i, i + 14).join('\n');
     const match = window.match(/@media\s*\([^)]*?(\d+(?:\.\d+)?)px\s*\)/);
-    const rel = path.relative(path.join(__dirname, '..'), file);
+    const rel = path.relative(path.join(__dirname, '..', '..'), file);
     if (!match) {
       problems.push(`${rel}:${i + 1}: marked ${MARKER} but no media query follows within 14 lines`);
       return;

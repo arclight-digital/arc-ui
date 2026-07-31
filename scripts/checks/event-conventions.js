@@ -34,12 +34,12 @@
  * That is the class of defect worth guarding: a contract that is enforced
  * where it is cheap to check and honour-system where it matters.
  *
- * Run via: pnpm run check:events (and as part of pnpm generate)
+ * Run via: pnpm check event-conventions (and as part of pnpm generate)
  */
 
 import { readFileSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { SRC_DIR, TIERS } from './lib/component-tags.js';
+import { SRC_DIR, TIERS } from '../lib/component-tags.js';
 
 /**
  * file → reasons. Every entry must explain itself; delete entries that stop

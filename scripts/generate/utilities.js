@@ -1,5 +1,5 @@
 import fs from 'node:fs';
-import { generateUtilitiesCSS } from '../shared/utilities.js';
+import { generateUtilitiesCSS } from '../../shared/utilities.js';
 
 // Same shape as generate-base-css.js: one source, written to the workspace copy
 // and to the package that ships it.

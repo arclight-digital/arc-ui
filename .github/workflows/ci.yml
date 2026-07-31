@@ -49,7 +49,7 @@ jobs:
       # only thing that catches a browser global creeping into a constructor,
       # willUpdate or render, where Lit runs them on the server too.
       - name: SSR render check
-        run: pnpm check:ssr
+        run: pnpm check ssr
 
       - name: Typecheck generated declarations
         run: ./node_modules/.bin/tsc --noEmit --skipLibCheck --moduleResolution bundler --module esnext --target es2022 packages/web-components/types/index.d.ts packages/web-components/types/shared-styles.d.ts packages/web-components/types/shared/*.d.ts packages/web-components/types/content/*.d.ts packages/web-components/types/dev.d.ts

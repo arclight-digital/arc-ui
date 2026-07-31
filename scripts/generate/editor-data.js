@@ -17,7 +17,7 @@ import { generateVsCodeCustomElementData } from 'custom-element-vs-code-integrat
 import { generateJetBrainsWebTypes } from 'custom-element-jet-brains-integration';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const wcDir = resolve(__dirname, '../packages/web-components');
+const wcDir = resolve(__dirname, '../../packages/web-components');
 const manifest = JSON.parse(readFileSync(resolve(wcDir, 'custom-elements.json'), 'utf-8'));
 
 generateVsCodeCustomElementData(manifest, {

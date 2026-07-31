@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Generates vendored icon modules from upstream libraries.
- * Run: node scripts/generate-icons.js
+ * Run: node scripts/generate/icons.js
  *
  * Outputs per library (phosphor, lucide):
  *   packages/web-components/src/icons/{lib}.js          — monolithic re-export (full library opt-in)
@@ -18,7 +18,7 @@ import { fileURLToPath } from 'node:url';
 
 const require = createRequire(import.meta.url);
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const outDir = resolve(__dirname, '../packages/web-components/src/icons');
+const outDir = resolve(__dirname, '../../packages/web-components/src/icons');
 mkdirSync(outDir, { recursive: true });
 
 function toKebab(str) {
@@ -125,7 +125,7 @@ function writeIconModule(name, label, entries) {
   });
   const source = [
     `// Auto-generated from ${label} — do not edit manually.`,
-    `// Run: node scripts/generate-icons.js`,
+    `// Run: node scripts/generate/icons.js`,
     ``,
     ...namedExports,
     ``,
@@ -171,7 +171,7 @@ const lucideInfo = writeIconModule('lucide', 'lucide-static', lucideEntries);
 // --- Phosphor (regular weight) ---
 const phosphorDir = resolve(
   __dirname,
-  '../node_modules/@phosphor-icons/core/assets/regular',
+  '../../node_modules/@phosphor-icons/core/assets/regular',
 );
 const phosphorEntries = readdirSync(phosphorDir)
   .filter((f) => f.endsWith('.svg'))

@@ -127,7 +127,7 @@ import '@arclux/arc-ui/register';`}</code></pre>
       <h2 class="docs-heading">Component coverage</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p>
-        <code>pnpm check:ssr</code> renders every component in Node and fails on any that
+        <code>pnpm check ssr</code> renders every component in Node and fails on any that
         throws; it runs in CI. Server-side, Lit runs the constructor, <code>willUpdate</code>
         and <code>render</code> — and none of <code>connectedCallback</code>,
         <code>firstUpdated</code>, <code>updated</code>, or a reactive controller's

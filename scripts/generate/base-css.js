@@ -1,5 +1,5 @@
-import { generateTokensCSS } from '../shared/tokens.js';
-import { findComponentTags } from './lib/component-tags.js';
+import { generateTokensCSS } from '../../shared/tokens.js';
+import { findComponentTags } from '../lib/component-tags.js';
 import fs from 'node:fs';
 
 // Tags come from the component sources so the :not(:defined) guard stays scoped

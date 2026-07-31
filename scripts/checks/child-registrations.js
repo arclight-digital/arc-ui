@@ -19,12 +19,12 @@
  * renders itself but expects consumers to slot in (arc-data-table @requires
  * arc-column, arc-list @requires arc-list-item).
  *
- * Run via: pnpm run check:child-registrations (and as part of pnpm generate)
+ * Run via: pnpm check child-registrations (and as part of pnpm generate)
  */
 
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { findComponents, SRC_DIR } from './lib/component-tags.js';
+import { findComponents, SRC_DIR } from '../lib/component-tags.js';
 
 /**
  * Tags rendered via paths this scan cannot see (document.createElement with a

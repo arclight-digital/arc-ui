@@ -23,7 +23,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const root = path.join(__dirname, '..');
+const root = path.join(__dirname, '..', '..');
 const pkgDir = path.join(root, 'packages', 'web-components');
 const srcDir = path.join(pkgDir, 'src');
 const tsc = path.join(root, 'node_modules', '.bin', 'tsc');

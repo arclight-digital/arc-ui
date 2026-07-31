@@ -13,7 +13,7 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const wcDir = resolve(__dirname, '../packages/web-components');
+const wcDir = resolve(__dirname, '../../packages/web-components');
 const manifestPath = resolve(wcDir, 'custom-elements.json');
 
 execFileSync('pnpm', ['exec', 'custom-elements-manifest', 'analyze'], {

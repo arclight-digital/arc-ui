@@ -27,7 +27,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const pkgDir = path.join(__dirname, '..', 'packages', 'web-components');
+const pkgDir = path.join(__dirname, '..', '..', 'packages', 'web-components');
 const pkgPath = path.join(pkgDir, 'package.json');
 const srcDir = path.join(pkgDir, 'src');
 

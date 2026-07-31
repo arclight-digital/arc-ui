@@ -1,4 +1,4 @@
-import { generateHostTokensCSS, tokens } from '../shared/tokens.js';
+import { generateHostTokensCSS, tokens } from '../../shared/tokens.js';
 import fs from 'node:fs';
 
 // The :host static token layer, generated so it cannot drift from the :root one

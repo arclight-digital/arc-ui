@@ -11,7 +11,7 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const wcDir = resolve(__dirname, '../packages/web-components');
+const wcDir = resolve(__dirname, '../../packages/web-components');
 const manifest = JSON.parse(readFileSync(resolve(wcDir, 'custom-elements.json'), 'utf-8'));
 
 /** Map a CEM type text to a TypeScript type. */

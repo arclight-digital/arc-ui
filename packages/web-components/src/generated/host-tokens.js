@@ -10,7 +10,7 @@ import { css } from 'lit';
  * are themed, and a literal here would pin a component to one theme.
  */
 export const hostTokens = css`
-    /* Generated from shared/tokens.js by scripts/generate-host-tokens.js. */
+    /* Generated from shared/tokens.js by scripts/generate/host-tokens.js. */
     /* Do not edit by hand — edit the token tree instead. */
 
     --font-body: var(--font-body-family, 'Host Grotesk'), var(--font-body-fallback, system-ui, sans-serif);

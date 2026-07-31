@@ -21,14 +21,14 @@
  * Consumer-supplied names are out of scope; they get the runtime warning in
  * arc-icon instead.
  *
- * Run via: pnpm run check:icon-names (and as part of pnpm generate)
+ * Run via: pnpm check icon-names (and as part of pnpm generate)
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const root = path.resolve(__dirname, '..');
+const root = path.resolve(__dirname, '..', '..');
 const SRC = path.join(root, 'packages/web-components/src');
 const LIBRARIES = ['phosphor', 'lucide'];
 

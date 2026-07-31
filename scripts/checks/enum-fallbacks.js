@@ -33,7 +33,7 @@
  * `:host(:not([prop="value"]))` form, which already routes unrecognised values
  * to the default by construction.
  *
- * Run via: pnpm run check:enum-fallbacks (and as part of pnpm generate)
+ * Run via: pnpm check enum-fallbacks (and as part of pnpm generate)
  */
 
 import fs from 'node:fs';
@@ -41,7 +41,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const SRC = path.join(__dirname, '..', 'packages', 'web-components', 'src');
+const SRC = path.join(__dirname, '..', '..', 'packages', 'web-components', 'src');
 const TIERS = ['content', 'data', 'feedback', 'input', 'layout', 'navigation', 'typography', 'shared'];
 
 const problems = [];

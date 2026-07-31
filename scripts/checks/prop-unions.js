@@ -20,7 +20,7 @@
  * Svelte is the probe: it is generated from the same PropMeta as the other five
  * wrappers, so a union that survives here survived everywhere.
  *
- * Run via: pnpm run check:unions (and as part of pnpm generate)
+ * Run via: pnpm check prop-unions (and as part of pnpm generate)
  */
 
 import fs from 'node:fs';
@@ -28,7 +28,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const root = path.join(__dirname, '..');
+const root = path.join(__dirname, '..', '..');
 const SRC = path.join(root, 'packages', 'web-components', 'src');
 const SVELTE = path.join(root, 'packages', 'svelte', 'src');
 

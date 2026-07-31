@@ -19,7 +19,7 @@ export const componentCount = components.length;
 /**
  * Every custom element the library defines — child items included, so this is
  * larger than componentCount. Each element ships exactly one .register.js, so
- * counting those files is counting tags; it's also the number check:ssr
+ * counting those files is counting tags; it's also the number the ssr check
  * renders, which is why the SSR claims quote it.
  */
 const wcSrc = new URL('../../../packages/web-components/src/', import.meta.url);

@@ -20,7 +20,7 @@
  * than a surprise in a consumer's build. An entry that starts passing is
  * reported too, so the list cannot quietly rot.
  *
- * Run via: pnpm run check:ssr
+ * Run via: pnpm check ssr
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -28,13 +28,13 @@ import { createRequire } from 'node:module';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const root = path.resolve(__dirname, '..');
+const root = path.resolve(__dirname, '..', '..');
 const WC = path.join(root, 'packages/web-components');
 const SRC = path.join(WC, 'src');
 
 // Shared with @arclux/arc-ui/ssr, which refuses to register a component on this
 // list. One copy, in the package, because both readers depend on it being true.
-import { CLIENT_ONLY } from '../packages/web-components/src/ssr-client-only.js';
+import { CLIENT_ONLY } from '../../packages/web-components/src/ssr-client-only.js';
 
 /**
  * Failures attributable to @lit-labs/ssr rather than to a component.

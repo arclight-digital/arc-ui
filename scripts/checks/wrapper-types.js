@@ -11,7 +11,7 @@
  * defect that is too breaking to fix in v2, with the v3 plan. An entry that
  * stops matching fails the check so the baseline can only shrink.
  *
- * Run via: pnpm run check:wrapper-types (and as part of pnpm generate)
+ * Run via: pnpm check wrapper-types (and as part of pnpm generate)
  */
 
 import { execFileSync } from 'node:child_process';
@@ -19,7 +19,7 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const root = resolve(__dirname, '..');
+const root = resolve(__dirname, '..', '..');
 
 /**
  * `file::TScode` → reason. Empty since v3 renamed the three props that

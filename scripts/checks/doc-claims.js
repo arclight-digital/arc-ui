@@ -37,14 +37,14 @@
  *   - A part rendered by a shared style helper or a child component that
  *     re-exports it via `exportparts`.
  *
- * Run via: pnpm run check:doc-claims (and as part of pnpm generate)
+ * Run via: pnpm check doc-claims (and as part of pnpm generate)
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const root = path.resolve(__dirname, '..');
+const root = path.resolve(__dirname, '..', '..');
 const SRC = path.join(root, 'packages/web-components/src');
 
 /** Reactive properties a mixin contributes to every consumer. */

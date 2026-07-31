@@ -8,7 +8,7 @@
  */
 import { writeFileSync, readdirSync, rmSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { findComponents, SRC_DIR, TIERS } from './lib/component-tags.js';
+import { findComponents, SRC_DIR, TIERS } from '../lib/component-tags.js';
 
 const srcDir = SRC_DIR;
 
