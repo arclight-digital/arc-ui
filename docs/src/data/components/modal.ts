@@ -26,7 +26,7 @@ The component ships with three width presets (sm/md/lg) and a smooth slide-up en
     'Named `footer` slot for action buttons with built-in right-alignment',
     'Closable prop to disable all implicit dismiss paths for critical flows',
     'Fires `arc-close` event when the dialog is dismissed',
-    'Fully accessible with `role="dialog"`, `aria-modal`, and `aria-labeledby`',
+    'Fully accessible with `role="dialog"`, `aria-modal`, and `aria-labelledby`',
   ],
 
   guidelines: {

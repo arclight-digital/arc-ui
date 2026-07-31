@@ -121,7 +121,7 @@ const description =
             </div>
 
             {COLOR_GROUPS.map((group) => (
-              <section class="rail-group" aria-labeledby={`grp-${group.id}`}>
+              <section class="rail-group" aria-labelledby={`grp-${group.id}`}>
                 <h2 class="rail-group__title" id={`grp-${group.id}`}>{group.label}</h2>
                 <p class="rail-group__hint">{group.hint}</p>
                 <div class="rail-group__body">
@@ -306,7 +306,7 @@ const description =
         <div class="stage-scroll">
           <!-- Interface: one composed screen, because a theme is judged as a
                whole and never as a grid of isolated widgets. -->
-          <div class="stage-panel" id="panel-interface" aria-labeledby="tab-interface" tabindex="0" data-stage-panel="interface" role="tabpanel">
+          <div class="stage-panel" id="panel-interface" aria-labelledby="tab-interface" tabindex="0" data-stage-panel="interface" role="tabpanel">
             <div class="demo-app">
               <div class="demo-app__head">
                 <div>
@@ -392,7 +392,7 @@ const description =
 
           <!-- Components: the matrix, for checking a token against every
                variant at once rather than against one composed screen. -->
-          <div class="stage-panel" id="panel-components" aria-labeledby="tab-components" tabindex="0" data-stage-panel="components" role="tabpanel" hidden>
+          <div class="stage-panel" id="panel-components" aria-labelledby="tab-components" tabindex="0" data-stage-panel="components" role="tabpanel" hidden>
             <div class="matrix">
               <section class="matrix-cell">
                 <h3 class="matrix-cell__title">Buttons</h3>
@@ -481,7 +481,7 @@ const description =
           </div>
 
           <!-- Contrast -->
-          <div class="stage-panel" id="panel-contrast" aria-labeledby="tab-contrast" tabindex="0" data-stage-panel="contrast" role="tabpanel" hidden>
+          <div class="stage-panel" id="panel-contrast" aria-labelledby="tab-contrast" tabindex="0" data-stage-panel="contrast" role="tabpanel" hidden>
             <div class="audit">
               <div class="audit__head">
                 <div>
@@ -534,7 +534,7 @@ const description =
           </div>
 
           <!-- Code -->
-          <div class="stage-panel" id="panel-code" aria-labeledby="tab-code" tabindex="0" data-stage-panel="code" role="tabpanel" hidden>
+          <div class="stage-panel" id="panel-code" aria-labelledby="tab-code" tabindex="0" data-stage-panel="code" role="tabpanel" hidden>
             <div class="code-pane">
               <div class="code-pane__head">
                 <div>

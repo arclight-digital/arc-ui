@@ -10,7 +10,7 @@ export const tabs: ComponentDef = {
 
   overview: `Tabs organize related content into separate panels that share the same page space. Only one panel is visible at a time, letting users switch context without navigating away. This makes Tabs ideal for grouping settings pages, documentation sections, or dashboard views where horizontal real estate is limited.
 
-The component follows the WAI-ARIA Tabs pattern out of the box. Each tab button carries \`role="tab"\` and its corresponding panel carries \`role="tabpanel"\`, linked via \`aria-controls\` and \`aria-labeledby\`. Focus management uses a roving tabindex so arrow keys move between tabs while Tab moves focus out of the tab list entirely, matching the behavior users expect from native OS tab controls.
+The component follows the WAI-ARIA Tabs pattern out of the box. Each tab button carries \`role="tab"\` and its corresponding panel carries \`role="tabpanel"\`, linked via \`aria-controls\` and \`aria-labelledby\`. Focus management uses a roving tabindex so arrow keys move between tabs while Tab moves focus out of the tab list entirely, matching the behavior users expect from native OS tab controls.
 
 Transitions between panels are handled with a crossfade animation driven by CSS, keeping the switch feeling instantaneous on fast machines while remaining smooth on lower-end hardware. Panels that are not active are removed from the accessibility tree and hidden with \`display: none\` so screen readers never encounter stale content.`,
 

@@ -171,7 +171,7 @@ export class ArcAccordion extends LitElement {
                 class="accordion__content ${isOpen ? 'is-open' : ''}"
                 id="accordion-panel-${i}"
                 role="region"
-                aria-labeledby="accordion-trigger-${i}"
+                aria-labelledby="accordion-trigger-${i}"
               >
                 <div class="accordion__body">
                   <p>${item.answer}</p>

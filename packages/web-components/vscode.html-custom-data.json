@@ -2235,7 +2235,7 @@
         },
         {
           "name": "heading",
-          "description": "Text displayed in the modal header bar. Automatically linked to the dialog via `aria-labeledby` for screen-reader accessibility. Keep it short and action-oriented (e.g. \"Delete Project\" rather than \"Are you sure?\").",
+          "description": "Text displayed in the modal header bar. Automatically linked to the dialog via `aria-labelledby` for screen-reader accessibility. Keep it short and action-oriented (e.g. \"Delete Project\" rather than \"Are you sure?\").",
           "values": []
         },
         {
@@ -4035,7 +4035,7 @@
         },
         {
           "name": "label",
-          "description": "Visible label rendered above the textarea in uppercase. Automatically linked to the field via `aria-labeledby`, ensuring screen readers announce it correctly.",
+          "description": "Visible label rendered above the textarea in uppercase. Automatically linked to the field via `aria-labelledby`, ensuring screen readers announce it correctly.",
           "values": []
         },
         {

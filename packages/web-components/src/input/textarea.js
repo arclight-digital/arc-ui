@@ -7,7 +7,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * count that turns red at the limit.
  *
  * @tag arc-textarea
- * @prop {string} label - Visible label rendered above the textarea in uppercase. Automatically linked to the field via `aria-labeledby`, ensuring screen readers announce it correctly.
+ * @prop {string} label - Visible label rendered above the textarea in uppercase. Automatically linked to the field via `aria-labelledby`, ensuring screen readers announce it correctly.
  * @prop {string} value - The current text content of the textarea. Updated on every keystroke and emitted via `arc-input` and `arc-change` events.
  * @prop {string} name - Form field name submitted with the value. Required for native form integration via ElementInternals.
  * @prop {string} placeholder - Hint text displayed inside the field when it is empty. Use it to show example input -- never as a substitute for the label.
@@ -225,7 +225,7 @@ export class ArcTextarea extends FormControlMixin(LitElement) {
           ?disabled=${this.disabled}
           ?readonly=${this.readonly}
           maxlength=${this.maxlength > 0 ? this.maxlength : undefined}
-          aria-labeledby=${this.label ? 'textarea-label' : undefined}
+          aria-labelledby=${this.label ? 'textarea-label' : undefined}
           aria-invalid=${hasError ? 'true' : 'false'}
           aria-describedby=${hasError ? 'error-msg' : undefined}
           @input=${this._onInput}

@@ -1786,7 +1786,7 @@ export declare class ArcMeter extends LitElement {
 export declare class ArcModal extends LitElement {
   /** Controls the visible state of the dialog. Set to `true` to open the modal and activate the focus trap; set to `false` to close it, run the exit animation, and restore focus to the previously-focused element. @default false */
   open: boolean;
-  /** Text displayed in the modal header bar. Automatically linked to the dialog via `aria-labeledby` for screen-reader accessibility. Keep it short and action-oriented (e.g. "Delete Project" rather than "Are you sure?"). @default '' */
+  /** Text displayed in the modal header bar. Automatically linked to the dialog via `aria-labelledby` for screen-reader accessibility. Keep it short and action-oriented (e.g. "Delete Project" rather than "Are you sure?"). @default '' */
   heading: string;
   /** Controls the maximum width of the dialog panel. `sm` (400px) is ideal for simple confirmations, `md` (560px) for standard forms, and `lg` (720px) for content-heavy dialogs with tables or multi-column layouts. @default 'md' */
   size: 'sm' | 'md' | 'lg';
@@ -2960,7 +2960,7 @@ export declare class ArcTextarea extends LitElement {
   name: string;
   /** Hint text displayed inside the field when it is empty. Use it to show example input -- never as a substitute for the label. @default '' */
   placeholder: string;
-  /** Visible label rendered above the textarea in uppercase. Automatically linked to the field via `aria-labeledby`, ensuring screen readers announce it correctly. @default '' */
+  /** Visible label rendered above the textarea in uppercase. Automatically linked to the field via `aria-labelledby`, ensuring screen readers announce it correctly. @default '' */
   label: string;
   /** The number of visible text rows that set the initial height of the textarea. Does not limit content length -- the user can scroll or resize beyond this height. @default 4 */
   rows: number;

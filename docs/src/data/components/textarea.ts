@@ -17,7 +17,7 @@ Use Textarea whenever you need to collect more than a single line of freeform te
 When a \`maxlength\` is set, a live character counter appears below the field and automatically switches to an error color as the user approaches the limit. This gives immediate, accessible feedback without requiring any JavaScript on the consumer side. Pair Textarea with the Form component for coordinated validation, submission handling, and error summary across an entire form.`,
 
   features: [
-    'Integrated uppercase label rendered above the field with automatic `aria-labeledby` association',
+    'Integrated uppercase label rendered above the field with automatic `aria-labelledby` association',
     'Live character counter that appears when `maxlength` is set and turns red at the limit',
     'Configurable resize behavior via the `resize` prop: vertical, horizontal, both, or none',
     'Adjustable initial height through the `rows` prop (defaults to 4)',
