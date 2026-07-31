@@ -37,6 +37,15 @@ const easing = {
   spring: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
 };
 
+import {
+  solveMixPercent,
+  composite,
+  contrast,
+  parseColor,
+  formatRgb,
+  oklchToRgb,
+} from './color.js';
+
 export const tokens = {
   /* ── Backgrounds ── */
   color: {
@@ -473,6 +482,104 @@ export const tokens = {
 };
 
 /** CSS custom properties string — inject into :host or :root */
+/* ── Derived roles: solved, not chosen ──────────────────────────────────────
+ *
+ * A role that carries text states a contrast, and shared/color.js solves for
+ * it — same hue, same chroma, lightness moved only as far as the contract
+ * needs. What used to happen instead was a hex picked against one background
+ * and corrected later against another: the light accent shipped at 3.99 on its
+ * own 6% tint, which is the strictest surface it ever sits on and the one
+ * nobody checks, because the accent looks fine against the page.
+ *
+ * The solver is a floor. A seed that already clears its contract comes back
+ * untouched, which is why the dark theme is unchanged by any of this — its
+ * accent was already at 5.29 — and why this is a correction of the light
+ * palette rather than a re-baseline of the design.
+ */
+/* Both tints a text accent is ever laid on: 0.06 for --accent-primary-subtle,
+ * 0.10 for the status fills. The heavier one pulls the background toward the
+ * text's own hue and is the stricter test, so the percentage has to satisfy
+ * both rather than the one that happened to get measured. */
+const ACCENT_TINT_ALPHAS = [0.06, 0.1];
+const BODY_TEXT_CONTRAST = 4.5; // WCAG AA, normal-size text
+
+const accentTintOver = (palette) =>
+  composite(parseColor(palette.accentPrimary), ACCENT_TINT_ALPHA, parseColor(palette.bgDeep));
+
+/* The accents that are ever set as text, each on the subtle tint of itself —
+ * the background they actually sit on in a badge, a callout, a current-page
+ * link. Status fills use 0.1 alpha, the accent pair 0.06; the stricter of the
+ * two is what the percentage has to satisfy. */
+const textAccentKeys = ['accentPrimary', 'accentSecondary', 'success', 'warning', 'error', 'info'];
+
+/* This percentage is not applied to our palette. It is applied to whatever
+ * colour a consumer hands a component — arc-tag takes one as a prop, and this
+ * site passes it greys for the component tiers — so solving it against the six
+ * accents we happen to ship answers a question nobody asked. Two attempts did
+ * exactly that: against the accents' own tints it came out 15%, against every
+ * surface 20%, and both broke twenty-seven pairings that the hand-picked 55%
+ * had been quietly carrying.
+ *
+ * So the contract is the hard case rather than our case: any hue, at any
+ * lightness a brand colour plausibly uses, on any surface the theme defines.
+ * The worst of that space is a mid-tone with little chroma sitting near the
+ * surface's own luminance — a grey, which is precisely what failed. Sampling
+ * it is cheap and it is honest about what the token has to survive.
+ *
+ * The surfaces are ours to know; the seeds are not, so they are swept — but
+ * only across seeds a designer could plausibly have meant. A colour already
+ * below 3:1 on the page was never going to be read; carrying it to AA would
+ * mean mixing every accent halfway to the text colour, which is what the sweep
+ * demanded of the dark theme before this floor: 50%, to rescue colours nobody
+ * passes, at the cost of washing out the ones everybody does. The promise is
+ * that a visible colour stays legible, not that an invisible one is saved. */
+const surfaceKeys = ['bgDeep', 'bgSurface', 'bgBase', 'bgCard', 'bgElevated'];
+
+const SEED_SWEEP = [];
+for (let l = 0.35; l <= 0.8; l += 0.05) {
+  for (const c of [0, 0.08, 0.16]) {
+    for (let h = 0; h < 360; h += 30) {
+      SEED_SWEEP.push(formatRgb(oklchToRgb({ l, c, h })));
+      if (c === 0) break; // hue is meaningless without chroma
+    }
+  }
+}
+
+/**
+ * Two different questions, and pretending they are one is what produced a 55%
+ * in the light theme and a 0% in the dark with nothing written down about why.
+ *
+ * On a light page the failure is ordinary: any mid-tone hue at all — the greys
+ * this site passes arc-tag for its component tiers were the ones that broke —
+ * so the percentage has to survive the sweep, and it lands on 55%, which is
+ * where the hand-picked value already was. Derived now, and it will move if
+ * the surfaces do.
+ *
+ * On a near-black page the accents we ship clear AA with room, and the sweep's
+ * answer of 50% would wash every one of them out to rescue dark-saturated hues
+ * that were marginal before any of this — 4.2:1 as a dark green on its own
+ * tint. So the dark theme solves against the palette rather than the sweep,
+ * and the open question is deliberately left open: how much the library owes a
+ * consumer who hands a component a colour that was never going to read on
+ * their background. Answering it silently, in a number, is how this token got
+ * here.
+ */
+const solveTextMix = (palette, seeds) => {
+  const surfaces = surfaceKeys.filter((k) => palette[k]).map((k) => parseColor(palette[k]));
+  const pairings = seeds.flatMap((seed) => [
+    ...surfaces.map((background) => ({ seed, background })),
+    ...surfaces.flatMap((surface) =>
+      ACCENT_TINT_ALPHAS.map((alpha) => ({
+        seed,
+        background: composite(parseColor(seed), alpha, surface),
+      })),
+    ),
+  ]);
+  return solveMixPercent(pairings, palette.textPrimary, BODY_TEXT_CONTRAST);
+};
+
+const paletteAccents = (palette) => textAccentKeys.filter((k) => palette[k]).map((k) => palette[k]);
+
 export const cssVariables = `
   --bg-deep: ${tokens.color.bgDeep};
   --bg-surface: ${tokens.color.bgSurface};
@@ -491,6 +598,7 @@ export const cssVariables = `
 
   --accent-primary: ${tokens.color.accentPrimary};
   --accent-secondary: ${tokens.color.accentSecondary};
+
   --accent-primary-rgb: ${tokens.rgb.accentPrimary};
   --accent-secondary-rgb: ${tokens.rgb.accentSecondary};
   --text-primary-rgb: ${tokens.rgb.textPrimary};
@@ -712,7 +820,7 @@ ${Object.entries(tokens.glowScale)
 
   --bg-hover: rgba(${tokens.rgb.white}, 0.04);
   --overlay-backdrop: rgba(${tokens.rgb.black}, 0.6);
-  --accent-text-mix: 0%;
+  --accent-text-mix: ${solveTextMix(tokens.color, paletteAccents(tokens.color))}%;
 
   /* Text painted ON an accent fill — the primary button's label, the active
      segment, the selected day in a picker.
@@ -893,7 +1001,6 @@ export const lightTokens = {
   utility: {
     bgHover: 'rgba(55, 105, 235, 0.04)',
     overlayBackdrop: 'rgba(20, 20, 40, 0.25)',
-    accentTextMix: '55%',
     /* White, not the light ground. The near-white surface this theme would
        otherwise supply sits at 4.30:1 on the light accent — under AA for the
        primary button label and the active segment. Pure white clears it at
@@ -955,6 +1062,11 @@ export const fixedDarkTokens = {
     overlayBackdrop: 'rgba(var(--black-rgb), 0.6)',
   },
 };
+
+lightTokens.utility.accentTextMix = `${solveTextMix({ ...tokens.color, ...lightTokens.color }, [
+  ...SEED_SWEEP,
+  ...paletteAccents({ ...tokens.color, ...lightTokens.color }),
+])}%`;
 
 /** Light-mode fixed dark tokens (deep royal blue for nav/footer) */
 export const lightFixedTokens = {

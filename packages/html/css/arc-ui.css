@@ -22,6 +22,7 @@
 
   --accent-primary: rgb(77, 126, 247);
   --accent-secondary: rgb(139, 92, 246);
+
   --accent-primary-rgb: 77, 126, 247;
   --accent-secondary-rgb: 139, 92, 246;
   --text-primary-rgb: 232, 232, 236;
@@ -249,7 +250,7 @@
 
   --bg-hover: rgba(255, 255, 255, 0.04);
   --overlay-backdrop: rgba(0, 0, 0, 0.6);
-  --accent-text-mix: 0%;
+  --accent-text-mix: 10%;
 
   /* Text painted ON an accent fill — the primary button's label, the active
      segment, the selected day in a picker.

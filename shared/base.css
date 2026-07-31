@@ -97,6 +97,7 @@
 
   --accent-primary: rgb(77, 126, 247);
   --accent-secondary: rgb(139, 92, 246);
+
   --accent-primary-rgb: 77, 126, 247;
   --accent-secondary-rgb: 139, 92, 246;
   --text-primary-rgb: 232, 232, 236;
@@ -324,7 +325,7 @@
 
   --bg-hover: rgba(255, 255, 255, 0.04);
   --overlay-backdrop: rgba(0, 0, 0, 0.6);
-  --accent-text-mix: 0%;
+  --accent-text-mix: 10%;
 
   /* Text painted ON an accent fill — the primary button's label, the active
      segment, the selected day in a picker.
@@ -442,8 +443,8 @@
   --glow-line-blue: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.6), transparent);
   --bg-hover: rgba(55, 105, 235, 0.04);
   --overlay-backdrop: rgba(20, 20, 40, 0.25);
-  --accent-text-mix: 55%;
   --on-accent: rgb(var(--white-rgb));
+  --accent-text-mix: 55%;
 }
 
 @media (prefers-color-scheme: light) {
@@ -504,8 +505,8 @@
     --glow-line-blue: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.6), transparent);
     --bg-hover: rgba(55, 105, 235, 0.04);
     --overlay-backdrop: rgba(20, 20, 40, 0.25);
-    --accent-text-mix: 55%;
     --on-accent: rgb(var(--white-rgb));
+    --accent-text-mix: 55%;
   }
 }
 
