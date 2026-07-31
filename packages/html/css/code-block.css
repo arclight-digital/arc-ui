@@ -42,6 +42,11 @@
 
       .arc-code-block .code-block__body {
         padding: var(--space-md);
+        /* Inside the scroller on purpose. Code that fits never reaches under
+           the button, and code that overflows clears it once scrolled to the
+           end. Held on the wrapper instead it would be a permanent dead column
+           down the full height of the block, which costs every multi-line
+           sample real width to solve a case only long single lines hit. */
         padding-inline-end: calc(var(--space-md) + 80px);
         overflow-x: auto;
         overflow-y: hidden;
@@ -70,14 +75,33 @@
         inset-inline-end: var(--space-sm);
         z-index: 1;
         border-radius: var(--radius-sm);
-        /* Fully opaque. It used to idle at 0.75, which over syntax-coloured
-           text read as smudged rather than as quiet — and on a touch screen
-           there is no hover to bring it back. The body already reserves 80px of
-           inline-end padding for it, so nothing is being covered by showing it
-           properly. */
+        /* Fully visible by default. On a block whose code fits, the reserved
+           inline-end padding means the button covers nothing, so hiding it
+           would cost discoverability and buy nothing back. */
         opacity: 1;
-        backdrop-filter: blur(4px);
         transition: opacity var(--transition-fast);
+      }
+
+      /* Only where it can actually get in the way: once the code overflows, a
+           line can scroll under the button, so it drops back to a hint of
+           itself and returns on presence. Tuning the transparency alone could
+           never work for both cases at once — this picks per block. */
+      .arc-code-block .code-block__copy--quiet {
+        opacity: 0.25;
+      }
+
+      .arc-code-block .code-block__body-wrap:hover .code-block__copy--quiet,
+      .arc-code-block .code-block__copy--quiet:focus-within {
+        opacity: 1;
+      }
+
+      /* No hover to bring it back, so never hide it in the first place. */
+      .arc-code-block @media (hover: none) {
+        .arc-code-block .code-block__copy--quiet { opacity: 1; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .arc-code-block .code-block__copy { transition: none; }
       }
 
       /* One line has no top-right to speak of: the button would sit level with
@@ -92,9 +116,6 @@
         transform: translateY(-50%);
       }
 
-      @media (prefers-reduced-motion: reduce) {
-        .arc-code-block .code-block__copy { transition: none; }
-      }
 
       .arc-code-block .code-block__body pre {
         margin: 0;

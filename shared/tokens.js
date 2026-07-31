@@ -117,7 +117,7 @@ export const tokens = {
    */
   font: {
     body:  { family: "'Host Grotesk'",   fallback: 'system-ui, sans-serif',   weight: 500 },
-    label: { family: "'Tektur'",         fallback: 'system-ui, sans-serif',   weight: 600 },
+    label: { family: "'Azeret Mono'",    fallback: 'ui-monospace, monospace', weight: 600 },
     mono:  { family: "'JetBrains Mono'", fallback: 'ui-monospace, monospace', weight: 400 },
     quote: { family: 'Georgia',          fallback: 'serif',                   weight: 200 },
     // display has no family of its own — it follows body until assigned — but
@@ -195,12 +195,15 @@ export const tokens = {
 
   letterSpacing: {
     displayXl:    '-1px',
-    sectionTitle: '4px',
-    uiAccent:     '1px',
+    // Label-role tracking is tuned for Azeret Mono: a monospace carries its
+    // own letter-fitting, so the wide Tektur-era values (4px/1px/3px) read
+    // as gappy rather than as spaced.
+    sectionTitle: '1px',
+    uiAccent:     '0px',
     wordmark:     'clamp(8px, 1.2vw, 14px)',
     // Was spelled only in the :root template and in shared-styles.js, never in
     // the tree — so the generated :host layer had no way to know about it.
-    labelInline:  '3px',
+    labelInline:  '0.75px',
   },
 
   lineHeight: {

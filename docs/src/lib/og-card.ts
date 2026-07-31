@@ -185,7 +185,7 @@ export function loadFonts() {
     fontsCache = [
       { name: 'Host Grotesk', data: font('hostgrotesk-latin.ttf'), weight: 400, style: 'normal' },
       { name: 'Host Grotesk', data: font('hostgrotesk-800-latin.ttf'), weight: 800, style: 'normal' },
-      { name: 'Tektur', data: font('tektur-latin.ttf'), style: 'normal' },
+      { name: 'Azeret Mono', data: font('azeretmono-600-latin.ttf'), weight: 600, style: 'normal' },
     ];
   }
   return fontsCache;
@@ -264,8 +264,8 @@ function kickerPill(pill: KickerPill): Node {
         background: `rgba(${accent.rgb}, 0.08)`,
         fontSize: '21px',
         fontWeight: 600,
-        fontFamily: 'Tektur',
-        letterSpacing: '3px',
+        fontFamily: 'Azeret Mono',
+        letterSpacing: '1px',
         textTransform: 'uppercase',
         color: accent.text,
       },

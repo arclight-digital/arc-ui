@@ -223,7 +223,7 @@ export function TeamSettings() {
    <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap">
    <h1 style="margin: 0; font-size: 28px; font-weight: 700; color: rgb(232, 232, 236); line-height: 1.2">Team Settings</h1>
    <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0">
-    <a href="#" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: 'Tektur', system-ui, sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; border: 1px solid transparent; border-radius: 10px; cursor: pointer; text-decoration: none; white-space: nowrap; padding: 6px 14px; font-size: 13px; background: rgb(77, 126, 247); color: rgb(232, 232, 236)">Invite Member</a>
+    <a href="#" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: 'Azeret Mono', ui-monospace, monospace; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; border: 1px solid transparent; border-radius: 10px; cursor: pointer; text-decoration: none; white-space: nowrap; padding: 6px 14px; font-size: 13px; background: rgb(77, 126, 247); color: rgb(232, 232, 236)">Invite Member</a>
    </div>
    </div>
    <p style="margin-top: 8px; margin-bottom: 0; color: rgb(160, 160, 176); font-size: 15px; line-height: 1.5">Manage roles, permissions, and invitations for your team.</p>

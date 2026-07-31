@@ -14,7 +14,7 @@ export const hostTokens = css`
     /* Do not edit by hand — edit the token tree instead. */
 
     --font-body: var(--font-body-family, 'Host Grotesk'), var(--font-body-fallback, system-ui, sans-serif);
-    --font-label: var(--font-label-family, 'Tektur'), var(--font-label-fallback, system-ui, sans-serif);
+    --font-label: var(--font-label-family, 'Azeret Mono'), var(--font-label-fallback, ui-monospace, monospace);
     --font-mono: var(--font-mono-family, 'JetBrains Mono'), var(--font-mono-fallback, ui-monospace, monospace);
     --font-quote: var(--font-quote-family, Georgia), var(--font-quote-fallback, serif);
     --font-display: var(--font-display-family, var(--font-body-family, 'Host Grotesk')), var(--font-display-fallback, var(--font-body-fallback, system-ui, sans-serif));
@@ -43,14 +43,14 @@ export const hostTokens = css`
     --wordmark-spacing: clamp(8px, 1.2vw, 14px);
     --section-title-size: var(--_text-xs);
     --section-title-weight: var(--font-label-weight, 600);
-    --section-title-spacing: 4px;
+    --section-title-spacing: 1px;
     --ui-accent-size: 16px;
     --ui-accent-weight: var(--font-label-weight, 600);
-    --ui-accent-spacing: 1px;
+    --ui-accent-spacing: 0px;
     --code-size: 14px;
     --code-lh: 1.8;
     --label-inline-size: 10px;
-    --label-inline-spacing: 3px;
+    --label-inline-spacing: 0.75px;
 
     /* Spacing */
     --space-xs: 4px;

@@ -148,6 +148,7 @@ export class ArcCodeBlock extends LitElement {
     code:     { type: String },
     variant:  { type: String, reflect: true },
     _highlightedHtml: { state: true },
+    _overflows: { state: true },
   };
 
   static styles = [
@@ -192,6 +193,11 @@ export class ArcCodeBlock extends LitElement {
 
       .code-block__body {
         padding: var(--space-md);
+        /* Inside the scroller on purpose. Code that fits never reaches under
+           the button, and code that overflows clears it once scrolled to the
+           end. Held on the wrapper instead it would be a permanent dead column
+           down the full height of the block, which costs every multi-line
+           sample real width to solve a case only long single lines hit. */
         padding-inline-end: calc(var(--space-md) + 80px);
         overflow-x: auto;
         overflow-y: hidden;
@@ -220,14 +226,33 @@ export class ArcCodeBlock extends LitElement {
         inset-inline-end: var(--space-sm);
         z-index: 1;
         border-radius: var(--radius-sm);
-        /* Fully opaque. It used to idle at 0.75, which over syntax-coloured
-           text read as smudged rather than as quiet — and on a touch screen
-           there is no hover to bring it back. The body already reserves 80px of
-           inline-end padding for it, so nothing is being covered by showing it
-           properly. */
+        /* Fully visible by default. On a block whose code fits, the reserved
+           inline-end padding means the button covers nothing, so hiding it
+           would cost discoverability and buy nothing back. */
         opacity: 1;
-        backdrop-filter: blur(4px);
         transition: opacity var(--transition-fast);
+      }
+
+      /* Only where it can actually get in the way: once the code overflows, a
+           line can scroll under the button, so it drops back to a hint of
+           itself and returns on presence. Tuning the transparency alone could
+           never work for both cases at once — this picks per block. */
+      .code-block__copy--quiet {
+        opacity: 0.25;
+      }
+
+      .code-block__body-wrap:hover .code-block__copy--quiet,
+      .code-block__copy--quiet:focus-within {
+        opacity: 1;
+      }
+
+      /* No hover to bring it back, so never hide it in the first place. */
+      @media (hover: none) {
+        .code-block__copy--quiet { opacity: 1; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .code-block__copy { transition: none; }
       }
 
       /* One line has no top-right to speak of: the button would sit level with
@@ -242,9 +267,6 @@ export class ArcCodeBlock extends LitElement {
         transform: translateY(-50%);
       }
 
-      @media (prefers-reduced-motion: reduce) {
-        .code-block__copy { transition: none; }
-      }
 
       .code-block__body pre {
         margin: 0;
@@ -354,12 +376,48 @@ export class ArcCodeBlock extends LitElement {
     this.code = '';
     this.variant = 'default';
     this._highlightedHtml = '';
+    this._overflows = false;
+    this._resizeObserver = null;
+  }
+
+  firstUpdated() {
+    // Watch the scroller rather than the host: the answer depends on the code's
+    // width against the viewport's, and either can change without the other.
+    if (typeof ResizeObserver === 'undefined') return;
+    const body = this.shadowRoot?.querySelector('.code-block__body');
+    if (!body) return;
+    this._resizeObserver = new ResizeObserver(() => this._measureOverflow());
+    this._resizeObserver.observe(body);
+    this._measureOverflow();
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this._resizeObserver?.disconnect();
+    this._resizeObserver = null;
+  }
+
+  /**
+   * Whether any code can actually end up behind the copy button.
+   *
+   * The body reserves inline-end padding for the button, so code that fits
+   * never reaches it — on those blocks the button covers nothing and there is
+   * no reason to hide it. Only once the line overflows can it scroll underneath,
+   * and only then is a quiet resting state worth the cost of being harder to
+   * find. One measurement decides which of the two a given block gets.
+   */
+  _measureOverflow() {
+    const body = this.shadowRoot?.querySelector('.code-block__body');
+    if (!body) return;
+    this._overflows = body.scrollWidth > body.clientWidth + 1;
   }
 
   updated(changedProperties) {
     if (changedProperties.has('code') || changedProperties.has('language')) {
       this._highlight();
     }
+    // After a re-highlight the content width has changed under us.
+    if (changedProperties.has('_highlightedHtml')) this._measureOverflow();
   }
 
   async _highlight() {
@@ -429,7 +487,7 @@ export class ArcCodeBlock extends LitElement {
       <div class="code-block" part="code-block">
         ${this._renderHeader()}
         <div class="code-block__body-wrap">
-          <div class="code-block__copy ${this._lineCount() === 1 ? 'code-block__copy--centered' : ''}">
+          <div class="code-block__copy ${this._lineCount() === 1 ? 'code-block__copy--centered' : ''} ${this._overflows ? 'code-block__copy--quiet' : ''}">
             <arc-copy-button .value=${this.code} part="copy"></arc-copy-button>
           </div>
           <div class="code-block__body" part="body">

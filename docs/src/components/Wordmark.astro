@@ -33,8 +33,8 @@
   .wordmark__expand {
     font-family: var(--font-accent);
     font-size: var(--text-xs);
-    /* Tracks the label-role trial: a mono needs less spacing and more weight
-       than Tektur did, and these tokens are where that gets decided. */
+    /* Weight and tracking come from the label-role tokens, where the fit for
+       the current face gets decided once. */
     font-weight: var(--font-label-weight, 500);
     letter-spacing: var(--ui-accent-spacing, 1.5px);
     color: var(--text-ghost);

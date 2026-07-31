@@ -185,7 +185,7 @@ export default function Example() {
    >
    <div style="display: flex; align-items: center; width: 100%; position: relative">
 
-   <span style="width: 32px; height: 32px; border-radius: 9999px; display: flex; align-items: center; justify-content: center; font-family: 'Tektur', system-ui, sans-serif; font-size: 13px; font-weight: 600; flex-shrink: 0; position: relative; z-index: 1; margin: 0 auto; box-sizing: border-box; background: rgb(77, 126, 247); color: rgb(232, 232, 236); border: 2px solid rgb(77, 126, 247); box-shadow: 0 0 12px rgba(77, 126, 247, 0.25)">
+   <span style="width: 32px; height: 32px; border-radius: 9999px; display: flex; align-items: center; justify-content: center; font-family: 'Azeret Mono', ui-monospace, monospace; font-size: 13px; font-weight: 600; flex-shrink: 0; position: relative; z-index: 1; margin: 0 auto; box-sizing: border-box; background: rgb(77, 126, 247); color: rgb(232, 232, 236); border: 2px solid rgb(77, 126, 247); box-shadow: 0 0 12px rgba(77, 126, 247, 0.25)">
 
    </span>
 

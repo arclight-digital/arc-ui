@@ -117,7 +117,7 @@ describe('font role slots', () => {
       const probe = document.createElement('div');
       probe.style.fontFamily = 'var(--font-accent)';
       document.body.appendChild(probe);
-      expect(getComputedStyle(probe).fontFamily).to.contain('Tektur');
+      expect(getComputedStyle(probe).fontFamily).to.contain('Azeret Mono');
     });
   });
 

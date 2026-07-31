@@ -29,7 +29,7 @@ Three size presets — sm, md, and lg — let you scale buttons to their context
     'Focus-visible ring for keyboard accessibility',
     'Subtle scale-down on active press for tactile feedback',
     'Disabled state that prevents interaction and dims the element',
-    'Uppercase Tektur type treatment for strong visual presence',
+    'Uppercase Azeret Mono type treatment for strong visual presence',
   ],
 
   guidelines: {
@@ -211,7 +211,7 @@ export function HeroActions() {
   .arc-button .btn:focus-visible { outline: none; box-shadow: 0 0 0 2px rgb(3, 3, 7), 0 0 0 4px rgb(77, 126, 247), 0 0 16px rgba(77,126,247,0.3); }
 </style>
 <span class="arc-button" style="display: inline-flex">
-  <a class="btn" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: 'Tektur', system-ui, sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; border: 1px solid transparent; border-radius: 10px; cursor: pointer; text-decoration: none; white-space: nowrap; box-sizing: border-box" href="#">Button</a>
+  <a class="btn" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: 'Azeret Mono', ui-monospace, monospace; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; border: 1px solid transparent; border-radius: 10px; cursor: pointer; text-decoration: none; white-space: nowrap; box-sizing: border-box" href="#">Button</a>
 </span>`,
     },
   ],

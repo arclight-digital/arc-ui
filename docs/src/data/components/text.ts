@@ -10,7 +10,7 @@ export const text: ComponentDef = {
 
   overview: `Text is the foundational typography primitive in ARC UI. It maps nine named variants to the design system's type scale, each with pre-configured font-size, weight, letter-spacing, line-height, and color. The "display" variant renders a large gradient-clipped headline, "heading" provides balanced section titles, and "body" covers standard paragraph content with the secondary text color.
 
-For specialized contexts, "accent" applies the accent gradient with a glow drop-shadow, "label" renders uppercase section titles using the Tektur font, and "wordmark" produces all-caps branding text with a blue glow text-shadow. The "code" variant switches to the monospace font stack with a violet color and subtle text-shadow, ideal for inline code references. "muted" and "ghost" provide progressively dimmer text colors for de-emphasized content.
+For specialized contexts, "accent" applies the accent gradient with a glow drop-shadow, "label" renders uppercase section titles using the Azeret Mono font, and "wordmark" produces all-caps branding text with a blue glow text-shadow. The "code" variant switches to the monospace font stack with a violet color and subtle text-shadow, ideal for inline code references. "muted" and "ghost" provide progressively dimmer text colors for de-emphasized content.
 
 The \`as\` property controls the rendered HTML element (h1 through h6, span, or the default p), allowing you to maintain correct document heading hierarchy independently from the visual variant. This separation of semantic tag from visual style is essential for accessibility and SEO.`,
 
@@ -20,7 +20,7 @@ The \`as\` property controls the rendered HTML element (h1 through h6, span, or 
     'Configurable HTML element via the "as" prop (h1-h6, span, p) for semantic control',
     'Balanced text wrapping on heading and body variants via text-wrap: balance',
     'Monospace code variant with violet color and subtle glow text-shadow',
-    'Uppercase Tektur-font treatment for label and wordmark variants',
+    'Uppercase Azeret Mono-font treatment for label and wordmark variants',
     'Accent variant includes a drop-shadow glow filter for visual emphasis',
     'Inline display for accent and code variants; block display for all others',
   ],

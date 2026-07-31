@@ -104,8 +104,8 @@ function statCard(value: string, label: string, accentColor: string, accentRgb: 
             style: {
               fontSize: '21px',
               fontWeight: 600,
-              fontFamily: 'Tektur',
-              letterSpacing: '3px',
+              fontFamily: 'Azeret Mono',
+              letterSpacing: '1px',
               color: 'rgba(255,255,255,0.4)',
               textTransform: 'uppercase' as const,
             },
@@ -139,7 +139,7 @@ function frameworkPill(name: string) {
 export const GET: APIRoute = async () => {
   const fontBody = fs.readFileSync('public/fonts/hostgrotesk-latin.ttf');
   const fontBodyBold = fs.readFileSync('public/fonts/hostgrotesk-800-latin.ttf');
-  const fontAccent = fs.readFileSync('public/fonts/tektur-latin.ttf');
+  const fontAccent = fs.readFileSync('public/fonts/azeretmono-600-latin.ttf');
 
   const dots = dotGrid(40, 22, 30, 0, 0);
 
@@ -518,7 +518,7 @@ export const GET: APIRoute = async () => {
       fonts: [
         { name: 'Host Grotesk', data: fontBody, weight: 400, style: 'normal' as const },
         { name: 'Host Grotesk', data: fontBodyBold, weight: 800, style: 'normal' as const },
-        { name: 'Tektur', data: fontAccent, style: 'normal' as const },
+        { name: 'Azeret Mono', data: fontAccent, weight: 600, style: 'normal' as const },
       ],
     },
   );

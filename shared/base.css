@@ -164,8 +164,8 @@
   --font-body-weight: 500;
   --font-body: var(--font-body-family), var(--font-body-fallback);
 
-  --font-label-family: 'Tektur';
-  --font-label-fallback: system-ui, sans-serif;
+  --font-label-family: 'Azeret Mono';
+  --font-label-fallback: ui-monospace, monospace;
   --font-label-weight: 600;
   --font-label: var(--font-label-family), var(--font-label-fallback);
 
@@ -231,14 +231,14 @@
   --wordmark-spacing: clamp(8px, 1.2vw, 14px);
   --section-title-size: var(--text-xs);
   --section-title-weight: var(--font-label-weight);
-  --section-title-spacing: 4px;
+  --section-title-spacing: 1px;
   --ui-accent-size: 16px;
   --ui-accent-weight: var(--font-label-weight);
-  --ui-accent-spacing: 1px;
+  --ui-accent-spacing: 0px;
   --code-size: 14px;
   --code-lh: 1.8;
   --label-inline-size: 10px;
-  --label-inline-spacing: 3px;
+  --label-inline-spacing: 0.75px;
   --field-weight: 400;
 
   --touch-min: 24px;
