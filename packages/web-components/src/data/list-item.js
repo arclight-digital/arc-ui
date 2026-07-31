@@ -53,7 +53,7 @@ export class ArcListItem extends LitElement {
         text-decoration: none;
         cursor: pointer;
         border-radius: var(--radius-sm);
-        transition: background var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast), transform 150ms cubic-bezier(0.16, 1, 0.3, 1);
+        transition: background var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast), transform 150ms var(--ease-out);
         border: none;
         background: none;
         width: 100%;

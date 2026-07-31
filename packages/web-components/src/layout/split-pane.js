@@ -58,7 +58,7 @@ export class ArcSplitPane extends LitElement {
       .split-pane__handle {
         flex-shrink: 0;
         background: var(--divider);
-        transition: background 0.15s ease;
+        transition: background var(--transition-fast);
         user-select: none;
         touch-action: none;
       }
@@ -80,16 +80,6 @@ export class ArcSplitPane extends LitElement {
 
       :host .split-pane--dragging {
         user-select: none;
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        :host *,
-        :host *::before,
-        :host *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
       }
     `,
   ];

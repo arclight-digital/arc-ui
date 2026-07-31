@@ -38,13 +38,3 @@
         flex-direction: column;
         gap: var(--space-sm);
       }
-
-      @media (prefers-reduced-motion: reduce) {
-        .arc-skeleton *,
-        .arc-skeleton *::before,
-        .arc-skeleton *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }

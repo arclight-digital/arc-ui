@@ -151,13 +151,3 @@
         border-top: none;
         border-inline-end: none;
       }
-
-      @media (prefers-reduced-motion: reduce) {
-        .arc-tooltip *,
-        .arc-tooltip *::before,
-        .arc-tooltip *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }

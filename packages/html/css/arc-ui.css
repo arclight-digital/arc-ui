@@ -189,14 +189,27 @@
   --radius-xl: 20px;
   --radius-full: 9999px;
 
-  --transition-fast: 120ms ease;
-  --transition-base: 200ms ease;
-  --transition-slow: 400ms ease;
+  --transition-fast: 120ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-enter: 500ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-exit: 300ms cubic-bezier(0.7, 0, 0.84, 0);
 
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 400ms;
   --duration-enter: 500ms;
   --duration-exit: 300ms;
+
+  /* Back-compat: the two curve names published before the motion scale
+     existed. Public API, so they stay; new work spells --ease-out and
+     --ease-standard. */
+  --ease-out-expo: var(--ease-out);
+  --ease-in-out: var(--ease-standard);
 
   --gradient-display-text: linear-gradient(135deg, rgb(232, 232, 236) 0%, rgb(124, 124, 137) 100%);
   --gradient-accent-text: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
@@ -325,16 +338,6 @@
 
       .arc-avatar-group[data-overlap="sm"] .group__overflow { padding-left: var(--space-xs); }
       .arc-avatar-group[data-overlap="lg"] .group__overflow { padding-left: var(--space-md); }
-
-      @media (prefers-reduced-motion: reduce) {
-        .arc-avatar-group *,
-        .arc-avatar-group *::before,
-        .arc-avatar-group *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
 
 /* arc-avatar */
 .arc-avatar { display: inline-flex; position: relative; }
@@ -496,16 +499,6 @@
         display: none;
       }
 
-      @media (prefers-reduced-motion: reduce) {
-        .arc-callout *,
-        .arc-callout *::before,
-        .arc-callout *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
-
 /* arc-card */
 .arc-card { display: block; }
 
@@ -581,16 +574,6 @@
         .arc-card .card__inner { padding: var(--space-lg) var(--space-md); }
       }
 
-      @media (prefers-reduced-motion: reduce) {
-        .arc-card *,
-        .arc-card *::before,
-        .arc-card *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
-
 /* arc-color-swatch */
 .arc-color-swatch { display: inline-flex; }
 
@@ -625,16 +608,6 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        .arc-color-swatch *,
-        .arc-color-swatch *::before,
-        .arc-color-swatch *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
       }
 
 /* arc-cta-banner */
@@ -1000,16 +973,6 @@
         .arc-feature-card .card__inner { padding: var(--space-md); }
       }
 
-      @media (prefers-reduced-motion: reduce) {
-        .arc-feature-card *,
-        .arc-feature-card *::before,
-        .arc-feature-card *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
-
 /* arc-icon */
 .arc-icon {
         display: inline-flex;
@@ -1083,16 +1046,6 @@
         fill: rgb(var(--black-rgb));
       }
 
-      @media (prefers-reduced-motion: reduce) {
-        .arc-qr-code *,
-        .arc-qr-code *::before,
-        .arc-qr-code *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
-
 /* arc-scroll-area */
 .arc-scroll-area {
         display: block;
@@ -1152,16 +1105,6 @@
         scrollbar-color: var(--border-bright) var(--surface-overlay);
       }
 
-      @media (prefers-reduced-motion: reduce) {
-        .arc-scroll-area *,
-        .arc-scroll-area *::before,
-        .arc-scroll-area *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
-
 /* arc-scroll-indicator */
 .arc-scroll-indicator {
         display: block;
@@ -1191,6 +1134,10 @@
         height: 100%;
         background: var(--accent-primary);
         transform-origin: left;
+        /* Deliberately not a motion token: this bar maps to scroll position, so
+           it has to track the finger linearly. An eased curve would make it lag
+           the scroll and then catch up, and any token duration is long enough to
+           read as drift. */
         transition: transform 60ms linear;
         will-change: transform;
       }
@@ -1346,16 +1293,6 @@
         gap: var(--space-sm);
       }
 
-      @media (prefers-reduced-motion: reduce) {
-        .arc-skeleton *,
-        .arc-skeleton *::before,
-        .arc-skeleton *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
-
 /* arc-spinner */
 .arc-spinner { display: inline-flex; }
 
@@ -1389,16 +1326,6 @@
       .arc-spinner[data-variant="white"] .spinner {
         border-color: var(--text-primary);
         border-top-color: transparent;
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        .arc-spinner *,
-        .arc-spinner *::before,
-        .arc-spinner *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
       }
 
 /* arc-stack */
@@ -1466,7 +1393,7 @@
         border: 1px solid var(--border-default);
         border-radius: var(--radius-sm);
         background: var(--surface-hover);
-        transition: box-shadow 200ms ease, border-color 200ms ease;
+        transition: box-shadow var(--transition-base), border-color var(--transition-base);
         line-height: 1.4;
       }
 
@@ -1517,16 +1444,6 @@
       /* Sizes */
       .arc-badge[data-size="sm"] .badge { font-size: calc(var(--_text-xs) - 1px); padding: 2px var(--space-xs); }
       .arc-badge[data-size="lg"] .badge { font-size: var(--_text-sm); padding: var(--space-sm) var(--space-md); }
-
-      @media (prefers-reduced-motion: reduce) {
-        .arc-badge *,
-        .arc-badge *::before,
-        .arc-badge *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
 
 /* arc-comparison-column */
 
@@ -1626,16 +1543,6 @@
         overflow: hidden;
         clip: rect(0 0 0 0);
         white-space: nowrap;
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        .arc-comparison *,
-        .arc-comparison *::before,
-        .arc-comparison *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
       }
 
 /* arc-description-item */
@@ -1888,16 +1795,6 @@
       .arc-meter .meter__fill--warning { background: var(--color-warning); }
       .arc-meter .meter__fill--error   { background: var(--color-error); }
 
-      @media (prefers-reduced-motion: reduce) {
-        .arc-meter *,
-        .arc-meter *::before,
-        .arc-meter *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
-
 /* arc-sparkline */
 .arc-sparkline {
         display: inline-block;
@@ -1925,7 +1822,7 @@
       .arc-sparkline .sparkline-bar {
         fill: rgba(var(--_sparkline-color-rgb, var(--accent-primary-rgb)), 0.3);
         rx: 1;
-        transition: fill var(--transition-fast, 150ms ease);
+        transition: fill var(--transition-fast);
       }
 
       .arc-sparkline .sparkline-bar:hover {
@@ -1939,7 +1836,7 @@
 
       /* Draw-in animation for line type */
       .arc-sparkline .sparkline-line-animated {
-        animation: sparkline-draw 800ms ease-out forwards;
+        animation: sparkline-draw 800ms var(--ease-out) forwards;
       }
 
       @keyframes sparkline-draw {
@@ -1948,23 +1845,13 @@
       }
 
       .arc-sparkline .sparkline-area-animated {
-        animation: sparkline-fade-in 800ms ease-out forwards;
+        animation: sparkline-fade-in 800ms var(--ease-out) forwards;
         opacity: 0;
       }
 
       @keyframes sparkline-fade-in {
         from { opacity: 0; }
         to   { opacity: 1; }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        .arc-sparkline *,
-        .arc-sparkline *::before,
-        .arc-sparkline *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
       }
 
 /* arc-stat */
@@ -2248,16 +2135,6 @@
         background: var(--surface-hover);
       }
 
-      @media (prefers-reduced-motion: reduce) {
-        .arc-table *,
-        .arc-table *::before,
-        .arc-table *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
-
 /* arc-tag */
 .arc-tag { display: inline-flex; }
       .arc-tag[disabled] { pointer-events: none; opacity: 0.5; }
@@ -2351,16 +2228,6 @@
       .arc-tag .tag__remove:focus-visible {
         outline: none;
         box-shadow: var(--interactive-focus);
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        .arc-tag *,
-        .arc-tag *::before,
-        .arc-tag *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
       }
 
 /* arc-timeline */
@@ -2469,16 +2336,6 @@
 
       .arc-timeline .timeline__slot-host { display: none; }
 
-      @media (prefers-reduced-motion: reduce) {
-        .arc-timeline *,
-        .arc-timeline *::before,
-        .arc-timeline *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
-
 /* arc-value-card */
 .arc-value-card { display: flex; flex-direction: column; height: 100%; }
 
@@ -2526,16 +2383,6 @@
         font-size: var(--_text-sm);
         line-height: 1.7;
         margin: 0;
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        .arc-value-card *,
-        .arc-value-card *::before,
-        .arc-value-card *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
       }
 
 /* arc-blockquote */
@@ -2602,13 +2449,6 @@
         letter-spacing: 2px;
         text-transform: uppercase;
         color: var(--text-muted);
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        .arc-blockquote *, .arc-blockquote *::before, .arc-blockquote *::after {
-          animation-duration: 0s !important;
-          transition-duration: 0s !important;
-        }
       }
 
 /* arc-code-block */
@@ -2787,16 +2627,6 @@
         font-family: var(--font-mono);
         font-size: var(--_text-xs);
         color: var(--text-ghost);
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        .arc-code-block *,
-        .arc-code-block *::before,
-        .arc-code-block *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
       }
 
 /* arc-gradient-text */
@@ -3015,16 +2845,6 @@
         margin: var(--space-sm) 0;
       }
 
-      @media (prefers-reduced-motion: reduce) {
-        .arc-markdown *,
-        .arc-markdown *::before,
-        .arc-markdown *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
-
 /* arc-number-format */
 .arc-number-format {
         display: inline;
@@ -3122,12 +2942,6 @@
         border-collapse: collapse !important;
         margin: var(--space-lg) 0 !important;
         font-size: var(--_text-sm) !important;
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        .arc-prose * {
-          transition: none !important;
-        }
       }
 
 /* arc-text */
@@ -3384,16 +3198,6 @@
         display: flex;
       }
 
-      @media (prefers-reduced-motion: reduce) {
-        .arc-button *,
-        .arc-button *::before,
-        .arc-button *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
-
 /* arc-chip */
 .arc-chip {
         display: inline-flex;
@@ -3404,16 +3208,6 @@
 
       .arc-chip arc-tag {
         pointer-events: none;
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        .arc-chip *,
-        .arc-chip *::before,
-        .arc-chip *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
       }
 
 /* arc-copy-button */
@@ -3468,16 +3262,6 @@
 
       .arc-copy-button .copy-btn__label {
         user-select: none;
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        .arc-copy-button *,
-        .arc-copy-button *::before,
-        .arc-copy-button *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
       }
 
 /* arc-fieldset */
@@ -3664,16 +3448,6 @@
         box-shadow: 0 0 16px var(--accent-primary-ring);
       }
 
-      @media (prefers-reduced-motion: reduce) {
-        .arc-icon-button *,
-        .arc-icon-button *::before,
-        .arc-icon-button *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
-
 /* arc-input-group */
 .arc-input-group {
         display: flex;
@@ -3848,16 +3622,6 @@
       .arc-input [slot="suffix"] {
         width: 20px;
         height: 20px;
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        .arc-input *,
-        .arc-input *::before,
-        .arc-input *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
       }
 
 /* arc-slider */
@@ -4146,16 +3910,6 @@
         color: var(--color-error);
       }
 
-      @media (prefers-reduced-motion: reduce) {
-        .arc-textarea *,
-        .arc-textarea *::before,
-        .arc-textarea *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
-
 /* arc-breadcrumb */
 .arc-breadcrumb { display: block; }
 
@@ -4225,16 +3979,6 @@
       }
 
       .arc-breadcrumb .breadcrumb__slot-host { display: none; }
-
-      @media (prefers-reduced-motion: reduce) {
-        .arc-breadcrumb *,
-        .arc-breadcrumb *::before,
-        .arc-breadcrumb *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
 
 /* arc-footer */
 .arc-footer {
@@ -4401,16 +4145,6 @@
         opacity: 0.6;
       }
 
-      @media (prefers-reduced-motion: reduce) {
-        .arc-link *,
-        .arc-link *::before,
-        .arc-link *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
-
 /* arc-pagination */
 .arc-pagination { display: inline-flex; }
 
@@ -4435,7 +4169,7 @@
         font-family: var(--font-body);
         font-size: var(--_text-sm);
         cursor: pointer;
-        transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast), transform var(--ease-out-expo);
+        transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast), transform var(--duration-fast) var(--ease-out);
         user-select: none;
       }
 
@@ -4485,16 +4219,6 @@
         color: var(--text-muted);
         font-size: var(--_text-sm);
         user-select: none;
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        .arc-pagination *,
-        .arc-pagination *::before,
-        .arc-pagination *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
       }
 
 /* arc-sidebar */
@@ -4736,16 +4460,6 @@
 
       .arc-sidebar .sidebar__slot-host { display: none; }
 
-      @media (prefers-reduced-motion: reduce) {
-        .arc-sidebar *,
-        .arc-sidebar *::before,
-        .arc-sidebar *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
-
 /* arc-skip-link */
 .arc-skip-link {
         display: contents;
@@ -4908,7 +4622,7 @@
         height: 1.5px;
         background: currentColor;
         border-radius: 1px; /* cosmetic rounding on 1.5px hamburger lines -- intentionally not tokenized */
-        transition: transform 400ms var(--ease-out-expo), opacity 250ms ease, width 400ms var(--ease-out-expo);
+        transition: transform 400ms var(--ease-out), opacity 250ms var(--ease-standard), width 400ms var(--ease-out);
         transform-origin: center;
       }
 
@@ -4931,16 +4645,6 @@
 
       @media (max-width: 900px) {
         .arc-top-bar .topbar__menu-btn { display: flex; }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        .arc-top-bar *,
-        .arc-top-bar *::before,
-        .arc-top-bar *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
       }
 
 /* arc-app-shell */
@@ -5877,16 +5581,6 @@
         box-shadow: inset var(--interactive-focus);
       }
 
-      @media (prefers-reduced-motion: reduce) {
-        .arc-toolbar *,
-        .arc-toolbar *::before,
-        .arc-toolbar *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
-
 /* arc-alert */
 .arc-alert { display: block; }
 
@@ -5951,17 +5645,6 @@
       .arc-alert[data-density="compact"] .alert__icon-wrap { width: 24px; height: 24px; font-size: var(--_text-sm); }
       .arc-alert[data-density="compact"] .alert__heading { font-size: var(--_text-sm); margin-bottom: 2px; }
       .arc-alert[data-density="compact"] .alert__content { font-size: var(--_text-xs); }
-
-
-      @media (prefers-reduced-motion: reduce) {
-        .arc-alert *,
-        .arc-alert *::before,
-        .arc-alert *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
 
 /* arc-announcement */
 .arc-announcement {
@@ -6292,14 +5975,4 @@
         transform: translateY(-50%) rotate(45deg);
         border-top: none;
         border-inline-end: none;
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        .arc-tooltip *,
-        .arc-tooltip *::before,
-        .arc-tooltip *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
       }

@@ -65,10 +65,3 @@
         text-transform: uppercase;
         color: var(--text-muted);
       }
-
-      @media (prefers-reduced-motion: reduce) {
-        .arc-blockquote *, .arc-blockquote *::before, .arc-blockquote *::after {
-          animation-duration: 0s !important;
-          transition-duration: 0s !important;
-        }
-      }

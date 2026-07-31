@@ -40,10 +40,33 @@ export const tokenStyles = css`
   }
 
   :host {
-    transition: opacity 150ms ease;
+    transition: opacity var(--transition-fast);
 
     ${hostTokens}
   }
 
   ${hostTouchTokens}
+
+  /* Reduced motion, once, for every component that adopts these styles.
+
+     This was copy-pasted verbatim into sixty-nine component files while fifteen
+     animating components had no guard at all — which is the usual outcome when
+     a cross-cutting rule is a convention rather than a place. Components keep
+     their own blocks only for what this cannot express: scroll-behavior,
+     animation-play-state, a transform that must be neutralised rather than
+     shortened.
+
+     0.01ms rather than "animation: none" on purpose. A component that removes
+     itself on animationend — the exiting toast and snackbar both do — would
+     wait forever for an event that a cancelled animation never fires. A
+     duration this short is imperceptible and still completes. */
+  @media (prefers-reduced-motion: reduce) {
+    :host *,
+    :host *::before,
+    :host *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 `;

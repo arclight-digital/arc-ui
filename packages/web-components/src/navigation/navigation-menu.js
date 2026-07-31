@@ -243,7 +243,7 @@ export class ArcNavigationMenu extends LitElement {
 
       .mobile-backdrop--closing {
         display: block;
-        animation: mobile-fade-out var(--duration-exit) ease-in both;
+        animation: mobile-fade-out var(--duration-exit) var(--ease-in) both;
       }
 
       .mobile-panel {
@@ -272,7 +272,7 @@ export class ArcNavigationMenu extends LitElement {
 
       .mobile-panel--closing {
         display: block;
-        animation: mobile-slide-out var(--duration-exit) ease-in both;
+        animation: mobile-slide-out var(--duration-exit) var(--ease-in) both;
       }
 
       .mobile-panel--open .mobile-item {
@@ -280,7 +280,7 @@ export class ArcNavigationMenu extends LitElement {
       }
 
       .mobile-panel--closing .mobile-item {
-        animation: mobile-item-out var(--duration-exit) ease-in both;
+        animation: mobile-item-out var(--duration-exit) var(--ease-in) both;
       }
 
       @keyframes mobile-fade-in {
@@ -470,7 +470,7 @@ export class ArcNavigationMenu extends LitElement {
         font-size: var(--body-size);
         border-radius: var(--radius-sm);
         -webkit-tap-highlight-color: transparent;
-        transition: background var(--transition-fast), transform 80ms ease;
+        transition: background var(--transition-fast), transform 80ms var(--ease-standard);
         cursor: pointer;
       }
 
@@ -494,16 +494,6 @@ export class ArcNavigationMenu extends LitElement {
         color: var(--text-muted);
         line-height: 1.4;
         margin-top: 2px;
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        :host *,
-        :host *::before,
-        :host *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
       }
     `,
   ];

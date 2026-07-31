@@ -94,13 +94,3 @@
         outline: none;
         box-shadow: var(--interactive-focus);
       }
-
-      @media (prefers-reduced-motion: reduce) {
-        .arc-tag *,
-        .arc-tag *::before,
-        .arc-tag *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }

@@ -37,13 +37,3 @@
 
       .arc-avatar-group[data-overlap="sm"] .group__overflow { padding-left: var(--space-xs); }
       .arc-avatar-group[data-overlap="lg"] .group__overflow { padding-left: var(--space-md); }
-
-      @media (prefers-reduced-motion: reduce) {
-        .arc-avatar-group *,
-        .arc-avatar-group *::before,
-        .arc-avatar-group *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }

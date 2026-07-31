@@ -231,16 +231,6 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
       }
 
       .ms__slot-host { display: none; }
-
-      @media (prefers-reduced-motion: reduce) {
-        :host *,
-        :host *::before,
-        :host *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
     `,
     // animate: false — this panel has its own keyframe entrance.
     managedPanelStyles('ms__dropdown', { animate: false }),

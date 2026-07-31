@@ -254,16 +254,6 @@ export class ArcDataGrid extends LitElement {
 
       /* Virtual spacer rows */
       .spacer td { padding: 0; border: none; background: none; }
-
-      @media (prefers-reduced-motion: reduce) {
-        :host *,
-        :host *::before,
-        :host *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
     `,
   ];
 

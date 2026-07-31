@@ -104,16 +104,6 @@ export class ArcCard extends LitElement {
       @media (max-width: 768px) { /* --breakpoint-md */
         .card__inner { padding: var(--space-lg) var(--space-md); }
       }
-
-      @media (prefers-reduced-motion: reduce) {
-        :host *,
-        :host *::before,
-        :host *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
     `,
   ];
 

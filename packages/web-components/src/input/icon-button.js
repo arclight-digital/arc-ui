@@ -146,16 +146,6 @@ export class ArcIconButton extends LitElement {
       :host([variant="secondary"]) .btn-slot::slotted(a:hover) {
         box-shadow: 0 0 16px var(--accent-primary-ring);
       }
-
-      @media (prefers-reduced-motion: reduce) {
-        :host *,
-        :host *::before,
-        :host *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
     `,
   ];
 

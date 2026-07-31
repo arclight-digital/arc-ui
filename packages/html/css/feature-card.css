@@ -92,13 +92,3 @@
       @media (max-width: 768px) { /* --breakpoint-md */
         .arc-feature-card .card__inner { padding: var(--space-md); }
       }
-
-      @media (prefers-reduced-motion: reduce) {
-        .arc-feature-card *,
-        .arc-feature-card *::before,
-        .arc-feature-card *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }

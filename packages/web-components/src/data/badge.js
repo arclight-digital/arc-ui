@@ -38,7 +38,7 @@ export class ArcBadge extends LitElement {
         border: 1px solid var(--border-default);
         border-radius: var(--radius-sm);
         background: var(--surface-hover);
-        transition: box-shadow 200ms ease, border-color 200ms ease;
+        transition: box-shadow var(--transition-base), border-color var(--transition-base);
         line-height: 1.4;
       }
 
@@ -89,16 +89,6 @@ export class ArcBadge extends LitElement {
       /* Sizes */
       :host([size="sm"]) .badge { font-size: calc(var(--_text-xs) - 1px); padding: 2px var(--space-xs); }
       :host([size="lg"]) .badge { font-size: var(--_text-sm); padding: var(--space-sm) var(--space-md); }
-
-      @media (prefers-reduced-motion: reduce) {
-        :host *,
-        :host *::before,
-        :host *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
     `,
   ];
 

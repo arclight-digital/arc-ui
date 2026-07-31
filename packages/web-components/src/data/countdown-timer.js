@@ -107,16 +107,6 @@ export class ArcCountdownTimer extends LitElement {
         text-transform: uppercase;
         color: var(--text-muted);
       }
-
-      @media (prefers-reduced-motion: reduce) {
-        :host *,
-        :host *::before,
-        :host *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
     `,
   ];
 

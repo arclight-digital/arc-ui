@@ -4,13 +4,6 @@
   @media (max-width: 768px) {
     .arc-feature-card .card__inner { padding: inherit; }
   }
-  @media (prefers-reduced-motion: reduce) {
-    .arc-feature-card *,
-        .arc-feature-card *::before,
-        .arc-feature-card *::after { animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important; }
-  }
   .arc-feature-card .card:hover .card__icon { border-color: rgba(130, 164, 250,0.3);
         box-shadow: 0 0 20px rgba(130, 164, 250, 0.2), 0 0 6px rgba(130, 164, 250, 0.12);
         transform: translateY(-2px); }

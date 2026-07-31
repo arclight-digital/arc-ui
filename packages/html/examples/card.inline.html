@@ -4,13 +4,6 @@
   @media (max-width: 768px) {
     .arc-card .card__inner { padding: inherit inherit; }
   }
-  @media (prefers-reduced-motion: reduce) {
-    .arc-card *,
-        .arc-card *::before,
-        .arc-card *::after { animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important; }
-  }
   .arc-card:not([data-href]):not([data-interactive]) .card:not(.card--linked):hover { background: rgb(30, 30, 78); }
   .arc-card:not([data-href]):not([data-interactive]) .card:not(.card--linked):hover .card__inner { box-shadow: none; }
   .arc-card a:focus-visible { outline: none;

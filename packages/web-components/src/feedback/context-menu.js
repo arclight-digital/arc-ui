@@ -55,7 +55,7 @@ export class ArcContextMenu extends LitElement {
         padding: var(--space-xs) 0;
         font-family: var(--font-body);
         font-size: var(--_text-sm);
-        animation: menu-in 100ms ease-out;
+        animation: menu-in 100ms var(--ease-out);
         outline: none;
       }
 

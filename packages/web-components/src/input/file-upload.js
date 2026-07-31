@@ -164,16 +164,6 @@ export class ArcFileUpload extends LitElement {
         font-size: var(--_text-sm);
         color: var(--color-error);
       }
-
-      @media (prefers-reduced-motion: reduce) {
-        :host *,
-        :host *::before,
-        :host *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
     `,
   ];
 

@@ -56,16 +56,6 @@ export class ArcAvatarGroup extends LitElement {
 
       :host([overlap="sm"]) .group__overflow { padding-left: var(--space-xs); }
       :host([overlap="lg"]) .group__overflow { padding-left: var(--space-md); }
-
-      @media (prefers-reduced-motion: reduce) {
-        :host *,
-        :host *::before,
-        :host *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
     `,
   ];
 

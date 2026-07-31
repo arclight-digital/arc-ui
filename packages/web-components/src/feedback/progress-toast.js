@@ -61,7 +61,7 @@ export class ArcProgressToast extends LitElement {
       }
 
       .progress-toast.is-exiting {
-        animation: pt-out 200ms ease-in forwards;
+        animation: pt-out 200ms var(--ease-in) forwards;
       }
 
       .progress-toast__message {

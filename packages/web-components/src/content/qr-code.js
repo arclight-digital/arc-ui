@@ -68,16 +68,6 @@ export class ArcQrCode extends LitElement {
       .card .qr-modules {
         fill: rgb(var(--black-rgb));
       }
-
-      @media (prefers-reduced-motion: reduce) {
-        :host *,
-        :host *::before,
-        :host *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
     `,
   ];
 

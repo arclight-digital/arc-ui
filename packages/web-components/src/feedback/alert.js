@@ -96,17 +96,6 @@ export class ArcAlert extends LitElement {
       :host([density="compact"]) .alert__icon-wrap { width: 24px; height: 24px; font-size: var(--_text-sm); }
       :host([density="compact"]) .alert__heading { font-size: var(--_text-sm); margin-bottom: 2px; }
       :host([density="compact"]) .alert__content { font-size: var(--_text-xs); }
-
-
-      @media (prefers-reduced-motion: reduce) {
-        :host *,
-        :host *::before,
-        :host *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
     `,
   ];
 

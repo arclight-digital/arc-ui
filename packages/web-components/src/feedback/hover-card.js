@@ -59,16 +59,6 @@ export class ArcHoverCard extends LitElement {
         transform: scale(1);
         pointer-events: auto;
       }
-
-      @media (prefers-reduced-motion: reduce) {
-        :host *,
-        :host *::before,
-        :host *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
     `,
     positionStyles('hovercard__card', { scale: 0.96, openCls: 'hovercard__card--visible' }),
   ];

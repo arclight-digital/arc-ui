@@ -71,13 +71,22 @@ export const hostTokens = css`
     --radius-full: 9999px;
 
     /* Transitions and motion */
-    --transition-fast: 120ms ease;
-    --transition-base: 200ms ease;
-    --transition-slow: 400ms ease;
-    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: 120ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-enter: 500ms cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-exit: 300ms cubic-bezier(0.7, 0, 0.84, 0);
+    --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --duration-fast: 120ms;
+    --duration-base: 200ms;
+    --duration-slow: 400ms;
     --duration-enter: 500ms;
     --duration-exit: 300ms;
+    --ease-out-expo: var(--ease-out);
+    --ease-in-out: var(--ease-standard);
 
     /* Z-index */
     --z-base: 0;

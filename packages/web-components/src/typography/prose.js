@@ -108,12 +108,6 @@ export class ArcProse extends LitElement {
         margin: var(--space-lg) 0 !important;
         font-size: var(--_text-sm) !important;
       }
-
-      @media (prefers-reduced-motion: reduce) {
-        :host * {
-          transition: none !important;
-        }
-      }
     `,
   ];
 
@@ -155,7 +149,7 @@ export class ArcProse extends LitElement {
         text-decoration: underline;
         text-decoration-color: rgba(var(--interactive-rgb), 0.3);
         text-underline-offset: 3px;
-        transition: text-decoration-color 120ms ease;
+        transition: text-decoration-color var(--transition-fast);
       }
       arc-prose a:hover {
         text-decoration-color: var(--interactive);

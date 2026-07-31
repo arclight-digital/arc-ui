@@ -174,7 +174,7 @@ export class ArcTopBar extends LitElement {
         height: 1.5px;
         background: currentColor;
         border-radius: 1px; /* cosmetic rounding on 1.5px hamburger lines -- intentionally not tokenized */
-        transition: transform 400ms var(--ease-out-expo), opacity 250ms ease, width 400ms var(--ease-out-expo);
+        transition: transform 400ms var(--ease-out), opacity 250ms var(--ease-standard), width 400ms var(--ease-out);
         transform-origin: center;
       }
 
@@ -197,16 +197,6 @@ export class ArcTopBar extends LitElement {
 
       @media (max-width: 900px) {
         .topbar__menu-btn { display: flex; }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        :host *,
-        :host *::before,
-        :host *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
       }
     `,
   ];

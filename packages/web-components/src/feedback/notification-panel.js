@@ -84,8 +84,8 @@ export class ArcNotificationPanel extends LitElement {
 
         /* opening transition — cubic overshoot for a pop feel */
         transition:
-          opacity 180ms ease-out,
-          transform 250ms cubic-bezier(0.34, 1.56, 0.64, 1),
+          opacity 180ms var(--ease-standard),
+          transform 250ms var(--ease-spring),
           display 180ms allow-discrete,
           overlay 180ms allow-discrete;
       }
@@ -153,7 +153,7 @@ export class ArcNotificationPanel extends LitElement {
       @media (prefers-reduced-motion: reduce) {
         .panel,
         :host([open]) .panel {
-          transition: opacity 100ms ease;
+          transition: opacity var(--transition-fast);
           transform: none;
         }
         :host([open]) .panel {

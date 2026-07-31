@@ -191,16 +191,6 @@ export class ArcSelect extends FormControlMixin(LitElement) {
       }
 
       .select__slot-host { display: none; }
-
-      @media (prefers-reduced-motion: reduce) {
-        :host *,
-        :host *::before,
-        :host *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
     `,
     // animate: false — the dropdown has its own dropdown-in keyframes, and a
     // declared transform beside them is redundant at best.

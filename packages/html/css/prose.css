@@ -91,9 +91,3 @@
         margin: var(--space-lg) 0 !important;
         font-size: var(--_text-sm) !important;
       }
-
-      @media (prefers-reduced-motion: reduce) {
-        .arc-prose * {
-          transition: none !important;
-        }
-      }

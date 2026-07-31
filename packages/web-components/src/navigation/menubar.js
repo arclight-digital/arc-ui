@@ -217,16 +217,6 @@ export class ArcMenubar extends LitElement {
         margin: var(--space-xs) 0;
         background: var(--border-subtle);
       }
-
-      @media (prefers-reduced-motion: reduce) {
-        :host *,
-        :host *::before,
-        :host *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
     `,
     // animate: false — menus are created and destroyed rather than toggled, and
     // they have their own menu-in keyframes.

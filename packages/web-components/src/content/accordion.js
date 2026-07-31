@@ -62,7 +62,7 @@ export class ArcAccordion extends LitElement {
         background: none;
         border: none;
         text-align: start;
-        transition: background var(--transition-fast), box-shadow var(--transition-fast), transform var(--ease-out-expo);
+        transition: background var(--transition-fast), box-shadow var(--transition-fast), transform var(--duration-fast) var(--ease-out);
         min-height: var(--touch-min);
       }
 
@@ -82,7 +82,7 @@ export class ArcAccordion extends LitElement {
         color: var(--text-muted);
         width: 18px;
         height: 18px;
-        transition: transform var(--ease-out-expo);
+        transition: transform var(--duration-base) var(--ease-out);
         flex-shrink: 0;
         display: inline-flex;
         align-items: center;
@@ -112,16 +112,6 @@ export class ArcAccordion extends LitElement {
       }
 
       .accordion__slot-host { display: none; }
-
-      @media (prefers-reduced-motion: reduce) {
-        :host *,
-        :host *::before,
-        :host *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
     `,
   ];
 

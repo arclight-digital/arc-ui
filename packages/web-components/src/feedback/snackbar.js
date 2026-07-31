@@ -75,7 +75,7 @@ export class ArcSnackbar extends LitElement {
       }
 
       .snackbar.is-exiting {
-        animation: snackbar-out 200ms ease-in forwards;
+        animation: snackbar-out 200ms var(--ease-in) forwards;
       }
 
       .snackbar__message { flex: 1; }

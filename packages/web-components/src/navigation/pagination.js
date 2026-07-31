@@ -53,7 +53,7 @@ export class ArcPagination extends LitElement {
         font-family: var(--font-body);
         font-size: var(--_text-sm);
         cursor: pointer;
-        transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast), transform var(--ease-out-expo);
+        transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast), transform var(--duration-fast) var(--ease-out);
         user-select: none;
       }
 
@@ -103,16 +103,6 @@ export class ArcPagination extends LitElement {
         color: var(--text-muted);
         font-size: var(--_text-sm);
         user-select: none;
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        :host *,
-        :host *::before,
-        :host *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
       }
     `,
   ];

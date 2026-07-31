@@ -124,16 +124,6 @@ export class ArcDropdownMenu extends LitElement {
       }
 
       .dropdown__slot-host { display: none; }
-
-      @media (prefers-reduced-motion: reduce) {
-        :host *,
-        :host *::before,
-        :host *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
     `,
     // The menu slides down rather than scaling; closedTransform keeps that
     // entrance instead of normalising it to the default scale.

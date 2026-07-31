@@ -64,14 +64,3 @@
       .arc-alert[data-density="compact"] .alert__icon-wrap { width: 24px; height: 24px; font-size: var(--_text-sm); }
       .arc-alert[data-density="compact"] .alert__heading { font-size: var(--_text-sm); margin-bottom: 2px; }
       .arc-alert[data-density="compact"] .alert__content { font-size: var(--_text-xs); }
-
-
-      @media (prefers-reduced-motion: reduce) {
-        .arc-alert *,
-        .arc-alert *::before,
-        .arc-alert *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }

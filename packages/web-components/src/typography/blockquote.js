@@ -85,13 +85,6 @@ export class ArcBlockquote extends LitElement {
         text-transform: uppercase;
         color: var(--text-muted);
       }
-
-      @media (prefers-reduced-motion: reduce) {
-        *, *::before, *::after {
-          animation-duration: 0s !important;
-          transition-duration: 0s !important;
-        }
-      }
     `,
   ];
 

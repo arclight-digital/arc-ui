@@ -29,6 +29,10 @@
         height: 100%;
         background: var(--accent-primary);
         transform-origin: left;
+        /* Deliberately not a motion token: this bar maps to scroll position, so
+           it has to track the finger linearly. An eased curve would make it lag
+           the scroll and then catch up, and any token duration is long enough to
+           read as drift. */
         transition: transform 60ms linear;
         will-change: transform;
       }

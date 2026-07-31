@@ -60,16 +60,6 @@ export class ArcSkeleton extends LitElement {
         flex-direction: column;
         gap: var(--space-sm);
       }
-
-      @media (prefers-reduced-motion: reduce) {
-        :host *,
-        :host *::before,
-        :host *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
     `,
   ];
 

@@ -58,7 +58,7 @@ export class ArcSparkline extends LitElement {
       .sparkline-bar {
         fill: rgba(var(--_sparkline-color-rgb, var(--accent-primary-rgb)), 0.3);
         rx: 1;
-        transition: fill var(--transition-fast, 150ms ease);
+        transition: fill var(--transition-fast);
       }
 
       .sparkline-bar:hover {
@@ -72,7 +72,7 @@ export class ArcSparkline extends LitElement {
 
       /* Draw-in animation for line type */
       .sparkline-line-animated {
-        animation: sparkline-draw 800ms ease-out forwards;
+        animation: sparkline-draw 800ms var(--ease-out) forwards;
       }
 
       @keyframes sparkline-draw {
@@ -81,23 +81,13 @@ export class ArcSparkline extends LitElement {
       }
 
       .sparkline-area-animated {
-        animation: sparkline-fade-in 800ms ease-out forwards;
+        animation: sparkline-fade-in 800ms var(--ease-out) forwards;
         opacity: 0;
       }
 
       @keyframes sparkline-fade-in {
         from { opacity: 0; }
         to   { opacity: 1; }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        :host *,
-        :host *::before,
-        :host *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
       }
     `,
   ];

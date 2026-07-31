@@ -255,16 +255,6 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
         color: var(--color-error);
         line-height: 1.4;
       }
-
-      @media (prefers-reduced-motion: reduce) {
-        :host *,
-        :host *::before,
-        :host *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
     `,
     // animate: false — this panel has its own keyframe entrance.
     managedPanelStyles('ti__dropdown', { animate: false }),

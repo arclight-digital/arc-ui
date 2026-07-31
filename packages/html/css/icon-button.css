@@ -109,13 +109,3 @@
       .arc-icon-button[data-variant="secondary"] a:hover {
         box-shadow: 0 0 16px var(--accent-primary-ring);
       }
-
-      @media (prefers-reduced-motion: reduce) {
-        .arc-icon-button *,
-        .arc-icon-button *::before,
-        .arc-icon-button *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }

@@ -100,13 +100,3 @@
       .arc-textarea .char-count.at-limit {
         color: var(--color-error);
       }
-
-      @media (prefers-reduced-motion: reduce) {
-        .arc-textarea *,
-        .arc-textarea *::before,
-        .arc-textarea *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }

@@ -36,13 +36,3 @@
       .arc-qr-code .card .qr-modules {
         fill: rgb(var(--black-rgb));
       }
-
-      @media (prefers-reduced-motion: reduce) {
-        .arc-qr-code *,
-        .arc-qr-code *::before,
-        .arc-qr-code *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }

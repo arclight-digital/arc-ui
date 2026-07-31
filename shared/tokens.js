@@ -3,6 +3,40 @@
  * Single source of truth — extracted from arclight.build
  */
 
+/* ────────────────────────────────────────────────────────────────────────────
+ * Motion, as two scales that the `transition` tokens compose.
+ *
+ * The curve carries the meaning, not the duration:
+ *
+ *   standard — a state change on an element that stays put: a hover recolour, a
+ *     border shift. Symmetric, because nothing is arriving or leaving.
+ *   out — something entering or expanding. Covers most of its distance
+ *     immediately and settles, which is what makes an entrance read as already
+ *     having been on its way rather than starting when you looked at it.
+ *   in — the mirror, for something leaving. Paired with a shorter duration:
+ *     an exit the user has already decided on should not have to be re-watched.
+ *   spring — a slight overshoot, reserved for a control confirming a discrete
+ *     action (a toggle landing, a checkbox filling). Motivated motion only.
+ *
+ * Before this, all three transition tokens ended in the CSS keyword `ease` —
+ * the browser default — across 356 uses, while the two curves the tree already
+ * published were spelled four times in the entire component library.
+ * ──────────────────────────────────────────────────────────────────────────── */
+const duration = {
+  fast:  '120ms',
+  base:  '200ms',
+  slow:  '400ms',
+  enter: '500ms',
+  exit:  '300ms',
+};
+
+const easing = {
+  standard: 'cubic-bezier(0.4, 0, 0.2, 1)',
+  out:      'cubic-bezier(0.16, 1, 0.3, 1)',
+  in:       'cubic-bezier(0.7, 0, 0.84, 0)',
+  spring:   'cubic-bezier(0.34, 1.56, 0.64, 1)',
+};
+
 export const tokens = {
   /* ── Backgrounds ── */
   color: {
@@ -200,23 +234,28 @@ export const tokens = {
     full: '9999px',
   },
 
-  /* ── Transitions ── */
+  /* ── Transitions ──
+     Duration and curve composed into the one shorthand a component writes.
+
+     The curve is baked in here rather than referenced with var() in the CSS,
+     which is the opposite of the rule for gradients and glows. Those compose
+     with var() so a consumer can retune them from :root; these cannot, because
+     both --transition-* and --ease-* are declared on :host, and a :host value
+     beats the inherited :root one — a var() reference would resolve against
+     :host's own easing and make the :root override unreachable anyway. That is
+     the same trap the --_text-* private mirrors exist to avoid. Composing in JS
+     instead is what keeps the shorthand and the bare curve from drifting. */
   transition: {
-    fast: '120ms ease',
-    base: '200ms ease',
-    slow: '400ms ease',
+    fast:  `${duration.fast} ${easing.standard}`,
+    base:  `${duration.base} ${easing.standard}`,
+    slow:  `${duration.slow} ${easing.standard}`,
+    enter: `${duration.enter} ${easing.out}`,
+    exit:  `${duration.exit} ${easing.in}`,
   },
 
-  /* ── Motion ── */
-  easing: {
-    outExpo: 'cubic-bezier(0.16, 1, 0.3, 1)',
-    inOut:   'cubic-bezier(0.4, 0, 0.2, 1)',
-  },
-
-  duration: {
-    enter: '500ms',
-    exit:  '300ms',
-  },
+  /* ── Motion ── see the scales above the tree for what each curve is for. */
+  easing,
+  duration,
 
   /* ── Shadows ── */
   shadow: {
@@ -489,14 +528,16 @@ export const cssVariables = `
   --radius-xl: ${tokens.radius.xl};
   --radius-full: ${tokens.radius.full};
 
-  --transition-fast: ${tokens.transition.fast};
-  --transition-base: ${tokens.transition.base};
-  --transition-slow: ${tokens.transition.slow};
+${Object.entries(tokens.transition).map(([k, v]) => `  --transition-${k}: ${v};`).join('\n')}
 
-  --ease-out-expo: ${tokens.easing.outExpo};
-  --ease-in-out: ${tokens.easing.inOut};
-  --duration-enter: ${tokens.duration.enter};
-  --duration-exit: ${tokens.duration.exit};
+${Object.entries(tokens.easing).map(([k, v]) => `  --ease-${k}: ${v};`).join('\n')}
+${Object.entries(tokens.duration).map(([k, v]) => `  --duration-${k}: ${v};`).join('\n')}
+
+  /* Back-compat: the two curve names published before the motion scale
+     existed. Public API, so they stay; new work spells --ease-out and
+     --ease-standard. */
+  --ease-out-expo: var(--ease-out);
+  --ease-in-out: var(--ease-standard);
 
   --gradient-display-text: ${tokens.gradient.displayText};
   --gradient-accent-text: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
@@ -1055,10 +1096,13 @@ export function generateHostTokensCSS(indent = '    ') {
   group('Radii', Object.entries(tokens.radius).map(([k, v]) => [`--radius-${k}`, v]));
   group('Transitions and motion', [
     ...Object.entries(tokens.transition).map(([k, v]) => [`--transition-${k}`, v]),
-    ['--ease-out-expo', tokens.easing.outExpo],
-    ['--ease-in-out', tokens.easing.inOut],
-    ['--duration-enter', tokens.duration.enter],
-    ['--duration-exit', tokens.duration.exit],
+    ...Object.entries(tokens.easing).map(([k, v]) => [`--ease-${k}`, v]),
+    ...Object.entries(tokens.duration).map(([k, v]) => [`--duration-${k}`, v]),
+    // Back-compat aliases for the two curve names published before the motion
+    // scale existed. Both targets are declared just above on this same :host,
+    // so the reference resolves locally and the alias cannot dangle.
+    ['--ease-out-expo', 'var(--ease-out)'],
+    ['--ease-in-out', 'var(--ease-standard)'],
   ]);
   group('Z-index', Object.entries(tokens.zIndex).map(([k, v]) => [`--z-${k}`, v]));
   group('Glow and focus', [

@@ -53,13 +53,3 @@
       .arc-copy-button .copy-btn__label {
         user-select: none;
       }
-
-      @media (prefers-reduced-motion: reduce) {
-        .arc-copy-button *,
-        .arc-copy-button *::before,
-        .arc-copy-button *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }

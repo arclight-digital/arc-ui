@@ -129,7 +129,7 @@ export class ArcToast extends LitElement {
 
 
       .toast.is-exiting {
-        animation: toast-out 200ms ease-in forwards;
+        animation: toast-out 200ms var(--ease-in) forwards;
       }
 
       @keyframes toast-in {

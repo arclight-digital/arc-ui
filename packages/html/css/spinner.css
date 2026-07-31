@@ -34,13 +34,3 @@
         border-color: var(--text-primary);
         border-top-color: transparent;
       }
-
-      @media (prefers-reduced-motion: reduce) {
-        .arc-spinner *,
-        .arc-spinner *::before,
-        .arc-spinner *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }

@@ -105,13 +105,3 @@
       }
 
       .arc-timeline .timeline__slot-host { display: none; }
-
-      @media (prefers-reduced-motion: reduce) {
-        .arc-timeline *,
-        .arc-timeline *::before,
-        .arc-timeline *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }

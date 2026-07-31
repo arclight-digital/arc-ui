@@ -17,6 +17,29 @@ export default defineConfig({
     }),
   ],
   vite: {
+    server: {
+      watch: {
+        // `pnpm generate` rewrites roughly 1,800 files in one burst: all six
+        // wrapper packages, the standalone CSS and HTML examples, the manifest
+        // and the editor data. @arclux/arc-ui is a workspace link shipping raw
+        // source, so Vite watches that tree as project source rather than as a
+        // pre-bundled dependency — and a write storm that size arrives as a
+        // flood of HMR invalidations the dev server does not recover from. The
+        // symptom is a page that renders wrong until the server itself is
+        // restarted; reloading the browser does not clear it.
+        //
+        // The docs site only ever imports from packages/web-components and
+        // shared/. Everything below is generated output it never reads, so
+        // ignoring it costs no reactivity and takes the storm from ~1,800 files
+        // to a couple of hundred.
+        ignored: [
+          '**/packages/{react,preact,vue,svelte,solid,angular}/**',
+          '**/packages/html/**',
+          '**/packages/web-components/{custom-elements.json,web-types.json}',
+          '**/packages/web-components/types/**',
+        ],
+      },
+    },
     build: {
       rollupOptions: {
         output: {

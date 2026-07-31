@@ -69,13 +69,3 @@
       }
 
       .arc-breadcrumb .breadcrumb__slot-host { display: none; }
-
-      @media (prefers-reduced-motion: reduce) {
-        .arc-breadcrumb *,
-        .arc-breadcrumb *::before,
-        .arc-breadcrumb *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }

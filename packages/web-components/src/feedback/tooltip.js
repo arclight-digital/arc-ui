@@ -177,16 +177,6 @@ export class ArcTooltip extends LitElement {
         border-top: none;
         border-inline-end: none;
       }
-
-      @media (prefers-reduced-motion: reduce) {
-        :host *,
-        :host *::before,
-        :host *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
     `,
     // scale: 1 — a tooltip cross-fades rather than scaling, but it still needs
     // the allow-discrete treatment or the fade is lost to display:none in the

@@ -112,16 +112,6 @@ export class ArcThemeToggle extends LitElement {
       :host([icon-only]) .theme-toggle__label {
         display: none;
       }
-
-      @media (prefers-reduced-motion: reduce) {
-        :host *,
-        :host *::before,
-        :host *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
     `,
   ];
 

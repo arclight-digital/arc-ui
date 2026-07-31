@@ -102,7 +102,7 @@ export class ArcSpeedDial extends LitElement {
         cursor: pointer;
         opacity: 0;
         transform: scale(0.3);
-        transition: opacity 200ms, transform 200ms var(--ease-out-expo), background var(--transition-fast);
+        transition: opacity var(--transition-base), transform 200ms var(--ease-out), background var(--transition-fast);
         color: var(--text-secondary);
         padding: 0;
         font: inherit;

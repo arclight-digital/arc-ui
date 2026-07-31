@@ -58,13 +58,3 @@
         scrollbar-width: thin;
         scrollbar-color: var(--border-bright) var(--surface-overlay);
       }
-
-      @media (prefers-reduced-motion: reduce) {
-        .arc-scroll-area *,
-        .arc-scroll-area *::before,
-        .arc-scroll-area *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }

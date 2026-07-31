@@ -57,16 +57,6 @@ export class ArcColorSwatch extends LitElement {
         text-overflow: ellipsis;
         white-space: nowrap;
       }
-
-      @media (prefers-reduced-motion: reduce) {
-        :host *,
-        :host *::before,
-        :host *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
     `,
   ];
 

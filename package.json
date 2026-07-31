@@ -36,6 +36,7 @@
     "check:doc-claims": "node scripts/check-doc-claims.js",
     "check:ssr": "node scripts/check-ssr.js",
     "check:wrapper-types": "node scripts/check-wrapper-types.js",
+    "check:motion": "node scripts/check-motion-tokens.js",
     "publish-all": "pnpm -r publish --access public",
     "smoke:wrappers": "node scripts/smoke-test-wrappers.js"
   },
