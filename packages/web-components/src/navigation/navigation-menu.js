@@ -586,10 +586,35 @@ export class ArcNavigationMenu extends LitElement {
     this._portalRoot = null;
   }
 
+  /**
+   * Read the items once the first render has a slot to read from.
+   *
+   * slotchange alone is not enough under declarative shadow DOM: the parser
+   * attaches the shadow root and assigns the slot before Lit adopts the tree,
+   * so the assignment has already happened by the time this listener exists
+   * and the event never arrives. This component mirrors its children into its
+   * own nav and hides the light DOM with `.nav__slot-host { display: none }`,
+   * so upgrading with zero items doesn't degrade to the plain link list — it
+   * renders an empty bar and hides the real links behind it. The site's whole
+   * top-bar nav disappeared on the first server-rendered deploy.
+   *
+   * Same fix, same reason, as arc-segmented-control.
+   */
+  firstUpdated() {
+    this._readItems(this.shadowRoot?.querySelector('.nav__slot-host slot'));
+  }
+
   _onSlotChange(e) {
-    this._items = e.target
+    this._readItems(e.target);
+  }
+
+  _readItems(slot) {
+    if (!slot) return;
+    const items = slot
       .assignedElements({ flatten: true })
       .filter((el) => el.tagName === 'ARC-NAV-ITEM');
+    if (!items.length && !this._items.length) return;
+    this._items = items;
   }
 
   _onKeyDown(e) {

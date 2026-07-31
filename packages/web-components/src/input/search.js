@@ -3,6 +3,7 @@ import { tokenStyles } from '../shared-styles.js';
 import { ClickOutsideController } from '../shared/click-outside.js';
 import { PositionController } from '../shared/position-controller.js';
 import { managedPanelStyles } from '../shared/position-styles.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 /**
  * Search input with a magnifying glass icon, clear button, loading spinner, and autocomplete
@@ -348,6 +349,11 @@ export class ArcSearch extends LitElement {
         }
         break;
     }
+  }
+
+  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  firstUpdated() {
+    hydrateSlots(this);
   }
 
   render() {

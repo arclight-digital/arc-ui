@@ -32500,6 +32500,36 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/shared/hydrate-slots.js",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "hydrateSlots",
+          "parameters": [
+            {
+              "name": "host",
+              "description": "Component whose first render just completed.",
+              "type": {
+                "text": "LitElement"
+              }
+            }
+          ],
+          "description": "hydrate-slots.js — deliver the slotchange that declarative shadow DOM eats.\n\nUnder DSD the parser attaches the shadow root and assigns the light-DOM\nchildren to their slots before any script runs. The element then upgrades\nand Lit adopts that tree rather than constructing it, so no new slot element is\ncreated and no assignment ever changes — and `slotchange`, which fires on\nassignment changes, never fires at all.\n\nComponents that mirror their children into their own markup and hide the\noriginals depend on that event for their content. Client-side they build\ntheir own shadow root, the slot is new, the event arrives, everything works\n— which is also why no test caught it. Server-rendered, they upgrade with\nnothing and render an empty mirror over hidden children: arc-segmented-control\nas an 8px sliver, arc-navigation-menu as a top bar with no navigation.\n\nDispatching the event the component was already listening for is deliberately\ndumber than calling its reader directly: there is one contract here, not one\nper component, and a handler that changes shape keeps working. Handlers must\nbe idempotent — they are read-and-store, and re-reading the same assignment\nis a no-op — which they are, since a real slotchange can fire any number of\ntimes for reasons unrelated to hydration.\n\nEnforced by scripts/checks/slot-hydration.js: a component that hides its slot\nhost and reads only on slotchange fails the build."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "hydrateSlots",
+          "declaration": {
+            "name": "hydrateSlots",
+            "module": "src/shared/hydrate-slots.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/shared/listbox-controller.js",
       "declarations": [
         {

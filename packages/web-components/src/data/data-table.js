@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 /**
  * A data-driven table component that renders rows from a JavaScript array. Declarative column
@@ -245,6 +246,7 @@ export class ArcDataTable extends LitElement {
   }
 
   firstUpdated() {
+    hydrateSlots(this);
     if (this.virtual) this._attachScrollListener();
   }
 

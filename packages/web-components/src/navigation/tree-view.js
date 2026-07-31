@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 /**
  * Hierarchical tree structure with expandable/collapsible nodes, selection tracking, keyboard
@@ -277,6 +278,11 @@ export class ArcTreeView extends LitElement {
         })}
       </ul>
     `;
+  }
+
+  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  firstUpdated() {
+    hydrateSlots(this);
   }
 
   render() {

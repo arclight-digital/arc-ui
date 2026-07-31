@@ -8,6 +8,7 @@ import { setTriggerAria, deepActiveElement } from '../shared/trigger-aria.js';
 import '../shared/menu-item.js';
 import '../shared/menu-divider.js';
 import '../content/separator.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 /**
  * Menu dropdown triggered by a button with keyboard navigation.
@@ -265,6 +266,11 @@ export class ArcDropdownMenu extends LitElement {
         ${child.shortcut ? html`<span class="dropdown__item-shortcut" part="shortcut">${child.shortcut}</span>` : ''}
       </button>
     `;
+  }
+
+  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  firstUpdated() {
+    hydrateSlots(this);
   }
 
   render() {

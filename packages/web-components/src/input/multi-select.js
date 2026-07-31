@@ -6,6 +6,7 @@ import { managedPanelStyles } from '../shared/position-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 import { ClickOutsideController } from '../shared/click-outside.js';
 import '../shared/option.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 /**
  * Multi-value select with tag chips, inline search filtering, and keyboard navigation.
@@ -455,6 +456,11 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
   _getLabel(val) {
     const item = this._normalizedItems.find((i) => i.value === val);
     return item ? item.label : val;
+  }
+
+  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  firstUpdated() {
+    hydrateSlots(this);
   }
 
   render() {

@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 /**
  * Expandable content sections with smooth height animations. Ideal for FAQs, settings panels, and
@@ -137,6 +138,11 @@ export class ArcAccordion extends LitElement {
       next.add(index);
     }
     this._openItems = next;
+  }
+
+  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  firstUpdated() {
+    hydrateSlots(this);
   }
 
   render() {

@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 /**
  * Collapsible navigation sidebar with grouped sections, heading labels, and active link
@@ -389,6 +390,11 @@ export class ArcSidebar extends LitElement {
   _toggleSection(section) {
     section.toggle();
     this.requestUpdate();
+  }
+
+  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  firstUpdated() {
+    hydrateSlots(this);
   }
 
   render() {

@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 /**
  * Single-select option group with arrow-key navigation and ARIA radiogroup semantics. Ideal for
@@ -168,6 +169,11 @@ export class ArcRadioGroup extends FormControlMixin(LitElement) {
       const radios = this.shadowRoot.querySelectorAll('.radio');
       radios[next]?.focus();
     });
+  }
+
+  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  firstUpdated() {
+    hydrateSlots(this);
   }
 
   render() {

@@ -6,6 +6,7 @@ import '../shared/menu-item.js';
 import '../shared/menu-divider.js';
 import '../content/icon.js';
 import '../content/separator.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 /**
  * Right-click context menu with keyboard shortcuts.
@@ -308,6 +309,11 @@ export class ArcContextMenu extends LitElement {
         break;
       }
     }
+  }
+
+  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  firstUpdated() {
+    hydrateSlots(this);
   }
 
   render() {

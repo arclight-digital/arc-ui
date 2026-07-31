@@ -6,6 +6,7 @@ import { PositionController } from '../shared/position-controller.js';
 import { ListboxController } from '../shared/listbox-controller.js';
 import { managedPanelStyles } from '../shared/position-styles.js';
 import '../shared/option.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 /**
  * Dropdown select with searchable options, keyboard navigation, and full ARIA listbox semantics
@@ -312,6 +313,11 @@ export class ArcSelect extends FormControlMixin(LitElement) {
   get _selectedLabel() {
     const selected = this._options.find((o) => o.value === this.value);
     return selected ? selected.label : '';
+  }
+
+  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  firstUpdated() {
+    hydrateSlots(this);
   }
 
   render() {

@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 /**
  * Vertical timeline with dated events.
@@ -143,6 +144,11 @@ export class ArcTimeline extends LitElement {
     this._items = e.target
       .assignedElements({ flatten: true })
       .filter((el) => el.tagName === 'ARC-TIMELINE-ITEM');
+  }
+
+  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  firstUpdated() {
+    hydrateSlots(this);
   }
 
   render() {

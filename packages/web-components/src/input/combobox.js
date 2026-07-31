@@ -6,6 +6,7 @@ import { managedPanelStyles } from '../shared/position-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 import { ClickOutsideController } from '../shared/click-outside.js';
 import '../shared/option.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 /**
  * Searchable dropdown with type-ahead filtering.
@@ -298,6 +299,11 @@ export class ArcCombobox extends FormControlMixin(LitElement) {
     // Filtering can leave fewer options than the active index, which would point
     // aria-activedescendant at an option that no longer exists.
     if (changed.has('_query') || changed.has('_options')) this._listbox.clampToCount();
+  }
+
+  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  firstUpdated() {
+    hydrateSlots(this);
   }
 
   render() {

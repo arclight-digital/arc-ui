@@ -4,6 +4,7 @@ import { MenuKeyboardController } from '../shared/menu-keyboard.js';
 import { OverlayMixin } from '../shared/overlay-mixin.js';
 import { matchItem, highlightRuns, snippetAround } from '../shared/fuzzy-match.js';
 import '../content/icon.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 /**
  * Spotlight-style command palette with fuzzy search and keyboard shortcuts.
@@ -519,6 +520,11 @@ export class ArcCommandPalette extends OverlayMixin(LitElement) {
     )
       return;
     this.open = false;
+  }
+
+  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  firstUpdated() {
+    hydrateSlots(this);
   }
 
   render() {
