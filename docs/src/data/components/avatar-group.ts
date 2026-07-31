@@ -12,14 +12,14 @@ export const avatarGroup: ComponentDef = {
 
 When avatars are slotted in, the component listens for slotchange events and dynamically manages visibility. Avatars beyond the \`max\` count are hidden via \`display: none\`, and a circular overflow badge (styled to match the avatar aesthetic) shows the remaining count. Each visible avatar receives a descending z-index so earlier avatars stack on top, creating the correct visual overlap order.
 
-AvatarGroup is marked as a hybrid component: the overlapping layout works in pure CSS, but the overflow counter logic — hiding excess avatars and computing the "+N" label — requires JavaScript. The group wrapper uses \`role="group"\` with \`aria-label="Avatar group"\` for assistive technology, and the overflow badge uses the same Azeret Mono font and elevated background as the avatar initials fallback for visual cohesion.`,
+AvatarGroup is marked as a hybrid component: the overlapping layout works in pure CSS, but the overflow counter logic — hiding excess avatars and computing the "+N" label — requires JavaScript. The group wrapper uses \`role="group"\` with \`aria-label="Avatar group"\` for assistive technology, and the overflow badge uses the same Tomorrow font and elevated background as the avatar initials fallback for visual cohesion.`,
 
   features: [
     'Automatic "+N" overflow counter when slotted avatars exceed the max threshold',
     'Three overlap presets: sm (-8px), md (-12px), lg (-16px) for adjustable density',
     'Dynamic slot management with slotchange listener for visibility toggling',
     'Descending z-index assignment for correct visual stacking order',
-    'Overflow badge styled to match avatar aesthetics (Azeret Mono font, elevated background, circular shape)',
+    'Overflow badge styled to match avatar aesthetics (Tomorrow font, elevated background, circular shape)',
     'Accessible `role="group"` with `aria-label` on the container',
     'Exposed CSS parts: group and overflow for external style customization',
   ],
@@ -177,7 +177,7 @@ export default function Example() {
 <span class="arc-avatar-group" style="display: inline-flex">
   <div style="display: flex; align-items: center" role="group" aria-label="Avatar group">
    AvatarGroup
-   <span style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 9999px; background: rgb(17, 17, 22); border: 1px solid rgb(34, 34, 41); font-family: 'Azeret Mono', ui-monospace, monospace; font-weight: 600; font-size: 12px; color: rgb(124, 124, 137); user-select: none" style="display:none"></span>
+   <span style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 9999px; background: rgb(17, 17, 22); border: 1px solid rgb(34, 34, 41); font-family: 'Tomorrow', system-ui, sans-serif; font-weight: 600; font-size: 12px; color: rgb(124, 124, 137); user-select: none" style="display:none"></span>
    </div>
 </span>`,
     },

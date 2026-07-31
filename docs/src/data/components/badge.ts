@@ -207,7 +207,7 @@ export function ProjectStatus() {
   .arc-badge[data-variant="secondary"]:hover .badge { box-shadow: 0 0 12px rgba(139, 92, 246, 0.15); }
 </style>
 <span class="arc-badge" style="display: inline-flex">
-  <span class="badge" style="display: inline-flex; align-items: center; gap: 8px; font-family: 'Azeret Mono', ui-monospace, monospace; font-weight: 600; font-size: 12px; letter-spacing: 4px; text-transform: uppercase; color: rgb(124, 124, 137); padding: 6px 16px; border: 1px solid rgb(34, 34, 41); border-radius: 100px; background: rgba(255, 255, 255, 0.03)">Badge</span>
+  <span class="badge" style="display: inline-flex; align-items: center; gap: 8px; font-family: 'Tomorrow', system-ui, sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 4px; text-transform: uppercase; color: rgb(124, 124, 137); padding: 6px 16px; border: 1px solid rgb(34, 34, 41); border-radius: 100px; background: rgba(255, 255, 255, 0.03)">Badge</span>
 </span>`,
     },
   ],

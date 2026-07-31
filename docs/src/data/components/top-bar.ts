@@ -293,7 +293,7 @@ export function AppHeader() {
    <rect y="15" width="20" height="2" rx="1"/>
    </svg>
    </button>
-   <a style="display: flex; align-items: center; gap: 8px; font-family: 'Azeret Mono', ui-monospace, monospace; font-size: clamp(20px, 2.5vw, 28px); font-weight: 500; letter-spacing: clamp(8px, 1.2vw, 14px); text-transform: uppercase; color: rgb(232, 232, 236); text-decoration: none; flex-shrink: 0" href="/">
+   <a style="display: flex; align-items: center; gap: 8px; font-family: 'Tomorrow', system-ui, sans-serif; font-size: clamp(20px, 2.5vw, 28px); font-weight: 500; letter-spacing: clamp(8px, 1.2vw, 14px); text-transform: uppercase; color: rgb(232, 232, 236); text-decoration: none; flex-shrink: 0" href="/">
 
    Heading
    </a>

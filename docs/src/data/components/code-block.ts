@@ -8,7 +8,7 @@ export const codeBlock: ComponentDef = {
   interactivity: 'hybrid',
   description: 'Syntax-highlighted code display with optional filename and copy button.',
 
-  overview: `CodeBlock displays source code in a styled container with a header bar, optional filename, language badge, and a one-click copy button. The header renders the filename in monospace font on the left, the language identifier as an uppercase Azeret Mono badge on the right, and a "Copy" button that writes the code content to the clipboard via the Clipboard API. After a successful copy, the button text and border color switch to a green "Copied" state for two seconds before reverting.
+  overview: `CodeBlock displays source code in a styled container with a header bar, optional filename, language badge, and a one-click copy button. The header renders the filename in monospace font on the left, the language identifier as an uppercase Tomorrow badge on the right, and a "Copy" button that writes the code content to the clipboard via the Clipboard API. After a successful copy, the button text and border color switch to a green "Copied" state for two seconds before reverting.
 
 The code body renders inside a \`<pre>\` element with the monospace font stack (JetBrains Mono), a line-height of 1.8, and horizontal overflow scrolling for long lines. Code content is provided via the \`code\` property — there is no default slot, so content placed between the tags is not rendered. The tab-size is set to 2 for compact indentation.
 
@@ -28,7 +28,7 @@ CodeBlock is marked as a hybrid component: the code display works without JavaSc
 
   features: [
     'One-click copy-to-clipboard via the Clipboard API with a 2-second "Copied" confirmation',
-    'Header bar with filename (monospace), language badge (uppercase Azeret Mono), and copy button',
+    'Header bar with filename (monospace), language badge (uppercase Tomorrow), and copy button',
     'Horizontal scroll overflow for long code lines without wrapping',
     'Syntax highlighting via shiki — an optional peer dependency, imported only by this component',
     'Renders uncoloured but fully functional when shiki is not installed',
@@ -198,9 +198,9 @@ export default function Example() {
   <div class="code-block" style="background: rgb(10, 10, 15); border: 1px solid rgb(34, 34, 41); border-radius: 14px; overflow: hidden">
    <div style="display: flex; align-items: center; justify-content: space-between; padding: 4px 16px; border-bottom: 1px solid rgb(24, 24, 30); background: rgb(13, 13, 18)">
    <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: rgb(124, 124, 137)">Filename</span>
-   <span style="font-family: 'Azeret Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: rgb(107, 107, 128)">Language</span>
+   <span style="font-family: 'Tomorrow', system-ui, sans-serif; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: rgb(107, 107, 128)">Language</span>
    <button
-   class="code-block__copy" style="display: flex; align-items: center; gap: 4px; background: none; border: 1px solid rgb(34, 34, 41); border-radius: 4px; color: rgb(124, 124, 137); font-family: 'Azeret Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; padding: 4px 8px; cursor: pointer"
+   class="code-block__copy" style="display: flex; align-items: center; gap: 4px; background: none; border: 1px solid rgb(34, 34, 41); border-radius: 4px; color: rgb(124, 124, 137); font-family: 'Tomorrow', system-ui, sans-serif; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; padding: 4px 8px; cursor: pointer"
 
    aria-label="_copied"
    >_copied</button>

@@ -2,28 +2,30 @@
  * Reference faces for the docs site. ARC UI itself ships no font files — this is
  * arcui.dev's own loading, and it follows the advice on /docs/typography.
  *
- * Host Grotesk and Azeret Mono are variable fonts, so each is declared ONCE with
- * its real axis range. Faces here were previously declared under several discrete
- * weights, all pointing at the same variable file. A @font-face naming a single
- * weight gives the browser no way to set the wght axis, so it renders the font's
- * default instance for every one of them and the whole weight hierarchy silently
- * flattens. That is the failure the typography page warns about, on the page
- * warning about it.
+ * Host Grotesk is a variable font, so it is declared ONCE with its real axis
+ * range. It was previously declared under several discrete weights, all pointing
+ * at the same variable file. A @font-face naming a single weight gives the
+ * browser no way to set the wght axis, so it renders the font's default instance
+ * for every one of them and the whole weight hierarchy silently flattens. That
+ * is the failure the typography page warns about, on the page warning about it.
  *
- * Ranges below are the fonts' actual fvar wght axes, not guesses:
+ * A static face has the opposite requirement: one @font-face per cut, each
+ * naming the weight it actually contains, or the browser synthesises the rest.
+ *
+ * What each file carries, from the fonts' own metadata, not guesses:
  *   hostgrotesk-latin.woff2        wght 300–800 (default 300)
- *   azeretmono-latin.woff2         wght 100–900
+ *   tomorrow-400-latin.woff2       static, 400
+ *   tomorrow-600-latin.woff2       static, 600
  *   jetbrainsmono-400-latin.woff2  static, 400
  *
  * Note that Host Grotesk cannot go below 300 — anything asking for less gets
  * the axis minimum.
  *
- * (azeretmono-600-latin.ttf is not loaded here: it is a static instance for
- * satori, which rasterises the OG cards server-side and takes no variable
- * fonts.)
+ * (tomorrow-600-latin.ttf is not loaded here: it is the same cut in TrueType for
+ * satori, which rasterises the OG cards server-side and cannot read woff2.)
  */
 
-/* Latin subset shared by all three faces. */
+/* Latin subset shared by every face below. */
 
 /* Host Grotesk — latin, variable */
 @font-face {
@@ -35,13 +37,25 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-/* Azeret Mono — latin, variable. The label/accent face. */
+/* Tomorrow — latin, static. The label/accent face. Two cuts rather than a
+   variable axis: the role only ever asks for the body weight and the 600 that
+   eyebrows, table headers and form labels are set in, and two subset files are
+   smaller than one variable face carrying nine weights nobody calls for. */
 @font-face {
-  font-family: 'Azeret Mono';
+  font-family: 'Tomorrow';
   font-style: normal;
-  font-weight: 100 900;
+  font-weight: 400;
   font-display: swap;
-  src: url('/fonts/azeretmono-latin.woff2') format('woff2');
+  src: url('/fonts/tomorrow-400-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Tomorrow';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/tomorrow-600-latin.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 

@@ -9,7 +9,7 @@ export const avatar: ComponentDef = {
   searchKeywords: ['profile picture'],
   description: 'User avatar with image or initials fallback.',
 
-  overview: `Avatar displays a user's profile image inside a circular, bordered container with a hover glow effect. When an image \`src\` is provided, it renders a fully covered \`<img>\` element with object-fit: cover and full border-radius. When no image is available, the component automatically falls back to rendering the first character of the \`name\` property as an uppercase initial inside the circle, using the Azeret Mono accent font at weight 600.
+  overview: `Avatar displays a user's profile image inside a circular, bordered container with a hover glow effect. When an image \`src\` is provided, it renders a fully covered \`<img>\` element with object-fit: cover and full border-radius. When no image is available, the component automatically falls back to rendering the first character of the \`name\` property as an uppercase initial inside the circle, using the Tomorrow accent font at weight 600.
 
 Three size presets — sm (32px), md (40px), and lg (56px) — control both the container dimensions and the initials font-size (12px, 14px, and 20px respectively). The container uses a subtle \`--border-default\` ring that transitions to \`--border-bright\` on hover, paired with a blue-tinted box-shadow glow for an interactive feel even though the component is primarily presentational.
 
@@ -22,7 +22,7 @@ The component sets \`role="img"\` and \`aria-label\` on the container, using the
     'Hover glow effect with border-color transition and blue box-shadow',
     'Accessible `role="img"` with `aria-label` derived from the name property',
     'Exposed CSS parts: avatar, img, initials for per-instance customization',
-    'Uppercase Azeret Mono-font initials at weight 600 for visual consistency',
+    'Uppercase Tomorrow-font initials at weight 600 for visual consistency',
   ],
 
   guidelines: {

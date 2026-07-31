@@ -168,8 +168,8 @@
   --font-body-weight: 500;
   --font-body: var(--font-body-family), var(--font-body-fallback);
 
-  --font-label-family: 'Azeret Mono';
-  --font-label-fallback: ui-monospace, monospace;
+  --font-label-family: 'Tomorrow';
+  --font-label-fallback: system-ui, -apple-system, Segoe UI, sans-serif;
   --font-label-weight: 600;
   --font-label: var(--font-label-family), var(--font-label-fallback);
 
@@ -235,10 +235,10 @@
   --wordmark-spacing: clamp(8px, 1.2vw, 14px);
   --section-title-size: var(--text-xs);
   --section-title-weight: var(--font-label-weight);
-  --section-title-spacing: 1px;
+  --section-title-spacing: 2px;
   --ui-accent-size: 16px;
   --ui-accent-weight: var(--font-label-weight);
-  --ui-accent-spacing: 0px;
+  --ui-accent-spacing: 0.5px;
   --code-size: 14px;
   --code-lh: 1.8;
   --label-inline-size: 10px;

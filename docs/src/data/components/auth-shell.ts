@@ -49,9 +49,9 @@ Both variants are fully responsive. On mobile, the split layout collapses to a s
 
   previewHtml: `<div style="width:100%;height:100%;border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden">
   <arc-auth-shell variant="split">
-    <div slot="logo" style="font-family: 'Azeret Mono', ui-monospace, monospace; font-size: 22px; font-weight: 700; letter-spacing: 1px; color: var(--text-heading);">ARC UI</div>
+    <div slot="logo" style="font-family: 'Tomorrow', system-ui, sans-serif; font-size: 22px; font-weight: 700; letter-spacing: 1px; color: var(--text-heading);">ARC UI</div>
     <div style="display: flex; flex-direction: column; gap: 16px;">
-      <h2 style="margin: 0 0 4px 0; font-family: 'Azeret Mono', ui-monospace, monospace; font-size: 20px; color: var(--text-heading);">Sign In</h2>
+      <h2 style="margin: 0 0 4px 0; font-family: 'Tomorrow', system-ui, sans-serif; font-size: 20px; color: var(--text-heading);">Sign In</h2>
       <p style="margin: 0; font-size: 14px; color: var(--text-muted);">Enter your credentials to continue</p>
       <arc-input label="Email" type="email" placeholder="you@example.com"></arc-input>
       <arc-input label="Password" type="password" placeholder="••••••••"></arc-input>
@@ -64,7 +64,7 @@ Both variants are fully responsive. On mobile, the split layout collapses to a s
     <div slot="footer">Don't have an account? <arc-link href="#">Sign up</arc-link></div>
     <div slot="aside" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; text-align: center; padding: 40px;">
       <div style="font-size: 48px;">&#128274;</div>
-      <h3 style="margin: 0; font-family: 'Azeret Mono', ui-monospace, monospace; font-size: 18px; color: var(--text-heading);">Secure by default</h3>
+      <h3 style="margin: 0; font-family: 'Tomorrow', system-ui, sans-serif; font-size: 18px; color: var(--text-heading);">Secure by default</h3>
       <p style="margin: 0; font-size: 14px; color: var(--text-muted); max-width: 260px;">Your data is encrypted end-to-end with enterprise-grade security built into every layer.</p>
     </div>
   </arc-auth-shell>

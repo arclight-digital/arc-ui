@@ -75,7 +75,7 @@ function statCard(value: string, label: string, accentColor: string, accentRgb: 
             style: {
               fontSize: '21px',
               fontWeight: 600,
-              fontFamily: 'Azeret Mono',
+              fontFamily: 'Tomorrow',
               letterSpacing: '1px',
               color: 'rgba(255,255,255,0.4)',
               textTransform: 'uppercase',

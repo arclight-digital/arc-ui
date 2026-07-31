@@ -10,7 +10,7 @@ export const stat: ComponentDef = {
 
   overview: `Stat renders a single key metric as a vertically stacked, center-aligned block. The value is displayed in a large, lightweight font (weight 200) with a blue-to-violet gradient fill and a dual-layer drop-shadow glow, making numbers visually striking against dark backgrounds. A thin gradient rule sits between the value and its uppercase label, providing a subtle decorative separator.
 
-The value font-size uses \`clamp(32px, 4.5vw, 48px)\` to scale responsively between breakpoints, ensuring readability from mobile to desktop without manual media queries. The label uses the Azeret Mono accent font at a small uppercase size with wide letter-spacing, following the system's standard labeling pattern.
+The value font-size uses \`clamp(32px, 4.5vw, 48px)\` to scale responsively between breakpoints, ensuring readability from mobile to desktop without manual media queries. The label uses the Tomorrow accent font at a small uppercase size with wide letter-spacing, following the system's standard labeling pattern.
 
 Stat also supports an optional trend indicator via the \`trend\` and \`change\` props. Setting \`trend\` to "up", "down", or "neutral" renders a colored arrow below the label, and the \`change\` prop displays accompanying text (typically a percentage like "+12%"). Up trends render in green, down trends in red, and neutral in muted grey, giving users an immediate sense of direction alongside the headline number.
 
@@ -20,7 +20,7 @@ Stat is designed for landing-page metrics, dashboard KPI rows, and pricing compa
     'Gradient-clipped value text with blue-to-violet fill and dual drop-shadow glow',
     'Responsive font-size using clamp() that scales from 32px to 48px',
     'Decorative gradient rule separator between value and label',
-    'Uppercase Azeret Mono-font label with wide letter-spacing',
+    'Uppercase Tomorrow-font label with wide letter-spacing',
     'Four exposed CSS parts (stat, value, label, trend) for external style overrides',
     'Optional trend indicator (up/down/neutral arrow with change text) for at-a-glance direction',
     'Lightweight font-weight 200 for an elegant numeric display',
@@ -165,7 +165,7 @@ export default function Example() {
    <span style="font-size: clamp(32px, 4.5vw, 48px); font-weight: 200; letter-spacing: -1px; line-height: 1; background: linear-gradient(90deg, rgb(77, 126, 247), rgb(139, 92, 246)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; filter: drop-shadow(0 0 16px rgba(77, 126, 247,0.3))
                   drop-shadow(0 0 40px rgba(139, 92, 246,0.12))">Value</span>
    <span style="width: 24px; height: 1px; background: linear-gradient(90deg, transparent, rgb(77, 126, 247), transparent); opacity: 0.4"></span>
-   <span style="font-family: 'Azeret Mono', ui-monospace, monospace; font-weight: 600; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: rgb(124, 124, 137)">Label</span>
+   <span style="font-family: 'Tomorrow', system-ui, sans-serif; font-weight: 600; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: rgb(124, 124, 137)">Label</span>
    </div>
 </div>`,
     },

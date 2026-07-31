@@ -113,11 +113,19 @@ describe('font role slots', () => {
       expect(getComputedStyle(probe).fontFamily).to.contain('TestLabel');
     });
 
-    it('--font-accent tracks the label role rather than pinning the old face', () => {
-      const probe = document.createElement('div');
-      probe.style.fontFamily = 'var(--font-accent)';
-      document.body.appendChild(probe);
-      expect(getComputedStyle(probe).fontFamily).to.contain('Azeret Mono');
+    // Named no face on purpose. The point of the alias is that it follows
+    // whatever the label role currently is, so spelling today's face here
+    // would fail the next time that face changes — which is the one event
+    // this test exists to survive.
+    it('--font-accent tracks the label role rather than pinning a face', () => {
+      const accent = document.createElement('div');
+      accent.style.fontFamily = 'var(--font-accent)';
+      const label = document.createElement('div');
+      label.style.fontFamily = 'var(--font-label)';
+      document.body.append(accent, label);
+      const resolved = getComputedStyle(label).fontFamily;
+      expect(resolved).to.not.equal('');
+      expect(getComputedStyle(accent).fontFamily).to.equal(resolved);
     });
   });
 
