@@ -6,8 +6,9 @@ import { tokenStyles } from '../shared-styles.js';
  * House-styled video player. Before the first play it shows the poster with a large glowing
  * play button; once playback starts, a minimal custom control bar rides the native video —
  * play/pause, a mono time readout, a scrub bar that seeks directly, a mute toggle, and a
- * fullscreen button. During playback the bar fades out after two seconds of idle and returns
- * on pointer or keyboard activity; under reduced motion it stays visible. Standard player
+ * fullscreen button. During playback the bar dims after two seconds of idle rather than
+ * leaving — it stays visible and clickable, and returns to full strength when the pointer is
+ * anywhere over the player or a control takes focus. Standard player
  * keys work on the focused player: Space or K toggles playback, the arrow keys seek five
  * seconds, M toggles mute, F toggles fullscreen.
  *
@@ -151,17 +152,19 @@ export class ArcVideo extends LitElement {
           transform var(--transition-base);
       }
 
-      .video__controls--hidden {
-        opacity: 0;
-        transform: translateY(4px);
-        pointer-events: none;
+      /* At rest the bar recedes rather than leaves: still legible, still
+         clickable, just quiet enough to stop competing with the frame. It
+         returns to full strength on approach, which is the affordance - you
+         can always see where the controls are, so nothing has to be
+         summoned by waving at the video. */
+      .video__controls--idle {
+        opacity: 0.45;
       }
 
-      /* A control holding focus pins the bar open regardless of the idle timer. */
-      .video__controls--hidden:focus-within {
+      .video:hover .video__controls--idle,
+      .video__controls--idle:hover,
+      .video__controls--idle:focus-within {
         opacity: 1;
-        transform: none;
-        pointer-events: auto;
       }
 
       .video__button {
@@ -284,15 +287,10 @@ export class ArcVideo extends LitElement {
           transform: none;
         }
 
-        /* Reduced motion means no fade - the bar is simply always visible. */
+        /* Reduced motion drops the fade, not the dimming: the bar still
+           recedes at rest, it just arrives there without the transition. */
         .video__controls {
           transition: none;
-        }
-
-        .video__controls--hidden {
-          opacity: 1;
-          transform: none;
-          pointer-events: auto;
         }
       }
     `,
@@ -528,9 +526,9 @@ export class ArcVideo extends LitElement {
   _renderControls() {
     const duration = this._duration;
     const fill = duration > 0 ? (this._currentTime / duration) * 100 : 0;
-    const hidden = !this._controlsVisible;
+    const idle = !this._controlsVisible;
     return html`
-      <div class="video__controls ${hidden ? 'video__controls--hidden' : ''}" part="controls">
+      <div class="video__controls ${idle ? 'video__controls--idle' : ''}" part="controls">
         <button
           class="video__button"
           part="play-toggle"

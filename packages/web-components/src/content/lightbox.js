@@ -1,4 +1,5 @@
 import { LitElement, html, css, nothing } from 'lit';
+import { keyed } from 'lit/directives/keyed.js';
 import { tokenStyles } from '../shared-styles.js';
 import { OverlayMixin } from '../shared/overlay-mixin.js';
 
@@ -39,6 +40,7 @@ export class ArcLightbox extends OverlayMixin(LitElement) {
     index: { type: Number },
     open: { type: Boolean, reflect: true },
     _zoomed: { state: true },
+    _loaded: { state: true },
   };
 
   static styles = [
@@ -118,7 +120,13 @@ export class ArcLightbox extends OverlayMixin(LitElement) {
         user-select: none;
         -webkit-user-drag: none;
         touch-action: none;
-        transition: transform var(--transition-base);
+        transition: transform var(--transition-base), opacity var(--transition-base);
+      }
+
+      /* A new src gets a new element, so the previous image is never held on
+         screen while the next one decodes. It fades in rather than popping. */
+      .lightbox__img--loading {
+        opacity: 0;
       }
 
       .lightbox__img--zoomed {
@@ -163,9 +171,11 @@ export class ArcLightbox extends OverlayMixin(LitElement) {
     this.index = 0;
     this.open = false;
     this._zoomed = false;
+    this._loaded = false;
     this._panX = 0;
     this._panY = 0;
     this._drag = null;
+    this._pendingSrc = null;
     this._onNavKeyDown = this._onNavKeyDown.bind(this);
   }
 
@@ -174,6 +184,13 @@ export class ArcLightbox extends OverlayMixin(LitElement) {
     return (Array.isArray(this.images) ? this.images : []).map((entry) =>
       typeof entry === 'string' ? { src: entry, alt: '', caption: '' } : entry,
     );
+  }
+
+  /** The entry `index` resolves to, clamped into range. */
+  _current() {
+    const images = this._normalized();
+    if (images.length === 0) return null;
+    return images[Math.max(0, Math.min(this.index, images.length - 1))];
   }
 
   /** Opens the viewer, optionally jumping to a specific image first. */
@@ -230,6 +247,23 @@ export class ArcLightbox extends OverlayMixin(LitElement) {
     )
       return;
     this.open = false;
+  }
+
+  /**
+   * The visible src is settled before render so the fresh `<img>` is created
+   * already marked loading. Compared by src, not index: a gallery that repeats
+   * an image keeps the same element, which never fires `load` again.
+   */
+  willUpdate() {
+    const src = this._current()?.src ?? null;
+    if (src !== this._pendingSrc) {
+      this._pendingSrc = src;
+      this._loaded = false;
+    }
+  }
+
+  _onImageLoad() {
+    this._loaded = true;
   }
 
   updated(changed) {
@@ -366,21 +400,28 @@ export class ArcLightbox extends OverlayMixin(LitElement) {
         <figure class="lightbox__figure" part="figure" @click=${this._handleBackdropClick}>
           ${
             current
-              ? html`
+              ? keyed(
+                  current.src,
+                  html`
             <img
-              class="lightbox__img ${this._zoomed ? 'lightbox__img--zoomed' : ''}"
+              class="lightbox__img ${this._zoomed ? 'lightbox__img--zoomed' : ''} ${
+                this._loaded ? '' : 'lightbox__img--loading'
+              }"
               part="image"
               src=${current.src}
               alt=${current.alt ?? ''}
               draggable="false"
               style="transform: ${this._transform()};"
+              @load=${this._onImageLoad}
+              @error=${this._onImageLoad}
               @dblclick=${this._toggleZoom}
               @pointerdown=${this._onPointerDown}
               @pointermove=${this._onPointerMove}
               @pointerup=${this._onPointerUp}
               @pointercancel=${this._onPointerUp}
             />
-          `
+          `,
+                )
               : nothing
           }
           ${

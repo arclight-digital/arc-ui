@@ -10,7 +10,7 @@ export const video: ComponentDef = {
     'House-styled video player with a glowing poster play overlay and minimal custom controls over the native video element.',
   searchKeywords: ['player', 'media', 'movie', 'playback', 'mp4'],
 
-  overview: `Video wraps the native \`<video>\` element in the house player chrome. Before the first play it shows the poster with a large, glowing play button; once playback starts, a minimal floating control bar takes over — play/pause, a monospace time readout, a scrub bar that seeks directly, a mute toggle, and a fullscreen button. During playback the bar fades out after two seconds of idle and returns on pointer or keyboard activity. Under reduced motion the fade is suppressed and the bar simply stays visible.
+  overview: `Video wraps the native \`<video>\` element in the house player chrome. Before the first play it shows the poster with a large, glowing play button; once playback starts, a minimal floating control bar takes over — play/pause, a monospace time readout, a scrub bar that seeks directly, a mute toggle, and a fullscreen button. During playback the bar dims after two seconds of idle rather than disappearing — it stays legible and clickable, so the controls never have to be summoned — and comes back to full strength whenever the pointer is over the player or a control takes focus. Under reduced motion the transition is suppressed; the dimming is not.
 
 The player answers to the standard keyboard map when focused: Space or K toggles playback, the arrow keys seek five seconds in either direction, M toggles mute, and F toggles fullscreen. Every state change surfaces as a house event — \`arc-play\`, \`arc-pause\`, and \`arc-ended\`, each carrying the current time in seconds on \`detail.value\`.
 
@@ -19,7 +19,7 @@ The component takes a single \`src\` — there is no \`<source>\` fallback chain
   features: [
     'Poster state with a large centered play button carrying the house glow',
     'Floating control bar: play/pause, monospace time readout, direct-seek scrub bar, mute, fullscreen',
-    'Controls fade after two seconds of idle playback and return on activity; always visible under reduced motion',
+    'Controls dim after two seconds of idle playback and return to full strength on hover or focus; never hidden outright',
     'Standard player keys on the focused player: Space/K, arrow-key seeking, M, F',
     'House events with the current time on `detail.value`: `arc-play`, `arc-pause`, `arc-ended`',
     '`controls="false"` ambient mode for presentation and background video',

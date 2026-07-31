@@ -50,7 +50,7 @@ To assistive technology the grid is a single image with a computed description â
   },
 
   previewLayout: 'block',
-  previewHtml: `<div style="display: flex; justify-content: center; overflow-x: auto;">
+  previewHtml: `<div style="display: flex; justify-content: center; overflow-x: auto; overflow-y: hidden;">
   <arc-activity-heatmap id="demo-activity"></arc-activity-heatmap>
 </div>`,
   previewSetup: `const map = el.querySelector('#demo-activity');

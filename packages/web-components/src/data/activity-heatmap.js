@@ -75,7 +75,13 @@ export class ArcActivityHeatmap extends LitElement {
       .heatmap {
         --_cell: var(--activity-heatmap-cell, 11px);
         --_gap:  var(--activity-heatmap-gap, 3px);
-        display: inline-grid;
+        /* Block-level, not inline-grid: as an inline box it sat in a line box
+           and inherited the host's half-leading as ~10px of dead space above
+           the months row, plus a sub-pixel height that made any surrounding
+           scroller show a 1px vertical scrollbar. The host is inline-block,
+           so shrink-to-fit sizing is already handled a level up. */
+        display: grid;
+        justify-content: start;
         grid-template-areas:
           '.        months'
           'weekdays grid'

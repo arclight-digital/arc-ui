@@ -44,7 +44,6 @@ export class ArcWaveform extends LitElement {
     interactive: { type: Boolean, reflect: true },
     variant: { type: String, reflect: true },
     label: { type: String },
-    _scrubbing: { state: true },
   };
 
   static styles = [
@@ -99,19 +98,17 @@ export class ArcWaveform extends LitElement {
          fraction: a percentage translation of the rail is a percentage of the
          waveform's width, which keeps the motion on the compositor with no
          per-frame layout. Physical translateX on purpose - the time axis is
-         direction-fixed. */
+         direction-fixed.
+
+         Deliberately untransitioned. The played/unplayed boundary is an SVG
+         clip that snaps to the position, so easing the playhead toward the same
+         value leaves it trailing the fill edge for the whole of every move -
+         and against a playhead advancing each frame, that gap never closes. */
       .waveform__rail {
         position: absolute;
         inset: 0;
         pointer-events: none;
         transform: translateX(calc(var(--_pos, 0) * 100%));
-        transition: transform var(--transition-fast);
-      }
-
-      /* While the pointer is down the playhead must track the hand exactly,
-         not ease toward it. */
-      .waveform--scrubbing .waveform__rail {
-        transition: none;
       }
 
       .waveform__playhead {
@@ -142,12 +139,6 @@ export class ArcWaveform extends LitElement {
         color: var(--interactive);
         font-weight: 600;
       }
-
-      @media (prefers-reduced-motion: reduce) {
-        .waveform__rail {
-          transition: none;
-        }
-      }
     `,
   ];
 
@@ -159,7 +150,6 @@ export class ArcWaveform extends LitElement {
     this.interactive = false;
     this.variant = 'bars';
     this.label = '';
-    this._scrubbing = false;
     this._onWindowPointerMove = this._onWindowPointerMove.bind(this);
     this._onWindowPointerUp = this._onWindowPointerUp.bind(this);
   }
@@ -222,7 +212,6 @@ export class ArcWaveform extends LitElement {
 
   _onPointerDown(e) {
     if (e.pointerType === 'mouse' && e.button !== 0) return;
-    this._scrubbing = true;
     e.currentTarget.setPointerCapture(e.pointerId);
     this._seekFromPointer(e);
     window.addEventListener('pointermove', this._onWindowPointerMove);
@@ -241,7 +230,6 @@ export class ArcWaveform extends LitElement {
   }
 
   _endScrub() {
-    this._scrubbing = false;
     window.removeEventListener('pointermove', this._onWindowPointerMove);
     window.removeEventListener('pointerup', this._onWindowPointerUp);
     window.removeEventListener('pointercancel', this._onWindowPointerUp);
@@ -347,7 +335,7 @@ export class ArcWaveform extends LitElement {
 
     return html`
       <div
-        class="waveform ${this._scrubbing ? 'waveform--scrubbing' : ''}"
+        class="waveform"
         part="waveform"
         role=${interactive ? 'slider' : 'img'}
         tabindex=${ifDefined(interactive ? '0' : undefined)}

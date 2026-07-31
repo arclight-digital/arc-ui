@@ -170,7 +170,7 @@ describe('arc-video playing state', () => {
     ).to.equal('1:40');
   });
 
-  it('idle-hidden controls come back on pointer activity', async () => {
+  it('idle-dimmed controls come back to full strength on pointer activity', async () => {
     const el = await mountVideo();
     inner(el).dispatchEvent(new Event('play'));
     await el.updateComplete;
@@ -178,11 +178,11 @@ describe('arc-video playing state', () => {
     // Drive the state machine directly rather than waiting out the 2s timer.
     el._controlsVisible = false;
     await el.updateComplete;
-    expect(controlsBar(el).classList.contains('video__controls--hidden')).to.be.true;
+    expect(controlsBar(el).classList.contains('video__controls--idle')).to.be.true;
 
     wrapper(el).dispatchEvent(new PointerEvent('pointermove', { bubbles: true }));
     await el.updateComplete;
-    expect(controlsBar(el).classList.contains('video__controls--hidden')).to.be.false;
+    expect(controlsBar(el).classList.contains('video__controls--idle')).to.be.false;
   });
 });
 
