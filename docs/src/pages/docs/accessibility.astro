@@ -6,7 +6,6 @@ import audit from '../../data/a11y-audit.json';
 const violationCount = audit.violations.length;
 
 const headings = [
-  { id: 'overview', label: 'Overview' },
   { id: 'audit', label: 'Automated Audit' },
   { id: 'aria', label: 'ARIA Attributes' },
   { id: 'keyboard', label: 'Keyboard Navigation' },
@@ -28,36 +27,18 @@ const headings = [
   <div class="a11y-page">
     <h1 class="page-title">Accessibility</h1>
     <p class="page-desc">
-      ARC UI targets WCAG 2.1 Level AA compliance. Components ship with semantic HTML,
-      keyboard support, and ARIA attributes built in.
+      ARC UI targets WCAG 2.1 Level AA. Components ship with semantic HTML,
+      keyboard support, and ARIA attributes built in — and this site is the test bed.
     </p>
-
-    <section id="overview">
-      <h2 class="docs-heading">Overview</h2>
-      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
-      <p class="docs-text">
-        Accessibility is a core design principle in ARC UI. Every component is built to be
-        usable by everyone, including people who use assistive technologies, keyboards, or
-        alternative input devices.
-      </p>
-      <ul class="docs-list">
-        <li>Semantic HTML elements and ARIA roles where needed</li>
-        <li>Full keyboard navigation for all interactive components</li>
-        <li>Visible focus indicators with configurable styles</li>
-        <li>Sufficient color contrast ratios</li>
-        <li>Reduced motion support via <code>prefers-reduced-motion</code></li>
-      </ul>
-    </section>
 
     <section id="audit">
       <h2 class="docs-heading">Automated Audit</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
         Claims are cheap, so we audit. Every component documentation page — live demos
-        included — is checked with <a href="https://github.com/dequelabs/axe-core">axe-core</a>,
-        which evaluates the fully rendered DOM including shadow roots, in both dark and
-        light themes. The audit runs in CI on every commit and fails the build on any
-        serious or critical violation — including color contrast. No exclusions.
+        included — is checked with <a href="https://github.com/dequelabs/axe-core">axe-core</a>
+        against the fully rendered DOM, shadow roots included, in both themes. CI fails on
+        any serious or critical violation, color contrast included. No exclusions.
       </p>
       <div class="audit-stats">
         <div class="audit-stat">
@@ -83,13 +64,10 @@ const headings = [
       <h2 class="docs-heading">ARIA Attributes</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        ARC UI components use appropriate ARIA roles and attributes automatically. For example,
-        <code>arc-modal</code> uses <code>role="dialog"</code> and manages <code>aria-modal</code>,
-        while <code>arc-tabs</code> uses <code>role="tablist"</code>, <code>role="tab"</code>,
-        and <code>role="tabpanel"</code>.
-      </p>
-      <p class="docs-text">
-        You can pass additional ARIA attributes through to the underlying element:
+        Roles are set automatically: <code>arc-modal</code> is a <code>role="dialog"</code>
+        managing <code>aria-modal</code>; <code>arc-tabs</code> wires up
+        <code>tablist</code>/<code>tab</code>/<code>tabpanel</code>. Anything extra passes
+        through from the host element:
       </p>
       <div class="docs-code"><Code code={`<!-- Labels -->
 <arc-button aria-label="Close dialog">
@@ -113,9 +91,16 @@ const headings = [
       <h2 class="docs-heading">Keyboard Navigation</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        All interactive components support keyboard navigation. Here are the key bindings
-        by component type:
+        Every interactive component is fully keyboard-driven. Don't take our word for it —
+        this one is live. <kbd>Tab</kbd> to it and drive it from the keyboard:
       </p>
+      <div class="kbd-demo">
+        <arc-tabs>
+          <arc-tab label="Arrows"><kbd>Arrow Left</kbd> and <kbd>Arrow Right</kbd> move between tabs; the panel follows focus.</arc-tab>
+          <arc-tab label="Home / End"><kbd>Home</kbd> jumps to the first tab, <kbd>End</kbd> to the last.</arc-tab>
+          <arc-tab label="Tab"><kbd>Tab</kbd> leaves the tablist — one tab stop for the whole widget.</arc-tab>
+        </arc-tabs>
+      </div>
       <div class="token-table-wrap">
         <table class="token-table">
           <thead>
@@ -124,7 +109,7 @@ const headings = [
           <tbody>
             <tr><td>Button</td><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Activate</td></tr>
             <tr><td>Modal</td><td><kbd>Escape</kbd></td><td>Close</td></tr>
-            <tr><td>Tabs</td><td><kbd>Arrow Left/Right</kbd></td><td>Switch tab</td></tr>
+            <tr><td>Tabs</td><td><kbd>Arrow Left/Right</kbd>, <kbd>Home</kbd> / <kbd>End</kbd></td><td>Switch tab</td></tr>
             <tr><td>Accordion</td><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Toggle panel</td></tr>
             <tr><td>Select</td><td><kbd>Arrow Up/Down</kbd></td><td>Navigate options</td></tr>
             <tr><td>Select</td><td><kbd>Enter</kbd></td><td>Select option</td></tr>
@@ -142,7 +127,8 @@ const headings = [
       <h2 class="docs-heading">Focus Management</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        ARC UI provides two focus indicator styles via design tokens:
+        ARC UI ships two focus indicator styles as design tokens. <kbd>Tab</kbd> through
+        these to compare them:
       </p>
       <div class="focus-demo-row">
         <button class="focus-card focus-card--ring">
@@ -155,16 +141,16 @@ const headings = [
         </button>
       </div>
       <p class="docs-text">
-        Focus is only shown on keyboard navigation (via <code>:focus-visible</code>), not on
-        mouse clicks. Overlay components like <code>arc-modal</code> and <code>arc-drawer</code>
-        trap focus within the dialog while open, preventing users from tabbing to background content.
+        Focus shows only on keyboard navigation (<code>:focus-visible</code>), never on mouse
+        clicks — click the cards above and nothing appears. Overlays like <code>arc-modal</code>
+        and <code>arc-drawer</code> trap focus while open.
       </p>
       <div class="docs-code"><Code code={`/* Customize focus styles globally */
 :root {
   --focus-ring: 0 0 0 2px var(--bg-deep),
                 0 0 0 4px var(--accent-primary);
   --focus-glow: var(--focus-ring),
-                0 0 16px rgba(77, 126, 247, 0.3);
+                0 0 16px rgba(var(--accent-primary-rgb), 0.3);
 }`} lang="css" theme="css-variables" /></div>
     </section>
 
@@ -172,21 +158,20 @@ const headings = [
       <h2 class="docs-heading">Screen Readers</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        ARC UI uses Shadow DOM for style encapsulation. While Shadow DOM can create challenges
-        for screen readers, we follow these patterns to ensure compatibility:
+        Shadow DOM can complicate screen reader access; ARC UI's patterns avoid the traps:
       </p>
       <ul class="docs-list">
         <li>
-          <strong>Slotted content</strong> remains in the light DOM, so screen readers can
-          access it directly.
+          <strong>Slotted content</strong> stays in the light DOM, where screen readers
+          reach it directly.
         </li>
         <li>
           <strong>ARIA attributes</strong> set on the host element are reflected into the
           shadow root where needed.
         </li>
         <li>
-          <strong>Labels</strong> use the <code>label</code> attribute or <code>aria-label</code>
-          to ensure elements are announced correctly.
+          <strong>Form elements</strong> take a <code>label</code> attribute, so they are
+          always announced.
         </li>
       </ul>
       <div class="docs-code"><Code code={`<!-- Use slot for screen-reader-accessible content -->
@@ -207,26 +192,19 @@ const headings = [
       <h2 class="docs-heading">Color & Contrast</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        ARC UI's color tokens target WCAG AA contrast requirements; the automated audit
-        above measures actual rendered ratios in both themes:
+        The audit above measures actual rendered ratios in both themes — these are results,
+        not targets:
       </p>
       <ul class="docs-list">
+        <li><code>--text-primary</code> on <code>--bg-deep</code> exceeds 15:1.</li>
         <li>
-          <strong>Text on backgrounds:</strong> <code>--text-primary</code> on <code>--bg-deep</code>
-          achieves a contrast ratio above 15:1.
+          <code>--text-muted</code> and <code>--text-ghost</code> meet the 4.5:1 ratio for
+          normal text in both themes.
         </li>
         <li>
-          <strong>Muted text:</strong> <code>--text-muted</code> and <code>--text-ghost</code>
-          meet the 4.5:1 ratio for normal text in both themes, verified by the audit.
-        </li>
-        <li>
-          <strong>Feedback colors:</strong> <code>--color-success</code>, <code>--color-warning</code>,
-          <code>--color-error</code>, and <code>--color-info</code> are tuned for sufficient
-          contrast in both dark and light modes.
-        </li>
-        <li>
-          <strong>Interactive states:</strong> Focus indicators use high-contrast accent colors
-          with glow effects for enhanced visibility.
+          The feedback colors — <code>--color-success</code>, <code>--color-warning</code>,
+          <code>--color-error</code>, <code>--color-info</code> — pass in both dark and
+          light modes.
         </li>
       </ul>
       <arc-callout variant="warning">When customizing themes, verify that your color overrides maintain sufficient contrast ratios. Use the <a href="/docs/theme-synthesizer">Theme Synthesizer</a> to preview and test your custom themes for accessibility.</arc-callout>
@@ -236,8 +214,8 @@ const headings = [
       <h2 class="docs-heading">Reduced Motion</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        ARC UI respects the <code>prefers-reduced-motion</code> media query. When enabled,
-        transitions and animations are minimized or disabled:
+        With <code>prefers-reduced-motion</code> set, every transition and animation collapses —
+        functionality is unchanged, only the motion goes:
       </p>
       <div class="docs-code"><Code code={`/* Built into ARC UI components */
 @media (prefers-reduced-motion: reduce) {
@@ -249,21 +227,15 @@ const headings = [
     transition-duration: 0.01ms !important;
   }
 }`} lang="css" theme="css-variables" /></div>
-      <p class="docs-text">
-        This affects all component transitions (hover effects, drawer slides, modal fades, etc.)
-        without changing functionality. Users can still interact with every component — only
-        the motion is removed.
-      </p>
     </section>
 
     <section id="no-javascript">
       <h2 class="docs-heading">Without JavaScript</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        Web Components need JavaScript to upgrade. Until that happens — because a script
-        failed, a network is slow, or the visitor has JS disabled — a custom element is an
-        unknown tag rendering only its light DOM. What you put inside the element is
-        therefore what everyone sees first.
+        Web Components need JavaScript to upgrade. Until that happens — a failed script, a
+        slow network, JS disabled — a custom element is an unknown tag rendering only its
+        light DOM. What you put inside the element is what everyone sees first.
       </p>
       <p class="docs-text">
         This matters most for links. An <code>href</code> on the custom element itself
@@ -307,8 +279,8 @@ const headings = [
         Components whose content comes from properties rather than slots — such as
         <code>arc-feature-card</code>, which renders from <code>heading</code> and
         <code>description</code> — have no light DOM to fall back to and stay blank without
-        JavaScript. Author their content as slotted markup, or treat them as
-        enhancement-only.
+        JavaScript. Author their content as slotted markup, treat them as enhancement-only,
+        or <a href="/docs/server-rendering">server-render them</a>.
       </p>
     </section>
 
@@ -316,8 +288,8 @@ const headings = [
       <h2 class="docs-heading">See Also</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <ul class="see-also__list">
+        <li><a href="/docs/server-rendering">Server Rendering</a> — content in the payload before JS runs</li>
         <li><a href="/docs/getting-started">Getting Started</a> — installation and setup</li>
-        <li><a href="/docs/contributing">Contributing</a> — how to contribute to ARC UI</li>
       </ul>
     </section>
   </div>
@@ -357,7 +329,7 @@ const headings = [
     color: var(--text-secondary);
   }
 
-  .token-table kbd {
+  kbd {
     font-family: var(--font-mono);
     font-size: var(--text-xs);
     background: var(--bg-elevated);
@@ -365,6 +337,15 @@ const headings = [
     border-radius: var(--radius-sm);
     border: 1px solid var(--border-default);
     box-shadow: 0 1px 0 var(--border-default);
+  }
+
+  /* Live keyboard demo */
+  .kbd-demo {
+    padding: var(--space-md);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    background: var(--bg-card);
+    margin-bottom: var(--space-md);
   }
 
   /* Focus demos */

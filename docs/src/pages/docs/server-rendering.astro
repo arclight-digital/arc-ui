@@ -27,35 +27,58 @@ const headings = [
         ARC UI components server-render through <code>@lit-labs/ssr</code> into
         <strong>declarative shadow DOM</strong> — a <code>&lt;template shadowrootmode="open"&gt;</code>
         the browser turns into a real shadow root while parsing, before any JavaScript runs.
-        The component's content is in the initial HTML response.
       </p>
       <p>
-        <strong>All {elementCount} components</strong> render this way today. This is optional: a consumer
-        with no build step, or loading ARC from a CDN, needs none of it and loses nothing.
+        <strong>All {elementCount} components</strong> render this way today, and all of it is
+        optional: a consumer with no build step, or loading ARC from a CDN, needs none of it
+        and loses nothing.
       </p>
     </section>
 
     <section id="what-it-fixes">
-      <h2>What it fixes</h2>
+      <h2 class="docs-heading">What it fixes</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p>
-        Most ARC components take their content from properties rather than slots. With JavaScript
-        disabled, or before it loads, this is an empty unknown tag — no heading, no description,
-        nothing for a crawler to read:
+        Most ARC components take their content from properties rather than slots. Before
+        JavaScript loads — or without it — this is an empty unknown tag: no heading, no
+        description, nothing for a crawler to read.
       </p>
       <pre><code>{`<arc-feature-card
   heading="Fast by default"
   description="Ships 40% less JavaScript"
 ></arc-feature-card>`}</code></pre>
       <p>
-        <strong>65 of {elementCount} components</strong> are shaped like this — they have no default slot at
-        all, so there is no markup to fall back to. Server rendering is the only thing that puts
-        their content in the payload. Slot-driven components already degrade gracefully, and gain
-        less from it.
+        The same tag through the server renderer (Lit's hydration markers elided) — the
+        content is in the HTML response itself:
+      </p>
+      <pre><code>{`<arc-feature-card
+  heading="Fast by default"
+  description="Ships 40% less JavaScript"
+>
+  <template shadowrootmode="open">
+    <link rel="stylesheet" href="/_arc/s-y0rti11lg82db.css">
+    <div class="card" part="card">
+      <div class="card__inner" part="inner">
+        <h3 class="card__title" part="title">
+          Fast by default
+        </h3>
+        <p class="card__desc" part="description">
+          Ships 40% less JavaScript
+        </p>
+      </div>
+    </div>
+  </template>
+</arc-feature-card>`}</code></pre>
+      <p>
+        <strong>65 of {elementCount} components</strong> are shaped like this — no default slot,
+        no markup to fall back to. Server rendering is the only thing that puts their content in
+        the payload. Slot-driven components already degrade gracefully, and gain less from it.
       </p>
     </section>
 
     <section id="usage">
-      <h2>Rendering and hydrating</h2>
+      <h2 class="docs-heading">Rendering and hydrating</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p>On the server, render as you would any Lit template:</p>
       <pre><code>{`import { render } from '@lit-labs/ssr';
 import { collectResult } from '@lit-labs/ssr/lib/render-result.js';
@@ -73,19 +96,18 @@ const markup = await collectResult(render(html\`
 import '@arclux/arc-ui/register';`}</code></pre>
 
       <p>
-        Without it, the moment an element upgrades Lit renders its template from scratch into the
-        shadow root the server already filled — discarding identical DOM and producing the exact
-        flash server rendering exists to avoid. With it, Lit <em>adopts</em> the existing nodes and
-        renders nothing.
-      </p>
-      <p>
-        Import order matters because hydration support patches <code>LitElement</code>'s update
-        path. A component class defined before the patch never receives it.
+        Without it, the moment an element upgrades Lit renders its template from scratch into
+        the shadow root the server already filled — discarding identical DOM and producing the
+        exact flash server rendering exists to avoid. With it, Lit <em>adopts</em> the existing
+        nodes and renders nothing. Order matters because hydration support patches
+        <code>LitElement</code>'s update path: a component class defined before the patch never
+        receives it.
       </p>
     </section>
 
     <section id="fouc">
-      <h2>The FOUC guard</h2>
+      <h2 class="docs-heading">The FOUC guard</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p>
         <code>base.css</code> hides ARC elements until they upgrade, so a page never flashes
         unstyled custom elements. A server-rendered element is un-upgraded but <em>finished</em>,
@@ -102,49 +124,40 @@ import '@arclux/arc-ui/register';`}</code></pre>
     </section>
 
     <section id="coverage">
-      <h2>Component coverage</h2>
+      <h2 class="docs-heading">Component coverage</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p>
-        <code>pnpm check:ssr</code> renders every component in Node and fails on any that throws;
-        it runs in CI. Server-side, Lit runs the constructor, <code>willUpdate</code> and
-        <code>render</code> — and none of <code>connectedCallback</code>,
+        <code>pnpm check:ssr</code> renders every component in Node and fails on any that
+        throws; it runs in CI. Server-side, Lit runs the constructor, <code>willUpdate</code>
+        and <code>render</code> — and none of <code>connectedCallback</code>,
         <code>firstUpdated</code>, <code>updated</code>, or a reactive controller's
         <code>hostConnected</code>. Browser work belongs in those.
       </p>
-      <ul>
-        <li><strong>All {elementCount} components</strong> server-render, every one emitting declarative shadow DOM.</li>
-        <li>
-          There are no client-only components. <code>arc-markdown</code> was the last one — its
-          sanitiser needed <code>DOMParser</code> and its render used an <code>.innerHTML</code>
-          property binding, which the server has nothing to serialise. Both are fixed.
-        </li>
-      </ul>
       <p>
-        Support is a property of the library, not of individual components — there is no
-        per-component opt-in to track, because everything works. You opt in per page.
+        All {elementCount} pass; none are client-only. There is no per-component support table
+        to consult — you opt in per page, not per component.
       </p>
     </section>
 
     <section id="frameworks">
-      <h2>Framework support</h2>
+      <h2 class="docs-heading">Framework support</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p>
-        Every framework integration for Lit SSR works from the component graph, which is why only
-        React ever had one. Nothing about the problem needs the graph: a framework's server render
-        produces HTML, and every <code>&lt;arc-*&gt;</code> in that HTML can be rendered to a
-        declarative shadow root by reading the markup alone.
+        Lit's framework SSR integrations work from the component graph, which is why only React
+        ever had one. But nothing about the problem needs the graph: a framework's server render
+        produces HTML, and every <code>&lt;arc-*&gt;</code> in it can be rendered to a
+        declarative shadow root from the markup alone. So <code>@arclux/arc-ui/ssr</code> takes
+        HTML and returns HTML, and does not care what produced it.
       </p>
-      <p>
-        So <code>@arclux/arc-ui/ssr</code> takes HTML and returns HTML, and does not care what
-        produced it.
-      </p>
-      <arc-code-block language="js" code={`import { renderDeclarativeShadowDOM } from '@arclux/arc-ui/ssr';
+      <pre><code>{`import { renderDeclarativeShadowDOM } from '@arclux/arc-ui/ssr';
 
 const { html, stylesheets } = await renderDeclarativeShadowDOM(pageHtml);
-// serve html; write each stylesheet under /_arc`} />
+// serve html; write each stylesheet under /_arc`}</code></pre>
       <ul>
         <li>
           <strong>Nuxt, SvelteKit, Angular Universal, Next, Astro, or a string you built by
-          hand</strong> — pipe the rendered HTML through it. This is the same code that renders
-          this site, over 177 pages and 43,620 shadow roots on every build.
+          hand</strong> — pipe the rendered HTML through it. This is the code that renders this
+          site: 177 pages, 43,620 shadow roots, every build.
         </li>
         <li>
           <strong>React</strong> — <code>@lit-labs/ssr-react</code> also works, if you would rather
@@ -152,15 +165,12 @@ const { html, stylesheets } = await renderDeclarativeShadowDOM(pageHtml);
         </li>
       </ul>
       <p>
-        It needs <code>@lit-labs/ssr</code>, an optional peer dependency: install it in the project
-        that server-renders. Two things are on the caller. Serve the returned stylesheets from the
-        path they were linked with, and import <code>@arclux/arc-ui/hydrate</code> on the client
-        <em>before any component is defined</em> — on a bundler that usually means forcing it into
-        its own chunk, since an import statement alone does not control evaluation order.
-      </p>
-      <p>
-        Hydration support and the FOUC opt-out apply to every one of these, since both are
-        properties of the element rather than of the framework around it.
+        It needs <code>@lit-labs/ssr</code>, an optional peer dependency — install it in the
+        project that server-renders. Two things are on the caller: serve the returned
+        stylesheets from the path they were linked with, and import
+        <code>@arclux/arc-ui/hydrate</code> on the client <em>before any component is
+        defined</em> — on a bundler that usually means forcing it into its own chunk, since an
+        import statement alone does not control evaluation order.
       </p>
     </section>
   </div>
@@ -169,12 +179,7 @@ const { html, stylesheets } = await renderDeclarativeShadowDOM(pageHtml);
 <style>
   .prose-page { max-width: 70ch; }
   .prose-page h1 { font-family: var(--font-display); margin-bottom: var(--space-lg); }
-  .prose-page h2 {
-    font-family: var(--font-display);
-    margin: var(--space-2xl) 0 var(--space-md);
-    padding-top: var(--space-lg);
-    border-top: 1px solid var(--border-subtle);
-  }
+  .prose-page h2 { margin-top: var(--space-2xl); }
   .prose-page p { color: var(--text-secondary); line-height: 1.7; margin-bottom: var(--space-md); }
   .prose-page ul { color: var(--text-secondary); line-height: 1.7; padding-inline-start: var(--space-lg); margin-bottom: var(--space-md); }
   .prose-page li { margin-bottom: var(--space-sm); }

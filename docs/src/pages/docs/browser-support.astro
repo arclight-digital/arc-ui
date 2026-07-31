@@ -28,9 +28,8 @@ const headings = [
       <h2 class="docs-heading">Overview</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        ARC UI is built on <strong>Lit 3</strong>, which compiles to standard JavaScript modules. No
-        transpilation to ES5 or legacy module formats is provided. The library ships as ESM-only
-        (<code>type: "module"</code>).
+        ARC UI is built on <strong>Lit 3</strong> and ships as ESM-only
+        (<code>type: "module"</code>). No ES5 or legacy module builds are provided.
       </p>
     </section>
 
@@ -70,7 +69,6 @@ const headings = [
     <section id="web-components">
       <h2 class="docs-heading">Web Components APIs</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
-      <p class="docs-text">ARC UI relies on the following browser APIs:</p>
 
       <div class="api-table-wrap">
         <table class="api-table">
@@ -91,12 +89,11 @@ const headings = [
       </div>
 
       <p class="docs-text">
-        The <code>scripting</code> media query is the one entry here that is newer than the
-        baseline above, and it is deliberately not a requirement. It gates the rule that hides
-        components until they upgrade. Where the query is unsupported it simply does not match,
-        which switches that hide <em>off</em> — older browsers get a brief flash of unstyled
-        content instead of hidden content, never the reverse. See
-        <a href="/docs/accessibility#no-javascript">Without JavaScript</a> for the full picture.
+        The <code>scripting</code> media query is the one entry newer than the baseline, and
+        deliberately not a requirement. It gates the rule that hides components until they
+        upgrade; where unsupported, the query doesn't match and the hide switches <em>off</em> —
+        older browsers get a brief flash of unstyled content, never hidden content. See
+        <a href="/docs/accessibility#no-javascript">Without JavaScript</a>.
       </p>
     </section>
 
@@ -104,17 +101,17 @@ const headings = [
       <h2 class="docs-heading">Polyfills</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        For evergreen browsers, <strong>no polyfills are required</strong>. If you need to support
-        older browsers, the <a href="https://github.com/webcomponents/polyfills" target="_blank" rel="noopener">@webcomponents/webcomponentsjs</a>
-        polyfill bundle provides Custom Elements and Shadow DOM support. Load it before any ARC UI imports:
+        Evergreen browsers need <strong>no polyfills</strong>. For older browsers,
+        <a href="https://github.com/webcomponents/polyfills" target="_blank" rel="noopener">@webcomponents/webcomponentsjs</a>
+        provides Custom Elements and Shadow DOM. Load it before any ARC UI imports:
       </p>
       <div class="docs-code"><arc-code-block
         language="html"
         code='<script src="https://unpkg.com/@webcomponents/webcomponentsjs@2/webcomponents-bundle.js"><\/script>'
       ></arc-code-block></div>
       <arc-callout variant="warning" style="margin-top:var(--space-sm)">
-        The polyfill adds approximately 15 KB (gzipped) and may degrade performance.
-        We recommend targeting evergreen browsers instead.
+        The polyfill costs ~15 KB (gzipped) and may degrade performance — prefer
+        targeting evergreen browsers.
       </arc-callout>
     </section>
 

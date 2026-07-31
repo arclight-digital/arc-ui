@@ -88,18 +88,22 @@ const spacingTokens = [
           </div>
         ))}
       </div>
+      <p class="docs-text docs-text--footnote">
+        Accents also ship <code>-rgb</code> channel triplets (<code>--accent-primary-rgb</code>,
+        <code>--accent-secondary-rgb</code>) that glows, gradients, and focus rings compose via
+        <code>var()</code> — override the base pair and the rest follows. See <a href="/docs/theming">Theming</a>.
+      </p>
     </section>
 
     <section id="charts">
       <h2 class="docs-heading">Charts</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        Categorical series palette for <code>arc-chart</code> and data visualization. Assign hues in
-        fixed order by series position — never cycle or reshuffle them. The set is validated for
-        color-vision-deficiency separation and contrast against <code>--bg-card</code> in both themes
-        (series 1, 4, and 6 shift automatically in light mode). Status colors
-        (<code>--color-success</code>, <code>--color-error</code>, …) are reserved for state and are
-        not part of this palette.
+        Categorical series palette for <code>arc-chart</code> and data visualization. Assign hues
+        in fixed order by series position — never cycle or reshuffle them. The set is validated
+        for color-vision-deficiency separation and contrast against <code>--bg-card</code> in both
+        themes (series 1, 4, and 6 shift automatically in light mode). Status colors are reserved
+        for state and are not part of this palette.
       </p>
       <div class="tokens-grid">
         {chartTokens.map((t) => (
@@ -131,18 +135,24 @@ const spacingTokens = [
     <section id="typography">
       <h2 class="docs-heading">Typography</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <p class="docs-text">
+        ARC UI ships no font files — only role slots. Assign a face to each role via
+        <code>--font-&lt;role&gt;-family</code> and every component follows. The samples below
+        render live from the slots; <code>--font-accent</code> is a back-compat alias of
+        <code>--font-label</code>.
+      </p>
       <div class="type-samples">
         <div class="type-row">
-          <span class="type-label">font-body</span>
-          <span class="type-sample" style="font-family: 'Host Grotesk', system-ui, sans-serif; font-size: 16px;">Host Grotesk — The quick brown fox jumps over the lazy dog</span>
+          <span class="type-label">--font-body</span>
+          <span class="type-sample type-sample--body">The quick brown fox jumps over the lazy dog</span>
         </div>
         <div class="type-row">
-          <span class="type-label">font-accent</span>
-          <span class="type-sample" style="font-family: 'Azeret Mono', ui-monospace, monospace; font-size: 16px; letter-spacing: 1px; text-transform: uppercase;">Azeret Mono — The quick brown fox</span>
+          <span class="type-label">--font-label</span>
+          <span class="type-sample type-sample--label">The quick brown fox</span>
         </div>
         <div class="type-row">
-          <span class="type-label">font-mono</span>
-          <span class="type-sample" style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px;">JetBrains Mono — const x = 42;</span>
+          <span class="type-label">--font-mono</span>
+          <span class="type-sample type-sample--mono">const x = 42;</span>
         </div>
       </div>
 
@@ -265,31 +275,22 @@ const spacingTokens = [
     <section id="opacity">
       <h2 class="docs-heading">Opacity</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
-      <div class="token-table-wrap">
-        <table class="token-table">
-          <thead>
-            <tr><th>Token</th><th>Value</th></tr>
-          </thead>
-          <tbody>
-            <tr><td><code>--opacity-disabled</code></td><td>0.5</td></tr>
-            <tr><td><code>--opacity-muted</code></td><td>0.6</td></tr>
-            <tr><td><code>--opacity-hover</code></td><td>0.8</td></tr>
-            <tr><td><code>--opacity-visible</code></td><td>1</td></tr>
-          </tbody>
-        </table>
-      </div>
       <div class="opacity-samples">
-        <div class="opacity-card" style="opacity: var(--opacity-disabled)">
-          <span class="opacity-label">disabled (0.5)</span>
+        <div class="opacity-item">
+          <div class="opacity-card" style="opacity: var(--opacity-disabled)"></div>
+          <span class="opacity-label"><code>--opacity-disabled</code> 0.5</span>
         </div>
-        <div class="opacity-card" style="opacity: var(--opacity-muted)">
-          <span class="opacity-label">muted (0.6)</span>
+        <div class="opacity-item">
+          <div class="opacity-card" style="opacity: var(--opacity-muted)"></div>
+          <span class="opacity-label"><code>--opacity-muted</code> 0.6</span>
         </div>
-        <div class="opacity-card" style="opacity: var(--opacity-hover)">
-          <span class="opacity-label">hover (0.8)</span>
+        <div class="opacity-item">
+          <div class="opacity-card" style="opacity: var(--opacity-hover)"></div>
+          <span class="opacity-label"><code>--opacity-hover</code> 0.8</span>
         </div>
-        <div class="opacity-card" style="opacity: var(--opacity-visible)">
-          <span class="opacity-label">visible (1)</span>
+        <div class="opacity-item">
+          <div class="opacity-card" style="opacity: var(--opacity-visible)"></div>
+          <span class="opacity-label"><code>--opacity-visible</code> 1</span>
         </div>
       </div>
     </section>
@@ -427,7 +428,6 @@ const spacingTokens = [
     <section id="focus">
       <h2 class="docs-heading">Focus</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
-      <p class="focus-desc">Tab to these cards to see focus styles in action.</p>
       <div class="focus-samples">
         <button class="focus-demo focus-demo--ring">
           <code>--focus-ring</code>
@@ -516,6 +516,12 @@ const spacingTokens = [
     padding: 1px 6px;
     border-radius: var(--radius-sm);
     border: 1px solid var(--border-subtle);
+  }
+
+  .docs-text--footnote {
+    font-size: var(--text-sm);
+    margin-top: var(--space-md);
+    margin-bottom: 0;
   }
 
   .subsection-heading {
@@ -643,6 +649,23 @@ const spacingTokens = [
     color: var(--text-primary);
   }
 
+  .type-sample--body {
+    font-family: var(--font-body);
+    font-size: var(--body-size);
+  }
+
+  .type-sample--label {
+    font-family: var(--font-label);
+    font-size: var(--ui-accent-size);
+    letter-spacing: var(--ui-accent-spacing);
+    text-transform: uppercase;
+  }
+
+  .type-sample--mono {
+    font-family: var(--font-mono);
+    font-size: var(--code-size);
+  }
+
   /* Token table */
   .token-table-wrap {
     border: 1px solid var(--border-subtle);
@@ -724,15 +747,17 @@ const spacingTokens = [
     display: flex;
     gap: var(--space-lg);
     flex-wrap: wrap;
-    margin-top: var(--space-md);
+  }
+
+  .opacity-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
   }
 
   .opacity-card {
     width: 120px;
     height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     background: var(--accent-primary);
     border-radius: var(--radius-md);
   }
@@ -740,7 +765,12 @@ const spacingTokens = [
   .opacity-label {
     font-family: var(--font-mono);
     font-size: var(--text-xs);
-    color: white;
+    color: var(--text-muted);
+  }
+
+  .opacity-label code {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
   }
 
   /* Glow samples */
@@ -836,12 +866,6 @@ const spacingTokens = [
   }
 
   /* Focus demos */
-  .focus-desc {
-    color: var(--text-secondary);
-    font-size: var(--text-sm);
-    margin-bottom: var(--space-md);
-  }
-
   .focus-samples {
     display: flex;
     gap: var(--space-lg);

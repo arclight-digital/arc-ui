@@ -1,5 +1,7 @@
 ---
 import DocsLayout from '../../layouts/DocsLayout.astro';
+import { tokenCount, utilityClassCount } from '../../data/site-stats';
+import '@arclux/arc-ui/utilities.css';
 
 const headings = [
   { id: 'overview', label: 'Overview' },
@@ -33,6 +35,8 @@ const surface = [
   ['.arc-shadow-lg', 'box-shadow: var(--shadow-lg)'],
   ['.arc-font-mono', 'font-family: var(--font-mono)'],
 ];
+
+const fontRoles = ['body', 'label', 'mono', 'display', 'quote'];
 ---
 
 <DocsLayout
@@ -49,18 +53,20 @@ const surface = [
       <p>
         ARC UI components own everything inside their shadow boundary and nothing outside it.
         The space <em>between</em> components is yours, and in practice everyone writes the same
-        flex, gap and padding CSS to fill it — against 381 custom properties
+        flex, gap and padding CSS to fill it — against {tokenCount} custom properties
         <code>base.css</code> already publishes with no ergonomic way to use them.
       </p>
       <p>
-        <strong>272 classes</strong>, about 2 KB over the wire, covering spacing, layout and
-        surface. It is a deliberate middle: enough to lay out a page around ARC components,
-        not enough to be a framework.
+        <strong>{utilityClassCount} generated, <code>arc-</code>-prefixed classes</strong>, about
+        2.6&nbsp;KB gzipped, covering spacing, layout and surface. It is a deliberate middle:
+        enough to lay out a page around ARC components, not enough to be a framework. This site
+        loads the stylesheet, so every demo on this page is the classes themselves, live.
       </p>
     </section>
 
     <section id="why">
-      <h2>Why not just use Tailwind</h2>
+      <h2 class="docs-heading">Why not just use Tailwind</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p>
         You can, and for most utility work you should. What Tailwind cannot do is know what
         <code>arc-card</code> uses for its own padding.
@@ -81,26 +87,32 @@ const surface = [
     </section>
 
     <section id="install">
-      <h2>Install</h2>
-      <p>Opt-in and standalone. Nobody who only wants tokens pays for it.</p>
+      <h2 class="docs-heading">Install</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <pre><code>{`import '@arclux/arc-ui/base.css';       /* defines the tokens */
 import '@arclux/arc-ui/utilities.css'; /* uses them */`}</code></pre>
       <p>
-        Every class is <code>arc-</code> prefixed, because consumers run Tailwind or Bootstrap
-        and an unprefixed <code>.flex</code> would collide catastrophically. It costs the
-        terseness that makes utilities pleasant, and there is no way around it for a library.
+        Opt-in and standalone — nobody who only wants tokens pays for it. Every class is
+        <code>arc-</code> prefixed, because consumers run Tailwind or Bootstrap and an
+        unprefixed <code>.flex</code> would collide catastrophically. It costs the terseness that
+        makes utilities pleasant, and there is no way around it for a library.
       </p>
     </section>
 
     <section id="spacing">
-      <h2>Spacing</h2>
+      <h2 class="docs-heading">Spacing</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p>
-        Every step of the <code>--space-*</code> scale, on padding, margin and gap.
-        Suffixes are logical, not physical: <code>x</code>/<code>y</code> for the inline and
-        block axes, <code>s</code>/<code>e</code> for start and end, <code>t</code>/<code>b</code>
-        for block start and end. A layout built from these mirrors under
-        <code>dir="rtl"</code> without a second stylesheet.
+        Every step of the <code>--space-*</code> scale, on padding, margin and gap. Suffixes are
+        logical, not physical: <code>x</code>/<code>y</code> for the inline and block axes,
+        <code>s</code>/<code>e</code> for start and end, <code>t</code>/<code>b</code> for block
+        start and end. A layout built from these mirrors under <code>dir="rtl"</code> without a
+        second stylesheet — the same class, both directions:
       </p>
+      <div class="demo-stack">
+        <div class="demo-box arc-ps-xl arc-py-sm"><code>.arc-ps-xl</code></div>
+        <div class="demo-box arc-ps-xl arc-py-sm" dir="rtl"><code>.arc-ps-xl</code> <code>dir="rtl"</code></div>
+      </div>
       <table>
         <tbody>
           {spacing.map(([name, decl]) => (
@@ -115,7 +127,19 @@ import '@arclux/arc-ui/utilities.css'; /* uses them */`}</code></pre>
     </section>
 
     <section id="layout">
-      <h2>Layout</h2>
+      <h2 class="docs-heading">Layout</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <div class="demo-box arc-flex arc-items-center arc-justify-between arc-gap-md arc-p-md">
+        <code>.arc-flex</code>
+        <code>.arc-items-center</code>
+        <code>.arc-justify-between</code>
+      </div>
+      <div class="demo-grid arc-grid arc-grid-cols-3 arc-gap-sm">
+        <div class="demo-box arc-p-sm arc-col-span-2"><code>.arc-col-span-2</code></div>
+        <div class="demo-box arc-p-sm"><code>.arc-grid-cols-3</code></div>
+        <div class="demo-box arc-p-sm"><code>.arc-gap-sm</code></div>
+        <div class="demo-box arc-p-sm arc-col-span-full"><code>.arc-col-span-full</code></div>
+      </div>
       <ul>
         <li>
           <strong>Display</strong> — <code>.arc-flex</code>, <code>.arc-inline-flex</code>,
@@ -143,7 +167,13 @@ import '@arclux/arc-ui/utilities.css'; /* uses them */`}</code></pre>
     </section>
 
     <section id="surface">
-      <h2>Surface</h2>
+      <h2 class="docs-heading">Surface</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <div class="arc-bg-card arc-border arc-rounded-md arc-shadow-lg arc-p-md demo-card">
+        <div class="arc-text-primary"><code>.arc-bg-card .arc-border .arc-rounded-md .arc-shadow-lg</code></div>
+        <div class="arc-text-secondary arc-text-sm"><code>.arc-text-secondary</code> <code>.arc-text-sm</code></div>
+        <div class="arc-text-accent-primary arc-font-mono arc-text-sm"><code>.arc-text-accent-primary</code> <code>.arc-font-mono</code></div>
+      </div>
       <table>
         <tbody>
           {surface.map(([name, decl]) => (
@@ -152,38 +182,40 @@ import '@arclux/arc-ui/utilities.css'; /* uses them */`}</code></pre>
         </tbody>
       </table>
       <p>
-        Colours use the token names directly, so <code>.arc-text-primary</code> is the
-        foreground colour and <code>.arc-text-lg</code> is a type size — the same split
-        <code>--text-primary</code> and <code>--text-lg</code> already have. The generator
-        fails the build if a future token ever makes those two collide.
+        Colours use the token names directly, so <code>.arc-text-primary</code> is the foreground
+        colour and <code>.arc-text-lg</code> is a type size — the same split
+        <code>--text-primary</code> and <code>--text-lg</code> already have. The generator fails
+        the build if a future token ever makes those two collide.
       </p>
-      <p>
+      <p class="demo-fonts">
         Font classes name the five <strong>roles</strong>, not typefaces:
-        <code>.arc-font-body</code>, <code>-label</code>, <code>-mono</code>,
-        <code>-display</code>, <code>-quote</code>.
+        {fontRoles.map((role) => (
+          <span class={`arc-font-${role}`}>.arc-font-{role}</span>
+        ))}
       </p>
     </section>
 
     <section id="limits">
-      <h2>Limits</h2>
+      <h2 class="docs-heading">Limits</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <ul>
         <li>
-          <strong>Light DOM only.</strong> A class cannot cross a shadow boundary, so these
-          style the space around ARC components and never anything inside one. Reach for
-          <code>::part()</code> and the CSS custom properties for that.
+          <strong>Light DOM only.</strong> A class cannot cross a shadow boundary — these style
+          the space around ARC components, never anything inside one. Use <code>::part()</code>
+          and the CSS custom properties for that.
         </li>
         <li>
-          <strong>No responsive or state variants.</strong> No <code>sm:</code>,
-          no <code>hover:</code>. That is where a utility layer becomes a framework, and this
-          one is deliberately not that. Write a media query.
+          <strong>No responsive or state variants.</strong> No <code>sm:</code>, no
+          <code>hover:</code>. That is where a utility layer becomes a framework, and this one
+          is deliberately not that. Write a media query.
         </li>
         <li>
           <strong>No arbitrary values.</strong> The scale is the point — a class that resolves
           to an arbitrary pixel value is not tracking the token system.
         </li>
         <li>
-          <strong>Requires the tokens.</strong> Every class reads a <code>var()</code>, so load
-          <code>base.css</code> or define the same variables yourself.
+          <strong>Requires the tokens.</strong> Every class reads a <code>var()</code> — load
+          <code>base.css</code>, or define the same variables yourself.
         </li>
       </ul>
     </section>
@@ -193,12 +225,7 @@ import '@arclux/arc-ui/utilities.css'; /* uses them */`}</code></pre>
 <style>
   .prose-page { max-width: 70ch; }
   .prose-page h1 { font-family: var(--font-display); margin-bottom: var(--space-lg); }
-  .prose-page h2 {
-    font-family: var(--font-display);
-    margin: var(--space-2xl) 0 var(--space-md);
-    padding-top: var(--space-lg);
-    border-top: 1px solid var(--border-subtle);
-  }
+  .prose-page h2 { margin-top: var(--space-2xl); }
   .prose-page p { color: var(--text-secondary); line-height: 1.7; margin-bottom: var(--space-md); }
   .prose-page ul { color: var(--text-secondary); line-height: 1.7; padding-inline-start: var(--space-lg); margin-bottom: var(--space-md); }
   .prose-page li { margin-bottom: var(--space-sm); }
@@ -222,5 +249,28 @@ import '@arclux/arc-ui/utilities.css'; /* uses them */`}</code></pre>
     border-bottom: 1px solid var(--border-subtle);
     color: var(--text-secondary);
     vertical-align: top;
+  }
+
+  /* Demo chrome — everything else the demos do is the utility classes themselves. */
+  .demo-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+  }
+  .demo-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+  }
+  .demo-grid { margin-bottom: var(--space-md); }
+  .demo-card { margin-bottom: var(--space-md); }
+  .demo-card > div { margin-bottom: var(--space-xs); }
+  .demo-card > div:last-child { margin-bottom: 0; }
+  .demo-fonts span {
+    display: inline-block;
+    margin-inline-start: var(--space-sm);
+    color: var(--text-primary);
   }
 </style>

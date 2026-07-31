@@ -143,8 +143,46 @@ function renderComponent(c: typeof components[number]): string {
   return lines.join('\n');
 }
 
+/**
+ * One-line descriptions for token groups, keyed by the first name segment.
+ * Groups without an entry still render — name and count only — so new
+ * prefixes in base.css are never dropped, just undescribed.
+ */
+const tokenGroupDescriptions: Record<string, string> = {
+  accent: 'brand accent colors. `--accent-primary` and `--accent-secondary` (plus their `-rgb` forms) are the base theming tokens; the `-subtle`/`-border`/`-glow`/`-ring` variants derive from them',
+  bg: 'page and container background colors',
+  surface: 'component surface background colors',
+  text: 'this prefix deliberately carries both type-scale sizes (`xs`–`3xl`) and foreground text colors (`primary`/`secondary`/`muted`/`ghost`)',
+  color: 'status color palette (success/warning/error/info) with `-rgb` and `-subtle` forms',
+  feedback: 'status tint, border, and glow compounds derived from `--color-*`',
+  border: 'border colors',
+  divider: 'divider treatment',
+  glow: 'accent glow effects (compound, derived from accents)',
+  gradient: 'gradients (compound, derived from accents)',
+  shadow: 'elevation shadows',
+  focus: 'focus ring styles',
+  font: 'font role slots (body/label/mono/display/quote): composed `--font-<role>` + `-family`/`-fallback`/`-weight`; `--font-accent` is a back-compat alias of `--font-label`',
+  space: 'spacing scale',
+  radius: 'border radii',
+  breakpoint: 'responsive breakpoints',
+  z: 'z-index layers',
+  duration: 'motion durations',
+  ease: 'easing curves',
+  transition: 'composed transitions (duration + easing)',
+  chart: 'chart series palette',
+  interactive: 'interactive state colors and focus-ring inputs',
+  opacity: 'opacity steps',
+  touch: 'touch target sizing',
+};
+
 export const GET: APIRoute = async () => {
-  const tiers = ['layout', 'navigation', 'content', 'data', 'typography', 'input', 'feedback'] as const;
+  // Preferred ordering; any tier present in the data but missing here is
+  // appended so components can never be silently dropped from the output.
+  const tierOrder = ['layout', 'navigation', 'content', 'data', 'typography', 'input', 'feedback'];
+  const tiers = [
+    ...tierOrder,
+    ...Array.from(new Set(components.map((c) => c.tier))).filter((t) => !tierOrder.includes(t)),
+  ];
 
   // Extract all CSS custom properties from base.css.
   // Same pattern as site-stats.ts so the two counts can never diverge.
@@ -157,6 +195,15 @@ export const GET: APIRoute = async () => {
     }
   }
 
+  // Group by first name segment, preserving base.css declaration order.
+  const tokenGroups = new Map<string, string[]>();
+  for (const t of allTokens) {
+    const prefix = t.slice(2).split('-')[0];
+    const group = tokenGroups.get(prefix);
+    if (group) group.push(t);
+    else tokenGroups.set(prefix, [t]);
+  }
+
   const sections: string[] = [];
 
   // Header
@@ -165,6 +212,8 @@ export const GET: APIRoute = async () => {
   sections.push(`> Version ${version} | ${components.length} components | ${frameworkCount} framework targets`);
   sections.push('');
   sections.push('This is the complete reference for LLM consumption. For a concise overview, see /llms.txt.');
+  sections.push('');
+  sections.push('The APIs below are the Web Component surface. Framework wrappers (React, Vue, Svelte, Angular, Solid, Preact) are generated from this source and expose the same props, events, slots, and CSS parts.');
   sections.push('');
 
   // Token reference
@@ -181,9 +230,15 @@ export const GET: APIRoute = async () => {
   sections.push('}');
   sections.push('```');
   sections.push('');
-  sections.push('### All Token Names');
+  sections.push('Compound tokens (glows, gradients, focus rings, feedback tints) reference base tokens via `var()`, so overriding a base token cascades through every derived value. The theme is dark by default; set `data-theme="light"` on `<html>` for light mode, or `data-theme="auto"` to follow `prefers-color-scheme`.');
   sections.push('');
-  sections.push(allTokens.map((t) => `\`${t}\``).join(', '));
+  sections.push(`### Token Names by Group (${allTokens.length} total)`);
+  for (const [prefix, names] of tokenGroups) {
+    const desc = tokenGroupDescriptions[prefix];
+    sections.push('');
+    sections.push(`**\`--${prefix}-*\` (${names.length})**${desc ? ` — ${desc}` : ''}`);
+    sections.push(names.map((t) => `\`${t}\``).join(', '));
+  }
   sections.push('');
 
   // Components by tier

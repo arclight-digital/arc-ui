@@ -18,7 +18,8 @@ const roles = [
     reference: 'Host Grotesk',
     fallback: 'system-ui, sans-serif',
     weight: '500',
-    uses: 'Prose, inputs, descriptions, option lists, table cells. The default for everything that is not covered by another role.',
+    uses: 'Prose, inputs, descriptions, option lists, table cells — the default for everything not covered by another role.',
+    specimen: 'Sphinx of black quartz, judge my vow.',
   },
   {
     slot: 'label',
@@ -27,6 +28,7 @@ const roles = [
     fallback: 'ui-monospace, monospace',
     weight: '600',
     uses: 'Form labels, table headers, eyebrows, dividers, segment labels. Rendered small, uppercase and tracked, so it wants a face that holds up at 12px in caps.',
+    specimen: 'Section label',
   },
   {
     slot: 'mono',
@@ -35,6 +37,7 @@ const roles = [
     fallback: 'ui-monospace, monospace',
     weight: '400',
     uses: 'Code blocks, keyboard hints, command palette shortcuts, and tabular numerics — meter readouts, stat deltas, calendar day numbers.',
+    specimen: '1,024.7 ms · +12.4% · 0x2F',
   },
   {
     slot: 'display',
@@ -43,6 +46,7 @@ const roles = [
     fallback: 'follows Text',
     weight: '500',
     uses: 'Large headings and hero type. Inherits the Text role until you assign it a face of its own, so a display typeface is opt-in rather than assumed. The weight does not follow Text — large type usually wants its own.',
+    specimen: 'Radiant interfaces',
   },
   {
     slot: 'quote',
@@ -50,7 +54,8 @@ const roles = [
     reference: 'Georgia',
     fallback: 'serif',
     weight: '200',
-    uses: 'The decorative quotation glyph on arc-blockquote. Separate because it is the one place the system wants a serif.',
+    uses: 'The quotation glyph on arc-blockquote — the one place the system wants a serif.',
+    specimen: '“',
   },
 ];
 ---
@@ -65,9 +70,8 @@ const roles = [
   <div class="typography-page">
     <h1 class="page-title">Typography</h1>
     <p class="page-desc">
-      ARC UI does not ship font files. It defines five typographic <strong>roles</strong> and
-      names a reference face for each; you assign whatever typefaces you like by overriding one
-      token per role.
+      ARC UI ships no font files. It defines five typographic <strong>roles</strong> and names a
+      reference face for each; you assign your own by overriding one token per role.
     </p>
 
     <section id="roles-not-typefaces">
@@ -75,14 +79,14 @@ const roles = [
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
         A design system that bundles its own typefaces makes two decisions on your behalf: which
-        faces you use, and how they reach the browser. ARC UI makes neither. What it does commit
-        to is the <em>roles</em> — which parts of the interface are set in which voice, at what
+        faces you use, and how they reach the browser. ARC UI makes neither. What it commits to
+        is the <em>roles</em> — which parts of the interface are set in which voice, at what
         size, weight and tracking. Those relationships are the typographic design; the specific
         faces are yours.
       </p>
       <p class="docs-text">
-        Every role is four tokens: the family you assign, the fallback stack behind it, the weight
-        the role is set at, and the composed value components actually consume.
+        Every role is four tokens — the family you assign, the fallback stack behind it, the
+        weight the role is set at, and the composed value components actually consume:
       </p>
       <Code
         lang="css"
@@ -97,12 +101,12 @@ const roles = [
       </p>
       <p class="docs-text">
         The weight is a separate knob because a face you assign will not always ship the weight
-        the role is set at. The Label role is set at 600 across some fifty components; point it at
-        a face whose heaviest cut is 500 and the browser synthesises the difference, which looks
-        like smeared type rather than like a missing weight. Setting
-        <code>--font-label-weight</code> once fixes all of them, including the derived context
-        tokens — <code>--section-title-weight</code> and <code>--ui-accent-weight</code> reference
-        the role rather than restating a number.
+        the role is set at. The Label role is set at 600 across some fifty components; point it
+        at a face whose heaviest cut is 500 and the browser synthesises the difference, which
+        looks like smeared type rather than a missing weight. Setting
+        <code>--font-label-weight</code> once fixes all of them — derived tokens like
+        <code>--section-title-weight</code> and <code>--ui-accent-weight</code> reference the
+        role rather than restating a number.
       </p>
     </section>
 
@@ -116,6 +120,7 @@ const roles = [
               <span class="role-name">{r.name}</span>
               <code class="role-slot">--font-{r.slot}-family</code>
             </div>
+            <div class={`role-specimen role-specimen--${r.slot}`}>{r.specimen}</div>
             <p class="role-uses">{r.uses}</p>
             <div class="role-meta">
               <span><strong>Reference</strong> {r.reference}</span>
@@ -153,7 +158,7 @@ const roles = [
       />
       <p class="docs-text">
         Assigning one role does not disturb the others. Leaving a role unassigned keeps its
-        reference face, and if that face is not loaded, its fallback.
+        reference face — and if that face never loads, its fallback.
       </p>
       <h3 class="tier-heading">Using one typeface everywhere</h3>
       <p class="docs-text">
@@ -201,17 +206,18 @@ const roles = [
 :root { --font-body-family: 'Inter'; }`}
       />
       <p class="docs-text">
-        Declare a variable font <strong>once</strong> with a weight range. Declaring the same file
-        under several discrete weights is the most common way to get this wrong: a
+        Declare a variable font <strong>once</strong>, with a weight range. Declaring the same
+        file under several discrete weights is the most common way to get this wrong: a
         <code>@font-face</code> naming a single weight gives the browser no way to set the
-        <code>wght</code> axis, so it renders the font's <em>default instance</em> for every one of
-        them. Nothing errors, every weight resolves, and the hierarchy is flat — components in this
-        library ask for weights from 200 to 800 and would all render identically.
+        <code>wght</code> axis, so it renders the font's <em>default instance</em> for every one
+        of them. Nothing errors, every weight resolves, and the hierarchy is flat — components in
+        this library ask for weights from 200 to 800 and would all render identically.
       </p>
       <p class="docs-text">
-        Use the range the font actually has. Asking for a weight outside it gets you the nearest end
-        of the axis, so a face whose lightest cut is 300 cannot deliver the 200 some roles default
-        to — set <code>--font-quote-weight</code> and friends to something it can reach instead.
+        Use the range the font actually has. Asking for a weight outside it gets the nearest end
+        of the axis, so a face whose lightest cut is 300 cannot deliver the 200 some roles
+        default to — set <code>--font-quote-weight</code> and friends to something it can reach
+        instead.
       </p>
       <p class="docs-text">
         Preload the faces used above the fold, and only those:
@@ -223,15 +229,12 @@ const roles = [
 
       <h3 class="tier-heading">Use the family name the package registers, not the one you expect</h3>
       <p class="docs-text">
-        Whatever loads your font decides what the family is <em>called</em>, and the assignment has
-        to use that exact string. This is the one mistake worth calling out, because it fails
-        quietly: an unknown family name is not an error, it is simply skipped, so the role falls
-        through to its fallback stack and the page renders in <code>system-ui</code> — which looks
-        close enough to a grotesque that it reads as "the font loaded" at a glance.
-      </p>
-      <p class="docs-text">
-        Fontsource's variable packages are where this usually happens. They register the family with
-        a <code>Variable</code> suffix:
+        Whatever loads your font decides what the family is <em>called</em>, and the assignment
+        has to use that exact string. This mistake fails quietly: an unknown family name is not
+        an error, it is simply skipped, so the role falls through to its fallback and the page
+        renders in <code>system-ui</code> — which looks close enough to a grotesque to read as
+        "the font loaded" at a glance. Fontsource's variable packages are where this usually
+        happens; they register the family with a <code>Variable</code> suffix:
       </p>
       <Code
         lang="js"
@@ -247,9 +250,9 @@ const roles = [
       <p class="docs-text">
         The static Fontsource packages (<code>@fontsource/host-grotesk</code>) register the bare
         name, so the two differ by more than the import path. To check which you have, look at
-        the <code>font-family</code> in the package's own CSS, or confirm in DevTools: the Computed
-        panel names the face actually used to render, and the Rendered Fonts section names the file
-        it came from. If that says <code>system-ui</code>, the name is wrong.
+        the <code>font-family</code> in the package's own CSS, or confirm in DevTools: the
+        Computed panel names the face actually rendering, and Rendered Fonts names the file it
+        came from. If it says <code>system-ui</code>, the name is wrong.
       </p>
     </section>
 
@@ -267,8 +270,8 @@ const roles = [
       />
       <p class="docs-text">
         Fallbacks differ from webfonts in width and vertical metrics, so text reflows when the
-        real face arrives. Because you choose the typeface, only you can measure that — the fix
-        is a metric-matched fallback face declared against your font's actual metrics:
+        real face arrives. The fix is a metric-matched fallback declared against your font's
+        actual metrics:
       </p>
       <Code
         lang="css"
@@ -296,10 +299,10 @@ const roles = [
       <h2 class="docs-heading">The Reference Faces</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        The defaults name Host Grotesk, Azeret Mono, JetBrains Mono and Georgia. These are what this
-        documentation site is set in, and what the components were designed against — but ARC UI
-        does not ship or load them. If you load nothing, you get each role's fallback, which is a
-        supported configuration rather than a broken one.
+        The defaults name Host Grotesk, Azeret Mono, JetBrains Mono and Georgia. The specimens
+        above render them live — this documentation site loads them, and the components were
+        designed against them — but ARC UI does not ship or load them. If you load nothing, each
+        role renders its fallback, which is a supported configuration rather than a broken one.
       </p>
       <p class="docs-text">
         Treat them as a reference rendering, not a requirement. The roles are the contract.
@@ -337,6 +340,46 @@ const roles = [
     font-family: var(--font-mono);
     font-size: var(--text-xs);
     color: var(--interactive);
+  }
+
+  .role-specimen {
+    color: var(--text-primary);
+    margin-bottom: var(--space-sm);
+  }
+
+  .role-specimen--body {
+    font-family: var(--font-body);
+    font-weight: var(--font-body-weight);
+    font-size: var(--text-lg);
+  }
+
+  .role-specimen--label {
+    font-family: var(--font-label);
+    font-weight: var(--font-label-weight);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  .role-specimen--mono {
+    font-family: var(--font-mono);
+    font-weight: var(--font-mono-weight);
+    font-size: var(--text-md);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .role-specimen--display {
+    font-family: var(--font-display);
+    font-weight: var(--font-display-weight);
+    font-size: var(--text-2xl);
+    letter-spacing: -0.02em;
+  }
+
+  .role-specimen--quote {
+    font-family: var(--font-quote);
+    font-weight: var(--font-quote-weight);
+    font-size: var(--text-3xl);
+    line-height: 1;
   }
 
   .role-uses {

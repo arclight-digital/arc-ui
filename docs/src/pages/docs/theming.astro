@@ -23,8 +23,8 @@ const headings = [
   <div class="theming-page">
     <h1 class="page-title">Theming</h1>
     <p class="page-desc">
-      ARC UI's visual identity is driven entirely by CSS custom properties. Switch between
-      dark, light, and auto modes — or create a fully custom theme by overriding tokens.
+      Every surface, glow, and gradient resolves from CSS custom properties.
+      Switch modes with one attribute, or retheme by overriding tokens.
     </p>
 
     <section id="how-themes-work">
@@ -52,7 +52,8 @@ const headings = [
         </arc-card>
       </div>
       <p class="docs-text">
-        All components automatically adapt when the theme changes — no additional configuration needed.
+        Every component adapts on the spot when the theme changes — no configuration needed.
+        Try it: flip the toggle in the top bar.
       </p>
     </section>
 
@@ -60,14 +61,13 @@ const headings = [
       <h2 class="docs-heading">Dark Mode</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        Dark mode is the default. The color palette uses near-black backgrounds with blue and violet
-        accent glows to create a distinctive, modern aesthetic.
+        Dark mode is the default: near-black surfaces with blue and violet accent glows.
       </p>
       <div class="docs-code"><Code code={`<!-- Dark mode is the default — no attribute needed -->
 <html>
   <!-- or explicitly: -->
 <html data-theme="dark">`} lang="html" theme="css-variables" /></div>
-      <p class="docs-text">Key dark-mode tokens:</p>
+      <p class="docs-text">The surface stack, rendered live:</p>
       <div class="token-preview-grid">
         <arc-card class="token-preview" style="--bg-card: var(--bg-deep)">
           <code>--bg-deep</code>
@@ -88,22 +88,18 @@ const headings = [
       <h2 class="docs-heading">Light Mode</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        Light mode shifts backgrounds to soft whites and adjusts accents for stronger contrast
-        on light surfaces. Shadows become colored (blue/violet tinted) instead of black.
+        Light mode shifts backgrounds to soft whites and strengthens the accents for contrast
+        on light surfaces. Shadows become blue/violet-tinted instead of black.
       </p>
       <div class="docs-code"><Code code={`<html data-theme="light">`} lang="html" theme="css-variables" /></div>
-      <p class="docs-text">
-        In light mode, the <code>.theme-fixed</code> regions (nav, footer) switch to a deep
-        royal blue instead of near-black, maintaining the brand feel.
-      </p>
     </section>
 
     <section id="auto-mode">
       <h2 class="docs-heading">Auto Mode</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        Auto mode respects the user's OS preference via <code>prefers-color-scheme</code>.
-        Use localStorage to persist the user's choice:
+        Auto mode follows the user's OS preference via <code>prefers-color-scheme</code>.
+        To persist an explicit choice across visits, store it and restore on load:
       </p>
       <div class="docs-code"><Code code={`// Set theme and persist
 function setTheme(theme) {
@@ -121,49 +117,49 @@ document.documentElement.setAttribute('data-theme', saved);`} lang="js" theme="c
       <h2 class="docs-heading">Fixed Regions</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        Some UI regions (nav bars, footers) should keep a consistent dark appearance regardless
-        of theme. Apply the <code>.theme-fixed</code> class to lock a region's tokens:
+        Some regions — navs, footers — should keep a consistent dark appearance regardless of
+        theme. Apply the <code>.theme-fixed</code> class to lock their tokens: near-black in
+        dark mode, deep royal blue in light mode. The top bar on this page uses it — flip to
+        light mode and watch it hold.
       </p>
       <div class="docs-code"><Code code={`<div class="theme-fixed">
   <arc-top-bar fixed>
     <!-- Always uses dark tokens -->
   </arc-top-bar>
 </div>`} lang="html" theme="css-variables" /></div>
-      <p class="docs-text">
-        In dark mode, <code>.theme-fixed</code> uses the standard near-black palette.
-        In light mode, it switches to deep royal blue backgrounds instead.
-      </p>
     </section>
 
     <section id="custom-themes">
       <h2 class="docs-heading">Custom Themes</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        Create a custom theme by overriding CSS custom properties. For colors, you should also
-        provide the <code>-rgb</code> channel variant so alpha compositing works correctly:
+        Compound tokens — gradients, glows, focus rings — reference the base accent tokens via
+        <code>var()</code>. Override the base pair (plus their <code>-rgb</code> channel variants,
+        which alpha compositing needs) and everything downstream follows:
       </p>
       <div class="docs-code"><Code code={`:root {
-  /* Override accent colors */
   --accent-primary: rgb(0, 150, 136);
   --accent-primary-rgb: 0, 150, 136;
   --accent-secondary: rgb(233, 30, 99);
   --accent-secondary-rgb: 233, 30, 99;
-
-  /* Alpha variants auto-compose from -rgb channels */
-  --accent-primary-subtle: rgba(var(--accent-primary-rgb), 0.06);
-  --accent-primary-border: rgba(var(--accent-primary-rgb), 0.12);
-  --accent-primary-glow:   rgba(var(--accent-primary-rgb), 0.2);
+  /* That's it. Glows, gradients, and focus rings recompose from these. */
 }`} lang="css" theme="css-variables" /></div>
-      <arc-callout variant="info">When overriding accent or background tokens, verify that your custom values maintain sufficient contrast ratios (4.5:1 for text, 3:1 for UI elements). Use the <a href="/docs/theme-synthesizer">Theme Synthesizer</a> to interactively build a custom theme and export the CSS.</arc-callout>
+      <p class="docs-text">
+        Here are those four lines applied to this page, live — every button, glow, gradient,
+        and divider follows:
+      </p>
+      <div class="cascade-demo">
+        <arc-button id="cascade-toggle" variant="primary">Apply the override</arc-button>
+      </div>
+      <arc-callout variant="info">Keep contrast ratios when overriding accent or background tokens: 4.5:1 for text, 3:1 for UI elements.</arc-callout>
     </section>
 
     <section id="synthesizer">
       <h2 class="docs-heading">Theme Synthesizer</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        The <a href="/docs/theme-synthesizer">Theme Synthesizer</a> is an interactive tool that lets
-        you tweak every design token, preview the result in real time, and download a ready-to-use
-        <code>base.css</code> file.
+        The <a href="/docs/theme-synthesizer">Theme Synthesizer</a> lets you tweak every token,
+        preview the result in real time, and download a ready-to-use <code>base.css</code>.
       </p>
       <div class="synth-cta">
         <a href="/docs/theme-synthesizer">
@@ -183,6 +179,46 @@ document.documentElement.setAttribute('data-theme', saved);`} lang="js" theme="c
     </section>
   </div>
 </DocsLayout>
+
+<script>
+  // Custom-theme cascade demo: apply the four base-token overrides from the
+  // code block above to <html> (the same element :root compounds live on),
+  // so every glow/gradient/focus-ring var() chain re-resolves page-wide.
+  const CASCADE_OVERRIDES: Record<string, string> = {
+    '--accent-primary': 'rgb(0, 150, 136)',
+    '--accent-primary-rgb': '0, 150, 136',
+    '--accent-secondary': 'rgb(233, 30, 99)',
+    '--accent-secondary-rgb': '233, 30, 99',
+  };
+
+  function initCascadeDemo() {
+    const btn = document.getElementById('cascade-toggle');
+    if (!btn || btn.dataset.bound) return;
+    btn.dataset.bound = 'true';
+    const root = document.documentElement;
+    const applied = () => root.style.getPropertyValue('--accent-primary') !== '';
+    const sync = () => {
+      btn.textContent = applied() ? 'Remove the override' : 'Apply the override';
+    };
+    btn.addEventListener('click', () => {
+      const on = applied();
+      for (const [prop, value] of Object.entries(CASCADE_OVERRIDES)) {
+        if (on) root.style.removeProperty(prop);
+        else root.style.setProperty(prop, value);
+      }
+      sync();
+    });
+    sync();
+  }
+  initCascadeDemo();
+  document.addEventListener('astro:page-load', initCascadeDemo);
+  // Demo is page-scoped: clean up on client-side navigation away.
+  document.addEventListener('astro:before-swap', () => {
+    for (const prop of Object.keys(CASCADE_OVERRIDES)) {
+      document.documentElement.style.removeProperty(prop);
+    }
+  });
+</script>
 
 <style>
   /* Theme mode cards */
@@ -250,6 +286,11 @@ document.documentElement.setAttribute('data-theme', saved);`} lang="js" theme="c
   .token-preview code {
     font-size: var(--text-xs);
     color: var(--text-muted);
+  }
+
+  /* Cascade demo */
+  .cascade-demo {
+    margin-bottom: var(--space-md);
   }
 
   /* CTA */

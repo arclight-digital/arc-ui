@@ -25,18 +25,16 @@ const headings = [
   <div class="frameworks-page">
     <h1 class="page-title">Frameworks</h1>
     <p class="page-desc">
-      ARC UI is built on Lit Web Components. We built a custom code generator called Prism
-      that reads the Lit source and produces typed, idiomatic bindings for every major framework.
+      Use ARC UI in React, Vue, Svelte, Angular, Solid, Preact — or no framework at all.
     </p>
 
     <section id="overview">
       <h2 class="docs-heading">Overview</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        ARC UI follows a <strong>write-once, run-everywhere</strong> architecture. The core
-        <code>@arclux/arc-ui</code> package contains Lit-based custom elements that work in
-        any environment. We built a custom code generator called <strong>Prism</strong> that
-        parses any Lit Web Component and produces framework-native wrappers, giving you:
+        The core <code>@arclux/arc-ui</code> package contains Lit-based custom elements
+        that work in any environment. Our code generator, <strong>Prism</strong>, parses
+        the Lit source and produces a framework-native wrapper package for each framework:
       </p>
       <ul class="docs-list">
         <li>Proper event binding (e.g. React's synthetic events)</li>
@@ -44,18 +42,13 @@ const headings = [
         <li>Idiomatic imports for each framework</li>
         <li>SSR compatibility where supported</li>
       </ul>
-      <p class="docs-text">
-        Every framework package re-exports the same components — choose the one that matches your stack.
-      </p>
     </section>
 
     <section id="react">
       <h2 class="docs-heading">React</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <arc-badge variant="primary">@arclux/arc-ui-react</arc-badge>
-      <p class="docs-text">Install the React wrapper package:</p>
       <div class="docs-code"><Code code="npm install @arclux/arc-ui-react" lang="bash" theme="css-variables" /></div>
-      <p class="docs-text">Use in your React components:</p>
       <div class="docs-code"><Code code={`import '@arclux/arc-ui/base.css';
 import { Button, Card, Input } from '@arclux/arc-ui-react';
 
@@ -80,9 +73,7 @@ function App() {
       <h2 class="docs-heading">Vue</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <arc-badge variant="primary">@arclux/arc-ui-vue</arc-badge>
-      <p class="docs-text">Install the Vue wrapper package:</p>
       <div class="docs-code"><Code code="npm install @arclux/arc-ui-vue" lang="bash" theme="css-variables" /></div>
-      <p class="docs-text">Use in your Vue components:</p>
       <div class="docs-code"><Code code={`<script setup>
 import '@arclux/arc-ui/base.css';
 import { Button, Card } from '@arclux/arc-ui-vue';
@@ -102,9 +93,7 @@ import { Button, Card } from '@arclux/arc-ui-vue';
       <h2 class="docs-heading">Svelte</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <arc-badge variant="primary">@arclux/arc-ui-svelte</arc-badge>
-      <p class="docs-text">Install the Svelte wrapper package:</p>
       <div class="docs-code"><Code code="npm install @arclux/arc-ui-svelte" lang="bash" theme="css-variables" /></div>
-      <p class="docs-text">Use in your Svelte components:</p>
       <div class="docs-code"><Code code={`<script>
   import '@arclux/arc-ui/base.css';
   import { Button, Card } from '@arclux/arc-ui-svelte';
@@ -122,12 +111,10 @@ import { Button, Card } from '@arclux/arc-ui-vue';
       <h2 class="docs-heading">Angular</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <arc-badge variant="primary">@arclux/arc-ui-angular</arc-badge>
-      <p class="docs-text">Install the Angular wrapper package:</p>
       <div class="docs-code"><Code code="npm install @arclux/arc-ui-angular" lang="bash" theme="css-variables" /></div>
-      <p class="docs-text">Add the stylesheet to your global styles:</p>
+      <p class="docs-text">Add the stylesheet to your global styles, then import the standalone components:</p>
       <div class="docs-code"><Code code={`/* styles.css */
 @import '@arclux/arc-ui/base.css';`} lang="css" theme="css-variables" /></div>
-      <p class="docs-text">Import the standalone components and use them in your template:</p>
       <div class="docs-code"><Code code={`import { Component } from '@angular/core';
 import { Button, Card } from '@arclux/arc-ui-angular';
 
@@ -154,9 +141,7 @@ export class HelloComponent {
       <h2 class="docs-heading">Solid</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <arc-badge variant="primary">@arclux/arc-ui-solid</arc-badge>
-      <p class="docs-text">Install the Solid wrapper package:</p>
       <div class="docs-code"><Code code="npm install @arclux/arc-ui-solid" lang="bash" theme="css-variables" /></div>
-      <p class="docs-text">Use in your Solid components:</p>
       <div class="docs-code"><Code code={`import '@arclux/arc-ui/base.css';
 import { Button, Card } from '@arclux/arc-ui-solid';
 
@@ -176,9 +161,7 @@ function App() {
       <h2 class="docs-heading">Preact</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <arc-badge variant="primary">@arclux/arc-ui-preact</arc-badge>
-      <p class="docs-text">Install the Preact wrapper package:</p>
       <div class="docs-code"><Code code="npm install @arclux/arc-ui-preact" lang="bash" theme="css-variables" /></div>
-      <p class="docs-text">Use in your Preact components:</p>
       <div class="docs-code"><Code code={`import '@arclux/arc-ui/base.css';
 import { Button, Card } from '@arclux/arc-ui-preact';
 
@@ -197,13 +180,11 @@ function App() {
     <section id="vanilla">
       <h2 class="docs-heading">Vanilla JS / CDN</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
-      <p class="docs-text">
-        No framework? No problem. Use the core Web Component package directly:
-      </p>
+      <p class="docs-text">No framework needed — use the core Web Component package directly:</p>
       <div class="docs-code"><Code code="npm install @arclux/arc-ui" lang="bash" theme="css-variables" /></div>
       <div class="docs-code"><Code code={`import '@arclux/arc-ui/button';
 import '@arclux/arc-ui/card';`} lang="js" theme="css-variables" /></div>
-      <p class="docs-text">Or load via CDN with no build step:</p>
+      <p class="docs-text">Or via CDN with no build step:</p>
       <div class="docs-code"><Code code={`<link rel="stylesheet"
   href="https://unpkg.com/@arclux/arc-ui@${version}/base.css">
 <script type="module"
@@ -216,9 +197,6 @@ import '@arclux/arc-ui/card';`} lang="js" theme="css-variables" /></div>
   <p>Pure HTML, no framework needed.</p>
 </arc-card>`} lang="html" theme="css-variables" /></div>
       <arc-callout variant="tip">For projects that can't use JavaScript, ARC UI also provides standalone CSS files.</arc-callout>
-      <p class="docs-text">
-        Import the bundle or individual component styles:
-      </p>
       <div class="docs-code"><Code code={`<!-- Full bundle -->
 <link rel="stylesheet" href="https://unpkg.com/@arclux/arc-ui-html@${version}/css/arc-ui.css">
 
