@@ -1997,6 +1997,16 @@ function Settings() {
 
   .fw-panel {
     grid-area: 1 / 1;
+    /* A grid item's min-width is auto, so without this the panel refuses to
+       shrink below the longest line in its example and the code block hangs
+       157px past its column. Same trap the API tables hit: wrapping declared
+       and unreachable. */
+    min-width: 0;
+    /* Centered in the shared cell rather than stretched to it. The cell is as
+       tall as the longest example by design; stretching every panel to that
+       height left the shorter ones top-aligned inside it, which read as the
+       section losing its vertical centering. */
+    align-self: center;
   }
 
   .fw-panels::before {
