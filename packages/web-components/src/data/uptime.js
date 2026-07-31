@@ -1,5 +1,7 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { PositionController } from '../shared/position-controller.js';
+import { managedPanelStyles } from '../shared/position-styles.js';
 
 /**
  * Status-page uptime history strip: one slim tick per period, colored by
@@ -106,6 +108,10 @@ export class ArcUptime extends LitElement {
         box-shadow: var(--glow-status);
       }
 
+      /* The resting position, for the panel PositionController hasn't adopted
+         yet — pre-upgrade and in prism's static export. Once managed it moves
+         to the top layer, so a track inside a scrolling card no longer clips
+         the bubble to a sliver. */
       .uptime__detail {
         position: absolute;
         bottom: calc(100% + var(--space-xs));
@@ -166,6 +172,13 @@ export class ArcUptime extends LitElement {
         .uptime__tick { transition: none; }
       }
     `,
+    // Cross-fade rather than scale: the bubble tracks a pointer moving tick to
+    // tick, and a panel that rescaled on every step would flicker.
+    managedPanelStyles('uptime__detail', {
+      openCls: 'is-visible',
+      scale: 1,
+      duration: 'var(--duration-fast)',
+    }),
   ];
 
   constructor() {
@@ -175,6 +188,23 @@ export class ArcUptime extends LitElement {
     this.endLabel = '';
     this.summary = true;
     this._activeIndex = null;
+    // The anchor is the hovered tick, not the track: the bubble belongs over
+    // the interval it describes.
+    this._position = new PositionController(this, {
+      anchor: () => this.shadowRoot?.querySelector('.uptime__tick.is-active'),
+      floating: () => this.shadowRoot?.querySelector('.uptime__detail'),
+      placement: () => 'top',
+      fallbackPlacement: 'top',
+      offset: 6,
+    });
+  }
+
+  updated(changed) {
+    // Re-run on every step, not just on open: the anchor is a different tick
+    // each time the pointer or the arrow keys move.
+    if (changed.has('_activeIndex')) {
+      this._activeIndex !== null ? this._position.show() : this._position.hide();
+    }
   }
 
   /** Map an uptime fraction to a status name; anything non-finite is none. */
@@ -288,18 +318,6 @@ export class ArcUptime extends LitElement {
     }
   }
 
-  /**
-   * Bubble placement is pure arithmetic on the index - no measurement, so it
-   * server-renders and never causes layout reads. Near either end the bubble
-   * pins to the track edge instead of centring, which would overflow.
-   */
-  _detailPosition(index, count) {
-    const center = ((index + 0.5) / count) * 100;
-    if (center < 10) return 'inset-inline-start: 0;';
-    if (center > 90) return 'inset-inline-end: 0;';
-    return `inset-inline-start: ${center}%; transform: translateX(-50%);`;
-  }
-
   render() {
     const ticks = this._normalized();
     const percent = this._percentOf(ticks);
@@ -339,9 +357,8 @@ export class ArcUptime extends LitElement {
             detail
               ? html`
             <div
-              class="uptime__detail"
+              class="uptime__detail is-visible"
               part="detail"
-              style=${this._detailPosition(this._activeIndex, ticks.length)}
               aria-hidden="true"
             >
               <span class="uptime__detail-label">${detail.label}</span>

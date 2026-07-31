@@ -1,6 +1,8 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { monthNames, weekdayNames, defaultLocale } from '../shared/date-names.js';
+import { PositionController } from '../shared/position-controller.js';
+import { managedPanelStyles } from '../shared/position-styles.js';
 
 /** Milliseconds per day; all internal date math is UTC epoch-day arithmetic. */
 const DAY = 86400000;
@@ -181,6 +183,11 @@ export class ArcActivityHeatmap extends LitElement {
         box-shadow: 0 0 8px rgba(var(--_cell-rgb), 0.3);
       }
 
+      /* The resting position, for the panel PositionController hasn't adopted
+         yet — pre-upgrade and in prism's static export. Once managed it moves
+         to the top layer, which is what lets it escape the scroll container a
+         year-wide heatmap is usually placed in: anchored to the grid it was
+         clipped to a sliver by the wrapper's overflow. */
       .heatmap__detail {
         position: absolute;
         bottom: calc(100% + var(--space-xs));
@@ -253,6 +260,13 @@ export class ArcActivityHeatmap extends LitElement {
         .heatmap__cell { transition: none; }
       }
     `,
+    // Cross-fade like tooltip rather than scale: the detail tracks a pointer
+    // moving cell to cell, and a panel that rescaled on every step would flicker.
+    managedPanelStyles('heatmap__detail', {
+      openCls: 'is-visible',
+      scale: 1,
+      duration: 'var(--duration-fast)',
+    }),
   ];
 
   constructor() {
@@ -264,6 +278,23 @@ export class ArcActivityHeatmap extends LitElement {
     this.max = null;
     this.legend = true;
     this._activeIndex = null;
+    // The anchor is the hovered cell, not the grid: the detail should sit over
+    // the day it describes, and the cell moves under the pointer.
+    this._position = new PositionController(this, {
+      anchor: () => this.shadowRoot?.querySelector('.heatmap__cell.is-active'),
+      floating: () => this.shadowRoot?.querySelector('.heatmap__detail'),
+      placement: () => 'top',
+      fallbackPlacement: 'top',
+      offset: 6,
+    });
+  }
+
+  updated(changed) {
+    // Re-run on every step, not just on open: the anchor is a different cell
+    // each time the pointer or the arrow keys move.
+    if (changed.has('_activeIndex')) {
+      this._activeIndex !== null ? this._position.show() : this._position.hide();
+    }
   }
 
   /**
@@ -482,18 +513,6 @@ export class ArcActivityHeatmap extends LitElement {
     }
   }
 
-  /**
-   * Bubble placement is pure arithmetic on the cell's column — no
-   * measurement, so it server-renders and never causes layout reads. Near
-   * either edge the bubble pins to the grid edge instead of centring.
-   */
-  _detailPosition(index, weekCount) {
-    const center = ((Math.floor(index / 7) + 0.5) / weekCount) * 100;
-    if (center < 12) return 'inset-inline-start: 0;';
-    if (center > 88) return 'inset-inline-end: 0;';
-    return `inset-inline-start: ${center}%; transform: translateX(-50%);`;
-  }
-
   render() {
     const layout = this._layout();
     const cells = this._cells(layout);
@@ -542,9 +561,8 @@ export class ArcActivityHeatmap extends LitElement {
             detail
               ? html`
             <div
-              class="heatmap__detail"
+              class="heatmap__detail is-visible"
               part="detail"
-              style=${this._detailPosition(this._activeIndex, layout.weekCount)}
               aria-hidden="true"
             >
               <span class="heatmap__detail-date">${detail.date}</span>
