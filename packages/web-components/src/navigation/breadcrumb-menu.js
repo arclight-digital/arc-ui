@@ -23,11 +23,17 @@ export class ArcBreadcrumbMenu extends LitElement {
   static properties = {
     items: {
       converter: {
-        fromAttribute: (v) => { try { return JSON.parse(v); } catch { return []; } },
+        fromAttribute: (v) => {
+          try {
+            return JSON.parse(v);
+          } catch {
+            return [];
+          }
+        },
       },
     },
     label: { type: String },
-    _openIndex:  { type: Number, state: true },
+    _openIndex: { type: Number, state: true },
   };
 
   static styles = [
@@ -141,14 +147,15 @@ export class ArcBreadcrumbMenu extends LitElement {
     this.items = [];
     this._openIndex = -1;
     this._clickOutside = new ClickOutsideController(this, {
-      onClickOutside: () => { this._openIndex = -1; },
+      onClickOutside: () => {
+        this._openIndex = -1;
+      },
     });
     this._position = new PositionController(this, {
       // Only one crumb's dropdown is rendered at a time, so "the dropdown" is
       // unambiguous, and its anchor is the crumb it was rendered inside.
       floating: () => this.shadowRoot?.querySelector('.breadcrumb-menu__dropdown'),
-      anchor: () =>
-        this.shadowRoot?.querySelector('.breadcrumb-menu__dropdown')?.parentElement,
+      anchor: () => this.shadowRoot?.querySelector('.breadcrumb-menu__dropdown')?.parentElement,
       align: () => 'start',
       offset: 4,
     });
@@ -169,11 +176,13 @@ export class ArcBreadcrumbMenu extends LitElement {
 
   _navigate(href) {
     this._openIndex = -1;
-    this.dispatchEvent(new CustomEvent('arc-navigate', {
-      detail: { href },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-navigate', {
+        detail: { href },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   render() {
@@ -181,11 +190,13 @@ export class ArcBreadcrumbMenu extends LitElement {
 
     return html`
       <nav class="breadcrumb-menu" part="base" aria-label=${this.label}>
-        ${this.items.map((item, i) => html`
+        ${this.items.map(
+          (item, i) => html`
           ${i > 0 ? html`<span class="breadcrumb-menu__separator" part="separator" aria-hidden="true">/</span>` : ''}
           <div class="breadcrumb-menu__item" part="item">
-            ${item.siblings?.length
-              ? html`
+            ${
+              item.siblings?.length
+                ? html`
                 <button
                   class="breadcrumb-menu__link ${i === lastIndex ? 'is-current' : ''}"
                   part="link"
@@ -198,19 +209,25 @@ export class ArcBreadcrumbMenu extends LitElement {
                     <polyline points="6 9 12 15 18 9"></polyline>
                   </svg>
                 </button>
-                ${this._openIndex === i ? html`
+                ${
+                  this._openIndex === i
+                    ? html`
                   <div class="breadcrumb-menu__dropdown" part="dropdown" @click=${(e) => e.stopPropagation()}>
-                    ${item.siblings.map(sib => html`
+                    ${item.siblings.map(
+                      (sib) => html`
                       <button
                         class="breadcrumb-menu__dropdown-item"
                         part="dropdown-item"
                         @click=${() => this._navigate(sib.href)}
                       >${sib.label}</button>
-                    `)}
+                    `,
+                    )}
                   </div>
-                ` : ''}
+                `
+                    : ''
+                }
               `
-              : html`
+                : html`
                 <button
                   class="breadcrumb-menu__link ${i === lastIndex ? 'is-current' : ''}"
                   part="link"
@@ -220,7 +237,8 @@ export class ArcBreadcrumbMenu extends LitElement {
               `
             }
           </div>
-        `)}
+        `,
+        )}
       </nav>
     `;
   }

@@ -31,19 +31,19 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
 export class ArcDatePicker extends FormControlMixin(LitElement) {
   static properties = {
     size: { type: String, reflect: true },
-    value:       { type: String, reflect: true },
-    name:        { type: String, reflect: true },
-    min:         { type: String },
-    max:         { type: String },
+    value: { type: String, reflect: true },
+    name: { type: String, reflect: true },
+    min: { type: String },
+    max: { type: String },
     placeholder: { type: String },
-    disabled:    { type: Boolean, reflect: true },
-    label:       { type: String },
-    open:        { type: Boolean, reflect: true },
-    locale:      { type: String },
+    disabled: { type: Boolean, reflect: true },
+    label: { type: String },
+    open: { type: Boolean, reflect: true },
+    locale: { type: String },
     firstDayOfWeek: { type: Number, attribute: 'first-day-of-week' },
-    _viewMonth:  { state: true },
-    _viewYear:   { state: true },
-    _mode:       { state: true },
+    _viewMonth: { state: true },
+    _viewYear: { state: true },
+    _mode: { state: true },
     _focusedIso: { state: true },
   };
 
@@ -328,7 +328,9 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
 
     this._handleEscape = this._handleEscape.bind(this);
     this._clickOutside = new ClickOutsideController(this, {
-      onClickOutside: () => { this.open = false; },
+      onClickOutside: () => {
+        this.open = false;
+      },
       when: () => this.open,
     });
     this._position = new PositionController(this, {
@@ -431,11 +433,13 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
     this.value = dateStr;
     this.open = false;
 
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: this.value },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _isDisabledDate(dateStr) {
@@ -513,14 +517,14 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
 
   /** ISO of the single day button that should be the tab stop (roving tabindex) */
   _getTabStopIso(days) {
-    if (this._focusedIso && days.some(d => d.iso === this._focusedIso && !d.disabled)) {
+    if (this._focusedIso && days.some((d) => d.iso === this._focusedIso && !d.disabled)) {
       return this._focusedIso;
     }
-    const selected = days.find(d => d.selected && !d.disabled);
+    const selected = days.find((d) => d.selected && !d.disabled);
     if (selected) return selected.iso;
-    const today = days.find(d => d.today && !d.disabled);
+    const today = days.find((d) => d.today && !d.disabled);
     if (today) return today.iso;
-    const first = days.find(d => !d.outside && !d.disabled) || days.find(d => !d.disabled);
+    const first = days.find((d) => !d.outside && !d.disabled) || days.find((d) => !d.disabled);
     return first ? first.iso : null;
   }
 
@@ -539,12 +543,24 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
 
     let handled = true;
     switch (e.key) {
-      case 'ArrowRight': d.setDate(d.getDate() + 1); break;
-      case 'ArrowLeft': d.setDate(d.getDate() - 1); break;
-      case 'ArrowDown': d.setDate(d.getDate() + 7); break;
-      case 'ArrowUp': d.setDate(d.getDate() - 7); break;
-      case 'Home': d.setDate(d.getDate() - d.getDay()); break;
-      case 'End': d.setDate(d.getDate() + (6 - d.getDay())); break;
+      case 'ArrowRight':
+        d.setDate(d.getDate() + 1);
+        break;
+      case 'ArrowLeft':
+        d.setDate(d.getDate() - 1);
+        break;
+      case 'ArrowDown':
+        d.setDate(d.getDate() + 7);
+        break;
+      case 'ArrowUp':
+        d.setDate(d.getDate() - 7);
+        break;
+      case 'Home':
+        d.setDate(d.getDate() - d.getDay());
+        break;
+      case 'End':
+        d.setDate(d.getDate() + (6 - d.getDay()));
+        break;
       default:
         handled = false;
     }
@@ -608,24 +624,33 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
           <span class="calendar-icon" aria-hidden="true">\u{1F4C5}</span>
         </div>
 
-        ${this.open ? html`
+        ${
+          this.open
+            ? html`
           <div class="dropdown" part="dropdown" role="dialog" aria-label="Date picker">
             <div class="calendar-header">
               <button class="nav-btn" @click=${this._prev} aria-label=${this._mode === 'days' ? 'Previous month' : this._mode === 'months' ? 'Previous year' : 'Previous years'}>\u2039</button>
               <button class="calendar-title" @click=${this._cycleMode}>
-                ${this._mode === 'days' ? `${this._getMonthName(this._viewMonth)} ${this._viewYear}`
-                  : this._mode === 'months' ? `${this._viewYear}`
-                  : `${this._viewYear - 5} – ${this._viewYear + 6}`}
+                ${
+                  this._mode === 'days'
+                    ? `${this._getMonthName(this._viewMonth)} ${this._viewYear}`
+                    : this._mode === 'months'
+                      ? `${this._viewYear}`
+                      : `${this._viewYear - 5} – ${this._viewYear + 6}`
+                }
               </button>
               <button class="nav-btn" @click=${this._next} aria-label=${this._mode === 'days' ? 'Next month' : this._mode === 'months' ? 'Next year' : 'Next years'}>\u203A</button>
             </div>
 
-            ${this._mode === 'days' ? html`
+            ${
+              this._mode === 'days'
+                ? html`
               <div class="weekdays">
-                ${weekdays.map(d => html`<span class="weekday">${d}</span>`)}
+                ${weekdays.map((d) => html`<span class="weekday">${d}</span>`)}
               </div>
               <div class="days" role="group" aria-label="Calendar days" @keydown=${this._onDaysKeydown}>
-                ${days.map(d => html`
+                ${days.map(
+                  (d) => html`
                   <button
                     class="day ${d.outside ? 'outside' : ''} ${d.today ? 'today' : ''} ${d.selected ? 'selected' : ''} ${d.disabled ? 'disabled' : ''}"
                     ?disabled=${d.disabled}
@@ -635,29 +660,40 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
                     aria-label="${this._dayAriaLabel(d.iso)}"
                     aria-pressed=${d.selected ? 'true' : 'false'}
                   >${d.day}</button>
-                `)}
+                `,
+                )}
               </div>
-            ` : this._mode === 'months' ? html`
+            `
+                : this._mode === 'months'
+                  ? html`
               <div class="picker-grid">
-                ${monthNames('short', this.locale || undefined).map((name, i) => html`
+                ${monthNames('short', this.locale || undefined).map(
+                  (name, i) => html`
                   <button
                     class="picker-cell ${i === this._viewMonth ? 'current' : ''}"
                     @click=${() => this._selectMonth(i)}
                   >${name}</button>
-                `)}
+                `,
+                )}
               </div>
-            ` : html`
+            `
+                  : html`
               <div class="picker-grid">
-                ${Array.from({ length: 12 }, (_, i) => this._viewYear - 5 + i).map(y => html`
+                ${Array.from({ length: 12 }, (_, i) => this._viewYear - 5 + i).map(
+                  (y) => html`
                   <button
                     class="picker-cell ${y === this._viewYear ? 'current' : ''}"
                     @click=${() => this._selectYear(y)}
                   >${y}</button>
-                `)}
+                `,
+                )}
               </div>
-            `}
+            `
+            }
           </div>
-        ` : ''}
+        `
+            : ''
+        }
       </div>
     `;
   }

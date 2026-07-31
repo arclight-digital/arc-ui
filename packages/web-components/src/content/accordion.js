@@ -13,8 +13,8 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcAccordion extends LitElement {
   static properties = {
-    multiple:   { type: Boolean, reflect: true },
-    _items:     { state: true },
+    multiple: { type: Boolean, reflect: true },
+    _items: { state: true },
     _openItems: { state: true },
   };
 
@@ -123,8 +123,9 @@ export class ArcAccordion extends LitElement {
   }
 
   _onSlotChange(e) {
-    this._items = e.target.assignedElements({ flatten: true })
-      .filter(el => el.tagName === 'ARC-ACCORDION-ITEM');
+    this._items = e.target
+      .assignedElements({ flatten: true })
+      .filter((el) => el.tagName === 'ARC-ACCORDION-ITEM');
   }
 
   _toggle(index) {

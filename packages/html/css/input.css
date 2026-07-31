@@ -80,7 +80,7 @@
         min-width: 0;
       }
 
-      .arc-input .input-group__field:focus { outline: none; }
+      .arc-input .input-group__field:focus-visible { outline: none; }
       .arc-input .input-group__field::placeholder { color: var(--text-ghost); }
       .arc-input .input-group__field:disabled { cursor: not-allowed; }
 
@@ -94,8 +94,8 @@
         flex-shrink: 0;
       }
 
-      .arc-input .input-group__prefix { padding-left: var(--space-md); }
-      .arc-input .input-group__suffix { padding-right: var(--space-md); }
+      .arc-input .input-group__prefix { padding-inline-start: var(--space-md); }
+      .arc-input .input-group__suffix { padding-inline-end: var(--space-md); }
 
       .arc-input .input-group__prefix--empty,
       .arc-input .input-group__suffix--empty { display: none; }

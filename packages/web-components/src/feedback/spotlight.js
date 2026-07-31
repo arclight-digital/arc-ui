@@ -16,8 +16,8 @@ import { ClickOutsideController } from '../shared/click-outside.js';
  */
 export class ArcSpotlight extends LitElement {
   static properties = {
-    target:  { type: String },
-    active:  { type: Boolean, reflect: true },
+    target: { type: String },
+    active: { type: Boolean, reflect: true },
     padding: { type: Number },
   };
 
@@ -97,7 +97,12 @@ export class ArcSpotlight extends LitElement {
   }
 
   _dismiss() {
-    if (!this.dispatchEvent(new CustomEvent('arc-close', { bubbles: true, composed: true, cancelable: true }))) return;
+    if (
+      !this.dispatchEvent(
+        new CustomEvent('arc-close', { bubbles: true, composed: true, cancelable: true }),
+      )
+    )
+      return;
     this.active = false;
   }
 

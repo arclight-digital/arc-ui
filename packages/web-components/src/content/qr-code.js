@@ -20,14 +20,14 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcQrCode extends LitElement {
   static properties = {
-    value:     { type: String },
-    size:      { type: Number },
-    level:     { type: String, reflect: true },
-    label:     { type: String },
+    value: { type: String },
+    size: { type: Number },
+    level: { type: String, reflect: true },
+    label: { type: String },
     quietZone: { type: Number, attribute: 'quiet-zone' },
-    contrast:  { type: Boolean, reflect: true },
-    _path:     { state: true },
-    _count:    { state: true },
+    contrast: { type: Boolean, reflect: true },
+    _path: { state: true },
+    _count: { state: true },
   };
 
   static styles = [

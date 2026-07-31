@@ -13,7 +13,7 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcGradientText extends LitElement {
   static properties = {
-    variant:  { type: String, reflect: true },
+    variant: { type: String, reflect: true },
     gradient: { type: String },
     animated: { type: Boolean, reflect: true },
   };
@@ -98,9 +98,10 @@ export class ArcGradientText extends LitElement {
   }
 
   render() {
-    const customStyle = this.variant === 'custom' && this.gradient
-      ? `background:${this.gradient};-webkit-background-clip:text;background-clip:text;`
-      : '';
+    const customStyle =
+      this.variant === 'custom' && this.gradient
+        ? `background:${this.gradient};-webkit-background-clip:text;background-clip:text;`
+        : '';
 
     return html`<span
       class="gradient-text"

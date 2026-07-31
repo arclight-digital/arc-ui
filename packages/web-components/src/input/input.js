@@ -38,19 +38,19 @@ export class ArcInput extends FormControlMixin(LitElement) {
   static autoValidates = false;
 
   static properties = {
-    type:        { type: String },
-    name:        { type: String, reflect: true },
-    label:       { type: String },
+    type: { type: String },
+    name: { type: String, reflect: true },
+    label: { type: String },
     placeholder: { type: String },
-    value:       { type: String },
-    disabled:    { type: Boolean, reflect: true },
-    required:    { type: Boolean, reflect: true },
-    error:       { type: String },
-    size:        { type: String, reflect: true },
-    multiline:   { type: Boolean, reflect: true },
-    rows:        { type: Number },
-    _hasPrefix:  { state: true },
-    _hasSuffix:  { state: true },
+    value: { type: String },
+    disabled: { type: Boolean, reflect: true },
+    required: { type: Boolean, reflect: true },
+    error: { type: String },
+    size: { type: String, reflect: true },
+    multiline: { type: Boolean, reflect: true },
+    rows: { type: Number },
+    _hasPrefix: { state: true },
+    _hasSuffix: { state: true },
   };
 
   static styles = [
@@ -135,7 +135,7 @@ export class ArcInput extends FormControlMixin(LitElement) {
         min-width: 0;
       }
 
-      .input-group__field:focus { outline: none; }
+      .input-group__field:focus-visible { outline: none; }
       .input-group__field::placeholder { color: var(--text-ghost); }
       .input-group__field:disabled { cursor: not-allowed; }
 
@@ -149,8 +149,8 @@ export class ArcInput extends FormControlMixin(LitElement) {
         flex-shrink: 0;
       }
 
-      .input-group__prefix { padding-left: var(--space-md); }
-      .input-group__suffix { padding-right: var(--space-md); }
+      .input-group__prefix { padding-inline-start: var(--space-md); }
+      .input-group__suffix { padding-inline-end: var(--space-md); }
 
       .input-group__prefix--empty,
       .input-group__suffix--empty { display: none; }
@@ -200,13 +200,25 @@ export class ArcInput extends FormControlMixin(LitElement) {
   _handleInput(e) {
     this.value = e.target.value;
     this._updateFormValue();
-    this.dispatchEvent(new CustomEvent('arc-input', { detail: { value: this.value }, bubbles: true, composed: true }));
+    this.dispatchEvent(
+      new CustomEvent('arc-input', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _handleChange(e) {
     this.value = e.target.value;
     this._updateFormValue();
-    this.dispatchEvent(new CustomEvent('arc-change', { detail: { value: this.value }, bubbles: true, composed: true }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _onPrefixSlotChange(e) {

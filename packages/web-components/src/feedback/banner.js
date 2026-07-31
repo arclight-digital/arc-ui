@@ -21,9 +21,9 @@ import { getStatusIcon } from '../status-utils.js';
  */
 export class ArcBanner extends LitElement {
   static properties = {
-    variant:     { type: String, reflect: true },
+    variant: { type: String, reflect: true },
     dismissible: { type: Boolean, reflect: true },
-    sticky:      { type: Boolean, reflect: true },
+    sticky: { type: Boolean, reflect: true },
   };
 
   static styles = [
@@ -84,7 +84,12 @@ export class ArcBanner extends LitElement {
   }
 
   _dismiss() {
-    if (!this.dispatchEvent(new CustomEvent('arc-close', { bubbles: true, composed: true, cancelable: true }))) return;
+    if (
+      !this.dispatchEvent(
+        new CustomEvent('arc-close', { bubbles: true, composed: true, cancelable: true }),
+      )
+    )
+      return;
     this.style.display = 'none';
   }
 
@@ -93,9 +98,13 @@ export class ArcBanner extends LitElement {
       <div class="banner" role="alert" part="banner">
         <span class="banner__icon" aria-hidden="true" part="icon">${getStatusIcon(this.variant)}</span>
         <span class="banner__message" part="message"><slot></slot></span>
-        ${this.dismissible ? html`
+        ${
+          this.dismissible
+            ? html`
           <arc-icon-button name="x" label="Dismiss" variant="ghost" size="sm" @click=${this._dismiss} part="dismiss"></arc-icon-button>
-        ` : ''}
+        `
+            : ''
+        }
       </div>
     `;
   }

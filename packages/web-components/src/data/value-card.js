@@ -16,8 +16,8 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcValueCard extends LitElement {
   static properties = {
-    icon:        { type: String },
-    heading:     { type: String },
+    icon: { type: String },
+    heading: { type: String },
     description: { type: String },
   };
 

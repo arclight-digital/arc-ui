@@ -21,11 +21,11 @@ import { cardHoverStyles } from '../card-styles.js';
  */
 export class ArcFeatureCard extends LitElement {
   static properties = {
-    icon:        { type: String },
-    heading:     { type: String },
+    icon: { type: String },
+    heading: { type: String },
     description: { type: String },
-    href:        { type: String },
-    action:      { type: String, reflect: true },
+    href: { type: String },
+    action: { type: String, reflect: true },
   };
 
   static styles = [
@@ -141,14 +141,18 @@ export class ArcFeatureCard extends LitElement {
         <div class="card__icon" part="icon"><slot name="icon">${this.icon}</slot></div>
         <h3 class="card__title" part="title">${this.heading}</h3>
         <p class="card__desc" part="description">${this.description}</p>
-        ${this.action && this.href ? html`
+        ${
+          this.action && this.href
+            ? html`
           <span class="card__action" part="action">
             ${this.action}
             <svg class="card__action-arrow" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </span>
-        ` : ''}
+        `
+            : ''
+        }
         <span class="card__rule"></span>
       </div>
     `;

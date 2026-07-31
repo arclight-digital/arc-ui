@@ -124,7 +124,10 @@ function subsequence(t, text, hay, brevity) {
   for (let i = 0; i < hay.length && ti < t.length; i++) {
     if (hay[i] !== t[ti]) continue;
 
-    if (isBoundary(text, i)) { score += 90; boundaryHits++; }
+    if (isBoundary(text, i)) {
+      score += 90;
+      boundaryHits++;
+    }
     // Consecutive characters read as a real fragment rather than as scattered
     // letters that happen to be in order.
     if (i === lastMatch + 1) score += 40;
@@ -157,8 +160,7 @@ function subsequence(t, text, hay, brevity) {
   return { score, indices };
 }
 
-const span = (start, length) =>
-  Array.from({ length }, (_, i) => start + i);
+const span = (start, length) => Array.from({ length }, (_, i) => start + i);
 
 /**
  * Score a query against an item's searchable fields.
@@ -265,9 +267,7 @@ export function snippetAround(text, indices, width = 120) {
 
   return {
     text: lead + text.slice(start, end) + tail,
-    indices: indices
-      .filter((i) => i >= start && i < end)
-      .map((i) => i + offset),
+    indices: indices.filter((i) => i >= start && i < end).map((i) => i + offset),
   };
 }
 

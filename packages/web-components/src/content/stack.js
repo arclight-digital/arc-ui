@@ -15,10 +15,10 @@ import { tokenStyles } from '../shared-styles.js';
 export class ArcStack extends LitElement {
   static properties = {
     direction: { type: String, reflect: true },
-    gap:       { type: String, reflect: true },
-    align:     { type: String, reflect: true },
-    justify:   { type: String, reflect: true },
-    wrap:      { type: Boolean, reflect: true },
+    gap: { type: String, reflect: true },
+    align: { type: String, reflect: true },
+    justify: { type: String, reflect: true },
+    wrap: { type: Boolean, reflect: true },
   };
 
   static styles = [

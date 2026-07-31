@@ -14,7 +14,7 @@ import { tokenStyles } from '../shared-styles.js';
 export class ArcResponsiveSwitcher extends LitElement {
   static properties = {
     threshold: { type: String, reflect: true },
-    gap:       { type: String, reflect: true },
+    gap: { type: String, reflect: true },
   };
 
   static styles = [
@@ -72,10 +72,7 @@ export class ArcResponsiveSwitcher extends LitElement {
       this._sheet.replaceSync(
         `@container (min-width: ${this.threshold}) { .switcher { flex-direction: row; } }`,
       );
-      this.shadowRoot.adoptedStyleSheets = [
-        ...this.shadowRoot.adoptedStyleSheets,
-        this._sheet,
-      ];
+      this.shadowRoot.adoptedStyleSheets = [...this.shadowRoot.adoptedStyleSheets, this._sheet];
     }
   }
 

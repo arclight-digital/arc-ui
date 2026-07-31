@@ -42,7 +42,7 @@ To assistive technology the grid is a single image with a computed description �
       'Keep the legend unless the surrounding UI already explains the ramp — it is the only key the colors have',
     ],
     dont: [
-      'Do not use it for a continuous metric like latency or revenue — that trend is Sparkline\'s job; the heatmap shows daily density',
+      "Do not use it for a continuous metric like latency or revenue — that trend is Sparkline's job; the heatmap shows daily density",
       'Do not use it for per-period pass/fail health — Uptime owns discrete status history with its own color semantics',
       'Do not use it to display scheduled items on dates — Event Calendar shows what happens when; the heatmap shows how much happened',
       'Do not encode more than one measure per cell — one value, one ramp; two measures need two heatmaps',

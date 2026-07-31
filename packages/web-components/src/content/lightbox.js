@@ -35,9 +35,9 @@ export class ArcLightbox extends OverlayMixin(LitElement) {
   static properties = {
     // Attribute is off: an array can't survive a round trip through one, and
     // leaving it on invites `images="[...]"` that silently sets a string.
-    images:  { attribute: false },
-    index:   { type: Number },
-    open:    { type: Boolean, reflect: true },
+    images: { attribute: false },
+    index: { type: Number },
+    open: { type: Boolean, reflect: true },
     _zoomed: { state: true },
   };
 
@@ -172,7 +172,7 @@ export class ArcLightbox extends OverlayMixin(LitElement) {
   /** Entries normalised to `{ src, alt, caption }` regardless of input form. */
   _normalized() {
     return (Array.isArray(this.images) ? this.images : []).map((entry) =>
-      typeof entry === 'string' ? { src: entry, alt: '', caption: '' } : entry
+      typeof entry === 'string' ? { src: entry, alt: '', caption: '' } : entry,
     );
   }
 
@@ -207,11 +207,13 @@ export class ArcLightbox extends OverlayMixin(LitElement) {
     if (target === this.index) return;
     this._resetZoom();
     this.index = target;
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: target, index: target },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: target, index: target },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   /**
@@ -221,7 +223,12 @@ export class ArcLightbox extends OverlayMixin(LitElement) {
    */
   _close() {
     if (!this.open) return;
-    if (!this.dispatchEvent(new CustomEvent('arc-close', { bubbles: true, composed: true, cancelable: true }))) return;
+    if (
+      !this.dispatchEvent(
+        new CustomEvent('arc-close', { bubbles: true, composed: true, cancelable: true }),
+      )
+    )
+      return;
     this.open = false;
   }
 
@@ -357,7 +364,9 @@ export class ArcLightbox extends OverlayMixin(LitElement) {
         </div>
 
         <figure class="lightbox__figure" part="figure" @click=${this._handleBackdropClick}>
-          ${current ? html`
+          ${
+            current
+              ? html`
             <img
               class="lightbox__img ${this._zoomed ? 'lightbox__img--zoomed' : ''}"
               part="image"
@@ -371,13 +380,21 @@ export class ArcLightbox extends OverlayMixin(LitElement) {
               @pointerup=${this._onPointerUp}
               @pointercancel=${this._onPointerUp}
             />
-          ` : nothing}
-          ${current?.caption ? html`
+          `
+              : nothing
+          }
+          ${
+            current?.caption
+              ? html`
             <figcaption class="lightbox__caption" part="caption">${current.caption}</figcaption>
-          ` : nothing}
+          `
+              : nothing
+          }
         </figure>
 
-        ${total > 1 ? html`
+        ${
+          total > 1
+            ? html`
           <arc-icon-button
             class="lightbox__nav lightbox__nav--prev"
             name="chevron-left"
@@ -394,7 +411,9 @@ export class ArcLightbox extends OverlayMixin(LitElement) {
             @click=${this.next}
             part="next"
           ></arc-icon-button>
-        ` : nothing}
+        `
+            : nothing
+        }
       </div>
     `;
   }

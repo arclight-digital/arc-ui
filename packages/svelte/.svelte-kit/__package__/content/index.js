@@ -26,3 +26,8 @@ export { default as VirtualList } from './VirtualList.svelte';
 export { default as QrCode } from './QrCode.svelte';
 export { default as Accordion } from './Accordion.svelte';
 export { default as Avatar } from './Avatar.svelte';
+export { default as Hotspot } from './Hotspot.svelte';
+export { default as ImageCompare } from './ImageCompare.svelte';
+export { default as ImageHotspots } from './ImageHotspots.svelte';
+export { default as Lightbox } from './Lightbox.svelte';
+export { default as Video } from './Video.svelte';

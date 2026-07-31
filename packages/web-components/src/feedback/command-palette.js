@@ -40,11 +40,11 @@ import '../content/icon.js';
  */
 export class ArcCommandPalette extends OverlayMixin(LitElement) {
   static properties = {
-    open:          { type: Boolean, reflect: true },
-    placeholder:   { type: String },
-    maxResults:    { type: Number, attribute: 'max-results' },
-    _query:        { state: true },
-    _items:        { state: true },
+    open: { type: Boolean, reflect: true },
+    placeholder: { type: String },
+    maxResults: { type: Number, attribute: 'max-results' },
+    _query: { state: true },
+    _items: { state: true },
   };
 
   static styles = [
@@ -301,8 +301,7 @@ export class ArcCommandPalette extends OverlayMixin(LitElement) {
     // The observer fires for any light-DOM mutation, including ones that touch
     // no items at all; re-assigning an identical list would request an update
     // on every keystroke a consumer makes elsewhere in the subtree.
-    const same =
-      next.length === this._items.length && next.every((el, i) => el === this._items[i]);
+    const same = next.length === this._items.length && next.every((el, i) => el === this._items[i]);
     if (!same) this._items = next;
   }
 
@@ -420,9 +419,7 @@ export class ArcCommandPalette extends OverlayMixin(LitElement) {
     // result whose relevance is invisible — the reader sees a row that matched
     // and no indication of where.
     const description = item.description || '';
-    const snippet = description
-      ? snippetAround(description, hit.description || [])
-      : null;
+    const snippet = description ? snippetAround(description, hit.description || []) : null;
     const descriptionRuns = snippet ? highlightRuns(snippet.text, snippet.indices) : null;
 
     return html`
@@ -433,7 +430,9 @@ export class ArcCommandPalette extends OverlayMixin(LitElement) {
         aria-selected=${i === this._menuKb.focusedIndex ? 'true' : 'false'}
         tabindex="-1"
         @click=${() => this._selectItem(item)}
-        @mouseenter=${() => { this._menuKb.focusedIndex = i; }}
+        @mouseenter=${() => {
+          this._menuKb.focusedIndex = i;
+        }}
         part="item"
       >
         ${item.icon ? html`<arc-icon name=${item.icon} size="16" class="palette__item-icon" aria-hidden="true"></arc-icon>` : ''}
@@ -442,16 +441,19 @@ export class ArcCommandPalette extends OverlayMixin(LitElement) {
             ${runs.map((run) =>
               run.matched
                 ? html`<mark class="palette__item-match" part="match">${run.text}</mark>`
-                : run.text
+                : run.text,
             )}
           </span>
-          ${descriptionRuns
-            ? html`<span class="palette__item-description" part="description">${descriptionRuns.map((run) =>
-                run.matched
-                  ? html`<mark class="palette__item-match" part="match">${run.text}</mark>`
-                  : run.text
-              )}</span>`
-            : ''}
+          ${
+            descriptionRuns
+              ? html`<span class="palette__item-description" part="description">${descriptionRuns.map(
+                  (run) =>
+                    run.matched
+                      ? html`<mark class="palette__item-match" part="match">${run.text}</mark>`
+                      : run.text,
+                )}</span>`
+              : ''
+          }
         </span>
         ${item.shortcut ? html`<span class="palette__item-shortcut">${item.shortcut}</span>` : ''}
       </button>
@@ -491,24 +493,31 @@ export class ArcCommandPalette extends OverlayMixin(LitElement) {
     // back against the DOM to work out which item fired, which two items
     // sharing a label quietly get wrong. `item` stays alongside it — the shape
     // consumers already read — so this adds a key rather than moving one.
-    this.dispatchEvent(new CustomEvent('arc-select', {
-      detail: {
-        value: item.selectionValue,
-        item: { label: item.label, shortcut: item.shortcut, value: item.selectionValue },
-      },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-select', {
+        detail: {
+          value: item.selectionValue,
+          item: { label: item.label, shortcut: item.shortcut, value: item.selectionValue },
+        },
+        bubbles: true,
+        composed: true,
+      }),
+    );
     this._close();
   }
 
   _close() {
     if (!this.open) return;
-    if (!this.dispatchEvent(new CustomEvent('arc-close', {
-      bubbles: true,
-      composed: true,
-      cancelable: true,
-    }))) return;
+    if (
+      !this.dispatchEvent(
+        new CustomEvent('arc-close', {
+          bubbles: true,
+          composed: true,
+          cancelable: true,
+        }),
+      )
+    )
+      return;
     this.open = false;
   }
 
@@ -548,21 +557,33 @@ export class ArcCommandPalette extends OverlayMixin(LitElement) {
           />
         </div>
         <div class="palette__results" id="palette-results" role="listbox" part="results">
-          ${matches.length === 0 ? html`
+          ${
+            matches.length === 0
+              ? html`
             <div class="palette__empty" role="status" part="empty">
-              ${this._query
-                ? html`No results for <strong>&ldquo;${this._query}&rdquo;</strong>`
-                : 'No results found'}
+              ${
+                this._query
+                  ? html`No results for <strong>&ldquo;${this._query}&rdquo;</strong>`
+                  : 'No results found'
+              }
             </div>
-          ` : ''}
-          ${this._groupRuns(matches).map(run => html`
-            ${run.heading ? html`
+          `
+              : ''
+          }
+          ${this._groupRuns(matches).map(
+            (run) => html`
+            ${
+              run.heading
+                ? html`
               <div role="group" aria-label=${run.heading} class="palette__group">
                 <div class="palette__group-heading" aria-hidden="true" part="group-heading">${run.heading}</div>
-                ${run.entries.map(entry => this._renderItem(entry.item, entry.index, entry))}
+                ${run.entries.map((entry) => this._renderItem(entry.item, entry.index, entry))}
               </div>
-            ` : run.entries.map(entry => this._renderItem(entry.item, entry.index, entry))}
-          `)}
+            `
+                : run.entries.map((entry) => this._renderItem(entry.item, entry.index, entry))
+            }
+          `,
+          )}
         </div>
         <div class="palette__footer" part="footer">
           <span><kbd>↑↓</kbd> navigate</span>

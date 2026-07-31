@@ -6,7 +6,15 @@ export const maskedInput: ComponentDef = {
   tag: 'arc-masked-input',
   tier: 'input',
   interactivity: 'interactive',
-  searchKeywords: ['mask', 'format', 'pattern', 'date input', 'card number', 'phone number', 'license key'],
+  searchKeywords: [
+    'mask',
+    'format',
+    'pattern',
+    'date input',
+    'card number',
+    'phone number',
+    'license key',
+  ],
   description:
     'Text field that enforces a character mask as you type — dates, card numbers, phone numbers, license keys. The mask’s literals are typed for the user; value holds only the raw characters, and the raw value is what forms receive, so the mask stays presentation.',
 

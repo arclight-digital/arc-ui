@@ -14,7 +14,7 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcTruncate extends LitElement {
   static properties = {
-    lines:    { type: Number, reflect: true },
+    lines: { type: Number, reflect: true },
     expanded: { type: Boolean, reflect: true },
   };
 
@@ -129,11 +129,13 @@ export class ArcTruncate extends LitElement {
 
   _toggle() {
     this.expanded = !this.expanded;
-    this.dispatchEvent(new CustomEvent('arc-toggle', {
-      detail: { expanded: this.expanded },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-toggle', {
+        detail: { expanded: this.expanded },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   render() {
@@ -148,13 +150,17 @@ export class ArcTruncate extends LitElement {
       >
         <slot></slot>
       </div>
-      ${this._overflows || this.expanded ? html`
+      ${
+        this._overflows || this.expanded
+          ? html`
         <button
           class="truncate__toggle"
           @click=${this._toggle}
           part="toggle"
         >${this.expanded ? 'Show less' : 'Show more'}</button>
-      ` : ''}
+      `
+          : ''
+      }
     `;
   }
 }

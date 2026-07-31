@@ -30,15 +30,15 @@ import '../shared/option.js';
 export class ArcMultiSelect extends FormControlMixin(LitElement) {
   static properties = {
     size: { type: String, reflect: true },
-    value:        { type: Array },
-    placeholder:  { type: String },
-    label:        { type: String },
-    name:         { type: String, reflect: true },
-    disabled:     { type: Boolean, reflect: true },
-    _query:       { state: true },
-    _open:        { state: true },
-    _focused:     { state: true },
-    _options:     { state: true },
+    value: { type: Array },
+    placeholder: { type: String },
+    label: { type: String },
+    name: { type: String, reflect: true },
+    disabled: { type: Boolean, reflect: true },
+    _query: { state: true },
+    _open: { state: true },
+    _focused: { state: true },
+    _options: { state: true },
   };
 
   static styles = [
@@ -266,8 +266,12 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
     this._listbox = new ListboxController(this, {
       getItemCount: () => this._filteredItems.length,
       isOpen: () => this._open,
-      onOpen: () => { this._open = true; },
-      onClose: () => { this._open = false; },
+      onOpen: () => {
+        this._open = true;
+      },
+      onClose: () => {
+        this._open = false;
+      },
       onSelect: (i) => this._toggleItem(this._filteredItems[i]),
       optionId: (i) => `${this._msId}-option-${i}`,
       scrollContainer: () => this.shadowRoot?.querySelector('.ms__dropdown'),
@@ -294,8 +298,9 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
   }
 
   _onSlotChange(e) {
-    this._options = e.target.assignedElements({ flatten: true })
-      .filter(el => el.tagName === 'ARC-OPTION');
+    this._options = e.target
+      .assignedElements({ flatten: true })
+      .filter((el) => el.tagName === 'ARC-OPTION');
   }
 
   updated(changed) {
@@ -313,15 +318,13 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
   }
 
   get _normalizedItems() {
-    return this._options.map(opt => ({ label: opt.label, value: opt.value }));
+    return this._options.map((opt) => ({ label: opt.label, value: opt.value }));
   }
 
   get _filteredItems() {
     const q = this._query.toLowerCase();
     if (!q) return this._normalizedItems;
-    return this._normalizedItems.filter(item =>
-      item.label.toLowerCase().includes(q)
-    );
+    return this._normalizedItems.filter((item) => item.label.toLowerCase().includes(q));
   }
 
   _isSelected(item) {
@@ -343,34 +346,40 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
     this._query = '';
     this._listbox.reset();
 
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: this.value },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _removeItem(val, e) {
     e.stopPropagation();
     if (this.readonly) return;
-    this.value = (this.value || []).filter(v => v !== val);
+    this.value = (this.value || []).filter((v) => v !== val);
 
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: this.value },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _onInput(e) {
     this._query = e.target.value;
     this._open = true;
     this._listbox.reset();
-    this.dispatchEvent(new CustomEvent('arc-input', {
-      detail: { value: this._query },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-input', {
+        detail: { value: this._query },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _onFocusIn() {
@@ -386,7 +395,11 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
 
     switch (e.key) {
       case 'ArrowLeft':
-        if (e.target.selectionStart === 0 && e.target.selectionEnd === 0 && (this.value || []).length > 0) {
+        if (
+          e.target.selectionStart === 0 &&
+          e.target.selectionEnd === 0 &&
+          (this.value || []).length > 0
+        ) {
           e.preventDefault();
           this._focusTag((this.value || []).length - 1);
         }
@@ -440,7 +453,7 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
   }
 
   _getLabel(val) {
-    const item = this._normalizedItems.find(i => i.value === val);
+    const item = this._normalizedItems.find((i) => i.value === val);
     return item ? item.label : val;
   }
 
@@ -449,7 +462,10 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
     const selected = this.value || [];
     const showPlaceholder = selected.length === 0 && !this._query;
     const listboxId = `${this._msId}-listbox`;
-    const activeId = this._listbox.activeIndex >= 0 ? `${this._msId}-option-${this._listbox.activeIndex}` : undefined;
+    const activeId =
+      this._listbox.activeIndex >= 0
+        ? `${this._msId}-option-${this._listbox.activeIndex}`
+        : undefined;
 
     return html`
       <div class="ms__slot-host">
@@ -461,7 +477,8 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
         @click=${() => this.shadowRoot.querySelector('.ms__input')?.focus()}
         part="control"
       >
-        ${selected.map((val, i) => html`
+        ${selected.map(
+          (val, i) => html`
           <span class="ms__tag" part="tag">
             ${this._getLabel(val)}
             <button
@@ -472,7 +489,8 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
               tabindex="-1"
             >&times;</button>
           </span>
-        `)}
+        `,
+        )}
         <input
           class="ms__input"
           type="text"
@@ -499,10 +517,11 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
         aria-multiselectable="true"
         part="dropdown"
       >
-        ${filtered.length > 0
-          ? filtered.map((item, i) => {
-              const checked = this._isSelected(item);
-              return html`
+        ${
+          filtered.length > 0
+            ? filtered.map((item, i) => {
+                const checked = this._isSelected(item);
+                return html`
                 <div
                   id="${this._msId}-option-${i}"
                   class="ms__option ${i === this._listbox.activeIndex ? 'ms__option--active' : ''}"
@@ -517,8 +536,8 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
                   ${item.label}
                 </div>
               `;
-            })
-          : html`<div class="ms__empty">No results found</div>`
+              })
+            : html`<div class="ms__empty">No results found</div>`
         }
       </div>
     `;

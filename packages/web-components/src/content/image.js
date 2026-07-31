@@ -21,13 +21,13 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcImage extends LitElement {
   static properties = {
-    src:       { type: String },
-    alt:       { type: String },
-    aspect:    { type: String, reflect: true },
-    fit:       { type: String, reflect: true },
-    loading:   { type: String },
-    fallback:  { type: String },
-    _state:    { state: true },
+    src: { type: String },
+    alt: { type: String },
+    aspect: { type: String, reflect: true },
+    fit: { type: String, reflect: true },
+    loading: { type: String },
+    fallback: { type: String },
+    _state: { state: true },
   };
 
   static styles = [
@@ -138,37 +138,44 @@ export class ArcImage extends LitElement {
 
   _onLoad() {
     this._state = 'loaded';
-    this.dispatchEvent(new CustomEvent('arc-load', {
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-load', {
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _onError() {
     this._state = 'error';
-    this.dispatchEvent(new CustomEvent('arc-error', {
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-error', {
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   render() {
     return html`
       <div class="image-wrapper" part="wrapper">
-        ${this._state === 'error'
-          ? html`
+        ${
+          this._state === 'error'
+            ? html`
             <div class="fallback" part="fallback">
-              ${this.fallback
-                ? html`<img src=${this.fallback} alt=${this.alt} class="loaded" style="object-fit:contain;max-width:60%;max-height:60%;" />`
-                : html`<svg class="fallback__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><path d="m21 15-5-5L5 21" /></svg>`
+              ${
+                this.fallback
+                  ? html`<img src=${this.fallback} alt=${this.alt} class="loaded" style="object-fit:contain;max-width:60%;max-height:60%;" />`
+                  : html`<svg class="fallback__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><path d="m21 15-5-5L5 21" /></svg>`
               }
             </div>
           `
-          : nothing
+            : nothing
         }
         <div class="shimmer ${this._state !== 'loading' ? 'shimmer--hidden' : ''}" aria-hidden="true"></div>
-        ${this._state !== 'error'
-          ? html`
+        ${
+          this._state !== 'error'
+            ? html`
             <img
               src=${this.src}
               alt=${this.alt}
@@ -178,7 +185,7 @@ export class ArcImage extends LitElement {
               @error=${this._onError}
               part="image"
             />`
-          : nothing
+            : nothing
         }
       </div>
     `;

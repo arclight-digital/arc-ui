@@ -13,8 +13,8 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcCluster extends LitElement {
   static properties = {
-    gap:     { type: String, reflect: true },
-    align:   { type: String, reflect: true },
+    gap: { type: String, reflect: true },
+    align: { type: String, reflect: true },
     justify: { type: String, reflect: true },
   };
 

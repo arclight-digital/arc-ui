@@ -47,16 +47,16 @@ const LOOP_PAUSE = 2000;
  */
 export class ArcTerminal extends LitElement {
   static properties = {
-    lines:    { attribute: false },
-    prompt:   { type: String },
-    title:    { type: String },
-    speed:    { type: Number },
+    lines: { attribute: false },
+    prompt: { type: String },
+    title: { type: String },
+    speed: { type: Number },
     autoplay: { type: Boolean },
-    loop:     { type: Boolean, reflect: true },
+    loop: { type: Boolean, reflect: true },
     _lineIndex: { state: true },
     _charIndex: { state: true },
-    _started:   { state: true },
-    _complete:  { state: true },
+    _started: { state: true },
+    _complete: { state: true },
   };
 
   static styles = [
@@ -189,7 +189,9 @@ export class ArcTerminal extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this._mqListener = (e) => { this._reducedMotion = e.matches; };
+    this._mqListener = (e) => {
+      this._reducedMotion = e.matches;
+    };
     this._mq = window.matchMedia('(prefers-reduced-motion: reduce)');
     this._reducedMotion = this._mq.matches;
     this._mq.addEventListener('change', this._mqListener);
@@ -207,7 +209,7 @@ export class ArcTerminal extends LitElement {
         (entries) => {
           if (entries.some((entry) => entry.isIntersecting)) this.play();
         },
-        { threshold: 0.2 }
+        { threshold: 0.2 },
       );
       this._observer.observe(this);
     }

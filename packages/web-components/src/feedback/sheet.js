@@ -26,8 +26,8 @@ import { OverlayMixin } from '../shared/overlay-mixin.js';
  */
 export class ArcSheet extends OverlayMixin(LitElement) {
   static properties = {
-    open:    { type: Boolean, reflect: true },
-    side:    { type: String, reflect: true },
+    open: { type: Boolean, reflect: true },
+    side: { type: String, reflect: true },
     heading: { type: String },
   };
 
@@ -170,7 +170,12 @@ export class ArcSheet extends OverlayMixin(LitElement) {
   }
 
   _close() {
-    if (!this.dispatchEvent(new CustomEvent('arc-close', { bubbles: true, composed: true, cancelable: true }))) return;
+    if (
+      !this.dispatchEvent(
+        new CustomEvent('arc-close', { bubbles: true, composed: true, cancelable: true }),
+      )
+    )
+      return;
     this.open = false;
   }
 

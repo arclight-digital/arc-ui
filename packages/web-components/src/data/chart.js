@@ -277,7 +277,10 @@ export class ArcChart extends LitElement {
       return this._nf('pct', { style: 'percent', maximumFractionDigits: 1 }).format(v);
     }
     if (this.valueFormat === 'currency') {
-      return this._nf(`cur:${this.currency}`, { style: 'currency', currency: this.currency }).format(v);
+      return this._nf(`cur:${this.currency}`, {
+        style: 'currency',
+        currency: this.currency,
+      }).format(v);
     }
     return this._nf('num', { maximumFractionDigits: 2 }).format(v);
   }
@@ -297,7 +300,8 @@ export class ArcChart extends LitElement {
       }).format(v);
     }
     const a = Math.abs(v);
-    const [d, suffix] = a >= 1e9 ? [v / 1e9, 'B'] : a >= 1e6 ? [v / 1e6, 'M'] : a >= 1e3 ? [v / 1e3, 'k'] : [v, ''];
+    const [d, suffix] =
+      a >= 1e9 ? [v / 1e9, 'B'] : a >= 1e6 ? [v / 1e6, 'M'] : a >= 1e3 ? [v / 1e3, 'k'] : [v, ''];
     return `${Math.round(d * 10) / 10}${suffix}`;
   }
 
@@ -310,20 +314,26 @@ export class ArcChart extends LitElement {
 
   /** Fixed color order --chart-1..6; series beyond 6 fold into a summed "Other" */
   _foldSeries() {
-    const src = Array.isArray(this.series) ? this.series.filter((s) => s && Array.isArray(s.data)) : [];
+    const src = Array.isArray(this.series)
+      ? this.series.filter((s) => s && Array.isArray(s.data))
+      : [];
     if (src.length <= MAX_SERIES) return src;
     const keep = src.slice(0, MAX_SERIES - 1);
     const rest = src.slice(MAX_SERIES - 1);
     const len = Math.max(0, ...rest.map((s) => s.data.length));
     const other = {
       label: `Other (${rest.length} series)`,
-      data: Array.from({ length: len }, (_, i) => rest.reduce((a, s) => a + (num(s.data[i]) || 0), 0)),
+      data: Array.from({ length: len }, (_, i) =>
+        rest.reduce((a, s) => a + (num(s.data[i]) || 0), 0),
+      ),
     };
     return [...keep, other];
   }
 
   _donutSegments() {
-    const src = Array.isArray(this.series) ? this.series.filter((s) => s && Array.isArray(s.data)) : [];
+    const src = Array.isArray(this.series)
+      ? this.series.filter((s) => s && Array.isArray(s.data))
+      : [];
     let segs;
     if (src.length === 1) {
       segs = src[0].data.map((v, i) => ({
@@ -361,8 +371,20 @@ export class ArcChart extends LitElement {
     const exp = Math.floor(Math.log10(range));
     const f = range / 10 ** exp;
     const nf = round
-      ? f < 1.5 ? 1 : f < 3 ? 2 : f < 7 ? 5 : 10
-      : f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10;
+      ? f < 1.5
+        ? 1
+        : f < 3
+          ? 2
+          : f < 7
+            ? 5
+            : 10
+      : f <= 1
+        ? 1
+        : f <= 2
+          ? 2
+          : f <= 5
+            ? 5
+            : 10;
     return nf * 10 ** exp;
   }
 
@@ -410,7 +432,7 @@ export class ArcChart extends LitElement {
         detail: { seriesIndex, index, value },
         bubbles: true,
         composed: true,
-      })
+      }),
     );
   }
 
@@ -450,7 +472,11 @@ export class ArcChart extends LitElement {
         const v = Math.max(0, num(list[si].data[i]) || 0);
         if (!v) continue;
         lastVisible = si;
-        if (py >= geo.y(c + v) && py <= geo.y(c)) { k = si; c = null; break; }
+        if (py >= geo.y(c + v) && py <= geo.y(c)) {
+          k = si;
+          c = null;
+          break;
+        }
         c += v;
       }
       if (c !== null) k = lastVisible;
@@ -464,7 +490,10 @@ export class ArcChart extends LitElement {
         const v = num(s.data[i]);
         if (!Number.isFinite(v)) return;
         const d = Math.abs(geo.y(v) - py);
-        if (d < best) { best = d; k = si; }
+        if (d < best) {
+          best = d;
+          k = si;
+        }
       });
     }
     const value = num(list[k]?.data[i]);
@@ -510,8 +539,14 @@ export class ArcChart extends LitElement {
         }
       }
     }
-    if (!Number.isFinite(lo) || !Number.isFinite(hi)) { lo = 0; hi = 1; }
-    if (this.type !== 'line') { lo = Math.min(lo, 0); hi = Math.max(hi, 0); }
+    if (!Number.isFinite(lo) || !Number.isFinite(hi)) {
+      lo = 0;
+      hi = 1;
+    }
+    if (this.type !== 'line') {
+      lo = Math.min(lo, 0);
+      hi = Math.max(hi, 0);
+    }
     if (lo === hi) hi = lo + 1;
 
     const ticks = this._ticks(lo, hi);
@@ -521,7 +556,9 @@ export class ArcChart extends LitElement {
     const w = this._width || 600;
     const h = this.height;
     const tickLabels = ticks.map((t) => this._fmtAxis(t));
-    const left = this.hideAxis ? 8 : Math.ceil(Math.max(...tickLabels.map((t) => t.length)) * CHAR_W) + 14;
+    const left = this.hideAxis
+      ? 8
+      : Math.ceil(Math.max(...tickLabels.map((t) => t.length)) * CHAR_W) + 14;
     const right = 8;
     const top = 10;
     const bottom = this.hideAxis ? 8 : 26;
@@ -540,13 +577,19 @@ export class ArcChart extends LitElement {
       const skip = Math.max(1, Math.ceil((n * (maxLen * CHAR_W + 12)) / plotW));
       axis = svg`
         <g part="axis">
-          ${ticks.map((t) => svg`
+          ${ticks.map(
+            (t) => svg`
             <line class="gridline" x1=${left} x2=${R(left + plotW)} y1=${R(y(t))} y2=${R(y(t))}></line>
             <text class="axis-text" x=${left - 8} y=${R(y(t))} text-anchor="end" dominant-baseline="middle">${this._fmtAxis(t)}</text>
-          `)}
-          ${labelStrs.map((l, i) => (i % skip ? nothing : svg`
+          `,
+          )}
+          ${labelStrs.map((l, i) =>
+            i % skip
+              ? nothing
+              : svg`
             <text class="axis-text" x=${R(xc(i))} y=${h - 8} text-anchor="middle">${l}</text>
-          `))}
+          `,
+          )}
         </g>`;
     }
 
@@ -597,9 +640,10 @@ export class ArcChart extends LitElement {
         }
         if (!pts.length) return nothing;
         const d = pts.map(([X, Y], j) => `${j ? 'L' : 'M'}${R(X)},${R(Y)}`).join(' ');
-        const area = this.type === 'area'
-          ? svg`<path class="area" fill=${color} d=${`${d} L${R(pts[pts.length - 1][0])},${R(baseline)} L${R(pts[0][0])},${R(baseline)} Z`}></path>`
-          : nothing;
+        const area =
+          this.type === 'area'
+            ? svg`<path class="area" fill=${color} d=${`${d} L${R(pts[pts.length - 1][0])},${R(baseline)} L${R(pts[0][0])},${R(baseline)} Z`}></path>`
+            : nothing;
         return svg`${area}<path class="line" stroke=${color} d=${d}></path>`;
       });
     }
@@ -619,16 +663,25 @@ export class ArcChart extends LitElement {
     }
 
     const hits = svg`
-      ${Array.from({ length: n }, (_, i) => svg`
+      ${Array.from(
+        { length: n },
+        (_, i) => svg`
         <rect
           class="hit ${this.type === 'bar' && hv?.kind === 'x' && hv.index === i ? 'hit-active' : ''}"
           x=${R(left + i * band)} y=${top} width=${R(band)} height=${R(plotH)}
           @pointerenter=${(e) => this._onEnterX(e, i)}
           @click=${() => this._onColumnClick(i, list, geo)}
         ></rect>
-      `)}`;
+      `,
+      )}`;
 
-    const typeName = stacked ? 'Stacked bar' : this.type === 'area' ? 'Area' : this.type === 'bar' ? 'Bar' : 'Line';
+    const typeName = stacked
+      ? 'Stacked bar'
+      : this.type === 'area'
+        ? 'Area'
+        : this.type === 'bar'
+          ? 'Bar'
+          : 'Line';
     const aria = `${typeName} chart, ${list.length} series, ${n} categories`;
 
     return {
@@ -722,13 +775,15 @@ export class ArcChart extends LitElement {
     return html`
       <div class="tooltip" part="tooltip" style=${style}>
         <div class="tooltip-title">${this._labelAt(hv.index)}</div>
-        ${model.list.map((s, si) => html`
+        ${model.list.map(
+          (s, si) => html`
           <div class="tooltip-row">
             <span class="chip" style=${`background: var(--chart-${si + 1})`}></span>
             <span class="tooltip-label">${s.label ?? `Series ${si + 1}`}</span>
             <span class="tooltip-value">${this._fmtValue(num(s.data[hv.index]))}</span>
           </div>
-        `)}
+        `,
+        )}
       </div>`;
   }
 
@@ -749,32 +804,40 @@ export class ArcChart extends LitElement {
         ${model.body}
         ${model.empty ? nothing : this._renderTooltip(model)}
       </div>
-      ${showLegend
-        ? html`
+      ${
+        showLegend
+          ? html`
           <div class="legend" part="legend">
-            ${model.legendItems.map((label, i) => html`
+            ${model.legendItems.map(
+              (label, i) => html`
               <span class="legend-item">
                 <span class="chip" style=${`background: var(--chart-${i + 1})`}></span>${label}
               </span>
-            `)}
+            `,
+            )}
           </div>`
-        : nothing}
-      ${model.empty
-        ? nothing
-        : html`
+          : nothing
+      }
+      ${
+        model.empty
+          ? nothing
+          : html`
           <table class="sr-only">
             <caption>${model.aria}</caption>
             <thead>
               <tr>${model.tableHead.map((th) => html`<th scope="col">${th}</th>`)}</tr>
             </thead>
             <tbody>
-              ${model.tableRows.map((row) => html`
+              ${model.tableRows.map(
+                (row) => html`
                 <tr>
                   ${row.map((cell, ci) => (ci === 0 ? html`<th scope="row">${cell}</th>` : html`<td>${cell}</td>`))}
                 </tr>
-              `)}
+              `,
+              )}
             </tbody>
-          </table>`}
+          </table>`
+      }
     `;
   }
 }

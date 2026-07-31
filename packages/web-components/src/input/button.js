@@ -22,12 +22,12 @@ import { isLoneSlottedAnchor } from '../shared/anchor-adoption.js';
  */
 export class ArcButton extends LitElement {
   static properties = {
-    variant:    { type: String, reflect: true },
-    size:       { type: String, reflect: true },
-    href:       { type: String },
-    disabled:   { type: Boolean, reflect: true },
-    loading:    { type: Boolean, reflect: true },
-    type:       { type: String },
+    variant: { type: String, reflect: true },
+    size: { type: String, reflect: true },
+    href: { type: String },
+    disabled: { type: Boolean, reflect: true },
+    loading: { type: Boolean, reflect: true },
+    type: { type: String },
     _hasPrefix: { state: true },
     _hasSuffix: { state: true },
     _slottedAnchor: { state: true },

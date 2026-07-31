@@ -23,8 +23,8 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcCtaBanner extends LitElement {
   static properties = {
-    eyebrow:    { type: String },
-    headline:   { type: String },
+    eyebrow: { type: String },
+    headline: { type: String },
     nogradient: { type: Boolean, reflect: true },
   };
 
@@ -118,16 +118,24 @@ export class ArcCtaBanner extends LitElement {
       <div class="cta" part="container">
         <div class="cta__bg" part="background"></div>
         <div class="cta__inner" part="inner">
-          ${this.eyebrow ? html`
+          ${
+            this.eyebrow
+              ? html`
             <span class="cta__eyebrow" part="eyebrow">
               <slot name="eyebrow">${this.eyebrow}</slot>
             </span>
-          ` : html`<slot name="eyebrow"></slot>`}
-          ${this.headline ? html`
+          `
+              : html`<slot name="eyebrow"></slot>`
+          }
+          ${
+            this.headline
+              ? html`
             <h2 class="cta__headline" part="headline">
               <slot name="headline">${this.headline}</slot>
             </h2>
-          ` : html`<slot name="headline"></slot>`}
+          `
+              : html`<slot name="headline"></slot>`
+          }
           <div class="cta__body" part="body">
             <slot></slot>
           </div>

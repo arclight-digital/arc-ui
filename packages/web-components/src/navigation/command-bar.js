@@ -21,8 +21,8 @@ import { tokenStyles } from '../shared-styles.js';
 export class ArcCommandBar extends LitElement {
   static properties = {
     placeholder: { type: String },
-    value:       { type: String },
-    icon:        { type: String, reflect: true },
+    value: { type: String },
+    icon: { type: String, reflect: true },
   };
 
   static styles = [
@@ -94,20 +94,24 @@ export class ArcCommandBar extends LitElement {
 
   _onInput(e) {
     this.value = e.target.value;
-    this.dispatchEvent(new CustomEvent('arc-input', {
-      detail: { value: this.value },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-input', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _onKeyDown(e) {
     if (e.key === 'Enter') {
-      this.dispatchEvent(new CustomEvent('arc-submit', {
-        detail: { value: this.value },
-        bubbles: true,
-        composed: true,
-      }));
+      this.dispatchEvent(
+        new CustomEvent('arc-submit', {
+          detail: { value: this.value },
+          bubbles: true,
+          composed: true,
+        }),
+      );
     }
   }
 

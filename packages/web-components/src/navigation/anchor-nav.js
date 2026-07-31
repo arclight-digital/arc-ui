@@ -17,10 +17,16 @@ import { tokenStyles } from '../shared-styles.js';
 export class ArcAnchorNav extends LitElement {
   static properties = {
     orientation: { type: String, reflect: true },
-    value:       { type: String, reflect: true },
+    value: { type: String, reflect: true },
     items: {
       converter: {
-        fromAttribute: (v) => { try { return JSON.parse(v); } catch { return []; } },
+        fromAttribute: (v) => {
+          try {
+            return JSON.parse(v);
+          } catch {
+            return [];
+          }
+        },
       },
     },
   };
@@ -145,25 +151,29 @@ export class ArcAnchorNav extends LitElement {
         for (const entry of entries) {
           if (entry.isIntersecting) {
             this.value = entry.target.id;
-            this.dispatchEvent(new CustomEvent('arc-change', {
-              detail: { value: this.value },
-              bubbles: true,
-              composed: true,
-            }));
+            this.dispatchEvent(
+              new CustomEvent('arc-change', {
+                detail: { value: this.value },
+                bubbles: true,
+                composed: true,
+              }),
+            );
           }
         }
       },
-      { rootMargin: '-20% 0px -60% 0px' }
+      { rootMargin: '-20% 0px -60% 0px' },
     );
   }
 
   _onClick(val) {
     this.value = val;
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: val },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: val },
+        bubbles: true,
+        composed: true,
+      }),
+    );
     const el = document.getElementById(val);
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   }
@@ -183,7 +193,10 @@ export class ArcAnchorNav extends LitElement {
     const hasItems = this.items && this.items.length > 0;
     return html`
       <nav class="anchor-nav" part="base" role="navigation" aria-label="Page sections">
-        ${hasItems ? this.items.map(item => html`
+        ${
+          hasItems
+            ? this.items.map(
+                (item) => html`
           <button
             class="anchor-nav__link ${this.value === item.value ? 'is-active' : ''}"
             part="link"
@@ -192,7 +205,10 @@ export class ArcAnchorNav extends LitElement {
           >
             ${item.label}
           </button>
-        `) : ''}
+        `,
+              )
+            : ''
+        }
         <slot @slotchange=${this._onSlotChange}></slot>
       </nav>
     `;

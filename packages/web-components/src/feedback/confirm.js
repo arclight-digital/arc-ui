@@ -23,12 +23,12 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcConfirm extends LitElement {
   static properties = {
-    open:           { type: Boolean, reflect: true },
-    heading:        { type: String },
-    message:        { type: String },
+    open: { type: Boolean, reflect: true },
+    heading: { type: String },
+    message: { type: String },
     confirmLabel: { type: String, attribute: 'confirm-label' },
-    cancelLabel:  { type: String, attribute: 'cancel-label' },
-    variant:        { type: String, reflect: true },
+    cancelLabel: { type: String, attribute: 'cancel-label' },
+    variant: { type: String, reflect: true },
   };
 
   static styles = [
@@ -89,14 +89,22 @@ export class ArcConfirm extends LitElement {
     document.body.appendChild(el);
 
     return new Promise((resolve) => {
-      el.addEventListener('arc-confirm', () => {
-        resolve(true);
-        el.remove();
-      }, { once: true });
-      el.addEventListener('arc-cancel', () => {
-        resolve(false);
-        el.remove();
-      }, { once: true });
+      el.addEventListener(
+        'arc-confirm',
+        () => {
+          resolve(true);
+          el.remove();
+        },
+        { once: true },
+      );
+      el.addEventListener(
+        'arc-cancel',
+        () => {
+          resolve(false);
+          el.remove();
+        },
+        { once: true },
+      );
     });
   }
 

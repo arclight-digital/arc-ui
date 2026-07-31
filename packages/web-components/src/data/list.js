@@ -20,13 +20,13 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcList extends LitElement {
   static properties = {
-    variant:    { type: String, reflect: true },
-    size:       { type: String, reflect: true },
+    variant: { type: String, reflect: true },
+    size: { type: String, reflect: true },
     selectable: { type: Boolean, reflect: true },
-    multiple:   { type: Boolean },
-    value:      { type: String },
-    label:      { type: String },
-    _items:     { state: true },
+    multiple: { type: Boolean },
+    value: { type: String },
+    label: { type: String },
+    _items: { state: true },
   };
 
   static styles = [
@@ -82,8 +82,9 @@ export class ArcList extends LitElement {
   }
 
   _onSlotChange(e) {
-    this._items = e.target.assignedElements({ flatten: true })
-      .filter(el => el.tagName === 'ARC-LIST-ITEM');
+    this._items = e.target
+      .assignedElements({ flatten: true })
+      .filter((el) => el.tagName === 'ARC-LIST-ITEM');
     this._syncSelection();
   }
 
@@ -102,11 +103,13 @@ export class ArcList extends LitElement {
     }
 
     this._syncSelection();
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      bubbles: true,
-      composed: true,
-      detail: { value: this.value },
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        bubbles: true,
+        composed: true,
+        detail: { value: this.value },
+      }),
+    );
   };
 
   _syncSelection() {
@@ -118,13 +121,14 @@ export class ArcList extends LitElement {
   }
 
   _handleKeydown(e) {
-    const items = this._items.filter(i => !i.disabled);
+    const items = this._items.filter((i) => !i.disabled);
     if (!items.length) return;
 
-    const current = items.findIndex(i =>
-      i.shadowRoot?.querySelector('.item') === i.shadowRoot?.activeElement ||
-      i === document.activeElement ||
-      i.shadowRoot?.querySelector(':focus') !== null
+    const current = items.findIndex(
+      (i) =>
+        i.shadowRoot?.querySelector('.item') === i.shadowRoot?.activeElement ||
+        i === document.activeElement ||
+        i.shadowRoot?.querySelector(':focus') !== null,
     );
 
     let next = -1;
@@ -150,11 +154,13 @@ export class ArcList extends LitElement {
       case ' ':
         if (this.selectable && current >= 0) {
           e.preventDefault();
-          items[current].dispatchEvent(new CustomEvent('arc-select', {
-            bubbles: true,
-            composed: true,
-            detail: { value: items[current].value },
-          }));
+          items[current].dispatchEvent(
+            new CustomEvent('arc-select', {
+              bubbles: true,
+              composed: true,
+              detail: { value: items[current].value },
+            }),
+          );
         }
         return;
       default:

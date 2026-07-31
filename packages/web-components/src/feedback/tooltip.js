@@ -18,10 +18,10 @@ import { setTriggerAria } from '../shared/trigger-aria.js';
  */
 export class ArcTooltip extends LitElement {
   static properties = {
-    content:   { type: String },
-    position:  { type: String, reflect: true },
-    delay:     { type: Number },
-    _visible:  { state: true },
+    content: { type: String },
+    position: { type: String, reflect: true },
+    delay: { type: Number },
+    _visible: { state: true },
   };
 
   static styles = [
@@ -248,10 +248,9 @@ export class ArcTooltip extends LitElement {
    * aria-description on the slotted trigger element.
    */
   _syncTriggerAria() {
-    setTriggerAria(
-      this.shadowRoot.querySelector('.tooltip__trigger slot'),
-      { 'aria-description': this.content || null }
-    );
+    setTriggerAria(this.shadowRoot.querySelector('.tooltip__trigger slot'), {
+      'aria-description': this.content || null,
+    });
   }
 
   _show() {

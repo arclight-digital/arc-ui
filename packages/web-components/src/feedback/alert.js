@@ -23,10 +23,10 @@ import { getStatusIcon } from '../status-utils.js';
  */
 export class ArcAlert extends LitElement {
   static properties = {
-    variant:     { type: String, reflect: true },
+    variant: { type: String, reflect: true },
     density: { type: String, reflect: true },
     dismissible: { type: Boolean, reflect: true },
-    heading:     { type: String },
+    heading: { type: String },
   };
 
   static styles = [
@@ -108,7 +108,12 @@ export class ArcAlert extends LitElement {
   }
 
   _dismiss() {
-    if (!this.dispatchEvent(new CustomEvent('arc-close', { bubbles: true, composed: true, cancelable: true }))) return;
+    if (
+      !this.dispatchEvent(
+        new CustomEvent('arc-close', { bubbles: true, composed: true, cancelable: true }),
+      )
+    )
+      return;
     this.style.display = 'none';
   }
 
@@ -120,9 +125,13 @@ export class ArcAlert extends LitElement {
           ${this.heading ? html`<p class="alert__heading" part="heading">${this.heading}</p>` : ''}
           <div class="alert__content" part="content"><slot></slot></div>
         </div>
-        ${this.dismissible ? html`
+        ${
+          this.dismissible
+            ? html`
           <arc-icon-button name="x" label="Dismiss" variant="ghost" size="sm" @click=${this._dismiss} part="dismiss"></arc-icon-button>
-        ` : ''}
+        `
+            : ''
+        }
       </div>
     `;
   }

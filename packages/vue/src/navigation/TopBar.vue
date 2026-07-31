@@ -21,7 +21,6 @@ const props = withDefaults(defineProps<{
   scrolled: false,
   immersive: false,
   fixed: false,
-  contained: 'null',
   menuOpen: false,
   mobileMenu: 'sidebar',
   menuPosition: 'left',

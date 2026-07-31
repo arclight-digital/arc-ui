@@ -289,10 +289,7 @@ export class PositionController {
       this.opts.placement?.(),
       this.opts.fallbackPlacement ?? 'bottom',
     );
-    const align = resolveAlignment(
-      this.opts.align?.(),
-      this.opts.fallbackAlign ?? 'center',
-    );
+    const align = resolveAlignment(this.opts.align?.(), this.opts.fallbackAlign ?? 'center');
 
     if (this.opts.flip !== false) {
       placement = this._flip(placement, a, w, h, vw, vh, offset, padding);
@@ -304,14 +301,14 @@ export class PositionController {
 
     if (vertical) {
       top = placement === 'bottom' ? a.bottom + offset : a.top - h - offset;
-      left = (align === 'start' ? a.left
-        : align === 'end' ? a.right - w
-        : a.left + (a.width - w) / 2) + crossOffset;
+      left =
+        (align === 'start' ? a.left : align === 'end' ? a.right - w : a.left + (a.width - w) / 2) +
+        crossOffset;
     } else {
       left = placement === 'right' ? a.right + offset : a.left - w - offset;
-      top = (align === 'start' ? a.top
-        : align === 'end' ? a.bottom - h
-        : a.top + (a.height - h) / 2) + crossOffset;
+      top =
+        (align === 'start' ? a.top : align === 'end' ? a.bottom - h : a.top + (a.height - h) / 2) +
+        crossOffset;
     }
 
     if (this.opts.shift !== false) {

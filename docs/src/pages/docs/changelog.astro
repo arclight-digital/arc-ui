@@ -84,15 +84,39 @@ const headings = [
      hand-written sections had (docs-heading/docs-text/docs-list/tier-heading
      in docs.css), so the files themselves stay free of house markup. */
 
-  /* h3 → the tier-heading eyebrow */
+  /* Releases are the page's top-level unit, so they get the page's largest
+     gap. Each already opens with the house h2 + arc-divider; separation is
+     whitespace's job, not a second rule's. */
+  .release-body + .release-body {
+    margin-top: var(--space-4xl);
+  }
+
+  /* h3 → a section heading inside a release.
+     These carried the tier-heading eyebrow: --text-xs at --text-muted, with no
+     top margin. Both parts worked against it. Muted sits *below* the
+     --text-secondary body it introduces, so the heading read as the quietest
+     thing in its own section — hierarchy inverted rather than established. And
+     with no top margin, a release of eight sections arrived as one unbroken
+     column. Lifting to --text-primary is the house move (hierarchy comes from
+     lifting, not from stepping down the gray ramp), and the gap does the
+     breaking — the release's own divider stays the only rule on the page.
+     Uppercase at the label role is kept: it's what distinguishes this level
+     from the sentence-case h2 above it now that both sit at primary. */
   .release-body :global(h3) {
-    font-family: var(--font-accent);
-    font-size: var(--text-xs);
-    font-weight: 600;
-    letter-spacing: 2px;
+    font-family: var(--font-label);
+    font-size: var(--text-sm);
+    font-weight: var(--font-label-weight, 600);
+    letter-spacing: 1.5px;
     text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: var(--space-sm);
+    color: var(--text-primary);
+    margin-top: var(--space-2xl);
+    margin-bottom: var(--space-md);
+    max-width: 640px;
+  }
+
+  /* The first section already has the release divider above it. */
+  .release-body :global(h3:first-of-type) {
+    margin-top: var(--space-lg);
   }
 
   /* p → docs-text */
@@ -135,7 +159,7 @@ const headings = [
     line-height: 1.8;
     margin-bottom: var(--space-sm);
     max-width: 640px;
-    padding-left: var(--space-lg);
+    padding-inline-start: var(--space-lg);
   }
 
   .release-body :global(ul code) {
@@ -170,7 +194,7 @@ const headings = [
   .changelog-archive summary {
     cursor: pointer;
     padding: var(--space-md) 0;
-    font-family: var(--font-accent);
+    font-family: var(--font-label);
     font-size: var(--text-xs);
     letter-spacing: 2px;
     text-transform: uppercase;

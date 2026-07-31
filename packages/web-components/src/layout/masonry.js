@@ -14,7 +14,7 @@ import { tokenStyles } from '../shared-styles.js';
 export class ArcMasonry extends LitElement {
   static properties = {
     columns: { type: Number, reflect: true },
-    gap:     { type: String, reflect: true },
+    gap: { type: String, reflect: true },
   };
 
   static styles = [

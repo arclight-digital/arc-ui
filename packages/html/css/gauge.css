@@ -76,7 +76,7 @@
       .arc-gauge .gauge__unit {
         font-size: var(--code-size);
         color: var(--text-muted);
-        margin-left: 2px;
+        margin-inline-start: 2px;
       }
 
       .arc-gauge .gauge__label {

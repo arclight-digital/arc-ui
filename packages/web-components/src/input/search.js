@@ -32,12 +32,12 @@ import { managedPanelStyles } from '../shared/position-styles.js';
  */
 export class ArcSearch extends LitElement {
   static properties = {
-    value:        { type: String },
-    placeholder:  { type: String },
-    label:        { type: String },
-    disabled:     { type: Boolean, reflect: true },
-    loading:      { type: Boolean, reflect: true },
-    open:        { type: Boolean, reflect: true },
+    value: { type: String },
+    placeholder: { type: String },
+    label: { type: String },
+    disabled: { type: Boolean, reflect: true },
+    loading: { type: Boolean, reflect: true },
+    open: { type: Boolean, reflect: true },
     _activeIndex: { state: true },
     _suggestions: { state: true },
   };
@@ -196,7 +196,10 @@ export class ArcSearch extends LitElement {
 
       .search__slot-host { display: none; }
     `,
-    managedPanelStyles('search__suggestions', { openCls: 'search__suggestions--open', animate: false }),
+    managedPanelStyles('search__suggestions', {
+      openCls: 'search__suggestions--open',
+      animate: false,
+    }),
   ];
 
   constructor() {
@@ -210,7 +213,9 @@ export class ArcSearch extends LitElement {
     this._activeIndex = -1;
     this._suggestions = [];
     this._clickOutside = new ClickOutsideController(this, {
-      onClickOutside: () => { this.open = false; },
+      onClickOutside: () => {
+        this.open = false;
+      },
     });
     this._position = new PositionController(this, {
       anchor: () => this.shadowRoot?.querySelector('.search__wrapper'),
@@ -229,8 +234,9 @@ export class ArcSearch extends LitElement {
   }
 
   _onSlotChange(e) {
-    this._suggestions = e.target.assignedElements({ flatten: true })
-      .filter(el => el.tagName === 'ARC-SUGGESTION');
+    this._suggestions = e.target
+      .assignedElements({ flatten: true })
+      .filter((el) => el.tagName === 'ARC-SUGGESTION');
   }
 
   get _hasSuggestions() {
@@ -238,7 +244,7 @@ export class ArcSearch extends LitElement {
   }
 
   get _normalizedSuggestions() {
-    return this._suggestions.map(s => ({
+    return this._suggestions.map((s) => ({
       label: s.label,
       value: s.value || s.label,
     }));
@@ -249,11 +255,13 @@ export class ArcSearch extends LitElement {
     this._activeIndex = -1;
     if (this._hasSuggestions) this.open = true;
 
-    this.dispatchEvent(new CustomEvent('arc-input', {
-      detail: { value: this.value },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-input', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _onFocus() {
@@ -265,20 +273,24 @@ export class ArcSearch extends LitElement {
     this.open = false;
     this._activeIndex = -1;
 
-    this.dispatchEvent(new CustomEvent('arc-clear', {
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-clear', {
+        bubbles: true,
+        composed: true,
+      }),
+    );
 
     this.shadowRoot.querySelector('.search__input')?.focus();
   }
 
   _submit() {
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: this.value },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _selectSuggestion(item) {
@@ -286,19 +298,23 @@ export class ArcSearch extends LitElement {
     this.open = false;
     this._activeIndex = -1;
 
-    this.dispatchEvent(new CustomEvent('arc-select', {
-      detail: { value: item },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-select', {
+        detail: { value: item },
+        bubbles: true,
+        composed: true,
+      }),
+    );
 
     // A suggestion pick commits the value just like Enter does, so it must
     // also fire arc-change — same detail shape as _submit().
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: this.value },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _onKeyDown(e) {
@@ -306,7 +322,10 @@ export class ArcSearch extends LitElement {
 
     switch (e.key) {
       case 'ArrowDown':
-        if (!this.open && this._hasSuggestions) { this.open = true; return; }
+        if (!this.open && this._hasSuggestions) {
+          this.open = true;
+          return;
+        }
         e.preventDefault();
         this._activeIndex = Math.min(this._activeIndex + 1, items.length - 1);
         break;
@@ -365,9 +384,13 @@ export class ArcSearch extends LitElement {
           part="input"
         />
 
-        ${this.loading ? html`
+        ${
+          this.loading
+            ? html`
           <span class="search__spinner" part="spinner" aria-label="Loading"></span>
-        ` : this.value ? html`
+        `
+            : this.value
+              ? html`
           <button
             class="search__clear"
             @click=${this._clear}
@@ -375,7 +398,9 @@ export class ArcSearch extends LitElement {
             tabindex="-1"
             part="clear"
           >&times;</button>
-        ` : ''}
+        `
+              : ''
+        }
 
         <div
           id="search-suggestions"
@@ -384,7 +409,8 @@ export class ArcSearch extends LitElement {
           aria-label="Suggestions"
           part="suggestions"
         >
-          ${items.map((item, i) => html`
+          ${items.map(
+            (item, i) => html`
             <button
               class="search__suggestion ${i === this._activeIndex ? 'search__suggestion--active' : ''}"
               role="option"
@@ -392,7 +418,8 @@ export class ArcSearch extends LitElement {
               @click=${() => this._selectSuggestion(item)}
               part="suggestion"
             >${item.label || item.value}</button>
-          `)}
+          `,
+          )}
         </div>
       </div>
     `;

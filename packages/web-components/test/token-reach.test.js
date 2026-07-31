@@ -108,48 +108,96 @@ describe('a :root override reaches components', () => {
   });
 });
 
-describe('compositions are deliberately not forwarded', () => {
+/**
+ * Compositions are forwarded; only shadow-private references are held back.
+ *
+ * This reverses the earlier "literal-valued tokens only" rule. Forwarding a
+ * composition is what lets the `[data-theme="light"]` retunes of --glow-*,
+ * --focus-* and the interactive ramp reach shadow DOM at all; holding them back
+ * stranded the light values at :root while the :host copies kept dark alphas.
+ * A value referencing a shadow-private var(--_…) is still excluded, because
+ * that reference is guaranteed-invalid in the scope it would inherit from.
+ *
+ * The rule is stated in shared/tokens.js (renderForwardRule). Its cost is real,
+ * and the last test here pins it rather than leaving it to be rediscovered.
+ */
+describe('compositions are forwarded, shadow-private references are not', () => {
+  function forwardedNames() {
+    const from = cssText.indexOf('Let a :root override');
+    const block = cssText.slice(from, cssText.indexOf('\n}', from));
+    return [...block.matchAll(/(--[a-z0-9_-]+): inherit;/g)].map((m) => m[1]);
+  }
+
+  function rootValues() {
+    const from = cssText.indexOf(':root {');
+    const root = cssText.slice(from, cssText.indexOf('\n}', from));
+    return new Map(
+      [...root.matchAll(/(--[a-zA-Z0-9_-]+)\s*:\s*([^;]+);/g)].map((m) => [m[1], m[2]]));
+  }
+
   afterEach(() => {
     document.documentElement.style.removeProperty('--accent-primary');
+    document.documentElement.removeAttribute('data-theme');
     cleanup();
   });
 
-  it('keeps a per-instance --accent-primary override flowing into its aliases', async () => {
-    // The regression this guards: `inherit` resolves to the parent's *substituted*
-    // value, so forwarding --interactive would freeze it to the parent's accent and
-    // `arc-button { --accent-primary: … }` would stop recolouring the button —
-    // :host's `--interactive: var(--accent-primary)` would never resolve locally.
-    // Only literal-valued tokens may be forwarded.
+  it('lets a :root override of a base token re-resolve the compounds', async () => {
     const el = await mountButton();
     expect(seen(el, '--interactive')).to.equal('rgb(77, 126, 247)');
 
+    document.documentElement.style.setProperty('--accent-primary', 'rgb(1, 2, 3)');
+    await el.updateComplete;
+    expect(seen(el, '--interactive'), 'compound followed :root').to.equal('rgb(1, 2, 3)');
+  });
+
+  it('carries the light-theme retune of a glow into shadow DOM', async () => {
+    // The whole reason compositions are forwarded: --glow-md is retuned from
+    // alpha .25 to .36 under [data-theme="light"], and a component that never
+    // saw the retune would wear a dark-mode glow on a light ground.
+    const el = await mountButton();
+    const dark = seen(el, '--glow-md');
+
+    document.documentElement.setAttribute('data-theme', 'light');
+    await el.updateComplete;
+    const light = seen(el, '--glow-md');
+
+    expect(light, 'the retune reached the component').to.not.equal(dark);
+    expect(light).to.include('0.36');
+  });
+
+  it('forwards no token whose value references a shadow-private variable', async () => {
+    const values = rootValues();
+    const leaked = forwardedNames().filter((n) => (values.get(n) || '').includes('var(--_'));
+    expect(leaked, 'these would inherit an invalid reference').to.deep.equal([]);
+
+    // --glow-status is the live case: rgba(var(--_status-rgb), …), declared only
+    // inside a shadow root by status-styles.js. If it appears in the rule, the
+    // exclusion in renderForwardRule has stopped matching.
+    expect(forwardedNames()).to.not.include('--glow-status');
+    expect(forwardedNames(), 'its literal alpha still is').to.include('--glow-status-alpha');
+  });
+
+  it('forwards the semantic aliases and the accent compounds', async () => {
+    for (const n of ['--interactive', '--surface-raised', '--divider', '--focus-glow',
+                     '--glow-md', '--transition-base']) {
+      expect(forwardedNames(), n).to.include(n);
+    }
+  });
+
+  it('prices the trade: a per-element base override no longer re-resolves compounds', async () => {
+    // `inherit` arrives already substituted in the parent's scope, so setting a
+    // base token on the element itself cannot reach a compound resolved above it.
+    // Overriding the compound directly still works — an element's own style
+    // outranks :where() — and that is the documented escape hatch.
+    const el = await mountButton();
+
     el.style.setProperty('--accent-primary', 'rgb(1, 2, 3)');
     await el.updateComplete;
-    expect(seen(el, '--interactive'), 'alias followed the instance').to.equal('rgb(1, 2, 3)');
-  });
+    expect(seen(el, '--interactive'), 'frozen to the parent value').to.equal('rgb(77, 126, 247)');
 
-  it('forwards no token whose value contains a var() reference', async () => {
-    const cssText2 = cssText;
-    const from = cssText2.indexOf('Let a :root override');
-    const block = cssText2.slice(from, cssText2.indexOf('\n}', from));
-    const forwarded = [...block.matchAll(/(--[a-z0-9_-]+): inherit;/g)].map((m) => m[1]);
-
-    // Look each one up in the :root block and confirm it is a literal.
-    const rootFrom = cssText2.indexOf(':root {');
-    const root = cssText2.slice(rootFrom, cssText2.indexOf('\n}', rootFrom));
-    const values = new Map(
-      [...root.matchAll(/(--[a-zA-Z0-9_-]+)\s*:\s*([^;]+);/g)].map((m) => [m[1], m[2]]));
-
-    const compositions = forwarded.filter((n) => (values.get(n) || '').includes('var('));
-    expect(compositions, 'these would freeze to the parent value').to.deep.equal([]);
-  });
-
-  it('does not forward the semantic aliases', async () => {
-    const from = cssText.indexOf('Let a :root override');
-    const block = cssText.slice(from, cssText.indexOf('\n}', from));
-    for (const n of ['--interactive', '--surface-raised', '--divider', '--focus-glow']) {
-      expect(block, n).to.not.include(`${n}: inherit`);
-    }
+    el.style.setProperty('--interactive', 'rgb(4, 5, 6)');
+    await el.updateComplete;
+    expect(seen(el, '--interactive'), 'the compound itself still overrides').to.equal('rgb(4, 5, 6)');
   });
 });
 

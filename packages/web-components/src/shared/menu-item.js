@@ -15,8 +15,8 @@ export class ArcMenuItem extends LitElement {
   static properties = {
     shortcut: { type: String, reflect: true },
     disabled: { type: Boolean, reflect: true },
-    icon:     { type: String },
-    value:    { type: String },
+    icon: { type: String },
+    value: { type: String },
   };
 
   static styles = css`

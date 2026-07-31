@@ -17,7 +17,7 @@ export class ArcColorSwatch extends LitElement {
   static properties = {
     color: { type: String },
     label: { type: String },
-    size:  { type: String, reflect: true },
+    size: { type: String, reflect: true },
   };
 
   static styles = [

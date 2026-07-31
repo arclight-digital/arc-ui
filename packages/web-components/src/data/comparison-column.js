@@ -12,9 +12,9 @@ import { LitElement, nothing } from 'lit';
  */
 export class ArcComparisonColumn extends LitElement {
   static properties = {
-    heading:   { type: String, reflect: true },
+    heading: { type: String, reflect: true },
     highlight: { type: Boolean, reflect: true },
-    values:    { type: String },
+    values: { type: String },
   };
 
   constructor() {

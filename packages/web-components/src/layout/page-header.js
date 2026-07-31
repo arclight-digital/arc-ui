@@ -114,16 +114,20 @@ export class ArcPageHeader extends LitElement {
           <slot name="above"></slot>
         </div>
         <div class="page-header__title-row" part="title-row">
-          ${this.heading
-            ? html`<h1 class="page-header__heading" part="heading">${this.heading}</h1>`
-            : html`<slot name="heading"></slot>`}
+          ${
+            this.heading
+              ? html`<h1 class="page-header__heading" part="heading">${this.heading}</h1>`
+              : html`<slot name="heading"></slot>`
+          }
           <div class="page-header__aside" part="aside">
             <slot name="aside"></slot>
           </div>
         </div>
-        ${this.description
-          ? html`<p class="page-header__description" part="description">${this.description}</p>`
-          : html`<slot name="description"></slot>`}
+        ${
+          this.description
+            ? html`<p class="page-header__description" part="description">${this.description}</p>`
+            : html`<slot name="description"></slot>`
+        }
         <div class="page-header__below" part="below">
           <slot name="below"></slot>
         </div>

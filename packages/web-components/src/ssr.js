@@ -54,12 +54,7 @@ import { CLIENT_ONLY } from './ssr-client-only.js';
  * their contents spends bytes on markup no reader and no metric ever sees. On
  * arcui.dev that was 174 of a page's 427 roots — the whole ⌘K palette.
  */
-export const CLOSED_OVERLAYS = [
-  'arc-command-palette',
-  'arc-modal',
-  'arc-sheet',
-  'arc-drawer',
-];
+export const CLOSED_OVERLAYS = ['arc-command-palette', 'arc-modal', 'arc-sheet', 'arc-drawer'];
 
 /**
  * Long repeated lists, and how many of each to render.
@@ -103,8 +98,8 @@ async function prepare() {
       ssr = await import('@lit-labs/ssr');
     } catch (cause) {
       throw new Error(
-        '@arclux/arc-ui/ssr needs @lit-labs/ssr, which is an optional peer '
-        + 'dependency. Install it in the project that server-renders.',
+        '@arclux/arc-ui/ssr needs @lit-labs/ssr, which is an optional peer ' +
+          'dependency. Install it in the project that server-renders.',
         { cause },
       );
     }
@@ -120,10 +115,10 @@ async function prepare() {
     const names = Object.keys(CLIENT_ONLY);
     if (names.length > 0) {
       throw new Error(
-        `@arclux/arc-ui/ssr registers components through the ./register.js `
-        + `barrel, which cannot skip the ${names.length} client-only `
-        + `component(s): ${names.join(', ')}. Give it a registration path that `
-        + `omits them before adding an entry to src/ssr-client-only.js.`,
+        `@arclux/arc-ui/ssr registers components through the ./register.js ` +
+          `barrel, which cannot skip the ${names.length} client-only ` +
+          `component(s): ${names.join(', ')}. Give it a registration path that ` +
+          `omits them before adding an entry to src/ssr-client-only.js.`,
       );
     }
     // @lit-labs/ssr installs the DOM shim on import, so it has to be loaded
@@ -175,15 +170,11 @@ export async function renderDeclarativeShadowDOM(source, options = {}) {
 
   await iconRegistry.preload([...source.matchAll(ICON_NAME)].map((m) => m[1]));
 
-  let out = await lit.collectResult(
-    lit.render(lit.html`${lit.unsafeStatic(source)}`)
-  );
+  let out = await lit.collectResult(lit.render(lit.html`${lit.unsafeStatic(source)}`));
 
   // lit wraps its output in a part marker, and the opening one lands *before*
   // the doctype — enough to put the document in quirks mode.
-  out = out
-    .replace(/^\s*<!--lit-part [^>]*-->/, '')
-    .replace(/<!--\/lit-part-->\s*$/, '');
+  out = out.replace(/^\s*<!--lit-part [^>]*-->/, '').replace(/<!--\/lit-part-->\s*$/, '');
 
   const capped = closeOverlays(out, closedOverlays);
   const trimmed = trimLists(capped.html, listBudgets);
@@ -255,8 +246,13 @@ function shadowRoots(page) {
       const open = page.indexOf('<template', i);
       const close = page.indexOf('</template>', i);
       if (close === -1) break;
-      if (open !== -1 && open < close) { depth++; i = open + 9; }
-      else { depth--; i = close + 11; }
+      if (open !== -1 && open < close) {
+        depth++;
+        i = open + 9;
+      } else {
+        depth--;
+        i = close + 11;
+      }
     }
     roots.push({ start: match.index, end: i });
     SHADOW_OPEN.lastIndex = i;
@@ -277,8 +273,13 @@ function elementSpans(page, tag) {
       const nextOpen = page.indexOf(`<${tag}`, i);
       const nextClose = page.indexOf(close, i);
       if (nextClose === -1) break;
-      if (nextOpen !== -1 && nextOpen < nextClose) { depth++; i = nextOpen + tag.length + 1; }
-      else { depth--; i = nextClose + close.length; }
+      if (nextOpen !== -1 && nextOpen < nextClose) {
+        depth++;
+        i = nextOpen + tag.length + 1;
+      } else {
+        depth--;
+        i = nextClose + close.length;
+      }
     }
     spans.push([match.index, i]);
     open.lastIndex = i;
@@ -302,7 +303,7 @@ function closeOverlays(page, hosts) {
 
   const roots = shadowRoots(page);
   const drop = roots.filter(({ start }) =>
-    hidden.some(([from, to]) => start >= from && start < to)
+    hidden.some(([from, to]) => start >= from && start < to),
   );
   if (drop.length === 0) return { html: page, deferred: 0 };
 
@@ -362,7 +363,8 @@ function liftStylesheets(page, sheets, used, prefix) {
  */
 function preloadStylesheets(page, used, prefix) {
   if (used.size === 0 || !page.includes('</head>')) return page;
-  const links = [...used].sort()
+  const links = [...used]
+    .sort()
     .map((name) => `<link rel="preload" as="style" href="${prefix}/${name}">`)
     .join('');
   return page.replace('</head>', `${links}</head>`);

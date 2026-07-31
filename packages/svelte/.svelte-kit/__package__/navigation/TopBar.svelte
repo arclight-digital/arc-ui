@@ -49,7 +49,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { heading = '', homeHref = '/', scrolled = false, immersive = false, fixed = false, contained = 'null', menuOpen = false, mobileMenu = 'sidebar', menuPosition = 'left', navAlign = 'center', logo, subtitle, center, actions, ...rest }: Props = $props();
+  let { heading = '', homeHref = '/', scrolled = false, immersive = false, fixed = false, contained, menuOpen = false, mobileMenu = 'sidebar', menuPosition = 'left', navAlign = 'center', logo, subtitle, center, actions, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

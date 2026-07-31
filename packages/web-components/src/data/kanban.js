@@ -29,14 +29,14 @@ import './tag.js';
  */
 export class ArcKanban extends LitElement {
   static properties = {
-    columns:      { type: Array },
-    disabled:     { type: Boolean, reflect: true },
-    _cols:        { state: true },
-    _drag:        { state: true },
-    _dropTarget:  { state: true },
-    _kbCard:      { state: true },
-    _activeIdx:   { state: true },
-    _announcement:{ state: true },
+    columns: { type: Array },
+    disabled: { type: Boolean, reflect: true },
+    _cols: { state: true },
+    _drag: { state: true },
+    _dropTarget: { state: true },
+    _kbCard: { state: true },
+    _activeIdx: { state: true },
+    _announcement: { state: true },
   };
 
   static styles = [
@@ -270,7 +270,8 @@ export class ArcKanban extends LitElement {
   _findCard(cardId) {
     for (let c = 0; c < this._cols.length; c++) {
       const index = this._cols[c].items.findIndex((it) => it.id === cardId);
-      if (index !== -1) return { colIndex: c, col: this._cols[c], index, item: this._cols[c].items[index] };
+      if (index !== -1)
+        return { colIndex: c, col: this._cols[c], index, item: this._cols[c].items[index] };
     }
     return null;
   }
@@ -292,11 +293,13 @@ export class ArcKanban extends LitElement {
   }
 
   _fireMove(cardId, fromColumn, toColumn, index) {
-    this.dispatchEvent(new CustomEvent('arc-card-move', {
-      detail: { cardId, fromColumn, toColumn, index },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-card-move', {
+        detail: { cardId, fromColumn, toColumn, index },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _announce(message) {
@@ -349,11 +352,13 @@ export class ArcKanban extends LitElement {
     this._pd = null;
     this._stopAutoScroll();
     if (!this._drag) {
-      this.dispatchEvent(new CustomEvent('arc-card-click', {
-        detail: { cardId: pd.id, columnId: pd.colId },
-        bubbles: true,
-        composed: true,
-      }));
+      this.dispatchEvent(
+        new CustomEvent('arc-card-click', {
+          detail: { cardId: pd.id, columnId: pd.colId },
+          bubbles: true,
+          composed: true,
+        }),
+      );
       return;
     }
     const drag = this._drag;
@@ -366,7 +371,9 @@ export class ArcKanban extends LitElement {
       this._fireMove(drag.cardId, moved.fromColumn, moved.toColumn, moved.index);
       const found = this._findCard(drag.cardId);
       if (found) {
-        this._announce(`${found.item.label} dropped. Position ${found.index + 1} of ${found.col.items.length} in ${found.col.title}.`);
+        this._announce(
+          `${found.item.label} dropped. Position ${found.index + 1} of ${found.col.items.length} in ${found.col.title}.`,
+        );
       }
     }
   }
@@ -396,12 +403,16 @@ export class ArcKanban extends LitElement {
       return;
     }
     const columnId = colEl.dataset.columnId;
-    const cards = [...colEl.querySelectorAll('.kanban__card')]
-      .filter((el) => el.dataset.cardId !== String(this._drag.cardId));
+    const cards = [...colEl.querySelectorAll('.kanban__card')].filter(
+      (el) => el.dataset.cardId !== String(this._drag.cardId),
+    );
     let index = cards.length;
     for (let i = 0; i < cards.length; i++) {
       const r = cards[i].getBoundingClientRect();
-      if (y < r.top + r.height / 2) { index = i; break; }
+      if (y < r.top + r.height / 2) {
+        index = i;
+        break;
+      }
     }
     const t = this._dropTarget;
     if (!t || t.columnId !== columnId || t.index !== index) {
@@ -503,7 +514,7 @@ export class ArcKanban extends LitElement {
     this._kbCard = { cardId: card.id, originColumn: col.id, originIndex: index };
     this._announce(
       `${card.label} grabbed. Position ${index + 1} of ${col.items.length} in ${col.title}. ` +
-      `Use arrow keys to move, Enter to drop, Escape to cancel.`
+        `Use arrow keys to move, Enter to drop, Escape to cancel.`,
     );
   }
 
@@ -512,7 +523,9 @@ export class ArcKanban extends LitElement {
     this._kbCard = null;
     const found = this._findCard(card.id);
     if (!found) return;
-    this._announce(`${card.label} dropped. Position ${found.index + 1} of ${found.col.items.length} in ${found.col.title}.`);
+    this._announce(
+      `${card.label} dropped. Position ${found.index + 1} of ${found.col.items.length} in ${found.col.title}.`,
+    );
     if (found.col.id !== kb.originColumn || found.index !== kb.originIndex) {
       this._fireMove(card.id, kb.originColumn, found.col.id, found.index);
     }
@@ -525,7 +538,9 @@ export class ArcKanban extends LitElement {
     this._setActive(kb.originColumn, kb.originIndex);
     this._focusCard(card.id);
     const origin = this._cols.find((c) => c.id === kb.originColumn);
-    this._announce(`Move cancelled. ${card.label} returned to position ${kb.originIndex + 1} in ${origin ? origin.title : ''}.`);
+    this._announce(
+      `Move cancelled. ${card.label} returned to position ${kb.originIndex + 1} in ${origin ? origin.title : ''}.`,
+    );
   }
 
   _kbMoveWithin(card, colIndex, newIndex) {
@@ -536,7 +551,9 @@ export class ArcKanban extends LitElement {
     if (!moved) return;
     this._setActive(col.id, clamped);
     this._focusCard(card.id);
-    this._announce(`${card.label}, position ${clamped + 1} of ${col.items.length} in ${col.title}.`);
+    this._announce(
+      `${card.label}, position ${clamped + 1} of ${col.items.length} in ${col.title}.`,
+    );
   }
 
   _kbMoveAcross(card, colIndex, dir, index) {
@@ -547,7 +564,9 @@ export class ArcKanban extends LitElement {
     if (!moved) return;
     this._setActive(target.id, insertAt);
     this._focusCard(card.id);
-    this._announce(`${card.label}, position ${insertAt + 1} of ${target.items.length + 1} in ${target.title}.`);
+    this._announce(
+      `${card.label}, position ${insertAt + 1} of ${target.items.length + 1} in ${target.title}.`,
+    );
   }
 
   /* ---- Roving focus (one tab stop per column) ---- */
@@ -579,7 +598,9 @@ export class ArcKanban extends LitElement {
 
   _focusCard(cardId) {
     this.updateComplete.then(() => {
-      const el = this.shadowRoot.querySelector(`.kanban__card[data-card-id="${CSS.escape(String(cardId))}"]`);
+      const el = this.shadowRoot.querySelector(
+        `.kanban__card[data-card-id="${CSS.escape(String(cardId))}"]`,
+      );
       if (el) {
         el.focus();
         el.scrollIntoView({ block: 'nearest', inline: 'nearest' });
@@ -592,12 +613,16 @@ export class ArcKanban extends LitElement {
   _renderCardContent(card) {
     return html`
       <span class="kanban__card-label" part="card-label">${card.label}</span>
-      ${card.description
-        ? html`<p class="kanban__card-desc" part="card-description">${card.description}</p>`
-        : null}
-      ${card.tag
-        ? html`<arc-tag size="sm" variant=${card.variant || 'default'}>${card.tag}</arc-tag>`
-        : null}
+      ${
+        card.description
+          ? html`<p class="kanban__card-desc" part="card-description">${card.description}</p>`
+          : null
+      }
+      ${
+        card.tag
+          ? html`<arc-tag size="sm" variant=${card.variant || 'default'}>${card.tag}</arc-tag>`
+          : null
+      }
     `;
   }
 
@@ -609,7 +634,9 @@ export class ArcKanban extends LitElement {
       grabbed ? 'kanban__card--kb-moving' : '',
       ctx.beforeId === card.id ? 'kanban__card--over-before' : '',
       ctx.afterId === card.id ? 'kanban__card--over-after' : '',
-    ].filter(Boolean).join(' ');
+    ]
+      .filter(Boolean)
+      .join(' ');
 
     return html`
       <div
@@ -670,15 +697,21 @@ export class ArcKanban extends LitElement {
           >${col.limit != null ? `${count}/${col.limit}` : count}</span>
         </div>
         <div class="kanban__list" part="list" role="list" aria-label=${col.title}>
-          ${count === 0
-            ? html`<div
+          ${
+            count === 0
+              ? html`<div
                 class="kanban__dropzone ${zoneActive ? 'kanban__dropzone--active' : ''}"
                 part="dropzone"
                 aria-hidden="true"
               ></div>`
-            : null}
-          ${repeat(items, (i) => i.id, (card, i) =>
-            this._renderCard(card, i, col, colIndex, { dragId, beforeId, afterId, activeIdx }))}
+              : null
+          }
+          ${repeat(
+            items,
+            (i) => i.id,
+            (card, i) =>
+              this._renderCard(card, i, col, colIndex, { dragId, beforeId, afterId, activeIdx }),
+          )}
         </div>
       </div>
     `;
@@ -702,7 +735,11 @@ export class ArcKanban extends LitElement {
   render() {
     return html`
       <div class="kanban" part="board">
-        ${repeat(this._cols, (c) => c.id, (col, i) => this._renderColumn(col, i))}
+        ${repeat(
+          this._cols,
+          (c) => c.id,
+          (col, i) => this._renderColumn(col, i),
+        )}
       </div>
       ${this._renderGhost()}
       <div class="kanban__sr" id="kb-instructions">

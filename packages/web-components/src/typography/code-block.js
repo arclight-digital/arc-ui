@@ -10,50 +10,50 @@ const _loadedLangs = new Set();
 
 /* Lang name → dynamic import from @shikijs/langs */
 const LANG_IMPORT = {
-  javascript:  () => import('@shikijs/langs/javascript'),
-  js:          () => import('@shikijs/langs/javascript'),
-  typescript:  () => import('@shikijs/langs/typescript'),
-  ts:          () => import('@shikijs/langs/typescript'),
-  jsx:         () => import('@shikijs/langs/jsx'),
-  tsx:         () => import('@shikijs/langs/tsx'),
-  html:        () => import('@shikijs/langs/html'),
-  css:         () => import('@shikijs/langs/css'),
-  json:        () => import('@shikijs/langs/json'),
-  bash:        () => import('@shikijs/langs/bash'),
-  shell:       () => import('@shikijs/langs/shellscript'),
-  sh:          () => import('@shikijs/langs/shellscript'),
-  python:      () => import('@shikijs/langs/python'),
-  py:          () => import('@shikijs/langs/python'),
-  ruby:        () => import('@shikijs/langs/ruby'),
-  rb:          () => import('@shikijs/langs/ruby'),
-  go:          () => import('@shikijs/langs/go'),
-  rust:        () => import('@shikijs/langs/rust'),
-  rs:          () => import('@shikijs/langs/rust'),
-  java:        () => import('@shikijs/langs/java'),
-  php:         () => import('@shikijs/langs/php'),
-  swift:       () => import('@shikijs/langs/swift'),
-  kotlin:      () => import('@shikijs/langs/kotlin'),
-  yaml:        () => import('@shikijs/langs/yaml'),
-  yml:         () => import('@shikijs/langs/yaml'),
-  toml:        () => import('@shikijs/langs/toml'),
-  xml:         () => import('@shikijs/langs/xml'),
-  markdown:    () => import('@shikijs/langs/markdown'),
-  md:          () => import('@shikijs/langs/markdown'),
-  sql:         () => import('@shikijs/langs/sql'),
-  graphql:     () => import('@shikijs/langs/graphql'),
-  docker:      () => import('@shikijs/langs/docker'),
-  dockerfile:  () => import('@shikijs/langs/docker'),
-  c:           () => import('@shikijs/langs/c'),
-  cpp:         () => import('@shikijs/langs/cpp'),
-  csharp:      () => import('@shikijs/langs/csharp'),
-  cs:          () => import('@shikijs/langs/csharp'),
-  scss:        () => import('@shikijs/langs/scss'),
-  less:        () => import('@shikijs/langs/less'),
-  svelte:      () => import('@shikijs/langs/svelte'),
-  vue:         () => import('@shikijs/langs/vue'),
-  astro:       () => import('@shikijs/langs/astro'),
-  diff:        () => import('@shikijs/langs/diff'),
-  regex:       () => import('@shikijs/langs/regex'),
+  javascript: () => import('@shikijs/langs/javascript'),
+  js: () => import('@shikijs/langs/javascript'),
+  typescript: () => import('@shikijs/langs/typescript'),
+  ts: () => import('@shikijs/langs/typescript'),
+  jsx: () => import('@shikijs/langs/jsx'),
+  tsx: () => import('@shikijs/langs/tsx'),
+  html: () => import('@shikijs/langs/html'),
+  css: () => import('@shikijs/langs/css'),
+  json: () => import('@shikijs/langs/json'),
+  bash: () => import('@shikijs/langs/bash'),
+  shell: () => import('@shikijs/langs/shellscript'),
+  sh: () => import('@shikijs/langs/shellscript'),
+  python: () => import('@shikijs/langs/python'),
+  py: () => import('@shikijs/langs/python'),
+  ruby: () => import('@shikijs/langs/ruby'),
+  rb: () => import('@shikijs/langs/ruby'),
+  go: () => import('@shikijs/langs/go'),
+  rust: () => import('@shikijs/langs/rust'),
+  rs: () => import('@shikijs/langs/rust'),
+  java: () => import('@shikijs/langs/java'),
+  php: () => import('@shikijs/langs/php'),
+  swift: () => import('@shikijs/langs/swift'),
+  kotlin: () => import('@shikijs/langs/kotlin'),
+  yaml: () => import('@shikijs/langs/yaml'),
+  yml: () => import('@shikijs/langs/yaml'),
+  toml: () => import('@shikijs/langs/toml'),
+  xml: () => import('@shikijs/langs/xml'),
+  markdown: () => import('@shikijs/langs/markdown'),
+  md: () => import('@shikijs/langs/markdown'),
+  sql: () => import('@shikijs/langs/sql'),
+  graphql: () => import('@shikijs/langs/graphql'),
+  docker: () => import('@shikijs/langs/docker'),
+  dockerfile: () => import('@shikijs/langs/docker'),
+  c: () => import('@shikijs/langs/c'),
+  cpp: () => import('@shikijs/langs/cpp'),
+  csharp: () => import('@shikijs/langs/csharp'),
+  cs: () => import('@shikijs/langs/csharp'),
+  scss: () => import('@shikijs/langs/scss'),
+  less: () => import('@shikijs/langs/less'),
+  svelte: () => import('@shikijs/langs/svelte'),
+  vue: () => import('@shikijs/langs/vue'),
+  astro: () => import('@shikijs/langs/astro'),
+  diff: () => import('@shikijs/langs/diff'),
+  regex: () => import('@shikijs/langs/regex'),
 };
 
 /**
@@ -71,22 +71,22 @@ function warnMissingShiki(err) {
   _warnedMissing = true;
   console.warn(
     '[arc-code-block] shiki is not installed, so code renders without syntax ' +
-    'highlighting. Install it to enable highlighting:\n' +
-    '  npm install shiki @shikijs/langs\n' +
-    `(${err?.message ?? err})`
+      'highlighting. Install it to enable highlighting:\n' +
+      '  npm install shiki @shikijs/langs\n' +
+      `(${err?.message ?? err})`,
   );
 }
 
 async function getHL(lang) {
   if (!_hlReady) {
     _hlReady = (async () => {
-      const [{ createHighlighterCore, createCssVariablesTheme }, { createJavaScriptRegexEngine }] = await Promise.all([
-        import('shiki/core'),
-        import('shiki/engine/javascript'),
-      ]).catch((err) => {
-        warnMissingShiki(err);
-        throw err;
-      });
+      const [{ createHighlighterCore, createCssVariablesTheme }, { createJavaScriptRegexEngine }] =
+        await Promise.all([import('shiki/core'), import('shiki/engine/javascript')]).catch(
+          (err) => {
+            warnMissingShiki(err);
+            throw err;
+          },
+        );
       const theme = createCssVariablesTheme({
         name: 'arc-tokens',
         variablePrefix: '--shiki-',
@@ -145,8 +145,8 @@ export class ArcCodeBlock extends LitElement {
   static properties = {
     language: { type: String, reflect: true },
     filename: { type: String, reflect: true },
-    code:     { type: String },
-    variant:  { type: String, reflect: true },
+    code: { type: String },
+    variant: { type: String, reflect: true },
     _highlightedHtml: { state: true },
     _overflows: { state: true },
   };
@@ -427,7 +427,10 @@ export class ArcCodeBlock extends LitElement {
     }
     try {
       const hl = await getHL(this.language);
-      if (!hl) { this._highlightedHtml = ''; return; }
+      if (!hl) {
+        this._highlightedHtml = '';
+        return;
+      }
       this._highlightedHtml = hl.codeToHtml(this.code, {
         lang: this.language,
         theme: 'arc-tokens',
@@ -451,9 +454,13 @@ export class ArcCodeBlock extends LitElement {
             <span class="code-block__orb code-block__orb--minimize"></span>
             <span class="code-block__orb code-block__orb--maximize"></span>
           </div>
-          ${this.filename ? html`
+          ${
+            this.filename
+              ? html`
             <span class="code-block__titlebar-filename" part="filename">${this.filename}</span>
-          ` : ''}
+          `
+              : ''
+          }
         </div>
       `;
     }
@@ -462,9 +469,13 @@ export class ArcCodeBlock extends LitElement {
     return html`
       <div class="code-block__header" part="header">
         <span class="code-block__filename" part="filename">${this.filename}</span>
-        ${this.language ? html`
+        ${
+          this.language
+            ? html`
           <span class="code-block__lang" part="lang">${this.language}</span>
-        ` : ''}
+        `
+            : ''
+        }
       </div>
     `;
   }
@@ -474,9 +485,11 @@ export class ArcCodeBlock extends LitElement {
     const lines = this._lineCount();
     return html`
       <arc-status-bar part="status-bar">
-        ${this.language
-          ? html`<span slot="start" class="code-block__meta" part="lang">${this.language}</span>`
-          : ''}
+        ${
+          this.language
+            ? html`<span slot="start" class="code-block__meta" part="lang">${this.language}</span>`
+            : ''
+        }
         <span slot="end" class="code-block__meta" part="lines">${lines} ${lines === 1 ? 'line' : 'lines'}</span>
       </arc-status-bar>
     `;
@@ -491,9 +504,10 @@ export class ArcCodeBlock extends LitElement {
             <arc-copy-button .value=${this.code} part="copy"></arc-copy-button>
           </div>
           <div class="code-block__body" part="body">
-            ${this._highlightedHtml
-              ? unsafeHTML(this._highlightedHtml)
-              : html`<pre class="code-block__pre" part="pre"><code part="code">${this.code}</code></pre>`
+            ${
+              this._highlightedHtml
+                ? unsafeHTML(this._highlightedHtml)
+                : html`<pre class="code-block__pre" part="pre"><code part="code">${this.code}</code></pre>`
             }
           </div>
         </div>

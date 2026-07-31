@@ -17,7 +17,7 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcCollapsible extends LitElement {
   static properties = {
-    open:    { type: Boolean, reflect: true },
+    open: { type: Boolean, reflect: true },
     heading: { type: String },
   };
 
@@ -113,11 +113,13 @@ export class ArcCollapsible extends LitElement {
 
   _toggle() {
     this.open = !this.open;
-    this.dispatchEvent(new CustomEvent('arc-toggle', {
-      detail: { open: this.open },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-toggle', {
+        detail: { open: this.open },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _handleKeydown(e) {

@@ -12,7 +12,7 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcSpinner extends LitElement {
   static properties = {
-    size:    { type: String, reflect: true },
+    size: { type: String, reflect: true },
     variant: { type: String, reflect: true },
   };
 

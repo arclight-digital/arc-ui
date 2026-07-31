@@ -20,7 +20,7 @@ import { tokenStyles } from '../shared-styles.js';
 export class ArcTable extends LitElement {
   static properties = {
     columns: { type: Array },
-    rows:    { type: Array },
+    rows: { type: Array },
     striped: { type: Boolean, reflect: true },
     density: { type: String, reflect: true },
   };
@@ -119,17 +119,19 @@ export class ArcTable extends LitElement {
         <table part="table">
           <thead part="head">
             <tr>
-              ${this.columns.map(col => html`<th>${col}</th>`)}
+              ${this.columns.map((col) => html`<th>${col}</th>`)}
             </tr>
           </thead>
           <tbody part="body">
-            ${this.rows.map(row => html`
+            ${this.rows.map(
+              (row) => html`
               <tr part="row">
                 ${(Array.isArray(row) ? row : this.columns.map((_, i) => row[i])).map(
-                  cell => html`<td part="cell">${cell ?? ''}</td>`
+                  (cell) => html`<td part="cell">${cell ?? ''}</td>`,
                 )}
               </tr>
-            `)}
+            `,
+            )}
           </tbody>
         </table>
       </div>

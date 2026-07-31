@@ -23,49 +23,49 @@
  * published were spelled four times in the entire component library.
  * ──────────────────────────────────────────────────────────────────────────── */
 const duration = {
-  fast:  '120ms',
-  base:  '200ms',
-  slow:  '400ms',
+  fast: '120ms',
+  base: '200ms',
+  slow: '400ms',
   enter: '500ms',
-  exit:  '300ms',
+  exit: '300ms',
 };
 
 const easing = {
   standard: 'cubic-bezier(0.4, 0, 0.2, 1)',
-  out:      'cubic-bezier(0.16, 1, 0.3, 1)',
-  in:       'cubic-bezier(0.7, 0, 0.84, 0)',
-  spring:   'cubic-bezier(0.34, 1.56, 0.64, 1)',
+  out: 'cubic-bezier(0.16, 1, 0.3, 1)',
+  in: 'cubic-bezier(0.7, 0, 0.84, 0)',
+  spring: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
 };
 
 export const tokens = {
   /* ── Backgrounds ── */
   color: {
-    bgDeep:      'rgb(3, 3, 7)',
-    bgSurface:   'rgb(10, 10, 15)',
-    bgBase:      'rgb(10, 10, 15)',
-    bgCard:      'rgb(13, 13, 18)',
-    bgElevated:  'rgb(17, 17, 22)',
+    bgDeep: 'rgb(3, 3, 7)',
+    bgSurface: 'rgb(10, 10, 15)',
+    bgBase: 'rgb(10, 10, 15)',
+    bgCard: 'rgb(13, 13, 18)',
+    bgElevated: 'rgb(17, 17, 22)',
 
     /* Text */
-    textPrimary:   'rgb(232, 232, 236)',
+    textPrimary: 'rgb(232, 232, 236)',
     textSecondary: 'rgb(150, 152, 162)',
-    textMuted:     'rgb(142, 142, 155)',
-    textGhost:     'rgb(133, 133, 154)',
+    textMuted: 'rgb(142, 142, 155)',
+    textGhost: 'rgb(133, 133, 154)',
 
     /* Borders */
-    borderSubtle:  'rgb(24, 24, 30)',
+    borderSubtle: 'rgb(24, 24, 30)',
     borderDefault: 'rgb(34, 34, 41)',
-    borderBright:  'rgb(51, 51, 64)',
+    borderBright: 'rgb(51, 51, 64)',
 
     /* Accent */
-    accentPrimary:   'rgb(77, 126, 247)',
+    accentPrimary: 'rgb(77, 126, 247)',
     accentSecondary: 'rgb(139, 92, 246)',
 
     /* Feedback */
     success: 'rgb(52, 211, 153)',
-    error:   'rgb(239, 68, 68)',
+    error: 'rgb(239, 68, 68)',
     warning: 'rgb(245, 158, 11)',
-    info:    'rgb(59, 130, 246)',
+    info: 'rgb(59, 130, 246)',
 
     /* Chart series — categorical palette, fixed order, never cycled.
        Validated (OKLCH lightness band, chroma floor, CVD adjacent-pair
@@ -82,16 +82,16 @@ export const tokens = {
 
   /* RGB channels (for alpha compositing) */
   rgb: {
-    accentPrimary:   '77, 126, 247',
+    accentPrimary: '77, 126, 247',
     accentSecondary: '139, 92, 246',
-    textPrimary:  '232, 232, 236',
-    textMuted:    '142, 142, 155',
-    error:        '239, 68, 68',
-    success:      '52, 211, 153',
-    warning:      '245, 158, 11',
-    info:         '59, 130, 246',
-    white:        '255, 255, 255',
-    black:        '0, 0, 0',
+    textPrimary: '232, 232, 236',
+    textMuted: '142, 142, 155',
+    error: '239, 68, 68',
+    success: '52, 211, 153',
+    warning: '245, 158, 11',
+    info: '59, 130, 246',
+    white: '255, 255, 255',
+    black: '0, 0, 0',
   },
 
   /* ── Typography ──
@@ -116,10 +116,10 @@ export const tokens = {
    * used at, so assigning nothing changes nothing.
    */
   font: {
-    body:  { family: "'Host Grotesk'",   fallback: 'system-ui, sans-serif',   weight: 500 },
-    label: { family: "'Azeret Mono'",    fallback: 'ui-monospace, monospace', weight: 600 },
-    mono:  { family: "'JetBrains Mono'", fallback: 'ui-monospace, monospace', weight: 400 },
-    quote: { family: 'Georgia',          fallback: 'serif',                   weight: 200 },
+    body: { family: "'Host Grotesk'", fallback: 'system-ui, sans-serif', weight: 500 },
+    label: { family: "'Azeret Mono'", fallback: 'ui-monospace, monospace', weight: 600 },
+    mono: { family: "'JetBrains Mono'", fallback: 'ui-monospace, monospace', weight: 400 },
+    quote: { family: 'Georgia', fallback: 'serif', weight: 200 },
     // display has no family of its own — it follows body until assigned — but
     // it does have its own weight, since large type usually wants a different
     // one from body text even when it is the same face.
@@ -150,20 +150,20 @@ export const tokens = {
    * reaching past the component for something it already decides.
    */
   fontSize: {
-    xs:           '12px',
-    sm:           '16px',
-    md:           '17px',
-    lg:           'clamp(18px, 1.5vw, 20px)',
-    xl:           'clamp(22px, 2.5vw, 26px)',
-    '2xl':        'clamp(28px, 3vw, 36px)',
-    '3xl':        'clamp(36px, 5vw, 52px)',
-    displayXl:    'var(--text-3xl)',
-    heading:      'var(--text-xl)',
-    body:         'var(--text-md)',
-    wordmark:     'clamp(20px, 2.5vw, 28px)',
+    xs: '12px',
+    sm: '16px',
+    md: '17px',
+    lg: 'clamp(18px, 1.5vw, 20px)',
+    xl: 'clamp(22px, 2.5vw, 26px)',
+    '2xl': 'clamp(28px, 3vw, 36px)',
+    '3xl': 'clamp(36px, 5vw, 52px)',
+    displayXl: 'var(--text-3xl)',
+    heading: 'var(--text-xl)',
+    body: 'var(--text-md)',
+    wordmark: 'clamp(20px, 2.5vw, 28px)',
     sectionTitle: 'var(--text-xs)',
-    uiAccent:     '16px',
-    code:         '14px',
+    uiAccent: '16px',
+    code: '14px',
     // 10px, not var(--text-xs) (12px). The two sources disagreed: shared-styles
     // declared 10px on :host, which shadows :root, so web-component consumers
     // saw 10px while the standalone CSS build — which has no shadow root and
@@ -171,7 +171,7 @@ export const tokens = {
     // which package you installed. Settled on 10px because that is what the
     // canonical Lit components have been rendering; if 12px was the intent, this
     // is the one line to change.
-    labelInline:  '10px',
+    labelInline: '10px',
   },
 
   /* Context weights, derived from the role weights above rather than restated.
@@ -179,31 +179,31 @@ export const tokens = {
      it, or the role knob only reaches half of what wears the role. Same rule as
      the gradients and focus rings: compound tokens reference base tokens. */
   fontWeight: {
-    displayXl:    'var(--font-display-weight)',
-    heading:      'var(--font-display-weight)',
-    body:         'var(--font-body-weight)',
-    wordmark:     'var(--font-display-weight)',
+    displayXl: 'var(--font-display-weight)',
+    heading: 'var(--font-display-weight)',
+    body: 'var(--font-body-weight)',
+    wordmark: 'var(--font-display-weight)',
     sectionTitle: 'var(--font-label-weight)',
-    uiAccent:     'var(--font-label-weight)',
+    uiAccent: 'var(--font-label-weight)',
     /* Field text: what the user typed, in the four text inputs. Its own context
        rather than the body weight, because a form value wants the weight a
        native input has (400) and body prose here is 500. Before this it was
        hardcoded three different ways — 300 in arc-input, 400 in arc-select and
        arc-textarea, 500 in arc-number-input — for the same kind of text. */
-    field:        400,
+    field: 400,
   },
 
   letterSpacing: {
-    displayXl:    '-1px',
+    displayXl: '-1px',
     // Label-role tracking is tuned for Azeret Mono: a monospace carries its
     // own letter-fitting, so the wide Tektur-era values (4px/1px/3px) read
     // as gappy rather than as spaced.
     sectionTitle: '1px',
-    uiAccent:     '0px',
-    wordmark:     'clamp(8px, 1.2vw, 14px)',
+    uiAccent: '0px',
+    wordmark: 'clamp(8px, 1.2vw, 14px)',
     // Was spelled only in the :root template and in shared-styles.js, never in
     // the tree — so the generated :host layer had no way to know about it.
-    labelInline:  '0.75px',
+    labelInline: '0.75px',
   },
 
   lineHeight: {
@@ -214,11 +214,11 @@ export const tokens = {
 
   /* ── Spacing ── */
   space: {
-    xs:  '4px',
-    sm:  '8px',
-    md:  '16px',
-    lg:  '24px',
-    xl:  '40px',
+    xs: '4px',
+    sm: '8px',
+    md: '16px',
+    lg: '24px',
+    xl: '40px',
     '2xl': '64px',
     '3xl': '96px',
     '4xl': '128px',
@@ -229,11 +229,11 @@ export const tokens = {
     // Four components read --radius-xs (breadcrumb, link, notification-panel)
     // and the scale had no such step, so the declaration was invalid at
     // computed-value time and those corners rendered square.
-    xs:   '2px',
-    sm:   '4px',
-    md:   '10px',
-    lg:   '14px',
-    xl:   '20px',
+    xs: '2px',
+    sm: '4px',
+    md: '10px',
+    lg: '14px',
+    xl: '20px',
     full: '9999px',
   },
 
@@ -248,11 +248,11 @@ export const tokens = {
      themselves are forwarded too, so the reference resolves on the element
      against whatever the page declares. */
   transition: {
-    fast:  'var(--duration-fast) var(--ease-standard)',
-    base:  'var(--duration-base) var(--ease-standard)',
-    slow:  'var(--duration-slow) var(--ease-standard)',
+    fast: 'var(--duration-fast) var(--ease-standard)',
+    base: 'var(--duration-base) var(--ease-standard)',
+    slow: 'var(--duration-slow) var(--ease-standard)',
     enter: 'var(--duration-enter) var(--ease-out)',
-    exit:  'var(--duration-exit) var(--ease-in)',
+    exit: 'var(--duration-exit) var(--ease-in)',
   },
 
   /* ── Motion ── see the scales above the tree for what each curve is for. */
@@ -261,33 +261,33 @@ export const tokens = {
 
   /* ── Shadows ── */
   shadow: {
-    xs:      '0 1px 2px rgba(0, 0, 0, 0.2)',
-    sm:      '0 2px 4px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.15)',
-    md:      '0 4px 12px rgba(0, 0, 0, 0.25), 0 2px 4px rgba(0, 0, 0, 0.15)',
-    lg:      '0 8px 24px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0, 0, 0, 0.15)',
-    xl:      '0 16px 48px rgba(0, 0, 0, 0.35), 0 8px 16px rgba(0, 0, 0, 0.15)',
+    xs: '0 1px 2px rgba(0, 0, 0, 0.2)',
+    sm: '0 2px 4px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.15)',
+    md: '0 4px 12px rgba(0, 0, 0, 0.25), 0 2px 4px rgba(0, 0, 0, 0.15)',
+    lg: '0 8px 24px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0, 0, 0, 0.15)',
+    xl: '0 16px 48px rgba(0, 0, 0, 0.35), 0 8px 16px rgba(0, 0, 0, 0.15)',
     overlay: '0 8px 32px rgba(0, 0, 0, 0.4)',
-    inset:   'inset 0 1px 3px rgba(0, 0, 0, 0.25)',
+    inset: 'inset 0 1px 3px rgba(0, 0, 0, 0.25)',
   },
 
   /* ── Z-Index ── */
   zIndex: {
-    base:     0,
+    base: 0,
     dropdown: 1000,
-    tooltip:  1100,
-    overlay:  1200,
-    modal:    1300,
-    toast:    1400,
-    max:      9999,
+    tooltip: 1100,
+    overlay: 1200,
+    modal: 1300,
+    toast: 1400,
+    max: 9999,
   },
 
   /* ── Breakpoints ── */
   breakpoint: {
-    xs:   '480px',
-    sm:   '640px',
-    md:   '768px',
-    lg:   '1024px',
-    xl:   '1280px',
+    xs: '480px',
+    sm: '640px',
+    md: '768px',
+    lg: '1024px',
+    xl: '1280px',
     '2xl': '1536px',
     /**
      * The width at which the primary navigation collapses to a hamburger.
@@ -309,9 +309,9 @@ export const tokens = {
   /* ── Opacity ── */
   opacity: {
     disabled: 0.5,
-    muted:    0.6,
-    hover:    0.8,
-    visible:  1,
+    muted: 0.6,
+    hover: 0.8,
+    visible: 1,
   },
 
   /* ── Interactive ── */
@@ -324,9 +324,9 @@ export const tokens = {
 
   /* ── Layout ── */
   layout: {
-    maxWidth:   '1120px',
+    maxWidth: '1120px',
     maxWidthSm: '720px',
-    navHeight:  '64px',
+    navHeight: '64px',
     /**
      * Inline inset from a highlighted navigation row's edge to its content.
      *
@@ -350,16 +350,20 @@ export const tokens = {
   /* ── Gradients ── */
   gradient: {
     displayText: 'linear-gradient(135deg, rgb(232, 232, 236) 0%, rgb(124, 124, 137) 100%)',
-    accentText:  'linear-gradient(90deg, rgb(77, 126, 247), rgb(139, 92, 246))',
-    divider:     'linear-gradient(90deg, transparent, rgb(24, 24, 30), transparent)',
-    dividerGlow: 'linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.2), rgba(var(--accent-secondary-rgb),0.12), transparent)',
+    accentText: 'linear-gradient(90deg, rgb(77, 126, 247), rgb(139, 92, 246))',
+    divider: 'linear-gradient(90deg, transparent, rgb(24, 24, 30), transparent)',
+    dividerGlow:
+      'linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.2), rgba(var(--accent-secondary-rgb),0.12), transparent)',
   },
 
   /* ── Glow (box-shadow presets) ── */
   glow: {
-    white: '0 0 6px rgba(var(--text-primary-rgb),0.6), 0 0 18px rgba(var(--text-primary-rgb),0.25), 0 0 40px rgba(var(--text-primary-rgb),0.1)',
-    primary:   '0 0 8px rgba(var(--accent-primary-rgb),0.9), 0 0 20px rgba(var(--accent-primary-rgb),0.5), 0 0 44px rgba(var(--accent-primary-rgb),0.25), 0 0 80px rgba(var(--accent-primary-rgb),0.1)',
-    secondary: '0 0 8px rgba(var(--accent-secondary-rgb),0.9), 0 0 20px rgba(var(--accent-secondary-rgb),0.5), 0 0 44px rgba(var(--accent-secondary-rgb),0.25), 0 0 80px rgba(var(--accent-secondary-rgb),0.1)',
+    white:
+      '0 0 6px rgba(var(--text-primary-rgb),0.6), 0 0 18px rgba(var(--text-primary-rgb),0.25), 0 0 40px rgba(var(--text-primary-rgb),0.1)',
+    primary:
+      '0 0 8px rgba(var(--accent-primary-rgb),0.9), 0 0 20px rgba(var(--accent-primary-rgb),0.5), 0 0 44px rgba(var(--accent-primary-rgb),0.25), 0 0 80px rgba(var(--accent-primary-rgb),0.1)',
+    secondary:
+      '0 0 8px rgba(var(--accent-secondary-rgb),0.9), 0 0 20px rgba(var(--accent-secondary-rgb),0.5), 0 0 44px rgba(var(--accent-secondary-rgb),0.25), 0 0 80px rgba(var(--accent-secondary-rgb),0.1)',
   },
 
   /* ── Glow scale ──
@@ -418,7 +422,8 @@ export const tokens = {
 
   /* ── Card / Ambient Glow ── */
   glowCard: {
-    hover: '0 0 20px rgba(var(--accent-primary-rgb),0.08), 0 0 40px rgba(var(--accent-secondary-rgb),0.04)',
+    hover:
+      '0 0 20px rgba(var(--accent-primary-rgb),0.08), 0 0 40px rgba(var(--accent-secondary-rgb),0.04)',
   },
 
   /* ── Focus ──
@@ -450,7 +455,8 @@ export const tokens = {
      ring on its arrow buttons and the 40px glow on an 8px dot. */
   focus: {
     ring: '0 0 0 1px rgba(var(--accent-primary-rgb),0.25)',
-    error: '0 0 0 2px var(--surface-base), 0 0 0 4px var(--color-error), 0 0 16px rgba(var(--color-error-rgb), 0.2)',
+    error:
+      '0 0 0 2px var(--surface-base), 0 0 0 4px var(--color-error), 0 0 16px rgba(var(--color-error-rgb), 0.2)',
     inset: 'inset 0 0 0 2px var(--interactive)',
     thumb: '0 0 8px rgba(var(--interactive-rgb), 0.5), 0 0 20px rgba(var(--interactive-rgb), 0.25)',
     glow: '0 0 0 1px rgba(var(--accent-primary-rgb),0.2), 0 0 6px rgba(var(--accent-primary-rgb),0.35), 0 0 16px rgba(var(--accent-primary-rgb),0.2), 0 0 40px rgba(var(--accent-secondary-rgb),0.12)',
@@ -643,10 +649,16 @@ export const cssVariables = `
   --radius-xl: ${tokens.radius.xl};
   --radius-full: ${tokens.radius.full};
 
-${Object.entries(tokens.transition).map(([k, v]) => `  --transition-${k}: ${v};`).join('\n')}
+${Object.entries(tokens.transition)
+  .map(([k, v]) => `  --transition-${k}: ${v};`)
+  .join('\n')}
 
-${Object.entries(tokens.easing).map(([k, v]) => `  --ease-${k}: ${v};`).join('\n')}
-${Object.entries(tokens.duration).map(([k, v]) => `  --duration-${k}: ${v};`).join('\n')}
+${Object.entries(tokens.easing)
+  .map(([k, v]) => `  --ease-${k}: ${v};`)
+  .join('\n')}
+${Object.entries(tokens.duration)
+  .map(([k, v]) => `  --duration-${k}: ${v};`)
+  .join('\n')}
 
   /* Back-compat: the two curve names published before the motion scale
      existed. Public API, so they stay; new work spells --ease-out and
@@ -668,7 +680,9 @@ ${Object.entries(tokens.duration).map(([k, v]) => `  --duration-${k}: ${v};`).jo
   --glow-line-blue: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.7), transparent);
   --glow-line-gradient: linear-gradient(90deg, transparent, var(--accent-primary), var(--accent-secondary), transparent);
 
-${Object.entries(tokens.glowScale).map(([k, v]) => `  --glow-${k}: ${v};`).join('\n')}
+${Object.entries(tokens.glowScale)
+  .map(([k, v]) => `  --glow-${k}: ${v};`)
+  .join('\n')}
   --glow-status-alpha: ${tokens.glowStatusAlpha};
   --glow-hover: 0 0 12px rgba(var(--accent-primary-rgb), 0.15);
   --glow-card-hover: 0 0 20px rgba(var(--accent-primary-rgb),0.08), 0 0 40px rgba(var(--accent-secondary-rgb),0.04);
@@ -744,19 +758,19 @@ ${Object.entries(tokens.glowScale).map(([k, v]) => `  --glow-${k}: ${v};`).join(
 /** Light theme color overrides */
 export const lightTokens = {
   color: {
-    bgDeep:      'rgb(242, 242, 248)',
-    bgSurface:   'rgb(248, 248, 252)',
-    bgBase:      'rgb(244, 244, 250)',
-    bgCard:      'rgb(248, 248, 252)',
-    bgElevated:  'rgb(238, 238, 246)',
-    textPrimary:   'rgb(35, 35, 55)',
+    bgDeep: 'rgb(242, 242, 248)',
+    bgSurface: 'rgb(248, 248, 252)',
+    bgBase: 'rgb(244, 244, 250)',
+    bgCard: 'rgb(248, 248, 252)',
+    bgElevated: 'rgb(238, 238, 246)',
+    textPrimary: 'rgb(35, 35, 55)',
     textSecondary: 'rgb(85, 88, 108)',
-    textMuted:     'rgb(97, 100, 120)',
-    textGhost:     'rgb(104, 107, 129)',
-    borderSubtle:  'rgb(230, 232, 238)',
+    textMuted: 'rgb(97, 100, 120)',
+    textGhost: 'rgb(104, 107, 129)',
+    borderSubtle: 'rgb(230, 232, 238)',
     borderDefault: 'rgb(210, 214, 222)',
-    borderBright:  'rgb(190, 195, 205)',
-    accentPrimary:   'rgb(55, 105, 235)',
+    borderBright: 'rgb(190, 195, 205)',
+    accentPrimary: 'rgb(55, 105, 235)',
     accentSecondary: 'rgb(120, 70, 230)',
     /* Status colours, darkened for a light page.
      *
@@ -772,9 +786,9 @@ export const lightTokens = {
      * brighter hue is exactly what a light surface wants, and the darkened
      * text now sits on it with contrast to spare. */
     success: 'rgb(13, 124, 92)',
-    error:   'rgb(190, 42, 42)',
+    error: 'rgb(190, 42, 42)',
     warning: 'rgb(147, 102, 0)',
-    info:    'rgb(27, 88, 190)',
+    info: 'rgb(27, 88, 190)',
     /* Chart series — light-mode steps (brand accents shift; lime darkens
        to clear 3:1 on the light surface). Validated like the dark set. */
     chart1: '#3769eb',
@@ -782,18 +796,22 @@ export const lightTokens = {
     chart6: '#4d7c0f',
   },
   rgb: {
-    accentPrimary:   '55, 105, 235',
+    accentPrimary: '55, 105, 235',
     accentSecondary: '120, 70, 230',
-    textPrimary:  '35, 35, 55',
-    textMuted:    '97, 100, 120',
+    textPrimary: '35, 35, 55',
+    textMuted: '97, 100, 120',
   },
   glow: {
-    primary:   '0 0 8px rgba(var(--accent-primary-rgb),0.5), 0 0 24px rgba(var(--accent-primary-rgb),0.2), 0 0 48px rgba(var(--accent-primary-rgb),0.08)',
-    secondary: '0 0 8px rgba(var(--accent-secondary-rgb),0.5), 0 0 24px rgba(var(--accent-secondary-rgb),0.2), 0 0 48px rgba(var(--accent-secondary-rgb),0.08)',
-    white: '0 0 8px rgba(var(--accent-primary-rgb),0.15), 0 0 20px rgba(var(--accent-secondary-rgb),0.08)',
+    primary:
+      '0 0 8px rgba(var(--accent-primary-rgb),0.5), 0 0 24px rgba(var(--accent-primary-rgb),0.2), 0 0 48px rgba(var(--accent-primary-rgb),0.08)',
+    secondary:
+      '0 0 8px rgba(var(--accent-secondary-rgb),0.5), 0 0 24px rgba(var(--accent-secondary-rgb),0.2), 0 0 48px rgba(var(--accent-secondary-rgb),0.08)',
+    white:
+      '0 0 8px rgba(var(--accent-primary-rgb),0.15), 0 0 20px rgba(var(--accent-secondary-rgb),0.08)',
   },
   glowCard: {
-    hover: '0 0 20px rgba(var(--accent-primary-rgb),0.12), 0 0 40px rgba(var(--accent-secondary-rgb),0.06)',
+    hover:
+      '0 0 20px rgba(var(--accent-primary-rgb),0.12), 0 0 40px rgba(var(--accent-secondary-rgb),0.06)',
   },
 
   /* The interface tier, which had no light values at all.
@@ -812,9 +830,9 @@ export const lightTokens = {
      problem reverses and they glare. These are a starting point from that rule,
      not a judgement made by looking. */
   glowScale: {
-    xs:     '0 0 6px rgba(var(--accent-primary-rgb), 0.42)',
-    sm:     '0 0 8px rgba(var(--accent-primary-rgb), 0.42)',
-    md:     '0 0 12px rgba(var(--accent-primary-rgb), 0.36)',
+    xs: '0 0 6px rgba(var(--accent-primary-rgb), 0.42)',
+    sm: '0 0 8px rgba(var(--accent-primary-rgb), 0.42)',
+    md: '0 0 12px rgba(var(--accent-primary-rgb), 0.36)',
   },
   /* The status glow's themable half. --glow-status itself stays on :host (its
      --_status-rgb is shadow-private and cannot cross the boundary), so the
@@ -829,31 +847,39 @@ export const lightTokens = {
      The thumb's tight 0.5 layer already reads on a light ground; only its
      outer wash steps up. */
   focus: {
-    ring:  '0 0 0 1px rgba(var(--accent-primary-rgb),0.38)',
-    glow:  '0 0 0 1px rgba(var(--accent-primary-rgb),0.3), 0 0 6px rgba(var(--accent-primary-rgb),0.5), 0 0 16px rgba(var(--accent-primary-rgb),0.3), 0 0 40px rgba(var(--accent-secondary-rgb),0.18)',
-    error: '0 0 0 2px var(--surface-base), 0 0 0 4px var(--color-error), 0 0 16px rgba(var(--color-error-rgb), 0.3)',
+    ring: '0 0 0 1px rgba(var(--accent-primary-rgb),0.38)',
+    glow: '0 0 0 1px rgba(var(--accent-primary-rgb),0.3), 0 0 6px rgba(var(--accent-primary-rgb),0.5), 0 0 16px rgba(var(--accent-primary-rgb),0.3), 0 0 40px rgba(var(--accent-secondary-rgb),0.18)',
+    error:
+      '0 0 0 2px var(--surface-base), 0 0 0 4px var(--color-error), 0 0 16px rgba(var(--color-error-rgb), 0.3)',
     thumb: '0 0 8px rgba(var(--interactive-rgb), 0.5), 0 0 20px rgba(var(--interactive-rgb), 0.38)',
   },
 
   shadow: {
-    xs:      '0 1px 2px rgba(var(--accent-primary-rgb),0.06)',
-    sm:      '0 2px 4px rgba(var(--accent-primary-rgb),0.08), 0 1px 2px rgba(var(--accent-secondary-rgb),0.04)',
-    md:      '0 4px 12px rgba(var(--accent-primary-rgb),0.1), 0 2px 4px rgba(var(--accent-secondary-rgb),0.05)',
-    lg:      '0 8px 24px rgba(var(--accent-primary-rgb),0.12), 0 4px 8px rgba(var(--accent-secondary-rgb),0.06)',
-    xl:      '0 16px 48px rgba(var(--accent-primary-rgb),0.14), 0 8px 16px rgba(var(--accent-secondary-rgb),0.07)',
-    overlay: '0 4px 24px rgba(var(--accent-primary-rgb),0.1), 0 8px 48px rgba(var(--accent-secondary-rgb),0.06)',
+    xs: '0 1px 2px rgba(var(--accent-primary-rgb),0.06)',
+    sm: '0 2px 4px rgba(var(--accent-primary-rgb),0.08), 0 1px 2px rgba(var(--accent-secondary-rgb),0.04)',
+    md: '0 4px 12px rgba(var(--accent-primary-rgb),0.1), 0 2px 4px rgba(var(--accent-secondary-rgb),0.05)',
+    lg: '0 8px 24px rgba(var(--accent-primary-rgb),0.12), 0 4px 8px rgba(var(--accent-secondary-rgb),0.06)',
+    xl: '0 16px 48px rgba(var(--accent-primary-rgb),0.14), 0 8px 16px rgba(var(--accent-secondary-rgb),0.07)',
+    overlay:
+      '0 4px 24px rgba(var(--accent-primary-rgb),0.1), 0 8px 48px rgba(var(--accent-secondary-rgb),0.06)',
   },
   gradient: {
     displayText: 'linear-gradient(135deg, var(--text-primary) 0%, var(--accent-primary) 100%)',
-    divider: 'linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.2), transparent)',
-    dividerGlow: 'linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.35), rgba(var(--accent-secondary-rgb),0.25), transparent)',
-    pageAmbient: 'radial-gradient(ellipse, rgba(var(--accent-primary-rgb),0.06) 0%, transparent 70%)',
-    borderGlow: 'linear-gradient(135deg, rgba(var(--accent-primary-rgb),0.2), rgba(var(--accent-secondary-rgb),0.15), rgba(var(--accent-primary-rgb),0.08))',
-    ambient: 'radial-gradient(circle at 15% 85%, rgba(var(--accent-primary-rgb),0.07) 0%, transparent 50%),\n    radial-gradient(circle at 85% 15%, rgba(var(--accent-secondary-rgb),0.05) 0%, transparent 50%)',
+    divider:
+      'linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.2), transparent)',
+    dividerGlow:
+      'linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.35), rgba(var(--accent-secondary-rgb),0.25), transparent)',
+    pageAmbient:
+      'radial-gradient(ellipse, rgba(var(--accent-primary-rgb),0.06) 0%, transparent 70%)',
+    borderGlow:
+      'linear-gradient(135deg, rgba(var(--accent-primary-rgb),0.2), rgba(var(--accent-secondary-rgb),0.15), rgba(var(--accent-primary-rgb),0.08))',
+    ambient:
+      'radial-gradient(circle at 15% 85%, rgba(var(--accent-primary-rgb),0.07) 0%, transparent 50%),\n    radial-gradient(circle at 85% 15%, rgba(var(--accent-secondary-rgb),0.05) 0%, transparent 50%)',
   },
   glowLine: {
     white: 'linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.15), transparent)',
-    primary: 'linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.6), transparent)',
+    primary:
+      'linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.6), transparent)',
   },
   utility: {
     bgHover: 'rgba(55, 105, 235, 0.04)',
@@ -870,19 +896,19 @@ export const lightTokens = {
 /** Fixed dark tokens for nav/footer regions */
 export const fixedDarkTokens = {
   color: {
-    bgDeep:      'rgb(3, 3, 7)',
-    bgSurface:   'rgb(10, 10, 15)',
-    bgBase:      'rgb(10, 10, 15)',
-    bgCard:      'rgb(13, 13, 18)',
-    bgElevated:  'rgb(17, 17, 22)',
-    textPrimary:   'rgb(232, 232, 236)',
+    bgDeep: 'rgb(3, 3, 7)',
+    bgSurface: 'rgb(10, 10, 15)',
+    bgBase: 'rgb(10, 10, 15)',
+    bgCard: 'rgb(13, 13, 18)',
+    bgElevated: 'rgb(17, 17, 22)',
+    textPrimary: 'rgb(232, 232, 236)',
     textSecondary: 'rgb(150, 152, 162)',
-    textMuted:     'rgb(142, 142, 155)',
-    textGhost:     'rgb(133, 133, 154)',
-    borderSubtle:  'rgb(24, 24, 30)',
+    textMuted: 'rgb(142, 142, 155)',
+    textGhost: 'rgb(133, 133, 154)',
+    borderSubtle: 'rgb(24, 24, 30)',
     borderDefault: 'rgb(34, 34, 41)',
-    borderBright:  'rgb(51, 51, 64)',
-    accentPrimary:   'rgb(77, 126, 247)',
+    borderBright: 'rgb(51, 51, 64)',
+    accentPrimary: 'rgb(77, 126, 247)',
     accentSecondary: 'rgb(139, 92, 246)',
     /* Status colours, pinned to the dark-tuned values. The statuses became
        themeable (light darkens them for a near-white page), so a fixed-dark
@@ -892,21 +918,21 @@ export const fixedDarkTokens = {
        for both fixed grounds — near-black here, deep navy in the light-fixed
        variant, which inherits these rather than restating them. */
     success: 'rgb(52, 211, 153)',
-    error:   'rgb(239, 68, 68)',
+    error: 'rgb(239, 68, 68)',
     warning: 'rgb(245, 158, 11)',
-    info:    'rgb(59, 130, 246)',
+    info: 'rgb(59, 130, 246)',
   },
   rgb: {
-    accentPrimary:   '77, 126, 247',
+    accentPrimary: '77, 126, 247',
     accentSecondary: '139, 92, 246',
-    textPrimary:  '232, 232, 236',
-    textMuted:    '142, 142, 155',
-    success:      '52, 211, 153',
-    error:        '239, 68, 68',
-    warning:      '245, 158, 11',
-    info:         '59, 130, 246',
-    white:        '255, 255, 255',
-    black:        '0, 0, 0',
+    textPrimary: '232, 232, 236',
+    textMuted: '142, 142, 155',
+    success: '52, 211, 153',
+    error: '239, 68, 68',
+    warning: '245, 158, 11',
+    info: '59, 130, 246',
+    white: '255, 255, 255',
+    black: '0, 0, 0',
   },
   gradient: {
     displayText: 'linear-gradient(135deg, rgb(232, 232, 236) 0%, rgb(124, 124, 137) 100%)',
@@ -924,11 +950,11 @@ export const fixedDarkTokens = {
 /** Light-mode fixed dark tokens (deep royal blue for nav/footer) */
 export const lightFixedTokens = {
   color: {
-    bgDeep:      'rgb(12, 12, 52)',
-    bgSurface:   'rgb(16, 16, 62)',
-    bgBase:      'rgb(16, 16, 62)',
-    bgCard:      'rgb(20, 20, 70)',
-    bgElevated:  'rgb(26, 26, 80)',
+    bgDeep: 'rgb(12, 12, 52)',
+    bgSurface: 'rgb(16, 16, 62)',
+    bgBase: 'rgb(16, 16, 62)',
+    bgCard: 'rgb(20, 20, 70)',
+    bgElevated: 'rgb(26, 26, 80)',
     /* Near-neutral, and spread out.
      *
      * These were rgb(179,183,212) / (165,170,203) / (155,160,196): each about
@@ -947,15 +973,15 @@ export const lightFixedTokens = {
      * inactive labels any brighter and the current page becomes the quietest
      * thing in the row, which is the opposite of what the highlight is for. */
     textSecondary: 'rgb(196, 198, 206)',
-    textMuted:     'rgb(152, 154, 164)',
-    textGhost:     'rgb(130, 132, 144)',
-    accentPrimary:   'rgb(130, 164, 250)',
+    textMuted: 'rgb(152, 154, 164)',
+    textGhost: 'rgb(130, 132, 144)',
+    accentPrimary: 'rgb(130, 164, 250)',
     /* Lifted off the background. The old values sat 14 to 40 points from a
      * rgb(16,16,62) surface, which put a pill's outline at 1.2:1 — present in
      * the stylesheet and invisible on screen. */
-    borderSubtle:  'rgb(52, 53, 96)',
+    borderSubtle: 'rgb(52, 53, 96)',
     borderDefault: 'rgb(78, 79, 112)',
-    borderBright:  'rgb(110, 111, 140)',
+    borderBright: 'rgb(110, 111, 140)',
   },
   rgb: {
     accentPrimary: '130, 164, 250',
@@ -965,44 +991,72 @@ export const lightFixedTokens = {
 /* ── CSS Generator ── */
 
 const colorVarMap = {
-  bgDeep: '--bg-deep', bgSurface: '--bg-surface', bgBase: '--bg-base',
-  bgCard: '--bg-card', bgElevated: '--bg-elevated',
-  textPrimary: '--text-primary', textSecondary: '--text-secondary',
-  textMuted: '--text-muted', textGhost: '--text-ghost',
-  borderSubtle: '--border-subtle', borderDefault: '--border-default',
+  bgDeep: '--bg-deep',
+  bgSurface: '--bg-surface',
+  bgBase: '--bg-base',
+  bgCard: '--bg-card',
+  bgElevated: '--bg-elevated',
+  textPrimary: '--text-primary',
+  textSecondary: '--text-secondary',
+  textMuted: '--text-muted',
+  textGhost: '--text-ghost',
+  borderSubtle: '--border-subtle',
+  borderDefault: '--border-default',
   borderBright: '--border-bright',
-  accentPrimary: '--accent-primary', accentSecondary: '--accent-secondary',
+  accentPrimary: '--accent-primary',
+  accentSecondary: '--accent-secondary',
   /* Status colours are themeable: they were declared once, tuned for a
      near-black page, and reused unchanged on a near-white one. */
-  success: '--color-success', error: '--color-error',
-  warning: '--color-warning', info: '--color-info',
-  chart1: '--chart-1', chart2: '--chart-2', chart3: '--chart-3',
-  chart4: '--chart-4', chart5: '--chart-5', chart6: '--chart-6',
+  success: '--color-success',
+  error: '--color-error',
+  warning: '--color-warning',
+  info: '--color-info',
+  chart1: '--chart-1',
+  chart2: '--chart-2',
+  chart3: '--chart-3',
+  chart4: '--chart-4',
+  chart5: '--chart-5',
+  chart6: '--chart-6',
 };
 
 const rgbVarMap = {
-  accentPrimary: '--accent-primary-rgb', accentSecondary: '--accent-secondary-rgb',
-  textPrimary: '--text-primary-rgb', textMuted: '--text-muted-rgb',
-  success: '--color-success-rgb', error: '--color-error-rgb',
-  warning: '--color-warning-rgb', info: '--color-info-rgb',
-  white: '--white-rgb', black: '--black-rgb',
+  accentPrimary: '--accent-primary-rgb',
+  accentSecondary: '--accent-secondary-rgb',
+  textPrimary: '--text-primary-rgb',
+  textMuted: '--text-muted-rgb',
+  success: '--color-success-rgb',
+  error: '--color-error-rgb',
+  warning: '--color-warning-rgb',
+  info: '--color-info-rgb',
+  white: '--white-rgb',
+  black: '--black-rgb',
 };
 
 const focusVarMap = {
-  ring: '--focus-ring', glow: '--focus-glow', error: '--focus-error',
-  inset: '--focus-inset', thumb: '--focus-thumb',
+  ring: '--focus-ring',
+  glow: '--focus-glow',
+  error: '--focus-error',
+  inset: '--focus-inset',
+  thumb: '--focus-thumb',
 };
 
 const shadowVarMap = {
-  xs: '--shadow-xs', sm: '--shadow-sm', md: '--shadow-md',
-  lg: '--shadow-lg', xl: '--shadow-xl', overlay: '--shadow-overlay',
+  xs: '--shadow-xs',
+  sm: '--shadow-sm',
+  md: '--shadow-md',
+  lg: '--shadow-lg',
+  xl: '--shadow-xl',
+  overlay: '--shadow-overlay',
   inset: '--shadow-inset',
 };
 
 const gradientVarMap = {
-  displayText: '--gradient-display-text', divider: '--gradient-divider',
-  dividerGlow: '--gradient-divider-glow', pageAmbient: '--gradient-page-ambient',
-  borderGlow: '--gradient-border-glow', ambient: '--gradient-ambient',
+  displayText: '--gradient-display-text',
+  divider: '--gradient-divider',
+  dividerGlow: '--gradient-divider-glow',
+  pageAmbient: '--gradient-page-ambient',
+  borderGlow: '--gradient-border-glow',
+  ambient: '--gradient-ambient',
 };
 
 function renderOverrides(t, indent = '  ', label = 'theme') {
@@ -1020,17 +1074,23 @@ function renderOverrides(t, indent = '  ', label = 'theme') {
     else unknown.push(`${group}.${k}`);
   };
 
-  if (t.color)    for (const [k, v] of Object.entries(t.color))    mapped(colorVarMap, 'color')(k, v);
-  if (t.rgb)      for (const [k, v] of Object.entries(t.rgb))      mapped(rgbVarMap, 'rgb')(k, v);
-  if (t.shadow)   for (const [k, v] of Object.entries(t.shadow))   mapped(shadowVarMap, 'shadow')(k, v);
-  if (t.gradient) for (const [k, v] of Object.entries(t.gradient)) mapped(gradientVarMap, 'gradient')(k, v);
+  if (t.color) for (const [k, v] of Object.entries(t.color)) mapped(colorVarMap, 'color')(k, v);
+  if (t.rgb) for (const [k, v] of Object.entries(t.rgb)) mapped(rgbVarMap, 'rgb')(k, v);
+  if (t.shadow) for (const [k, v] of Object.entries(t.shadow)) mapped(shadowVarMap, 'shadow')(k, v);
+  if (t.gradient)
+    for (const [k, v] of Object.entries(t.gradient)) mapped(gradientVarMap, 'gradient')(k, v);
 
   if (t.glow) {
-    const glowVar = { primary: '--glow-primary', secondary: '--glow-secondary', white: '--glow-white' };
+    const glowVar = {
+      primary: '--glow-primary',
+      secondary: '--glow-secondary',
+      white: '--glow-white',
+    };
     for (const [k, v] of Object.entries(t.glow)) mapped(glowVar, 'glow')(k, v);
   }
   if (t.glowCard) {
-    for (const [k, v] of Object.entries(t.glowCard)) mapped({ hover: '--glow-card-hover' }, 'glowCard')(k, v);
+    for (const [k, v] of Object.entries(t.glowCard))
+      mapped({ hover: '--glow-card-hover' }, 'glowCard')(k, v);
   }
   if (t.glowScale) {
     const scaleVar = { xs: '--glow-xs', sm: '--glow-sm', md: '--glow-md', status: '--glow-status' };
@@ -1057,8 +1117,22 @@ function renderOverrides(t, indent = '  ', label = 'theme') {
   }
 
   for (const group of Object.keys(t)) {
-    if (!['color', 'rgb', 'shadow', 'gradient', 'glow', 'glowCard', 'glowScale',
-          'glowHover', 'glowStatusAlpha', 'glowLine', 'focus', 'utility'].includes(group)) {
+    if (
+      ![
+        'color',
+        'rgb',
+        'shadow',
+        'gradient',
+        'glow',
+        'glowCard',
+        'glowScale',
+        'glowHover',
+        'glowStatusAlpha',
+        'glowLine',
+        'focus',
+        'utility',
+      ].includes(group)
+    ) {
       unknown.push(group);
     }
   }
@@ -1066,9 +1140,9 @@ function renderOverrides(t, indent = '  ', label = 'theme') {
   if (unknown.length) {
     throw new Error(
       `tokens.js: ${label} declares ${unknown.length} value(s) with nowhere to go: ` +
-      `${unknown.join(', ')}. Add them to the matching var map in tokens.js, or ` +
-      `remove them from the theme — silently dropping them is how themes end up ` +
-      `half-applied.`,
+        `${unknown.join(', ')}. Add them to the matching var map in tokens.js, or ` +
+        `remove them from the theme — silently dropping them is how themes end up ` +
+        `half-applied.`,
     );
   }
 
@@ -1271,13 +1345,10 @@ function privatiseScale(value) {
 
 /** Rule 2: a role-weight reference carries the role's literal as its fallback. */
 function weightWithFallback(value) {
-  return String(value).replace(
-    /var\(--font-([a-z]+)-weight\)/g,
-    (whole, role) => {
-      const literal = tokens.font[role]?.weight;
-      return literal === undefined ? whole : `var(--font-${role}-weight, ${literal})`;
-    },
-  );
+  return String(value).replace(/var\(--font-([a-z]+)-weight\)/g, (whole, role) => {
+    const literal = tokens.font[role]?.weight;
+    return literal === undefined ? whole : `var(--font-${role}-weight, ${literal})`;
+  });
 }
 
 const hostValue = (value) => weightWithFallback(privatiseScale(value));
@@ -1306,13 +1377,16 @@ export function generateHostTokensCSS(indent = '    ') {
   // slots are inherited; the composition is local.
   for (const [role, def] of Object.entries(tokens.font)) {
     if (!def.family) continue;
-    add(`--font-${role}`, `var(--font-${role}-family, ${def.family}), var(--font-${role}-fallback, ${def.fallback})`);
+    add(
+      `--font-${role}`,
+      `var(--font-${role}-family, ${def.family}), var(--font-${role}-fallback, ${def.fallback})`,
+    );
   }
   // display has no family of its own: it follows body until assigned one.
   add(
     '--font-display',
     `var(--font-display-family, var(--font-body-family, ${tokens.font.body.family})), ` +
-    `var(--font-display-fallback, var(--font-body-fallback, ${tokens.font.body.fallback}))`,
+      `var(--font-display-fallback, var(--font-body-fallback, ${tokens.font.body.fallback}))`,
   );
   add('--font-accent', 'var(--font-label)');
   blank();
@@ -1345,7 +1419,8 @@ export function generateHostTokensCSS(indent = '    ') {
     if (key !== 'field' && tokens.fontWeight[key] !== undefined) {
       add(`--${cssName}-weight`, tokens.fontWeight[key]);
     }
-    if (tokens.letterSpacing[key] !== undefined) add(`--${cssName}-spacing`, tokens.letterSpacing[key]);
+    if (tokens.letterSpacing[key] !== undefined)
+      add(`--${cssName}-spacing`, tokens.letterSpacing[key]);
     if (tokens.lineHeight[key] !== undefined) add(`--${cssName}-lh`, tokens.lineHeight[key]);
   }
   blank();
@@ -1356,8 +1431,14 @@ export function generateHostTokensCSS(indent = '    ') {
     blank();
   };
 
-  group('Spacing', Object.entries(tokens.space).map(([k, v]) => [`--space-${k}`, v]));
-  group('Radii', Object.entries(tokens.radius).map(([k, v]) => [`--radius-${k}`, v]));
+  group(
+    'Spacing',
+    Object.entries(tokens.space).map(([k, v]) => [`--space-${k}`, v]),
+  );
+  group(
+    'Radii',
+    Object.entries(tokens.radius).map(([k, v]) => [`--radius-${k}`, v]),
+  );
   group('Transitions and motion', [
     ...Object.entries(tokens.transition).map(([k, v]) => [`--transition-${k}`, v]),
     ...Object.entries(tokens.easing).map(([k, v]) => [`--ease-${k}`, v]),
@@ -1368,7 +1449,10 @@ export function generateHostTokensCSS(indent = '    ') {
     ['--ease-out-expo', 'var(--ease-out)'],
     ['--ease-in-out', 'var(--ease-standard)'],
   ]);
-  group('Z-index', Object.entries(tokens.zIndex).map(([k, v]) => [`--z-${k}`, v]));
+  group(
+    'Z-index',
+    Object.entries(tokens.zIndex).map(([k, v]) => [`--z-${k}`, v]),
+  );
   group('Glow and focus', [
     ...Object.entries(tokens.glowScale).map(([k, v]) => [`--glow-${k}`, v]),
     // The status glow's themable half: a bare number, so it forwards where the
@@ -1488,7 +1572,9 @@ export function generateTokensCSS({ tags = [] } = {}) {
     ['--interactive-focus-error', 'var(--focus-error)'],
     ['--interactive-focus-inset', 'var(--focus-inset)'],
     ['--interactive-focus-thumb', 'var(--focus-thumb)'],
-  ].map(([name, value]) => `  ${name}: ${value};`).join('\n');
+  ]
+    .map(([name, value]) => `  ${name}: ${value};`)
+    .join('\n');
 
   return `/* Generated from shared/tokens.js — do not edit by hand */
 

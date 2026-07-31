@@ -24,7 +24,13 @@ export class ArcStepperNav extends LitElement {
   static properties = {
     steps: {
       converter: {
-        fromAttribute: (v) => { try { return JSON.parse(v); } catch { return []; } },
+        fromAttribute: (v) => {
+          try {
+            return JSON.parse(v);
+          } catch {
+            return [];
+          }
+        },
       },
     },
     active: { type: Number, reflect: true },
@@ -129,11 +135,13 @@ export class ArcStepperNav extends LitElement {
   _goTo(index) {
     if (this.linear && index > this.active) return;
     this.active = index;
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: this.active, step: this.active },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: this.active, step: this.active },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _back() {
@@ -144,10 +152,12 @@ export class ArcStepperNav extends LitElement {
     if (this.active < this.steps.length - 1) {
       this._goTo(this.active + 1);
     } else {
-      this.dispatchEvent(new CustomEvent('arc-complete', {
-        bubbles: true,
-        composed: true,
-      }));
+      this.dispatchEvent(
+        new CustomEvent('arc-complete', {
+          bubbles: true,
+          composed: true,
+        }),
+      );
     }
   }
 
@@ -167,7 +177,8 @@ export class ArcStepperNav extends LitElement {
     return html`
       <div class="stepper-nav" part="base">
         <div class="stepper-nav__steps" part="steps">
-          ${this.steps.map((step, i) => html`
+          ${this.steps.map(
+            (step, i) => html`
             ${i > 0 ? html`<div class="stepper-nav__connector ${i <= this.active ? 'is-complete' : ''}" part="connector"></div>` : ''}
             <div class="stepper-nav__step">
               <button
@@ -178,21 +189,26 @@ export class ArcStepperNav extends LitElement {
                 aria-current=${i === this.active ? 'step' : 'false'}
                 aria-label=${this._stepLabel(step, i)}
               >
-                ${i < this.active
-                  ? html`<svg class="stepper-nav__check" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`
-                  : i + 1}
+                ${
+                  i < this.active
+                    ? html`<svg class="stepper-nav__check" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`
+                    : i + 1
+                }
               </button>
             </div>
-          `)}
+          `,
+          )}
         </div>
         <div class="stepper-nav__panel" part="panel">
           <slot></slot>
         </div>
         <div class="stepper-nav__controls" part="controls">
           <arc-button variant="ghost" size="sm" ?disabled=${this.active === 0} @click=${this._back}>Back</arc-button>
-          ${!this.linear && this.active < this.steps.length - 1
-            ? html`<arc-button variant="ghost" size="sm" @click=${this._skip}>Skip</arc-button>`
-            : ''}
+          ${
+            !this.linear && this.active < this.steps.length - 1
+              ? html`<arc-button variant="ghost" size="sm" @click=${this._skip}>Skip</arc-button>`
+              : ''
+          }
           <arc-button variant="primary" size="sm" @click=${this._next}>
             ${this.active === this.steps.length - 1 ? 'Complete' : 'Next'}
           </arc-button>

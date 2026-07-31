@@ -8,7 +8,15 @@ export const conversation: ComponentDef = {
   interactivity: 'interactive',
   description:
     'An AI chat transcript: role-attributed messages in a scrollable column that follows new replies without ever yanking a reader who scrolled up. Built as the assist panel for AI products.',
-  searchKeywords: ['chat', 'ai', 'assistant', 'transcript', 'streaming', 'typing indicator', 'messages'],
+  searchKeywords: [
+    'chat',
+    'ai',
+    'assistant',
+    'transcript',
+    'streaming',
+    'typing indicator',
+    'messages',
+  ],
 
   overview: `Conversation is the transcript surface for an AI assistant panel. Slot \`<arc-message>\` children into it and each one takes a voice from its speaker attribute: user messages align to the inline end on a faint accent tint, assistant messages answer from the inline start on a neutral surface, and system messages run centred and muted for notices in the transcript's own voice. Because alignment is built on logical properties, the whole layout mirrors automatically in RTL.
 
@@ -33,14 +41,14 @@ Streaming needs no API of its own — a message body is its default slot, so app
   guidelines: {
     do: [
       'Use Conversation for a dialogue between the user and a responder — the role attribution and scroll behaviour are the point',
-      'Stream a reply by appending to the message\'s slotted text (for example, updating textContent as tokens arrive); with markdown set it re-renders as it grows',
+      "Stream a reply by appending to the message's slotted text (for example, updating textContent as tokens arrive); with markdown set it re-renders as it grows",
       'Show a pending assistant message the moment a request is sent, then fill its slot when tokens arrive',
       'Give messages timestamps as ISO strings and let the house relative-time rendering do the rest',
       'Listen for arc-scroll-away to float a "jump to latest" chip, and clear it on arc-scroll-return',
       'Size the transcript with the --conversation-height custom property, or let it fill a sized parent',
     ],
     dont: [
-      'Do not use Conversation for an activity feed or event history — that is Timeline\'s job, where entries mark moments rather than speakers',
+      "Do not use Conversation for an activity feed or event history — that is Timeline's job, where entries mark moments rather than speakers",
       'Do not use it as a general item column — a List handles collections that no one is talking to',
       'Do not scroll the reader to the bottom yourself on new messages — the component already follows, and only when the reader wants it to',
       'Do not put critical status in a system message alone; it scrolls away with the transcript',

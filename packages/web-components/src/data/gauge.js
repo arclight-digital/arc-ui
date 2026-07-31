@@ -29,15 +29,15 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcGauge extends LitElement {
   static properties = {
-    value:     { type: Number, reflect: true },
-    min:       { type: Number },
-    max:       { type: Number },
-    low:       { type: Number },
-    high:      { type: Number },
-    optimum:   { type: Number },
-    label:     { type: String },
-    unit:      { type: String },
-    variant:   { type: String, reflect: true },
+    value: { type: Number, reflect: true },
+    min: { type: Number },
+    max: { type: Number },
+    low: { type: Number },
+    high: { type: Number },
+    optimum: { type: Number },
+    label: { type: String },
+    unit: { type: String },
+    variant: { type: String, reflect: true },
     showValue: { type: Boolean, reflect: true, attribute: 'show-value' },
   };
 
@@ -119,7 +119,7 @@ export class ArcGauge extends LitElement {
       .gauge__unit {
         font-size: var(--code-size);
         color: var(--text-muted);
-        margin-left: 2px;
+        margin-inline-start: 2px;
       }
 
       .gauge__label {
@@ -262,16 +262,24 @@ export class ArcGauge extends LitElement {
             style="stroke-dasharray: ${length} ${length}; stroke-dashoffset: ${offset}; --_arc-total: ${length};"
           />`}
         </svg>
-        ${this.showValue || this.label ? html`
+        ${
+          this.showValue || this.label
+            ? html`
           <div class="gauge__readout" part="readout" aria-hidden="true">
-            ${this.showValue ? html`
-              <span class="gauge__value" part="value">${clamped}${this.unit
-                ? html`<span class="gauge__unit" part="unit">${this.unit}</span>`
-                : ''}</span>
-            ` : ''}
+            ${
+              this.showValue
+                ? html`
+              <span class="gauge__value" part="value">${clamped}${
+                this.unit ? html`<span class="gauge__unit" part="unit">${this.unit}</span>` : ''
+              }</span>
+            `
+                : ''
+            }
             ${this.label ? html`<span class="gauge__label" part="label">${this.label}</span>` : ''}
           </div>
-        ` : ''}
+        `
+            : ''
+        }
       </div>
     `;
   }

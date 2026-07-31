@@ -14,7 +14,7 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcBlockquote extends LitElement {
   static properties = {
-    cite:    { type: String },
+    cite: { type: String },
     variant: { type: String, reflect: true },
   };
 
@@ -100,9 +100,9 @@ export class ArcBlockquote extends LitElement {
         <div class="quote" part="quote">
           <slot></slot>
         </div>
-        ${this.cite
-          ? html`<footer class="cite" part="cite">&mdash; ${this.cite}</footer>`
-          : nothing}
+        ${
+          this.cite ? html`<footer class="cite" part="cite">&mdash; ${this.cite}</footer>` : nothing
+        }
       </blockquote>
     `;
   }

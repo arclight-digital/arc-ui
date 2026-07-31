@@ -20,11 +20,11 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  */
 export class ArcToggle extends FormControlMixin(LitElement) {
   static properties = {
-    checked:  { type: Boolean, reflect: true },
+    checked: { type: Boolean, reflect: true },
     disabled: { type: Boolean, reflect: true },
-    size:     { type: String, reflect: true },
-    label:    { type: String },
-    name:        { type: String, reflect: true },
+    size: { type: String, reflect: true },
+    label: { type: String },
+    name: { type: String, reflect: true },
   };
 
   static styles = [
@@ -165,11 +165,13 @@ export class ArcToggle extends FormControlMixin(LitElement) {
     if (this.disabled || this.readonly) return;
     this.checked = !this.checked;
     this._updateFormValue();
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: this.checked, checked: this.checked },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: this.checked, checked: this.checked },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _handleKeydown(e) {

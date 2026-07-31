@@ -10,8 +10,8 @@ let maskedInputIdCounter = 0;
  */
 const FILLABLE = {
   '#': /[0-9]/,
-  'A': /[A-Za-z]/,
-  'a': /[A-Za-z]/,
+  A: /[A-Za-z]/,
+  a: /[A-Za-z]/,
   '*': /[A-Za-z0-9]/,
 };
 
@@ -125,18 +125,18 @@ export class ArcMaskedInput extends FormControlMixin(LitElement) {
   static autoValidates = false;
 
   static properties = {
-    mask:            { type: String },
-    value:           { type: String },
+    mask: { type: String },
+    value: { type: String },
     placeholderChar: { type: String, attribute: 'placeholder-char' },
-    label:           { type: String },
-    name:            { type: String, reflect: true },
-    disabled:        { type: Boolean, reflect: true },
-    required:        { type: Boolean, reflect: true },
-    autocomplete:    { type: String },
-    error:           { type: String },
-    size:            { type: String, reflect: true },
-    _hasPrefix:      { state: true },
-    _hasSuffix:      { state: true },
+    label: { type: String },
+    name: { type: String, reflect: true },
+    disabled: { type: Boolean, reflect: true },
+    required: { type: Boolean, reflect: true },
+    autocomplete: { type: String },
+    error: { type: String },
+    size: { type: String, reflect: true },
+    _hasPrefix: { state: true },
+    _hasSuffix: { state: true },
   };
 
   static styles = [
@@ -245,7 +245,7 @@ export class ArcMaskedInput extends FormControlMixin(LitElement) {
         caret-color: var(--interactive);
       }
 
-      .masked__field:focus { outline: none; }
+      .masked__field:focus-visible { outline: none; }
       .masked__field::placeholder { color: var(--text-ghost); }
       .masked__field:disabled { cursor: not-allowed; }
 
@@ -271,8 +271,8 @@ export class ArcMaskedInput extends FormControlMixin(LitElement) {
         flex-shrink: 0;
       }
 
-      .masked__prefix { padding-left: var(--space-md); }
-      .masked__suffix { padding-right: var(--space-md); }
+      .masked__prefix { padding-inline-start: var(--space-md); }
+      .masked__suffix { padding-inline-end: var(--space-md); }
 
       .masked__prefix--empty,
       .masked__suffix--empty { display: none; }
@@ -364,11 +364,13 @@ export class ArcMaskedInput extends FormControlMixin(LitElement) {
       field.setSelectionRange(caret, caret);
     }
     this._updateFormValue();
-    this.dispatchEvent(new CustomEvent('arc-input', {
-      detail: { value: this.value, formatted: text },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-input', {
+        detail: { value: this.value, formatted: text },
+        bubbles: true,
+        composed: true,
+      }),
+    );
     // A full mask is a committed value — the fixed-length commit that
     // otp-input established. Blur will not repeat it for the same value.
     if (newRaw.length > 0 && newRaw.length === slotsOf(mask).length) this._commit();
@@ -377,11 +379,13 @@ export class ArcMaskedInput extends FormControlMixin(LitElement) {
   _commit() {
     if ((this.value || '') === this._committed) return;
     this._committed = this.value || '';
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: this._committed, formatted: this.formattedValue },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: this._committed, formatted: this.formattedValue },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _insert(text) {
@@ -389,7 +393,7 @@ export class ArcMaskedInput extends FormControlMixin(LitElement) {
     const mask = this.mask || '';
     const field = this._field;
     const raw = this.value || '';
-    const start = field?.selectionStart ?? (field?.value.length ?? 0);
+    const start = field?.selectionStart ?? field?.value.length ?? 0;
     const end = field?.selectionEnd ?? start;
     const rawStart = rawIndexAt(mask, start);
     const rawEnd = Math.max(rawIndexAt(mask, end), rawStart);
@@ -443,7 +447,10 @@ export class ArcMaskedInput extends FormControlMixin(LitElement) {
     const expected = format(this.mask || '', this.value || '', this.placeholderChar).text;
     if (field.value === expected) return;
     const newRaw = conform(this.mask || '', field.value);
-    this._applyEdit(newRaw, rawIndexAt(this.mask || '', field.selectionStart ?? field.value.length));
+    this._applyEdit(
+      newRaw,
+      rawIndexAt(this.mask || '', field.selectionStart ?? field.value.length),
+    );
     if (field.value !== expected && newRaw === (this.value || '')) {
       // Every character was rejected — put the field text back.
       field.value = expected;
@@ -489,10 +496,12 @@ export class ArcMaskedInput extends FormControlMixin(LitElement) {
             <slot name="prefix" @slotchange=${this._onPrefixSlotChange}></slot>
           </div>
           <div class="masked__stack">
-            ${text
-              ? html`<div class="masked__hint" aria-hidden="true" part="hint"><span
+            ${
+              text
+                ? html`<div class="masked__hint" aria-hidden="true" part="hint"><span
                   class="masked__hint-pad">${text}</span><span class="masked__hint-rest">${rest}</span></div>`
-              : ''}
+                : ''
+            }
             <input
               class="masked__field"
               type="text"

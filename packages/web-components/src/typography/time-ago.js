@@ -14,8 +14,8 @@ import { tokenStyles } from '../shared-styles.js';
 export class ArcTimeAgo extends LitElement {
   static properties = {
     datetime: { type: String },
-    live:     { type: Boolean, reflect: true },
-    locale:   { type: String },
+    live: { type: Boolean, reflect: true },
+    locale: { type: String },
   };
 
   static styles = [
@@ -86,9 +86,9 @@ export class ArcTimeAgo extends LitElement {
     const date = this._parsedDate;
     if (!date) return 60_000;
     const diffMs = Math.abs(Date.now() - date.getTime());
-    if (diffMs < 3_600_000) return 60_000;       // < 1 hour: every 60s
-    if (diffMs < 86_400_000) return 300_000;      // < 1 day: every 5 min
-    return 3_600_000;                              // else: every hour
+    if (diffMs < 3_600_000) return 60_000; // < 1 hour: every 60s
+    if (diffMs < 86_400_000) return 300_000; // < 1 day: every 5 min
+    return 3_600_000; // else: every hour
   }
 
   /** @returns {Date|null} */

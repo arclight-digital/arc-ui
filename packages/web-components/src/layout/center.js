@@ -12,9 +12,9 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcCenter extends LitElement {
   static properties = {
-    maxWidth:  { type: String, reflect: true, attribute: 'max-width' },
+    maxWidth: { type: String, reflect: true, attribute: 'max-width' },
     intrinsic: { type: Boolean, reflect: true },
-    text:      { type: Boolean, reflect: true },
+    text: { type: Boolean, reflect: true },
   };
 
   static styles = [

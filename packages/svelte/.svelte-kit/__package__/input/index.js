@@ -40,3 +40,8 @@ export { default as Radio } from './Radio.svelte';
 export { default as Select } from './Select.svelte';
 export { default as Slider } from './Slider.svelte';
 export { default as Toggle } from './Toggle.svelte';
+export { default as Knob } from './Knob.svelte';
+export { default as InlineEdit } from './InlineEdit.svelte';
+export { default as MaskedInput } from './MaskedInput.svelte';
+export { default as SignaturePad } from './SignaturePad.svelte';
+export { default as TreeSelect } from './TreeSelect.svelte';

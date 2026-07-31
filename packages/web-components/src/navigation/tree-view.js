@@ -15,8 +15,8 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcTreeView extends LitElement {
   static properties = {
-    _items:      { state: true },
-    _selected:   { state: true },
+    _items: { state: true },
+    _selected: { state: true },
     _focusedKey: { state: true },
   };
 
@@ -131,8 +131,9 @@ export class ArcTreeView extends LitElement {
   }
 
   _onSlotChange(e) {
-    this._items = e.target.assignedElements({ flatten: true })
-      .filter(el => el.tagName === 'ARC-TREE-ITEM');
+    this._items = e.target
+      .assignedElements({ flatten: true })
+      .filter((el) => el.tagName === 'ARC-TREE-ITEM');
   }
 
   _isExpanded(item) {
@@ -154,11 +155,13 @@ export class ArcTreeView extends LitElement {
       this._expandedSet.delete(`collapsed:${key}`);
     }
 
-    this.dispatchEvent(new CustomEvent('arc-toggle', {
-      detail: { item: { label: item.label, icon: item.icon }, expanded: !wasExpanded },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-toggle', {
+        detail: { item: { label: item.label, icon: item.icon }, expanded: !wasExpanded },
+        bubbles: true,
+        composed: true,
+      }),
+    );
 
     this.requestUpdate();
   }
@@ -166,11 +169,17 @@ export class ArcTreeView extends LitElement {
   _selectItem(item, path) {
     this._selected = item.label;
 
-    this.dispatchEvent(new CustomEvent('arc-select', {
-      detail: { value: item.value ?? item.label, item: { label: item.label, icon: item.icon }, path },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-select', {
+        detail: {
+          value: item.value ?? item.label,
+          item: { label: item.label, icon: item.icon },
+          path,
+        },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _onKeyDown(e, item, path, hasChildren) {
@@ -237,18 +246,27 @@ export class ArcTreeView extends LitElement {
                 role="treeitem"
                 aria-expanded=${hasChildren ? String(expanded) : undefined}
                 aria-selected=${isSelected ? 'true' : 'false'}
-                tabindex=${focusKey ? (key === focusKey ? '0' : '-1') : (level === 0 && idx === 0 ? '0' : '-1')}
-                @focus=${() => { this._focusedKey = key; }}
-                @click=${(e) => { this._selectItem(item, path); if (hasChildren) this._toggleExpand(item, e); }}
+                tabindex=${focusKey ? (key === focusKey ? '0' : '-1') : level === 0 && idx === 0 ? '0' : '-1'}
+                @focus=${() => {
+                  this._focusedKey = key;
+                }}
+                @click=${(e) => {
+                  this._selectItem(item, path);
+                  if (hasChildren) this._toggleExpand(item, e);
+                }}
                 @keydown=${(e) => this._onKeyDown(e, item, path, hasChildren)}
                 part="row"
               >
                 <span class="tree__chevron ${hasChildren ? (expanded ? 'tree__chevron--expanded' : '') : 'tree__chevron--placeholder'}">
-                  ${hasChildren ? html`
+                  ${
+                    hasChildren
+                      ? html`
                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
                       <path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                  ` : ''}
+                  `
+                      : ''
+                  }
                 </span>
                 ${item.icon ? html`<span class="tree__icon">${item.icon}</span>` : ''}
                 <span class="tree__label">${item.label}</span>

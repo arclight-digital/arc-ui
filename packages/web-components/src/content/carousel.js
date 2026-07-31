@@ -22,13 +22,13 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcCarousel extends LitElement {
   static properties = {
-    autoPlay:   { type: Boolean, attribute: 'auto-play', reflect: true },
-    interval:   { type: Number },
-    loop:       { type: Boolean, reflect: true },
-    showDots:   { type: Boolean, attribute: 'show-dots', reflect: true },
+    autoPlay: { type: Boolean, attribute: 'auto-play', reflect: true },
+    interval: { type: Number },
+    loop: { type: Boolean, reflect: true },
+    showDots: { type: Boolean, attribute: 'show-dots', reflect: true },
     showArrows: { type: Boolean, attribute: 'show-arrows', reflect: true },
-    _current:   { state: true },
-    _total:     { state: true },
+    _current: { state: true },
+    _total: { state: true },
   };
 
   static styles = [
@@ -204,15 +204,21 @@ export class ArcCarousel extends LitElement {
       slides[next].scrollIntoView({ block: 'nearest', inline: 'start', behavior: 'smooth' });
     }
 
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: this._current, index: this._current },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: this._current, index: this._current },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
-  _prev() { this._goTo(this._current - 1); }
-  _next() { this._goTo(this._current + 1); }
+  _prev() {
+    this._goTo(this._current - 1);
+  }
+  _next() {
+    this._goTo(this._current + 1);
+  }
 
   /* ---- Auto-play ---- */
 
@@ -220,7 +226,11 @@ export class ArcCarousel extends LitElement {
     this._stopAutoPlay();
     if (!this.autoPlay) return;
     // Respect prefers-reduced-motion
-    if (typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+    if (
+      typeof window !== 'undefined' &&
+      window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+    )
+      return;
     this._autoPlayTimer = setInterval(() => {
       if (!this._paused) this._next();
     }, this.interval);
@@ -233,10 +243,18 @@ export class ArcCarousel extends LitElement {
     }
   }
 
-  _onMouseEnter() { this._paused = true; }
-  _onMouseLeave() { this._paused = false; }
-  _onFocusIn()    { this._paused = true; }
-  _onFocusOut()   { this._paused = false; }
+  _onMouseEnter() {
+    this._paused = true;
+  }
+  _onMouseLeave() {
+    this._paused = false;
+  }
+  _onFocusIn() {
+    this._paused = true;
+  }
+  _onFocusOut() {
+    this._paused = false;
+  }
 
   updated(changed) {
     if (changed.has('autoPlay') || changed.has('interval')) {
@@ -280,7 +298,9 @@ export class ArcCarousel extends LitElement {
           <slot @slotchange=${this._onSlotChange}></slot>
         </div>
 
-        ${this.showArrows ? html`
+        ${
+          this.showArrows
+            ? html`
           <button
             class="carousel__arrow carousel__arrow--prev"
             part="arrow-prev"
@@ -295,11 +315,16 @@ export class ArcCarousel extends LitElement {
             ?disabled=${!canNext}
             @click=${this._next}
           >&#8250;</button>
-        ` : ''}
+        `
+            : ''
+        }
 
-        ${this.showDots && this._total > 1 ? html`
+        ${
+          this.showDots && this._total > 1
+            ? html`
           <div class="carousel__dots" part="dots" role="tablist" aria-label="Slide controls">
-            ${dots.map(i => html`
+            ${dots.map(
+              (i) => html`
               <button
                 class="carousel__dot ${i === this._current ? 'carousel__dot--active' : ''}"
                 part="dot"
@@ -308,9 +333,12 @@ export class ArcCarousel extends LitElement {
                 aria-label="Go to slide ${i + 1}"
                 @click=${() => this._goTo(i)}
               ></button>
-            `)}
+            `,
+            )}
           </div>
-        ` : ''}
+        `
+            : ''
+        }
       </div>
     `;
   }

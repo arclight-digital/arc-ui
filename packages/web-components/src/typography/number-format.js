@@ -16,9 +16,9 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcNumberFormat extends LitElement {
   static properties = {
-    value:    { type: Number },
-    type:     { type: String, reflect: true },
-    locale:   { type: String },
+    value: { type: Number },
+    type: { type: String, reflect: true },
+    locale: { type: String },
     currency: { type: String },
     decimals: { type: Number },
     notation: { type: String },

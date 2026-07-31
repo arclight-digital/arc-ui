@@ -16,8 +16,8 @@ import { statusVars } from '../status-styles.js';
 export class ArcBadge extends LitElement {
   static properties = {
     variant: { type: String, reflect: true },
-    size:    { type: String, reflect: true },
-    color:   { type: String },
+    size: { type: String, reflect: true },
+    color: { type: String },
   };
 
   static styles = [
@@ -105,8 +105,20 @@ export class ArcBadge extends LitElement {
       : '';
 
     return html`<span class="badge" part="badge" style=${colorStyle}
-      @mouseenter=${this.color ? (e) => { e.currentTarget.style.boxShadow = `0 0 12px rgba(${this.color}, 0.15)`; } : null}
-      @mouseleave=${this.color ? (e) => { e.currentTarget.style.boxShadow = ''; } : null}
+      @mouseenter=${
+        this.color
+          ? (e) => {
+              e.currentTarget.style.boxShadow = `0 0 12px rgba(${this.color}, 0.15)`;
+            }
+          : null
+      }
+      @mouseleave=${
+        this.color
+          ? (e) => {
+              e.currentTarget.style.boxShadow = '';
+            }
+          : null
+      }
     ><slot></slot></span>`;
   }
 }

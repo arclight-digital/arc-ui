@@ -13,7 +13,7 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcAvatarGroup extends LitElement {
   static properties = {
-    max:     { type: Number },
+    max: { type: Number },
     overlap: { type: String, reflect: true },
   };
 
@@ -54,8 +54,8 @@ export class ArcAvatarGroup extends LitElement {
         padding-inline-start: var(--space-sm);
       }
 
-      :host([overlap="sm"]) .group__overflow { padding-left: var(--space-xs); }
-      :host([overlap="lg"]) .group__overflow { padding-left: var(--space-md); }
+      :host([overlap="sm"]) .group__overflow { padding-inline-start: var(--space-xs); }
+      :host([overlap="lg"]) .group__overflow { padding-inline-start: var(--space-md); }
     `,
   ];
 

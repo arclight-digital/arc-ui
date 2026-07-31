@@ -38,9 +38,9 @@ import './icon-button.js';
  */
 export class ArcSignaturePad extends FormControlMixin(LitElement) {
   static properties = {
-    value:    { type: String },
-    name:     { type: String, reflect: true },
-    label:    { type: String },
+    value: { type: String },
+    name: { type: String, reflect: true },
+    label: { type: String },
     disabled: { type: Boolean, reflect: true },
     penColor: { type: String, attribute: 'pen-color' },
     penWidth: { type: Number, attribute: 'pen-width' },
@@ -242,10 +242,12 @@ export class ArcSignaturePad extends FormControlMixin(LitElement) {
       this.value = '';
     }
     this._clearCanvas();
-    this.dispatchEvent(new CustomEvent('arc-clear', {
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-clear', {
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   /**
@@ -255,7 +257,7 @@ export class ArcSignaturePad extends FormControlMixin(LitElement) {
    */
   toDataURL(type = 'image/png') {
     const canvas = this._canvasEl;
-    return canvas ? canvas.toDataURL(type) : (this.value || '');
+    return canvas ? canvas.toDataURL(type) : this.value || '';
   }
 
   /* ---- Canvas plumbing (browser only, never before firstUpdated) ---- */
@@ -333,7 +335,9 @@ export class ArcSignaturePad extends FormControlMixin(LitElement) {
     const canvas = e.currentTarget;
     try {
       canvas.setPointerCapture(e.pointerId);
-    } catch { /* a synthetic or already-lifted pointer has no capture */ }
+    } catch {
+      /* a synthetic or already-lifted pointer has no capture */
+    }
     // preventDefault suppressed the focus a pointerdown normally brings.
     canvas.focus();
 
@@ -414,16 +418,20 @@ export class ArcSignaturePad extends FormControlMixin(LitElement) {
       this.value = url;
     }
     this._updateFormValue();
-    this.dispatchEvent(new CustomEvent('arc-input', {
-      detail: { value: url },
-      bubbles: true,
-      composed: true,
-    }));
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: url },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-input', {
+        detail: { value: url },
+        bubbles: true,
+        composed: true,
+      }),
+    );
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: url },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _onClearClick() {
@@ -435,9 +443,13 @@ export class ArcSignaturePad extends FormControlMixin(LitElement) {
     const ariaLabel = `${this.label || 'Signature'} — ${signed ? 'signed' : 'empty'}`;
     return html`
       <div class="pad" part="pad">
-        ${this.label ? html`
+        ${
+          this.label
+            ? html`
           <span class="pad__label" part="label">${this.label}</span>
-        ` : ''}
+        `
+            : ''
+        }
         <div class="pad__surface">
           <canvas
             part="canvas"
@@ -458,7 +470,9 @@ export class ArcSignaturePad extends FormControlMixin(LitElement) {
             <span class="pad__hint-line"></span>
             <span class="pad__hint-text">Sign here</span>
           </div>
-          ${signed && !this.readonly && !this.disabled ? html`
+          ${
+            signed && !this.readonly && !this.disabled
+              ? html`
             <arc-icon-button
               class="pad__clear"
               part="clear"
@@ -468,7 +482,9 @@ export class ArcSignaturePad extends FormControlMixin(LitElement) {
               label="Clear signature"
               @click=${this._onClearClick}
             ></arc-icon-button>
-          ` : ''}
+          `
+              : ''
+          }
         </div>
       </div>
     `;

@@ -25,9 +25,9 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcGuidedTour extends LitElement {
   static properties = {
-    steps:  { state: true },
+    steps: { state: true },
     active: { state: true },
-    open:   { type: Boolean, reflect: true },
+    open: { type: Boolean, reflect: true },
   };
 
   static styles = [
@@ -158,11 +158,13 @@ export class ArcGuidedTour extends LitElement {
   _next() {
     if (this.active < this.steps.length - 1) {
       this.active++;
-      this.dispatchEvent(new CustomEvent('arc-change', {
-        detail: { value: this.active, step: this.active },
-        bubbles: true,
-        composed: true,
-      }));
+      this.dispatchEvent(
+        new CustomEvent('arc-change', {
+          detail: { value: this.active, step: this.active },
+          bubbles: true,
+          composed: true,
+        }),
+      );
     } else {
       this._complete();
     }
@@ -171,11 +173,13 @@ export class ArcGuidedTour extends LitElement {
   _prev() {
     if (this.active > 0) {
       this.active--;
-      this.dispatchEvent(new CustomEvent('arc-change', {
-        detail: { value: this.active, step: this.active },
-        bubbles: true,
-        composed: true,
-      }));
+      this.dispatchEvent(
+        new CustomEvent('arc-change', {
+          detail: { value: this.active, step: this.active },
+          bubbles: true,
+          composed: true,
+        }),
+      );
     }
   }
 
@@ -185,7 +189,12 @@ export class ArcGuidedTour extends LitElement {
   }
 
   _dismiss() {
-    if (!this.dispatchEvent(new CustomEvent('arc-close', { bubbles: true, composed: true, cancelable: true }))) return;
+    if (
+      !this.dispatchEvent(
+        new CustomEvent('arc-close', { bubbles: true, composed: true, cancelable: true }),
+      )
+    )
+      return;
     this.open = false;
   }
 
@@ -213,9 +222,13 @@ export class ArcGuidedTour extends LitElement {
         <div class="tour__title" part="title">${step.title || ''}</div>
         <div class="tour__content" part="content">${step.content || ''}</div>
         <div class="tour__controls" part="controls">
-          ${!isFirst ? html`
+          ${
+            !isFirst
+              ? html`
             <arc-button variant="ghost" size="sm" @click=${this._prev} part="prev">Back</arc-button>
-          ` : html`<span></span>`}
+          `
+              : html`<span></span>`
+          }
           <arc-button variant="primary" size="sm" @click=${this._next} part="next">
             ${isLast ? 'Finish' : 'Next'}
           </arc-button>

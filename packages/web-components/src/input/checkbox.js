@@ -23,13 +23,13 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  */
 export class ArcCheckbox extends FormControlMixin(LitElement) {
   static properties = {
-    checked:       { type: Boolean, reflect: true },
+    checked: { type: Boolean, reflect: true },
     indeterminate: { type: Boolean, reflect: true },
-    disabled:      { type: Boolean, reflect: true },
-    size:          { type: String, reflect: true },
-    label:         { type: String },
-    name:        { type: String, reflect: true },
-    value:         { type: String },
+    disabled: { type: Boolean, reflect: true },
+    size: { type: String, reflect: true },
+    label: { type: String },
+    name: { type: String, reflect: true },
+    value: { type: String },
   };
 
   static styles = [
@@ -134,7 +134,7 @@ export class ArcCheckbox extends FormControlMixin(LitElement) {
   }
 
   _formValue() {
-    return this.checked ? (this.value || 'on') : null;
+    return this.checked ? this.value || 'on' : null;
   }
 
   _formResetState() {
@@ -150,11 +150,13 @@ export class ArcCheckbox extends FormControlMixin(LitElement) {
     this.indeterminate = false;
     this.checked = !this.checked;
     this._updateFormValue();
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: this.checked, checked: this.checked },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: this.checked, checked: this.checked },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _handleKeydown(e) {

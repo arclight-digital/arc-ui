@@ -28,17 +28,17 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
 export class ArcColorPicker extends FormControlMixin(LitElement) {
   static properties = {
     size: { type: String, reflect: true },
-    value:    { type: String, reflect: true },
-    name:     { type: String, reflect: true },
-    presets:  { type: Array },
+    value: { type: String, reflect: true },
+    name: { type: String, reflect: true },
+    presets: { type: Array },
     disabled: { type: Boolean, reflect: true },
-    label:    { type: String },
-    _hue:     { state: true },
-    _sat:     { state: true },
-    _lit:     { state: true },
-    _hexInput:    { state: true },
-    _draggingArea:   { state: true },
-    _draggingHue:    { state: true },
+    label: { type: String },
+    _hue: { state: true },
+    _sat: { state: true },
+    _lit: { state: true },
+    _hexInput: { state: true },
+    _draggingArea: { state: true },
+    _draggingHue: { state: true },
   };
 
   static styles = [
@@ -268,14 +268,32 @@ export class ArcColorPicker extends FormControlMixin(LitElement) {
     const c = (1 - Math.abs(2 * l - 1)) * s;
     const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
     const m = l - c / 2;
-    let r = 0, g = 0, b = 0;
-    if (h < 60) { r = c; g = x; }
-    else if (h < 120) { r = x; g = c; }
-    else if (h < 180) { g = c; b = x; }
-    else if (h < 240) { g = x; b = c; }
-    else if (h < 300) { r = x; b = c; }
-    else { r = c; b = x; }
-    const toHex = (v) => Math.round((v + m) * 255).toString(16).padStart(2, '0');
+    let r = 0,
+      g = 0,
+      b = 0;
+    if (h < 60) {
+      r = c;
+      g = x;
+    } else if (h < 120) {
+      r = x;
+      g = c;
+    } else if (h < 180) {
+      g = c;
+      b = x;
+    } else if (h < 240) {
+      g = x;
+      b = c;
+    } else if (h < 300) {
+      r = x;
+      b = c;
+    } else {
+      r = c;
+      b = x;
+    }
+    const toHex = (v) =>
+      Math.round((v + m) * 255)
+        .toString(16)
+        .padStart(2, '0');
     return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
   }
 
@@ -290,20 +308,24 @@ export class ArcColorPicker extends FormControlMixin(LitElement) {
     const hex = this._hslToHex(this._hue, this._sat, this._lit);
     this.value = hex;
     this._hexInput = hex;
-    this.dispatchEvent(new CustomEvent('arc-input', {
-      detail: { value: hex },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-input', {
+        detail: { value: hex },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   /** The committed value, after a drag ends or a discrete pick. */
   _commit() {
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: this.value },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   /* ---- Area (saturation / lightness) interaction ---- */
@@ -394,11 +416,13 @@ export class ArcColorPicker extends FormControlMixin(LitElement) {
       this._parseHex(hex);
       // Typing in the hex field is edit-and-commit in one: this runs on blur
       // or Enter, never per keystroke.
-      this.dispatchEvent(new CustomEvent('arc-input', {
-        detail: { value: hex },
-        bubbles: true,
-        composed: true,
-      }));
+      this.dispatchEvent(
+        new CustomEvent('arc-input', {
+          detail: { value: hex },
+          bubbles: true,
+          composed: true,
+        }),
+      );
       this._commit();
     } else {
       this._hexInput = this.value;
@@ -419,11 +443,13 @@ export class ArcColorPicker extends FormControlMixin(LitElement) {
     this.value = hex.toLowerCase();
     this._hexInput = this.value;
     this._parseHex(this.value);
-    this.dispatchEvent(new CustomEvent('arc-input', {
-      detail: { value: this.value },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-input', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
     this._commit();
   }
 
@@ -496,9 +522,12 @@ export class ArcColorPicker extends FormControlMixin(LitElement) {
           />
         </div>
 
-        ${this.presets && this.presets.length ? html`
+        ${
+          this.presets && this.presets.length
+            ? html`
           <div class="picker__presets" part="presets" role="listbox" aria-label="Color presets">
-            ${this.presets.map(c => html`
+            ${this.presets.map(
+              (c) => html`
               <button
                 class="picker__swatch ${c.toLowerCase() === this.value ? 'picker__swatch--active' : ''}"
                 style="background: ${c}"
@@ -507,9 +536,12 @@ export class ArcColorPicker extends FormControlMixin(LitElement) {
                 aria-label=${c}
                 @click=${() => this._selectPreset(c)}
               ></button>
-            `)}
+            `,
+            )}
           </div>
-        ` : ''}
+        `
+            : ''
+        }
       </div>
     `;
   }

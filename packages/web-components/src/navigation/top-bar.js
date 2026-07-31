@@ -34,20 +34,20 @@ import '../layout/container.register.js';
  */
 export class ArcTopBar extends LitElement {
   static properties = {
-    heading:      { type: String },
-    homeHref:     { type: String, attribute: 'home-href' },
+    heading: { type: String },
+    homeHref: { type: String, attribute: 'home-href' },
     /* Declared, not just toggled onto the host: it was written with
        toggleAttribute alone, so it styled correctly but appeared in no
        manifest, no wrapper type and no documentation — API that exists and
        cannot be found. */
-    scrolled:     { type: Boolean, reflect: true },
-    immersive:    { type: Boolean, reflect: true },
-    fixed:        { type: Boolean, reflect: true },
-    contained:    { type: String, reflect: true },
-    menuOpen:     { type: Boolean, attribute: 'menu-open', reflect: true },
-    mobileMenu:   { type: String, attribute: 'mobile-menu' },
+    scrolled: { type: Boolean, reflect: true },
+    immersive: { type: Boolean, reflect: true },
+    fixed: { type: Boolean, reflect: true },
+    contained: { type: String, reflect: true },
+    menuOpen: { type: Boolean, attribute: 'menu-open', reflect: true },
+    mobileMenu: { type: String, attribute: 'mobile-menu' },
     menuPosition: { type: String, attribute: 'menu-position' },
-    navAlign:     { type: String, attribute: 'nav-align' },
+    navAlign: { type: String, attribute: 'nav-align' },
   };
 
   static styles = [
@@ -379,11 +379,13 @@ export class ArcTopBar extends LitElement {
   _toggleMenu() {
     this.menuOpen = !this.menuOpen;
     const eventName = this.mobileMenu === 'nav' ? 'arc-mobile-menu-toggle' : 'arc-sidebar-toggle';
-    this.dispatchEvent(new CustomEvent(eventName, {
-      detail: { value: this.menuOpen },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent(eventName, {
+        detail: { value: this.menuOpen },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _renderMenuButton() {
@@ -423,12 +425,13 @@ export class ArcTopBar extends LitElement {
     return html`
       <div class="topbar__content" part="content">
         ${menuLeft ? this._renderMenuButton() : ''}
-        ${this.homeHref
-          ? html`
+        ${
+          this.homeHref
+            ? html`
             <a class="topbar__brand" href=${this.homeHref} part="brand">
               ${this._renderBrand()}
             </a>`
-          : html`<div class="topbar__brand" part="brand">${this._renderBrand()}</div>`
+            : html`<div class="topbar__brand" part="brand">${this._renderBrand()}</div>`
         }
         <div class="topbar__center" part="center" style="justify-content:${this._navJustify}">
           <slot name="center"></slot>
@@ -447,9 +450,10 @@ export class ArcTopBar extends LitElement {
 
     return html`
       <header class="topbar" part="topbar">
-        ${size
-          ? html`<arc-container size=${size}>${this._renderContent(menuLeft)}</arc-container>`
-          : this._renderContent(menuLeft)
+        ${
+          size
+            ? html`<arc-container size=${size}>${this._renderContent(menuLeft)}</arc-container>`
+            : this._renderContent(menuLeft)
         }
         <div class="topbar__glow"></div>
       </header>

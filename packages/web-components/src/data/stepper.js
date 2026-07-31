@@ -178,8 +178,9 @@ export class ArcStepper extends LitElement {
   }
 
   _onSlotChange(e) {
-    this._steps = e.target.assignedElements({ flatten: true })
-      .filter(el => el.tagName === 'ARC-STEP');
+    this._steps = e.target
+      .assignedElements({ flatten: true })
+      .filter((el) => el.tagName === 'ARC-STEP');
   }
 
   _getStepState(index) {
@@ -210,9 +211,11 @@ export class ArcStepper extends LitElement {
               <div class="step__header">
                 ${!isFirst ? html`<span class="step__line step__line--left" part="line"></span>` : ''}
                 <span class="step__circle" part="circle">
-                  ${state === 'completed'
-                    ? html`<span class="step__check" aria-hidden="true">&#10003;</span>`
-                    : i + 1}
+                  ${
+                    state === 'completed'
+                      ? html`<span class="step__check" aria-hidden="true">&#10003;</span>`
+                      : i + 1
+                  }
                 </span>
                 ${!isLast ? html`<span class="step__line step__line--right" part="line"></span>` : ''}
               </div>

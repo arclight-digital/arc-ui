@@ -23,9 +23,9 @@ import '../content/spinner.js';
 export class ArcInfiniteScroll extends LitElement {
   static properties = {
     threshold: { type: Number },
-    loading:   { type: Boolean, reflect: true },
-    finished:  { type: Boolean, reflect: true },
-    disabled:  { type: Boolean, reflect: true },
+    loading: { type: Boolean, reflect: true },
+    finished: { type: Boolean, reflect: true },
+    disabled: { type: Boolean, reflect: true },
   };
 
   static styles = [
@@ -105,10 +105,12 @@ export class ArcInfiniteScroll extends LitElement {
       (entries) => {
         const entry = entries[0];
         if (entry && entry.isIntersecting && !this.loading && !this.finished && !this.disabled) {
-          this.dispatchEvent(new CustomEvent('arc-load-more', {
-            bubbles: true,
-            composed: true,
-          }));
+          this.dispatchEvent(
+            new CustomEvent('arc-load-more', {
+              bubbles: true,
+              composed: true,
+            }),
+          );
         }
       },
       {
@@ -137,18 +139,16 @@ export class ArcInfiniteScroll extends LitElement {
           <slot></slot>
         </div>
 
-        ${this.finished
-          ? html`
+        ${
+          this.finished
+            ? html`
             <div class="infinite-scroll__footer" part="footer">
               <span class="infinite-scroll__end-text" part="end-text">No more items</span>
             </div>
           `
-          : html`
+            : html`
             <div class="infinite-scroll__footer" part="footer">
-              ${this.loading
-                ? html`<arc-spinner size="sm" part="spinner"></arc-spinner>`
-                : ''
-              }
+              ${this.loading ? html`<arc-spinner size="sm" part="spinner"></arc-spinner>` : ''}
             </div>
             <div class="infinite-scroll__sentinel"></div>
           `

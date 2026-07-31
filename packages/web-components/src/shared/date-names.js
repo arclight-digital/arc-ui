@@ -30,14 +30,62 @@
  * the primary source.
  */
 const SUNDAY_FIRST = new Set([
-  'US', 'CA', 'MX', 'BR', 'CO', 'PE', 'VE', 'AR', 'CL', 'DO', 'GT', 'HN', 'NI',
-  'PA', 'PR', 'SV', 'BO', 'EC', 'PY', 'UY',
-  'JP', 'KR', 'TW', 'HK', 'MO', 'PH', 'TH', 'ID', 'MY', 'SG', 'IL', 'CN',
-  'ZA', 'KE', 'ZW', 'AU', 'NZ',
+  'US',
+  'CA',
+  'MX',
+  'BR',
+  'CO',
+  'PE',
+  'VE',
+  'AR',
+  'CL',
+  'DO',
+  'GT',
+  'HN',
+  'NI',
+  'PA',
+  'PR',
+  'SV',
+  'BO',
+  'EC',
+  'PY',
+  'UY',
+  'JP',
+  'KR',
+  'TW',
+  'HK',
+  'MO',
+  'PH',
+  'TH',
+  'ID',
+  'MY',
+  'SG',
+  'IL',
+  'CN',
+  'ZA',
+  'KE',
+  'ZW',
+  'AU',
+  'NZ',
 ]);
 const SATURDAY_FIRST = new Set([
-  'AE', 'AF', 'BH', 'DJ', 'DZ', 'EG', 'IQ', 'IR', 'JO', 'KW', 'LY', 'OM',
-  'QA', 'SA', 'SD', 'SY', 'YE',
+  'AE',
+  'AF',
+  'BH',
+  'DJ',
+  'DZ',
+  'EG',
+  'IQ',
+  'IR',
+  'JO',
+  'KW',
+  'LY',
+  'OM',
+  'QA',
+  'SA',
+  'SD',
+  'SY',
+  'YE',
 ]);
 
 /** Memoised formatters — constructing an Intl.DateTimeFormat is not cheap. */
@@ -57,9 +105,7 @@ function formatter(locale, options) {
 export function defaultLocale() {
   // A document-level lang wins: it is the author's declared intent for the page,
   // and it is what assistive technology reads the content as.
-  const declared = typeof document !== 'undefined'
-    ? document.documentElement?.lang
-    : '';
+  const declared = typeof document !== 'undefined' ? document.documentElement?.lang : '';
   return declared || (typeof navigator !== 'undefined' ? navigator.language : 'en') || 'en';
 }
 
@@ -76,7 +122,8 @@ export function monthNames(style = 'long', locale = defaultLocale()) {
   return Array.from({ length: 12 }, (_, m) =>
     // Day 15 in UTC: far enough from either boundary that no time zone or
     // calendar rounding can push the date into an adjacent month.
-    f.format(new Date(Date.UTC(2021, m, 15))));
+    f.format(new Date(Date.UTC(2021, m, 15))),
+  );
 }
 
 /**
@@ -87,11 +134,16 @@ export function monthNames(style = 'long', locale = defaultLocale()) {
  * @param {number} [firstDay] - 1 = Monday … 7 = Sunday. Defaults to the locale's.
  * @returns {string[]} seven names starting at `firstDay`.
  */
-export function weekdayNames(style = 'short', locale = defaultLocale(), firstDay = firstDayOfWeek(locale)) {
+export function weekdayNames(
+  style = 'short',
+  locale = defaultLocale(),
+  firstDay = firstDayOfWeek(locale),
+) {
   const f = formatter(locale, { weekday: style, timeZone: 'UTC' });
   // 2021-08-01 was a Sunday, so adding n gives a clean run through one week.
   const sundayFirst = Array.from({ length: 7 }, (_, d) =>
-    f.format(new Date(Date.UTC(2021, 7, 1 + d))));
+    f.format(new Date(Date.UTC(2021, 7, 1 + d))),
+  );
   // firstDay is 1..7 with Monday=1; the array above is Sunday-first (index 0).
   const offset = firstDay % 7;
   return [...sundayFirst.slice(offset), ...sundayFirst.slice(0, offset)];

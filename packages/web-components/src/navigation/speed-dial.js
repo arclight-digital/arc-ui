@@ -23,12 +23,18 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcSpeedDial extends LitElement {
   static properties = {
-    open:      { type: Boolean, reflect: true },
+    open: { type: Boolean, reflect: true },
     direction: { type: String, reflect: true },
-    position:  { type: String, reflect: true },
+    position: { type: String, reflect: true },
     items: {
       converter: {
-        fromAttribute: (v) => { try { return JSON.parse(v); } catch { return []; } },
+        fromAttribute: (v) => {
+          try {
+            return JSON.parse(v);
+          } catch {
+            return [];
+          }
+        },
       },
     },
   };
@@ -143,32 +149,46 @@ export class ArcSpeedDial extends LitElement {
 
   _toggle() {
     if (this.open) {
-      if (!this.dispatchEvent(new CustomEvent('arc-close', {
-        bubbles: true,
-        composed: true,
-        cancelable: true,
-      }))) return;
+      if (
+        !this.dispatchEvent(
+          new CustomEvent('arc-close', {
+            bubbles: true,
+            composed: true,
+            cancelable: true,
+          }),
+        )
+      )
+        return;
       this.open = false;
       return;
     }
     this.open = true;
-    this.dispatchEvent(new CustomEvent('arc-open', {
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-open', {
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _onAction(index) {
-    this.dispatchEvent(new CustomEvent('arc-action', {
-      detail: { index },
-      bubbles: true,
-      composed: true,
-    }));
-    if (!this.dispatchEvent(new CustomEvent('arc-close', {
-      cancelable: true,
-      bubbles: true,
-      composed: true,
-    }))) return;
+    this.dispatchEvent(
+      new CustomEvent('arc-action', {
+        detail: { index },
+        bubbles: true,
+        composed: true,
+      }),
+    );
+    if (
+      !this.dispatchEvent(
+        new CustomEvent('arc-close', {
+          cancelable: true,
+          bubbles: true,
+          composed: true,
+        }),
+      )
+    )
+      return;
     this.open = false;
   }
 
@@ -176,7 +196,8 @@ export class ArcSpeedDial extends LitElement {
     return html`
       <div class="speed-dial" part="base">
         <div class="speed-dial__actions" part="actions">
-          ${this.items.map((action, i) => html`
+          ${this.items.map(
+            (action, i) => html`
             <button
               class="speed-dial__action"
               part="action"
@@ -186,7 +207,8 @@ export class ArcSpeedDial extends LitElement {
             >
               <arc-icon name=${action.icon || ''} size="sm"></arc-icon>
             </button>
-          `)}
+          `,
+          )}
         </div>
         <div class="speed-dial__trigger" part="trigger" @click=${this._toggle}>
           <slot name="trigger">

@@ -20,9 +20,11 @@ function warnUnknownIcon(name) {
   _warnedIcons.add(name);
   console.warn(
     `[arc-icon] No icon named "${name}" in the active library. ` +
-    'Check the spelling against the library in use (Phosphor by default, ' +
-    'Lucide via iconRegistry.use("lucide")), or register it yourself with ' +
-    'iconRegistry.set({ "' + name + '": "<svg…>" }).'
+      'Check the spelling against the library in use (Phosphor by default, ' +
+      'Lucide via iconRegistry.use("lucide")), or register it yourself with ' +
+      'iconRegistry.set({ "' +
+      name +
+      '": "<svg…>" }).',
   );
 }
 
@@ -39,8 +41,8 @@ function warnUnknownIcon(name) {
  */
 export class ArcIcon extends LitElement {
   static properties = {
-    name:  { type: String, reflect: true },
-    size:  { type: String, reflect: true },
+    name: { type: String, reflect: true },
+    size: { type: String, reflect: true },
     label: { type: String },
     _svgContent: { state: true },
   };

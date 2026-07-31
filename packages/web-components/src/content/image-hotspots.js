@@ -52,10 +52,13 @@ export class ArcImageHotspots extends LitElement {
   }
 
   _onSlotChange(e) {
-    this._hotspots = e.target.assignedElements({ flatten: true })
+    this._hotspots = e.target
+      .assignedElements({ flatten: true })
       .filter((el) => el.tagName === 'ARC-HOTSPOT');
     // The index is each pin's identity in event detail when it has no label.
-    this._hotspots.forEach((el, i) => { el._index = i; });
+    this._hotspots.forEach((el, i) => {
+      el._index = i;
+    });
   }
 
   /**

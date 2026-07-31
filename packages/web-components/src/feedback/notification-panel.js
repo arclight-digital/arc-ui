@@ -169,7 +169,9 @@ export class ArcNotificationPanel extends LitElement {
     this.position = 'top-right';
     this.maxHeight = '400px';
     this._clickOutside = new ClickOutsideController(this, {
-      onClickOutside: () => { this.open = false; },
+      onClickOutside: () => {
+        this.open = false;
+      },
     });
     this._position = new PositionController(this, {
       anchor: () => this.shadowRoot?.querySelector('.trigger'),
@@ -193,15 +195,11 @@ export class ArcNotificationPanel extends LitElement {
     if (changedProperties.has('open')) {
       if (this.open) {
         this._clickOutside.activate();
-        this.dispatchEvent(
-          new CustomEvent('arc-open', { bubbles: true, composed: true })
-        );
+        this.dispatchEvent(new CustomEvent('arc-open', { bubbles: true, composed: true }));
       } else {
         this._clickOutside.deactivate();
         if (changedProperties.get('open') === true) {
-          this.dispatchEvent(
-            new CustomEvent('arc-close', { bubbles: true, composed: true })
-          );
+          this.dispatchEvent(new CustomEvent('arc-close', { bubbles: true, composed: true }));
         }
       }
     }

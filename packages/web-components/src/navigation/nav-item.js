@@ -15,9 +15,9 @@ import { loneAnchorChild, resolveCarrierHref } from '../shared/anchor-adoption.j
  */
 export class ArcNavItem extends LitElement {
   static properties = {
-    href:        { type: String, reflect: true },
-    active:      { type: Boolean, reflect: true },
-    variant:     { type: String, reflect: true },
+    href: { type: String, reflect: true },
+    active: { type: Boolean, reflect: true },
+    variant: { type: String, reflect: true },
     description: { type: String },
   };
 
@@ -50,8 +50,8 @@ export class ArcNavItem extends LitElement {
     if (anchor) return anchor.textContent.trim();
 
     return [...this.childNodes]
-      .filter(n => n.nodeType === Node.TEXT_NODE)
-      .map(n => n.textContent.trim())
+      .filter((n) => n.nodeType === Node.TEXT_NODE)
+      .map((n) => n.textContent.trim())
       .filter(Boolean)
       .join(' ');
   }

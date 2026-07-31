@@ -14,8 +14,8 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcHighlight extends LitElement {
   static properties = {
-    text:          { type: String },
-    query:         { type: String },
+    text: { type: String },
+    query: { type: String },
     caseSensitive: { type: Boolean, reflect: true, attribute: 'case-sensitive' },
   };
 
@@ -64,9 +64,7 @@ export class ArcHighlight extends LitElement {
 
     // After split-by-captured-group, odd indices are matched segments.
     return html`<span part="text">${parts.map((segment, i) =>
-      i % 2 === 1
-        ? html`<mark part="mark">${segment}</mark>`
-        : segment
+      i % 2 === 1 ? html`<mark part="mark">${segment}</mark>` : segment,
     )}</span>`;
   }
 }

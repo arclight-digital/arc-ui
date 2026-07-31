@@ -22,9 +22,9 @@ import { setTriggerAria, deepActiveElement } from '../shared/trigger-aria.js';
  */
 export class ArcPopover extends LitElement {
   static properties = {
-    open:     { type: Boolean, reflect: true },
+    open: { type: Boolean, reflect: true },
     position: { type: String, reflect: true },
-    trigger:  { type: String },
+    trigger: { type: String },
   };
 
   static styles = [
@@ -111,13 +111,10 @@ export class ArcPopover extends LitElement {
   }
 
   _syncTriggerAria() {
-    setTriggerAria(
-      this.shadowRoot.querySelector('slot[name="trigger"]'),
-      {
-        'aria-haspopup': 'dialog',
-        'aria-expanded': this.open ? 'true' : 'false',
-      }
-    );
+    setTriggerAria(this.shadowRoot.querySelector('slot[name="trigger"]'), {
+      'aria-haspopup': 'dialog',
+      'aria-expanded': this.open ? 'true' : 'false',
+    });
   }
 
   _onKeyDown(e) {
@@ -132,19 +129,26 @@ export class ArcPopover extends LitElement {
       return;
     }
     this.open = true;
-    this.dispatchEvent(new CustomEvent('arc-open', {
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-open', {
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _close(restoreFocus = true) {
     if (!this.open) return;
-    if (!this.dispatchEvent(new CustomEvent('arc-close', {
-      bubbles: true,
-      composed: true,
-      cancelable: true,
-    }))) return;
+    if (
+      !this.dispatchEvent(
+        new CustomEvent('arc-close', {
+          bubbles: true,
+          composed: true,
+          cancelable: true,
+        }),
+      )
+    )
+      return;
     this.open = false;
     if (restoreFocus && this._openedFrom && this._openedFrom.isConnected) {
       this._openedFrom.focus();

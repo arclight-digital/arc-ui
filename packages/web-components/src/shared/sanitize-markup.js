@@ -80,7 +80,10 @@ function readTag(src, start) {
   }
 
   let selfClosing = false;
-  if (src[i] === '/') { selfClosing = true; i++; }
+  if (src[i] === '/') {
+    selfClosing = true;
+    i++;
+  }
   while (i < src.length && src[i] !== '>') i++;
   return { name, closing, selfClosing, attributes, end: i + 1 };
 }
@@ -122,8 +125,8 @@ export function sanitizeMarkup(source, config) {
   };
 
   let out = '';
-  let depth = 0;      // nesting depth inside rootTag, when there is one
-  let skipDepth = 0;  // >0 while inside a banned subtree
+  let depth = 0; // nesting depth inside rootTag, when there is one
+  let skipDepth = 0; // >0 while inside a banned subtree
   let started = !rootTag;
   let i = 0;
 
@@ -177,7 +180,10 @@ export function sanitizeMarkup(source, config) {
     if (tag.closing) {
       if (rootTag && tag.name === rootTag) {
         depth--;
-        if (depth === 0) { out += `</${rootTag}>`; break; }
+        if (depth === 0) {
+          out += `</${rootTag}>`;
+          break;
+        }
       }
       out += `</${tag.name}>`;
       continue;

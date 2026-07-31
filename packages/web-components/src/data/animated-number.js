@@ -17,13 +17,13 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcAnimatedNumber extends LitElement {
   static properties = {
-    value:    { type: Number, reflect: true },
+    value: { type: Number, reflect: true },
     duration: { type: Number },
-    format:   { type: String, reflect: true },
-    prefix:   { type: String },
-    suffix:   { type: String },
+    format: { type: String, reflect: true },
+    prefix: { type: String },
+    suffix: { type: String },
     decimals: { type: Number },
-    locale:   { type: String },
+    locale: { type: String },
   };
 
   static styles = [

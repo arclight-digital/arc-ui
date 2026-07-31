@@ -14,7 +14,7 @@ import { LitElement, html, css } from 'lit';
  */
 export class ArcOption extends LitElement {
   static properties = {
-    value:    { type: String, reflect: true },
+    value: { type: String, reflect: true },
     disabled: { type: Boolean, reflect: true },
     selected: { type: Boolean, reflect: true },
   };

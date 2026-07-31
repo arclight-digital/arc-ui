@@ -39,14 +39,14 @@ import '../content/icon.js';
  */
 export class ArcInlineEdit extends FormControlMixin(LitElement) {
   static properties = {
-    value:       { type: String },
-    label:       { type: String },
-    name:        { type: String, reflect: true },
+    value: { type: String },
+    label: { type: String },
+    name: { type: String, reflect: true },
     placeholder: { type: String },
-    multiline:   { type: Boolean, reflect: true },
-    disabled:    { type: Boolean, reflect: true },
-    _editing:    { state: true },
-    _draft:      { state: true },
+    multiline: { type: Boolean, reflect: true },
+    disabled: { type: Boolean, reflect: true },
+    _editing: { state: true },
+    _draft: { state: true },
   };
 
   static styles = [
@@ -219,14 +219,22 @@ export class ArcInlineEdit extends FormControlMixin(LitElement) {
       // consumer contract is that arc-change means the value is different.
       if (draft !== this.value) {
         this.value = draft;
-        this.dispatchEvent(new CustomEvent('arc-change', {
-          detail: { value: draft }, bubbles: true, composed: true,
-        }));
+        this.dispatchEvent(
+          new CustomEvent('arc-change', {
+            detail: { value: draft },
+            bubbles: true,
+            composed: true,
+          }),
+        );
       }
     } else {
-      this.dispatchEvent(new CustomEvent('arc-cancel', {
-        detail: { value: this.value }, bubbles: true, composed: true,
-      }));
+      this.dispatchEvent(
+        new CustomEvent('arc-cancel', {
+          detail: { value: this.value },
+          bubbles: true,
+          composed: true,
+        }),
+      );
     }
     if (restoreFocus) {
       this.updateComplete.then(() => {
@@ -251,9 +259,13 @@ export class ArcInlineEdit extends FormControlMixin(LitElement) {
 
   _onFieldInput(e) {
     this._draft = e.target.value;
-    this.dispatchEvent(new CustomEvent('arc-input', {
-      detail: { value: this._draft }, bubbles: true, composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-input', {
+        detail: { value: this._draft },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _onFieldKeydown(e) {
@@ -266,7 +278,7 @@ export class ArcInlineEdit extends FormControlMixin(LitElement) {
       return;
     }
     if (e.key === 'Enter') {
-      const commits = this.multiline ? (e.metaKey || e.ctrlKey) : true;
+      const commits = this.multiline ? e.metaKey || e.ctrlKey : true;
       if (commits) {
         e.preventDefault();
         this._finish({ commit: true, restoreFocus: true });

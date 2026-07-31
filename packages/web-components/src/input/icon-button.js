@@ -23,14 +23,14 @@ import '../content/icon.js';
  */
 export class ArcIconButton extends LitElement {
   static properties = {
-    name:     { type: String, reflect: true },
-    text:     { type: String },
-    variant:  { type: String, reflect: true },
-    size:     { type: String, reflect: true },
-    label:    { type: String },
-    href:     { type: String },
+    name: { type: String, reflect: true },
+    text: { type: String },
+    variant: { type: String, reflect: true },
+    size: { type: String, reflect: true },
+    label: { type: String },
+    href: { type: String },
     disabled: { type: Boolean, reflect: true },
-    type:     { type: String },
+    type: { type: String },
     _slottedAnchor: { state: true },
   };
 

@@ -18,11 +18,11 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcAvatar extends LitElement {
   static properties = {
-    src:       { type: String },
-    name:      { type: String, reflect: true },
-    size:      { type: String, reflect: true },
-    shape:     { type: String, reflect: true },
-    status:    { type: String, reflect: true },
+    src: { type: String },
+    name: { type: String, reflect: true },
+    size: { type: String, reflect: true },
+    shape: { type: String, reflect: true },
+    status: { type: String, reflect: true },
     _imgState: { state: true },
   };
 
@@ -191,9 +191,11 @@ export class ArcAvatar extends LitElement {
       <div class="avatar" part="avatar" role="img" aria-label=${this.name || 'Avatar'}>
         ${content}
       </div>
-      ${/* role="img" is what makes the label reachable: aria-label on a bare
+      ${
+        /* role="img" is what makes the label reachable: aria-label on a bare
             span is prohibited and silently dropped, so the status dot carried
-            a name no assistive technology could read. */ ''}
+            a name no assistive technology could read. */ ''
+      }
       ${this.status ? html`<span class="avatar__status" part="status" role="img" aria-label=${this.status}></span>` : ''}
     `;
   }

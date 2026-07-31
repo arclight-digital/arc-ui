@@ -13,8 +13,8 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcScrollArea extends LitElement {
   static properties = {
-    maxHeight:    { type: String, attribute: 'max-height', reflect: true },
-    orientation:  { type: String, reflect: true },
+    maxHeight: { type: String, attribute: 'max-height', reflect: true },
+    orientation: { type: String, reflect: true },
   };
 
   static styles = [

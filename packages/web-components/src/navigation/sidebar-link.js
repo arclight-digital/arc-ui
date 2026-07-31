@@ -15,10 +15,10 @@ import { resolveCarrierHref } from '../shared/anchor-adoption.js';
  */
 export class ArcSidebarLink extends LitElement {
   static properties = {
-    href:   { type: String, reflect: true },
+    href: { type: String, reflect: true },
     active: { type: Boolean, reflect: true },
-    level:  { type: Number, reflect: true },
-    icon:   { type: String, reflect: true },
+    level: { type: Number, reflect: true },
+    icon: { type: String, reflect: true },
     external: { type: Boolean, reflect: true },
   };
 

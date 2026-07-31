@@ -17,9 +17,9 @@ import { tokenStyles } from '../shared-styles.js';
 export class ArcResizable extends LitElement {
   static properties = {
     direction: { type: String, reflect: true },
-    minSize:   { type: Number, attribute: 'min-size' },
-    maxSize:   { type: Number, attribute: 'max-size' },
-    size:      { type: Number },
+    minSize: { type: Number, attribute: 'min-size' },
+    maxSize: { type: Number, attribute: 'max-size' },
+    size: { type: Number },
     _dragging: { state: true },
   };
 
@@ -149,11 +149,13 @@ export class ArcResizable extends LitElement {
         this.size = newSize;
         this.style.setProperty('--panel-size', `${this.size}px`);
 
-        this.dispatchEvent(new CustomEvent('arc-resize', {
-          detail: { size: this.size },
-          bubbles: true,
-          composed: true,
-        }));
+        this.dispatchEvent(
+          new CustomEvent('arc-resize', {
+            detail: { size: this.size },
+            bubbles: true,
+            composed: true,
+          }),
+        );
       }
     };
 
@@ -191,11 +193,13 @@ export class ArcResizable extends LitElement {
       this.size = newSize;
       this.style.setProperty('--panel-size', `${this.size}px`);
 
-      this.dispatchEvent(new CustomEvent('arc-resize', {
-        detail: { size: this.size },
-        bubbles: true,
-        composed: true,
-      }));
+      this.dispatchEvent(
+        new CustomEvent('arc-resize', {
+          detail: { size: this.size },
+          bubbles: true,
+          composed: true,
+        }),
+      );
     }
   }
 

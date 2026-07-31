@@ -15,8 +15,8 @@ import { tokenStyles } from '../shared-styles.js';
 export class ArcButtonGroup extends LitElement {
   static properties = {
     orientation: { type: String, reflect: true },
-    size:        { type: String, reflect: true },
-    variant:     { type: String, reflect: true },
+    size: { type: String, reflect: true },
+    variant: { type: String, reflect: true },
   };
 
   static styles = [

@@ -16,10 +16,10 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcDock extends LitElement {
   static properties = {
-    position:  { type: String, reflect: true },
-    autoHide:  { type: Boolean, reflect: true, attribute: 'auto-hide' },
-    open:      { type: Boolean, reflect: true },
-    _hovered:  { state: true },
+    position: { type: String, reflect: true },
+    autoHide: { type: Boolean, reflect: true, attribute: 'auto-hide' },
+    open: { type: Boolean, reflect: true },
+    _hovered: { state: true },
   };
 
   static styles = [

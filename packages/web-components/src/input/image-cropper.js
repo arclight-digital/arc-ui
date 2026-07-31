@@ -30,14 +30,14 @@ const ARROW_KEYS = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'];
  */
 export class ArcImageCropper extends LitElement {
   static properties = {
-    src:    { type: String, reflect: true },
+    src: { type: String, reflect: true },
     height: { type: Number, reflect: true },
     aspect: { type: Number, reflect: true },
-    zoom:   { type: Number, reflect: true },
-    _loaded:   { state: true },
-    _errored:  { state: true },
-    _rect:     { state: true },
-    _stageW:   { state: true },
+    zoom: { type: Number, reflect: true },
+    _loaded: { state: true },
+    _errored: { state: true },
+    _rect: { state: true },
+    _stageW: { state: true },
     _announce: { state: true },
   };
 
@@ -320,7 +320,12 @@ export class ArcImageCropper extends LitElement {
       const cx = r.x + r.width / 2;
       const cy = r.y + r.height / 2;
       const h = r.width / this._aspect;
-      this._rect = this._clampRect({ x: cx - r.width / 2, y: cy - h / 2, width: r.width, height: h });
+      this._rect = this._clampRect({
+        x: cx - r.width / 2,
+        y: cy - h / 2,
+        width: r.width,
+        height: h,
+      });
       this._scheduleChange();
     } else if (changed.has('zoom') || changed.has('height')) {
       this._rect = this._clampRect(this._rect);
@@ -352,7 +357,11 @@ export class ArcImageCropper extends LitElement {
     const imgX = (stageW - dispW) / 2;
     const imgY = (stageH - dispH) / 2;
     return {
-      scale, imgX, imgY, dispW, dispH,
+      scale,
+      imgX,
+      imgY,
+      dispW,
+      dispH,
       bx: Math.max(0, imgX),
       by: Math.max(0, imgY),
       bRight: Math.min(stageW, imgX + dispW),
@@ -386,10 +395,19 @@ export class ArcImageCropper extends LitElement {
     const bh = g.bBottom - g.by;
     let { x, y, width: w, height: h } = r;
     if (this._aspect > 0) {
-      if (w > bw) { w = bw; h = w / this._aspect; }
-      if (h > bh) { h = bh; w = h * this._aspect; }
+      if (w > bw) {
+        w = bw;
+        h = w / this._aspect;
+      }
+      if (h > bh) {
+        h = bh;
+        w = h * this._aspect;
+      }
       const minW = Math.min(Math.max(MIN_SIZE, MIN_SIZE * this._aspect), bw, bh * this._aspect);
-      if (w < minW) { w = minW; h = w / this._aspect; }
+      if (w < minW) {
+        w = minW;
+        h = w / this._aspect;
+      }
     } else {
       w = Math.max(Math.min(MIN_SIZE, bw), Math.min(w, bw));
       h = Math.max(Math.min(MIN_SIZE, bh), Math.min(h, bh));
@@ -531,7 +549,10 @@ export class ArcImageCropper extends LitElement {
     let { width: w, height: h } = r;
     if (this._aspect > 0) {
       w = Math.min(w, maxW, maxH * this._aspect);
-      w = Math.max(w, Math.min(Math.max(MIN_SIZE, MIN_SIZE * this._aspect), maxW, maxH * this._aspect));
+      w = Math.max(
+        w,
+        Math.min(Math.max(MIN_SIZE, MIN_SIZE * this._aspect), maxW, maxH * this._aspect),
+      );
       h = w / this._aspect;
     } else {
       w = Math.max(Math.min(MIN_SIZE, maxW), Math.min(w, maxW));
@@ -596,23 +617,23 @@ export class ArcImageCropper extends LitElement {
   _drawCropCanvas() {
     const crop = this.getCrop();
     if (!crop) {
-      throw new Error('arc-image-cropper: no image loaded — set `src` and wait for it to load before exporting.');
+      throw new Error(
+        'arc-image-cropper: no image loaded — set `src` and wait for it to load before exporting.',
+      );
     }
     const img = this.shadowRoot.querySelector('.stage__img');
     const canvas = document.createElement('canvas');
     canvas.width = crop.width;
     canvas.height = crop.height;
-    canvas.getContext('2d').drawImage(
-      img,
-      crop.x, crop.y, crop.width, crop.height,
-      0, 0, crop.width, crop.height
-    );
+    canvas
+      .getContext('2d')
+      .drawImage(img, crop.x, crop.y, crop.width, crop.height, 0, 0, crop.width, crop.height);
     return canvas;
   }
 
   _corsError(err) {
     return new Error(
-      `arc-image-cropper: canvas export failed — \`src\` must be same-origin or served with CORS headers (a cross-origin image taints the canvas). Original error: ${err.message}`
+      `arc-image-cropper: canvas export failed — \`src\` must be same-origin or served with CORS headers (a cross-origin image taints the canvas). Original error: ${err.message}`,
     );
   }
 
@@ -622,11 +643,16 @@ export class ArcImageCropper extends LitElement {
     return new Promise((resolve, reject) => {
       try {
         canvas.toBlob(
-          (blob) => blob
-            ? resolve(blob)
-            : reject(new Error('arc-image-cropper: canvas.toBlob returned null — the crop could not be encoded.')),
+          (blob) =>
+            blob
+              ? resolve(blob)
+              : reject(
+                  new Error(
+                    'arc-image-cropper: canvas.toBlob returned null — the crop could not be encoded.',
+                  ),
+                ),
           type,
-          quality
+          quality,
         );
       } catch (err) {
         reject(this._corsError(err));
@@ -652,11 +678,13 @@ export class ArcImageCropper extends LitElement {
       this._changeRaf = 0;
       const crop = this.getCrop();
       if (!crop) return;
-      this.dispatchEvent(new CustomEvent('arc-crop-change', {
-        detail: crop,
-        bubbles: true,
-        composed: true,
-      }));
+      this.dispatchEvent(
+        new CustomEvent('arc-crop-change', {
+          detail: crop,
+          bubbles: true,
+          composed: true,
+        }),
+      );
     });
   }
 
@@ -667,13 +695,13 @@ export class ArcImageCropper extends LitElement {
     const r = this._rect;
     const zoom = this._zoomClamped;
     const fill = ((zoom - 1) / 3) * 100;
-    const rectStyle = r
-      ? `left:${r.x}px;top:${r.y}px;width:${r.width}px;height:${r.height}px`
-      : '';
+    const rectStyle = r ? `left:${r.x}px;top:${r.y}px;width:${r.width}px;height:${r.height}px` : '';
 
     return html`
       <div class="stage" part="stage" style="height:${this.height}px">
-        ${this.src && !this._errored ? html`
+        ${
+          this.src && !this._errored
+            ? html`
           <img
             class="stage__img ${this._loaded && g ? '' : 'stage__img--hidden'}"
             part="image"
@@ -683,17 +711,29 @@ export class ArcImageCropper extends LitElement {
             @load=${this._onImgLoad}
             @error=${this._onImgError}
           />
-        ` : ''}
+        `
+            : ''
+        }
 
-        ${this.src && !this._loaded && !this._errored ? html`
+        ${
+          this.src && !this._loaded && !this._errored
+            ? html`
           <div class="skeleton" part="skeleton" role="status" aria-label="Loading image" aria-busy="true"></div>
-        ` : ''}
+        `
+            : ''
+        }
 
-        ${this._errored ? html`
+        ${
+          this._errored
+            ? html`
           <div class="error" part="error" role="alert">Image failed to load.</div>
-        ` : ''}
+        `
+            : ''
+        }
 
-        ${g && r ? html`
+        ${
+          g && r
+            ? html`
           <div class="shade" style=${rectStyle}></div>
           <div
             class="crop"
@@ -711,11 +751,15 @@ export class ArcImageCropper extends LitElement {
             <div class="guide guide--v" style="left:66.667%"></div>
             <div class="guide guide--h" style="top:33.333%"></div>
             <div class="guide guide--h" style="top:66.667%"></div>
-            ${HANDLES.map((hd) => html`
+            ${HANDLES.map(
+              (hd) => html`
               <div class="handle" part="handle" data-handle=${hd} aria-hidden="true"></div>
-            `)}
+            `,
+            )}
           </div>
-        ` : ''}
+        `
+            : ''
+        }
       </div>
 
       <div class="zoom" part="zoom">

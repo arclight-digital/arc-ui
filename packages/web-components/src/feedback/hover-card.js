@@ -20,10 +20,10 @@ import { setTriggerAria } from '../shared/trigger-aria.js';
  */
 export class ArcHoverCard extends LitElement {
   static properties = {
-    position:   { type: String, reflect: true },
-    openDelay:  { type: Number, attribute: 'open-delay' },
+    position: { type: String, reflect: true },
+    openDelay: { type: Number, attribute: 'open-delay' },
     closeDelay: { type: Number, attribute: 'close-delay' },
-    _visible:   { state: true },
+    _visible: { state: true },
   };
 
   static styles = [
@@ -106,10 +106,9 @@ export class ArcHoverCard extends LitElement {
   }
 
   _syncTriggerAria() {
-    setTriggerAria(
-      this.shadowRoot.querySelector('.hovercard__trigger slot'),
-      { 'aria-expanded': this._visible ? 'true' : 'false' }
-    );
+    setTriggerAria(this.shadowRoot.querySelector('.hovercard__trigger slot'), {
+      'aria-expanded': this._visible ? 'true' : 'false',
+    });
   }
 
   _scheduleOpen() {
@@ -117,10 +116,12 @@ export class ArcHoverCard extends LitElement {
     if (this._visible) return;
     this._openTimeout = setTimeout(() => {
       this._visible = true;
-      this.dispatchEvent(new CustomEvent('arc-open', {
-        bubbles: true,
-        composed: true,
-      }));
+      this.dispatchEvent(
+        new CustomEvent('arc-open', {
+          bubbles: true,
+          composed: true,
+        }),
+      );
     }, this.openDelay);
   }
 
@@ -139,11 +140,16 @@ export class ArcHoverCard extends LitElement {
   _hide() {
     clearTimeout(this._openTimeout);
     clearTimeout(this._closeTimeout);
-    if (!this.dispatchEvent(new CustomEvent('arc-close', {
-      bubbles: true,
-      composed: true,
-      cancelable: true,
-    }))) return;
+    if (
+      !this.dispatchEvent(
+        new CustomEvent('arc-close', {
+          bubbles: true,
+          composed: true,
+          cancelable: true,
+        }),
+      )
+    )
+      return;
     this._visible = false;
   }
 

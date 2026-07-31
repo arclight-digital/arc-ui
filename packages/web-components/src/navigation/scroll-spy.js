@@ -19,11 +19,11 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcScrollSpy extends LitElement {
   static properties = {
-    active:    { type: String, reflect: true },
-    offset:    { type: Number },
-    progress:  { type: String, reflect: true },
-    _active:   { state: true },
-    _links:    { state: true },
+    active: { type: String, reflect: true },
+    offset: { type: Number },
+    progress: { type: String, reflect: true },
+    _active: { state: true },
+    _links: { state: true },
     _progress: { state: true },
   };
 
@@ -33,9 +33,13 @@ export class ArcScrollSpy extends LitElement {
   /* Both readings of `progress` are derived, never stored, so the two can only
      ever agree with the prop. An unrecognised value answers false to both and
      so behaves as `none` — the default — rather than half-enabling something. */
-  get _showRing() { return this.progress === 'ring' || this.progress === 'both'; }
+  get _showRing() {
+    return this.progress === 'ring' || this.progress === 'both';
+  }
 
-  get _showRead() { return this.progress === 'read' || this.progress === 'both'; }
+  get _showRead() {
+    return this.progress === 'read' || this.progress === 'both';
+  }
 
   static styles = [
     tokenStyles,
@@ -242,8 +246,9 @@ export class ArcScrollSpy extends LitElement {
   }
 
   _onSlotChange(e) {
-    this._links = e.target.assignedElements({ flatten: true })
-      .filter(el => el.tagName === 'ARC-SPY-LINK');
+    this._links = e.target
+      .assignedElements({ flatten: true })
+      .filter((el) => el.tagName === 'ARC-SPY-LINK');
   }
 
   updated(changed) {
@@ -310,18 +315,18 @@ export class ArcScrollSpy extends LitElement {
     if (active === this._active) return;
     this._active = active;
     this.active = active;
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: active },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: active },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   /** 'auto' when the reader has asked for less motion, 'smooth' otherwise. */
   get _behavior() {
-    return globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches
-      ? 'auto'
-      : 'smooth';
+    return globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
   }
 
   _scrollToTop() {
@@ -340,7 +345,7 @@ export class ArcScrollSpy extends LitElement {
 
   _handleClick(e, target) {
     const el = document.getElementById(target);
-    if (!el) return;  // Let the browser try the href; it knows as much as we do.
+    if (!el) return; // Let the browser try the href; it knows as much as we do.
     e.preventDefault();
 
     // scroll-margin-top rather than arithmetic on a scroll offset: it is the one
@@ -351,7 +356,9 @@ export class ArcScrollSpy extends LitElement {
     el.scrollIntoView({ behavior: this._behavior, block: 'start' });
     // Restored on the next frame so the value cannot leak into the page's own
     // styling, but not before the scroll has been queued against it.
-    requestAnimationFrame(() => { el.style.scrollMarginBlockStart = previous; });
+    requestAnimationFrame(() => {
+      el.style.scrollMarginBlockStart = previous;
+    });
 
     // A table of contents whose entries do not change the URL cannot be used to
     // link to a section — the whole point of the headings having ids.
@@ -420,12 +427,15 @@ export class ArcScrollSpy extends LitElement {
                 aria-current=${this._active === link.target ? 'location' : 'false'}
                 @click=${(e) => this._handleClick(e, link.target)}
                 part="link"
-                style=${level > 0
-                  ? `padding-inline-start: calc(var(--nav-row-inset) + ${level * 12}px)`
-                  : ''}
+                style=${
+                  level > 0
+                    ? `padding-inline-start: calc(var(--nav-row-inset) + ${level * 12}px)`
+                    : ''
+                }
               >${link.label}</a>
             </li>
-          `})}
+          `;
+          })}
         </ul>
       </nav>
     `;

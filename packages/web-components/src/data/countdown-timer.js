@@ -19,12 +19,12 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcCountdownTimer extends LitElement {
   static properties = {
-    target:           { type: String },
-    label:            { type: String },
-    expired:          { type: String },
+    target: { type: String },
+    label: { type: String },
+    expired: { type: String },
     hideZeroSegments: { type: Boolean, reflect: true, attribute: 'hide-zero-segments' },
-    _days:    { state: true },
-    _hours:   { state: true },
+    _days: { state: true },
+    _hours: { state: true },
     _minutes: { state: true },
     _seconds: { state: true },
     _expired: { state: true },
@@ -187,9 +187,7 @@ export class ArcCountdownTimer extends LitElement {
   }
 
   render() {
-    const topLabel = this.label
-      ? html`<div class="top-label">${this.label}</div>`
-      : '';
+    const topLabel = this.label ? html`<div class="top-label">${this.label}</div>` : '';
 
     if (this._expired) {
       return html`

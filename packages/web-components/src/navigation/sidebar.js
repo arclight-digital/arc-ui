@@ -28,12 +28,12 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcSidebar extends LitElement {
   static properties = {
-    active:    { type: String, reflect: true },
+    active: { type: String, reflect: true },
     collapsed: { type: Boolean, reflect: true },
-    position:  { type: String, reflect: true },
-    width:     { type: String },
-    glow:      { type: Boolean, reflect: true },
-    label:     { type: String },
+    position: { type: String, reflect: true },
+    width: { type: String },
+    glow: { type: Boolean, reflect: true },
+    label: { type: String },
     _sections: { state: true },
   };
 
@@ -365,8 +365,9 @@ export class ArcSidebar extends LitElement {
   }
 
   _onSlotChange(e) {
-    this._sections = e.target.assignedElements({ flatten: true })
-      .filter(el => el.tagName === 'ARC-SIDEBAR-SECTION');
+    this._sections = e.target
+      .assignedElements({ flatten: true })
+      .filter((el) => el.tagName === 'ARC-SIDEBAR-SECTION');
     this.requestUpdate();
   }
 
@@ -403,32 +404,37 @@ export class ArcSidebar extends LitElement {
 
           return html`
             <div class="sidebar__section" part="section">
-              ${section.heading
-                ? isCollapsible
-                  ? html`
+              ${
+                section.heading
+                  ? isCollapsible
+                    ? html`
                     <button
                       class="sidebar__toggle"
                       @click=${() => this._toggleSection(section)}
                       aria-expanded=${String(isOpen)}
                       part="toggle"
                     >
-                      ${section.icon
-                        ? html`<arc-icon class="sidebar__heading-icon" part="heading-icon" name=${section.icon} size="sm"></arc-icon>`
-                        : ''}
+                      ${
+                        section.icon
+                          ? html`<arc-icon class="sidebar__heading-icon" part="heading-icon" name=${section.icon} size="sm"></arc-icon>`
+                          : ''
+                      }
                       <span class="sidebar__toggle-label">${section.heading}</span>
                       <span class="sidebar__toggle-count">${links.length}</span>
                       <svg class="sidebar__chevron ${isOpen ? '' : 'sidebar__chevron--closed'}" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true">
                         <path d="M4.5 6L8 9.5L11.5 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                       </svg>
                     </button>`
-                  : html`
+                    : html`
                     <div class="sidebar__heading" part="heading">
-                      ${section.icon
-                        ? html`<arc-icon class="sidebar__heading-icon" part="heading-icon" name=${section.icon} size="sm"></arc-icon>`
-                        : ''}
+                      ${
+                        section.icon
+                          ? html`<arc-icon class="sidebar__heading-icon" part="heading-icon" name=${section.icon} size="sm"></arc-icon>`
+                          : ''
+                      }
                       <span class="sidebar__heading-text">${section.heading}</span>
                     </div>`
-                : ''
+                  : ''
               }
               <div class="sidebar__links ${!isOpen && isCollapsible ? 'sidebar__links--hidden' : ''}" part="links">
                 ${links.map((link) => {
@@ -437,31 +443,38 @@ export class ArcSidebar extends LitElement {
                   <a
                     class="sidebar__link ${level > 0 ? 'sidebar__link--nested' : ''}"
                     href=${link.resolvedHref}
-                    aria-current=${(this.active === link.resolvedHref || link.active) ? 'page' : 'false'}
+                    aria-current=${this.active === link.resolvedHref || link.active ? 'page' : 'false'}
                     @click=${(e) => this._handleClick(e, link.resolvedHref)}
                     part="link"
-                    style=${level > 0
-                      ? `padding-inline-start: calc(var(--nav-row-inset) + ${level * 12}px)`
-                      : ''}
+                    style=${
+                      level > 0
+                        ? `padding-inline-start: calc(var(--nav-row-inset) + ${level * 12}px)`
+                        : ''
+                    }
                   >
                     <span class="sidebar__link-body">
-                      ${link.icon
-                        ? html`<arc-icon class="sidebar__link-icon" part="link-icon" name=${link.icon} size="sm"></arc-icon>`
-                        : ''}
+                      ${
+                        link.icon
+                          ? html`<arc-icon class="sidebar__link-icon" part="link-icon" name=${link.icon} size="sm"></arc-icon>`
+                          : ''
+                      }
                       <span>${link.label}</span>
                     </span>
-                    ${link.external
-                      ? html`
+                    ${
+                      link.external
+                        ? html`
                         <svg class="sidebar__link-arrow sidebar__link-arrow--external" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true">
                           <path d="M6.5 3H3.5A0.5 0.5 0 003 3.5v9a0.5 0.5 0 00.5.5h9a0.5 0.5 0 00.5-.5v-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                           <path d="M9.5 2.5H13.5V6.5M13.5 2.5L7.5 8.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>`
-                      : html`
+                        : html`
                         <svg class="sidebar__link-arrow" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true">
                           <path d="M6 4L10 8L6 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>`}
+                        </svg>`
+                    }
                   </a>
-                `})}
+                `;
+                })}
               </div>
             </div>
           `;

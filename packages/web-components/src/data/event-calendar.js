@@ -36,11 +36,11 @@ import { monthNames, weekdayNames, firstDayOfWeek, weekdayOffset } from '../shar
  */
 export class ArcEventCalendar extends LitElement {
   static properties = {
-    locale:      { type: String },
+    locale: { type: String },
     firstDayOfWeek: { type: Number, attribute: 'first-day-of-week' },
     events: { type: Array },
-    view:   { type: String, reflect: true },
-    date:   { type: String },
+    view: { type: String, reflect: true },
+    date: { type: String },
     _focusedIso: { state: true },
   };
 
@@ -323,7 +323,6 @@ export class ArcEventCalendar extends LitElement {
     `,
   ];
 
-
   constructor() {
     super();
     this.locale = '';
@@ -338,7 +337,6 @@ export class ArcEventCalendar extends LitElement {
   get _firstDay() {
     return this.firstDayOfWeek || firstDayOfWeek(this.locale || undefined);
   }
-
 
   connectedCallback() {
     super.connectedCallback();
@@ -412,7 +410,7 @@ export class ArcEventCalendar extends LitElement {
   _eventsForDay(iso) {
     const evs = Array.isArray(this.events) ? this.events : [];
     return evs
-      .filter(ev => ev && ev.date && ev.date <= iso && iso <= (ev.end || ev.date))
+      .filter((ev) => ev && ev.date && ev.date <= iso && iso <= (ev.end || ev.date))
       .sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0));
   }
 
@@ -427,19 +425,23 @@ export class ArcEventCalendar extends LitElement {
   }
 
   _dispatchPeriodChange() {
-    this.dispatchEvent(new CustomEvent('arc-period-change', {
-      detail: { view: this.view, date: this.date },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-period-change', {
+        detail: { view: this.view, date: this.date },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _dispatchDateClick(date) {
-    this.dispatchEvent(new CustomEvent('arc-date-click', {
-      detail: { date },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-date-click', {
+        detail: { date },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _navigate(dir) {
@@ -481,11 +483,13 @@ export class ArcEventCalendar extends LitElement {
     const chip = e.target.closest('.cal__chip');
     if (chip) {
       const ev = (this.events || [])[Number(chip.dataset.idx)];
-      this.dispatchEvent(new CustomEvent('arc-event-click', {
-        detail: { event: ev },
-        bubbles: true,
-        composed: true,
-      }));
+      this.dispatchEvent(
+        new CustomEvent('arc-event-click', {
+          detail: { event: ev },
+          bubbles: true,
+          composed: true,
+        }),
+      );
       return;
     }
     const cell = e.target.closest('.cal__cell');
@@ -513,15 +517,32 @@ export class ArcEventCalendar extends LitElement {
         }
         return;
       }
-      case 'ArrowRight': target = this._addDays(d, 1); break;
-      case 'ArrowLeft':  target = this._addDays(d, -1); break;
-      case 'ArrowDown':  target = this._addDays(d, 7); break;
-      case 'ArrowUp':    target = this._addDays(d, -7); break;
-      case 'Home':       target = this._addDays(d, -d.getDay()); break;
-      case 'End':        target = this._addDays(d, 6 - d.getDay()); break;
-      case 'PageUp':     target = this.view === 'week' ? this._addDays(d, -7) : this._addMonths(d, -1); break;
-      case 'PageDown':   target = this.view === 'week' ? this._addDays(d, 7) : this._addMonths(d, 1); break;
-      default: return;
+      case 'ArrowRight':
+        target = this._addDays(d, 1);
+        break;
+      case 'ArrowLeft':
+        target = this._addDays(d, -1);
+        break;
+      case 'ArrowDown':
+        target = this._addDays(d, 7);
+        break;
+      case 'ArrowUp':
+        target = this._addDays(d, -7);
+        break;
+      case 'Home':
+        target = this._addDays(d, -d.getDay());
+        break;
+      case 'End':
+        target = this._addDays(d, 6 - d.getDay());
+        break;
+      case 'PageUp':
+        target = this.view === 'week' ? this._addDays(d, -7) : this._addMonths(d, -1);
+        break;
+      case 'PageDown':
+        target = this.view === 'week' ? this._addDays(d, 7) : this._addMonths(d, 1);
+        break;
+      default:
+        return;
     }
 
     e.preventDefault();
@@ -582,19 +603,27 @@ export class ArcEventCalendar extends LitElement {
           aria-label="${M[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}${countLabel}"
           part="day-number"
         >${d.getDate()}</button>
-        ${evs.length ? html`
+        ${
+          evs.length
+            ? html`
           <div class="cal__events" part="events">
-            ${visible.map(ev => this._renderChip(ev, iso))}
-            ${hidden > 0 ? html`
+            ${visible.map((ev) => this._renderChip(ev, iso))}
+            ${
+              hidden > 0
+                ? html`
               <button
                 class="cal__more"
                 tabindex="-1"
                 aria-label="${hidden} more ${hidden === 1 ? 'event' : 'events'} on ${M[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}"
                 part="more"
               >+${hidden} more</button>
-            ` : ''}
+            `
+                : ''
+            }
           </div>
-        ` : ''}
+        `
+            : ''
+        }
       </div>
     `;
   }
@@ -606,7 +635,7 @@ export class ArcEventCalendar extends LitElement {
     const title = this._periodTitle(anchor, days);
     const isWeek = this.view === 'week';
     const maxChips = isWeek ? 0 : 3;
-    const focusIso = days.some(day => day.iso === this._focusedIso)
+    const focusIso = days.some((day) => day.iso === this._focusedIso)
       ? this._focusedIso
       : this._toISO(anchor);
     const period = isWeek ? 'week' : 'month';
@@ -635,7 +664,7 @@ export class ArcEventCalendar extends LitElement {
         </div>
 
         <div class="cal__dows" part="dows">
-          ${weekdayNames('short', this.locale || undefined, this._firstDay).map(dow => html`<div class="cal__dow" part="dow">${dow}</div>`)}
+          ${weekdayNames('short', this.locale || undefined, this._firstDay).map((dow) => html`<div class="cal__dow" part="dow">${dow}</div>`)}
         </div>
 
         <div
@@ -646,7 +675,7 @@ export class ArcEventCalendar extends LitElement {
           @click=${this._onGridClick}
           @keydown=${this._onGridKeydown}
         >
-          ${days.map(day => this._renderCell(day, todayIso, focusIso, maxChips))}
+          ${days.map((day) => this._renderCell(day, todayIso, focusIso, maxChips))}
         </div>
       </div>
     `;

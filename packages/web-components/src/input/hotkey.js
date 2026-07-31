@@ -17,9 +17,9 @@ import { isEditingTarget } from '../shared/editing-target.js';
  */
 export class ArcHotkey extends LitElement {
   static properties = {
-    keys:     { type: String },
+    keys: { type: String },
     disabled: { type: Boolean, reflect: true },
-    global:   { type: Boolean },
+    global: { type: Boolean },
   };
 
   static styles = css`
@@ -74,7 +74,7 @@ export class ArcHotkey extends LitElement {
       return;
     }
 
-    this._parsedChords = this.keys.split(/\s+/).map(combo => {
+    this._parsedChords = this.keys.split(/\s+/).map((combo) => {
       const parts = combo.toLowerCase().split('+');
       const key = parts.pop();
       return {
@@ -119,11 +119,13 @@ export class ArcHotkey extends LitElement {
         // Full match — fire trigger
         this._chordIndex = 0;
         this._clearChord();
-        this.dispatchEvent(new CustomEvent('arc-hotkey-trigger', {
-          bubbles: true,
-          composed: true,
-          detail: { keys: this.keys },
-        }));
+        this.dispatchEvent(
+          new CustomEvent('arc-hotkey-trigger', {
+            bubbles: true,
+            composed: true,
+            detail: { keys: this.keys },
+          }),
+        );
       } else {
         // Waiting for next chord key — timeout after 1s
         this._clearChord();

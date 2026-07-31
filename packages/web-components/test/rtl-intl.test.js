@@ -1,6 +1,7 @@
 import { expect } from '@esm-bundle/chai';
 import '../src/input/date-picker.register.js';
 import '../src/input/calendar.register.js';
+import '../src/data/data-grid.register.js';
 import {
   monthNames, weekdayNames, firstDayOfWeek, weekdayOffset, defaultLocale,
 } from '../src/shared/date-names.js';
@@ -149,7 +150,12 @@ describe('the calendars use the shared source', () => {
 });
 
 describe('logical properties for RTL', () => {
-  const PHYSICAL = /^\s*(margin|padding|border)-(left|right)\s*:|^\s*text-align\s*:\s*(left|right)\s*;|^\s*border-(top|bottom)-(left|right)-radius\s*:/m;
+  // Matched against a single trimmed declaration, not against a source line.
+  // The line-anchored version could only see a declaration that started its
+  // line, so `.crumbs { padding-left: var(--space-md); }` written on one line
+  // was invisible — eleven real violations across six components sat behind
+  // that until a prettier run happened to split them onto their own lines.
+  const PHYSICAL = /^(margin|padding|border)-(left|right)\s*:|^text-align\s*:\s*(left|right)$|^border-(top|bottom)-(left|right)-radius\s*:/;
 
   // The codemod's baseline. These are the files that keep a physical property on
   // purpose, each for a stated reason; everything else must be logical.
@@ -176,16 +182,23 @@ describe('logical properties for RTL', () => {
       if (!r.ok) return [];
       const src = await r.text();
       const found = [];
-      let selector = '';
-      for (const line of src.split('\n')) {
-        const trimmed = line.trim();
-        if (trimmed.endsWith('{')) selector = trimmed;
-        // A rule keyed on a physical side describes that side by API contract:
-        // arc-dock position="left" means the left edge, not the start edge, so
-        // its border belongs on the physical right. Same for a resolved
-        // data-placement. These are the codemod's deliberate carve-outs.
-        if (/\[(?:position|data-placement)\s*=\s*"(?:left|right)"\]/.test(selector)) continue;
-        if (PHYSICAL.test(line)) found.push(`${path}: ${trimmed}`);
+      // Read the css`…` templates as innermost selector/body pairs, so how a
+      // rule is formatted cannot decide whether it is swept. Nested at-rules
+      // fall out for free: [^{}]* can never span a brace, so every match is an
+      // innermost block and its selector is the text since the last one.
+      for (const block of src.matchAll(/\bcss`([^`]*)`/g)) {
+        for (const rule of block[1].matchAll(/([^{}]*)\{([^{}]*)\}/g)) {
+          const selector = rule[1].trim();
+          // A rule keyed on a physical side describes that side by API
+          // contract: arc-dock position="left" means the left edge, not the
+          // start edge, so its border belongs on the physical right. Same for a
+          // resolved data-placement. The codemod's deliberate carve-outs.
+          if (/\[(?:position|data-placement)\s*=\s*"(?:left|right)"\]/.test(selector)) continue;
+          for (const raw of rule[2].split(';')) {
+            const decl = raw.trim();
+            if (decl && PHYSICAL.test(decl)) found.push(`${path}: ${decl};`);
+          }
+        }
       }
       return found;
     }));
@@ -210,6 +223,72 @@ describe('logical properties for RTL', () => {
 
     expect(ltr).to.equal(0);
     expect(rtl, 'start edge moved to the right in RTL').to.equal(180);
+    cleanup();
+  });
+
+  // Column pinning was the one system left physical after the v3 sweep: sticky
+  // offsets written as `left:${n}px` from JS, an edge shadow cast rightward,
+  // and a scroll test of `scrollLeft > 0` that RTL's negative scrollLeft could
+  // never satisfy. Converting one of those alone would have been worse than
+  // leaving all three, so this asserts the unit.
+  it('pins data-grid columns to the inline-start edge in both directions', async () => {
+    const columns = [
+      { key: 'a', label: 'A', pinned: true, width: '100px' },
+      { key: 'b', label: 'B', pinned: true, width: '100px' },
+      { key: 'c', label: 'C', width: '800px' },
+    ];
+    const grid = mount('<arc-data-grid></arc-data-grid>');
+    // Narrower than the 1000px of columns, or nothing scrolls and the cells sit
+    // where ordinary table layout puts them — which mirrors under RTL all by
+    // itself and would let this pass with the offsets still physical.
+    grid.style.width = '300px';
+    grid.columns = columns;
+    // Long unwrappable text, not the 800px width hint: under `table {width:100%}`
+    // a width is only a suggestion and the column would compress to fit rather
+    // than overflow, leaving nothing to scroll.
+    grid.rows = [{ a: '1', b: '2', c: 'wide '.repeat(200) }];
+    await grid.updateComplete;
+    await tick();
+
+    const wrapper = grid.shadowRoot.querySelector('.grid-wrapper');
+    const cells = () => [...grid.shadowRoot.querySelectorAll('tbody td')];
+    const box = () => wrapper.getBoundingClientRect();
+    const startEdge = (cell) => {
+      const r = cell.getBoundingClientRect();
+      // Distance from the wrapper's start edge, whichever side that is.
+      return grid.style.direction === 'rtl' ? box().right - r.right : r.left - box().left;
+    };
+
+    // Scrolled well past the pinned block: unpinned content has moved, so any
+    // cell still at the start edge is there because it is pinned.
+    wrapper.scrollLeft = 400;
+    await tick();
+    const [a, b, c] = cells();
+    expect(startEdge(a), 'first pinned column holds the start edge').to.be.closeTo(0, 1.5);
+    expect(startEdge(b), 'second pinned column clears the first').to.be.closeTo(100, 1.5);
+    expect(startEdge(c), 'unpinned column scrolled away').to.be.lessThan(0);
+
+    grid.style.direction = 'rtl';
+    await grid.updateComplete;
+    // RTL scrollLeft runs 0 → negative, so this is the same 400px of travel.
+    wrapper.scrollLeft = -400;
+    await tick();
+
+    const [a2, b2, c2] = cells();
+    expect(startEdge(a2), 'still the start edge, now on the right').to.be.closeTo(0, 1.5);
+    expect(startEdge(b2), 'and still inboard of it').to.be.closeTo(100, 1.5);
+    expect(startEdge(c2), 'unpinned column scrolled away').to.be.lessThan(0);
+
+    // The edge shadow is gated on having scrolled at all, which a `> 0` test of
+    // a negative scrollLeft can never satisfy. The scroll listener is passive
+    // and coalesces through rAF before touching state, so settle both.
+    for (let i = 0; i < 3 && !wrapper.classList.contains('scrolled-x'); i++) {
+      await new Promise(requestAnimationFrame);
+      await tick();
+      await grid.updateComplete;
+    }
+    expect(wrapper.classList.contains('scrolled-x'), 'edge shadow armed under RTL').to.equal(true);
+
     cleanup();
   });
 });

@@ -24,9 +24,9 @@ import '../content/separator.js';
  */
 export class ArcContextMenu extends LitElement {
   static properties = {
-    open:           { type: Boolean, reflect: true },
-    _activeIndex:   { state: true },
-    _children:      { state: true },
+    open: { type: Boolean, reflect: true },
+    _activeIndex: { state: true },
+    _children: { state: true },
   };
   // _x/_y are deliberately not reactive state: PositionController writes the
   // menu's coordinates to its inline style, and a re-render driven by them would
@@ -184,12 +184,13 @@ export class ArcContextMenu extends LitElement {
   }
 
   _onSlotChange(e) {
-    this._children = e.target.assignedElements({ flatten: true })
-      .filter(el => el.tagName === 'ARC-MENU-ITEM' || el.tagName === 'ARC-MENU-DIVIDER');
+    this._children = e.target
+      .assignedElements({ flatten: true })
+      .filter((el) => el.tagName === 'ARC-MENU-ITEM' || el.tagName === 'ARC-MENU-DIVIDER');
   }
 
   get _menuItems() {
-    return this._children.filter(el => el.tagName === 'ARC-MENU-ITEM' && !el.disabled);
+    return this._children.filter((el) => el.tagName === 'ARC-MENU-ITEM' && !el.disabled);
   }
 
   get _selectableItems() {
@@ -206,10 +207,12 @@ export class ArcContextMenu extends LitElement {
 
     this.open = true;
 
-    this.dispatchEvent(new CustomEvent('arc-open', {
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-open', {
+        bubbles: true,
+        composed: true,
+      }),
+    );
 
     // PositionController measures and writes coordinates from updated(), before
     // the browser paints, so there is no longer a first frame at the wrong place
@@ -220,11 +223,16 @@ export class ArcContextMenu extends LitElement {
   }
 
   _close(restoreFocus = true) {
-    if (!this.dispatchEvent(new CustomEvent('arc-close', {
-      bubbles: true,
-      composed: true,
-      cancelable: true,
-    }))) return;
+    if (
+      !this.dispatchEvent(
+        new CustomEvent('arc-close', {
+          bubbles: true,
+          composed: true,
+          cancelable: true,
+        }),
+      )
+    )
+      return;
     this.open = false;
     this._activeIndex = -1;
 
@@ -237,11 +245,22 @@ export class ArcContextMenu extends LitElement {
   _selectItem(item, index) {
     if (item.disabled || item.tagName === 'ARC-MENU-DIVIDER') return;
 
-    this.dispatchEvent(new CustomEvent('arc-select', {
-      detail: { value: item.selectionValue, item: { label: item.label, shortcut: item.shortcut, icon: item.icon, value: item.selectionValue }, index },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-select', {
+        detail: {
+          value: item.selectionValue,
+          item: {
+            label: item.label,
+            shortcut: item.shortcut,
+            icon: item.icon,
+            value: item.selectionValue,
+          },
+          index,
+        },
+        bubbles: true,
+        composed: true,
+      }),
+    );
 
     this._close();
   }
@@ -250,7 +269,7 @@ export class ArcContextMenu extends LitElement {
     const selectable = this._selectableItems;
     if (selectable.length === 0) return;
 
-    const currentSelectableIdx = selectable.findIndex(s => s.index === this._activeIndex);
+    const currentSelectableIdx = selectable.findIndex((s) => s.index === this._activeIndex);
 
     switch (e.key) {
       case 'ArrowDown': {
@@ -325,7 +344,9 @@ export class ArcContextMenu extends LitElement {
               aria-disabled=${child.disabled ? 'true' : 'false'}
               tabindex="-1"
               @click=${() => this._selectItem(child, i)}
-              @pointerenter=${() => { this._activeIndex = i; }}
+              @pointerenter=${() => {
+                this._activeIndex = i;
+              }}
             >
               ${child.icon ? html`<arc-icon name=${child.icon} size="16" class="item-icon" aria-hidden="true"></arc-icon>` : ''}
               <span class="item-label">${child.label}</span>

@@ -27,11 +27,11 @@ import { OverlayMixin } from '../shared/overlay-mixin.js';
  */
 export class ArcModal extends OverlayMixin(LitElement) {
   static properties = {
-    open:       { type: Boolean, reflect: true },
-    heading:    { type: String },
-    size:       { type: String, reflect: true },
+    open: { type: Boolean, reflect: true },
+    heading: { type: String },
+    size: { type: String, reflect: true },
     fullscreen: { type: Boolean, reflect: true },
-    closable:   { type: Boolean, reflect: true },
+    closable: { type: Boolean, reflect: true },
   };
 
   static styles = [
@@ -180,7 +180,12 @@ export class ArcModal extends OverlayMixin(LitElement) {
   _close() {
     if (!this.closable) return;
     // Cancelable: a consumer with unsaved state can preventDefault() to veto.
-    if (!this.dispatchEvent(new CustomEvent('arc-close', { bubbles: true, composed: true, cancelable: true }))) return;
+    if (
+      !this.dispatchEvent(
+        new CustomEvent('arc-close', { bubbles: true, composed: true, cancelable: true }),
+      )
+    )
+      return;
     this.open = false;
   }
 
@@ -211,9 +216,13 @@ export class ArcModal extends OverlayMixin(LitElement) {
             <slot name="header">
               <h2 class="modal__heading">${this.heading}</h2>
             </slot>
-            ${this.closable ? html`
+            ${
+              this.closable
+                ? html`
               <arc-icon-button name="x" label="Close" variant="ghost" size="sm" @click=${this._close} part="close"></arc-icon-button>
-            ` : ''}
+            `
+                : ''
+            }
           </div>
           <div class="modal__body" part="body">
             <slot></slot>

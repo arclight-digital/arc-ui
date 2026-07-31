@@ -33,17 +33,17 @@ import { managedPanelStyles } from '../shared/position-styles.js';
  */
 export class ArcTreeSelect extends FormControlMixin(LitElement) {
   static properties = {
-    items:          { attribute: false },
-    value:          { type: String, reflect: true },
+    items: { attribute: false },
+    value: { type: String, reflect: true },
     expandedValues: { type: Array, attribute: 'expanded-values' },
-    placeholder:    { type: String },
-    label:          { type: String },
-    name:           { type: String, reflect: true },
-    disabled:       { type: Boolean, reflect: true },
-    size:           { type: String, reflect: true },
-    error:          { type: String },
-    open:           { type: Boolean, reflect: true },
-    _expandedKeys:  { state: true },
+    placeholder: { type: String },
+    label: { type: String },
+    name: { type: String, reflect: true },
+    disabled: { type: Boolean, reflect: true },
+    size: { type: String, reflect: true },
+    error: { type: String },
+    open: { type: Boolean, reflect: true },
+    _expandedKeys: { state: true },
   };
 
   static styles = [
@@ -278,7 +278,9 @@ export class ArcTreeSelect extends FormControlMixin(LitElement) {
     this._rows = [];
     this._navRows = [];
     this._clickOutside = new ClickOutsideController(this, {
-      onClickOutside: () => { this.open = false; },
+      onClickOutside: () => {
+        this.open = false;
+      },
     });
     this._position = new PositionController(this, {
       anchor: () => this.shadowRoot?.querySelector('.tree-select__trigger'),
@@ -292,7 +294,9 @@ export class ArcTreeSelect extends FormControlMixin(LitElement) {
     this._listbox = new ListboxController(this, {
       getItemCount: () => this._navRows.length,
       isOpen: () => this.open,
-      onOpen: () => { this.open = true; },
+      onOpen: () => {
+        this.open = true;
+      },
       onClose: () => {
         this.open = false;
         // Virtual focus means the trigger never lost real focus, so there is
@@ -329,6 +333,17 @@ export class ArcTreeSelect extends FormControlMixin(LitElement) {
       }
     }
     this._computeRows();
+    // Open onto the selected leaf, so arrowing starts from where the user
+    // already is rather than from the top of the tree. Set here rather than in
+    // updated() so the active row lands in *this* render: virtual focus is
+    // render-time state, and moving it after the pass paints one frame from the
+    // top of the tree and schedules a second update to correct it.
+    if (changed.has('open') && this.open) {
+      const selected = this._navRows.findIndex(
+        (r) => !r.hasChildren && r.node.value === this.value,
+      );
+      if (selected >= 0) this._listbox.setActive(selected);
+    }
   }
 
   updated(changed) {
@@ -337,12 +352,6 @@ export class ArcTreeSelect extends FormControlMixin(LitElement) {
       if (this.open) {
         this._clickOutside.activate();
         this._position.show();
-        // Open onto the selected leaf, so arrowing starts from where the user
-        // already is rather than from the top of the tree.
-        const selected = this._navRows.findIndex(
-          (r) => !r.hasChildren && r.node.value === this.value
-        );
-        if (selected >= 0) this._listbox.setActive(selected);
       } else {
         this._clickOutside.deactivate();
         this._position.hide();
@@ -409,11 +418,13 @@ export class ArcTreeSelect extends FormControlMixin(LitElement) {
     }
     this.value = row.node.value;
     this.open = false;
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: row.node.value, label: row.node.label, path: row.path },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: row.node.value, label: row.node.label, path: row.path },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _handleTriggerKeydown(e) {
@@ -448,9 +459,13 @@ export class ArcTreeSelect extends FormControlMixin(LitElement) {
   render() {
     const pathNodes = this.value ? this._findPath(this.value) : null;
     const leaf = pathNodes?.[pathNodes.length - 1];
-    const crumbs = pathNodes && pathNodes.length > 1
-      ? pathNodes.slice(0, -1).map((n) => n.label).join(' / ')
-      : '';
+    const crumbs =
+      pathNodes && pathNodes.length > 1
+        ? pathNodes
+            .slice(0, -1)
+            .map((n) => n.label)
+            .join(' / ')
+        : '';
 
     const hasError = !!this.error;
     const treeId = `${this._treeSelectId}-tree`;
@@ -478,11 +493,12 @@ export class ArcTreeSelect extends FormControlMixin(LitElement) {
           @keydown=${this._handleTriggerKeydown}
           part="trigger"
         >
-          ${leaf
-            ? html`<span class="tree-select__value">${crumbs
-                ? html`<span class="tree-select__crumbs">${crumbs} / </span>`
-                : ''}${leaf.label}</span>`
-            : html`<span class="tree-select__placeholder">${this.placeholder}</span>`
+          ${
+            leaf
+              ? html`<span class="tree-select__value">${
+                  crumbs ? html`<span class="tree-select__crumbs">${crumbs} / </span>` : ''
+                }${leaf.label}</span>`
+              : html`<span class="tree-select__placeholder">${this.placeholder}</span>`
           }
           <span class="tree-select__chevron" aria-hidden="true">&#9662;</span>
         </button>
@@ -499,24 +515,31 @@ export class ArcTreeSelect extends FormControlMixin(LitElement) {
                 role="treeitem"
                 aria-level=${row.level + 1}
                 aria-expanded=${row.hasChildren ? String(row.expanded) : nothing}
-                aria-selected=${row.hasChildren ? nothing : (isSelected ? 'true' : 'false')}
+                aria-selected=${row.hasChildren ? nothing : isSelected ? 'true' : 'false'}
                 aria-disabled=${row.disabled ? 'true' : nothing}
                 @click=${() => this._activateRow(row)}
                 part="row"
               >
-                ${Array.from({ length: row.level }, (_, d) => html`
+                ${Array.from(
+                  { length: row.level },
+                  (_, d) => html`
                   <span
                     class="tree-select__rail"
                     style="inset-inline-start: calc(var(--space-md) + ${d * 16 + 7}px)"
                     aria-hidden="true"
                   ></span>
-                `)}
+                `,
+                )}
                 <span class="tree-select__twist ${row.hasChildren ? (row.expanded ? 'tree-select__twist--expanded' : '') : 'tree-select__twist--placeholder'}" aria-hidden="true">
-                  ${row.hasChildren ? html`
+                  ${
+                    row.hasChildren
+                      ? html`
                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
                       <path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                  ` : ''}
+                  `
+                      : ''
+                  }
                 </span>
                 <span class="tree-select__row-label">${row.node.label}</span>
               </div>

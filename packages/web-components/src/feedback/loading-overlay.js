@@ -18,9 +18,9 @@ import '../content/spinner.js';
  */
 export class ArcLoadingOverlay extends LitElement {
   static properties = {
-    active:  { type: Boolean, reflect: true },
+    active: { type: Boolean, reflect: true },
     message: { type: String },
-    global:  { type: Boolean, reflect: true },
+    global: { type: Boolean, reflect: true },
   };
 
   static styles = [

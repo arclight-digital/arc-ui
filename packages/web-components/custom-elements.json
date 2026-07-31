@@ -5361,7 +5361,7 @@
                 "text": "Array<{key:string,label:string,sortable?:boolean,editable?:boolean,pinned?:boolean,width?:string,align?:string}>"
               },
               "default": "[]",
-              "description": "Column definitions. Each entry maps a `key` in your row objects to a rendered column with a `label` header. Optional flags enable sorting, inline editing, and left-edge pinning per column; `width` sets a fixed CSS width (required for accurate pinned offsets) and `align` controls text alignment. Pinned columns are always displayed first. Set via JavaScript property.",
+              "description": "Column definitions. Each entry maps a `key` in your row objects to a rendered column with a `label` header. Optional flags enable sorting, inline editing, and inline-start-edge pinning per column; `width` sets a fixed CSS width (required for accurate pinned offsets) and `align` controls text alignment. Pinned columns are always displayed first. Set via JavaScript property.",
               "attribute": "columns"
             },
             {
@@ -5463,7 +5463,7 @@
                 "text": "Array<{key:string,label:string,sortable?:boolean,editable?:boolean,pinned?:boolean,width?:string,align?:string}>"
               },
               "default": "[]",
-              "description": "Column definitions. Each entry maps a `key` in your row objects to a rendered column with a `label` header. Optional flags enable sorting, inline editing, and left-edge pinning per column; `width` sets a fixed CSS width (required for accurate pinned offsets) and `align` controls text alignment. Pinned columns are always displayed first. Set via JavaScript property.",
+              "description": "Column definitions. Each entry maps a `key` in your row objects to a rendered column with a `label` header. Optional flags enable sorting, inline editing, and inline-start-edge pinning per column; `width` sets a fixed CSS width (required for accurate pinned offsets) and `align` controls text alignment. Pinned columns are always displayed first. Set via JavaScript property.",
               "fieldName": "columns"
             },
             {
@@ -33459,7 +33459,7 @@
           "type": {
             "text": "array"
           },
-          "default": "[ 'arc-command-palette', 'arc-modal', 'arc-sheet', 'arc-drawer', ]",
+          "default": "['arc-command-palette', 'arc-modal', 'arc-sheet', 'arc-drawer']",
           "description": "Components closed until something opens them.\n\nThe overlay-mixin set: everything rendered into the top layer and invisible\nuntil asked for. Nothing inside one can appear in a first paint, so rendering\ntheir contents spends bytes on markup no reader and no metric ever sees. On\narcui.dev that was 174 of a page's 427 roots — the whole ⌘K palette."
         },
         {

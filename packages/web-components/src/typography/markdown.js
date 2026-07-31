@@ -5,7 +5,15 @@ import { sanitizeMarkup, normalizeUrl } from '../shared/sanitize-markup.js';
 
 /** Tags dropped with their contents: active content, and document-level markup. */
 const BANNED_ELEMENTS = new Set([
-  'script', 'style', 'iframe', 'object', 'embed', 'link', 'meta', 'base', 'form',
+  'script',
+  'style',
+  'iframe',
+  'object',
+  'embed',
+  'link',
+  'meta',
+  'base',
+  'form',
 ]);
 
 /** Attributes carrying a URL, where a `javascript:` value would execute. */
@@ -42,12 +50,14 @@ function hardenLinks(tag) {
  * attacker-influenced part of it is the URL inside a link or an image.
  */
 function sanitizeHtml(raw) {
-  return sanitizeMarkup(raw, {
-    banned: BANNED_ELEMENTS,
-    urlAttributes: URL_ATTRIBUTES,
-    isSafeUrl,
-    onTag: hardenLinks,
-  }) ?? '';
+  return (
+    sanitizeMarkup(raw, {
+      banned: BANNED_ELEMENTS,
+      urlAttributes: URL_ATTRIBUTES,
+      isSafeUrl,
+      onTag: hardenLinks,
+    }) ?? ''
+  );
 }
 
 /**
@@ -104,7 +114,7 @@ function parseMarkdown(src) {
     if (/^>\s?/.test(trimmed)) {
       const content = trimmed
         .split('\n')
-        .map(l => l.replace(/^>\s?/, ''))
+        .map((l) => l.replace(/^>\s?/, ''))
         .join('\n');
       out += `<blockquote>${parseMarkdown(content)}</blockquote>`;
       continue;
@@ -112,15 +122,21 @@ function parseMarkdown(src) {
 
     // Unordered list
     if (/^[\-*]\s/.test(trimmed)) {
-      const items = trimmed.split('\n').filter(l => /^[\-*]\s/.test(l.trim()));
-      out += '<ul>' + items.map(l => `<li>${inlineMarkdown(l.trim().replace(/^[\-*]\s+/, ''))}</li>`).join('') + '</ul>';
+      const items = trimmed.split('\n').filter((l) => /^[\-*]\s/.test(l.trim()));
+      out +=
+        '<ul>' +
+        items.map((l) => `<li>${inlineMarkdown(l.trim().replace(/^[\-*]\s+/, ''))}</li>`).join('') +
+        '</ul>';
       continue;
     }
 
     // Ordered list
     if (/^\d+\.\s/.test(trimmed)) {
-      const items = trimmed.split('\n').filter(l => /^\d+\.\s/.test(l.trim()));
-      out += '<ol>' + items.map(l => `<li>${inlineMarkdown(l.trim().replace(/^\d+\.\s+/, ''))}</li>`).join('') + '</ol>';
+      const items = trimmed.split('\n').filter((l) => /^\d+\.\s/.test(l.trim()));
+      out +=
+        '<ol>' +
+        items.map((l) => `<li>${inlineMarkdown(l.trim().replace(/^\d+\.\s+/, ''))}</li>`).join('') +
+        '</ol>';
       continue;
     }
 
@@ -302,7 +318,7 @@ export class ArcMarkdown extends LitElement {
     const slot = this.shadowRoot?.querySelector('slot');
     if (slot) {
       const nodes = slot.assignedNodes({ flatten: true });
-      return nodes.map(n => n.textContent).join('');
+      return nodes.map((n) => n.textContent).join('');
     }
     return this.textContent || '';
   }

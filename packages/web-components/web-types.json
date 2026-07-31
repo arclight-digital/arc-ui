@@ -2880,7 +2880,7 @@
           "attributes": [
             {
               "name": "columns",
-              "description": "Column definitions. Each entry maps a `key` in your row objects to a rendered column with a `label` header. Optional flags enable sorting, inline editing, and left-edge pinning per column; `width` sets a fixed CSS width (required for accurate pinned offsets) and `align` controls text alignment. Pinned columns are always displayed first. Set via JavaScript property.",
+              "description": "Column definitions. Each entry maps a `key` in your row objects to a rendered column with a `label` header. Optional flags enable sorting, inline editing, and inline-start-edge pinning per column; `width` sets a fixed CSS width (required for accurate pinned offsets) and `align` controls text alignment. Pinned columns are always displayed first. Set via JavaScript property.",
               "value": {
                 "type": "Array<{key:string,label:string,sortable?:boolean,editable?:boolean,pinned?:boolean,width?:string,align?:string}>",
                 "default": "[]"
@@ -2957,7 +2957,7 @@
             "properties": [
               {
                 "name": "columns",
-                "description": "Column definitions. Each entry maps a `key` in your row objects to a rendered column with a `label` header. Optional flags enable sorting, inline editing, and left-edge pinning per column; `width` sets a fixed CSS width (required for accurate pinned offsets) and `align` controls text alignment. Pinned columns are always displayed first. Set via JavaScript property.",
+                "description": "Column definitions. Each entry maps a `key` in your row objects to a rendered column with a `label` header. Optional flags enable sorting, inline editing, and inline-start-edge pinning per column; `width` sets a fixed CSS width (required for accurate pinned offsets) and `align` controls text alignment. Pinned columns are always displayed first. Set via JavaScript property.",
                 "type": "Array<{key:string,label:string,sortable?:boolean,editable?:boolean,pinned?:boolean,width?:string,align?:string}>"
               },
               {

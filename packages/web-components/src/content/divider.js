@@ -16,10 +16,10 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcDivider extends LitElement {
   static properties = {
-    variant:  { type: String, reflect: true },
-    align:    { type: String, reflect: true },
+    variant: { type: String, reflect: true },
+    align: { type: String, reflect: true },
     vertical: { type: Boolean, reflect: true },
-    label:    { type: String },
+    label: { type: String },
   };
 
   static styles = [
@@ -70,7 +70,7 @@ export class ArcDivider extends LitElement {
 
       /* Alignment — rewrite gradients to originate from one edge */
       :host([align="left"]) .divider { margin-inline: 0; }
-      :host([align="right"]) .divider { margin-left: auto; margin-right: 0; }
+      :host([align="right"]) .divider { margin-inline-start: auto; margin-inline-end: 0; }
 
       :host([align="left"]:not([variant="glow"]):not([variant="line-gradient"]):not([variant="line-primary"]):not([variant="line-white"])) .divider,
       :host([align="left"][variant="subtle"]) .divider {

@@ -226,7 +226,9 @@ export class ListboxController {
     if (!this.opts.isOpen()) this.opts.onOpen?.();
 
     clearTimeout(this._typeaheadTimer);
-    this._typeaheadTimer = setTimeout(() => { this._typeahead = ''; }, TYPEAHEAD_TIMEOUT);
+    this._typeaheadTimer = setTimeout(() => {
+      this._typeahead = '';
+    }, TYPEAHEAD_TIMEOUT);
 
     const repeat = this._typeahead === e.key;
     this._typeahead = repeat ? e.key : this._typeahead + e.key;

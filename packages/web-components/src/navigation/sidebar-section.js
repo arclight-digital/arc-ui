@@ -15,10 +15,10 @@ import { LitElement, html, css } from 'lit';
  */
 export class ArcSidebarSection extends LitElement {
   static properties = {
-    heading:     { type: String, reflect: true },
+    heading: { type: String, reflect: true },
     collapsible: { type: Boolean, reflect: true },
-    open:        { type: Boolean, reflect: true },
-    icon:        { type: String, reflect: true },
+    open: { type: Boolean, reflect: true },
+    icon: { type: String, reflect: true },
   };
 
   static styles = css`
@@ -41,11 +41,13 @@ export class ArcSidebarSection extends LitElement {
   toggle() {
     if (this.collapsible) {
       this.open = !this.open;
-      this.dispatchEvent(new CustomEvent('arc-toggle', {
-        detail: { open: this.open },
-        bubbles: true,
-        composed: true,
-      }));
+      this.dispatchEvent(
+        new CustomEvent('arc-toggle', {
+          detail: { open: this.open },
+          bubbles: true,
+          composed: true,
+        }),
+      );
     }
   }
 

@@ -23,13 +23,13 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcMeter extends LitElement {
   static properties = {
-    value:   { type: Number, reflect: true },
-    min:     { type: Number },
-    max:     { type: Number },
-    low:     { type: Number },
-    high:    { type: Number },
+    value: { type: Number, reflect: true },
+    min: { type: Number },
+    max: { type: Number },
+    low: { type: Number },
+    high: { type: Number },
     optimum: { type: Number },
-    label:   { type: String },
+    label: { type: String },
   };
 
   static styles = [
@@ -156,12 +156,16 @@ export class ArcMeter extends LitElement {
         aria-valuenow=${this.value}
         aria-label=${this.label || 'Meter'}
       >
-        ${this.label ? html`
+        ${
+          this.label
+            ? html`
           <div class="meter__header" part="header">
             <span class="meter__label" part="label">${this.label}</span>
             <span class="meter__value" part="value">${Math.round(percent)}%</span>
           </div>
-        ` : ''}
+        `
+            : ''
+        }
         <div class="meter__track" part="track">
           <div
             class="meter__fill meter__fill--${zone}"

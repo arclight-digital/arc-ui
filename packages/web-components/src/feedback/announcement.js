@@ -13,7 +13,7 @@ import { LitElement, html, css } from 'lit';
 export class ArcAnnouncement extends LitElement {
   static properties = {
     politeness: { type: String, reflect: true },
-    message:    { type: String },
+    message: { type: String },
   };
 
   static styles = [

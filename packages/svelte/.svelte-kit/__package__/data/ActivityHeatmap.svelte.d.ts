@@ -1,0 +1,41 @@
+import '@arclux/arc-ui/activity-heatmap';
+interface Props {
+    data?: Array<{
+        date: string;
+        value: number;
+        label?: string;
+    }>;
+    endDate?: string;
+    weeks?: number;
+    weekStart?: string;
+    max?: number;
+    legend?: string;
+    class?: string;
+    id?: string;
+    style?: string;
+    title?: string;
+    role?: string;
+    slot?: string;
+    part?: string;
+    exportparts?: string;
+    dir?: string;
+    lang?: string;
+    translate?: string;
+    accesskey?: string;
+    enterkeyhint?: string;
+    inputmode?: string;
+    popover?: string;
+    contenteditable?: boolean | string;
+    tabindex?: number;
+    hidden?: boolean;
+    inert?: boolean;
+    draggable?: boolean;
+    spellcheck?: boolean;
+    autofocus?: boolean;
+    [key: `data-${string}`]: unknown;
+    [key: `aria-${string}`]: unknown;
+    [key: `on${string}`]: unknown;
+}
+declare const ActivityHeatmap: import("svelte").Component<Props, {}, "">;
+type ActivityHeatmap = ReturnType<typeof ActivityHeatmap>;
+export default ActivityHeatmap;

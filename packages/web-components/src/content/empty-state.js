@@ -17,7 +17,7 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcEmptyState extends LitElement {
   static properties = {
-    heading:     { type: String },
+    heading: { type: String },
     description: { type: String },
   };
 

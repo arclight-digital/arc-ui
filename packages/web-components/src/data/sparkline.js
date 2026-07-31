@@ -21,12 +21,12 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcSparkline extends LitElement {
   static properties = {
-    data:   { type: String },
-    type:   { type: String, reflect: true },
-    color:  { type: String },
-    width:  { type: Number },
+    data: { type: String },
+    type: { type: String, reflect: true },
+    color: { type: String },
+    width: { type: Number },
     height: { type: Number },
-    fill:   { type: Boolean },
+    fill: { type: Boolean },
   };
 
   static styles = [
@@ -163,13 +163,17 @@ export class ArcSparkline extends LitElement {
     const dashLen = this._calcLineLength(coords);
 
     return svg`
-      ${this.fill ? svg`
+      ${
+        this.fill
+          ? svg`
         <path
           class="sparkline-area sparkline-area-animated"
           part="area"
           d=${areaPath}
         />
-      ` : ''}
+      `
+          : ''
+      }
       <polyline
         class="sparkline-line sparkline-line-animated"
         part="line"

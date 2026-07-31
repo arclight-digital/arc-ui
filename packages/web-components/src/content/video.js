@@ -42,21 +42,21 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcVideo extends LitElement {
   static properties = {
-    src:      { type: String },
-    poster:   { type: String },
-    label:    { type: String },
+    src: { type: String },
+    poster: { type: String },
+    label: { type: String },
     autoplay: { type: Boolean, reflect: true },
-    loop:     { type: Boolean, reflect: true },
-    muted:    { type: Boolean, reflect: true },
+    loop: { type: Boolean, reflect: true },
+    muted: { type: Boolean, reflect: true },
     // Default-true boolean: presence is still true, and the explicit string
     // "false" is the off switch (same pattern as arc-uptime's summary prop).
     controls: { converter: { fromAttribute: (v) => v !== 'false' } },
-    preload:  { type: String },
-    _started:         { state: true },
-    _playing:         { state: true },
-    _currentTime:     { state: true },
-    _duration:        { state: true },
-    _fullscreen:      { state: true },
+    preload: { type: String },
+    _started: { state: true },
+    _playing: { state: true },
+    _currentTime: { state: true },
+    _duration: { state: true },
+    _fullscreen: { state: true },
     _controlsVisible: { state: true },
   };
 
@@ -342,11 +342,13 @@ export class ArcVideo extends LitElement {
   _onPlay(e) {
     this._started = true;
     this._playing = true;
-    this.dispatchEvent(new CustomEvent('arc-play', {
-      detail: { value: e.target.currentTime ?? 0 },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-play', {
+        detail: { value: e.target.currentTime ?? 0 },
+        bubbles: true,
+        composed: true,
+      }),
+    );
     this._restartIdleTimer();
   }
 
@@ -354,19 +356,23 @@ export class ArcVideo extends LitElement {
     this._playing = false;
     clearTimeout(this._idleTimer);
     this._controlsVisible = true;
-    this.dispatchEvent(new CustomEvent('arc-pause', {
-      detail: { value: e.target.currentTime ?? 0 },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-pause', {
+        detail: { value: e.target.currentTime ?? 0 },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _onEnded(e) {
-    this.dispatchEvent(new CustomEvent('arc-ended', {
-      detail: { value: e.target.currentTime ?? 0 },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-ended', {
+        detail: { value: e.target.currentTime ?? 0 },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _onTimeUpdate(e) {
@@ -604,7 +610,9 @@ export class ArcVideo extends LitElement {
           @durationchange=${this._onLoadedMetadata}
           @click=${this._started ? this._togglePlay : nothing}
         ></video>
-        ${!this._started ? html`
+        ${
+          !this._started
+            ? html`
           <div class="video__overlay" part="overlay">
             <button
               class="video__play"
@@ -615,7 +623,9 @@ export class ArcVideo extends LitElement {
               <arc-icon name="play" size="xl"></arc-icon>
             </button>
           </div>
-        ` : nothing}
+        `
+            : nothing
+        }
         ${controls && this._started ? this._renderControls() : nothing}
       </div>
     `;

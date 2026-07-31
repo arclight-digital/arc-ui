@@ -33,6 +33,14 @@ jobs:
       - name: Lint
         run: pnpm lint
 
+      # Runs after the generate-diff step, not before: prism owns the formatting
+      # of everything it writes, so the wrapper packages are in .prettierignore
+      # and the two never rewrite the same file. Formatting is not cosmetic here
+      # — the CSS checks read declarations out of the css`` templates, and a rule
+      # crushed onto one line is a rule they cannot see.
+      - name: Formatting
+        run: pnpm format:check
+
       - name: Cache Playwright browsers
         uses: actions/cache@v6
         with:

@@ -30,20 +30,20 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
 export class ArcTimePicker extends FormControlMixin(LitElement) {
   static properties = {
     size: { type: String, reflect: true },
-    value:       { type: String, reflect: true },
-    name:        { type: String, reflect: true },
-    min:         { type: String },
-    max:         { type: String },
-    step:        { type: Number },
-    format:      { type: String },
+    value: { type: String, reflect: true },
+    name: { type: String, reflect: true },
+    min: { type: String },
+    max: { type: String },
+    step: { type: Number },
+    format: { type: String },
     placeholder: { type: String },
-    disabled:    { type: Boolean, reflect: true },
-    label:       { type: String },
-    open:        { type: Boolean, reflect: true },
-    _selectedHour:    { state: true },
-    _selectedMinute:  { state: true },
-    _selectedPeriod:  { state: true },
-    _focusedColumn:   { state: true },
+    disabled: { type: Boolean, reflect: true },
+    label: { type: String },
+    open: { type: Boolean, reflect: true },
+    _selectedHour: { state: true },
+    _selectedMinute: { state: true },
+    _selectedPeriod: { state: true },
+    _focusedColumn: { state: true },
   };
 
   static styles = [
@@ -241,7 +241,9 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
 
     this._handleEscape = this._handleEscape.bind(this);
     this._clickOutside = new ClickOutsideController(this, {
-      onClickOutside: () => { this.open = false; },
+      onClickOutside: () => {
+        this.open = false;
+      },
       when: () => this.open,
     });
     this._position = new PositionController(this, {
@@ -359,11 +361,13 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
     this.value = newValue;
     this.open = false;
 
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: this.value },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _formatDisplay(value) {
@@ -385,7 +389,7 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
 
   _getHours() {
     if (this.format === '12h') {
-      return Array.from({ length: 12 }, (_, i) => i === 0 ? 12 : i);
+      return Array.from({ length: 12 }, (_, i) => (i === 0 ? 12 : i));
     }
     return Array.from({ length: 24 }, (_, i) => i);
   }
@@ -402,7 +406,7 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
   _isHourDisabled(hour) {
     // Check if every possible minute in this hour is disabled
     const minutes = this._getMinutes();
-    return minutes.every(m => {
+    return minutes.every((m) => {
       const timeStr = this._to24h(hour, m, this._selectedPeriod);
       return this._isDisabledTime(timeStr);
     });
@@ -418,18 +422,18 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
     // Check if every hour+minute combo for this period is disabled
     const hours = this._getHours();
     const minutes = this._getMinutes();
-    return hours.every(h =>
-      minutes.every(m => {
+    return hours.every((h) =>
+      minutes.every((m) => {
         const timeStr = this._to24h(h, m, period);
         return this._isDisabledTime(timeStr);
-      })
+      }),
     );
   }
 
   /** Value that should be the single tab stop for a column (roving tabindex) */
   _tabStopFor(options, selected, isDisabled) {
     if (selected !== null && options.includes(selected) && !isDisabled(selected)) return selected;
-    const first = options.find(o => !isDisabled(o));
+    const first = options.find((o) => !isDisabled(o));
     return first !== undefined ? first : null;
   }
 
@@ -459,7 +463,9 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
       const next = buttons[nextIndex];
       if (!next) return;
       // Move the roving tab stop along with focus
-      buttons.forEach(b => { b.tabIndex = -1; });
+      buttons.forEach((b) => {
+        b.tabIndex = -1;
+      });
       next.tabIndex = 0;
       next.focus();
       next.scrollIntoView({ block: 'nearest' });
@@ -480,7 +486,7 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
     if (changed.has('open') && this.open) {
       // Scroll selected items into view, then focus the hour tab stop
       this.updateComplete.then(() => {
-        this.shadowRoot.querySelectorAll('.time-option.selected').forEach(el => {
+        this.shadowRoot.querySelectorAll('.time-option.selected').forEach((el) => {
           el.scrollIntoView({ block: 'nearest' });
         });
         this.shadowRoot.querySelector('.column[aria-label="Hours"] button[tabindex="0"]')?.focus();
@@ -492,9 +498,13 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
     const hours = this._getHours();
     const minutes = this._getMinutes();
     const is12h = this.format === '12h';
-    const hourTabStop = this._tabStopFor(hours, this._selectedHour, h => this._isHourDisabled(h));
-    const minuteTabStop = this._tabStopFor(minutes, this._selectedMinute, m => this._isMinuteDisabled(m));
-    const periodTabStop = this._tabStopFor(['AM', 'PM'], this._selectedPeriod, p => this._isPeriodDisabled(p));
+    const hourTabStop = this._tabStopFor(hours, this._selectedHour, (h) => this._isHourDisabled(h));
+    const minuteTabStop = this._tabStopFor(minutes, this._selectedMinute, (m) =>
+      this._isMinuteDisabled(m),
+    );
+    const periodTabStop = this._tabStopFor(['AM', 'PM'], this._selectedPeriod, (p) =>
+      this._isPeriodDisabled(p),
+    );
 
     return html`
       <div class="wrapper" part="wrapper">
@@ -517,13 +527,15 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
           <span class="clock-icon" aria-hidden="true">\u{1F552}</span>
         </div>
 
-        ${this.open ? html`
+        ${
+          this.open
+            ? html`
           <div class="dropdown" part="dropdown" role="dialog" aria-label="Time picker">
             <div class="columns">
               <div>
                 <div class="column-label">${is12h ? 'Hr' : 'Hour'}</div>
                 <div class="column" role="listbox" aria-label="Hours" @keydown=${(e) => this._handleColumnKeydown(e, 'hour')}>
-                  ${hours.map(h => {
+                  ${hours.map((h) => {
                     const disabled = this._isHourDisabled(h);
                     const selected = this._selectedHour === h;
                     return html`
@@ -545,7 +557,7 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
               <div>
                 <div class="column-label">Min</div>
                 <div class="column" role="listbox" aria-label="Minutes" @keydown=${(e) => this._handleColumnKeydown(e, 'minute')}>
-                  ${minutes.map(m => {
+                  ${minutes.map((m) => {
                     const disabled = this._isMinuteDisabled(m);
                     const selected = this._selectedMinute === m;
                     return html`
@@ -562,11 +574,13 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
                 </div>
               </div>
 
-              ${is12h ? html`
+              ${
+                is12h
+                  ? html`
                 <div>
                   <div class="column-label">&nbsp;</div>
                   <div class="column" role="listbox" aria-label="AM or PM" @keydown=${(e) => this._handleColumnKeydown(e, 'period')}>
-                    ${['AM', 'PM'].map(p => {
+                    ${['AM', 'PM'].map((p) => {
                       const disabled = this._isPeriodDisabled(p);
                       const selected = this._selectedPeriod === p;
                       return html`
@@ -582,10 +596,14 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
                     })}
                   </div>
                 </div>
-              ` : ''}
+              `
+                  : ''
+              }
             </div>
           </div>
-        ` : ''}
+        `
+            : ''
+        }
       </div>
     `;
   }

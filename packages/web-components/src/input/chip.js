@@ -17,9 +17,9 @@ import '../data/tag.js';
  */
 export class ArcChip extends LitElement {
   static properties = {
-    selected:   { type: Boolean, reflect: true },
-    disabled:   { type: Boolean, reflect: true },
-    value:      { type: String },
+    selected: { type: Boolean, reflect: true },
+    disabled: { type: Boolean, reflect: true },
+    value: { type: String },
     _inListbox: { state: true },
   };
 
@@ -57,11 +57,13 @@ export class ArcChip extends LitElement {
   _toggle() {
     if (this.disabled) return;
     this.selected = !this.selected;
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: this.value, selected: this.selected },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: this.value, selected: this.selected },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _handleKeydown(e) {
@@ -79,7 +81,7 @@ export class ArcChip extends LitElement {
         exportparts="tag: chip, label"
         role=${this._inListbox ? 'option' : 'button'}
         aria-selected=${this._inListbox ? (this.selected ? 'true' : 'false') : nothing}
-        aria-pressed=${this._inListbox ? nothing : (this.selected ? 'true' : 'false')}
+        aria-pressed=${this._inListbox ? nothing : this.selected ? 'true' : 'false'}
         aria-disabled=${this.disabled ? 'true' : 'false'}
         tabindex=${this.disabled ? '-1' : '0'}
         @click=${this._toggle}

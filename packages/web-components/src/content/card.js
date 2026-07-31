@@ -20,10 +20,10 @@ import { isLoneSlottedAnchor } from '../shared/anchor-adoption.js';
  */
 export class ArcCard extends LitElement {
   static properties = {
-    href:        { type: String },
-    padding:     { type: String, reflect: true },
+    href: { type: String },
+    padding: { type: String, reflect: true },
     interactive: { type: Boolean, reflect: true },
-    _hasFooter:  { state: true },
+    _hasFooter: { state: true },
     _slottedAnchor: { state: true },
   };
 

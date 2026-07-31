@@ -6,8 +6,7 @@ export const clock: ComponentDef = {
   tag: 'arc-clock',
   tier: 'data',
   interactivity: 'interactive',
-  description:
-    'Live clock with a digital or analog face, optionally pinned to an IANA timezone.',
+  description: 'Live clock with a digital or analog face, optionally pinned to an IANA timezone.',
 
   overview: `Clock displays the current time and keeps it current, updating once per second from a single interval that starts on connect and is cleared on disconnect. It ships two faces selected by the \`variant\` attribute. The digital face renders the time in \`var(--font-mono)\` with tabular numerals in the primary text color, so digits tick over without the layout shifting. The analog face is an SVG dial: a minimal tick ring with twelve major marks, hour and minute hands in the primary text color, and an accent-colored second hand with a soft glow around a center pin.
 
@@ -43,7 +42,7 @@ Server rendering produces a valid static face — a dash placeholder on the digi
       'Do not use Clock to describe when something happened — that is TimeAgo, which renders relative phrases like "3 minutes ago"',
       'Do not place many seconds-precision clocks on one page — each ticks every second, and together they compete for attention',
       'Do not force hour12 in interfaces serving mixed locales without a reason; the locale default is usually right',
-      'Do not rely on the displayed time for anything transactional — it is the viewer\'s device clock, not a server clock',
+      "Do not rely on the displayed time for anything transactional — it is the viewer's device clock, not a server clock",
     ],
   },
 

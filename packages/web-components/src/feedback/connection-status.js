@@ -15,7 +15,7 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcConnectionStatus extends LitElement {
   static properties = {
-    online:   { state: true },
+    online: { state: true },
     _visible: { state: true },
   };
 

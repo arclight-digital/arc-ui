@@ -280,9 +280,8 @@ export class ArcToolbar extends LitElement {
     }
 
     const cs = getComputedStyle(toolbar);
-    const avail = toolbar.clientWidth
-      - (parseFloat(cs.paddingLeft) || 0)
-      - (parseFloat(cs.paddingRight) || 0);
+    const avail =
+      toolbar.clientWidth - (parseFloat(cs.paddingLeft) || 0) - (parseFloat(cs.paddingRight) || 0);
     const gap = parseFloat(cs.columnGap) || 0;
     const widths = items.map((el) => this._widthCache.get(el) || 0);
     const totalOf = (n) => widths.slice(0, n).reduce((a, w) => a + w, 0) + gap * Math.max(0, n - 1);
@@ -319,11 +318,13 @@ export class ArcToolbar extends LitElement {
 
     this._overflowItems = hiddenItems;
     if (hiddenItems.length === 0 && this._menuOpen) this._closeMenu(false);
-    this.dispatchEvent(new CustomEvent('arc-overflow-change', {
-      detail: { hiddenCount: hiddenItems.length },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-overflow-change', {
+        detail: { hiddenCount: hiddenItems.length },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _restoreAll() {
@@ -337,10 +338,12 @@ export class ArcToolbar extends LitElement {
       const label = el.getAttribute('label');
       if (label) return label;
     }
-    return el.textContent.trim()
-      || el.getAttribute('aria-label')
-      || el.getAttribute('title')
-      || `Item ${index + 1}`;
+    return (
+      el.textContent.trim() ||
+      el.getAttribute('aria-label') ||
+      el.getAttribute('title') ||
+      `Item ${index + 1}`
+    );
   }
 
   _toggleMenu() {
@@ -387,7 +390,8 @@ export class ArcToolbar extends LitElement {
           aria-hidden=${this._menuOpen ? 'false' : 'true'}
           part="overflow-panel"
         >
-          ${this._overflowItems.map((el, i) => html`
+          ${this._overflowItems.map(
+            (el, i) => html`
             <button
               id="overflow-item-${i}"
               class="overflow__item ${i === this._menuKb.focusedIndex ? 'is-focused' : ''}"
@@ -395,9 +399,13 @@ export class ArcToolbar extends LitElement {
               tabindex=${i === this._menuKb.focusedIndex ? '0' : '-1'}
               part="overflow-item"
               @click=${() => this._activateItem(i)}
-              @mouseenter=${() => { this._menuKb.focusedIndex = i; this.requestUpdate(); }}
+              @mouseenter=${() => {
+                this._menuKb.focusedIndex = i;
+                this.requestUpdate();
+              }}
             >${this._itemLabel(el, i)}</button>
-          `)}
+          `,
+          )}
         </div>
       </div>
     `;

@@ -30,18 +30,18 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  */
 export class ArcTextarea extends FormControlMixin(LitElement) {
   static properties = {
-    value:       { type: String },
-    name:        { type: String, reflect: true },
+    value: { type: String },
+    name: { type: String, reflect: true },
     placeholder: { type: String },
-    label:       { type: String },
-    rows:        { type: Number },
-    maxlength:   { type: Number },
-    disabled:    { type: Boolean, reflect: true },
-    readonly:    { type: Boolean, reflect: true },
-    resize:      { type: String, reflect: true },
-    size:        { type: String, reflect: true },
-    autoResize:  { type: Boolean, attribute: 'auto-resize', reflect: true },
-    error:       { type: String },
+    label: { type: String },
+    rows: { type: Number },
+    maxlength: { type: Number },
+    disabled: { type: Boolean, reflect: true },
+    readonly: { type: Boolean, reflect: true },
+    resize: { type: String, reflect: true },
+    size: { type: String, reflect: true },
+    autoResize: { type: Boolean, attribute: 'auto-resize', reflect: true },
+    error: { type: String },
   };
 
   static styles = [
@@ -169,11 +169,13 @@ export class ArcTextarea extends FormControlMixin(LitElement) {
     this.value = e.target.value;
     this._updateFormValue();
     if (this.autoResize) this._autoGrow(e.target);
-    this.dispatchEvent(new CustomEvent('arc-input', {
-      detail: { value: this.value },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-input', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _autoGrow(el) {
@@ -192,11 +194,13 @@ export class ArcTextarea extends FormControlMixin(LitElement) {
   _onChange(e) {
     this.value = e.target.value;
     this._updateFormValue();
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: this.value },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   render() {
@@ -206,9 +210,13 @@ export class ArcTextarea extends FormControlMixin(LitElement) {
 
     return html`
       <div class="textarea-wrapper ${hasError ? 'error' : ''}" part="wrapper">
-        ${this.label ? html`
+        ${
+          this.label
+            ? html`
           <label part="label" id="textarea-label">${this.label}</label>
-        ` : ''}
+        `
+            : ''
+        }
         <textarea
           part="textarea"
           .value=${this.value}
@@ -224,14 +232,22 @@ export class ArcTextarea extends FormControlMixin(LitElement) {
           @change=${this._onChange}
         ></textarea>
         <div class="footer">
-          ${hasError ? html`
+          ${
+            hasError
+              ? html`
             <span class="error-message" id="error-msg" role="alert" part="error">${this.error}</span>
-          ` : html`<span></span>`}
-          ${showCounter ? html`
+          `
+              : html`<span></span>`
+          }
+          ${
+            showCounter
+              ? html`
             <span class="char-count ${atLimit ? 'at-limit' : ''}" part="counter" aria-live="polite">
               ${this.value.length}/${this.maxlength}
             </span>
-          ` : ''}
+          `
+              : ''
+          }
         </div>
       </div>
     `;

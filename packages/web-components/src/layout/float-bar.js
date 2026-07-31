@@ -15,7 +15,7 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcFloatBar extends LitElement {
   static properties = {
-    open:     { type: Boolean, reflect: true },
+    open: { type: Boolean, reflect: true },
     position: { type: String, reflect: true },
   };
 

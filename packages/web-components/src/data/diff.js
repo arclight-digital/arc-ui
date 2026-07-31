@@ -17,8 +17,8 @@ import { tokenStyles } from '../shared-styles.js';
 export class ArcDiff extends LitElement {
   static properties = {
     original: { type: String },
-    revised:  { type: String },
-    mode:   { type: String, reflect: true },
+    revised: { type: String },
+    mode: { type: String, reflect: true },
   };
 
   static styles = [
@@ -118,19 +118,22 @@ export class ArcDiff extends LitElement {
     const dp = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
     for (let i = 1; i <= m; i++) {
       for (let j = 1; j <= n; j++) {
-        dp[i][j] = beforeLines[i - 1] === afterLines[j - 1]
-          ? dp[i - 1][j - 1] + 1
-          : Math.max(dp[i - 1][j], dp[i][j - 1]);
+        dp[i][j] =
+          beforeLines[i - 1] === afterLines[j - 1]
+            ? dp[i - 1][j - 1] + 1
+            : Math.max(dp[i - 1][j], dp[i][j - 1]);
       }
     }
 
     // Backtrack to produce diff operations
     const ops = [];
-    let i = m, j = n;
+    let i = m,
+      j = n;
     while (i > 0 || j > 0) {
       if (i > 0 && j > 0 && beforeLines[i - 1] === afterLines[j - 1]) {
         ops.push({ type: 'unchanged', text: beforeLines[i - 1], oldNum: i, newNum: j });
-        i--; j--;
+        i--;
+        j--;
       } else if (j > 0 && (i === 0 || dp[i][j - 1] >= dp[i - 1][j])) {
         ops.push({ type: 'added', text: afterLines[j - 1], newNum: j });
         j--;
@@ -162,21 +165,17 @@ export class ArcDiff extends LitElement {
     const ops = this._computeDiff(beforeLines, afterLines);
 
     if (this.mode === 'side-by-side') {
-      const removedOps = ops.filter(o => o.type !== 'added');
-      const addedOps = ops.filter(o => o.type !== 'removed');
+      const removedOps = ops.filter((o) => o.type !== 'added');
+      const addedOps = ops.filter((o) => o.type !== 'removed');
 
       return html`
         <div class="diff" part="container">
           <div class="diff__body">
             <div class="diff__pane">
-              ${removedOps.map(op => this._renderLine(
-                op.type === 'unchanged' ? { ...op } : op
-              ))}
+              ${removedOps.map((op) => this._renderLine(op.type === 'unchanged' ? { ...op } : op))}
             </div>
             <div class="diff__pane">
-              ${addedOps.map(op => this._renderLine(
-                op.type === 'unchanged' ? { ...op } : op
-              ))}
+              ${addedOps.map((op) => this._renderLine(op.type === 'unchanged' ? { ...op } : op))}
             </div>
           </div>
         </div>
@@ -186,7 +185,7 @@ export class ArcDiff extends LitElement {
     return html`
       <div class="diff" part="container">
         <div class="diff__body">
-          ${ops.map(op => this._renderLine(op))}
+          ${ops.map((op) => this._renderLine(op))}
         </div>
       </div>
     `;

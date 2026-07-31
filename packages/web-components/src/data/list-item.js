@@ -21,10 +21,10 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcListItem extends LitElement {
   static properties = {
-    value:      { type: String, reflect: true },
-    selected:   { type: Boolean, reflect: true },
-    disabled:   { type: Boolean, reflect: true },
-    href:       { type: String },
+    value: { type: String, reflect: true },
+    selected: { type: Boolean, reflect: true },
+    disabled: { type: Boolean, reflect: true },
+    href: { type: String },
     _hasPrefix: { state: true },
     _hasSuffix: { state: true },
     _hasDescription: { state: true },
@@ -149,11 +149,13 @@ export class ArcListItem extends LitElement {
 
   _onClick(e) {
     if (this.disabled) return;
-    this.dispatchEvent(new CustomEvent('arc-select', {
-      bubbles: true,
-      composed: true,
-      detail: { value: this.value },
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-select', {
+        bubbles: true,
+        composed: true,
+        detail: { value: this.value },
+      }),
+    );
   }
 
   _renderContent() {

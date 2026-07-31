@@ -5,10 +5,10 @@ import { getStatusIcon } from '../status-utils.js';
 /** Returns inline style string setting --_status-color/rgb for a given variant */
 function statusStyle(variant) {
   const map = {
-    info:    { color: 'var(--accent-primary)',  rgb: 'var(--accent-primary-rgb)' },
-    success: { color: 'var(--color-success)',   rgb: 'var(--color-success-rgb)' },
-    warning: { color: 'var(--color-warning)',   rgb: 'var(--color-warning-rgb)' },
-    error:   { color: 'var(--color-error)',     rgb: 'var(--color-error-rgb)' },
+    info: { color: 'var(--accent-primary)', rgb: 'var(--accent-primary-rgb)' },
+    success: { color: 'var(--color-success)', rgb: 'var(--color-success-rgb)' },
+    warning: { color: 'var(--color-warning)', rgb: 'var(--color-warning-rgb)' },
+    error: { color: 'var(--color-error)', rgb: 'var(--color-error-rgb)' },
   };
   const v = map[variant] || map.info;
   return `--_status-color:${v.color};--_status-rgb:${v.rgb}`;
@@ -44,12 +44,12 @@ function statusStyle(variant) {
  */
 export class ArcToast extends LitElement {
   static properties = {
-    position:   { type: String, reflect: true },
-    duration:   { type: Number },
+    position: { type: String, reflect: true },
+    duration: { type: Number },
     maxVisible: { type: Number, attribute: 'max-visible' },
-    dedupe:     { type: Boolean },
+    dedupe: { type: Boolean },
     queueLimit: { type: Number, attribute: 'queue-limit' },
-    _toasts:    { state: true },
+    _toasts: { state: true },
   };
 
   static styles = [
@@ -168,7 +168,9 @@ export class ArcToast extends LitElement {
     this._timers = new Set();
     this._lastCounts = { visible: 0, queued: 0 };
     // Lets any component raise a toast without holding a reference to this one.
-    this._onDocToast = (e) => { this.show(e.detail ?? {}); };
+    this._onDocToast = (e) => {
+      this.show(e.detail ?? {});
+    };
   }
 
   connectedCallback() {
@@ -202,8 +204,9 @@ export class ArcToast extends LitElement {
     const { message = '', variant = 'info' } = options;
 
     if (this.dedupe) {
-      const existing = [...this._toasts, ...this._queue]
-        .find(t => t.message === message && t.variant === variant);
+      const existing = [...this._toasts, ...this._queue].find(
+        (t) => t.message === message && t.variant === variant,
+      );
       if (existing) {
         existing.count += 1;
         // A visible duplicate gets its timer restarted, so a repeating message
@@ -227,11 +230,13 @@ export class ArcToast extends LitElement {
         dropped += 1;
       }
       if (dropped > 0) {
-        this.dispatchEvent(new CustomEvent('arc-queue-overflow', {
-          detail: { dropped },
-          bubbles: true,
-          composed: true,
-        }));
+        this.dispatchEvent(
+          new CustomEvent('arc-queue-overflow', {
+            detail: { dropped },
+            bubbles: true,
+            composed: true,
+          }),
+        );
       }
     }
 
@@ -246,12 +251,12 @@ export class ArcToast extends LitElement {
    * @param {number} id
    */
   dismiss(id) {
-    if (this._toasts.some(t => t.id === id)) {
+    if (this._toasts.some((t) => t.id === id)) {
       this._dismiss(id);
       return;
     }
     const before = this._queue.length;
-    this._queue = this._queue.filter(t => t.id !== id);
+    this._queue = this._queue.filter((t) => t.id !== id);
     if (this._queue.length !== before) this._notify();
   }
 
@@ -300,14 +305,16 @@ export class ArcToast extends LitElement {
 
   _notify() {
     const counts = { visible: this._toasts.length, queued: this._queue.length };
-    if (counts.visible === this._lastCounts.visible
-        && counts.queued === this._lastCounts.queued) return;
+    if (counts.visible === this._lastCounts.visible && counts.queued === this._lastCounts.queued)
+      return;
     this._lastCounts = counts;
-    this.dispatchEvent(new CustomEvent('arc-queue-change', {
-      detail: counts,
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-queue-change', {
+        detail: counts,
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   /** The rendered text: the message, plus a counter once it has repeated. */
@@ -321,7 +328,7 @@ export class ArcToast extends LitElement {
   }
 
   _dismiss(id) {
-    if (!this._toasts.some(t => t.id === id)) return;
+    if (!this._toasts.some((t) => t.id === id)) return;
     const el = this.shadowRoot.querySelector(`[data-toast-id="${id}"]`);
     if (el) {
       el.classList.add('is-exiting');
@@ -329,12 +336,14 @@ export class ArcToast extends LitElement {
       const cleanup = () => {
         if (done) return;
         done = true;
-        this._toasts = this._toasts.filter(t => t.id !== id);
-        this.dispatchEvent(new CustomEvent('arc-close', {
-          detail: { id },
-          bubbles: true,
-          composed: true,
-        }));
+        this._toasts = this._toasts.filter((t) => t.id !== id);
+        this.dispatchEvent(
+          new CustomEvent('arc-close', {
+            detail: { id },
+            bubbles: true,
+            composed: true,
+          }),
+        );
         this._release();
         this._notify();
       };
@@ -342,7 +351,7 @@ export class ArcToast extends LitElement {
       // Safety fallback if animation doesn't fire (e.g. prefers-reduced-motion)
       this._setTimer(cleanup, 300);
     } else {
-      this._toasts = this._toasts.filter(t => t.id !== id);
+      this._toasts = this._toasts.filter((t) => t.id !== id);
       this._release();
       this._notify();
     }
@@ -351,16 +360,22 @@ export class ArcToast extends LitElement {
   render() {
     return html`
       <div class="toast-container" role="status" aria-live="polite" aria-atomic="false" part="container">
-        ${this._toasts.map(t => html`
+        ${this._toasts.map(
+          (t) => html`
           <div class="toast" style=${statusStyle(t.variant)} data-toast-id=${t.id} part="toast">
             <span class="toast__icon" aria-hidden="true">${getStatusIcon(t.variant)}</span>
             <span class="toast__message">${this._label(t)}</span>
-            ${t.actionLabel ? html`
+            ${
+              t.actionLabel
+                ? html`
               <arc-button variant="ghost" size="sm" @click=${() => this._handleAction(t)} part="action">${t.actionLabel}</arc-button>
-            ` : ''}
+            `
+                : ''
+            }
             <arc-icon-button name="x" label="Dismiss" variant="ghost" size="sm" @click=${() => this._dismiss(t.id)} part="dismiss"></arc-icon-button>
           </div>
-        `)}
+        `,
+        )}
       </div>
     `;
   }

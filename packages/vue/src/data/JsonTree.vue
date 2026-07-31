@@ -10,7 +10,6 @@ const props = withDefaults(defineProps<{
   expanded?: number | boolean;
   keysQuoted?: boolean;
 }>(), {
-  data: 'undefined',
   json: '',
   expanded: 1,
   keysQuoted: false,

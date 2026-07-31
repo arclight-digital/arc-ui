@@ -25,11 +25,11 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcClock extends LitElement {
   static properties = {
-    variant:      { type: String, reflect: true },
-    timezone:     { type: String },
-    label:        { type: String },
-    showSeconds:  { type: Boolean, reflect: true, attribute: 'show-seconds' },
-    hour12:       { type: Boolean },
+    variant: { type: String, reflect: true },
+    timezone: { type: String },
+    label: { type: String },
+    showSeconds: { type: Boolean, reflect: true, attribute: 'show-seconds' },
+    hour12: { type: Boolean },
     showTimezone: { type: Boolean, reflect: true, attribute: 'show-timezone' },
     _now: { state: true },
   };
@@ -280,11 +280,13 @@ export class ArcClock extends LitElement {
         <line class="hand hand--minute" part="hand-minute"
           x1="50" y1="50" x2="50" y2="18"
           transform="rotate(${minuteAngle} 50 50)"></line>
-        ${this.showSeconds
-          ? svg`<line class="hand hand--second" part="hand-second"
+        ${
+          this.showSeconds
+            ? svg`<line class="hand hand--second" part="hand-second"
               x1="50" y1="57" x2="50" y2="14"
               transform="rotate(${secondAngle} 50 50)"></line>`
-          : ''}
+            : ''
+        }
         <circle class="pin" part="pin" cx="50" cy="50" r="3"></circle>
         <circle class="pin-core" cx="50" cy="50" r="1.1"></circle>
       </svg>
@@ -301,9 +303,11 @@ export class ArcClock extends LitElement {
         <div class="face" part="face" aria-hidden="true">
           ${analog ? this._renderAnalog() : this._renderDigital()}
         </div>
-        ${this.label
-          ? html`<div class="label" part="label" aria-hidden="true">${this.label}</div>`
-          : ''}
+        ${
+          this.label
+            ? html`<div class="label" part="label" aria-hidden="true">${this.label}</div>`
+            : ''
+        }
         ${accessible ? html`<span class="sr-only">${accessible}</span>` : ''}
       </div>
     `;

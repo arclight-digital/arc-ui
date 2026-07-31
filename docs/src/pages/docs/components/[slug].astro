@@ -1,6 +1,7 @@
 ---
 import DocsLayout from '../../../layouts/DocsLayout.astro';
 import ComponentShowcase from '../../../components/ComponentShowcase.astro';
+import ApiList from '../../../components/ApiList.astro';
 import { components } from '../../../data/components/index';
 import { getApi } from '../../../data/manifest';
 
@@ -20,7 +21,6 @@ const subComponents = (component.subComponents ?? []).map((sub: any) => ({
   ...sub,
   api: getApi(sub.tag),
 }));
-const hasEventDetails = api.events.some((e) => e.detail);
 
 const tierColors: Record<string, string> = {
   layout: '100, 180, 120',
@@ -208,12 +208,7 @@ const headings = [
           <p>{interactivityNotes[component.interactivity]}</p>
         </div>
       )}
-      <ComponentShowcase
-        name={component.name}
-        description={component.description}
-        tabs={component.tabs}
-        codeOnly
-      />
+      <ComponentShowcase tabs={component.tabs} />
     </section>
 
     <!-- API Table -->
@@ -222,26 +217,7 @@ const headings = [
         <h2 class="docs-heading">API</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
         <div class="component-page__api">
-          <table class="api-table">
-            <thead>
-              <tr>
-                <th>Prop</th>
-                <th>Type</th>
-                <th>Default</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              {api.props.map((p) => (
-                <tr>
-                  <td><code>{p.name}</code></td>
-                  <td><code>{p.type}</code></td>
-                  <td>{p.default ? <code>{p.default}</code> : '—'}</td>
-                  <td>{p.description}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <ApiList rows={api.props} />
         </div>
       </section>
     )}
@@ -252,24 +228,7 @@ const headings = [
         <h2 class="docs-heading">Events</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
         <div class="component-page__api">
-          <table class="api-table">
-            <thead>
-              <tr>
-                <th>Event</th>
-                {hasEventDetails && <th>Detail</th>}
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              {api.events.map((ev) => (
-                <tr>
-                  <td><code>{ev.name}</code></td>
-                  {hasEventDetails && <td>{ev.detail ? <code>{ev.detail}</code> : '—'}</td>}
-                  <td>{ev.description}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <ApiList rows={api.events} kind="event" />
         </div>
       </section>
     )}
@@ -283,26 +242,7 @@ const headings = [
         <p class="component-page__desc" style="margin-top:var(--space-sm)">{sub.description}</p>
         {sub.api.props.length > 0 && (
           <div class="component-page__api" style="margin-top:var(--space-md)">
-            <table class="api-table">
-              <thead>
-                <tr>
-                  <th>Prop</th>
-                  <th>Type</th>
-                  <th>Default</th>
-                  <th>Description</th>
-                </tr>
-              </thead>
-              <tbody>
-                {sub.api.props.map((p: any) => (
-                  <tr>
-                    <td><code>{p.name}</code></td>
-                    <td><code>{p.type}</code></td>
-                    <td>{p.default ? <code>{p.default}</code> : '—'}</td>
-                    <td>{p.description}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <ApiList rows={sub.api.props} />
           </div>
         )}
       </section>
@@ -627,48 +567,6 @@ const headings = [
     border-radius: var(--radius-lg) var(--radius-lg) 0 0;
     opacity: 0.4;
     z-index: 1;
-  }
-
-  .api-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: var(--text-sm);
-  }
-
-  .api-table th {
-    text-align: left;
-    font-family: var(--font-accent);
-    font-size: var(--text-xs);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text-ghost);
-    font-weight: 600;
-    padding: var(--space-sm) var(--space-md);
-    border-bottom: 1px solid var(--border-subtle);
-    background: var(--bg-elevated);
-  }
-
-  .api-table td {
-    padding: var(--space-sm) var(--space-md);
-    border-bottom: 1px solid var(--border-subtle);
-    color: var(--text-secondary);
-    vertical-align: top;
-    /* Documented object types run long and have no spaces to break at
-       (`Array<{key:string,label:string,…}>`), so without this the table forces
-       the API panel to scroll horizontally. That is worse to read than a
-       wrapped type, and it makes the panel a scrollable region with nothing
-       focusable in it — a serious axe failure. `anywhere` rather than
-       `break-word` so the break also shrinks the column's min-content width,
-       which is what actually lets the table fit. */
-    overflow-wrap: anywhere;
-  }
-
-  .api-table code {
-    font-size: var(--text-xs);
-    background: var(--bg-surface);
-    padding: 1px 6px;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border-subtle);
   }
 
   /* ── Overview ── */

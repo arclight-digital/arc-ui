@@ -15,43 +15,128 @@ const k = (id, w = 4) => ({ id, w });
 const g = (w) => ({ gap: w });
 
 const F_ROW = [
-  k('esc'), g(4),
-  k('f1'), k('f2'), k('f3'), k('f4'), g(2),
-  k('f5'), k('f6'), k('f7'), k('f8'), g(2),
-  k('f9'), k('f10'), k('f11'), k('f12'),
+  k('esc'),
+  g(4),
+  k('f1'),
+  k('f2'),
+  k('f3'),
+  k('f4'),
+  g(2),
+  k('f5'),
+  k('f6'),
+  k('f7'),
+  k('f8'),
+  g(2),
+  k('f9'),
+  k('f10'),
+  k('f11'),
+  k('f12'),
 ];
 
 /* In compact, Esc takes the backquote position (the 60% convention); in
    ansi, Esc lives in the F-row and backquote returns home. */
 const NUM_ROW_COMPACT = [
-  k('esc'), k('1'), k('2'), k('3'), k('4'), k('5'), k('6'), k('7'), k('8'),
-  k('9'), k('0'), k('minus'), k('equal'), k('backspace', 8),
+  k('esc'),
+  k('1'),
+  k('2'),
+  k('3'),
+  k('4'),
+  k('5'),
+  k('6'),
+  k('7'),
+  k('8'),
+  k('9'),
+  k('0'),
+  k('minus'),
+  k('equal'),
+  k('backspace', 8),
 ];
 const NUM_ROW_ANSI = [
-  k('backquote'), k('1'), k('2'), k('3'), k('4'), k('5'), k('6'), k('7'),
-  k('8'), k('9'), k('0'), k('minus'), k('equal'), k('backspace', 8),
+  k('backquote'),
+  k('1'),
+  k('2'),
+  k('3'),
+  k('4'),
+  k('5'),
+  k('6'),
+  k('7'),
+  k('8'),
+  k('9'),
+  k('0'),
+  k('minus'),
+  k('equal'),
+  k('backspace', 8),
 ];
 
 const TOP_ROW = [
-  k('tab', 6), k('q'), k('w'), k('e'), k('r'), k('t'), k('y'), k('u'),
-  k('i'), k('o'), k('p'), k('bracketleft'), k('bracketright'), k('backslash', 6),
+  k('tab', 6),
+  k('q'),
+  k('w'),
+  k('e'),
+  k('r'),
+  k('t'),
+  k('y'),
+  k('u'),
+  k('i'),
+  k('o'),
+  k('p'),
+  k('bracketleft'),
+  k('bracketright'),
+  k('backslash', 6),
 ];
 
 const HOME_ROW = [
-  k('caps', 7), k('a'), k('s'), k('d'), k('f'), k('g'), k('h'), k('j'),
-  k('k'), k('l'), k('semicolon'), k('quote'), k('enter', 9),
+  k('caps', 7),
+  k('a'),
+  k('s'),
+  k('d'),
+  k('f'),
+  k('g'),
+  k('h'),
+  k('j'),
+  k('k'),
+  k('l'),
+  k('semicolon'),
+  k('quote'),
+  k('enter', 9),
 ];
 
 const SHIFT_ROW = [
-  k('shift', 9), k('z'), k('x'), k('c'), k('v'), k('b'), k('n'), k('m'),
-  k('comma'), k('period'), k('slash'), k('shift', 11),
+  k('shift', 9),
+  k('z'),
+  k('x'),
+  k('c'),
+  k('v'),
+  k('b'),
+  k('n'),
+  k('m'),
+  k('comma'),
+  k('period'),
+  k('slash'),
+  k('shift', 11),
 ];
 
 /** Bottom row order follows the platform: Cmd flanks Space on a Mac board. */
 function bottomRow(platform) {
   return platform === 'mac'
-    ? [k('ctrl', 5), k('alt', 5), k('meta', 5), k('space', 30), k('meta', 5), k('alt', 5), k('ctrl', 5)]
-    : [k('ctrl', 5), k('meta', 5), k('alt', 5), k('space', 30), k('alt', 5), k('meta', 5), k('ctrl', 5)];
+    ? [
+        k('ctrl', 5),
+        k('alt', 5),
+        k('meta', 5),
+        k('space', 30),
+        k('meta', 5),
+        k('alt', 5),
+        k('ctrl', 5),
+      ]
+    : [
+        k('ctrl', 5),
+        k('meta', 5),
+        k('alt', 5),
+        k('space', 30),
+        k('alt', 5),
+        k('meta', 5),
+        k('ctrl', 5),
+      ];
 }
 
 /* Nav cluster (ansi only): absolute placements right of the 2-column
@@ -72,15 +157,19 @@ const NAV_CLUSTER = [
 
 /** Every key with its grid placement, for one layout on one platform. */
 function buildBoard(layout, platform) {
-  const rows = layout === 'ansi'
-    ? [F_ROW, NUM_ROW_ANSI, TOP_ROW, HOME_ROW, SHIFT_ROW, bottomRow(platform)]
-    : [NUM_ROW_COMPACT, TOP_ROW, HOME_ROW, SHIFT_ROW, bottomRow(platform)];
+  const rows =
+    layout === 'ansi'
+      ? [F_ROW, NUM_ROW_ANSI, TOP_ROW, HOME_ROW, SHIFT_ROW, bottomRow(platform)]
+      : [NUM_ROW_COMPACT, TOP_ROW, HOME_ROW, SHIFT_ROW, bottomRow(platform)];
 
   const keys = [];
   rows.forEach((row, r) => {
     let col = 1;
     for (const item of row) {
-      if (item.gap) { col += item.gap; continue; }
+      if (item.gap) {
+        col += item.gap;
+        continue;
+      }
       keys.push({ id: item.id, row: r + 1, col, span: item.w });
       col += item.w;
     }
@@ -96,39 +185,68 @@ function buildBoard(layout, platform) {
    on mac and ctrl elsewhere, so one chord string documents both platforms. */
 
 const MODIFIER_IDS = {
-  ctrl: 'ctrl', control: 'ctrl',
-  meta: 'meta', cmd: 'meta', command: 'meta', win: 'meta', windows: 'meta',
+  ctrl: 'ctrl',
+  control: 'ctrl',
+  meta: 'meta',
+  cmd: 'meta',
+  command: 'meta',
+  win: 'meta',
+  windows: 'meta',
   shift: 'shift',
-  alt: 'alt', option: 'alt', opt: 'alt',
+  alt: 'alt',
+  option: 'alt',
+  opt: 'alt',
 };
 
 /** Typed key name → board key id. Letters, digits and F-keys pass through. */
 const KEY_IDS = {
-  escape: 'esc', esc: 'esc',
-  enter: 'enter', return: 'enter',
-  space: 'space', spacebar: 'space',
+  escape: 'esc',
+  esc: 'esc',
+  enter: 'enter',
+  return: 'enter',
+  space: 'space',
+  spacebar: 'space',
   backspace: 'backspace',
   tab: 'tab',
-  capslock: 'caps', caps: 'caps',
-  delete: 'delete', del: 'delete',
-  insert: 'insert', ins: 'insert',
-  home: 'home', end: 'end',
-  pageup: 'pageup', pgup: 'pageup',
-  pagedown: 'pagedown', pgdn: 'pagedown',
-  up: 'up', arrowup: 'up',
-  down: 'down', arrowdown: 'down',
-  left: 'left', arrowleft: 'left',
-  right: 'right', arrowright: 'right',
-  '-': 'minus', minus: 'minus',
-  '=': 'equal', equal: 'equal',
-  '[': 'bracketleft', ']': 'bracketright',
+  capslock: 'caps',
+  caps: 'caps',
+  delete: 'delete',
+  del: 'delete',
+  insert: 'insert',
+  ins: 'insert',
+  home: 'home',
+  end: 'end',
+  pageup: 'pageup',
+  pgup: 'pageup',
+  pagedown: 'pagedown',
+  pgdn: 'pagedown',
+  up: 'up',
+  arrowup: 'up',
+  down: 'down',
+  arrowdown: 'down',
+  left: 'left',
+  arrowleft: 'left',
+  right: 'right',
+  arrowright: 'right',
+  '-': 'minus',
+  minus: 'minus',
+  '=': 'equal',
+  equal: 'equal',
+  '[': 'bracketleft',
+  ']': 'bracketright',
   '\\': 'backslash',
-  ';': 'semicolon', semicolon: 'semicolon',
-  "'": 'quote', quote: 'quote',
-  ',': 'comma', comma: 'comma',
-  '.': 'period', period: 'period',
-  '/': 'slash', slash: 'slash',
-  '`': 'backquote', backquote: 'backquote',
+  ';': 'semicolon',
+  semicolon: 'semicolon',
+  "'": 'quote',
+  quote: 'quote',
+  ',': 'comma',
+  comma: 'comma',
+  '.': 'period',
+  period: 'period',
+  '/': 'slash',
+  slash: 'slash',
+  '`': 'backquote',
+  backquote: 'backquote',
 };
 
 /** Board key id, or null when the name is not a key this board knows. */
@@ -170,12 +288,33 @@ const MOD_LEGENDS = {
 };
 
 const BASE_LEGENDS = {
-  esc: 'Esc', tab: 'Tab', caps: 'Caps', enter: 'Enter', backspace: '⌫',
-  space: '', minus: '-', equal: '=', bracketleft: '[', bracketright: ']',
-  backslash: '\\', semicolon: ';', quote: "'", comma: ',', period: '.',
-  slash: '/', backquote: '`', insert: 'Ins', delete: 'Del', home: 'Home',
-  end: 'End', pageup: 'PgUp', pagedown: 'PgDn',
-  up: '↑', down: '↓', left: '←', right: '→',
+  esc: 'Esc',
+  tab: 'Tab',
+  caps: 'Caps',
+  enter: 'Enter',
+  backspace: '⌫',
+  space: '',
+  minus: '-',
+  equal: '=',
+  bracketleft: '[',
+  bracketright: ']',
+  backslash: '\\',
+  semicolon: ';',
+  quote: "'",
+  comma: ',',
+  period: '.',
+  slash: '/',
+  backquote: '`',
+  insert: 'Ins',
+  delete: 'Del',
+  home: 'Home',
+  end: 'End',
+  pageup: 'PgUp',
+  pagedown: 'PgDn',
+  up: '↑',
+  down: '↓',
+  left: '←',
+  right: '→',
 };
 
 function legendFor(id, platform) {
@@ -197,13 +336,33 @@ const MOD_NAMES = {
 const MOD_ORDER = ['ctrl', 'meta', 'alt', 'shift'];
 
 const KEY_NAMES = {
-  esc: 'Esc', tab: 'Tab', caps: 'Caps Lock', enter: 'Enter',
-  backspace: 'Backspace', space: 'Space', insert: 'Insert', delete: 'Delete',
-  home: 'Home', end: 'End', pageup: 'Page Up', pagedown: 'Page Down',
-  up: 'Up', down: 'Down', left: 'Left', right: 'Right',
-  minus: '-', equal: '=', bracketleft: '[', bracketright: ']',
-  backslash: '\\', semicolon: ';', quote: "'", comma: ',', period: '.',
-  slash: '/', backquote: '`',
+  esc: 'Esc',
+  tab: 'Tab',
+  caps: 'Caps Lock',
+  enter: 'Enter',
+  backspace: 'Backspace',
+  space: 'Space',
+  insert: 'Insert',
+  delete: 'Delete',
+  home: 'Home',
+  end: 'End',
+  pageup: 'Page Up',
+  pagedown: 'Page Down',
+  up: 'Up',
+  down: 'Down',
+  left: 'Left',
+  right: 'Right',
+  minus: '-',
+  equal: '=',
+  bracketleft: '[',
+  bracketright: ']',
+  backslash: '\\',
+  semicolon: ';',
+  quote: "'",
+  comma: ',',
+  period: '.',
+  slash: '/',
+  backquote: '`',
 };
 
 function chordName({ mods, key }, platform) {
@@ -244,11 +403,11 @@ function chordName({ mods, key }, platform) {
  */
 export class ArcKeyboardMap extends LitElement {
   static properties = {
-    layout:    { type: String, reflect: true },
+    layout: { type: String, reflect: true },
     highlight: {},
-    labels:    { converter: { fromAttribute: (v) => v !== 'false' } },
-    platform:  { type: String },
-    caption:   { type: String },
+    labels: { converter: { fromAttribute: (v) => v !== 'false' } },
+    platform: { type: String },
+    caption: { type: String },
     _detected: { state: true },
   };
 
@@ -382,9 +541,7 @@ export class ArcKeyboardMap extends LitElement {
 
   _ariaLabel(chords, platform) {
     const names = chords.map((c) => chordName(c, platform)).filter(Boolean);
-    return names.length
-      ? `Keyboard diagram highlighting ${names.join(', ')}`
-      : 'Keyboard diagram';
+    return names.length ? `Keyboard diagram highlighting ${names.join(', ')}` : 'Keyboard diagram';
   }
 
   render() {
@@ -402,8 +559,9 @@ export class ArcKeyboardMap extends LitElement {
           role="img"
           aria-label=${this._ariaLabel(chords, platform)}
         >
-          ${keys.map((key) => hits.has(key.id)
-            ? html`
+          ${keys.map((key) =>
+            hits.has(key.id)
+              ? html`
             <kbd
               class="key key--hit"
               part="key key-highlighted"
@@ -411,19 +569,21 @@ export class ArcKeyboardMap extends LitElement {
               style="grid-row: ${key.row}; grid-column: ${key.col} / span ${key.span};"
               aria-hidden="true"
             >${this.labels ? html`<span class="key__legend">${legendFor(key.id, platform)}</span>` : nothing}</kbd>`
-            : html`
+              : html`
             <kbd
               class="key"
               part="key"
               data-key=${key.id}
               style="grid-row: ${key.row}; grid-column: ${key.col} / span ${key.span};"
               aria-hidden="true"
-            >${this.labels ? html`<span class="key__legend">${legendFor(key.id, platform)}</span>` : nothing}</kbd>`
+            >${this.labels ? html`<span class="key__legend">${legendFor(key.id, platform)}</span>` : nothing}</kbd>`,
           )}
         </div>
-        ${this.caption
-          ? html`<figcaption class="caption" part="caption">${this.caption}</figcaption>`
-          : nothing}
+        ${
+          this.caption
+            ? html`<figcaption class="caption" part="caption">${this.caption}</figcaption>`
+            : nothing
+        }
       </figure>
     `;
   }

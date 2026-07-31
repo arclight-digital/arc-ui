@@ -49,12 +49,12 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcImageCompare extends LitElement {
   static properties = {
-    position:    { type: Number, reflect: true },
+    position: { type: Number, reflect: true },
     orientation: { type: String, reflect: true },
     beforeLabel: { type: String, attribute: 'before-label' },
-    afterLabel:  { type: String, attribute: 'after-label' },
-    label:       { type: String },
-    _dragging:   { state: true },
+    afterLabel: { type: String, attribute: 'after-label' },
+    label: { type: String },
+    _dragging: { state: true },
   };
 
   static styles = [
@@ -265,19 +265,23 @@ export class ArcImageCompare extends LitElement {
   }
 
   _emitInput() {
-    this.dispatchEvent(new CustomEvent('arc-input', {
-      detail: { value: this.position },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-input', {
+        detail: { value: this.position },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _emitChange() {
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: this.position },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: this.position },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   /* ---- Pointer dragging ---- */
@@ -339,13 +343,26 @@ export class ArcImageCompare extends LitElement {
     const rtl = !vertical && this._isRTL();
     let next = null;
     switch (e.key) {
-      case 'ArrowRight': next = this.position + (rtl ? -step : step); break;
-      case 'ArrowLeft':  next = this.position - (rtl ? -step : step); break;
-      case 'ArrowUp':    next = this.position + (vertical ? -step : step); break;
-      case 'ArrowDown':  next = this.position - (vertical ? -step : step); break;
-      case 'Home':       next = 0; break;
-      case 'End':        next = 100; break;
-      default: return;
+      case 'ArrowRight':
+        next = this.position + (rtl ? -step : step);
+        break;
+      case 'ArrowLeft':
+        next = this.position - (rtl ? -step : step);
+        break;
+      case 'ArrowUp':
+        next = this.position + (vertical ? -step : step);
+        break;
+      case 'ArrowDown':
+        next = this.position - (vertical ? -step : step);
+        break;
+      case 'Home':
+        next = 0;
+        break;
+      case 'End':
+        next = 100;
+        break;
+      default:
+        return;
     }
     e.preventDefault();
     next = this._clamp(next);
@@ -371,12 +388,20 @@ export class ArcImageCompare extends LitElement {
         <div class="compare__before" part="before">
           <slot name="before"></slot>
         </div>
-        ${this.beforeLabel ? html`
+        ${
+          this.beforeLabel
+            ? html`
           <span class="compare__chip compare__chip--before" part="label-before">${this.beforeLabel}</span>
-        ` : ''}
-        ${this.afterLabel ? html`
+        `
+            : ''
+        }
+        ${
+          this.afterLabel
+            ? html`
           <span class="compare__chip compare__chip--after" part="label-after">${this.afterLabel}</span>
-        ` : ''}
+        `
+            : ''
+        }
         <div class="compare__divider" part="divider">
           <div
             class="compare__handle"

@@ -38,7 +38,7 @@ Zoom is deliberately a single level: press \`+\`, click the zoom button, or doub
     ],
     dont: [
       'Do not use Lightbox for non-image content — Modal is the general-purpose overlay',
-      'Do not open it on page load; a full-screen takeover should always be the user\'s choice',
+      "Do not open it on page load; a full-screen takeover should always be the user's choice",
       'Do not pass tiny thumbnails as the `src` — supply full-resolution sources, since the whole point is a closer look',
       'Do not mix it with a second overlay at once; close one surface before opening another',
     ],

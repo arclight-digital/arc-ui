@@ -360,8 +360,8 @@
         padding-inline-start: var(--space-sm);
       }
 
-      .arc-avatar-group[data-overlap="sm"] .group__overflow { padding-left: var(--space-xs); }
-      .arc-avatar-group[data-overlap="lg"] .group__overflow { padding-left: var(--space-md); }
+      .arc-avatar-group[data-overlap="sm"] .group__overflow { padding-inline-start: var(--space-xs); }
+      .arc-avatar-group[data-overlap="lg"] .group__overflow { padding-inline-start: var(--space-md); }
 
 /* arc-avatar */
 .arc-avatar { display: inline-flex; position: relative; }
@@ -754,7 +754,7 @@
 
       /* Alignment — rewrite gradients to originate from one edge */
       .arc-divider[data-align="left"] .divider { margin-inline: 0; }
-      .arc-divider[data-align="right"] .divider { margin-left: auto; margin-right: 0; }
+      .arc-divider[data-align="right"] .divider { margin-inline-start: auto; margin-inline-end: 0; }
 
       .arc-divider[data-align="left"]:not([data-data-variant="glow"]):not([data-data-variant="line-gradient"]):not([data-data-variant="line-primary"]):not([data-data-variant="line-white"]) .divider,
       .arc-divider[data-align="left"][data-variant="subtle"] .divider {
@@ -1896,7 +1896,7 @@
       .arc-gauge .gauge__unit {
         font-size: var(--code-size);
         color: var(--text-muted);
-        margin-left: 2px;
+        margin-inline-start: 2px;
       }
 
       .arc-gauge .gauge__label {
@@ -4063,7 +4063,7 @@
         min-width: 0;
       }
 
-      .arc-input .input-group__field:focus { outline: none; }
+      .arc-input .input-group__field:focus-visible { outline: none; }
       .arc-input .input-group__field::placeholder { color: var(--text-ghost); }
       .arc-input .input-group__field:disabled { cursor: not-allowed; }
 
@@ -4077,8 +4077,8 @@
         flex-shrink: 0;
       }
 
-      .arc-input .input-group__prefix { padding-left: var(--space-md); }
-      .arc-input .input-group__suffix { padding-right: var(--space-md); }
+      .arc-input .input-group__prefix { padding-inline-start: var(--space-md); }
+      .arc-input .input-group__suffix { padding-inline-end: var(--space-md); }
 
       .arc-input .input-group__prefix--empty,
       .arc-input .input-group__suffix--empty { display: none; }

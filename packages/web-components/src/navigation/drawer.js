@@ -22,9 +22,9 @@ import { OverlayMixin } from '../shared/overlay-mixin.js';
  */
 export class ArcDrawer extends OverlayMixin(LitElement) {
   static properties = {
-    open:     { type: Boolean, reflect: true },
+    open: { type: Boolean, reflect: true },
     position: { type: String, reflect: true },
-    heading:  { type: String },
+    heading: { type: String },
   };
 
   static styles = [
@@ -115,11 +115,16 @@ export class ArcDrawer extends OverlayMixin(LitElement) {
   }
 
   _close() {
-    if (!this.dispatchEvent(new CustomEvent('arc-close', {
-      bubbles: true,
-      composed: true,
-      cancelable: true,
-    }))) return;
+    if (
+      !this.dispatchEvent(
+        new CustomEvent('arc-close', {
+          bubbles: true,
+          composed: true,
+          cancelable: true,
+        }),
+      )
+    )
+      return;
     this.open = false;
   }
 

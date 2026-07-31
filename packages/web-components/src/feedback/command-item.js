@@ -13,11 +13,11 @@ import { LitElement, html, css } from 'lit';
  */
 export class ArcCommandItem extends LitElement {
   static properties = {
-    shortcut:    { type: String, reflect: true },
-    icon:        { type: String },
-    keywords:    { type: String },
+    shortcut: { type: String, reflect: true },
+    icon: { type: String },
+    keywords: { type: String },
     description: { type: String },
-    value:       { type: String },
+    value: { type: String },
   };
 
   static styles = css`

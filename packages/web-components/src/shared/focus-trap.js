@@ -4,8 +4,7 @@
  * light-DOM content and nested shadow roots, so traps see the consumer's
  * buttons/inputs inside header/body/footer slots.
  */
-const FOCUSABLE =
-  'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+const FOCUSABLE = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
 function isVisible(el) {
   return !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);

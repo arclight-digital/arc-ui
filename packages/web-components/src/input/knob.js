@@ -34,25 +34,24 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
 export class ArcKnob extends FormControlMixin(LitElement) {
   static properties = {
     size: { type: String, reflect: true },
-    value:    { type: Number, reflect: true },
-    min:      { type: Number },
-    max:      { type: Number },
-    step:     { type: Number },
-    name:     { type: String, reflect: true },
+    value: { type: Number, reflect: true },
+    min: { type: Number },
+    max: { type: Number },
+    step: { type: Number },
+    name: { type: String, reflect: true },
     disabled: { type: Boolean, reflect: true },
-    label:    { type: String },
-    detents:  {
+    label: { type: String },
+    detents: {
       attribute: 'detents',
       // The default converter for an Array type wants JSON; a knob's detents
       // read better as the comma list a patch file would carry.
       converter: {
-        fromAttribute: (v) => (v == null || v === '')
-          ? []
-          : v.split(',').map(Number).filter(Number.isFinite),
+        fromAttribute: (v) =>
+          v == null || v === '' ? [] : v.split(',').map(Number).filter(Number.isFinite),
       },
     },
     // Attribute is off: a function can't survive a round trip through one.
-    format:   { attribute: false },
+    format: { attribute: false },
     /** @internal */ _dragging: { state: true },
   };
 
@@ -251,20 +250,24 @@ export class ArcKnob extends FormControlMixin(LitElement) {
 
   _fireInput() {
     this._updateFormValue();
-    this.dispatchEvent(new CustomEvent('arc-input', {
-      detail: { value: this.value },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-input', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _fireChange() {
     this._updateFormValue();
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: this.value },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   /** A discrete gesture (wheel notch, key step) is edit and commit at once. */
@@ -292,8 +295,8 @@ export class ArcKnob extends FormControlMixin(LitElement) {
     const range = this.max - this.min;
     if (range === 0) return;
     const scale = e.shiftKey ? 0.1 : 1;
-    const raw = this._dragStartValue
-      + ((this._dragStartY - e.clientY) / ArcKnob.DRAG_THROW) * range * scale;
+    const raw =
+      this._dragStartValue + ((this._dragStartY - e.clientY) / ArcKnob.DRAG_THROW) * range * scale;
     const next = this._applyDetents(this._snap(this._clamp(raw, this.min, this.max)));
     if (next === this.value) return;
     this.value = next;
@@ -373,9 +376,13 @@ export class ArcKnob extends FormControlMixin(LitElement) {
 
     return html`
       <div class="knob" part="knob">
-        ${this.label ? html`
+        ${
+          this.label
+            ? html`
           <span class="knob__label" part="label">${this.label}</span>
-        ` : ''}
+        `
+            : ''
+        }
         <div
           class="knob__dial ${this._dragging ? 'knob__dial--active' : ''}"
           part="dial"

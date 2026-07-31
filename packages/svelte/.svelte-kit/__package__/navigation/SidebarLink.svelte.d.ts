@@ -5,6 +5,7 @@ interface Props {
     active?: boolean;
     level?: number;
     icon?: string;
+    external?: boolean;
     children?: Snippet;
     class?: string;
     id?: string;

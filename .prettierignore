@@ -1,6 +1,32 @@
 node_modules
 dist
-packages/html
 .idea
 package-lock.json
 pnpm-lock.yaml
+
+# Generated output. Formatting any of it puts prettier and a generator in a
+# fight: prettier rewrites the file, `pnpm generate` writes it back, and the
+# generate-diff CI job fails on whichever ran last. Each generator owns the
+# formatting of what it emits.
+
+# Prism output — see prism.config.js for the full list.
+packages/html
+packages/react/src
+packages/vue/src
+packages/svelte/src
+packages/angular/src
+packages/solid/src
+packages/preact/src
+
+# scripts/generate/* output inside the web-components package.
+packages/web-components/src/**/*.register.js
+packages/web-components/src/base.css
+packages/web-components/src/utilities.css
+packages/web-components/src/dev-schema.js
+packages/web-components/src/generated
+packages/web-components/src/icons/lucide.js
+packages/web-components/src/icons/phosphor.js
+
+# shared/tokens.js output.
+shared/base.css
+shared/utilities.css

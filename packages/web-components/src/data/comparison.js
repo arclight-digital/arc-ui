@@ -128,13 +128,17 @@ export class ArcComparison extends LitElement {
   }
 
   _onSlotChange(e) {
-    this._columns = e.target.assignedElements({ flatten: true })
-      .filter(el => el.tagName === 'ARC-COMPARISON-COLUMN');
+    this._columns = e.target
+      .assignedElements({ flatten: true })
+      .filter((el) => el.tagName === 'ARC-COMPARISON-COLUMN');
   }
 
   _parseJSON(str) {
-    try { return JSON.parse(str); }
-    catch { return []; }
+    try {
+      return JSON.parse(str);
+    } catch {
+      return [];
+    }
   }
 
   _renderCheck() {
@@ -170,18 +174,21 @@ export class ArcComparison extends LitElement {
           <!-- Header row -->
           <div class="row" role="row">
             <div class="header-cell header-cell--feature" part="header" role="columnheader"><span class="sr-only">Feature</span></div>
-            ${cols.map(col => html`
+            ${cols.map(
+              (col) => html`
               <div class="header-cell ${col.highlight ? 'header-cell--highlight' : ''}" part="header" role="columnheader">
                 ${col.heading}
               </div>
-            `)}
+            `,
+            )}
           </div>
 
           <!-- Feature rows -->
-          ${features.map((feature, i) => html`
+          ${features.map(
+            (feature, i) => html`
             <div class="row" role="row">
               <div class="cell cell--feature" part="feature" role="rowheader">${feature}</div>
-              ${cols.map(col => {
+              ${cols.map((col) => {
                 const values = this._parseJSON(col.values);
                 const val = values[i] ?? '';
                 return html`
@@ -191,7 +198,8 @@ export class ArcComparison extends LitElement {
                 `;
               })}
             </div>
-          `)}
+          `,
+          )}
         </div>
 
         <slot style="display:none" @slotchange=${this._onSlotChange}></slot>

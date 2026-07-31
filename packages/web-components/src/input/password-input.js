@@ -5,10 +5,26 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
 let passwordInputIdCounter = 0;
 
 const COMMON_PASSWORDS = new Set([
-  'password', '123456', '123456789', '12345678', '12345', '1234567',
-  'qwerty', 'abc123', 'password1', '111111', 'iloveyou', 'admin',
-  'letmein', 'welcome', 'monkey', 'dragon', '654321', 'superman',
-  'qazwsx', 'football',
+  'password',
+  '123456',
+  '123456789',
+  '12345678',
+  '12345',
+  '1234567',
+  'qwerty',
+  'abc123',
+  'password1',
+  '111111',
+  'iloveyou',
+  'admin',
+  'letmein',
+  'welcome',
+  'monkey',
+  'dragon',
+  '654321',
+  'superman',
+  'qazwsx',
+  'football',
 ]);
 
 const STRENGTH_LABELS = ['', 'Weak', 'Fair', 'Good', 'Strong'];
@@ -90,18 +106,18 @@ export class ArcPasswordInput extends FormControlMixin(LitElement) {
   static autoValidates = false;
 
   static properties = {
-    name:        { type: String, reflect: true },
-    label:        { type: String },
-    placeholder:  { type: String },
-    value:        { type: String },
-    disabled:     { type: Boolean, reflect: true },
-    required:     { type: Boolean, reflect: true },
-    error:        { type: String },
-    size:         { type: String, reflect: true },
+    name: { type: String, reflect: true },
+    label: { type: String },
+    placeholder: { type: String },
+    value: { type: String },
+    disabled: { type: Boolean, reflect: true },
+    required: { type: Boolean, reflect: true },
+    error: { type: String },
+    size: { type: String, reflect: true },
     autocomplete: { type: String },
     showStrength: { type: Boolean, reflect: true, attribute: 'show-strength' },
-    _visible:     { state: true },
-    _score:       { state: true },
+    _visible: { state: true },
+    _score: { state: true },
   };
 
   static styles = [
@@ -186,7 +202,7 @@ export class ArcPasswordInput extends FormControlMixin(LitElement) {
         min-width: 0;
       }
 
-      .input-group__field:focus { outline: none; }
+      .input-group__field:focus-visible { outline: none; }
       .input-group__field::placeholder { color: var(--text-ghost); }
       .input-group__field:disabled { cursor: not-allowed; }
 
@@ -277,7 +293,13 @@ export class ArcPasswordInput extends FormControlMixin(LitElement) {
       if (score !== this._score) {
         this._score = score;
         if (this.showStrength) {
-          this.dispatchEvent(new CustomEvent('arc-strength-change', { detail: { score }, bubbles: true, composed: true }));
+          this.dispatchEvent(
+            new CustomEvent('arc-strength-change', {
+              detail: { score },
+              bubbles: true,
+              composed: true,
+            }),
+          );
         }
       }
     }
@@ -298,13 +320,25 @@ export class ArcPasswordInput extends FormControlMixin(LitElement) {
   _handleInput(e) {
     this.value = e.target.value;
     this._updateFormValue();
-    this.dispatchEvent(new CustomEvent('arc-input', { detail: { value: this.value }, bubbles: true, composed: true }));
+    this.dispatchEvent(
+      new CustomEvent('arc-input', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _handleChange(e) {
     this.value = e.target.value;
     this._updateFormValue();
-    this.dispatchEvent(new CustomEvent('arc-change', { detail: { value: this.value }, bubbles: true, composed: true }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   /** Visibility persists until toggled again — no revert on blur. */
@@ -340,9 +374,11 @@ export class ArcPasswordInput extends FormControlMixin(LitElement) {
           aria-valuetext=${label || 'Empty'}
           aria-describedby=${labelId}
         >
-          ${[1, 2, 3, 4].map((i) => html`
+          ${[1, 2, 3, 4].map(
+            (i) => html`
             <span class="strength__segment ${i <= score ? 'strength__segment--on' : ''}"></span>
-          `)}
+          `,
+          )}
         </div>
         <span class="strength__label" id=${labelId} aria-live="polite">${label}</span>
       </div>

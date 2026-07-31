@@ -26,10 +26,10 @@ import { trapTabKey, focusFirst, deepActiveElement } from '../shared/focus-trap.
  */
 export class ArcAppShell extends LitElement {
   static properties = {
-    sidebarOpen:  { type: Boolean, reflect: true, attribute: 'sidebar-open' },
-    breakpoint:   { type: Number },
-    _mobile:      { state: true },
-    _hasToc:      { state: true },
+    sidebarOpen: { type: Boolean, reflect: true, attribute: 'sidebar-open' },
+    breakpoint: { type: Number },
+    _mobile: { state: true },
+    _hasToc: { state: true },
   };
 
   static styles = [
@@ -288,11 +288,13 @@ export class ArcAppShell extends LitElement {
   _setOpen(value) {
     if (this.sidebarOpen === value) return;
     this.sidebarOpen = value;
-    this.dispatchEvent(new CustomEvent('arc-sidebar-toggle', {
-      detail: { value },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-sidebar-toggle', {
+        detail: { value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _onNavigate(e) {
@@ -323,7 +325,7 @@ export class ArcAppShell extends LitElement {
 
   _onTocSlotChange(e) {
     const nodes = e.target.assignedElements({ flatten: true });
-    this._hasToc = nodes.some(n => n.children.length > 0 || n.textContent.trim());
+    this._hasToc = nodes.some((n) => n.children.length > 0 || n.textContent.trim());
   }
 
   render() {

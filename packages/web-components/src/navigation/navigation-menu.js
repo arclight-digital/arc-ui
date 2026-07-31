@@ -21,11 +21,11 @@ import { lockScroll, unlockScroll } from '../shared/scroll-lock.js';
  */
 export class ArcNavigationMenu extends LitElement {
   static properties = {
-    label:               { type: String },
-    _items:              { state: true },
-    _openIndex:          { state: true },
-    _mobileOpen:         { state: true },
-    _mobileClosing:      { state: true },
+    label: { type: String },
+    _items: { state: true },
+    _openIndex: { state: true },
+    _mobileOpen: { state: true },
+    _mobileClosing: { state: true },
     _mobileExpandedIndex: { state: true },
   };
 
@@ -587,8 +587,9 @@ export class ArcNavigationMenu extends LitElement {
   }
 
   _onSlotChange(e) {
-    this._items = e.target.assignedElements({ flatten: true })
-      .filter(el => el.tagName === 'ARC-NAV-ITEM');
+    this._items = e.target
+      .assignedElements({ flatten: true })
+      .filter((el) => el.tagName === 'ARC-NAV-ITEM');
   }
 
   _onKeyDown(e) {
@@ -629,7 +630,10 @@ export class ArcNavigationMenu extends LitElement {
     this._close();
     if (this._mobileOpen) this._closeMobile();
     const nav = new CustomEvent('arc-navigate', {
-      detail: { href, item: { label: item.label, href: item.resolvedHref, description: item.description } },
+      detail: {
+        href,
+        item: { label: item.label, href: item.resolvedHref, description: item.description },
+      },
       bubbles: true,
       composed: true,
       cancelable: true,
@@ -679,11 +683,13 @@ export class ArcNavigationMenu extends LitElement {
     if (!this._mobileOpen || this._mobileClosing) return;
     this._mobileClosing = true;
     this._mobileExpandedIndex = -1;
-    this.dispatchEvent(new CustomEvent('arc-mobile-menu-toggle', {
-      detail: { value: false },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-mobile-menu-toggle', {
+        detail: { value: false },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _onPanelAnimEnd(e) {
@@ -738,8 +744,7 @@ export class ArcNavigationMenu extends LitElement {
     if (!this._portalRoot) return;
     if (!this._portalStyled) {
       const sheet = new CSSStyleSheet();
-      const cssTexts = (this.constructor.elementStyles || [])
-        .map(s => s.cssText ?? s.toString());
+      const cssTexts = (this.constructor.elementStyles || []).map((s) => s.cssText ?? s.toString());
       sheet.replaceSync(cssTexts.join('\n'));
       this._portalRoot.adoptedStyleSheets = [sheet];
       this._portalStyled = true;
@@ -776,7 +781,9 @@ export class ArcNavigationMenu extends LitElement {
               @mouseleave=${hasChildren ? () => this._scheduleClose() : null}
               part="item"
             >
-              ${hasChildren ? html`
+              ${
+                hasChildren
+                  ? html`
                 <button
                   class="nav__trigger nav__trigger--has-children ${isOpen ? 'nav__trigger--open' : ''} ${item.active ? 'nav__trigger--active' : ''} ${item.variant && item.variant !== 'default' ? `nav__trigger--${item.variant}` : ''}"
                   @click=${(e) => this._handleTriggerClick(e, item, i)}
@@ -789,7 +796,8 @@ export class ArcNavigationMenu extends LitElement {
                     <path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
                 </button>
-              ` : html`
+              `
+                  : html`
                 <a
                   class="nav__trigger ${item.active ? 'nav__trigger--active' : ''} ${item.variant && item.variant !== 'default' ? `nav__trigger--${item.variant}` : ''}"
                   href=${item.resolvedHref}
@@ -798,9 +806,12 @@ export class ArcNavigationMenu extends LitElement {
                 >
                   ${item.label}
                 </a>
-              `}
+              `
+              }
 
-              ${hasChildren ? html`
+              ${
+                hasChildren
+                  ? html`
                 <div
                   class="nav__dropdown ${isOpen ? 'nav__dropdown--open' : ''}"
                   @mouseenter=${() => this._cancelClose()}
@@ -808,7 +819,8 @@ export class ArcNavigationMenu extends LitElement {
                   role="menu"
                   part="dropdown"
                 >
-                  ${item.subItems.map(child => html`
+                  ${item.subItems.map(
+                    (child) => html`
                     <a
                       class="nav__dropdown-item"
                       href=${child.resolvedHref}
@@ -817,13 +829,20 @@ export class ArcNavigationMenu extends LitElement {
                       part="dropdown-item"
                     >
                       <span class="nav__dropdown-label">${child.label}</span>
-                      ${child.description ? html`
+                      ${
+                        child.description
+                          ? html`
                         <span class="nav__dropdown-desc">${child.description}</span>
-                      ` : ''}
+                      `
+                          : ''
+                      }
                     </a>
-                  `)}
+                  `,
+                  )}
                 </div>
-              ` : ''}
+              `
+                  : ''
+              }
             </div>
           `;
         })}
@@ -855,7 +874,9 @@ export class ArcNavigationMenu extends LitElement {
 
             return html`
               <li class="mobile-item" style="animation-delay: ${i * 60}ms">
-                ${hasChildren ? html`
+                ${
+                  hasChildren
+                    ? html`
                   <button
                     class="mobile-trigger ${item.active ? 'mobile-trigger--active' : ''} ${item.variant && item.variant !== 'default' ? `mobile-trigger--${item.variant}` : ''}"
                     @click=${() => this._toggleMobileDropdown(i)}
@@ -868,21 +889,28 @@ export class ArcNavigationMenu extends LitElement {
                   </button>
                   <div class="mobile-children ${isExpanded ? 'mobile-children--open' : ''}">
                     <div class="mobile-children__inner">
-                      ${item.subItems.map(child => html`
+                      ${item.subItems.map(
+                        (child) => html`
                         <a
                           class="mobile-child"
                           href=${child.resolvedHref}
                           @click=${(e) => this._navigate(e, child.resolvedHref, child)}
                         >
                           <span class="mobile-child-label">${child.label}</span>
-                          ${child.description ? html`
+                          ${
+                            child.description
+                              ? html`
                             <span class="mobile-child-desc">${child.description}</span>
-                          ` : ''}
+                          `
+                              : ''
+                          }
                         </a>
-                      `)}
+                      `,
+                      )}
                     </div>
                   </div>
-                ` : html`
+                `
+                    : html`
                   <a
                     class="mobile-trigger ${item.active ? 'mobile-trigger--active' : ''} ${item.variant && item.variant !== 'default' ? `mobile-trigger--${item.variant}` : ''}"
                     href=${item.resolvedHref}
@@ -890,7 +918,8 @@ export class ArcNavigationMenu extends LitElement {
                   >
                     ${item.label}
                   </a>
-                `}
+                `
+                }
               </li>
             `;
           })}

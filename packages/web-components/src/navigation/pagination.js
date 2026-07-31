@@ -21,10 +21,10 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcPagination extends LitElement {
   static properties = {
-    total:    { type: Number },
-    current:  { type: Number, reflect: true },
+    total: { type: Number },
+    current: { type: Number, reflect: true },
     siblings: { type: Number },
-    compact:  { type: Boolean, reflect: true },
+    compact: { type: Boolean, reflect: true },
   };
 
   static styles = [
@@ -150,15 +150,21 @@ export class ArcPagination extends LitElement {
   _goToPage(page) {
     if (page < 1 || page > this.total || page === this.current) return;
     this.current = page;
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: this.current },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: this.current },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
-  _prev() { this._goToPage(this.current - 1); }
-  _next() { this._goToPage(this.current + 1); }
+  _prev() {
+    this._goToPage(this.current - 1);
+  }
+  _next() {
+    this._goToPage(this.current + 1);
+  }
 
   render() {
     const pages = this._getPageRange();
@@ -188,7 +194,7 @@ export class ArcPagination extends LitElement {
     return html`
       <nav class="pagination" role="navigation" aria-label="Pagination" part="pagination">
         ${prevBtn}
-        ${pages.map(page =>
+        ${pages.map((page) =>
           page === '...'
             ? html`<span class="pagination__ellipsis" part="ellipsis" aria-hidden="true">&hellip;</span>`
             : html`
@@ -199,7 +205,7 @@ export class ArcPagination extends LitElement {
                 aria-current=${page === this.current ? 'page' : nothing}
                 part="page"
               >${page}</button>
-            `
+            `,
         )}
         ${nextBtn}
       </nav>

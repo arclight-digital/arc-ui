@@ -50,9 +50,10 @@ export class ArcDashboardGrid extends LitElement {
     // the column-derived minimum. On wide viewports the column fraction is
     // larger, capping at N columns. On narrow viewports the absolute minimum
     // wins, forcing items to wrap.
-    const minCol = this.columns > 0
-      ? `max(${this.minColumnWidth}, (100% - ${this.columns - 1} * ${this.gap}) / ${this.columns})`
-      : this.minColumnWidth;
+    const minCol =
+      this.columns > 0
+        ? `max(${this.minColumnWidth}, (100% - ${this.columns - 1} * ${this.gap}) / ${this.columns})`
+        : this.minColumnWidth;
 
     this.style.setProperty('--min-col', minCol);
     this.style.setProperty('--gap', this.gap);

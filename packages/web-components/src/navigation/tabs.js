@@ -16,11 +16,11 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcTabs extends LitElement {
   static properties = {
-    selected:    { type: Number, reflect: true },
-    align:       { type: String, reflect: true },
-    variant:     { type: String, reflect: true },
+    selected: { type: Number, reflect: true },
+    align: { type: String, reflect: true },
+    variant: { type: String, reflect: true },
     orientation: { type: String, reflect: true },
-    _tabs:       { state: true },
+    _tabs: { state: true },
   };
 
   static styles = [
@@ -159,8 +159,9 @@ export class ArcTabs extends LitElement {
 
   _onSlotChange(e) {
     const slot = e.target;
-    const children = slot.assignedElements({ flatten: true })
-      .filter(el => el.tagName === 'ARC-TAB');
+    const children = slot
+      .assignedElements({ flatten: true })
+      .filter((el) => el.tagName === 'ARC-TAB');
     this._tabs = children;
     this._syncVisibility();
   }
@@ -177,11 +178,13 @@ export class ArcTabs extends LitElement {
 
     const label = this._tabs[index]?.label;
 
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: index, label },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: index, label },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _handleKeydown(e) {
@@ -211,12 +214,13 @@ export class ArcTabs extends LitElement {
   }
 
   render() {
-    const labels = this._tabs.map(t => t.label);
+    const labels = this._tabs.map((t) => t.label);
 
     return html`
       <div class="tabs" part="tabs">
         <div class="tabs__list" role="tablist" aria-orientation=${this.orientation} @keydown=${this._handleKeydown}>
-          ${labels.map((label, i) => html`
+          ${labels.map(
+            (label, i) => html`
             <button
               class="tabs__tab"
               role="tab"
@@ -226,7 +230,8 @@ export class ArcTabs extends LitElement {
               aria-controls="panel-${i}"
               @click=${() => this._select(i)}
             >${label}</button>
-          `)}
+          `,
+          )}
         </div>
 
         <div

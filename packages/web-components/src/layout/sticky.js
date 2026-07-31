@@ -14,7 +14,7 @@ import { tokenStyles } from '../shared-styles.js';
 export class ArcSticky extends LitElement {
   static properties = {
     offset: { type: String, reflect: true },
-    stuck:  { type: Boolean, reflect: true, state: true },
+    stuck: { type: Boolean, reflect: true, state: true },
   };
 
   static styles = [

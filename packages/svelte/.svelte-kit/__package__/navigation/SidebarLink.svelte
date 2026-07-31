@@ -8,6 +8,7 @@
     active?: boolean;
     level?: number;
     icon?: string;
+    external?: boolean;
     children?: Snippet;
     class?: string;
     id?: string;
@@ -36,9 +37,9 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { href = '', active = false, level = 0, icon = '', children, ...rest }: Props = $props();
+  let { href = '', active = false, level = 0, icon = '', external = false, children, ...rest }: Props = $props();
 </script>
 
-<arc-sidebar-link {href} {active} {level} {icon} {...rest}>
+<arc-sidebar-link {href} {active} {level} {icon} {external} {...rest}>
   {@render children?.()}
 </arc-sidebar-link>

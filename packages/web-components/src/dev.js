@@ -24,10 +24,33 @@ const DOCS_BASE = 'https://arcui.dev/docs/components/';
 
 // Attributes that are legitimate on any element.
 const GLOBAL_ATTRS = new Set([
-  'class', 'style', 'id', 'slot', 'part', 'exportparts', 'role', 'tabindex',
-  'hidden', 'dir', 'lang', 'title', 'translate', 'autofocus', 'inert',
-  'popover', 'draggable', 'spellcheck', 'contenteditable', 'is', 'itemid',
-  'itemprop', 'itemref', 'itemscope', 'itemtype', 'nonce', 'accesskey',
+  'class',
+  'style',
+  'id',
+  'slot',
+  'part',
+  'exportparts',
+  'role',
+  'tabindex',
+  'hidden',
+  'dir',
+  'lang',
+  'title',
+  'translate',
+  'autofocus',
+  'inert',
+  'popover',
+  'draggable',
+  'spellcheck',
+  'contenteditable',
+  'is',
+  'itemid',
+  'itemprop',
+  'itemref',
+  'itemscope',
+  'itemtype',
+  'nonce',
+  'accesskey',
 ]);
 
 const warned = new WeakMap(); // element → Set of "attr=value" already reported
@@ -59,12 +82,22 @@ function warn(el, key, message) {
 }
 
 function checkAttr(el, entry, name) {
-  if (GLOBAL_ATTRS.has(name) || name.startsWith('data-') || name.startsWith('aria-') || name.startsWith('on')) return;
+  if (
+    GLOBAL_ATTRS.has(name) ||
+    name.startsWith('data-') ||
+    name.startsWith('aria-') ||
+    name.startsWith('on')
+  )
+    return;
 
   const value = el.getAttribute(name);
 
   if (entry.enums && name in entry.enums && value !== null && !entry.enums[name].includes(value)) {
-    warn(el, `${name}=${value}`, `"${value}" is not a valid ${name} — expected ${entry.enums[name].join(' | ')}.`);
+    warn(
+      el,
+      `${name}=${value}`,
+      `"${value}" is not a valid ${name} — expected ${entry.enums[name].join(' | ')}.`,
+    );
     return;
   }
 
@@ -72,7 +105,11 @@ function checkAttr(el, entry, name) {
     // camelCase property written as an attribute (HTML lowercases it)
     const dekebabed = entry.attrs.find((a) => a.includes('-') && a.replace(/-/g, '') === name);
     if (dekebabed) {
-      warn(el, `attr:${name}`, `attribute "${name}" looks like the ${dekebabed.replace(/-(\w)/g, (_, c) => c.toUpperCase())} property — attributes are kebab-case: use "${dekebabed}".`);
+      warn(
+        el,
+        `attr:${name}`,
+        `attribute "${name}" looks like the ${dekebabed.replace(/-(\w)/g, (_, c) => c.toUpperCase())} property — attributes are kebab-case: use "${dekebabed}".`,
+      );
       return;
     }
     const near = entry.attrs.find((a) => editDistance(a, name) <= (name.length > 4 ? 2 : 1));
@@ -116,7 +153,9 @@ if (typeof window !== 'undefined' && typeof MutationObserver !== 'undefined') {
   observer.observe(document.documentElement, { childList: true, subtree: true, attributes: true });
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => scan(document.documentElement), { once: true });
+    document.addEventListener('DOMContentLoaded', () => scan(document.documentElement), {
+      once: true,
+    });
   } else {
     scan(document.documentElement);
   }

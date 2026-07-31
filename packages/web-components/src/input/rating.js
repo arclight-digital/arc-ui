@@ -20,9 +20,9 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
 export class ArcRating extends FormControlMixin(LitElement) {
   static properties = {
     size: { type: String, reflect: true },
-    value:    { type: Number, reflect: true },
-    max:      { type: Number, reflect: true },
-    name:     { type: String, reflect: true },
+    value: { type: Number, reflect: true },
+    max: { type: Number, reflect: true },
+    name: { type: String, reflect: true },
     disabled: { type: Boolean, reflect: true },
     readonly: { type: Boolean, reflect: true },
   };
@@ -116,11 +116,13 @@ export class ArcRating extends FormControlMixin(LitElement) {
     if (this.disabled || this.readonly) return;
     this.value = index;
     this._updateFormValue();
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: this.value },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _onStarEnter(index) {
@@ -165,11 +167,13 @@ export class ArcRating extends FormControlMixin(LitElement) {
     if (newValue !== this.value) {
       this.value = newValue;
       this._updateFormValue();
-      this.dispatchEvent(new CustomEvent('arc-change', {
-        detail: { value: this.value },
-        bubbles: true,
-        composed: true,
-      }));
+      this.dispatchEvent(
+        new CustomEvent('arc-change', {
+          detail: { value: this.value },
+          bubbles: true,
+          composed: true,
+        }),
+      );
     }
   }
 

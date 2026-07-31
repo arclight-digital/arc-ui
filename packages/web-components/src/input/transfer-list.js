@@ -30,16 +30,16 @@ import './icon-button.js';
 export class ArcTransferList extends FormControlMixin(LitElement) {
   static properties = {
     size: { type: String, reflect: true },
-    options:     { type: Array },
-    value:       { type: Array },
-    name:        { type: String, reflect: true },
-    disabled:    { type: Boolean, reflect: true },
-    searchable:  { type: Boolean, reflect: true },
+    options: { type: Array },
+    value: { type: Array },
+    name: { type: String, reflect: true },
+    disabled: { type: Boolean, reflect: true },
+    searchable: { type: Boolean, reflect: true },
     sourceLabel: { type: String, attribute: 'source-label' },
     targetLabel: { type: String, attribute: 'target-label' },
-    _sourceQuery:  { state: true },
-    _targetQuery:  { state: true },
-    _checked:      { state: true },
+    _sourceQuery: { state: true },
+    _targetQuery: { state: true },
+    _checked: { state: true },
     _activeSource: { state: true },
     _activeTarget: { state: true },
     _announcement: { state: true },
@@ -300,8 +300,8 @@ export class ArcTransferList extends FormControlMixin(LitElement) {
     this.targetLabel = 'Selected';
     this._sourceQuery = '';
     this._targetQuery = '';
-    this._checked = new Set();      // values marked to move (distinct from being in `value`)
-    this._activeSource = null;      // roving-tabindex value per pane
+    this._checked = new Set(); // values marked to move (distinct from being in `value`)
+    this._activeSource = null; // roving-tabindex value per pane
     this._activeTarget = null;
     this._announcement = '';
   }
@@ -331,8 +331,8 @@ export class ArcTransferList extends FormControlMixin(LitElement) {
 
   _paneItems(pane) {
     const selected = this._valueSet;
-    return (this.options || []).filter(o =>
-      pane === 'source' ? !selected.has(o.value) : selected.has(o.value)
+    return (this.options || []).filter((o) =>
+      pane === 'source' ? !selected.has(o.value) : selected.has(o.value),
     );
   }
 
@@ -340,13 +340,17 @@ export class ArcTransferList extends FormControlMixin(LitElement) {
     const items = this._paneItems(pane);
     const q = (pane === 'source' ? this._sourceQuery : this._targetQuery).toLowerCase();
     if (!q) return items;
-    return items.filter(o => String(o.label ?? '').toLowerCase().includes(q));
+    return items.filter((o) =>
+      String(o.label ?? '')
+        .toLowerCase()
+        .includes(q),
+    );
   }
 
   /** Active (roving) value for a pane, falling back to the first visible item. */
   _activeValue(pane, items) {
     const stored = pane === 'source' ? this._activeSource : this._activeTarget;
-    if (stored != null && items.some(o => o.value === stored)) return stored;
+    if (stored != null && items.some((o) => o.value === stored)) return stored;
     return items.length > 0 ? items[0].value : null;
   }
 
@@ -373,15 +377,15 @@ export class ArcTransferList extends FormControlMixin(LitElement) {
    */
   _move(values, pane, { keepFocus = false } = {}) {
     if (this.readonly) return;
-    const movable = values.filter(v => {
-      const opt = (this.options || []).find(o => o.value === v);
+    const movable = values.filter((v) => {
+      const opt = (this.options || []).find((o) => o.value === v);
       return opt && !opt.disabled;
     });
     if (movable.length === 0) return;
 
     const before = this._filteredItems(pane);
     const firstIdx = Math.min(
-      ...movable.map(v => before.findIndex(o => o.value === v)).filter(i => i >= 0)
+      ...movable.map((v) => before.findIndex((o) => o.value === v)).filter((i) => i >= 0),
     );
     const movedSet = new Set(movable);
 
@@ -392,8 +396,8 @@ export class ArcTransferList extends FormControlMixin(LitElement) {
       for (const v of movable) selected.delete(v);
     }
     // Options order is canonical; unknown values are preserved at the end.
-    const known = (this.options || []).filter(o => selected.has(o.value)).map(o => o.value);
-    const unknown = [...selected].filter(v => !(this.options || []).some(o => o.value === v));
+    const known = (this.options || []).filter((o) => selected.has(o.value)).map((o) => o.value);
+    const unknown = [...selected].filter((v) => !(this.options || []).some((o) => o.value === v));
     this.value = [...known, ...unknown];
 
     const checked = new Set(this._checked);
@@ -401,17 +405,18 @@ export class ArcTransferList extends FormControlMixin(LitElement) {
     this._checked = checked;
 
     const dest = pane === 'source' ? this.targetLabel : this.sourceLabel;
-    this._announcement =
-      `${movable.length} ${movable.length === 1 ? 'item' : 'items'} moved to ${dest}`;
+    this._announcement = `${movable.length} ${movable.length === 1 ? 'item' : 'items'} moved to ${dest}`;
 
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: this.value },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
 
     if (keepFocus) {
-      const remaining = before.filter(o => !movedSet.has(o.value));
+      const remaining = before.filter((o) => !movedSet.has(o.value));
       if (remaining.length > 0) {
         const nearest = remaining[Math.min(Math.max(firstIdx, 0), remaining.length - 1)];
         this._setActive(pane, nearest.value);
@@ -423,20 +428,26 @@ export class ArcTransferList extends FormControlMixin(LitElement) {
   }
 
   _checkedIn(pane) {
-    return this._paneItems(pane).filter(o => this._checked.has(o.value) && !o.disabled);
+    return this._paneItems(pane).filter((o) => this._checked.has(o.value) && !o.disabled);
   }
 
   _movableIn(pane) {
-    return this._filteredItems(pane).filter(o => !o.disabled);
+    return this._filteredItems(pane).filter((o) => !o.disabled);
   }
 
   _moveChecked(pane, e) {
-    this._move(this._checkedIn(pane).map(o => o.value), pane);
+    this._move(
+      this._checkedIn(pane).map((o) => o.value),
+      pane,
+    );
     this._recoverButtonFocus(pane, e);
   }
 
   _moveAll(pane, e) {
-    this._move(this._movableIn(pane).map(o => o.value), pane);
+    this._move(
+      this._movableIn(pane).map((o) => o.value),
+      pane,
+    );
     this._recoverButtonFocus(pane, e);
   }
 
@@ -471,7 +482,7 @@ export class ArcTransferList extends FormControlMixin(LitElement) {
     const items = this._filteredItems(pane);
     if (items.length === 0) return;
     const active = this._activeValue(pane, items);
-    const idx = items.findIndex(o => o.value === active);
+    const idx = items.findIndex((o) => o.value === active);
 
     if ((e.key === 'a' || e.key === 'A') && (e.ctrlKey || e.metaKey)) {
       e.preventDefault();
@@ -540,7 +551,7 @@ export class ArcTransferList extends FormControlMixin(LitElement) {
     const all = this._paneItems(pane);
     const items = this._filteredItems(pane);
     const query = pane === 'source' ? this._sourceQuery : this._targetQuery;
-    const checkedCount = all.filter(o => this._checked.has(o.value) && !o.disabled).length;
+    const checkedCount = all.filter((o) => this._checked.has(o.value) && !o.disabled).length;
     const activeVal = this._activeValue(pane, items);
 
     return html`
@@ -549,7 +560,9 @@ export class ArcTransferList extends FormControlMixin(LitElement) {
           <span class="tl__pane-label">${label}</span>
           <span class="tl__pane-count">${checkedCount} of ${all.length}</span>
         </div>
-        ${this.searchable ? html`
+        ${
+          this.searchable
+            ? html`
           <input
             class="tl__search"
             type="text"
@@ -561,7 +574,9 @@ export class ArcTransferList extends FormControlMixin(LitElement) {
             @input=${(e) => this._onSearchInput(e, pane)}
             part="search"
           />
-        ` : ''}
+        `
+            : ''
+        }
         <div
           class="tl__listbox"
           data-pane=${pane}
@@ -572,11 +587,12 @@ export class ArcTransferList extends FormControlMixin(LitElement) {
           part="listbox"
           @keydown=${(e) => this._onListKeyDown(e, pane)}
         >
-          ${items.length > 0
-            ? items.map(item => {
-                const checked = this._checked.has(item.value) && !item.disabled;
-                const isActive = item.value === activeVal;
-                return html`
+          ${
+            items.length > 0
+              ? items.map((item) => {
+                  const checked = this._checked.has(item.value) && !item.disabled;
+                  const isActive = item.value === activeVal;
+                  return html`
                   <div
                     class="tl__option ${checked ? 'tl__option--checked' : ''} ${item.disabled ? 'tl__option--disabled' : ''}"
                     role="option"
@@ -595,8 +611,8 @@ export class ArcTransferList extends FormControlMixin(LitElement) {
                     <span class="tl__option-label">${item.label}</span>
                   </div>
                 `;
-              })
-            : html`<div class="tl__empty">${query ? 'No matches' : 'No items'}</div>`
+                })
+              : html`<div class="tl__empty">${query ? 'No matches' : 'No items'}</div>`
           }
         </div>
       </div>

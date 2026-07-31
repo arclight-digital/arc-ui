@@ -17,9 +17,9 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcStat extends LitElement {
   static properties = {
-    value:  { type: String },
-    label:  { type: String },
-    trend:  { type: String, reflect: true },
+    value: { type: String },
+    label: { type: String },
+    trend: { type: String, reflect: true },
     change: { type: String },
   };
 
@@ -105,12 +105,16 @@ export class ArcStat extends LitElement {
         <span class="stat__value" part="value">${this.value}</span>
         <span class="stat__rule"></span>
         <span class="stat__label" part="label">${this.label}</span>
-        ${this.trend ? html`
+        ${
+          this.trend
+            ? html`
           <span class="stat__trend" part="trend">
             ${this.trend === 'up' ? arrowUp : this.trend === 'down' ? arrowDown : dash}
             ${this.change || ''}
           </span>
-        ` : ''}
+        `
+            : ''
+        }
       </div>
     `;
   }

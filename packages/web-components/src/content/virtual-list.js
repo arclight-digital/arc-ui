@@ -36,12 +36,12 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcVirtualList extends LitElement {
   static properties = {
-    items:      { type: Array },
+    items: { type: Array },
     // Attribute is off: a function can't survive a round trip through one, and
     // leaving it on invites `render-item="handleRow"` that silently sets a string.
     renderItem: { attribute: false },
     itemHeight: { type: Number, attribute: 'item-height' },
-    overscan:   { type: Number },
+    overscan: { type: Number },
     _startIndex: { state: true },
     _visibleCount: { state: true },
   };
@@ -139,11 +139,13 @@ export class ArcVirtualList extends LitElement {
     this._startIndex = start;
     this._visibleCount = count;
     if (moved) {
-      this.dispatchEvent(new CustomEvent('arc-range-change', {
-        detail: { value: { start, end: start + count }, start, end: start + count },
-        bubbles: true,
-        composed: true,
-      }));
+      this.dispatchEvent(
+        new CustomEvent('arc-range-change', {
+          detail: { value: { start, end: start + count }, start, end: start + count },
+          bubbles: true,
+          composed: true,
+        }),
+      );
     }
   }
 
@@ -159,7 +161,8 @@ export class ArcVirtualList extends LitElement {
   render() {
     const total = this.items?.length || 0;
     const totalHeight = total * this.itemHeight;
-    const visibleItems = this.items?.slice(this._startIndex, this._startIndex + this._visibleCount) || [];
+    const visibleItems =
+      this.items?.slice(this._startIndex, this._startIndex + this._visibleCount) || [];
 
     return html`
       <div class="virtual-list__spacer" style="height:${totalHeight}px" part="spacer">
@@ -171,9 +174,11 @@ export class ArcVirtualList extends LitElement {
               style="top:${index * this.itemHeight}px;height:${this.itemHeight}px;"
               part="item"
             >
-              ${this.renderItem
-                ? this.renderItem(item, index)
-                : html`<slot name="item-${index}"></slot>`}
+              ${
+                this.renderItem
+                  ? this.renderItem(item, index)
+                  : html`<slot name="item-${index}"></slot>`
+              }
             </div>
           `;
         })}

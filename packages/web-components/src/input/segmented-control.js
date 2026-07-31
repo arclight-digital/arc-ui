@@ -15,7 +15,7 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcSegmentedControl extends LitElement {
   static properties = {
-    value:    { type: String, reflect: true },
+    value: { type: String, reflect: true },
     disabled: { type: Boolean, reflect: true },
     _options: { state: true },
   };
@@ -124,8 +124,9 @@ export class ArcSegmentedControl extends LitElement {
 
   _readOptions(slot) {
     if (!slot) return;
-    const options = slot.assignedElements({ flatten: true })
-      .filter(el => el.tagName === 'ARC-OPTION');
+    const options = slot
+      .assignedElements({ flatten: true })
+      .filter((el) => el.tagName === 'ARC-OPTION');
     if (!options.length && !this._options.length) return;
     this._options = options;
     // Auto-select first if no value set
@@ -137,11 +138,13 @@ export class ArcSegmentedControl extends LitElement {
   _select(optionValue) {
     if (this.disabled || optionValue === this.value) return;
     this.value = optionValue;
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: this.value },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _handleKeydown(e, index) {

@@ -20,8 +20,8 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcSnackbar extends LitElement {
   static properties = {
-    position:   { type: String, reflect: true },
-    duration:   { type: Number },
+    position: { type: String, reflect: true },
+    duration: { type: Number },
     _snackbars: { state: true },
   };
 
@@ -115,46 +115,56 @@ export class ArcSnackbar extends LitElement {
 
   _handleAction(snackbar) {
     if (snackbar.action) snackbar.action();
-    this.dispatchEvent(new CustomEvent('arc-action', {
-      detail: { id: snackbar.id },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-action', {
+        detail: { id: snackbar.id },
+        bubbles: true,
+        composed: true,
+      }),
+    );
     this._dismiss(snackbar.id);
   }
 
   _dismiss(id) {
-    if (!this._snackbars.some(s => s.id === id)) return;
+    if (!this._snackbars.some((s) => s.id === id)) return;
     const el = this.shadowRoot.querySelector(`[data-snackbar-id="${id}"]`);
     if (el) {
       el.classList.add('is-exiting');
       const cleanup = () => {
-        this._snackbars = this._snackbars.filter(s => s.id !== id);
-        this.dispatchEvent(new CustomEvent('arc-close', {
-          detail: { id },
-          bubbles: true,
-          composed: true,
-        }));
+        this._snackbars = this._snackbars.filter((s) => s.id !== id);
+        this.dispatchEvent(
+          new CustomEvent('arc-close', {
+            detail: { id },
+            bubbles: true,
+            composed: true,
+          }),
+        );
       };
       el.addEventListener('animationend', cleanup, { once: true });
       setTimeout(cleanup, 300);
     } else {
-      this._snackbars = this._snackbars.filter(s => s.id !== id);
+      this._snackbars = this._snackbars.filter((s) => s.id !== id);
     }
   }
 
   render() {
     return html`
       <div class="snackbar-container" role="status" aria-live="polite" aria-atomic="false" part="container">
-        ${this._snackbars.map(s => html`
+        ${this._snackbars.map(
+          (s) => html`
           <div class="snackbar" data-snackbar-id=${s.id} part="snackbar">
             <span class="snackbar__message">${s.message}</span>
-            ${s.actionLabel ? html`
+            ${
+              s.actionLabel
+                ? html`
               <arc-button variant="ghost" size="sm" @click=${() => this._handleAction(s)} part="action">${s.actionLabel}</arc-button>
-            ` : ''}
+            `
+                : ''
+            }
             <arc-icon-button name="x" label="Dismiss" variant="ghost" size="sm" @click=${() => this._dismiss(s.id)} part="dismiss"></arc-icon-button>
           </div>
-        `)}
+        `,
+        )}
       </div>
     `;
   }

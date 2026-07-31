@@ -11,7 +11,7 @@ import { LitElement, html, css } from 'lit';
 export class ArcTimelineItem extends LitElement {
   static properties = {
     heading: { type: String, reflect: true },
-    date:    { type: String, reflect: true },
+    date: { type: String, reflect: true },
   };
 
   static styles = css`

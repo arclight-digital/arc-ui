@@ -82,9 +82,7 @@ export class ArcSettingsLayout extends LitElement {
 
   render() {
     const layoutClass =
-      this.navPosition === 'top'
-        ? 'settings-layout--top'
-        : 'settings-layout--left';
+      this.navPosition === 'top' ? 'settings-layout--top' : 'settings-layout--left';
 
     return html`
       <div class="${layoutClass}" part="layout">

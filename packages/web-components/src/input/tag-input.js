@@ -37,20 +37,20 @@ import { ClickOutsideController } from '../shared/click-outside.js';
 export class ArcTagInput extends FormControlMixin(LitElement) {
   static properties = {
     size: { type: String, reflect: true },
-    value:        { type: Array },
-    suggestions:  { type: Array },
-    delimiter:    { type: String },
-    maxTags:      { type: Number, attribute: 'max-tags' },
-    allowCustom:  { type: Boolean, attribute: 'allow-custom' },
-    label:        { type: String },
-    placeholder:  { type: String },
-    name:         { type: String, reflect: true },
-    disabled:     { type: Boolean, reflect: true },
-    error:        { type: String },
-    _query:       { state: true },
-    _open:        { state: true },
-    _focused:     { state: true },
-    _shakeValue:  { state: true },
+    value: { type: Array },
+    suggestions: { type: Array },
+    delimiter: { type: String },
+    maxTags: { type: Number, attribute: 'max-tags' },
+    allowCustom: { type: Boolean, attribute: 'allow-custom' },
+    label: { type: String },
+    placeholder: { type: String },
+    name: { type: String, reflect: true },
+    disabled: { type: Boolean, reflect: true },
+    error: { type: String },
+    _query: { state: true },
+    _open: { state: true },
+    _focused: { state: true },
+    _shakeValue: { state: true },
   };
 
   static styles = [
@@ -298,8 +298,12 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
       isOpen: () => this._open,
       // Only open on a direction key when there is something to show — an empty
       // suggestion list would otherwise open a blank panel.
-      onOpen: () => { if ((this.suggestions || []).length > 0) this._open = true; },
-      onClose: () => { this._open = false; },
+      onOpen: () => {
+        if ((this.suggestions || []).length > 0) this._open = true;
+      },
+      onClose: () => {
+        this._open = false;
+      },
       onSelect: (i) => this._commit(this._filteredSuggestions[i]),
       optionId: (i) => `${this._tiId}-option-${i}`,
       scrollContainer: () => this.shadowRoot?.querySelector('.ti__dropdown'),
@@ -349,19 +353,21 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
   }
 
   get _filteredSuggestions() {
-    const tags = (this.value || []).map(t => t.toLowerCase());
+    const tags = (this.value || []).map((t) => t.toLowerCase());
     const q = this._query.trim().toLowerCase();
     return (this.suggestions || [])
-      .filter(s => !tags.includes(s.toLowerCase()))
-      .filter(s => !q || s.toLowerCase().includes(q));
+      .filter((s) => !tags.includes(s.toLowerCase()))
+      .filter((s) => !q || s.toLowerCase().includes(q));
   }
 
   _emitChange() {
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: this.value },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   /** Adds a trimmed tag; rejects empties, over-max, non-suggestions (when allowCustom=false), and duplicates (with a shake). */
@@ -371,11 +377,11 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
     if (!text || this._atMax) return false;
 
     // canonicalize casing against suggestions when one matches
-    const match = (this.suggestions || []).find(s => s.toLowerCase() === text.toLowerCase());
+    const match = (this.suggestions || []).find((s) => s.toLowerCase() === text.toLowerCase());
     if (!this.allowCustom && !match) return false;
     const finalValue = match || text;
 
-    const existing = (this.value || []).find(t => t.toLowerCase() === finalValue.toLowerCase());
+    const existing = (this.value || []).find((t) => t.toLowerCase() === finalValue.toLowerCase());
     if (existing) {
       this._shakeExisting(existing);
       this._query = '';
@@ -392,15 +398,19 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
   _shakeExisting(tag) {
     // reset then re-set on the next frame so the animation restarts on repeat offenses
     this._shakeValue = null;
-    requestAnimationFrame(() => { this._shakeValue = tag; });
+    requestAnimationFrame(() => {
+      this._shakeValue = tag;
+    });
     clearTimeout(this._shakeTimer);
-    this._shakeTimer = setTimeout(() => { this._shakeValue = null; }, 450);
+    this._shakeTimer = setTimeout(() => {
+      this._shakeValue = null;
+    }, 450);
   }
 
   _removeTag(tag, e) {
     e?.stopPropagation();
     if (this.readonly) return;
-    this.value = (this.value || []).filter(t => t !== tag);
+    this.value = (this.value || []).filter((t) => t !== tag);
     this._emitChange();
   }
 
@@ -418,11 +428,13 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
     }
     this._open = (this.suggestions || []).length > 0;
     this._listbox.reset();
-    this.dispatchEvent(new CustomEvent('arc-input', {
-      detail: { value: this._query, query: this._query },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-input', {
+        detail: { value: this._query, query: this._query },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _onFocusIn() {
@@ -448,7 +460,11 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
         this._commit(this._query);
         break;
       case 'ArrowLeft':
-        if (e.target.selectionStart === 0 && e.target.selectionEnd === 0 && (this.value || []).length > 0) {
+        if (
+          e.target.selectionStart === 0 &&
+          e.target.selectionEnd === 0 &&
+          (this.value || []).length > 0
+        ) {
           e.preventDefault();
           this._focusTag((this.value || []).length - 1);
         }
@@ -509,10 +525,15 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
     const hasError = !!this.error;
     const inputId = `${this._tiId}-input`;
     const listboxId = `${this._tiId}-listbox`;
-    const activeId = dropdownOpen && this._listbox.activeIndex >= 0 ? `${this._tiId}-option-${this._listbox.activeIndex}` : undefined;
+    const activeId =
+      dropdownOpen && this._listbox.activeIndex >= 0
+        ? `${this._tiId}-option-${this._listbox.activeIndex}`
+        : undefined;
     const placeholder = atMax
       ? '-- max reached'
-      : (tags.length === 0 && !this._query ? this.placeholder : '');
+      : tags.length === 0 && !this._query
+        ? this.placeholder
+        : '';
 
     return html`
       ${this.label ? html`<label class="ti__label" for=${inputId} part="label">${this.label}</label>` : ''}
@@ -521,7 +542,8 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
         @click=${() => this.shadowRoot.querySelector('.ti__input')?.focus()}
         part="field"
       >
-        ${tags.map((tag, i) => html`
+        ${tags.map(
+          (tag, i) => html`
           <span class="ti__tag ${this._shakeValue === tag ? 'ti__tag--shake' : ''}" part="tag">
             ${tag}
             <button
@@ -532,7 +554,8 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
               tabindex="-1"
             >&times;</button>
           </span>
-        `)}
+        `,
+        )}
         <input
           id=${inputId}
           class="ti__input"
@@ -561,7 +584,8 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
         role="listbox"
         part="dropdown"
       >
-        ${filtered.map((item, i) => html`
+        ${filtered.map(
+          (item, i) => html`
           <div
             id="${this._tiId}-option-${i}"
             class="ti__option ${i === this._listbox.activeIndex ? 'ti__option--active' : ''}"
@@ -570,7 +594,8 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
             @click=${() => this._commit(item)}
             part="option"
           >${item}</div>
-        `)}
+        `,
+        )}
       </div>
       ${hasError ? html`<span class="ti__error" role="alert" part="error">${this.error}</span>` : ''}
     `;

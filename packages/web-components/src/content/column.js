@@ -15,11 +15,11 @@ import { LitElement, html, css } from 'lit';
  */
 export class ArcColumn extends LitElement {
   static properties = {
-    field:    { type: String, reflect: true },
-    key:      { type: String, reflect: true },
-    label:    { type: String, reflect: true },
+    field: { type: String, reflect: true },
+    key: { type: String, reflect: true },
+    label: { type: String, reflect: true },
     sortable: { type: Boolean, reflect: true },
-    width:    { type: String },
+    width: { type: String },
   };
 
   /**

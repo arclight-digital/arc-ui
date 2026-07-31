@@ -9,3 +9,5 @@ export { default as TimeAgo } from './TimeAgo.svelte';
 export { default as Truncate } from './Truncate.svelte';
 export { default as Typewriter } from './Typewriter.svelte';
 export { default as Text } from './Text.svelte';
+export { default as Terminal } from './Terminal.svelte';
+export { default as KeyboardMap } from './KeyboardMap.svelte';

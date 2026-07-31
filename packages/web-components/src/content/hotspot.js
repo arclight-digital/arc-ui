@@ -23,10 +23,10 @@ import { deepActiveElement } from '../shared/trigger-aria.js';
  */
 export class ArcHotspot extends LitElement {
   static properties = {
-    x:     { type: Number, reflect: true },
-    y:     { type: Number, reflect: true },
+    x: { type: Number, reflect: true },
+    y: { type: Number, reflect: true },
     label: { type: String, reflect: true },
-    open:  { type: Boolean, reflect: true },
+    open: { type: Boolean, reflect: true },
   };
 
   static styles = [
@@ -269,11 +269,13 @@ export class ArcHotspot extends LitElement {
       return;
     }
     this.open = true;
-    this.dispatchEvent(new CustomEvent('arc-open', {
-      bubbles: true,
-      composed: true,
-      detail: { value: this._value },
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-open', {
+        bubbles: true,
+        composed: true,
+        detail: { value: this._value },
+      }),
+    );
   }
 
   /**
@@ -283,12 +285,17 @@ export class ArcHotspot extends LitElement {
    */
   close(restoreFocus = true) {
     if (!this.open) return;
-    if (!this.dispatchEvent(new CustomEvent('arc-close', {
-      bubbles: true,
-      composed: true,
-      cancelable: true,
-      detail: { value: this._value },
-    }))) return;
+    if (
+      !this.dispatchEvent(
+        new CustomEvent('arc-close', {
+          bubbles: true,
+          composed: true,
+          cancelable: true,
+          detail: { value: this._value },
+        }),
+      )
+    )
+      return;
     this.open = false;
     if (restoreFocus && this._openedFrom && this._openedFrom.isConnected) {
       this._openedFrom.focus();

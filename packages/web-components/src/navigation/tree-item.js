@@ -11,8 +11,8 @@ import { LitElement, html, css } from 'lit';
  */
 export class ArcTreeItem extends LitElement {
   static properties = {
-    label:    { type: String, reflect: true },
-    icon:     { type: String },
+    label: { type: String, reflect: true },
+    icon: { type: String },
     expanded: { type: Boolean, reflect: true },
   };
 

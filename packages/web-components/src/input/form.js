@@ -22,13 +22,13 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcForm extends LitElement {
   static properties = {
-    action:       { type: String },
-    method:       { type: String },
-    novalidate:   { type: Boolean, reflect: true },
-    loading:      { type: Boolean, reflect: true },
-    disabled:     { type: Boolean, reflect: true },
+    action: { type: String },
+    method: { type: String },
+    novalidate: { type: Boolean, reflect: true },
+    loading: { type: Boolean, reflect: true },
+    disabled: { type: Boolean, reflect: true },
     errorSummary: { type: Boolean, reflect: true, attribute: 'error-summary' },
-    _errors:      { state: true },
+    _errors: { state: true },
   };
 
   static styles = [
@@ -125,7 +125,12 @@ export class ArcForm extends LitElement {
     if (e.key !== 'Enter' || e.defaultPrevented) return;
     const target = e.composedPath()[0];
     if (!target || target.tagName !== 'INPUT') return;
-    if (['checkbox', 'radio', 'button', 'submit', 'reset', 'file', 'range', 'color'].includes(target.type)) return;
+    if (
+      ['checkbox', 'radio', 'button', 'submit', 'reset', 'file', 'range', 'color'].includes(
+        target.type,
+      )
+    )
+      return;
     e.preventDefault();
     this.submit();
   }
@@ -228,11 +233,13 @@ export class ArcForm extends LitElement {
     if (!valid && !this.novalidate) {
       e.preventDefault();
       this._errors = errors;
-      this.dispatchEvent(new CustomEvent('arc-invalid', {
-        detail: { errors },
-        bubbles: true,
-        composed: true,
-      }));
+      this.dispatchEvent(
+        new CustomEvent('arc-invalid', {
+          detail: { errors },
+          bubbles: true,
+          composed: true,
+        }),
+      );
       return;
     }
 
@@ -240,22 +247,26 @@ export class ArcForm extends LitElement {
 
     // Native form submission — let the browser handle it
     if (this.action) {
-      this.dispatchEvent(new CustomEvent('arc-submit', {
-        detail: { values, formData, valid },
-        bubbles: true,
-        composed: true,
-      }));
+      this.dispatchEvent(
+        new CustomEvent('arc-submit', {
+          detail: { values, formData, valid },
+          bubbles: true,
+          composed: true,
+        }),
+      );
       // Don't preventDefault — the form submits natively
       return;
     }
 
     // JS-only mode — prevent default and let the listener handle it
     e.preventDefault();
-    this.dispatchEvent(new CustomEvent('arc-submit', {
-      detail: { values, formData, valid },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-submit', {
+        detail: { values, formData, valid },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   /** Programmatic submit — call from outside */
@@ -296,10 +307,12 @@ export class ArcForm extends LitElement {
     this._flagged = new WeakSet();
     this._errors = [];
 
-    this.dispatchEvent(new CustomEvent('arc-reset', {
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-reset', {
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   render() {
@@ -312,14 +325,18 @@ export class ArcForm extends LitElement {
         @submit=${this._handleSubmit}
       >
         <div class="form-layout" part="layout">
-          ${this.errorSummary && this._errors.length > 0 ? html`
+          ${
+            this.errorSummary && this._errors.length > 0
+              ? html`
             <div class="form-errors" role="alert" part="errors">
               <p class="form-errors__title">Please fix the following errors</p>
               <ul class="form-errors__list">
-                ${this._errors.map(err => html`<li>${err.message}</li>`)}
+                ${this._errors.map((err) => html`<li>${err.message}</li>`)}
               </ul>
             </div>
-          ` : nothing}
+          `
+              : nothing
+          }
           <slot></slot>
         </div>
       </form>

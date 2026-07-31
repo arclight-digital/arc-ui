@@ -22,12 +22,12 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcProgress extends LitElement {
   static properties = {
-    value:         { type: Number },
-    variant:       { type: String, reflect: true },
-    size:          { type: String, reflect: true },
+    value: { type: Number },
+    variant: { type: String, reflect: true },
+    size: { type: String, reflect: true },
     indeterminate: { type: Boolean, reflect: true },
-    showValue:     { type: Boolean, attribute: 'show-value', reflect: true },
-    label:         { type: String },
+    showValue: { type: Boolean, attribute: 'show-value', reflect: true },
+    label: { type: String },
   };
 
   static styles = [
@@ -181,12 +181,16 @@ export class ArcProgress extends LitElement {
 
     return html`
       <div part="progress">
-        ${hasHeader ? html`
+        ${
+          hasHeader
+            ? html`
           <div class="progress__header">
             ${this.label ? html`<span class="progress__label" style="margin-bottom:0" part="label">${this.label}</span>` : html`<span></span>`}
             ${this.showValue && !this.indeterminate ? html`<span class="progress__value" part="value">${clampedValue}%</span>` : ''}
           </div>
-        ` : ''}
+        `
+            : ''
+        }
         <div
           class="progress__track"
           role="progressbar"

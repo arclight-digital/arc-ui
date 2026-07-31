@@ -16,11 +16,11 @@ import { isLoneSlottedAnchor } from '../shared/anchor-adoption.js';
  */
 export class ArcLink extends LitElement {
   static properties = {
-    href:      { type: String },
-    variant:   { type: String, reflect: true },
+    href: { type: String },
+    variant: { type: String, reflect: true },
     underline: { type: String, reflect: true },
-    active:    { type: Boolean, reflect: true },
-    external:  { type: Boolean, reflect: true },
+    active: { type: Boolean, reflect: true },
+    external: { type: Boolean, reflect: true },
     _slottedAnchor: { state: true },
   };
 

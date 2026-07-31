@@ -28,13 +28,13 @@ import { monthNames, weekdayNames, firstDayOfWeek, weekdayOffset } from '../shar
  */
 export class ArcCalendar extends LitElement {
   static properties = {
-    locale:      { type: String },
+    locale: { type: String },
     firstDayOfWeek: { type: Number, attribute: 'first-day-of-week' },
-    value:  { type: String },
-    min:    { type: String },
-    max:    { type: String },
-    month:  { type: Number },
-    year:   { type: Number },
+    value: { type: String },
+    min: { type: String },
+    max: { type: String },
+    month: { type: Number },
+    year: { type: Number },
     _focusedDay: { state: true },
   };
 
@@ -166,7 +166,6 @@ export class ArcCalendar extends LitElement {
     `,
   ];
 
-
   constructor() {
     super();
     this.locale = '';
@@ -183,7 +182,6 @@ export class ArcCalendar extends LitElement {
   get _firstDay() {
     return this.firstDayOfWeek || firstDayOfWeek(this.locale || undefined);
   }
-
 
   get _todayISO() {
     const d = new Date();
@@ -253,22 +251,26 @@ export class ArcCalendar extends LitElement {
   }
 
   _dispatchMonthChange() {
-    this.dispatchEvent(new CustomEvent('arc-month-change', {
-      detail: { month: this.month, year: this.year },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-month-change', {
+        detail: { month: this.month, year: this.year },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _selectDate(iso) {
     if (this._isDisabled(iso)) return;
     this.value = iso;
 
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: iso },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: iso },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _onKeyDown(e) {
@@ -283,10 +285,18 @@ export class ArcCalendar extends LitElement {
     let handled = true;
 
     switch (e.key) {
-      case 'ArrowRight': day++; break;
-      case 'ArrowLeft': day--; break;
-      case 'ArrowDown': day += 7; break;
-      case 'ArrowUp': day -= 7; break;
+      case 'ArrowRight':
+        day++;
+        break;
+      case 'ArrowLeft':
+        day--;
+        break;
+      case 'ArrowDown':
+        day += 7;
+        break;
+      case 'ArrowUp':
+        day -= 7;
+        break;
       case 'Enter':
       case ' ':
         e.preventDefault();
@@ -339,17 +349,19 @@ export class ArcCalendar extends LitElement {
 
         <div class="calendar__grid" role="grid" part="grid">
           <div class="calendar__row" role="row">
-            ${weekdayNames('short', this.locale || undefined, this._firstDay).map(d => html`<div class="calendar__dow" role="columnheader" part="dow">${d}</div>`)}
+            ${weekdayNames('short', this.locale || undefined, this._firstDay).map((d) => html`<div class="calendar__dow" role="columnheader" part="dow">${d}</div>`)}
           </div>
 
-          ${weeks.map(week => html`
+          ${weeks.map(
+            (week) => html`
             <div class="calendar__row" role="row">
               ${week.map(({ day, month, year, outside }) => {
                 const iso = this._toISO(year, month, day);
                 const isToday = iso === today;
                 const isSelected = iso === this.value;
                 const isDisabled = this._isDisabled(iso);
-                const isFocused = this._focusedDay &&
+                const isFocused =
+                  this._focusedDay &&
                   this._focusedDay.year === year &&
                   this._focusedDay.month === month &&
                   this._focusedDay.day === day;
@@ -367,7 +379,8 @@ export class ArcCalendar extends LitElement {
                 `;
               })}
             </div>
-          `)}
+          `,
+          )}
         </div>
       </div>
     `;

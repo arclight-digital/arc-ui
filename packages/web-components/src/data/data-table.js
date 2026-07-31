@@ -28,16 +28,16 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcDataTable extends LitElement {
   static properties = {
-    rows:          { type: Array },
-    sortable:      { type: Boolean, reflect: true },
-    selectable:    { type: Boolean, reflect: true },
-    sortColumn:    { type: String, attribute: 'sort-column' },
+    rows: { type: Array },
+    sortable: { type: Boolean, reflect: true },
+    selectable: { type: Boolean, reflect: true },
+    sortColumn: { type: String, attribute: 'sort-column' },
     sortDirection: { type: String, reflect: true, attribute: 'sort-direction' },
-    virtual:       { type: Boolean, reflect: true },
-    rowHeight:     { type: Number, attribute: 'row-height' },
-    _columns:      { state: true },
+    virtual: { type: Boolean, reflect: true },
+    rowHeight: { type: Number, attribute: 'row-height' },
+    _columns: { state: true },
     _selectedRows: { state: true },
-    _startIndex:   { state: true },
+    _startIndex: { state: true },
     _visibleCount: { state: true },
   };
 
@@ -239,8 +239,9 @@ export class ArcDataTable extends LitElement {
   }
 
   _onSlotChange(e) {
-    this._columns = e.target.assignedElements({ flatten: true })
-      .filter(el => el.tagName === 'ARC-COLUMN');
+    this._columns = e.target
+      .assignedElements({ flatten: true })
+      .filter((el) => el.tagName === 'ARC-COLUMN');
   }
 
   firstUpdated() {
@@ -320,11 +321,13 @@ export class ArcDataTable extends LitElement {
       this.sortDirection = 'asc';
     }
 
-    this.dispatchEvent(new CustomEvent('arc-sort', {
-      detail: { column: this.sortColumn, direction: this.sortDirection },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-sort', {
+        detail: { column: this.sortColumn, direction: this.sortDirection },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _handleSelectAll(e) {
@@ -335,15 +338,17 @@ export class ArcDataTable extends LitElement {
       this._selectedRows = new Set();
     }
 
-    this.dispatchEvent(new CustomEvent('arc-select', {
-      detail: {
-        value: [...this._selectedRows].sort((a, b) => a - b),
-        selected: checked,
-        all: true,
-      },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-select', {
+        detail: {
+          value: [...this._selectedRows].sort((a, b) => a - b),
+          selected: checked,
+          all: true,
+        },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _handleRowSelect(e, row, index) {
@@ -358,16 +363,18 @@ export class ArcDataTable extends LitElement {
 
     this._selectedRows = next;
 
-    this.dispatchEvent(new CustomEvent('arc-select', {
-      detail: {
-        value: [...next].sort((a, b) => a - b),
-        selected: checked,
-        row,
-        index,
-      },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-select', {
+        detail: {
+          value: [...next].sort((a, b) => a - b),
+          selected: checked,
+          row,
+          index,
+        },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   get _sortedRows() {
@@ -379,7 +386,11 @@ export class ArcDataTable extends LitElement {
     // so engines reordered rows arbitrarily on every sort.
     const numeric = this.rows.every((r) => {
       const v = r[key];
-      return v == null || v === '' || (typeof v === 'number' ? Number.isFinite(v) : !Number.isNaN(Number(v)));
+      return (
+        v == null ||
+        v === '' ||
+        (typeof v === 'number' ? Number.isFinite(v) : !Number.isNaN(Number(v)))
+      );
     });
     const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
 
@@ -449,7 +460,9 @@ export class ArcDataTable extends LitElement {
   _renderRow(row, i) {
     return html`
       <tr class="${this._selectedRows.has(i) ? 'selected' : ''}" part="row">
-        ${this.selectable ? html`
+        ${
+          this.selectable
+            ? html`
           <td class="checkbox-cell">
             <input
               type="checkbox"
@@ -458,10 +471,14 @@ export class ArcDataTable extends LitElement {
               @change=${(e) => this._handleRowSelect(e, row, i)}
             />
           </td>
-        ` : ''}
-        ${this._columns.map(col => html`
+        `
+            : ''
+        }
+        ${this._columns.map(
+          (col) => html`
           <td part="cell">${row[col.fieldName] ?? ''}</td>
-        `)}
+        `,
+        )}
       </tr>
     `;
   }
@@ -477,7 +494,9 @@ export class ArcDataTable extends LitElement {
         <table part="table">
           <thead part="head">
             <tr>
-              ${this.selectable ? html`
+              ${
+                this.selectable
+                  ? html`
                 <th class="checkbox-cell">
                   <input
                     type="checkbox"
@@ -486,20 +505,28 @@ export class ArcDataTable extends LitElement {
                     @change=${this._handleSelectAll}
                   />
                 </th>
-              ` : ''}
-              ${this._columns.map(col => html`
+              `
+                  : ''
+              }
+              ${this._columns.map(
+                (col) => html`
                 <th
                   class="${this.sortable && col.sortable ? 'sortable' : ''} ${this.sortColumn === col.fieldName ? 'sorted' : ''}"
                   style="${col.width ? `width: ${col.width}` : ''}"
                   aria-sort=${this.sortColumn === col.fieldName ? (this.sortDirection === 'asc' ? 'ascending' : 'descending') : 'none'}
                 >
-                  ${this.sortable && col.sortable ? html`
+                  ${
+                    this.sortable && col.sortable
+                      ? html`
                     <button class="sort-button" @click=${() => this._handleSort(col)}>
                       ${col.label}${this._renderSortIndicator(col)}
                     </button>
-                  ` : html`${col.label}${this._renderSortIndicator(col)}`}
+                  `
+                      : html`${col.label}${this._renderSortIndicator(col)}`
+                  }
                 </th>
-              `)}
+              `,
+              )}
             </tr>
           </thead>
           <tbody part="body">

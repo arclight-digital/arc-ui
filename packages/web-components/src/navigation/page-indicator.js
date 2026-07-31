@@ -16,8 +16,8 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcPageIndicator extends LitElement {
   static properties = {
-    count:     { type: Number },
-    value:     { type: Number, reflect: true },
+    count: { type: Number },
+    value: { type: Number, reflect: true },
     clickable: { type: Boolean, reflect: true },
   };
 
@@ -71,11 +71,13 @@ export class ArcPageIndicator extends LitElement {
   _select(index) {
     if (!this.clickable) return;
     this.value = index;
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: this.value },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   render() {
@@ -86,7 +88,8 @@ export class ArcPageIndicator extends LitElement {
 
     return html`
       <div class="page-indicator" part="base" role="tablist" aria-label="Page indicator">
-        ${dots.map(i => html`
+        ${dots.map(
+          (i) => html`
           <button
             class="page-indicator__dot ${this.value === i ? 'is-active' : ''}"
             part="dot"
@@ -96,7 +99,8 @@ export class ArcPageIndicator extends LitElement {
             @click=${() => this._select(i)}
             ?disabled=${!this.clickable}
           ></button>
-        `)}
+        `,
+        )}
       </div>
     `;
   }

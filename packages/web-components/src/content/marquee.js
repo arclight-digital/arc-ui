@@ -17,11 +17,11 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcMarquee extends LitElement {
   static properties = {
-    speed:            { type: Number },
-    direction:        { type: String, reflect: true },
+    speed: { type: Number },
+    direction: { type: String, reflect: true },
     pauseOnHover: { type: Boolean, reflect: true, attribute: 'pause-on-hover' },
-    gap:              { type: String },
-    _animDuration:    { state: true },
+    gap: { type: String },
+    _animDuration: { state: true },
   };
 
   static styles = [

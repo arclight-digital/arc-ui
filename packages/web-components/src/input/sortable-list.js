@@ -16,12 +16,12 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcSortableList extends LitElement {
   static properties = {
-    disabled:      { type: Boolean, reflect: true },
-    _items:        { state: true },
-    _dragIndex:    { state: true },
-    _overIndex:    { state: true },
-    _kbSelected:   { state: true },
-    _kbMoving:     { state: true },
+    disabled: { type: Boolean, reflect: true },
+    _items: { state: true },
+    _dragIndex: { state: true },
+    _overIndex: { state: true },
+    _kbSelected: { state: true },
+    _kbMoving: { state: true },
   };
 
   static styles = [
@@ -263,11 +263,16 @@ export class ArcSortableList extends LitElement {
   }
 
   _fireOrderChange() {
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: this._items.map(item => item.originalIndex), order: this._items.map(item => item.originalIndex) },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: {
+          value: this._items.map((item) => item.originalIndex),
+          order: this._items.map((item) => item.originalIndex),
+        },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _focusItem(index) {
@@ -282,12 +287,14 @@ export class ArcSortableList extends LitElement {
   _renderGripDots() {
     // 3 rows x 2 dots = 6-dot grip icon
     return html`
-      ${[0, 1, 2].map(() => html`
+      ${[0, 1, 2].map(
+        () => html`
         <div class="sortable__grip-row">
           <span class="sortable__grip-dot"></span>
           <span class="sortable__grip-dot"></span>
         </div>
-      `)}
+      `,
+      )}
     `;
   }
 

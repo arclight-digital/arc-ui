@@ -30,15 +30,15 @@ import '../shared/option.js';
  */
 export class ArcSelect extends FormControlMixin(LitElement) {
   static properties = {
-    value:       { type: String, reflect: true },
+    value: { type: String, reflect: true },
     placeholder: { type: String },
-    label:       { type: String },
-    name:        { type: String, reflect: true },
-    disabled:    { type: Boolean, reflect: true },
-    size:        { type: String, reflect: true },
-    error:       { type: String },
-    open:        { type: Boolean, reflect: true },
-    _options:    { state: true },
+    label: { type: String },
+    name: { type: String, reflect: true },
+    disabled: { type: Boolean, reflect: true },
+    size: { type: String, reflect: true },
+    error: { type: String },
+    open: { type: Boolean, reflect: true },
+    _options: { state: true },
   };
 
   static styles = [
@@ -212,7 +212,9 @@ export class ArcSelect extends FormControlMixin(LitElement) {
     this.open = false;
     this._options = [];
     this._clickOutside = new ClickOutsideController(this, {
-      onClickOutside: () => { this.open = false; },
+      onClickOutside: () => {
+        this.open = false;
+      },
     });
     this._position = new PositionController(this, {
       anchor: () => this.shadowRoot?.querySelector('.select__trigger'),
@@ -226,7 +228,9 @@ export class ArcSelect extends FormControlMixin(LitElement) {
     this._listbox = new ListboxController(this, {
       getItemCount: () => this._options.length,
       isOpen: () => this.open,
-      onOpen: () => { this.open = true; },
+      onOpen: () => {
+        this.open = true;
+      },
       onClose: () => {
         this.open = false;
         // Virtual focus means the trigger never lost real focus, so there is
@@ -251,7 +255,7 @@ export class ArcSelect extends FormControlMixin(LitElement) {
         this._position.show();
         // Open onto the selected option, so arrowing starts from where the user
         // already is rather than from the top of the list.
-        const selected = this._options.findIndex(o => o.value === this.value);
+        const selected = this._options.findIndex((o) => o.value === this.value);
         if (selected >= 0) this._listbox.setActive(selected);
       } else {
         this._clickOutside.deactivate();
@@ -268,8 +272,9 @@ export class ArcSelect extends FormControlMixin(LitElement) {
   }
 
   _onSlotChange(e) {
-    this._options = e.target.assignedElements({ flatten: true })
-      .filter(el => el.tagName === 'ARC-OPTION');
+    this._options = e.target
+      .assignedElements({ flatten: true })
+      .filter((el) => el.tagName === 'ARC-OPTION');
   }
 
   _toggleOpen() {
@@ -280,11 +285,13 @@ export class ArcSelect extends FormControlMixin(LitElement) {
   _selectOption(opt) {
     this.value = opt.value;
     this.open = false;
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: opt.value, label: opt.label },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: opt.value, label: opt.label },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _handleTriggerKeydown(e) {
@@ -303,7 +310,7 @@ export class ArcSelect extends FormControlMixin(LitElement) {
   }
 
   get _selectedLabel() {
-    const selected = this._options.find(o => o.value === this.value);
+    const selected = this._options.find((o) => o.value === this.value);
     return selected ? selected.label : '';
   }
 
@@ -335,14 +342,16 @@ export class ArcSelect extends FormControlMixin(LitElement) {
           @keydown=${this._handleTriggerKeydown}
           part="trigger"
         >
-          ${display
-            ? html`<span>${display}</span>`
-            : html`<span class="select__placeholder">${this.placeholder}</span>`
+          ${
+            display
+              ? html`<span>${display}</span>`
+              : html`<span class="select__placeholder">${this.placeholder}</span>`
           }
           <span class="select__chevron" aria-hidden="true">&#9662;</span>
         </button>
         <div id=${listboxId} class="select__dropdown" role="listbox" part="dropdown">
-          ${this._options.map((opt, i) => html`
+          ${this._options.map(
+            (opt, i) => html`
             <div
               id="${this._selectId}-opt-${i}"
               class="select__option ${i === this._listbox.activeIndex ? 'select__option--active' : ''}"
@@ -351,7 +360,8 @@ export class ArcSelect extends FormControlMixin(LitElement) {
               @click=${() => this._selectOption(opt)}
               part="option"
             >${opt.label}</div>
-          `)}
+          `,
+          )}
         </div>
         ${hasError ? html`<span class="select__error" role="alert" part="error">${this.error}</span>` : ''}
       </div>

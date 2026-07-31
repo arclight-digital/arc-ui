@@ -29,12 +29,12 @@ const ROLES = new Set(['user', 'assistant', 'system']);
  */
 export class ArcMessage extends LitElement {
   static properties = {
-    speaker:      { type: String },
-    author:    { type: String },
+    speaker: { type: String },
+    author: { type: String },
     timestamp: { type: String },
-    pending:   { type: Boolean, reflect: true },
-    markdown:  { type: Boolean, reflect: true },
-    _source:   { state: true },
+    pending: { type: Boolean, reflect: true },
+    markdown: { type: Boolean, reflect: true },
+    _source: { state: true },
   };
 
   static styles = [
@@ -187,7 +187,8 @@ export class ArcMessage extends LitElement {
   _readSlottedSource() {
     const slot = this.shadowRoot?.querySelector('slot:not([name])');
     if (!slot) return;
-    const text = slot.assignedNodes({ flatten: true })
+    const text = slot
+      .assignedNodes({ flatten: true })
       .map((node) => node.textContent)
       .join('');
     if (text !== this._source) this._source = text;

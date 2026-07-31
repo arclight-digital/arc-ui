@@ -140,8 +140,9 @@ export class ArcTimeline extends LitElement {
   }
 
   _onSlotChange(e) {
-    this._items = e.target.assignedElements({ flatten: true })
-      .filter(el => el.tagName === 'ARC-TIMELINE-ITEM');
+    this._items = e.target
+      .assignedElements({ flatten: true })
+      .filter((el) => el.tagName === 'ARC-TIMELINE-ITEM');
   }
 
   render() {
@@ -159,15 +160,19 @@ export class ArcTimeline extends LitElement {
               </div>
               <div class="timeline__content" part="content">
                 <div class="timeline__title" part="title" role="heading" aria-level=${this.headingLevel}>${item.heading || ''}</div>
-                ${item.description
-                  ? html`<p class="timeline__desc" part="description">${item.description}</p>`
-                  : ''}
-                ${item.date
-                  ? html`<time class="timeline__date" part="date">${item.date}</time>`
-                  : ''}
+                ${
+                  item.description
+                    ? html`<p class="timeline__desc" part="description">${item.description}</p>`
+                    : ''
+                }
+                ${
+                  item.date
+                    ? html`<time class="timeline__date" part="date">${item.date}</time>`
+                    : ''
+                }
               </div>
             </li>
-          `
+          `,
         )}
       </ol>
     `;

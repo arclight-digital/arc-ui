@@ -22,9 +22,9 @@ import { statusVars } from '../status-styles.js';
  */
 export class ArcCallout extends LitElement {
   static properties = {
-    variant:     { type: String, reflect: true },
+    variant: { type: String, reflect: true },
     dismissible: { type: Boolean, reflect: true },
-    _dismissed:  { state: true },
+    _dismissed: { state: true },
   };
 
   static styles = [
@@ -90,10 +90,10 @@ export class ArcCallout extends LitElement {
   /** @private */
   _getDefaultIcon() {
     const icons = {
-      info:    'info',
+      info: 'info',
       warning: 'warning',
-      tip:     'lightbulb',
-      error:   'x-circle',
+      tip: 'lightbulb',
+      error: 'x-circle',
     };
     return icons[this.variant] || icons.info;
   }
@@ -101,16 +101,21 @@ export class ArcCallout extends LitElement {
   /** @private */
   _getLabel() {
     const labels = {
-      info:    'Note',
+      info: 'Note',
       warning: 'Warning',
-      tip:     'Tip',
-      error:   'Error',
+      tip: 'Tip',
+      error: 'Error',
     };
     return labels[this.variant] || labels.info;
   }
 
   _dismiss() {
-    if (!this.dispatchEvent(new CustomEvent('arc-close', { bubbles: true, composed: true, cancelable: true }))) return;
+    if (
+      !this.dispatchEvent(
+        new CustomEvent('arc-close', { bubbles: true, composed: true, cancelable: true }),
+      )
+    )
+      return;
     this._dismissed = true;
     this.classList.add('dismissed');
   }
@@ -125,9 +130,13 @@ export class ArcCallout extends LitElement {
             <slot name="icon"><arc-icon name=${this._getDefaultIcon()} size="sm"></arc-icon></slot>
           </span>
           <span class="callout__label" part="label">${this._getLabel()}</span>
-          ${this.dismissible ? html`
+          ${
+            this.dismissible
+              ? html`
             <arc-icon-button name="x" label="Dismiss" variant="ghost" size="sm" @click=${this._dismiss} part="dismiss"></arc-icon-button>
-          ` : ''}
+          `
+              : ''
+          }
         </div>
         <div class="callout__content" part="content">
           <slot></slot>

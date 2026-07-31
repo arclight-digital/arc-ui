@@ -22,12 +22,12 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcFieldset extends LitElement {
   static properties = {
-    legend:      { type: String },
+    legend: { type: String },
     description: { type: String },
-    disabled:    { type: Boolean, reflect: true },
-    error:       { type: String },
-    variant:     { type: String, reflect: true },
-    _hasLegend:  { state: true },
+    disabled: { type: Boolean, reflect: true },
+    error: { type: String },
+    variant: { type: String, reflect: true },
+    _hasLegend: { state: true },
     _hasActions: { state: true },
   };
 
@@ -133,7 +133,9 @@ export class ArcFieldset extends LitElement {
 
     return html`
       <fieldset ?disabled=${this.disabled} part="fieldset">
-        ${showLegend ? html`
+        ${
+          showLegend
+            ? html`
           <legend part="legend">
             <div class="fieldset__header">
               <span>
@@ -147,7 +149,9 @@ export class ArcFieldset extends LitElement {
               </span>
             </div>
           </legend>
-        ` : ''}
+        `
+            : ''
+        }
         ${this.description ? html`<div class="fieldset__description" part="description">${this.description}</div>` : ''}
         <div class="fieldset__content" part="content">
           <slot></slot>

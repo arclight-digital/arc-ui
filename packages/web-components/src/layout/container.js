@@ -13,8 +13,8 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcContainer extends LitElement {
   static properties = {
-    narrow:  { type: Boolean, reflect: true },
-    size:    { type: String, reflect: true },
+    narrow: { type: Boolean, reflect: true },
+    size: { type: String, reflect: true },
     padding: { type: String, reflect: true },
   };
 

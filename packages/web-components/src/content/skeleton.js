@@ -15,9 +15,9 @@ import { tokenStyles } from '../shared-styles.js';
 export class ArcSkeleton extends LitElement {
   static properties = {
     variant: { type: String, reflect: true },
-    width:   { type: String },
-    height:  { type: String },
-    count:   { type: Number },
+    width: { type: String },
+    height: { type: String },
+    count: { type: Number },
   };
 
   static styles = [
@@ -76,7 +76,9 @@ export class ArcSkeleton extends LitElement {
       this.width ? `width:${this.width}` : '',
       this.height ? `height:${this.height}` : '',
       this.variant === 'circle' && !this.height && this.width ? `height:${this.width}` : '',
-    ].filter(Boolean).join(';');
+    ]
+      .filter(Boolean)
+      .join(';');
 
     return html`<div class="skeleton" part="skeleton" style=${styles}></div>`;
   }

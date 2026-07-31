@@ -12,7 +12,6 @@ const props = withDefaults(defineProps<{
 }>(), {
   density: 'default',
   border: true,
-  contained: 'null',
   align: 'left',
 });
 </script>

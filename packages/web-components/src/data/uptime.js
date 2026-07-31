@@ -23,10 +23,10 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcUptime extends LitElement {
   static properties = {
-    data:         { attribute: false },
-    startLabel:   { type: String, attribute: 'start-label' },
-    endLabel:     { type: String, attribute: 'end-label' },
-    summary:      { converter: { fromAttribute: (v) => v !== 'false' } },
+    data: { attribute: false },
+    startLabel: { type: String, attribute: 'start-label' },
+    endLabel: { type: String, attribute: 'end-label' },
+    summary: { converter: { fromAttribute: (v) => v !== 'false' } },
     _activeIndex: { state: true },
   };
 
@@ -239,9 +239,10 @@ export class ArcUptime extends LitElement {
   /** Hover-bubble and live-region text for one tick. */
   _detailOf(tick, index, count) {
     const label = tick.label || `Period ${index + 1} of ${count}`;
-    const status = tick.value !== undefined
-      ? `${(tick.value * 100).toFixed(2).replace(/\.?0+$/, '')}% — ${ArcUptime.#STATUS_TEXT[tick.status]}`
-      : ArcUptime.#STATUS_TEXT[tick.status];
+    const status =
+      tick.value !== undefined
+        ? `${(tick.value * 100).toFixed(2).replace(/\.?0+$/, '')}% — ${ArcUptime.#STATUS_TEXT[tick.status]}`
+        : ArcUptime.#STATUS_TEXT[tick.status];
     return { label, status };
   }
 
@@ -264,10 +265,20 @@ export class ArcUptime extends LitElement {
       e.preventDefault();
     };
     switch (e.key) {
-      case 'ArrowRight': step(rtl ? -1 : 1); break;
-      case 'ArrowLeft':  step(rtl ? 1 : -1); break;
-      case 'Home': this._activeIndex = 0; e.preventDefault(); break;
-      case 'End':  this._activeIndex = count - 1; e.preventDefault(); break;
+      case 'ArrowRight':
+        step(rtl ? -1 : 1);
+        break;
+      case 'ArrowLeft':
+        step(rtl ? 1 : -1);
+        break;
+      case 'Home':
+        this._activeIndex = 0;
+        e.preventDefault();
+        break;
+      case 'End':
+        this._activeIndex = count - 1;
+        e.preventDefault();
+        break;
       case 'Escape':
         if (this._activeIndex !== null) {
           this._clearActive();
@@ -297,9 +308,13 @@ export class ArcUptime extends LitElement {
 
     return html`
       <div class="uptime" part="uptime">
-        ${this.summary && percent !== null ? html`
+        ${
+          this.summary && percent !== null
+            ? html`
           <div class="uptime__summary" part="summary">${percent}% uptime</div>
-        ` : nothing}
+        `
+            : nothing
+        }
         <div
           class="uptime__track"
           part="track"
@@ -311,14 +326,18 @@ export class ArcUptime extends LitElement {
           @keydown=${this._onKeyDown}
           @blur=${this._clearActive}
         >
-          ${ticks.map((tick, i) => html`
+          ${ticks.map(
+            (tick, i) => html`
             <span
               class="uptime__tick status--${tick.status} ${i === this._activeIndex ? 'is-active' : ''}"
               part="tick"
               data-index=${i}
             ></span>
-          `)}
-          ${detail ? html`
+          `,
+          )}
+          ${
+            detail
+              ? html`
             <div
               class="uptime__detail"
               part="detail"
@@ -328,14 +347,20 @@ export class ArcUptime extends LitElement {
               <span class="uptime__detail-label">${detail.label}</span>
               <span class="uptime__detail-status status--${active.status}">${detail.status}</span>
             </div>
-          ` : nothing}
+          `
+              : nothing
+          }
         </div>
-        ${this.startLabel || this.endLabel ? html`
+        ${
+          this.startLabel || this.endLabel
+            ? html`
           <div class="uptime__caption" part="caption">
             <span>${this.startLabel}</span>
             <span>${this.endLabel}</span>
           </div>
-        ` : nothing}
+        `
+            : nothing
+        }
         <span class="sr-only" role="status">${detail ? `${detail.label}: ${detail.status}` : ''}</span>
       </div>
     `;

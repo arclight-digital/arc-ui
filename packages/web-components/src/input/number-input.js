@@ -30,12 +30,12 @@ let numberInputIdCounter = 0;
 export class ArcNumberInput extends FormControlMixin(LitElement) {
   static properties = {
     size: { type: String, reflect: true },
-    value:    { type: Number, reflect: true },
-    min:      { type: Number },
-    max:      { type: Number },
-    step:     { type: Number },
-    label:    { type: String },
-    name:     { type: String, reflect: true },
+    value: { type: Number, reflect: true },
+    min: { type: Number },
+    max: { type: Number },
+    step: { type: Number },
+    label: { type: String },
+    name: { type: String, reflect: true },
     disabled: { type: Boolean, reflect: true },
   };
 
@@ -218,17 +218,21 @@ export class ArcNumberInput extends FormControlMixin(LitElement) {
     if (clamped === this.value) return;
     this.value = clamped;
     this._updateFormValue();
-    this.dispatchEvent(new CustomEvent('arc-input', {
-      detail: { value: this.value },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-input', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
     if (!commit) return;
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: this.value },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _decrement() {
@@ -274,9 +278,13 @@ export class ArcNumberInput extends FormControlMixin(LitElement) {
   render() {
     return html`
       <div class="number-input" part="wrapper">
-        ${this.label ? html`
+        ${
+          this.label
+            ? html`
           <label class="number-input__label" for=${this._fieldId} part="label">${this.label}</label>
-        ` : ''}
+        `
+            : ''
+        }
         <div class="number-input__controls" part="controls">
           <button
             class="number-input__btn"

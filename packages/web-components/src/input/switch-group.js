@@ -17,10 +17,10 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcSwitchGroup extends LitElement {
   static properties = {
-    label:       { type: String },
+    label: { type: String },
     orientation: { type: String, reflect: true },
-    size:        { type: String, reflect: true },
-    disabled:    { type: Boolean, reflect: true },
+    size: { type: String, reflect: true },
+    disabled: { type: Boolean, reflect: true },
   };
 
   static styles = [
@@ -74,8 +74,9 @@ export class ArcSwitchGroup extends LitElement {
   }
 
   _onSlotChange(e) {
-    const children = e.target.assignedElements({ flatten: true })
-      .filter(el => el.tagName === 'ARC-TOGGLE');
+    const children = e.target
+      .assignedElements({ flatten: true })
+      .filter((el) => el.tagName === 'ARC-TOGGLE');
 
     for (const toggle of children) {
       if (this.size) toggle.setAttribute('size', this.size);

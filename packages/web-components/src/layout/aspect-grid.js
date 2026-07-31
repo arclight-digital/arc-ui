@@ -14,8 +14,8 @@ import { tokenStyles } from '../shared-styles.js';
 export class ArcAspectGrid extends LitElement {
   static properties = {
     columns: { type: Number, reflect: true },
-    ratio:   { type: String, reflect: true },
-    gap:     { type: String, reflect: true },
+    ratio: { type: String, reflect: true },
+    gap: { type: String, reflect: true },
   };
 
   static styles = [

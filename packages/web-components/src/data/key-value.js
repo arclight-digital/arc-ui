@@ -14,7 +14,7 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcKeyValue extends LitElement {
   static properties = {
-    layout:   { type: String, reflect: true },
+    layout: { type: String, reflect: true },
     dividers: { type: Boolean, reflect: true },
   };
 

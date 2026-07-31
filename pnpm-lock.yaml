@@ -11,8 +11,8 @@ importers:
   .:
     devDependencies:
       '@arclux/prism':
-        specifier: github:arclight-digital/prism#v2.11.0
-        version: https://codeload.github.com/arclight-digital/prism/tar.gz/bb539012465e5dac0c4e6d99b312cfb7a95f46d9
+        specifier: ^2.11.0
+        version: 2.11.1
       '@axe-core/playwright':
         specifier: ^4.12.1
         version: 4.12.1(playwright-core@1.61.1)
@@ -74,8 +74,8 @@ importers:
         specifier: ^1.2.0
         version: 1.2.0(lit@3.3.2)
       '@arclux/glint':
-        specifier: ^0.1.0
-        version: 0.1.0
+        specifier: ^1.1.0
+        version: 1.1.0
       '@astrojs/sitemap':
         specifier: ^3.7.3
         version: 3.7.3
@@ -286,13 +286,12 @@ packages:
     peerDependencies:
       lit: ^3.3.0
 
-  '@arclux/glint@0.1.0':
-    resolution: {integrity: sha512-01TWq5XS75CRyJ2RGTCFLbuoAdfXKM8eLmTzlLtsgwKmhlUbYDGo2QiThNlIuHnzMM+l/vxStMSOdmYB38t73w==}
+  '@arclux/glint@1.1.0':
+    resolution: {integrity: sha512-w0qdMdOCn/o7rUIeVnpm/GL3K/3PrVZhOz9p8/INWL5vSojdOyuRKI7VZDouc0yhTMD5DgCKLUiQQdxaxd8lAA==}
     engines: {node: '>=22.0.0'}
 
-  '@arclux/prism@https://codeload.github.com/arclight-digital/prism/tar.gz/bb539012465e5dac0c4e6d99b312cfb7a95f46d9':
-    resolution: {tarball: https://codeload.github.com/arclight-digital/prism/tar.gz/bb539012465e5dac0c4e6d99b312cfb7a95f46d9}
-    version: 2.11.0
+  '@arclux/prism@2.11.1':
+    resolution: {integrity: sha512-dBbtvJIvkBbZKx1axrXnRQ9GnwjYGEKSf7P0F0VTtSfVlgZGjmzGeiiHfor4FPuvVw/KTBcQJ8KCu9RiCNQZPQ==}
     engines: {node: '>=24'}
     hasBin: true
 
@@ -5250,9 +5249,9 @@ snapshots:
     dependencies:
       lit: 3.3.2
 
-  '@arclux/glint@0.1.0': {}
+  '@arclux/glint@1.1.0': {}
 
-  '@arclux/prism@https://codeload.github.com/arclight-digital/prism/tar.gz/bb539012465e5dac0c4e6d99b312cfb7a95f46d9':
+  '@arclux/prism@2.11.1':
     dependencies:
       chokidar: 5.0.0
 

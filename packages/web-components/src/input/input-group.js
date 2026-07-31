@@ -17,7 +17,7 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcInputGroup extends LitElement {
   static properties = {
-    size:       { type: String, reflect: true },
+    size: { type: String, reflect: true },
     _hasPrefix: { state: true },
     _hasSuffix: { state: true },
   };

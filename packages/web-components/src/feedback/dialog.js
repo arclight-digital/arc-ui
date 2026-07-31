@@ -23,12 +23,12 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcDialog extends LitElement {
   static properties = {
-    open:           { type: Boolean, reflect: true },
-    heading:        { type: String },
-    message:        { type: String },
+    open: { type: Boolean, reflect: true },
+    heading: { type: String },
+    message: { type: String },
     confirmLabel: { type: String, attribute: 'confirm-label' },
-    cancelLabel:  { type: String, attribute: 'cancel-label' },
-    variant:        { type: String, reflect: true },
+    cancelLabel: { type: String, attribute: 'cancel-label' },
+    variant: { type: String, reflect: true },
   };
 
   static styles = [
@@ -107,9 +107,13 @@ export class ArcDialog extends LitElement {
         closable
         @arc-close=${this._onModalClose}
       >
-        ${this.message ? html`
+        ${
+          this.message
+            ? html`
           <div class="dialog__body" part="body">${this.message}</div>
-        ` : ''}
+        `
+            : ''
+        }
         <div slot="footer">
           <arc-button variant="ghost" size="sm" @click=${this._cancel} part="cancel">${this.cancelLabel}</arc-button>
           <arc-button variant="primary" size="sm" @click=${this._doConfirm} part="confirm">${this.confirmLabel}</arc-button>

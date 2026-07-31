@@ -28,13 +28,13 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
 export class ArcSlider extends FormControlMixin(LitElement) {
   static properties = {
     size: { type: String, reflect: true },
-    value:    { type: Number, reflect: true },
-    min:      { type: Number },
-    max:      { type: Number },
-    step:     { type: Number },
-    name:     { type: String, reflect: true },
+    value: { type: Number, reflect: true },
+    min: { type: Number },
+    max: { type: Number },
+    step: { type: Number },
+    name: { type: String, reflect: true },
     disabled: { type: Boolean, reflect: true },
-    label:    { type: String },
+    label: { type: String },
   };
 
   static styles = [
@@ -208,11 +208,13 @@ export class ArcSlider extends FormControlMixin(LitElement) {
     }
     this.value = Number(e.target.value);
     this._updateFormValue();
-    this.dispatchEvent(new CustomEvent('arc-input', {
-      detail: { value: this.value },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-input', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _onChange(e) {
@@ -222,22 +224,28 @@ export class ArcSlider extends FormControlMixin(LitElement) {
     }
     this.value = Number(e.target.value);
     this._updateFormValue();
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: this.value },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   render() {
     return html`
       <div class="slider" part="slider">
-        ${this.label ? html`
+        ${
+          this.label
+            ? html`
           <div class="slider__header" part="header">
             <label class="slider__label" part="label">${this.label}</label>
             <span class="slider__value" part="value">${this.value}</span>
           </div>
-        ` : ''}
+        `
+            : ''
+        }
         <div class="slider__track" part="track">
           <input
             type="range"

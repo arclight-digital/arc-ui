@@ -20,7 +20,7 @@ import { tokenStyles } from '../shared-styles.js';
 export class ArcProgressToast extends LitElement {
   static properties = {
     position: { type: String, reflect: true },
-    _toasts:  { state: true },
+    _toasts: { state: true },
   };
 
   static styles = [
@@ -123,7 +123,7 @@ export class ArcProgressToast extends LitElement {
   }
 
   updateToast(id, { progress, message }) {
-    this._toasts = this._toasts.map(t => {
+    this._toasts = this._toasts.map((t) => {
       if (t.id !== id) return t;
       return {
         ...t,
@@ -138,46 +138,56 @@ export class ArcProgressToast extends LitElement {
     if (el) {
       el.classList.add('is-exiting');
       const cleanup = () => {
-        this._toasts = this._toasts.filter(t => t.id !== id);
-        this.dispatchEvent(new CustomEvent('arc-complete', {
-          detail: { id },
-          bubbles: true,
-          composed: true,
-        }));
+        this._toasts = this._toasts.filter((t) => t.id !== id);
+        this.dispatchEvent(
+          new CustomEvent('arc-complete', {
+            detail: { id },
+            bubbles: true,
+            composed: true,
+          }),
+        );
       };
       el.addEventListener('animationend', cleanup, { once: true });
       setTimeout(cleanup, 300);
     } else {
-      this._toasts = this._toasts.filter(t => t.id !== id);
+      this._toasts = this._toasts.filter((t) => t.id !== id);
     }
   }
 
   _cancel(toast) {
     if (toast.onCancel) toast.onCancel();
-    this.dispatchEvent(new CustomEvent('arc-cancel', {
-      detail: { id: toast.id },
-      bubbles: true,
-      composed: true,
-    }));
-    this._toasts = this._toasts.filter(t => t.id !== toast.id);
+    this.dispatchEvent(
+      new CustomEvent('arc-cancel', {
+        detail: { id: toast.id },
+        bubbles: true,
+        composed: true,
+      }),
+    );
+    this._toasts = this._toasts.filter((t) => t.id !== toast.id);
   }
 
   render() {
     return html`
       <div class="progress-toast-container" role="status" aria-live="polite" part="container">
-        ${this._toasts.map(t => html`
+        ${this._toasts.map(
+          (t) => html`
           <div class="progress-toast" data-toast-id=${t.id} part="toast">
             <div class="progress-toast__message">
               <span>${t.message}</span>
-              ${t.onCancel ? html`
+              ${
+                t.onCancel
+                  ? html`
                 <arc-icon-button name="x" label="Cancel" variant="ghost" size="sm" @click=${() => this._cancel(t)} part="cancel"></arc-icon-button>
-              ` : ''}
+              `
+                  : ''
+              }
             </div>
             <div class="progress-toast__track" part="track">
               <div class="progress-toast__fill" style="width:${Math.min(100, Math.max(0, t.progress))}%" part="fill"></div>
             </div>
           </div>
-        `)}
+        `,
+        )}
       </div>
     `;
   }

@@ -22,12 +22,12 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  */
 export class ArcRadioGroup extends FormControlMixin(LitElement) {
   static properties = {
-    value:       { type: String, reflect: true },
-    name:        { type: String, reflect: true },
-    disabled:    { type: Boolean, reflect: true },
-    size:        { type: String, reflect: true },
+    value: { type: String, reflect: true },
+    name: { type: String, reflect: true },
+    disabled: { type: Boolean, reflect: true },
+    size: { type: String, reflect: true },
     orientation: { type: String, reflect: true },
-    _radios:     { state: true },
+    _radios: { state: true },
   };
 
   static styles = [
@@ -132,18 +132,21 @@ export class ArcRadioGroup extends FormControlMixin(LitElement) {
   }
 
   _onSlotChange(e) {
-    this._radios = e.target.assignedElements({ flatten: true })
-      .filter(el => el.tagName === 'ARC-RADIO');
+    this._radios = e.target
+      .assignedElements({ flatten: true })
+      .filter((el) => el.tagName === 'ARC-RADIO');
   }
 
   _select(val) {
     if (this.disabled || this.readonly) return;
     this.value = val;
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: this.value },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _handleKeydown(e, index) {
@@ -151,13 +154,13 @@ export class ArcRadioGroup extends FormControlMixin(LitElement) {
     let next;
 
     if (e.key === 'ArrowDown' || e.key === 'ArrowRight') next = (index + 1) % opts.length;
-    else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') next = (index - 1 + opts.length) % opts.length;
+    else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft')
+      next = (index - 1 + opts.length) % opts.length;
     else if (e.key === ' ') {
       e.preventDefault();
       this._select(opts[index].value);
       return;
-    }
-    else return;
+    } else return;
 
     e.preventDefault();
     this._select(opts[next].value);
@@ -173,7 +176,8 @@ export class ArcRadioGroup extends FormControlMixin(LitElement) {
         <slot @slotchange=${this._onSlotChange}></slot>
       </div>
       <div class="radio-group" role="radiogroup" aria-label=${this.name} part="group">
-        ${this._radios.map((opt, i) => html`
+        ${this._radios.map(
+          (opt, i) => html`
           <div
             class="radio"
             role="radio"
@@ -187,7 +191,8 @@ export class ArcRadioGroup extends FormControlMixin(LitElement) {
             </div>
             <span class="radio__label" part="label">${opt.label}</span>
           </div>
-        `)}
+        `,
+        )}
       </div>
     `;
   }

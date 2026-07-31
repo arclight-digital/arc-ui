@@ -20,13 +20,13 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcFileUpload extends LitElement {
   static properties = {
-    accept:    { type: String },
-    multiple:  { type: Boolean, reflect: true },
-    maxSize:   { type: Number, attribute: 'max-size' },
-    disabled:  { type: Boolean, reflect: true },
-    _files:    { state: true },
+    accept: { type: String },
+    multiple: { type: Boolean, reflect: true },
+    maxSize: { type: Number, attribute: 'max-size' },
+    disabled: { type: Boolean, reflect: true },
+    _files: { state: true },
     _dragOver: { state: true },
-    _error:    { state: true },
+    _error: { state: true },
   };
 
   static styles = [
@@ -190,10 +190,10 @@ export class ArcFileUpload extends LitElement {
     this._error = '';
 
     if (this.maxSize > 0) {
-      const oversized = files.filter(f => f.size > this.maxSize);
+      const oversized = files.filter((f) => f.size > this.maxSize);
       if (oversized.length > 0) {
-        this._error = `${oversized.map(f => f.name).join(', ')} exceeded max size of ${this._formatSize(this.maxSize)}`;
-        return files.filter(f => f.size <= this.maxSize);
+        this._error = `${oversized.map((f) => f.name).join(', ')} exceeded max size of ${this._formatSize(this.maxSize)}`;
+        return files.filter((f) => f.size <= this.maxSize);
       }
     }
 
@@ -210,11 +210,13 @@ export class ArcFileUpload extends LitElement {
       this._files = [valid[0]];
     }
 
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: [...this._files] },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: [...this._files] },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _removeFile(index) {
@@ -222,17 +224,21 @@ export class ArcFileUpload extends LitElement {
     this._files = this._files.filter((_, i) => i !== index);
     this._error = '';
 
-    this.dispatchEvent(new CustomEvent('arc-remove', {
-      detail: { value: removed, index },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-remove', {
+        detail: { value: removed, index },
+        bubbles: true,
+        composed: true,
+      }),
+    );
 
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: [...this._files] },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: [...this._files] },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _handleClick() {
@@ -295,12 +301,20 @@ export class ArcFileUpload extends LitElement {
           <span class="upload-text">
             Drag & drop files here or <span class="browse-link">browse</span>
           </span>
-          ${this.accept ? html`
+          ${
+            this.accept
+              ? html`
             <span class="upload-hint">Accepted: ${this.accept}</span>
-          ` : ''}
-          ${this.maxSize > 0 ? html`
+          `
+              : ''
+          }
+          ${
+            this.maxSize > 0
+              ? html`
             <span class="upload-hint">Max size: ${this._formatSize(this.maxSize)}</span>
-          ` : ''}
+          `
+              : ''
+          }
         </div>
 
         <input
@@ -312,26 +326,39 @@ export class ArcFileUpload extends LitElement {
           tabindex="-1"
         />
 
-        ${this._error ? html`
+        ${
+          this._error
+            ? html`
           <div class="error-message" role="alert" part="error">${this._error}</div>
-        ` : ''}
+        `
+            : ''
+        }
 
-        ${this._files.length > 0 ? html`
+        ${
+          this._files.length > 0
+            ? html`
           <div class="file-list" part="file-list" role="list" aria-label="Selected files">
-            ${this._files.map((file, i) => html`
+            ${this._files.map(
+              (file, i) => html`
               <div class="file-item" part="file-item" role="listitem">
                 <span class="file-icon" aria-hidden="true">\u{1F4CE}</span>
                 <span class="file-name">${file.name}</span>
                 <span class="file-size">${this._formatSize(file.size)}</span>
                 <button
                   class="file-remove"
-                  @click=${(e) => { e.stopPropagation(); this._removeFile(i); }}
+                  @click=${(e) => {
+                    e.stopPropagation();
+                    this._removeFile(i);
+                  }}
                   aria-label="Remove ${file.name}"
                 >&times;</button>
               </div>
-            `)}
+            `,
+            )}
           </div>
-        ` : ''}
+        `
+            : ''
+        }
       </div>
     `;
   }

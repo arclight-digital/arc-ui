@@ -13,7 +13,7 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcDescriptionList extends LitElement {
   static properties = {
-    columns:  { type: Number, reflect: true },
+    columns: { type: Number, reflect: true },
     dividers: { type: Boolean, reflect: true },
   };
 
@@ -71,14 +71,10 @@ export class ArcDescriptionList extends LitElement {
       const isLastRow = i >= lastRowStart;
 
       if (this.dividers) {
-        item.style.borderBottom = isLastRow
-          ? 'none'
-          : '1px solid var(--border-subtle)';
+        item.style.borderBottom = isLastRow ? 'none' : '1px solid var(--border-subtle)';
 
         if (cols > 1) {
-          item.style.borderRight = isLastInRow
-            ? 'none'
-            : '1px solid var(--border-subtle)';
+          item.style.borderRight = isLastInRow ? 'none' : '1px solid var(--border-subtle)';
         } else {
           item.style.borderRight = '';
         }

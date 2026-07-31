@@ -42,39 +42,76 @@ function walk(dir) {
   }
 }
 
+/**
+ * Rules are read as innermost selector/body pairs over the whole source, not
+ * line by line.
+ *
+ * The line-based version could not see a rule written on one line: for
+ * `.field:focus { outline: none; }` the backscan for a selector started from
+ * the `}` that closed the very same rule, and so found no selector at all.
+ * Four real violations — data-grid's cell editor, input, masked-input and
+ * password-input — sat unreported behind that until the tree was run through
+ * prettier and the declarations landed on their own lines. Same blind spot
+ * check-motion-tokens had, and the same fix: normalise the shape before
+ * matching, so how a rule is formatted cannot decide whether it is checked.
+ */
+/** The contents of each css`…` tagged template, with its offset in the file. */
+function* styleBlocks(src) {
+  const open = /\bcss`/g;
+  let m;
+  while ((m = open.exec(src))) {
+    const start = m.index + m[0].length;
+    const end = src.indexOf('`', start);
+    if (end === -1) return;
+    yield { text: src.slice(start, end), offset: start };
+    open.lastIndex = end + 1;
+  }
+}
+
+function* rules(src) {
+  // Scoped to the style blocks: run over the whole module and the braces of
+  // imports, objects and function bodies pair up with CSS braces, which puts
+  // every selector one rule out of step.
+  for (const block of styleBlocks(src)) {
+    for (const m of block.text.matchAll(/([^{}]*)\{([^{}]*)\}/g)) {
+      const at = block.offset + m.index;
+      yield {
+        selector: m[1].trim(),
+        body: m[2],
+        line: src.slice(0, at).split('\n').length,
+      };
+    }
+  }
+}
+
 function scan(file) {
   const src = fs.readFileSync(file, 'utf8');
   const rel = path.relative(process.cwd(), file);
-  const lines = src.split('\n');
 
-  lines.forEach((line, i) => {
-    const at = (msg) => failures.push({ file: rel, line: i + 1, msg, text: line.trim() });
+  for (const { selector, body, line } of rules(src)) {
+    const at = (msg, text) => failures.push({ file: rel, line, msg, text: text.trim() });
 
     // An explicit, greppable opt-out for the rare rule that has a reason. It
     // has to name one — the point is that a deviation stays visible in review
     // rather than being absorbed as normal.
-    if (/focus-ring-exempt/.test(lines.slice(Math.max(0, i - 4), i + 1).join('\n'))) return;
+    if (/focus-ring-exempt/.test(selector) || /focus-ring-exempt/.test(body)) continue;
 
     // 1. A box-shadow inside a focus rule that is not built from tokens.
-    if (/:focus(-visible)?\b/.test(line) || /focus-within/.test(line)) {
-      // Look at this rule's body for a literal shadow.
-      const body = lines.slice(i, i + 8).join('\n').split('}')[0];
+    if (/:focus(-visible|-within)?\b/.test(selector)) {
       const shadow = body.match(/box-shadow:\s*([^;]+);/);
       if (shadow && !TOKEN.test(shadow[1]) && /rgba?\(|\d+px/.test(shadow[1])) {
-        at('hand-rolled focus shadow — use --interactive-focus, -ring or -error');
+        at('hand-rolled focus shadow — use --interactive-focus, -ring or -error', shadow[0]);
       }
     }
 
     // 2. outline:none under a bare :focus (not :focus-visible, not a
     //    :not(:focus) hover suppression).
-    if (/outline:\s*none/.test(line)) {
-      const rule = lines.slice(Math.max(0, i - 6), i + 1).join('\n');
-      const sel = rule.slice(rule.lastIndexOf('}') + 1);
-      if (/:focus\b/.test(sel) && !/:focus-visible|:focus-within|:not\(:focus/.test(sel)) {
-        at('outline suppressed under a bare :focus — scope it to :focus-visible');
+    if (/outline:\s*none/.test(body)) {
+      if (/:focus\b/.test(selector) && !/:focus-visible|:focus-within|:not\(:focus/.test(selector)) {
+        at('outline suppressed under a bare :focus — scope it to :focus-visible', selector);
       }
     }
-  });
+  }
 }
 
 walk(SRC);

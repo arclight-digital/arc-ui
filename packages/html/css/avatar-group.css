@@ -35,5 +35,5 @@
         padding-inline-start: var(--space-sm);
       }
 
-      .arc-avatar-group[data-overlap="sm"] .group__overflow { padding-left: var(--space-xs); }
-      .arc-avatar-group[data-overlap="lg"] .group__overflow { padding-left: var(--space-md); }
+      .arc-avatar-group[data-overlap="sm"] .group__overflow { padding-inline-start: var(--space-xs); }
+      .arc-avatar-group[data-overlap="lg"] .group__overflow { padding-inline-start: var(--space-md); }

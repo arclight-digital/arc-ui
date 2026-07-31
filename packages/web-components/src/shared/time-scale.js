@@ -80,7 +80,7 @@ export function toPixels(scale, value) {
  * @returns {number}
  */
 export function toValue(scale, px) {
-  return scale.origin + (px / (scale.pixelsPerUnit * dir(scale)));
+  return scale.origin + px / (scale.pixelsPerUnit * dir(scale));
 }
 
 /**
@@ -157,9 +157,7 @@ export function panBy(scale, deltaPx) {
  */
 export function gridSnapper(gridUnits) {
   if (!Number.isInteger(gridUnits) || gridUnits <= 0) {
-    throw new RangeError(
-      `time-scale: gridUnits must be a positive integer, got ${gridUnits}`,
-    );
+    throw new RangeError(`time-scale: gridUnits must be a positive integer, got ${gridUnits}`);
   }
   return (value) => Math.round(value / gridUnits) * gridUnits;
 }

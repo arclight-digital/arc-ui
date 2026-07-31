@@ -8,7 +8,7 @@ import { tokenStyles } from '../shared-styles.js';
  * tab stop.
  *
  * @tag arc-data-grid
- * @prop {Array<{key:string,label:string,sortable?:boolean,editable?:boolean,pinned?:boolean,width?:string,align?:string}>} columns - Column definitions. Each entry maps a `key` in your row objects to a rendered column with a `label` header. Optional flags enable sorting, inline editing, and left-edge pinning per column; `width` sets a fixed CSS width (required for accurate pinned offsets) and `align` controls text alignment. Pinned columns are always displayed first. Set via JavaScript property.
+ * @prop {Array<{key:string,label:string,sortable?:boolean,editable?:boolean,pinned?:boolean,width?:string,align?:string}>} columns - Column definitions. Each entry maps a `key` in your row objects to a rendered column with a `label` header. Optional flags enable sorting, inline editing, and inline-start-edge pinning per column; `width` sets a fixed CSS width (required for accurate pinned offsets) and `align` controls text alignment. Pinned columns are always displayed first. Set via JavaScript property.
  * @prop {Array<Record<string, any>>} rows - The data array. Each object becomes a row keyed by column `key`. The grid works on an internal shallow copy — sorting and inline edits never mutate the array you pass in. Set via JavaScript property; reassigning it resets selection and any open editor.
  * @prop {Array<{key:string,direction:'asc'|'desc'}>} sort - Multi-sort state in priority order. Clicking a sortable header cycles it asc → desc → none; Shift+click appends it as a secondary sort. When more than one sort is active, headers show a direction arrow plus priority number. Set this property to pre-sort the grid.
  * @prop {boolean} manualSort - Skips internal sorting. Rows render in the order given, while headers still cycle the `sort` state and emit `arc-sort` — use this to implement server-side sorting.
@@ -30,21 +30,21 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcDataGrid extends LitElement {
   static properties = {
-    columns:       { type: Array },
-    rows:          { type: Array },
-    sort:          { type: Array },
-    manualSort:    { type: Boolean, attribute: 'manual-sort' },
-    selectable:    { type: Boolean, reflect: true },
-    virtual:       { type: Boolean, reflect: true },
-    rowHeight:     { type: Number, attribute: 'row-height' },
-    _rows:         { state: true },
-    _selected:     { state: true },
-    _startIndex:   { state: true },
+    columns: { type: Array },
+    rows: { type: Array },
+    sort: { type: Array },
+    manualSort: { type: Boolean, attribute: 'manual-sort' },
+    selectable: { type: Boolean, reflect: true },
+    virtual: { type: Boolean, reflect: true },
+    rowHeight: { type: Number, attribute: 'row-height' },
+    _rows: { state: true },
+    _selected: { state: true },
+    _startIndex: { state: true },
     _visibleCount: { state: true },
-    _focusRow:     { state: true },
-    _focusCol:     { state: true },
-    _editing:      { state: true },
-    _scrolledX:    { state: true },
+    _focusRow: { state: true },
+    _focusCol: { state: true },
+    _editing: { state: true },
+    _scrolledX: { state: true },
   };
 
   static styles = [
@@ -150,7 +150,7 @@ export class ArcDataGrid extends LitElement {
       td.editable-cell { cursor: text; }
       td.editing { padding: 0 var(--space-xs); }
 
-      /* Pinned columns stick to the left edge of the horizontal scroller */
+      /* Pinned columns stick to the inline-start edge of the horizontal scroller */
       .cell--pinned {
         position: sticky;
         z-index: 1;
@@ -159,11 +159,19 @@ export class ArcDataGrid extends LitElement {
 
       thead .cell--pinned { z-index: 4; }
 
-      .cell--pinned-last { border-right: 1px solid var(--border-default); }
+      .cell--pinned-last { border-inline-end: 1px solid var(--border-default); }
 
+      /* Cast away from the pinned edge, so it has to follow the inline axis.
+         box-shadow takes no logical offset, so the sign flips under :dir(rtl)
+         — the one physical value column pinning still needs. */
       .scrolled-x th.cell--pinned-last,
       .scrolled-x td.cell--pinned-last {
         box-shadow: 6px 0 12px -6px rgba(var(--black-rgb), 0.45);
+      }
+
+      .scrolled-x th.cell--pinned-last:dir(rtl),
+      .scrolled-x td.cell--pinned-last:dir(rtl) {
+        box-shadow: -6px 0 12px -6px rgba(var(--black-rgb), 0.45);
       }
 
       th:focus-visible,
@@ -243,7 +251,7 @@ export class ArcDataGrid extends LitElement {
         box-shadow: var(--shadow-inset), var(--interactive-focus);
       }
 
-      .editor:focus { outline: none; }
+      .editor:focus-visible { outline: none; }
 
       .empty-state {
         padding: var(--space-xl);
@@ -318,7 +326,9 @@ export class ArcDataGrid extends LitElement {
       this._rafId = null;
       const wrapper = this.shadowRoot?.querySelector('.grid-wrapper');
       if (!wrapper) return;
-      this._scrolledX = wrapper.scrollLeft > 0;
+      // Signed under RTL — scrollLeft starts at 0 and goes negative — so the
+      // magnitude is what says "scrolled away from the pinned edge".
+      this._scrolledX = Math.abs(wrapper.scrollLeft) > 0;
       if (this.virtual) this._recalcVirtual();
     });
   }
@@ -369,12 +379,14 @@ export class ArcDataGrid extends LitElement {
     const hasPinned = cols.some((c) => c.pinned);
     const offsets = new Map();
     const checkboxPinned = this.selectable && hasPinned;
-    let left = checkboxPinned ? 40 : 0;
+    // Distance along the inline axis, not from the left edge: the cells apply
+    // it as inset-inline-start, so it mirrors with the writing direction.
+    let offset = checkboxPinned ? 40 : 0;
     let lastPinnedKey = null;
     for (const col of cols) {
       if (!col.pinned) break;
-      offsets.set(col.key, left);
-      left += this._colWidth(col);
+      offsets.set(col.key, offset);
+      offset += this._colWidth(col);
       lastPinnedKey = col.key;
     }
     return { hasPinned, offsets, lastPinnedKey, checkboxPinned };
@@ -388,10 +400,19 @@ export class ArcDataGrid extends LitElement {
     // Decide each key's comparison mode once for the whole column. A per-pair
     // typeof check makes mixed number/"number" columns non-transitive, letting
     // engines reorder rows arbitrarily on every sort.
-    const numericByKey = new Map(sorts.map(({ key }) => [key, this._rows.every((r) => {
-      const v = r[key];
-      return v == null || v === '' || (typeof v === 'number' ? Number.isFinite(v) : !Number.isNaN(Number(v)));
-    })]));
+    const numericByKey = new Map(
+      sorts.map(({ key }) => [
+        key,
+        this._rows.every((r) => {
+          const v = r[key];
+          return (
+            v == null ||
+            v === '' ||
+            (typeof v === 'number' ? Number.isFinite(v) : !Number.isNaN(Number(v)))
+          );
+        }),
+      ]),
+    );
     const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
 
     return idx.sort((ia, ib) => {
@@ -421,7 +442,9 @@ export class ArcDataGrid extends LitElement {
     let next;
     if (additive) {
       next = sorts
-        .map((s) => (s.key === col.key ? (nextDir ? { key: col.key, direction: nextDir } : null) : s))
+        .map((s) =>
+          s.key === col.key ? (nextDir ? { key: col.key, direction: nextDir } : null) : s,
+        )
         .filter(Boolean);
       if (!existing) next.push({ key: col.key, direction: 'asc' });
     } else {
@@ -429,11 +452,13 @@ export class ArcDataGrid extends LitElement {
     }
 
     this.sort = next;
-    this.dispatchEvent(new CustomEvent('arc-sort', {
-      detail: { sort: next.map((s) => ({ ...s })) },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-sort', {
+        detail: { sort: next.map((s) => ({ ...s })) },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _onHeaderClick(e, col, c) {
@@ -448,9 +473,7 @@ export class ArcDataGrid extends LitElement {
   }
 
   _toggleAll() {
-    this._selected = this._allSelected
-      ? new Set()
-      : new Set(this._rows.map((_, i) => i));
+    this._selected = this._allSelected ? new Set() : new Set(this._rows.map((_, i) => i));
     this._emitSelection();
   }
 
@@ -464,11 +487,13 @@ export class ArcDataGrid extends LitElement {
 
   _emitSelection() {
     const selectedIndices = [...this._selected].sort((a, b) => a - b);
-    this.dispatchEvent(new CustomEvent('arc-select', {
-      detail: { value: selectedIndices, selectedIndices },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-select', {
+        detail: { value: selectedIndices, selectedIndices },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   /* ---------- Roving cell focus (APG grid) ---------- */
@@ -502,10 +527,22 @@ export class ArcDataGrid extends LitElement {
     const rowCount = this._rows.length + 1;
 
     switch (e.key) {
-      case 'ArrowRight': e.preventDefault(); this._moveFocus(r, c + 1); return;
-      case 'ArrowLeft':  e.preventDefault(); this._moveFocus(r, c - 1); return;
-      case 'ArrowDown':  e.preventDefault(); this._moveFocus(r + 1, c); return;
-      case 'ArrowUp':    e.preventDefault(); this._moveFocus(r - 1, c); return;
+      case 'ArrowRight':
+        e.preventDefault();
+        this._moveFocus(r, c + 1);
+        return;
+      case 'ArrowLeft':
+        e.preventDefault();
+        this._moveFocus(r, c - 1);
+        return;
+      case 'ArrowDown':
+        e.preventDefault();
+        this._moveFocus(r + 1, c);
+        return;
+      case 'ArrowUp':
+        e.preventDefault();
+        this._moveFocus(r - 1, c);
+        return;
       case 'Home':
         e.preventDefault();
         this._moveFocus(e.ctrlKey || e.metaKey ? 0 : r, 0);
@@ -586,11 +623,13 @@ export class ArcDataGrid extends LitElement {
     row[key] = next;
     this._rows = [...this._rows];
 
-    this.dispatchEvent(new CustomEvent('arc-cell-change', {
-      detail: { rowIndex: sourceIndex, key, value: next, row },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-cell-change', {
+        detail: { rowIndex: sourceIndex, key, value: next, row },
+        bubbles: true,
+        composed: true,
+      }),
+    );
 
     if (refocus) this._moveFocus(r, c);
   }
@@ -623,11 +662,23 @@ export class ArcDataGrid extends LitElement {
     const styles = [];
     if (pin.offsets.has(col.key)) {
       const w = this._colWidth(col);
-      styles.push(`left:${pin.offsets.get(col.key)}px`, `width:${w}px`, `min-width:${w}px`, `max-width:${w}px`);
+      styles.push(
+        `inset-inline-start:${pin.offsets.get(col.key)}px`,
+        `width:${w}px`,
+        `min-width:${w}px`,
+        `max-width:${w}px`,
+      );
     } else if (col.width) {
       styles.push(`width:${col.width}`);
     }
-    if (col.align && col.align !== 'left') styles.push(`text-align:${col.align}`);
+    // `left`/`right` stay the public spelling, but they resolve to the inline
+    // axis: the cells they align sit in columns that mirror, so text that kept
+    // a physical side would part company with its own column under RTL. Same
+    // rendering in LTR, where start is left. `left` is the CSS default (`start`
+    // on th, inherited by td), so it needs no declaration.
+    const ALIGN = { left: 'start', right: 'end', start: 'start', end: 'end', center: 'center' };
+    const align = ALIGN[col.align] ?? col.align;
+    if (align && align !== 'start') styles.push(`text-align:${align}`);
     return styles.join(';');
   }
 
@@ -654,9 +705,15 @@ export class ArcDataGrid extends LitElement {
         scope="col"
         class="${col.sortable ? 'sortable' : ''} ${entry ? 'sorted' : ''} ${pinned ? 'cell--pinned' : ''} ${col.key === pin.lastPinnedKey ? 'cell--pinned-last' : ''}"
         style=${style || nothing}
-        aria-sort=${col.sortable
-          ? (primary ? (entry.direction === 'asc' ? 'ascending' : 'descending') : 'none')
-          : nothing}
+        aria-sort=${
+          col.sortable
+            ? primary
+              ? entry.direction === 'asc'
+                ? 'ascending'
+                : 'descending'
+              : 'none'
+            : nothing
+        }
         tabindex=${this._tabindex(0, c)}
         data-row="0"
         data-col=${c}
@@ -666,9 +723,8 @@ export class ArcDataGrid extends LitElement {
   }
 
   _renderCell(col, c, row, sourceIndex, r, pin) {
-    const editing = this._editing
-      && this._editing.sourceIndex === sourceIndex
-      && this._editing.key === col.key;
+    const editing =
+      this._editing && this._editing.sourceIndex === sourceIndex && this._editing.key === col.key;
     const pinned = pin.offsets.has(col.key);
     const style = this._cellStyle(col, pin);
     const value = row[col.key];
@@ -684,8 +740,9 @@ export class ArcDataGrid extends LitElement {
         data-col=${c}
         @click=${() => this._setFocusCoords(r, c)}
         @dblclick=${col.editable ? () => this._openEditor(r, c, col, sourceIndex) : nothing}
-      >${editing
-        ? html`<input
+      >${
+        editing
+          ? html`<input
             class="editor"
             part="editor"
             type="text"
@@ -694,7 +751,8 @@ export class ArcDataGrid extends LitElement {
             @keydown=${this._onEditorKeydown}
             @blur=${this._onEditorBlur}
           />`
-        : value ?? ''}</td>
+          : (value ?? '')
+      }</td>
     `;
   }
 
@@ -712,12 +770,14 @@ export class ArcDataGrid extends LitElement {
         aria-rowindex=${r + 1}
         aria-selected=${this.selectable ? String(selected) : nothing}
       >
-        ${this.selectable ? html`
+        ${
+          this.selectable
+            ? html`
           <td
             role="gridcell"
             part="cell"
             class="checkbox-cell ${pin.checkboxPinned ? 'cell--pinned' : ''}"
-            style=${pin.checkboxPinned ? 'left:0' : nothing}
+            style=${pin.checkboxPinned ? 'inset-inline-start:0' : nothing}
             tabindex=${this._tabindex(r, 0)}
             data-row=${r}
             data-col="0"
@@ -731,7 +791,9 @@ export class ArcDataGrid extends LitElement {
               @change=${() => this._toggleRow(sourceIndex)}
             />
           </td>
-        ` : ''}
+        `
+            : ''
+        }
         ${cols.map((col, i) => this._renderCell(col, i + (this.selectable ? 1 : 0), row, sourceIndex, r, pin))}
       </tr>
     `;
@@ -782,12 +844,14 @@ export class ArcDataGrid extends LitElement {
         >
           <thead part="header">
             <tr role="row" aria-rowindex="1">
-              ${this.selectable ? html`
+              ${
+                this.selectable
+                  ? html`
                 <th
                   role="columnheader"
                   part="header-cell"
                   class="checkbox-cell ${pin.checkboxPinned ? 'cell--pinned' : ''}"
-                  style=${pin.checkboxPinned ? 'left:0' : nothing}
+                  style=${pin.checkboxPinned ? 'inset-inline-start:0' : nothing}
                   tabindex=${this._tabindex(0, 0)}
                   data-row="0"
                   data-col="0"
@@ -802,7 +866,9 @@ export class ArcDataGrid extends LitElement {
                     @change=${() => this._toggleAll()}
                   />
                 </th>
-              ` : ''}
+              `
+                  : ''
+              }
               ${cols.map((col, i) => this._renderHeaderCell(col, i + (this.selectable ? 1 : 0), pin))}
             </tr>
           </thead>

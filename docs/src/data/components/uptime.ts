@@ -41,7 +41,7 @@ To assistive technology the strip is a single image with a computed description 
       'Keep one strip per monitored service and stack them, as status pages do',
     ],
     dont: [
-      'Do not use Uptime for continuous metrics like latency or throughput — that trend is Sparkline\'s job; Uptime shows discrete per-period health',
+      "Do not use Uptime for continuous metrics like latency or throughput — that trend is Sparkline's job; Uptime shows discrete per-period health",
       'Do not use it as a live indicator of the current connection — Connection Status owns "are we online right now"; Uptime is history',
       'Do not exceed roughly 120 periods — ticks thinner than a couple of pixels stop reading as individual periods',
       'Do not rely on tick color alone to report an incident; the strip summarizes, an incident log explains',

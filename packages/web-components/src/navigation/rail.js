@@ -19,10 +19,16 @@ export class ArcRail extends LitElement {
   static properties = {
     items: {
       converter: {
-        fromAttribute: (v) => { try { return JSON.parse(v); } catch { return []; } },
+        fromAttribute: (v) => {
+          try {
+            return JSON.parse(v);
+          } catch {
+            return [];
+          }
+        },
       },
     },
-    value:    { type: String, reflect: true },
+    value: { type: String, reflect: true },
     expanded: { type: Boolean, reflect: true },
   };
 
@@ -81,17 +87,20 @@ export class ArcRail extends LitElement {
 
   _select(val) {
     this.value = val;
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: this.value },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   render() {
     return html`
       <nav class="rail" part="base" role="navigation" aria-label="Rail navigation">
-        ${this.items.map(item => html`
+        ${this.items.map(
+          (item) => html`
           <div
             class="rail__item ${this.value === item.value ? 'is-active' : ''}"
             part="item"
@@ -104,7 +113,8 @@ export class ArcRail extends LitElement {
               aria-current=${this.value === item.value ? 'page' : 'false'}
             ></arc-icon-button>
           </div>
-        `)}
+        `,
+        )}
         <slot></slot>
       </nav>
     `;

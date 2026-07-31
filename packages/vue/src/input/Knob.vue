@@ -25,7 +25,6 @@ const props = withDefaults(defineProps<{
   disabled: false,
   label: '',
   detents: () => ([]),
-  format: 'undefined',
 });
 
 const emit = defineEmits<{

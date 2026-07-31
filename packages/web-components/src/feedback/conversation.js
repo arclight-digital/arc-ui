@@ -162,11 +162,13 @@ export class ArcConversation extends LitElement {
     const near = distance <= NEAR_BOTTOM_PX;
     if (near === this._nearEnd) return;
     this._nearEnd = near;
-    this.dispatchEvent(new CustomEvent(near ? 'arc-scroll-return' : 'arc-scroll-away', {
-      bubbles: true,
-      composed: true,
-      detail: { value: distance },
-    }));
+    this.dispatchEvent(
+      new CustomEvent(near ? 'arc-scroll-return' : 'arc-scroll-away', {
+        bubbles: true,
+        composed: true,
+        detail: { value: distance },
+      }),
+    );
   }
 
   render() {

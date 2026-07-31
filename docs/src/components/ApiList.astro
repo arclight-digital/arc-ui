@@ -1,0 +1,187 @@
+---
+/**
+ * The API surface of a component: aligned metadata columns, with each
+ * member's description on its own full-width row beneath them.
+ *
+ * The four-column version failed because the description column competed with
+ * the other three for width and always won: identifiers broke mid-word
+ * (`paddi`/`ng`, `inter`/`active`) and a union type wrapped across three lines.
+ * `overflow-wrap: anywhere` was on every cell to stop the panel scrolling
+ * sideways — correct in itself, since a scroll region with nothing focusable in
+ * it is an axe failure, but applied to the prop name it broke the one string
+ * that must stay whole.
+ *
+ * Dropping the description out of the column grid fixes the cause: name and
+ * type keep a single meaning per column and now have the width to sit on one
+ * line, and the prose gets the full measure. The default rides at the type's
+ * shoulder rather than holding a column of its own — it is an annotation on the
+ * type, and a column made it a peer while leaving most rows to pad themselves
+ * with a placeholder dash. One row group per member, so a member and its
+ * description highlight together.
+ */
+interface Row {
+  name: string;
+  /** Props: the declared type. */
+  type?: string;
+  /** Props: the constructor default, already quoted as source text. */
+  default?: string;
+  /** Events: the detail payload type. */
+  detail?: string;
+  description: string;
+}
+
+interface Props {
+  rows: Row[];
+  kind?: 'prop' | 'event';
+}
+
+const { rows, kind = 'prop' } = Astro.props;
+
+const headers = kind === 'event' ? ['Event', 'Detail'] : ['Prop', 'Type'];
+
+/** Second cell: the type for a prop, the detail payload for an event. */
+const secondary = (r: Row) => (kind === 'event' ? r.detail : r.type);
+---
+
+<table class="api">
+  <thead>
+    <tr>
+      {headers.map((h) => <th>{h}</th>)}
+    </tr>
+  </thead>
+
+  {rows.map((r) => (
+    <tbody class="api__member">
+      <tr class="api__meta">
+        <td class="api__name"><code>{r.name}</code></td>
+        <td class="api__type">
+          {secondary(r) ? <code>{secondary(r)}</code> : <span class="api__none">—</span>}
+          {kind === 'prop' && r.default && (
+            <span class="api__aside">
+              <span class="api__aside-label">default</span>
+              <code class="api__aside-value">{r.default}</code>
+            </span>
+          )}
+        </td>
+      </tr>
+      <tr class="api__desc">
+        <td colspan={headers.length}>{r.description}</td>
+      </tr>
+    </tbody>
+  ))}
+</table>
+
+<style>
+  .api {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+  }
+
+  .api th {
+    text-align: left;
+    font-family: var(--font-label);
+    font-size: var(--text-xs);
+    font-weight: var(--font-label-weight, 600);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: var(--space-sm) var(--space-md);
+    border-bottom: 1px solid var(--border-subtle);
+    background: var(--bg-elevated);
+    white-space: nowrap;
+  }
+
+  /* The member and its description track together. */
+  .api__member:hover {
+    background: var(--surface-hover);
+  }
+
+  .api__meta td {
+    padding: var(--space-md) var(--space-md) var(--space-xs);
+    vertical-align: baseline;
+  }
+
+  /* The one string on this page that must never break. Its column is sized to
+     content, so it costs the description nothing. */
+  .api__name {
+    width: 1%;
+    white-space: nowrap;
+  }
+
+  .api__name code {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  /* A documented object type — `Array<{key:string,label:string}>` — has no
+     spaces to break at, so it alone may break anywhere rather than push the
+     panel into a horizontal scroll. */
+  .api__type {
+    overflow-wrap: anywhere;
+  }
+
+  .api__type > code {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    background: var(--bg-surface);
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-subtle);
+  }
+
+  /* The default is an annotation on the type, not a peer of it: it reads at the
+     type's shoulder, unchipped, so the bordered chip stays the thing you scan
+     down the column. Absent simply means no default — an aside has nothing to
+     line up with, so it needs no placeholder dash. */
+  .api__aside {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--space-xs);
+    margin-inline-start: var(--space-sm);
+    white-space: nowrap;
+  }
+
+  .api__aside-label {
+    font-family: var(--font-label);
+    font-size: var(--text-xs);
+    font-weight: var(--font-label-weight, 600);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-ghost);
+  }
+
+  .api__aside-value {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+  }
+
+  .api__none {
+    color: var(--text-ghost);
+  }
+
+  .api__desc td {
+    padding: 0 var(--space-md) var(--space-md);
+    border-bottom: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 70ch;
+  }
+
+  .api__member:last-child .api__desc td {
+    border-bottom: none;
+  }
+
+  @media (max-width: 640px) {
+    .api__meta td {
+      padding-inline: var(--space-sm);
+    }
+    .api__desc td {
+      padding-inline: var(--space-sm);
+    }
+  }
+</style>

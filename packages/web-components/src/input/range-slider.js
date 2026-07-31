@@ -32,14 +32,14 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
 export class ArcRangeSlider extends FormControlMixin(LitElement) {
   static properties = {
     size: { type: String, reflect: true },
-    min:        { type: Number },
-    max:        { type: Number },
-    step:       { type: Number },
-    low:        { type: Number, reflect: true },
-    high:       { type: Number, reflect: true },
-    name:       { type: String, reflect: true },
-    disabled:   { type: Boolean, reflect: true },
-    label:      { type: String },
+    min: { type: Number },
+    max: { type: Number },
+    step: { type: Number },
+    low: { type: Number, reflect: true },
+    high: { type: Number, reflect: true },
+    name: { type: String, reflect: true },
+    disabled: { type: Boolean, reflect: true },
+    label: { type: String },
     showValues: { type: Boolean, reflect: true, attribute: 'show-values' },
     /** @internal */ _dragging: { state: true },
   };
@@ -238,20 +238,24 @@ export class ArcRangeSlider extends FormControlMixin(LitElement) {
 
   _fireInput() {
     this._updateFormValue();
-    this.dispatchEvent(new CustomEvent('arc-input', {
-      detail: { value: [this.low, this.high], low: this.low, high: this.high },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-input', {
+        detail: { value: [this.low, this.high], low: this.low, high: this.high },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _fireChange() {
     this._updateFormValue();
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: [this.low, this.high], low: this.low, high: this.high },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: [this.low, this.high], low: this.low, high: this.high },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _onThumbPointerDown(thumb, e) {
@@ -335,12 +339,16 @@ export class ArcRangeSlider extends FormControlMixin(LitElement) {
 
     return html`
       <div class="range-slider" part="range-slider">
-        ${this.label || this.showValues ? html`
+        ${
+          this.label || this.showValues
+            ? html`
           <div class="range-slider__header" part="header">
             ${this.label ? html`<label class="range-slider__label" part="label">${this.label}</label>` : html`<span></span>`}
             ${this.showValues ? html`<span class="range-slider__values" part="values">${this.low} – ${this.high}</span>` : ''}
           </div>
-        ` : ''}
+        `
+            : ''
+        }
         <div
           class="range-slider__track"
           part="track"

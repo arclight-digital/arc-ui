@@ -17,8 +17,8 @@ import { tokenStyles } from '../shared-styles.js';
 export class ArcSeparator extends LitElement {
   static properties = {
     orientation: { type: String, reflect: true },
-    label:       { type: String },
-    variant:     { type: String, reflect: true },
+    label: { type: String },
+    variant: { type: String, reflect: true },
   };
 
   static styles = [

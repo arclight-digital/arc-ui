@@ -279,20 +279,20 @@ export class ArcJsonTree extends LitElement {
   }
 
   _isExpanded(pathKey, level) {
-    return this._overrides.has(pathKey)
-      ? this._overrides.get(pathKey)
-      : level < this._depth();
+    return this._overrides.has(pathKey) ? this._overrides.get(pathKey) : level < this._depth();
   }
 
   _toggle(node) {
     const next = !this._isExpanded(node.pathKey, node.level);
     this._overrides.set(node.pathKey, next);
 
-    this.dispatchEvent(new CustomEvent('arc-toggle', {
-      detail: { path: node.path, expanded: next },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-toggle', {
+        detail: { path: node.path, expanded: next },
+        bubbles: true,
+        composed: true,
+      }),
+    );
 
     this.requestUpdate();
   }
@@ -308,7 +308,10 @@ export class ArcJsonTree extends LitElement {
     this.requestUpdate();
     this.updateComplete.then(() => {
       for (const row of this.shadowRoot?.querySelectorAll('.json-tree__row') ?? []) {
-        if (row.dataset.key === nextKey) { row.focus(); break; }
+        if (row.dataset.key === nextKey) {
+          row.focus();
+          break;
+        }
       }
     });
   }
@@ -391,7 +394,8 @@ export class ArcJsonTree extends LitElement {
   }
 
   _renderChevron(branch, open) {
-    if (!branch) return html`<span class="json-tree__chevron json-tree__chevron--placeholder"></span>`;
+    if (!branch)
+      return html`<span class="json-tree__chevron json-tree__chevron--placeholder"></span>`;
     return html`
       <span class="json-tree__chevron ${open ? 'json-tree__chevron--expanded' : ''}">
         <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
@@ -425,7 +429,9 @@ export class ArcJsonTree extends LitElement {
           data-key=${moreKey}
           tabindex=${tab}
           part="row"
-          @focus=${() => { this._focusedKey = moreKey; }}
+          @focus=${() => {
+            this._focusedKey = moreKey;
+          }}
           @click=${() => this._activate(node)}
           @keydown=${(e) => this._onKeyDown(e, node)}
         >
@@ -446,9 +452,7 @@ export class ArcJsonTree extends LitElement {
     const node = { pathKey, path, level, branch, open };
     // The root row's path key is the empty string, so compare against null
     // rather than truthiness or the focused root would fall through.
-    const tab = focusKey !== null
-      ? (pathKey === focusKey ? '0' : '-1')
-      : (isFirst ? '0' : '-1');
+    const tab = focusKey !== null ? (pathKey === focusKey ? '0' : '-1') : isFirst ? '0' : '-1';
 
     let valuePart;
     if (!container) {
@@ -459,7 +463,7 @@ export class ArcJsonTree extends LitElement {
       valuePart = html`<span class="json-tree__punct">${isArray ? '[' : '{'}</span>`;
     } else {
       const n = entries.length;
-      const unit = isArray ? (n === 1 ? 'item' : 'items') : (n === 1 ? 'key' : 'keys');
+      const unit = isArray ? (n === 1 ? 'item' : 'items') : n === 1 ? 'key' : 'keys';
       valuePart = html`<span class="json-tree__preview" part="preview">${isArray ? '[…]' : '{…}'} ${n} ${unit}</span>`;
     }
 
@@ -471,9 +475,11 @@ export class ArcJsonTree extends LitElement {
       children = html`
         <ul class="json-tree__group" role="group">
           ${visible.map(([k, v]) => this._renderNode(v, k, level + 1, [...path, String(k)], focusKey, false))}
-          ${entries.length > shown
-            ? this._renderMore(entries, shown, level + 1, path, pathKey, focusKey)
-            : nothing}
+          ${
+            entries.length > shown
+              ? this._renderMore(entries, shown, level + 1, path, pathKey, focusKey)
+              : nothing
+          }
         </ul>
       `;
       closer = html`<div class="json-tree__closer" style="padding-inline-start: calc(var(--space-xs) * 2 + ${level * 16 + 16}px)">${isArray ? ']' : '}'}</div>`;
@@ -481,9 +487,11 @@ export class ArcJsonTree extends LitElement {
 
     return html`
       <li class="json-tree__item" role="none" part="item">
-        ${level > 0
-          ? html`<div class="json-tree__line" style="inset-inline-start: calc(var(--space-xs) + ${(level - 1) * 16 + 8}px)"></div>`
-          : nothing}
+        ${
+          level > 0
+            ? html`<div class="json-tree__line" style="inset-inline-start: calc(var(--space-xs) + ${(level - 1) * 16 + 8}px)"></div>`
+            : nothing
+        }
         <button
           class="json-tree__row ${branch ? 'json-tree__row--branch' : ''}"
           style="padding-inline-start: calc(var(--space-xs) + ${level * 16}px)"
@@ -493,7 +501,9 @@ export class ArcJsonTree extends LitElement {
           data-key=${pathKey}
           tabindex=${tab}
           part="row"
-          @focus=${() => { this._focusedKey = pathKey; }}
+          @focus=${() => {
+            this._focusedKey = pathKey;
+          }}
           @click=${() => this._activate(node)}
           @keydown=${(e) => this._onKeyDown(e, node)}
         >

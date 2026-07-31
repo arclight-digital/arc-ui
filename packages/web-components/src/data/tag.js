@@ -20,11 +20,11 @@ import { statusVars } from '../status-styles.js';
  */
 export class ArcTag extends LitElement {
   static properties = {
-    variant:   { type: String, reflect: true },
-    size:      { type: String, reflect: true },
+    variant: { type: String, reflect: true },
+    size: { type: String, reflect: true },
     removable: { type: Boolean, reflect: true },
-    disabled:  { type: Boolean, reflect: true },
-    color:     { type: String },
+    disabled: { type: Boolean, reflect: true },
+    color: { type: String },
   };
 
   static styles = [
@@ -135,10 +135,12 @@ export class ArcTag extends LitElement {
   _remove(e) {
     e.stopPropagation();
     if (this.disabled) return;
-    this.dispatchEvent(new CustomEvent('arc-remove', {
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-remove', {
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   render() {
@@ -148,11 +150,25 @@ export class ArcTag extends LitElement {
 
     return html`
       <span class="tag" part="tag" style=${colorStyle}
-        @mouseenter=${this.color ? (e) => { e.currentTarget.style.boxShadow = `0 0 12px rgba(${this.color}, 0.15)`; } : null}
-        @mouseleave=${this.color ? (e) => { e.currentTarget.style.boxShadow = ''; } : null}
+        @mouseenter=${
+          this.color
+            ? (e) => {
+                e.currentTarget.style.boxShadow = `0 0 12px rgba(${this.color}, 0.15)`;
+              }
+            : null
+        }
+        @mouseleave=${
+          this.color
+            ? (e) => {
+                e.currentTarget.style.boxShadow = '';
+              }
+            : null
+        }
       >
         <span class="tag__label" part="label"><slot></slot></span>
-        ${this.removable ? html`
+        ${
+          this.removable
+            ? html`
           <button
             class="tag__remove"
             @click=${this._remove}
@@ -164,7 +180,9 @@ export class ArcTag extends LitElement {
               <path d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z"/>
             </svg>
           </button>
-        ` : ''}
+        `
+            : ''
+        }
       </span>
     `;
   }

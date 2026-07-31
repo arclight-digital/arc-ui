@@ -136,7 +136,7 @@ export class ArcSplitPane extends LitElement {
         detail: { ratio: this.ratio },
         bubbles: true,
         composed: true,
-      })
+      }),
     );
   }
 
@@ -156,9 +156,9 @@ export class ArcSplitPane extends LitElement {
         <div
           class="split-pane__primary"
           part="primary"
-          style="${this.orientation === 'horizontal'
-            ? `width: ${primarySize}`
-            : `height: ${primarySize}`}"
+          style="${
+            this.orientation === 'horizontal' ? `width: ${primarySize}` : `height: ${primarySize}`
+          }"
         >
           <slot name="primary"></slot>
         </div>

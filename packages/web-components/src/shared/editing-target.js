@@ -38,8 +38,16 @@
  * and a shortcut firing while one has focus is usually correct.
  */
 const NON_TEXT_INPUT_TYPES = new Set([
-  'button', 'checkbox', 'color', 'file', 'hidden',
-  'image', 'radio', 'range', 'reset', 'submit',
+  'button',
+  'checkbox',
+  'color',
+  'file',
+  'hidden',
+  'image',
+  'radio',
+  'range',
+  'reset',
+  'submit',
 ]);
 
 /**

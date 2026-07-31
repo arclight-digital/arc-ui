@@ -18,8 +18,8 @@ import { tokenStyles } from '../shared-styles.js';
 export class ArcBreadcrumb extends LitElement {
   static properties = {
     separator: { type: String },
-    label:     { type: String },
-    _items:    { state: true },
+    label: { type: String },
+    _items: { state: true },
   };
 
   static styles = [
@@ -104,16 +104,19 @@ export class ArcBreadcrumb extends LitElement {
   }
 
   _onSlotChange(e) {
-    this._items = e.target.assignedElements({ flatten: true })
-      .filter(el => el.tagName === 'ARC-BREADCRUMB-ITEM');
+    this._items = e.target
+      .assignedElements({ flatten: true })
+      .filter((el) => el.tagName === 'ARC-BREADCRUMB-ITEM');
   }
 
   _handleClick(href) {
-    this.dispatchEvent(new CustomEvent('arc-navigate', {
-      detail: { href },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-navigate', {
+        detail: { href },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   render() {
@@ -126,12 +129,14 @@ export class ArcBreadcrumb extends LitElement {
           const isLast = i === this._items.length - 1;
           return html`
             <span class="breadcrumb__item">
-              ${isLast
-                ? html`<span class="breadcrumb__current" aria-current="page" part="current">${item.label}</span>`
-                : html`
-                    ${item.resolvedHref
-                      ? html`<a class="breadcrumb__link" href=${item.resolvedHref} part="link">${item.label}</a>`
-                      : html`<button class="breadcrumb__link" @click=${() => this._handleClick(item.resolvedHref)} part="link">${item.label}</button>`
+              ${
+                isLast
+                  ? html`<span class="breadcrumb__current" aria-current="page" part="current">${item.label}</span>`
+                  : html`
+                    ${
+                      item.resolvedHref
+                        ? html`<a class="breadcrumb__link" href=${item.resolvedHref} part="link">${item.label}</a>`
+                        : html`<button class="breadcrumb__link" @click=${() => this._handleClick(item.resolvedHref)} part="link">${item.label}</button>`
                     }
                     <span class="breadcrumb__separator" aria-hidden="true" part="separator">${this.separator}</span>
                   `

@@ -38,13 +38,13 @@ export class ArcWaveform extends LitElement {
   static properties = {
     // No attribute: an array cannot round-trip through one, and peaks lists are
     // long enough that nobody should be writing them into markup anyway.
-    peaks:       { attribute: false },
-    position:    { type: Number, reflect: true },
-    duration:    { type: Number },
+    peaks: { attribute: false },
+    position: { type: Number, reflect: true },
+    duration: { type: Number },
     interactive: { type: Boolean, reflect: true },
-    variant:     { type: String, reflect: true },
-    label:       { type: String },
-    _scrubbing:  { state: true },
+    variant: { type: String, reflect: true },
+    label: { type: String },
+    _scrubbing: { state: true },
   };
 
   static styles = [
@@ -193,29 +193,29 @@ export class ArcWaveform extends LitElement {
   }
 
   _emitInput() {
-    this.dispatchEvent(new CustomEvent('arc-input', {
-      detail: {
-        value: this.position,
-        time: this.duration != null && this.duration > 0
-          ? this.position * this.duration
-          : null,
-      },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-input', {
+        detail: {
+          value: this.position,
+          time: this.duration != null && this.duration > 0 ? this.position * this.duration : null,
+        },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _emitChange() {
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: {
-        value: this.position,
-        time: this.duration != null && this.duration > 0
-          ? this.position * this.duration
-          : null,
-      },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: {
+          value: this.position,
+          time: this.duration != null && this.duration > 0 ? this.position * this.duration : null,
+        },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   /* ---- Pointer scrubbing ---- */
@@ -264,14 +264,27 @@ export class ArcWaveform extends LitElement {
     let absolute = null;
     switch (e.key) {
       case 'ArrowRight':
-      case 'ArrowUp':   delta = 0.01; break;
+      case 'ArrowUp':
+        delta = 0.01;
+        break;
       case 'ArrowLeft':
-      case 'ArrowDown': delta = -0.01; break;
-      case 'PageUp':    delta = 0.1; break;
-      case 'PageDown':  delta = -0.1; break;
-      case 'Home':      absolute = 0; break;
-      case 'End':       absolute = 1; break;
-      default: return;
+      case 'ArrowDown':
+        delta = -0.01;
+        break;
+      case 'PageUp':
+        delta = 0.1;
+        break;
+      case 'PageDown':
+        delta = -0.1;
+        break;
+      case 'Home':
+        absolute = 0;
+        break;
+      case 'End':
+        absolute = 1;
+        break;
+      default:
+        return;
     }
     e.preventDefault();
     const next = this._clamp01(absolute != null ? absolute : this._clamp01(this.position) + delta);
@@ -357,18 +370,26 @@ export class ArcWaveform extends LitElement {
             ${this._renderShapes(peaks, W, H)}
           </g>
         </svg>
-        ${interactive || pos > 0 ? html`
+        ${
+          interactive || pos > 0
+            ? html`
           <div class="waveform__rail">
             <div class="waveform__playhead" part="playhead"></div>
           </div>
-        ` : ''}
+        `
+            : ''
+        }
       </div>
-      ${hasTime ? html`
+      ${
+        hasTime
+          ? html`
         <div class="waveform__time" part="time">
           <span class="waveform__time-current">${this._formatTime(pos * this.duration)}</span>
           <span class="waveform__time-total">${this._formatTime(this.duration)}</span>
         </div>
-      ` : ''}
+      `
+          : ''
+      }
     `;
   }
 }

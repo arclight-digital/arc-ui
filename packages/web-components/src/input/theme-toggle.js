@@ -19,10 +19,10 @@ import { iconBoxStyles } from '../button-styles.js';
  */
 export class ArcThemeToggle extends LitElement {
   static properties = {
-    theme:    { type: String, reflect: true },
+    theme: { type: String, reflect: true },
     disabled: { type: Boolean, reflect: true },
     iconOnly: { type: Boolean, attribute: 'icon-only', reflect: true },
-    size:     { type: String, reflect: true },
+    size: { type: String, reflect: true },
   };
 
   static styles = [
@@ -156,11 +156,13 @@ export class ArcThemeToggle extends LitElement {
     document.documentElement.setAttribute('data-theme', this.theme);
     localStorage.setItem('arc-theme', this.theme);
 
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: this.theme },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: this.theme },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   _handleKeydown(e) {

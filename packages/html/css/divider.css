@@ -46,7 +46,7 @@
 
       /* Alignment — rewrite gradients to originate from one edge */
       .arc-divider[data-align="left"] .divider { margin-inline: 0; }
-      .arc-divider[data-align="right"] .divider { margin-left: auto; margin-right: 0; }
+      .arc-divider[data-align="right"] .divider { margin-inline-start: auto; margin-inline-end: 0; }
 
       .arc-divider[data-align="left"]:not([data-data-variant="glow"]):not([data-data-variant="line-gradient"]):not([data-data-variant="line-primary"]):not([data-data-variant="line-white"]) .divider,
       .arc-divider[data-align="left"][data-variant="subtle"] .divider {

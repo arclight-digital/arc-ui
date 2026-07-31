@@ -19,9 +19,7 @@
 
 /** Nodes that carry meaning — everything but whitespace-only text. */
 function meaningfulNodes(nodes) {
-  return nodes.filter(
-    (n) => n.nodeType !== Node.TEXT_NODE || n.textContent.trim() !== ''
-  );
+  return nodes.filter((n) => n.nodeType !== Node.TEXT_NODE || n.textContent.trim() !== '');
 }
 
 /**
@@ -39,9 +37,7 @@ function meaningfulNodes(nodes) {
 export function isLoneSlottedAnchor(slot) {
   const nodes = meaningfulNodes(slot.assignedNodes({ flatten: true }));
   return (
-    nodes.length === 1 &&
-    nodes[0].nodeType === Node.ELEMENT_NODE &&
-    nodes[0].localName === 'a'
+    nodes.length === 1 && nodes[0].nodeType === Node.ELEMENT_NODE && nodes[0].localName === 'a'
   );
 }
 
@@ -59,9 +55,7 @@ export function isLoneSlottedAnchor(slot) {
 export function loneAnchorChild(host) {
   const nodes = meaningfulNodes([...host.childNodes]);
   const first = nodes[0];
-  return nodes.length === 1 &&
-    first.nodeType === Node.ELEMENT_NODE &&
-    first.localName === 'a'
+  return nodes.length === 1 && first.nodeType === Node.ELEMENT_NODE && first.localName === 'a'
     ? /** @type {HTMLAnchorElement} */ (first)
     : null;
 }

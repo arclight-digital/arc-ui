@@ -20,7 +20,13 @@ export class ArcBottomNav extends LitElement {
   static properties = {
     items: {
       converter: {
-        fromAttribute: (v) => { try { return JSON.parse(v); } catch { return []; } },
+        fromAttribute: (v) => {
+          try {
+            return JSON.parse(v);
+          } catch {
+            return [];
+          }
+        },
       },
     },
     value: { type: String, reflect: true },
@@ -103,17 +109,20 @@ export class ArcBottomNav extends LitElement {
 
   _select(val) {
     this.value = val;
-    this.dispatchEvent(new CustomEvent('arc-change', {
-      detail: { value: this.value },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-change', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   render() {
     return html`
       <nav class="bottom-nav" part="base" role="navigation" aria-label="Bottom navigation">
-        ${this.items.map(item => html`
+        ${this.items.map(
+          (item) => html`
           <button
             class="bottom-nav__item ${this.value === item.value ? 'is-active' : ''}"
             part="item"
@@ -123,7 +132,8 @@ export class ArcBottomNav extends LitElement {
             <span class="bottom-nav__icon" part="icon">${item.icon ? html`<arc-icon name=${item.icon} size="md"></arc-icon>` : ''}</span>
             <span class="bottom-nav__label" part="label">${item.label}</span>
           </button>
-        `)}
+        `,
+        )}
       </nav>
     `;
   }

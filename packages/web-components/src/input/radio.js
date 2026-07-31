@@ -12,7 +12,7 @@ import { LitElement, html, css } from 'lit';
  */
 export class ArcRadio extends LitElement {
   static properties = {
-    value:    { type: String, reflect: true },
+    value: { type: String, reflect: true },
     disabled: { type: Boolean, reflect: true },
   };
 

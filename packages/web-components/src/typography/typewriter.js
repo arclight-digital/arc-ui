@@ -17,15 +17,15 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcTypewriter extends LitElement {
   static properties = {
-    text:         { type: String },
-    speed:        { type: Number },
-    delay:        { type: Number },
-    cursor:       { type: Boolean, reflect: true },
-    loop:         { type: Boolean, reflect: true },
-    nowrap:       { type: Boolean, reflect: true },
-    pauseEnd:  { type: Number, reflect: true, attribute: 'pause-end' },
+    text: { type: String },
+    speed: { type: Number },
+    delay: { type: Number },
+    cursor: { type: Boolean, reflect: true },
+    loop: { type: Boolean, reflect: true },
+    nowrap: { type: Boolean, reflect: true },
+    pauseEnd: { type: Number, reflect: true, attribute: 'pause-end' },
     _displayText: { state: true },
-    _complete:    { state: true },
+    _complete: { state: true },
   };
 
   static styles = [
@@ -95,7 +95,9 @@ export class ArcTypewriter extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this._mqListener = (e) => { this._reducedMotion = e.matches; };
+    this._mqListener = (e) => {
+      this._reducedMotion = e.matches;
+    };
     this._mq = window.matchMedia('(prefers-reduced-motion: reduce)');
     this._reducedMotion = this._mq.matches;
     this._mq.addEventListener('change', this._mqListener);

@@ -11,7 +11,7 @@ import { LitElement, html, css } from 'lit';
 export class ArcSpyLink extends LitElement {
   static properties = {
     target: { type: String, reflect: true },
-    level:  { type: Number, reflect: true },
+    level: { type: Number, reflect: true },
   };
 
   static styles = css`

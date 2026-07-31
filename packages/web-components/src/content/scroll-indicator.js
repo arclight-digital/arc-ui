@@ -16,10 +16,10 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcScrollIndicator extends LitElement {
   static properties = {
-    target:   { type: String },
+    target: { type: String },
     position: { type: String, reflect: true },
-    size:     { type: String, reflect: true },
-    color:    { type: String, reflect: true },
+    size: { type: String, reflect: true },
+    color: { type: String, reflect: true },
     _progress: { state: true },
   };
 

@@ -13,7 +13,7 @@ import { tokenStyles } from '../shared-styles.js';
 export class ArcText extends LitElement {
   static properties = {
     variant: { type: String, reflect: true },
-    as:      { type: String },
+    as: { type: String },
   };
 
   static styles = [
@@ -107,14 +107,22 @@ export class ArcText extends LitElement {
   render() {
     const tag = this.as;
     switch (tag) {
-      case 'h1': return html`<h1 class="text--${this.variant}" part="text"><slot></slot></h1>`;
-      case 'h2': return html`<h2 class="text--${this.variant}" part="text"><slot></slot></h2>`;
-      case 'h3': return html`<h3 class="text--${this.variant}" part="text"><slot></slot></h3>`;
-      case 'h4': return html`<h4 class="text--${this.variant}" part="text"><slot></slot></h4>`;
-      case 'h5': return html`<h5 class="text--${this.variant}" part="text"><slot></slot></h5>`;
-      case 'h6': return html`<h6 class="text--${this.variant}" part="text"><slot></slot></h6>`;
-      case 'span': return html`<span class="text--${this.variant}" part="text"><slot></slot></span>`;
-      default: return html`<p class="text--${this.variant}" part="text"><slot></slot></p>`;
+      case 'h1':
+        return html`<h1 class="text--${this.variant}" part="text"><slot></slot></h1>`;
+      case 'h2':
+        return html`<h2 class="text--${this.variant}" part="text"><slot></slot></h2>`;
+      case 'h3':
+        return html`<h3 class="text--${this.variant}" part="text"><slot></slot></h3>`;
+      case 'h4':
+        return html`<h4 class="text--${this.variant}" part="text"><slot></slot></h4>`;
+      case 'h5':
+        return html`<h5 class="text--${this.variant}" part="text"><slot></slot></h5>`;
+      case 'h6':
+        return html`<h6 class="text--${this.variant}" part="text"><slot></slot></h6>`;
+      case 'span':
+        return html`<span class="text--${this.variant}" part="text"><slot></slot></span>`;
+      default:
+        return html`<p class="text--${this.variant}" part="text"><slot></slot></p>`;
     }
   }
 }

@@ -22,11 +22,11 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
 export class ArcOtpInput extends FormControlMixin(LitElement) {
   static properties = {
     size: { type: String, reflect: true },
-    length:   { type: Number, reflect: true },
-    value:    { type: String, reflect: true },
-    name:     { type: String, reflect: true },
+    length: { type: Number, reflect: true },
+    value: { type: String, reflect: true },
+    name: { type: String, reflect: true },
     disabled: { type: Boolean, reflect: true },
-    type:     { type: String },
+    type: { type: String },
   };
 
   static styles = [
@@ -118,23 +118,27 @@ export class ArcOtpInput extends FormControlMixin(LitElement) {
   _updateValue() {
     const inputs = this._getInputs();
     const chars = [];
-    inputs.forEach(input => chars.push(input.value));
+    inputs.forEach((input) => chars.push(input.value));
     this.value = chars.join('');
     this._updateFormValue();
     // Every digit is an edit; only a full code is a committed value. Firing
     // arc-change per keystroke — which this did — meant a consumer that
     // submitted on arc-change submitted five incomplete codes first.
-    this.dispatchEvent(new CustomEvent('arc-input', {
-      detail: { value: this.value },
-      bubbles: true,
-      composed: true,
-    }));
-    if (this.value.length === this.length) {
-      this.dispatchEvent(new CustomEvent('arc-change', {
+    this.dispatchEvent(
+      new CustomEvent('arc-input', {
         detail: { value: this.value },
         bubbles: true,
         composed: true,
-      }));
+      }),
+    );
+    if (this.value.length === this.length) {
+      this.dispatchEvent(
+        new CustomEvent('arc-change', {
+          detail: { value: this.value },
+          bubbles: true,
+          composed: true,
+        }),
+      );
     }
   }
 
@@ -200,11 +204,11 @@ export class ArcOtpInput extends FormControlMixin(LitElement) {
     let chars = pasted.split('');
 
     if (this.type === 'number') {
-      chars = chars.filter(c => /[0-9]/.test(c));
+      chars = chars.filter((c) => /[0-9]/.test(c));
     }
 
     const inputs = this._getInputs();
-    for (let i = 0; i < chars.length && (index + i) < this.length; i++) {
+    for (let i = 0; i < chars.length && index + i < this.length; i++) {
       inputs[index + i].value = chars[i];
     }
 
@@ -226,7 +230,8 @@ export class ArcOtpInput extends FormControlMixin(LitElement) {
 
     return html`
       <div class="otp" role="group" aria-label="One-time password input" part="otp">
-        ${chars.map((char, i) => html`
+        ${chars.map(
+          (char, i) => html`
           <input
             class="otp__box"
             type="text"
@@ -244,7 +249,8 @@ export class ArcOtpInput extends FormControlMixin(LitElement) {
             @focus=${this._onFocus}
             part="box"
           />
-        `)}
+        `,
+        )}
       </div>
     `;
   }

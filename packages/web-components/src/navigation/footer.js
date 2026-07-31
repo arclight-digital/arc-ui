@@ -25,9 +25,9 @@ import '../layout/container.register.js';
 export class ArcFooter extends LitElement {
   static properties = {
     density: { type: String, reflect: true },
-    border:    { type: Boolean, reflect: true },
+    border: { type: Boolean, reflect: true },
     contained: { type: String, reflect: true },
-    align:     { type: String, reflect: true },
+    align: { type: String, reflect: true },
   };
 
   static styles = [
@@ -149,9 +149,10 @@ export class ArcFooter extends LitElement {
     const size = this._containerSize;
     return html`
       <footer class="footer" part="base">
-        ${size
-          ? html`<arc-container size=${size}>${this._renderContent()}</arc-container>`
-          : this._renderContent()
+        ${
+          size
+            ? html`<arc-container size=${size}>${this._renderContent()}</arc-container>`
+            : this._renderContent()
         }
       </footer>
     `;

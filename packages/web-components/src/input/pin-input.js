@@ -28,14 +28,14 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
 export class ArcPinInput extends FormControlMixin(LitElement) {
   static properties = {
     size: { type: String, reflect: true },
-    length:    { type: Number },
-    value:     { type: String, reflect: true },
-    name:      { type: String, reflect: true },
-    disabled:  { type: Boolean, reflect: true },
-    mask:      { type: Boolean, reflect: true },
-    type:      { type: String, reflect: true },
+    length: { type: Number },
+    value: { type: String, reflect: true },
+    name: { type: String, reflect: true },
+    disabled: { type: Boolean, reflect: true },
+    mask: { type: Boolean, reflect: true },
+    type: { type: String, reflect: true },
     separator: { type: Number },
-    label:     { type: String },
+    label: { type: String },
   };
 
   static styles = [
@@ -184,7 +184,7 @@ export class ArcPinInput extends FormControlMixin(LitElement) {
 
   _buildValue() {
     const boxes = this._getBoxes();
-    return boxes.map(b => b.value).join('');
+    return boxes.map((b) => b.value).join('');
   }
 
   _emitChange() {
@@ -194,25 +194,31 @@ export class ArcPinInput extends FormControlMixin(LitElement) {
     // Every character is an edit; only a full pin is a committed value. This
     // fired arc-change per keystroke, so a consumer submitting on arc-change
     // submitted every incomplete prefix first.
-    this.dispatchEvent(new CustomEvent('arc-input', {
-      detail: { value: val },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-input', {
+        detail: { value: val },
+        bubbles: true,
+        composed: true,
+      }),
+    );
 
     if (val.length === this.length) {
-      this.dispatchEvent(new CustomEvent('arc-change', {
-        detail: { value: val },
-        bubbles: true,
-        composed: true,
-      }));
+      this.dispatchEvent(
+        new CustomEvent('arc-change', {
+          detail: { value: val },
+          bubbles: true,
+          composed: true,
+        }),
+      );
       // arc-complete predates the contract and stays: it is the more specific
       // name, and consumers listen for it to auto-submit.
-      this.dispatchEvent(new CustomEvent('arc-complete', {
-        detail: { value: val },
-        bubbles: true,
-        composed: true,
-      }));
+      this.dispatchEvent(
+        new CustomEvent('arc-complete', {
+          detail: { value: val },
+          bubbles: true,
+          composed: true,
+        }),
+      );
     }
   }
 
@@ -292,7 +298,7 @@ export class ArcPinInput extends FormControlMixin(LitElement) {
 
   _needsSeparator(index) {
     if (!this.separator || this.separator <= 0) return false;
-    return (index + 1) < this.length && (index + 1) % this.separator === 0;
+    return index + 1 < this.length && (index + 1) % this.separator === 0;
   }
 
   render() {
@@ -304,7 +310,8 @@ export class ArcPinInput extends FormControlMixin(LitElement) {
       <div class="pin" part="pin">
         ${this.label ? html`<span class="pin__label" part="label">${this.label}</span>` : ''}
         <div class="pin__boxes" role="group" aria-label=${this.label || 'PIN input'} part="boxes">
-          ${chars.map((ch, i) => html`
+          ${chars.map(
+            (ch, i) => html`
             <input
               class="pin__box"
               type=${this.mask ? 'password' : 'text'}
@@ -323,7 +330,8 @@ export class ArcPinInput extends FormControlMixin(LitElement) {
               part="box"
             />
             ${this._needsSeparator(i) ? html`<span class="pin__separator" aria-hidden="true">&ndash;</span>` : ''}
-          `)}
+          `,
+          )}
         </div>
       </div>
     `;

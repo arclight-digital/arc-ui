@@ -21,10 +21,10 @@ import { managedPanelStyles } from '../shared/position-styles.js';
  */
 export class ArcMenubar extends LitElement {
   static properties = {
-    items:         { type: Array },
-    _openTop:      { state: true },
-    _focusedTop:   { state: true },
-    _activePath:   { state: true },
+    items: { type: Array },
+    _openTop: { state: true },
+    _focusedTop: { state: true },
+    _activePath: { state: true },
     _expandedPath: { state: true },
   };
 
@@ -350,11 +350,11 @@ export class ArcMenubar extends LitElement {
   }
 
   _enabledIndices(arr) {
-    return arr.map((it, i) => (this._isSelectable(it) ? i : -1)).filter(i => i >= 0);
+    return arr.map((it, i) => (this._isSelectable(it) ? i : -1)).filter((i) => i >= 0);
   }
 
   _enabledTop() {
-    return this._topItems.map((it, i) => (it && !it.disabled ? i : -1)).filter(i => i >= 0);
+    return this._topItems.map((it, i) => (it && !it.disabled ? i : -1)).filter((i) => i >= 0);
   }
 
   _isPrefix(p, q) {
@@ -436,11 +436,13 @@ export class ArcMenubar extends LitElement {
       labels.push(arr[idx]?.label);
       arr = arr[idx]?.items || [];
     }
-    this.dispatchEvent(new CustomEvent('arc-select', {
-      detail: { value: labels[labels.length - 1], path: labels },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-select', {
+        detail: { value: labels[labels.length - 1], path: labels },
+        bubbles: true,
+        composed: true,
+      }),
+    );
     this._closeAll(true);
   }
 
@@ -553,9 +555,8 @@ export class ArcMenubar extends LitElement {
     const enabled = this._enabledIndices(this._menuItemsAt(parent));
     if (!enabled.length) return;
     const cur = enabled.indexOf(this._activePath[this._activePath.length - 1]);
-    const next = cur < 0
-      ? (dir > 0 ? 0 : enabled.length - 1)
-      : (cur + dir + enabled.length) % enabled.length;
+    const next =
+      cur < 0 ? (dir > 0 ? 0 : enabled.length - 1) : (cur + dir + enabled.length) % enabled.length;
     this._setActive([...parent, enabled[next]]);
   }
 
@@ -654,9 +655,7 @@ export class ArcMenubar extends LitElement {
     if (this._hasSub(item)) {
       this._cancelHoverTimer();
       this._activePath = path;
-      this._expandedPath = this._isPrefix(path, this._expandedPath)
-        ? path.slice(0, -1)
-        : path;
+      this._expandedPath = this._isPrefix(path, this._expandedPath) ? path.slice(0, -1) : path;
       return;
     }
     this._select(path);

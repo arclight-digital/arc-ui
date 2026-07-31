@@ -58,12 +58,12 @@ const dowOf = (epochDay) => ((epochDay % 7) + 7 + 4) % 7;
  */
 export class ArcActivityHeatmap extends LitElement {
   static properties = {
-    data:      { attribute: false },
-    endDate:   { type: String, attribute: 'end-date' },
-    weeks:     { type: Number },
+    data: { attribute: false },
+    endDate: { type: String, attribute: 'end-date' },
+    weeks: { type: Number },
     weekStart: { type: String, attribute: 'week-start' },
-    max:       { type: Number },
-    legend:    { converter: { fromAttribute: (v) => v !== 'false' } },
+    max: { type: Number },
+    legend: { converter: { fromAttribute: (v) => v !== 'false' } },
     _activeIndex: { state: true },
   };
 
@@ -343,8 +343,8 @@ export class ArcActivityHeatmap extends LitElement {
       const epoch = layout.start + i;
       const date = toISO(epoch);
       const entry = byDate.get(date);
-      const value = typeof entry?.value === 'number' && Number.isFinite(entry.value)
-        ? entry.value : 0;
+      const value =
+        typeof entry?.value === 'number' && Number.isFinite(entry.value) ? entry.value : 0;
       cells.push({
         epoch,
         date,
@@ -359,7 +359,10 @@ export class ArcActivityHeatmap extends LitElement {
   /** "Mar 4, 2026" for an epoch day, in the document's locale. */
   _fmtDate(epoch) {
     return new Intl.DateTimeFormat(defaultLocale(), {
-      month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC',
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+      timeZone: 'UTC',
     }).format(new Date(epoch * DAY));
   }
 
@@ -390,7 +393,8 @@ export class ArcActivityHeatmap extends LitElement {
   _weekdayLabels(ws) {
     // weekdayNames takes 1 = Monday … 7 = Sunday; our ws is 0 = Sunday, 1 = Monday.
     const names = weekdayNames('short', undefined, ws === 1 ? 1 : 7);
-    return names.map((text, row) => ({ row, text }))
+    return names
+      .map((text, row) => ({ row, text }))
       .filter(({ row }) => [1, 3, 5].includes((ws + row) % 7));
   }
 
@@ -399,8 +403,10 @@ export class ArcActivityHeatmap extends LitElement {
     if (cells.length === 0) return 'Activity heatmap: no data';
     const active = cells.filter((c) => c.value > 0);
     const total = active.reduce((a, c) => a + c.value, 0);
-    return `Activity heatmap: ${cells.length} days ending ${this._fmtDate(layout.end)}, `
-      + `${total} total across ${active.length} active ${active.length === 1 ? 'day' : 'days'}`;
+    return (
+      `Activity heatmap: ${cells.length} days ending ${this._fmtDate(layout.end)}, ` +
+      `${total} total across ${active.length} active ${active.length === 1 ? 'day' : 'days'}`
+    );
   }
 
   /** Hover-bubble and live-region text for one cell. */
@@ -432,18 +438,35 @@ export class ArcActivityHeatmap extends LitElement {
     if (count === 0) return;
     const rtl = this.matches(':dir(rtl)');
     const step = (delta) => {
-      this._activeIndex = this._activeIndex === null
-        ? (delta > 0 ? 0 : count - 1)
-        : Math.min(count - 1, Math.max(0, this._activeIndex + delta));
+      this._activeIndex =
+        this._activeIndex === null
+          ? delta > 0
+            ? 0
+            : count - 1
+          : Math.min(count - 1, Math.max(0, this._activeIndex + delta));
       e.preventDefault();
     };
     switch (e.key) {
-      case 'ArrowDown':  step(1); break;
-      case 'ArrowUp':    step(-1); break;
-      case 'ArrowRight': step(rtl ? -7 : 7); break;
-      case 'ArrowLeft':  step(rtl ? 7 : -7); break;
-      case 'Home': this._activeIndex = 0; e.preventDefault(); break;
-      case 'End':  this._activeIndex = count - 1; e.preventDefault(); break;
+      case 'ArrowDown':
+        step(1);
+        break;
+      case 'ArrowUp':
+        step(-1);
+        break;
+      case 'ArrowRight':
+        step(rtl ? -7 : 7);
+        break;
+      case 'ArrowLeft':
+        step(rtl ? 7 : -7);
+        break;
+      case 'Home':
+        this._activeIndex = 0;
+        e.preventDefault();
+        break;
+      case 'End':
+        this._activeIndex = count - 1;
+        e.preventDefault();
+        break;
       case 'Escape':
         if (this._activeIndex !== null) {
           this._clearActive();
@@ -475,14 +498,18 @@ export class ArcActivityHeatmap extends LitElement {
     return html`
       <div class="heatmap" part="heatmap">
         <div class="heatmap__months" part="months" style=${columns} aria-hidden="true">
-          ${this._monthLabels(layout).map((m) => html`
+          ${this._monthLabels(layout).map(
+            (m) => html`
             <span class="heatmap__month" part="month" style="grid-column-start: ${m.week + 1};">${m.text}</span>
-          `)}
+          `,
+          )}
         </div>
         <div class="heatmap__weekdays" part="weekdays" aria-hidden="true">
-          ${this._weekdayLabels(layout.ws).map((d) => html`
+          ${this._weekdayLabels(layout.ws).map(
+            (d) => html`
             <span class="heatmap__weekday" part="weekday" style="grid-row: ${d.row + 1};">${d.text}</span>
-          `)}
+          `,
+          )}
         </div>
         <div
           class="heatmap__grid"
@@ -495,15 +522,19 @@ export class ArcActivityHeatmap extends LitElement {
           @keydown=${this._onKeyDown}
           @blur=${this._clearActive}
         >
-          ${cells.map((cell, i) => html`
+          ${cells.map(
+            (cell, i) => html`
             <span
               class="heatmap__cell level-${cell.level} ${i === this._activeIndex ? 'is-active' : ''}"
               part="cell"
               data-index=${i}
               data-date=${cell.date}
             ></span>
-          `)}
-          ${detail ? html`
+          `,
+          )}
+          ${
+            detail
+              ? html`
             <div
               class="heatmap__detail"
               part="detail"
@@ -513,17 +544,25 @@ export class ArcActivityHeatmap extends LitElement {
               <span class="heatmap__detail-date">${detail.date}</span>
               <span class="heatmap__detail-value ${detail.empty ? 'heatmap__detail-value--empty' : ''}">${detail.value}</span>
             </div>
-          ` : nothing}
+          `
+              : nothing
+          }
         </div>
-        ${this.legend ? html`
+        ${
+          this.legend
+            ? html`
           <div class="heatmap__legend" part="legend" aria-hidden="true">
             <span>Less</span>
-            ${[0, 1, 2, 3, 4].map((l) => html`
+            ${[0, 1, 2, 3, 4].map(
+              (l) => html`
               <span class="heatmap__swatch level-${l}" part="swatch"></span>
-            `)}
+            `,
+            )}
             <span>More</span>
           </div>
-        ` : nothing}
+        `
+            : nothing
+        }
         <span class="sr-only" role="status">${detail ? `${detail.date}: ${detail.value}` : ''}</span>
       </div>
     `;

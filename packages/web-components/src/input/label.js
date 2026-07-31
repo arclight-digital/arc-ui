@@ -18,12 +18,12 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcLabel extends LitElement {
   static properties = {
-    for:       { type: String, reflect: true },
-    required:  { type: Boolean, reflect: true },
-    size:      { type: String, reflect: true },
-    disabled:  { type: Boolean, reflect: true },
+    for: { type: String, reflect: true },
+    required: { type: Boolean, reflect: true },
+    size: { type: String, reflect: true },
+    disabled: { type: Boolean, reflect: true },
     _hasDescription: { state: true },
-    _hasTooltip:     { state: true },
+    _hasTooltip: { state: true },
   };
 
   static styles = [
@@ -101,8 +101,8 @@ export class ArcLabel extends LitElement {
 
   _onClick() {
     if (!this.for) return;
-    const target = (this.getRootNode()).querySelector(`#${this.for}`) ||
-                   document.getElementById(this.for);
+    const target =
+      this.getRootNode().querySelector(`#${this.for}`) || document.getElementById(this.for);
     target?.focus?.();
   }
 

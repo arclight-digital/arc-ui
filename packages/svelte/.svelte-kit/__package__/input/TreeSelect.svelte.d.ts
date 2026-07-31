@@ -1,0 +1,46 @@
+import '@arclux/arc-ui/tree-select';
+interface Props {
+    items?: Array<{
+        value: string;
+        label: string;
+        children?: Array<object>;
+        disabled?: boolean;
+    }>;
+    value?: string;
+    expandedValues?: string[];
+    placeholder?: string;
+    label?: string;
+    name?: string;
+    disabled?: boolean;
+    size?: 'sm' | 'md' | 'lg';
+    error?: string;
+    open?: boolean;
+    class?: string;
+    id?: string;
+    style?: string;
+    title?: string;
+    role?: string;
+    slot?: string;
+    part?: string;
+    exportparts?: string;
+    dir?: string;
+    lang?: string;
+    translate?: string;
+    accesskey?: string;
+    enterkeyhint?: string;
+    inputmode?: string;
+    popover?: string;
+    contenteditable?: boolean | string;
+    tabindex?: number;
+    hidden?: boolean;
+    inert?: boolean;
+    draggable?: boolean;
+    spellcheck?: boolean;
+    autofocus?: boolean;
+    [key: `data-${string}`]: unknown;
+    [key: `aria-${string}`]: unknown;
+    [key: `on${string}`]: unknown;
+}
+declare const TreeSelect: import("svelte").Component<Props, {}, "label" | "value">;
+type TreeSelect = ReturnType<typeof TreeSelect>;
+export default TreeSelect;

@@ -92,15 +92,15 @@ if (typeof customElements !== 'undefined' && typeof document !== 'undefined') {
 
     warned = true;
     console.warn(
-      `[arc-ui] Hydration support loaded too late: <${name}> was defined `
-      + 'without it, so Lit will render a second copy of every component over '
-      + "the server's markup instead of adopting it.\n"
-      + 'Importing @arclux/arc-ui/hydrate first is not sufficient on its own — '
-      + "a bundler hoists a chunk's cross-chunk imports above its own inlined "
-      + 'code, so a small module gets inlined into the entry and runs after the '
-      + 'component chunks it was meant to precede.\n'
-      + 'Force it into a chunk of its own (Rollup/Vite: manualChunks) so it '
-      + 'becomes a cross-chunk import too, and keeps its source order.'
+      `[arc-ui] Hydration support loaded too late: <${name}> was defined ` +
+        'without it, so Lit will render a second copy of every component over ' +
+        "the server's markup instead of adopting it.\n" +
+        'Importing @arclux/arc-ui/hydrate first is not sufficient on its own — ' +
+        "a bundler hoists a chunk's cross-chunk imports above its own inlined " +
+        'code, so a small module gets inlined into the entry and runs after the ' +
+        'component chunks it was meant to precede.\n' +
+        'Force it into a chunk of its own (Rollup/Vite: manualChunks) so it ' +
+        'becomes a cross-chunk import too, and keeps its source order.',
     );
   };
 }

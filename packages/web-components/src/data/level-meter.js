@@ -32,15 +32,15 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcLevelMeter extends LitElement {
   static properties = {
-    value:       { type: Number },
-    min:         { type: Number },
-    max:         { type: Number },
-    peak:        { type: Number },
+    value: { type: Number },
+    min: { type: Number },
+    max: { type: Number },
+    peak: { type: Number },
     orientation: { type: String, reflect: true },
-    segments:    { type: Number },
-    warn:        { type: Number },
-    clip:        { type: Number },
-    label:       { type: String },
+    segments: { type: Number },
+    warn: { type: Number },
+    clip: { type: Number },
+    label: { type: String },
   };
 
   static styles = [
@@ -181,9 +181,7 @@ export class ArcLevelMeter extends LitElement {
     // importable and renderable in Node for SSR.
     if (typeof requestAnimationFrame === 'function') {
       this._reduceMotion =
-        typeof matchMedia === 'function'
-          ? matchMedia('(prefers-reduced-motion: reduce)')
-          : null;
+        typeof matchMedia === 'function' ? matchMedia('(prefers-reduced-motion: reduce)') : null;
       this._lastTick = null;
       this._rafId = requestAnimationFrame(this._decayTick);
     }
@@ -243,9 +241,7 @@ export class ArcLevelMeter extends LitElement {
     if (this._peakF <= f) return;
     if (Date.now() - this._peakAt < this._holdMs) return;
 
-    const next = this._reduceMotion?.matches
-      ? f
-      : Math.max(f, this._peakF - this._decayPerS * dt);
+    const next = this._reduceMotion?.matches ? f : Math.max(f, this._peakF - this._decayPerS * dt);
     if (next !== this._peakF) {
       this._peakF = next;
       this.requestUpdate();
@@ -256,13 +252,10 @@ export class ArcLevelMeter extends LitElement {
     const f = this._toFraction(this.value);
     const explicitPeak = this.peak != null && Number.isFinite(this.peak);
     const peakF = explicitPeak ? this._toFraction(this.peak) : this._peakF;
-    const count = Number.isFinite(this.segments)
-      ? Math.max(0, Math.floor(this.segments))
-      : 20;
+    const count = Number.isFinite(this.segments) ? Math.max(0, Math.floor(this.segments)) : 20;
 
     const range = this.max - this.min;
-    const valueNow =
-      range > 0 ? Math.min(this.max, Math.max(this.min, this.value)) : this.min;
+    const valueNow = range > 0 ? Math.min(this.max, Math.max(this.min, this.value)) : this.min;
 
     const segs = [];
     if (count > 0) {
@@ -287,24 +280,28 @@ export class ArcLevelMeter extends LitElement {
         aria-label=${this.label || 'Level'}
       >
         <div class="track" part="track">
-          ${count > 0
-            ? segs
-            : html`
+          ${
+            count > 0
+              ? segs
+              : html`
                 <div
                   part="fill"
                   class="fill zone--${this._zoneAt(f)}"
                   style="--_fill: ${(f * 100).toFixed(2)}%"
                 ></div>
-              `}
-          ${peakF > 0
-            ? html`
+              `
+          }
+          ${
+            peakF > 0
+              ? html`
                 <div
                   part="peak"
                   class="peak zone--${this._zoneAt(peakF)}"
                   style="--_peak: ${(peakF * 100).toFixed(2)}%"
                 ></div>
               `
-            : ''}
+              : ''
+          }
         </div>
       </div>
     `;

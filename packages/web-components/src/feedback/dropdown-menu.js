@@ -27,8 +27,8 @@ import '../content/separator.js';
  */
 export class ArcDropdownMenu extends LitElement {
   static properties = {
-    open:          { type: Boolean, reflect: true },
-    _children:     { state: true },
+    open: { type: Boolean, reflect: true },
+    _children: { state: true },
   };
 
   static styles = [
@@ -155,12 +155,13 @@ export class ArcDropdownMenu extends LitElement {
   }
 
   _onSlotChange(e) {
-    this._children = e.target.assignedElements({ flatten: true })
-      .filter(el => el.tagName === 'ARC-MENU-ITEM' || el.tagName === 'ARC-MENU-DIVIDER');
+    this._children = e.target
+      .assignedElements({ flatten: true })
+      .filter((el) => el.tagName === 'ARC-MENU-ITEM' || el.tagName === 'ARC-MENU-DIVIDER');
   }
 
   get _menuItems() {
-    return this._children.filter(el => el.tagName === 'ARC-MENU-ITEM');
+    return this._children.filter((el) => el.tagName === 'ARC-MENU-ITEM');
   }
 
   updated(changed) {
@@ -196,13 +197,10 @@ export class ArcDropdownMenu extends LitElement {
   }
 
   _syncTriggerAria() {
-    setTriggerAria(
-      this.shadowRoot.querySelector('slot[name="trigger"]'),
-      {
-        'aria-haspopup': 'menu',
-        'aria-expanded': this.open ? 'true' : 'false',
-      }
-    );
+    setTriggerAria(this.shadowRoot.querySelector('slot[name="trigger"]'), {
+      'aria-haspopup': 'menu',
+      'aria-expanded': this.open ? 'true' : 'false',
+    });
   }
 
   _toggle() {
@@ -211,11 +209,16 @@ export class ArcDropdownMenu extends LitElement {
 
   _close(restoreFocus = true) {
     if (!this.open) return;
-    if (!this.dispatchEvent(new CustomEvent('arc-close', {
-      bubbles: true,
-      composed: true,
-      cancelable: true,
-    }))) return;
+    if (
+      !this.dispatchEvent(
+        new CustomEvent('arc-close', {
+          bubbles: true,
+          composed: true,
+          cancelable: true,
+        }),
+      )
+    )
+      return;
     this.open = false;
     if (restoreFocus && this._openedFrom && this._openedFrom.isConnected) {
       this._openedFrom.focus();
@@ -224,11 +227,17 @@ export class ArcDropdownMenu extends LitElement {
   }
 
   _selectItem(item, index) {
-    this.dispatchEvent(new CustomEvent('arc-select', {
-      detail: { value: item.selectionValue, item: { label: item.label, shortcut: item.shortcut, value: item.selectionValue }, index },
-      bubbles: true,
-      composed: true,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('arc-select', {
+        detail: {
+          value: item.selectionValue,
+          item: { label: item.label, shortcut: item.shortcut, value: item.selectionValue },
+          index,
+        },
+        bubbles: true,
+        composed: true,
+      }),
+    );
     this._close();
   }
 
@@ -246,7 +255,10 @@ export class ArcDropdownMenu extends LitElement {
         role="menuitem"
         tabindex=${selectableIndex === this._menuKb.focusedIndex ? '0' : '-1'}
         @click=${() => this._selectItem(child, globalIndex)}
-        @mouseenter=${() => { this._menuKb.focusedIndex = selectableIndex; this.requestUpdate(); }}
+        @mouseenter=${() => {
+          this._menuKb.focusedIndex = selectableIndex;
+          this.requestUpdate();
+        }}
         part="item"
       >
         <span class="dropdown__item-label">${child.label || ''}</span>

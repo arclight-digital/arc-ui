@@ -37,9 +37,9 @@ The pins render server-side at their coordinates because positioning is pure CSS
       'Constrain the component to a readable width so pin targets stay comfortably apart',
     ],
     dont: [
-      'Do not crowd pins so close together that their popovers cover each other\'s targets',
+      "Do not crowd pins so close together that their popovers cover each other's targets",
       'Do not put critical information only in a popover — undiscovered pins go unread',
-      'Do not use Image Hotspots for step-by-step onboarding — that is Guided Tour\'s job',
+      "Do not use Image Hotspots for step-by-step onboarding — that is Guided Tour's job",
       'Do not rely on pixel positions in your head; x and y are percentages of the image box',
     ],
   },
