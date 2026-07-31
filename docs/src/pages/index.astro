@@ -1983,9 +1983,20 @@ function Settings() {
   }
 
   /* The code window floats in its own light */
+  /* All seven panels occupy one grid cell, so the block is always as tall as
+     the longest example rather than as tall as whichever is showing. The
+     examples differ by several lines — Angular's component class against
+     Svelte's four — and on a phone, where the code wraps and the whole section
+     is one column, switching framework moved everything below it up or down
+     the page under the reader's thumb. */
   .fw-panels {
     position: relative;
+    display: grid;
     min-width: 0;
+  }
+
+  .fw-panel {
+    grid-area: 1 / 1;
   }
 
   .fw-panels::before {
@@ -2003,8 +2014,12 @@ function Settings() {
     position: relative;
   }
 
+  /* Deliberately not display:none: the panel has to keep its cell for the
+     height to hold. visibility takes it out of the a11y tree and the tab order
+     the same way, and the switcher keeps toggling [hidden] as before. */
   .fw-panel[hidden] {
-    display: none;
+    display: block;
+    visibility: hidden;
   }
 
   /* ── Yours: the theme file and the components it repaints, both live ── */
