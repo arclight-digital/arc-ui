@@ -85,13 +85,53 @@ const SIDES = [
 const rule = (selector, declarations) => `.arc-${selector} { ${declarations} }`;
 
 /**
+ * What a step on a t-shirt scale looks like: `xs`, `sm`, `md`, `lg`, `xl`,
+ * `2xl`, `3xl`, `2xs`.
+ */
+const SCALE_STEP = /^(?:xs|sm|md|lg|xl|\d+x[sl])$/;
+
+/**
+ * Keep the two vocabularies sharing `--text-*` from ever converging.
+ *
+ * `--text-md` is a size and `--text-primary` is a colour, so `.arc-text-*` is
+ * deliberately both — the class name is the token name, which is the point.
+ * That only works because the key sets are disjoint *by shape*: sizes are scale
+ * steps, colours are semantic words.
+ *
+ * `assertNoCollisions` below catches the failure, but only once it has already
+ * happened. This catches the cause: a colour named `md`, or a size named
+ * `primary`, fails here naming the mistake rather than three steps later naming
+ * a duplicate selector.
+ */
+function assertNamespaceShapes() {
+  for (const key of [...TEXT_COLORS, ...ACCENT_COLORS]) {
+    if (!SCALE_STEP.test(key)) continue;
+    throw new Error(
+      `utilities: the colour "${key}" is shaped like a step on the type scale, `
+      + 'and both emit .arc-text-* classes from the same token prefix.\n'
+      + 'Foreground colours must stay semantic words (primary, muted, …) and '
+      + 'sizes must stay scale steps (xs, md, 2xl, …), or --text-* stops '
+      + 'saying which kind of thing it is.',
+    );
+  }
+  for (const key of TEXT_SIZE_KEYS) {
+    if (SCALE_STEP.test(key)) continue;
+    throw new Error(
+      `utilities: the type size "${key}" is not shaped like a scale step, so it `
+      + 'can collide with a foreground colour of the same name in .arc-text-*.\n'
+      + 'The semantic sizes (heading, body, …) are for components to read, not '
+      + 'for consumers to reach past them with.',
+    );
+  }
+}
+
+/**
  * Fail rather than emit two rules with the same name.
  *
- * `.arc-text-*` is deliberately both the type scale and the foreground colours,
- * because that is how the tokens are named — `--text-md` is a size and
- * `--text-primary` is a colour, and the key sets do not overlap. That holds
- * today and is exactly the kind of thing a later token addition breaks silently,
- * with the loser being whichever rule the cascade happens to reach second.
+ * The backstop to `assertNamespaceShapes`: that one guards the case we know
+ * about, this one catches any pair from any two groups, including one nobody
+ * anticipated. Without it the loser is whichever rule the cascade reaches
+ * second, silently.
  */
 function assertNoCollisions(rules) {
   const seen = new Map();
@@ -234,6 +274,8 @@ export function generateUtilitiesCSS() {
   groups.push(section('Font role', FONT_ROLES.map(
     (role) => rule(`font-${role}`, `font-family: var(--font-${role});`)
   )));
+
+  assertNamespaceShapes();
 
   const rules = groups.join('\n').split('\n').filter((l) => l.startsWith('.arc-'));
   assertNoCollisions(rules);

@@ -92,6 +92,29 @@ export const tokens = {
     display: { weight: 500 },
   },
 
+  /**
+   * Type sizes, emitted as `--text-*`.
+   *
+   * **`--text-*` deliberately carries two kinds of thing**, and it is the only
+   * prefix in the tree that does: `--text-md` is a size from here, while
+   * `--text-primary` is a foreground colour from `color` below. Reading
+   * base.css that looks like an inconsistency; it is load-bearing. The class
+   * name in the utility layer *is* the token name, so `.arc-text-md` sizes and
+   * `.arc-text-primary` colours, and both read the variable a consumer would
+   * override.
+   *
+   * That only works while the two key sets stay disjoint **by shape** — sizes
+   * are scale steps (`xs`, `md`, `2xl`), colours are semantic words
+   * (`primary`, `muted`). Adding a colour called `md`, or a size called
+   * `primary`, breaks it. `shared/utilities.js` asserts both directions and
+   * fails the build, so this is a rule with a check behind it rather than a
+   * convention to remember.
+   *
+   * The entries below the scale — `heading`, `body`, `wordmark` and friends —
+   * are for components to describe their own roles. They are deliberately not
+   * exposed as utilities: a consumer reaching for `.arc-text-heading` is
+   * reaching past the component for something it already decides.
+   */
   fontSize: {
     xs:           '12px',
     sm:           '16px',
