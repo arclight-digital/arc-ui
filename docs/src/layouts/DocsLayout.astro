@@ -146,6 +146,17 @@ const docsJsonLd = {
     position: relative;
   }
 
+  /* The shell row is a plain flex: the sidebar and TOC hold 280px each and the
+     middle column absorbs every extra pixel, so on a wide display the prose
+     stretched while the chrome stayed put. Capping the row and centring it
+     shrinks the whole layout together instead. Both rails are sticky rather
+     than fixed, so they travel with it. Matches arc-container's `xl` step. */
+  arc-app-shell {
+    display: block;
+    max-width: 1600px;
+    margin-inline: auto;
+  }
+
   .docs-content {
     contain: inline-size;
     outline: none;

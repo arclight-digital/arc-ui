@@ -1,5 +1,5 @@
 <div class="site-footer theme-fixed">
-  <arc-footer contained class="site-footer__panel">
+  <arc-footer contained="xl" class="site-footer__panel">
     <div class="site-footer__brand" slot="logo">
       <div class="site-footer__title">
         <span class="site-footer__name">ARC UI</span>
@@ -330,36 +330,39 @@
     filter: blur(30px);
   }
 
+  /* White-hot at the top edge — the same tip treatment as the tunnel's beams —
+     dying out before the crop finishes the sinking-light read. The highlight
+     across the glyphs is now a fixed specular rather than a drifting one: a
+     moving background-position on background-clip:text cannot go to the
+     compositor, so every frame repainted 250px of clipped type and the sweep
+     measured 44 long frames and a 192ms spike against 27/33ms with the same
+     word standing still. The drift moved to the bloom, where it is opacity —
+     which composites. */
   .afterglow__word {
     position: relative;
-    /* White-hot at the top edge — the same tip treatment as the tunnel's
-       beams — dying out before the crop finishes the sinking-light read.
-       The first layer is a slow sheen drifting across the glyphs. */
     background:
-      linear-gradient(105deg, transparent 32%, rgba(255, 255, 255, 0.28) 50%, transparent 68%),
+      linear-gradient(105deg, transparent 34%, rgba(255, 255, 255, 0.26) 50%, transparent 66%),
       linear-gradient(180deg,
         rgba(255, 255, 255, 0.85),
         rgba(var(--accent-primary-rgb), 0.7) 32%,
         rgba(var(--accent-secondary-rgb), 0.3) 62%,
         transparent 85%);
-    background-size: 250% 100%, 100% 100%;
-    background-position: 200% 0, 0 0;
+    background-size: 140% 100%, 100% 100%;
+    background-position: 22% 0, 0 0;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: afterglow-sheen 9s ease-in-out infinite;
   }
 
-  @keyframes afterglow-sheen {
-    0%   { background-position: 200% 0, 0 0; }
-    100% { background-position: -150% 0, 0 0; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .afterglow__word {
-      animation: none;
-    }
-  }
+  /* Nothing here animates, and that is the fix. Three mechanics were tried on
+     this word: a sweeping background-position (44 long frames, 192ms spike),
+     the same with layer hints (median frame 8ms to 25ms — a permanently
+     composited 30px blur costs more than the repaint it was meant to save),
+     and an opacity breathe on the bloom (median 50ms: opacity over a blurred
+     box re-renders the blur rather than compositing it). The word is 250px of
+     background-clip:text with a blurred twin behind it — every frame of motion
+     over that is a re-render of both. It reads as emitted light from the bloom
+     and the white-hot top edge alone, which cost nothing to hold still. */
 
   /* The page's last pixel row is the site's recurring glow hairline — the
      word sinks through it and the page ends the way its sections divide */

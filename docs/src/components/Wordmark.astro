@@ -13,21 +13,42 @@
     white-space: nowrap;
   }
 
+  /* The afterglow's treatment, brought up to nav scale: a white-hot top edge
+     falling through the accent into the secondary, with a sheen layer riding
+     over it. The footer runs that sheen on a loop because the word is sinking
+     off the page and the drift is what makes it read as emitted light; up here
+     it waits for the pointer, since a logo that animates on its own in fixed
+     chrome is movement nothing asked for. */
   .wordmark__name {
     font-family: var(--font-body);
     font-size: var(--text-xl);
     font-weight: 600;
     letter-spacing: -0.5px;
-    background: var(--gradient-accent-text);
-    background-size: 200% 100%;
-    background-position: 0% 50%;
+    background:
+      linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, 0.32) 50%, transparent 62%),
+      linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.92),
+        var(--accent-primary) 58%,
+        var(--accent-secondary)
+      );
+    background-size: 250% 100%, 100% 100%;
+    background-position: 200% 0, 0 0;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    filter: drop-shadow(0 0 10px rgba(var(--accent-primary-rgb), 0.15));
+    /* clip-text paint box: keep descender room whatever the line-height */
+    padding-block: 0.1em 0.2em;
+    margin-block: -0.1em -0.2em;
+    /* Lit at rest, not just on approach: two shadows, a tight one that reads
+       as the glyph's own edge light and a wide one that puts it in the air
+       around the word. Hover doesn't add a new effect, it turns this one up. */
+    filter:
+      drop-shadow(0 0 6px rgba(var(--accent-primary-rgb), 0.35))
+      drop-shadow(0 0 18px rgba(var(--accent-primary-rgb), 0.18));
     transition:
       filter 400ms var(--ease-out-expo),
-      background-position 600ms var(--ease-out-expo);
+      background-position 900ms var(--ease-out-expo);
   }
 
   .wordmark__expand {
@@ -41,19 +62,43 @@
     transition: color 400ms var(--ease-out-expo);
   }
 
+  /* The acronym only works if the capitals read as the brighter thing. At the
+     accent's own value they don't: --accent-primary sits at luminance 0.232
+     against --text-ghost's 0.241, so the three letters carrying the trick were
+     fractionally darker than the letters they pick out — and a saturated blue
+     at 12px on near-black loses more again to acuity. Lifted toward white
+     rather than swapped for a lighter literal, so a consumer overriding
+     --accent-primary still gets their own hue here. */
   .wordmark__letter {
     color: var(--accent-primary);
+    color: color-mix(in oklab, var(--accent-primary) 70%, white);
   }
 
   .wordmark:hover .wordmark__name {
-    background-position: 100% 50%;
+    /* The sheen crosses the glyphs on approach and parks off the far edge;
+       only the highlight layer moves, so the vertical gradient underneath
+       stays put. */
+    background-position: -150% 0, 0 0;
     filter:
-      drop-shadow(0 0 16px rgba(var(--accent-primary-rgb), 0.5))
-      drop-shadow(0 0 32px rgba(var(--accent-secondary-rgb), 0.2));
+      drop-shadow(0 0 10px rgba(var(--accent-primary-rgb), 0.75))
+      drop-shadow(0 0 28px rgba(var(--accent-primary-rgb), 0.45))
+      drop-shadow(0 0 44px rgba(var(--accent-secondary-rgb), 0.25));
   }
 
   .wordmark:hover .wordmark__expand {
     color: var(--text-secondary);
+  }
+
+  /* The sheen is the only thing that moves; the glow still answers the pointer,
+     because a colour change is not motion. */
+  @media (prefers-reduced-motion: reduce) {
+    .wordmark__name {
+      transition: filter 400ms var(--ease-out-expo);
+    }
+
+    .wordmark:hover .wordmark__name {
+      background-position: 200% 0, 0 0;
+    }
   }
 
   @media (max-width: 768px) {

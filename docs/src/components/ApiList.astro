@@ -16,8 +16,26 @@
  * line, and the prose gets the full measure. The default rides at the type's
  * shoulder rather than holding a column of its own — it is an annotation on the
  * type, and a column made it a peer while leaving most rows to pad themselves
- * with a placeholder dash. One row group per member, so a member and its
- * description highlight together.
+ * with a placeholder dash. One `tbody` per member, so a member and its
+ * description are one unit to the document outline rather than two adjacent
+ * rows that happen to be related.
+ *
+ * ## Why nothing here is in a container
+ *
+ * The first pass gave every datum its own treatment: the type in a bordered
+ * chip, the default behind an uppercase eyebrow, the header filled and tracked
+ * out to 2px, a hover tint on rows that aren't interactive. Decorating each
+ * field to the same degree ranks none of them — the reader gets four things
+ * shouting at one volume and has to sort out the hierarchy themselves. It is
+ * also the most reproduced docs-table styling there is, which is its own
+ * argument against it.
+ *
+ * So the rank is carried by the type itself, in the one order that survives
+ * this palette: the name is lifted to --text-primary and bolded, the type sits
+ * at --text-secondary in mono, and the default reads as source — `= "md"` —
+ * rather than as a labelled field. Stepping down the muted/ghost ramp instead
+ * would have bought almost nothing; those two are a handful of rgb points
+ * apart, so weight, size and family do the work colour can't.
  */
 interface Row {
   name: string;
@@ -37,151 +55,115 @@ interface Props {
 
 const { rows, kind = 'prop' } = Astro.props;
 
-const headers = kind === 'event' ? ['Event', 'Detail'] : ['Prop', 'Type'];
-
 /** Second cell: the type for a prop, the detail payload for an event. */
 const secondary = (r: Row) => (kind === 'event' ? r.detail : r.type);
 ---
 
-<table class="api">
-  <thead>
-    <tr>
-      {headers.map((h) => <th>{h}</th>)}
-    </tr>
-  </thead>
-
+<dl class="api">
   {rows.map((r) => (
-    <tbody class="api__member">
-      <tr class="api__meta">
-        <td class="api__name"><code>{r.name}</code></td>
-        <td class="api__type">
-          {secondary(r) ? <code>{secondary(r)}</code> : <span class="api__none">—</span>}
-          {kind === 'prop' && r.default && (
-            <span class="api__aside">
-              <span class="api__aside-label">default</span>
-              <code class="api__aside-value">{r.default}</code>
-            </span>
-          )}
-        </td>
-      </tr>
-      <tr class="api__desc">
-        <td colspan={headers.length}>{r.description}</td>
-      </tr>
-    </tbody>
+    <div class="api__member">
+      <dt class="api__sig">
+        <code class="api__name">{r.name}</code>
+        {secondary(r) && (
+          <code class="api__type">
+            {kind === 'event' && <span class="api__key">detail:</span>}
+            {secondary(r)}
+          </code>
+        )}
+        {kind === 'prop' && r.default && (
+          <code class="api__default"><span class="api__eq" aria-hidden="true">=</span>{r.default}</code>
+        )}
+      </dt>
+      <dd class="api__desc">{r.description}</dd>
+    </div>
   ))}
-</table>
+</dl>
 
 <style>
   .api {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: var(--text-sm);
+    margin: 0;
   }
 
-  .api th {
-    text-align: left;
-    font-family: var(--font-label);
-    font-size: var(--text-xs);
-    font-weight: var(--font-label-weight, 600);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    padding: var(--space-sm) var(--space-md);
+  /* The panel itself has no padding — the table this replaced was inset by its
+     own cell padding, so the inset has to be reinstated here or every line sits
+     flush against the card border. It rides on the member rather than the list
+     so each rule still spans the full width of the panel, edge to edge. */
+  .api__member {
+    padding: var(--space-md);
     border-bottom: 1px solid var(--border-subtle);
-    background: var(--bg-elevated);
-    white-space: nowrap;
   }
 
-  /* The member and its description track together. */
-  .api__member:hover {
-    background: var(--surface-hover);
+  .api__member:last-child {
+    border-bottom: none;
   }
 
-  .api__meta td {
-    padding: var(--space-md) var(--space-md) var(--space-xs);
-    vertical-align: baseline;
+  /* The signature, read the way it is written in a d.ts: name, type, default,
+     on one baseline. As a two-column table the type sat a dead 300px away from
+     the name it belonged to — a colspan description row inflates the first
+     column no matter what width it is given — and the pair had to be read
+     across a gap rather than as one line. */
+  .api .api__sig {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: var(--space-sm);
+    row-gap: var(--space-xs);
   }
 
-  /* The one string on this page that must never break. Its column is sized to
-     content, so it costs the description nothing. */
-  .api__name {
-    width: 1%;
-    white-space: nowrap;
-  }
-
-  .api__name code {
+  /* The one string on this page that must never break. */
+  .api .api__name {
     font-family: var(--font-mono);
     font-size: var(--text-sm);
     font-weight: 600;
     color: var(--text-primary);
+    white-space: nowrap;
   }
 
   /* A documented object type — `Array<{key:string,label:string}>` — has no
      spaces to break at, so it alone may break anywhere rather than push the
      panel into a horizontal scroll. */
-  .api__type {
+  .api .api__type {
+    font-family: var(--font-mono);
+    font-size: var(--code-size);
+    color: var(--text-secondary);
     overflow-wrap: anywhere;
   }
 
-  .api__type > code {
+  /* `= "md"`, the way a default is written in the language being documented.
+     A labelled field made the reader parse a label to learn what a signature
+     already says. Absent simply means no default: there is no column to line
+     up with, so nothing needs a placeholder dash. */
+  .api .api__default {
     font-family: var(--font-mono);
-    font-size: var(--text-xs);
+    font-size: var(--code-size);
     color: var(--text-secondary);
-    background: var(--bg-surface);
-    padding: 2px 8px;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border-subtle);
-  }
-
-  /* The default is an annotation on the type, not a peer of it: it reads at the
-     type's shoulder, unchipped, so the bordered chip stays the thing you scan
-     down the column. Absent simply means no default — an aside has nothing to
-     line up with, so it needs no placeholder dash. */
-  .api__aside {
-    display: inline-flex;
-    align-items: baseline;
-    gap: var(--space-xs);
-    margin-inline-start: var(--space-sm);
     white-space: nowrap;
   }
 
-  .api__aside-label {
-    font-family: var(--font-label);
-    font-size: var(--text-xs);
-    font-weight: var(--font-label-weight, 600);
-    letter-spacing: 1px;
-    text-transform: uppercase;
+  .api .api__eq {
     color: var(--text-ghost);
+    margin-inline-end: 0.4ch;
   }
 
-  .api__aside-value {
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    color: var(--text-muted);
-  }
-
-  .api__none {
+  /* An event's payload is not its type: it arrives on `event.detail`, and with
+     the column headers gone a bare object next to an event name claimed a
+     relationship that doesn't exist. Naming the key says it in the language the
+     listener is written in, and rhymes with the `=` a default carries. */
+  .api .api__key {
     color: var(--text-ghost);
+    margin-inline-end: 0.6ch;
   }
 
-  .api__desc td {
-    padding: 0 var(--space-md) var(--space-md);
-    border-bottom: 1px solid var(--border-subtle);
-    color: var(--text-secondary);
+  /* Support text, and sized like it. At body size and full card width this ran
+     past 120 characters a line — `max-width` on a `td` is ignored by table
+     layout, so the measure cap the old markup declared never applied and the
+     prose swamped the row it belonged to. */
+  .api .api__desc {
+    margin: var(--space-sm) 0 0;
+    /* The panel carries the measure now, so the description fills it instead
+       of stopping short and leaving the card hanging open to its right. */
+    font-size: var(--code-size);
     line-height: 1.7;
-    max-width: 70ch;
-  }
-
-  .api__member:last-child .api__desc td {
-    border-bottom: none;
-  }
-
-  @media (max-width: 640px) {
-    .api__meta td {
-      padding-inline: var(--space-sm);
-    }
-    .api__desc td {
-      padding-inline: var(--space-sm);
-    }
+    color: var(--text-secondary);
   }
 </style>

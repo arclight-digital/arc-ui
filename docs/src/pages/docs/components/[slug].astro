@@ -549,7 +549,11 @@ const headings = [
     to { transform: translate(-50%, -50%) rotate(360deg); }
   }
 
+  /* The measure the overview prose keeps, so the panel's border lands on the
+     same right edge as the text above it instead of stretching to whatever the
+     shell has left over. */
   .component-page__api {
+    max-width: 640px;
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-lg);
     overflow-x: auto;
