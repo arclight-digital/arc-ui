@@ -33,7 +33,12 @@ export const elementCount = countRegisters(wcSrc);
 export const frameworks = ['React', 'Vue', 'Svelte', 'Angular', 'Solid', 'Preact', 'HTML'];
 export const frameworkCount = frameworks.length;
 
-export const buildSteps = 0;
+/** Steps in the generate pipeline, counted from the pipeline definition itself
+ *  (gen('…') / check('…') calls plus the literal prism step in scripts/generate.js). */
+const generateJs = fs.readFileSync(new URL('../../../scripts/generate.js', import.meta.url), 'utf-8');
+export const buildSteps =
+  (generateJs.match(/\b(?:gen|check)\('[a-z-]+'\)/g) ?? []).length +
+  (generateJs.match(/name: 'prism'/g) ?? []).length;
 
 /** Unique custom properties defined in the generated shared/base.css. */
 export const tokenCount = new Set(baseCss.match(/--[a-z0-9-]+(?=\s*:)/g)).size;

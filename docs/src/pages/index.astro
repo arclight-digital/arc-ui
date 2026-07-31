@@ -4,6 +4,19 @@ import SiteTopBar from '../components/SiteTopBar.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import { components } from '../data/components/index';
 import { buildSteps, tokenCount, testCount, utilityClassCount, elementCount, version, versionShort } from '../data/site-stats';
+import { tokens } from '../../../shared/tokens.js';
+
+// The console's first swatch IS the shipped theme, read from the token source
+// so it can never drift from what the page is actually wearing. Clicking it
+// removes the override entirely (see initAccentSwatches) — a real reset.
+const rgbToHex = (rgb: string) =>
+  '#' + (rgb.match(/\d+/g) ?? []).map((n) => (+n).toString(16).padStart(2, '0')).join('');
+const defaultAccent = {
+  p: rgbToHex(tokens.color.accentPrimary),
+  prgb: tokens.rgb.accentPrimary,
+  s: rgbToHex(tokens.color.accentSecondary),
+  srgb: tokens.rgb.accentSecondary,
+};
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -159,16 +172,14 @@ function Settings() {
          CSS so these stay readable and the oversize can change in one place
          without re-deriving twelve coordinates by hand. -->
     <div class="hero__lobes" aria-hidden="true">
-      <span class="lobe" style="--hrx:48; --hry:42; --hx:18; --hy:24;  --tint:var(--accent-primary-rgb);   --a:0.115; --stop:68%; --hdx:2.5;  --hdy:-1.8; --sc:1.07; --dur:29s; --delay:-4s"></span>
-      <span class="lobe" style="--hrx:42; --hry:48; --hx:84; --hy:30;  --tint:var(--accent-secondary-rgb); --a:0.1;   --stop:70%; --hdx:-2;   --hdy:2.2;  --sc:0.96; --dur:37s; --delay:-13s"></span>
-      <span class="lobe" style="--hrx:54; --hry:36; --hx:70; --hy:78;  --tint:var(--accent-primary-rgb);   --a:0.086; --stop:72%; --hdx:-2.8; --hdy:-1.4; --sc:1.08; --dur:23s; --delay:-9s"></span>
-      <span class="lobe" style="--hrx:40; --hry:44; --hx:12; --hy:70;  --tint:var(--accent-secondary-rgb); --a:0.08;  --stop:68%; --hdx:2.2;  --hdy:1.6;  --sc:0.94; --dur:43s; --delay:-21s"></span>
-      <span class="lobe" style="--hrx:34; --hry:30; --hx:52; --hy:2;   --tint:var(--accent-primary-rgb);   --a:0.069; --stop:70%; --hdx:-1.6; --hdy:2.4;  --sc:1.04; --dur:31s; --delay:-17s"></span>
-      <span class="lobe" style="--hrx:60; --hry:26; --hx:50; --hy:104; --tint:var(--accent-primary-rgb);   --a:0.092; --stop:62%; --hdx:1.4;  --hdy:-1.2; --sc:1.03; --dur:53s; --delay:-7s"></span>
+      <span class="lobe" style="--hrx:80; --hry:62; --hx:20; --hy:38;  --tint:var(--accent-primary-rgb);   --a:0.135; --stop:70%; --hdx:2.5;  --hdy:-1.8; --sc:1.07; --dur:29s; --delay:-4s"></span>
+      <span class="lobe" style="--hrx:62; --hry:80; --hx:82; --hy:58;  --tint:var(--accent-secondary-rgb); --a:0.12;  --stop:70%; --hdx:-2;   --hdy:2.2;  --sc:0.96; --dur:37s; --delay:-13s"></span>
+      <span class="lobe" style="--hrx:54; --hry:40; --hx:74; --hy:20;  --tint:var(--accent-secondary-rgb); --a:0.085; --stop:72%; --hdx:-2.8; --hdy:-1.4; --sc:1.08; --dur:23s; --delay:-9s"></span>
+      <span class="lobe" style="--hrx:44; --hry:46; --hx:8;  --hy:78;  --tint:var(--accent-secondary-rgb); --a:0.08;  --stop:68%; --hdx:2.2;  --hdy:1.6;  --sc:0.94; --dur:43s; --delay:-21s"></span>
+      <span class="lobe" style="--hrx:38; --hry:32; --hx:50; --hy:0;   --tint:var(--accent-primary-rgb);   --a:0.07;  --stop:70%; --hdx:-1.6; --hdy:2.4;  --sc:1.04; --dur:31s; --delay:-17s"></span>
+      <span class="lobe" style="--hrx:64; --hry:34; --hx:50; --hy:102; --tint:var(--accent-primary-rgb);   --a:0.1;   --stop:64%; --hdx:1.4;  --hdy:-1.2; --sc:1.03; --dur:53s; --delay:-7s"></span>
     </div>
-    <div class="hero__ambient"></div>
     <div class="hero__dots"></div>
-    <div class="hero__vignette"></div>
     <div class="hero__content">
       <a href="/docs/changelog" class="hero__announcement">
         <span class="hero__announcement-badge">{versionShort}</span>
@@ -287,54 +298,66 @@ function Settings() {
             <span class="statement__lit">all the way down.</span>
           </h2>
           <p class="section-desc">
-            <span class="section-desc__line">Rendered on your server before the bundle loads.</span>
-            <span class="section-desc__line">Restyled by overriding a token.</span>
+            <span class="section-desc__line">Override four tokens and every gradient, glow and focus ring follows.</span>
+            <span class="section-desc__line">The utility classes read the same tokens, so your layout moves with them.</span>
           </p>
         </div>
-        <div class="yours__grid">
-          <figure class="payload" data-reveal="fade-up">
-            <figcaption class="payload__chrome">
-              <span class="payload__method">GET</span>
-              <span class="payload__url">/pricing</span>
-              <span class="payload__meta">200 · text/html</span>
-            </figcaption>
-            <pre class="payload__code"><code><span class="payload__line"><span class="tk-p">&lt;</span><span class="tk-t">arc-feature-card</span> <span class="tk-a">heading</span><span class="tk-p">=</span><span class="tk-s">"Fast by default"</span><span class="tk-p">&gt;</span></span><span class="payload__line payload__line--hot">  <span class="tk-p">&lt;</span><span class="tk-t">template</span> <span class="tk-a">shadowrootmode</span><span class="tk-p">=</span><span class="tk-s">"open"</span><span class="tk-p">&gt;</span></span><span class="payload__line">    <span class="tk-p">&lt;</span><span class="tk-t">style</span><span class="tk-p">&gt;</span><span class="tk-c">…</span><span class="tk-p">&lt;/</span><span class="tk-t">style</span><span class="tk-p">&gt;</span></span><span class="payload__line">    <span class="tk-p">&lt;</span><span class="tk-t">div</span> <span class="tk-a">class</span><span class="tk-p">=</span><span class="tk-s">"card"</span> <span class="tk-a">part</span><span class="tk-p">=</span><span class="tk-s">"card"</span><span class="tk-p">&gt;</span></span><span class="payload__line">      <span class="tk-p">&lt;</span><span class="tk-t">h3</span> <span class="tk-a">class</span><span class="tk-p">=</span><span class="tk-s">"card__title"</span><span class="tk-p">&gt;</span>Fast by default<span class="tk-p">&lt;/</span><span class="tk-t">h3</span><span class="tk-p">&gt;</span></span><span class="payload__line">      <span class="tk-p">&lt;</span><span class="tk-t">p</span> <span class="tk-a">class</span><span class="tk-p">=</span><span class="tk-s">"card__desc"</span><span class="tk-p">&gt;</span>Ships 40% less JavaScript<span class="tk-p">&lt;/</span><span class="tk-t">p</span><span class="tk-p">&gt;</span></span><span class="payload__line">    <span class="tk-p">&lt;/</span><span class="tk-t">div</span><span class="tk-p">&gt;</span></span><span class="payload__line payload__line--hot">  <span class="tk-p">&lt;/</span><span class="tk-t">template</span><span class="tk-p">&gt;</span></span><span class="payload__line"><span class="tk-p">&lt;/</span><span class="tk-t">arc-feature-card</span><span class="tk-p">&gt;</span></span></code></pre>
-            <p class="payload__caption">
-              All {components.length} components ship their shadow DOM in the HTML, parsed before
-              any JavaScript runs. <a class="chapter-link" href="/docs/server-rendering">Server rendering →</a>
-            </p>
-          </figure>
-          <div class="tokens-demo" data-reveal="fade-up">
-            <div class="tokens-demo__head">
-              <div class="swatches" id="accent-swatches" role="group" aria-label="Accent token pair">
-                <button class="swatch is-active" aria-label="Arc blue and violet" aria-pressed="true" data-p="#4d7ef7" data-prgb="77,126,247" data-s="#8b5cf6" data-srgb="139,92,246" style="--sw-a:#4d7ef7; --sw-b:#8b5cf6"></button>
+        <div class="yours__console" data-reveal="fade-up">
+          <div class="console__controls">
+            <div class="ctl">
+              <span class="ctl__label" id="accent-label">Accent</span>
+              <div class="swatches" id="accent-swatches" role="group" aria-labelledby="accent-label">
+                <button class="swatch is-active" aria-label="Arc default" aria-pressed="true" data-default="true" data-p={defaultAccent.p} data-prgb={defaultAccent.prgb} data-s={defaultAccent.s} data-srgb={defaultAccent.srgb} style={`--sw-a:${defaultAccent.p}; --sw-b:${defaultAccent.s}`}></button>
                 <button class="swatch" aria-label="Emerald and cyan" aria-pressed="false" data-p="#10b981" data-prgb="16,185,129" data-s="#22d3ee" data-srgb="34,211,238" style="--sw-a:#10b981; --sw-b:#22d3ee"></button>
                 <button class="swatch" aria-label="Amber and red" aria-pressed="false" data-p="#f59e0b" data-prgb="245,158,11" data-s="#ef4444" data-srgb="239,68,68" style="--sw-a:#f59e0b; --sw-b:#ef4444"></button>
                 <button class="swatch" aria-label="Magenta and purple" aria-pressed="false" data-p="#ec4899" data-prgb="236,72,153" data-s="#a855f7" data-srgb="168,85,247" style="--sw-a:#ec4899; --sw-b:#a855f7"></button>
               </div>
-              <code class="tokens-demo__readout">--space-md: <em id="tokens-demo-readout">16px</em></code>
             </div>
-            <div class="tokens-demo__stage" id="tokens-demo-stage">
-              <div class="arc-flex arc-flex-col arc-gap-md arc-p-md arc-bg-card arc-border arc-rounded-lg">
-                <div class="arc-flex arc-items-center arc-justify-between">
-                  <span class="tokens-demo__title">Workspace</span>
-                  <arc-badge variant="primary">Pro</arc-badge>
+            <div class="ctl ctl--slider">
+              <span class="ctl__label">Spacing</span>
+              <arc-slider id="tokens-demo-slider" aria-label="--space-md" min="8" max="32" value="16"></arc-slider>
+              <code class="ctl__readout">--space-md: <em id="tokens-demo-readout">16px</em></code>
+            </div>
+            <div class="ctl ctl--slider">
+              <span class="ctl__label">Radius</span>
+              <arc-slider id="radius-slider" aria-label="--radius-lg" min="2" max="28" value="14"></arc-slider>
+              <code class="ctl__readout">--radius-lg: <em id="radius-readout">14px</em></code>
+            </div>
+          </div>
+          <div class="console__outputs">
+            <figure class="theme-file">
+              <figcaption class="theme-file__chrome">
+                <span class="theme-file__name">theme.css</span>
+                <span class="theme-file__meta">live</span>
+              </figcaption>
+              <pre class="theme-file__code"><code><span class="theme-file__line"><span class="tk-t">:root</span> <span class="tk-p">&#123;</span></span><span class="theme-file__line">  <span class="tk-a">--accent-primary</span><span class="tk-p">:</span> <span class="tk-s" data-theme-val="p">{defaultAccent.p}</span><span class="tk-p">;</span></span><span class="theme-file__line">  <span class="tk-a">--accent-primary-rgb</span><span class="tk-p">:</span> <span class="tk-s" data-theme-val="prgb">{defaultAccent.prgb}</span><span class="tk-p">;</span></span><span class="theme-file__line">  <span class="tk-a">--accent-secondary</span><span class="tk-p">:</span> <span class="tk-s" data-theme-val="s">{defaultAccent.s}</span><span class="tk-p">;</span></span><span class="theme-file__line">  <span class="tk-a">--accent-secondary-rgb</span><span class="tk-p">:</span> <span class="tk-s" data-theme-val="srgb">{defaultAccent.srgb}</span><span class="tk-p">;</span></span><span class="theme-file__line"><span class="tk-p">&#125;</span></span></code></pre>
+              <p class="theme-file__caption">
+                That file is the entire theme, applied to this page for real — compound tokens
+                reference these four, so every gradient, glow and focus ring follows.
+                <a class="chapter-link" href="/docs/theme-synthesizer">Build yours →</a>
+              </p>
+            </figure>
+            <div class="tokens-demo">
+              <div class="tokens-demo__stage" id="tokens-demo-stage">
+                <div class="arc-flex arc-flex-col arc-gap-md arc-p-md arc-bg-card arc-border arc-rounded-lg">
+                  <div class="arc-flex arc-items-center arc-justify-between">
+                    <span class="tokens-demo__title">Workspace</span>
+                    <arc-badge variant="primary">Pro</arc-badge>
+                  </div>
+                  <div class="arc-flex arc-items-center arc-gap-md">
+                    <arc-avatar name="Ava Lane" size="sm"></arc-avatar>
+                    <arc-avatar name="Rio Kim" size="sm"></arc-avatar>
+                    <arc-button variant="secondary" size="sm">Invite</arc-button>
+                  </div>
+                  <arc-progress value="64" label="Storage"></arc-progress>
                 </div>
-                <div class="arc-flex arc-items-center arc-gap-md">
-                  <arc-avatar name="Ava Lane" size="sm"></arc-avatar>
-                  <arc-avatar name="Rio Kim" size="sm"></arc-avatar>
-                  <arc-button variant="secondary" size="sm">Invite</arc-button>
-                </div>
-                <arc-progress value="64" label="Storage"></arc-progress>
               </div>
+              <p class="tokens-demo__caption">
+                {utilityClassCount} utility classes and every component read the same tokens —
+                spacing and radius here move only this card, exactly the way a scoped override
+                would in your app. <a class="chapter-link" href="/docs/utilities">Utilities →</a>
+              </p>
             </div>
-            <div class="tokens-demo__controls">
-              <arc-slider id="tokens-demo-slider" label="--space-md" min="8" max="32" value="16"></arc-slider>
-            </div>
-            <p class="tokens-demo__caption">
-              {utilityClassCount} utility classes and every component read the same tokens — one
-              override moves them all. <a class="chapter-link" href="/docs/utilities">Utilities →</a>
-            </p>
           </div>
         </div>
       </div>
@@ -461,9 +484,18 @@ function Settings() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const rootStyles = getComputedStyle(document.documentElement);
-    const BLUE = rootStyles.getPropertyValue('--accent-primary-rgb').trim() || '77,126,247';
-    const PURPLE = rootStyles.getPropertyValue('--accent-secondary-rgb').trim() || '139,92,246';
+    // let, not const: the accent-swatch demo repaints the whole page, and a
+    // canvas that kept its init-time colors would be the one thing on the
+    // page still wearing the old accents. Re-read on the demo's event.
+    let BLUE = '77,126,247';
+    let PURPLE = '139,92,246';
+    function readPalette() {
+      const rootStyles = getComputedStyle(document.documentElement);
+      BLUE = rootStyles.getPropertyValue('--accent-primary-rgb').trim() || BLUE;
+      PURPLE = rootStyles.getPropertyValue('--accent-secondary-rgb').trim() || PURPLE;
+    }
+    readPalette();
+    document.addEventListener('arc-demo-accent', readPalette);
 
     // Live theme check: additive glow works on dark; on light backgrounds
     // beams switch to multiply so they read as tinted streaks, not fog
@@ -762,7 +794,17 @@ function Settings() {
         gctx.drawImage(half, 0, 0, glow.width, glow.height);
         ctx!.globalCompositeOperation = 'lighter';
         ctx!.globalAlpha = Math.min(0.95, 0.6 + boost * 0.18);
-        ctx!.drawImage(glow, 0, 0, width, height);
+        /* Overdrawn by one texel on every side. The glow buffer's outermost
+           texels are partial coverage — they averaged real pixels together
+           with the nothing beyond the canvas edge — and blowing that buffer
+           back up to full size stretches that band into a ring of weaker
+           glow tracing the entire frame. Pushing the edge a texel past the
+           canvas puts the artifact outside the visible area. One texel here
+           is ~4 real pixels, which is why it reads as a ring rather than a
+           line. */
+        const padX = width / glow.width;
+        const padY = height / glow.height;
+        ctx!.drawImage(glow, -padX, -padY, width + padX * 2, height + padY * 2);
         ctx!.globalAlpha = 1;
       }
 
@@ -945,18 +987,25 @@ function Settings() {
     document.addEventListener('astro:before-swap', () => glint.destroy(), { once: true });
   }
 
-  /* ── Utilities demo: one token moves everything ── */
+  /* ── Utilities demo: one token moves everything. Spacing and radius scope
+     to the stage — a scoped override is exactly how a consumer would use
+     them, unlike the accents, whose compounds only recompose at :root ── */
   function initTokensDemo() {
     const stage = document.getElementById('tokens-demo-stage');
-    const slider = document.getElementById('tokens-demo-slider') as any;
-    const readout = document.getElementById('tokens-demo-readout');
-    if (!stage || !slider || slider.dataset.demoInit) return;
-    slider.dataset.demoInit = '1';
-    slider.addEventListener('arc-input', (e: any) => {
-      const v = Math.round(e.detail?.value ?? slider.value);
-      stage.style.setProperty('--space-md', `${v}px`);
-      if (readout) readout.textContent = `${v}px`;
-    });
+    if (!stage) return;
+    const wire = (sliderId: string, readoutId: string, prop: string) => {
+      const slider = document.getElementById(sliderId) as any;
+      const readout = document.getElementById(readoutId);
+      if (!slider || slider.dataset.demoInit) return;
+      slider.dataset.demoInit = '1';
+      slider.addEventListener('arc-input', (e: any) => {
+        const v = Math.round(e.detail?.value ?? slider.value);
+        stage.style.setProperty(prop, `${v}px`);
+        if (readout) readout.textContent = `${v}px`;
+      });
+    };
+    wire('tokens-demo-slider', 'tokens-demo-readout', '--space-md');
+    wire('radius-slider', 'radius-readout', '--radius-lg');
   }
 
   /* ── Stat count-up ── */
@@ -1040,21 +1089,46 @@ function Settings() {
     }, { once: true });
   }
 
-  /* ── Accent swatches: four data attributes repaint the whole stage ── */
+  /* ── Accent swatches: the theme.css panel rewrites itself, and the
+     override applies at :root — the real consumer recipe, applied for real.
+     Compound tokens compose on :root, so a scoped override would recolor
+     direct var() uses and quietly skip every gradient, glow and focus ring;
+     applying to documentElement is the demo that cannot lie. The canvas
+     caches its two colors, so it re-reads them on arc-demo-accent; cleanup
+     on navigation keeps the override from following the visitor into docs. ── */
   function initAccentSwatches() {
-    const stage = document.getElementById('tokens-demo-stage');
     const group = document.getElementById('accent-swatches');
-    if (!stage || !group || (group as any).dataset.init) return;
+    if (!group || (group as any).dataset.init) return;
     (group as any).dataset.init = '1';
+
+    const PROPS = ['--accent-primary', '--accent-primary-rgb', '--accent-secondary', '--accent-secondary-rgb'];
+    document.addEventListener('astro:before-swap', () => {
+      PROPS.forEach((prop) => document.documentElement.style.removeProperty(prop));
+    }, { once: true });
 
     group.addEventListener('click', (e) => {
       const btn = (e.target as HTMLElement).closest<HTMLElement>('.swatch');
       if (!btn) return;
       const { p, prgb, s, srgb } = btn.dataset;
-      stage.style.setProperty('--accent-primary', p!);
-      stage.style.setProperty('--accent-primary-rgb', prgb!);
-      stage.style.setProperty('--accent-secondary', s!);
-      stage.style.setProperty('--accent-secondary-rgb', srgb!);
+      const root = document.documentElement.style;
+      if (btn.dataset.default) {
+        // The first swatch is the shipped theme: a real reset, not a repaint
+        // that happens to match. Removing the override hands control back to
+        // base.css, so light mode, .theme-fixed and future token changes all
+        // resolve exactly as if the demo was never touched.
+        PROPS.forEach((prop) => root.removeProperty(prop));
+      } else {
+        root.setProperty('--accent-primary', p!);
+        root.setProperty('--accent-primary-rgb', prgb!);
+        root.setProperty('--accent-secondary', s!);
+        root.setProperty('--accent-secondary-rgb', srgb!);
+      }
+      document.dispatchEvent(new CustomEvent('arc-demo-accent'));
+      const spaced = (rgb: string) => rgb.split(',').map((n) => n.trim()).join(', ');
+      const vals: Record<string, string> = { p: p!, prgb: spaced(prgb!), s: s!, srgb: spaced(srgb!) };
+      document.querySelectorAll<HTMLElement>('[data-theme-val]').forEach((el) => {
+        el.textContent = vals[el.dataset.themeVal!] ?? el.textContent;
+      });
       Array.from(group.children).forEach((c) => {
         c.classList.toggle('is-active', c === btn);
         c.setAttribute('aria-pressed', String(c === btn));
@@ -1101,20 +1175,22 @@ function Settings() {
     display: flex;
     align-items: center;
     /* Theme knobs for the tunnel: dark is the native habitat; light mode
-       swaps the dark core for haze, drops the screen blend, and halves glow */
+       drops the screen blend and halves the glow */
     --hero-core: rgba(3,3,7,0.6);
-    --hero-rim: rgba(3,3,7,0.55);
     --hero-dot: rgba(255,255,255,0.12);
     --stream-blend: screen;
+    --lobe-blend: normal;
+    --lobe-boost: 1;
     --glow-a: 1;
     --peak: 0.9;
   }
 
   :global([data-theme='light']) .hero {
     --hero-core: rgba(255,255,255,0.65);
-    --hero-rim: rgba(255,255,255,0.6);
     --hero-dot: rgba(10,10,25,0.16);
     --stream-blend: normal;
+    --lobe-blend: multiply;
+    --lobe-boost: 1.55;
     --glow-a: 0.4;
     --peak: 0.55;
     --grain-a: 0.022;
@@ -1123,9 +1199,10 @@ function Settings() {
   @media (prefers-color-scheme: light) {
     :global([data-theme='auto']) .hero {
       --hero-core: rgba(255,255,255,0.65);
-      --hero-rim: rgba(255,255,255,0.6);
       --hero-dot: rgba(10,10,25,0.16);
       --stream-blend: normal;
+      --lobe-blend: multiply;
+      --lobe-boost: 1.55;
       --glow-a: 0.4;
       --peak: 0.55;
       --grain-a: 0.022;
@@ -1211,19 +1288,6 @@ function Settings() {
     -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 70%);
   }
 
-  /* Vignette blur: two masked backdrop-filter layers make the tunnel
-     progressively hazier toward the hero's edges — sharp at the core,
-     frosted at the rim, with no visible seam */
-  .hero__vignette {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 1;
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    mask-image: radial-gradient(ellipse 78% 74% at 50% 40%, transparent 48%, black 88%);
-    -webkit-mask-image: radial-gradient(ellipse 78% 74% at 50% 40%, transparent 48%, black 88%);
-  }
 
   /* ── Ambient lobes ──
      The lit part of the hero, one element per lobe so each can live on its
@@ -1242,29 +1306,51 @@ function Settings() {
     inset: 0;
     z-index: 1;
     pointer-events: none;
-    /* The vignette, done by removing light instead of painting dark.
-       Darkening the rim from above could not win: --hero-rim is 55% of a
-       near-black over an already near-black page, so it moved the corners by
-       about four values out of 255 while the lobes sitting out there added
-       more than that — the edges stayed brighter than the middle and the
-       whole hero read as lit from outside in. Attenuating the lobes
-       themselves costs nothing and cannot go muddy. Reaching transparent at
-       exactly 100% means the container's own clip lands on zero alpha, and
-       no-repeat is required: mask-repeat defaults to repeat, which would
-       tile this gradient across the lobes' overhang. */
-    mask-image: radial-gradient(ellipse 80% 78% at 50% 42%,
-      #000 38%, rgba(0,0,0,0.4) 76%, transparent 100%);
-    -webkit-mask-image: radial-gradient(ellipse 80% 78% at 50% 42%,
-      #000 38%, rgba(0,0,0,0.4) 76%, transparent 100%);
-    mask-repeat: no-repeat;
-    -webkit-mask-repeat: no-repeat;
+    /* No vignette mask here. One was added to fight an anti-vignette and it
+       took the hero's ambient light with it — cutting the lobes to 40% at
+       76% and to nothing at the frame meant the corners went black, when the
+       original was lit all the way out. Light reaching the edges is the
+       look; the eye reads it as a room the tunnel is in rather than a
+       gradient in a box. The dark middle alone carries the annulus. */
   }
 
   .lobe {
     position: absolute;
-    inset: 0;
+
+    /* The box is deliberately larger than the hero, 20% past it on every
+       side. A lobe's gradient is still at full alpha where it crosses its
+       own box edge — that is what an off-frame light source looks like — so
+       if that edge ever travels into view it lands as a hard vertical or
+       horizontal line through the hero. It used to: the one lobe that
+       scaled down pulled its left edge 50px inside the frame and drew a
+       clean seam down the whole height. Oversizing means the edges cannot
+       reach the frame no matter how far a lobe drifts or how far it shrinks.
+       Sized in percentages, so it holds at every viewport. */
+    inset: -20%;
+
+    /* The markup writes hero-space numbers — 50/50 is the middle of the
+       hero, --hrx is a radius as a fraction of the hero's width — and they
+       are converted to this larger box here. Authoring them pre-divided
+       meant twelve unreadable coordinates that had to be re-derived by hand
+       every time the oversize changed. 140 is the box's span in hero
+       percent: it must match the inset above (100 + 2 x 20). */
+    --rx: calc(var(--hrx) / 140 * 100%);
+    --ry: calc(var(--hry) / 140 * 100%);
+    --x: calc((var(--hx) + 20) / 140 * 100%);
+    --y: calc((var(--hy) + 20) / 140 * 100%);
+    --dx: calc(var(--hdx) / 140 * 100%);
+    --dy: calc(var(--hdy) / 140 * 100%);
+
+    /* On light, the same trade the canvas beams make. Alpha-compositing a
+       0.13 accent onto near-white gets you a pale grey suggestion of a
+       colour — the lighter the ground, the less an alpha can say. Multiply
+       tints the ground instead of veiling it, so the accent arrives at full
+       chroma and only the value moves, and the boost pays for the fact that
+       multiply against white starts from no effect at all. Dark keeps normal
+       compositing, where laying light over black already works. */
+    mix-blend-mode: var(--lobe-blend);
     background: radial-gradient(ellipse var(--rx) var(--ry) at var(--x) var(--y),
-      rgba(var(--tint), var(--a)), transparent var(--stop));
+      rgba(var(--tint), calc(var(--a) * var(--lobe-boost))), transparent var(--stop));
     /* alphas run ~15% over the static values they replace, because the
        breathe cycle averages below full opacity */
     animation: lobe-breathe var(--dur) ease-in-out infinite alternate;
@@ -1306,38 +1392,43 @@ function Settings() {
     background-size: 160px 160px;
   }
 
-  .hero__ambient {
+  /* Settles the hero into the page it sits on. `overflow: clip` would
+     otherwise end the canvas and the lobes on a straight horizontal line
+     across the full width; this fades to the exact colour underneath, so
+     there is no boundary left to see.
+
+     --bg-deep, not --bg-base. The body is painted --bg-deep, and --bg-base is
+     seven values lighter — fading to it left the hero settling into a colour
+     the page never uses, which reads as the fade stopping short of black
+     rather than as no fade at all.
+
+     Starts at 80%: it exists to hide one edge, not to darken the
+     composition. It is a pseudo-element because it is one gradient on a
+     full-hero box and nothing else — there is no reason for it to be a div
+     in the markup. */
+  .hero::before {
+    content: '';
     position: absolute;
     inset: 0;
-    /* The dark middle, and only that. It sits above .hero__lobes so it cuts
-       into them, which is what makes the profile an annulus: quiet at the
-       centre where the headline reads, brighter in the band the lobes make
-       further out, dark again at the rim.
-
-       There is deliberately no dark rim layer here. .hero__vignette is
-       already the rim treatment, so painting --hero-rim in this stack too
-       darkened the hero twice over — and worse, it landed on exactly the
-       radius the lobes peak at, so the annulus cancelled itself out and the
-       whole hero just went dim. Two darks and a band, not three. */
-    background:
-      /* Settle to the page's own background at the bottom edge.
-         Left, right and top are the viewport — light leaving there reads as
-         light leaving the screen. The bottom is not: it is an interior
-         boundary with more page under it, and `overflow: clip` ends the
-         canvas and the lobes on a straight horizontal line across the full
-         width. Masking those layers was the wrong fix — it made the effect
-         visibly stop short of the hero, and it sliced whichever lobes
-         happened to be sitting low. This layer paints above both of them, so
-         one gradient settles everything at once, and because it fades to the
-         exact colour of the section below there is no boundary left to see.
-         Nothing is cut; it just arrives already dark. */
-      linear-gradient(to bottom, transparent 58%, var(--bg-base) 100%),
-      /* No rim layer. The vignette is .hero__lobes' mask — light removed at
-         the edge, not darkness painted over it. Painting it here dimmed the
-         lobes across their whole width to win a few values at the corners. */
-      radial-gradient(ellipse 52% 46% at 50% 42%, var(--hero-core), transparent 68%);
-    pointer-events: none;
     z-index: 1;
+    pointer-events: none;
+    background:
+      /* The dark middle the headline sits on, at its original strength.
+
+         What changed is the stops, not the alpha. The original was
+         `var(--hero-core), transparent 68%` — a ramp that stops dead, leaving
+         a corner in the curve at 68% that the eye picks up as an ellipse
+         drawn around the middle of the hero, even where it cannot see a
+         brightness difference. That was the ring. These four decay to nothing
+         exactly where the gradient runs out, so the alpha is still falling at
+         every radius and there is no point where the rate of change jumps. */
+      radial-gradient(ellipse 62% 58% at 50% 42%,
+        var(--hero-core) 0%,
+        color-mix(in srgb, var(--hero-core) 58%, transparent) 38%,
+        color-mix(in srgb, var(--hero-core) 22%, transparent) 66%,
+        color-mix(in srgb, var(--hero-core) 6%, transparent) 84%,
+        transparent 100%),
+      linear-gradient(to bottom, transparent 80%, var(--bg-deep) 100%);
   }
 
   /* ── Component Stream (light-tunnel walls) ──
@@ -1427,22 +1518,6 @@ function Settings() {
        from-blur instead of overriding its destination. */
     .hero--live .hero__canvas { filter: blur(1.1px) saturate(1.3); }
 
-    /* Six full-hero composited layers is a lot to ask of a phone for light
-       that is barely there; the four that carry the profile stay. */
-    .lobe:nth-child(3),
-    .lobe:nth-child(5) { display: none; }
-
-    /* A full-viewport backdrop-filter re-samples everything beneath it every
-       frame, and beneath it is an animating canvas — the most expensive thing
-       on this page for a mobile GPU, to soften edges on the smallest screen.
-       A painted rim reads the same and costs one composited layer. */
-    .hero__vignette {
-      backdrop-filter: none;
-      -webkit-backdrop-filter: none;
-      background: radial-gradient(ellipse 78% 74% at 50% 40%, transparent 46%, var(--hero-rim) 92%);
-      mask-image: none;
-      -webkit-mask-image: none;
-    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -1923,7 +1998,7 @@ function Settings() {
     display: none;
   }
 
-  /* ── Yours: the response and the tokens, both live ── */
+  /* ── Yours: the theme file and the components it repaints, both live ── */
   .yours {
     position: relative;
     padding: var(--space-4xl) 0;
@@ -1950,26 +2025,84 @@ function Settings() {
     margin-bottom: var(--space-2xl);
   }
 
-  .yours__grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: var(--space-xl);
-    align-items: start;
-  }
-
-  /* The response pane: what the server actually sends */
-  .payload {
-    margin: 0;
-    min-width: 0;
+  /* One console: every customization control in a single labeled bar, the
+     two live outputs — the stylesheet and the components — beneath it */
+  .yours__console {
     border-radius: var(--radius-lg);
     border: 1px solid var(--border-subtle);
     background: var(--bg-card);
     overflow: hidden;
   }
 
-  .payload__chrome {
+  .console__controls {
     display: flex;
-    align-items: baseline;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-md) var(--space-xl);
+    padding: var(--space-md) var(--space-lg);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .ctl {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    min-width: 0;
+  }
+
+  .ctl--slider {
+    flex: 1 1 260px;
+  }
+
+  .ctl--slider arc-slider {
+    flex: 1;
+    min-width: 120px;
+  }
+
+  .ctl__label {
+    font-family: var(--font-accent);
+    font-weight: var(--font-label-weight, 600);
+    font-size: var(--text-xs);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    flex-shrink: 0;
+  }
+
+  /* Token names are code: verbatim, mono, never uppercased by a label role */
+  .ctl__readout {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    flex-shrink: 0;
+  }
+
+  .ctl__readout em {
+    font-style: normal;
+    color: var(--accent-primary);
+  }
+
+  .console__outputs {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: stretch;
+  }
+
+  .console__outputs > :last-child {
+    border-inline-start: 1px solid var(--border-subtle);
+  }
+
+  /* The theme pane: the stylesheet the controls write */
+  .theme-file {
+    margin: 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .theme-file__chrome {
+    display: flex;
+    align-items: center;
     gap: var(--space-sm);
     padding: 10px var(--space-md);
     border-bottom: 1px solid var(--border-subtle);
@@ -1977,47 +2110,30 @@ function Settings() {
     font-size: var(--text-xs);
   }
 
-  .payload__method {
-    font-weight: 700;
-    color: var(--accent-primary);
-  }
-
-  .payload__url {
+  .theme-file__name {
     color: var(--text-secondary);
   }
 
-  .payload__meta {
+  .theme-file__meta {
     margin-left: auto;
-    color: var(--text-muted);
+    color: var(--text-ghost);
   }
 
-  .payload__code {
+  .theme-file__code {
     margin: 0;
     padding: var(--space-lg) 0;
     font-family: var(--font-mono);
     font-size: var(--text-xs);
     line-height: 1.8;
     overflow-x: auto;
+    flex: 1;
   }
 
-  .payload__line {
+  .theme-file__line {
     display: block;
     padding: 0 var(--space-lg);
     white-space: pre;
     color: var(--text-secondary);
-  }
-
-  /* The two lines that carry the whole argument glow; a tint, not a border */
-  .payload__line--hot {
-    background: linear-gradient(90deg,
-      rgba(var(--accent-primary-rgb), 0.14),
-      rgba(var(--accent-secondary-rgb), 0.05) 70%,
-      transparent);
-  }
-
-  .payload__line--hot .tk-t,
-  .payload__line--hot .tk-a {
-    text-shadow: 0 0 12px rgba(var(--accent-primary-rgb), 0.5);
   }
 
   .tk-p { color: var(--text-muted); }
@@ -2026,7 +2142,13 @@ function Settings() {
   .tk-s { color: var(--color-success, #7bd88f); }
   .tk-c { color: var(--text-ghost); }
 
-  .payload__caption {
+  /* The swatch repaints these live — a value swap, not an emphasis */
+  .theme-file__code em[data-theme-val],
+  .theme-file__code [data-theme-val] {
+    font-style: normal;
+  }
+
+  .theme-file__caption {
     padding: var(--space-sm) var(--space-md);
     border-top: 1px solid var(--border-subtle);
     font-size: var(--text-xs);
@@ -2037,19 +2159,8 @@ function Settings() {
   /* ── Token stage ── */
   .tokens-demo {
     min-width: 0;
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--border-subtle);
-    background: var(--bg-card);
-    overflow: hidden;
-  }
-
-  .tokens-demo__head {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-md);
-    padding: 10px var(--space-md);
-    border-bottom: 1px solid var(--border-subtle);
+    flex-direction: column;
   }
 
   .swatches {
@@ -2078,31 +2189,18 @@ function Settings() {
     box-shadow: 0 0 0 2px var(--bg-card), 0 0 0 4px var(--sw-a), 0 0 14px rgba(var(--accent-primary-rgb), 0.35);
   }
 
-  .tokens-demo__readout {
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    color: var(--text-secondary);
-  }
-
-  .tokens-demo__readout em {
-    font-style: normal;
-    color: var(--accent-primary);
-    text-shadow: 0 0 10px rgba(var(--accent-primary-rgb), 0.4);
-  }
 
   .tokens-demo__stage {
     padding: var(--space-xl) var(--space-lg);
     background: radial-gradient(ellipse at center, rgba(var(--accent-primary-rgb), 0.05), transparent 70%);
+    flex: 1;
+    display: grid;
+    align-items: center;
   }
 
   .tokens-demo__title {
     font-weight: 600;
     color: var(--text-primary);
-  }
-
-  .tokens-demo__controls {
-    padding: var(--space-md) var(--space-lg);
-    border-top: 1px solid var(--border-subtle);
   }
 
   .tokens-demo__caption {
@@ -2238,8 +2336,29 @@ function Settings() {
   /* ── Responsive ── */
   @media (max-width: 900px) {
     .native__grid,
-    .yours__grid {
+    .console__outputs {
       grid-template-columns: 1fr;
+    }
+    .console__outputs > :last-child {
+      border-inline-start: none;
+      border-top: 1px solid var(--border-subtle);
+    }
+    /* Slider rows re-stack: label and readout share the top line, the
+       slider takes the full width below — nothing clips, and the touch
+       target runs the whole row. */
+    .ctl--slider {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      row-gap: var(--space-xs);
+      flex-basis: 100%;
+    }
+    .ctl--slider .ctl__readout {
+      justify-self: end;
+      min-width: 0;
+    }
+    .ctl--slider arc-slider {
+      grid-column: 1 / -1;
+      grid-row: 2;
     }
     .fw-list {
       flex-direction: row;
