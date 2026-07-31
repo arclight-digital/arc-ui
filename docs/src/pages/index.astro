@@ -1506,15 +1506,21 @@ function Settings() {
     100% { transform: translate(-50%, -50%) translate3d(var(--lx), var(--ly), 470px); opacity: 0; }
   }
 
-  @media (max-width: 768px) {
-    /* On a phone the content column is the full viewport, so there is no
-       edge lane left for the stream — pushing --lx out just parks items
-       half-clipped at the screen edge, and anything nearer crosses the
-       headline itself. The canvas streaks carry the tunnel alone here;
-       dropping the DOM stream is also the single biggest perf saving in
-       the hero (12 animated 3D layers, each with two drop-shadows). */
+  /* --breakpoint-lg. The stream needs an edge lane to fly through, and the
+     lane closes when the content column reaches the full width of the
+     viewport — pushing --lx out past that parks items half-clipped at the
+     screen edge, and anything nearer crosses the headline itself. That
+     happens around 1024, not 768: at 768 this rule was also emptying the
+     hero on tablets in portrait and on a laptop in a split window, which is
+     a wider audience than the phone it was written for. The canvas streaks
+     carry the tunnel alone below it, and dropping the DOM stream is the
+     single biggest perf saving in the hero — 12 animated 3D layers, each
+     with two drop-shadows. */
+  @media (max-width: 1024px) {
     .hero__stream { display: none; }
+  }
 
+  @media (max-width: 768px) {
     /* The bloom buffer is already smaller here, and a smaller buffer is a
        wider halo — so the canvas needs less blur of its own, not more.
        Scoped to the settled state, or it would fight the entrance's
