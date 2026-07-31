@@ -121,8 +121,13 @@ const secondary = (r: Row) => (kind === 'event' ? r.detail : r.type);
 
   /* A documented object type — `Array<{key:string,label:string}>` — has no
      spaces to break at, so it alone may break anywhere rather than push the
-     panel into a horizontal scroll. */
+     panel sideways. min-width:0 is what makes that reachable: a flex item's
+     base size is its max-content width, so without it the type refuses to
+     shrink below its longest line and widens the panel instead of breaking —
+     the wrapping was declared but could never happen, which is how a capped
+     panel became a scroll region axe fails on. */
   .api .api__type {
+    min-width: 0;
     font-family: var(--font-mono);
     font-size: var(--code-size);
     color: var(--text-secondary);
@@ -134,10 +139,12 @@ const secondary = (r: Row) => (kind === 'event' ? r.detail : r.type);
      already says. Absent simply means no default: there is no column to line
      up with, so nothing needs a placeholder dash. */
   .api .api__default {
+    min-width: 0;
+    margin-inline-start: var(--space-md);
     font-family: var(--font-mono);
     font-size: var(--code-size);
     color: var(--text-secondary);
-    white-space: nowrap;
+    overflow-wrap: anywhere;
   }
 
   .api .api__eq {

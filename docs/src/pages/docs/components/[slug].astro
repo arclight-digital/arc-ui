@@ -556,7 +556,11 @@ const headings = [
     max-width: 640px;
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-lg);
-    overflow-x: auto;
+    /* No overflow-x. Capping the panel at the prose measure turned a box that
+       had never scrolled into one that did, on every page with a long union
+       type — and a scroll region containing nothing focusable is an axe
+       serious violation (scrollable-region-focusable), which is what broke CI
+       on 13 component pages. The signature wraps instead; see ApiList. */
     position: relative;
   }
 
