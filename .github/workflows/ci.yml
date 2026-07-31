@@ -45,11 +45,13 @@ jobs:
       - name: Component tests
         run: pnpm test
 
-      # Server-renders every component in Node. Cheap — no browser — and the
-      # only thing that catches a browser global creeping into a constructor,
-      # willUpdate or render, where Lit runs them on the server too.
-      - name: SSR render check
-        run: pnpm check ssr
+      # The whole auto-discovered suite, not a hardcoded subset — a newly added
+      # check file must run here, not just locally. Every check reads source or
+      # files the `pnpm generate` step above produced (the ssr check imports the
+      # component modules, icon-names reads the vendored icon resolvers); none
+      # needs a browser, the docs build, or the network.
+      - name: Check suite
+        run: pnpm check
 
       - name: Typecheck generated declarations
         run: ./node_modules/.bin/tsc --noEmit --skipLibCheck --moduleResolution bundler --module esnext --target es2022 packages/web-components/types/index.d.ts packages/web-components/types/shared-styles.d.ts packages/web-components/types/shared/*.d.ts packages/web-components/types/content/*.d.ts packages/web-components/types/dev.d.ts

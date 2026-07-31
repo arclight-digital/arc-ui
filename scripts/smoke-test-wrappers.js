@@ -43,7 +43,7 @@ if (!existsSync(resolve(root, 'packages/web-components/src/icons/phosphor/_resol
 
 // ── 1. Pack the tarballs (prepack builds dist/ in every package) ────────────
 const tarballs = {};
-for (const pkg of ['web-components', 'react', 'svelte', 'vue', 'solid']) {
+for (const pkg of ['web-components', 'react', 'preact', 'svelte', 'vue', 'solid']) {
   const out = run('pnpm', ['pack', '--pack-destination', scratch], resolve(root, 'packages', pkg));
   tarballs[pkg] = out.trim().split('\n').pop();
   console.log(`  packed ${pkg}`);
@@ -69,6 +69,29 @@ import { Button } from '@arclux/arc-ui-react/Button';
 import { Card } from '@arclux/arc-ui-react';
 createRoot(document.getElementById('root')!).render(
   <Card padding="md"><Button variant="primary">Smoke</Button></Card>
+);
+`,
+    },
+  },
+  preact: {
+    dependencies: {
+      '@arclux/arc-ui-preact': `file:${tarballs.preact}`,
+      preact: '^10.19.0',
+    },
+    devDependencies: { vite: '^7.0.0', '@preact/preset-vite': '^2.9.0' },
+    entry: 'main.tsx',
+    files: {
+      'vite.config.js': `
+import preact from '@preact/preset-vite';
+export default { plugins: [preact()] };
+`,
+      'src/main.tsx': `
+import { render } from 'preact';
+import { Button } from '@arclux/arc-ui-preact/Button';
+import { Card } from '@arclux/arc-ui-preact';
+render(
+  <Card padding="md"><Button variant="primary">Smoke</Button></Card>,
+  document.getElementById('root')!
 );
 `,
     },
@@ -193,4 +216,4 @@ for (const [framework, consumer] of Object.entries(CONSUMERS)) {
 
 if (failed) process.exit(1);
 rmSync(scratch, { recursive: true, force: true });
-console.log('✓ tarballs install, compile, and register their elements in real Vite consumers (react, svelte, vue, solid)');
+console.log('✓ tarballs install, compile, and register their elements in real Vite consumers (react, preact, svelte, vue, solid)');

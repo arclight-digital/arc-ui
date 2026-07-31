@@ -152,7 +152,11 @@ outer: for (const phase of phases) {
       accepted += findings.accepted;
     } catch (err) {
       console.log(`FAIL  ${Math.round(performance.now() - start)}ms`);
-      console.error(`\n${err.stderr?.toString() || err.message}\n`);
+      // Both streams, stdout first (matching scripts/check.js): prism reports
+      // its findings on stdout and several checks mix streams, so printing
+      // stderr alone left CI red with no cause shown.
+      const out = `${err.stdout?.toString() ?? ''}${err.stderr?.toString() ?? ''}`.trim();
+      console.error(`\n${out || err.message}\n`);
       failed = true;
       break outer;
     }

@@ -108,14 +108,20 @@ const ICON_ATTRIBUTE = /(^|-)icon$|^name$/;
 /** One icon that exists in both shipped libraries, used wherever a name is wanted. */
 const SAMPLE_ICON = 'check';
 
+/** All string-literal values of an enum union in a manifest type text. */
+const literalsOf = (type) => [...type.matchAll(/'([^']*)'/g)].map((m) => m[1]);
+
 /** A plausible value for one manifest attribute, or null to leave it off. */
-function sampleValue(tag, attr) {
+function sampleValue(tag, attr, variant = 0) {
   const type = attr.type?.text ?? 'string';
 
-  // A union of string literals: the first is as good as any, and is a value the
-  // component documents rather than one it has to fall back from.
-  const literals = [...type.matchAll(/'([^']*)'/g)].map((m) => m[1]);
-  if (literals.length > 0) return literals[0];
+  // A union of string literals: every one is rendered across the variant
+  // passes, because branch-per-variant is exactly where browser-only code
+  // hides — rendering only the first literal left every other branch of a
+  // `variant === 'x'` render untested. An attribute with fewer literals than
+  // the variant index holds its last value.
+  const literals = literalsOf(type);
+  if (literals.length > 0) return literals[Math.min(variant, literals.length - 1)];
 
   // Structured types get skipped, not guessed. `string[]` still contains the
   // word "string", and feeding "Example" to arc-table's `columns` produced a
@@ -128,25 +134,87 @@ function sampleValue(tag, attr) {
 
   if (tag === 'arc-icon' && attr.name === 'name') return SAMPLE_ICON;
   if (ICON_ATTRIBUTE.test(attr.name) && attr.name !== 'name') return SAMPLE_ICON;
+  // Intl.NumberFormat validates currency codes eagerly; "Example" throws a
+  // RangeError that is about this function, not about SSR. (Only reachable now
+  // that the variant pass renders type="currency" — the first-literal-only
+  // pass never got past type="number".)
+  if (attr.name === 'currency') return 'USD';
   return 'Example';
 }
 
 
-/** `<tag a="1" b>` built from the manifest, or null if the tag is not in it. */
-function populatedMarkup(tag) {
+/**
+ * `<tag a="1" b>` markups built from the manifest — one per enum-literal
+ * variant, so every literal of every enum union renders once. Variants are
+ * batched by index rather than combined (variant N sets every enum attribute
+ * to its Nth literal), so cross-attribute *combinations* remain uncovered —
+ * exhaustive combinatorics would be thousands of renders for no plausible
+ * class of bug. Empty when the tag has no manifest attributes.
+ */
+function populatedMarkups(tag) {
   const decl = MANIFEST.modules
     ?.flatMap((m) => m.declarations ?? [])
     .find((d) => d.tagName === tag);
-  if (!decl?.attributes?.length) return null;
+  if (!decl?.attributes?.length) return [];
 
-  let out = `<${tag}`;
-  for (const attr of decl.attributes) {
-    const value = sampleValue(tag, attr);
-    if (value === null) continue;
-    out += value === '' ? ` ${attr.name}` : ` ${attr.name}="${value}"`;
+  const variants = Math.max(
+    1,
+    ...decl.attributes.map((a) => literalsOf(a.type?.text ?? '').length)
+  );
+  const markups = [];
+  for (let v = 0; v < variants; v++) {
+    let out = `<${tag}`;
+    for (const attr of decl.attributes) {
+      const value = sampleValue(tag, attr, v);
+      if (value === null) continue;
+      out += value === '' ? ` ${attr.name}` : ` ${attr.name}="${value}"`;
+    }
+    markups.push(`${out}></${tag}>`);
   }
-  return `${out}></${tag}>`;
+  return markups;
 }
+
+/**
+ * Structured (array/object/function-typed) props cannot be spelled as
+ * attributes, so the markup passes above skip them — which skipped e.g.
+ * arc-virtual-list's items-populated render path entirely. This is an explicit
+ * per-component sample map, not a guessing scheme: add a component here when
+ * its populated path matters.
+ *
+ * Still uncovered: structured props of components not listed here (arc-table
+ * columns/rows, arc-chart data, arc-kanban columns, ...) and combinations of
+ * structured props with enum variants.
+ *
+ * Each entry returns { template, verify }: the lit template to server-render,
+ * and an optional post-render assertion returning an error string. The
+ * assertion is what keeps a sample honest — a sample that silently stops
+ * exercising its path is the arc-icon lesson all over again.
+ */
+const PROPERTY_SAMPLES = {
+  'arc-virtual-list': () => {
+    let rows = 0;
+    return {
+      // The component only computes its visible window from a client-side
+      // measure (firstUpdated → _recalc), so a bare server render shows zero
+      // rows and never calls renderItem. Seeding the private `_visibleCount`
+      // state forces two rows through the renderItem path in Node; `verify`
+      // fails loudly if a rename ever makes the seed a no-op.
+      template: html`<arc-virtual-list
+        item-height="20"
+        .items=${[{ id: 1 }, { id: 2 }, { id: 3 }]}
+        .renderItem=${(item, index) => {
+          rows++;
+          return html`<div>row ${item.id} at ${index}</div>`;
+        }}
+        ._visibleCount=${2}
+      ></arc-virtual-list>`,
+      verify: () =>
+        rows > 0
+          ? null
+          : 'renderItem was never invoked — the seeded _visibleCount no longer forces rows through the server render',
+    };
+  },
+};
 
 const all = components();
 const results = [];
@@ -169,16 +237,35 @@ for (const { tag, module } of all) {
     continue;
   }
 
-  // Second pass: the same element with its documented attributes set.
-  const markup = populatedMarkup(tag);
-  if (!markup) continue;
-  try {
-    await collectResult(render(markupTemplate(markup)));
-  } catch (err) {
-    const result = results[results.length - 1];
+  const result = results[results.length - 1];
+  const fail = (message) => {
     result.ok = false;
     result.withProps = true;
-    result.message = err?.message ?? String(err);
+    result.message = message;
+  };
+
+  // Second pass: the same element with its documented attributes set, once
+  // per enum-literal variant.
+  for (const markup of populatedMarkups(tag)) {
+    try {
+      await collectResult(render(markupTemplate(markup)));
+    } catch (err) {
+      fail(err?.message ?? String(err));
+      break;
+    }
+  }
+  if (!result.ok) continue;
+
+  // Third pass: structured props from the explicit sample map.
+  const sample = PROPERTY_SAMPLES[tag]?.();
+  if (sample) {
+    try {
+      await collectResult(render(sample.template));
+      const problem = sample.verify?.();
+      if (problem) fail(problem);
+    } catch (err) {
+      fail(err?.message ?? String(err));
+    }
   }
 }
 

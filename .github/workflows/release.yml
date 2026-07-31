@@ -39,6 +39,28 @@ jobs:
       - name: Lint
         run: pnpm lint
 
+      # A tag on a red commit must not publish. Same gates as ci.yml's verify
+      # and wrapper-builds jobs: browser tests, the full check suite, and the
+      # packed-tarball smoke test — all against the tree `pnpm generate`
+      # produced above (the checks and the smoke test need its outputs).
+      - name: Cache Playwright browsers
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+
+      - name: Install Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Component tests
+        run: pnpm test
+
+      - name: Check suite
+        run: pnpm check
+
+      - name: Smoke-test packed tarballs
+        run: pnpm smoke:wrappers
+
       # The per-icon modules are generated and gitignored, so a fresh CI
       # checkout only has them because `pnpm generate` ran above. Pack the
       # tarball and prove the critical files made it in — v2.3.0 shipped
