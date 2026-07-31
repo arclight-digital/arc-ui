@@ -119,7 +119,7 @@ export class ArcRangeSlider extends FormControlMixin(LitElement) {
         cursor: pointer;
         transform: translateX(-50%);
         transition: box-shadow var(--transition-fast);
-        box-shadow: 0 0 6px rgba(var(--interactive-rgb), 0.3);
+        box-shadow: var(--glow-xs);
         outline: none;
         z-index: 1;
       }

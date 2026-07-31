@@ -64,7 +64,7 @@ export class ArcProgress extends LitElement {
         border-radius: var(--radius-full);
         background: var(--gradient-accent-text);
         transition: width var(--transition-base);
-        box-shadow: 0 0 8px rgba(var(--accent-primary-rgb), 0.3);
+        box-shadow: var(--glow-sm);
       }
 
       :host([indeterminate]) .progress__fill {

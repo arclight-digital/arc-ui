@@ -98,6 +98,9 @@ export const hostTokens = css`
     --z-max: 9999;
 
     /* Glow and focus */
+    --glow-xs: 0 0 6px rgba(var(--accent-primary-rgb), 0.3);
+    --glow-sm: 0 0 8px rgba(var(--accent-primary-rgb), 0.3);
+    --glow-md: 0 0 12px rgba(var(--accent-primary-rgb), 0.25);
     --glow-hover: 0 0 12px rgba(var(--accent-primary-rgb), 0.15);
     --focus-ring: 0 0 0 1px rgba(var(--accent-primary-rgb),0.25);
     --focus-glow: 0 0 0 1px rgba(var(--accent-primary-rgb),0.2), 0 0 6px rgba(var(--accent-primary-rgb),0.35), 0 0 16px rgba(var(--accent-primary-rgb),0.2), 0 0 40px rgba(var(--accent-secondary-rgb),0.12);

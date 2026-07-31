@@ -117,7 +117,7 @@ export class ArcSlider extends FormControlMixin(LitElement) {
         border: 2px solid var(--surface-primary);
         cursor: pointer;
         transition: box-shadow var(--transition-fast);
-        box-shadow: 0 0 6px rgba(var(--interactive-rgb), 0.3);
+        box-shadow: var(--glow-xs);
       }
 
       input[type="range"]::-moz-range-thumb {
@@ -128,7 +128,7 @@ export class ArcSlider extends FormControlMixin(LitElement) {
         border: 2px solid var(--surface-primary);
         cursor: pointer;
         transition: box-shadow var(--transition-fast);
-        box-shadow: 0 0 6px rgba(var(--interactive-rgb), 0.3);
+        box-shadow: var(--glow-xs);
       }
 
       /* Sizes — the track thickness and the thumb, since a slider has no text

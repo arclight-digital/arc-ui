@@ -69,7 +69,7 @@ export class ArcCheckbox extends FormControlMixin(LitElement) {
       :host([indeterminate]) .checkbox__box {
         background: var(--interactive);
         border-color: var(--interactive);
-        box-shadow: 0 0 8px rgba(var(--interactive-rgb), 0.3);
+        box-shadow: var(--glow-sm);
       }
 
       @keyframes check-pop {

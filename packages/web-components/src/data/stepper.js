@@ -81,13 +81,13 @@ export class ArcStepper extends LitElement {
         background: transparent;
         color: var(--accent-primary);
         border: 2px solid var(--accent-primary);
-        box-shadow: 0 0 12px rgba(var(--accent-primary-rgb), 0.25);
+        box-shadow: var(--glow-md);
         animation: pulse 2s ease-in-out infinite;
       }
 
       @keyframes pulse {
         0%, 100% {
-          box-shadow: 0 0 12px rgba(var(--accent-primary-rgb), 0.25);
+          box-shadow: var(--glow-md);
         }
         50% {
           box-shadow: 0 0 12px rgba(var(--accent-primary-rgb), 0.4);

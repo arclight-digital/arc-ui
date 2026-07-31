@@ -60,7 +60,7 @@ export class ArcDivider extends LitElement {
       :host([variant="line-primary"]) .divider {
         max-width: 200px;
         background: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.7), transparent);
-        box-shadow: 0 0 8px rgba(var(--accent-primary-rgb),0.3);
+        box-shadow: var(--glow-sm);
       }
       :host([variant="line-gradient"]) .divider {
         max-width: 240px;
@@ -133,7 +133,7 @@ export class ArcDivider extends LitElement {
         width: 2px;
         max-width: none;
         background: linear-gradient(180deg, transparent, rgba(var(--accent-primary-rgb),0.7), transparent);
-        box-shadow: 0 0 8px rgba(var(--accent-primary-rgb),0.3);
+        box-shadow: var(--glow-sm);
       }
 
       :host([vertical][variant="line-white"]) .divider {

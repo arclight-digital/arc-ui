@@ -327,6 +327,27 @@ export const tokens = {
     secondary: '0 0 8px rgba(var(--accent-secondary-rgb),0.9), 0 0 20px rgba(var(--accent-secondary-rgb),0.5), 0 0 44px rgba(var(--accent-secondary-rgb),0.25), 0 0 80px rgba(var(--accent-secondary-rgb),0.1)',
   },
 
+  /* ── Glow scale ──
+     Three accent steps, for the emphasis a component adds on hover, on an
+     active item, on a selected cell. Distinct from the `glow` block above,
+     which is display work — a wordmark, a hero rule — at alphas no interface
+     surface should carry.
+
+     The values are not new. Sixty-two hand-written glows were counted across
+     the components against five uses of the published tokens, and these three
+     are the clusters that census found, kept at their exact existing values so
+     adopting them changes nothing on screen. The scale exists so the sixty-third
+     has something to reach for; that is the whole job of it.
+
+     Elevation, for contrast, needed nothing: the same census found two
+     hand-written cast shadows in the entire library against a hundred and
+     seventy-seven token uses. The shadow scale was already doing its job. */
+  glowScale: {
+    xs: '0 0 6px rgba(var(--accent-primary-rgb), 0.3)',
+    sm: '0 0 8px rgba(var(--accent-primary-rgb), 0.3)',
+    md: '0 0 12px rgba(var(--accent-primary-rgb), 0.25)',
+  },
+
   /* ── Hover Glow ── */
   glowHover: '0 0 12px rgba(var(--accent-primary-rgb), 0.15)',
 
@@ -582,6 +603,7 @@ ${Object.entries(tokens.duration).map(([k, v]) => `  --duration-${k}: ${v};`).jo
   --glow-line-blue: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.7), transparent);
   --glow-line-gradient: linear-gradient(90deg, transparent, var(--accent-primary), var(--accent-secondary), transparent);
 
+${Object.entries(tokens.glowScale).map(([k, v]) => `  --glow-${k}: ${v};`).join('\n')}
   --glow-hover: 0 0 12px rgba(var(--accent-primary-rgb), 0.15);
   --glow-card-hover: 0 0 20px rgba(var(--accent-primary-rgb),0.08), 0 0 40px rgba(var(--accent-secondary-rgb),0.04);
   --gradient-border-glow: linear-gradient(135deg, rgba(var(--accent-primary-rgb),0.15), rgba(var(--accent-secondary-rgb),0.1), rgba(var(--accent-primary-rgb),0.05));
@@ -1141,6 +1163,7 @@ export function generateHostTokensCSS(indent = '    ') {
   ]);
   group('Z-index', Object.entries(tokens.zIndex).map(([k, v]) => [`--z-${k}`, v]));
   group('Glow and focus', [
+    ...Object.entries(tokens.glowScale).map(([k, v]) => [`--glow-${k}`, v]),
     ['--glow-hover', tokens.glowHover],
     ['--focus-ring', tokens.focus.ring],
     ['--focus-glow', tokens.focus.glow],

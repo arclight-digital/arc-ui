@@ -86,7 +86,7 @@ export class ArcRadioGroup extends FormControlMixin(LitElement) {
 
       .radio[aria-checked="true"] .radio__circle {
         border-color: var(--interactive);
-        box-shadow: 0 0 8px rgba(var(--interactive-rgb), 0.3);
+        box-shadow: var(--glow-sm);
       }
 
       .radio[aria-checked="true"] .radio__dot {
