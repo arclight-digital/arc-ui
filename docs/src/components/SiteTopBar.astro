@@ -28,7 +28,9 @@ const path = Astro.url.pathname;
 const inDocs = path.startsWith('/docs');
 const isComponents = activeSlug === 'components' || path.startsWith('/docs/components');
 const isTokens = activeSlug === 'tokens';
-const isSynth = activeSlug === 'theme-synthesizer';
+/* The synthesizer is an app at /synth, outside the docs tree, so it is marked
+   by path rather than by a docs slug. */
+const isSynth = path.startsWith('/synth');
 /** Any docs page that isn't one of the other three tabs files under Docs. */
 const isDocs = inDocs && !isComponents && !isTokens && !isSynth;
 ---
@@ -59,7 +61,7 @@ const isDocs = inDocs && !isComponents && !isTokens && !isSynth;
     <arc-nav-item active={isDocs || undefined}><a href="/docs/getting-started">Docs</a></arc-nav-item>
     <arc-nav-item active={isComponents || undefined}><a href="/docs/components">Components</a></arc-nav-item>
     <arc-nav-item active={isTokens || undefined}><a href="/docs/tokens">Tokens</a></arc-nav-item>
-    <arc-nav-item active={isSynth || undefined}><a href="/docs/theme-synthesizer">Synthesizer</a></arc-nav-item>
+    <arc-nav-item active={isSynth || undefined}><a href="/synth">Synthesizer</a></arc-nav-item>
   </arc-navigation-menu>
   <div slot="actions" class="topbar-actions">
     {search && (

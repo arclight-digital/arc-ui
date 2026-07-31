@@ -1,68 +1,40 @@
-import satori from 'satori';
-import sharp from 'sharp';
-import fs from 'node:fs';
+/**
+ * og-image.png — the site's front-door social card.
+ *
+ * The background, chrome and fonts come from lib/og-card.ts, which is the
+ * whole reason that module exists ("so the background treatment, chrome, and
+ * fonts stay identical across all cards"). This route used to carry its own
+ * copy of every one of them — dot grid, glows, border, edge lines, font
+ * loading — so a change to the shared treatment silently skipped the one card
+ * most people ever see. Only what is unique to the front door lives here: the
+ * wordmark, the promise, and the stats.
+ */
 import type { APIRoute } from 'astro';
 import { tokens } from '../../../shared/tokens.js';
+import { blue, blueRgb, teal, tealRgb, renderCard } from '../lib/og-card';
 import {
   componentCount,
   frameworks,
   frameworkCount,
   buildSteps,
   tokenCount,
-  version,
   versionShort,
 } from '../data/site-stats';
 
 export const prerender = true;
 
-// Token-derived colors
-const blue = tokens.color.accentPrimary;
-const blueRgb = tokens.rgb.accentPrimary;
-const teal = '#14b8a6';
-const tealRgb = '20,184,166';
-const violet = tokens.color.accentSecondary;
-const violetRgb = tokens.rgb.accentSecondary;
+type Node = { type: string; props: Record<string, unknown> };
 
-// Generate dot grid — brighter near center, fading to edges
-function dotGrid(cols: number, rows: number, spacing: number, offsetX: number, offsetY: number) {
-  const dots = [];
-  for (let r = 0; r < rows; r++) {
-    for (let c = 0; c < cols; c++) {
-      const cx = (c - cols / 2) / (cols / 2);
-      const cy = (r - rows / 2) / (rows / 2);
-      const dist = Math.sqrt(cx * cx + cy * cy);
-      const opacity = Math.max(0, 0.18 - dist * 0.12);
-      if (opacity < 0.02) continue;
-
-      dots.push({
-        type: 'div' as const,
-        props: {
-          style: {
-            position: 'absolute' as const,
-            left: `${offsetX + c * spacing}px`,
-            top: `${offsetY + r * spacing}px`,
-            width: '2px',
-            height: '2px',
-            borderRadius: '50%',
-            background: `rgba(255,255,255,${opacity})`,
-          },
-        },
-      });
-    }
-  }
-  return dots;
-}
-
-function statCard(value: string, label: string, accentColor: string, accentRgb: string) {
+function statCard(value: string, label: string, accentColor: string, accentRgb: string): Node {
   return {
-    type: 'div' as const,
+    type: 'div',
     props: {
       style: {
         display: 'flex',
-        flexDirection: 'column' as const,
+        flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        position: 'relative' as const,
+        position: 'relative',
         width: '250px',
         height: '120px',
         borderRadius: tokens.radius.lg,
@@ -72,7 +44,7 @@ function statCard(value: string, label: string, accentColor: string, accentRgb: 
       },
       children: [
         {
-          type: 'div' as const,
+          type: 'div',
           props: {
             style: {
               fontSize: '58px',
@@ -86,9 +58,8 @@ function statCard(value: string, label: string, accentColor: string, accentRgb: 
             children: value,
           },
         },
-        // Mini gradient rule
         {
-          type: 'div' as const,
+          type: 'div',
           props: {
             style: {
               width: '24px',
@@ -99,7 +70,7 @@ function statCard(value: string, label: string, accentColor: string, accentRgb: 
           },
         },
         {
-          type: 'div' as const,
+          type: 'div',
           props: {
             style: {
               fontSize: '21px',
@@ -107,7 +78,7 @@ function statCard(value: string, label: string, accentColor: string, accentRgb: 
               fontFamily: 'Azeret Mono',
               letterSpacing: '1px',
               color: 'rgba(255,255,255,0.4)',
-              textTransform: 'uppercase' as const,
+              textTransform: 'uppercase',
             },
             children: label,
           },
@@ -117,9 +88,9 @@ function statCard(value: string, label: string, accentColor: string, accentRgb: 
   };
 }
 
-function frameworkPill(name: string) {
+function frameworkPill(name: string): Node {
   return {
-    type: 'div' as const,
+    type: 'div',
     props: {
       style: {
         padding: '8px 20px',
@@ -137,393 +108,170 @@ function frameworkPill(name: string) {
 }
 
 export const GET: APIRoute = async () => {
-  const fontBody = fs.readFileSync('public/fonts/hostgrotesk-latin.ttf');
-  const fontBodyBold = fs.readFileSync('public/fonts/hostgrotesk-800-latin.ttf');
-  const fontAccent = fs.readFileSync('public/fonts/azeretmono-600-latin.ttf');
-
-  const dots = dotGrid(40, 22, 30, 0, 0);
-
-  const svg = await satori(
+  const content: Node[] = [
     {
       type: 'div',
       props: {
         style: {
-          width: '100%',
-          height: '100%',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          background: tokens.color.bgDeep,
-          position: 'relative',
+          zIndex: '1',
+          marginTop: '-132px',
         },
         children: [
-          // Dot grid
-          ...dots,
-
-          // Ambient glow — blue (top-left)
-          {
-            type: 'div',
-            props: {
-              style: {
-                position: 'absolute',
-                top: '0',
-                left: '0',
-                width: '100%',
-                height: '100%',
-                background: `radial-gradient(circle at 10% 10%, rgba(${blueRgb},0.22) 0%, transparent 50%)`,
-              },
-            },
-          },
-          // Ambient glow — violet (center-top, adds depth)
-          {
-            type: 'div',
-            props: {
-              style: {
-                position: 'absolute',
-                top: '0',
-                left: '0',
-                width: '100%',
-                height: '100%',
-                background: `radial-gradient(circle at 50% 15%, rgba(${violetRgb},0.12) 0%, transparent 45%)`,
-              },
-            },
-          },
-          // Ambient glow — teal (bottom-right)
-          {
-            type: 'div',
-            props: {
-              style: {
-                position: 'absolute',
-                top: '0',
-                left: '0',
-                width: '100%',
-                height: '100%',
-                background: `radial-gradient(circle at 90% 90%, rgba(${tealRgb},0.18) 0%, transparent 50%)`,
-              },
-            },
-          },
-          // Center spotlight — bloom behind title
-          {
-            type: 'div',
-            props: {
-              style: {
-                position: 'absolute',
-                top: '0',
-                left: '0',
-                width: '100%',
-                height: '100%',
-                background: 'radial-gradient(ellipse at 50% 30%, rgba(255,255,255,0.05) 0%, transparent 45%)',
-              },
-            },
-          },
-          // Title glow — strong colored bloom behind "ARC UI"
-          {
-            type: 'div',
-            props: {
-              style: {
-                position: 'absolute',
-                top: '0',
-                left: '0',
-                width: '100%',
-                height: '100%',
-                background: `radial-gradient(ellipse at 50% 28%, rgba(${blueRgb},0.14) 0%, rgba(${violetRgb},0.06) 30%, transparent 55%)`,
-              },
-            },
-          },
-
-          // Border
-          {
-            type: 'div',
-            props: {
-              style: {
-                position: 'absolute',
-                top: '0',
-                left: '0',
-                right: '0',
-                bottom: '0',
-                border: `1px solid rgba(${blueRgb},0.2)`,
-              },
-            },
-          },
-          // Top edge glow
-          {
-            type: 'div',
-            props: {
-              style: {
-                position: 'absolute',
-                top: '0',
-                left: '10%',
-                right: '10%',
-                height: '2px',
-                background: `linear-gradient(90deg, transparent, rgba(${blueRgb},0.6), rgba(${violetRgb},0.4), rgba(${tealRgb},0.5), transparent)`,
-              },
-            },
-          },
-          // Top edge bloom (wider, softer)
-          {
-            type: 'div',
-            props: {
-              style: {
-                position: 'absolute',
-                top: '0',
-                left: '15%',
-                right: '15%',
-                height: '20px',
-                background: `linear-gradient(90deg, transparent, rgba(${blueRgb},0.08), rgba(${violetRgb},0.06), rgba(${tealRgb},0.06), transparent)`,
-              },
-            },
-          },
-          // Bottom edge glow
-          {
-            type: 'div',
-            props: {
-              style: {
-                position: 'absolute',
-                bottom: '0',
-                left: '15%',
-                right: '15%',
-                height: '2px',
-                background: `linear-gradient(90deg, transparent, rgba(${tealRgb},0.4), rgba(${blueRgb},0.3), transparent)`,
-              },
-            },
-          },
-
-          // Main content
+          // Version pill
           {
             type: 'div',
             props: {
               style: {
                 display: 'flex',
-                flexDirection: 'column',
                 alignItems: 'center',
-                justifyContent: 'center',
-                zIndex: '1',
-                marginTop: '-132px',
+                gap: '10px',
+                padding: '8px 24px 8px 10px',
+                borderRadius: tokens.radius.full,
+                border: `1px solid rgba(${blueRgb}, 0.3)`,
+                background: `rgba(${blueRgb}, 0.08)`,
+                marginBottom: '20px',
               },
               children: [
-                // v2.0 pill
                 {
                   type: 'div',
                   props: {
                     style: {
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '10px',
-                      padding: '8px 24px 8px 10px',
+                      padding: '3px 13px',
                       borderRadius: tokens.radius.full,
-                      border: `1px solid rgba(${blueRgb}, 0.3)`,
-                      background: `rgba(${blueRgb}, 0.08)`,
-                      marginBottom: '20px',
-                    },
-                    children: [
-                      {
-                        type: 'div' as const,
-                        props: {
-                          style: {
-                            padding: '3px 13px',
-                            borderRadius: tokens.radius.full,
-                            background: `linear-gradient(135deg, ${blue}, ${violet})`,
-                            fontSize: '23px',
-                            fontWeight: 700,
-                            fontFamily: 'Host Grotesk',
-                            color: 'white',
-                            letterSpacing: '0.5px',
-                          },
-                          children: versionShort,
-                        },
-                      },
-                      {
-                        type: 'div' as const,
-                        props: {
-                          style: {
-                            fontSize: '23px',
-                            fontWeight: 500,
-                            fontFamily: 'Host Grotesk',
-                            color: 'rgba(255,255,255,0.6)',
-                          },
-                          children: 'Components that glow.',
-                        },
-                      },
-                    ],
-                  },
-                },
-                // ARC UI title
-                {
-                  type: 'div',
-                  props: {
-                    style: {
-                      display: 'flex',
-                      alignItems: 'baseline',
-                    },
-                    children: [
-                      {
-                        type: 'div' as const,
-                        props: {
-                          style: {
-                            fontSize: '172px',
-                            fontWeight: 800,
-                            fontFamily: 'Host Grotesk',
-                            letterSpacing: '-4px',
-                            background: `linear-gradient(135deg, rgba(255,255,255,0.95) 0%, ${blue} 50%, ${violet} 100%)`,
-                            backgroundClip: 'text',
-                            color: 'transparent',
-                            lineHeight: 1,
-                          },
-                          children: 'ARC UI',
-                        },
-                      },
-                    ],
-                  },
-                },
-                // Divider — with bloom
-                {
-                  type: 'div',
-                  props: {
-                    style: {
-                      position: 'relative' as const,
-                      width: '580px',
-                      height: '16px',
-                      marginTop: '14px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    },
-                    children: [
-                      // Bloom layer
-                      {
-                        type: 'div' as const,
-                        props: {
-                          style: {
-                            position: 'absolute' as const,
-                            width: '100%',
-                            height: '16px',
-                            borderRadius: '8px',
-                            background: `linear-gradient(90deg, transparent, rgba(${blueRgb},0.18), rgba(${violetRgb},0.12), rgba(${tealRgb},0.1), transparent)`,
-                          },
-                        },
-                      },
-                      // Crisp line
-                      {
-                        type: 'div' as const,
-                        props: {
-                          style: {
-                            position: 'absolute' as const,
-                            width: '100%',
-                            height: '2px',
-                            background: `linear-gradient(90deg, transparent, ${blue}, ${violet}, ${teal}, transparent)`,
-                          },
-                        },
-                      },
-                    ],
-                  },
-                },
-                // Description
-                {
-                  type: 'div',
-                  props: {
-                    style: {
-                      fontSize: '31px',
-                      fontWeight: 400,
+                      background: `linear-gradient(135deg, ${blue}, ${teal})`,
+                      fontSize: '23px',
+                      fontWeight: 700,
                       fontFamily: 'Host Grotesk',
-                      color: 'rgba(255,255,255,0.55)',
-                      marginTop: '20px',
+                      color: 'white',
                       letterSpacing: '0.5px',
                     },
-                    children: 'One source of truth. Seven framework targets.',
+                    children: versionShort,
                   },
                 },
-                // Framework pills row
                 {
                   type: 'div',
                   props: {
                     style: {
-                      display: 'flex',
-                      gap: '10px',
-                      marginTop: '28px',
+                      fontSize: '23px',
+                      fontWeight: 500,
+                      fontFamily: 'Host Grotesk',
+                      color: 'rgba(255,255,255,0.6)',
                     },
-                    children: frameworks.map(frameworkPill),
+                    children: 'Components that glow.',
                   },
                 },
               ],
             },
           },
-
-          // Stats row — styled cards
+          // ARC UI
           {
             type: 'div',
             props: {
               style: {
-                position: 'absolute',
-                bottom: '38px',
+                fontSize: '172px',
+                fontWeight: 800,
+                fontFamily: 'Host Grotesk',
+                letterSpacing: '-4px',
+                background: `linear-gradient(135deg, rgba(255,255,255,0.95) 0%, ${blue} 50%, ${teal} 100%)`,
+                backgroundClip: 'text',
+                color: 'transparent',
+                lineHeight: 1,
+              },
+              children: 'ARC UI',
+            },
+          },
+          // Divider — bloom under a crisp line
+          {
+            type: 'div',
+            props: {
+              style: {
+                position: 'relative',
+                width: '580px',
+                height: '16px',
+                marginTop: '14px',
                 display: 'flex',
-                gap: '20px',
                 alignItems: 'center',
+                justifyContent: 'center',
               },
               children: [
-                statCard(String(componentCount), 'Components', blue, blueRgb),
-                statCard(String(frameworkCount), 'Frameworks', violet, violetRgb),
-                statCard(String(buildSteps), 'Build Steps', teal, tealRgb),
-                statCard(String(tokenCount), 'Design Tokens', blue, blueRgb),
+                {
+                  type: 'div',
+                  props: {
+                    style: {
+                      position: 'absolute',
+                      width: '100%',
+                      height: '16px',
+                      borderRadius: '8px',
+                      background: `linear-gradient(90deg, transparent, rgba(${blueRgb},0.18), rgba(${tealRgb},0.12), transparent)`,
+                    },
+                  },
+                },
+                {
+                  type: 'div',
+                  props: {
+                    style: {
+                      position: 'absolute',
+                      width: '100%',
+                      height: '2px',
+                      background: `linear-gradient(90deg, transparent, ${blue}, ${teal}, transparent)`,
+                    },
+                  },
+                },
               ],
             },
           },
-
-          // Version badge — bottom-right
+          // Promise
           {
             type: 'div',
             props: {
               style: {
-                position: 'absolute',
-                top: '18px',
-                right: '24px',
-                display: 'flex',
-                alignItems: 'center',
-                padding: '7px 20px',
-                borderRadius: tokens.radius.full,
-                border: `1px solid rgba(${blueRgb},0.3)`,
-                background: `rgba(${blueRgb},0.08)`,
-                fontSize: '22px',
-                fontWeight: 600,
-                fontFamily: 'Host Grotesk',
-                color: blue,
-              },
-              children: `v${version}`,
-            },
-          },
-
-          // URL — bottom-left
-          {
-            type: 'div',
-            props: {
-              style: {
-                position: 'absolute',
-                top: '24px',
-                left: '24px',
-                fontSize: '22px',
+                fontSize: '31px',
                 fontWeight: 400,
                 fontFamily: 'Host Grotesk',
-                letterSpacing: '1px',
-                color: 'rgba(255,255,255,0.45)',
+                color: 'rgba(255,255,255,0.55)',
+                marginTop: '20px',
+                letterSpacing: '0.5px',
               },
-              children: 'arcui.dev',
+              children: 'One source of truth. Seven framework targets.',
+            },
+          },
+          // Framework pills
+          {
+            type: 'div',
+            props: {
+              style: { display: 'flex', gap: '10px', marginTop: '28px' },
+              children: frameworks.map(frameworkPill),
             },
           },
         ],
       },
     },
+    // Stats
     {
-      width: 1200,
-      height: 630,
-      fonts: [
-        { name: 'Host Grotesk', data: fontBody, weight: 400, style: 'normal' as const },
-        { name: 'Host Grotesk', data: fontBodyBold, weight: 800, style: 'normal' as const },
-        { name: 'Azeret Mono', data: fontAccent, weight: 600, style: 'normal' as const },
-      ],
+      type: 'div',
+      props: {
+        style: {
+          position: 'absolute',
+          bottom: '38px',
+          display: 'flex',
+          gap: '20px',
+          alignItems: 'center',
+        },
+        children: [
+          statCard(String(componentCount), 'Components', blue, blueRgb),
+          statCard(String(frameworkCount), 'Frameworks', teal, tealRgb),
+          statCard(String(buildSteps), 'Build Steps', blue, blueRgb),
+          statCard(String(tokenCount), 'Design Tokens', teal, tealRgb),
+        ],
+      },
     },
-  );
+  ];
 
-  const png = await sharp(Buffer.from(svg)).png().toBuffer();
+  const png = await renderCard(content);
 
   // No Cache-Control here: this route is prerendered to a static file, so the
   // host serves it with its own headers and anything set here is discarded.

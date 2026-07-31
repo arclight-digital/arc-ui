@@ -30,8 +30,10 @@ const guideSections = [
     links: [
       { slug: 'tokens',            label: 'Design Tokens',     icon: 'swatches' },
       { slug: 'theming',           label: 'Theming',           icon: 'paint-brush' },
-      /* A tool that operates on the theming page's concepts, not a peer of them. */
-      { slug: 'theme-synthesizer', label: 'Theme Synthesizer', icon: 'sliders', level: 1 },
+      /* A tool that operates on the theming page's concepts, not a peer of them —
+         and since v3 an application at its own route rather than a docs page,
+         so it carries an explicit href out of the /docs tree. */
+      { slug: 'theme-synthesizer', label: 'Theme Synthesizer', icon: 'sliders', level: 1, href: '/synth' },
       { slug: 'typography',        label: 'Typography',        icon: 'text-aa' },
       { slug: 'utilities',         label: 'Utilities',         icon: 'wrench' },
     ],
@@ -79,9 +81,10 @@ const activeHref = activeSlug
     <arc-sidebar-section heading={section.heading}>
       {section.links.map((link) => (
         <arc-sidebar-link
-          href={`/docs/${link.slug}`}
+          href={'href' in link ? link.href : `/docs/${link.slug}`}
           icon={link.icon}
           level={link.level}
+          external={'href' in link || undefined}
           active={activeSlug === link.slug || undefined}
         >{link.label}</arc-sidebar-link>
       ))}

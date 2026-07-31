@@ -40,10 +40,13 @@ export const docsCards: Record<string, PageCard> = {
     title: 'Typography',
     description: 'ARC UI ships no font files. Assign your own typefaces to five role slots and the whole system follows.',
   },
-  'docs-theme-synthesizer': {
-    pills: [{ text: 'Docs' }],
+  // Keyed `synth`, not `docs-…`: since v3 the synthesizer is an application at
+  // /synth rather than a page in the docs tree.
+  synth: {
+    pills: [{ text: 'Tool' }],
     title: 'Theme Synthesizer',
-    description: 'Pick two accent colors and generate a complete, ready-to-paste ARC UI theme.',
+    description:
+      'Build a theme against a live interface, check its contrast in both themes, and export only the tokens you changed.',
   },
   'docs-frameworks': {
     pills: [{ text: 'Docs' }],
@@ -78,8 +81,8 @@ export function componentCard(slug: string): PageCard | undefined {
   return {
     pills: [
       { text: 'Component' },
-      { text: c.tier, accent: 'violet' },
-      { text: c.interactivity, accent: 'teal' },
+      { text: c.tier, accent: 'primary' },
+      { text: c.interactivity, accent: 'secondary' },
     ],
     title: c.name,
     description: c.description,
@@ -99,6 +102,8 @@ export function ogPathFor(pathname: string): string | undefined {
   if (compMatch && components.some((c) => c.slug === compMatch[1])) {
     return `/og/${compMatch[1]}.png`;
   }
+  // Standalone tool routes are keyed by their own name, without the docs prefix.
+  if (docsCards[path.slice(1)]) return `/og/${path.slice(1)}.png`;
   const seg = path === '/docs' ? 'index' : path.replace(/^\/docs\//, '').replace(/\//g, '-');
   return docsCards[`docs-${seg}`] ? `/og/docs-${seg}.png` : undefined;
 }

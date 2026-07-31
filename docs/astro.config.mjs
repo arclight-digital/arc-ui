@@ -18,7 +18,12 @@ export default defineConfig({
     sitemap({
       // /docs/ is a redirect stub — keep it out of the index. /dev/ holds
       // internal eyeballing pages, which are noindex and not public docs.
-      filter: (page) => page !== 'https://arcui.dev/docs/' && !page.includes('/dev/'),
+      filter: (page) =>
+        page !== 'https://arcui.dev/docs/' &&
+        !page.includes('/dev/') &&
+        // The synthesizer moved to /synth; this path is a noindex redirect stub
+        // kept for old links, and listing it would compete with the real page.
+        !page.startsWith('https://arcui.dev/docs/theme-synthesizer'),
       // Emit slash-less URLs to match canonical tags and internal links
       // (the CDN serves both forms; these tags pick the canonical one).
       serialize: (item) =>

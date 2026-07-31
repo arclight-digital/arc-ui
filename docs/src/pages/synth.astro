@@ -1,0 +1,2303 @@
+---
+/**
+ * /synth — the Theme Synthesizer.
+ *
+ * This is an application, not a docs page, and it is laid out like one: a
+ * control rail on the left, a live stage on the right, both filling the
+ * viewport with their own scroll. The previous version was a docs article you
+ * scrolled — every control was a screen away from the thing it changed, so you
+ * dragged a slider, scrolled down to see what happened, and scrolled back.
+ *
+ * The site chrome stays: same SiteTopBar as every other page, so this reads as
+ * a room in the house rather than a different building.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteTopBar from '../components/SiteTopBar.astro';
+import {
+  COLOR_GROUPS,
+  FONT_ROLES,
+  MOTION_GROUP,
+  SPACE_GROUPS,
+  TYPE_RANGES,
+} from '../lib/synth/schema';
+import { PAIRS } from '../lib/synth/contrast';
+import { PRESETS } from '../lib/synth/presets';
+
+const rangeSections = [TYPE_RANGES, ...SPACE_GROUPS, MOTION_GROUP];
+const spaceSections = SPACE_GROUPS;
+const description =
+  'Build an ARC UI theme against a live interface, check its contrast in both themes, and export only the tokens you changed.';
+---
+
+<BaseLayout
+  title="Theme Synthesizer — ARC UI"
+  description={description}
+  ogImage="/og/synth.png"
+>
+  <nav aria-label="Skip link">
+    <arc-skip-link target="#synth-stage">Skip to preview</arc-skip-link>
+  </nav>
+
+  <SiteTopBar mobileMenu="nav" />
+
+  <div class="synth">
+    {/*
+      The command bar is `.theme-fixed` on purpose. Every other surface here
+      wears the theme being edited — that is the whole point — but a palette
+      with 1.2:1 text is a legitimate thing to build and briefly look at, and
+      when you do, the controls that undo it must still be readable. Fixed
+      regions force the --bg-*, --text-* and accent families, so Reset is
+      always visible no matter what the rest of the page is doing.
+    */}
+    {/* A div, not a <header>: arc-top-bar already contributes the page's one
+        banner landmark, and a second <header> at this level would make two. */}
+    <div class="synth-bar theme-fixed" role="region" aria-label="Theme actions">
+      <div class="synth-bar__group">
+        <h1 class="synth-bar__title">Theme Synthesizer</h1>
+        <span class="synth-bar__count" data-changed-count aria-live="polite"></span>
+      </div>
+
+      <div class="synth-bar__group synth-bar__group--center" role="group" aria-label="Editing theme">
+        <span class="synth-bar__label" aria-hidden="true">Editing</span>
+        {/* Named by the role="group" wrapper above, not by aria-label here:
+            aria-label on a custom element with no role of its own is
+            prohibited, and gets dropped rather than read. */}
+        <arc-segmented-control data-theme-switch value="dark">
+          <arc-option value="dark">Dark</arc-option>
+          <arc-option value="light">Light</arc-option>
+        </arc-segmented-control>
+        {/*
+          On by default. Editing one theme and shipping both is the failure
+          mode here — you tune an accent in dark, never open light, and half
+          your theme goes out on the shipped defaults. Mirroring copies the
+          value across and the contrast table says immediately whether it
+          survived the trip; unlink when you want to tune the two separately.
+        */}
+        <label class="synth-mirror">
+          <input type="checkbox" data-mirror checked />
+          <span>Mirror to both</span>
+        </label>
+      </div>
+
+      <div class="synth-bar__group synth-bar__group--end">
+        <button type="button" class="synth-chip" data-contrast-chip data-open-stage="contrast">
+          <span class="synth-chip__dot" data-contrast-dot></span>
+          <span data-contrast-text>Checking contrast…</span>
+        </button>
+        <arc-button variant="ghost" size="sm" data-action="import">Import</arc-button>
+        <arc-button variant="ghost" size="sm" data-action="reset">Reset</arc-button>
+        <arc-button variant="primary" size="sm" data-action="export">Export</arc-button>
+      </div>
+    </div>
+
+    <div class="synth-body">
+      <!-- ── Control rail ───────────────────────────────────────────── -->
+      <aside class="synth-rail" aria-label="Theme controls">
+        <div class="synth-rail__head">
+          <arc-segmented-control data-rail-switch value="color">
+            <arc-option value="color">Color</arc-option>
+            <arc-option value="type">Type</arc-option>
+            <arc-option value="space">Space</arc-option>
+            <arc-option value="motion">Motion</arc-option>
+          </arc-segmented-control>
+        </div>
+
+        <div class="synth-rail__scroll">
+          <!-- Color -->
+          <div class="rail-panel" data-rail-panel="color">
+            <div class="rail-presets">
+              <p class="rail-presets__title">Start from</p>
+              <div class="rail-presets__grid">
+                {PRESETS.map((preset) => (
+                  <button type="button" class="preset" data-preset={preset.id} title={preset.blurb}>
+                    <span class="preset__swatches" aria-hidden="true">
+                      <span style={`background:${preset.swatches[0]}`}></span>
+                      <span style={`background:${preset.swatches[1]}`}></span>
+                    </span>
+                    <span class="preset__name">{preset.name}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {COLOR_GROUPS.map((group) => (
+              <section class="rail-group" aria-labelledby={`grp-${group.id}`}>
+                <h2 class="rail-group__title" id={`grp-${group.id}`}>{group.label}</h2>
+                <p class="rail-group__hint">{group.hint}</p>
+                <div class="rail-group__body">
+                  {group.controls.map((control) => (
+                    <div class="color-row" data-token={control.token}>
+                      <button
+                        type="button"
+                        class="color-row__swatch"
+                        data-swatch
+                        aria-expanded="false"
+                        aria-label={`Edit ${control.label}`}
+                      ></button>
+                      <span class="color-row__text">
+                        <span class="color-row__label">{control.label}</span>
+                        <code class="color-row__token">{control.token}</code>
+                      </span>
+                      <input
+                        type="text"
+                        class="color-row__hex"
+                        data-hex
+                        spellcheck="false"
+                        aria-label={`${control.label} hex value`}
+                      />
+                      <button
+                        type="button"
+                        class="color-row__revert"
+                        data-revert
+                        hidden
+                        title="Revert to the ARC UI default"
+                      >
+                        <arc-icon name="arrow-counter-clockwise" size="12"></arc-icon>
+                      </button>
+                      <div class="color-row__picker" data-picker-slot hidden></div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            ))}
+          </div>
+
+          <!-- Type -->
+          <div class="rail-panel" data-rail-panel="type" hidden>
+            <section class="rail-group">
+              <h2 class="rail-group__title">Font roles</h2>
+              <p class="rail-group__hint">
+                ARC UI ships no font files. Assign a typeface to a role and every component wearing
+                that role follows — you never name a font in a component again.
+              </p>
+              <div class="rail-group__body rail-group__body--stack">
+                {FONT_ROLES.map((role) => (
+                  <div class="font-row" data-role={role.role}>
+                    <div class="font-row__head">
+                      <span class="font-row__label">{role.label}</span>
+                      <span class="font-row__hint">{role.hint}</span>
+                    </div>
+                    <input
+                      type="text"
+                      class="font-row__input"
+                      data-font-family
+                      spellcheck="false"
+                      aria-label={`${role.label} font family`}
+                    />
+                    <div class="font-row__foot">
+                      <input
+                        type="text"
+                        class="font-row__fallback"
+                        data-font-fallback
+                        spellcheck="false"
+                        aria-label={`${role.label} fallback stack`}
+                      />
+                      <input
+                        type="number"
+                        class="font-row__weight"
+                        data-font-weight
+                        min="100"
+                        max="900"
+                        step="50"
+                        aria-label={`${role.label} weight`}
+                      />
+                    </div>
+                    <p class="font-row__preview" data-font-preview>
+                      {role.role === 'mono' ? 'const theme = synthesize(tokens);' : 'The quick brown fox jumps over the lazy dog'}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section class="rail-group">
+              <h2 class="rail-group__title">{TYPE_RANGES.label}</h2>
+              <p class="rail-group__hint">{TYPE_RANGES.hint}</p>
+              <div class="rail-group__body rail-group__body--stack">
+                {TYPE_RANGES.controls.map((c) => (
+                  <div class="range-row" data-token={c.token}>
+                    <arc-slider
+                      size="sm"
+                      label={c.label}
+                      min={c.min}
+                      max={c.max}
+                      step={c.step}
+                      data-slider
+                    ></arc-slider>
+                    <span class="range-row__value" data-range-value></span>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </div>
+
+          <!-- Space -->
+          <div class="rail-panel" data-rail-panel="space" hidden>
+            {spaceSections.map((group) => (
+              <section class="rail-group">
+                <h2 class="rail-group__title">{group.label}</h2>
+                <p class="rail-group__hint">{group.hint}</p>
+                <div class="rail-group__body rail-group__body--stack">
+                  {group.controls.map((c) => (
+                    <div class="range-row" data-token={c.token}>
+                      <arc-slider
+                        size="sm"
+                        label={c.label}
+                        min={c.min}
+                        max={c.max}
+                        step={c.step}
+                        data-slider
+                      ></arc-slider>
+                      <span class="range-row__value" data-range-value></span>
+                      {c.gauge === 'space' && <span class="gauge gauge--space" data-gauge></span>}
+                      {c.gauge === 'radius' && <span class="gauge gauge--radius" data-gauge></span>}
+                    </div>
+                  ))}
+                </div>
+              </section>
+            ))}
+          </div>
+
+          <!-- Motion -->
+          <div class="rail-panel" data-rail-panel="motion" hidden>
+            <section class="rail-group">
+              <h2 class="rail-group__title">{MOTION_GROUP.label}</h2>
+              <p class="rail-group__hint">{MOTION_GROUP.hint}</p>
+              <div class="rail-group__body rail-group__body--stack">
+                {MOTION_GROUP.controls.map((c) => (
+                  <div class="range-row" data-token={c.token}>
+                    <arc-slider
+                      size="sm"
+                      label={c.label}
+                      min={c.min}
+                      max={c.max}
+                      step={c.step}
+                      data-slider
+                    ></arc-slider>
+                    <span class="range-row__value" data-range-value></span>
+                  </div>
+                ))}
+              </div>
+            </section>
+            <arc-callout variant="info">
+              Durations, not the <code>--transition-*</code> shorthands. The shorthands compose from
+              these plus the easing scale, so moving a duration retunes every animation that reads
+              it instead of replacing the composition with a literal.
+            </arc-callout>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ── Stage ──────────────────────────────────────────────────── -->
+      <main class="synth-stage" id="synth-stage" tabindex="-1">
+        {/* Roving tabindex: one stop for the group, arrows move within it —
+            the pattern the tab role promises and the reason only the selected
+            tab is reachable by Tab. */}
+        <div class="stage-tabs" role="tablist" aria-label="Preview">
+          <button type="button" role="tab" class="stage-tab" id="tab-interface" aria-controls="panel-interface" data-stage="interface" aria-selected="true">Interface</button>
+          <button type="button" role="tab" class="stage-tab" id="tab-components" aria-controls="panel-components" data-stage="components" aria-selected="false" tabindex="-1">Components</button>
+          <button type="button" role="tab" class="stage-tab" id="tab-contrast" aria-controls="panel-contrast" data-stage="contrast" aria-selected="false" tabindex="-1">
+            Contrast
+            <span class="stage-tab__badge" data-contrast-badge hidden></span>
+          </button>
+          <button type="button" role="tab" class="stage-tab" id="tab-code" aria-controls="panel-code" data-stage="code" aria-selected="false" tabindex="-1">Code</button>
+        </div>
+
+        <div class="stage-scroll">
+          <!-- Interface: one composed screen, because a theme is judged as a
+               whole and never as a grid of isolated widgets. -->
+          <div class="stage-panel" id="panel-interface" aria-labelledby="tab-interface" tabindex="0" data-stage-panel="interface" role="tabpanel">
+            <div class="demo-app">
+              <div class="demo-app__head">
+                <div>
+                  <p class="demo-eyebrow">Workspace</p>
+                  <h2 class="demo-title">Deployments</h2>
+                </div>
+                <div class="demo-app__actions">
+                  <arc-button variant="ghost" size="sm">Filter</arc-button>
+                  <arc-button variant="primary" size="sm">New deploy</arc-button>
+                </div>
+              </div>
+
+              <div class="demo-stats">
+                <arc-card>
+                  <p class="demo-stat__label">Requests</p>
+                  <p class="demo-stat__value">184,204</p>
+                  <arc-sparkline data="12,18,15,24,21,30,27,36,33,41" type="line" fill height="34"></arc-sparkline>
+                </arc-card>
+                <arc-card>
+                  <p class="demo-stat__label">Error rate</p>
+                  <p class="demo-stat__value">0.42%</p>
+                  <arc-meter value="4" min="0" max="100" low="10" high="60" optimum="0" label="Budget used"></arc-meter>
+                </arc-card>
+                <arc-card>
+                  <p class="demo-stat__label">Build</p>
+                  <p class="demo-stat__value demo-stat__value--accent">Passing</p>
+                  <arc-progress value="72" label="Pipeline progress" show-value></arc-progress>
+                </arc-card>
+              </div>
+
+              <arc-alert variant="success">
+                <strong>v3.0.1 deployed.</strong> Rolled out to all regions in 46 seconds.
+              </arc-alert>
+
+              <div class="demo-split">
+                <arc-card>
+                  <h3 class="demo-card__title">Recent activity</h3>
+                  <ul class="demo-feed">
+                    <li>
+                      <arc-avatar name="Nina Alvarez" size="sm" status="online"></arc-avatar>
+                      <span class="demo-feed__text">
+                        <strong>Nina</strong> promoted <code>edge-cache</code> to production
+                      </span>
+                      <arc-badge variant="success" size="sm">Live</arc-badge>
+                    </li>
+                    <li>
+                      <arc-avatar name="Theo Park" size="sm" status="away"></arc-avatar>
+                      <span class="demo-feed__text">
+                        <strong>Theo</strong> opened a rollback on <code>api-gateway</code>
+                      </span>
+                      <arc-badge variant="warning" size="sm">Review</arc-badge>
+                    </li>
+                    <li>
+                      <arc-avatar name="Ida Chen" size="sm" status="offline"></arc-avatar>
+                      <span class="demo-feed__text">
+                        <strong>Ida</strong> archived <code>legacy-worker</code>
+                      </span>
+                      <arc-badge size="sm">Archived</arc-badge>
+                    </li>
+                  </ul>
+                </arc-card>
+
+                <arc-card>
+                  <h3 class="demo-card__title">Deploy settings</h3>
+                  <div class="demo-form">
+                    <arc-input label="Service name" value="edge-cache" size="sm"></arc-input>
+                    <arc-select label="Region" size="sm" value="iad">
+                      <arc-option value="iad">us-east — IAD</arc-option>
+                      <arc-option value="fra">eu-central — FRA</arc-option>
+                      <arc-option value="syd">ap-southeast — SYD</arc-option>
+                    </arc-select>
+                    <arc-toggle label="Automatic rollback" checked></arc-toggle>
+                    <arc-slider label="Canary traffic" value="25" min="0" max="100" step="5" size="sm"></arc-slider>
+                    <div class="demo-form__actions">
+                      <arc-button variant="ghost" size="sm">Cancel</arc-button>
+                      <arc-button variant="primary" size="sm">Save changes</arc-button>
+                    </div>
+                  </div>
+                </arc-card>
+              </div>
+            </div>
+          </div>
+
+          <!-- Components: the matrix, for checking a token against every
+               variant at once rather than against one composed screen. -->
+          <div class="stage-panel" id="panel-components" aria-labelledby="tab-components" tabindex="0" data-stage-panel="components" role="tabpanel" hidden>
+            <div class="matrix">
+              <section class="matrix-cell">
+                <h3 class="matrix-cell__title">Buttons</h3>
+                <div class="matrix-cell__body">
+                  <arc-button variant="primary">Primary</arc-button>
+                  <arc-button variant="secondary">Secondary</arc-button>
+                  <arc-button variant="ghost">Ghost</arc-button>
+                  <arc-button variant="primary" disabled>Disabled</arc-button>
+                  <arc-button variant="secondary" size="sm">Small</arc-button>
+                </div>
+              </section>
+
+              <section class="matrix-cell">
+                <h3 class="matrix-cell__title">Status</h3>
+                <div class="matrix-cell__body">
+                  <arc-badge variant="default">Default</arc-badge>
+                  <arc-badge variant="primary">Primary</arc-badge>
+                  <arc-badge variant="secondary">Secondary</arc-badge>
+                  <arc-badge variant="success">Success</arc-badge>
+                  <arc-badge variant="warning">Warning</arc-badge>
+                  <arc-badge variant="error">Error</arc-badge>
+                  <arc-badge variant="info">Info</arc-badge>
+                </div>
+              </section>
+
+              <section class="matrix-cell matrix-cell--wide">
+                <h3 class="matrix-cell__title">Feedback</h3>
+                <div class="matrix-cell__body matrix-cell__body--stack">
+                  <arc-alert variant="info">An informational message.</arc-alert>
+                  <arc-alert variant="success">Everything completed successfully.</arc-alert>
+                  <arc-alert variant="warning">This action affects production.</arc-alert>
+                  <arc-alert variant="error">The request could not be completed.</arc-alert>
+                </div>
+              </section>
+
+              <section class="matrix-cell">
+                <h3 class="matrix-cell__title">Inputs</h3>
+                <div class="matrix-cell__body matrix-cell__body--stack">
+                  <arc-input label="Email" placeholder="you@example.com"></arc-input>
+                  <arc-input label="Invalid" value="not-an-email" error="Enter a valid address"></arc-input>
+                  <arc-toggle label="Notifications" checked></arc-toggle>
+                  <arc-checkbox label="Remember this device"></arc-checkbox>
+                </div>
+              </section>
+
+              <section class="matrix-cell">
+                <h3 class="matrix-cell__title">Type</h3>
+                <div class="matrix-cell__body matrix-cell__body--stack">
+                  <p class="type-display">Display</p>
+                  <p class="type-heading">Heading</p>
+                  <p class="type-body">Body text carries the prose weight and line height.</p>
+                  <p class="type-label">Section label</p>
+                  <p class="type-muted">Muted supporting copy.</p>
+                  <code class="type-code">const theme = synthesize(tokens);</code>
+                </div>
+              </section>
+
+              <section class="matrix-cell matrix-cell--wide">
+                <h3 class="matrix-cell__title">Surfaces</h3>
+                <div class="surface-strip">
+                  <div class="surface-chip" style="background: var(--bg-deep)"><span>deep</span></div>
+                  <div class="surface-chip" style="background: var(--bg-surface)"><span>surface</span></div>
+                  <div class="surface-chip" style="background: var(--bg-base)"><span>base</span></div>
+                  <div class="surface-chip" style="background: var(--bg-card)"><span>card</span></div>
+                  <div class="surface-chip" style="background: var(--bg-elevated)"><span>elevated</span></div>
+                </div>
+              </section>
+
+              <section class="matrix-cell matrix-cell--wide">
+                <h3 class="matrix-cell__title">Accent, composed</h3>
+                <p class="matrix-cell__note">
+                  None of these read an accent token directly — they read the gradients, glows and
+                  focus rings that compose from it. They move because the base tokens moved.
+                </p>
+                <div class="matrix-cell__body matrix-cell__body--stack">
+                  <arc-divider variant="line-gradient"></arc-divider>
+                  <div class="glow-row">
+                    <span class="glow-chip glow-chip--primary">glow-primary</span>
+                    <span class="glow-chip glow-chip--secondary">glow-secondary</span>
+                    <span class="glow-chip glow-chip--gradient">gradient-accent-text</span>
+                  </div>
+                  <arc-progress value="62" label="Composed accent"></arc-progress>
+                </div>
+              </section>
+            </div>
+          </div>
+
+          <!-- Contrast -->
+          <div class="stage-panel" id="panel-contrast" aria-labelledby="tab-contrast" tabindex="0" data-stage-panel="contrast" role="tabpanel" hidden>
+            <div class="audit">
+              <div class="audit__head">
+                <div>
+                  <h2 class="audit__title">Contrast</h2>
+                  <p class="audit__lede" data-audit-lede></p>
+                </div>
+                <arc-segmented-control data-audit-mode value="dark">
+                  <arc-option value="dark">Dark</arc-option>
+                  <arc-option value="light">Light</arc-option>
+                  <arc-option value="both">Both</arc-option>
+                </arc-segmented-control>
+              </div>
+
+              <table class="audit-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Pair</th>
+                    <th scope="col">Dark</th>
+                    <th scope="col">Light</th>
+                    <th scope="col">Needs</th>
+                  </tr>
+                </thead>
+                <tbody data-audit-body>
+                  {PAIRS.map((pair, i) => (
+                    <tr data-audit-row={i}>
+                      <th scope="row">
+                        <span class="audit-pair">{pair.label}</span>
+                        <span class="audit-note">{pair.note}</span>
+                      </th>
+                      <td data-audit-cell="dark"></td>
+                      <td data-audit-cell="light"></td>
+                      <td class="audit-needs">
+                        {pair.requirement === 'text'
+                          ? '4.5:1 text'
+                          : pair.requirement === 'info'
+                            ? '—'
+                            : '3:1 non-text'}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+
+              <arc-callout variant="info">
+                WCAG 2.1 ratios, computed from the tokens as you set them. Text pairs clearing 7:1
+                are marked AAA. This covers the pairings ARC UI actually paints; a component that
+                composites your colours at partial alpha can still land differently.
+              </arc-callout>
+            </div>
+          </div>
+
+          <!-- Code -->
+          <div class="stage-panel" id="panel-code" aria-labelledby="tab-code" tabindex="0" data-stage-panel="code" role="tabpanel" hidden>
+            <div class="code-pane">
+              <div class="code-pane__head">
+                <div>
+                  <h2 class="audit__title">Export</h2>
+                  <p class="audit__lede" data-code-lede></p>
+                </div>
+                <div class="code-pane__controls">
+                  <arc-segmented-control data-code-format value="css">
+                    <arc-option value="css">CSS</arc-option>
+                    <arc-option value="json">JSON</arc-option>
+                  </arc-segmented-control>
+                  <label class="code-toggle">
+                    <input type="checkbox" data-code-full />
+                    <span>Include unchanged tokens</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="code-frame">
+                <div class="code-frame__bar">
+                  <span class="code-frame__name" data-code-filename>arc-theme.css</span>
+                  <div class="code-frame__actions">
+                    <arc-button variant="ghost" size="sm" data-action="copy">Copy</arc-button>
+                    <arc-button variant="secondary" size="sm" data-action="download">Download</arc-button>
+                  </div>
+                </div>
+                <pre class="code-frame__body"><code data-code-output></code></pre>
+              </div>
+
+              <arc-callout variant="info">
+                Load this after ARC UI's stylesheet. Only what you changed is here — gradients,
+                glows, focus rings and shadows compose from the base tokens at <code>:root</code>,
+                so they re-derive on their own.
+              </arc-callout>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Mobile: the rail and stage cannot sit side by side, so they take turns. -->
+    <div class="synth-switch" role="region" aria-label="Pane switcher">
+      <arc-segmented-control data-mobile-switch value="controls">
+        <arc-option value="controls">Controls</arc-option>
+        <arc-option value="preview">Preview</arc-option>
+      </arc-segmented-control>
+    </div>
+  </div>
+
+  <!-- Import -->
+  <arc-modal data-import-modal heading="Import a theme">
+    <p class="modal-lede">
+      Paste a stylesheet — what this tool exports, ARC UI's own <code>base.css</code>, or a theme
+      you hand-edited. A single colour works too, and becomes the primary accent.
+    </p>
+    <textarea
+      class="import-area"
+      data-import-input
+      rows="12"
+      spellcheck="false"
+      aria-label="Theme CSS to import"
+      placeholder={':root {\n  --accent-primary: rgb(217, 70, 239);\n  --accent-secondary: rgb(124, 58, 237);\n}'}
+    ></textarea>
+    <p class="import-status" data-import-status role="status"></p>
+    <div slot="footer" class="modal-actions">
+      <arc-button variant="ghost" size="sm" data-action="import-cancel">Cancel</arc-button>
+      <arc-button variant="primary" size="sm" data-action="import-apply">Apply</arc-button>
+    </div>
+  </arc-modal>
+
+  <arc-toast data-toasts position="bottom-right"></arc-toast>
+</BaseLayout>
+
+<script>
+  import {
+    COLOR_GROUPS,
+    COLOR_TOKENS,
+    DEFAULT_COLORS,
+    DEFAULT_FONTS,
+    DEFAULT_RANGES,
+    FONT_ROLES,
+    RANGE_CONTROLS,
+    changedCount,
+    cloneState,
+    defaultState,
+    toHex,
+    type SynthState,
+    type ThemeMode,
+  } from '../lib/synth/schema';
+  import { emitCSS, emitJSON } from '../lib/synth/css';
+  import { auditTheme, formatRatio, summarize } from '../lib/synth/contrast';
+  import { importTheme } from '../lib/synth/parse';
+  import { PRESETS, applyPreset } from '../lib/synth/presets';
+
+  const STORAGE_KEY = 'arc-synth-v3';
+  const RANGE_BY_TOKEN = new Map(RANGE_CONTROLS.map((c) => [c.token, c]));
+
+  let state: SynthState = defaultState();
+  let mode: ThemeMode = 'dark';
+  let codeFormat: 'css' | 'json' = 'css';
+  let codeFull = false;
+  let auditMode: 'dark' | 'light' | 'both' = 'dark';
+  let mirror = true;
+  let openPicker: string | null = null;
+
+  const $ = <T extends Element = HTMLElement>(sel: string, root: ParentNode = document) =>
+    root.querySelector(sel) as T | null;
+  const $$ = <T extends Element = HTMLElement>(sel: string, root: ParentNode = document) =>
+    Array.from(root.querySelectorAll(sel)) as T[];
+
+  /* ── Persistence ─────────────────────────────────────────────────────── */
+
+  function save() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch {
+      /* Private mode, quota, a browser that refuses. The app still works. */
+    }
+  }
+
+  function load(): SynthState | null {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      // Merge over a fresh default rather than trusting the shape: a stored
+      // theme predates any token added since, and a missing key would render
+      // as `undefined` in the output.
+      const next = defaultState();
+      for (const m of ['dark', 'light'] as ThemeMode[]) {
+        for (const token of COLOR_TOKENS) {
+          const v = parsed?.colors?.[m]?.[token];
+          if (typeof v === 'string') next.colors[m][token] = toHex(v);
+        }
+      }
+      for (const key of Object.keys(DEFAULT_FONTS)) {
+        const v = parsed?.fonts?.[key];
+        if (typeof v === 'string' && v.trim()) next.fonts[key] = v;
+      }
+      for (const key of Object.keys(DEFAULT_RANGES)) {
+        const v = parsed?.ranges?.[key];
+        if (typeof v === 'number' && Number.isFinite(v)) next.ranges[key] = v;
+      }
+      return next;
+    } catch {
+      return null;
+    }
+  }
+
+  /* ── Applying the theme ──────────────────────────────────────────────── */
+
+  /**
+   * The overrides go on the document, not on a preview container.
+   *
+   * Compound tokens are composed at `:root` and custom properties inherit
+   * their already-substituted values, so scoping an accent override to a
+   * wrapper recolours direct `var(--accent-*)` uses and leaves every gradient,
+   * glow and focus ring inside it wearing the original colour. A preview that
+   * did that would contradict the library's central claim in the exact place
+   * it is being demonstrated.
+   */
+  function styleEl(): HTMLStyleElement {
+    let el = document.getElementById('synth-live') as HTMLStyleElement | null;
+    if (!el) {
+      el = document.createElement('style');
+      el.id = 'synth-live';
+      document.head.appendChild(el);
+    }
+    return el;
+  }
+
+  /**
+   * The docs site is not neutral ground.
+   *
+   * `docs/src/styles/global.css` gives arcui.dev its own brand: it retunes
+   * `--accent-secondary` to teal and hard-codes two compound tokens with the
+   * channels spelled out. Left alone, the synthesizer would preview against
+   * that brand while exporting against the library's — you would pick colours
+   * next to a teal gradient and ship a violet one. These re-compose the two
+   * hard-coded tokens from whatever the base tokens currently are, which is
+   * what they look like in a consuming project that never touched them.
+   */
+  const HOST_BRAND_RESET = `
+  --gradient-display-text: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-primary) 100%);
+  --gradient-ambient:
+    radial-gradient(circle at 15% 85%, rgba(var(--accent-primary-rgb),0.04) 0%, transparent 50%),
+    radial-gradient(circle at 85% 15%, rgba(var(--accent-secondary-rgb),0.03) 0%, transparent 50%);`;
+
+  function apply() {
+    // `:root:root` doubles specificity so it beats base.css's `:root`, and the
+    // light block carries the attribute selector on top so theme switching
+    // still resolves in the right order.
+    //
+    // `full: true` on the live sheet, unlike the export: a token left out here
+    // falls through to whatever the host page declares, and the host page has
+    // opinions. The export stays minimal because it lands on stock ARC UI.
+    const live = emitCSS(state, { root: ':root:root', header: false, full: true });
+    styleEl().textContent = `${live}\n\n:root:root {${HOST_BRAND_RESET}\n}`;
+    render();
+    save();
+  }
+
+  /* ── Rail: colours ───────────────────────────────────────────────────── */
+
+  function paintColorRows() {
+    for (const row of $$('.color-row')) {
+      const token = row.dataset.token!;
+      const value = state.colors[mode][token];
+      const swatch = $('[data-swatch]', row) as HTMLButtonElement;
+      const hex = $('[data-hex]', row) as HTMLInputElement;
+      const revert = $('[data-revert]', row) as HTMLButtonElement;
+
+      swatch.style.background = value;
+      // Don't fight the user mid-keystroke: only rewrite the field when the
+      // value it holds isn't already the one we're showing.
+      if (toHex(hex.value || '#000000') !== value || document.activeElement !== hex) {
+        hex.value = value;
+      }
+      const changed = value !== DEFAULT_COLORS[mode][token];
+      row.classList.toggle('is-changed', changed);
+      revert.hidden = !changed;
+
+      const picker = $('arc-color-picker', row) as any;
+      if (picker && picker.value !== value) picker.value = value;
+    }
+  }
+
+  function togglePicker(row: HTMLElement) {
+    const token = row.dataset.token!;
+    const slot = $('[data-picker-slot]', row) as HTMLElement;
+    const swatch = $('[data-swatch]', row) as HTMLButtonElement;
+
+    if (openPicker === token) {
+      slot.hidden = true;
+      swatch.setAttribute('aria-expanded', 'false');
+      openPicker = null;
+      return;
+    }
+
+    // One at a time — a rail of thirteen open pickers is a scroll, not a tool.
+    if (openPicker) {
+      const prev = $(`.color-row[data-token="${openPicker}"]`);
+      if (prev) {
+        ($('[data-picker-slot]', prev) as HTMLElement).hidden = true;
+        $('[data-swatch]', prev)!.setAttribute('aria-expanded', 'false');
+      }
+    }
+
+    if (!slot.firstElementChild) {
+      const picker = document.createElement('arc-color-picker') as any;
+      picker.value = state.colors[mode][token];
+      // The theme's own palette as quick-picks: most edits reuse a colour
+      // already in the theme rather than inventing a new one.
+      picker.presets = [
+        state.colors[mode]['--accent-primary'],
+        state.colors[mode]['--accent-secondary'],
+        state.colors[mode]['--color-success'],
+        state.colors[mode]['--color-warning'],
+        state.colors[mode]['--color-error'],
+        state.colors[mode]['--color-info'],
+      ];
+      picker.addEventListener('arc-input', (e: any) => setColor(token, e.detail.value));
+      picker.addEventListener('arc-change', (e: any) => setColor(token, e.detail.value));
+      slot.appendChild(picker);
+    }
+
+    slot.hidden = false;
+    swatch.setAttribute('aria-expanded', 'true');
+    openPicker = token;
+  }
+
+  function setColor(token: string, value: string) {
+    const hex = toHex(value);
+    if (state.colors[mode][token] === hex) return;
+    state.colors[mode][token] = hex;
+    if (mirror) state.colors[other(mode)][token] = hex;
+    apply();
+  }
+
+  function other(m: ThemeMode): ThemeMode {
+    return m === 'dark' ? 'light' : 'dark';
+  }
+
+  /* ── Rail: type, space, motion ───────────────────────────────────────── */
+
+  function paintFontRows() {
+    for (const row of $$('.font-row')) {
+      const role = row.dataset.role!;
+      const family = $('[data-font-family]', row) as HTMLInputElement;
+      const fallback = $('[data-font-fallback]', row) as HTMLInputElement;
+      const weight = $('[data-font-weight]', row) as HTMLInputElement;
+      const preview = $('[data-font-preview]', row) as HTMLElement;
+
+      const fk = `--font-${role}-family`;
+      const bk = `--font-${role}-fallback`;
+      const wk = `--font-${role}-weight`;
+
+      if (document.activeElement !== family) family.value = state.fonts[fk];
+      if (document.activeElement !== fallback) fallback.value = state.fonts[bk];
+      if (document.activeElement !== weight) weight.value = state.fonts[wk];
+
+      preview.style.fontFamily = `${state.fonts[fk]}, ${state.fonts[bk]}`;
+      preview.style.fontWeight = state.fonts[wk];
+
+      const changed =
+        state.fonts[fk] !== DEFAULT_FONTS[fk] ||
+        state.fonts[bk] !== DEFAULT_FONTS[bk] ||
+        state.fonts[wk] !== DEFAULT_FONTS[wk];
+      row.classList.toggle('is-changed', changed);
+    }
+  }
+
+  function paintRangeRows() {
+    for (const row of $$('.range-row')) {
+      const token = row.dataset.token!;
+      const control = RANGE_BY_TOKEN.get(token)!;
+      const value = state.ranges[token];
+      const slider = $('[data-slider]', row) as any;
+      const label = $('[data-range-value]', row) as HTMLElement;
+      const gauge = $('[data-gauge]', row) as HTMLElement | null;
+
+      if (slider && slider.value !== value) slider.value = value;
+      label.textContent = `${value}${control.unit}`;
+      row.classList.toggle('is-changed', value !== DEFAULT_RANGES[token]);
+
+      if (gauge) {
+        if (control.gauge === 'space') gauge.style.inlineSize = `${value}px`;
+        else gauge.style.borderRadius = `${value}px`;
+      }
+    }
+  }
+
+  /* ── Stage: contrast ─────────────────────────────────────────────────── */
+
+  function paintAudit() {
+    const dark = auditTheme(state, 'dark');
+    const light = auditTheme(state, 'light');
+
+    for (const [i, row] of $$('[data-audit-row]').entries()) {
+      for (const [m, results] of [['dark', dark], ['light', light]] as const) {
+        const cell = $(`[data-audit-cell="${m}"]`, row)!;
+        const r = results[i];
+        cell.innerHTML = '';
+        const verdict =
+          r.requirement === 'info' ? 'info' : r.passes ? (r.aaa ? 'aaa' : 'pass') : 'fail';
+        const chip = document.createElement('span');
+        chip.className = `ratio ratio--${verdict}`;
+        chip.textContent = formatRatio(r.ratio);
+        const tag = document.createElement('span');
+        tag.className = 'ratio__tag';
+        tag.textContent = { info: 'Structure', aaa: 'AAA', pass: 'AA', fail: 'Fails' }[verdict];
+        chip.appendChild(tag);
+        cell.appendChild(chip);
+        (cell as HTMLElement).hidden = auditMode !== 'both' && auditMode !== m;
+      }
+    }
+    for (const th of $$('.audit-table thead th')) {
+      const label = th.textContent?.trim().toLowerCase();
+      if (label === 'dark' || label === 'light') {
+        (th as HTMLElement).hidden = auditMode !== 'both' && auditMode !== label;
+      }
+    }
+
+    const active = auditMode === 'light' ? light : dark;
+    const other = auditMode === 'light' ? dark : light;
+    const sumActive = summarize(active);
+    const sumBoth = summarize([...active, ...other]);
+    const failures = auditMode === 'both' ? sumBoth.failures : sumActive.failures;
+
+    const lede = $('[data-audit-lede]');
+    if (lede) {
+      lede.textContent = failures
+        ? `${failures} pairing${failures === 1 ? '' : 's'} below the bar. The worst is ${
+            (auditMode === 'both' ? sumBoth : sumActive).worst?.label.toLowerCase()
+          }.`
+        : 'Every pairing clears its threshold in both themes.';
+    }
+
+    // The chip in the command bar reports both themes regardless of which one
+    // you are editing — a theme that only works in dark is not finished.
+    const bothFailures = summarize([...dark, ...light]).failures;
+    const chipText = $('[data-contrast-text]');
+    const chipDot = $('[data-contrast-dot]');
+    const chip = $('[data-contrast-chip]');
+    if (chipText && chipDot && chip) {
+      chipText.textContent = bothFailures
+        ? `${bothFailures} contrast issue${bothFailures === 1 ? '' : 's'}`
+        : 'Contrast clean';
+      chip.classList.toggle('is-failing', bothFailures > 0);
+    }
+    const badge = $('[data-contrast-badge]') as HTMLElement;
+    if (badge) {
+      badge.hidden = bothFailures === 0;
+      badge.textContent = String(bothFailures);
+    }
+  }
+
+  /* ── Stage: code ─────────────────────────────────────────────────────── */
+
+  function codeText(): string {
+    return codeFormat === 'css' ? emitCSS(state, { full: codeFull }) : emitJSON(state, codeFull);
+  }
+
+  function paintCode() {
+    const out = $('[data-code-output]');
+    if (out) out.textContent = codeText();
+    const name = $('[data-code-filename]');
+    if (name) name.textContent = codeFormat === 'css' ? 'arc-theme.css' : 'arc-theme.json';
+    const lede = $('[data-code-lede]');
+    if (lede) {
+      const n = changedCount(state);
+      lede.textContent = n
+        ? `${n} token${n === 1 ? '' : 's'} changed from the ARC UI defaults.`
+        : 'Nothing changed yet — every token still matches the ARC UI defaults.';
+    }
+  }
+
+  /* ── Render ──────────────────────────────────────────────────────────── */
+
+  function render() {
+    paintColorRows();
+    paintFontRows();
+    paintRangeRows();
+    paintAudit();
+    paintCode();
+
+    // Never `hidden`: the counter sits in the bar's first group, so appearing
+    // and disappearing would shove the theme switch sideways every time the
+    // count crossed zero. It keeps its box and fades instead.
+    const n = changedCount(state);
+    const counter = $('[data-changed-count]') as HTMLElement;
+    if (counter) {
+      counter.classList.toggle('is-visible', n > 0);
+      counter.textContent = n > 0 ? `${n} changed` : '';
+    }
+  }
+
+  /* ── Theme mode ──────────────────────────────────────────────────────── */
+
+  function resolveTheme(): ThemeMode {
+    const attr = document.documentElement.getAttribute('data-theme');
+    if (attr === 'light' || attr === 'dark') return attr;
+    return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  }
+
+  function setMode(next: ThemeMode, { syncDocument = true } = {}) {
+    mode = next;
+    if (syncDocument) {
+      document.documentElement.setAttribute('data-theme', next);
+      try {
+        localStorage.setItem('arc-theme', next);
+      } catch {
+        /* nothing to do */
+      }
+    }
+    const sw = $('[data-theme-switch]') as any;
+    if (sw && sw.value !== next) sw.value = next;
+    // A picker left open belongs to the palette you were editing.
+    if (openPicker) {
+      const row = $(`.color-row[data-token="${openPicker}"]`);
+      if (row) {
+        ($('[data-picker-slot]', row) as HTMLElement).hidden = true;
+        ($('[data-picker-slot]', row) as HTMLElement).replaceChildren();
+        $('[data-swatch]', row)!.setAttribute('aria-expanded', 'false');
+      }
+      openPicker = null;
+    }
+    render();
+  }
+
+  /* ── Toasts ──────────────────────────────────────────────────────────── */
+
+  function toast(message: string, variant: 'success' | 'error' | 'info' = 'success') {
+    const container = $('[data-toasts]') as any;
+    if (container?.show) {
+      container.show({ message, variant, duration: 2600 });
+      return;
+    }
+    console.info(`[synth] ${message}`);
+  }
+
+  /* ── Wiring ──────────────────────────────────────────────────────────── */
+
+  function init() {
+    /**
+     * Bind once per document.
+     *
+     * `astro:page-load` fires on the initial load as well as after a soft
+     * navigation, so the usual `init(); addEventListener('astro:page-load',
+     * init)` pairing wires this page twice on arrival — every slider applies
+     * twice, and the import handler ran a second time against the textarea the
+     * first one had just cleared, reporting failure on a paste that worked.
+     * The marker lives on the element, not in a module flag, so a view
+     * transition that swaps in a fresh .synth still binds it.
+     */
+    const root = document.querySelector('.synth') as HTMLElement | null;
+    if (!root || root.dataset.ready === '1') return;
+    root.dataset.ready = '1';
+
+    const stored = load();
+    if (stored) state = stored;
+    setMode(resolveTheme(), { syncDocument: false });
+    apply();
+
+    // Rail panels
+    const railSwitch = $('[data-rail-switch]') as any;
+    railSwitch?.addEventListener('arc-change', (e: any) => {
+      for (const panel of $$('[data-rail-panel]')) {
+        panel.hidden = panel.dataset.railPanel !== e.detail.value;
+      }
+      ($('.synth-rail__scroll') as HTMLElement).scrollTop = 0;
+    });
+
+    // Editing theme
+    ($('[data-theme-switch]') as any)?.addEventListener('arc-change', (e: any) =>
+      setMode(e.detail.value as ThemeMode),
+    );
+
+    ($('[data-mirror]') as HTMLInputElement)?.addEventListener('change', (e) => {
+      mirror = (e.target as HTMLInputElement).checked;
+    });
+
+    // The site's own theme toggle lives in the top bar and can move the theme
+    // out from under us; follow it rather than letting the two disagree.
+    new MutationObserver(() => {
+      const next = resolveTheme();
+      if (next !== mode) setMode(next, { syncDocument: false });
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+    // Colour rows
+    for (const row of $$('.color-row')) {
+      const token = row.dataset.token!;
+      $('[data-swatch]', row)!.addEventListener('click', () => togglePicker(row));
+
+      const hex = $('[data-hex]', row) as HTMLInputElement;
+      hex.addEventListener('input', () => {
+        const v = hex.value.trim();
+        if (/^#?([0-9a-f]{3}|[0-9a-f]{6})$/i.test(v)) {
+          setColor(token, v.startsWith('#') ? v : `#${v}`);
+        }
+      });
+      hex.addEventListener('blur', () => paintColorRows());
+
+      $('[data-revert]', row)!.addEventListener('click', () => {
+        state.colors[mode][token] = DEFAULT_COLORS[mode][token];
+        apply();
+      });
+    }
+
+    // Presets
+    for (const button of $$('[data-preset]')) {
+      button.addEventListener('click', () => {
+        const preset = PRESETS.find((p) => p.id === button.dataset.preset);
+        if (!preset) return;
+        state = applyPreset(preset);
+        apply();
+        toast(`Loaded the ${preset.name} preset.`);
+      });
+    }
+
+    // Fonts
+    for (const row of $$('.font-row')) {
+      const role = row.dataset.role!;
+      const bind = (sel: string, key: string) => {
+        const input = $(sel, row) as HTMLInputElement;
+        input.addEventListener('input', () => {
+          const value = input.value.trim();
+          state.fonts[key] = value || DEFAULT_FONTS[key];
+          apply();
+        });
+      };
+      bind('[data-font-family]', `--font-${role}-family`);
+      bind('[data-font-fallback]', `--font-${role}-fallback`);
+      bind('[data-font-weight]', `--font-${role}-weight`);
+    }
+
+    // Ranges
+    for (const row of $$('.range-row')) {
+      const token = row.dataset.token!;
+      const slider = $('[data-slider]', row) as any;
+      const onInput = (e: any) => {
+        const value = Number(e.detail?.value ?? slider.value);
+        if (state.ranges[token] === value) return;
+        state.ranges[token] = value;
+        apply();
+      };
+      slider?.addEventListener('arc-input', onInput);
+      slider?.addEventListener('arc-change', onInput);
+    }
+
+    // Stage tabs
+    const tabs = $$('.stage-tab');
+    for (const [i, tab] of tabs.entries()) {
+      tab.addEventListener('click', () => selectStage(tab.dataset.stage!));
+      tab.addEventListener('keydown', (e: KeyboardEvent) => {
+        const step = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        const target =
+          step !== 0
+            ? tabs[(i + step + tabs.length) % tabs.length]
+            : e.key === 'Home'
+              ? tabs[0]
+              : e.key === 'End'
+                ? tabs[tabs.length - 1]
+                : null;
+        if (!target) return;
+        e.preventDefault();
+        selectStage(target.dataset.stage!);
+        target.focus();
+      });
+    }
+    $('[data-contrast-chip]')?.addEventListener('click', () => selectStage('contrast'));
+
+    // Audit mode
+    ($('[data-audit-mode]') as any)?.addEventListener('arc-change', (e: any) => {
+      auditMode = e.detail.value;
+      paintAudit();
+    });
+
+    // Code controls
+    ($('[data-code-format]') as any)?.addEventListener('arc-change', (e: any) => {
+      codeFormat = e.detail.value;
+      paintCode();
+    });
+    ($('[data-code-full]') as HTMLInputElement)?.addEventListener('change', (e) => {
+      codeFull = (e.target as HTMLInputElement).checked;
+      paintCode();
+    });
+
+    $('[data-action="copy"]')?.addEventListener('click', async () => {
+      await navigator.clipboard.writeText(codeText());
+      toast('Copied to the clipboard.');
+    });
+
+    $('[data-action="download"]')?.addEventListener('click', () => {
+      const blob = new Blob([codeText()], {
+        type: codeFormat === 'css' ? 'text/css' : 'application/json',
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = codeFormat === 'css' ? 'arc-theme.css' : 'arc-theme.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    $('[data-action="export"]')?.addEventListener('click', () => selectStage('code'));
+
+    // Reset
+    $('[data-action="reset"]')?.addEventListener('click', () => {
+      if (changedCount(state) === 0) {
+        toast('Already on the ARC UI defaults.', 'info');
+        return;
+      }
+      const previous = cloneState(state);
+      state = defaultState();
+      apply();
+      toast('Reset to the ARC UI defaults.');
+      // One level of undo, because a reset that eats twenty minutes of work
+      // with no way back is the reason people stop touching the button.
+      const undo = () => {
+        state = previous;
+        apply();
+        toast('Restored your theme.');
+      };
+      window.addEventListener('keydown', function onUndo(e) {
+        if ((e.metaKey || e.ctrlKey) && e.key === 'z') {
+          e.preventDefault();
+          undo();
+          window.removeEventListener('keydown', onUndo);
+        }
+      });
+    });
+
+    // Import
+    const modal = $('[data-import-modal]') as any;
+    $('[data-action="import"]')?.addEventListener('click', () => {
+      if (modal) modal.open = true;
+    });
+    $('[data-action="import-cancel"]')?.addEventListener('click', () => {
+      if (modal) modal.open = false;
+    });
+    $('[data-action="import-apply"]')?.addEventListener('click', () => {
+      const input = $('[data-import-input]') as HTMLTextAreaElement;
+      const status = $('[data-import-status]') as HTMLElement;
+      const report = importTheme(input.value, state);
+      status.textContent = report.message;
+      status.classList.toggle('is-error', !report.ok);
+      if (!report.ok) return;
+      state = report.state;
+      apply();
+      if (modal) modal.open = false;
+      input.value = '';
+      toast(report.message);
+    });
+
+    // Mobile pane switch
+    ($('[data-mobile-switch]') as any)?.addEventListener('arc-change', (e: any) => {
+      document.querySelector('.synth')?.setAttribute('data-mobile-pane', e.detail.value);
+    });
+  }
+
+  function selectStage(name: string) {
+    for (const tab of $$('.stage-tab')) {
+      const selected = tab.dataset.stage === name;
+      tab.setAttribute('aria-selected', String(selected));
+      tab.tabIndex = selected ? 0 : -1;
+    }
+    for (const panel of $$('[data-stage-panel]')) {
+      panel.hidden = panel.dataset.stagePanel !== name;
+    }
+    ($('.stage-scroll') as HTMLElement).scrollTop = 0;
+    document.querySelector('.synth')?.setAttribute('data-mobile-pane', 'preview');
+    const mobile = $('[data-mobile-switch]') as any;
+    if (mobile) mobile.value = 'preview';
+  }
+
+  init();
+  document.addEventListener('astro:page-load', init);
+
+  // The override outlives the page without this: the <style> lives in <head>,
+  // which view transitions preserve, so navigating to /docs would carry the
+  // user's in-progress theme onto every page after it.
+  document.addEventListener('astro:before-swap', () => {
+    document.getElementById('synth-live')?.remove();
+  });
+</script>
+
+<style>
+  /* ── Frame ───────────────────────────────────────────────────────────── */
+
+  .synth {
+    display: flex;
+    flex-direction: column;
+    block-size: 100dvh;
+    padding-block-start: var(--nav-height);
+    background: var(--bg-base);
+  }
+
+  .synth-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--bg-surface);
+    border-block-end: 1px solid var(--border-subtle);
+    flex-shrink: 0;
+  }
+
+  .synth-bar__group {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    min-inline-size: 0;
+  }
+
+  .synth-bar__group--end {
+    margin-inline-start: auto;
+  }
+
+  .synth-bar__title {
+    font-family: var(--font-label);
+    font-size: var(--text-xs);
+    font-weight: var(--font-label-weight);
+    letter-spacing: var(--section-title-spacing);
+    text-transform: uppercase;
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  .synth-bar__label {
+    font-family: var(--font-label);
+    font-size: var(--label-inline-size);
+    letter-spacing: var(--label-inline-spacing);
+    text-transform: uppercase;
+    color: var(--text-ghost);
+  }
+
+  /* Fixed box, held whether or not it has anything to say — see render(). The
+     width fits "888 changed", past which the theme is a rewrite, not an edit. */
+  .synth-bar__count {
+    inline-size: 84px;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: var(--label-inline-size);
+    color: var(--accent-primary);
+    padding: 2px 0;
+    border-radius: var(--radius-full);
+    background: transparent;
+    opacity: 0;
+    transition: opacity var(--transition-base);
+  }
+
+  .synth-bar__count.is-visible {
+    opacity: 1;
+    background: var(--accent-primary-subtle);
+  }
+
+  .synth-mirror {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .synth-mirror:hover { color: var(--text-secondary); }
+
+  /* ── Contrast chip ───────────────────────────────────────────────────── */
+
+  .synth-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-full);
+    background: transparent;
+    color: var(--text-muted);
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    cursor: pointer;
+    transition: color var(--transition-fast), border-color var(--transition-fast);
+  }
+
+  .synth-chip:hover {
+    color: var(--text-primary);
+    border-color: var(--border-bright);
+  }
+
+  .synth-chip__dot {
+    inline-size: 6px;
+    block-size: 6px;
+    border-radius: var(--radius-full);
+    background: var(--color-success);
+    box-shadow: 0 0 8px rgba(var(--color-success-rgb), 0.6);
+  }
+
+  .synth-chip.is-failing {
+    color: var(--color-warning);
+    border-color: rgba(var(--color-warning-rgb), 0.35);
+  }
+
+  .synth-chip.is-failing .synth-chip__dot {
+    background: var(--color-warning);
+    box-shadow: 0 0 8px rgba(var(--color-warning-rgb), 0.6);
+  }
+
+  /* ── Two panes ───────────────────────────────────────────────────────── */
+
+  .synth-body {
+    display: grid;
+    grid-template-columns: 372px minmax(0, 1fr);
+    flex: 1;
+    min-block-size: 0;
+  }
+
+  .synth-rail {
+    display: flex;
+    flex-direction: column;
+    min-block-size: 0;
+    background: var(--bg-surface);
+    border-inline-end: 1px solid var(--border-subtle);
+  }
+
+  .synth-rail__head {
+    padding: var(--space-sm) var(--space-md);
+    border-block-end: 1px solid var(--border-subtle);
+    flex-shrink: 0;
+  }
+
+  .synth-rail__head arc-segmented-control {
+    inline-size: 100%;
+  }
+
+  .synth-rail__scroll {
+    flex: 1;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: var(--space-md);
+  }
+
+  .synth-stage {
+    display: flex;
+    flex-direction: column;
+    min-block-size: 0;
+    outline: none;
+  }
+
+  .stage-tabs {
+    display: flex;
+    gap: var(--space-xs);
+    padding: 0 var(--space-lg);
+    border-block-end: 1px solid var(--border-subtle);
+    background: var(--bg-surface);
+    flex-shrink: 0;
+  }
+
+  .stage-tab {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: var(--space-sm) var(--space-sm);
+    border: none;
+    background: none;
+    color: var(--text-muted);
+    font-family: var(--font-label);
+    font-size: var(--text-xs);
+    letter-spacing: var(--section-title-spacing);
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: color var(--transition-fast);
+  }
+
+  .stage-tab:hover { color: var(--text-secondary); }
+
+  .stage-tab[aria-selected='true'] {
+    color: var(--text-primary);
+  }
+
+  /* Marked underneath, where a tab's own affordance lives — never with a
+     coloured edge on the leading side. */
+  .stage-tab[aria-selected='true']::after {
+    content: '';
+    position: absolute;
+    inset-inline: var(--space-sm);
+    inset-block-end: -1px;
+    block-size: 2px;
+    background: var(--gradient-accent-text);
+    border-radius: var(--radius-full);
+  }
+
+  /* `hidden` loses to a display rule, so the badge showed a literal "0" on a
+     clean theme. The attribute selector has to win it back. */
+  .stage-tab__badge[hidden] { display: none; }
+
+  .stage-tab__badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-inline-size: 16px;
+    padding: 0 4px;
+    border-radius: var(--radius-full);
+    background: rgba(var(--color-warning-rgb), 0.16);
+    color: var(--color-warning);
+    font-family: var(--font-mono);
+    font-size: 10px;
+  }
+
+  .stage-scroll {
+    flex: 1;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: var(--space-lg);
+  }
+
+  /* ── Rail groups ─────────────────────────────────────────────────────── */
+
+  .rail-group {
+    margin-block-end: var(--space-lg);
+  }
+
+  .rail-group__title {
+    font-family: var(--font-label);
+    font-size: var(--text-xs);
+    font-weight: var(--font-label-weight);
+    letter-spacing: var(--section-title-spacing);
+    text-transform: uppercase;
+    color: var(--text-primary);
+    margin: 0 0 4px;
+  }
+
+  .rail-group__hint {
+    font-size: var(--text-xs);
+    line-height: 1.5;
+    color: var(--text-muted);
+    margin: 0 0 var(--space-sm);
+  }
+
+  .rail-group__body {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .rail-group__body--stack {
+    gap: var(--space-sm);
+  }
+
+  /* ── Presets ─────────────────────────────────────────────────────────── */
+
+  .rail-presets {
+    margin-block-end: var(--space-lg);
+  }
+
+  .rail-presets__title {
+    font-family: var(--font-label);
+    font-size: var(--label-inline-size);
+    letter-spacing: var(--label-inline-spacing);
+    text-transform: uppercase;
+    color: var(--text-ghost);
+    margin: 0 0 var(--space-sm);
+  }
+
+  .rail-presets__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xs);
+  }
+
+  .preset {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: var(--space-sm);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    background: var(--bg-card);
+    cursor: pointer;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .preset:hover {
+    border-color: var(--border-bright);
+    box-shadow: var(--glow-hover);
+  }
+
+  .preset__swatches {
+    display: flex;
+    gap: 3px;
+  }
+
+  .preset__swatches span {
+    inline-size: 14px;
+    block-size: 14px;
+    border-radius: var(--radius-full);
+  }
+
+  .preset__name {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+  }
+
+  /* ── Colour rows ─────────────────────────────────────────────────────── */
+
+  .color-row {
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr) 78px 22px;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 6px 6px;
+    border-radius: var(--radius-sm);
+    transition: background var(--transition-fast);
+  }
+
+  .color-row:hover { background: var(--surface-hover); }
+
+  .color-row__swatch {
+    inline-size: 26px;
+    block-size: 26px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-bright);
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .color-row__text {
+    display: flex;
+    flex-direction: column;
+    min-inline-size: 0;
+  }
+
+  .color-row__label {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    line-height: 1.3;
+  }
+
+  /* A changed token lifts to primary rather than growing an edge marker —
+     hierarchy by weight of colour, not by a bar down the side. */
+  .color-row.is-changed .color-row__label {
+    color: var(--text-primary);
+  }
+
+  .color-row__token {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-ghost);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .color-row__hex,
+  .font-row__input,
+  .font-row__fallback,
+  .font-row__weight {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-primary);
+    background: var(--bg-deep);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 5px 7px;
+    inline-size: 100%;
+    min-inline-size: 0;
+  }
+
+  .color-row__hex:focus-visible,
+  .font-row__input:focus-visible,
+  .font-row__fallback:focus-visible,
+  .font-row__weight:focus-visible {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: var(--focus-ring);
+  }
+
+  .color-row__revert {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 22px;
+    block-size: 22px;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: none;
+    color: var(--text-ghost);
+    cursor: pointer;
+  }
+
+  .color-row__revert:hover { color: var(--accent-primary); }
+
+  .color-row__picker {
+    grid-column: 1 / -1;
+    padding-block: var(--space-sm);
+  }
+
+  /* ── Font rows ───────────────────────────────────────────────────────── */
+
+  .font-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: var(--space-sm);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    background: var(--bg-card);
+  }
+
+  .font-row__head {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .font-row__label {
+    font-family: var(--font-label);
+    font-size: var(--label-inline-size);
+    letter-spacing: var(--label-inline-spacing);
+    text-transform: uppercase;
+    color: var(--text-secondary);
+  }
+
+  .font-row.is-changed .font-row__label { color: var(--accent-primary); }
+
+  .font-row__hint {
+    font-size: var(--text-xs);
+    color: var(--text-ghost);
+    line-height: 1.4;
+  }
+
+  .font-row__foot {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 72px;
+    gap: 6px;
+  }
+
+  .font-row__preview {
+    margin: 4px 0 0;
+    font-size: var(--text-sm);
+    color: var(--text-primary);
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* ── Range rows ──────────────────────────────────────────────────────── */
+
+  .range-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 52px;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .range-row:has(.gauge) {
+    grid-template-columns: minmax(0, 1fr) 52px 44px;
+  }
+
+  .range-row__value {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    text-align: end;
+  }
+
+  .range-row.is-changed .range-row__value { color: var(--accent-primary); }
+
+  .gauge {
+    block-size: 20px;
+    background: var(--accent-primary-glow);
+    border-radius: 2px;
+  }
+
+  .gauge--radius {
+    inline-size: 26px;
+    block-size: 26px;
+    border: 1px solid var(--accent-primary);
+    background: var(--accent-primary-subtle);
+    justify-self: end;
+  }
+
+  /* ── Interface demo ──────────────────────────────────────────────────── */
+
+  .demo-app {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    max-inline-size: var(--max-width);
+    margin-inline: auto;
+  }
+
+  .demo-app__head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  .demo-app__actions { display: flex; gap: var(--space-sm); }
+
+  .demo-eyebrow {
+    font-family: var(--font-label);
+    font-size: var(--label-inline-size);
+    letter-spacing: var(--label-inline-spacing);
+    text-transform: uppercase;
+    /* Not --accent-primary: at 10px the light-theme accent lands at 4.37 on
+       --bg-base, just under the 4.5 small-text bar. */
+    color: var(--text-secondary);
+    margin: 0 0 4px;
+  }
+
+  .demo-title {
+    font-family: var(--font-display);
+    font-size: var(--heading-size);
+    font-weight: var(--heading-weight);
+    line-height: var(--heading-lh);
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  .demo-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-md);
+  }
+
+  .demo-stat__label {
+    font-family: var(--font-label);
+    font-size: var(--label-inline-size);
+    letter-spacing: var(--label-inline-spacing);
+    text-transform: uppercase;
+    color: var(--text-ghost);
+    margin: 0 0 4px;
+  }
+
+  .demo-stat__value {
+    font-family: var(--font-mono);
+    font-size: var(--text-xl);
+    color: var(--text-primary);
+    margin: 0 0 var(--space-sm);
+  }
+
+  .demo-stat__value--accent {
+    background: var(--gradient-accent-text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    /* clip-text with a tight line box chops descenders; the em pad is the
+       house fix and costs nothing when the glyphs don't need it. */
+    padding-block: 0.08em;
+    margin-block: -0.08em var(--space-sm);
+  }
+
+  .demo-split {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-md);
+  }
+
+  .demo-card__title {
+    font-size: var(--text-sm);
+    color: var(--text-primary);
+    margin: 0 0 var(--space-md);
+  }
+
+  .demo-feed {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .demo-feed li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .demo-feed__text {
+    flex: 1;
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .demo-feed__text strong { color: var(--text-primary); font-weight: 600; }
+
+  .demo-feed code {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent-primary);
+  }
+
+  .demo-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .demo-form__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-sm);
+  }
+
+  /* ── Component matrix ────────────────────────────────────────────────── */
+
+  .matrix {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-md);
+    max-inline-size: var(--max-width);
+    margin-inline: auto;
+  }
+
+  .matrix-cell {
+    padding: var(--space-md);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    background: var(--bg-card);
+  }
+
+  .matrix-cell--wide { grid-column: 1 / -1; }
+
+  .matrix-cell__title {
+    font-family: var(--font-label);
+    font-size: var(--label-inline-size);
+    letter-spacing: var(--label-inline-spacing);
+    text-transform: uppercase;
+    color: var(--text-ghost);
+    margin: 0 0 var(--space-md);
+  }
+
+  .matrix-cell__note {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin: -8px 0 var(--space-md);
+  }
+
+  .matrix-cell__body {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .matrix-cell__body--stack {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .type-display {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: var(--font-display-weight);
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  .type-heading {
+    font-family: var(--font-display);
+    font-size: var(--heading-size);
+    font-weight: var(--heading-weight);
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  .type-body {
+    font-family: var(--font-body);
+    font-size: var(--body-size);
+    line-height: var(--body-lh);
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  .type-label {
+    font-family: var(--font-label);
+    font-size: var(--text-xs);
+    font-weight: var(--font-label-weight);
+    letter-spacing: var(--section-title-spacing);
+    text-transform: uppercase;
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  .type-muted {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  .type-code {
+    font-family: var(--font-mono);
+    font-size: var(--code-size);
+    line-height: var(--code-lh);
+    color: var(--accent-primary);
+  }
+
+  .surface-strip {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: var(--space-xs);
+  }
+
+  .surface-chip {
+    block-size: 64px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-subtle);
+    display: flex;
+    align-items: flex-end;
+    padding: 6px;
+  }
+
+  .surface-chip span {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-muted);
+  }
+
+  .glow-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+  }
+
+  .glow-chip {
+    padding: 8px 14px;
+    border-radius: var(--radius-md);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    background: var(--bg-elevated);
+    color: var(--text-secondary);
+  }
+
+  .glow-chip--primary { box-shadow: var(--glow-primary); }
+  .glow-chip--secondary { box-shadow: var(--glow-secondary); }
+
+  .glow-chip--gradient {
+    background: var(--gradient-accent-text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    padding-block: calc(8px + 0.08em);
+  }
+
+  /* ── Audit ───────────────────────────────────────────────────────────── */
+
+  .audit,
+  .code-pane {
+    max-inline-size: 900px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .audit__head,
+  .code-pane__head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  .audit__title {
+    font-family: var(--font-display);
+    font-size: var(--heading-size);
+    font-weight: var(--heading-weight);
+    color: var(--text-primary);
+    margin: 0 0 4px;
+  }
+
+  .audit__lede {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  .audit-table {
+    inline-size: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-xs);
+  }
+
+  .audit-table th,
+  .audit-table td {
+    text-align: start;
+    padding: var(--space-sm);
+    border-block-end: 1px solid var(--border-subtle);
+    vertical-align: top;
+  }
+
+  .audit-table thead th {
+    font-family: var(--font-label);
+    font-size: var(--label-inline-size);
+    letter-spacing: var(--label-inline-spacing);
+    text-transform: uppercase;
+    color: var(--text-ghost);
+    font-weight: var(--font-label-weight);
+  }
+
+  .audit-pair {
+    display: block;
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  .audit-note {
+    display: block;
+    color: var(--text-muted);
+    font-weight: 400;
+    margin-block-start: 2px;
+  }
+
+  .audit-needs {
+    font-family: var(--font-mono);
+    color: var(--text-ghost);
+    white-space: nowrap;
+  }
+
+  .ratio {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    font-family: var(--font-mono);
+    white-space: nowrap;
+  }
+
+  .ratio__tag {
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 1px 5px;
+    border-radius: var(--radius-full);
+  }
+
+  .ratio--pass { color: var(--text-primary); }
+  .ratio--pass .ratio__tag {
+    color: var(--color-success);
+    background: rgba(var(--color-success-rgb), 0.12);
+  }
+
+  .ratio--aaa { color: var(--text-primary); }
+  .ratio--aaa .ratio__tag {
+    color: var(--color-success);
+    background: rgba(var(--color-success-rgb), 0.2);
+  }
+
+  /* Reported, not judged: no threshold applies, so it gets no verdict colour. */
+  .ratio--info { color: var(--text-muted); }
+  .ratio--info .ratio__tag {
+    color: var(--text-ghost);
+    background: var(--surface-hover);
+  }
+
+  .ratio--fail { color: var(--color-error); }
+  .ratio--fail .ratio__tag {
+    color: var(--color-error);
+    background: rgba(var(--color-error-rgb), 0.14);
+  }
+
+  /* ── Code ────────────────────────────────────────────────────────────── */
+
+  .code-pane__controls {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .code-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    cursor: pointer;
+  }
+
+  .code-frame {
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--bg-deep);
+  }
+
+  .code-frame__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--bg-surface);
+    border-block-end: 1px solid var(--border-subtle);
+  }
+
+  .code-frame__name {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+  }
+
+  .code-frame__actions { display: flex; gap: var(--space-sm); }
+
+  .code-frame__body {
+    margin: 0;
+    padding: var(--space-md);
+    max-block-size: 52vh;
+    overflow: auto;
+    font-family: var(--font-mono);
+    font-size: var(--code-size);
+    line-height: var(--code-lh);
+    color: var(--text-secondary);
+    white-space: pre;
+  }
+
+  /* ── Import modal ────────────────────────────────────────────────────── */
+
+  .modal-lede {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0 0 var(--space-md);
+  }
+
+  .import-area {
+    inline-size: 100%;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    line-height: 1.6;
+    color: var(--text-primary);
+    background: var(--bg-deep);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: var(--space-sm);
+    resize: vertical;
+  }
+
+  .import-area:focus-visible {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: var(--focus-ring);
+  }
+
+  .import-status {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    margin: var(--space-sm) 0 0;
+    min-block-size: 1.2em;
+  }
+
+  .import-status.is-error { color: var(--color-error); }
+
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-sm);
+  }
+
+  /* ── Mobile ──────────────────────────────────────────────────────────── */
+
+  .synth-switch { display: none; }
+
+  @media (max-width: 900px) {
+    .synth {
+      block-size: auto;
+      min-block-size: 100dvh;
+      padding-block-end: 64px;
+    }
+
+    .synth-body { grid-template-columns: minmax(0, 1fr); }
+
+    .synth-bar {
+      flex-wrap: wrap;
+      row-gap: var(--space-sm);
+    }
+
+    .synth-bar__group--center { order: 3; inline-size: 100%; }
+
+    .synth-rail,
+    .synth-stage {
+      border-inline-end: none;
+    }
+
+    .synth-rail__scroll,
+    .stage-scroll {
+      overflow: visible;
+    }
+
+    /* Two panes that take turns rather than stack: a rail above a preview
+       means the preview is always off-screen while you work the controls,
+       which is the failure the desktop layout exists to fix. */
+    .synth[data-mobile-pane='preview'] .synth-rail { display: none; }
+    .synth:not([data-mobile-pane='preview']) .synth-stage { display: none; }
+
+    .synth-switch {
+      display: flex;
+      justify-content: center;
+      position: fixed;
+      inset-block-end: var(--space-md);
+      inset-inline: 0;
+      z-index: var(--z-dropdown);
+      pointer-events: none;
+    }
+
+    .synth-switch arc-segmented-control {
+      pointer-events: auto;
+      background: var(--bg-elevated);
+      border-radius: var(--radius-full);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .rail-presets__grid { grid-template-columns: repeat(2, 1fr); }
+    .stage-scroll { padding: var(--space-md); }
+  }
+</style>

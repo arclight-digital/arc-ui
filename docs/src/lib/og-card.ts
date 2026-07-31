@@ -11,12 +11,31 @@ import fs from 'node:fs';
 import { tokens } from '../../../shared/tokens.js';
 import { version } from '../data/site-stats';
 
+/* The docs site is not the library's default theme. global.css overrides
+   --accent-secondary to teal for this site, so the palette people actually
+   see is blue → teal — while tokens.color.accentSecondary is the library
+   default, violet. Reading the library token here painted every card in a
+   colour the site never shows, and then hardcoded teal beside it, so the
+   cards carried three accents to the site's two.
+   Parsed rather than copied, for the same reason site-stats derives its
+   numbers: a constant here would drift the first time the theme moved. */
+function docsAccentSecondary(): { hex: string; rgb: string } {
+  const css = fs.readFileSync('src/styles/global.css', 'utf-8');
+  const rgb = css.match(/:root\s*\{[^}]*--accent-secondary-rgb:\s*([\d,\s]+);/)?.[1];
+  if (!rgb) throw new Error('og-card: no --accent-secondary-rgb in global.css :root');
+  const parts = rgb.split(',').map((n) => Number(n.trim()));
+  return {
+    hex: `rgb(${parts.join(', ')})`,
+    rgb: parts.join(','),
+  };
+}
+
+const secondary = docsAccentSecondary();
+
 export const blue = tokens.color.accentPrimary;
 export const blueRgb = tokens.rgb.accentPrimary;
-export const teal = '#14b8a6';
-export const tealRgb = '20,184,166';
-export const violet = tokens.color.accentSecondary;
-export const violetRgb = tokens.rgb.accentSecondary;
+export const teal = secondary.hex;
+export const tealRgb = secondary.rgb;
 
 type Node = { type: string; props: Record<string, unknown> };
 
@@ -59,21 +78,45 @@ function layer(background: string): Node {
   };
 }
 
-/** Ambient glows, center blooms, border, and edge glows — in paint order. */
+/* The hero's light, without the hero's tunnel.
+
+   Streaks radiating from a vanishing point were tried here and taken out.
+   The tunnel reads as depth on the site because it moves and because the
+   canvas blooms it; satori has neither — no filters, no animation — so what
+   survives the render is thin diagonal lines across the type, which is
+   scratches, not depth. The parts of the treatment that do survive a static
+   render are the colour and the falloff, and those are what is left.
+
+   The lobes are the site's, at the site's positions — blue from the left,
+   teal from the lower right, and the floor glow the whole thing sits on. The
+   card used to light its own corners instead (10% 10%, 90% 90%), which put
+   the brightest pixels exactly where a social platform crops and rounds.
+
+   Gone too: the 1px accent border and the coloured top and bottom edge
+   glows, which framed the card like a component demo. The only frame left is
+   a neutral hairline, so the card does not dissolve into a dark timeline. */
 export function backgroundLayers(): Node[] {
   return [
     ...dotGrid(40, 22, 30, 0, 0),
-    // Ambient glow — blue (top-left)
-    layer(`radial-gradient(circle at 10% 10%, rgba(${blueRgb},0.22) 0%, transparent 50%)`),
-    // Ambient glow — violet (center-top, adds depth)
-    layer(`radial-gradient(circle at 50% 15%, rgba(${violetRgb},0.12) 0%, transparent 45%)`),
-    // Ambient glow — teal (bottom-right)
-    layer(`radial-gradient(circle at 90% 90%, rgba(${tealRgb},0.18) 0%, transparent 50%)`),
-    // Center spotlight — bloom behind title
-    layer('radial-gradient(ellipse at 50% 30%, rgba(255,255,255,0.05) 0%, transparent 45%)'),
-    // Title glow — strong colored bloom behind the headline
-    layer(`radial-gradient(ellipse at 50% 28%, rgba(${blueRgb},0.14) 0%, rgba(${violetRgb},0.06) 30%, transparent 55%)`),
-    // Border
+    // Ambient — blue from the left
+    layer(`radial-gradient(ellipse 80% 62% at 20% 38%, rgba(${blueRgb},0.2) 0%, transparent 70%)`),
+    // Ambient — teal from the lower right
+    layer(`radial-gradient(ellipse 62% 80% at 82% 58%, rgba(${tealRgb},0.18) 0%, transparent 70%)`),
+    // The floor it sits on
+    layer(`radial-gradient(ellipse 64% 34% at 50% 102%, rgba(${blueRgb},0.14) 0%, transparent 64%)`),
+    /* The dark middle. Same shape as the hero's, and the same reason for the
+       stop list: a ramp that ends abruptly leaves a corner in the curve that
+       reads as an ellipse drawn on the card, so this one is still falling at
+       every radius and reaches nothing exactly where it runs out. */
+    layer(
+      'radial-gradient(ellipse 62% 58% at 50% 42%,' +
+        ' rgba(3,3,7,0.72) 0%,' +
+        ' rgba(3,3,7,0.42) 38%,' +
+        ' rgba(3,3,7,0.16) 66%,' +
+        ' rgba(3,3,7,0.04) 84%,' +
+        ' transparent 100%)',
+    ),
+    // Settles the card into a dark feed rather than framing it
     {
       type: 'div',
       props: {
@@ -83,49 +126,7 @@ export function backgroundLayers(): Node[] {
           left: '0',
           right: '0',
           bottom: '0',
-          border: `1px solid rgba(${blueRgb},0.2)`,
-        },
-      },
-    },
-    // Top edge glow
-    {
-      type: 'div',
-      props: {
-        style: {
-          position: 'absolute',
-          top: '0',
-          left: '10%',
-          right: '10%',
-          height: '2px',
-          background: `linear-gradient(90deg, transparent, rgba(${blueRgb},0.6), rgba(${violetRgb},0.4), rgba(${tealRgb},0.5), transparent)`,
-        },
-      },
-    },
-    // Top edge bloom (wider, softer)
-    {
-      type: 'div',
-      props: {
-        style: {
-          position: 'absolute',
-          top: '0',
-          left: '15%',
-          right: '15%',
-          height: '20px',
-          background: `linear-gradient(90deg, transparent, rgba(${blueRgb},0.08), rgba(${violetRgb},0.06), rgba(${tealRgb},0.06), transparent)`,
-        },
-      },
-    },
-    // Bottom edge glow
-    {
-      type: 'div',
-      props: {
-        style: {
-          position: 'absolute',
-          bottom: '0',
-          left: '15%',
-          right: '15%',
-          height: '2px',
-          background: `linear-gradient(90deg, transparent, rgba(${tealRgb},0.4), rgba(${blueRgb},0.3), transparent)`,
+          border: '1px solid rgba(255,255,255,0.07)',
         },
       },
     },
@@ -232,7 +233,7 @@ function titleFontSize(title: string): number {
 
 export interface KickerPill {
   text: string;
-  accent?: 'blue' | 'violet' | 'teal';
+  accent?: 'neutral' | 'primary' | 'secondary';
 }
 
 export interface PageCard {
@@ -244,14 +245,21 @@ export interface PageCard {
   showFrameworks?: boolean;
 }
 
+/* Three pill treatments out of a two-colour palette. There used to be a
+   third colour to spend — the tier pill was violet and the interactivity
+   pill teal — but the site only has blue and teal, so those two rendered
+   identically once the palette was corrected. The distinction is carried by
+   whether the text takes the accent, not by adding a colour the brand does
+   not have: neutral reads as a label, the two accent treatments read as
+   values. */
 const accents = {
-  blue: { rgb: blueRgb, text: 'rgba(255,255,255,0.6)' },
-  violet: { rgb: violetRgb, text: `rgba(${violetRgb},0.95)` },
-  teal: { rgb: tealRgb, text: `rgba(${tealRgb},0.95)` },
+  neutral: { rgb: blueRgb, text: 'rgba(255,255,255,0.6)' },
+  primary: { rgb: blueRgb, text: `rgba(${blueRgb},0.95)` },
+  secondary: { rgb: tealRgb, text: `rgba(${tealRgb},0.95)` },
 } as const;
 
 function kickerPill(pill: KickerPill): Node {
-  const accent = accents[pill.accent ?? 'blue'];
+  const accent = accents[pill.accent ?? 'neutral'];
   return {
     type: 'div',
     props: {
@@ -326,7 +334,7 @@ export function pageCardPng(card: PageCard): Promise<Buffer> {
                 fontFamily: 'Host Grotesk',
                 letterSpacing: '-2px',
                 textAlign: 'center',
-                background: `linear-gradient(135deg, rgba(255,255,255,0.95) 0%, ${blue} 50%, ${violet} 100%)`,
+                background: `linear-gradient(135deg, rgba(255,255,255,0.95) 0%, ${blue} 50%, ${teal} 100%)`,
                 backgroundClip: 'text',
                 color: 'transparent',
                 // Roomy line box + bottom padding so descenders (g, y, p)
@@ -359,7 +367,7 @@ export function pageCardPng(card: PageCard): Promise<Buffer> {
                       width: '100%',
                       height: '16px',
                       borderRadius: '8px',
-                      background: `linear-gradient(90deg, transparent, rgba(${blueRgb},0.18), rgba(${violetRgb},0.12), rgba(${tealRgb},0.1), transparent)`,
+                      background: `linear-gradient(90deg, transparent, rgba(${blueRgb},0.18), rgba(${tealRgb},0.12), transparent)`,
                     },
                   },
                 },
@@ -370,7 +378,7 @@ export function pageCardPng(card: PageCard): Promise<Buffer> {
                       position: 'absolute',
                       width: '100%',
                       height: '2px',
-                      background: `linear-gradient(90deg, transparent, ${blue}, ${violet}, ${teal}, transparent)`,
+                      background: `linear-gradient(90deg, transparent, ${blue}, ${teal}, transparent)`,
                     },
                   },
                 },
