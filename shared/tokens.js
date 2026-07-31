@@ -341,7 +341,23 @@ export const tokens = {
 
      Elevation, for contrast, needed nothing: the same census found two
      hand-written cast shadows in the entire library against a hundred and
-     seventy-seven token uses. The shadow scale was already doing its job. */
+     seventy-seven token uses. The shadow scale was already doing its job.
+
+     ── What hover does, and why it is two rules rather than one ──
+
+     A surface — a badge, a tag, a toolbar button, a table checkbox — glows on
+     hover and leaves its border alone. An edge that moves reads as the element
+     resizing, and these sit in tables and toolbars where that fires on every
+     row the pointer crosses.
+
+     A form field brightens its border *and* glows. That is the older
+     convention and it stays: a field is asking to be typed into, it is
+     surrounded by other fields, and it can afford the stronger signal. Making
+     the pickers match the rule while diverging from the arc-input beside them
+     in the same form would have been the worse consistency.
+
+     So a hover that only shifts border-color is drift; a hover that does both
+     on a field is not. Twenty-seven rules do both, deliberately. */
   glowScale: {
     xs: '0 0 6px rgba(var(--accent-primary-rgb), 0.3)',
     sm: '0 0 8px rgba(var(--accent-primary-rgb), 0.3)',

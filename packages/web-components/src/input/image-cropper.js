@@ -97,7 +97,9 @@ export class ArcImageCropper extends LitElement {
         color: var(--color-error);
       }
 
-      /* Darkens everything outside the crop rect; sits under the rect. */
+      /* Darkens everything outside the crop rect; sits under the rect.
+         Theme-fixed on purpose: this falls over the user's image, not over a
+         surface the theme owns, and a scrim has to darken in both themes. */
       .shade {
         position: absolute;
         pointer-events: none;
@@ -117,6 +119,9 @@ export class ArcImageCropper extends LitElement {
         box-shadow: var(--interactive-focus-ring);
       }
 
+      /* Rule-of-thirds guides, drawn over the image and over the shade above
+         it. Theme-fixed for the same reason: white reads against a darkened
+         photograph whatever the page around it is doing. */
       .guide {
         position: absolute;
         background: rgba(var(--white-rgb), 0.25);

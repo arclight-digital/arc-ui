@@ -104,7 +104,11 @@ export class ArcScrollSpy extends LitElement {
 
       .scroll-spy__link:hover {
         color: var(--text-secondary);
-        background: rgba(var(--white-rgb), 0.03);
+        /* --surface-hover, not a white wash: --white-rgb is 255,255,255 in both
+           themes, so 3% of it over a light background was invisible and the
+           link had no hover affordance at all there. The token is the same
+           thing done per-theme — white at 4% on dark, accent at 4% on light. */
+        background: var(--surface-hover);
       }
 
       .scroll-spy__link[aria-current="true"] {

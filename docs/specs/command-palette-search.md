@@ -1,6 +1,29 @@
 # Spec: Docs Site Search via `arc-command-palette` (⌘K)
 
-**Status:** Phase 1 implemented (`src/components/SiteSearch.astro`, 2026-07-23) · Phase 2 proposed · **Target:** docs site (arcui.dev) · **Depends on:** a small WC enhancement for Phase 2
+**Status:** Phase 1 implemented (`src/components/SiteSearch.astro`, 2026-07-23) · Phase 2 implemented · **Phase 3 (content search) implemented 2026-07-30, and it overturned three of the non-goals below** · **Target:** docs site (arcui.dev)
+
+> ## Superseded, 2026-07-30
+>
+> Three things this document rules out have since shipped. The reasoning below
+> is kept because it was right about the trade-offs and wrong only about where
+> they landed — but read it as history, not as intent.
+>
+> - **Full-text search of page content.** Now indexed: one record per
+>   `<section id>`, 1,377 of them, extracted from the built HTML by
+>   `docs/integrations/search-index.mjs`. The non-goal assumed names and
+>   descriptions "cover the realistic query space"; they do not cover *how do I
+>   override a token*, which is the shape of most real questions.
+> - **No client-side index fetch.** There is one, of ~365K, lazy on first open.
+>   Titles stay inline and static, so ⌘K is still usable instantly and only the
+>   content tier costs a request. The "no fetch" rule survives where it mattered.
+> - **No fuzzy matching beyond keyword aliases.** `shared/fuzzy-match.js` scores
+>   in five tiers with subsequence matching, acronym detection and ranked
+>   results. It lives in the component, not the docs.
+>
+> One finding worth carrying forward: subsequence matching is right for names
+> and catastrophic for prose. Descriptions are matched on contiguous runs only —
+> in 180 characters of English almost any four letters appear in order somewhere,
+> and left unrestricted a three-word query matched 375 of 1,377 sections.
 
 ## Goal
 
