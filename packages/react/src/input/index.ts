@@ -122,3 +122,18 @@ export type { SliderProps } from './Slider.js';
 
 export { Toggle } from './Toggle.js';
 export type { ToggleProps } from './Toggle.js';
+
+export { Knob } from './Knob.js';
+export type { KnobProps } from './Knob.js';
+
+export { InlineEdit } from './InlineEdit.js';
+export type { InlineEditProps } from './InlineEdit.js';
+
+export { MaskedInput } from './MaskedInput.js';
+export type { MaskedInputProps } from './MaskedInput.js';
+
+export { SignaturePad } from './SignaturePad.js';
+export type { SignaturePadProps } from './SignaturePad.js';
+
+export { TreeSelect } from './TreeSelect.js';
+export type { TreeSelectProps } from './TreeSelect.js';

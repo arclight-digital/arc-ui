@@ -74,3 +74,9 @@ export type { ToastProps } from './Toast.js';
 
 export { Tooltip } from './Tooltip.js';
 export type { TooltipProps } from './Tooltip.js';
+
+export { Conversation } from './Conversation.js';
+export type { ConversationProps } from './Conversation.js';
+
+export { Message } from './Message.js';
+export type { MessageProps } from './Message.js';

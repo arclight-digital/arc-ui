@@ -30,3 +30,8 @@ export { ArcSpinner } from './spinner.register.js';
 export { ArcStack } from './stack.register.js';
 export { ArcVirtualList } from './virtual-list.register.js';
 export { ArcQrCode } from './qr-code.js';
+export { ArcHotspot } from './hotspot.js';
+export { ArcImageCompare } from './image-compare.js';
+export { ArcImageHotspots } from './image-hotspots.js';
+export { ArcLightbox } from './lightbox.js';
+export { ArcVideo } from './video.js';

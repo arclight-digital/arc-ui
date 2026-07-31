@@ -26,3 +26,8 @@ export { default as VirtualList } from './VirtualList.vue';
 export { default as QrCode } from './QrCode.vue';
 export { default as Accordion } from './Accordion.vue';
 export { default as Avatar } from './Avatar.vue';
+export { default as Hotspot } from './Hotspot.vue';
+export { default as ImageCompare } from './ImageCompare.vue';
+export { default as ImageHotspots } from './ImageHotspots.vue';
+export { default as Lightbox } from './Lightbox.vue';
+export { default as Video } from './Video.vue';

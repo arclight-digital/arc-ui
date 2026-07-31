@@ -8,6 +8,7 @@ export interface SidebarLinkProps {
   active?: boolean;
   level?: number;
   icon?: string;
+  external?: boolean;
   children?: preact.ComponentChildren;
   class?: string;
   id?: string;
@@ -36,5 +37,5 @@ export interface SidebarLinkProps {
   [key: `on${string}`]: unknown;
 }
 
-export const SidebarLink: FunctionComponent<SidebarLinkProps> = ({ href, active, level, icon, children, ...rest }) =>
-  h('arc-sidebar-link', { href, active, level, icon, ...rest }, children);
+export const SidebarLink: FunctionComponent<SidebarLinkProps> = ({ href, active, level, icon, external, children, ...rest }) =>
+  h('arc-sidebar-link', { href, active, level, icon, external, ...rest }, children);

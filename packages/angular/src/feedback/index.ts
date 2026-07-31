@@ -24,3 +24,5 @@ export { Snackbar } from './Snackbar';
 export { Spotlight } from './Spotlight';
 export { Toast } from './Toast';
 export { Tooltip } from './Tooltip';
+export { Conversation } from './Conversation';
+export { Message } from './Message';

@@ -190,7 +190,7 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
 
       .picker-cell.current {
         background: var(--interactive);
-        color: var(--surface-base);
+        color: var(--on-accent);
         font-weight: 600;
       }
 

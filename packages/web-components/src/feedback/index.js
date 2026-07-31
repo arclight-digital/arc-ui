@@ -24,3 +24,5 @@ export { ArcSnackbar } from './snackbar.js';
 export { ArcSpotlight } from './spotlight.js';
 export { ArcToast } from './toast.js';
 export { ArcTooltip } from './tooltip.js';
+export { ArcConversation } from './conversation.js';
+export { ArcMessage } from './message.js';

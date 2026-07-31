@@ -297,6 +297,16 @@ export class ArcSidebar extends LitElement {
         transform: translateX(-2px);
       }
 
+      /* The external marker is the one arrow that does not wait for a hover.
+         Its job is to warn you where the link goes *before* you commit to it,
+         and a glyph that only appears once the pointer is already there has
+         missed the moment. Ghosted rather than hidden, so it reads as a
+         property of the destination and not as an active state. */
+      .sidebar__link-arrow--external {
+        opacity: 0.55;
+        transform: none;
+      }
+
       .sidebar__link:hover .sidebar__link-arrow {
         opacity: 1;
         transform: translateX(0);
@@ -440,9 +450,16 @@ export class ArcSidebar extends LitElement {
                         : ''}
                       <span>${link.label}</span>
                     </span>
-                    <svg class="sidebar__link-arrow" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true">
-                      <path d="M6 4L10 8L6 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+                    ${link.external
+                      ? html`
+                        <svg class="sidebar__link-arrow sidebar__link-arrow--external" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true">
+                          <path d="M6.5 3H3.5A0.5 0.5 0 003 3.5v9a0.5 0.5 0 00.5.5h9a0.5 0.5 0 00.5-.5v-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                          <path d="M9.5 2.5H13.5V6.5M13.5 2.5L7.5 8.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>`
+                      : html`
+                        <svg class="sidebar__link-arrow" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true">
+                          <path d="M6 4L10 8L6 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>`}
                   </a>
                 `})}
               </div>

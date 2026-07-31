@@ -251,6 +251,18 @@
   --overlay-backdrop: rgba(0, 0, 0, 0.6);
   --accent-text-mix: 0%;
 
+  /* Text painted ON an accent fill — the primary button's label, the active
+     segment, the selected day in a picker.
+
+     Not simply --surface-base, which is what those five call sites used to
+     read. That works in dark, where the ground is near-black against a bright
+     accent (5.53:1), but light mode pairs its near-white ground with a darker
+     accent and lands at 4.30:1 — under AA, on the most-used control in the
+     library. The light theme overrides this to pure white (4.79:1); the dark
+     value stays exactly what it was, since white on the dark accent would be
+     3.72:1 and strictly worse. */
+  --on-accent: var(--surface-base);
+
   /* ── Semantic: Interactive ── */
   --interactive: var(--accent-primary);
   --interactive-rgb: var(--accent-primary-rgb);
@@ -1021,6 +1033,22 @@
         fill: currentColor;
       }
 
+/* arc-image-hotspots */
+.arc-image-hotspots { display: block; }
+
+      /* The positioning context every slotted arc-hotspot stretches over. */
+      .arc-image-hotspots .image-hotspots {
+        position: relative;
+      }
+
+      .arc-image-hotspots img,
+      .arc-image-hotspots picture,
+      .arc-image-hotspots arc-image {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
 /* arc-qr-code */
 .arc-qr-code {
         display: inline-block;
@@ -1455,6 +1483,108 @@
       .arc-badge[data-size="sm"] .badge { font-size: calc(var(--_text-xs) - 1px); padding: 2px var(--space-xs); }
       .arc-badge[data-size="lg"] .badge { font-size: var(--_text-sm); padding: var(--space-sm) var(--space-md); }
 
+/* arc-clock */
+.arc-clock { display: inline-block; }
+
+      .arc-clock .clock {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-sm);
+      }
+
+      .arc-clock .time {
+        font-family: var(--font-mono);
+        font-size: clamp(24px, 3vw, 36px);
+        font-weight: 200;
+        font-variant-numeric: tabular-nums;
+        line-height: 1.2;
+        color: var(--text-primary);
+      }
+
+      .arc-clock .zone {
+        font-family: var(--font-mono);
+        font-size: var(--_text-xs);
+        letter-spacing: 1px;
+        color: var(--text-muted);
+        margin-inline-start: var(--space-sm);
+      }
+
+      .arc-clock .label {
+        font-family: var(--font-label);
+        font-weight: var(--font-label-weight, 600);
+        font-size: var(--_text-xs);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        text-align: center;
+        background: var(--gradient-accent-text);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .arc-clock .dial {
+        inline-size: 160px;
+        block-size: auto;
+        max-inline-size: 100%;
+      }
+
+      .arc-clock .dial-face {
+        fill: var(--surface-primary);
+        stroke: var(--border-subtle);
+        stroke-width: 1;
+      }
+
+      .arc-clock .tick {
+        stroke: var(--border-subtle);
+        stroke-width: 0.8;
+      }
+
+      .arc-clock .tick--major {
+        stroke: var(--text-muted);
+        stroke-width: 1.6;
+      }
+
+      .arc-clock .hand {
+        stroke: var(--text-primary);
+        stroke-linecap: round;
+      }
+
+      .arc-clock .hand--hour { stroke-width: 3.4; }
+      .arc-clock .hand--minute { stroke-width: 2.4; }
+
+      /*
+       * The second hand is the one accent moment on the dial: accent stroke
+       * with a soft glow, both composed from the base accent tokens so a
+       * consumer override recolors them together. Hands move in discrete
+       * one-second ticks with no transition, so there is no sweep animation
+       * to suppress under prefers-reduced-motion.
+       */
+      .arc-clock .hand--second {
+        stroke: var(--accent-primary);
+        stroke-width: 1.2;
+        filter: drop-shadow(0 0 2.5px rgba(var(--accent-primary-rgb), 0.5));
+      }
+
+      .arc-clock .pin {
+        fill: var(--accent-primary);
+      }
+
+      .arc-clock .pin-core {
+        fill: var(--surface-primary);
+      }
+
+      .arc-clock .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+      }
+
 /* arc-comparison-column */
 
 
@@ -1690,6 +1820,95 @@
         }
       }
 
+/* arc-gauge */
+.arc-gauge {
+        display: inline-block;
+        width: 160px;
+      }
+
+      .arc-gauge .gauge {
+        position: relative;
+        display: block;
+      }
+
+      .arc-gauge .gauge__svg {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .arc-gauge .gauge__track {
+        fill: none;
+        stroke: var(--surface-overlay);
+        stroke-width: 8;
+        stroke-linecap: round;
+      }
+
+      .arc-gauge .gauge__arc {
+        fill: none;
+        stroke-width: 8;
+        stroke-linecap: round;
+        /* Sweep on value change; stroke and glow cross-fade between zones. */
+        transition:
+          stroke-dashoffset 800ms var(--ease-out),
+          stroke var(--transition-base),
+          filter var(--transition-base);
+        /* Same glow shape as the status glow token, taken as a drop-shadow
+           because an SVG stroke has no box for a box-shadow to wrap. */
+        filter: drop-shadow(0 0 12px rgba(var(--_zone-rgb), var(--glow-status-alpha, 0.15)));
+        animation: gauge-sweep 800ms var(--ease-out);
+      }
+
+      .arc-gauge .gauge__arc--success { stroke: var(--color-success); --_zone-rgb: var(--color-success-rgb); }
+      .arc-gauge .gauge__arc--warning { stroke: var(--color-warning); --_zone-rgb: var(--color-warning-rgb); }
+      .arc-gauge .gauge__arc--error   { stroke: var(--color-error);   --_zone-rgb: var(--color-error-rgb); }
+
+      /* Entrance: draw in from empty to the rendered offset. The reduced-motion
+         guard in the shared styles zeroes this out. */
+      @keyframes gauge-sweep {
+        from { stroke-dashoffset: var(--_arc-total); }
+      }
+
+      .arc-gauge .gauge__readout {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+        user-select: none;
+      }
+
+      .arc-gauge .gauge--half .gauge__readout {
+        justify-content: flex-end;
+      }
+
+      .arc-gauge .gauge__value {
+        font-family: var(--font-mono);
+        font-variant-numeric: tabular-nums;
+        font-size: var(--_text-2xl);
+        font-weight: 300;
+        line-height: 1;
+        color: var(--text-primary);
+      }
+
+      .arc-gauge .gauge__unit {
+        font-size: var(--code-size);
+        color: var(--text-muted);
+        margin-left: 2px;
+      }
+
+      .arc-gauge .gauge__label {
+        font-family: var(--font-label);
+        font-weight: var(--font-label-weight, 600);
+        font-size: var(--label-inline-size);
+        letter-spacing: var(--label-inline-spacing);
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin-top: var(--space-xs);
+      }
+
 /* arc-key-value */
 .arc-key-value {
         display: block;
@@ -1755,6 +1974,105 @@
         font-family: var(--font-body);
         font-size: var(--_text-sm);
         color: var(--text-primary);
+      }
+
+/* arc-level-meter */
+.arc-level-meter {
+        display: inline-block;
+        inline-size: 14px;
+        block-size: 160px;
+      }
+
+      .arc-level-meter[data-orientation="horizontal"] {
+        inline-size: 160px;
+        block-size: 14px;
+      }
+
+      .arc-level-meter .meter {
+        inline-size: 100%;
+        block-size: 100%;
+        display: flex;
+      }
+
+      .arc-level-meter .track {
+        position: relative;
+        flex: 1;
+        display: flex;
+        gap: 2px;
+        background: var(--surface-overlay);
+        border-radius: var(--radius-sm);
+        overflow: hidden;
+      }
+
+      /* Widened default: any unrecognised orientation computes as vertical.
+         Segment 0 sits at the bottom, so the meter fills upward. */
+      .arc-level-meter:not([data-orientation="horizontal"]) .track {
+        flex-direction: column-reverse;
+      }
+
+      .arc-level-meter[data-orientation="horizontal"] .track {
+        flex-direction: row;
+      }
+
+      /* Zone tints. Each zone class sets the pair of channel/color custom
+         properties; lit surfaces below compose tint and glow from them, so the
+         three --color-* base tokens recolor everything. */
+      .arc-level-meter .zone--success { --_zone: var(--color-success); --_zone-rgb: var(--color-success-rgb); }
+      .arc-level-meter .zone--warning { --_zone: var(--color-warning); --_zone-rgb: var(--color-warning-rgb); }
+      .arc-level-meter .zone--error   { --_zone: var(--color-error);   --_zone-rgb: var(--color-error-rgb); }
+
+      /* Unlit segments show the track through a faint preview of their zone. */
+      .arc-level-meter .seg {
+        flex: 1;
+        min-inline-size: 0;
+        min-block-size: 0;
+        border-radius: var(--radius-xs);
+        background: rgba(var(--_zone-rgb), 0.14);
+      }
+
+      .arc-level-meter .seg--lit {
+        background: var(--_zone);
+        box-shadow: 0 0 6px rgba(var(--_zone-rgb), 0.5);
+      }
+
+      /* Continuous bar (segments = 0). A normal flex child rather than an
+         absolute overlay, so the same column-reverse / row direction that
+         orders segments also anchors the fill at the meter's zero end. */
+      .arc-level-meter .fill {
+        border-radius: var(--radius-xs);
+        background: var(--_zone);
+        box-shadow: 0 0 8px rgba(var(--_zone-rgb), 0.45);
+      }
+
+      .arc-level-meter:not([data-orientation="horizontal"]) .fill {
+        inline-size: 100%;
+        block-size: var(--_fill, 0%);
+      }
+
+      .arc-level-meter[data-orientation="horizontal"] .fill {
+        block-size: 100%;
+        inline-size: var(--_fill, 0%);
+      }
+
+      /* Peak-hold line. Positioned by the private custom property the render
+         writes, clamped so it stays inside the track at both extremes. */
+      .arc-level-meter .peak {
+        position: absolute;
+        pointer-events: none;
+        background: var(--_zone);
+        box-shadow: 0 0 6px rgba(var(--_zone-rgb), 0.6);
+      }
+
+      .arc-level-meter:not([data-orientation="horizontal"]) .peak {
+        inset-inline: 0;
+        block-size: 2px;
+        inset-block-end: clamp(0%, calc(var(--_peak, 0%) - 2px), calc(100% - 2px));
+      }
+
+      .arc-level-meter[data-orientation="horizontal"] .peak {
+        inset-block: 0;
+        inline-size: 2px;
+        inset-inline-start: clamp(0%, calc(var(--_peak, 0%) - 2px), calc(100% - 2px));
       }
 
 /* arc-meter */
@@ -2773,6 +3091,82 @@
         vertical-align: baseline;
       }
 
+/* arc-keyboard-map */
+.arc-keyboard-map {
+        display: block;
+        container-type: inline-size;
+      }
+
+      .arc-keyboard-map .map { margin: 0; }
+
+      /* One knob scales the whole board: key height tracks the container
+         width so caps stay square-ish, and the grid columns carry width. */
+      .arc-keyboard-map .board {
+        --_key: var(--keyboard-map-key, clamp(20px, 6.2cqw, 46px));
+        --_gap: var(--keyboard-map-gap, clamp(2px, 0.55cqw, 6px));
+        display: grid;
+        grid-template-columns: repeat(60, minmax(0, 1fr));
+        grid-auto-rows: var(--_key);
+        gap: var(--_gap);
+      }
+
+      /* ansi is 18.5 units wide to compact's 15, so its default key runs
+         proportionally smaller in the same container. */
+      .arc-keyboard-map .board--ansi {
+        --_key: var(--keyboard-map-key, clamp(16px, 5cqw, 42px));
+        grid-template-columns: repeat(74, minmax(0, 1fr));
+      }
+
+      /* arc-kbd's keycap language, scaled: same surface, border, depth. */
+      .arc-keyboard-map .key {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 0;
+        overflow: hidden;
+        font-family: var(--font-mono);
+        font-size: clamp(8px, calc(var(--_key) * 0.32), 13px);
+        line-height: 1;
+        color: var(--text-secondary);
+        background: var(--surface-overlay);
+        border: 1px solid var(--border-default);
+        border-bottom-width: 2px;
+        border-radius: var(--radius-sm);
+        white-space: nowrap;
+        user-select: none;
+        transition:
+          color var(--transition-fast),
+          background-color var(--transition-fast),
+          border-color var(--transition-fast),
+          box-shadow var(--transition-fast);
+      }
+
+      /* The house state marking: tint, glow, accent text — never an edge. */
+      .arc-keyboard-map .key--hit {
+        color: var(--accent-primary);
+        background: rgba(var(--accent-primary-rgb), 0.16);
+        border-color: rgba(var(--accent-primary-rgb), 0.45);
+        box-shadow: var(--glow-sm);
+      }
+
+      .arc-keyboard-map .caption {
+        margin-block-start: var(--space-sm);
+        font-family: var(--font-label);
+        font-size: var(--_text-xs);
+        color: var(--text-muted);
+        text-align: center;
+      }
+
+      /* Below this the legends are unreadable noise; the highlight pattern
+         still carries the information, so they step out. */
+      @container (max-width: 340px) {
+        .arc-keyboard-map .key__legend { display: none; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .arc-keyboard-map .key { transition: none; }
+      }
+
 /* arc-markdown */
 .arc-markdown { display: block; }
 
@@ -3217,7 +3611,7 @@
       .arc-button:not([data-data-variant="ghost"]):not([data-data-variant="secondary"]) .btn,
       .arc-button:not([data-data-variant="ghost"]):not([data-data-variant="secondary"]) a {
         background: var(--interactive);
-        color: var(--surface-base);
+        color: var(--on-accent);
         border-color: var(--interactive);
       }
       .arc-button:not([data-data-variant="ghost"]):not([data-data-variant="secondary"]) .btn:hover,
@@ -4538,6 +4932,16 @@
         flex-shrink: 0;
         transition: opacity var(--transition-fast), transform var(--transition-fast), color var(--transition-fast);
         transform: translateX(-2px);
+      }
+
+      /* The external marker is the one arrow that does not wait for a hover.
+         Its job is to warn you where the link goes *before* you commit to it,
+         and a glyph that only appears once the pointer is already there has
+         missed the moment. Ghosted rather than hidden, so it reads as a
+         property of the destination and not as an active state. */
+      .arc-sidebar .sidebar__link-arrow--external {
+        opacity: 0.55;
+        transform: none;
       }
 
       .arc-sidebar .sidebar__link:hover .sidebar__link-arrow {
@@ -5889,6 +6293,37 @@
         white-space: nowrap;
       }
 
+/* arc-conversation */
+.arc-conversation {
+        display: block;
+        min-block-size: 0;
+      }
+
+      /* The container is the scroll area. With no --conversation-height set,
+         the 100% fallback resolves against the host: a sized host is filled,
+         an auto host lets the percentage collapse to auto and the transcript
+         grows with its content. */
+      .arc-conversation .conversation {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-md);
+        block-size: var(--conversation-height, 100%);
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        padding: var(--space-md);
+        border-radius: var(--radius-md);
+      }
+
+      /* A scrollable region is keyboard territory, so it takes focus; the
+         inset ring is the treatment a filled scroll surface can carry without
+         being clipped by its own overflow. */
+      .arc-conversation .conversation:focus-visible {
+        outline: none;
+        box-shadow: var(--interactive-focus-inset);
+      }
+
+      .arc-conversation arc-message { flex-shrink: 0; }
+
 /* arc-inline-message */
 .arc-inline-message {
         display: flex;
@@ -5947,6 +6382,123 @@
 
       @media (prefers-reduced-motion: reduce) {
         .arc-loading-overlay .loading-overlay { transition: none; }
+      }
+
+/* arc-message */
+.arc-message { display: block; }
+
+      .arc-message .message {
+        display: flex;
+        align-items: flex-end;
+        gap: var(--space-sm);
+      }
+
+      /* The default voice is the user: bubble at the inline end. Flex end
+         follows the writing direction, so RTL mirrors for free. The base rule
+         carries the user styling and the other roles override it, which is
+         what routes an unrecognised role onto the default. */
+      .arc-message .message--user { flex-direction: row-reverse; }
+
+      .arc-message .message__main {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xs);
+        max-inline-size: var(--message-max-width, 80%);
+        min-inline-size: 0;
+      }
+
+      .arc-message .message--user .message__main { align-items: flex-end; }
+
+      .arc-message .message__meta {
+        margin: 0;
+        display: flex;
+        align-items: baseline;
+        gap: var(--space-sm);
+        font-family: var(--font-body);
+        font-size: var(--_text-xs);
+        color: var(--text-muted);
+      }
+
+      .arc-message .message__author {
+        font-weight: 600;
+        color: var(--text-secondary);
+      }
+
+      .arc-message .message__bubble {
+        padding: var(--space-sm) var(--space-md);
+        border-radius: var(--radius-lg);
+        font-family: var(--font-body);
+        font-size: var(--_text-sm);
+        line-height: 1.6;
+        overflow-wrap: break-word;
+        /* State by tint: the speaking user carries the accent wash. */
+        background: rgba(var(--accent-primary-rgb), 0.08);
+        border: 1px solid rgba(var(--accent-primary-rgb), 0.15);
+        color: var(--text-primary);
+      }
+
+      /* The assistant answers on a neutral surface; arc-markdown sets its
+         prose in --text-secondary, so plain text matches it here. */
+      .arc-message .message--assistant .message__bubble {
+        background: var(--surface-raised);
+        border-color: var(--border-subtle);
+        color: var(--text-secondary);
+      }
+
+      /* System notices: the transcript's own voice, centred and quiet. */
+      .arc-message .message--system { justify-content: center; }
+      .arc-message .message--system .message__main { align-items: center; }
+      .arc-message .message--system .message__meta { justify-content: center; }
+      .arc-message .message--system .message__bubble {
+        background: none;
+        border: none;
+        padding: var(--space-xs) var(--space-md);
+        font-size: var(--_text-xs);
+        color: var(--text-muted);
+        text-align: center;
+      }
+
+      .arc-message .message__body--hidden { display: none; }
+
+      /* The typing indicator. The keyword curve is deliberate: loops are
+         exempt from the entrance and exit curves in the token tree, and
+         ease-in-out is the symmetric shape a pulse wants — see the loop note
+         in scripts/checks/motion-tokens.js and the arc-hotspot halo this
+         follows. Opacity and transform only, so it stays off the layout path.
+         The shared reduced-motion guard shortens it to nothing; the explicit
+         rule below swaps the dots for a static ellipsis outright. */
+      .arc-message .message__pending {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-xs);
+        padding-block: var(--space-xs);
+      }
+
+      .arc-message .message__pending-dot {
+        inline-size: 6px;
+        block-size: 6px;
+        border-radius: var(--radius-full);
+        background: var(--text-muted);
+        animation: message-dot 1.2s ease-in-out infinite;
+      }
+
+      .arc-message .message__pending-dot:nth-child(2) { animation-delay: 0.15s; }
+      .arc-message .message__pending-dot:nth-child(3) { animation-delay: 0.3s; }
+
+      @keyframes message-dot {
+        0%, 100% { opacity: 0.35; transform: translateY(0); }
+        50%      { opacity: 1;    transform: translateY(-2px); }
+      }
+
+      .arc-message .message__pending-ellipsis {
+        display: none;
+        color: var(--text-muted);
+        line-height: 1;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .arc-message .message__pending-dot { display: none; }
+        .arc-message .message__pending-ellipsis { display: inline; }
       }
 
 /* arc-progress */

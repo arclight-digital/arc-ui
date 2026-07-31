@@ -80,3 +80,24 @@ export type { TableProps } from './Table.js';
 
 export { Timeline } from './Timeline.js';
 export type { TimelineProps } from './Timeline.js';
+
+export { Clock } from './Clock.js';
+export type { ClockProps } from './Clock.js';
+
+export { Gauge } from './Gauge.js';
+export type { GaugeProps } from './Gauge.js';
+
+export { LevelMeter } from './LevelMeter.js';
+export type { LevelMeterProps } from './LevelMeter.js';
+
+export { Uptime } from './Uptime.js';
+export type { UptimeProps } from './Uptime.js';
+
+export { Waveform } from './Waveform.js';
+export type { WaveformProps } from './Waveform.js';
+
+export { ActivityHeatmap } from './ActivityHeatmap.js';
+export type { ActivityHeatmapProps } from './ActivityHeatmap.js';
+
+export { JsonTree } from './JsonTree.js';
+export type { JsonTreeProps } from './JsonTree.js';

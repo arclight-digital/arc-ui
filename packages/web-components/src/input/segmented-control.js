@@ -75,7 +75,7 @@ export class ArcSegmentedControl extends LitElement {
 
       .segmented__option.is-active {
         background: var(--interactive);
-        color: var(--surface-base);
+        color: var(--on-accent);
         border-color: var(--interactive);
         box-shadow: 0 0 12px rgba(var(--interactive-rgb), 0.4);
       }
@@ -104,9 +104,30 @@ export class ArcSegmentedControl extends LitElement {
     this._options = [];
   }
 
+  /**
+   * Read the options once the first render has a slot to read from.
+   *
+   * `slotchange` alone is not enough under declarative shadow DOM: the parser
+   * attaches the shadow root and assigns the slot before Lit adopts the tree,
+   * so the assignment has already happened by the time this component's
+   * listener exists and the event never arrives. A server-rendered control
+   * therefore upgraded with zero options and collapsed to an 8px sliver —
+   * on every page that used one, including its own documentation.
+   */
+  firstUpdated() {
+    this._readOptions(this.shadowRoot?.querySelector('slot'));
+  }
+
   _onSlotChange(e) {
-    this._options = e.target.assignedElements({ flatten: true })
+    this._readOptions(e.target);
+  }
+
+  _readOptions(slot) {
+    if (!slot) return;
+    const options = slot.assignedElements({ flatten: true })
       .filter(el => el.tagName === 'ARC-OPTION');
+    if (!options.length && !this._options.length) return;
+    this._options = options;
     // Auto-select first if no value set
     if (!this.value && this._options.length > 0) {
       this.value = this._options[0].getAttribute('value') || '';

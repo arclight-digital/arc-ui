@@ -93,6 +93,11 @@
       "solid": "./src/content/FeatureCard.tsx",
       "default": "./dist/content/FeatureCard.js"
     },
+    "./Hotspot": {
+      "types": "./dist/content/Hotspot.d.ts",
+      "solid": "./src/content/Hotspot.tsx",
+      "default": "./dist/content/Hotspot.js"
+    },
     "./Icon": {
       "types": "./dist/content/Icon.d.ts",
       "solid": "./src/content/Icon.tsx",
@@ -103,10 +108,25 @@
       "solid": "./src/content/Image.tsx",
       "default": "./dist/content/Image.js"
     },
+    "./ImageCompare": {
+      "types": "./dist/content/ImageCompare.d.ts",
+      "solid": "./src/content/ImageCompare.tsx",
+      "default": "./dist/content/ImageCompare.js"
+    },
+    "./ImageHotspots": {
+      "types": "./dist/content/ImageHotspots.d.ts",
+      "solid": "./src/content/ImageHotspots.tsx",
+      "default": "./dist/content/ImageHotspots.js"
+    },
     "./InfiniteScroll": {
       "types": "./dist/content/InfiniteScroll.d.ts",
       "solid": "./src/content/InfiniteScroll.tsx",
       "default": "./dist/content/InfiniteScroll.js"
+    },
+    "./Lightbox": {
+      "types": "./dist/content/Lightbox.d.ts",
+      "solid": "./src/content/Lightbox.tsx",
+      "default": "./dist/content/Lightbox.js"
     },
     "./Marquee": {
       "types": "./dist/content/Marquee.d.ts",
@@ -148,6 +168,11 @@
       "solid": "./src/content/Stack.tsx",
       "default": "./dist/content/Stack.js"
     },
+    "./Video": {
+      "types": "./dist/content/Video.d.ts",
+      "solid": "./src/content/Video.tsx",
+      "default": "./dist/content/Video.js"
+    },
     "./VirtualList": {
       "types": "./dist/content/VirtualList.d.ts",
       "solid": "./src/content/VirtualList.tsx",
@@ -157,6 +182,11 @@
       "types": "./dist/data/index.d.ts",
       "solid": "./src/data/index.ts",
       "default": "./dist/data/index.js"
+    },
+    "./ActivityHeatmap": {
+      "types": "./dist/data/ActivityHeatmap.d.ts",
+      "solid": "./src/data/ActivityHeatmap.tsx",
+      "default": "./dist/data/ActivityHeatmap.js"
     },
     "./AnimatedNumber": {
       "types": "./dist/data/AnimatedNumber.d.ts",
@@ -172,6 +202,11 @@
       "types": "./dist/data/Chart.d.ts",
       "solid": "./src/data/Chart.tsx",
       "default": "./dist/data/Chart.js"
+    },
+    "./Clock": {
+      "types": "./dist/data/Clock.d.ts",
+      "solid": "./src/data/Clock.tsx",
+      "default": "./dist/data/Clock.js"
     },
     "./Comparison": {
       "types": "./dist/data/Comparison.d.ts",
@@ -218,6 +253,16 @@
       "solid": "./src/data/EventCalendar.tsx",
       "default": "./dist/data/EventCalendar.js"
     },
+    "./Gauge": {
+      "types": "./dist/data/Gauge.d.ts",
+      "solid": "./src/data/Gauge.tsx",
+      "default": "./dist/data/Gauge.js"
+    },
+    "./JsonTree": {
+      "types": "./dist/data/JsonTree.d.ts",
+      "solid": "./src/data/JsonTree.tsx",
+      "default": "./dist/data/JsonTree.js"
+    },
     "./Kanban": {
       "types": "./dist/data/Kanban.d.ts",
       "solid": "./src/data/Kanban.tsx",
@@ -232,6 +277,11 @@
       "types": "./dist/data/KvPair.d.ts",
       "solid": "./src/data/KvPair.tsx",
       "default": "./dist/data/KvPair.js"
+    },
+    "./LevelMeter": {
+      "types": "./dist/data/LevelMeter.d.ts",
+      "solid": "./src/data/LevelMeter.tsx",
+      "default": "./dist/data/LevelMeter.js"
     },
     "./List": {
       "types": "./dist/data/List.d.ts",
@@ -288,10 +338,20 @@
       "solid": "./src/data/TimelineItem.tsx",
       "default": "./dist/data/TimelineItem.js"
     },
+    "./Uptime": {
+      "types": "./dist/data/Uptime.d.ts",
+      "solid": "./src/data/Uptime.tsx",
+      "default": "./dist/data/Uptime.js"
+    },
     "./ValueCard": {
       "types": "./dist/data/ValueCard.d.ts",
       "solid": "./src/data/ValueCard.tsx",
       "default": "./dist/data/ValueCard.js"
+    },
+    "./Waveform": {
+      "types": "./dist/data/Waveform.d.ts",
+      "solid": "./src/data/Waveform.tsx",
+      "default": "./dist/data/Waveform.js"
     },
     "./typography": {
       "types": "./dist/typography/index.d.ts",
@@ -323,6 +383,11 @@
       "solid": "./src/typography/Kbd.tsx",
       "default": "./dist/typography/Kbd.js"
     },
+    "./KeyboardMap": {
+      "types": "./dist/typography/KeyboardMap.d.ts",
+      "solid": "./src/typography/KeyboardMap.tsx",
+      "default": "./dist/typography/KeyboardMap.js"
+    },
     "./Markdown": {
       "types": "./dist/typography/Markdown.d.ts",
       "solid": "./src/typography/Markdown.tsx",
@@ -337,6 +402,11 @@
       "types": "./dist/typography/Prose.d.ts",
       "solid": "./src/typography/Prose.tsx",
       "default": "./dist/typography/Prose.js"
+    },
+    "./Terminal": {
+      "types": "./dist/typography/Terminal.d.ts",
+      "solid": "./src/typography/Terminal.tsx",
+      "default": "./dist/typography/Terminal.js"
     },
     "./Text": {
       "types": "./dist/typography/Text.d.ts",
@@ -443,6 +513,11 @@
       "solid": "./src/input/ImageCropper.tsx",
       "default": "./dist/input/ImageCropper.js"
     },
+    "./InlineEdit": {
+      "types": "./dist/input/InlineEdit.d.ts",
+      "solid": "./src/input/InlineEdit.tsx",
+      "default": "./dist/input/InlineEdit.js"
+    },
     "./Input": {
       "types": "./dist/input/Input.d.ts",
       "solid": "./src/input/Input.tsx",
@@ -453,10 +528,20 @@
       "solid": "./src/input/InputGroup.tsx",
       "default": "./dist/input/InputGroup.js"
     },
+    "./Knob": {
+      "types": "./dist/input/Knob.d.ts",
+      "solid": "./src/input/Knob.tsx",
+      "default": "./dist/input/Knob.js"
+    },
     "./Label": {
       "types": "./dist/input/Label.d.ts",
       "solid": "./src/input/Label.tsx",
       "default": "./dist/input/Label.js"
+    },
+    "./MaskedInput": {
+      "types": "./dist/input/MaskedInput.d.ts",
+      "solid": "./src/input/MaskedInput.tsx",
+      "default": "./dist/input/MaskedInput.js"
     },
     "./MultiSelect": {
       "types": "./dist/input/MultiSelect.d.ts",
@@ -518,6 +603,11 @@
       "solid": "./src/input/Select.tsx",
       "default": "./dist/input/Select.js"
     },
+    "./SignaturePad": {
+      "types": "./dist/input/SignaturePad.d.ts",
+      "solid": "./src/input/SignaturePad.tsx",
+      "default": "./dist/input/SignaturePad.js"
+    },
     "./Slider": {
       "types": "./dist/input/Slider.d.ts",
       "solid": "./src/input/Slider.tsx",
@@ -567,6 +657,11 @@
       "types": "./dist/input/TransferList.d.ts",
       "solid": "./src/input/TransferList.tsx",
       "default": "./dist/input/TransferList.js"
+    },
+    "./TreeSelect": {
+      "types": "./dist/input/TreeSelect.d.ts",
+      "solid": "./src/input/TreeSelect.tsx",
+      "default": "./dist/input/TreeSelect.js"
     },
     "./navigation": {
       "types": "./dist/navigation/index.d.ts",
@@ -878,6 +973,11 @@
       "solid": "./src/feedback/ContextMenu.tsx",
       "default": "./dist/feedback/ContextMenu.js"
     },
+    "./Conversation": {
+      "types": "./dist/feedback/Conversation.d.ts",
+      "solid": "./src/feedback/Conversation.tsx",
+      "default": "./dist/feedback/Conversation.js"
+    },
     "./Dialog": {
       "types": "./dist/feedback/Dialog.d.ts",
       "solid": "./src/feedback/Dialog.tsx",
@@ -907,6 +1007,11 @@
       "types": "./dist/feedback/LoadingOverlay.d.ts",
       "solid": "./src/feedback/LoadingOverlay.tsx",
       "default": "./dist/feedback/LoadingOverlay.js"
+    },
+    "./Message": {
+      "types": "./dist/feedback/Message.d.ts",
+      "solid": "./src/feedback/Message.tsx",
+      "default": "./dist/feedback/Message.js"
     },
     "./Modal": {
       "types": "./dist/feedback/Modal.d.ts",

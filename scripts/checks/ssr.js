@@ -214,6 +214,99 @@ const PROPERTY_SAMPLES = {
           : 'renderItem was never invoked — the seeded _visibleCount no longer forces rows through the server render',
     };
   },
+  'arc-knob': () => {
+    let formatted = 0;
+    return {
+      template: html`<arc-knob
+        value="440"
+        min="20"
+        max="2000"
+        .detents=${[100, 440, 1000]}
+        .format=${(v) => {
+          formatted++;
+          return `${v} Hz`;
+        }}
+      ></arc-knob>`,
+      verify: () =>
+        formatted > 0
+          ? null
+          : 'format() was never invoked — the readout path no longer renders server-side',
+    };
+  },
+  // The remaining entries carry no callback prop, so there is no honest signal
+  // to verify — the populated render itself is the exercised path.
+  'arc-waveform': () => ({
+    template: html`<arc-waveform
+      duration="212"
+      position="0.4"
+      interactive
+      variant="bars"
+      .peaks=${Array.from({ length: 48 }, (_, i) => 0.15 + 0.85 * Math.abs(Math.sin(i * 0.7)))}
+    ></arc-waveform>`,
+  }),
+  'arc-uptime': () => ({
+    template: html`<arc-uptime
+      start-label="90 days ago"
+      end-label="Today"
+      .data=${[1, 0.98, { value: 0.5, status: 'down', label: 'Mar 4' }, { status: 'none' }]}
+    ></arc-uptime>`,
+  }),
+  'arc-terminal': () => ({
+    template: html`<arc-terminal
+      title="deploy"
+      .lines=${[
+        { type: 'comment', text: '# install' },
+        { type: 'command', text: 'pnpm add @arclux/arc-ui' },
+        { type: 'output', text: '+ @arclux/arc-ui 3.0.0' },
+      ]}
+    ></arc-terminal>`,
+  }),
+  'arc-lightbox': () => ({
+    template: html`<arc-lightbox
+      index="1"
+      .images=${[
+        { src: '/a.jpg', alt: 'A', caption: 'First' },
+        '/b.jpg',
+      ]}
+    ></arc-lightbox>`,
+  }),
+  'arc-json-tree': () => ({
+    template: html`<arc-json-tree
+      expanded="2"
+      .data=${{ id: 'usr_1042', active: true, score: 9.75, tags: ['alpha', 'beta'], profile: { name: 'Ada', email: null } }}
+    ></arc-json-tree>`,
+  }),
+  'arc-tree-select': () => ({
+    template: html`<arc-tree-select
+      label="Instrument"
+      value="violin"
+      .expandedValues=${['strings']}
+      .items=${[
+        { value: 'keys', label: 'Keys', children: [{ value: 'piano', label: 'Piano' }] },
+        { value: 'strings', label: 'Strings', children: [
+          { value: 'violin', label: 'Violin' },
+          { value: 'cello', label: 'Cello' },
+        ] },
+      ]}
+    ></arc-tree-select>`,
+  }),
+  'arc-keyboard-map': () => ({
+    template: html`<arc-keyboard-map
+      platform="mac"
+      caption="Command palette"
+      .highlight=${['mod+shift+p', 'escape']}
+    ></arc-keyboard-map>`,
+  }),
+  'arc-activity-heatmap': () => ({
+    template: html`<arc-activity-heatmap
+      end-date="2026-03-14"
+      weeks="4"
+      .data=${[
+        { date: '2026-03-04', value: 7, label: '7 commits' },
+        { date: '2026-03-14', value: 3 },
+      ]}
+    ></arc-activity-heatmap>`,
+  }),
 };
 
 const all = components();

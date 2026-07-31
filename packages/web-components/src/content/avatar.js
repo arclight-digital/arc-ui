@@ -191,7 +191,10 @@ export class ArcAvatar extends LitElement {
       <div class="avatar" part="avatar" role="img" aria-label=${this.name || 'Avatar'}>
         ${content}
       </div>
-      ${this.status ? html`<span class="avatar__status" part="status" aria-label=${this.status}></span>` : ''}
+      ${/* role="img" is what makes the label reachable: aria-label on a bare
+            span is prohibited and silently dropped, so the status dot carried
+            a name no assistive technology could read. */ ''}
+      ${this.status ? html`<span class="avatar__status" part="status" role="img" aria-label=${this.status}></span>` : ''}
     `;
   }
 }

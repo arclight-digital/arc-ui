@@ -33,3 +33,9 @@ export type { TypewriterProps } from './Typewriter.js';
 
 export { Text } from './Text.js';
 export type { TextProps } from './Text.js';
+
+export { Terminal } from './Terminal.js';
+export type { TerminalProps } from './Terminal.js';
+
+export { KeyboardMap } from './KeyboardMap.js';
+export type { KeyboardMapProps } from './KeyboardMap.js';

@@ -127,6 +127,7 @@ export const hostTokens = css`
     --surface-overlay: var(--bg-elevated);
     --surface-hover: var(--bg-hover);
     --divider: var(--border-subtle);
+    --on-accent: var(--surface-base);
 
     /* Interactive and layout */
     --touch-min: 24px;

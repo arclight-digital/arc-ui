@@ -691,6 +691,18 @@ ${Object.entries(tokens.glowScale).map(([k, v]) => `  --glow-${k}: ${v};`).join(
   --overlay-backdrop: rgba(${tokens.rgb.black}, 0.6);
   --accent-text-mix: 0%;
 
+  /* Text painted ON an accent fill — the primary button's label, the active
+     segment, the selected day in a picker.
+
+     Not simply --surface-base, which is what those five call sites used to
+     read. That works in dark, where the ground is near-black against a bright
+     accent (5.53:1), but light mode pairs its near-white ground with a darker
+     accent and lands at 4.30:1 — under AA, on the most-used control in the
+     library. The light theme overrides this to pure white (4.79:1); the dark
+     value stays exactly what it was, since white on the dark accent would be
+     3.72:1 and strictly worse. */
+  --on-accent: var(--surface-base);
+
   /* ── Semantic: Interactive ── */
   --interactive: var(--accent-primary);
   --interactive-rgb: var(--accent-primary-rgb);
@@ -847,6 +859,11 @@ export const lightTokens = {
     bgHover: 'rgba(55, 105, 235, 0.04)',
     overlayBackdrop: 'rgba(20, 20, 40, 0.25)',
     accentTextMix: '55%',
+    /* White, not the light ground. The near-white surface this theme would
+       otherwise supply sits at 4.30:1 on the light accent — under AA for the
+       primary button label and the active segment. Pure white clears it at
+       4.79:1 without moving the brand colour. */
+    onAccent: 'rgb(var(--white-rgb))',
   },
 };
 
@@ -1034,6 +1051,7 @@ function renderOverrides(t, indent = '  ', label = 'theme') {
       bgHover: '--bg-hover',
       accentTextMix: '--accent-text-mix',
       overlayBackdrop: '--overlay-backdrop',
+      onAccent: '--on-accent',
     };
     for (const [k, v] of Object.entries(t.utility)) mapped(utilVar, 'utility')(k, v);
   }
@@ -1380,6 +1398,7 @@ export function generateHostTokensCSS(indent = '    ') {
     ['--surface-overlay', 'var(--bg-elevated)'],
     ['--surface-hover', 'var(--bg-hover)'],
     ['--divider', 'var(--border-subtle)'],
+    ['--on-accent', 'var(--surface-base)'],
   ]);
   group('Interactive and layout', [
     ['--touch-min', tokens.touch.min],
@@ -1443,6 +1462,10 @@ export function generateTokensCSS({ tags = [] } = {}) {
     ['--surface-overlay', 'var(--bg-elevated)'],
     ['--surface-hover', 'var(--bg-hover)'],
     ['--divider', 'var(--border-subtle)'],
+    // Fixed regions keep the dark accent, so they keep the dark on-accent
+    // colour with it — without this the light theme's white would follow the
+    // page into a region whose accent never changed.
+    ['--on-accent', 'var(--surface-base)'],
     ['--glow-primary', tokens.glow.primary],
     ['--glow-secondary', tokens.glow.secondary],
     ['--glow-white', tokens.glow.white],

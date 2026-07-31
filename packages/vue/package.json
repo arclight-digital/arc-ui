@@ -76,6 +76,10 @@
       "types": "./dist/content/FeatureCard.vue.d.ts",
       "default": "./dist/content/FeatureCard.vue.js"
     },
+    "./Hotspot": {
+      "types": "./dist/content/Hotspot.vue.d.ts",
+      "default": "./dist/content/Hotspot.vue.js"
+    },
     "./Icon": {
       "types": "./dist/content/Icon.vue.d.ts",
       "default": "./dist/content/Icon.vue.js"
@@ -84,9 +88,21 @@
       "types": "./dist/content/Image.vue.d.ts",
       "default": "./dist/content/Image.vue.js"
     },
+    "./ImageCompare": {
+      "types": "./dist/content/ImageCompare.vue.d.ts",
+      "default": "./dist/content/ImageCompare.vue.js"
+    },
+    "./ImageHotspots": {
+      "types": "./dist/content/ImageHotspots.vue.d.ts",
+      "default": "./dist/content/ImageHotspots.vue.js"
+    },
     "./InfiniteScroll": {
       "types": "./dist/content/InfiniteScroll.vue.d.ts",
       "default": "./dist/content/InfiniteScroll.vue.js"
+    },
+    "./Lightbox": {
+      "types": "./dist/content/Lightbox.vue.d.ts",
+      "default": "./dist/content/Lightbox.vue.js"
     },
     "./Marquee": {
       "types": "./dist/content/Marquee.vue.d.ts",
@@ -120,6 +136,10 @@
       "types": "./dist/content/Stack.vue.d.ts",
       "default": "./dist/content/Stack.vue.js"
     },
+    "./Video": {
+      "types": "./dist/content/Video.vue.d.ts",
+      "default": "./dist/content/Video.vue.js"
+    },
     "./VirtualList": {
       "types": "./dist/content/VirtualList.vue.d.ts",
       "default": "./dist/content/VirtualList.vue.js"
@@ -127,6 +147,10 @@
     "./data": {
       "types": "./dist/data/index.d.ts",
       "default": "./dist/data/index.js"
+    },
+    "./ActivityHeatmap": {
+      "types": "./dist/data/ActivityHeatmap.vue.d.ts",
+      "default": "./dist/data/ActivityHeatmap.vue.js"
     },
     "./AnimatedNumber": {
       "types": "./dist/data/AnimatedNumber.vue.d.ts",
@@ -139,6 +163,10 @@
     "./Chart": {
       "types": "./dist/data/Chart.vue.d.ts",
       "default": "./dist/data/Chart.vue.js"
+    },
+    "./Clock": {
+      "types": "./dist/data/Clock.vue.d.ts",
+      "default": "./dist/data/Clock.vue.js"
     },
     "./Comparison": {
       "types": "./dist/data/Comparison.vue.d.ts",
@@ -176,6 +204,14 @@
       "types": "./dist/data/EventCalendar.vue.d.ts",
       "default": "./dist/data/EventCalendar.vue.js"
     },
+    "./Gauge": {
+      "types": "./dist/data/Gauge.vue.d.ts",
+      "default": "./dist/data/Gauge.vue.js"
+    },
+    "./JsonTree": {
+      "types": "./dist/data/JsonTree.vue.d.ts",
+      "default": "./dist/data/JsonTree.vue.js"
+    },
     "./Kanban": {
       "types": "./dist/data/Kanban.vue.d.ts",
       "default": "./dist/data/Kanban.vue.js"
@@ -187,6 +223,10 @@
     "./KvPair": {
       "types": "./dist/data/KvPair.vue.d.ts",
       "default": "./dist/data/KvPair.vue.js"
+    },
+    "./LevelMeter": {
+      "types": "./dist/data/LevelMeter.vue.d.ts",
+      "default": "./dist/data/LevelMeter.vue.js"
     },
     "./List": {
       "types": "./dist/data/List.vue.d.ts",
@@ -232,9 +272,17 @@
       "types": "./dist/data/TimelineItem.vue.d.ts",
       "default": "./dist/data/TimelineItem.vue.js"
     },
+    "./Uptime": {
+      "types": "./dist/data/Uptime.vue.d.ts",
+      "default": "./dist/data/Uptime.vue.js"
+    },
     "./ValueCard": {
       "types": "./dist/data/ValueCard.vue.d.ts",
       "default": "./dist/data/ValueCard.vue.js"
+    },
+    "./Waveform": {
+      "types": "./dist/data/Waveform.vue.d.ts",
+      "default": "./dist/data/Waveform.vue.js"
     },
     "./typography": {
       "types": "./dist/typography/index.d.ts",
@@ -260,6 +308,10 @@
       "types": "./dist/typography/Kbd.vue.d.ts",
       "default": "./dist/typography/Kbd.vue.js"
     },
+    "./KeyboardMap": {
+      "types": "./dist/typography/KeyboardMap.vue.d.ts",
+      "default": "./dist/typography/KeyboardMap.vue.js"
+    },
     "./Markdown": {
       "types": "./dist/typography/Markdown.vue.d.ts",
       "default": "./dist/typography/Markdown.vue.js"
@@ -271,6 +323,10 @@
     "./Prose": {
       "types": "./dist/typography/Prose.vue.d.ts",
       "default": "./dist/typography/Prose.vue.js"
+    },
+    "./Terminal": {
+      "types": "./dist/typography/Terminal.vue.d.ts",
+      "default": "./dist/typography/Terminal.vue.js"
     },
     "./Text": {
       "types": "./dist/typography/Text.vue.d.ts",
@@ -356,6 +412,10 @@
       "types": "./dist/input/ImageCropper.vue.d.ts",
       "default": "./dist/input/ImageCropper.vue.js"
     },
+    "./InlineEdit": {
+      "types": "./dist/input/InlineEdit.vue.d.ts",
+      "default": "./dist/input/InlineEdit.vue.js"
+    },
     "./Input": {
       "types": "./dist/input/Input.vue.d.ts",
       "default": "./dist/input/Input.vue.js"
@@ -364,9 +424,17 @@
       "types": "./dist/input/InputGroup.vue.d.ts",
       "default": "./dist/input/InputGroup.vue.js"
     },
+    "./Knob": {
+      "types": "./dist/input/Knob.vue.d.ts",
+      "default": "./dist/input/Knob.vue.js"
+    },
     "./Label": {
       "types": "./dist/input/Label.vue.d.ts",
       "default": "./dist/input/Label.vue.js"
+    },
+    "./MaskedInput": {
+      "types": "./dist/input/MaskedInput.vue.d.ts",
+      "default": "./dist/input/MaskedInput.vue.js"
     },
     "./MultiSelect": {
       "types": "./dist/input/MultiSelect.vue.d.ts",
@@ -416,6 +484,10 @@
       "types": "./dist/input/Select.vue.d.ts",
       "default": "./dist/input/Select.vue.js"
     },
+    "./SignaturePad": {
+      "types": "./dist/input/SignaturePad.vue.d.ts",
+      "default": "./dist/input/SignaturePad.vue.js"
+    },
     "./Slider": {
       "types": "./dist/input/Slider.vue.d.ts",
       "default": "./dist/input/Slider.vue.js"
@@ -455,6 +527,10 @@
     "./TransferList": {
       "types": "./dist/input/TransferList.vue.d.ts",
       "default": "./dist/input/TransferList.vue.js"
+    },
+    "./TreeSelect": {
+      "types": "./dist/input/TreeSelect.vue.d.ts",
+      "default": "./dist/input/TreeSelect.vue.js"
     },
     "./navigation": {
       "types": "./dist/navigation/index.d.ts",
@@ -704,6 +780,10 @@
       "types": "./dist/feedback/ContextMenu.vue.d.ts",
       "default": "./dist/feedback/ContextMenu.vue.js"
     },
+    "./Conversation": {
+      "types": "./dist/feedback/Conversation.vue.d.ts",
+      "default": "./dist/feedback/Conversation.vue.js"
+    },
     "./Dialog": {
       "types": "./dist/feedback/Dialog.vue.d.ts",
       "default": "./dist/feedback/Dialog.vue.js"
@@ -727,6 +807,10 @@
     "./LoadingOverlay": {
       "types": "./dist/feedback/LoadingOverlay.vue.d.ts",
       "default": "./dist/feedback/LoadingOverlay.vue.js"
+    },
+    "./Message": {
+      "types": "./dist/feedback/Message.vue.d.ts",
+      "default": "./dist/feedback/Message.vue.js"
     },
     "./Modal": {
       "types": "./dist/feedback/Modal.vue.d.ts",

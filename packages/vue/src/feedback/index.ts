@@ -24,3 +24,5 @@ export { default as Snackbar } from './Snackbar.vue';
 export { default as Spotlight } from './Spotlight.vue';
 export { default as Toast } from './Toast.vue';
 export { default as Tooltip } from './Tooltip.vue';
+export { default as Conversation } from './Conversation.vue';
+export { default as Message } from './Message.vue';

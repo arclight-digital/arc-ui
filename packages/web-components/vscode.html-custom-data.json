@@ -349,6 +349,33 @@
       "references": []
     },
     {
+      "name": "arc-hotspot",
+      "description": "A single glowing pin inside an Image Hotspots surface. The pin sits at percentage coordinates\nover the slotted image and opens a small anchored popover holding the slotted detail content.\nInside an arc-image-hotspots parent, opening one pin closes any other open pin.\n---\n\n\n### **Events:**\n - **arc-open** - Fired when the popover opens. detail.value carries the label, or the pin's index within its parent when no label is set.\n- **arc-close** - Fired before the popover closes and cancelable — preventDefault() vetoes the close. detail.value matches arc-open.\n\n### **Methods:**\n - **close(restoreFocus)** - Close the popover, firing the cancelable arc-close first. Public: the\nparent calls this to enforce one-open-at-a-time, so a consumer's veto is\nhonoured there too.\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **pin**\n- **panel**",
+      "attributes": [
+        {
+          "name": "x",
+          "description": "Horizontal position of the pin as a percentage of the image width, from 0 (left edge) to 100 (right edge). Values outside the range are clamped; a non-numeric value falls back to 50.",
+          "values": []
+        },
+        {
+          "name": "y",
+          "description": "Vertical position of the pin as a percentage of the image height, from 0 (top edge) to 100 (bottom edge). Values outside the range are clamped; a non-numeric value falls back to 50.",
+          "values": []
+        },
+        {
+          "name": "label",
+          "description": "Accessible name for the pin button, repeated as the heading of the popover. Always set it — without a label the pin announces nothing useful to a screen reader.",
+          "values": []
+        },
+        {
+          "name": "open",
+          "description": "Whether the pin's popover is currently visible. Reflected as an attribute. Opens on click; closes on Escape, outside click, or a second click on the pin.",
+          "values": []
+        }
+      ],
+      "references": []
+    },
+    {
       "name": "arc-icon-library",
       "description": "\n---\n",
       "attributes": [{ "name": "name", "values": [] }],
@@ -380,6 +407,44 @@
           "values": []
         }
       ],
+      "references": []
+    },
+    {
+      "name": "arc-image-compare",
+      "description": "Before/after image comparison: two layered images with a draggable divider revealing one over\nthe other. The `before` layer sits on top, clipped to the region between the start edge and the\ndivider; dragging the handle (or pressing arrow keys on it) moves the reveal line.\n\nThe clip is pure CSS driven by a private custom property, so the component server-renders at\nits initial position with no client-side measurement.\n\n`orientation` is named for the axis the divider *moves* along: `horizontal` (the default)\nslides a vertical divider line left and right; `vertical` slides a horizontal divider line up\nand down.\n\nThe position axis is logical: 0 is the inline-start edge (left in LTR, right in RTL) for\nhorizontal orientation, and the block-start edge (top) for vertical. Before/after has no\ninherent screen direction — unlike an audio timeline there is no convention fixing it — so the\ncontrol mirrors with the document like the rest of the reading order. Arrow keys follow the\ndivider's visible motion.\n---\n\n\n### **Events:**\n - **arc-input** - Fired continuously while dragging (every pointer move) and on each keyboard nudge. `value` is the position, 0-100. Use for live readouts.\n- **arc-change** - Fired once when the position commits: on pointer release, or with each keyboard nudge. Use for persisting the position.\n\n### **Slots:**\n - **before** - The \"before\" image (`<img>` or `<arc-image>`), revealed between the start edge and the divider.\n- **after** - The \"after\" image (`<img>` or `<arc-image>`). Sits underneath and sizes the component.\n\n### **CSS Parts:**\n - **container** - The clipping frame wrapping both layers.\n- **before** - The clipped before layer.\n- **after** - The base after layer.\n- **divider** - The hairline divider.\n- **handle** - The circular grab handle (the focusable slider).\n- **label-before** - The before caption chip.\n- **label-after** - The after caption chip.",
+      "attributes": [
+        {
+          "name": "position",
+          "description": "Divider position as a percentage, 0 to 100. 0 shows only the after layer, 100 only the before layer. Clamped, reflected, and updated as the user drags.",
+          "values": []
+        },
+        {
+          "name": "orientation",
+          "description": "Axis the divider moves along. `horizontal` (default) moves a vertical divider line left-right; `vertical` moves a horizontal line up-down.",
+          "values": [{ "name": "horizontal" }, { "name": "vertical" }]
+        },
+        {
+          "name": "before-label",
+          "description": "Optional caption for the before layer, rendered as a floating chip in the start corner.",
+          "values": []
+        },
+        {
+          "name": "after-label",
+          "description": "Optional caption for the after layer, rendered as a floating chip in the end corner.",
+          "values": []
+        },
+        {
+          "name": "label",
+          "description": "Accessible name for the divider handle, announced as the slider label.",
+          "values": []
+        }
+      ],
+      "references": []
+    },
+    {
+      "name": "arc-image-hotspots",
+      "description": "An annotated image: glowing pins positioned over a slotted picture, each opening a small\npopover of detail content. Built for product-feature callouts, annotated screenshots, and\nsimple maps. Slot the image and the arc-hotspot pins together as children — the pins position\nthemselves by percentage coordinates, so source order never matters. The parent keeps one\npopover open at a time; open and close activity arrives as the arc-open and arc-close events\nbubbling up from each arc-hotspot child, with detail.value naming the hotspot.\n---\n\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **container**",
+      "attributes": [],
       "references": []
     },
     {
@@ -450,6 +515,23 @@
         {
           "name": "disabled",
           "description": "Disables the component, disconnects the observer, and reduces opacity to 40%.",
+          "values": []
+        }
+      ],
+      "references": []
+    },
+    {
+      "name": "arc-lightbox",
+      "description": "Full-screen image viewer on the overlay stack: open from a thumbnail, step through a gallery\nwith wrapping prev/next navigation, zoom to 2x with drag-to-pan, and dismiss with Escape or a\nbackdrop click.\n\nThe gallery is data, not layout: images are supplied through the `images` property rather than\nslotted children, so the closed component renders nothing and the server render stays empty.\nEntries may be plain `src` strings or `{ src, alt, caption }` objects; the two forms mix freely.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the displayed image changes. `detail.value` is the new index.\n- **arc-close** - Fired when the lightbox closes. Cancelable: call `preventDefault()` to veto the close.\n- **arc-open** - Fired when the lightbox opens\n\n### **Methods:**\n - **show(index)** - Opens the viewer, optionally jumping to a specific image first.\n- **close()** - Closes the viewer through the cancelable arc-close contract.\n- **next()** - Advances to the next image, wrapping past the end.\n- **prev()** - Steps to the previous image, wrapping past the start.\n\n### **CSS Parts:**\n - **backdrop**\n- **bar**\n- **counter**\n- **zoom**\n- **close**\n- **prev**\n- **next**\n- **figure**\n- **image**\n- **caption**",
+      "attributes": [
+        {
+          "name": "index",
+          "description": "Index of the image currently displayed. Navigation wraps at both ends, so setting it out of range shows the nearest valid image.",
+          "values": []
+        },
+        {
+          "name": "open",
+          "description": "Controls the visible state of the viewer. Set to `true` to open at the current `index` and activate the focus trap; set to `false` to close and restore focus to the previously-focused element.",
           "values": []
         }
       ],
@@ -702,6 +784,57 @@
       "references": []
     },
     {
+      "name": "arc-video",
+      "description": "House-styled video player. Before the first play it shows the poster with a large glowing\nplay button; once playback starts, a minimal custom control bar rides the native video —\nplay/pause, a mono time readout, a scrub bar that seeks directly, a mute toggle, and a\nfullscreen button. During playback the bar fades out after two seconds of idle and returns\non pointer or keyboard activity; under reduced motion it stays visible. Standard player\nkeys work on the focused player: Space or K toggles playback, the arrow keys seek five\nseconds, M toggles mute, F toggles fullscreen.\n\nTakes a single `src` — there is no source-element fallback chain for multiple formats.\nServe one broadly supported encoding (H.264/MP4 plays everywhere), or reach for the native\nvideo element directly when you need format negotiation or adaptive streaming.\n---\n\n\n### **Events:**\n - **arc-play** - Fired when playback starts or resumes. `detail.value` is the current time in seconds.\n- **arc-pause** - Fired when playback pauses. `detail.value` is the current time in seconds.\n- **arc-ended** - Fired when playback reaches the end. `detail.value` is the final time in seconds.\n\n### **CSS Parts:**\n - **wrapper** - The player frame.\n- **video** - The native video element.\n- **overlay** - The pre-play overlay covering the poster.\n- **play-button** - The large centered play button inside the overlay.\n- **controls** - The control bar.\n- **play-toggle** - The play/pause button in the control bar.\n- **time** - The current/total time readout.\n- **scrubber** - The seek range input.\n- **mute-button** - The mute toggle button.\n- **fullscreen-button** - The fullscreen button.",
+      "attributes": [
+        {
+          "name": "src",
+          "description": "Video source URL. A single source only; no multi-format machinery.",
+          "values": []
+        },
+        {
+          "name": "poster",
+          "description": "Poster image URL shown before the first play.",
+          "values": []
+        },
+        {
+          "name": "label",
+          "description": "Accessible name for the player region. Falls back to a generic label when empty.",
+          "values": []
+        },
+        {
+          "name": "autoplay",
+          "description": "Starts playback as soon as the browser allows. Browsers only honor autoplay when the video is muted, so pair it with `muted`; when autoplay is blocked, the play overlay simply remains and the user starts playback themselves.",
+          "values": []
+        },
+        {
+          "name": "loop",
+          "description": "Restarts playback from the beginning when the video ends.",
+          "values": []
+        },
+        {
+          "name": "muted",
+          "description": "Mutes the audio track. Toggled live by the mute button and the M key.",
+          "values": []
+        },
+        {
+          "name": "controls",
+          "description": "Shows the custom control bar once playback has started, and enables the player keyboard shortcuts. Defaults to true; set `controls=\"false\"` for ambient or presentation video.",
+          "values": []
+        },
+        {
+          "name": "preload",
+          "description": "Passed through to the native video element. The default `metadata` loads dimensions and duration without buffering content.",
+          "values": [
+            { "name": "none" },
+            { "name": "metadata" },
+            { "name": "auto" }
+          ]
+        }
+      ],
+      "references": []
+    },
+    {
       "name": "arc-virtual-list",
       "description": "Windowed list that renders only the visible slice of a large array.\nFixed row height with configurable overscan.\n\nTwo ways to supply rows, because \"render a row\" means something different\ninside a framework than it does outside one:\n\n  - `renderItem` — a callback returning the row's content. The component\n    mounts only the visible rows, so a million-row array puts a screenful of\n    nodes in the DOM. This is the direct path: plain JS, HTML, Lit.\n  - windowed slots — the component renders an `item-N` slot for each index in\n    the visible range only, and announces that range as it scrolls. (Spelled\n    without the tag on purpose: prism scans this whole file for slot markup,\n    and a literal one in a comment invents a slot named `item-N`.)\n    Whoever owns\n    the light DOM supplies just those rows. This is how the framework\n    wrappers do it, so a React consumer writes JSX and a Svelte consumer\n    writes markup, rather than a callback returning nodes their framework\n    didn't create.\n\nBoth paths share one geometry engine, so scrolling behaves identically.\n`renderItem` wins if both are present.\n---\n\n\n### **Events:**\n - **arc-range-change** - Fired when the visible range changes. `end` is exclusive.\n\n### **Methods:**\n - **scrollToIndex(index)** - Scroll a row into view. Clamped to the list.\n\n### **Slots:**\n - **item-${index}**\n\n### **CSS Parts:**\n - **spacer**\n- **item**",
       "attributes": [
@@ -718,6 +851,38 @@
         {
           "name": "overscan",
           "description": "Rows rendered above and below the visible window to cover fast scrolling.",
+          "values": []
+        }
+      ],
+      "references": []
+    },
+    {
+      "name": "arc-activity-heatmap",
+      "description": "GitHub-style contribution calendar: a year of day cells laid out as one\ncolumn per week, each cell tinted by that day's activity on a five-step\naccent ramp. Hovering or arrow-keying a cell raises it with the house glow\nand shows its detail — the date and the day's label or value — in the same\nbuilt-in bubble arc-uptime carries. Month labels run along the top, sparse\nweekday labels down the side, and a Less→More legend sits below.\n\nThe grid is a pure function of its props. When `end-date` is unset the\nanchor is today, computed at render time in the browser; when rendering\nserver-side with no `end-date`, the anchor is instead derived from the\nnewest date present in `data`, so the server output is deterministic. Pin\n`end-date` explicitly whenever server and client must agree exactly.\n---\n\n\n### **CSS Parts:**\n - **heatmap**\n- **months**\n- **month**\n- **weekdays**\n- **weekday**\n- **grid**\n- **cell**\n- **detail**\n- **legend**\n- **swatch**",
+      "attributes": [
+        {
+          "name": "end-date",
+          "description": "The newest day shown, as an ISO string (YYYY-MM-DD). Unset: today in the browser; on the server, the newest date in `data` (see above).",
+          "values": []
+        },
+        {
+          "name": "weeks",
+          "description": "How many week columns to render, counting back from the week containing the end date (default 52). The last column is truncated after the end date, so the newest cell is always the end date itself.",
+          "values": []
+        },
+        {
+          "name": "week-start",
+          "description": "Which day starts each column: \"sunday\" (default, the GitHub convention) or \"monday\".",
+          "values": []
+        },
+        {
+          "name": "max",
+          "description": "When set, intensity is a linear scale from 0 to this value instead of the default quartile mapping: each nonzero value lands on step 1-4 by `value / max`. Values at or above `max` render as step 4.",
+          "values": []
+        },
+        {
+          "name": "legend",
+          "description": "Whether to render the Less→More swatch strip under the grid (default true; set the attribute to the string \"false\" to disable from markup).",
           "values": []
         }
       ],
@@ -858,6 +1023,43 @@
         {
           "name": "currency",
           "description": "ISO 4217 currency code used when value-format=\"currency\".",
+          "values": []
+        }
+      ],
+      "references": []
+    },
+    {
+      "name": "arc-clock",
+      "description": "Live clock with a digital or analog face, optionally pinned to an IANA timezone.\n---\n\n\n### **CSS Parts:**\n - **container**\n- **face**\n- **time**\n- **timezone**\n- **label**\n- **svg**\n- **hand-hour**\n- **hand-minute**\n- **hand-second**\n- **pin**",
+      "attributes": [
+        {
+          "name": "variant",
+          "description": "Which face to render. Digital shows a mono-spaced time string; analog shows an SVG dial with hands.",
+          "values": [{ "name": "digital" }, { "name": "analog" }]
+        },
+        {
+          "name": "timezone",
+          "description": "IANA timezone name (e.g. \"Asia/Tokyo\"). Defaults to the viewer's local timezone; an unrecognized value falls back to local.",
+          "values": []
+        },
+        {
+          "name": "label",
+          "description": "Optional caption rendered under the face.",
+          "values": []
+        },
+        {
+          "name": "show-seconds",
+          "description": "Show seconds on the digital face, or the second hand on the analog face.",
+          "values": []
+        },
+        {
+          "name": "hour12",
+          "description": "Force 12-hour display on the digital face. When unset, the viewer's locale decides. Set the property to false to force 24-hour display.",
+          "values": []
+        },
+        {
+          "name": "show-timezone",
+          "description": "Render the timezone abbreviation, muted, beside the digital time.",
           "values": []
         }
       ],
@@ -1108,6 +1310,85 @@
       "references": []
     },
     {
+      "name": "arc-gauge",
+      "description": "Radial gauge displaying a scalar value on an arc with color-coded zones (success, warning,\nerror) and an animated sweep. The radial companion to arc-meter: same threshold semantics,\nwith the reading rendered center-stage.\n---\n\n\n### **CSS Parts:**\n - **gauge**\n- **svg**\n- **track**\n- **arc**\n- **readout**\n- **value**\n- **unit**\n- **label**",
+      "attributes": [
+        {
+          "name": "value",
+          "description": "Current gauge value. Clamped between `min` and `max`. Reflected as an attribute.",
+          "values": []
+        },
+        {
+          "name": "min",
+          "description": "Minimum value representing the empty end of the arc.",
+          "values": []
+        },
+        {
+          "name": "max",
+          "description": "Maximum value representing the full end of the arc.",
+          "values": []
+        },
+        {
+          "name": "low",
+          "description": "Threshold below which the value is considered low. Used for color zone calculation.",
+          "values": []
+        },
+        {
+          "name": "high",
+          "description": "Threshold above which the value is considered high. Used for color zone calculation.",
+          "values": []
+        },
+        {
+          "name": "optimum",
+          "description": "The optimal value. Determines which end of the range is \"good\" for color zone logic.",
+          "values": []
+        },
+        {
+          "name": "label",
+          "description": "Label text displayed beneath the value and used as the accessible name.",
+          "values": []
+        },
+        {
+          "name": "unit",
+          "description": "Unit suffix rendered after the value (e.g. \"%\", \"ms\", \"GB\").",
+          "values": []
+        },
+        {
+          "name": "variant",
+          "description": "Arc shape: `full` is a 270-degree horseshoe, `half` a 180-degree semicircle.",
+          "values": [{ "name": "full" }, { "name": "half" }]
+        },
+        {
+          "name": "show-value",
+          "description": "Whether to render the numeric value in the center of the arc. Defaults to true; disable via the `showValue` property.",
+          "values": []
+        }
+      ],
+      "references": []
+    },
+    {
+      "name": "arc-json-tree",
+      "description": "Collapsible JSON explorer with house syntax coloring — the dev-tools\ninspector for API payloads, configuration objects, and structured state.\nPure recursive rendering with zero dependencies: unlike arc-code-block it\nloads no highlighter, so it ships in the register barrel.\n---\n\n\n### **Events:**\n - **arc-toggle** - Fired when a node is expanded or collapsed, with the node path and new expanded state\n\n### **CSS Parts:**\n - **container**\n- **item**\n- **row**\n- **key**\n- **value**\n- **preview**\n- **error**",
+      "attributes": [
+        {
+          "name": "json",
+          "description": "JSON string alternative to the data property, for attribute-only use. Parsed with try/catch; invalid input renders a small inline error state instead of throwing.",
+          "values": []
+        },
+        {
+          "name": "expanded",
+          "description": "How many levels open initially (default 1). As a bare boolean attribute, every level opens.",
+          "values": []
+        },
+        {
+          "name": "keys-quoted",
+          "description": "Render object keys with quotes. Off by default, matching devtools.",
+          "values": []
+        }
+      ],
+      "references": []
+    },
+    {
       "name": "arc-kanban",
       "description": "A drag-and-drop kanban board driven by a `columns` data array. Cards can be dragged between and\nwithin columns with the pointer, or moved entirely from the keyboard with live screen-reader\nannouncements. Column limits, tags, and descriptions are supported per card, and every move\nemits an `arc-card-move` event so the consumer can sync its source of truth.\n---\n\n\n### **Events:**\n - **arc-card-move** - Fired when a card is dropped in a new position (pointer or keyboard). detail: { cardId, fromColumn, toColumn, index } where index is the final position in the target column.\n- **arc-card-click** - Fired when a card is clicked without being dragged. detail: { cardId, columnId }.\n\n### **CSS Parts:**\n - **card-label**\n- **card-description**\n- **card**\n- **column**\n- **column-header**\n- **column-title**\n- **column-count**\n- **list**\n- **dropzone**\n- **board**",
       "attributes": [
@@ -1157,6 +1438,58 @@
         {
           "name": "label",
           "description": "The key/term text displayed in uppercase accent styling.",
+          "values": []
+        }
+      ],
+      "references": []
+    },
+    {
+      "name": "arc-level-meter",
+      "description": "Segmented audio level meter with peak-hold — the live vertical sibling of arc-meter,\nbuilt for signal-rate updates (audio levels, buffer fill, realtime telemetry).\nSegments below the warn threshold render success-tinted, between warn and clip\nwarning-tinted, and above clip error-tinted, with the house glow on lit segments.\nA thin peak-hold line rides the highest recent level and decays toward the\ncurrent value; feed the `peak` property to drive it yourself instead.\n\nOne element is one channel. There is deliberately no stereo mode — compose two\nmeters side by side for a stereo pair, one per channel, so channel count is the\nconsumer's decision rather than a prop fork.\n---\n\n\n### **CSS Parts:**\n - **meter** - The outer wrapper carrying role=\"meter\".\n- **track** - The tinted track containing segments or the continuous fill.\n- **segment** - Each discrete segment (segmented mode only).\n- **fill** - The continuous fill bar (segments=0 only).\n- **peak** - The thin peak-hold line.",
+      "attributes": [
+        {
+          "name": "value",
+          "description": "Current level. Interpreted against `min` and `max`, so with the defaults (0 and 1) it is a linear fraction, and with `min=\"-60\" max=\"0\"` it is a dB reading. Values outside the range are clamped.",
+          "values": []
+        },
+        {
+          "name": "min",
+          "description": "Value at the empty end of the meter. Defaults to 0.",
+          "values": []
+        },
+        {
+          "name": "max",
+          "description": "Value at the full end of the meter. Defaults to 1. Use -60..0 (or your headroom of choice) for dB scales.",
+          "values": []
+        },
+        {
+          "name": "peak",
+          "description": "Externally supplied peak-hold level, in the same units as `value`. When set, the component renders the hold line exactly there and does no tracking of its own. When absent, the meter tracks its own peak from incoming values, holds it briefly, then decays it toward the current level.",
+          "values": []
+        },
+        {
+          "name": "orientation",
+          "description": "Meter direction. Vertical (the default) fills bottom-up like a channel strip; horizontal fills from the inline start. Unknown values fall back to vertical.",
+          "values": [{ "name": "vertical" }, { "name": "horizontal" }]
+        },
+        {
+          "name": "segments",
+          "description": "Number of discrete segments. Defaults to 20. Set 0 for a continuous, unsegmented bar.",
+          "values": []
+        },
+        {
+          "name": "warn",
+          "description": "Fraction of the range (0..1) where the warning zone begins, regardless of units. Defaults to 0.75.",
+          "values": []
+        },
+        {
+          "name": "clip",
+          "description": "Fraction of the range (0..1) where the clip (error) zone begins. Defaults to 0.9.",
+          "values": []
+        },
+        {
+          "name": "label",
+          "description": "Accessible name applied as aria-label on the meter. The component renders no visible text, so this is the only name screen readers get — use something like \"Master left\" rather than \"Level\".",
           "values": []
         }
       ],
@@ -1446,6 +1779,28 @@
       "references": []
     },
     {
+      "name": "arc-uptime",
+      "description": "Status-page uptime history strip: one slim tick per period, colored by\nstatus. Hovering or arrow-keying across the strip raises a tick with the\nhouse status glow and shows its detail in a small built-in bubble. Accepts\nplain uptime fractions (thresholds decide the status) or explicit status\nobjects, and renders the computed overall percentage above the track.\n---\n\n\n### **Methods:**\n - **statusOf(value)** - Map an uptime fraction to a status name; anything non-finite is none.\n\n### **CSS Parts:**\n - **uptime**\n- **summary**\n- **track**\n- **tick**\n- **detail**\n- **caption**",
+      "attributes": [
+        {
+          "name": "start-label",
+          "description": "Caption under the oldest end of the track (e.g. \"90 days ago\").",
+          "values": []
+        },
+        {
+          "name": "end-label",
+          "description": "Caption under the newest end of the track (e.g. \"Today\").",
+          "values": []
+        },
+        {
+          "name": "summary",
+          "description": "Whether to render the overall percentage above the track (default true; set the attribute to the string \"false\" to disable from markup). The percentage is the mean of every finite value in the data; when no entry carries a value the line is omitted regardless.",
+          "values": []
+        }
+      ],
+      "references": []
+    },
+    {
       "name": "arc-value-card",
       "description": "Horizontal card with icon and text, for values or features lists.\n---\n\n\n### **Slots:**\n - **icon**\n\n### **CSS Parts:**\n - **card**\n- **icon**\n- **title**\n- **description**",
       "attributes": [
@@ -1456,6 +1811,38 @@
         },
         { "name": "heading", "description": "Card title", "values": [] },
         { "name": "description", "description": "Card body text", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "arc-waveform",
+      "description": "Audio waveform visualization that doubles as a scrubber. Renders a peaks array as an SVG\nwaveform — the played region in accent with a soft glow, the unplayed region muted, and a\nglowing playhead line at the current position. With `interactive` set it becomes a seek\ncontrol: pointer scrubbing and keyboard arrows move the playhead, emitting `arc-input`\nwhile the gesture is in flight and `arc-change` when the value commits.\n\nThe component never touches audio itself — no AudioContext, no decoding. The consumer\ncomputes peak amplitudes (one number per bar, 0 to 1) however it likes and hands them\nover as an array. This keeps the component a pure function of its props, so it\nserver-renders and stays cheap enough for a lane of clips in a DAW timeline.\n\nThe time axis is deliberately direction-fixed: audio time flows left-to-right even in\nRTL contexts, matching every DAW, player, and editor convention.\n---\n\n\n### **Events:**\n - **arc-input** - Fired continuously while scrubbing (every pointer move and each keyboard nudge). `value` is the position fraction 0-1; `time` is seconds when `duration` is set, otherwise null. Use for live preview — updating a time display or audibly scrubbing.\n- **arc-change** - Fired once when the seek commits: on pointer release, or with each keyboard nudge. Use for the actual seek on your audio source.\n\n### **CSS Parts:**\n - **waveform** - The interactive track region wrapping the SVG and playhead.\n- **svg** - The SVG element.\n- **base** - The unplayed (muted) waveform layer.\n- **played** - The played (accent) waveform layer.\n- **playhead** - The playhead line.\n- **time** - The time readout row (renders only when duration is set).",
+      "attributes": [
+        {
+          "name": "position",
+          "description": "Current playhead position as a fraction of the total, 0 to 1. Not seconds: multiply by `duration` yourself if you track seconds. Updated by the component during scrubbing and reflected as an attribute.",
+          "values": []
+        },
+        {
+          "name": "duration",
+          "description": "Total duration in seconds. Optional; when set, time readouts render below the waveform and the slider announces times instead of percentages.",
+          "values": []
+        },
+        {
+          "name": "interactive",
+          "description": "Enables scrubbing. The waveform becomes a focusable slider: click or drag to seek, arrow keys to nudge, Home/End to jump. Without it the waveform is a static image.",
+          "values": []
+        },
+        {
+          "name": "variant",
+          "description": "Rendering style. `bars` draws discrete bar pairs mirrored around the center line; `mirror` draws a filled min/max envelope.",
+          "values": [{ "name": "bars" }, { "name": "mirror" }]
+        },
+        {
+          "name": "label",
+          "description": "Accessible name for the waveform. Announced as the slider label when interactive, or as the image description otherwise.",
+          "values": []
+        }
       ],
       "references": []
     },
@@ -1657,6 +2044,18 @@
       "references": []
     },
     {
+      "name": "arc-conversation",
+      "description": "A chat transcript: the scrollable column that holds arc-message children. Built for AI\nassistant panels — the layout, the role alignment, and the scroll behaviour all assume messages\narrive while the user is reading. While the reader sits near the bottom, new or growing\nmessages keep the view pinned to the latest; once they scroll up to re-read, the transcript\nnever yanks them back down. The arc-scroll-away and arc-scroll-return events report those\ntransitions with the distance from the bottom, so a consumer can float a \"jump to latest\" chip\nand wire it to scrollToEnd().\n---\n\n\n### **Events:**\n - **arc-scroll-away** - Fired once when the reader scrolls up out of the near-bottom zone of the transcript. detail.value is the distance from the bottom in pixels.\n- **arc-scroll-return** - Fired once when the reader comes back within the near-bottom zone. detail.value is the distance from the bottom in pixels.\n\n### **Methods:**\n - **scrollToEnd()** - Scroll the transcript to its newest message.\n\n### **Slots:**\n - _default_ - Default content: the arc-message children making up the transcript.\n\n### **CSS Parts:**\n - **conversation**",
+      "attributes": [
+        {
+          "name": "auto-scroll",
+          "description": "Follow new content: when a message is added or grows while the reader is near the bottom, scroll to keep the latest visible. A reader who has scrolled up is never pulled back down. Defaults to true; set the property to false to leave scrolling entirely to the consumer.",
+          "values": []
+        }
+      ],
+      "references": []
+    },
+    {
       "name": "arc-dialog",
       "description": "Small centered confirmation dialog wrapping arc-modal for simple confirm/cancel prompts —\nunsaved changes, session expiry, and discard decisions.\n---\n\n\n### **Events:**\n - **arc-confirm** - Fired when the confirm button is clicked\n- **arc-cancel** - Fired when cancel, escape, or backdrop click occurs\n\n### **Methods:**\n - **confirm()** - Opens the dialog and returns a Promise that resolves to `true` on confirm\nor `false` on cancel (including Escape and backdrop click).\n\n### **CSS Parts:**\n - **body**\n- **cancel**\n- **confirm**",
       "attributes": [
@@ -1784,6 +2183,42 @@
         {
           "name": "global",
           "description": "When true, the overlay uses fixed positioning to cover the entire viewport instead of just its parent container. Includes a focus trap in this mode.",
+          "values": []
+        }
+      ],
+      "references": []
+    },
+    {
+      "name": "arc-message",
+      "description": "One message in a conversation transcript. The speaker attribute decides the voice: user messages\nsit at the inline end on a faint accent tint, assistant messages sit at the inline start on a\nneutral surface, and system messages run centred, muted and small. The default slot is the\nmessage body — append text to it to stream a reply in — and with the markdown attribute set,\nthat slotted text renders through arc-markdown, re-rendering as the text grows. A pending\nmessage shows the typing indicator in place of its body. Slot an avatar for either speaker if\nthe product wants faces; none is built in.\n---\n\n\n### **Slots:**\n - _default_ - The message body. Text when markdown is set; any markup otherwise.\n- **avatar** - An optional avatar beside the bubble; the component ships none of its own.\n\n### **CSS Parts:**\n - **message**\n- **meta**\n- **bubble**",
+      "attributes": [
+        {
+          "name": "speaker",
+          "description": "Whose message this is. \"user\" aligns to the inline end on an accent-tinted surface, \"assistant\" to the inline start on a neutral surface, and \"system\" runs centred and muted for notices in the transcript's own voice. An unrecognised value renders as \"user\".",
+          "values": [
+            { "name": "user" },
+            { "name": "assistant" },
+            { "name": "system" }
+          ]
+        },
+        {
+          "name": "author",
+          "description": "Display name shown in the muted meta line above the bubble. Omit it and the meta line only appears when a timestamp is set.",
+          "values": []
+        },
+        {
+          "name": "timestamp",
+          "description": "When the message was sent, as an ISO 8601 string. Rendered as house relative time (\"3 minutes ago\") through arc-time-ago, with the absolute date on its title.",
+          "values": []
+        },
+        {
+          "name": "pending",
+          "description": "Renders the typing indicator — three pulsing dots — in place of the body while a reply is being produced. Under prefers-reduced-motion the dots give way to a static ellipsis.",
+          "values": []
+        },
+        {
+          "name": "markdown",
+          "description": "Render the slotted text through the house markdown renderer. The slot's text content is the source; it re-parses whenever the slot changes, so streaming into the slot streams through the renderer. When false, slotted content renders as-is.",
           "values": []
         }
       ],
@@ -2660,6 +3095,45 @@
       "references": []
     },
     {
+      "name": "arc-inline-edit",
+      "description": "Click-to-edit text: renders as plain text until activated, then swaps to a\npre-filled field. Enter or blur commits, Escape cancels. Built for track\nrenames, document titles, and other fields where a permanent input box would\nbe visual noise.\n\nThe display text inherits the surrounding typography (`font: inherit`) and\nthe edit field matches it, so the swap never changes the text's metrics —\nan inline-edit inside a heading edits at heading size, one in a table cell\nedits at cell size. This is why there is no `size` prop: sizing comes from\ncontext, and a fixed scale would fight it.\n\nWhile editing, keystrokes accumulate in an internal draft. `value` — and the\nvalue a form submits — only changes on commit, so Escape can always revert\nand a half-typed rename is never submitted. Committing an unchanged value\nfires no event at all.\n---\n\n\n### **Events:**\n - **arc-change** - Fired once on commit when the value actually changed, with the new value in detail.value.\n- **arc-cancel** - Fired when an edit is cancelled (Escape or cancel()), with the retained value in detail.value. No arc-change accompanies it.\n- **arc-input** - Fired on each keystroke while editing, with the draft text in detail.value.\n\n### **Methods:**\n - **edit()** - Enter edit mode: focus the field and select its text. No-op when disabled, readonly, or already editing.\n- **commit()** - Commit the current draft and leave edit mode. Fires arc-change only if the value changed.\n- **cancel()** - Discard the draft, keep the previous value, and leave edit mode. Fires arc-cancel.\n\n### **CSS Parts:**\n - **display** - The display-state button wrapping the text and pencil affordance.\n- **field** - The input or textarea shown while editing.\n- **icon** - The pencil affordance icon.",
+      "attributes": [
+        {
+          "name": "value",
+          "description": "The committed text. Updated only when an edit commits (Enter or blur); keystrokes accumulate in an internal draft until then.",
+          "values": []
+        },
+        {
+          "name": "label",
+          "description": "Accessible name for the control. The display state announces as \"Edit {label}\" and the edit field is labelled with it. Always provide one.",
+          "values": []
+        },
+        {
+          "name": "name",
+          "description": "The `name` attribute sent with form data on submission. The submitted value is the committed `value`, never an in-progress draft.",
+          "values": []
+        },
+        {
+          "name": "placeholder",
+          "description": "Text shown in muted italic when `value` is empty, and as the field placeholder while editing. Defaults to \"Empty\".",
+          "values": []
+        },
+        {
+          "name": "multiline",
+          "description": "When true, editing uses a `<textarea>`: Enter inserts a newline and Cmd/Ctrl+Enter commits. Single-line commits on plain Enter.",
+          "values": []
+        },
+        {
+          "name": "disabled",
+          "description": "Prevents activation and applies a muted treatment. The value is excluded from form submission while disabled.",
+          "values": []
+        },
+        { "name": "required", "values": [] },
+        { "name": "readonly", "values": [] }
+      ],
+      "references": []
+    },
+    {
       "name": "arc-input-group",
       "description": "Combines an input with prefix and suffix addon slots for labels, icons, or buttons attached to\nthe input border.\n---\n\n\n### **Slots:**\n - **prefix**\n- _default_ - Default content.\n- **suffix**\n\n### **CSS Parts:**\n - **group**\n- **prefix**\n- **content**\n- **suffix**",
       "attributes": [
@@ -2741,6 +3215,56 @@
       "references": []
     },
     {
+      "name": "arc-knob",
+      "description": "Rotary knob input for continuous parameters — the control a slider can't be when the panel\nis a rack of channel strips. A 270-degree arc track fills from min to the current value with\na glowing indicator line, a monospace readout below, and synth-style interaction: vertical\ndrag to turn (Shift for fine adjustment), mouse wheel and arrow keys to step, optional\nmagnetic detents at named values.\n---\n\n\n### **Events:**\n - **arc-input** - Fired continuously while the knob is turning — every drag movement, wheel notch, or key step. Use for real-time preview such as a filter cutoff or gain applied live.\n- **arc-change** - Fired once when a turn commits: on drag release, and after each discrete wheel or key step. Use for persisting the value or triggering an expensive operation.\n\n### **CSS Parts:**\n - **knob**\n- **label**\n- **dial**\n- **track**\n- **fill**\n- **indicator**\n- **value**",
+      "attributes": [
+        {
+          "name": "size",
+          "description": "Control size. `md` is the default; `sm` and `lg` scale the dial.",
+          "values": [{ "name": "sm" }, { "name": "md" }, { "name": "lg" }]
+        },
+        {
+          "name": "value",
+          "description": "Current knob value. Reflected as an attribute and updated on user interaction.",
+          "values": []
+        },
+        {
+          "name": "min",
+          "description": "Minimum allowed value at the start of the arc sweep.",
+          "values": []
+        },
+        {
+          "name": "max",
+          "description": "Maximum allowed value at the end of the arc sweep.",
+          "values": []
+        },
+        {
+          "name": "step",
+          "description": "Increment granularity. The value snaps to multiples of this number.",
+          "values": []
+        },
+        { "name": "name", "values": [] },
+        {
+          "name": "disabled",
+          "description": "Disables interaction, reducing opacity and blocking pointer events.",
+          "values": []
+        },
+        {
+          "name": "label",
+          "description": "Label text displayed above the knob in the label typography role.",
+          "values": []
+        },
+        {
+          "name": "detents",
+          "description": "Snap values, as an array from script or a comma-separated attribute (for example \"0,50,100\"). While dragging, the value snaps magnetically to a detent within 2.5% of the range, and each detent renders as a tick mark around the dial. Keyboard and wheel stepping ignore detents.",
+          "values": [{ "name": "number[]" }]
+        },
+        { "name": "required", "values": [] },
+        { "name": "readonly", "values": [] }
+      ],
+      "references": []
+    },
+    {
       "name": "arc-label",
       "description": "Form label with required indicator, optional description text, and tooltip slot. Pairs with any\ninput component via the `for` attribute.\n---\n\n\n### **Slots:**\n - _default_ - Default content.\n- **tooltip**\n- **description**\n\n### **CSS Parts:**\n - **label**\n- **description**",
       "attributes": [
@@ -2764,6 +3288,64 @@
           "description": "Reduces opacity and blocks pointer events.",
           "values": []
         }
+      ],
+      "references": []
+    },
+    {
+      "name": "arc-masked-input",
+      "description": "Text field that enforces a character mask as you type — dates, card numbers,\nphone numbers, license keys. The mask's literals are typed for the user;\n`value` holds only the raw characters, and the raw value is what forms\nreceive, so the mask stays presentation.\n---\n\n\n### **Events:**\n - **arc-input** - Fired on each accepted edit. `value` is the raw characters; `formatted` is the presentation string. A rejected character fires nothing.\n- **arc-change** - Fired on blur or Enter when the value changed, and immediately when the last mask position fills — a complete mask is a committed value, the fixed-length precedent set by OTP Input.\n\n### **Slots:**\n - **prefix**\n- **suffix**\n\n### **CSS Parts:**\n - **field**\n- **label**\n- **wrapper**\n- **prefix**\n- **suffix**\n- **hint**\n- **error**",
+      "attributes": [
+        {
+          "name": "mask",
+          "description": "The mask pattern. `#` accepts a digit, `A` an uppercase letter (lowercase input is uppercased), `a` any letter, `*` a letter or digit; every other character is a literal typed for the user. Examples: `##/##/####`, `#### #### #### ####`, `AAA-###`.",
+          "values": []
+        },
+        {
+          "name": "value",
+          "description": "The RAW accepted characters only, with no mask literals — `12042026`, never `12/04/2026`. The formatted string is presentation; read it from `formattedValue`. Programmatic values are conformed against the mask, so setting a formatted string keeps only the characters the mask accepts.",
+          "values": []
+        },
+        {
+          "name": "placeholder-char",
+          "description": "Character rendered in unfilled positions of the in-field hint once typing starts (for example `12/__/____`). Before any input, the native placeholder shows the full mask shape. Defaults to `_`.",
+          "values": []
+        },
+        {
+          "name": "label",
+          "description": "Visible label rendered above the field. Automatically associated with the field via a generated id, ensuring screen readers announce it correctly.",
+          "values": []
+        },
+        {
+          "name": "name",
+          "description": "The `name` attribute sent with form data on submission. The submitted value is the RAW value, without mask literals.",
+          "values": []
+        },
+        {
+          "name": "disabled",
+          "description": "Prevents user interaction and applies a muted visual treatment. The field value is excluded from form submission when disabled.",
+          "values": []
+        },
+        {
+          "name": "required",
+          "description": "Marks the field as required. An empty field fails validation with valueMissing; a partially filled one fails with an \"Incomplete value\" pattern error.",
+          "values": []
+        },
+        {
+          "name": "autocomplete",
+          "description": "Passed through to the inner input, e.g. `cc-number` on a card field so browser autofill can offer saved cards.",
+          "values": []
+        },
+        {
+          "name": "error",
+          "description": "Error message displayed below the input. When set, the input border turns red and the error text appears.",
+          "values": []
+        },
+        {
+          "name": "size",
+          "description": "Controls the input size. Options: 'sm', 'md', 'lg'.",
+          "values": [{ "name": "sm" }, { "name": "md" }, { "name": "lg" }]
+        },
+        { "name": "readonly", "values": [] }
       ],
       "references": []
     },
@@ -3238,6 +3820,45 @@
       "references": []
     },
     {
+      "name": "arc-signature-pad",
+      "description": "Canvas signature capture that participates in forms. A bordered drawing surface with a muted\n\"Sign here\" baseline while empty, a velocity-scaled pen line for a natural stroke, and a ghost\nclear button once ink is down. Each completed stroke serializes the whole canvas to a PNG\ndata-URL and submits it as the field value; required-and-blank reports `valueMissing` like any\nother input.\n\nSigning by hand is inherently a pointer gesture: the pad itself offers no keyboard path to\nproduce a signature (the clear button is keyboard-reachable, the canvas is focusable so its\nsigned/empty state is announced). A consumer collecting signatures must offer keyboard users an\nequivalent — a type-to-sign field, an upload — alongside this control; the pad does not\nsimulate one.\n---\n\n\n### **Events:**\n - **arc-clear** - Fired when the pad is cleared, via the clear button or the clear() method.\n- **arc-input** - Fired once per completed stroke with the serialized data-URL. A stroke is the edit unit — nothing fires per point while the pen is down.\n- **arc-change** - Fired when the pointer session ends and the value serializes. A stroke is a discrete gesture, so each stroke end fires arc-input then arc-change together.\n\n### **Methods:**\n - **formStateRestoreCallback(state)** - Restore only what could plausibly be a serialized signature.\n- **clear()** - Wipe the canvas, empty the value, and bring the placeholder back.\n- **toDataURL(type)** - The current canvas as a data-URL in the requested format (PNG by\ndefault). Unlike `value`, this reads the canvas directly, so a blank pad\nreturns a blank image rather than an empty string.\n\n### **CSS Parts:**\n - **pad**\n- **label**\n- **canvas**\n- **placeholder**\n- **clear**",
+      "attributes": [
+        {
+          "name": "value",
+          "description": "The signature as a PNG data-URL, empty string while the pad is blank. Updated after every completed stroke. Setting it from script draws the image onto the canvas (client-side only). Not reflected — a data-URL is far too large to live in an attribute.",
+          "values": []
+        },
+        {
+          "name": "name",
+          "description": "Form field name the data-URL submits under.",
+          "values": []
+        },
+        {
+          "name": "label",
+          "description": "Label text displayed above the pad in the label typography role. Also feeds the canvas's accessible name.",
+          "values": []
+        },
+        {
+          "name": "disabled",
+          "description": "Disables interaction, reducing opacity and blocking pointer events. The pad leaves the tab order.",
+          "values": []
+        },
+        {
+          "name": "pen-color",
+          "description": "Pen color as any CSS color, including a `var()` expression, resolved against the canvas at stroke time. Attribute: `pen-color`. Defaults to the resolved value of `--text-primary`.",
+          "values": []
+        },
+        {
+          "name": "pen-width",
+          "description": "Base pen width in CSS pixels. The drawn line scales with stroke velocity — up to 40% thicker on slow, deliberate movement and 40% thinner on fast flicks. Attribute: `pen-width`. Default 2.",
+          "values": []
+        },
+        { "name": "required", "values": [] },
+        { "name": "readonly", "values": [] }
+      ],
+      "references": []
+    },
+    {
       "name": "arc-slider",
       "description": "Range input slider with a label, live numeric value display, accent-primary fill track, and\ncustomisable min/max/step.\n---\n\n\n### **Events:**\n - **arc-input** - Fired continuously as the user drags the thumb. Use for real-time preview updates like adjusting opacity, volume, or a CSS property live.\n- **arc-change** - Fired once when the user releases the thumb, indicating the final committed value. Use for persisting the value to a database or triggering an expensive operation.\n\n### **CSS Parts:**\n - **slider**\n- **header**\n- **label**\n- **value**\n- **track**\n- **input**",
       "attributes": [
@@ -3642,6 +4263,60 @@
         {
           "name": "target-label",
           "description": "Heading for the right (selected) pane. Attribute: `target-label`.",
+          "values": []
+        },
+        { "name": "required", "values": [] },
+        { "name": "readonly", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "arc-tree-select",
+      "description": "Dropdown select whose panel is a hierarchical tree — categories, instrument banks, folder\npickers. Group nodes expand and collapse; only leaf nodes are selectable, which keeps\nsingle-select semantics clean.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when a leaf is selected. `detail.value` is the leaf value, `detail.label` its label, and `detail.path` the array of ancestor group values from root to parent.\n\n### **CSS Parts:**\n - **tree-select**\n- **label**\n- **trigger**\n- **panel**\n- **row**\n- **error**",
+      "attributes": [
+        {
+          "name": "value",
+          "description": "The selected leaf's value. Setting it programmatically updates the trigger's breadcrumb label, and the branches containing it auto-expand the next time the panel opens.",
+          "values": []
+        },
+        {
+          "name": "expanded-values",
+          "description": "Values of group nodes to render initially expanded. Attribute: `expanded-values` (JSON array). Branches containing the selected value auto-expand on open regardless of this list.",
+          "values": [{ "name": "string[]" }]
+        },
+        {
+          "name": "placeholder",
+          "description": "Hint text displayed inside the trigger when no leaf is selected. It disappears once a value is chosen.",
+          "values": []
+        },
+        {
+          "name": "label",
+          "description": "Visible label rendered above the trigger. Also serves as the accessible name. Always provide one for accessibility compliance.",
+          "values": []
+        },
+        {
+          "name": "name",
+          "description": "Form field name submitted with the selected leaf value via ElementInternals.",
+          "values": []
+        },
+        {
+          "name": "disabled",
+          "description": "When true, the trigger becomes non-interactive: it cannot be opened, focused, or clicked, and renders with reduced opacity.",
+          "values": []
+        },
+        {
+          "name": "size",
+          "description": "Controls the trigger size.",
+          "values": [{ "name": "sm" }, { "name": "md" }, { "name": "lg" }]
+        },
+        {
+          "name": "error",
+          "description": "Error message displayed below the trigger. When set, the trigger border turns red.",
+          "values": []
+        },
+        {
+          "name": "open",
+          "description": "Controls whether the tree panel is visible. Automatically set to false when a leaf is selected, Escape is pressed, or the user clicks outside.",
           "values": []
         },
         { "name": "required", "values": [] },
@@ -4516,6 +5191,11 @@
           "name": "icon",
           "description": "Name of an icon to render before the label. Use icons consistently within a section — a sidebar where only some links carry one reads as an oversight rather than a hierarchy.",
           "values": []
+        },
+        {
+          "name": "external",
+          "description": "Marks a destination that leaves the surrounding section — an app on its own route, another site, a repository. The link gains a persistent box-arrow glyph in place of the hover chevron, so the departure is legible before the click rather than after it.",
+          "values": []
         }
       ],
       "references": []
@@ -4947,6 +5627,38 @@
       "references": []
     },
     {
+      "name": "arc-keyboard-map",
+      "description": "A rendered keyboard with highlighted keys and chords — the visual big\nsibling of arc-kbd and arc-hotkey, for shortcut documentation and editor\ncheat sheets. Every key named in `highlight` lights up with the house\nstate marking: accent tint, glow, accent legend text.\n\nThe board is a stylised diagram, not a keyboard configurator: `compact`\n(the default) is a 60%-style block without nav cluster or numpad — enough\nfor almost all shortcut documentation — and `ansi` adds the F-row and nav\ncluster. There is deliberately no ISO/JIS machinery; a diagram that\nchased physical-layout fidelity would trade its one job (making a chord\nlegible at a glance) for configuration surface.\n\nIt is pure display typography — no slots, no click events, nothing\nfocusable. A shortcut diagram that responded to clicks would imply the\nkeys do something; wiring real shortcuts is arc-hotkey's job.\n---\n\n\n### **CSS Parts:**\n - **board**\n- **key**\n- **key-highlighted**\n- **caption**",
+      "attributes": [
+        {
+          "name": "layout",
+          "description": "Board shape: \"compact\" (default, a 60%-style block) or \"ansi\" (adds the F-row and nav cluster). Unknown values fall back to compact.",
+          "values": []
+        },
+        {
+          "name": "highlight",
+          "description": "Key chords to light up: an array property (e.g. [\"mod+z\", \"mod+shift+z\"]) or a comma- or space-separated attribute string. Each chord joins keys with \"+\" (\"mod+shift+p\"); `mod` resolves to Cmd on mac and Ctrl on win, mirroring arc-hotkey's aliases (cmd/command → meta, option → alt, control → ctrl). Single keys are fine (\"g\", \"escape\"). Unknown key names are ignored.",
+          "values": [{ "name": "string[]" }]
+        },
+        {
+          "name": "labels",
+          "description": "Whether keys render their legends (default true; set the attribute to the string \"false\" to disable from markup).",
+          "values": []
+        },
+        {
+          "name": "platform",
+          "description": "Which platform's modifier legends and `mod` resolution to use: \"auto\" (default — detected in the browser, mac on the server), \"mac\", or \"win\".",
+          "values": []
+        },
+        {
+          "name": "caption",
+          "description": "Optional caption rendered below the board in muted text.",
+          "values": []
+        }
+      ],
+      "references": []
+    },
+    {
       "name": "arc-markdown",
       "description": "Renders markdown content as styled HTML with zero dependencies. Supports headings, lists, code\nblocks, blockquotes, links, images, and inline formatting.\n---\n\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **markdown**",
       "attributes": [
@@ -5008,6 +5720,38 @@
           "name": "size",
           "description": "Controls the base font size of the prose container. Affects paragraph text; headings and code maintain their own scale.",
           "values": [{ "name": "sm" }, { "name": "md" }, { "name": "lg" }]
+        }
+      ],
+      "references": []
+    },
+    {
+      "name": "arc-terminal",
+      "description": "Animated terminal window: a chrome'd frame that types commands\ncharacter-by-character and prints their output line by line.\n\nThe typing machinery mirrors arc-typewriter's setTimeout chain rather than\nimporting it — typewriter animates one string, this sequences many lines\nwith three behaviours, and a shared chain would serve neither cleanly.\n\nServer-side the full completed transcript renders (no animation in Node);\non the client, autoplay blanks it before first paint and replays it when\nthe element scrolls into view. Under prefers-reduced-motion the transcript\nrenders complete immediately and nothing animates — the same policy\narc-typewriter follows.\n---\n\n\n### **Events:**\n - **arc-complete** - Fired when the whole sequence has finished printing (each cycle, when looping)\n\n### **Methods:**\n - **play()** - Play the sequence from the beginning.\n- **reset()** - Return to the blank, pre-animation state without starting playback.\n\n### **CSS Parts:**\n - **terminal**\n- **titlebar**\n- **orbs**\n- **title**\n- **body**\n- **line**\n- **prompt**\n- **text**\n- **cursor**",
+      "attributes": [
+        {
+          "name": "prompt",
+          "description": "Prompt glyph rendered before each command line.",
+          "values": []
+        },
+        {
+          "name": "title",
+          "description": "Text centered in the window chrome bar. Empty hides it, leaving only the orbs.",
+          "values": []
+        },
+        {
+          "name": "speed",
+          "description": "Milliseconds per character when typing command lines.",
+          "values": []
+        },
+        {
+          "name": "autoplay",
+          "description": "Start the animation when the element scrolls into view. Defaults to true; disable from JS or a framework wrapper with a false property value, then drive it with play().",
+          "values": []
+        },
+        {
+          "name": "loop",
+          "description": "Replay the transcript indefinitely, pausing briefly at the end of each cycle.",
+          "values": []
         }
       ],
       "references": []

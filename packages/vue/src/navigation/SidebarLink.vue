@@ -9,11 +9,13 @@ const props = withDefaults(defineProps<{
   active?: boolean;
   level?: number;
   icon?: string;
+  external?: boolean;
 }>(), {
   href: '',
   active: false,
   level: 0,
   icon: '',
+  external: false,
 });
 </script>
 
@@ -23,6 +25,7 @@ const props = withDefaults(defineProps<{
     :active="props.active"
     :level="props.level"
     :icon="props.icon"
+    :external="props.external"
   >
     <slot />
   </arc-sidebar-link>

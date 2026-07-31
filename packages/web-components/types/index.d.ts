@@ -20,6 +20,24 @@ export declare class ArcAccordionItem extends LitElement {
 }
 
 /**
+ * `<arc-activity-heatmap>`
+ */
+export declare class ArcActivityHeatmap extends LitElement {
+  /** One entry per day with activity: an ISO `date` (YYYY-MM-DD), a numeric `value` mapped to the intensity ramp, and an optional `label` shown in the hover detail in place of the bare value (e.g. "7 commits"). Days in the rendered span with no entry render as empty cells, so sparse data is fine. Property only — set it from script or a framework binding. @default [] */
+  data: Array<{date: string, value: number, label?: string}>;
+  /** The newest day shown, as an ISO string (YYYY-MM-DD). Unset: today in the browser; on the server, the newest date in `data` (see above). @default '' */
+  endDate: string;
+  /** How many week columns to render, counting back from the week containing the end date (default 52). The last column is truncated after the end date, so the newest cell is always the end date itself. @default 52 */
+  weeks: number;
+  /** Which day starts each column: "sunday" (default, the GitHub convention) or "monday". @default 'sunday' */
+  weekStart: string;
+  /** When set, intensity is a linear scale from 0 to this value instead of the default quartile mapping: each nonzero value lands on step 1-4 by `value / max`. Values at or above `max` render as step 4. @default null */
+  max: number;
+  /** Whether to render the Less→More swatch strip under the grid (default true; set the attribute to the string "false" to disable from markup). @default true */
+  legend: boolean;
+}
+
+/**
  * `<arc-alert>`
  * Events: arc-close
  */
@@ -398,6 +416,24 @@ export declare class ArcChip extends LitElement {
 }
 
 /**
+ * `<arc-clock>`
+ */
+export declare class ArcClock extends LitElement {
+  /** Which face to render. Digital shows a mono-spaced time string; analog shows an SVG dial with hands. @default 'digital' */
+  variant: 'digital' | 'analog';
+  /** IANA timezone name (e.g. "Asia/Tokyo"). Defaults to the viewer's local timezone; an unrecognized value falls back to local. @default '' */
+  timezone: string;
+  /** Optional caption rendered under the face. @default '' */
+  label: string;
+  /** Show seconds on the digital face, or the second hand on the analog face. @default false */
+  showSeconds: boolean;
+  /** Force 12-hour display on the digital face. When unset, the viewer's locale decides. Set the property to false to force 24-hour display. @default undefined */
+  hour12: boolean;
+  /** Render the timezone abbreviation, muted, beside the digital time. @default false */
+  showTimezone: boolean;
+}
+
+/**
  * `<arc-cluster>`
  */
 export declare class ArcCluster extends LitElement {
@@ -650,6 +686,15 @@ export declare class ArcContainer extends LitElement {
 export declare class ArcContextMenu extends LitElement {
   /** Controls the visibility of the context menu. Set to true when the contextmenu event fires; set to false when the user selects an item, clicks the backdrop, or presses Escape. @default false */
   open: boolean;
+}
+
+/**
+ * `<arc-conversation>`
+ * Events: arc-scroll-away, arc-scroll-return
+ */
+export declare class ArcConversation extends LitElement {
+  /** Follow new content: when a message is added or grows while the reader is near the bottom, scroll to keep the latest visible. A reader who has scrolled up is never pulled back down. Defaults to true; set the property to false to leave scrolling entirely to the consumer. @default true */
+  autoScroll: boolean;
 }
 
 /**
@@ -1053,6 +1098,32 @@ export declare class ArcForm extends LitElement {
 }
 
 /**
+ * `<arc-gauge>`
+ */
+export declare class ArcGauge extends LitElement {
+  /** Current gauge value. Clamped between `min` and `max`. Reflected as an attribute. @default 0 */
+  value: number;
+  /** Minimum value representing the empty end of the arc. @default 0 */
+  min: number;
+  /** Maximum value representing the full end of the arc. @default 100 */
+  max: number;
+  /** Threshold below which the value is considered low. Used for color zone calculation. @default undefined */
+  low: number;
+  /** Threshold above which the value is considered high. Used for color zone calculation. @default undefined */
+  high: number;
+  /** The optimal value. Determines which end of the range is "good" for color zone logic. @default undefined */
+  optimum: number;
+  /** Label text displayed beneath the value and used as the accessible name. @default '' */
+  label: string;
+  /** Unit suffix rendered after the value (e.g. "%", "ms", "GB"). @default '' */
+  unit: string;
+  /** Arc shape: `full` is a 270-degree horseshoe, `half` a 180-degree semicircle. @default 'full' */
+  variant: 'full' | 'half';
+  /** Whether to render the numeric value in the center of the arc. Defaults to true; disable via the `showValue` property. @default true */
+  showValue: boolean;
+}
+
+/**
  * `<arc-gradient-text>`
  */
 export declare class ArcGradientText extends LitElement {
@@ -1100,6 +1171,21 @@ export declare class ArcHotkey extends LitElement {
   disabled: boolean;
   /** When true, attaches to `window` instead of `document` and skips input/textarea filtering. @default false */
   global: boolean;
+}
+
+/**
+ * `<arc-hotspot>`
+ * Events: arc-open, arc-close
+ */
+export declare class ArcHotspot extends LitElement {
+  /** Horizontal position of the pin as a percentage of the image width, from 0 (left edge) to 100 (right edge). Values outside the range are clamped; a non-numeric value falls back to 50. @default 50 */
+  x: number;
+  /** Vertical position of the pin as a percentage of the image height, from 0 (top edge) to 100 (bottom edge). Values outside the range are clamped; a non-numeric value falls back to 50. @default 50 */
+  y: number;
+  /** Accessible name for the pin button, repeated as the heading of the popover. Always set it — without a label the pin announces nothing useful to a screen reader. @default '' */
+  label: string;
+  /** Whether the pin's popover is currently visible. Reflected as an attribute. Opens on click; closes on Escape, outside click, or a second click on the pin. @default false */
+  open: boolean;
 }
 
 /**
@@ -1177,6 +1263,23 @@ export declare class ArcImage extends LitElement {
 }
 
 /**
+ * `<arc-image-compare>`
+ * Events: arc-input, arc-change
+ */
+export declare class ArcImageCompare extends LitElement {
+  /** Divider position as a percentage, 0 to 100. 0 shows only the after layer, 100 only the before layer. Clamped, reflected, and updated as the user drags. @default 50 */
+  position: number;
+  /** Axis the divider moves along. `horizontal` (default) moves a vertical divider line left-right; `vertical` moves a horizontal line up-down. @default 'horizontal' */
+  orientation: 'horizontal' | 'vertical';
+  /** Optional caption for the before layer, rendered as a floating chip in the start corner. @default '' */
+  beforeLabel: string;
+  /** Optional caption for the after layer, rendered as a floating chip in the end corner. @default '' */
+  afterLabel: string;
+  /** Accessible name for the divider handle, announced as the slider label. @default '' */
+  label: string;
+}
+
+/**
  * `<arc-image-cropper>`
  * Events: arc-crop-change
  */
@@ -1192,6 +1295,12 @@ export declare class ArcImageCropper extends LitElement {
 }
 
 /**
+ * `<arc-image-hotspots>`
+ */
+export declare class ArcImageHotspots extends LitElement {
+}
+
+/**
  * `<arc-infinite-scroll>`
  * Events: arc-load-more
  */
@@ -1204,6 +1313,38 @@ export declare class ArcInfiniteScroll extends LitElement {
   finished: boolean;
   /** Disables the component, disconnects the observer, and reduces opacity to 40%. @default false */
   disabled: boolean;
+}
+
+/**
+ * `<arc-inline-edit>`
+ * Events: arc-change, arc-cancel, arc-input
+ */
+export declare class ArcInlineEdit extends LitElement {
+  /** The committed text. Updated only when an edit commits (Enter or blur); keystrokes accumulate in an internal draft until then. @default '' */
+  value: string;
+  /** Accessible name for the control. The display state announces as "Edit {label}" and the edit field is labelled with it. Always provide one. @default '' */
+  label: string;
+  /** The `name` attribute sent with form data on submission. The submitted value is the committed `value`, never an in-progress draft. @default '' */
+  name: string;
+  /** Text shown in muted italic when `value` is empty, and as the field placeholder while editing. Defaults to "Empty". @default 'Empty' */
+  placeholder: string;
+  /** When true, editing uses a `<textarea>`: Enter inserts a newline and Cmd/Ctrl+Enter commits. Single-line commits on plain Enter. @default false */
+  multiline: boolean;
+  /** Prevents activation and applies a muted treatment. The value is excluded from form submission while disabled. @default false */
+  disabled: boolean;
+  /** Marks the field as required. An empty committed value is invalid — including in display state, which shows a subtle error tint. @default false */
+  required: boolean;
+  /** Renders the display state only: the text remains focusable for reading order, but activation is inert and no pencil affordance appears. @default false */
+  readonly: boolean;
+  /** @default true */
+  formAssociated: boolean;
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, } */
+  properties: Record<string, unknown>;
+  /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
+  autoValidates: boolean;
+  form: unknown;
+  validity: unknown;
+  validationMessage: unknown;
 }
 
 /**
@@ -1273,6 +1414,21 @@ export declare class ArcInset extends LitElement {
 }
 
 /**
+ * `<arc-json-tree>`
+ * Events: arc-toggle
+ */
+export declare class ArcJsonTree extends LitElement {
+  /** The value to render. Set as a property for objects and arrays; takes precedence over the json attribute when both are set. @default undefined */
+  data: Record<string, unknown>;
+  /** JSON string alternative to the data property, for attribute-only use. Parsed with try/catch; invalid input renders a small inline error state instead of throwing. @default '' */
+  json: string;
+  /** How many levels open initially (default 1). As a bare boolean attribute, every level opens. @default 1 */
+  expanded: number | boolean;
+  /** Render object keys with quotes. Off by default, matching devtools. @default false */
+  keysQuoted: boolean;
+}
+
+/**
  * `<arc-kanban>`
  * Events: arc-card-move, arc-card-click
  */
@@ -1300,6 +1456,68 @@ export declare class ArcKeyValue extends LitElement {
 }
 
 /**
+ * `<arc-keyboard-map>`
+ */
+export declare class ArcKeyboardMap extends LitElement {
+  /** Board shape: "compact" (default, a 60%-style block) or "ansi" (adds the F-row and nav cluster). Unknown values fall back to compact. @default 'compact' */
+  layout: string;
+  /** Key chords to light up: an array property (e.g. ["mod+z", "mod+shift+z"]) or a comma- or space-separated attribute string. Each chord joins keys with "+" ("mod+shift+p"); `mod` resolves to Cmd on mac and Ctrl on win, mirroring arc-hotkey's aliases (cmd/command → meta, option → alt, control → ctrl). Single keys are fine ("g", "escape"). Unknown key names are ignored. @default '' */
+  highlight: string|string[];
+  /** Whether keys render their legends (default true; set the attribute to the string "false" to disable from markup). @default true */
+  labels: boolean;
+  /** Which platform's modifier legends and `mod` resolution to use: "auto" (default — detected in the browser, mac on the server), "mac", or "win". @default 'auto' */
+  platform: string;
+  /** Optional caption rendered below the board in muted text. @default '' */
+  caption: string;
+}
+
+/**
+ * `<arc-knob>`
+ * Events: arc-input, arc-change
+ */
+export declare class ArcKnob extends LitElement {
+  /** Degrees of arc the knob sweeps; the remaining 90 stay open at the bottom. @default 270 */
+  SWEEP: number;
+  /** Pixels of vertical drag that cover the full range. @default 150 */
+  DRAG_THROW: number;
+  /** Fraction of the range within which a drag snaps to a detent. @default 0.025 */
+  DETENT_WINDOW: number;
+  /** Control size. `md` is the default; `sm` and `lg` scale the dial. @default 'md' */
+  size: 'sm' | 'md' | 'lg';
+  /** Current knob value. Reflected as an attribute and updated on user interaction. @default 0 */
+  value: number;
+  /** Minimum allowed value at the start of the arc sweep. @default 0 */
+  min: number;
+  /** Maximum allowed value at the end of the arc sweep. @default 100 */
+  max: number;
+  /** Increment granularity. The value snaps to multiples of this number. @default 1 */
+  step: number;
+  /** @default '' */
+  name: string;
+  /** Disables interaction, reducing opacity and blocking pointer events. @default false */
+  disabled: boolean;
+  /** Label text displayed above the knob in the label typography role. @default '' */
+  label: string;
+  /** Snap values, as an array from script or a comma-separated attribute (for example "0,50,100"). While dragging, the value snaps magnetically to a detent within 2.5% of the range, and each detent renders as a tick mark around the dial. Keyboard and wheel stepping ignore detents. @default [] */
+  detents: number[] | string;
+  /** `(value) => string` shaping the readout and the accessible value text, for example adding a unit suffix. Defaults to the plain number. @default undefined */
+  format: Function;
+  /** Prevents dragging, wheel, and key changes while the dial stays focusable and the value still submits. @default false */
+  readonly: boolean;
+  /** @default true */
+  formAssociated: boolean;
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, } */
+  properties: Record<string, unknown>;
+  /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
+  autoValidates: boolean;
+  form: unknown;
+  validity: unknown;
+  validationMessage: unknown;
+  /** @default false */
+  required: boolean;
+}
+
+/**
  * `<arc-kv-pair>`
  */
 export declare class ArcKvPair extends LitElement {
@@ -1319,6 +1537,43 @@ export declare class ArcLabel extends LitElement {
   size: 'sm' | 'md' | 'lg';
   /** Reduces opacity and blocks pointer events. @default false */
   disabled: boolean;
+}
+
+/**
+ * `<arc-level-meter>`
+ */
+export declare class ArcLevelMeter extends LitElement {
+  /** Current level. Interpreted against `min` and `max`, so with the defaults (0 and 1) it is a linear fraction, and with `min="-60" max="0"` it is a dB reading. Values outside the range are clamped. @default 0 */
+  value: number;
+  /** Value at the empty end of the meter. Defaults to 0. @default 0 */
+  min: number;
+  /** Value at the full end of the meter. Defaults to 1. Use -60..0 (or your headroom of choice) for dB scales. @default 1 */
+  max: number;
+  /** Externally supplied peak-hold level, in the same units as `value`. When set, the component renders the hold line exactly there and does no tracking of its own. When absent, the meter tracks its own peak from incoming values, holds it briefly, then decays it toward the current level. @default undefined */
+  peak: number;
+  /** Meter direction. Vertical (the default) fills bottom-up like a channel strip; horizontal fills from the inline start. Unknown values fall back to vertical. @default 'vertical' */
+  orientation: 'vertical' | 'horizontal';
+  /** Number of discrete segments. Defaults to 20. Set 0 for a continuous, unsegmented bar. @default 20 */
+  segments: number;
+  /** Fraction of the range (0..1) where the warning zone begins, regardless of units. Defaults to 0.75. @default 0.75 */
+  warn: number;
+  /** Fraction of the range (0..1) where the clip (error) zone begins. Defaults to 0.9. @default 0.9 */
+  clip: number;
+  /** Accessible name applied as aria-label on the meter. The component renders no visible text, so this is the only name screen readers get — use something like "Master left" rather than "Level". @default '' */
+  label: string;
+}
+
+/**
+ * `<arc-lightbox>`
+ * Events: arc-change, arc-close, arc-open
+ */
+export declare class ArcLightbox extends LitElement {
+  /** The gallery to display. Each entry is either a `src` string or an object of shape `{ src, alt, caption }`; `alt` and `caption` are optional. Set as a property — arrays do not round-trip through attributes. @default [] */
+  images: Array;
+  /** Index of the image currently displayed. Navigation wraps at both ends, so setting it out of range shows the nearest valid image. @default 0 */
+  index: number;
+  /** Controls the visible state of the viewer. Set to `true` to open at the current `index` and activate the focus trap; set to `false` to close and restore focus to the previously-focused element. @default false */
+  open: boolean;
 }
 
 /**
@@ -1406,6 +1661,46 @@ export declare class ArcMarquee extends LitElement {
 }
 
 /**
+ * `<arc-masked-input>`
+ * Events: arc-input, arc-change
+ */
+export declare class ArcMaskedInput extends LitElement {
+  /** Runs its own constraint logic — owns the whole validity flag set. @default false */
+  autoValidates: boolean;
+  /** The formatted presentation string — raw characters interleaved with mask literals, e.g. raw 12042026 under a date mask reads 12/04/2026. Read-only: it is derived from value and mask, never stored, and never submitted. */
+  formattedValue: unknown;
+  /** The mask pattern. `#` accepts a digit, `A` an uppercase letter (lowercase input is uppercased), `a` any letter, `*` a letter or digit; every other character is a literal typed for the user. Examples: `##/##/####`, `#### #### #### ####`, `AAA-###`. @default '' */
+  mask: string;
+  /** The RAW accepted characters only, with no mask literals — `12042026`, never `12/04/2026`. The formatted string is presentation; read it from `formattedValue`. Programmatic values are conformed against the mask, so setting a formatted string keeps only the characters the mask accepts. @default '' */
+  value: string;
+  /** Character rendered in unfilled positions of the in-field hint once typing starts (for example `12/__/____`). Before any input, the native placeholder shows the full mask shape. Defaults to `_`. @default '_' */
+  placeholderChar: string;
+  /** Visible label rendered above the field. Automatically associated with the field via a generated id, ensuring screen readers announce it correctly. @default '' */
+  label: string;
+  /** The `name` attribute sent with form data on submission. The submitted value is the RAW value, without mask literals. @default '' */
+  name: string;
+  /** Prevents user interaction and applies a muted visual treatment. The field value is excluded from form submission when disabled. @default false */
+  disabled: boolean;
+  /** Marks the field as required. An empty field fails validation with valueMissing; a partially filled one fails with an "Incomplete value" pattern error. @default false */
+  required: boolean;
+  /** Passed through to the inner input, e.g. `cc-number` on a card field so browser autofill can offer saved cards. @default '' */
+  autocomplete: string;
+  /** Error message displayed below the input. When set, the input border turns red and the error text appears. @default '' */
+  error: string;
+  /** Controls the input size. Options: 'sm', 'md', 'lg'. @default 'md' */
+  size: 'sm' | 'md' | 'lg';
+  /** Prevents the user from editing the value while keeping the field focusable, and the value is still submitted with the form. @default false */
+  readonly: boolean;
+  /** @default true */
+  formAssociated: boolean;
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, } */
+  properties: Record<string, unknown>;
+  form: unknown;
+  validity: unknown;
+  validationMessage: unknown;
+}
+
+/**
  * `<arc-masonry>`
  */
 export declare class ArcMasonry extends LitElement {
@@ -1446,6 +1741,22 @@ export declare class ArcMenuItem extends LitElement {
 export declare class ArcMenubar extends LitElement {
   /** The menu structure. Entries with an `items` array become submenus (one further nesting level supported); `{ divider: true }` renders a separator. Set via JavaScript — this is a property, not an HTML attribute. @default [] */
   items: Array<{label:string,disabled?:boolean,items:Array<{label?:string,shortcut?:string,disabled?:boolean,divider?:boolean,items?:Array<{label:string,shortcut?:string,disabled?:boolean}>}>}>;
+}
+
+/**
+ * `<arc-message>`
+ */
+export declare class ArcMessage extends LitElement {
+  /** Whose message this is. "user" aligns to the inline end on an accent-tinted surface, "assistant" to the inline start on a neutral surface, and "system" runs centred and muted for notices in the transcript's own voice. An unrecognised value renders as "user". @default 'user' */
+  speaker: 'user' | 'assistant' | 'system';
+  /** Display name shown in the muted meta line above the bubble. Omit it and the meta line only appears when a timestamp is set. @default '' */
+  author: string;
+  /** When the message was sent, as an ISO 8601 string. Rendered as house relative time ("3 minutes ago") through arc-time-ago, with the absolute date on its title. @default '' */
+  timestamp: string;
+  /** Renders the typing indicator — three pulsing dots — in place of the body while a reply is being produced. Under prefers-reduced-motion the dots give way to a static ellipsis. @default false */
+  pending: boolean;
+  /** Render the slotted text through the house markdown renderer. The slot's text content is the source; it re-parses whenever the slot changes, so streaming into the slot streams through the renderer. When false, slotted content renders as-is. @default false */
+  markdown: boolean;
 }
 
 /**
@@ -2197,6 +2508,8 @@ export declare class ArcSidebarLink extends LitElement {
   level: number;
   /** Name of an icon to render before the label. Use icons consistently within a section — a sidebar where only some links carry one reads as an oversight rather than a hierarchy. @default '' */
   icon: string;
+  /** Marks a destination that leaves the surrounding section — an app on its own route, another site, a repository. The link gains a persistent box-arrow glyph in place of the hover chevron, so the departure is legible before the click rather than after it. @default false */
+  external: boolean;
 }
 
 /**
@@ -2214,6 +2527,40 @@ export declare class ArcSidebarSection extends LitElement {
   open: boolean;
   /** Name of an icon to render before the heading. Ignored when the section has no heading. @default '' */
   icon: string;
+}
+
+/**
+ * `<arc-signature-pad>`
+ * Events: arc-clear, arc-input, arc-change
+ */
+export declare class ArcSignaturePad extends LitElement {
+  /** Stroke speed (CSS px per ms) at which the pen reaches its thinnest. @default 1.5 */
+  SPEED_FULL: number;
+  /** The signature as a PNG data-URL, empty string while the pad is blank. Updated after every completed stroke. Setting it from script draws the image onto the canvas (client-side only). Not reflected — a data-URL is far too large to live in an attribute. @default '' */
+  value: string;
+  /** Form field name the data-URL submits under. @default '' */
+  name: string;
+  /** Label text displayed above the pad in the label typography role. Also feeds the canvas's accessible name. @default '' */
+  label: string;
+  /** Disables interaction, reducing opacity and blocking pointer events. The pad leaves the tab order. @default false */
+  disabled: boolean;
+  /** Pen color as any CSS color, including a `var()` expression, resolved against the canvas at stroke time. Attribute: `pen-color`. Defaults to the resolved value of `--text-primary`. @default '' */
+  penColor: string;
+  /** Base pen width in CSS pixels. The drawn line scales with stroke velocity — up to 40% thicker on slow, deliberate movement and 40% thinner on fast flicks. Attribute: `pen-width`. Default 2. @default 2 */
+  penWidth: number;
+  /** Prevents drawing and hides the clear button while the pad stays focusable and the value still submits. @default false */
+  readonly: boolean;
+  /** When true and the pad is blank, the control is invalid with `valueMissing`. @default false */
+  required: boolean;
+  /** @default true */
+  formAssociated: boolean;
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, } */
+  properties: Record<string, unknown>;
+  /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
+  autoValidates: boolean;
+  form: unknown;
+  validity: unknown;
+  validationMessage: unknown;
 }
 
 /**
@@ -2574,6 +2921,25 @@ export declare class ArcTagInput extends LitElement {
 }
 
 /**
+ * `<arc-terminal>`
+ * Events: arc-complete
+ */
+export declare class ArcTerminal extends LitElement {
+  /** The transcript, as objects of shape { type: 'command' | 'output' | 'comment', text: string, delay?: number }. Commands get the prompt glyph and type character-by-character; output lines appear whole; comments render muted. `delay` is milliseconds before the line starts (default 500 for commands, 150 otherwise). Property only — arrays do not survive an attribute. @default [] */
+  lines: Array;
+  /** Prompt glyph rendered before each command line. @default '$' */
+  prompt: string;
+  /** Text centered in the window chrome bar. Empty hides it, leaving only the orbs. @default '' */
+  title: string;
+  /** Milliseconds per character when typing command lines. @default 50 */
+  speed: number;
+  /** Start the animation when the element scrolls into view. Defaults to true; disable from JS or a framework wrapper with a false property value, then drive it with play(). @default true */
+  autoplay: boolean;
+  /** Replay the transcript indefinitely, pausing briefly at the end of each cycle. @default false */
+  loop: boolean;
+}
+
+/**
  * `<arc-text>`
  */
 export declare class ArcText extends LitElement {
@@ -2867,6 +3233,46 @@ export declare class ArcTreeItem extends LitElement {
 }
 
 /**
+ * `<arc-tree-select>`
+ * Events: arc-change
+ */
+export declare class ArcTreeSelect extends LitElement {
+  /** Recursive tree of nodes. A node with a non-empty `children` array is a group header: it expands and collapses but can never be selected. A node without children is a selectable leaf. `disabled` nodes render but cannot be reached by keyboard or selected, and a disabled group hides its children. @default [] */
+  items: Array<{value: string, label: string, children?: Array<object>, disabled?: boolean}>;
+  /** The selected leaf's value. Setting it programmatically updates the trigger's breadcrumb label, and the branches containing it auto-expand the next time the panel opens. @default '' */
+  value: string;
+  /** Values of group nodes to render initially expanded. Attribute: `expanded-values` (JSON array). Branches containing the selected value auto-expand on open regardless of this list. @default [] */
+  expandedValues: string[];
+  /** Hint text displayed inside the trigger when no leaf is selected. It disappears once a value is chosen. @default 'Select...' */
+  placeholder: string;
+  /** Visible label rendered above the trigger. Also serves as the accessible name. Always provide one for accessibility compliance. @default '' */
+  label: string;
+  /** Form field name submitted with the selected leaf value via ElementInternals. @default '' */
+  name: string;
+  /** When true, the trigger becomes non-interactive: it cannot be opened, focused, or clicked, and renders with reduced opacity. @default false */
+  disabled: boolean;
+  /** Controls the trigger size. @default 'md' */
+  size: 'sm' | 'md' | 'lg';
+  /** Error message displayed below the trigger. When set, the trigger border turns red. @default '' */
+  error: string;
+  /** Controls whether the tree panel is visible. Automatically set to false when a leaf is selected, Escape is pressed, or the user clicks outside. @default false */
+  open: boolean;
+  /** @default true */
+  formAssociated: boolean;
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { required: { type: Boolean, reflect: true }, readonly: { type: Boolean, reflect: true }, } */
+  properties: Record<string, unknown>;
+  /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
+  autoValidates: boolean;
+  form: unknown;
+  validity: unknown;
+  validationMessage: unknown;
+  /** @default false */
+  required: boolean;
+  /** @default false */
+  readonly: boolean;
+}
+
+/**
  * `<arc-tree-view>`
  * Events: arc-toggle, arc-select
  */
@@ -2906,6 +3312,22 @@ export declare class ArcTypewriter extends LitElement {
 }
 
 /**
+ * `<arc-uptime>`
+ */
+export declare class ArcUptime extends LitElement {
+  /** Uptime fraction at or above `up` reads as up; at or above `degraded`, degraded; below, down. @default { up: 0.99, degraded: 0.95 } */
+  thresholds: Record<string, unknown>;
+  /** One entry per period, oldest first. A number is an uptime fraction from 0 to 1, mapped to a status by threshold (0.99 and up is "up", 0.95 and up is "degraded", below is "down"). An object may carry an explicit `status` (which wins over any threshold), a `value` used for the summary math, and a `label` shown in the hover detail. An entry with neither a finite value nor a status renders as the neutral "none" track. Property only — set it from script or a framework binding. @default [] */
+  data: Array<number | {value?: number, status?: 'up' | 'degraded' | 'down' | 'none', label?: string}>;
+  /** Caption under the oldest end of the track (e.g. "90 days ago"). @default '' */
+  startLabel: string;
+  /** Caption under the newest end of the track (e.g. "Today"). @default '' */
+  endLabel: string;
+  /** Whether to render the overall percentage above the track (default true; set the attribute to the string "false" to disable from markup). The percentage is the mean of every finite value in the data; when no entry carries a value the line is omitted regardless. @default true */
+  summary: boolean;
+}
+
+/**
  * `<arc-value-card>`
  */
 export declare class ArcValueCard extends LitElement {
@@ -2915,6 +3337,29 @@ export declare class ArcValueCard extends LitElement {
   heading: string;
   /** Card body text @default '' */
   description: string;
+}
+
+/**
+ * `<arc-video>`
+ * Events: arc-play, arc-pause, arc-ended
+ */
+export declare class ArcVideo extends LitElement {
+  /** Video source URL. A single source only; no multi-format machinery. @default '' */
+  src: string;
+  /** Poster image URL shown before the first play. @default '' */
+  poster: string;
+  /** Accessible name for the player region. Falls back to a generic label when empty. @default '' */
+  label: string;
+  /** Starts playback as soon as the browser allows. Browsers only honor autoplay when the video is muted, so pair it with `muted`; when autoplay is blocked, the play overlay simply remains and the user starts playback themselves. @default false */
+  autoplay: boolean;
+  /** Restarts playback from the beginning when the video ends. @default false */
+  loop: boolean;
+  /** Mutes the audio track. Toggled live by the mute button and the M key. @default false */
+  muted: boolean;
+  /** Shows the custom control bar once playback has started, and enables the player keyboard shortcuts. Defaults to true; set `controls="false"` for ambient or presentation video. @default true */
+  controls: boolean;
+  /** Passed through to the native video element. The default `metadata` loads dimensions and duration without buffering content. @default 'metadata' */
+  preload: 'none' | 'metadata' | 'auto';
 }
 
 /**
@@ -2934,10 +3379,30 @@ export declare class ArcVirtualList extends LitElement {
   overscan: number;
 }
 
+/**
+ * `<arc-waveform>`
+ * Events: arc-input, arc-change
+ */
+export declare class ArcWaveform extends LitElement {
+  /** Peak amplitudes as a number array, each value 0 to 1. Property only (no attribute) — set it from script or a framework binding. Values outside the range are clamped. An empty or missing array renders an empty track. @default [] */
+  peaks: Array;
+  /** Current playhead position as a fraction of the total, 0 to 1. Not seconds: multiply by `duration` yourself if you track seconds. Updated by the component during scrubbing and reflected as an attribute. @default 0 */
+  position: number;
+  /** Total duration in seconds. Optional; when set, time readouts render below the waveform and the slider announces times instead of percentages. @default null */
+  duration: number;
+  /** Enables scrubbing. The waveform becomes a focusable slider: click or drag to seek, arrow keys to nudge, Home/End to jump. Without it the waveform is a static image. @default false */
+  interactive: boolean;
+  /** Rendering style. `bars` draws discrete bar pairs mirrored around the center line; `mirror` draws a filled min/max envelope. @default 'bars' */
+  variant: 'bars' | 'mirror';
+  /** Accessible name for the waveform. Announced as the slider label when interactive, or as the image description otherwise. @default '' */
+  label: string;
+}
+
 declare global {
   interface HTMLElementTagNameMap {
     'arc-accordion': ArcAccordion;
     'arc-accordion-item': ArcAccordionItem;
+    'arc-activity-heatmap': ArcActivityHeatmap;
     'arc-alert': ArcAlert;
     'arc-anchor-nav': ArcAnchorNav;
     'arc-animated-number': ArcAnimatedNumber;
@@ -2965,6 +3430,7 @@ declare global {
     'arc-chart': ArcChart;
     'arc-checkbox': ArcCheckbox;
     'arc-chip': ArcChip;
+    'arc-clock': ArcClock;
     'arc-cluster': ArcCluster;
     'arc-code-block': ArcCodeBlock;
     'arc-collapsible': ArcCollapsible;
@@ -2982,6 +3448,7 @@ declare global {
     'arc-connection-status': ArcConnectionStatus;
     'arc-container': ArcContainer;
     'arc-context-menu': ArcContextMenu;
+    'arc-conversation': ArcConversation;
     'arc-copy-button': ArcCopyButton;
     'arc-countdown-timer': ArcCountdownTimer;
     'arc-cta-banner': ArcCtaBanner;
@@ -3006,36 +3473,48 @@ declare global {
     'arc-float-bar': ArcFloatBar;
     'arc-footer': ArcFooter;
     'arc-form': ArcForm;
+    'arc-gauge': ArcGauge;
     'arc-gradient-text': ArcGradientText;
     'arc-guided-tour': ArcGuidedTour;
     'arc-highlight': ArcHighlight;
     'arc-hotkey': ArcHotkey;
+    'arc-hotspot': ArcHotspot;
     'arc-hover-card': ArcHoverCard;
     'arc-icon': ArcIcon;
     'arc-icon-button': ArcIconButton;
     'arc-icon-library': ArcIconLibrary;
     'arc-image': ArcImage;
+    'arc-image-compare': ArcImageCompare;
     'arc-image-cropper': ArcImageCropper;
+    'arc-image-hotspots': ArcImageHotspots;
     'arc-infinite-scroll': ArcInfiniteScroll;
+    'arc-inline-edit': ArcInlineEdit;
     'arc-inline-message': ArcInlineMessage;
     'arc-input': ArcInput;
     'arc-input-group': ArcInputGroup;
     'arc-inset': ArcInset;
+    'arc-json-tree': ArcJsonTree;
     'arc-kanban': ArcKanban;
     'arc-kbd': ArcKbd;
     'arc-key-value': ArcKeyValue;
+    'arc-keyboard-map': ArcKeyboardMap;
+    'arc-knob': ArcKnob;
     'arc-kv-pair': ArcKvPair;
     'arc-label': ArcLabel;
+    'arc-level-meter': ArcLevelMeter;
+    'arc-lightbox': ArcLightbox;
     'arc-link': ArcLink;
     'arc-list': ArcList;
     'arc-list-item': ArcListItem;
     'arc-loading-overlay': ArcLoadingOverlay;
     'arc-markdown': ArcMarkdown;
     'arc-marquee': ArcMarquee;
+    'arc-masked-input': ArcMaskedInput;
     'arc-masonry': ArcMasonry;
     'arc-menu-divider': ArcMenuDivider;
     'arc-menu-item': ArcMenuItem;
     'arc-menubar': ArcMenubar;
+    'arc-message': ArcMessage;
     'arc-meter': ArcMeter;
     'arc-modal': ArcModal;
     'arc-multi-select': ArcMultiSelect;
@@ -3078,6 +3557,7 @@ declare global {
     'arc-sidebar': ArcSidebar;
     'arc-sidebar-link': ArcSidebarLink;
     'arc-sidebar-section': ArcSidebarSection;
+    'arc-signature-pad': ArcSignaturePad;
     'arc-skeleton': ArcSkeleton;
     'arc-skip-link': ArcSkipLink;
     'arc-slider': ArcSlider;
@@ -3103,6 +3583,7 @@ declare global {
     'arc-tabs': ArcTabs;
     'arc-tag': ArcTag;
     'arc-tag-input': ArcTagInput;
+    'arc-terminal': ArcTerminal;
     'arc-text': ArcText;
     'arc-textarea': ArcTextarea;
     'arc-theme-toggle': ArcThemeToggle;
@@ -3117,11 +3598,15 @@ declare global {
     'arc-top-bar': ArcTopBar;
     'arc-transfer-list': ArcTransferList;
     'arc-tree-item': ArcTreeItem;
+    'arc-tree-select': ArcTreeSelect;
     'arc-tree-view': ArcTreeView;
     'arc-truncate': ArcTruncate;
     'arc-typewriter': ArcTypewriter;
+    'arc-uptime': ArcUptime;
     'arc-value-card': ArcValueCard;
+    'arc-video': ArcVideo;
     'arc-virtual-list': ArcVirtualList;
+    'arc-waveform': ArcWaveform;
   }
   interface GlobalEventHandlersEventMap {
     'arc-action': CustomEvent;
@@ -3137,6 +3622,7 @@ declare global {
     'arc-copy': CustomEvent<{ value: string }>;
     'arc-crop-change': CustomEvent;
     'arc-date-click': CustomEvent;
+    'arc-ended': CustomEvent<{ value: number }>;
     'arc-error': CustomEvent<void>;
     'arc-event-click': CustomEvent;
     'arc-expired': CustomEvent<void>;
@@ -3153,13 +3639,17 @@ declare global {
     'arc-online': CustomEvent<void>;
     'arc-open': CustomEvent;
     'arc-overflow-change': CustomEvent;
+    'arc-pause': CustomEvent<{ value: number }>;
     'arc-period-change': CustomEvent<{ view: 'month' | 'week', date: string }>;
+    'arc-play': CustomEvent<{ value: number }>;
     'arc-queue-change': CustomEvent;
     'arc-queue-overflow': CustomEvent;
     'arc-range-change': CustomEvent<{value: {start: number, end: number}, start: number, end: number}>;
     'arc-remove': CustomEvent;
     'arc-reset': CustomEvent<void>;
     'arc-resize': CustomEvent<{ ratio: number }> | CustomEvent<{ size: number }>;
+    'arc-scroll-away': CustomEvent<{value: number}>;
+    'arc-scroll-return': CustomEvent<{value: number}>;
     'arc-select': CustomEvent;
     'arc-sidebar-toggle': CustomEvent;
     'arc-sort': CustomEvent;

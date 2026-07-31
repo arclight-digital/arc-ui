@@ -180,6 +180,15 @@ export default {
   ],
   "slug": "feature-card"
  },
+ "arc-hotspot": {
+  "attrs": [
+   "x",
+   "y",
+   "label",
+   "open"
+  ],
+  "slug": "image-hotspots"
+ },
  "arc-icon-library": {
   "attrs": [
    "name"
@@ -201,6 +210,26 @@ export default {
    ]
   },
   "slug": "icon"
+ },
+ "arc-image-compare": {
+  "attrs": [
+   "position",
+   "orientation",
+   "before-label",
+   "after-label",
+   "label"
+  ],
+  "enums": {
+   "orientation": [
+    "horizontal",
+    "vertical"
+   ]
+  },
+  "slug": "image-compare"
+ },
+ "arc-image-hotspots": {
+  "attrs": [],
+  "slug": "image-hotspots"
  },
  "arc-image": {
   "attrs": [
@@ -242,6 +271,13 @@ export default {
    "disabled"
   ],
   "slug": "infinite-scroll"
+ },
+ "arc-lightbox": {
+  "attrs": [
+   "index",
+   "open"
+  ],
+  "slug": "lightbox"
  },
  "arc-marquee": {
   "attrs": [
@@ -407,6 +443,26 @@ export default {
   },
   "slug": "stack"
  },
+ "arc-video": {
+  "attrs": [
+   "src",
+   "poster",
+   "label",
+   "autoplay",
+   "loop",
+   "muted",
+   "controls",
+   "preload"
+  ],
+  "enums": {
+   "preload": [
+    "none",
+    "metadata",
+    "auto"
+   ]
+  },
+  "slug": "video"
+ },
  "arc-virtual-list": {
   "attrs": [
    "items",
@@ -414,6 +470,16 @@ export default {
    "overscan"
   ],
   "slug": "virtual-list"
+ },
+ "arc-activity-heatmap": {
+  "attrs": [
+   "end-date",
+   "weeks",
+   "week-start",
+   "max",
+   "legend"
+  ],
+  "slug": "activity-heatmap"
  },
  "arc-animated-number": {
   "attrs": [
@@ -484,6 +550,23 @@ export default {
    ]
   },
   "slug": "chart"
+ },
+ "arc-clock": {
+  "attrs": [
+   "variant",
+   "timezone",
+   "label",
+   "show-seconds",
+   "hour12",
+   "show-timezone"
+  ],
+  "enums": {
+   "variant": [
+    "digital",
+    "analog"
+   ]
+  },
+  "slug": "clock"
  },
  "arc-comparison-column": {
   "attrs": [
@@ -581,6 +664,35 @@ export default {
   },
   "slug": "event-calendar"
  },
+ "arc-gauge": {
+  "attrs": [
+   "value",
+   "min",
+   "max",
+   "low",
+   "high",
+   "optimum",
+   "label",
+   "unit",
+   "variant",
+   "show-value"
+  ],
+  "enums": {
+   "variant": [
+    "full",
+    "half"
+   ]
+  },
+  "slug": "gauge"
+ },
+ "arc-json-tree": {
+  "attrs": [
+   "json",
+   "expanded",
+   "keys-quoted"
+  ],
+  "slug": "json-tree"
+ },
  "arc-kanban": {
   "attrs": [
    "columns",
@@ -606,6 +718,26 @@ export default {
    "label"
   ],
   "slug": "key-value"
+ },
+ "arc-level-meter": {
+  "attrs": [
+   "value",
+   "min",
+   "max",
+   "peak",
+   "orientation",
+   "segments",
+   "warn",
+   "clip",
+   "label"
+  ],
+  "enums": {
+   "orientation": [
+    "vertical",
+    "horizontal"
+   ]
+  },
+  "slug": "level-meter"
  },
  "arc-list-item": {
   "attrs": [
@@ -749,6 +881,14 @@ export default {
   ],
   "slug": "timeline"
  },
+ "arc-uptime": {
+  "attrs": [
+   "start-label",
+   "end-label",
+   "summary"
+  ],
+  "slug": "uptime"
+ },
  "arc-value-card": {
   "attrs": [
    "icon",
@@ -756,6 +896,22 @@ export default {
    "description"
   ],
   "slug": "value-card"
+ },
+ "arc-waveform": {
+  "attrs": [
+   "position",
+   "duration",
+   "interactive",
+   "variant",
+   "label"
+  ],
+  "enums": {
+   "variant": [
+    "bars",
+    "mirror"
+   ]
+  },
+  "slug": "waveform"
  },
  "arc-alert": {
   "attrs": [
@@ -860,6 +1016,12 @@ export default {
   ],
   "slug": "context-menu"
  },
+ "arc-conversation": {
+  "attrs": [
+   "auto-scroll"
+  ],
+  "slug": "conversation"
+ },
  "arc-dialog": {
   "attrs": [
    "open",
@@ -928,6 +1090,23 @@ export default {
    "global"
   ],
   "slug": "loading-overlay"
+ },
+ "arc-message": {
+  "attrs": [
+   "speaker",
+   "author",
+   "timestamp",
+   "pending",
+   "markdown"
+  ],
+  "enums": {
+   "speaker": [
+    "user",
+    "assistant",
+    "system"
+   ]
+  },
+  "slug": "conversation"
  },
  "arc-modal": {
   "attrs": [
@@ -1349,6 +1528,19 @@ export default {
   ],
   "slug": "image-cropper"
  },
+ "arc-inline-edit": {
+  "attrs": [
+   "value",
+   "label",
+   "name",
+   "placeholder",
+   "multiline",
+   "disabled",
+   "required",
+   "readonly"
+  ],
+  "slug": "inline-edit"
+ },
  "arc-input-group": {
   "attrs": [
    "size"
@@ -1393,6 +1585,29 @@ export default {
   },
   "slug": "input"
  },
+ "arc-knob": {
+  "attrs": [
+   "size",
+   "value",
+   "min",
+   "max",
+   "step",
+   "name",
+   "disabled",
+   "label",
+   "detents",
+   "required",
+   "readonly"
+  ],
+  "enums": {
+   "size": [
+    "sm",
+    "md",
+    "lg"
+   ]
+  },
+  "slug": "knob"
+ },
  "arc-label": {
   "attrs": [
    "for",
@@ -1408,6 +1623,29 @@ export default {
    ]
   },
   "slug": "label"
+ },
+ "arc-masked-input": {
+  "attrs": [
+   "mask",
+   "value",
+   "placeholder-char",
+   "label",
+   "name",
+   "disabled",
+   "required",
+   "autocomplete",
+   "error",
+   "size",
+   "readonly"
+  ],
+  "enums": {
+   "size": [
+    "sm",
+    "md",
+    "lg"
+   ]
+  },
+  "slug": "masked-input"
  },
  "arc-multi-select": {
   "attrs": [
@@ -1639,6 +1877,19 @@ export default {
   },
   "slug": "select"
  },
+ "arc-signature-pad": {
+  "attrs": [
+   "value",
+   "name",
+   "label",
+   "disabled",
+   "pen-color",
+   "pen-width",
+   "required",
+   "readonly"
+  ],
+  "slug": "signature-pad"
+ },
  "arc-slider": {
   "attrs": [
    "size",
@@ -1836,6 +2087,29 @@ export default {
    ]
   },
   "slug": "transfer-list"
+ },
+ "arc-tree-select": {
+  "attrs": [
+   "value",
+   "expanded-values",
+   "placeholder",
+   "label",
+   "name",
+   "disabled",
+   "size",
+   "error",
+   "open",
+   "required",
+   "readonly"
+  ],
+  "enums": {
+   "size": [
+    "sm",
+    "md",
+    "lg"
+   ]
+  },
+  "slug": "tree-select"
  },
  "arc-app-shell": {
   "attrs": [
@@ -2318,7 +2592,8 @@ export default {
    "href",
    "active",
    "level",
-   "icon"
+   "icon",
+   "external"
   ],
   "slug": "sidebar"
  },
@@ -2533,6 +2808,16 @@ export default {
   "attrs": [],
   "slug": "kbd"
  },
+ "arc-keyboard-map": {
+  "attrs": [
+   "layout",
+   "highlight",
+   "labels",
+   "platform",
+   "caption"
+  ],
+  "slug": "keyboard-map"
+ },
  "arc-markdown": {
   "attrs": [
    "content"
@@ -2574,6 +2859,16 @@ export default {
    ]
   },
   "slug": "prose"
+ },
+ "arc-terminal": {
+  "attrs": [
+   "prompt",
+   "title",
+   "speed",
+   "autoplay",
+   "loop"
+  ],
+  "slug": "terminal"
  },
  "arc-text": {
   "attrs": [

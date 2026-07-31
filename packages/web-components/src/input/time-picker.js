@@ -195,7 +195,7 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
 
       .time-option.selected {
         background: var(--interactive);
-        color: var(--surface-base);
+        color: var(--on-accent);
         font-weight: 600;
       }
 

@@ -38,4 +38,11 @@ export class SidebarLink {
   get icon(): string {
     return this._el.icon;
   }
+
+  @Input() set external(value: boolean) {
+    this._el.external = value;
+  }
+  get external(): boolean {
+    return this._el.external;
+  }
 }

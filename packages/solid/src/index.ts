@@ -552,3 +552,66 @@ export type { MenuItemProps } from './shared/MenuItem.js';
 
 export { Option } from './shared/Option.js';
 export type { OptionProps } from './shared/Option.js';
+
+export { Clock } from './data/Clock.js';
+export type { ClockProps } from './data/Clock.js';
+
+export { Gauge } from './data/Gauge.js';
+export type { GaugeProps } from './data/Gauge.js';
+
+export { LevelMeter } from './data/LevelMeter.js';
+export type { LevelMeterProps } from './data/LevelMeter.js';
+
+export { Uptime } from './data/Uptime.js';
+export type { UptimeProps } from './data/Uptime.js';
+
+export { Waveform } from './data/Waveform.js';
+export type { WaveformProps } from './data/Waveform.js';
+
+export { Terminal } from './typography/Terminal.js';
+export type { TerminalProps } from './typography/Terminal.js';
+
+export { Knob } from './input/Knob.js';
+export type { KnobProps } from './input/Knob.js';
+
+export { Hotspot } from './content/Hotspot.js';
+export type { HotspotProps } from './content/Hotspot.js';
+
+export { ImageCompare } from './content/ImageCompare.js';
+export type { ImageCompareProps } from './content/ImageCompare.js';
+
+export { ImageHotspots } from './content/ImageHotspots.js';
+export type { ImageHotspotsProps } from './content/ImageHotspots.js';
+
+export { Lightbox } from './content/Lightbox.js';
+export type { LightboxProps } from './content/Lightbox.js';
+
+export { Video } from './content/Video.js';
+export type { VideoProps } from './content/Video.js';
+
+export { ActivityHeatmap } from './data/ActivityHeatmap.js';
+export type { ActivityHeatmapProps } from './data/ActivityHeatmap.js';
+
+export { JsonTree } from './data/JsonTree.js';
+export type { JsonTreeProps } from './data/JsonTree.js';
+
+export { KeyboardMap } from './typography/KeyboardMap.js';
+export type { KeyboardMapProps } from './typography/KeyboardMap.js';
+
+export { InlineEdit } from './input/InlineEdit.js';
+export type { InlineEditProps } from './input/InlineEdit.js';
+
+export { MaskedInput } from './input/MaskedInput.js';
+export type { MaskedInputProps } from './input/MaskedInput.js';
+
+export { SignaturePad } from './input/SignaturePad.js';
+export type { SignaturePadProps } from './input/SignaturePad.js';
+
+export { TreeSelect } from './input/TreeSelect.js';
+export type { TreeSelectProps } from './input/TreeSelect.js';
+
+export { Conversation } from './feedback/Conversation.js';
+export type { ConversationProps } from './feedback/Conversation.js';
+
+export { Message } from './feedback/Message.js';
+export type { MessageProps } from './feedback/Message.js';

@@ -1,0 +1,243 @@
+import { LitElement, html, css } from 'lit';
+import { tokenStyles } from '../shared-styles.js';
+
+/** The role vocabulary. An unrecognised value renders as the default, user. */
+const ROLES = new Set(['user', 'assistant', 'system']);
+
+/**
+ * One message in a conversation transcript. The speaker attribute decides the voice: user messages
+ * sit at the inline end on a faint accent tint, assistant messages sit at the inline start on a
+ * neutral surface, and system messages run centred, muted and small. The default slot is the
+ * message body — append text to it to stream a reply in — and with the markdown attribute set,
+ * that slotted text renders through arc-markdown, re-rendering as the text grows. A pending
+ * message shows the typing indicator in place of its body. Slot an avatar for either speaker if
+ * the product wants faces; none is built in.
+ *
+ * @tag arc-message
+ * @requires arc-markdown
+ * @requires arc-time-ago
+ * @prop {'user' | 'assistant' | 'system'} speaker - Whose message this is. "user" aligns to the inline end on an accent-tinted surface, "assistant" to the inline start on a neutral surface, and "system" runs centred and muted for notices in the transcript's own voice. An unrecognised value renders as "user".
+ * @prop {string} author - Display name shown in the muted meta line above the bubble. Omit it and the meta line only appears when a timestamp is set.
+ * @prop {string} timestamp - When the message was sent, as an ISO 8601 string. Rendered as house relative time ("3 minutes ago") through arc-time-ago, with the absolute date on its title.
+ * @prop {boolean} pending - Renders the typing indicator — three pulsing dots — in place of the body while a reply is being produced. Under prefers-reduced-motion the dots give way to a static ellipsis.
+ * @prop {boolean} markdown - Render the slotted text through the house markdown renderer. The slot's text content is the source; it re-parses whenever the slot changes, so streaming into the slot streams through the renderer. When false, slotted content renders as-is.
+ * @slot - The message body. Text when markdown is set; any markup otherwise.
+ * @slot avatar - An optional avatar beside the bubble; the component ships none of its own.
+ * @csspart message
+ * @csspart meta
+ * @csspart bubble
+ */
+export class ArcMessage extends LitElement {
+  static properties = {
+    speaker:      { type: String },
+    author:    { type: String },
+    timestamp: { type: String },
+    pending:   { type: Boolean, reflect: true },
+    markdown:  { type: Boolean, reflect: true },
+    _source:   { state: true },
+  };
+
+  static styles = [
+    tokenStyles,
+    css`
+      :host { display: block; }
+
+      .message {
+        display: flex;
+        align-items: flex-end;
+        gap: var(--space-sm);
+      }
+
+      /* The default voice is the user: bubble at the inline end. Flex end
+         follows the writing direction, so RTL mirrors for free. The base rule
+         carries the user styling and the other roles override it, which is
+         what routes an unrecognised role onto the default. */
+      .message--user { flex-direction: row-reverse; }
+
+      .message__main {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xs);
+        max-inline-size: var(--message-max-width, 80%);
+        min-inline-size: 0;
+      }
+
+      .message--user .message__main { align-items: flex-end; }
+
+      .message__meta {
+        margin: 0;
+        display: flex;
+        align-items: baseline;
+        gap: var(--space-sm);
+        font-family: var(--font-body);
+        font-size: var(--_text-xs);
+        color: var(--text-muted);
+      }
+
+      .message__author {
+        font-weight: 600;
+        color: var(--text-secondary);
+      }
+
+      .message__bubble {
+        padding: var(--space-sm) var(--space-md);
+        border-radius: var(--radius-lg);
+        font-family: var(--font-body);
+        font-size: var(--_text-sm);
+        line-height: 1.6;
+        overflow-wrap: break-word;
+        /* State by tint: the speaking user carries the accent wash. */
+        background: rgba(var(--accent-primary-rgb), 0.08);
+        border: 1px solid rgba(var(--accent-primary-rgb), 0.15);
+        color: var(--text-primary);
+      }
+
+      /* The assistant answers on a neutral surface; arc-markdown sets its
+         prose in --text-secondary, so plain text matches it here. */
+      .message--assistant .message__bubble {
+        background: var(--surface-raised);
+        border-color: var(--border-subtle);
+        color: var(--text-secondary);
+      }
+
+      /* System notices: the transcript's own voice, centred and quiet. */
+      .message--system { justify-content: center; }
+      .message--system .message__main { align-items: center; }
+      .message--system .message__meta { justify-content: center; }
+      .message--system .message__bubble {
+        background: none;
+        border: none;
+        padding: var(--space-xs) var(--space-md);
+        font-size: var(--_text-xs);
+        color: var(--text-muted);
+        text-align: center;
+      }
+
+      .message__body--hidden { display: none; }
+
+      /* The typing indicator. The keyword curve is deliberate: loops are
+         exempt from the entrance and exit curves in the token tree, and
+         ease-in-out is the symmetric shape a pulse wants — see the loop note
+         in scripts/checks/motion-tokens.js and the arc-hotspot halo this
+         follows. Opacity and transform only, so it stays off the layout path.
+         The shared reduced-motion guard shortens it to nothing; the explicit
+         rule below swaps the dots for a static ellipsis outright. */
+      .message__pending {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-xs);
+        padding-block: var(--space-xs);
+      }
+
+      .message__pending-dot {
+        inline-size: 6px;
+        block-size: 6px;
+        border-radius: var(--radius-full);
+        background: var(--text-muted);
+        animation: message-dot 1.2s ease-in-out infinite;
+      }
+
+      .message__pending-dot:nth-child(2) { animation-delay: 0.15s; }
+      .message__pending-dot:nth-child(3) { animation-delay: 0.3s; }
+
+      @keyframes message-dot {
+        0%, 100% { opacity: 0.35; transform: translateY(0); }
+        50%      { opacity: 1;    transform: translateY(-2px); }
+      }
+
+      .message__pending-ellipsis {
+        display: none;
+        color: var(--text-muted);
+        line-height: 1;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .message__pending-dot { display: none; }
+        .message__pending-ellipsis { display: inline; }
+      }
+    `,
+  ];
+
+  constructor() {
+    super();
+    this.speaker = 'user';
+    this.author = '';
+    this.timestamp = '';
+    this.pending = false;
+    this.markdown = false;
+    /** Slotted text captured for the markdown path; state, so updates re-render. */
+    this._source = '';
+  }
+
+  /**
+   * Read the slot here as well as on slotchange: under declarative shadow DOM
+   * the parser assigns the slot before this component's listener exists, so
+   * the initial slotchange has already fired and a slotchange-only read
+   * upgrades empty. See the dsd-slotchange-trap note; arc-segmented-control
+   * shipped that bug.
+   */
+  firstUpdated() {
+    this._readSlottedSource();
+  }
+
+  _onSlotChange() {
+    this._readSlottedSource();
+  }
+
+  _readSlottedSource() {
+    const slot = this.shadowRoot?.querySelector('slot:not([name])');
+    if (!slot) return;
+    const text = slot.assignedNodes({ flatten: true })
+      .map((node) => node.textContent)
+      .join('');
+    if (text !== this._source) this._source = text;
+  }
+
+  /** The role class, with anything outside the vocabulary landing on user. */
+  get _speaker() {
+    return ROLES.has(this.speaker) ? this.speaker : 'user';
+  }
+
+  _renderMeta() {
+    if (!this.author && !this.timestamp) return '';
+    return html`
+      <p class="message__meta" part="meta">
+        ${this.author ? html`<span class="message__author">${this.author}</span>` : ''}
+        ${this.timestamp ? html`<arc-time-ago datetime=${this.timestamp}></arc-time-ago>` : ''}
+      </p>
+    `;
+  }
+
+  _renderPending() {
+    return html`
+      <span class="message__pending" role="img" aria-label="Waiting for a reply">
+        <span class="message__pending-dot"></span>
+        <span class="message__pending-dot"></span>
+        <span class="message__pending-dot"></span>
+        <span class="message__pending-ellipsis" aria-hidden="true">&hellip;</span>
+      </span>
+    `;
+  }
+
+  render() {
+    // Server-side, _source is empty (firstUpdated does not run), so the raw
+    // slotted text stays visible and hydration swaps in the rendered form —
+    // the transcript is never blank while the markdown path waits for JS.
+    const rendersMarkdown = this.markdown && !this.pending && this._source;
+    return html`
+      <div class="message message--${this._speaker}" part="message">
+        <slot name="avatar"></slot>
+        <div class="message__main">
+          ${this._renderMeta()}
+          <div class="message__bubble" part="bubble">
+            ${this.pending ? this._renderPending() : ''}
+            ${rendersMarkdown ? html`<arc-markdown .content=${this._source}></arc-markdown>` : ''}
+            <div class=${this.pending || rendersMarkdown ? 'message__body--hidden' : ''}>
+              <slot @slotchange=${this._onSlotChange}></slot>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+}

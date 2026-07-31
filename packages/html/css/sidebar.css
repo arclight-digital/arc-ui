@@ -258,6 +258,16 @@
         transform: translateX(-2px);
       }
 
+      /* The external marker is the one arrow that does not wait for a hover.
+         Its job is to warn you where the link goes *before* you commit to it,
+         and a glyph that only appears once the pointer is already there has
+         missed the moment. Ghosted rather than hidden, so it reads as a
+         property of the destination and not as an active state. */
+      .arc-sidebar .sidebar__link-arrow--external {
+        opacity: 0.55;
+        transform: none;
+      }
+
       .arc-sidebar .sidebar__link:hover .sidebar__link-arrow {
         opacity: 1;
         transform: translateX(0);

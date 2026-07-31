@@ -93,6 +93,11 @@
       "svelte": "./dist/content/FeatureCard.svelte",
       "default": "./dist/content/FeatureCard.svelte"
     },
+    "./Hotspot": {
+      "types": "./dist/content/Hotspot.svelte.d.ts",
+      "svelte": "./dist/content/Hotspot.svelte",
+      "default": "./dist/content/Hotspot.svelte"
+    },
     "./Icon": {
       "types": "./dist/content/Icon.svelte.d.ts",
       "svelte": "./dist/content/Icon.svelte",
@@ -103,10 +108,25 @@
       "svelte": "./dist/content/Image.svelte",
       "default": "./dist/content/Image.svelte"
     },
+    "./ImageCompare": {
+      "types": "./dist/content/ImageCompare.svelte.d.ts",
+      "svelte": "./dist/content/ImageCompare.svelte",
+      "default": "./dist/content/ImageCompare.svelte"
+    },
+    "./ImageHotspots": {
+      "types": "./dist/content/ImageHotspots.svelte.d.ts",
+      "svelte": "./dist/content/ImageHotspots.svelte",
+      "default": "./dist/content/ImageHotspots.svelte"
+    },
     "./InfiniteScroll": {
       "types": "./dist/content/InfiniteScroll.svelte.d.ts",
       "svelte": "./dist/content/InfiniteScroll.svelte",
       "default": "./dist/content/InfiniteScroll.svelte"
+    },
+    "./Lightbox": {
+      "types": "./dist/content/Lightbox.svelte.d.ts",
+      "svelte": "./dist/content/Lightbox.svelte",
+      "default": "./dist/content/Lightbox.svelte"
     },
     "./Marquee": {
       "types": "./dist/content/Marquee.svelte.d.ts",
@@ -148,6 +168,11 @@
       "svelte": "./dist/content/Stack.svelte",
       "default": "./dist/content/Stack.svelte"
     },
+    "./Video": {
+      "types": "./dist/content/Video.svelte.d.ts",
+      "svelte": "./dist/content/Video.svelte",
+      "default": "./dist/content/Video.svelte"
+    },
     "./VirtualList": {
       "types": "./dist/content/VirtualList.svelte.d.ts",
       "svelte": "./dist/content/VirtualList.svelte",
@@ -157,6 +182,11 @@
       "types": "./dist/data/index.d.ts",
       "svelte": "./dist/data/index.js",
       "default": "./dist/data/index.js"
+    },
+    "./ActivityHeatmap": {
+      "types": "./dist/data/ActivityHeatmap.svelte.d.ts",
+      "svelte": "./dist/data/ActivityHeatmap.svelte",
+      "default": "./dist/data/ActivityHeatmap.svelte"
     },
     "./AnimatedNumber": {
       "types": "./dist/data/AnimatedNumber.svelte.d.ts",
@@ -172,6 +202,11 @@
       "types": "./dist/data/Chart.svelte.d.ts",
       "svelte": "./dist/data/Chart.svelte",
       "default": "./dist/data/Chart.svelte"
+    },
+    "./Clock": {
+      "types": "./dist/data/Clock.svelte.d.ts",
+      "svelte": "./dist/data/Clock.svelte",
+      "default": "./dist/data/Clock.svelte"
     },
     "./Comparison": {
       "types": "./dist/data/Comparison.svelte.d.ts",
@@ -218,6 +253,16 @@
       "svelte": "./dist/data/EventCalendar.svelte",
       "default": "./dist/data/EventCalendar.svelte"
     },
+    "./Gauge": {
+      "types": "./dist/data/Gauge.svelte.d.ts",
+      "svelte": "./dist/data/Gauge.svelte",
+      "default": "./dist/data/Gauge.svelte"
+    },
+    "./JsonTree": {
+      "types": "./dist/data/JsonTree.svelte.d.ts",
+      "svelte": "./dist/data/JsonTree.svelte",
+      "default": "./dist/data/JsonTree.svelte"
+    },
     "./Kanban": {
       "types": "./dist/data/Kanban.svelte.d.ts",
       "svelte": "./dist/data/Kanban.svelte",
@@ -232,6 +277,11 @@
       "types": "./dist/data/KvPair.svelte.d.ts",
       "svelte": "./dist/data/KvPair.svelte",
       "default": "./dist/data/KvPair.svelte"
+    },
+    "./LevelMeter": {
+      "types": "./dist/data/LevelMeter.svelte.d.ts",
+      "svelte": "./dist/data/LevelMeter.svelte",
+      "default": "./dist/data/LevelMeter.svelte"
     },
     "./List": {
       "types": "./dist/data/List.svelte.d.ts",
@@ -288,10 +338,20 @@
       "svelte": "./dist/data/TimelineItem.svelte",
       "default": "./dist/data/TimelineItem.svelte"
     },
+    "./Uptime": {
+      "types": "./dist/data/Uptime.svelte.d.ts",
+      "svelte": "./dist/data/Uptime.svelte",
+      "default": "./dist/data/Uptime.svelte"
+    },
     "./ValueCard": {
       "types": "./dist/data/ValueCard.svelte.d.ts",
       "svelte": "./dist/data/ValueCard.svelte",
       "default": "./dist/data/ValueCard.svelte"
+    },
+    "./Waveform": {
+      "types": "./dist/data/Waveform.svelte.d.ts",
+      "svelte": "./dist/data/Waveform.svelte",
+      "default": "./dist/data/Waveform.svelte"
     },
     "./typography": {
       "types": "./dist/typography/index.d.ts",
@@ -323,6 +383,11 @@
       "svelte": "./dist/typography/Kbd.svelte",
       "default": "./dist/typography/Kbd.svelte"
     },
+    "./KeyboardMap": {
+      "types": "./dist/typography/KeyboardMap.svelte.d.ts",
+      "svelte": "./dist/typography/KeyboardMap.svelte",
+      "default": "./dist/typography/KeyboardMap.svelte"
+    },
     "./Markdown": {
       "types": "./dist/typography/Markdown.svelte.d.ts",
       "svelte": "./dist/typography/Markdown.svelte",
@@ -337,6 +402,11 @@
       "types": "./dist/typography/Prose.svelte.d.ts",
       "svelte": "./dist/typography/Prose.svelte",
       "default": "./dist/typography/Prose.svelte"
+    },
+    "./Terminal": {
+      "types": "./dist/typography/Terminal.svelte.d.ts",
+      "svelte": "./dist/typography/Terminal.svelte",
+      "default": "./dist/typography/Terminal.svelte"
     },
     "./Text": {
       "types": "./dist/typography/Text.svelte.d.ts",
@@ -443,6 +513,11 @@
       "svelte": "./dist/input/ImageCropper.svelte",
       "default": "./dist/input/ImageCropper.svelte"
     },
+    "./InlineEdit": {
+      "types": "./dist/input/InlineEdit.svelte.d.ts",
+      "svelte": "./dist/input/InlineEdit.svelte",
+      "default": "./dist/input/InlineEdit.svelte"
+    },
     "./Input": {
       "types": "./dist/input/Input.svelte.d.ts",
       "svelte": "./dist/input/Input.svelte",
@@ -453,10 +528,20 @@
       "svelte": "./dist/input/InputGroup.svelte",
       "default": "./dist/input/InputGroup.svelte"
     },
+    "./Knob": {
+      "types": "./dist/input/Knob.svelte.d.ts",
+      "svelte": "./dist/input/Knob.svelte",
+      "default": "./dist/input/Knob.svelte"
+    },
     "./Label": {
       "types": "./dist/input/Label.svelte.d.ts",
       "svelte": "./dist/input/Label.svelte",
       "default": "./dist/input/Label.svelte"
+    },
+    "./MaskedInput": {
+      "types": "./dist/input/MaskedInput.svelte.d.ts",
+      "svelte": "./dist/input/MaskedInput.svelte",
+      "default": "./dist/input/MaskedInput.svelte"
     },
     "./MultiSelect": {
       "types": "./dist/input/MultiSelect.svelte.d.ts",
@@ -518,6 +603,11 @@
       "svelte": "./dist/input/Select.svelte",
       "default": "./dist/input/Select.svelte"
     },
+    "./SignaturePad": {
+      "types": "./dist/input/SignaturePad.svelte.d.ts",
+      "svelte": "./dist/input/SignaturePad.svelte",
+      "default": "./dist/input/SignaturePad.svelte"
+    },
     "./Slider": {
       "types": "./dist/input/Slider.svelte.d.ts",
       "svelte": "./dist/input/Slider.svelte",
@@ -567,6 +657,11 @@
       "types": "./dist/input/TransferList.svelte.d.ts",
       "svelte": "./dist/input/TransferList.svelte",
       "default": "./dist/input/TransferList.svelte"
+    },
+    "./TreeSelect": {
+      "types": "./dist/input/TreeSelect.svelte.d.ts",
+      "svelte": "./dist/input/TreeSelect.svelte",
+      "default": "./dist/input/TreeSelect.svelte"
     },
     "./navigation": {
       "types": "./dist/navigation/index.d.ts",
@@ -878,6 +973,11 @@
       "svelte": "./dist/feedback/ContextMenu.svelte",
       "default": "./dist/feedback/ContextMenu.svelte"
     },
+    "./Conversation": {
+      "types": "./dist/feedback/Conversation.svelte.d.ts",
+      "svelte": "./dist/feedback/Conversation.svelte",
+      "default": "./dist/feedback/Conversation.svelte"
+    },
     "./Dialog": {
       "types": "./dist/feedback/Dialog.svelte.d.ts",
       "svelte": "./dist/feedback/Dialog.svelte",
@@ -907,6 +1007,11 @@
       "types": "./dist/feedback/LoadingOverlay.svelte.d.ts",
       "svelte": "./dist/feedback/LoadingOverlay.svelte",
       "default": "./dist/feedback/LoadingOverlay.svelte"
+    },
+    "./Message": {
+      "types": "./dist/feedback/Message.svelte.d.ts",
+      "svelte": "./dist/feedback/Message.svelte",
+      "default": "./dist/feedback/Message.svelte"
     },
     "./Modal": {
       "types": "./dist/feedback/Modal.svelte.d.ts",

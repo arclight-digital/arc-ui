@@ -80,3 +80,18 @@ export type { AccordionProps } from './Accordion.js';
 
 export { Avatar } from './Avatar.js';
 export type { AvatarProps } from './Avatar.js';
+
+export { Hotspot } from './Hotspot.js';
+export type { HotspotProps } from './Hotspot.js';
+
+export { ImageCompare } from './ImageCompare.js';
+export type { ImageCompareProps } from './ImageCompare.js';
+
+export { ImageHotspots } from './ImageHotspots.js';
+export type { ImageHotspotsProps } from './ImageHotspots.js';
+
+export { Lightbox } from './Lightbox.js';
+export type { LightboxProps } from './Lightbox.js';
+
+export { Video } from './Video.js';
+export type { VideoProps } from './Video.js';

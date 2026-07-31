@@ -26,3 +26,8 @@ export { Skeleton } from './Skeleton';
 export { Spinner } from './Spinner';
 export { Stack } from './Stack';
 export { VirtualList } from './VirtualList';
+export { Hotspot } from './Hotspot';
+export { ImageCompare } from './ImageCompare';
+export { ImageHotspots } from './ImageHotspots';
+export { Lightbox } from './Lightbox';
+export { Video } from './Video';

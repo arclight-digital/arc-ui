@@ -24,3 +24,5 @@ export { default as Snackbar } from './Snackbar.svelte';
 export { default as Spotlight } from './Spotlight.svelte';
 export { default as Toast } from './Toast.svelte';
 export { default as Tooltip } from './Tooltip.svelte';
+export { default as Conversation } from './Conversation.svelte';
+export { default as Message } from './Message.svelte';

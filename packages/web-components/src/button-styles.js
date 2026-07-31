@@ -18,7 +18,7 @@ export const buttonVariantStyles = css`
   :host([variant="primary"]) .btn,
   :host([variant="primary"]) .btn-slot::slotted(a) {
     background: var(--interactive);
-    color: var(--surface-base);
+    color: var(--on-accent);
     border-color: var(--interactive);
   }
   :host([variant="primary"]) .btn:hover,

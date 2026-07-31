@@ -16,6 +16,7 @@ export interface SidebarLinkProps {
   active?: boolean;
   level?: number;
   icon?: string;
+  external?: boolean;
   children?: JSX.Element;
   class?: string;
   id?: string;
@@ -45,9 +46,9 @@ export interface SidebarLinkProps {
 }
 
 export const SidebarLink: Component<SidebarLinkProps> = (props) => {
-  const [local, rest] = splitProps(props, ['href', 'active', 'level', 'icon', 'children']);
+  const [local, rest] = splitProps(props, ['href', 'active', 'level', 'icon', 'external', 'children']);
   return (
-    <arc-sidebar-link href={local.href} active={local.active} level={local.level} icon={local.icon} {...rest}>
+    <arc-sidebar-link href={local.href} active={local.active} level={local.level} icon={local.icon} external={local.external} {...rest}>
       {local.children}
     </arc-sidebar-link>
   );

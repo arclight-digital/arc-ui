@@ -10,3 +10,5 @@ export { Text } from './Text';
 export { TimeAgo } from './TimeAgo';
 export { Truncate } from './Truncate';
 export { Typewriter } from './Typewriter';
+export { Terminal } from './Terminal';
+export { KeyboardMap } from './KeyboardMap';

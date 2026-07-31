@@ -12,3 +12,5 @@ export { ArcNumberFormat } from './number-format.js';
 export { ArcProse } from './prose.js';
 export { ArcTimeAgo } from './time-ago.js';
 export { ArcTypewriter } from './typewriter.js';
+export { ArcTerminal } from './terminal.js';
+export { ArcKeyboardMap } from './keyboard-map.js';

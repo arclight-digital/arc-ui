@@ -9,6 +9,7 @@ export interface SidebarLinkProps {
   active?: boolean;
   level?: number;
   icon?: string;
+  external?: boolean;
   className?: string;
   children?: React.ReactNode;
 }

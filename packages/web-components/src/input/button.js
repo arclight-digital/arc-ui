@@ -111,7 +111,7 @@ export class ArcButton extends LitElement {
       :host(:not([variant="ghost"]):not([variant="secondary"])) .btn,
       :host(:not([variant="ghost"]):not([variant="secondary"])) .btn-slot::slotted(a) {
         background: var(--interactive);
-        color: var(--surface-base);
+        color: var(--on-accent);
         border-color: var(--interactive);
       }
       :host(:not([variant="ghost"]):not([variant="secondary"])) .btn:hover,

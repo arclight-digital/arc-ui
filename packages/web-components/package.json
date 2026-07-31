@@ -25,6 +25,10 @@
       "types": "./types/index.d.ts",
       "default": "./src/content/accordion-item.register.js"
     },
+    "./activity-heatmap": {
+      "types": "./types/index.d.ts",
+      "default": "./src/data/activity-heatmap.register.js"
+    },
     "./alert": {
       "types": "./types/index.d.ts",
       "default": "./src/feedback/alert.register.js"
@@ -161,6 +165,10 @@
       "types": "./types/index.d.ts",
       "default": "./src/input/chip.register.js"
     },
+    "./clock": {
+      "types": "./types/index.d.ts",
+      "default": "./src/data/clock.register.js"
+    },
     "./cluster": {
       "types": "./types/index.d.ts",
       "default": "./src/layout/cluster.register.js"
@@ -228,6 +236,10 @@
     "./context-menu": {
       "types": "./types/index.d.ts",
       "default": "./src/feedback/context-menu.register.js"
+    },
+    "./conversation": {
+      "types": "./types/index.d.ts",
+      "default": "./src/feedback/conversation.register.js"
     },
     "./copy-button": {
       "types": "./types/index.d.ts",
@@ -329,6 +341,10 @@
       "types": "./types/index.d.ts",
       "default": "./src/input/form.register.js"
     },
+    "./gauge": {
+      "types": "./types/index.d.ts",
+      "default": "./src/data/gauge.register.js"
+    },
     "./gradient-text": {
       "types": "./types/index.d.ts",
       "default": "./src/typography/gradient-text.register.js"
@@ -344,6 +360,10 @@
     "./hotkey": {
       "types": "./types/index.d.ts",
       "default": "./src/input/hotkey.register.js"
+    },
+    "./hotspot": {
+      "types": "./types/index.d.ts",
+      "default": "./src/content/hotspot.register.js"
     },
     "./hover-card": {
       "types": "./types/index.d.ts",
@@ -373,13 +393,25 @@
       "types": "./types/index.d.ts",
       "default": "./src/content/image.register.js"
     },
+    "./image-compare": {
+      "types": "./types/index.d.ts",
+      "default": "./src/content/image-compare.register.js"
+    },
     "./image-cropper": {
       "types": "./types/index.d.ts",
       "default": "./src/input/image-cropper.register.js"
     },
+    "./image-hotspots": {
+      "types": "./types/index.d.ts",
+      "default": "./src/content/image-hotspots.register.js"
+    },
     "./infinite-scroll": {
       "types": "./types/index.d.ts",
       "default": "./src/content/infinite-scroll.register.js"
+    },
+    "./inline-edit": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/inline-edit.register.js"
     },
     "./inline-message": {
       "types": "./types/index.d.ts",
@@ -397,6 +429,10 @@
       "types": "./types/index.d.ts",
       "default": "./src/layout/inset.register.js"
     },
+    "./json-tree": {
+      "types": "./types/index.d.ts",
+      "default": "./src/data/json-tree.register.js"
+    },
     "./kanban": {
       "types": "./types/index.d.ts",
       "default": "./src/data/kanban.register.js"
@@ -409,6 +445,14 @@
       "types": "./types/index.d.ts",
       "default": "./src/data/key-value.register.js"
     },
+    "./keyboard-map": {
+      "types": "./types/index.d.ts",
+      "default": "./src/typography/keyboard-map.register.js"
+    },
+    "./knob": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/knob.register.js"
+    },
     "./kv-pair": {
       "types": "./types/index.d.ts",
       "default": "./src/data/kv-pair.register.js"
@@ -416,6 +460,14 @@
     "./label": {
       "types": "./types/index.d.ts",
       "default": "./src/input/label.register.js"
+    },
+    "./level-meter": {
+      "types": "./types/index.d.ts",
+      "default": "./src/data/level-meter.register.js"
+    },
+    "./lightbox": {
+      "types": "./types/index.d.ts",
+      "default": "./src/content/lightbox.register.js"
     },
     "./link": {
       "types": "./types/index.d.ts",
@@ -441,6 +493,10 @@
       "types": "./types/index.d.ts",
       "default": "./src/content/marquee.register.js"
     },
+    "./masked-input": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/masked-input.register.js"
+    },
     "./masonry": {
       "types": "./types/index.d.ts",
       "default": "./src/layout/masonry.register.js"
@@ -456,6 +512,10 @@
     "./menubar": {
       "types": "./types/index.d.ts",
       "default": "./src/navigation/menubar.register.js"
+    },
+    "./message": {
+      "types": "./types/index.d.ts",
+      "default": "./src/feedback/message.register.js"
     },
     "./meter": {
       "types": "./types/index.d.ts",
@@ -656,6 +716,10 @@
       "types": "./types/index.d.ts",
       "default": "./src/navigation/sidebar-section.register.js"
     },
+    "./signature-pad": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/signature-pad.register.js"
+    },
     "./skeleton": {
       "types": "./types/index.d.ts",
       "default": "./src/content/skeleton.register.js"
@@ -760,6 +824,10 @@
       "types": "./types/index.d.ts",
       "default": "./src/input/tag-input.register.js"
     },
+    "./terminal": {
+      "types": "./types/index.d.ts",
+      "default": "./src/typography/terminal.register.js"
+    },
     "./text": {
       "types": "./types/index.d.ts",
       "default": "./src/typography/text.register.js"
@@ -820,6 +888,10 @@
       "types": "./types/index.d.ts",
       "default": "./src/navigation/tree-item.register.js"
     },
+    "./tree-select": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/tree-select.register.js"
+    },
     "./tree-view": {
       "types": "./types/index.d.ts",
       "default": "./src/navigation/tree-view.register.js"
@@ -832,13 +904,25 @@
       "types": "./types/index.d.ts",
       "default": "./src/typography/typewriter.register.js"
     },
+    "./uptime": {
+      "types": "./types/index.d.ts",
+      "default": "./src/data/uptime.register.js"
+    },
     "./value-card": {
       "types": "./types/index.d.ts",
       "default": "./src/data/value-card.register.js"
     },
+    "./video": {
+      "types": "./types/index.d.ts",
+      "default": "./src/content/video.register.js"
+    },
     "./virtual-list": {
       "types": "./types/index.d.ts",
       "default": "./src/content/virtual-list.register.js"
+    },
+    "./waveform": {
+      "types": "./types/index.d.ts",
+      "default": "./src/data/waveform.register.js"
     },
     "./themes/high-contrast": "./src/themes/high-contrast.css",
     "./themes/minimal": "./src/themes/minimal.css",

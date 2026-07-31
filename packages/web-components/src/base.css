@@ -24,39 +24,43 @@
    rendering at all. Set by the build, never by hand. */
 @media (scripting: enabled) {
   :root:not([data-arc-ssr]) :is(
-  arc-accordion, arc-accordion-item, arc-alert, arc-anchor-nav, arc-animated-number,
-  arc-announcement, arc-app-shell, arc-aspect-grid, arc-aspect-ratio, arc-auth-shell, arc-avatar,
-  arc-avatar-group, arc-badge, arc-banner, arc-blockquote, arc-bottom-nav, arc-breadcrumb,
-  arc-breadcrumb-item, arc-breadcrumb-menu, arc-button, arc-button-group, arc-calendar,
-  arc-callout, arc-card, arc-carousel, arc-center, arc-chart, arc-checkbox, arc-chip,
-  arc-cluster, arc-code-block, arc-collapsible, arc-color-picker, arc-color-swatch, arc-column,
-  arc-combobox, arc-command-bar, arc-command-group, arc-command-item, arc-command-palette,
-  arc-comparison, arc-comparison-column, arc-confirm, arc-connection-status, arc-container,
-  arc-context-menu, arc-copy-button, arc-countdown-timer, arc-cta-banner, arc-dashboard-grid,
+  arc-accordion, arc-accordion-item, arc-activity-heatmap, arc-alert, arc-anchor-nav,
+  arc-animated-number, arc-announcement, arc-app-shell, arc-aspect-grid, arc-aspect-ratio,
+  arc-auth-shell, arc-avatar, arc-avatar-group, arc-badge, arc-banner, arc-blockquote,
+  arc-bottom-nav, arc-breadcrumb, arc-breadcrumb-item, arc-breadcrumb-menu, arc-button,
+  arc-button-group, arc-calendar, arc-callout, arc-card, arc-carousel, arc-center, arc-chart,
+  arc-checkbox, arc-chip, arc-clock, arc-cluster, arc-code-block, arc-collapsible,
+  arc-color-picker, arc-color-swatch, arc-column, arc-combobox, arc-command-bar,
+  arc-command-group, arc-command-item, arc-command-palette, arc-comparison,
+  arc-comparison-column, arc-confirm, arc-connection-status, arc-container, arc-context-menu,
+  arc-conversation, arc-copy-button, arc-countdown-timer, arc-cta-banner, arc-dashboard-grid,
   arc-data-grid, arc-data-table, arc-date-picker, arc-date-range-picker, arc-description-item,
   arc-description-list, arc-dialog, arc-diff, arc-divider, arc-dock, arc-drawer,
   arc-dropdown-menu, arc-empty-state, arc-event-calendar, arc-feature-card, arc-fieldset,
-  arc-file-upload, arc-float-bar, arc-footer, arc-form, arc-gradient-text, arc-guided-tour,
-  arc-highlight, arc-hotkey, arc-hover-card, arc-icon, arc-icon-button, arc-icon-library,
-  arc-image, arc-image-cropper, arc-infinite-scroll, arc-inline-message, arc-input,
-  arc-input-group, arc-inset, arc-kanban, arc-kbd, arc-key-value, arc-kv-pair, arc-label,
-  arc-link, arc-list, arc-list-item, arc-loading-overlay, arc-markdown, arc-marquee, arc-masonry,
-  arc-menu-divider, arc-menu-item, arc-menubar, arc-meter, arc-modal, arc-multi-select,
-  arc-nav-item, arc-navigation-menu, arc-notification-panel, arc-number-format, arc-number-input,
-  arc-option, arc-otp-input, arc-page-header, arc-page-indicator, arc-page-layout,
-  arc-pagination, arc-password-input, arc-pin-input, arc-popover, arc-progress,
+  arc-file-upload, arc-float-bar, arc-footer, arc-form, arc-gauge, arc-gradient-text,
+  arc-guided-tour, arc-highlight, arc-hotkey, arc-hotspot, arc-hover-card, arc-icon,
+  arc-icon-button, arc-icon-library, arc-image, arc-image-compare, arc-image-cropper,
+  arc-image-hotspots, arc-infinite-scroll, arc-inline-edit, arc-inline-message, arc-input,
+  arc-input-group, arc-inset, arc-json-tree, arc-kanban, arc-kbd, arc-key-value,
+  arc-keyboard-map, arc-knob, arc-kv-pair, arc-label, arc-level-meter, arc-lightbox, arc-link,
+  arc-list, arc-list-item, arc-loading-overlay, arc-markdown, arc-marquee, arc-masked-input,
+  arc-masonry, arc-menu-divider, arc-menu-item, arc-menubar, arc-message, arc-meter, arc-modal,
+  arc-multi-select, arc-nav-item, arc-navigation-menu, arc-notification-panel, arc-number-format,
+  arc-number-input, arc-option, arc-otp-input, arc-page-header, arc-page-indicator,
+  arc-page-layout, arc-pagination, arc-password-input, arc-pin-input, arc-popover, arc-progress,
   arc-progress-toast, arc-prose, arc-qr-code, arc-radio, arc-radio-group, arc-rail,
   arc-range-slider, arc-rating, arc-resizable, arc-responsive-switcher, arc-scroll-area,
   arc-scroll-indicator, arc-scroll-spy, arc-scroll-to-top, arc-search, arc-section,
   arc-segmented-control, arc-select, arc-separator, arc-settings-layout, arc-sheet, arc-sidebar,
-  arc-sidebar-link, arc-sidebar-section, arc-skeleton, arc-skip-link, arc-slider, arc-snackbar,
-  arc-sortable-list, arc-sparkline, arc-speed-dial, arc-spinner, arc-split-pane, arc-spotlight,
-  arc-spy-link, arc-stack, arc-stat, arc-status-bar, arc-step, arc-stepper, arc-stepper-nav,
-  arc-sticky, arc-suggestion, arc-switch-group, arc-tab, arc-table, arc-tabs, arc-tag,
-  arc-tag-input, arc-text, arc-textarea, arc-theme-toggle, arc-time-ago, arc-time-picker,
-  arc-timeline, arc-timeline-item, arc-toast, arc-toggle, arc-toolbar, arc-tooltip, arc-top-bar,
-  arc-transfer-list, arc-tree-item, arc-tree-view, arc-truncate, arc-typewriter, arc-value-card,
-  arc-virtual-list
+  arc-sidebar-link, arc-sidebar-section, arc-signature-pad, arc-skeleton, arc-skip-link,
+  arc-slider, arc-snackbar, arc-sortable-list, arc-sparkline, arc-speed-dial, arc-spinner,
+  arc-split-pane, arc-spotlight, arc-spy-link, arc-stack, arc-stat, arc-status-bar, arc-step,
+  arc-stepper, arc-stepper-nav, arc-sticky, arc-suggestion, arc-switch-group, arc-tab, arc-table,
+  arc-tabs, arc-tag, arc-tag-input, arc-terminal, arc-text, arc-textarea, arc-theme-toggle,
+  arc-time-ago, arc-time-picker, arc-timeline, arc-timeline-item, arc-toast, arc-toggle,
+  arc-toolbar, arc-tooltip, arc-top-bar, arc-transfer-list, arc-tree-item, arc-tree-select,
+  arc-tree-view, arc-truncate, arc-typewriter, arc-uptime, arc-value-card, arc-video,
+  arc-virtual-list, arc-waveform
   ):not(:defined),
   [data-arc-defer]:not(:defined) {
     opacity: 0;
@@ -322,6 +326,18 @@
   --overlay-backdrop: rgba(0, 0, 0, 0.6);
   --accent-text-mix: 0%;
 
+  /* Text painted ON an accent fill — the primary button's label, the active
+     segment, the selected day in a picker.
+
+     Not simply --surface-base, which is what those five call sites used to
+     read. That works in dark, where the ground is near-black against a bright
+     accent (5.53:1), but light mode pairs its near-white ground with a darker
+     accent and lands at 4.30:1 — under AA, on the most-used control in the
+     library. The light theme overrides this to pure white (4.79:1); the dark
+     value stays exactly what it was, since white on the dark accent would be
+     3.72:1 and strictly worse. */
+  --on-accent: var(--surface-base);
+
   /* ── Semantic: Interactive ── */
   --interactive: var(--accent-primary);
   --interactive-rgb: var(--accent-primary-rgb);
@@ -427,6 +443,7 @@
   --bg-hover: rgba(55, 105, 235, 0.04);
   --overlay-backdrop: rgba(20, 20, 40, 0.25);
   --accent-text-mix: 55%;
+  --on-accent: rgb(var(--white-rgb));
 }
 
 @media (prefers-color-scheme: light) {
@@ -488,6 +505,7 @@
     --bg-hover: rgba(55, 105, 235, 0.04);
     --overlay-backdrop: rgba(20, 20, 40, 0.25);
     --accent-text-mix: 55%;
+    --on-accent: rgb(var(--white-rgb));
   }
 }
 
@@ -499,39 +517,43 @@
    Scoped to ARC's own tags: this must never be a universal selector, which
    would push these values onto every element in the consumer's page. */
 :where(
-  arc-accordion, arc-accordion-item, arc-alert, arc-anchor-nav, arc-animated-number,
-  arc-announcement, arc-app-shell, arc-aspect-grid, arc-aspect-ratio, arc-auth-shell, arc-avatar,
-  arc-avatar-group, arc-badge, arc-banner, arc-blockquote, arc-bottom-nav, arc-breadcrumb,
-  arc-breadcrumb-item, arc-breadcrumb-menu, arc-button, arc-button-group, arc-calendar,
-  arc-callout, arc-card, arc-carousel, arc-center, arc-chart, arc-checkbox, arc-chip,
-  arc-cluster, arc-code-block, arc-collapsible, arc-color-picker, arc-color-swatch, arc-column,
-  arc-combobox, arc-command-bar, arc-command-group, arc-command-item, arc-command-palette,
-  arc-comparison, arc-comparison-column, arc-confirm, arc-connection-status, arc-container,
-  arc-context-menu, arc-copy-button, arc-countdown-timer, arc-cta-banner, arc-dashboard-grid,
+  arc-accordion, arc-accordion-item, arc-activity-heatmap, arc-alert, arc-anchor-nav,
+  arc-animated-number, arc-announcement, arc-app-shell, arc-aspect-grid, arc-aspect-ratio,
+  arc-auth-shell, arc-avatar, arc-avatar-group, arc-badge, arc-banner, arc-blockquote,
+  arc-bottom-nav, arc-breadcrumb, arc-breadcrumb-item, arc-breadcrumb-menu, arc-button,
+  arc-button-group, arc-calendar, arc-callout, arc-card, arc-carousel, arc-center, arc-chart,
+  arc-checkbox, arc-chip, arc-clock, arc-cluster, arc-code-block, arc-collapsible,
+  arc-color-picker, arc-color-swatch, arc-column, arc-combobox, arc-command-bar,
+  arc-command-group, arc-command-item, arc-command-palette, arc-comparison,
+  arc-comparison-column, arc-confirm, arc-connection-status, arc-container, arc-context-menu,
+  arc-conversation, arc-copy-button, arc-countdown-timer, arc-cta-banner, arc-dashboard-grid,
   arc-data-grid, arc-data-table, arc-date-picker, arc-date-range-picker, arc-description-item,
   arc-description-list, arc-dialog, arc-diff, arc-divider, arc-dock, arc-drawer,
   arc-dropdown-menu, arc-empty-state, arc-event-calendar, arc-feature-card, arc-fieldset,
-  arc-file-upload, arc-float-bar, arc-footer, arc-form, arc-gradient-text, arc-guided-tour,
-  arc-highlight, arc-hotkey, arc-hover-card, arc-icon, arc-icon-button, arc-icon-library,
-  arc-image, arc-image-cropper, arc-infinite-scroll, arc-inline-message, arc-input,
-  arc-input-group, arc-inset, arc-kanban, arc-kbd, arc-key-value, arc-kv-pair, arc-label,
-  arc-link, arc-list, arc-list-item, arc-loading-overlay, arc-markdown, arc-marquee, arc-masonry,
-  arc-menu-divider, arc-menu-item, arc-menubar, arc-meter, arc-modal, arc-multi-select,
-  arc-nav-item, arc-navigation-menu, arc-notification-panel, arc-number-format, arc-number-input,
-  arc-option, arc-otp-input, arc-page-header, arc-page-indicator, arc-page-layout,
-  arc-pagination, arc-password-input, arc-pin-input, arc-popover, arc-progress,
+  arc-file-upload, arc-float-bar, arc-footer, arc-form, arc-gauge, arc-gradient-text,
+  arc-guided-tour, arc-highlight, arc-hotkey, arc-hotspot, arc-hover-card, arc-icon,
+  arc-icon-button, arc-icon-library, arc-image, arc-image-compare, arc-image-cropper,
+  arc-image-hotspots, arc-infinite-scroll, arc-inline-edit, arc-inline-message, arc-input,
+  arc-input-group, arc-inset, arc-json-tree, arc-kanban, arc-kbd, arc-key-value,
+  arc-keyboard-map, arc-knob, arc-kv-pair, arc-label, arc-level-meter, arc-lightbox, arc-link,
+  arc-list, arc-list-item, arc-loading-overlay, arc-markdown, arc-marquee, arc-masked-input,
+  arc-masonry, arc-menu-divider, arc-menu-item, arc-menubar, arc-message, arc-meter, arc-modal,
+  arc-multi-select, arc-nav-item, arc-navigation-menu, arc-notification-panel, arc-number-format,
+  arc-number-input, arc-option, arc-otp-input, arc-page-header, arc-page-indicator,
+  arc-page-layout, arc-pagination, arc-password-input, arc-pin-input, arc-popover, arc-progress,
   arc-progress-toast, arc-prose, arc-qr-code, arc-radio, arc-radio-group, arc-rail,
   arc-range-slider, arc-rating, arc-resizable, arc-responsive-switcher, arc-scroll-area,
   arc-scroll-indicator, arc-scroll-spy, arc-scroll-to-top, arc-search, arc-section,
   arc-segmented-control, arc-select, arc-separator, arc-settings-layout, arc-sheet, arc-sidebar,
-  arc-sidebar-link, arc-sidebar-section, arc-skeleton, arc-skip-link, arc-slider, arc-snackbar,
-  arc-sortable-list, arc-sparkline, arc-speed-dial, arc-spinner, arc-split-pane, arc-spotlight,
-  arc-spy-link, arc-stack, arc-stat, arc-status-bar, arc-step, arc-stepper, arc-stepper-nav,
-  arc-sticky, arc-suggestion, arc-switch-group, arc-tab, arc-table, arc-tabs, arc-tag,
-  arc-tag-input, arc-text, arc-textarea, arc-theme-toggle, arc-time-ago, arc-time-picker,
-  arc-timeline, arc-timeline-item, arc-toast, arc-toggle, arc-toolbar, arc-tooltip, arc-top-bar,
-  arc-transfer-list, arc-tree-item, arc-tree-view, arc-truncate, arc-typewriter, arc-value-card,
-  arc-virtual-list
+  arc-sidebar-link, arc-sidebar-section, arc-signature-pad, arc-skeleton, arc-skip-link,
+  arc-slider, arc-snackbar, arc-sortable-list, arc-sparkline, arc-speed-dial, arc-spinner,
+  arc-split-pane, arc-spotlight, arc-spy-link, arc-stack, arc-stat, arc-status-bar, arc-step,
+  arc-stepper, arc-stepper-nav, arc-sticky, arc-suggestion, arc-switch-group, arc-tab, arc-table,
+  arc-tabs, arc-tag, arc-tag-input, arc-terminal, arc-text, arc-textarea, arc-theme-toggle,
+  arc-time-ago, arc-time-picker, arc-timeline, arc-timeline-item, arc-toast, arc-toggle,
+  arc-toolbar, arc-tooltip, arc-top-bar, arc-transfer-list, arc-tree-item, arc-tree-select,
+  arc-tree-view, arc-truncate, arc-typewriter, arc-uptime, arc-value-card, arc-video,
+  arc-virtual-list, arc-waveform
 ) {
   --display-xl-weight: inherit;
   --display-xl-spacing: inherit;
@@ -614,6 +636,7 @@
   --surface-overlay: inherit;
   --surface-hover: inherit;
   --divider: inherit;
+  --on-accent: inherit;
   --touch-min: inherit;
   --touch-pad: inherit;
   --max-width: inherit;
@@ -666,6 +689,7 @@
   --surface-overlay: var(--bg-elevated);
   --surface-hover: var(--bg-hover);
   --divider: var(--border-subtle);
+  --on-accent: var(--surface-base);
   --glow-primary: 0 0 8px rgba(var(--accent-primary-rgb),0.9), 0 0 20px rgba(var(--accent-primary-rgb),0.5), 0 0 44px rgba(var(--accent-primary-rgb),0.25), 0 0 80px rgba(var(--accent-primary-rgb),0.1);
   --glow-secondary: 0 0 8px rgba(var(--accent-secondary-rgb),0.9), 0 0 20px rgba(var(--accent-secondary-rgb),0.5), 0 0 44px rgba(var(--accent-secondary-rgb),0.25), 0 0 80px rgba(var(--accent-secondary-rgb),0.1);
   --glow-white: 0 0 6px rgba(var(--text-primary-rgb),0.6), 0 0 18px rgba(var(--text-primary-rgb),0.25), 0 0 40px rgba(var(--text-primary-rgb),0.1);

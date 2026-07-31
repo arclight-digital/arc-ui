@@ -161,6 +161,25 @@ import { eventCalendar } from './event-calendar';
 import { transferList } from './transfer-list';
 import { imageCropper } from './image-cropper';
 import { qrCode } from './qr-code';
+import { knob } from './knob';
+import { gauge } from './gauge';
+import { waveform } from './waveform';
+import { levelMeter } from './level-meter';
+import { clock } from './clock';
+import { uptime } from './uptime';
+import { terminal } from './terminal';
+import { lightbox } from './lightbox';
+import { imageCompare } from './image-compare';
+import { imageHotspots } from './image-hotspots';
+import { video } from './video';
+import { jsonTree } from './json-tree';
+import { activityHeatmap } from './activity-heatmap';
+import { signaturePad } from './signature-pad';
+import { maskedInput } from './masked-input';
+import { treeSelect } from './tree-select';
+import { inlineEdit } from './inline-edit';
+import { keyboardMap } from './keyboard-map';
+import { conversation } from './conversation';
 import type { ComponentDef } from './_types';
 
 export type { ComponentDef } from './_types';
@@ -329,4 +348,23 @@ export const components: ComponentDef[] = [
   transferList,
   imageCropper,
   qrCode,
+  knob,
+  gauge,
+  waveform,
+  levelMeter,
+  clock,
+  uptime,
+  terminal,
+  lightbox,
+  imageCompare,
+  imageHotspots,
+  video,
+  jsonTree,
+  activityHeatmap,
+  signaturePad,
+  maskedInput,
+  treeSelect,
+  inlineEdit,
+  keyboardMap,
+  conversation,
 ];

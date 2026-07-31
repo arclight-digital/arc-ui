@@ -76,6 +76,10 @@
       "types": "./dist/content/FeatureCard.d.ts",
       "default": "./dist/content/FeatureCard.js"
     },
+    "./Hotspot": {
+      "types": "./dist/content/Hotspot.d.ts",
+      "default": "./dist/content/Hotspot.js"
+    },
     "./Icon": {
       "types": "./dist/content/Icon.d.ts",
       "default": "./dist/content/Icon.js"
@@ -84,9 +88,21 @@
       "types": "./dist/content/Image.d.ts",
       "default": "./dist/content/Image.js"
     },
+    "./ImageCompare": {
+      "types": "./dist/content/ImageCompare.d.ts",
+      "default": "./dist/content/ImageCompare.js"
+    },
+    "./ImageHotspots": {
+      "types": "./dist/content/ImageHotspots.d.ts",
+      "default": "./dist/content/ImageHotspots.js"
+    },
     "./InfiniteScroll": {
       "types": "./dist/content/InfiniteScroll.d.ts",
       "default": "./dist/content/InfiniteScroll.js"
+    },
+    "./Lightbox": {
+      "types": "./dist/content/Lightbox.d.ts",
+      "default": "./dist/content/Lightbox.js"
     },
     "./Marquee": {
       "types": "./dist/content/Marquee.d.ts",
@@ -120,6 +136,10 @@
       "types": "./dist/content/Stack.d.ts",
       "default": "./dist/content/Stack.js"
     },
+    "./Video": {
+      "types": "./dist/content/Video.d.ts",
+      "default": "./dist/content/Video.js"
+    },
     "./VirtualList": {
       "types": "./dist/content/VirtualList.d.ts",
       "default": "./dist/content/VirtualList.js"
@@ -127,6 +147,10 @@
     "./data": {
       "types": "./dist/data/index.d.ts",
       "default": "./dist/data/index.js"
+    },
+    "./ActivityHeatmap": {
+      "types": "./dist/data/ActivityHeatmap.d.ts",
+      "default": "./dist/data/ActivityHeatmap.js"
     },
     "./AnimatedNumber": {
       "types": "./dist/data/AnimatedNumber.d.ts",
@@ -139,6 +163,10 @@
     "./Chart": {
       "types": "./dist/data/Chart.d.ts",
       "default": "./dist/data/Chart.js"
+    },
+    "./Clock": {
+      "types": "./dist/data/Clock.d.ts",
+      "default": "./dist/data/Clock.js"
     },
     "./Comparison": {
       "types": "./dist/data/Comparison.d.ts",
@@ -176,6 +204,14 @@
       "types": "./dist/data/EventCalendar.d.ts",
       "default": "./dist/data/EventCalendar.js"
     },
+    "./Gauge": {
+      "types": "./dist/data/Gauge.d.ts",
+      "default": "./dist/data/Gauge.js"
+    },
+    "./JsonTree": {
+      "types": "./dist/data/JsonTree.d.ts",
+      "default": "./dist/data/JsonTree.js"
+    },
     "./Kanban": {
       "types": "./dist/data/Kanban.d.ts",
       "default": "./dist/data/Kanban.js"
@@ -187,6 +223,10 @@
     "./KvPair": {
       "types": "./dist/data/KvPair.d.ts",
       "default": "./dist/data/KvPair.js"
+    },
+    "./LevelMeter": {
+      "types": "./dist/data/LevelMeter.d.ts",
+      "default": "./dist/data/LevelMeter.js"
     },
     "./List": {
       "types": "./dist/data/List.d.ts",
@@ -232,9 +272,17 @@
       "types": "./dist/data/TimelineItem.d.ts",
       "default": "./dist/data/TimelineItem.js"
     },
+    "./Uptime": {
+      "types": "./dist/data/Uptime.d.ts",
+      "default": "./dist/data/Uptime.js"
+    },
     "./ValueCard": {
       "types": "./dist/data/ValueCard.d.ts",
       "default": "./dist/data/ValueCard.js"
+    },
+    "./Waveform": {
+      "types": "./dist/data/Waveform.d.ts",
+      "default": "./dist/data/Waveform.js"
     },
     "./typography": {
       "types": "./dist/typography/index.d.ts",
@@ -260,6 +308,10 @@
       "types": "./dist/typography/Kbd.d.ts",
       "default": "./dist/typography/Kbd.js"
     },
+    "./KeyboardMap": {
+      "types": "./dist/typography/KeyboardMap.d.ts",
+      "default": "./dist/typography/KeyboardMap.js"
+    },
     "./Markdown": {
       "types": "./dist/typography/Markdown.d.ts",
       "default": "./dist/typography/Markdown.js"
@@ -271,6 +323,10 @@
     "./Prose": {
       "types": "./dist/typography/Prose.d.ts",
       "default": "./dist/typography/Prose.js"
+    },
+    "./Terminal": {
+      "types": "./dist/typography/Terminal.d.ts",
+      "default": "./dist/typography/Terminal.js"
     },
     "./Text": {
       "types": "./dist/typography/Text.d.ts",
@@ -356,6 +412,10 @@
       "types": "./dist/input/ImageCropper.d.ts",
       "default": "./dist/input/ImageCropper.js"
     },
+    "./InlineEdit": {
+      "types": "./dist/input/InlineEdit.d.ts",
+      "default": "./dist/input/InlineEdit.js"
+    },
     "./Input": {
       "types": "./dist/input/Input.d.ts",
       "default": "./dist/input/Input.js"
@@ -364,9 +424,17 @@
       "types": "./dist/input/InputGroup.d.ts",
       "default": "./dist/input/InputGroup.js"
     },
+    "./Knob": {
+      "types": "./dist/input/Knob.d.ts",
+      "default": "./dist/input/Knob.js"
+    },
     "./Label": {
       "types": "./dist/input/Label.d.ts",
       "default": "./dist/input/Label.js"
+    },
+    "./MaskedInput": {
+      "types": "./dist/input/MaskedInput.d.ts",
+      "default": "./dist/input/MaskedInput.js"
     },
     "./MultiSelect": {
       "types": "./dist/input/MultiSelect.d.ts",
@@ -416,6 +484,10 @@
       "types": "./dist/input/Select.d.ts",
       "default": "./dist/input/Select.js"
     },
+    "./SignaturePad": {
+      "types": "./dist/input/SignaturePad.d.ts",
+      "default": "./dist/input/SignaturePad.js"
+    },
     "./Slider": {
       "types": "./dist/input/Slider.d.ts",
       "default": "./dist/input/Slider.js"
@@ -455,6 +527,10 @@
     "./TransferList": {
       "types": "./dist/input/TransferList.d.ts",
       "default": "./dist/input/TransferList.js"
+    },
+    "./TreeSelect": {
+      "types": "./dist/input/TreeSelect.d.ts",
+      "default": "./dist/input/TreeSelect.js"
     },
     "./navigation": {
       "types": "./dist/navigation/index.d.ts",
@@ -704,6 +780,10 @@
       "types": "./dist/feedback/ContextMenu.d.ts",
       "default": "./dist/feedback/ContextMenu.js"
     },
+    "./Conversation": {
+      "types": "./dist/feedback/Conversation.d.ts",
+      "default": "./dist/feedback/Conversation.js"
+    },
     "./Dialog": {
       "types": "./dist/feedback/Dialog.d.ts",
       "default": "./dist/feedback/Dialog.js"
@@ -727,6 +807,10 @@
     "./LoadingOverlay": {
       "types": "./dist/feedback/LoadingOverlay.d.ts",
       "default": "./dist/feedback/LoadingOverlay.js"
+    },
+    "./Message": {
+      "types": "./dist/feedback/Message.d.ts",
+      "default": "./dist/feedback/Message.js"
     },
     "./Modal": {
       "types": "./dist/feedback/Modal.d.ts",
