@@ -1,9 +1,11 @@
 /**
  * /rss.xml — RSS 2.0 feed of ARC UI releases, one item per version.
- * Hand-rolled (no @astrojs/rss dependency) from src/data/releases.ts.
+ * Hand-rolled (no @astrojs/rss dependency) from the `releases` content
+ * collection (src/content/releases/). Dates are npm publish dates.
  */
 import type { APIRoute } from 'astro';
-import { releases, anchorFor } from '../data/releases';
+import { getCollection } from 'astro:content';
+import { anchorFor, compareVersionsDesc } from '../lib/releases';
 
 export const prerender = true;
 
@@ -15,7 +17,11 @@ function escapeXml(s: string): string {
     .replace(/"/g, '&quot;');
 }
 
-export const GET: APIRoute = ({ site }) => {
+export const GET: APIRoute = async ({ site }) => {
+  const releases = (await getCollection('releases'))
+    .map((entry) => entry.data)
+    .sort((a, b) => compareVersionsDesc(a.version, b.version));
+
   const base = (site ?? new URL('https://arcui.dev')).href.replace(/\/$/, '');
   const items = releases
     .map((r, i) => {

@@ -5,6 +5,11 @@ import searchIndex from './integrations/search-index.mjs';
 
 export default defineConfig({
   site: 'https://arcui.dev',
+  markdown: {
+    // The releases collection is hand-written prose; keep quotes/apostrophes
+    // exactly as typed rather than SmartyPants-curling them.
+    smartypants: false,
+  },
   integrations: [
     arcDsd(),
     // After arc-dsd, deliberately. The DSD pass rewrites every page, and
