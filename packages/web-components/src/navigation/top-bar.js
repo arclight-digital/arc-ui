@@ -104,7 +104,12 @@ export class ArcTopBar extends LitElement {
          expected to be a fixed edge rather than something that comes and goes.
          Also gated on [fixed]: a bar in the flow scrolls away with the page and
          never overlays anything, so it has nothing to earn. */
-      :host([immersive][fixed]:not([scrolled])) .topbar {
+      /* :not([menu-open]) because an open mobile panel is content passing
+         underneath in every sense that matters — it is a filled, blurred sheet
+         hanging directly below a bar that is still showing the hero through
+         itself, so the panel reads as floating loose under nothing. The bar
+         earns its chrome the moment it has something to sit on top of. */
+      :host([immersive][fixed]:not([scrolled]):not([menu-open])) .topbar {
         background: transparent;
         backdrop-filter: none;
         -webkit-backdrop-filter: none;

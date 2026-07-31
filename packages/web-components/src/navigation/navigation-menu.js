@@ -295,13 +295,26 @@ export class ArcNavigationMenu extends LitElement {
         overflow-x: hidden;
         overflow-y: auto;
         overscroll-behavior: contain;
-        background: color-mix(in srgb, var(--surface-base) 92%, transparent);
+        background:
+          radial-gradient(120% 80% at 50% 0%, rgba(var(--accent-primary-rgb), 0.07), transparent 70%),
+          color-mix(in srgb, var(--surface-base) 92%, transparent);
         backdrop-filter: blur(12px) saturate(130%);
         -webkit-backdrop-filter: blur(12px) saturate(130%);
-        border-bottom: 1px solid var(--divider);
         box-shadow: var(--shadow-lg);
         z-index: var(--z-overlay);
         will-change: clip-path, opacity;
+      }
+
+      /* The lit hairline every other v3 surface ends on — the footer's horizon,
+         the tooltip's top edge — rather than a flat --divider. The panel hangs
+         from the bar, so its own bottom edge is where it meets the page. */
+      .mobile-panel::after {
+        content: '';
+        position: absolute;
+        inset-inline: 0;
+        bottom: 0;
+        height: 1px;
+        background: var(--divider-glow);
       }
 
       .mobile-panel--open {
@@ -375,8 +388,8 @@ export class ArcNavigationMenu extends LitElement {
         width: 100%;
         padding: var(--space-md) var(--space-lg);
         min-height: var(--touch-min);
-        background: rgba(var(--text-primary-rgb), 0.02);
-        border: 1px solid var(--border-subtle);
+        background: transparent;
+        border: 1px solid transparent;
         border-radius: var(--radius-md);
         color: var(--text-primary);
         font-family: var(--font-label);
@@ -405,18 +418,21 @@ export class ArcNavigationMenu extends LitElement {
         transition-duration: 0ms;
       }
 
+      /* One row is marked, and it is marked the way v3 marks state everywhere
+         else: tint, glow, accent text. Every row used to carry its own fill and
+         border, which ranks none of them — the same thing the API tables were
+         doing before they stopped. The color goes through the theme's solved
+         text mix, so the label holds AA on the tint in both themes. */
       .mobile-trigger--active {
-        color: var(--interactive);
-        background: rgba(var(--interactive-rgb), 0.06);
-        border-color: rgba(var(--interactive-rgb), 0.3);
-        box-shadow: inset 0 0 8px rgba(var(--interactive-rgb), 0.06),
-          0 0 8px rgba(var(--interactive-rgb), 0.08);
+        color: color-mix(in srgb, var(--interactive), var(--text-primary) var(--accent-text-mix, 0%));
+        background: rgba(var(--interactive-rgb), 0.08);
+        border-color: rgba(var(--interactive-rgb), 0.28);
+        box-shadow: var(--glow-sm);
       }
 
       .mobile-trigger--active:hover {
-        border-color: rgba(var(--interactive-rgb), 0.5);
-        box-shadow: inset 0 0 8px rgba(var(--interactive-rgb), 0.08),
-          0 0 12px rgba(var(--interactive-rgb), 0.12);
+        border-color: rgba(var(--interactive-rgb), 0.45);
+        box-shadow: var(--glow-md);
       }
 
       .mobile-trigger--muted {
