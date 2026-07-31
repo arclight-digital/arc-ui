@@ -24,4 +24,11 @@ export class CommandPalette {
   get placeholder(): string {
     return this._el.placeholder;
   }
+
+  @Input() set maxResults(value: number) {
+    this._el.maxResults = value;
+  }
+  get maxResults(): number {
+    return this._el.maxResults;
+  }
 }

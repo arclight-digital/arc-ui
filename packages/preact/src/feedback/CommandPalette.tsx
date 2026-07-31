@@ -7,6 +7,7 @@ import '@arclux/arc-ui/command-palette';
 export interface CommandPaletteProps {
   open?: boolean;
   placeholder?: string;
+  maxResults?: number;
   onArcSelect?: (e: CustomEvent) => void;
   onArcClose?: (e: CustomEvent) => void;
   children?: preact.ComponentChildren;
@@ -37,7 +38,7 @@ export interface CommandPaletteProps {
   [key: `on${string}`]: unknown;
 }
 
-export const CommandPalette: FunctionComponent<CommandPaletteProps> = ({ open, placeholder, onArcSelect, onArcClose, children, ...rest }) => {
+export const CommandPalette: FunctionComponent<CommandPaletteProps> = ({ open, placeholder, maxResults, onArcSelect, onArcClose, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -55,5 +56,5 @@ export const CommandPalette: FunctionComponent<CommandPaletteProps> = ({ open, p
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcSelect, onArcClose]);
-  return h('arc-command-palette', { ref, open, placeholder, ...rest }, children);
+  return h('arc-command-palette', { ref, open, placeholder, maxResults, ...rest }, children);
 };

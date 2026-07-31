@@ -1,11 +1,15 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import arcDsd from './integrations/arc-dsd.mjs';
+import searchIndex from './integrations/search-index.mjs';
 
 export default defineConfig({
   site: 'https://arcui.dev',
   integrations: [
     arcDsd(),
+    // After arc-dsd, deliberately. The DSD pass rewrites every page, and
+    // indexing the pre-rewrite HTML would index markup that is not what ships.
+    searchIndex(),
     sitemap({
       // /docs/ is a redirect stub — keep it out of the index. /dev/ holds
       // internal eyeballing pages, which are noindex and not public docs.

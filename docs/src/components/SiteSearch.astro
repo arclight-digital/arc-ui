@@ -2,9 +2,20 @@
 /**
  * SiteSearch — ⌘K / Ctrl+K site-wide search built on arc-command-palette.
  *
- * All ~175 items (guides + components) are rendered statically at build time;
- * the palette's built-in label filter does the matching. No index, no fetch.
- * See docs/specs/command-palette-search.md for the full design.
+ * Two tiers, on purpose:
+ *
+ *   Titles — all ~175 guides and components, rendered statically at build time.
+ *     They are the dominant query and they cost one HTML block that compresses
+ *     to a few KB and caches identically on every page. No fetch, so ⌘K is
+ *     usable the instant the page is interactive.
+ *   Content — every `<section>` of every page, fetched once on first open from
+ *     /search-index.json (built by integrations/search-index.mjs). Inlining it
+ *     would put the whole site's prose into every page; fetching it eagerly
+ *     would spend that on readers who never search.
+ *
+ * The palette matches fuzzily and ranks, and it searches an item's
+ * `description` as well as its label — which is what makes the content tier
+ * work at all. See shared/fuzzy-match.js.
  */
 import { components } from '../data/components/index';
 
@@ -44,7 +55,7 @@ const cap = (s: string) => s[0].toUpperCase() + s.slice(1);
 <arc-command-palette id="site-search" placeholder="Search components and guides…">
   <arc-command-group heading="Guides">
     {guides.map((g) => (
-      <arc-command-item icon="book-open" shortcut="Guide" data-href={g.href}>{g.title}</arc-command-item>
+      <arc-command-item icon="book-open" shortcut="Guide" value={g.href}>{g.title}</arc-command-item>
     ))}
   </arc-command-group>
   {tierOrder.map((tier) => (
@@ -54,11 +65,15 @@ const cap = (s: string) => s[0].toUpperCase() + s.slice(1);
           icon={tierIcons[c.tier]}
           shortcut={cap(c.tier)}
           keywords={[c.tag, ...(c.searchKeywords ?? [])].join(' ')}
-          data-href={`/docs/components/${c.slug}`}
+          value={`/docs/components/${c.slug}`}
         >{c.name}</arc-command-item>
       ))}
     </arc-command-group>
   ))}
+  {/* Filled on first open from /search-index.json. Present in the markup so
+      the palette has a group to append into and the heading order is fixed
+      rather than depending on when the fetch lands. */}
+  <arc-command-group heading="On this site" id="site-search-content"></arc-command-group>
 </arc-command-palette>
 
 <script is:inline>
@@ -70,42 +85,76 @@ const cap = (s: string) => s[0].toUpperCase() + s.slice(1);
 
     var getPalette = function () { return document.getElementById('site-search'); };
 
+    // The content tier, fetched once per session on first open. The palette
+    // watches its own light DOM, so appending items is all that is needed —
+    // there is nothing to notify.
+    var indexState = 'idle';
+    function loadContentIndex() {
+      if (indexState !== 'idle') return;
+      indexState = 'loading';
+
+      fetch('/search-index.json')
+        .then(function (r) { return r.ok ? r.json() : []; })
+        .then(function (records) {
+          var group = document.getElementById('site-search-content');
+          if (!group || !records.length) { indexState = 'done'; return; }
+
+          // One fragment, one insertion: appending 1,400 elements one at a time
+          // would run the palette's MutationObserver on every one of them.
+          var frag = document.createDocumentFragment();
+          records.forEach(function (r) {
+            var item = document.createElement('arc-command-item');
+            item.setAttribute('icon', 'text-align-left');
+            item.setAttribute('shortcut', r.page || 'Page');
+            item.setAttribute('value', r.href);
+            // The prose is searched and shown as the second line; the page name
+            // goes in keywords so "theming contrast" finds a section of the
+            // theming guide whose own heading never says "theming".
+            if (r.text) item.setAttribute('description', r.text);
+            item.setAttribute('keywords', ((r.page || '') + ' ' + (r.text || '')).slice(0, 400));
+            item.textContent = r.title;
+            frag.appendChild(item);
+          });
+          group.appendChild(frag);
+          indexState = 'done';
+        })
+        .catch(function () {
+          // Titles still work. A search that silently loses its content tier is
+          // better than one that throws on open.
+          indexState = 'idle';
+        });
+    }
+
+    function openPalette(p, toggle) {
+      if (!p) return;
+      loadContentIndex();
+      p.open = toggle ? !p.open : true;
+    }
+
     document.addEventListener('keydown', function (e) {
       if ((e.metaKey || e.ctrlKey) && !e.shiftKey && !e.altKey && (e.key === 'k' || e.key === 'K')) {
         e.preventDefault();
-        var p = getPalette();
-        if (p) p.open = !p.open;
+        openPalette(getPalette(), true);
       }
     });
 
     document.addEventListener('click', function (e) {
       var t = e.target && e.target.closest && e.target.closest('[data-site-search-trigger]');
-      if (t) {
-        var p = getPalette();
-        if (p) p.open = true;
-      }
+      if (t) openPalette(getPalette(), false);
     });
 
-    // arc-select detail carries only {label, shortcut} — resolve it back to
-    // the matching item element to find the destination href.
+    // detail.value is the item's href. This used to search back through the DOM
+    // for an item whose label and shortcut matched the ones reported, because
+    // the palette carried no value — which picked the wrong item whenever two
+    // shared a label, and content sections share headings constantly ("Usage"
+    // appears on most component pages).
     document.addEventListener('arc-select', function (e) {
       var p = getPalette();
       if (!p || e.target !== p) return;
-      var d = e.detail && e.detail.item;
-      if (!d) return;
-      var items = p.querySelectorAll('arc-command-item');
-      for (var i = 0; i < items.length; i++) {
-        if (
-          items[i].textContent.trim() === d.label &&
-          (items[i].getAttribute('shortcut') || '') === (d.shortcut || '')
-        ) {
-          if (items[i].dataset.href) {
-            p.open = false;
-            window.location.assign(items[i].dataset.href);
-          }
-          return;
-        }
-      }
+      var href = e.detail && e.detail.value;
+      if (!href) return;
+      p.open = false;
+      window.location.assign(href);
     });
 
     // The key handler is OS-agnostic (metaKey || ctrlKey); only the visible

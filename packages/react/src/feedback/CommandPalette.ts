@@ -7,6 +7,7 @@ import { ArcCommandPalette } from '@arclux/arc-ui/command-palette';
 export interface CommandPaletteProps {
   open?: boolean;
   placeholder?: string;
+  maxResults?: number;
   className?: string;
   children?: React.ReactNode;
   onArcSelect?: (e: CustomEvent) => void;

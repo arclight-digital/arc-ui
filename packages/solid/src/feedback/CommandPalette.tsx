@@ -14,6 +14,7 @@ declare module 'solid-js' {
 export interface CommandPaletteProps {
   open?: boolean;
   placeholder?: string;
+  maxResults?: number;
   onArcSelect?: (e: CustomEvent) => void;
   onArcClose?: (e: CustomEvent) => void;
   children?: JSX.Element;
@@ -45,9 +46,9 @@ export interface CommandPaletteProps {
 }
 
 export const CommandPalette: Component<CommandPaletteProps> = (props) => {
-  const [local, rest] = splitProps(props, ['open', 'placeholder', 'onArcSelect', 'onArcClose', 'children']);
+  const [local, rest] = splitProps(props, ['open', 'placeholder', 'maxResults', 'onArcSelect', 'onArcClose', 'children']);
   return (
-    <arc-command-palette open={local.open} placeholder={local.placeholder} on:arc-select={local.onArcSelect} on:arc-close={local.onArcClose} {...rest}>
+    <arc-command-palette open={local.open} placeholder={local.placeholder} prop:maxResults={local.maxResults} on:arc-select={local.onArcSelect} on:arc-close={local.onArcClose} {...rest}>
       {local.children}
     </arc-command-palette>
   );

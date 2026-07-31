@@ -826,7 +826,8 @@ export default {
  "arc-command-palette": {
   "attrs": [
    "open",
-   "placeholder"
+   "placeholder",
+   "max-results"
   ],
   "slug": "command-palette"
  },

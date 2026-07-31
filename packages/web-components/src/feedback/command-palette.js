@@ -2,7 +2,7 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { MenuKeyboardController } from '../shared/menu-keyboard.js';
 import { OverlayMixin } from '../shared/overlay-mixin.js';
-import { matchItem, highlightRuns } from '../shared/fuzzy-match.js';
+import { matchItem, highlightRuns, snippetAround } from '../shared/fuzzy-match.js';
 import '../content/icon.js';
 
 /**
@@ -22,6 +22,7 @@ import '../content/icon.js';
  * @requires arc-command-group
  * @prop {boolean} open - Controls whether the palette is visible. When set to true, the dialog animates in, the search input auto-focuses, and body scroll is locked. Set to false to close.
  * @prop {string} placeholder - Placeholder text displayed in the search input when the query is empty.
+ * @prop {number} maxResults - How many ranked results to render. Truncation happens after ranking, so what survives is the best of the set. Raise it for a short command list; the default suits a large one.
  * @fires {CustomEvent<{ value: string, item: { label: string, shortcut: string, value: string } }>} arc-select - Fired when a command item is selected. `detail.value` is the item's `value`, falling back to its label.
  * @fires {CustomEvent<void>} arc-close - Fired when the palette closes
  * @slot - Default content.
@@ -41,6 +42,7 @@ export class ArcCommandPalette extends OverlayMixin(LitElement) {
   static properties = {
     open:          { type: Boolean, reflect: true },
     placeholder:   { type: String },
+    maxResults:    { type: Number, attribute: 'max-results' },
     _query:        { state: true },
     _items:        { state: true },
   };
@@ -255,6 +257,7 @@ export class ArcCommandPalette extends OverlayMixin(LitElement) {
     super();
     this.open = false;
     this.placeholder = 'Type a command...';
+    this.maxResults = 50;
     this._query = '';
     this._items = [];
     this._menuKb = new MenuKeyboardController(this, {
@@ -264,14 +267,43 @@ export class ArcCommandPalette extends OverlayMixin(LitElement) {
     });
   }
 
-  _onSlotChange(e) {
-    this._items = e.target.assignedElements({ flatten: true }).flatMap(el => {
-      if (el.tagName === 'ARC-COMMAND-ITEM') return [el];
-      if (el.tagName === 'ARC-COMMAND-GROUP') {
-        return [...el.querySelectorAll('arc-command-item')];
-      }
-      return [];
-    });
+  connectedCallback() {
+    super.connectedCallback();
+    // slotchange fires when the palette's own children change, and not when a
+    // child is added *inside* an arc-command-group — the slot assignment is
+    // unchanged, so the event never comes and the item list goes stale. That is
+    // the shape any asynchronous source has: results fetched on first open, a
+    // remote query, a content index. Observing the subtree covers both, and the
+    // recompute is a querySelectorAll over the light DOM, not a render.
+    this._itemObserver = new MutationObserver(() => this._collectItems());
+    this._itemObserver.observe(this, { childList: true, subtree: true });
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this._itemObserver?.disconnect();
+    this._itemObserver = null;
+  }
+
+  _onSlotChange() {
+    this._collectItems();
+  }
+
+  /**
+   * Flatten the slotted tree into the ordered item list.
+   *
+   * Reads from `this` rather than from the slot's assigned elements so it works
+   * whether it was triggered by slotchange or by the observer — assignedElements
+   * needs the event's slot, and the observer has no event.
+   */
+  _collectItems() {
+    const next = [...this.querySelectorAll('arc-command-item')];
+    // The observer fires for any light-DOM mutation, including ones that touch
+    // no items at all; re-assigning an identical list would request an update
+    // on every keystroke a consumer makes elsewhere in the subtree.
+    const same =
+      next.length === this._items.length && next.every((el, i) => el === this._items[i]);
+    if (!same) this._items = next;
   }
 
   /**
@@ -287,16 +319,40 @@ export class ArcCommandPalette extends OverlayMixin(LitElement) {
    * group and moving the strongest group to the top keeps one run per heading
    * while still putting the best match first.
    */
+  /**
+   * Memoised on the query and the item list.
+   *
+   * This is a getter that scans every item, and it was being read three or four
+   * times per keystroke — once by render, and again through `_filteredItems`
+   * every time the keyboard controller asked for its item count. At a hundred
+   * items nobody notices; against a site-search index of fourteen hundred it is
+   * four full scans per character typed, which is what made the first two
+   * characters of a query feel like a stall.
+   */
   get _matches() {
+    if (
+      this._matchCache &&
+      this._matchCache.query === this._query &&
+      this._matchCache.items === this._items
+    ) {
+      return this._matchCache.result;
+    }
+    const result = this._computeMatches();
+    this._matchCache = { query: this._query, items: this._items, result };
+    return result;
+  }
+
+  _computeMatches() {
     if (!this._query.trim()) {
-      return this._items.map((item) => ({ item, indices: [] }));
+      return this._items.map((item) => ({ item, label: [], description: [] }));
     }
 
     const scored = [];
     for (const item of this._items) {
       const hit = matchItem(this._query, {
-        primary: item.label || '',
-        secondary: [item.keywords || '', item.description || ''],
+        label: item.label || '',
+        keywords: item.keywords || '',
+        description: item.description || '',
       });
       if (hit) scored.push({ item, ...hit });
     }
@@ -312,7 +368,12 @@ export class ArcCommandPalette extends OverlayMixin(LitElement) {
     for (const entries of ordered) entries.sort((a, b) => b.score - a.score);
     ordered.sort((a, b) => b[0].score - a[0].score);
 
-    return ordered.flat();
+    // Truncated after ranking, so what survives is the best of the set rather
+    // than the first N found. A broad query against a large list matches
+    // hundreds of items, and rendering hundreds of buttons on every keystroke is
+    // what makes typing feel like it is fighting back. Nobody scrolls to result
+    // two hundred; the fix for a query with too many matches is more query.
+    return ordered.flat().slice(0, this.maxResults);
   }
 
   /** Kept as the list the keyboard controller and selection index against. */
@@ -327,26 +388,42 @@ export class ArcCommandPalette extends OverlayMixin(LitElement) {
    */
   _groupRuns(matches) {
     const runs = [];
-    matches.forEach(({ item, indices }, index) => {
+    matches.forEach(({ item, label, description }, index) => {
       const group = item.closest('arc-command-group');
       const heading = (group && group.heading) || '';
       const last = runs[runs.length - 1];
       if (last && last.heading === heading) {
-        last.entries.push({ item, index, indices });
+        last.entries.push({ item, index, label, description });
       } else {
-        runs.push({ heading, entries: [{ item, index, indices }] });
+        runs.push({ heading, entries: [{ item, index, label, description }] });
       }
     });
     return runs;
   }
 
-  _renderItem(item, i, indices = []) {
-    // The label is split into matched and unmatched runs rather than being
+  /**
+   * @param {ArcCommandItem} item
+   * @param {number} i flat index, for focus and aria-activedescendant
+   * @param {{label?: number[], description?: number[]}} hit matched positions
+   */
+  _renderItem(item, i, hit = {}) {
+    // Both lines are split into matched and unmatched runs rather than being
     // interpolated as markup: a command item's text is whatever the consumer
     // slotted, and building an HTML string around it would make an item titled
     // `<script>` an injection point on every keystroke.
     const label = item.label || '';
-    const runs = highlightRuns(label, indices);
+    const runs = highlightRuns(label, hit.label || []);
+
+    // The description is windowed around its first match before rendering. A
+    // section snippet runs to a couple of hundred characters and the hit is
+    // usually not in the first forty, so showing the head of the string shows a
+    // result whose relevance is invisible — the reader sees a row that matched
+    // and no indication of where.
+    const description = item.description || '';
+    const snippet = description
+      ? snippetAround(description, hit.description || [])
+      : null;
+    const descriptionRuns = snippet ? highlightRuns(snippet.text, snippet.indices) : null;
 
     return html`
       <button
@@ -368,8 +445,12 @@ export class ArcCommandPalette extends OverlayMixin(LitElement) {
                 : run.text
             )}
           </span>
-          ${item.description
-            ? html`<span class="palette__item-description" part="description">${item.description}</span>`
+          ${descriptionRuns
+            ? html`<span class="palette__item-description" part="description">${descriptionRuns.map((run) =>
+                run.matched
+                  ? html`<mark class="palette__item-match" part="match">${run.text}</mark>`
+                  : run.text
+              )}</span>`
             : ''}
         </span>
         ${item.shortcut ? html`<span class="palette__item-shortcut">${item.shortcut}</span>` : ''}
@@ -478,9 +559,9 @@ export class ArcCommandPalette extends OverlayMixin(LitElement) {
             ${run.heading ? html`
               <div role="group" aria-label=${run.heading} class="palette__group">
                 <div class="palette__group-heading" aria-hidden="true" part="group-heading">${run.heading}</div>
-                ${run.entries.map(entry => this._renderItem(entry.item, entry.index, entry.indices))}
+                ${run.entries.map(entry => this._renderItem(entry.item, entry.index, entry))}
               </div>
-            ` : run.entries.map(entry => this._renderItem(entry.item, entry.index, entry.indices))}
+            ` : run.entries.map(entry => this._renderItem(entry.item, entry.index, entry))}
           `)}
         </div>
         <div class="palette__footer" part="footer">

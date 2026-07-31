@@ -6,6 +6,7 @@
   interface Props {
     open?: boolean;
     placeholder?: string;
+    maxResults?: number;
     children?: Snippet;
     class?: string;
     id?: string;
@@ -34,9 +35,16 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { open = false, placeholder = 'Type a command...', children, ...rest }: Props = $props();
+  let { open = false, placeholder = 'Type a command...', maxResults = 50, children, ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (maxResults !== undefined) el.maxResults = maxResults;
+  });
 </script>
 
-<arc-command-palette {open} {placeholder} {...rest}>
+<arc-command-palette {open} {placeholder} bind:this={__el} {...rest}>
   {@render children?.()}
 </arc-command-palette>

@@ -576,6 +576,8 @@ export declare class ArcCommandPalette extends LitElement {
   open: boolean;
   /** Placeholder text displayed in the search input when the query is empty. @default 'Type a command...' */
   placeholder: string;
+  /** How many ranked results to render. Truncation happens after ranking, so what survives is the best of the set. Raise it for a short command list; the default suits a large one. @default 50 */
+  maxResults: number;
 }
 
 /**

@@ -7,9 +7,11 @@ defineOptions({ name: 'CommandPalette' });
 const props = withDefaults(defineProps<{
   open?: boolean;
   placeholder?: string;
+  maxResults?: number;
 }>(), {
   open: false,
   placeholder: 'Type a command...',
+  maxResults: 50,
 });
 
 const emit = defineEmits<{
@@ -22,6 +24,7 @@ const emit = defineEmits<{
   <arc-command-palette
     :open="props.open"
     :placeholder="props.placeholder"
+    :maxResults="props.maxResults"
     @arc-select="(payload: CustomEvent) => emit('arc-select', payload)"
     @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"
   >

@@ -7471,6 +7471,17 @@
               "default": "'Type a command...'",
               "description": "Placeholder text displayed in the search input when the query is empty.",
               "attribute": "placeholder"
+            },
+            {
+              "kind": "field",
+              "name": "maxResults",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "default": "50",
+              "description": "How many ranked results to render. Truncation happens after ranking, so what survives is the best of the set. Raise it for a short command list; the default suits a large one.",
+              "attribute": "max-results"
             }
           ],
           "events": [
@@ -7507,6 +7518,15 @@
               "default": "'Type a command...'",
               "description": "Placeholder text displayed in the search input when the query is empty.",
               "fieldName": "placeholder"
+            },
+            {
+              "name": "max-results",
+              "type": {
+                "text": "number"
+              },
+              "default": "50",
+              "description": "How many ranked results to render. Truncation happens after ranking, so what survives is the best of the set. Raise it for a short command list; the default suits a large one.",
+              "fieldName": "maxResults"
             }
           ],
           "mixins": [
@@ -27622,9 +27642,13 @@
             },
             {
               "name": "text"
+            },
+            {
+              "name": "{ prose = false }",
+              "default": "{}"
             }
           ],
-          "description": "Score one term against one string.",
+          "description": "Score one term against one string.\n\n`prose` turns off subsequence matching, and it matters more than it sounds.\nSubsequence is the right tool for a name — \"cmdpal\" should find \"Command\nPalette\" — and actively wrong for a paragraph, because in 180 characters of\nEnglish almost any four letters appear in order somewhere. Left on, the query\n\"override a token\" matched 375 of 1,377 indexed sections, ranked prop tables\nabove the theming guide, and highlighted a scatter of single letters that\nread as a rendering bug. Long text has to be matched on contiguous runs.",
           "return": {
             "type": {
               "text": "{score: number, indices: number[]}|null"
@@ -27644,14 +27668,36 @@
             {
               "name": "fields",
               "type": {
-                "text": "{primary: string, secondary?: string[]}"
+                "text": "{label?: string, keywords?: string, description?: string}"
               }
             }
           ],
-          "description": "Score a query against an item's searchable fields.\n\nFields are weighted, and only the best-scoring field decides the tier — an\nitem whose *label* matches should beat one where the same text turned up in a\ndescription, no matter how well. Weighting by multiplication rather than\naddition keeps that true across tiers.\n\n`indices` come back only for the primary field, because that is the only one\nrendered; highlighting a description the palette never shows would be work\nwith no output.",
+          "description": "Score a query against an item's searchable fields.\n\nThe label is weighted above the rest: an item whose *label* matches should\nbeat one where the same text turned up in prose, however well it scored\nthere. Weighting by multiplication rather than addition keeps that true\nacross tiers rather than only within one.\n\nPositions come back per rendered field, not as one list. Both the label and\nthe description are shown, and a result has to be able to say which of them\nthe query actually hit — a content result that lights up nothing has the same\nproblem as no highlight at all: the reader cannot see why it is in the list.\n`keywords` gets no positions because it is never displayed.",
           "return": {
             "type": {
-              "text": "{score: number, indices: number[]}|null"
+              "text": "{score: number, label: number[], description: number[]}|null"
+            }
+          }
+        },
+        {
+          "kind": "function",
+          "name": "snippetAround",
+          "parameters": [
+            {
+              "name": "text"
+            },
+            {
+              "name": "indices"
+            },
+            {
+              "name": "width",
+              "default": "120"
+            }
+          ],
+          "description": "Window a long string down to the part worth showing, around its first match.\n\nA section snippet is a couple of hundred characters and the match is often\nnot in the first forty, so showing the head of the string shows a result\nwhose relevance is invisible. This centres the window on the first hit and\nre-bases the positions onto the returned text, so highlighting still lines up.\n\nCuts on word boundaries where there is one nearby — a snippet starting\nmid-word reads as damaged rather than as trimmed.",
+          "return": {
+            "type": {
+              "text": "{text: string, indices: number[]}"
             }
           }
         },
@@ -27683,6 +27729,14 @@
           "name": "matchItem",
           "declaration": {
             "name": "matchItem",
+            "module": "src/shared/fuzzy-match.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "snippetAround",
+          "declaration": {
+            "name": "snippetAround",
             "module": "src/shared/fuzzy-match.js"
           }
         },

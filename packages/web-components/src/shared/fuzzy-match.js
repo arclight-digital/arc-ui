@@ -57,11 +57,19 @@ const SCORE = {
 /**
  * Score one term against one string.
  *
+ * `prose` turns off subsequence matching, and it matters more than it sounds.
+ * Subsequence is the right tool for a name — "cmdpal" should find "Command
+ * Palette" — and actively wrong for a paragraph, because in 180 characters of
+ * English almost any four letters appear in order somewhere. Left on, the query
+ * "override a token" matched 375 of 1,377 indexed sections, ranked prop tables
+ * above the theming guide, and highlighted a scatter of single letters that
+ * read as a rendering bug. Long text has to be matched on contiguous runs.
+ *
  * @returns {{score: number, indices: number[]}|null} null when the term does
  *   not appear at all. Callers treat null as "this item is out", so a
  *   multi-term query rejects an item as soon as one term misses.
  */
-export function matchTerm(term, text) {
+export function matchTerm(term, text, { prose = false } = {}) {
   if (!term) return { score: 0, indices: [] };
   if (!text) return null;
 
@@ -89,6 +97,9 @@ export function matchTerm(term, text) {
     return { score: tier + brevity - at, indices: span(at, t.length) };
   }
 
+  // In prose, a contiguous run is the only kind of match worth having.
+  if (prose) return null;
+
   return subsequence(t, text, hay, brevity);
 }
 
@@ -108,11 +119,12 @@ function subsequence(t, text, hay, brevity) {
   let score = SCORE.subsequence + brevity;
   let ti = 0;
   let lastMatch = -1;
+  let boundaryHits = 0;
 
   for (let i = 0; i < hay.length && ti < t.length; i++) {
     if (hay[i] !== t[ti]) continue;
 
-    if (isBoundary(text, i)) score += 90;
+    if (isBoundary(text, i)) { score += 90; boundaryHits++; }
     // Consecutive characters read as a real fragment rather than as scattered
     // letters that happen to be in order.
     if (i === lastMatch + 1) score += 40;
@@ -125,6 +137,23 @@ function subsequence(t, text, hay, brevity) {
   }
 
   if (ti < t.length) return null;
+
+  // Reject a match that is neither compact nor an acronym.
+  //
+  // A real abbreviation is one of two shapes. Either it is dense — "cmdpal"
+  // covers eleven characters of "Command Palette" — or every character of it
+  // begins a word, which is what an acronym is: "cp" spans the whole of
+  // "Command Palette" and is still exactly what someone means by it.
+  //
+  // A coincidence is neither. "rtl" is a subsequence of "Avoiding the
+  // Registration Flash" only because those three letters happen to fall in that
+  // order across thirty characters, two of them mid-word. Without this rule
+  // every three-letter query returned dozens of those and ranked them above the
+  // page that actually discusses the subject.
+  const spanned = indices[indices.length - 1] - indices[0] + 1;
+  const isAcronym = boundaryHits === t.length;
+  if (!isAcronym && spanned > t.length * 3) return null;
+
   return { score, indices };
 }
 
@@ -134,52 +163,112 @@ const span = (start, length) =>
 /**
  * Score a query against an item's searchable fields.
  *
- * Fields are weighted, and only the best-scoring field decides the tier — an
- * item whose *label* matches should beat one where the same text turned up in a
- * description, no matter how well. Weighting by multiplication rather than
- * addition keeps that true across tiers.
+ * The label is weighted above the rest: an item whose *label* matches should
+ * beat one where the same text turned up in prose, however well it scored
+ * there. Weighting by multiplication rather than addition keeps that true
+ * across tiers rather than only within one.
  *
- * `indices` come back only for the primary field, because that is the only one
- * rendered; highlighting a description the palette never shows would be work
- * with no output.
+ * Positions come back per rendered field, not as one list. Both the label and
+ * the description are shown, and a result has to be able to say which of them
+ * the query actually hit — a content result that lights up nothing has the same
+ * problem as no highlight at all: the reader cannot see why it is in the list.
+ * `keywords` gets no positions because it is never displayed.
  *
  * @param {string} query
- * @param {{primary: string, secondary?: string[]}} fields
- * @returns {{score: number, indices: number[]}|null}
+ * @param {{label?: string, keywords?: string, description?: string}} fields
+ * @returns {{score: number, label: number[], description: number[]}|null}
  */
 export function matchItem(query, fields) {
-  const terms = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
-  if (terms.length === 0) return { score: 0, indices: [] };
+  let terms = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
+  if (terms.length === 0) return { score: 0, label: [], description: [] };
 
-  const primary = fields.primary || '';
-  const secondary = (fields.secondary || []).filter(Boolean);
-
-  let total = 0;
-  let indices = [];
-
-  for (const term of terms) {
-    const onPrimary = matchTerm(term, primary);
-    let best = onPrimary ? { ...onPrimary, score: onPrimary.score * 4 } : null;
-
-    for (const field of secondary) {
-      const hit = matchTerm(term, field);
-      if (hit && (!best || hit.score > best.score)) {
-        // Secondary hits contribute no indices — they are not rendered.
-        best = { score: hit.score, indices: [] };
-      }
-    }
-
-    // Every term has to land somewhere.
-    if (!best) return null;
-
-    total += best.score;
-    if (onPrimary && best.indices.length) indices.push(...onPrimary.indices);
+  // Drop single-character words from a multi-word query. Every term has to
+  // match, so "override a token" would otherwise require the letter "a" to
+  // appear alongside the other two — a real constraint that carries no
+  // intent. Only when there are other terms: a query that *is* "a" still
+  // means it.
+  if (terms.length > 1) {
+    const meaningful = terms.filter((t) => t.length > 1);
+    if (meaningful.length > 0) terms = meaningful;
   }
 
-  // Terms can overlap on the same characters; de-duplicate so highlighting
-  // does not emit the same index twice.
-  indices = [...new Set(indices)].sort((a, b) => a - b);
-  return { score: total, indices };
+  const label = fields.label || '';
+  const keywords = fields.keywords || '';
+  const description = fields.description || '';
+
+  let total = 0;
+  const labelHits = [];
+  const descriptionHits = [];
+
+  for (const term of terms) {
+    const onLabel = matchTerm(term, label);
+    const onKeywords = keywords ? matchTerm(term, keywords) : null;
+    // Prose mode: a description is a paragraph, not a name. See matchTerm.
+    const onDescription = description ? matchTerm(term, description, { prose: true }) : null;
+
+    const candidates = [
+      onLabel && { score: onLabel.score * 4, field: 'label', hit: onLabel },
+      onKeywords && { score: onKeywords.score, field: 'keywords', hit: onKeywords },
+      onDescription && { score: onDescription.score, field: 'description', hit: onDescription },
+    ].filter(Boolean);
+
+    // Every term has to land somewhere.
+    if (candidates.length === 0) return null;
+
+    const best = candidates.reduce((a, b) => (b.score > a.score ? b : a));
+    total += best.score;
+
+    // Highlight wherever the term was found in a *rendered* field, not only in
+    // the field that won the score. A term matching both the title and the body
+    // should light up in both — that is the reader's answer to "why this one".
+    if (onLabel) labelHits.push(...onLabel.indices);
+    if (onDescription) descriptionHits.push(...onDescription.indices);
+  }
+
+  const dedupe = (xs) => [...new Set(xs)].sort((a, b) => a - b);
+  return { score: total, label: dedupe(labelHits), description: dedupe(descriptionHits) };
+}
+
+/**
+ * Window a long string down to the part worth showing, around its first match.
+ *
+ * A section snippet is a couple of hundred characters and the match is often
+ * not in the first forty, so showing the head of the string shows a result
+ * whose relevance is invisible. This centres the window on the first hit and
+ * re-bases the positions onto the returned text, so highlighting still lines up.
+ *
+ * Cuts on word boundaries where there is one nearby — a snippet starting
+ * mid-word reads as damaged rather than as trimmed.
+ *
+ * @returns {{text: string, indices: number[]}}
+ */
+export function snippetAround(text, indices, width = 120) {
+  if (!text) return { text: '', indices: [] };
+  if (text.length <= width) return { text, indices };
+
+  const first = indices.length ? indices[0] : 0;
+  // Bias the window left of the match so there is a little context before it.
+  let start = Math.max(0, first - Math.floor(width / 3));
+  if (start > 0) {
+    const space = text.indexOf(' ', start);
+    if (space !== -1 && space - start < 15) start = space + 1;
+  }
+  let end = Math.min(text.length, start + width);
+  if (end < text.length) {
+    const space = text.lastIndexOf(' ', end);
+    if (space > start && end - space < 15) end = space;
+  }
+
+  const lead = start > 0 ? '…' : '';
+  const tail = end < text.length ? '…' : '';
+  const offset = lead.length - start;
+
+  return {
+    text: lead + text.slice(start, end) + tail,
+    indices: indices
+      .filter((i) => i >= start && i < end)
+      .map((i) => i + offset),
+  };
 }
 
 /**

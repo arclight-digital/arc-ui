@@ -248,6 +248,7 @@ declare module 'react' {
       'arc-command-palette': ArcBaseAttributes & {
         open?: boolean;
         placeholder?: string;
+        'max-results'?: number | string;
       };
       'arc-comparison': ArcBaseAttributes & {
         features?: string;

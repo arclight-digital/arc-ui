@@ -8,7 +8,7 @@
  */
 import { expect } from '@esm-bundle/chai';
 import { mount, cleanup, tick } from './helpers.js';
-import { matchItem, matchTerm, highlightRuns } from '../src/shared/fuzzy-match.js';
+import { matchItem, matchTerm, highlightRuns, snippetAround } from '../src/shared/fuzzy-match.js';
 
 import '../src/feedback/command-palette.register.js';
 import '../src/feedback/command-item.register.js';
@@ -16,7 +16,7 @@ import '../src/feedback/command-group.register.js';
 
 /** Score `query` against `text`, or null when it does not match at all. */
 const score = (query, text) => {
-  const hit = matchItem(query, { primary: text });
+  const hit = matchItem(query, { label: text });
   return hit ? hit.score : null;
 };
 
@@ -64,20 +64,40 @@ describe('fuzzy matching', () => {
   });
 
   it('lets a keyword match without letting it outrank a label match', () => {
-    const onLabel = matchItem('dialog', { primary: 'Dialog' });
-    const onKeyword = matchItem('dialog', { primary: 'Modal', secondary: ['dialog popup'] });
+    const onLabel = matchItem('dialog', { label: 'Dialog' });
+    const onKeyword = matchItem('dialog', { label: 'Modal', keywords: 'dialog popup' });
     expect(onKeyword, 'keywords should still match').to.not.equal(null);
     expect(onLabel.score).to.be.greaterThan(onKeyword.score);
   });
 
-  it('reports match positions against the label only', () => {
-    const hit = matchItem('mod', { primary: 'Modal', secondary: ['dialog'] });
-    expect(hit.indices).to.deep.equal([0, 1, 2]);
+  it('reports match positions per rendered field', () => {
+    const hit = matchItem('mod', { label: 'Modal', keywords: 'dialog' });
+    expect(hit.label).to.deep.equal([0, 1, 2]);
+    expect(hit.description).to.deep.equal([]);
 
-    // A secondary-only match has nothing to highlight in the label.
-    const viaKeyword = matchItem('popup', { primary: 'Modal', secondary: ['popup'] });
+    // keywords are never displayed, so a keyword-only match lights up nothing.
+    const viaKeyword = matchItem('popup', { label: 'Modal', keywords: 'popup' });
     expect(viaKeyword).to.not.equal(null);
-    expect(viaKeyword.indices).to.deep.equal([]);
+    expect(viaKeyword.label).to.deep.equal([]);
+    expect(viaKeyword.description).to.deep.equal([]);
+  });
+
+  it('lights up the description when that is where the query landed', () => {
+    const hit = matchItem('token', {
+      label: 'Theming',
+      description: 'Override a token to restyle every component at once.',
+    });
+    expect(hit.label).to.deep.equal([]);
+    expect(hit.description.length).to.be.greaterThan(0);
+  });
+
+  it('lights up both lines when a term is in both', () => {
+    const hit = matchItem('theme', {
+      label: 'Theme Synthesizer',
+      description: 'Build a theme from two colours.',
+    });
+    expect(hit.label.length).to.be.greaterThan(0);
+    expect(hit.description.length).to.be.greaterThan(0);
   });
 
   it('is case-insensitive but reports indices into the original text', () => {
@@ -192,5 +212,97 @@ describe('arc-command-palette search', () => {
     el.addEventListener('arc-select', (e) => { detail = e.detail; });
     el.shadowRoot.querySelector('.palette__item').click();
     expect(detail.value).to.equal('Plain');
+  });
+});
+
+describe('snippetAround', () => {
+  const long =
+    'Themes are controlled by the data-theme attribute on the html element. ' +
+    'ARC UI ships three modes and a synthesizer for building your own palette.';
+
+  it('leaves a short string alone', () => {
+    const out = snippetAround('short enough', [0], 120);
+    expect(out.text).to.equal('short enough');
+    expect(out.indices).to.deep.equal([0]);
+  });
+
+  it('windows around the match rather than showing the head', () => {
+    const at = long.indexOf('synthesizer');
+    const out = snippetAround(long, [at], 60);
+    expect(out.text).to.contain('synthesizer');
+    expect(out.text.length).to.be.lessThan(long.length);
+  });
+
+  it('re-bases the positions onto the returned text', () => {
+    const at = long.indexOf('synthesizer');
+    const indices = Array.from({ length: 11 }, (_, i) => at + i);
+    const out = snippetAround(long, indices, 60);
+    const lit = out.indices.map((i) => out.text[i]).join('');
+    expect(lit).to.equal('synthesizer');
+  });
+
+  it('marks where it cut', () => {
+    const at = long.indexOf('synthesizer');
+    const out = snippetAround(long, [at], 60);
+    expect(out.text.startsWith('…')).to.equal(true);
+  });
+});
+
+describe('subsequence discipline', () => {
+  // Everything here is about one tension: subsequence matching is what makes
+  // "cmdpal" find Command Palette, and is also what made a 1,400-section docs
+  // index return hundreds of coincidences for any three letters.
+
+  it('rejects a sparse coincidence', () => {
+    // r…t…l are in order across thirty characters, two of them mid-word.
+    expect(matchTerm('rtl', 'Avoiding the Registration Flash')).to.equal(null);
+  });
+
+  it('keeps a dense abbreviation', () => {
+    expect(matchTerm('cmdpal', 'Command Palette')).to.not.equal(null);
+    expect(matchTerm('dtbl', 'Data Table')).to.not.equal(null);
+  });
+
+  it('keeps an acronym however far it spans', () => {
+    // Every character starts a word, which is what an acronym is — the span
+    // rule must not punish it.
+    expect(matchTerm('cp', 'Command Palette')).to.not.equal(null);
+  });
+
+  it('does not subsequence-match prose', () => {
+    const prose = 'Themes are controlled by the data-theme attribute on the html element.';
+    // Present as a subsequence, absent as a word — in prose only the word counts.
+    expect(matchTerm('tact', prose, { prose: true })).to.equal(null);
+    expect(matchTerm('theme', prose, { prose: true })).to.not.equal(null);
+  });
+
+  it('ignores single-letter words in a multi-word query', () => {
+    // "a" carries no intent, and requiring it would exclude the right answers.
+    const hit = matchItem('override a token', {
+      label: 'Tokens',
+      description: 'Override any token to restyle the library.',
+    });
+    expect(hit).to.not.equal(null);
+  });
+
+  it('still honours a query that is itself one character', () => {
+    expect(matchItem('a', { label: 'Alert' })).to.not.equal(null);
+  });
+});
+
+describe('result cap', () => {
+  afterEach(cleanup);
+
+  it('renders at most maxResults, after ranking', async () => {
+    const items = Array.from({ length: 40 }, (_, i) => `<arc-command-item>Item ${i}</arc-command-item>`);
+    const el = mount(`<arc-command-palette max-results="5">${items.join('')}</arc-command-palette>`);
+    await el.updateComplete;
+    await tick();
+    el.open = true;
+    await el.updateComplete;
+    el._query = 'item';
+    await el.updateComplete;
+
+    expect(el.shadowRoot.querySelectorAll('.palette__item').length).to.equal(5);
   });
 });
