@@ -9,6 +9,7 @@ import { ArcTagInput } from '@arclux/arc-ui/tag-input';
   template: ``,
   host: {
     '(arc-change)': '_onArcChange($event)',
+    '(arc-input)': '_onArcInput($event)',
   },
 })
 export class TagInput {
@@ -94,6 +95,14 @@ export class TagInput {
   @Output() valueChange = new EventEmitter<string[]>();
 
   _onArcChange(event: CustomEvent) {
+    const detail = event.detail as Record<string, unknown> | null;
+    if (!detail) return;
+    if ('value' in detail) {
+      this.valueChange.emit(detail.value as string[]);
+    }
+  }
+
+  _onArcInput(event: CustomEvent) {
     const detail = event.detail as Record<string, unknown> | null;
     if (!detail) return;
     if ('value' in detail) {

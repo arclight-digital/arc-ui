@@ -15,6 +15,8 @@ export interface CommandItemProps {
   shortcut?: string;
   icon?: string;
   keywords?: string;
+  description?: string;
+  value?: string;
   children?: JSX.Element;
   class?: string;
   id?: string;
@@ -44,9 +46,9 @@ export interface CommandItemProps {
 }
 
 export const CommandItem: Component<CommandItemProps> = (props) => {
-  const [local, rest] = splitProps(props, ['shortcut', 'icon', 'keywords', 'children']);
+  const [local, rest] = splitProps(props, ['shortcut', 'icon', 'keywords', 'description', 'value', 'children']);
   return (
-    <arc-command-item shortcut={local.shortcut} icon={local.icon} keywords={local.keywords} {...rest}>
+    <arc-command-item shortcut={local.shortcut} icon={local.icon} keywords={local.keywords} description={local.description} value={local.value} {...rest}>
       {local.children}
     </arc-command-item>
   );

@@ -8,10 +8,12 @@ const props = withDefaults(defineProps<{
   shortcut?: string;
   disabled?: boolean;
   icon?: string;
+  value?: string;
 }>(), {
   shortcut: '',
   disabled: false,
   icon: '',
+  value: '',
 });
 </script>
 
@@ -20,6 +22,7 @@ const props = withDefaults(defineProps<{
     :shortcut="props.shortcut"
     :disabled="props.disabled"
     :icon="props.icon"
+    :value="props.value"
   >
     <slot />
   </arc-menu-item>

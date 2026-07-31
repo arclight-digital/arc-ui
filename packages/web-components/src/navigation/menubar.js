@@ -437,7 +437,7 @@ export class ArcMenubar extends LitElement {
       arr = arr[idx]?.items || [];
     }
     this.dispatchEvent(new CustomEvent('arc-select', {
-      detail: { path: labels },
+      detail: { value: labels[labels.length - 1], path: labels },
       bubbles: true,
       composed: true,
     }));

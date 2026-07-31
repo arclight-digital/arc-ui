@@ -7,6 +7,7 @@ export interface MenuItemProps {
   shortcut?: string;
   disabled?: boolean;
   icon?: string;
+  value?: string;
   children?: preact.ComponentChildren;
   class?: string;
   id?: string;
@@ -35,5 +36,5 @@ export interface MenuItemProps {
   [key: `on${string}`]: unknown;
 }
 
-export const MenuItem: FunctionComponent<MenuItemProps> = ({ shortcut, disabled, icon, children, ...rest }) =>
-  h('arc-menu-item', { shortcut, disabled, icon, ...rest }, children);
+export const MenuItem: FunctionComponent<MenuItemProps> = ({ shortcut, disabled, icon, value, children, ...rest }) =>
+  h('arc-menu-item', { shortcut, disabled, icon, value, ...rest }, children);

@@ -2901,7 +2901,7 @@
         },
         {
           "name": "arc-list-item",
-          "description": "Individual row within an arc-list. Supports prefix/suffix slots, a description slot for\nsecondary text, links, and selection state.\n---\n\n\n### **Events:**\n - **arc-select**\n\n### **Slots:**\n - **prefix**\n- _default_ - Default content.\n- **description**\n- **suffix**\n\n### **CSS Parts:**\n - **label**\n- **description**\n- **item**",
+          "description": "Individual row within an arc-list. Supports prefix/suffix slots, a description slot for\nsecondary text, links, and selection state.\n---\n\n\n### **Events:**\n - **arc-select** - Fired when the item is activated by click. The parent arc-list dispatches the same event from this element for Enter and Space.\n\n### **Slots:**\n - **prefix**\n- _default_ - Default content.\n- **description**\n- **suffix**\n\n### **CSS Parts:**\n - **label**\n- **description**\n- **item**",
           "doc-url": "",
           "attributes": [
             {
@@ -2955,7 +2955,8 @@
           "events": [
             {
               "name": "arc-select",
-              "type": "CustomEvent"
+              "type": "CustomEvent<{ value: string }>",
+              "description": "Fired when the item is activated by click. The parent arc-list dispatches the same event from this element for Enter and Space."
             }
           ],
           "js": {
@@ -2984,14 +2985,15 @@
             "events": [
               {
                 "name": "arc-select",
-                "type": "CustomEvent"
+                "type": "CustomEvent<{ value: string }>",
+                "description": "Fired when the item is activated by click. The parent arc-list dispatches the same event from this element for Enter and Space."
               }
             ]
           }
         },
         {
           "name": "arc-list",
-          "description": "Structured list container with optional selection, keyboard navigation, and multiple visual\nvariants. Pairs with arc-list-item for rich content rows.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the selection changes. `event.detail.value` contains the new value string.\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **list**",
+          "description": "Structured list container with optional selection, keyboard navigation, and multiple visual\nvariants. Pairs with arc-list-item for rich content rows.\n---\n\n\n### **Events:**\n - **arc-select** - Fired from the activated arc-list-item when a selectable list is driven by Enter or Space.\n- **arc-change** - Fired when the selection changes. `event.detail.value` contains the new value string.\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **list**",
           "doc-url": "",
           "attributes": [
             {
@@ -3051,6 +3053,11 @@
           ],
           "events": [
             {
+              "name": "arc-select",
+              "type": "CustomEvent<{ value: string }>",
+              "description": "Fired from the activated arc-list-item when a selectable list is driven by Enter or Space."
+            },
+            {
               "name": "arc-change",
               "type": "CustomEvent<{ value: string }>",
               "description": "Fired when the selection changes. `event.detail.value` contains the new value string."
@@ -3090,6 +3097,11 @@
               }
             ],
             "events": [
+              {
+                "name": "arc-select",
+                "type": "CustomEvent<{ value: string }>",
+                "description": "Fired from the activated arc-list-item when a selectable list is driven by Enter or Space."
+              },
               {
                 "name": "arc-change",
                 "type": "CustomEvent<{ value: string }>",
@@ -3976,6 +3988,22 @@
                 "type": "string",
                 "default": "''"
               }
+            },
+            {
+              "name": "description",
+              "description": "Secondary line shown under the label and matched by search. Use it for the sentence that tells two similar results apart; a docs site can put the matching passage here so a query finds page content rather than only page titles.",
+              "value": {
+                "type": "string",
+                "default": "''"
+              }
+            },
+            {
+              "name": "value",
+              "description": "Stable identifier carried on the arc-select detail. Defaults to the label, which is fine until two items share one — give anything a handler must act on its own value rather than matching against display text.",
+              "value": {
+                "type": "string",
+                "default": "''"
+              }
             }
           ],
           "slots": [
@@ -3991,6 +4019,10 @@
                 "name": "label"
               },
               {
+                "name": "selectionValue",
+                "description": "What arc-select reports. Falls back to the label so an item that never sets\n`value` behaves as it always did."
+              },
+              {
                 "name": "shortcut",
                 "description": "Keyboard shortcut hint",
                 "type": "string"
@@ -4004,6 +4036,16 @@
                 "name": "keywords",
                 "description": "Extra space-separated terms the search filter matches against but never displays — e.g. keywords=\"dialog popup\" on a Modal item.",
                 "type": "string"
+              },
+              {
+                "name": "description",
+                "description": "Secondary line shown under the label and matched by search. Use it for the sentence that tells two similar results apart; a docs site can put the matching passage here so a query finds page content rather than only page titles.",
+                "type": "string"
+              },
+              {
+                "name": "value",
+                "description": "Stable identifier carried on the arc-select detail. Defaults to the label, which is fine until two items share one — give anything a handler must act on its own value rather than matching against display text.",
+                "type": "string"
               }
             ],
             "events": []
@@ -4011,7 +4053,7 @@
         },
         {
           "name": "arc-command-palette",
-          "description": "Spotlight-style command palette with search and keyboard shortcuts.\n---\n\n\n### **Events:**\n - **arc-select** - Fired when a command item is selected\n- **arc-close** - Fired when the palette closes\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **item**\n- **backdrop**\n- **dialog**\n- **search**\n- **input**\n- **results**\n- **empty**\n- **group-heading**\n- **footer**",
+          "description": "Spotlight-style command palette with fuzzy search and keyboard shortcuts.\n\nMatching is fuzzy and ranked — see shared/fuzzy-match.js for the scoring.\n\"cmdpal\" finds \"Command Palette\", terms may be typed in any order, and\nresults come back best-first rather than in DOM order, with the matched\ncharacters marked. Items are searched on their label, their `keywords`, and\ntheir `description`; the description is also the second line the palette\nrenders, which is what lets a consumer search page content rather than only\npage titles.\n---\n\n\n### **Events:**\n - **arc-select** - Fired when a command item is selected. `detail.value` is the item's `value`, falling back to its label.\n- **arc-close** - Fired when the palette closes\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **item**\n- **match**\n- **description**\n- **backdrop**\n- **dialog**\n- **search**\n- **input**\n- **results**\n- **empty**\n- **group-heading**\n- **footer**",
           "doc-url": "",
           "attributes": [
             {
@@ -4040,8 +4082,8 @@
           "events": [
             {
               "name": "arc-select",
-              "type": "CustomEvent",
-              "description": "Fired when a command item is selected"
+              "type": "CustomEvent<{ value: string, item: { label: string, shortcut: string, value: string } }>",
+              "description": "Fired when a command item is selected. `detail.value` is the item's `value`, falling back to its label."
             },
             {
               "name": "arc-close",
@@ -4065,8 +4107,8 @@
             "events": [
               {
                 "name": "arc-select",
-                "type": "CustomEvent",
-                "description": "Fired when a command item is selected"
+                "type": "CustomEvent<{ value: string, item: { label: string, shortcut: string, value: string } }>",
+                "description": "Fired when a command item is selected. `detail.value` is the item's `value`, falling back to its label."
               },
               {
                 "name": "arc-close",
@@ -13095,7 +13137,7 @@
         },
         {
           "name": "arc-sidebar-section",
-          "description": "A collapsible group within a Sidebar. Each section renders an optional heading label above its\nchild links, creating a visual and semantic grouping that mirrors your information architecture.\nFires an `arc-toggle` event with `{ open }` detail when the section is expanded or collapsed.\n---\n\n\n### **Events:**\n - **arc-toggle**\n\n### **Slots:**\n - _default_ - Default content.",
+          "description": "A collapsible group within a Sidebar. Each section renders an optional heading label above its\nchild links, creating a visual and semantic grouping that mirrors your information architecture.\nFires an `arc-toggle` event with `{ open }` detail when the section is expanded or collapsed.\n---\n\n\n### **Events:**\n - **arc-toggle** - Fired when a collapsible section expands or collapses.\n\n### **Slots:**\n - _default_ - Default content.",
           "doc-url": "",
           "attributes": [
             {
@@ -13132,7 +13174,8 @@
           "events": [
             {
               "name": "arc-toggle",
-              "type": "CustomEvent"
+              "type": "CustomEvent<{ open: boolean }>",
+              "description": "Fired when a collapsible section expands or collapses."
             }
           ],
           "js": {
@@ -13160,7 +13203,8 @@
             "events": [
               {
                 "name": "arc-toggle",
-                "type": "CustomEvent"
+                "type": "CustomEvent<{ open: boolean }>",
+                "description": "Fired when a collapsible section expands or collapses."
               }
             ]
           }
@@ -13935,6 +13979,14 @@
                 "type": "string",
                 "default": "''"
               }
+            },
+            {
+              "name": "value",
+              "description": "Stable identifier carried on the arc-select detail. Defaults to the label, which is fine until two items share one — give anything a handler must act on its own value rather than matching against display text.",
+              "value": {
+                "type": "string",
+                "default": "''"
+              }
             }
           ],
           "slots": [
@@ -13952,6 +14004,10 @@
                 "type": "string"
               },
               {
+                "name": "selectionValue",
+                "description": "What arc-select reports. Falls back to the label so an item that never sets\n`value` behaves as it always did."
+              },
+              {
                 "name": "shortcut",
                 "description": "Keyboard shortcut hint displayed on the right side.",
                 "type": "string"
@@ -13964,6 +14020,11 @@
               {
                 "name": "icon",
                 "description": "Name of the icon to display before the label.",
+                "type": "string"
+              },
+              {
+                "name": "value",
+                "description": "Stable identifier carried on the arc-select detail. Defaults to the label, which is fine until two items share one — give anything a handler must act on its own value rather than matching against display text.",
                 "type": "string"
               }
             ],
@@ -15299,6 +15360,12 @@
         },
         {
           "name": "part(item)"
+        },
+        {
+          "name": "part(match)"
+        },
+        {
+          "name": "part(description)"
         },
         {
           "name": "part(backdrop)"

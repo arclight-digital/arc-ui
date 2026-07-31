@@ -13,6 +13,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {boolean} multiple - Allows multiple items to be selected simultaneously. Only applies when `selectable` is true.
  * @prop {string} value - The currently selected value(s). Comma-separated when `multiple` is true.
  * @prop {string} label - Accessible name for the list, applied as `aria-label`. Required when `selectable` is set so the listbox has an accessible name.
+ * @fires {CustomEvent<{ value: string }>} arc-select - Fired from the activated arc-list-item when a selectable list is driven by Enter or Space.
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired when the selection changes. `event.detail.value` contains the new value string.
  * @slot - Default content.
  * @csspart list

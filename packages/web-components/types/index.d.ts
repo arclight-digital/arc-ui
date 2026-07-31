@@ -553,12 +553,18 @@ export declare class ArcCommandGroup extends LitElement {
  */
 export declare class ArcCommandItem extends LitElement {
   label: unknown;
+  /** What arc-select reports. Falls back to the label so an item that never sets `value` behaves as it always did. */
+  selectionValue: unknown;
   /** Keyboard shortcut hint @default '' */
   shortcut: string;
   /** Name of the icon to display before the item label. @default '' */
   icon: string;
   /** Extra space-separated terms the search filter matches against but never displays — e.g. keywords="dialog popup" on a Modal item. @default '' */
   keywords: string;
+  /** Secondary line shown under the label and matched by search. Use it for the sentence that tells two similar results apart; a docs site can put the matching passage here so a query finds page content rather than only page titles. @default '' */
+  description: string;
+  /** Stable identifier carried on the arc-select detail. Defaults to the label, which is fine until two items share one — give anything a handler must act on its own value rather than matching against display text. @default '' */
+  value: string;
 }
 
 /**
@@ -1330,7 +1336,7 @@ export declare class ArcLink extends LitElement {
 
 /**
  * `<arc-list>`
- * Events: arc-change
+ * Events: arc-select, arc-change
  */
 export declare class ArcList extends LitElement {
   /** Visual style. Bordered wraps the list in an outlined container. Separated adds bottom borders between items. @default 'default' */
@@ -1418,12 +1424,16 @@ export declare class ArcMenuDivider extends LitElement {
 export declare class ArcMenuItem extends LitElement {
   /** Display text for the menu item. */
   label: string;
+  /** What arc-select reports. Falls back to the label so an item that never sets `value` behaves as it always did. */
+  selectionValue: unknown;
   /** Keyboard shortcut hint displayed on the right side. @default '' */
   shortcut: string;
   /** Disables the item, preventing interaction. @default false */
   disabled: boolean;
   /** Name of the icon to display before the label. @default '' */
   icon: string;
+  /** Stable identifier carried on the arc-select detail. Defaults to the label, which is fine until two items share one — give anything a handler must act on its own value rather than matching against display text. @default '' */
+  value: string;
 }
 
 /**

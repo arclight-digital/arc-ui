@@ -10,6 +10,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {boolean} selected - Whether this item is currently selected. Managed automatically by the parent list.
  * @prop {boolean} disabled - Prevents interaction and dims the item.
  * @prop {string} href - When set, renders the item as an anchor tag for navigation.
+ * @fires {CustomEvent<{ value: string }>} arc-select - Fired when the item is activated by click. The parent arc-list dispatches the same event from this element for Enter and Space.
  * @slot prefix
  * @slot - Default content.
  * @slot description

@@ -8,6 +8,7 @@ export interface MenuItemProps {
   shortcut?: string;
   disabled?: boolean;
   icon?: string;
+  value?: string;
   className?: string;
   children?: React.ReactNode;
 }

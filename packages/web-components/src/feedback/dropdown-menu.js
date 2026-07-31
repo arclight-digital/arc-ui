@@ -225,7 +225,7 @@ export class ArcDropdownMenu extends LitElement {
 
   _selectItem(item, index) {
     this.dispatchEvent(new CustomEvent('arc-select', {
-      detail: { item: { label: item.label, shortcut: item.shortcut }, index },
+      detail: { value: item.selectionValue, item: { label: item.label, shortcut: item.shortcut, value: item.selectionValue }, index },
       bubbles: true,
       composed: true,
     }));

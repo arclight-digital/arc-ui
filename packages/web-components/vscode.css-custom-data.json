@@ -203,6 +203,8 @@
     { "name": "::part(message)" },
     { "name": "::part(dismiss)" },
     { "name": "::part(item)" },
+    { "name": "::part(match)" },
+    { "name": "::part(description)" },
     { "name": "::part(backdrop)" },
     { "name": "::part(dialog)" },
     { "name": "::part(search)" },

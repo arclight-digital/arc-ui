@@ -238,7 +238,7 @@ export class ArcContextMenu extends LitElement {
     if (item.disabled || item.tagName === 'ARC-MENU-DIVIDER') return;
 
     this.dispatchEvent(new CustomEvent('arc-select', {
-      detail: { item: { label: item.label, shortcut: item.shortcut, icon: item.icon }, index },
+      detail: { value: item.selectionValue, item: { label: item.label, shortcut: item.shortcut, icon: item.icon, value: item.selectionValue }, index },
       bubbles: true,
       composed: true,
     }));

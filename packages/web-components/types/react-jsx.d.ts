@@ -242,6 +242,8 @@ declare module 'react' {
         shortcut?: string;
         icon?: string;
         keywords?: string;
+        description?: string;
+        value?: string;
       };
       'arc-command-palette': ArcBaseAttributes & {
         open?: boolean;
@@ -582,6 +584,7 @@ declare module 'react' {
         shortcut?: string;
         disabled?: boolean;
         icon?: string;
+        value?: string;
       };
       'arc-menubar': ArcBaseAttributes & {
         items?: string;

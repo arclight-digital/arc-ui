@@ -817,7 +817,9 @@ export default {
   "attrs": [
    "shortcut",
    "icon",
-   "keywords"
+   "keywords",
+   "description",
+   "value"
   ],
   "slug": "command-palette"
  },
@@ -2438,7 +2440,8 @@ export default {
   "attrs": [
    "shortcut",
    "disabled",
-   "icon"
+   "icon",
+   "value"
   ],
   "slug": "context-menu"
  },

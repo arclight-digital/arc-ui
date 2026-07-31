@@ -5408,8 +5408,9 @@
             {
               "name": "arc-select",
               "type": {
-                "text": "CustomEvent"
-              }
+                "text": "CustomEvent<{ value: string }>"
+              },
+              "description": "Fired when the item is activated by click. The parent arc-list dispatches the same event from this element for Enter and Space."
             }
           ],
           "attributes": [
@@ -5560,6 +5561,13 @@
             }
           ],
           "events": [
+            {
+              "type": {
+                "text": "CustomEvent<{ value: string }>"
+              },
+              "description": "Fired from the activated arc-list-item when a selectable list is driven by Enter or Space.",
+              "name": "arc-select"
+            },
             {
               "type": {
                 "text": "CustomEvent<{ value: string }>"
@@ -7264,6 +7272,12 @@
             },
             {
               "kind": "field",
+              "name": "selectionValue",
+              "description": "What arc-select reports. Falls back to the label so an item that never sets\n`value` behaves as it always did.",
+              "readonly": true
+            },
+            {
+              "kind": "field",
               "name": "shortcut",
               "privacy": "public",
               "type": {
@@ -7295,6 +7309,28 @@
               "default": "''",
               "description": "Extra space-separated terms the search filter matches against but never displays — e.g. keywords=\"dialog popup\" on a Modal item.",
               "attribute": "keywords"
+            },
+            {
+              "kind": "field",
+              "name": "description",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Secondary line shown under the label and matched by search. Use it for the sentence that tells two similar results apart; a docs site can put the matching passage here so a query finds page content rather than only page titles.",
+              "attribute": "description"
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Stable identifier carried on the arc-select detail. Defaults to the label, which is fine until two items share one — give anything a handler must act on its own value rather than matching against display text.",
+              "attribute": "value"
             }
           ],
           "attributes": [
@@ -7324,6 +7360,24 @@
               "default": "''",
               "description": "Extra space-separated terms the search filter matches against but never displays — e.g. keywords=\"dialog popup\" on a Modal item.",
               "fieldName": "keywords"
+            },
+            {
+              "name": "description",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Secondary line shown under the label and matched by search. Use it for the sentence that tells two similar results apart; a docs site can put the matching passage here so a query finds page content rather than only page titles.",
+              "fieldName": "description"
+            },
+            {
+              "name": "value",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Stable identifier carried on the arc-select detail. Defaults to the label, which is fine until two items share one — give anything a handler must act on its own value rather than matching against display text.",
+              "fieldName": "value"
             }
           ],
           "superclass": {
@@ -7351,11 +7405,17 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "Spotlight-style command palette with search and keyboard shortcuts.",
+          "description": "Spotlight-style command palette with fuzzy search and keyboard shortcuts.\n\nMatching is fuzzy and ranked — see shared/fuzzy-match.js for the scoring.\n\"cmdpal\" finds \"Command Palette\", terms may be typed in any order, and\nresults come back best-first rather than in DOM order, with the matched\ncharacters marked. Items are searched on their label, their `keywords`, and\ntheir `description`; the description is also the second line the palette\nrenders, which is what lets a consumer search page content rather than only\npage titles.",
           "name": "ArcCommandPalette",
           "cssParts": [
             {
               "name": "item"
+            },
+            {
+              "name": "match"
+            },
+            {
+              "name": "description"
             },
             {
               "name": "backdrop"
@@ -7417,9 +7477,9 @@
             {
               "name": "arc-select",
               "type": {
-                "text": "CustomEvent"
+                "text": "CustomEvent<{ value: string, item: { label: string, shortcut: string, value: string } }>"
               },
-              "description": "Fired when a command item is selected"
+              "description": "Fired when a command item is selected. `detail.value` is the item's `value`, falling back to its label."
             },
             {
               "name": "arc-close",
@@ -25687,8 +25747,9 @@
             {
               "name": "arc-toggle",
               "type": {
-                "text": "CustomEvent"
-              }
+                "text": "CustomEvent<{ open: boolean }>"
+              },
+              "description": "Fired when a collapsible section expands or collapses."
             }
           ],
           "attributes": [
@@ -27550,6 +27611,93 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/shared/fuzzy-match.js",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "matchTerm",
+          "parameters": [
+            {
+              "name": "term"
+            },
+            {
+              "name": "text"
+            }
+          ],
+          "description": "Score one term against one string.",
+          "return": {
+            "type": {
+              "text": "{score: number, indices: number[]}|null"
+            }
+          }
+        },
+        {
+          "kind": "function",
+          "name": "matchItem",
+          "parameters": [
+            {
+              "name": "query",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "fields",
+              "type": {
+                "text": "{primary: string, secondary?: string[]}"
+              }
+            }
+          ],
+          "description": "Score a query against an item's searchable fields.\n\nFields are weighted, and only the best-scoring field decides the tier — an\nitem whose *label* matches should beat one where the same text turned up in a\ndescription, no matter how well. Weighting by multiplication rather than\naddition keeps that true across tiers.\n\n`indices` come back only for the primary field, because that is the only one\nrendered; highlighting a description the palette never shows would be work\nwith no output.",
+          "return": {
+            "type": {
+              "text": "{score: number, indices: number[]}|null"
+            }
+          }
+        },
+        {
+          "kind": "function",
+          "name": "highlightRuns",
+          "parameters": [
+            {
+              "name": "text"
+            },
+            {
+              "name": "indices"
+            }
+          ],
+          "description": "Split a string into alternating unmatched/matched runs for rendering.\n\nReturns `[{text, matched}]` rather than markup so the caller decides the\nelement — the palette wraps matches in <mark>, and a consumer templating this\ndifferently is not forced through innerHTML."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "matchTerm",
+          "declaration": {
+            "name": "matchTerm",
+            "module": "src/shared/fuzzy-match.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "matchItem",
+          "declaration": {
+            "name": "matchItem",
+            "module": "src/shared/fuzzy-match.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "highlightRuns",
+          "declaration": {
+            "name": "highlightRuns",
+            "module": "src/shared/fuzzy-match.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/shared/listbox-controller.js",
       "declarations": [
         {
@@ -27695,6 +27843,12 @@
             },
             {
               "kind": "field",
+              "name": "selectionValue",
+              "description": "What arc-select reports. Falls back to the label so an item that never sets\n`value` behaves as it always did.",
+              "readonly": true
+            },
+            {
+              "kind": "field",
               "name": "shortcut",
               "privacy": "public",
               "type": {
@@ -27727,6 +27881,17 @@
               "default": "''",
               "description": "Name of the icon to display before the label.",
               "attribute": "icon"
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Stable identifier carried on the arc-select detail. Defaults to the label, which is fine until two items share one — give anything a handler must act on its own value rather than matching against display text.",
+              "attribute": "value"
             }
           ],
           "attributes": [
@@ -27756,6 +27921,15 @@
               "default": "''",
               "description": "Name of the icon to display before the label.",
               "fieldName": "icon"
+            },
+            {
+              "name": "value",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Stable identifier carried on the arc-select detail. Defaults to the label, which is fine until two items share one — give anything a handler must act on its own value rather than matching against display text.",
+              "fieldName": "value"
             }
           ],
           "superclass": {

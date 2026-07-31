@@ -7,6 +7,8 @@ export interface CommandItemProps {
   shortcut?: string;
   icon?: string;
   keywords?: string;
+  description?: string;
+  value?: string;
   children?: preact.ComponentChildren;
   class?: string;
   id?: string;
@@ -35,5 +37,5 @@ export interface CommandItemProps {
   [key: `on${string}`]: unknown;
 }
 
-export const CommandItem: FunctionComponent<CommandItemProps> = ({ shortcut, icon, keywords, children, ...rest }) =>
-  h('arc-command-item', { shortcut, icon, keywords, ...rest }, children);
+export const CommandItem: FunctionComponent<CommandItemProps> = ({ shortcut, icon, keywords, description, value, children, ...rest }) =>
+  h('arc-command-item', { shortcut, icon, keywords, description, value, ...rest }, children);

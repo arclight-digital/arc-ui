@@ -62,9 +62,17 @@
     }
     (rest['onarc-change'] as ((e: Event) => void) | undefined)?.(e);
   }
+  function __onArcInput(e: Event) {
+    const detail = (e as CustomEvent).detail as Record<string, unknown> | null;
+    if (detail) {
+      if ('value' in detail) value = detail.value as string[];
+    }
+    (rest['onarc-input'] as ((e: Event) => void) | undefined)?.(e);
+  }
 </script>
 
 <arc-tag-input {size} {value} {suggestions} {delimiter} {label} {placeholder} {name} {disabled} {error} bind:this={__el} {...rest}
   onarc-change={__onArcChange}
+  onarc-input={__onArcInput}
 >
 </arc-tag-input>

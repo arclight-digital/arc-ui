@@ -43,6 +43,13 @@ function onArcChange(payload: CustomEvent) {
     if ('value' in detail) emit('update:value', detail.value as string[]);
   }
 }
+function onArcInput(payload: CustomEvent) {
+  emit('arc-input', payload);
+  const detail = payload.detail as Record<string, unknown> | null;
+  if (detail) {
+    if ('value' in detail) emit('update:value', detail.value as string[]);
+  }
+}
 </script>
 
 <template>
@@ -59,7 +66,7 @@ function onArcChange(payload: CustomEvent) {
     :disabled="props.disabled"
     :error="props.error"
     @arc-change="onArcChange"
-    @arc-input="(payload: CustomEvent) => emit('arc-input', payload)"
+    @arc-input="onArcInput"
   >
   </arc-tag-input>
 </template>

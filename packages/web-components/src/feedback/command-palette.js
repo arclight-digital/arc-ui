@@ -2,10 +2,19 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { MenuKeyboardController } from '../shared/menu-keyboard.js';
 import { OverlayMixin } from '../shared/overlay-mixin.js';
+import { matchItem, highlightRuns } from '../shared/fuzzy-match.js';
 import '../content/icon.js';
 
 /**
- * Spotlight-style command palette with search and keyboard shortcuts.
+ * Spotlight-style command palette with fuzzy search and keyboard shortcuts.
+ *
+ * Matching is fuzzy and ranked — see shared/fuzzy-match.js for the scoring.
+ * "cmdpal" finds "Command Palette", terms may be typed in any order, and
+ * results come back best-first rather than in DOM order, with the matched
+ * characters marked. Items are searched on their label, their `keywords`, and
+ * their `description`; the description is also the second line the palette
+ * renders, which is what lets a consumer search page content rather than only
+ * page titles.
  *
  * @tag arc-command-palette
  * @requires arc-icon
@@ -13,10 +22,12 @@ import '../content/icon.js';
  * @requires arc-command-group
  * @prop {boolean} open - Controls whether the palette is visible. When set to true, the dialog animates in, the search input auto-focuses, and body scroll is locked. Set to false to close.
  * @prop {string} placeholder - Placeholder text displayed in the search input when the query is empty.
- * @fires arc-select - Fired when a command item is selected
+ * @fires {CustomEvent<{ value: string, item: { label: string, shortcut: string, value: string } }>} arc-select - Fired when a command item is selected. `detail.value` is the item's `value`, falling back to its label.
  * @fires {CustomEvent<void>} arc-close - Fired when the palette closes
  * @slot - Default content.
  * @csspart item
+ * @csspart match
+ * @csspart description
  * @csspart backdrop
  * @csspart dialog
  * @csspart search
@@ -172,8 +183,39 @@ export class ArcCommandPalette extends OverlayMixin(LitElement) {
         color: var(--text-muted);
       }
 
-      .palette__item-label {
+      /* The text column holds the label and, when there is one, a second line.
+         min-width: 0 is what lets the description ellipsize: a flex child's
+         default min-width is auto, so without it the child refuses to shrink
+         below its content and the shortcut gets pushed off the row instead. */
+      .palette__item-text {
         flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        text-align: start;
+      }
+
+      .palette__item-label {
+        display: block;
+      }
+
+      /* The matched characters. A <mark> is the right element — this is a
+         relevance highlight, which is what mark means — but the UA paints it
+         black-on-yellow, so the colours are ours. */
+      .palette__item-match {
+        background: none;
+        color: var(--interactive);
+        font-weight: 600;
+      }
+
+      .palette__item-description {
+        display: block;
+        font-size: var(--_text-xs);
+        color: var(--text-muted);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       .palette__item-shortcut {
@@ -232,12 +274,50 @@ export class ArcCommandPalette extends OverlayMixin(LitElement) {
     });
   }
 
+  /**
+   * Items that match the query, best first, with their matched positions.
+   *
+   * The empty query returns DOM order untouched: with nothing typed there is
+   * nothing to rank by, and the author's ordering is the only signal there is.
+   *
+   * Ranking is per-group rather than global, and groups are ordered by their
+   * best member. A flat global sort would interleave headings — a list that
+   * reads Guides, Input, Guides, Data as the scores happen to fall — and
+   * `_groupRuns` would fragment into a heading per item. Sorting inside each
+   * group and moving the strongest group to the top keeps one run per heading
+   * while still putting the best match first.
+   */
+  get _matches() {
+    if (!this._query.trim()) {
+      return this._items.map((item) => ({ item, indices: [] }));
+    }
+
+    const scored = [];
+    for (const item of this._items) {
+      const hit = matchItem(this._query, {
+        primary: item.label || '',
+        secondary: [item.keywords || '', item.description || ''],
+      });
+      if (hit) scored.push({ item, ...hit });
+    }
+
+    const groups = new Map();
+    for (const entry of scored) {
+      const group = entry.item.closest('arc-command-group');
+      if (!groups.has(group)) groups.set(group, []);
+      groups.get(group).push(entry);
+    }
+
+    const ordered = [...groups.values()];
+    for (const entries of ordered) entries.sort((a, b) => b.score - a.score);
+    ordered.sort((a, b) => b[0].score - a[0].score);
+
+    return ordered.flat();
+  }
+
+  /** Kept as the list the keyboard controller and selection index against. */
   get _filteredItems() {
-    if (!this._query) return this._items;
-    const q = this._query.toLowerCase();
-    return this._items.filter(item =>
-      `${item.label || ''} ${item.keywords || ''}`.toLowerCase().includes(q)
-    );
+    return this._matches.map((m) => m.item);
   }
 
   /**
@@ -245,22 +325,29 @@ export class ArcCommandPalette extends OverlayMixin(LitElement) {
    * heading (empty heading for ungrouped items). Each entry keeps its flat
    * index so keyboard focus and aria-activedescendant stay in sync.
    */
-  _groupRuns(filtered) {
+  _groupRuns(matches) {
     const runs = [];
-    filtered.forEach((item, index) => {
+    matches.forEach(({ item, indices }, index) => {
       const group = item.closest('arc-command-group');
       const heading = (group && group.heading) || '';
       const last = runs[runs.length - 1];
       if (last && last.heading === heading) {
-        last.entries.push({ item, index });
+        last.entries.push({ item, index, indices });
       } else {
-        runs.push({ heading, entries: [{ item, index }] });
+        runs.push({ heading, entries: [{ item, index, indices }] });
       }
     });
     return runs;
   }
 
-  _renderItem(item, i) {
+  _renderItem(item, i, indices = []) {
+    // The label is split into matched and unmatched runs rather than being
+    // interpolated as markup: a command item's text is whatever the consumer
+    // slotted, and building an HTML string around it would make an item titled
+    // `<script>` an injection point on every keystroke.
+    const label = item.label || '';
+    const runs = highlightRuns(label, indices);
+
     return html`
       <button
         id="palette-item-${i}"
@@ -273,7 +360,18 @@ export class ArcCommandPalette extends OverlayMixin(LitElement) {
         part="item"
       >
         ${item.icon ? html`<arc-icon name=${item.icon} size="16" class="palette__item-icon" aria-hidden="true"></arc-icon>` : ''}
-        <span class="palette__item-label">${item.label || ''}</span>
+        <span class="palette__item-text">
+          <span class="palette__item-label">
+            ${runs.map((run) =>
+              run.matched
+                ? html`<mark class="palette__item-match" part="match">${run.text}</mark>`
+                : run.text
+            )}
+          </span>
+          ${item.description
+            ? html`<span class="palette__item-description" part="description">${item.description}</span>`
+            : ''}
+        </span>
         ${item.shortcut ? html`<span class="palette__item-shortcut">${item.shortcut}</span>` : ''}
       </button>
     `;
@@ -306,8 +404,17 @@ export class ArcCommandPalette extends OverlayMixin(LitElement) {
   }
 
   _selectItem(item) {
+    if (!item) return;
+    // detail.value is the canonical key the v3 event contract requires, and it
+    // was missing here: a handler had to match the reported label and shortcut
+    // back against the DOM to work out which item fired, which two items
+    // sharing a label quietly get wrong. `item` stays alongside it — the shape
+    // consumers already read — so this adds a key rather than moving one.
     this.dispatchEvent(new CustomEvent('arc-select', {
-      detail: { item: { label: item.label, shortcut: item.shortcut } },
+      detail: {
+        value: item.selectionValue,
+        item: { label: item.label, shortcut: item.shortcut, value: item.selectionValue },
+      },
       bubbles: true,
       composed: true,
     }));
@@ -325,7 +432,7 @@ export class ArcCommandPalette extends OverlayMixin(LitElement) {
   }
 
   render() {
-    const filtered = this._filteredItems;
+    const matches = this._matches;
 
     return html`
       <div class="palette__slot-host">
@@ -353,27 +460,27 @@ export class ArcCommandPalette extends OverlayMixin(LitElement) {
             role="combobox"
             aria-expanded="true"
             aria-controls="palette-results"
-            aria-activedescendant=${this._menuKb.focusedIndex >= 0 && filtered.length > 0 ? `palette-item-${this._menuKb.focusedIndex}` : ''}
+            aria-activedescendant=${this._menuKb.focusedIndex >= 0 && matches.length > 0 ? `palette-item-${this._menuKb.focusedIndex}` : ''}
             autocomplete="off"
             spellcheck="false"
             part="input"
           />
         </div>
         <div class="palette__results" id="palette-results" role="listbox" part="results">
-          ${filtered.length === 0 ? html`
+          ${matches.length === 0 ? html`
             <div class="palette__empty" role="status" part="empty">
               ${this._query
                 ? html`No results for <strong>&ldquo;${this._query}&rdquo;</strong>`
                 : 'No results found'}
             </div>
           ` : ''}
-          ${this._groupRuns(filtered).map(run => html`
+          ${this._groupRuns(matches).map(run => html`
             ${run.heading ? html`
               <div role="group" aria-label=${run.heading} class="palette__group">
                 <div class="palette__group-heading" aria-hidden="true" part="group-heading">${run.heading}</div>
-                ${run.entries.map(entry => this._renderItem(entry.item, entry.index))}
+                ${run.entries.map(entry => this._renderItem(entry.item, entry.index, entry.indices))}
               </div>
-            ` : run.entries.map(entry => this._renderItem(entry.item, entry.index))}
+            ` : run.entries.map(entry => this._renderItem(entry.item, entry.index, entry.indices))}
           `)}
         </div>
         <div class="palette__footer" part="footer">

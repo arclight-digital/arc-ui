@@ -166,7 +166,7 @@ export class ArcTreeView extends LitElement {
     this._selected = item.label;
 
     this.dispatchEvent(new CustomEvent('arc-select', {
-      detail: { item: { label: item.label, icon: item.icon }, path },
+      detail: { value: item.value ?? item.label, item: { label: item.label, icon: item.icon }, path },
       bubbles: true,
       composed: true,
     }));

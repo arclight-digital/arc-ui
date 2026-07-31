@@ -421,7 +421,7 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
     this._open = (this.suggestions || []).length > 0;
     this._listbox.reset();
     this.dispatchEvent(new CustomEvent('arc-input', {
-      detail: { query: this._query },
+      detail: { value: this._query, query: this._query },
       bubbles: true,
       composed: true,
     }));

@@ -8,10 +8,14 @@ const props = withDefaults(defineProps<{
   shortcut?: string;
   icon?: string;
   keywords?: string;
+  description?: string;
+  value?: string;
 }>(), {
   shortcut: '',
   icon: '',
   keywords: '',
+  description: '',
+  value: '',
 });
 </script>
 
@@ -20,6 +24,8 @@ const props = withDefaults(defineProps<{
     :shortcut="props.shortcut"
     :icon="props.icon"
     :keywords="props.keywords"
+    :description="props.description"
+    :value="props.value"
   >
     <slot />
   </arc-command-item>

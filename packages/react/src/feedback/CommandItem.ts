@@ -8,6 +8,8 @@ export interface CommandItemProps {
   shortcut?: string;
   icon?: string;
   keywords?: string;
+  description?: string;
+  value?: string;
   className?: string;
   children?: React.ReactNode;
 }

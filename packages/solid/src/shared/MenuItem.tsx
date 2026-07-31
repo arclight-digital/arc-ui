@@ -15,6 +15,7 @@ export interface MenuItemProps {
   shortcut?: string;
   disabled?: boolean;
   icon?: string;
+  value?: string;
   children?: JSX.Element;
   class?: string;
   id?: string;
@@ -44,9 +45,9 @@ export interface MenuItemProps {
 }
 
 export const MenuItem: Component<MenuItemProps> = (props) => {
-  const [local, rest] = splitProps(props, ['shortcut', 'disabled', 'icon', 'children']);
+  const [local, rest] = splitProps(props, ['shortcut', 'disabled', 'icon', 'value', 'children']);
   return (
-    <arc-menu-item shortcut={local.shortcut} disabled={local.disabled} icon={local.icon} {...rest}>
+    <arc-menu-item shortcut={local.shortcut} disabled={local.disabled} icon={local.icon} value={local.value} {...rest}>
       {local.children}
     </arc-menu-item>
   );

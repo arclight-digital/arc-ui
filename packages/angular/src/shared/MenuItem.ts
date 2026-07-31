@@ -31,4 +31,11 @@ export class MenuItem {
   get icon(): string {
     return this._el.icon;
   }
+
+  @Input() set value(value: string) {
+    this._el.value = value;
+  }
+  get value(): string {
+    return this._el.value;
+  }
 }

@@ -31,4 +31,18 @@ export class CommandItem {
   get keywords(): string {
     return this._el.keywords;
   }
+
+  @Input() set description(value: string) {
+    this._el.description = value;
+  }
+  get description(): string {
+    return this._el.description;
+  }
+
+  @Input() set value(value: string) {
+    this._el.value = value;
+  }
+  get value(): string {
+    return this._el.value;
+  }
 }
