@@ -2552,7 +2552,7 @@
       }
 
       /* No hover to bring it back, so never hide it in the first place. */
-      .arc-code-block @media (hover: none) {
+      @media (hover: none) {
         .arc-code-block .code-block__copy--quiet { opacity: 1; }
       }
 
@@ -4857,7 +4857,7 @@
          was added. Fixed in prism (v3, "don't scope an at-rule whose prelude a
          comment precedes"); if a media query ever goes missing from arc-ui.css
          again, check the emitted CSS before trusting that it compiled. */
-      .arc-top-bar @media (max-width: 900px) {
+      @media (max-width: 900px) {
         .arc-top-bar .topbar__menu-btn { display: flex; }
       }
 
@@ -5014,7 +5014,7 @@
       }
 
       /* Body scroll lock when open */
-      .arc-app-shell @media (prefers-reduced-motion: reduce) {
+      @media (prefers-reduced-motion: reduce) {
         .arc-app-shell[mobile] .shell__sidebar {
           transition: none;
         }
