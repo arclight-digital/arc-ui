@@ -12,7 +12,7 @@
     "@arclux/arc-ui": "workspace:*",
     "@arclux/arc-ui-svelte": "workspace:*",
     "@arclux/arc-ui-vue": "workspace:*",
-    "@arclux/brand": "workspace:*",
+    "@arclux/brand": "^1.2.0",
     "@arclux/glint": "^0.1.0",
     "@astrojs/sitemap": "^3.7.3",
     "astro": "^5.17.1",

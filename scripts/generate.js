@@ -59,7 +59,6 @@ const phases = [
     title: 'Components',
     steps: [
       gen('registrations'),
-      gen('brand-assets'),
       { name: 'prism', cmd: 'npx', args: ['prism', '--strict', '--prune'] },
     ],
   },
