@@ -161,12 +161,6 @@ export class ArcToggle extends FormControlMixin(LitElement) {
     this.checked = state.checked;
   }
 
-  updated(changed) {
-    if (changed.has('checked')) {
-      this._updateFormValue();
-    }
-  }
-
   _toggle() {
     if (this.disabled || this.readonly) return;
     this.checked = !this.checked;

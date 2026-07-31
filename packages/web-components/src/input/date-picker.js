@@ -569,12 +569,10 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
   }
 
   updated(changed) {
+    super.updated(changed);
     if (changed.has('open')) {
       this.open ? this._position.show() : this._position.hide();
       this.open ? this._clickOutside.activate() : this._clickOutside.deactivate();
-    }
-    if (changed.has('value')) {
-      this._updateFormValue();
     }
     if (changed.has('open') && this.open && this._mode === 'days') {
       // Move focus to the roving tab stop when the popup opens

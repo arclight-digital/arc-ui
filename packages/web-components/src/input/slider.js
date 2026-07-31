@@ -190,12 +190,6 @@ export class ArcSlider extends FormControlMixin(LitElement) {
     this.label = '';
   }
 
-  updated(changed) {
-    if (changed.has('value')) {
-      this._updateFormValue();
-    }
-  }
-
   _formValue() {
     return this.value == null ? null : String(this.value);
   }

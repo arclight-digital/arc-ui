@@ -703,9 +703,12 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
   }
 
   updated(changed) {
+    super.updated(changed);
     if (changed.has('open')) {
       this.open ? this._position.show() : this._position.hide();
     }
+    // The submitted value tracks `start`/`end`, not `value`, so the mixin's
+    // value-watch never fires for this control — sync locally.
     if (changed.has('start') || changed.has('end')) {
       this._updateFormValue();
     }

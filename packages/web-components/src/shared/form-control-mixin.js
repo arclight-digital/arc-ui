@@ -137,9 +137,12 @@ export const FormControlMixin = (superClass) => class extends superClass {
     // _updateFormValue() from their interaction handlers, so `el.value = x`
     // from script used to leave the submitted value and validity stale.
     // Double-calling after an interaction handler is harmless — it's
-    // idempotent. (Subclasses that override updated() without calling super
-    // lose these hooks and must sync themselves — combobox and multi-select
-    // already do.)
+    // idempotent, and serialization always goes through the subclass's own
+    // _formValue(). Subclasses that override updated() MUST call
+    // super.updated(changed) first or they lose these hooks. Controls whose
+    // submitted state lives outside `value`/`checked` (range-slider's
+    // low/high, date-range-picker's start/end) must additionally watch their
+    // own props and call _updateFormValue() themselves.
     if (changed.has('value') || changed.has('checked')) {
       this._updateFormValue();
     }

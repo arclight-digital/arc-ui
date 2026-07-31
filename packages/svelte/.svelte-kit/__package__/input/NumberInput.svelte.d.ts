@@ -1,5 +1,6 @@
 import '@arclux/arc-ui/number-input';
 interface Props {
+    size?: 'sm' | 'md' | 'lg';
     value?: number;
     min?: number;
     max?: number;

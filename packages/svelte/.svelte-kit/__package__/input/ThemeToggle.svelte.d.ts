@@ -3,6 +3,7 @@ interface Props {
     theme?: 'dark' | 'light' | 'auto';
     disabled?: boolean;
     iconOnly?: boolean;
+    size?: 'xs' | 'sm' | 'md' | 'lg';
     class?: string;
     id?: string;
     style?: string;

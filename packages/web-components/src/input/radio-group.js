@@ -131,12 +131,6 @@ export class ArcRadioGroup extends FormControlMixin(LitElement) {
     this._radios = [];
   }
 
-  updated(changed) {
-    if (changed.has('value')) {
-      this._updateFormValue();
-    }
-  }
-
   _onSlotChange(e) {
     this._radios = e.target.assignedElements({ flatten: true })
       .filter(el => el.tagName === 'ARC-RADIO');

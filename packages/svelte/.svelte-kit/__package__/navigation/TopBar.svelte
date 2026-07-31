@@ -5,6 +5,9 @@
 
   interface Props {
     heading?: string;
+    homeHref?: string;
+    scrolled?: boolean;
+    immersive?: boolean;
     fixed?: boolean;
     contained?: string;
     menuOpen?: boolean;
@@ -46,12 +49,13 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { heading = '', fixed = false, contained = 'null', menuOpen = false, mobileMenu = 'sidebar', menuPosition = 'left', navAlign = 'center', logo, subtitle, center, actions, ...rest }: Props = $props();
+  let { heading = '', homeHref = '/', scrolled = false, immersive = false, fixed = false, contained = 'null', menuOpen = false, mobileMenu = 'sidebar', menuPosition = 'left', navAlign = 'center', logo, subtitle, center, actions, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {
     const el = __el as unknown as Record<string, unknown> | undefined;
     if (!el) return;
+    if (homeHref !== undefined) el.homeHref = homeHref;
     if (menuOpen !== undefined) el.menuOpen = menuOpen;
     if (mobileMenu !== undefined) el.mobileMenu = mobileMenu;
     if (menuPosition !== undefined) el.menuPosition = menuPosition;
@@ -59,7 +63,7 @@
   });
 </script>
 
-<arc-top-bar {heading} {fixed} {contained} bind:this={__el} {...rest}>
+<arc-top-bar {heading} {scrolled} {immersive} {fixed} {contained} bind:this={__el} {...rest}>
   {@render logo?.()}
   {@render subtitle?.()}
   {@render center?.()}

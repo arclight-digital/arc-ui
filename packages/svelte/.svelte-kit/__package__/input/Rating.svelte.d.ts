@@ -1,5 +1,6 @@
 import '@arclux/arc-ui/rating';
 interface Props {
+    size?: 'sm' | 'md' | 'lg';
     value?: number;
     max?: number;
     name?: string;

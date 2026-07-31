@@ -6,6 +6,7 @@
   interface Props {
     active?: string;
     offset?: number;
+    progress?: 'none' | 'ring' | 'read' | 'both';
     children?: Snippet;
     class?: string;
     id?: string;
@@ -34,9 +35,9 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { active = '', offset = 80, children, ...rest }: Props = $props();
+  let { active = '', offset = 80, progress = 'none', children, ...rest }: Props = $props();
 </script>
 
-<arc-scroll-spy {active} {offset} {...rest}>
+<arc-scroll-spy {active} {offset} {progress} {...rest}>
   {@render children?.()}
 </arc-scroll-spy>

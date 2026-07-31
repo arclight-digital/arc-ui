@@ -4,6 +4,7 @@ interface Props {
     href?: string;
     active?: boolean;
     level?: number;
+    icon?: string;
     children?: Snippet;
     class?: string;
     id?: string;

@@ -1,6 +1,7 @@
 import '@arclux/arc-ui/multi-select';
 import type { Snippet } from 'svelte';
 interface Props {
+    size?: 'sm' | 'md' | 'lg';
     value?: string[];
     placeholder?: string;
     label?: string;

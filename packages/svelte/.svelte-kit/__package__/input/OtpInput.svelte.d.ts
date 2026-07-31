@@ -1,5 +1,6 @@
 import '@arclux/arc-ui/otp-input';
 interface Props {
+    size?: 'sm' | 'md' | 'lg';
     length?: number;
     value?: string;
     name?: string;

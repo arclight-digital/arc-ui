@@ -1,5 +1,6 @@
 import '@arclux/arc-ui/date-picker';
 interface Props {
+    size?: 'sm' | 'md' | 'lg';
     value?: string;
     name?: string;
     min?: string;

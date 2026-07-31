@@ -4,6 +4,7 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
+    size?: 'sm' | 'md' | 'lg';
     length?: number;
     value?: string;
     name?: string;
@@ -39,11 +40,18 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { length = 4, value = $bindable(''), name = '', disabled = false, mask = false, type = 'number', separator = 0, label = '', ...rest }: Props = $props();
+  let { size = 'md', length = 4, value = $bindable(''), name = '', disabled = false, mask = false, type = 'number', separator = 0, label = '', ...rest }: Props = $props();
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
   // have attached. These are declared after {...rest} below so they win.
+  function __onArcInput(e: Event) {
+    const detail = (e as CustomEvent).detail as Record<string, unknown> | null;
+    if (detail) {
+      if ('value' in detail) value = detail.value as string;
+    }
+    (rest['onarc-input'] as ((e: Event) => void) | undefined)?.(e);
+  }
   function __onArcChange(e: Event) {
     const detail = (e as CustomEvent).detail as Record<string, unknown> | null;
     if (detail) {
@@ -60,7 +68,8 @@
   }
 </script>
 
-<arc-pin-input {length} {value} {name} {disabled} {mask} {type} {separator} {label} {...rest}
+<arc-pin-input {size} {length} {value} {name} {disabled} {mask} {type} {separator} {label} {...rest}
+  onarc-input={__onArcInput}
   onarc-change={__onArcChange}
   onarc-complete={__onArcComplete}
 >

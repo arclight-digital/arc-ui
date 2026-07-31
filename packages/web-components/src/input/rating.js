@@ -108,12 +108,6 @@ export class ArcRating extends FormControlMixin(LitElement) {
     this._hoverValue = 0;
   }
 
-  updated(changed) {
-    if (changed.has('value')) {
-      this._updateFormValue();
-    }
-  }
-
   _formValue() {
     return this.value == null ? null : String(this.value);
   }

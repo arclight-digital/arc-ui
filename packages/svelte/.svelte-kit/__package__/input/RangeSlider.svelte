@@ -4,6 +4,7 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
+    size?: 'sm' | 'md' | 'lg';
     min?: number;
     max?: number;
     step?: number;
@@ -40,7 +41,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { min = 0, max = 100, step = 1, low = $bindable(0), high = $bindable(100), name = '', disabled = false, label = '', showValues = true, ...rest }: Props = $props();
+  let { size = 'md', min = 0, max = 100, step = 1, low = $bindable(0), high = $bindable(100), name = '', disabled = false, label = '', showValues = true, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {
@@ -70,7 +71,7 @@
   }
 </script>
 
-<arc-range-slider {min} {max} {step} {low} {high} {name} {disabled} {label} bind:this={__el} {...rest}
+<arc-range-slider {size} {min} {max} {step} {low} {high} {name} {disabled} {label} bind:this={__el} {...rest}
   onarc-input={__onArcInput}
   onarc-change={__onArcChange}
 >

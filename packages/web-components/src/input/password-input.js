@@ -271,8 +271,8 @@ export class ArcPasswordInput extends FormControlMixin(LitElement) {
   }
 
   updated(changed) {
+    super.updated(changed);
     if (changed.has('value')) {
-      this._updateFormValue();
       const score = scorePassword(this.value);
       if (score !== this._score) {
         this._score = score;

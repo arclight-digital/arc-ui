@@ -97,12 +97,6 @@ export class ArcOtpInput extends FormControlMixin(LitElement) {
     this.type = 'number';
   }
 
-  updated(changed) {
-    if (changed.has('value')) {
-      this._updateFormValue();
-    }
-  }
-
   get _chars() {
     const chars = (this.value || '').split('');
     while (chars.length < this.length) chars.push('');

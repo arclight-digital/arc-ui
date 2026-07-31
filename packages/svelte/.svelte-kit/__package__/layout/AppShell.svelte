@@ -40,7 +40,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { sidebarOpen = false, breakpoint = 900, topbar, sidebar, toc, children, ...rest }: Props = $props();
+  let { sidebarOpen = false, breakpoint, topbar, sidebar, toc, children, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

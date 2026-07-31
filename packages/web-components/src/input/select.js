@@ -244,9 +244,7 @@ export class ArcSelect extends FormControlMixin(LitElement) {
   }
 
   updated(changed) {
-    if (changed.has('value')) {
-      this._updateFormValue();
-    }
+    super.updated(changed);
     if (changed.has('open')) {
       if (this.open) {
         this._clickOutside.activate();

@@ -1,5 +1,6 @@
 import '@arclux/arc-ui/range-slider';
 interface Props {
+    size?: 'sm' | 'md' | 'lg';
     min?: number;
     max?: number;
     step?: number;

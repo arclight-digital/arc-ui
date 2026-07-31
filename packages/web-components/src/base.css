@@ -260,11 +260,11 @@
   --radius-xl: 20px;
   --radius-full: 9999px;
 
-  --transition-fast: 120ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-enter: 500ms cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-exit: 300ms cubic-bezier(0.7, 0, 0.84, 0);
+  --transition-fast: var(--duration-fast) var(--ease-standard);
+  --transition-base: var(--duration-base) var(--ease-standard);
+  --transition-slow: var(--duration-slow) var(--ease-standard);
+  --transition-enter: var(--duration-enter) var(--ease-out);
+  --transition-exit: var(--duration-exit) var(--ease-in);
 
   --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -299,7 +299,8 @@
   --glow-xs: 0 0 6px rgba(var(--accent-primary-rgb), 0.3);
   --glow-sm: 0 0 8px rgba(var(--accent-primary-rgb), 0.3);
   --glow-md: 0 0 12px rgba(var(--accent-primary-rgb), 0.25);
-  --glow-status: 0 0 12px rgba(var(--_status-rgb), 0.15);
+  --glow-status: 0 0 12px rgba(var(--_status-rgb), var(--glow-status-alpha, 0.15));
+  --glow-status-alpha: 0.15;
   --glow-hover: 0 0 12px rgba(var(--accent-primary-rgb), 0.15);
   --glow-card-hover: 0 0 20px rgba(var(--accent-primary-rgb),0.08), 0 0 40px rgba(var(--accent-secondary-rgb),0.04);
   --gradient-border-glow: linear-gradient(135deg, rgba(var(--accent-primary-rgb),0.15), rgba(var(--accent-secondary-rgb),0.1), rgba(var(--accent-primary-rgb),0.05));
@@ -415,8 +416,12 @@
   --glow-xs: 0 0 6px rgba(var(--accent-primary-rgb), 0.42);
   --glow-sm: 0 0 8px rgba(var(--accent-primary-rgb), 0.42);
   --glow-md: 0 0 12px rgba(var(--accent-primary-rgb), 0.36);
-  --glow-status: 0 0 12px rgba(var(--_status-rgb), 0.22);
   --glow-hover: 0 0 12px rgba(var(--accent-primary-rgb), 0.22);
+  --glow-status-alpha: 0.22;
+  --focus-ring: 0 0 0 1px rgba(var(--accent-primary-rgb),0.38);
+  --focus-glow: 0 0 0 1px rgba(var(--accent-primary-rgb),0.3), 0 0 6px rgba(var(--accent-primary-rgb),0.5), 0 0 16px rgba(var(--accent-primary-rgb),0.3), 0 0 40px rgba(var(--accent-secondary-rgb),0.18);
+  --focus-error: 0 0 0 2px var(--surface-base), 0 0 0 4px var(--color-error), 0 0 16px rgba(var(--color-error-rgb), 0.3);
+  --focus-thumb: 0 0 8px rgba(var(--interactive-rgb), 0.5), 0 0 20px rgba(var(--interactive-rgb), 0.38);
   --glow-line-white: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.15), transparent);
   --glow-line-blue: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.6), transparent);
   --bg-hover: rgba(55, 105, 235, 0.04);
@@ -472,8 +477,12 @@
     --glow-xs: 0 0 6px rgba(var(--accent-primary-rgb), 0.42);
     --glow-sm: 0 0 8px rgba(var(--accent-primary-rgb), 0.42);
     --glow-md: 0 0 12px rgba(var(--accent-primary-rgb), 0.36);
-    --glow-status: 0 0 12px rgba(var(--_status-rgb), 0.22);
     --glow-hover: 0 0 12px rgba(var(--accent-primary-rgb), 0.22);
+    --glow-status-alpha: 0.22;
+    --focus-ring: 0 0 0 1px rgba(var(--accent-primary-rgb),0.38);
+    --focus-glow: 0 0 0 1px rgba(var(--accent-primary-rgb),0.3), 0 0 6px rgba(var(--accent-primary-rgb),0.5), 0 0 16px rgba(var(--accent-primary-rgb),0.3), 0 0 40px rgba(var(--accent-secondary-rgb),0.18);
+    --focus-error: 0 0 0 2px var(--surface-base), 0 0 0 4px var(--color-error), 0 0 16px rgba(var(--color-error-rgb), 0.3);
+    --focus-thumb: 0 0 8px rgba(var(--interactive-rgb), 0.5), 0 0 20px rgba(var(--interactive-rgb), 0.38);
     --glow-line-white: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.15), transparent);
     --glow-line-blue: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.6), transparent);
     --bg-hover: rgba(55, 105, 235, 0.04);
@@ -524,13 +533,19 @@
   arc-transfer-list, arc-tree-item, arc-tree-view, arc-truncate, arc-typewriter, arc-value-card,
   arc-virtual-list
 ) {
+  --display-xl-weight: inherit;
   --display-xl-spacing: inherit;
+  --heading-weight: inherit;
   --heading-lh: inherit;
+  --body-weight: inherit;
   --body-lh: inherit;
   --wordmark-size: inherit;
+  --wordmark-weight: inherit;
   --wordmark-spacing: inherit;
+  --section-title-weight: inherit;
   --section-title-spacing: inherit;
   --ui-accent-size: inherit;
+  --ui-accent-weight: inherit;
   --ui-accent-spacing: inherit;
   --code-size: inherit;
   --code-lh: inherit;
@@ -564,6 +579,8 @@
   --duration-slow: inherit;
   --duration-enter: inherit;
   --duration-exit: inherit;
+  --ease-out-expo: inherit;
+  --ease-in-out: inherit;
   --z-base: inherit;
   --z-dropdown: inherit;
   --z-tooltip: inherit;
@@ -571,11 +588,38 @@
   --z-modal: inherit;
   --z-toast: inherit;
   --z-max: inherit;
+  --glow-xs: inherit;
+  --glow-sm: inherit;
+  --glow-md: inherit;
+  --glow-status-alpha: inherit;
+  --glow-hover: inherit;
+  --focus-ring: inherit;
+  --focus-glow: inherit;
+  --focus-error: inherit;
+  --focus-inset: inherit;
+  --focus-thumb: inherit;
+  --interactive: inherit;
+  --interactive-rgb: inherit;
+  --interactive-hover: inherit;
+  --interactive-active: inherit;
+  --interactive-focus: inherit;
+  --interactive-focus-ring: inherit;
+  --interactive-focus-error: inherit;
+  --interactive-focus-inset: inherit;
+  --interactive-focus-thumb: inherit;
+  --interactive-muted: inherit;
+  --surface-base: inherit;
+  --surface-primary: inherit;
+  --surface-raised: inherit;
+  --surface-overlay: inherit;
+  --surface-hover: inherit;
+  --divider: inherit;
   --touch-min: inherit;
   --touch-pad: inherit;
   --max-width: inherit;
   --max-width-sm: inherit;
   --nav-height: inherit;
+  --nav-row-inset: inherit;
 }
 
 /* Fixed Dark — always-dark regions (nav, footer) */
@@ -594,10 +638,18 @@
   --border-bright: rgb(51, 51, 64);
   --accent-primary: rgb(77, 126, 247);
   --accent-secondary: rgb(139, 92, 246);
+  --color-success: rgb(52, 211, 153);
+  --color-error: rgb(239, 68, 68);
+  --color-warning: rgb(245, 158, 11);
+  --color-info: rgb(59, 130, 246);
   --accent-primary-rgb: 77, 126, 247;
   --accent-secondary-rgb: 139, 92, 246;
   --text-primary-rgb: 232, 232, 236;
   --text-muted-rgb: 142, 142, 155;
+  --color-success-rgb: 52, 211, 153;
+  --color-error-rgb: 239, 68, 68;
+  --color-warning-rgb: 245, 158, 11;
+  --color-info-rgb: 59, 130, 246;
   --white-rgb: 255, 255, 255;
   --black-rgb: 0, 0, 0;
   --shadow-overlay: 0 8px 32px rgba(0, 0, 0, 0.4);
@@ -614,6 +666,28 @@
   --surface-overlay: var(--bg-elevated);
   --surface-hover: var(--bg-hover);
   --divider: var(--border-subtle);
+  --glow-primary: 0 0 8px rgba(var(--accent-primary-rgb),0.9), 0 0 20px rgba(var(--accent-primary-rgb),0.5), 0 0 44px rgba(var(--accent-primary-rgb),0.25), 0 0 80px rgba(var(--accent-primary-rgb),0.1);
+  --glow-secondary: 0 0 8px rgba(var(--accent-secondary-rgb),0.9), 0 0 20px rgba(var(--accent-secondary-rgb),0.5), 0 0 44px rgba(var(--accent-secondary-rgb),0.25), 0 0 80px rgba(var(--accent-secondary-rgb),0.1);
+  --glow-white: 0 0 6px rgba(var(--text-primary-rgb),0.6), 0 0 18px rgba(var(--text-primary-rgb),0.25), 0 0 40px rgba(var(--text-primary-rgb),0.1);
+  --glow-xs: 0 0 6px rgba(var(--accent-primary-rgb), 0.3);
+  --glow-sm: 0 0 8px rgba(var(--accent-primary-rgb), 0.3);
+  --glow-md: 0 0 12px rgba(var(--accent-primary-rgb), 0.25);
+  --glow-status-alpha: 0.15;
+  --glow-hover: 0 0 12px rgba(var(--accent-primary-rgb), 0.15);
+  --glow-card-hover: 0 0 20px rgba(var(--accent-primary-rgb),0.08), 0 0 40px rgba(var(--accent-secondary-rgb),0.04);
+  --gradient-divider-glow: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.2), rgba(var(--accent-secondary-rgb),0.12), transparent);
+  --focus-ring: 0 0 0 1px rgba(var(--accent-primary-rgb),0.25);
+  --focus-glow: 0 0 0 1px rgba(var(--accent-primary-rgb),0.2), 0 0 6px rgba(var(--accent-primary-rgb),0.35), 0 0 16px rgba(var(--accent-primary-rgb),0.2), 0 0 40px rgba(var(--accent-secondary-rgb),0.12);
+  --focus-error: 0 0 0 2px var(--surface-base), 0 0 0 4px var(--color-error), 0 0 16px rgba(var(--color-error-rgb), 0.2);
+  --focus-inset: inset 0 0 0 2px var(--interactive);
+  --focus-thumb: 0 0 8px rgba(var(--interactive-rgb), 0.5), 0 0 20px rgba(var(--interactive-rgb), 0.25);
+  --interactive-hover: var(--glow-hover);
+  --interactive-active: var(--glow-primary);
+  --interactive-focus: var(--focus-glow);
+  --interactive-focus-ring: var(--focus-ring);
+  --interactive-focus-error: var(--focus-error);
+  --interactive-focus-inset: var(--focus-inset);
+  --interactive-focus-thumb: var(--focus-thumb);
 }
 
 [data-theme="light"] .theme-fixed {

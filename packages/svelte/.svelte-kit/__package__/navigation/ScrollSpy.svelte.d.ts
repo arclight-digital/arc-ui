@@ -3,6 +3,7 @@ import type { Snippet } from 'svelte';
 interface Props {
     active?: string;
     offset?: number;
+    progress?: 'none' | 'ring' | 'read' | 'both';
     children?: Snippet;
     class?: string;
     id?: string;

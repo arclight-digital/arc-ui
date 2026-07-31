@@ -4,6 +4,7 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
+    size?: 'sm' | 'md' | 'lg';
     value?: number;
     min?: number;
     max?: number;
@@ -38,11 +39,18 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = $bindable(0), min, max, step = 1, label = '', name = '', disabled = false, ...rest }: Props = $props();
+  let { size = 'md', value = $bindable(0), min, max, step = 1, label = '', name = '', disabled = false, ...rest }: Props = $props();
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
   // have attached. These are declared after {...rest} below so they win.
+  function __onArcInput(e: Event) {
+    const detail = (e as CustomEvent).detail as Record<string, unknown> | null;
+    if (detail) {
+      if ('value' in detail) value = detail.value as number;
+    }
+    (rest['onarc-input'] as ((e: Event) => void) | undefined)?.(e);
+  }
   function __onArcChange(e: Event) {
     const detail = (e as CustomEvent).detail as Record<string, unknown> | null;
     if (detail) {
@@ -52,7 +60,8 @@
   }
 </script>
 
-<arc-number-input {value} {min} {max} {step} {label} {name} {disabled} {...rest}
+<arc-number-input {size} {value} {min} {max} {step} {label} {name} {disabled} {...rest}
+  onarc-input={__onArcInput}
   onarc-change={__onArcChange}
 >
 </arc-number-input>

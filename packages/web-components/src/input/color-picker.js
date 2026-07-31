@@ -226,9 +226,7 @@ export class ArcColorPicker extends FormControlMixin(LitElement) {
   }
 
   updated(changed) {
-    if (changed.has('value')) {
-      this._updateFormValue();
-    }
+    super.updated(changed);
     if (changed.has('value') && !this._draggingArea && !this._draggingHue) {
       this._parseHex(this.value);
       this._hexInput = this.value;

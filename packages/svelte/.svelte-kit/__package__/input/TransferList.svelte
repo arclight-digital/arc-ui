@@ -4,6 +4,7 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
+    size?: 'sm' | 'md' | 'lg';
     options?: Array<{value:string,label:string,disabled?:boolean}>;
     value?: string[];
     name?: string;
@@ -38,7 +39,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { options = [], value = $bindable([]), name = '', disabled = false, searchable = false, sourceLabel = 'Available', targetLabel = 'Selected', ...rest }: Props = $props();
+  let { size = 'md', options = [], value = $bindable([]), name = '', disabled = false, searchable = false, sourceLabel = 'Available', targetLabel = 'Selected', ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {
@@ -60,7 +61,7 @@
   }
 </script>
 
-<arc-transfer-list {options} {value} {name} {disabled} {searchable} bind:this={__el} {...rest}
+<arc-transfer-list {size} {options} {value} {name} {disabled} {searchable} bind:this={__el} {...rest}
   onarc-change={__onArcChange}
 >
 </arc-transfer-list>

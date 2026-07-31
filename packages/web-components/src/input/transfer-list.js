@@ -325,12 +325,6 @@ export class ArcTransferList extends FormControlMixin(LitElement) {
     this.value = [...(state.value || [])];
   }
 
-  updated(changed) {
-    if (changed.has('value')) {
-      this._updateFormValue();
-    }
-  }
-
   get _valueSet() {
     return new Set(this.value || []);
   }

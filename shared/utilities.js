@@ -61,6 +61,15 @@ const ACCENT_COLORS = [
   'accent-primary', 'accent-secondary', 'success', 'error', 'warning', 'info',
 ];
 
+/**
+ * The token behind an accent/status class. The class name is the bare key
+ * (.arc-text-success), but base.css publishes the status colours under the
+ * --color-* prefix — var(--success) does not exist and resolves to nothing.
+ * The accents really are bare (--accent-primary), so only the statuses map.
+ */
+const STATUS_KEYS = new Set(['success', 'error', 'warning', 'info']);
+const accentVar = (k) => (STATUS_KEYS.has(k) ? `--color-${k}` : `--${k}`);
+
 /** The five font roles. Components read these; so should layout around them. */
 const FONT_ROLES = ['body', 'label', 'mono', 'display', 'quote'];
 
@@ -254,9 +263,9 @@ export function generateUtilitiesCSS() {
   groups.push(section('Colour', [
     ...TEXT_SIZE_KEYS.map((k) => rule(`text-${k}`, `font-size: var(--text-${k});`)),
     ...TEXT_COLORS.map((k) => rule(`text-${k}`, `color: var(--text-${k});`)),
-    ...ACCENT_COLORS.map((k) => rule(`text-${k}`, `color: var(--${k});`)),
+    ...ACCENT_COLORS.map((k) => rule(`text-${k}`, `color: var(${accentVar(k)});`)),
     ...BG_COLORS.map((k) => rule(`bg-${k}`, `background-color: var(--bg-${k});`)),
-    ...ACCENT_COLORS.map((k) => rule(`bg-${k}`, `background-color: var(--${k});`)),
+    ...ACCENT_COLORS.map((k) => rule(`bg-${k}`, `background-color: var(${accentVar(k)});`)),
     rule('bg-none', 'background: none;'),
   ]));
 

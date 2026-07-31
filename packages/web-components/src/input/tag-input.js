@@ -331,11 +331,9 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
   }
 
   updated(changed) {
+    super.updated(changed);
     if (changed.has('_open')) {
       this._open ? this._position.show() : this._position.hide();
-    }
-    if (changed.has('value')) {
-      this._updateFormValue();
     }
     if (changed.has('_open')) {
       if (this._open) this._clickOutside.activate();

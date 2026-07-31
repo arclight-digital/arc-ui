@@ -18,8 +18,8 @@ import { managedPanelStyles } from '../shared/position-styles.js';
  * @prop {boolean} open - Whether the suggestion dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.
  * @fires {CustomEvent<{ value: string }>} arc-input - Fired on each keystroke in the search field
  * @fires {CustomEvent<void>} arc-clear - Fired when the clear button is clicked
- * @fires {CustomEvent<{ value: string }>} arc-change - Fired when the search value changes on blur
- * @fires arc-select - Fired when a suggestion is selected
+ * @fires {CustomEvent<{ value: string }>} arc-change - Fired when the value is committed: Enter in the field, or a suggestion selected by click or keyboard
+ * @fires arc-select - Fired when a suggestion is selected (before the accompanying arc-change)
  * @slot - Default content.
  * @csspart label
  * @csspart wrapper
@@ -288,6 +288,14 @@ export class ArcSearch extends LitElement {
 
     this.dispatchEvent(new CustomEvent('arc-select', {
       detail: { value: item },
+      bubbles: true,
+      composed: true,
+    }));
+
+    // A suggestion pick commits the value just like Enter does, so it must
+    // also fire arc-change — same detail shape as _submit().
+    this.dispatchEvent(new CustomEvent('arc-change', {
+      detail: { value: this.value },
       bubbles: true,
       composed: true,
     }));

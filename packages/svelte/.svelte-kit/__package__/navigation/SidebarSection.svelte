@@ -7,6 +7,7 @@
     heading?: string;
     collapsible?: boolean;
     open?: boolean;
+    icon?: string;
     children?: Snippet;
     class?: string;
     id?: string;
@@ -35,7 +36,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { heading = '', collapsible = false, open = $bindable(true), children, ...rest }: Props = $props();
+  let { heading = '', collapsible = false, open = $bindable(true), icon = '', children, ...rest }: Props = $props();
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
@@ -49,7 +50,7 @@
   }
 </script>
 
-<arc-sidebar-section {heading} {collapsible} {open} {...rest}
+<arc-sidebar-section {heading} {collapsible} {open} {icon} {...rest}
   onarc-toggle={__onArcToggle}
 >
   {@render children?.()}

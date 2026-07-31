@@ -1,5 +1,6 @@
 import '@arclux/arc-ui/pin-input';
 interface Props {
+    size?: 'sm' | 'md' | 'lg';
     length?: number;
     value?: string;
     name?: string;

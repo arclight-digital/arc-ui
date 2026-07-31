@@ -472,12 +472,10 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
   }
 
   updated(changed) {
+    super.updated(changed);
     if (changed.has('open')) {
       this.open ? this._position.show() : this._position.hide();
       this.open ? this._clickOutside.activate() : this._clickOutside.deactivate();
-    }
-    if (changed.has('value')) {
-      this._updateFormValue();
     }
     if (changed.has('open') && this.open) {
       // Scroll selected items into view, then focus the hour tab stop

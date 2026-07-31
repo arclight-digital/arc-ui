@@ -4,6 +4,8 @@ interface Props {
     shortcut?: string;
     icon?: string;
     keywords?: string;
+    description?: string;
+    value?: string;
     children?: Snippet;
     class?: string;
     id?: string;

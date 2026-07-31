@@ -23,7 +23,10 @@ import { css, unsafeCSS } from 'lit';
  * @param {boolean} [opts.animate=true] - Emit the open/close enter and exit
  *   animation. Pass false for panels that run their own keyframe animation, so
  *   this doesn't declare a competing `transform` on the same element.
- * @param {string} [opts.duration='var(--transition-base)'] - Animation duration.
+ * @param {string} [opts.duration='var(--duration-base)'] - Animation duration.
+ *   Must be a bare <duration> (--duration-*), never a --transition-* shorthand:
+ *   this feeds `transition-duration`, where a `<time> <curve>` pair is invalid
+ *   and computes to 0s — the panel would snap instead of animating.
  * @param {string} [opts.closedTransform] - Closed-state transform, replacing the
  *   scale. Lets a panel keep the entrance it already had (the menus slide down
  *   rather than scale) instead of every panel being normalised to one.
@@ -34,7 +37,7 @@ export function managedPanelStyles(
     scale = 0.95,
     openCls,
     animate = true,
-    duration = 'var(--transition-base)',
+    duration = 'var(--duration-base)',
     closedTransform,
   } = {},
 ) {
@@ -61,6 +64,12 @@ export function managedPanelStyles(
   // :popover-open, because a browser without popover support still gets a
   // data-managed panel — keying on :popover-open would leave it stuck at
   // opacity 0 there.
+  //
+  // The curves follow the motion scale's rule (see shared/tokens.js): --ease-out
+  // for something entering, --ease-in for something leaving. A transition reads
+  // its timing from the *destination* state, so the closed-state rule carries the
+  // exit curve and the open rule the enter curve. Both are declared explicitly
+  // because transition-duration alone would leave the UA default `ease`.
   const scaleRules = animate
     ? css`
     .${c}[data-managed] {
@@ -68,11 +77,13 @@ export function managedPanelStyles(
       transform: ${s};
       transition-property: opacity, transform, display, overlay;
       transition-duration: ${d};
+      transition-timing-function: var(--ease-in);
       transition-behavior: allow-discrete;
     }
     ${open} {
       opacity: 1;
       transform: none;
+      transition-timing-function: var(--ease-out);
     }
     @starting-style {
       ${open} {

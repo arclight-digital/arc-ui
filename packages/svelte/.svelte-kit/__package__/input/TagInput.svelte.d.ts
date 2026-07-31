@@ -1,5 +1,6 @@
 import '@arclux/arc-ui/tag-input';
 interface Props {
+    size?: 'sm' | 'md' | 'lg';
     value?: string[];
     suggestions?: string[];
     delimiter?: string;

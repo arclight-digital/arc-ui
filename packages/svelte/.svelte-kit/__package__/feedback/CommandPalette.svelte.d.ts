@@ -3,6 +3,7 @@ import type { Snippet } from 'svelte';
 interface Props {
     open?: boolean;
     placeholder?: string;
+    maxResults?: number;
     children?: Snippet;
     class?: string;
     id?: string;

@@ -175,6 +175,9 @@ export class ArcRangeSlider extends FormControlMixin(LitElement) {
   }
 
   updated(changed) {
+    super.updated(changed);
+    // The submitted value tracks `low`/`high`, not `value`, so the mixin's
+    // value-watch never fires for this control — sync locally.
     if (changed.has('low') || changed.has('high')) {
       this._updateFormValue();
     }

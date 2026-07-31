@@ -2,6 +2,9 @@ import '@arclux/arc-ui/top-bar';
 import type { Snippet } from 'svelte';
 interface Props {
     heading?: string;
+    homeHref?: string;
+    scrolled?: boolean;
+    immersive?: boolean;
     fixed?: boolean;
     contained?: string;
     menuOpen?: boolean;

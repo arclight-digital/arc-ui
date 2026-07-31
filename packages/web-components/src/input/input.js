@@ -182,9 +182,7 @@ export class ArcInput extends FormControlMixin(LitElement) {
   }
 
   updated(changed) {
-    if (changed.has('value')) {
-      this._updateFormValue();
-    }
+    super.updated(changed);
     if (changed.has('value') || changed.has('required')) {
       this._syncValidity();
     }

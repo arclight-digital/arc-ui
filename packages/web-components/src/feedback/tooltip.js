@@ -184,7 +184,7 @@ export class ArcTooltip extends LitElement {
     managedPanelStyles('tooltip__popup', {
       openCls: 'is-visible',
       scale: 1,
-      duration: 'var(--transition-fast)',
+      duration: 'var(--duration-fast)',
     }),
   ];
 

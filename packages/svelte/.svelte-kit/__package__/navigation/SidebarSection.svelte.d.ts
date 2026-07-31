@@ -4,6 +4,7 @@ interface Props {
     heading?: string;
     collapsible?: boolean;
     open?: boolean;
+    icon?: string;
     children?: Snippet;
     class?: string;
     id?: string;

@@ -9127,7 +9127,7 @@
         },
         {
           "name": "arc-search",
-          "description": "Search input with a magnifying glass icon, clear button, loading spinner, and autocomplete\nsuggestions dropdown.\n---\n\n\n### **Events:**\n - **arc-input** - Fired on each keystroke in the search field\n- **arc-clear** - Fired when the clear button is clicked\n- **arc-change** - Fired when the search value changes on blur\n- **arc-select** - Fired when a suggestion is selected\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **label**\n- **wrapper**\n- **icon**\n- **input**\n- **spinner**\n- **clear**\n- **suggestions**\n- **suggestion**",
+          "description": "Search input with a magnifying glass icon, clear button, loading spinner, and autocomplete\nsuggestions dropdown.\n---\n\n\n### **Events:**\n - **arc-input** - Fired on each keystroke in the search field\n- **arc-clear** - Fired when the clear button is clicked\n- **arc-change** - Fired when the value is committed: Enter in the field, or a suggestion selected by click or keyboard\n- **arc-select** - Fired when a suggestion is selected (before the accompanying arc-change)\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **label**\n- **wrapper**\n- **icon**\n- **input**\n- **spinner**\n- **clear**\n- **suggestions**\n- **suggestion**",
           "doc-url": "",
           "attributes": [
             {
@@ -9199,12 +9199,12 @@
             {
               "name": "arc-change",
               "type": "CustomEvent<{ value: string }>",
-              "description": "Fired when the search value changes on blur"
+              "description": "Fired when the value is committed: Enter in the field, or a suggestion selected by click or keyboard"
             },
             {
               "name": "arc-select",
               "type": "CustomEvent",
-              "description": "Fired when a suggestion is selected"
+              "description": "Fired when a suggestion is selected (before the accompanying arc-change)"
             }
           ],
           "js": {
@@ -9254,12 +9254,12 @@
               {
                 "name": "arc-change",
                 "type": "CustomEvent<{ value: string }>",
-                "description": "Fired when the search value changes on blur"
+                "description": "Fired when the value is committed: Enter in the field, or a suggestion selected by click or keyboard"
               },
               {
                 "name": "arc-select",
                 "type": "CustomEvent",
-                "description": "Fired when a suggestion is selected"
+                "description": "Fired when a suggestion is selected (before the accompanying arc-change)"
               }
             ]
           }

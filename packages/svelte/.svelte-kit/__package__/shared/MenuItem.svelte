@@ -7,6 +7,7 @@
     shortcut?: string;
     disabled?: boolean;
     icon?: string;
+    value?: string;
     children?: Snippet;
     class?: string;
     id?: string;
@@ -35,9 +36,9 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { shortcut = '', disabled = false, icon = '', children, ...rest }: Props = $props();
+  let { shortcut = '', disabled = false, icon = '', value = '', children, ...rest }: Props = $props();
 </script>
 
-<arc-menu-item {shortcut} {disabled} {icon} {...rest}>
+<arc-menu-item {shortcut} {disabled} {icon} {value} {...rest}>
   {@render children?.()}
 </arc-menu-item>

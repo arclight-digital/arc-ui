@@ -1,5 +1,6 @@
 import '@arclux/arc-ui/color-picker';
 interface Props {
+    size?: 'sm' | 'md' | 'lg';
     value?: string;
     name?: string;
     presets?: string[];

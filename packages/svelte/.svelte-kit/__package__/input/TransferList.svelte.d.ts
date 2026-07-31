@@ -1,5 +1,6 @@
 import '@arclux/arc-ui/transfer-list';
 interface Props {
+    size?: 'sm' | 'md' | 'lg';
     options?: Array<{
         value: string;
         label: string;

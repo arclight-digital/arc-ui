@@ -1,5 +1,6 @@
 import '@arclux/arc-ui/date-range-picker';
 interface Props {
+    size?: 'sm' | 'md' | 'lg';
     locale?: string;
     firstDayOfWeek?: number;
     start?: string;

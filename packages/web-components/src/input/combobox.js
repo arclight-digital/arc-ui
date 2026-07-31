@@ -272,11 +272,11 @@ export class ArcCombobox extends FormControlMixin(LitElement) {
   }
 
   updated(changed) {
+    super.updated(changed);
     if (changed.has('_open')) {
       this._open ? this._position.show() : this._position.hide();
     }
     if (changed.has('value')) {
-      this._updateFormValue();
       if (!this._open) {
         const item = this._normalizedItems.find(i => i.value === this.value);
         if (item) this._query = item.label;

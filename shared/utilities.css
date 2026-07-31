@@ -270,10 +270,10 @@
 .arc-text-ghost { color: var(--text-ghost); }
 .arc-text-accent-primary { color: var(--accent-primary); }
 .arc-text-accent-secondary { color: var(--accent-secondary); }
-.arc-text-success { color: var(--success); }
-.arc-text-error { color: var(--error); }
-.arc-text-warning { color: var(--warning); }
-.arc-text-info { color: var(--info); }
+.arc-text-success { color: var(--color-success); }
+.arc-text-error { color: var(--color-error); }
+.arc-text-warning { color: var(--color-warning); }
+.arc-text-info { color: var(--color-info); }
 .arc-bg-deep { background-color: var(--bg-deep); }
 .arc-bg-surface { background-color: var(--bg-surface); }
 .arc-bg-base { background-color: var(--bg-base); }
@@ -281,10 +281,10 @@
 .arc-bg-elevated { background-color: var(--bg-elevated); }
 .arc-bg-accent-primary { background-color: var(--accent-primary); }
 .arc-bg-accent-secondary { background-color: var(--accent-secondary); }
-.arc-bg-success { background-color: var(--success); }
-.arc-bg-error { background-color: var(--error); }
-.arc-bg-warning { background-color: var(--warning); }
-.arc-bg-info { background-color: var(--info); }
+.arc-bg-success { background-color: var(--color-success); }
+.arc-bg-error { background-color: var(--color-error); }
+.arc-bg-warning { background-color: var(--color-warning); }
+.arc-bg-info { background-color: var(--color-info); }
 .arc-bg-none { background: none; }
 
 /* ── Border ── */

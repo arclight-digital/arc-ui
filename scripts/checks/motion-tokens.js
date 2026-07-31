@@ -112,7 +112,10 @@ function check(file) {
     }
 
     // A curve token where the duration belongs: no <time> before it in the
-    // same comma-separated segment.
+    // same comma-separated segment. Shorthands only — transition-timing-function
+    // takes a bare curve and no duration, so a curve token alone is exactly
+    // right there.
+    if (/-timing-function\s*:/.test(line)) return;
     for (const segment of line.slice(line.indexOf(':') + 1).split(',')) {
       if (!/var\(--ease-/.test(segment)) continue;
       const beforeCurve = segment.slice(0, segment.indexOf('var(--ease-'));

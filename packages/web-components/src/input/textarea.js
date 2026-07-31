@@ -182,10 +182,7 @@ export class ArcTextarea extends FormControlMixin(LitElement) {
   }
 
   updated(changed) {
-    super.updated?.(changed);
-    if (changed.has('value')) {
-      this._updateFormValue();
-    }
+    super.updated(changed);
     if (this.autoResize && (changed.has('value') || changed.has('autoResize'))) {
       const ta = this.shadowRoot?.querySelector('textarea');
       if (ta) this._autoGrow(ta);

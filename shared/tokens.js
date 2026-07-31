@@ -240,20 +240,19 @@ export const tokens = {
   /* ── Transitions ──
      Duration and curve composed into the one shorthand a component writes.
 
-     The curve is baked in here rather than referenced with var() in the CSS,
-     which is the opposite of the rule for gradients and glows. Those compose
-     with var() so a consumer can retune them from :root; these cannot, because
-     both --transition-* and --ease-* are declared on :host, and a :host value
-     beats the inherited :root one — a var() reference would resolve against
-     :host's own easing and make the :root override unreachable anyway. That is
-     the same trap the --_text-* private mirrors exist to avoid. Composing in JS
-     instead is what keeps the shorthand and the bare curve from drifting. */
+     Composed with var(), same rule as the gradients and glows: compound tokens
+     reference base tokens, so overriding --duration-base or --ease-standard at
+     :root retunes every shorthand with it. That works because --ease-* and
+     --duration-* are forwarded by the :where(arc-*) rule in base.css — the
+     :host copies yield to the inherited :root value — and the shorthands
+     themselves are forwarded too, so the reference resolves on the element
+     against whatever the page declares. */
   transition: {
-    fast:  `${duration.fast} ${easing.standard}`,
-    base:  `${duration.base} ${easing.standard}`,
-    slow:  `${duration.slow} ${easing.standard}`,
-    enter: `${duration.enter} ${easing.out}`,
-    exit:  `${duration.exit} ${easing.in}`,
+    fast:  'var(--duration-fast) var(--ease-standard)',
+    base:  'var(--duration-base) var(--ease-standard)',
+    slow:  'var(--duration-slow) var(--ease-standard)',
+    enter: 'var(--duration-enter) var(--ease-out)',
+    exit:  'var(--duration-exit) var(--ease-in)',
   },
 
   /* ── Motion ── see the scales above the tree for what each curve is for. */
@@ -341,13 +340,9 @@ export const tokens = {
      * A composition on purpose, so overriding --space-sm moves the whole scale
      * with it rather than leaving this one value behind.
      *
-     * Which also means this is NOT a consumer override point, and silently so:
-     * renderTokenForwarding only forwards tokens whose value is a literal, so
-     * `:root { --nav-row-inset: 20px }` never reaches a component — the :host
-     * declaration wins and the override is simply ignored. Verified. The
-     * supported knob is --space-sm, which is a literal, is forwarded, and does
-     * move both rows. Anyone wanting this settable on its own has to give it a
-     * literal value here and accept that it stops tracking the scale.
+     * Forwarded like any other :host token (only shadow-private compositions
+     * are held back), so both knobs work from :root: --space-sm moves the whole
+     * scale, and `:root { --nav-row-inset: 20px }` moves just the rows.
      */
     navRowInset: 'var(--space-sm)',
   },
@@ -404,9 +399,19 @@ export const tokens = {
     md: '0 0 12px rgba(var(--accent-primary-rgb), 0.25)',
     /* Reads --_status-rgb from status-styles.js, so it takes the colour of
        whatever variant the host is carrying. arc-badge and arc-tag each spelled
-       this out five times, once per variant; arc-alert a sixth. */
-    status: '0 0 12px rgba(var(--_status-rgb), 0.15)',
+       this out five times, once per variant; arc-alert a sixth.
+
+       The alpha is a token of its own because this is the one glow that cannot
+       be forwarded: --_status-rgb is shadow-private, guaranteed-invalid at
+       :root, so --glow-status must stay a :host declaration — which would strand
+       its light-theme retune at :root, unreachable. The themable part is only
+       the alpha, so that is what crosses the boundary: --glow-status-alpha is a
+       bare number, forwarded like any literal, overridden per theme below. */
+    status: '0 0 12px rgba(var(--_status-rgb), var(--glow-status-alpha, 0.15))',
   },
+
+  /* The themable half of --glow-status — see the note on glowScale.status. */
+  glowStatusAlpha: '0.15',
 
   /* ── Hover Glow ── */
   glowHover: '0 0 12px rgba(var(--accent-primary-rgb), 0.15)',
@@ -664,6 +669,7 @@ ${Object.entries(tokens.duration).map(([k, v]) => `  --duration-${k}: ${v};`).jo
   --glow-line-gradient: linear-gradient(90deg, transparent, var(--accent-primary), var(--accent-secondary), transparent);
 
 ${Object.entries(tokens.glowScale).map(([k, v]) => `  --glow-${k}: ${v};`).join('\n')}
+  --glow-status-alpha: ${tokens.glowStatusAlpha};
   --glow-hover: 0 0 12px rgba(var(--accent-primary-rgb), 0.15);
   --glow-card-hover: 0 0 20px rgba(var(--accent-primary-rgb),0.08), 0 0 40px rgba(var(--accent-secondary-rgb),0.04);
   --gradient-border-glow: linear-gradient(135deg, rgba(var(--accent-primary-rgb),0.15), rgba(var(--accent-secondary-rgb),0.1), rgba(var(--accent-primary-rgb),0.05));
@@ -797,9 +803,25 @@ export const lightTokens = {
     xs:     '0 0 6px rgba(var(--accent-primary-rgb), 0.42)',
     sm:     '0 0 8px rgba(var(--accent-primary-rgb), 0.42)',
     md:     '0 0 12px rgba(var(--accent-primary-rgb), 0.36)',
-    status: '0 0 12px rgba(var(--_status-rgb), 0.22)',
   },
+  /* The status glow's themable half. --glow-status itself stays on :host (its
+     --_status-rgb is shadow-private and cannot cross the boundary), so the
+     light retune travels as this bare number instead. Same ×1.5 rule. */
+  glowStatusAlpha: '0.22',
   glowHover: '0 0 12px rgba(var(--accent-primary-rgb), 0.22)',
+
+  /* Focus recipes, retuned by the same ×1.5 rule as the glow scale above:
+     subtle accent washes need more alpha on a light ground. Structure is
+     identical to the dark recipes — layers, radii and solid rings unchanged,
+     only the alphas move. focus.inset carries no alpha and needs no override.
+     The thumb's tight 0.5 layer already reads on a light ground; only its
+     outer wash steps up. */
+  focus: {
+    ring:  '0 0 0 1px rgba(var(--accent-primary-rgb),0.38)',
+    glow:  '0 0 0 1px rgba(var(--accent-primary-rgb),0.3), 0 0 6px rgba(var(--accent-primary-rgb),0.5), 0 0 16px rgba(var(--accent-primary-rgb),0.3), 0 0 40px rgba(var(--accent-secondary-rgb),0.18)',
+    error: '0 0 0 2px var(--surface-base), 0 0 0 4px var(--color-error), 0 0 16px rgba(var(--color-error-rgb), 0.3)',
+    thumb: '0 0 8px rgba(var(--interactive-rgb), 0.5), 0 0 20px rgba(var(--interactive-rgb), 0.38)',
+  },
 
   shadow: {
     xs:      '0 1px 2px rgba(var(--accent-primary-rgb),0.06)',
@@ -845,12 +867,27 @@ export const fixedDarkTokens = {
     borderBright:  'rgb(51, 51, 64)',
     accentPrimary:   'rgb(77, 126, 247)',
     accentSecondary: 'rgb(139, 92, 246)',
+    /* Status colours, pinned to the dark-tuned values. The statuses became
+       themeable (light darkens them for a near-white page), so a fixed-dark
+       region has to force them back: without these, a `success` badge inside
+       the navy footer of a light page would render the darkened-for-light
+       green on rgb(12, 12, 52) at roughly 2:1. The bright values are correct
+       for both fixed grounds — near-black here, deep navy in the light-fixed
+       variant, which inherits these rather than restating them. */
+    success: 'rgb(52, 211, 153)',
+    error:   'rgb(239, 68, 68)',
+    warning: 'rgb(245, 158, 11)',
+    info:    'rgb(59, 130, 246)',
   },
   rgb: {
     accentPrimary:   '77, 126, 247',
     accentSecondary: '139, 92, 246',
     textPrimary:  '232, 232, 236',
     textMuted:    '142, 142, 155',
+    success:      '52, 211, 153',
+    error:        '239, 68, 68',
+    warning:      '245, 158, 11',
+    info:         '59, 130, 246',
     white:        '255, 255, 255',
     black:        '0, 0, 0',
   },
@@ -929,7 +966,14 @@ const colorVarMap = {
 const rgbVarMap = {
   accentPrimary: '--accent-primary-rgb', accentSecondary: '--accent-secondary-rgb',
   textPrimary: '--text-primary-rgb', textMuted: '--text-muted-rgb',
+  success: '--color-success-rgb', error: '--color-error-rgb',
+  warning: '--color-warning-rgb', info: '--color-info-rgb',
   white: '--white-rgb', black: '--black-rgb',
+};
+
+const focusVarMap = {
+  ring: '--focus-ring', glow: '--focus-glow', error: '--focus-error',
+  inset: '--focus-inset', thumb: '--focus-thumb',
 };
 
 const shadowVarMap = {
@@ -975,8 +1019,12 @@ function renderOverrides(t, indent = '  ', label = 'theme') {
     const scaleVar = { xs: '--glow-xs', sm: '--glow-sm', md: '--glow-md', status: '--glow-status' };
     for (const [k, v] of Object.entries(t.glowScale)) mapped(scaleVar, 'glowScale')(k, v);
   }
-  // A scalar rather than a group, like the base tree's glowHover.
+  // Scalars rather than groups, like the base tree's glowHover.
   if (t.glowHover) add('--glow-hover', t.glowHover);
+  if (t.glowStatusAlpha) add('--glow-status-alpha', t.glowStatusAlpha);
+  if (t.focus) {
+    for (const [k, v] of Object.entries(t.focus)) mapped(focusVarMap, 'focus')(k, v);
+  }
   if (t.glowLine) {
     const lineVar = { white: '--glow-line-white', primary: '--glow-line-blue' };
     for (const [k, v] of Object.entries(t.glowLine)) mapped(lineVar, 'glowLine')(k, v);
@@ -992,7 +1040,7 @@ function renderOverrides(t, indent = '  ', label = 'theme') {
 
   for (const group of Object.keys(t)) {
     if (!['color', 'rgb', 'shadow', 'gradient', 'glow', 'glowCard', 'glowScale',
-          'glowHover', 'glowLine', 'utility'].includes(group)) {
+          'glowHover', 'glowStatusAlpha', 'glowLine', 'focus', 'utility'].includes(group)) {
       unknown.push(group);
     }
   }
@@ -1085,19 +1133,27 @@ function renderTokenForwarding(tags) {
 
   // Derived from the :host layer itself rather than a hand-kept list, so a token
   // added to the tree is forwarded automatically.
-  // Only tokens whose value is a *literal* may be forwarded.
   //
-  // `inherit` resolves to the parent's already-substituted value, so forwarding a
-  // composition freezes it: --interactive: inherit would take the parent's
-  // resolved accent, and `arc-button { --accent-primary: red }` would stop
-  // recolouring the button because :host's --interactive: var(--accent-primary)
-  // never gets to resolve in the element's own context. Compositions must stay
-  // local. Nothing is lost by skipping them — each derives from a base token that
-  // is itself reachable: --interactive from --accent-primary (a colour, never on
-  // :host, so already inherited) and --body-size from --text-md (via its private
-  // mirror).
+  // Only tokens that reference a *shadow-private* variable (var(--_…)) are held
+  // back. A private token is only ever declared inside a shadow root —
+  // --_status-rgb comes from status-styles.js — so forwarding its composition
+  // would make the value inherit from a scope where the reference is
+  // guaranteed-invalid. Everything else is forwarded, compositions included:
+  // an accent compound like --glow-md or --focus-glow resolves fine at :root
+  // (the accent channels are declared there), and forwarding is exactly what
+  // lets the [data-theme="light"] retunes of those recipes reach into shadow
+  // DOM — a blanket "no var()" exclusion here is what once stranded them at
+  // :root while the :host copies kept the dark alphas.
+  //
+  // The trade `inherit` makes on a composition: the value arrives already
+  // substituted in the parent's scope, so a *per-element* override of a base
+  // token (`arc-button { --accent-primary: red }`) no longer re-resolves the
+  // compounds on that element. Overriding the compound itself on the element
+  // still works — an element selector outranks :where() — and :root/theme/
+  // region overrides of the base token now cascade correctly, which is the
+  // behaviour consumers actually rely on.
   const names = [...generateHostTokensCSS('').matchAll(/^(--[a-zA-Z0-9_-]+)\s*:\s*([^;]+);/gm)]
-    .filter(([, , value]) => !value.includes('var('))
+    .filter(([, , value]) => !value.includes('var(--_'))
     .map((m) => m[1])
     .filter((n) => !NOT_FORWARDED.test(n));
 
@@ -1297,6 +1353,9 @@ export function generateHostTokensCSS(indent = '    ') {
   group('Z-index', Object.entries(tokens.zIndex).map(([k, v]) => [`--z-${k}`, v]));
   group('Glow and focus', [
     ...Object.entries(tokens.glowScale).map(([k, v]) => [`--glow-${k}`, v]),
+    // The status glow's themable half: a bare number, so it forwards where the
+    // shadow-private composition above it cannot. See glowScale.status.
+    ['--glow-status-alpha', tokens.glowStatusAlpha],
     ['--glow-hover', tokens.glowHover],
     ['--focus-ring', tokens.focus.ring],
     ['--focus-glow', tokens.focus.glow],
@@ -1363,23 +1422,50 @@ export function generateTokensCSS({ tags = [] } = {}) {
 
   // A custom property substitutes its var() references in the scope where it
   // is DECLARED, then inherits the resolved value — so the :root semantic
-  // aliases (--surface-base: var(--bg-deep), …) carry the page theme's colors
-  // into .theme-fixed regions and ignore the forced tokens above them.
-  // Re-declaring the aliases inside .theme-fixed makes them re-substitute
-  // against the fixed values; the light-fixed variant needs no copy of its
-  // own, because the cascade settles --bg-*/--text-* on the element before
-  // the alias resolves there.
+  // aliases (--surface-base: var(--bg-deep), …) and accent compounds
+  // (--glow-md, --focus-glow, …) carry the page theme's colors into
+  // .theme-fixed regions and ignore the forced tokens above them.
+  // Re-declaring them inside .theme-fixed makes them re-substitute against
+  // the fixed values; the light-fixed variant needs no copy of its own,
+  // because the cascade settles --bg-*/--accent-* on the element before the
+  // composition resolves there. Compound values come from the token tree, not
+  // a restated literal, so they cannot drift from the :root recipes.
+  // --glow-status is deliberately absent: it references the shadow-private
+  // --_status-rgb and must stay a :host declaration; its themable alpha is
+  // pinned back to the dark value here instead.
   const fixedSemanticAliases = [
-    '  --interactive: var(--accent-primary);',
-    '  --interactive-rgb: var(--accent-primary-rgb);',
-    '  --interactive-muted: var(--text-ghost);',
-    '  --surface-base: var(--bg-deep);',
-    '  --surface-primary: var(--bg-surface);',
-    '  --surface-raised: var(--bg-card);',
-    '  --surface-overlay: var(--bg-elevated);',
-    '  --surface-hover: var(--bg-hover);',
-    '  --divider: var(--border-subtle);',
-  ].join('\n');
+    ['--interactive', 'var(--accent-primary)'],
+    ['--interactive-rgb', 'var(--accent-primary-rgb)'],
+    ['--interactive-muted', 'var(--text-ghost)'],
+    ['--surface-base', 'var(--bg-deep)'],
+    ['--surface-primary', 'var(--bg-surface)'],
+    ['--surface-raised', 'var(--bg-card)'],
+    ['--surface-overlay', 'var(--bg-elevated)'],
+    ['--surface-hover', 'var(--bg-hover)'],
+    ['--divider', 'var(--border-subtle)'],
+    ['--glow-primary', tokens.glow.primary],
+    ['--glow-secondary', tokens.glow.secondary],
+    ['--glow-white', tokens.glow.white],
+    ['--glow-xs', tokens.glowScale.xs],
+    ['--glow-sm', tokens.glowScale.sm],
+    ['--glow-md', tokens.glowScale.md],
+    ['--glow-status-alpha', tokens.glowStatusAlpha],
+    ['--glow-hover', tokens.glowHover],
+    ['--glow-card-hover', tokens.glowCard.hover],
+    ['--gradient-divider-glow', tokens.gradient.dividerGlow],
+    ['--focus-ring', tokens.focus.ring],
+    ['--focus-glow', tokens.focus.glow],
+    ['--focus-error', tokens.focus.error],
+    ['--focus-inset', tokens.focus.inset],
+    ['--focus-thumb', tokens.focus.thumb],
+    ['--interactive-hover', 'var(--glow-hover)'],
+    ['--interactive-active', 'var(--glow-primary)'],
+    ['--interactive-focus', 'var(--focus-glow)'],
+    ['--interactive-focus-ring', 'var(--focus-ring)'],
+    ['--interactive-focus-error', 'var(--focus-error)'],
+    ['--interactive-focus-inset', 'var(--focus-inset)'],
+    ['--interactive-focus-thumb', 'var(--focus-thumb)'],
+  ].map(([name, value]) => `  ${name}: ${value};`).join('\n');
 
   return `/* Generated from shared/tokens.js — do not edit by hand */
 

@@ -145,12 +145,6 @@ export class ArcCheckbox extends FormControlMixin(LitElement) {
     this.checked = state.checked;
   }
 
-  updated(changed) {
-    if (changed.has('checked') || changed.has('value')) {
-      this._updateFormValue();
-    }
-  }
-
   _toggle() {
     if (this.disabled || this.readonly) return;
     this.indeterminate = false;

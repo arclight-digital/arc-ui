@@ -4,6 +4,7 @@ interface Props {
     shortcut?: string;
     disabled?: boolean;
     icon?: string;
+    value?: string;
     children?: Snippet;
     class?: string;
     id?: string;

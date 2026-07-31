@@ -185,12 +185,6 @@ export class ArcNumberInput extends FormControlMixin(LitElement) {
     this._fieldId = `arc-number-input-${++numberInputIdCounter}`;
   }
 
-  updated(changed) {
-    if (changed.has('value')) {
-      this._updateFormValue();
-    }
-  }
-
   _formValue() {
     return this.value == null ? null : String(this.value);
   }

@@ -151,12 +151,6 @@ export class ArcPinInput extends FormControlMixin(LitElement) {
     this.label = '';
   }
 
-  updated(changed) {
-    if (changed.has('value')) {
-      this._updateFormValue();
-    }
-  }
-
   get _chars() {
     const chars = (this.value || '').split('');
     return Array.from({ length: this.length }, (_, i) => chars[i] || '');
