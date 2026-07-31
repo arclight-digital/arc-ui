@@ -334,7 +334,7 @@ function Settings() {
               <p class="theme-file__caption">
                 That file is the entire theme, applied to this page for real — compound tokens
                 reference these four, so every gradient, glow and focus ring follows.
-                <a class="chapter-link" href="/docs/theme-synthesizer">Build yours →</a>
+                <a class="chapter-link" href="/synth">Build yours →</a>
               </p>
             </figure>
             <div class="tokens-demo">
@@ -1136,6 +1136,10 @@ function Settings() {
   }
 
   async function initNavigation() {
+    // Document-level listener survives soft navigations; without the guard,
+    // every astro:page-load stacked another copy and one click navigated N times.
+    if ((window as any).__arcNavigate) return;
+    (window as any).__arcNavigate = true;
     const { navigate } = await import('astro:transitions/client');
     document.addEventListener('arc-navigate', (e: any) => {
       const href = e.detail?.href;
@@ -2119,8 +2123,16 @@ function Settings() {
   }
 
   .theme-file__code {
+    /* The console panel is the frame — strip the global pre box chrome so the
+       code doesn't render as a second rounded card inside it. */
+    background: none;
+    border: 0;
+    border-radius: 0;
     margin: 0;
     padding: var(--space-lg) 0;
+  }
+  .theme-file__code::before {
+    content: none;
     font-family: var(--font-mono);
     font-size: var(--text-xs);
     line-height: 1.8;

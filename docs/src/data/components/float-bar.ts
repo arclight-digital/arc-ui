@@ -52,7 +52,7 @@ Unlike Dock, which auto-hides and reveals on hover, FloatBar is explicitly contr
   <div style="position:absolute;bottom:var(--space-md);left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:var(--space-md);padding:var(--space-sm) var(--space-lg);background:var(--bg-surface-overlay);backdrop-filter:blur(12px);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);box-shadow:0 4px 24px rgba(0,0,0,0.12)">
     <span style="color:var(--text-secondary);font-size:14px;font-family:var(--font-body);white-space:nowrap">3 items selected</span>
     <arc-button variant="secondary" size="sm">Archive</arc-button>
-    <arc-button variant="danger" size="sm">Delete</arc-button>
+    <arc-button variant="secondary" size="sm">Delete</arc-button>
   </div>
 </div>`,
 
@@ -63,7 +63,7 @@ Unlike Dock, which auto-hides and reveals on hover, FloatBar is explicitly contr
       code: `<arc-float-bar id="bulk-actions" position="bottom">
   <span>3 items selected</span>
   <arc-button variant="secondary" size="sm">Archive</arc-button>
-  <arc-button variant="danger" size="sm">Delete</arc-button>
+  <arc-button variant="secondary" size="sm">Delete</arc-button>
 </arc-float-bar>
 
 <script>
@@ -83,7 +83,7 @@ function BulkActions({ selectedCount }: { selectedCount: number }) {
     <FloatBar open={selectedCount > 0} position="bottom">
       <span>{selectedCount} items selected</span>
       <Button variant="secondary" size="sm">Archive</Button>
-      <Button variant="danger" size="sm">Delete</Button>
+      <Button variant="secondary" size="sm">Delete</Button>
     </FloatBar>
   );
 }`,
@@ -102,7 +102,7 @@ const selectedCount = ref(3);
   <FloatBar :open="selectedCount > 0" position="bottom">
     <span>{{ selectedCount }} items selected</span>
     <Button variant="secondary" size="sm">Archive</Button>
-    <Button variant="danger" size="sm">Delete</Button>
+    <Button variant="secondary" size="sm">Delete</Button>
   </FloatBar>
 </template>`,
     },
@@ -118,7 +118,7 @@ const selectedCount = ref(3);
 <FloatBar open={selectedCount > 0} position="bottom">
   <span>{selectedCount} items selected</span>
   <Button variant="secondary" size="sm">Archive</Button>
-  <Button variant="danger" size="sm">Delete</Button>
+  <Button variant="secondary" size="sm">Delete</Button>
 </FloatBar>`,
     },
     {
@@ -133,7 +133,7 @@ import { FloatBar, Button } from '@arclux/arc-ui-angular';
     <arc-float-bar [open]="selectedCount > 0" position="bottom">
       <span>{{ selectedCount }} items selected</span>
       <arc-button variant="secondary" size="sm">Archive</arc-button>
-      <arc-button variant="danger" size="sm">Delete</arc-button>
+      <arc-button variant="secondary" size="sm">Delete</arc-button>
     </arc-float-bar>
   \`,
 })
@@ -154,7 +154,7 @@ function BulkActions() {
     <FloatBar open={selectedCount() > 0} position="bottom">
       <span>{selectedCount()} items selected</span>
       <Button variant="secondary" size="sm">Archive</Button>
-      <Button variant="danger" size="sm">Delete</Button>
+      <Button variant="secondary" size="sm">Delete</Button>
     </FloatBar>
   );
 }`,
@@ -172,7 +172,7 @@ function BulkActions() {
     <FloatBar open={selectedCount > 0} position="bottom">
       <span>{selectedCount} items selected</span>
       <Button variant="secondary" size="sm">Archive</Button>
-      <Button variant="danger" size="sm">Delete</Button>
+      <Button variant="secondary" size="sm">Delete</Button>
     </FloatBar>
   );
 }`,

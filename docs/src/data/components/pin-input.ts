@@ -13,7 +13,7 @@ export const pinInput: ComponentDef = {
 
 The \`type\` prop controls character validation: \`"number"\` restricts input to digits 0-9, \`"alphanumeric"\` allows letters and digits, and \`"text"\` accepts any single character. When \`mask\` is enabled, entered characters are obscured with dots (using CSS \`-webkit-text-security: disc\`) for sensitive codes. An optional \`separator\` prop inserts a visual dash between groups of boxes — for example, setting \`separator="3"\` on a 6-digit code renders it as three boxes, a dash, and three more boxes.
 
-PinInput fires \`arc-change\` on every character entry or deletion, providing the current partial value. When all boxes are filled, it additionally fires \`arc-complete\` with the full value, making it easy to trigger form submission or validation at the right moment without polling or length-checking.`,
+PinInput fires \`arc-input\` on every character entry or deletion, providing the current partial value. When all boxes are filled it fires \`arc-change\` — the commit for a fixed-length code — along with \`arc-complete\`, the more specific name kept for consumers that auto-submit. Either one makes it easy to trigger form submission or validation at the right moment without polling or length-checking.`,
 
   features: [
     'Auto-advance focus to the next box after each valid character entry',
@@ -23,7 +23,7 @@ PinInput fires \`arc-change\` on every character entry or deletion, providing th
     'Configurable `type` validation: `"number"`, `"alphanumeric"`, or `"text"`',
     'Mask mode via `mask` prop for obscuring sensitive codes with dots',
     'Visual separator dashes between groups via the `separator` prop (e.g. every 3 boxes)',
-    'Dual events: `arc-change` on every keystroke, `arc-complete` when all boxes are filled',
+    'Split events: `arc-input` on every keystroke, `arc-change` and `arc-complete` when all boxes are filled',
   ],
 
   guidelines: {

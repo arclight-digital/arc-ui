@@ -13,7 +13,7 @@ export const colorPicker: ComponentDef = {
 
 When preset colors are provided via the \`presets\` array prop, the component renders a row of clickable swatches beneath the hex input. The active preset is highlighted with a primary-colored border. This is ideal for brand color palettes or frequently used colors, giving users quick one-click access while still allowing full custom selection through the gradient area.
 
-ColorPicker performs all HSL-to-hex conversion internally. It fires \`arc-change\` whenever the color changes — whether from dragging the area, sliding the hue bar, typing a hex value, or clicking a preset. The event detail contains the hex string, making integration straightforward regardless of the input method used.`,
+ColorPicker performs all HSL-to-hex conversion internally. It fires \`arc-input\` continuously as the color changes — every frame of a drag across the area or the hue track — which is the event to drive a live preview. \`arc-change\` fires once the color is committed: the pointer released after a drag, a preset clicked, or a valid hex entered — the event for anything expensive, like a save. Both carry the hex string in the event detail.`,
 
   features: [
     'Saturation/lightness gradient area with crosshair cursor and pointer-drag interaction',
@@ -31,7 +31,7 @@ ColorPicker performs all HSL-to-hex conversion internally. It fires \`arc-change
       'Provide a `label` to give the picker context, especially when multiple pickers appear on the same page',
       'Pass a `presets` array for brand palettes or commonly used colors to speed up selection',
       'Use the `value` prop to set an initial color in 6-digit hex format (e.g. `#4d7ef7`)',
-      'Listen for `arc-change` to update your application state in real time as the user picks',
+      'Listen for `arc-input` to update a live preview while the user drags, and `arc-change` for the committed color on release',
       'Place the picker inside a popover or dropdown if horizontal space is constrained',
     ],
     dont: [
@@ -62,8 +62,13 @@ ColorPicker performs all HSL-to-hex conversion internally. It fires \`arc-change
 <script>
   const picker = document.querySelector('arc-color-picker');
   picker.presets = ['#4d7ef7', '#22c55e', '#ef4444', '#eab308'];
+  // Live preview — fires on every drag frame
+  picker.addEventListener('arc-input', e => {
+    document.documentElement.style.setProperty('--accent-primary', e.detail.value);
+  });
+  // Committed color — fires once on release
   picker.addEventListener('arc-change', e => {
-    console.log('Selected:', e.detail.value);
+    console.log('Committed:', e.detail.value);
   });
 </script>`,
     },
@@ -78,7 +83,8 @@ export default function Example() {
       label="Theme Color"
       value="#4d7ef7"
       presets={['#4d7ef7', '#22c55e', '#ef4444', '#eab308']}
-      onArcChange={(e) => console.log(e.detail.value)}
+      onArcInput={(e) => console.log('Live:', e.detail.value)}
+      onArcChange={(e) => console.log('Committed:', e.detail.value)}
     />
   );
 }`,
@@ -97,7 +103,8 @@ const presets = ['#4d7ef7', '#22c55e', '#ef4444', '#eab308'];
     label="Theme Color"
     value="#4d7ef7"
     :presets="presets"
-    @arc-change="(e) => console.log(e.detail.value)"
+    @arc-input="(e) => console.log('Live:', e.detail.value)"
+    @arc-change="(e) => console.log('Committed:', e.detail.value)"
   />
 </template>`,
     },
@@ -114,7 +121,8 @@ const presets = ['#4d7ef7', '#22c55e', '#ef4444', '#eab308'];
   label="Theme Color"
   value="#4d7ef7"
   {presets}
-  on:arc-change={(e) => console.log(e.detail.value)}
+  on:arc-input={(e) => console.log('Live:', e.detail.value)}
+  on:arc-change={(e) => console.log('Committed:', e.detail.value)}
 />`,
     },
     {
@@ -130,6 +138,7 @@ import { ColorPicker } from '@arclux/arc-ui-angular';
       label="Theme Color"
       value="#4d7ef7"
       [presets]="presets"
+      (arc-input)="onPreview($event)"
       (arc-change)="onPick($event)"
     ></arc-color-picker>
   \`,
@@ -137,8 +146,12 @@ import { ColorPicker } from '@arclux/arc-ui-angular';
 export class MyComponent {
   presets = ['#4d7ef7', '#22c55e', '#ef4444', '#eab308'];
 
+  onPreview(e: CustomEvent) {
+    console.log('Live:', e.detail.value);
+  }
+
   onPick(e: CustomEvent) {
-    console.log('Selected:', e.detail.value);
+    console.log('Committed:', e.detail.value);
   }
 }`,
     },
@@ -153,7 +166,8 @@ export default function Example() {
       label="Theme Color"
       value="#4d7ef7"
       presets={['#4d7ef7', '#22c55e', '#ef4444', '#eab308']}
-      onArcChange={(e) => console.log(e.detail.value)}
+      onArcInput={(e) => console.log('Live:', e.detail.value)}
+      onArcChange={(e) => console.log('Committed:', e.detail.value)}
     />
   );
 }`,
@@ -169,7 +183,8 @@ export default function Example() {
       label="Theme Color"
       value="#4d7ef7"
       presets={['#4d7ef7', '#22c55e', '#ef4444', '#eab308']}
-      onArcChange={(e) => console.log(e.detail.value)}
+      onArcInput={(e) => console.log('Live:', e.detail.value)}
+      onArcChange={(e) => console.log('Committed:', e.detail.value)}
     />
   );
 }`,

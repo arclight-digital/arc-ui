@@ -13,7 +13,7 @@ export const otpInput: ComponentDef = {
 
 The component supports two input modes via the \`type\` prop. The default \`number\` mode filters out non-digit characters and sets \`inputmode="numeric"\` for mobile keyboard optimisation. Setting \`type="text"\` allows any character, suitable for alphanumeric verification codes. Each box uses a monospace font at 20px for clear character visibility, with an accent-primary caret and focus ring to highlight the active input position.
 
-Paste handling is built in — pasting a code into any box distributes the characters across subsequent boxes and advances focus to the end of the pasted content. The component fires \`arc-change\` on every character addition or removal, with the full concatenated value in the event detail. Arrow keys, Home, and End provide horizontal navigation across boxes, and the \`autocomplete="one-time-code"\` attribute enables browser autofill from SMS or authenticator apps.`,
+Paste handling is built in — pasting a code into any box distributes the characters across subsequent boxes and advances focus to the end of the pasted content. The component fires \`arc-input\` on every character addition or removal, with the partial concatenated value in the event detail, and \`arc-change\` once every box is filled — the commit for a fixed-length code. Arrow keys, Home, and End provide horizontal navigation across boxes, and the \`autocomplete="one-time-code"\` attribute enables browser autofill from SMS or authenticator apps.`,
 
   features: [
     'Row of individual character boxes with configurable `length` (default 6)',
@@ -23,14 +23,14 @@ Paste handling is built in — pasting a code into any box distributes the chara
     'Two input modes: `number` (digits only with numeric keyboard) and `text` (any character)',
     'Arrow key, Home, and End navigation across individual boxes',
     'Browser autofill support via `autocomplete="one-time-code"` on each input',
-    'Fires `arc-change` with the full concatenated value on every character change',
+    'Fires `arc-input` on every character change and `arc-change` once the code is complete',
   ],
 
   guidelines: {
     do: [
       'Set `length` to match the expected code length from your authentication backend',
       'Use `type="number"` for numeric-only codes to get the mobile numeric keyboard',
-      'Listen to `arc-change` and auto-submit when the value reaches the expected length',
+      'Listen for `arc-change` to auto-submit — it fires only once the code is complete',
       'Place OTPInput in a focused, distraction-free context like a verification step',
       'Provide a clear label or heading above the input explaining what code to enter',
     ],

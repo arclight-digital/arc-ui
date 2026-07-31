@@ -37,7 +37,7 @@ The keyboard model follows the accepted accessible kanban pattern: each column's
       'Listen to arc-card-move and update your source-of-truth data, then pass the new array back into columns',
       'Set a limit on columns where work-in-progress caps matter — the badge flags overruns automatically',
       'Keep card labels short and put detail in the description — it clamps to two lines',
-      'Use tag variants (primary, success, danger, ...) to encode card category at a glance',
+      'Use tag variants (primary, success, error, ...) to encode card category at a glance',
     ],
     dont: [
       'Do not mutate the columns array in place and expect a re-render — assign a new array instead',
@@ -62,7 +62,7 @@ if (kb) kb.columns = [
   ]},
   { id: 'doing', title: 'In Progress', limit: 2, items: [
     { id: 'd1', label: 'Refactor auth middleware', description: 'Split session handling out of the request pipeline.', tag: 'Backend', variant: 'primary' },
-    { id: 'd2', label: 'Fix focus trap in modal', tag: 'Bug', variant: 'danger' },
+    { id: 'd2', label: 'Fix focus trap in modal', tag: 'Bug', variant: 'error' },
     { id: 'd3', label: 'Ship dark-mode charts', tag: 'Feature', variant: 'success' }
   ]},
   { id: 'done', title: 'Done', items: [

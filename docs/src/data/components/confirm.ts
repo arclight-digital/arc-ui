@@ -11,14 +11,14 @@ export const confirm: ComponentDef = {
 
   overview: `Confirm provides a promise-based programmatic API for confirmation dialogs. Instead of managing dialog open/close state and listening for button clicks, you call \`ArcConfirm.open()\` with a heading and message, and \`await\` the returned promise. The promise resolves to \`true\` if the user confirms and \`false\` if they cancel — making it trivial to gate destructive actions behind user consent.
 
-Under the hood, Confirm renders a dialog with the same visual treatment — backdrop blur, surface-raised panel, and focus trap — but with a fixed two-button layout: a cancel button (ghost variant) and a confirm button (primary or danger variant depending on the \`variant\` prop). The danger variant uses the error color for the confirm button, making it visually clear that the action is destructive.
+Under the hood, Confirm renders a dialog with the same visual treatment — backdrop blur, surface-raised panel, and focus trap — but with a fixed two-button layout: a cancel button (ghost variant) and a confirm button styled by the \`variant\` prop. The \`error\` variant recolors the confirm button with the error color, making it visually clear that the action is destructive.
 
 The component can also be used declaratively as \`<arc-confirm>\` with props and events, but the imperative \`ArcConfirm.open()\` API is the recommended pattern for most use cases. A single \`<arc-confirm>\` element in the layout can be reused for all confirmation prompts in the application.`,
 
   features: [
     'Promise-based ArcConfirm.open() API — await user confirmation in one line',
     'Resolves true on confirm, false on cancel — no event listeners needed',
-    'Two variants: default (primary confirm button) and danger (error-colored confirm button)',
+    'Two variants: default (primary confirm button) and error (error-colored confirm button)',
     'Customizable heading, message, confirm label, and cancel label',
     'Same visual treatment as dialog — backdrop blur, surface-raised panel, focus trap',
     'Focus trap keeps keyboard navigation within the dialog while open',
@@ -29,7 +29,7 @@ The component can also be used declaratively as \`<arc-confirm>\` with props and
 
   guidelines: {
     do: [
-      'Use the danger variant for destructive actions like delete, remove, or revoke',
+      'Use the error variant for destructive actions like delete, remove, or revoke',
       'Write a clear heading that states the action: "Delete project?" not "Are you sure?"',
       'Provide specific confirm/cancel labels: "Delete" and "Keep" instead of "OK" and "Cancel"',
       'Use the imperative API for cleaner async flows: const ok = await ArcConfirm.open(...)',
@@ -44,15 +44,15 @@ The component can also be used declaratively as \`<arc-confirm>\` with props and
     ],
   },
 
-  previewHtml: `<div style="width:100%;display:flex;gap:8px;flex-wrap:wrap"><arc-confirm id="demo-confirm"></arc-confirm><arc-button id="demo-confirm-danger" variant="error">Delete Item</arc-button><arc-button id="demo-confirm-default" variant="secondary">Confirm Action</arc-button></div>`,
+  previewHtml: `<div style="width:100%;display:flex;gap:8px;flex-wrap:wrap"><arc-confirm id="demo-confirm"></arc-confirm><arc-button id="demo-confirm-error" variant="primary">Delete Item</arc-button><arc-button id="demo-confirm-default" variant="secondary">Confirm Action</arc-button></div>`,
 
   previewSetup: `
       const confirmEl = document.getElementById('demo-confirm');
-      document.getElementById('demo-confirm-danger')?.addEventListener('click', async () => {
+      document.getElementById('demo-confirm-error')?.addEventListener('click', async () => {
         if (confirmEl) {
           confirmEl.heading = 'Delete this item?';
           confirmEl.message = 'This action cannot be undone.';
-          confirmEl.variant = 'danger';
+          confirmEl.variant = 'error';
           confirmEl.confirmLabel = 'Delete';
           confirmEl.cancelLabel = 'Keep';
           confirmEl.open = true;
@@ -78,11 +78,11 @@ The component can also be used declaratively as \`<arc-confirm>\` with props and
 
 <arc-confirm id="confirm"></arc-confirm>
 
-<arc-button variant="error"
+<arc-button variant="primary"
   onclick="Object.assign(document.getElementById('confirm'), {
     heading: 'Delete this item?',
     message: 'This action cannot be undone.',
-    variant: 'danger',
+    variant: 'error',
     confirmLabel: 'Delete',
     cancelLabel: 'Keep',
     open: true
@@ -111,7 +111,7 @@ export function ConfirmDemo() {
         onArcConfirm={() => { setOpen(false); /* perform delete */ }}
         onArcCancel={() => setOpen(false)}
       />
-      <Button variant="error" onClick={() => setOpen(true)}>Delete Item</Button>
+      <Button variant="primary" onClick={() => setOpen(true)}>Delete Item</Button>
     </>
   );
 }`,
@@ -132,7 +132,7 @@ const handleConfirm = () => { open.value = false; /* perform delete */ };
     message="This action cannot be undone." variant="error"
     confirm-label="Delete" cancel-label="Keep"
     @arc-confirm="handleConfirm" @arc-cancel="open = false" />
-  <Button variant="error" @click="open = true">Delete Item</Button>
+  <Button variant="primary" @click="open = true">Delete Item</Button>
 </template>`,
     },
     {
@@ -150,7 +150,7 @@ const handleConfirm = () => { open.value = false; /* perform delete */ };
   confirmLabel="Delete" cancelLabel="Keep"
   on:arc-confirm={handleConfirm}
   on:arc-cancel={() => open = false} />
-<Button variant="error" on:click={() => open = true}>Delete Item</Button>`,
+<Button variant="primary" on:click={() => open = true}>Delete Item</Button>`,
     },
     {
       label: 'Angular',
@@ -165,7 +165,7 @@ import { Button, Confirm } from '@arclux/arc-ui-angular';
       message="This action cannot be undone." variant="error"
       confirmLabel="Delete" cancelLabel="Keep"
       (arc-confirm)="onConfirm()" (arc-cancel)="open = false"></arc-confirm>
-    <arc-button variant="error" (click)="open = true">Delete Item</arc-button>
+    <arc-button variant="primary" (click)="open = true">Delete Item</arc-button>
   \`,
 })
 export class ConfirmDemoComponent {
@@ -197,7 +197,7 @@ export function ConfirmDemo() {
         onArcConfirm={() => { setOpen(false); /* perform delete */ }}
         onArcCancel={() => setOpen(false)}
       />
-      <Button variant="error" onClick={() => setOpen(true)}>Delete Item</Button>
+      <Button variant="primary" onClick={() => setOpen(true)}>Delete Item</Button>
     </>
   );
 }`,
@@ -223,7 +223,7 @@ export function ConfirmDemo() {
         onArcConfirm={() => { setOpen(false); /* perform delete */ }}
         onArcCancel={() => setOpen(false)}
       />
-      <Button variant="error" onClick={() => setOpen(true)}>Delete Item</Button>
+      <Button variant="primary" onClick={() => setOpen(true)}>Delete Item</Button>
     </>
   );
 }`,

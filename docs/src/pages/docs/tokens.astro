@@ -299,16 +299,28 @@ const spacingTokens = [
     <section id="motion">
       <h2 class="docs-heading">Motion</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <p class="docs-text">
+        Motion is two base scales — four curves and five durations — that the
+        <code>--transition-*</code> tokens compose. The curve carries the meaning:
+        pick it by what the element is doing, not by taste.
+      </p>
       <div class="token-table-wrap">
         <table class="token-table">
           <thead>
-            <tr><th>Token</th><th>Value</th></tr>
+            <tr><th>Token</th><th>Value</th><th>Usage</th></tr>
           </thead>
           <tbody>
-            <tr><td><code>--ease-out-expo</code></td><td>cubic-bezier(0.16, 1, 0.3, 1)</td></tr>
-            <tr><td><code>--ease-in-out</code></td><td>cubic-bezier(0.4, 0, 0.2, 1)</td></tr>
-            <tr><td><code>--duration-enter</code></td><td>500ms</td></tr>
-            <tr><td><code>--duration-exit</code></td><td>300ms</td></tr>
+            <tr><td><code>--ease-standard</code></td><td>cubic-bezier(0.4, 0, 0.2, 1)</td><td>A state change on an element that stays put — hover recolor, border shift</td></tr>
+            <tr><td><code>--ease-out</code></td><td>cubic-bezier(0.16, 1, 0.3, 1)</td><td>Something entering or expanding</td></tr>
+            <tr><td><code>--ease-in</code></td><td>cubic-bezier(0.7, 0, 0.84, 0)</td><td>Something leaving — paired with a shorter duration</td></tr>
+            <tr><td><code>--ease-spring</code></td><td>cubic-bezier(0.34, 1.56, 0.64, 1)</td><td>A control confirming a discrete action — toggle landing, checkbox filling</td></tr>
+            <tr><td><code>--duration-fast</code></td><td>120ms</td><td>Micro state changes</td></tr>
+            <tr><td><code>--duration-base</code></td><td>200ms</td><td>Default for most transitions</td></tr>
+            <tr><td><code>--duration-slow</code></td><td>400ms</td><td>Large surfaces</td></tr>
+            <tr><td><code>--duration-enter</code></td><td>500ms</td><td>Entrances</td></tr>
+            <tr><td><code>--duration-exit</code></td><td>300ms</td><td>Exits</td></tr>
+            <tr><td><code>--ease-out-expo</code></td><td>var(--ease-out)</td><td>Back-compat alias</td></tr>
+            <tr><td><code>--ease-in-out</code></td><td>var(--ease-standard)</td><td>Back-compat alias</td></tr>
           </tbody>
         </table>
       </div>
@@ -444,15 +456,23 @@ const spacingTokens = [
     <section id="transitions">
       <h2 class="docs-heading">Transitions</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <p class="docs-text">
+        Each transition token composes a duration and a curve from the
+        <a href="#motion">motion scales</a>. Override the base
+        <code>--duration-*</code> and <code>--ease-*</code> tokens and the
+        compositions follow.
+      </p>
       <div class="token-table-wrap">
         <table class="token-table">
           <thead>
-            <tr><th>Token</th><th>Value</th></tr>
+            <tr><th>Token</th><th>Composition</th></tr>
           </thead>
           <tbody>
-            <tr><td><code>--transition-fast</code></td><td>120ms ease</td></tr>
-            <tr><td><code>--transition-base</code></td><td>200ms ease</td></tr>
-            <tr><td><code>--transition-slow</code></td><td>400ms ease</td></tr>
+            <tr><td><code>--transition-fast</code></td><td>var(--duration-fast) var(--ease-standard)</td></tr>
+            <tr><td><code>--transition-base</code></td><td>var(--duration-base) var(--ease-standard)</td></tr>
+            <tr><td><code>--transition-slow</code></td><td>var(--duration-slow) var(--ease-standard)</td></tr>
+            <tr><td><code>--transition-enter</code></td><td>var(--duration-enter) var(--ease-out)</td></tr>
+            <tr><td><code>--transition-exit</code></td><td>var(--duration-exit) var(--ease-in)</td></tr>
           </tbody>
         </table>
       </div>
@@ -484,7 +504,7 @@ const spacingTokens = [
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <ul class="see-also__list">
         <li><a href="/docs/theming">Theming</a> — dark/light mode and custom themes</li>
-        <li><a href="/docs/theme-synthesizer">Theme Synthesizer</a> — visually build a custom theme</li>
+        <li><a href="/synth">Theme Synthesizer</a> — visually build a custom theme</li>
       </ul>
     </section>
   </div>

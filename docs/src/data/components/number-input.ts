@@ -13,7 +13,7 @@ export const numberInput: ComponentDef = {
 
 The component enforces value boundaries through automatic clamping. When \`min\` or \`max\` props are set, the value is clamped to stay within range, and the corresponding button becomes disabled and visually dimmed when the limit is reached. The \`step\` prop controls the increment granularity for both button clicks and keyboard interactions. Holding Shift while pressing arrow keys multiplies the step by 10, enabling quick large adjustments without repeated clicks.
 
-When a \`label\` is provided, it renders as an uppercase accent-font label above the control, connected to the input via a generated \`id\` and \`for\` attribute for accessibility. The component fires \`arc-change\` on every value change — whether from button clicks, direct typing, or keyboard arrows — with the new value in the event detail.`,
+When a \`label\` is provided, it renders as an uppercase accent-font label above the control, connected to the input via a generated \`id\` and \`for\` attribute for accessibility. The events mirror the native control: typing fires \`arc-input\` alone on each keystroke, and the value commits with \`arc-change\` on blur or Enter. A stepper button click or an arrow key fires both, because each of those is an edit and a commit in one gesture. Every event carries the new value in its detail.`,
 
   features: [
     'Inline decrement and increment buttons flanking a centered numeric text field',
