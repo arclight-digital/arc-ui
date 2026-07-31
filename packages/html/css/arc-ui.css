@@ -4850,9 +4850,13 @@
          interpolation; doing it here compiled fine and dropped this query from
          arc-ui.css entirely. The JS side reads the token directly, and
          check-breakpoint-drift.js asserts this number still matches it.
-         Separately: prism emits the query with the component selector in front
-         of the at-rule, which is invalid CSS — so this has never applied in the
-         standalone package. That is a prism bug, fixed there. */
+         Separately, and the reason this comment is worth reading: a comment
+         sitting directly above an at-rule used to make prism scope it, emitting
+         the component selector in front of the @media — invalid CSS, so the
+         rule stopped applying in the standalone package the moment this note
+         was added. Fixed in prism (v3, "don't scope an at-rule whose prelude a
+         comment precedes"); if a media query ever goes missing from arc-ui.css
+         again, check the emitted CSS before trusting that it compiled. */
       .arc-top-bar @media (max-width: 900px) {
         .arc-top-bar .topbar__menu-btn { display: flex; }
       }
