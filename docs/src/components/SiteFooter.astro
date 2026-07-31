@@ -299,7 +299,7 @@
     overflow: hidden;
     /* Headroom above the glyphs: the bloom must fade out on its own, not be
        sliced at the clip edge. The crop is only ever at the bottom. */
-    padding-top: 36px;
+    padding-top: 20px;
   }
 
   .afterglow__stack {
@@ -385,5 +385,15 @@
     .site-footer__col--end .site-footer__col-links a:hover { transform: translateX(3px); }
     .site-footer__social-row { justify-content: center; }
     .site-footer__legal-inner { flex-direction: column; gap: var(--space-xs); text-align: center; }
+    /* At phone scale the glyphs are a quarter the size but the gap above
+       them wasn't — tuck the afterglow up under the legal block. A gentler
+       blur needs less headroom, so the bloom still fades before the clip. */
+    .afterglow {
+      padding-top: 8px;
+      margin-top: calc(-1 * var(--space-lg));
+    }
+    .afterglow__bloom {
+      filter: blur(18px);
+    }
   }
 </style>
