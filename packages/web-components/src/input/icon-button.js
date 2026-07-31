@@ -3,6 +3,7 @@ import { tokenStyles } from '../shared-styles.js';
 import { buttonVariantStyles, iconBoxStyles } from '../button-styles.js';
 import { isLoneSlottedAnchor } from '../shared/anchor-adoption.js';
 import '../content/icon.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 /**
  * Compact button that renders an icon with optional text label, supporting ghost, secondary, and
@@ -179,6 +180,11 @@ export class ArcIconButton extends LitElement {
 
   _onDefaultSlotChange(e) {
     this._slottedAnchor = isLoneSlottedAnchor(e.target);
+  }
+
+  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  firstUpdated() {
+    hydrateSlots(this);
   }
 
   render() {

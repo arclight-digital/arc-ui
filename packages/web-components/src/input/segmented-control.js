@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 /**
  * A radio-group-style toggle bar that renders slotted arc-option elements as a row of mutually
@@ -115,6 +116,7 @@ export class ArcSegmentedControl extends LitElement {
    * on every page that used one, including its own documentation.
    */
   firstUpdated() {
+    hydrateSlots(this);
     this._readOptions(this.shadowRoot?.querySelector('slot'));
   }
 

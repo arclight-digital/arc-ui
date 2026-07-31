@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 /**
  * An annotated image: glowing pins positioned over a slotted picture, each opening a small
@@ -73,6 +74,11 @@ export class ArcImageHotspots extends LitElement {
     for (const hotspot of this._hotspots) {
       if (hotspot !== opened && hotspot.open) hotspot.close(false);
     }
+  }
+
+  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  firstUpdated() {
+    hydrateSlots(this);
   }
 
   render() {

@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 /** How close to the bottom, in pixels, still counts as reading the live end. */
 const NEAR_BOTTOM_PX = 100;
@@ -91,6 +92,7 @@ export class ArcConversation extends LitElement {
   }
 
   firstUpdated() {
+    hydrateSlots(this);
     // A transcript opens at its latest message, not its oldest.
     if (this.autoScroll) {
       this.scrollToEnd();

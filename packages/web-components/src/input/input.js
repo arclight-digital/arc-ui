@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 let inputIdCounter = 0;
 
@@ -227,6 +228,11 @@ export class ArcInput extends FormControlMixin(LitElement) {
 
   _onSuffixSlotChange(e) {
     this._hasSuffix = e.target.assignedNodes({ flatten: true }).length > 0;
+  }
+
+  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  firstUpdated() {
+    hydrateSlots(this);
   }
 
   render() {

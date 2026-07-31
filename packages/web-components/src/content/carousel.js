@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 /**
  * A scrollable slide container with navigation arrows, dot indicators, auto-play, looping, and
@@ -275,6 +276,11 @@ export class ArcCarousel extends LitElement {
   }
 
   /* ---- Render ---- */
+
+  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  firstUpdated() {
+    hydrateSlots(this);
+  }
 
   render() {
     const canPrev = this.loop || this._current > 0;

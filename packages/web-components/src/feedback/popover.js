@@ -4,6 +4,7 @@ import { positionStyles } from '../shared/position-styles.js';
 import { PositionController } from '../shared/position-controller.js';
 import { ClickOutsideController } from '../shared/click-outside.js';
 import { setTriggerAria, deepActiveElement } from '../shared/trigger-aria.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 /**
  * Floating content panel anchored to a trigger element, with four placement positions and
@@ -154,6 +155,11 @@ export class ArcPopover extends LitElement {
       this._openedFrom.focus();
     }
     this._openedFrom = null;
+  }
+
+  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  firstUpdated() {
+    hydrateSlots(this);
   }
 
   render() {

@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 /**
  * Form label with required indicator, optional description text, and tooltip slot. Pairs with any
@@ -104,6 +105,11 @@ export class ArcLabel extends LitElement {
     const target =
       this.getRootNode().querySelector(`#${this.for}`) || document.getElementById(this.for);
     target?.focus?.();
+  }
+
+  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  firstUpdated() {
+    hydrateSlots(this);
   }
 
   render() {

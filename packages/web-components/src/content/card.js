@@ -2,6 +2,7 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { cardHoverStyles } from '../card-styles.js';
 import { isLoneSlottedAnchor } from '../shared/anchor-adoption.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 /**
  * Content container with subtle border styling and hover effects. Links the entire card surface
@@ -122,6 +123,11 @@ export class ArcCard extends LitElement {
 
   _onDefaultSlotChange(e) {
     this._slottedAnchor = isLoneSlottedAnchor(e.target);
+  }
+
+  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  firstUpdated() {
+    hydrateSlots(this);
   }
 
   render() {

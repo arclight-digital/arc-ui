@@ -3,6 +3,7 @@ import { tokenStyles } from '../shared-styles.js';
 import { positionStyles } from '../shared/position-styles.js';
 import { PositionController } from '../shared/position-controller.js';
 import { setTriggerAria } from '../shared/trigger-aria.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 /**
  * Card that appears on hover with a delay.
@@ -151,6 +152,11 @@ export class ArcHoverCard extends LitElement {
     )
       return;
     this._visible = false;
+  }
+
+  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  firstUpdated() {
+    hydrateSlots(this);
   }
 
   render() {

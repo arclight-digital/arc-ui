@@ -28,28 +28,21 @@
  * The fix each time is one line: read the slot in `firstUpdated` as well. This
  * check makes the third instance fail here instead of in production.
  *
- * What counts as a mirror: a `display: none` rule on a class whose name
- * contains `slot-host` (the house name for the hidden original) or a
- * `.slot-host` of its own. What counts as a first-render read: a
- * `firstUpdated` that mentions a slot.
+ * The rule is deliberately broad: every component that listens for slotchange
+ * must read its slots on first render. The first version of this check only
+ * looked for the mirror pattern — a hidden slot host — and missed arc-app-shell,
+ * which hides nothing and instead sizes its table-of-contents rail from a
+ * slotchange read. The rail collapsed to `display: none` and took the docs
+ * scroll spy with it, two hours after the narrow check passed. If a component
+ * cares about slotchange at all, DSD eats the one that matters.
+ *
+ * This also removes a divergence rather than adding a special case: client-side,
+ * slotchange does fire on first render, so a handler running once at
+ * firstUpdated is what every component already experiences in the browser.
  */
 import { readFileSync, readdirSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 import { SRC_DIR } from '../lib/component-tags.js';
-
-/**
- * Components that hide a slot host but genuinely do not mirror it — the hidden
- * slot is a probe for presence rather than a source of content. Each entry has
- * to say why, and one that stops being true should be deleted rather than kept
- * as cover.
- */
-const WAIVERS = new Map([
-  [
-    'fieldset.js',
-    'the hidden rule is .legend__slot--empty, a collapse when the legend slot ' +
-      'has no content — there is no mirror, the slot itself is the output',
-  ],
-]);
 
 const tiers = readdirSync(SRC_DIR, { withFileTypes: true })
   .filter((e) => e.isDirectory() && e.name !== 'icons' && e.name !== 'generated')
@@ -63,12 +56,9 @@ for (const tier of tiers) {
     if (!file.endsWith('.js') || file.endsWith('.register.js')) continue;
     const source = readFileSync(resolve(SRC_DIR, tier, file), 'utf-8');
 
-    const hidesSlotHost = /\.[\w-]*slot-host[^{]*\{[^}]*display:\s*none/.test(source);
-    const readsOnSlotChange = /@slotchange=/.test(source);
-    if (!hidesSlotHost || !readsOnSlotChange) continue;
+    if (!/@slotchange=/.test(source)) continue;
 
     checked++;
-    if (WAIVERS.has(file)) continue;
 
     // A firstUpdated that mentions a slot — either querying one directly or
     // handing off to a helper that does.
@@ -77,9 +67,9 @@ for (const tier of tiers) {
 
     if (!readsOnFirstRender) {
       console.error(
-        `  ${tier}/${file} hides its slot host and reads children only on slotchange — ` +
-          `under declarative shadow DOM that event never fires, so it renders an ` +
-          `empty mirror over hidden content. Read the slot in firstUpdated too.`
+        `  ${tier}/${file} listens for slotchange but never reads its slots on first ` +
+          `render — under declarative shadow DOM that event never fires, so whatever ` +
+          `the handler sets stays at its default. Call hydrateSlots(this) in firstUpdated.`
       );
       failures++;
     }
@@ -87,8 +77,8 @@ for (const tier of tiers) {
 }
 
 if (failures > 0) {
-  console.error(`\n✗ ${failures} component(s) lose their slotted content under SSR`);
+  console.error(`\n✗ ${failures} component(s) lose slot-derived state under SSR`);
   process.exit(1);
 }
 
-console.log(`✓ every mirroring component reads its slot on first render (${checked} components)`);
+console.log(`✓ every slotchange listener reads its slots on first render (${checked} components)`);

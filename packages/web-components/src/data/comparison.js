@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 /**
  * A two-column or multi-column comparison table for pricing tiers, feature breakdowns, or
@@ -161,6 +162,11 @@ export class ArcComparison extends LitElement {
     if (val === 'true' || val === true) return this._renderCheck();
     if (val === 'false' || val === false) return this._renderCross();
     return val;
+  }
+
+  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  firstUpdated() {
+    hydrateSlots(this);
   }
 
   render() {

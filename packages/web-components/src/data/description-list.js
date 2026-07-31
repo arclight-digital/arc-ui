@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 /**
  * Structured term/detail pair list in a responsive grid layout with optional dividers.
@@ -101,6 +102,11 @@ export class ArcDescriptionList extends LitElement {
         this._applyStyles(slot.assignedElements({ flatten: true }));
       }
     }
+  }
+
+  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  firstUpdated() {
+    hydrateSlots(this);
   }
 
   render() {

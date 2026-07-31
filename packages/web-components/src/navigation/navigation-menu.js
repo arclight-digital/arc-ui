@@ -2,6 +2,7 @@ import { LitElement, html, css, render as litRender } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { breakpoints } from '../generated/breakpoints.js';
 import { lockScroll, unlockScroll } from '../shared/scroll-lock.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 /**
  * Horizontal navigation bar with hover-triggered dropdown sub-menus and full keyboard
@@ -601,6 +602,7 @@ export class ArcNavigationMenu extends LitElement {
    * Same fix, same reason, as arc-segmented-control.
    */
   firstUpdated() {
+    hydrateSlots(this);
     this._readItems(this.shadowRoot?.querySelector('.nav__slot-host slot'));
   }
 

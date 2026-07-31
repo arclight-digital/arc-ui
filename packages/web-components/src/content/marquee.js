@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 /**
  * Continuously scrolling content strip with configurable speed, direction, gap, and pause-on-hover
@@ -89,6 +90,7 @@ export class ArcMarquee extends LitElement {
   }
 
   firstUpdated() {
+    hydrateSlots(this);
     this._updateDuplicate();
     this._setupResizeObserver();
   }

@@ -2,6 +2,7 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { buttonVariantStyles } from '../button-styles.js';
 import { isLoneSlottedAnchor } from '../shared/anchor-adoption.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 /**
  * Primary call-to-action element with three visual variants that map to action hierarchy. Supports
@@ -217,6 +218,11 @@ export class ArcButton extends LitElement {
         <slot name="suffix" @slotchange=${this._onSuffixSlotChange}></slot>
       </span>
     `;
+  }
+
+  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  firstUpdated() {
+    hydrateSlots(this);
   }
 
   render() {

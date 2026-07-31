@@ -2,6 +2,7 @@ import { LitElement, html, css } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { tokenStyles } from '../shared-styles.js';
 import { sanitizeMarkup, normalizeUrl } from '../shared/sanitize-markup.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 /** Tags dropped with their contents: active content, and document-level markup. */
 const BANNED_ELEMENTS = new Set([
@@ -321,6 +322,11 @@ export class ArcMarkdown extends LitElement {
       return nodes.map((n) => n.textContent).join('');
     }
     return this.textContent || '';
+  }
+
+  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  firstUpdated() {
+    hydrateSlots(this);
   }
 
   render() {

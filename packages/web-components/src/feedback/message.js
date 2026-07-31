@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 /** The role vocabulary. An unrecognised value renders as the default, user. */
 const ROLES = new Set(['user', 'assistant', 'system']);
@@ -177,6 +178,7 @@ export class ArcMessage extends LitElement {
    * shipped that bug.
    */
   firstUpdated() {
+    hydrateSlots(this);
     this._readSlottedSource();
   }
 

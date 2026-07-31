@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 /**
  * Combines an input with prefix and suffix addon slots for labels, icons, or buttons attached to
@@ -109,6 +110,11 @@ export class ArcInputGroup extends LitElement {
 
   _onSuffixSlotChange(e) {
     this._hasSuffix = e.target.assignedNodes({ flatten: true }).length > 0;
+  }
+
+  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  firstUpdated() {
+    hydrateSlots(this);
   }
 
   render() {

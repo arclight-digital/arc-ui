@@ -1,5 +1,6 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 /**
  * Structured list container with optional selection, keyboard navigation, and multiple visual
@@ -177,6 +178,11 @@ export class ArcList extends LitElement {
     if (changed.has('value')) {
       this._syncSelection();
     }
+  }
+
+  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  firstUpdated() {
+    hydrateSlots(this);
   }
 
   render() {

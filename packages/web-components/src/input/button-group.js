@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 /**
  * Connects multiple buttons into a single visual unit with shared borders and collapsed radii.
@@ -115,6 +116,11 @@ export class ArcButtonGroup extends LitElement {
         if (this.variant) child.setAttribute('variant', this.variant);
       }
     }
+  }
+
+  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  firstUpdated() {
+    hydrateSlots(this);
   }
 
   render() {

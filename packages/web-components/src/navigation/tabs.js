@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 /**
  * Tabbed content navigation with keyboard support and ARIA roles.
@@ -211,6 +212,11 @@ export class ArcTabs extends LitElement {
     if (changed.has('selected')) {
       this._syncVisibility();
     }
+  }
+
+  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  firstUpdated() {
+    hydrateSlots(this);
   }
 
   render() {

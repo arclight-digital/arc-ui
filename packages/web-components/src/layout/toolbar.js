@@ -3,6 +3,7 @@ import { tokenStyles } from '../shared-styles.js';
 import { MenuKeyboardController } from '../shared/menu-keyboard.js';
 import { ClickOutsideController } from '../shared/click-outside.js';
 import '../input/icon-button.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 /**
  * Horizontal toolbar with start, center, and end slots.
@@ -409,6 +410,11 @@ export class ArcToolbar extends LitElement {
         </div>
       </div>
     `;
+  }
+
+  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  firstUpdated() {
+    hydrateSlots(this);
   }
 
   render() {

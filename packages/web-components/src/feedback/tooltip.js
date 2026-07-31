@@ -3,6 +3,7 @@ import { tokenStyles } from '../shared-styles.js';
 import { PositionController } from '../shared/position-controller.js';
 import { managedPanelStyles } from '../shared/position-styles.js';
 import { setTriggerAria } from '../shared/trigger-aria.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 /**
  * Contextual hint that appears on hover or focus, providing supplementary information without
@@ -262,6 +263,11 @@ export class ArcTooltip extends LitElement {
   _hide() {
     clearTimeout(this._showTimeout);
     this._visible = false;
+  }
+
+  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  firstUpdated() {
+    hydrateSlots(this);
   }
 
   render() {

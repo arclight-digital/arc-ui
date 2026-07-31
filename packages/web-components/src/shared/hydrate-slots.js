@@ -27,9 +27,30 @@
  * @param {import('lit').LitElement} host - Component whose first render just completed.
  */
 export function hydrateSlots(host) {
-  const root = host.renderRoot;
-  if (!root?.querySelectorAll) return;
-  for (const slot of root.querySelectorAll('slot')) {
-    slot.dispatchEvent(new Event('slotchange'));
+  const fire = () => {
+    const root = host.renderRoot;
+    if (!root?.querySelectorAll) return;
+    for (const slot of root.querySelectorAll('slot')) {
+      slot.dispatchEvent(new Event('slotchange'));
+    }
+  };
+
+  fire();
+
+  /*
+   * And again once parsing finishes, because first render is not always after
+   * the children exist. A component near the top of the document can upgrade
+   * while the parser is still working its way down to the light-DOM content it
+   * is waiting for — arc-app-shell reached firstUpdated with its `toc` slot
+   * empty, decided it had no table of contents, and collapsed the rail to
+   * display:none. The docs scroll spy was gone from every page while the
+   * markup sat right there in the HTML, assigned correctly, one dispatch away.
+   *
+   * Cheap: readyState is only 'loading' during initial parse, so this listener
+   * exists for the one render where it can matter, and re-reading the same
+   * assignment is a no-op in every handler it reaches.
+   */
+  if (typeof document !== 'undefined' && document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', fire, { once: true });
   }
 }

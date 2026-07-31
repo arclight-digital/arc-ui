@@ -3,6 +3,7 @@ import { tokenStyles } from '../shared-styles.js';
 import { breakpoints } from '../generated/breakpoints.js';
 import { lockScroll, unlockScroll } from '../shared/scroll-lock.js';
 import { trapTabKey, focusFirst, deepActiveElement } from '../shared/focus-trap.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 
 /**
  * Full-page layout scaffold that composes a TopBar, Sidebar, and scrollable content area into a
@@ -326,6 +327,11 @@ export class ArcAppShell extends LitElement {
   _onTocSlotChange(e) {
     const nodes = e.target.assignedElements({ flatten: true });
     this._hasToc = nodes.some((n) => n.children.length > 0 || n.textContent.trim());
+  }
+
+  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  firstUpdated() {
+    hydrateSlots(this);
   }
 
   render() {
