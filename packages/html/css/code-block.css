@@ -70,13 +70,30 @@
         inset-inline-end: var(--space-sm);
         z-index: 1;
         border-radius: var(--radius-sm);
-        opacity: 0.75;
+        /* Fully opaque. It used to idle at 0.75, which over syntax-coloured
+           text read as smudged rather than as quiet — and on a touch screen
+           there is no hover to bring it back. The body already reserves 80px of
+           inline-end padding for it, so nothing is being covered by showing it
+           properly. */
+        opacity: 1;
         backdrop-filter: blur(4px);
         transition: opacity var(--transition-fast);
       }
 
-      .arc-code-block .code-block__copy:hover {
-        opacity: 1;
+      /* One line has no top-right to speak of: the button would sit level with
+         the only row of code, slightly above its centre, which reads as
+         misaligned rather than as anchored. Centre it against the single line
+         instead, and let anything taller keep the corner. */
+      /* Not for the basic variant, which lays the button out as a static flex
+         item: the top offset is inert there but the transform is not, so a
+         -50% lifted it clean out through the top edge of the block. */
+      .arc-code-block:not([data-variant="basic"]) .code-block__copy--centered {
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .arc-code-block .code-block__copy { transition: none; }
       }
 
       .arc-code-block .code-block__body pre {

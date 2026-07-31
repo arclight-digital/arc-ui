@@ -11,11 +11,17 @@
   --accent-secondary:        rgb(20, 184, 166);
   --accent-secondary-rgb:    20, 184, 166;
 
-  /* ── Font trial: Trispace in the label/accent role (was Tektur).
+  /* ── Font trial: Azeret Mono in the label/accent role (was Tektur).
      Docs-level assignment through the role slot — the library default is
      untouched, and OG cards still render with Tektur until this sticks.
-     Revert = delete this line (Tektur's @font-face is still loaded). ── */
-  --font-label-family: 'Trispace';
+     A mono carries its own letter-fitting and darker per-weight color, so
+     the Tektur-era tracking is roughly halved and the weight drops a step.
+     Revert = delete this block (Tektur and Trispace stay loaded for A/B). ── */
+  --font-label-family: 'Azeret Mono';
+  --font-label-weight: 600;
+  --section-title-spacing: 1px;
+  --label-inline-spacing: 0.75px;
+  --ui-accent-spacing: 0px;
 
   /* Demo-specific: 3-stop gradient with midpoint accent */
   --gradient-display-text:   linear-gradient(135deg, rgb(232, 232, 236) 0%, rgb(77, 126, 247) 50%, rgb(20, 184, 166) 100%);

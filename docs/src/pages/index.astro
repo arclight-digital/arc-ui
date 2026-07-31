@@ -1288,17 +1288,37 @@ function Settings() {
     z-index: 1;
   }
 
+  /* The word the page is named for actually emits: the twin behind it is a
+     layered bloom — hot white core, accent halo, wide secondary falloff —
+     breathing on the hero's own glow knob so light mode stays calm. */
   .hero__headline-glow-shadow {
     position: absolute;
     inset: 0;
     font-size: clamp(60px, 10.5vw, 120px);
     font-weight: 600;
     letter-spacing: -3px;
-    color: rgba(var(--accent-primary-rgb), 0.35);
-    filter: blur(30px);
+    color: transparent;
+    text-shadow:
+      0 0 14px rgba(255, 255, 255, calc(0.35 * var(--glow-a, 1))),
+      0 0 32px rgba(var(--accent-primary-rgb), calc(0.65 * var(--glow-a, 1))),
+      0 0 70px rgba(var(--accent-primary-rgb), calc(0.45 * var(--glow-a, 1))),
+      0 0 130px rgba(var(--accent-secondary-rgb), calc(0.4 * var(--glow-a, 1)));
+    filter: blur(6px);
     z-index: 0;
     pointer-events: none;
     user-select: none;
+    animation: hero-glow-breathe 5s ease-in-out infinite alternate;
+  }
+
+  @keyframes hero-glow-breathe {
+    from { opacity: 0.7; }
+    to   { opacity: 1; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero__headline-glow-shadow {
+      animation: none;
+    }
   }
 
   .hero__body {
@@ -1351,9 +1371,9 @@ function Settings() {
      are no card grids to carry the argument, the artifact below it does. */
   .section-label {
     font-family: var(--font-accent);
-    font-weight: 600;
+    font-weight: var(--font-label-weight, 600);
     font-size: var(--text-xs);
-    letter-spacing: 4px;
+    letter-spacing: var(--section-title-spacing, 4px);
     text-transform: uppercase;
     background: var(--gradient-accent-text);
     -webkit-background-clip: text;
@@ -1839,8 +1859,8 @@ function Settings() {
   .stat-custom__label {
     font-family: var(--font-accent);
     font-size: var(--text-xs);
-    font-weight: 600;
-    letter-spacing: 3px;
+    font-weight: var(--font-label-weight, 600);
+    letter-spacing: var(--label-inline-spacing, 3px);
     text-transform: uppercase;
     color: var(--text-ghost);
   }

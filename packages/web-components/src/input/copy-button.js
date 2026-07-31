@@ -45,7 +45,8 @@ export class ArcCopyButton extends LitElement {
           background var(--transition-fast),
           border-color var(--transition-fast),
           color var(--transition-fast),
-          box-shadow var(--transition-fast);
+          box-shadow var(--transition-fast),
+          transform 120ms var(--ease-out-expo);
       }
 
       .copy-btn:hover {
@@ -54,14 +55,31 @@ export class ArcCopyButton extends LitElement {
         background: var(--surface-hover);
       }
 
+      /* Press feedback, matching the rest of the button family. Copying gives
+         no other physical signal — the clipboard write is silent and the label
+         change lands a beat later — so the press itself was the one moment with
+         nothing to confirm the click registered. */
+      .copy-btn:active {
+        transform: scale(0.97);
+      }
+
       .copy-btn:focus-visible {
         outline: none;
         box-shadow: var(--interactive-focus);
       }
 
+      /* Filled, not just outlined. The copied state is the component's only
+         piece of feedback and it was carried by border and text colour alone,
+         which at this size is a few pixels of green. The tint reads at a glance
+         and derives from the same token, so it follows the theme. */
       .copy-btn.is-copied {
         border-color: var(--color-success);
         color: var(--color-success);
+        background: var(--feedback-success-subtle);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .copy-btn:active { transform: none; }
       }
 
       .copy-btn__icon {
