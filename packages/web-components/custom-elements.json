@@ -10076,6 +10076,31 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/generated/breakpoints.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "breakpoints",
+          "type": {
+            "text": "object"
+          },
+          "default": "{ xs: 480, sm: 640, md: 768, lg: 1024, xl: 1280, '2xl': 1536, navCollapse: 900, }",
+          "description": "Breakpoint widths in pixels, unitless.\n\nFor media queries inside a `css` template, interpolate with a unit:\n  css`@media (max-width: ${breakpoints.navCollapse}px) { … }`\nFor width comparisons in JS, use the number directly:\n  if (window.innerWidth > breakpoints.navCollapse) …"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "breakpoints",
+          "declaration": {
+            "name": "breakpoints",
+            "module": "src/generated/breakpoints.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/generated/host-tokens.js",
       "declarations": [
         {
@@ -21583,7 +21608,6 @@
               "type": {
                 "text": "number"
               },
-              "default": "900",
               "description": "Viewport width in pixels at which the layout switches between mobile and desktop modes.",
               "attribute": "breakpoint"
             }
@@ -21612,7 +21636,6 @@
               "type": {
                 "text": "number"
               },
-              "default": "900",
               "description": "Viewport width in pixels at which the layout switches between mobile and desktop modes.",
               "fieldName": "breakpoint"
             }

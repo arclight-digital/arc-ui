@@ -284,11 +284,16 @@ export class ArcTopBar extends LitElement {
         transform: translateY(-5.25px) rotate(-45deg);
       }
 
-      /* Shared with arc-navigation-menu, which collapses its links at the same
-         width. The pair is load-bearing — move one without the other and both
-         hamburgers show at once, or neither does — so both read the number from
-         the token tree rather than restating it. */
-      @media (max-width: ${breakpoints.navCollapse}px) {
+      /* nav-collapse: keep in step with tokens.breakpoint.navCollapse.
+         A literal, not an interpolation. prism reads these css templates as
+         text to generate the standalone CSS package, and cannot evaluate an
+         interpolation; doing it here compiled fine and dropped this query from
+         arc-ui.css entirely. The JS side reads the token directly, and
+         check-breakpoint-drift.js asserts this number still matches it.
+         Separately: prism emits the query with the component selector in front
+         of the at-rule, which is invalid CSS — so this has never applied in the
+         standalone package. That is a prism bug, fixed there. */
+      @media (max-width: 900px) {
         .topbar__menu-btn { display: flex; }
       }
     `,

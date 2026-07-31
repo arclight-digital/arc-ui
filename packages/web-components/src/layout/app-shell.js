@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { breakpoints } from '../generated/breakpoints.js';
 import { lockScroll, unlockScroll } from '../shared/scroll-lock.js';
 import { trapTabKey, focusFirst, deepActiveElement } from '../shared/focus-trap.js';
 
@@ -200,7 +201,10 @@ export class ArcAppShell extends LitElement {
   constructor() {
     super();
     this.sidebarOpen = false;
-    this.breakpoint = 900;
+    // The same width the top bar reveals its hamburger at, and the nav menu
+    // collapses at — this shell's sidebar has to switch to its drawer on the
+    // same line, or the button is there with nothing to open.
+    this.breakpoint = breakpoints.navCollapse;
     this._mobile = false;
     this._hasToc = false;
     this._returnFocus = null;

@@ -43,3 +43,10 @@ ${decls}
 
 fs.writeFileSync('packages/web-components/src/generated/breakpoints.js', out);
 console.log('✓ breakpoints.js generated');
+
+// The other half of the same job, so it is one pipeline step rather than two:
+// this module covers the consumers that can read a value, and the drift check
+// covers the media queries that cannot. Dynamic, so it runs after the write —
+// a static import would hoist above it. Still runnable on its own via
+// `pnpm check:breakpoints`.
+await import('./check-breakpoint-drift.js');

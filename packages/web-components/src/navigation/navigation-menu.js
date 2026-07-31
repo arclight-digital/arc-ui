@@ -258,6 +258,9 @@ export class ArcNavigationMenu extends LitElement {
       .nav__slot-host { display: none; }
 
       /* ── Mobile panel ── */
+      /* nav-collapse: keep in step with tokens.breakpoint.navCollapse.
+         Literal for prism's sake — see the note in arc-top-bar. Guarded by
+         check-breakpoint-drift.js. */
       @media (max-width: 900px) {
         .nav { display: none; }
       }
@@ -661,7 +664,7 @@ export class ArcNavigationMenu extends LitElement {
   }
 
   _onResize() {
-    if (window.innerWidth > 900 && this._mobileOpen) {
+    if (window.innerWidth > breakpoints.navCollapse && this._mobileOpen) {
       this._closeMobile();
     }
   }

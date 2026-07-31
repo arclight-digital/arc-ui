@@ -3444,12 +3444,23 @@
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
         text-transform: uppercase;
-        letter-spacing: 1.5px;
+        --_ls: 1.5px;
+        letter-spacing: var(--_ls);
         white-space: nowrap;
       }
 
       .arc-icon-button .btn__text {
         line-height: 1;
+        /* letter-spacing also lands after the final letter, and that trailing
+           space is inside the box being centred — so the word rendered half of
+           it, 0.75px, to the left of centre. Pulled back off the end here, at
+           the cause: the box then matches the ink and every size centres
+           correctly, where compensating with padding would have meant patching
+           each of the four size rules separately.
+           arc-navigation-menu does the same correction with asymmetric padding
+           instead, because its label is a bare text node with no element to
+           hang a margin on. */
+        margin-inline-end: calc(var(--_ls) * -1);
       }
 
       /* Sizes — icon-only: see iconBoxStyles in ../button-styles.js, shared with
@@ -4833,10 +4844,15 @@
         transform: translateY(-5.25px) rotate(-45deg);
       }
 
-      /* 900px is not a breakpoint token, and arc-navigation-menu hardcodes the
-         same number for the width at which it collapses. The pair is
-         load-bearing: move one without the other and both hamburgers show at
-         once, or neither does. Change them together, or move both onto a token. */
+      /* nav-collapse: keep in step with tokens.breakpoint.navCollapse.
+         A literal, not an interpolation. prism reads these css templates as
+         text to generate the standalone CSS package, and cannot evaluate an
+         interpolation; doing it here compiled fine and dropped this query from
+         arc-ui.css entirely. The JS side reads the token directly, and
+         check-breakpoint-drift.js asserts this number still matches it.
+         Separately: prism emits the query with the component selector in front
+         of the at-rule, which is invalid CSS — so this has never applied in the
+         standalone package. That is a prism bug, fixed there. */
       .arc-top-bar @media (max-width: 900px) {
         .arc-top-bar .topbar__menu-btn { display: flex; }
       }

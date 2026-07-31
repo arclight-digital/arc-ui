@@ -232,10 +232,15 @@
         transform: translateY(-5.25px) rotate(-45deg);
       }
 
-      /* 900px is not a breakpoint token, and arc-navigation-menu hardcodes the
-         same number for the width at which it collapses. The pair is
-         load-bearing: move one without the other and both hamburgers show at
-         once, or neither does. Change them together, or move both onto a token. */
+      /* nav-collapse: keep in step with tokens.breakpoint.navCollapse.
+         A literal, not an interpolation. prism reads these css templates as
+         text to generate the standalone CSS package, and cannot evaluate an
+         interpolation; doing it here compiled fine and dropped this query from
+         arc-ui.css entirely. The JS side reads the token directly, and
+         check-breakpoint-drift.js asserts this number still matches it.
+         Separately: prism emits the query with the component selector in front
+         of the at-rule, which is invalid CSS — so this has never applied in the
+         standalone package. That is a prism bug, fixed there. */
       .arc-top-bar @media (max-width: 900px) {
         .arc-top-bar .topbar__menu-btn { display: flex; }
       }

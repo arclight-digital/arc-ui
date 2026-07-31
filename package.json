@@ -28,6 +28,7 @@
     "docs:deploy": "cd docs && pnpm wrangler pages deploy",
     "bump-versions": "node scripts/bump-versions.js",
     "check:unions": "node scripts/check-prop-unions.js",
+    "check:breakpoints": "node scripts/check-breakpoint-drift.js",
     "check:enum-fallbacks": "node scripts/check-enum-fallbacks.js",
     "check:wrapper-slots": "node scripts/check-wrapper-slots.js",
     "check:child-registrations": "node scripts/check-child-registrations.js",

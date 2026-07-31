@@ -9,7 +9,6 @@ const props = withDefaults(defineProps<{
   breakpoint?: number;
 }>(), {
   sidebarOpen: false,
-  breakpoint: 900,
 });
 
 const emit = defineEmits<{

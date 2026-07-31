@@ -84,7 +84,7 @@ export declare class ArcAnnouncement extends LitElement {
 export declare class ArcAppShell extends LitElement {
   /** Controls whether the sidebar is visible on mobile viewports (below 768 px). On desktop the sidebar is always shown regardless of this attribute. Toggle it from a hamburger button in your TopBar to give mobile users access to navigation. @default false */
   sidebarOpen: boolean;
-  /** Viewport width in pixels at which the layout switches between mobile and desktop modes. @default 900 */
+  /** Viewport width in pixels at which the layout switches between mobile and desktop modes. */
   breakpoint: number;
 }
 
