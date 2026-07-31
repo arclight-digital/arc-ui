@@ -104,7 +104,7 @@ export class ArcTextarea extends FormControlMixin(LitElement) {
         box-shadow: var(--shadow-inset), var(--interactive-hover);
       }
 
-      textarea:focus {
+      textarea:focus-visible {
         outline: none;
         border-color: rgba(var(--interactive-rgb), 0.4);
         box-shadow: var(--shadow-inset), var(--interactive-focus);
@@ -119,9 +119,9 @@ export class ArcTextarea extends FormControlMixin(LitElement) {
         border-color: var(--color-error);
       }
 
-      .error textarea:focus {
+      .error textarea:focus-visible {
         outline: none;
-        box-shadow: 0 0 0 2px var(--surface-base), 0 0 0 4px var(--color-error), 0 0 16px rgba(var(--color-error-rgb), 0.2);
+        box-shadow: var(--interactive-focus-error);
       }
 
       .footer {

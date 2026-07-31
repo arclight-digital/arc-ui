@@ -108,7 +108,7 @@ export class ArcInput extends FormControlMixin(LitElement) {
 
       .input-group--error .input-group__wrapper:focus-within {
         border-color: var(--color-error);
-        box-shadow: 0 0 0 2px var(--surface-base), 0 0 0 4px var(--color-error), 0 0 16px rgba(var(--color-error-rgb), 0.2);
+        box-shadow: var(--interactive-focus-error);
       }
 
       .input-group__error {

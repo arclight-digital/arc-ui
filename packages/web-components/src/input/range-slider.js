@@ -137,9 +137,7 @@ export class ArcRangeSlider extends FormControlMixin(LitElement) {
       :host([size="lg"]) .range-slider__thumb { width: 26px; height: 26px; }
 
       .range-slider__thumb:hover {
-        box-shadow:
-          0 0 8px rgba(var(--interactive-rgb), 0.5),
-          0 0 20px rgba(var(--interactive-rgb), 0.25);
+        box-shadow: var(--interactive-focus-thumb);
       }
 
       .range-slider__thumb:focus-visible {
@@ -147,9 +145,7 @@ export class ArcRangeSlider extends FormControlMixin(LitElement) {
       }
 
       .range-slider__thumb--active {
-        box-shadow:
-          0 0 8px rgba(var(--interactive-rgb), 0.5),
-          0 0 20px rgba(var(--interactive-rgb), 0.25);
+        box-shadow: var(--interactive-focus-thumb);
         z-index: 2;
       }
 

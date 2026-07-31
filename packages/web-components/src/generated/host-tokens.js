@@ -101,6 +101,9 @@ export const hostTokens = css`
     --glow-hover: 0 0 12px rgba(var(--accent-primary-rgb), 0.15);
     --focus-ring: 0 0 0 1px rgba(var(--accent-primary-rgb),0.25);
     --focus-glow: 0 0 0 1px rgba(var(--accent-primary-rgb),0.2), 0 0 6px rgba(var(--accent-primary-rgb),0.35), 0 0 16px rgba(var(--accent-primary-rgb),0.2), 0 0 40px rgba(var(--accent-secondary-rgb),0.12);
+    --focus-error: 0 0 0 2px var(--surface-base), 0 0 0 4px var(--color-error), 0 0 16px rgba(var(--color-error-rgb), 0.2);
+    --focus-inset: inset 0 0 0 2px var(--interactive);
+    --focus-thumb: 0 0 8px rgba(var(--interactive-rgb), 0.5), 0 0 20px rgba(var(--interactive-rgb), 0.25);
 
     /* Semantic aliases */
     --interactive: var(--accent-primary);
@@ -109,6 +112,9 @@ export const hostTokens = css`
     --interactive-active: var(--glow-primary);
     --interactive-focus: var(--focus-glow);
     --interactive-focus-ring: var(--focus-ring);
+    --interactive-focus-error: var(--focus-error);
+    --interactive-focus-inset: var(--focus-inset);
+    --interactive-focus-thumb: var(--focus-thumb);
     --interactive-muted: var(--text-ghost);
     --surface-base: var(--bg-deep);
     --surface-primary: var(--bg-surface);

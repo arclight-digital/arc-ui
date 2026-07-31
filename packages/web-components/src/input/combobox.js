@@ -95,7 +95,7 @@ export class ArcCombobox extends FormControlMixin(LitElement) {
         box-shadow: var(--shadow-inset), var(--interactive-hover);
       }
 
-      .combobox__input:focus {
+      .combobox__input:focus-visible {
         outline: none;
         border-color: rgba(var(--interactive-rgb), 0.4);
         box-shadow: var(--shadow-inset), var(--interactive-focus);

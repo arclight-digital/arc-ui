@@ -155,7 +155,7 @@ export class ArcColorPicker extends FormControlMixin(LitElement) {
         box-sizing: border-box;
       }
 
-      .picker__hex-input:focus {
+      .picker__hex-input:focus-visible {
         outline: none;
         border-color: var(--interactive);
         box-shadow: var(--interactive-focus);

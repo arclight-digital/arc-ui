@@ -103,7 +103,7 @@ export class ArcSlider extends FormControlMixin(LitElement) {
       }
 
       input[type="range"]:hover,
-      input[type="range"]:focus {
+      input[type="range"]:focus-visible {
         filter: drop-shadow(0 0 6px rgba(var(--interactive-rgb), 0.4));
       }
 
@@ -143,17 +143,13 @@ export class ArcSlider extends FormControlMixin(LitElement) {
       :host([size="lg"]) input[type="range"]::-moz-range-thumb { width: 26px; height: 26px; }
 
       input[type="range"]:hover::-webkit-slider-thumb,
-      input[type="range"]:focus::-webkit-slider-thumb {
-        box-shadow:
-          0 0 8px rgba(var(--interactive-rgb), 0.5),
-          0 0 20px rgba(var(--interactive-rgb), 0.25);
+      input[type="range"]:focus-visible::-webkit-slider-thumb {
+        box-shadow: var(--interactive-focus-thumb);
       }
 
       input[type="range"]:hover::-moz-range-thumb,
-      input[type="range"]:focus::-moz-range-thumb {
-        box-shadow:
-          0 0 8px rgba(var(--interactive-rgb), 0.5),
-          0 0 20px rgba(var(--interactive-rgb), 0.25);
+      input[type="range"]:focus-visible::-moz-range-thumb {
+        box-shadow: var(--interactive-focus-thumb);
       }
 
       input[type="range"]:focus-visible {
@@ -161,17 +157,11 @@ export class ArcSlider extends FormControlMixin(LitElement) {
       }
 
       input[type="range"]:focus-visible::-webkit-slider-thumb {
-        box-shadow:
-          0 0 0 1px rgba(var(--interactive-rgb), 0.2),
-          0 0 8px rgba(var(--interactive-rgb), 0.5),
-          0 0 20px rgba(var(--interactive-rgb), 0.25);
+        box-shadow: var(--interactive-focus-ring), var(--interactive-focus-thumb);
       }
 
       input[type="range"]:focus-visible::-moz-range-thumb {
-        box-shadow:
-          0 0 0 1px rgba(var(--interactive-rgb), 0.2),
-          0 0 8px rgba(var(--interactive-rgb), 0.5),
-          0 0 20px rgba(var(--interactive-rgb), 0.25);
+        box-shadow: var(--interactive-focus-ring), var(--interactive-focus-thumb);
       }
 
       input[type="range"]::-moz-range-track {

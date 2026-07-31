@@ -73,7 +73,7 @@ export class ArcOtpInput extends FormControlMixin(LitElement) {
         border-color: var(--border-bright);
       }
 
-      .otp__box:focus {
+      .otp__box:focus-visible {
         outline: none;
         border-color: rgba(var(--interactive-rgb), 0.4);
         box-shadow: var(--interactive-focus);

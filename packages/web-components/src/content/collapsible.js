@@ -57,7 +57,7 @@ export class ArcCollapsible extends LitElement {
 
       .collapsible__trigger:focus-visible {
         outline: none;
-        box-shadow: inset 0 0 0 2px var(--interactive);
+        box-shadow: var(--interactive-focus-inset);
         background: var(--surface-overlay);
       }
 

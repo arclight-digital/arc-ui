@@ -335,9 +335,38 @@ export const tokens = {
     hover: '0 0 20px rgba(var(--accent-primary-rgb),0.08), 0 0 40px rgba(var(--accent-secondary-rgb),0.04)',
   },
 
-  /* ── Focus ── */
+  /* ── Focus ──
+     Two treatments, and which one a component takes is a property of the
+     target rather than of the component:
+
+       glow — a bounded control. A field, a button, a checkbox, a card: an
+         element with its own box, where light gathering around that box reads
+         as the box being addressed.
+       ring — an inline or dense target. A link in running text, a tab, a table
+         cell, a row in a list. These sit close to their neighbours, and a
+         four-layer glow reaching 40px would wash over whatever is beside them
+         instead of marking what is focused.
+       error — the glow's shape in the error colour, with an inner 2px in the
+         surface colour so the ring stays legible against a red border. This
+         was written out by hand identically in four components before it was a
+         token.
+       inset — a full-bleed row inside a bordered container, where an outer
+         glow would be clipped by the container it sits in and a 1px ring on
+         the edge would be indistinguishable from the container's own border.
+         arc-accordion and arc-collapsible triggers.
+       thumb — a range input's thumb, which has no box to gather light around.
+         Two tight layers on the circle itself. Repeated by hand across
+         arc-slider and arc-image-cropper, hover and focus alike.
+
+     The rule was latent in the library before it was written down: forty-eight
+     components had picked the glow and thirteen the ring, and every one of them
+     agreed with this except arc-carousel, which had them inverted — the thin
+     ring on its arrow buttons and the 40px glow on an 8px dot. */
   focus: {
     ring: '0 0 0 1px rgba(var(--accent-primary-rgb),0.25)',
+    error: '0 0 0 2px var(--surface-base), 0 0 0 4px var(--color-error), 0 0 16px rgba(var(--color-error-rgb), 0.2)',
+    inset: 'inset 0 0 0 2px var(--interactive)',
+    thumb: '0 0 8px rgba(var(--interactive-rgb), 0.5), 0 0 20px rgba(var(--interactive-rgb), 0.25)',
     glow: '0 0 0 1px rgba(var(--accent-primary-rgb),0.2), 0 0 6px rgba(var(--accent-primary-rgb),0.35), 0 0 16px rgba(var(--accent-primary-rgb),0.2), 0 0 40px rgba(var(--accent-secondary-rgb),0.12)',
   },
 };
@@ -561,6 +590,9 @@ ${Object.entries(tokens.duration).map(([k, v]) => `  --duration-${k}: ${v};`).jo
 
   --focus-ring: ${tokens.focus.ring};
   --focus-glow: ${tokens.focus.glow};
+  --focus-error: ${tokens.focus.error};
+  --focus-inset: ${tokens.focus.inset};
+  --focus-thumb: ${tokens.focus.thumb};
 
   --max-width: ${tokens.layout.maxWidth};
   --max-width-sm: ${tokens.layout.maxWidthSm};
@@ -577,6 +609,9 @@ ${Object.entries(tokens.duration).map(([k, v]) => `  --duration-${k}: ${v};`).jo
   --interactive-active: var(--glow-primary);
   --interactive-focus: var(--focus-glow);
   --interactive-focus-ring: var(--focus-ring);
+  --interactive-focus-error: var(--focus-error);
+  --interactive-focus-inset: var(--focus-inset);
+  --interactive-focus-thumb: var(--focus-thumb);
   --interactive-muted: var(--text-ghost);
 
   /* ── Semantic: Surface ── */
@@ -1109,6 +1144,9 @@ export function generateHostTokensCSS(indent = '    ') {
     ['--glow-hover', tokens.glowHover],
     ['--focus-ring', tokens.focus.ring],
     ['--focus-glow', tokens.focus.glow],
+    ['--focus-error', tokens.focus.error],
+    ['--focus-inset', tokens.focus.inset],
+    ['--focus-thumb', tokens.focus.thumb],
   ]);
   group('Semantic aliases', [
     ['--interactive', 'var(--accent-primary)'],
@@ -1117,6 +1155,9 @@ export function generateHostTokensCSS(indent = '    ') {
     ['--interactive-active', 'var(--glow-primary)'],
     ['--interactive-focus', 'var(--focus-glow)'],
     ['--interactive-focus-ring', 'var(--focus-ring)'],
+    ['--interactive-focus-error', 'var(--focus-error)'],
+    ['--interactive-focus-inset', 'var(--focus-inset)'],
+    ['--interactive-focus-thumb', 'var(--focus-thumb)'],
     ['--interactive-muted', 'var(--text-ghost)'],
     ['--surface-base', 'var(--bg-deep)'],
     ['--surface-primary', 'var(--bg-surface)'],

@@ -95,7 +95,7 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
 
       input::placeholder { color: var(--text-muted); }
       input:hover:not(:focus) { border-color: var(--border-bright); }
-      input:focus { outline: none; border-color: rgba(var(--interactive-rgb), 0.4); box-shadow: var(--interactive-focus); }
+      input:focus-visible { outline: none; border-color: rgba(var(--interactive-rgb), 0.4); box-shadow: var(--interactive-focus); }
 
       .clock-icon {
         position: absolute;

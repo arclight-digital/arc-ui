@@ -64,6 +64,7 @@ const steps = [
   { name: 'Slots',    cmd: 'node',  args: ['scripts/check-wrapper-slots.js'] },
   { name: 'WrapperTypes', cmd: 'node', args: ['scripts/check-wrapper-types.js'] },
   { name: 'Motion',   cmd: 'node',  args: ['scripts/check-motion-tokens.js'] },
+  { name: 'Focus',    cmd: 'node',  args: ['scripts/check-focus-ring.js'] },
 ];
 
 const totalStart = performance.now();

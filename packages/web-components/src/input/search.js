@@ -101,7 +101,7 @@ export class ArcSearch extends LitElement {
         color: var(--text-muted);
       }
 
-      .search__input:focus {
+      .search__input:focus-visible {
         outline: none;
         border-color: rgba(var(--interactive-rgb), 0.4);
         box-shadow: var(--interactive-focus);

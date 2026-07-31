@@ -235,17 +235,11 @@ export class ArcImageCropper extends LitElement {
       input[type="range"]:focus-visible { outline: none; }
 
       input[type="range"]:focus-visible::-webkit-slider-thumb {
-        box-shadow:
-          0 0 0 1px rgba(var(--interactive-rgb), 0.2),
-          0 0 8px rgba(var(--interactive-rgb), 0.5),
-          0 0 20px rgba(var(--interactive-rgb), 0.25);
+        box-shadow: var(--interactive-focus-ring), var(--interactive-focus-thumb);
       }
 
       input[type="range"]:focus-visible::-moz-range-thumb {
-        box-shadow:
-          0 0 0 1px rgba(var(--interactive-rgb), 0.2),
-          0 0 8px rgba(var(--interactive-rgb), 0.5),
-          0 0 20px rgba(var(--interactive-rgb), 0.25);
+        box-shadow: var(--interactive-focus-ring), var(--interactive-focus-thumb);
       }
 
       .sr-only {

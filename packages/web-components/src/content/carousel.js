@@ -94,7 +94,7 @@ export class ArcCarousel extends LitElement {
 
       .carousel__arrow:focus-visible {
         outline: none;
-        box-shadow: var(--interactive-focus-ring);
+        box-shadow: var(--interactive-focus);
       }
 
       .carousel__arrow--prev { left: var(--space-sm); }
@@ -136,7 +136,7 @@ export class ArcCarousel extends LitElement {
 
       .carousel__dot:focus-visible {
         outline: none;
-        box-shadow: var(--interactive-focus);
+        box-shadow: var(--interactive-focus-ring);
       }
 
       /* Reduced motion */

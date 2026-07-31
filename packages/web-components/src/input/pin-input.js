@@ -113,7 +113,7 @@ export class ArcPinInput extends FormControlMixin(LitElement) {
         border-color: var(--border-bright);
       }
 
-      .pin__box:focus {
+      .pin__box:focus-visible {
         outline: none;
         border-color: rgba(var(--interactive-rgb), 0.4);
         box-shadow: var(--interactive-focus);

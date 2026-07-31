@@ -159,7 +159,7 @@ export class ArcNumberInput extends FormControlMixin(LitElement) {
         margin: 0;
       }
 
-      .number-input__field:focus {
+      .number-input__field:focus-visible {
         outline: none;
         border-color: var(--interactive);
         box-shadow: var(--interactive-focus);

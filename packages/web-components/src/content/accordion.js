@@ -74,7 +74,7 @@ export class ArcAccordion extends LitElement {
       .accordion__trigger[aria-expanded="true"] { background: var(--surface-overlay); }
       .accordion__trigger:focus-visible {
         outline: none;
-        box-shadow: inset 0 0 0 2px var(--interactive);
+        box-shadow: var(--interactive-focus-inset);
         background: var(--surface-overlay);
       }
 
