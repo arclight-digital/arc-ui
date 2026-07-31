@@ -1,14 +1,15 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { statusVars } from '../status-styles.js';
+import { warnLowContrast } from '../shared/contrast.js';
 
 /**
- * Compact pill-shaped label with colour variants, custom colour support, and an optional remove
+ * Compact pill-shaped label with color variants, custom color support, and an optional remove
  * button, for categorisation, filtering, and selection feedback.
  *
  * @tag arc-tag
- * @prop {'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error'} variant - Colour variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and error provide semantic status colours.
- * @prop {string} color - Custom colour as an RGB triplet (e.g. `"77, 126, 247"`). When set, overrides the variant colours for border, text, background, and hover glow. Useful for data-driven category colours.
+ * @prop {'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error'} variant - Color variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and error provide semantic status colors.
+ * @prop {string} color - Custom color as an RGB triplet (e.g. `"77, 126, 247"`). When set, overrides the variant colors for border, text, background, and hover glow. Useful for data-driven category colors.
  * @prop {'sm' | 'md' | 'lg'} size - Controls the tag size.
  * @prop {boolean} removable - When true, shows a close button that fires `arc-remove` when clicked.
  * @prop {boolean} disabled - Disables the tag, reducing opacity to 40% and blocking pointer events including the remove button.
@@ -141,6 +142,18 @@ export class ArcTag extends LitElement {
         composed: true,
       }),
     );
+  }
+
+  /**
+   * A custom color is the consumer's, and the theme will not repaint it to
+   * make it legible — so say so when it isn't. The mix the palette applies is
+   * solved for our own accents, and a grey passed for a category chip is
+   * exactly the case it does not cover.
+   */
+  updated() {
+    if (this.color) {
+      warnLowContrast(this, this.renderRoot?.querySelector('.tag'), `color="${this.color}"`);
+    }
   }
 
   render() {
