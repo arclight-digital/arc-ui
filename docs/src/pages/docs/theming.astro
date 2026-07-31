@@ -1,5 +1,4 @@
 ---
-import { Code } from 'astro:components';
 import DocsLayout from '../../layouts/DocsLayout.astro';
 
 const headings = [
@@ -63,10 +62,10 @@ const headings = [
       <p class="docs-text">
         Dark mode is the default: near-black surfaces with blue and violet accent glows.
       </p>
-      <div class="docs-code"><Code code={`<!-- Dark mode is the default — no attribute needed -->
+      <div class="docs-code"><arc-code-block language="html" code={`<!-- Dark mode is the default — no attribute needed -->
 <html>
   <!-- or explicitly: -->
-<html data-theme="dark">`} lang="html" theme="css-variables" /></div>
+<html data-theme="dark">`}></arc-code-block></div>
       <p class="docs-text">The surface stack, rendered live:</p>
       <div class="token-preview-grid">
         <arc-card class="token-preview" style="--bg-card: var(--bg-deep)">
@@ -91,7 +90,7 @@ const headings = [
         Light mode shifts backgrounds to soft whites and strengthens the accents for contrast
         on light surfaces. Shadows become blue/violet-tinted instead of black.
       </p>
-      <div class="docs-code"><Code code={`<html data-theme="light">`} lang="html" theme="css-variables" /></div>
+      <div class="docs-code"><arc-code-block language="html" code={`<html data-theme="light">`}></arc-code-block></div>
     </section>
 
     <section id="auto-mode">
@@ -101,7 +100,7 @@ const headings = [
         Auto mode follows the user's OS preference via <code>prefers-color-scheme</code>.
         To persist an explicit choice across visits, store it and restore on load:
       </p>
-      <div class="docs-code"><Code code={`// Set theme and persist
+      <div class="docs-code"><arc-code-block language="js" code={`// Set theme and persist
 function setTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
   localStorage.setItem('arc-theme', theme);
@@ -109,7 +108,7 @@ function setTheme(theme) {
 
 // Restore on page load
 const saved = localStorage.getItem('arc-theme') || 'auto';
-document.documentElement.setAttribute('data-theme', saved);`} lang="js" theme="css-variables" /></div>
+document.documentElement.setAttribute('data-theme', saved);`}></arc-code-block></div>
       <arc-callout variant="tip">The <code>arc-theme-toggle</code> component handles this automatically — just drop it into your layout.</arc-callout>
     </section>
 
@@ -122,11 +121,11 @@ document.documentElement.setAttribute('data-theme', saved);`} lang="js" theme="c
         dark mode, deep royal blue in light mode. The top bar on this page uses it — flip to
         light mode and watch it hold.
       </p>
-      <div class="docs-code"><Code code={`<div class="theme-fixed">
+      <div class="docs-code"><arc-code-block language="html" code={`<div class="theme-fixed">
   <arc-top-bar fixed>
     <!-- Always uses dark tokens -->
   </arc-top-bar>
-</div>`} lang="html" theme="css-variables" /></div>
+</div>`}></arc-code-block></div>
     </section>
 
     <section id="custom-themes">
@@ -137,13 +136,13 @@ document.documentElement.setAttribute('data-theme', saved);`} lang="js" theme="c
         <code>var()</code>. Override the base pair (plus their <code>-rgb</code> channel variants,
         which alpha compositing needs) and everything downstream follows:
       </p>
-      <div class="docs-code"><Code code={`:root {
+      <div class="docs-code"><arc-code-block language="css" code={`:root {
   --accent-primary: rgb(0, 150, 136);
   --accent-primary-rgb: 0, 150, 136;
   --accent-secondary: rgb(233, 30, 99);
   --accent-secondary-rgb: 233, 30, 99;
   /* That's it. Glows, gradients, and focus rings recompose from these. */
-}`} lang="css" theme="css-variables" /></div>
+}`}></arc-code-block></div>
       <p class="docs-text">
         Here are those four lines applied to this page, live — every button, glow, gradient,
         and divider follows:

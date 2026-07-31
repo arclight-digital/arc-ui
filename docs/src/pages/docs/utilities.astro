@@ -76,9 +76,9 @@ const fontRoles = ['body', 'label', 'mono', 'display', 'quote'];
         against, so <code>.arc-p-md</code> and a card's internal padding resolve to the same
         value — and overriding one base token moves both:
       </p>
-      <pre><code>{`:root { --space-md: 20px; }
+      <arc-code-block language="css" code={`:root { --space-md: 20px; }
 
-/* .arc-p-md and every component's internal md spacing move together */`}</code></pre>
+/* .arc-p-md and every component's internal md spacing move together */`}></arc-code-block>
       <p>
         Every declaration reads a <code>var()</code> rather than a literal, which is what keeps
         that link intact. Use these where you want your layout to track the component system,
@@ -89,8 +89,8 @@ const fontRoles = ['body', 'label', 'mono', 'display', 'quote'];
     <section id="install">
       <h2 class="docs-heading">Install</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
-      <pre><code>{`import '@arclux/arc-ui/base.css';       /* defines the tokens */
-import '@arclux/arc-ui/utilities.css'; /* uses them */`}</code></pre>
+      <arc-code-block language="js" code={`import '@arclux/arc-ui/base.css';       /* defines the tokens */
+import '@arclux/arc-ui/utilities.css'; /* uses them */`}></arc-code-block>
       <p>
         Opt-in and standalone — nobody who only wants tokens pays for it. Every class is
         <code>arc-</code> prefixed, because consumers run Tailwind or Bootstrap and an

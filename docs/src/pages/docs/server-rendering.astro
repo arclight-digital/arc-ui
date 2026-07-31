@@ -43,15 +43,15 @@ const headings = [
         JavaScript loads — or without it — this is an empty unknown tag: no heading, no
         description, nothing for a crawler to read.
       </p>
-      <pre><code>{`<arc-feature-card
+      <arc-code-block language="html" code={`<arc-feature-card
   heading="Fast by default"
   description="Ships 40% less JavaScript"
-></arc-feature-card>`}</code></pre>
+></arc-feature-card>`}></arc-code-block>
       <p>
         The same tag through the server renderer (Lit's hydration markers elided) — the
         content is in the HTML response itself:
       </p>
-      <pre><code>{`<arc-feature-card
+      <arc-code-block language="html" code={`<arc-feature-card
   heading="Fast by default"
   description="Ships 40% less JavaScript"
 >
@@ -68,7 +68,7 @@ const headings = [
       </div>
     </div>
   </template>
-</arc-feature-card>`}</code></pre>
+</arc-feature-card>`}></arc-code-block>
       <p>
         <strong>65 of {elementCount} components</strong> are shaped like this — no default slot,
         no markup to fall back to. Server rendering is the only thing that puts their content in
@@ -80,20 +80,20 @@ const headings = [
       <h2 class="docs-heading">Rendering and hydrating</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p>On the server, render as you would any Lit template:</p>
-      <pre><code>{`import { render } from '@lit-labs/ssr';
+      <arc-code-block language="js" code={`import { render } from '@lit-labs/ssr';
 import { collectResult } from '@lit-labs/ssr/lib/render-result.js';
 import { html } from 'lit';
 import '@arclux/arc-ui/feature-card';
 
 const markup = await collectResult(render(html\`
   <arc-feature-card heading="Fast by default"></arc-feature-card>
-\`));`}</code></pre>
+\`));`}></arc-code-block>
 
       <p>
         On the client, import the hydration entry <strong>before any component</strong>:
       </p>
-      <pre><code>{`import '@arclux/arc-ui/hydrate';   // first — order matters
-import '@arclux/arc-ui/register';`}</code></pre>
+      <arc-code-block language="js" code={`import '@arclux/arc-ui/hydrate';   // first — order matters
+import '@arclux/arc-ui/register';`}></arc-code-block>
 
       <p>
         Without it, the moment an element upgrades Lit renders its template from scratch into
@@ -115,7 +115,7 @@ import '@arclux/arc-ui/register';`}</code></pre>
         rendering into a longer blank screen rather than a shorter one.
       </p>
       <p>Opt the page out at the root:</p>
-      <pre><code>{`<html data-arc-ssr>`}</code></pre>
+      <arc-code-block language="html" code={`<html data-arc-ssr>`}></arc-code-block>
       <p>
         This is a root-level switch rather than something automatic because CSS cannot detect a
         declarative shadow root: the browser consumes the <code>&lt;template&gt;</code> during
@@ -149,10 +149,10 @@ import '@arclux/arc-ui/register';`}</code></pre>
         declarative shadow root from the markup alone. So <code>@arclux/arc-ui/ssr</code> takes
         HTML and returns HTML, and does not care what produced it.
       </p>
-      <pre><code>{`import { renderDeclarativeShadowDOM } from '@arclux/arc-ui/ssr';
+      <arc-code-block language="js" code={`import { renderDeclarativeShadowDOM } from '@arclux/arc-ui/ssr';
 
 const { html, stylesheets } = await renderDeclarativeShadowDOM(pageHtml);
-// serve html; write each stylesheet under /_arc`}</code></pre>
+// serve html; write each stylesheet under /_arc`}></arc-code-block>
       <ul>
         <li>
           <strong>Nuxt, SvelteKit, Angular Universal, Next, Astro, or a string you built by

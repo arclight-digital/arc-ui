@@ -1,5 +1,4 @@
 ---
-import { Code } from 'astro:components';
 import DocsLayout from '../../layouts/DocsLayout.astro';
 import audit from '../../data/a11y-audit.json';
 
@@ -69,7 +68,7 @@ const headings = [
         <code>tablist</code>/<code>tab</code>/<code>tabpanel</code>. Anything extra passes
         through from the host element:
       </p>
-      <div class="docs-code"><Code code={`<!-- Labels -->
+      <div class="docs-code"><arc-code-block language="html" code={`<!-- Labels -->
 <arc-button aria-label="Close dialog">
   <arc-icon name="x"></arc-icon>
 </arc-button>
@@ -84,7 +83,7 @@ const headings = [
 <!-- Live regions -->
 <arc-alert aria-live="polite" variant="success">
   Changes saved successfully
-</arc-alert>`} lang="html" theme="css-variables" /></div>
+</arc-alert>`}></arc-code-block></div>
     </section>
 
     <section id="keyboard">
@@ -145,13 +144,13 @@ const headings = [
         clicks — click the cards above and nothing appears. Overlays like <code>arc-modal</code>
         and <code>arc-drawer</code> trap focus while open.
       </p>
-      <div class="docs-code"><Code code={`/* Customize focus styles globally */
+      <div class="docs-code"><arc-code-block language="css" code={`/* Customize focus styles globally */
 :root {
   --focus-ring: 0 0 0 2px var(--bg-deep),
                 0 0 0 4px var(--accent-primary);
   --focus-glow: var(--focus-ring),
                 0 0 16px rgba(var(--accent-primary-rgb), 0.3);
-}`} lang="css" theme="css-variables" /></div>
+}`}></arc-code-block></div>
     </section>
 
     <section id="screen-readers">
@@ -174,7 +173,7 @@ const headings = [
           always announced.
         </li>
       </ul>
-      <div class="docs-code"><Code code={`<!-- Use slot for screen-reader-accessible content -->
+      <div class="docs-code"><arc-code-block language="html" code={`<!-- Use slot for screen-reader-accessible content -->
 <arc-card>
   <h3>Account Settings</h3>
   <p>Manage your profile and preferences.</p>
@@ -185,7 +184,7 @@ const headings = [
 <arc-select label="Country">
   <option value="us">United States</option>
   <option value="uk">United Kingdom</option>
-</arc-select>`} lang="html" theme="css-variables" /></div>
+</arc-select>`}></arc-code-block></div>
     </section>
 
     <section id="color-contrast">
@@ -217,7 +216,7 @@ const headings = [
         With <code>prefers-reduced-motion</code> set, every transition and animation collapses —
         functionality is unchanged, only the motion goes:
       </p>
-      <div class="docs-code"><Code code={`/* Built into ARC UI components */
+      <div class="docs-code"><arc-code-block language="css" code={`/* Built into ARC UI components */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -226,7 +225,7 @@ const headings = [
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-}`} lang="css" theme="css-variables" /></div>
+}`}></arc-code-block></div>
     </section>
 
     <section id="no-javascript">
@@ -244,7 +243,7 @@ const headings = [
         is never created. Slot a real anchor instead and the link is ordinary HTML from the
         first byte:
       </p>
-      <div class="docs-code"><Code code={`<!-- Works without JS, and before the element upgrades -->
+      <div class="docs-code"><arc-code-block language="html" code={`<!-- Works without JS, and before the element upgrades -->
 <arc-button variant="primary">
   <a href="/get-started">Get started</a>
 </arc-button>
@@ -255,7 +254,7 @@ const headings = [
 </arc-navigation-menu>
 
 <!-- Needs JS to become a link at all -->
-<arc-button variant="primary" href="/get-started">Get started</arc-button>`} lang="html" theme="css-variables" /></div>
+<arc-button variant="primary" href="/get-started">Get started</arc-button>`}></arc-code-block></div>
       <p class="docs-text">
         On upgrade the component adopts that anchor as its control rather than rendering a
         second one, so there is only ever one link in the accessibility tree. The
@@ -271,10 +270,10 @@ const headings = [
         scripting being available — so with JS disabled your content stays visible rather
         than being hidden forever waiting for an upgrade that never comes:
       </p>
-      <div class="docs-code"><Code code={`/* Shipped in base.css */
+      <div class="docs-code"><arc-code-block language="css" code={`/* Shipped in base.css */
 @media (scripting: enabled) {
   :is(arc-button, arc-link /* … */):not(:defined) { opacity: 0; }
-}`} lang="css" theme="css-variables" /></div>
+}`}></arc-code-block></div>
       <p class="docs-text">
         Components whose content comes from properties rather than slots — such as
         <code>arc-feature-card</code>, which renders from <code>heading</code> and

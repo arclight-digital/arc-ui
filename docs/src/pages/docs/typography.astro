@@ -1,5 +1,4 @@
 ---
-import { Code } from 'astro:components';
 import DocsLayout from '../../layouts/DocsLayout.astro';
 
 const headings = [
@@ -88,13 +87,10 @@ const roles = [
         Every role is four tokens — the family you assign, the fallback stack behind it, the
         weight the role is set at, and the composed value components actually consume:
       </p>
-      <Code
-        lang="css"
-        code={`--font-body-family:    'Host Grotesk';               /* assign this */
+      <arc-code-block language="css" code={`--font-body-family:    'Host Grotesk';               /* assign this */
 --font-body-fallback:  system-ui, sans-serif;        /* rarely */
 --font-body-weight:    500;                          /* if your face disagrees */
---font-body:           var(--font-body-family), var(--font-body-fallback);`}
-      />
+--font-body:           var(--font-body-family), var(--font-body-fallback);`}></arc-code-block>
       <p class="docs-text">
         Override only <code>-family</code> and everything downstream — the fallback, and every
         component using that role — follows. Nothing here needs you to retype a font stack.
@@ -145,17 +141,14 @@ const roles = [
         Set the family tokens on <code>:root</code>, after ARC UI's stylesheet. That is all —
         components read the roles through the shadow boundary.
       </p>
-      <Code
-        lang="css"
-        code={`@import '@arclux/arc-ui/base.css';
+      <arc-code-block language="css" code={`@import '@arclux/arc-ui/base.css';
 
 :root {
   --font-body-family:    'Inter';
   --font-label-family:   'Inter';
   --font-mono-family:    'IBM Plex Mono';
   --font-display-family: 'Fraunces';   /* opt into a display face */
-}`}
-      />
+}`}></arc-code-block>
       <p class="docs-text">
         Assigning one role does not disturb the others. Leaving a role unassigned keeps its
         reference face — and if that face never loads, its fallback.
@@ -165,24 +158,18 @@ const roles = [
         Point the roles at the same family. The size, weight and tracking distinctions that
         separate them are defined independently, so the hierarchy survives.
       </p>
-      <Code
-        lang="css"
-        code={`:root {
+      <arc-code-block language="css" code={`:root {
   --font-body-family:  'Inter';
   --font-label-family: 'Inter';
-}`}
-      />
+}`}></arc-code-block>
       <h3 class="tier-heading">Scoping to part of a page</h3>
       <p class="docs-text">
         Role tokens are ordinary custom properties, so they cascade. Assign them on any ancestor
         to rebrand a subtree.
       </p>
-      <Code
-        lang="css"
-        code={`.marketing-section {
+      <arc-code-block language="css" code={`.marketing-section {
   --font-display-family: 'Playfair Display';
-}`}
-      />
+}`}></arc-code-block>
     </section>
 
     <section id="loading">
@@ -193,9 +180,7 @@ const roles = [
         browser is separate, and ARC UI stays out of it — self-host, use a font CDN, or use a
         package like Fontsource. A self-hosted <code>@font-face</code> looks like this:
       </p>
-      <Code
-        lang="css"
-        code={`@font-face {
+      <arc-code-block language="css" code={`@font-face {
   font-family: 'Inter';
   src: url('/fonts/inter-variable.woff2') format('woff2');
   font-weight: 100 900;        /* the font's real axis range, not one face per weight */
@@ -203,8 +188,7 @@ const roles = [
   font-style: normal;
 }
 
-:root { --font-body-family: 'Inter'; }`}
-      />
+:root { --font-body-family: 'Inter'; }`}></arc-code-block>
       <p class="docs-text">
         Declare a variable font <strong>once</strong>, with a weight range. Declaring the same
         file under several discrete weights is the most common way to get this wrong: a
@@ -222,10 +206,7 @@ const roles = [
       <p class="docs-text">
         Preload the faces used above the fold, and only those:
       </p>
-      <Code
-        lang="html"
-        code={`<link rel="preload" href="/fonts/inter-variable.woff2" as="font" type="font/woff2" crossorigin />`}
-      />
+      <arc-code-block language="html" code={`<link rel="preload" href="/fonts/inter-variable.woff2" as="font" type="font/woff2" crossorigin />`}></arc-code-block>
 
       <h3 class="tier-heading">Use the family name the package registers, not the one you expect</h3>
       <p class="docs-text">
@@ -236,17 +217,11 @@ const roles = [
         "the font loaded" at a glance. Fontsource's variable packages are where this usually
         happens; they register the family with a <code>Variable</code> suffix:
       </p>
-      <Code
-        lang="js"
-        code={`import '@fontsource-variable/host-grotesk';   // registers "Host Grotesk Variable"`}
-      />
-      <Code
-        lang="css"
-        code={`:root {
+      <arc-code-block language="js" code={`import '@fontsource-variable/host-grotesk';   // registers "Host Grotesk Variable"`}></arc-code-block>
+      <arc-code-block language="css" code={`:root {
   --font-body-family: 'Host Grotesk';            /* ✗ silently unused */
   --font-body-family: 'Host Grotesk Variable';   /* ✓ what the package registered */
-}`}
-      />
+}`}></arc-code-block>
       <p class="docs-text">
         The static Fontsource packages (<code>@fontsource/host-grotesk</code>) register the bare
         name, so the two differ by more than the import path. To check which you have, look at
@@ -264,18 +239,13 @@ const roles = [
         something deliberate rather than to the browser default. You can replace a fallback on
         its own:
       </p>
-      <Code
-        lang="css"
-        code={`:root { --font-body-fallback: Georgia, serif; }`}
-      />
+      <arc-code-block language="css" code={`:root { --font-body-fallback: Georgia, serif; }`}></arc-code-block>
       <p class="docs-text">
         Fallbacks differ from webfonts in width and vertical metrics, so text reflows when the
         real face arrives. The fix is a metric-matched fallback declared against your font's
         actual metrics:
       </p>
-      <Code
-        lang="css"
-        code={`@font-face {
+      <arc-code-block language="css" code={`@font-face {
   font-family: 'Inter Fallback';
   src: local('Arial');
   size-adjust: 107%;        /* measured against Inter, not a general-purpose value */
@@ -286,8 +256,7 @@ const roles = [
 :root {
   --font-body-family:   'Inter';
   --font-body-fallback: 'Inter Fallback', system-ui, sans-serif;
-}`}
-      />
+}`}></arc-code-block>
       <p class="docs-text">
         Tools such as Fontaine and <code>next/font</code> generate these overrides
         automatically. Pair with <code>font-display: swap</code>; with a metric-matched fallback

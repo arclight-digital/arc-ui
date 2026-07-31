@@ -59,3 +59,53 @@ export const utilityClassCount = new Set(utilitiesCss.match(/^\.[a-z0-9\\:-]+(?=
 export const version = pkg.version as string;
 /** e.g. "v2.3" — used for release badges/pills. */
 export const versionShort = `v${version.split('.').slice(0, 2).join('.')}`;
+
+/* ── Surface area ──────────────────────────────────────────────────────────
+   Counted from the component sources, which is also where the docs tables,
+   the editor data and every wrapper package get them from. A number here
+   being wrong would mean the manifest is wrong too. */
+const wcFiles: URL[] = [];
+const collect = (dir: URL) => {
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (entry.isDirectory()) collect(new URL(`${entry.name}/`, dir));
+    else if (entry.name.endsWith('.js') && !entry.name.endsWith('.register.js'))
+      wcFiles.push(new URL(entry.name, dir));
+  }
+};
+collect(wcSrc);
+const wcSource = wcFiles
+  .filter((f) => !f.pathname.includes('/icons/') && !f.pathname.includes('/generated/'))
+  .map((f) => fs.readFileSync(f, 'utf-8'));
+
+const countTag = (tag: string) =>
+  wcSource.reduce((n, src) => n + (src.match(new RegExp(`@${tag}\\b`, 'g')) ?? []).length, 0);
+
+export const propCount = countTag('prop');
+export const eventCount = countTag('fires');
+export const partCount = countTag('csspart');
+export const slotCount = countTag('slot');
+
+/** Lines of component source — icons and generated files excluded, since
+ *  neither is written by hand. */
+export const sourceLineCount = wcSource.reduce((n, src) => n + src.split('\n').length, 0);
+
+/** Icons available to arc-icon, across both sets. */
+const iconSets = ['phosphor', 'lucide'] as const;
+export const iconCount = iconSets.reduce((n, set) => {
+  const src = fs.readFileSync(new URL(`icons/${set}.js`, wcSrc), 'utf-8');
+  return n + (src.match(/^export const /gm) ?? []).length;
+}, 0);
+
+/** Published packages: the web components plus one generated wrapper each. */
+export const packageCount = fs
+  .readdirSync(new URL('../../../packages/', import.meta.url), { withFileTypes: true })
+  .filter((e) => e.isDirectory()).length;
+
+/** Components by tier, largest first — the shape of the library. */
+export const tierBreakdown = Object.entries(
+  components.reduce<Record<string, number>>((acc, c) => {
+    const tier = (c as { tier?: string }).tier ?? 'other';
+    acc[tier] = (acc[tier] ?? 0) + 1;
+    return acc;
+  }, {}),
+).sort((a, b) => b[1] - a[1]);

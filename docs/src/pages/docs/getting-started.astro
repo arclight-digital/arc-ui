@@ -1,27 +1,35 @@
 ---
-import { Code } from 'astro:components';
 import DocsLayout from '../../layouts/DocsLayout.astro';
 import { components } from '../../data/components/index';
 import { version, tokenCount } from '../../data/site-stats';
 
 const componentCount = components.length;
 
+/* Ordered as the reader needs them, not as the library is organised: install,
+   render something, then the things you only care about once it works. */
 const headings = [
-  { id: 'overview', label: 'Overview' },
-  { id: 'installation', label: 'Installation' },
-  { id: 'quick-start', label: 'Quick Start' },
+  { id: 'install', label: 'Install' },
+  { id: 'first-component', label: 'Your First Component' },
+  { id: 'imports', label: 'Import Patterns' },
   { id: 'frameworks', label: 'Framework Setup' },
-  { id: 'registration-flash', label: 'Registration Flash' },
   { id: 'theming', label: 'Theming' },
   { id: 'design-tokens', label: 'Design Tokens' },
   { id: 'typescript', label: 'TypeScript' },
+  { id: 'production', label: 'Going to Production' },
   { id: 'next-steps', label: 'Next Steps' },
 ];
+
+const cdnSnippet = `<link rel="stylesheet"
+  href="https://unpkg.com/@arclux/arc-ui@${version}/base.css">
+<script type="module"
+  src="https://unpkg.com/@arclux/arc-ui@${version}/register"><\/script>
+
+<arc-button variant="primary">Click Me</arc-button>`;
 ---
 
 <DocsLayout
   title="Getting Started"
-  description="Install and use ARC UI in your project."
+  description="Install ARC UI, register the components, render your first one."
   activeSlug="getting-started"
   headings={headings}
   breadcrumbs={[{ label: 'Getting Started' }]}
@@ -29,91 +37,111 @@ const headings = [
   <div class="getting-started">
     <h1 class="page-title">Getting Started</h1>
     <p class="page-desc">
-      Install ARC UI, register the components, render your first one.
+      ARC UI is {componentCount} Lit web components that run natively in the browser, with
+      typed wrappers generated for seven frameworks from the same source. One install, one
+      import, and you are rendering.
     </p>
 
-    <!-- Overview -->
-    <section id="overview">
-      <h2 class="docs-heading">Overview</h2>
+    <!-- Install -->
+    <section id="install">
+      <h2 class="docs-heading">Install</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
-      <p class="docs-text">
-        ARC UI is built on <strong>Lit Web Components</strong> — every component works
-        natively in the browser. Our code generator, <strong>Prism</strong>, reads the
-        Lit source and produces idiomatic bindings for React, Vue, Svelte, Angular,
-        Solid, Preact, and plain HTML from a single component definition.
-      </p>
 
-      <div class="overview-stats">
-        <arc-stat value={`${componentCount}`} label="Components"></arc-stat>
-        <arc-stat value="7" label="Frameworks"></arc-stat>
-        <arc-stat value="1" label="Runtime dep"></arc-stat>
-        <arc-stat value="A11y" label="Built-in"></arc-stat>
-      </div>
+      <arc-tabs class="install-tabs">
+        <arc-tab label="npm">
+          <arc-code-block language="bash" code="npm install @arclux/arc-ui"></arc-code-block>
+        </arc-tab>
+        <arc-tab label="pnpm">
+          <arc-code-block language="bash" code="pnpm add @arclux/arc-ui"></arc-code-block>
+        </arc-tab>
+        <arc-tab label="yarn">
+          <arc-code-block language="bash" code="yarn add @arclux/arc-ui"></arc-code-block>
+        </arc-tab>
+        <arc-tab label="CDN">
+          <arc-code-block language="html" code={cdnSnippet}></arc-code-block>
+        </arc-tab>
+      </arc-tabs>
+
+      <p class="docs-text">
+        One runtime dependency — Lit. The CDN tab needs no build step at all.
+      </p>
     </section>
 
-    <!-- Installation -->
-    <section id="installation">
-      <h2 class="docs-heading">Installation</h2>
+    <!-- Your First Component -->
+    <section id="first-component">
+      <h2 class="docs-heading">Your First Component</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
 
-      <div class="install-tabs">
-        <div class="install-option">
-          <span class="install-label">npm</span>
-          <div class="docs-code"><Code code="npm install @arclux/arc-ui" lang="bash" theme="css-variables" /></div>
+      <ol class="steps">
+        <li class="step">
+          <div class="step__content">
+            <strong class="step__title">Import the tokens and register the components</strong>
+            <p class="docs-text">
+              The stylesheet carries every design token; the register module defines all
+              {componentCount} custom elements.
+            </p>
+            <arc-code-block language="js" code={`import '@arclux/arc-ui/base.css';
+import '@arclux/arc-ui/register';`}></arc-code-block>
+          </div>
+        </li>
+
+        <li class="step">
+          <div class="step__content">
+            <strong class="step__title">Write the markup</strong>
+            <p class="docs-text">
+              They are HTML elements. No provider, no wrapper, no client directive.
+            </p>
+            <arc-code-block language="html" code={`<arc-button variant="primary">Get Started</arc-button>
+<arc-input label="Email" placeholder="you@example.com"></arc-input>
+<arc-toggle label="Dark mode"></arc-toggle>`}></arc-code-block>
+          </div>
+        </li>
+
+        <li class="step">
+          <div class="step__content">
+            <strong class="step__title">That is it — this is that markup, live</strong>
+            <p class="docs-text">
+              Rendered by this page from the snippet above, not a screenshot of it.
+            </p>
+            <div class="quick-demo">
+              <arc-button variant="primary">Get Started</arc-button>
+              <arc-input label="Email" placeholder="you@example.com"></arc-input>
+              <arc-toggle label="Dark mode"></arc-toggle>
+            </div>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- Import Patterns -->
+    <section id="imports">
+      <h2 class="docs-heading">Import Patterns</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <p class="docs-text">
+        Three ways in, and the one you want depends on whether you are shipping a page or an
+        app. Start at the top and move down when bundle size starts to matter.
+      </p>
+
+      <div class="import-table">
+        <div class="import-row">
+          <code class="import-row__code">@arclux/arc-ui/register</code>
+          <span class="import-row__note">Every component. Simplest, and the right default while you are exploring.</span>
         </div>
-        <div class="install-option">
-          <span class="install-label">pnpm</span>
-          <div class="docs-code"><Code code="pnpm add @arclux/arc-ui" lang="bash" theme="css-variables" /></div>
+        <div class="import-row">
+          <code class="import-row__code">@arclux/arc-ui/button</code>
+          <span class="import-row__note">One component and its dependencies. Tree-shakeable — what a production app should use.</span>
         </div>
-        <div class="install-option">
-          <span class="install-label">yarn</span>
-          <div class="docs-code"><Code code="yarn add @arclux/arc-ui" lang="bash" theme="css-variables" /></div>
+        <div class="import-row">
+          <code class="import-row__code">{`{ ArcButton } from '@arclux/arc-ui'`}</code>
+          <span class="import-row__note">The named class, for extending or instantiating in script. Pulls in the full registry.</span>
         </div>
       </div>
 
       <arc-callout variant="info" style="margin-top:var(--space-sm)">
-        <strong>CDN:</strong> no build step? A single script tag works — see <a href="#frameworks">Framework Setup</a>.
+        <code>arc-code-block</code> is the one exception: it carries a syntax highlighter, so it
+        is excluded from every barrel. Import it at <code>@arclux/arc-ui/code-block</code>.
       </arc-callout>
-    </section>
-
-    <!-- Quick Start -->
-    <section id="quick-start">
-      <h2 class="docs-heading">Quick Start</h2>
-      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
-
-      <div class="step">
-        <span class="step__number">1</span>
-        <div class="step__content">
-          <strong>Import tokens &amp; register components</strong>
-          <div class="docs-code"><Code code={`import '@arclux/arc-ui/base.css';
-import '@arclux/arc-ui/register';`} lang="js" theme="css-variables" /></div>
-
-          <arc-callout variant="info" style="margin-top:var(--space-xs)">
-            <strong>Import patterns:</strong>
-            <ul style="margin:var(--space-xs) 0 0;padding-left:var(--space-md)">
-              <li><code>import '@arclux/arc-ui/register'</code> — register all components (simplest)</li>
-              <li><code>import '@arclux/arc-ui/button'</code> — register one component + deps (tree-shakeable)</li>
-              <li><code>import {'{'} ArcButton {'}'} from '@arclux/arc-ui'</code> — named class export (registers all components — not tree-shakeable)</li>
-            </ul>
-          </arc-callout>
-        </div>
-      </div>
-
-      <div class="step">
-        <span class="step__number">2</span>
-        <div class="step__content">
-          <strong>Use in HTML</strong>
-          <div class="docs-code"><Code code={`<arc-button variant="primary">Get Started</arc-button>
-<arc-input label="Email" placeholder="you@example.com"></arc-input>
-<arc-toggle label="Dark mode"></arc-toggle>`} lang="html" theme="css-variables" /></div>
-          <span class="quick-demo__label">That markup, rendered live by this page:</span>
-          <div class="quick-demo">
-            <arc-button variant="primary">Get Started</arc-button>
-            <arc-input label="Email" placeholder="you@example.com"></arc-input>
-            <arc-toggle label="Dark mode"></arc-toggle>
-          </div>
-        </div>
-      </div>
     </section>
 
     <!-- Framework Setup -->
@@ -122,76 +150,19 @@ import '@arclux/arc-ui/register';`} lang="js" theme="css-variables" /></div>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
 
       <p class="docs-text">
-        Prism generates a native wrapper package per framework — typed props, idiomatic
-        events, tree-shakeable imports. Same components, different import:
+        Prism reads the Lit source and generates a native wrapper package per framework — typed
+        props, idiomatic events, tree-shakeable imports. Same components, different import:
       </p>
-      <div class="docs-code"><Code code={`import { Button, Card } from '@arclux/arc-ui-react';   // React
+      <arc-code-block language="js" code={`import { Button, Card } from '@arclux/arc-ui-react';   // React
 import { Button, Card } from '@arclux/arc-ui-vue';     // Vue
 import { Button, Card } from '@arclux/arc-ui-svelte';  // Svelte
 import { Button, Card } from '@arclux/arc-ui-angular'; // Angular
 import { Button, Card } from '@arclux/arc-ui-solid';   // Solid
-import { Button, Card } from '@arclux/arc-ui-preact';  // Preact`} lang="js" theme="css-variables" /></div>
-
-      <p class="docs-text">No build step? Load from a CDN:</p>
-      <div class="docs-code"><Code code={`<link rel="stylesheet"
-  href="https://unpkg.com/@arclux/arc-ui@${version}/base.css">
-<script type="module"
-  src="https://unpkg.com/@arclux/arc-ui@${version}/register">
-</script>
-
-<arc-button variant="primary">Click Me</arc-button>`} lang="html" theme="css-variables" /></div>
+import { Button, Card } from '@arclux/arc-ui-preact';  // Preact`}></arc-code-block>
 
       <p class="docs-text">
-        See the <a href="/docs/frameworks">Frameworks</a> guide for per-framework install
-        and usage.
-      </p>
-    </section>
-
-    <!-- Registration Flash -->
-    <section id="registration-flash">
-      <h2 class="docs-heading">Avoiding the Registration Flash</h2>
-      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
-
-      <p class="docs-text">
-        Custom elements render their fallback content until JavaScript registers them.
-        <code>base.css</code> ships a guard — <code>:not(:defined) {'{'} opacity: 0 {'}'}</code> —
-        so unregistered components stay hidden and fade in when their definition loads. On pages
-        that register many components, two additions make the upgrade invisible:
-      </p>
-
-      <p class="docs-text">
-        <strong>1. Register above-the-fold components first.</strong> Static imports of the
-        components visible on first paint form a small, fast chunk; the full registry loads
-        lazily behind it:
-      </p>
-      <div class="docs-code"><Code code={`import '@arclux/arc-ui/base.css';
-
-// Shell components visible on first paint — small synchronous chunk
-import '@arclux/arc-ui/top-bar';
-import '@arclux/arc-ui/button';
-import '@arclux/arc-ui/badge';
-
-// Everything else — lazy chunk that fades in when ready
-import('@arclux/arc-ui/register');`} lang="js" theme="css-variables" /></div>
-
-      <p class="docs-text">
-        <strong>2. Reserve space for layout-critical elements.</strong> Hidden elements still
-        occupy layout, so give your shell components their final size before they upgrade and
-        nothing shifts when definitions land:
-      </p>
-      <div class="docs-code"><Code code={`arc-top-bar:not(:defined) {
-  display: block;
-  height: 64px;
-}
-
-arc-button:not(:defined) {
-  display: inline-flex;
-  min-height: 40px;
-}`} lang="css" theme="css-variables" /></div>
-
-      <p class="docs-text">
-        This site uses exactly this pattern — the visible frame upgrades from a chunk roughly
-        an eighth the size of the full registry.
+        The <a href="/docs/frameworks">Frameworks</a> guide covers install and usage for each
+        one, including the SSR story.
       </p>
     </section>
 
@@ -201,18 +172,16 @@ arc-button:not(:defined) {
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
 
       <p class="docs-text">
-        ARC UI ships three theme modes — dark, light, and auto — all controlled by one
-        attribute on <code>&lt;html&gt;</code>:
+        Three theme modes, one attribute on <code>&lt;html&gt;</code>:
       </p>
-      <div class="docs-code"><Code code={`<html data-theme="dark">   <!-- default -->
+      <arc-code-block language="html" code={`<html data-theme="dark">   <!-- default -->
 <html data-theme="light">
-<html data-theme="auto">   <!-- follows OS preference -->`} lang="html" theme="css-variables" /></div>
+<html data-theme="auto">   <!-- follows OS preference -->`}></arc-code-block>
 
       <p class="docs-text">
-        The theme toggle in this site's top bar sets exactly this attribute — try it.
-        For fully custom themes, override design tokens (see the
-        <a href="/docs/theming">Theming</a> guide) or build one visually with the
-        <a href="/synth">Theme Synthesizer</a>.
+        The toggle in this site's top bar sets exactly that attribute — try it. For a theme of
+        your own, override the tokens (see <a href="/docs/theming">Theming</a>) or build one
+        visually in the <a href="/synth">Theme Synthesizer</a> and export it.
       </p>
     </section>
 
@@ -222,11 +191,11 @@ arc-button:not(:defined) {
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
 
       <p class="docs-text">
-        {tokenCount} CSS custom properties drive the visual language. Import the stylesheet
-        and reference them in your own CSS:
+        {tokenCount} custom properties drive the visual language, and they are the same ones
+        the components read. Import the stylesheet and your own CSS speaks the same system:
       </p>
 
-      <div class="docs-code"><Code code={`@import '@arclux/arc-ui/base.css';
+      <arc-code-block language="css" code={`@import '@arclux/arc-ui/base.css';
 
 .my-component {
   color: var(--text-primary);
@@ -235,7 +204,7 @@ arc-button:not(:defined) {
   border-radius: var(--radius-md);
   font-family: var(--font-body);
   box-shadow: var(--shadow-md);
-}`} lang="css" theme="css-variables" /></div>
+}`}></arc-code-block>
 
       <div class="token-preview">
         <div class="token-category">
@@ -264,7 +233,7 @@ arc-button:not(:defined) {
       </div>
 
       <p class="docs-text">
-        See the <a href="/docs/tokens">Design Tokens</a> reference for every available token.
+        The <a href="/docs/tokens">Design Tokens</a> reference lists every one.
       </p>
     </section>
 
@@ -274,17 +243,69 @@ arc-button:not(:defined) {
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
 
       <p class="docs-text">
-        Framework wrappers ship full type definitions. For plain Web Components, add the
-        ambient declarations — autocomplete and type checking for every <code>arc-*</code>
-        element in JSX and template literals:
+        The framework wrappers ship their own types. For plain web components, add the ambient
+        declarations and every <code>arc-*</code> element gets autocomplete and checking in JSX
+        and template literals:
       </p>
 
-      <div class="docs-code"><Code code={`// tsconfig.json
-{
+      <arc-code-block language="json" filename="tsconfig.json" code={`{
   "compilerOptions": {
     "types": ["@arclux/arc-ui/types"]
   }
-}`} lang="json" theme="css-variables" /></div>
+}`}></arc-code-block>
+    </section>
+
+    <!-- Going to Production -->
+    <section id="production">
+      <h2 class="docs-heading">Going to Production</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <p class="docs-text">
+        Nothing here is needed to build with ARC UI — it is what to do once you are shipping it.
+      </p>
+
+      <p class="docs-text">
+        A custom element renders its fallback content until JavaScript registers it.
+        <code>base.css</code> ships the guard for that — <code>:not(:defined) {'{'} opacity: 0 {'}'}</code>
+        — so unregistered components stay hidden and fade in as their definitions land. On a
+        page registering many of them, two additions make the upgrade invisible.
+      </p>
+
+      <p class="docs-text">
+        <strong>Register what is above the fold first.</strong> Static imports of the components
+        visible on first paint form a small, fast chunk; the full registry loads lazily behind it.
+      </p>
+      <arc-code-block language="js" code={`import '@arclux/arc-ui/base.css';
+
+// Shell components visible on first paint — small synchronous chunk
+import '@arclux/arc-ui/top-bar';
+import '@arclux/arc-ui/button';
+import '@arclux/arc-ui/badge';
+
+// Everything else — lazy chunk that fades in when ready
+import('@arclux/arc-ui/register');`}></arc-code-block>
+
+      <p class="docs-text">
+        <strong>Reserve space for layout-critical elements.</strong> A hidden element still
+        occupies layout, so give shell components their final size before they upgrade and
+        nothing shifts when the definitions arrive.
+      </p>
+      <arc-code-block language="css" code={`arc-top-bar:not(:defined) {
+  display: block;
+  height: 64px;
+}
+
+arc-button:not(:defined) {
+  display: inline-flex;
+  min-height: 40px;
+}`}></arc-code-block>
+
+      <p class="docs-text">
+        This site does exactly that — the visible frame upgrades from a chunk roughly an eighth
+        the size of the full registry. If you server-render, see
+        <a href="/docs/server-rendering">Server Rendering</a>: every component emits declarative
+        shadow DOM, so the markup arrives styled before any of this matters.
+      </p>
     </section>
 
     <!-- Next Steps -->
@@ -311,87 +332,77 @@ arc-button:not(:defined) {
 </DocsLayout>
 
 <style>
-  /* Overview stats */
-  .overview-stats {
-    display: flex;
-    gap: var(--space-lg);
-    margin-bottom: var(--space-lg);
-    flex-wrap: wrap;
+  /* arc-code-block takes the measure from docs.css, site-wide. These are the
+     page's own blocks, held to the same edge. */
+  .install-tabs,
+  .import-table,
+  .quick-demo,
+  .token-preview,
+  .getting-started :global(arc-callout) {
+    max-width: var(--docs-measure);
   }
 
-  /* Install tabs */
+  /* Install: one command at a time. Three stacked panels spent most of a
+     screen restating the same line for package managers a reader has already
+     chosen between — and the tabs come with the copy button the raw snippets
+     never had. */
   .install-tabs {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-    margin-bottom: var(--space-md);
+    margin-bottom: var(--space-sm);
   }
 
-  .install-option {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--space-md);
-  }
-
-  .install-label {
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    font-weight: 600;
-    color: var(--text-muted);
-    min-width: 48px;
-    padding-top: 10px;
-    text-align: right;
-  }
-
-  .install-option .docs-code {
-    flex: 1;
+  .install-tabs :global(arc-code-block) {
     margin-bottom: 0;
   }
 
-  /* Steps */
+  /* Steps: an ordered list, so the numbering is the document's rather than
+     three hand-placed spans, and a screen reader is told how many there are. */
+  .steps {
+    list-style: none;
+    counter-reset: step;
+    padding: 0;
+    margin: 0;
+  }
+
   .step {
+    counter-increment: step;
     display: flex;
     gap: var(--space-md);
     margin-bottom: var(--space-lg);
   }
 
-  .step__number {
+  .step::before {
+    content: counter(step);
     display: flex;
     align-items: center;
     justify-content: center;
     width: 28px;
     height: 28px;
-    border-radius: 50%;
-    background: var(--accent-primary);
-    color: var(--text-primary);
-    font-size: var(--text-sm);
-    font-weight: 700;
     flex-shrink: 0;
     margin-top: 2px;
+    border-radius: 50%;
+    background: rgba(var(--accent-primary-rgb), 0.12);
+    border: 1px solid rgba(var(--accent-primary-rgb), 0.35);
+    box-shadow: 0 0 12px rgba(var(--accent-primary-rgb), 0.15);
+    color: var(--accent-primary);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 600;
   }
 
   .step__content {
     flex: 1;
     min-width: 0;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
   }
 
-  .step__content strong {
+  .step__title {
+    display: block;
     font-size: var(--text-md);
     color: var(--text-primary);
+    margin-bottom: var(--space-xs);
   }
 
-  .step__content .docs-code {
-    margin-bottom: 0;
-  }
-
-  /* Quick demo */
-  .quick-demo__label {
-    font-size: var(--text-xs);
-    font-weight: 600;
-    color: var(--text-muted);
+  .step__content .docs-text {
+    margin-bottom: var(--space-xs);
   }
 
   .quick-demo {
@@ -403,6 +414,40 @@ arc-button:not(:defined) {
     border: 1px solid var(--border-default);
     border-radius: var(--radius-md);
     flex-wrap: wrap;
+  }
+
+  /* Import patterns: the specifier and what it costs you, side by side. This
+     was a bulleted aside inside step one, where it interrupted the first thing
+     the reader was trying to do with a decision they could not yet make. */
+  .import-table {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .import-row {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .import-row + .import-row {
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .import-row__code {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-primary);
+  }
+
+  .import-row__note {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    line-height: 1.6;
   }
 
   /* Token preview */
@@ -456,8 +501,6 @@ arc-button:not(:defined) {
   }
 
   @media (max-width: 768px) {
-    .overview-stats { gap: var(--space-sm); }
-    .install-option { flex-direction: column; gap: var(--space-xs); }
-    .install-label { text-align: left; min-width: unset; padding-top: 0; }
+    .step { gap: var(--space-sm); }
   }
 </style>

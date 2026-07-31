@@ -10,10 +10,14 @@
   margin-bottom: var(--space-xs);
 }
 
+:root {
+  --docs-measure: 640px;
+}
+
 .page-desc {
   color: var(--text-secondary);
   font-size: var(--text-md);
-  max-width: 640px;
+  max-width: var(--docs-measure);
   margin-bottom: var(--space-md);
   line-height: 1.6;
 }
@@ -29,7 +33,7 @@
   font-size: var(--text-sm);
   line-height: 1.7;
   margin-bottom: var(--space-sm);
-  max-width: 640px;
+  max-width: var(--docs-measure);
 }
 
 .docs-text a {
@@ -56,10 +60,21 @@
 }
 
 .docs-code {
-  margin-bottom: var(--space-sm);
+  margin-block: var(--space-sm);
   min-width: 0;
-  max-width: 100%;
+  max-width: var(--docs-measure);
   overflow-x: auto;
+}
+
+/* Code sits on the same measure as the prose. Without this a snippet ran to
+   the full width of the content column while the paragraph introducing it
+   stopped at 640px, so every guide page had two right edges — most obvious
+   where several one-line snippets stack. Long lines scroll inside the block,
+   which is what a code block is for. */
+.docs-content arc-code-block {
+  display: block;
+  max-width: var(--docs-measure);
+  margin-block: var(--space-sm);
 }
 
 .docs-list {
@@ -67,7 +82,7 @@
   font-size: var(--text-sm);
   line-height: 1.8;
   margin-bottom: var(--space-sm);
-  max-width: 640px;
+  max-width: var(--docs-measure);
   padding-left: var(--space-lg);
 }
 

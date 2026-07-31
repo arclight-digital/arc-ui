@@ -1,0 +1,314 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import {
+  componentCount,
+  elementCount,
+  frameworkCount,
+  frameworks,
+  buildSteps,
+  tokenCount,
+  testCount,
+  testSuiteCount,
+  utilityClassCount,
+  propCount,
+  eventCount,
+  partCount,
+  slotCount,
+  sourceLineCount,
+  iconCount,
+  packageCount,
+  tierBreakdown,
+  version,
+} from '../../data/site-stats';
+
+const headings = [
+  { id: 'library', label: 'The Library' },
+  { id: 'shape', label: 'Shape' },
+  { id: 'surface', label: 'Surface Area' },
+  { id: 'build', label: 'The Build' },
+  { id: 'method', label: 'How These Are Counted' },
+];
+
+const fmt = (n: number) => n.toLocaleString('en-US');
+const tierMax = Math.max(...tierBreakdown.map(([, n]) => n));
+const tierLabels: Record<string, string> = {
+  layout: 'Layout',
+  navigation: 'Navigation',
+  content: 'Content',
+  data: 'Data',
+  typography: 'Typography',
+  input: 'Input',
+  feedback: 'Feedback',
+  shared: 'Shared',
+  other: 'Other',
+};
+---
+
+<DocsLayout
+  title="Stats"
+  description="What ARC UI is made of, counted from the source at build time."
+  activeSlug="stats"
+  headings={headings}
+  breadcrumbs={[{ label: 'Stats' }]}
+>
+  <div class="stats-page">
+    <h1 class="page-title">Stats</h1>
+    <p class="page-desc">
+      Every number on this page is read out of the repository when the site builds. Nothing here
+      is typed by hand, so nothing here can quietly go stale — if a count looks wrong, the source
+      changed and this page already knows.
+    </p>
+
+    <!-- The Library -->
+    <section id="library">
+      <h2 class="docs-heading">The Library</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <div class="stat-grid">
+        <arc-stat value={fmt(componentCount)} label="Components"></arc-stat>
+        <arc-stat value={fmt(elementCount)} label="Custom elements"></arc-stat>
+        <arc-stat value={fmt(frameworkCount)} label="Targets"></arc-stat>
+        <arc-stat value={fmt(packageCount)} label="Packages"></arc-stat>
+        <arc-stat value={fmt(tokenCount)} label="Design tokens"></arc-stat>
+        <arc-stat value={fmt(iconCount)} label="Icons"></arc-stat>
+      </div>
+
+      <p class="docs-text">
+        {componentCount} documented components, but {elementCount} custom elements — the
+        difference is child items like <code>arc-tab</code> and <code>arc-menu-item</code>, which
+        are part of a parent's API rather than components you reach for on their own. The
+        {frameworkCount} targets are {frameworks.slice(0, -1).join(', ')} and {frameworks.at(-1)},
+        each generated from the same Lit source rather than maintained by hand.
+      </p>
+    </section>
+
+    <!-- Shape -->
+    <section id="shape">
+      <h2 class="docs-heading">Shape</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <p class="docs-text">
+        Components by tier. A library's proportions say what it is for — this one is mostly
+        content and input, which is what a documentation-heavy product interface asks for.
+      </p>
+
+      <ul class="tier-chart">
+        {tierBreakdown.map(([tier, count]) => (
+          <li class="tier-row">
+            <span class="tier-row__label">{tierLabels[tier] ?? tier}</span>
+            <span class="tier-row__bar" style={`--fill:${(count / tierMax) * 100}%`}></span>
+            <span class="tier-row__count">{count}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- Surface Area -->
+    <section id="surface">
+      <h2 class="docs-heading">Surface Area</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <p class="docs-text">
+        Everything a consumer can touch, counted from the JSDoc the components declare it in.
+        These same annotations generate the API tables, the editor autocomplete data and the
+        typed wrapper packages, so a number being wrong here would mean all three are wrong too.
+      </p>
+
+      <div class="stat-grid">
+        <arc-stat value={fmt(propCount)} label="Props"></arc-stat>
+        <arc-stat value={fmt(eventCount)} label="Events"></arc-stat>
+        <arc-stat value={fmt(partCount)} label="CSS parts"></arc-stat>
+        <arc-stat value={fmt(slotCount)} label="Slots"></arc-stat>
+        <arc-stat value={fmt(utilityClassCount)} label="Utility classes"></arc-stat>
+        <arc-stat value={fmt(sourceLineCount)} label="Lines of source"></arc-stat>
+      </div>
+
+      <p class="docs-text">
+        That is roughly {Math.round(propCount / componentCount)} props and
+        {' '}{Math.round(partCount / componentCount)} styleable parts per component — the parts
+        matter more than they look, since a shadow root is otherwise a closed door to a
+        consumer's stylesheet.
+      </p>
+    </section>
+
+    <!-- The Build -->
+    <section id="build">
+      <h2 class="docs-heading">The Build</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <div class="stat-grid">
+        <arc-stat value={fmt(testCount)} label="Tests"></arc-stat>
+        <arc-stat value={fmt(testSuiteCount)} label="Suites"></arc-stat>
+        <arc-stat value={fmt(buildSteps)} label="Generate steps"></arc-stat>
+        <arc-stat value={fmt(elementCount)} label="Server-render"></arc-stat>
+        <arc-stat value="1" label="Runtime dependency"></arc-stat>
+        <arc-stat value={`v${version}`} label="Current release"></arc-stat>
+      </div>
+
+      <p class="docs-text">
+        All {elementCount} elements server-render to declarative shadow DOM — not most of them,
+        all of them, and a build check fails if that stops being true. The single runtime
+        dependency is Lit. Everything else in the {packageCount} packages is generated by the
+        {' '}{buildSteps}-step pipeline described in
+        {' '}<a href="/docs/contributing">Contributing</a>.
+      </p>
+    </section>
+
+    <!-- Method -->
+    <section id="method">
+      <h2 class="docs-heading">How These Are Counted</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <div class="method-list">
+        <div class="method-row">
+          <code class="method-row__what">Components · tiers</code>
+          <span class="method-row__how">The docs data index — one entry per documented component, tier included.</span>
+        </div>
+        <div class="method-row">
+          <code class="method-row__what">Custom elements</code>
+          <span class="method-row__how">One <code>.register.js</code> per element, counted on disk. The same set the SSR check renders.</span>
+        </div>
+        <div class="method-row">
+          <code class="method-row__what">Props · events · parts · slots</code>
+          <span class="method-row__how">JSDoc tags in the component sources, excluding icons and generated files.</span>
+        </div>
+        <div class="method-row">
+          <code class="method-row__what">Design tokens</code>
+          <span class="method-row__how">Unique custom properties declared in the generated <code>base.css</code>.</span>
+        </div>
+        <div class="method-row">
+          <code class="method-row__what">Tests</code>
+          <span class="method-row__how">Every <code>it(</code> across the component suites.</span>
+        </div>
+        <div class="method-row">
+          <code class="method-row__what">Icons</code>
+          <span class="method-row__how">Exports in the generated Phosphor and Lucide sets.</span>
+        </div>
+      </div>
+
+      <p class="docs-text">
+        The counts live in one module, <code>site-stats.ts</code>, shared by this page, the
+        landing page and the social card — so the number on a link preview cannot disagree with
+        the number on the page it previews.
+      </p>
+    </section>
+  </div>
+</DocsLayout>
+
+<style>
+  /* Three up, on the page's measure — every group here is six figures, so a
+     fixed three columns fills two even rows. auto-fit against the full content
+     column packed five into the first row and left the sixth alone under a
+     hole the width of four. */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
+    max-width: var(--docs-measure);
+    padding: var(--space-lg) var(--space-md);
+    margin-bottom: var(--space-md);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+  }
+
+  /* Bars, not a chart library: one row per tier, width proportional to the
+     largest. The count stays in text at the end of the row so the figure is
+     readable when the bar is too short to judge. */
+  .tier-chart {
+    list-style: none;
+    margin: 0 0 var(--space-md);
+    padding: 0;
+    max-width: var(--docs-measure);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .tier-row {
+    display: grid;
+    grid-template-columns: 96px 1fr 32px;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .tier-row__label {
+    font-family: var(--font-label);
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+  }
+
+  .tier-row__bar {
+    position: relative;
+    height: 8px;
+    border-radius: var(--radius-full);
+    background: var(--surface-overlay);
+    overflow: hidden;
+  }
+
+  .tier-row__bar::after {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    inline-size: var(--fill);
+    border-radius: var(--radius-full);
+    background: linear-gradient(
+      90deg,
+      rgba(var(--accent-primary-rgb), 0.75),
+      rgba(var(--accent-secondary-rgb), 0.75)
+    );
+    box-shadow: 0 0 10px rgba(var(--accent-primary-rgb), 0.25);
+  }
+
+  .tier-row__count {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-variant-numeric: tabular-nums;
+    color: var(--text-muted);
+    text-align: end;
+  }
+
+  .method-list {
+    display: flex;
+    flex-direction: column;
+    max-width: var(--docs-measure);
+    margin-bottom: var(--space-md);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .method-row {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .method-row + .method-row {
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .method-row__what {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-primary);
+  }
+
+  .method-row__how {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 640px) {
+    .stat-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .tier-row {
+      grid-template-columns: 76px 1fr 28px;
+    }
+  }
+</style>
