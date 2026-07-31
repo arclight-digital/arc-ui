@@ -843,6 +843,7 @@
     "./themes/high-contrast": "./src/themes/high-contrast.css",
     "./themes/minimal": "./src/themes/minimal.css",
     "./base.css": "./src/base.css",
+    "./utilities.css": "./src/utilities.css",
     "./icons/lucide": {
       "types": "./src/icons/lucide.d.ts",
       "default": "./src/icons/lucide.js"

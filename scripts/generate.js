@@ -37,6 +37,7 @@ const steps = [
   { name: 'DocClaims', cmd: 'node', args: ['scripts/check-doc-claims.js'] },
   { name: 'Tokens',   cmd: 'node',  args: ['scripts/generate-base-css.js'] },
   { name: 'HostTokens', cmd: 'node', args: ['scripts/generate-host-tokens.js'] },
+  { name: 'Utilities', cmd: 'node', args: ['scripts/generate-utilities.js'] },
   { name: 'Icons',    cmd: 'node',  args: ['scripts/generate-icons.js'] },
   // After Icons, not with the other source-level assertions: it reads the
   // vendored icon resolvers, which are gitignored and produced by the step

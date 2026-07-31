@@ -1,0 +1,226 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+
+const headings = [
+  { id: 'overview', label: 'Overview' },
+  { id: 'why', label: 'Why not Tailwind' },
+  { id: 'install', label: 'Install' },
+  { id: 'spacing', label: 'Spacing' },
+  { id: 'layout', label: 'Layout' },
+  { id: 'surface', label: 'Surface' },
+  { id: 'limits', label: 'Limits' },
+];
+
+/** Kept in the page rather than generated: these are the shapes worth showing. */
+const spacing = [
+  ['.arc-p-md', 'padding: var(--space-md)'],
+  ['.arc-px-lg', 'padding-inline: var(--space-lg)'],
+  ['.arc-py-sm', 'padding-block: var(--space-sm)'],
+  ['.arc-ps-xl', 'padding-inline-start: var(--space-xl)'],
+  ['.arc-m-0', 'margin: 0'],
+  ['.arc-mx-auto', 'margin-inline: auto'],
+  ['.arc-gap-md', 'gap: var(--space-md)'],
+  ['.arc-gap-y-lg', 'row-gap: var(--space-lg)'],
+];
+
+const surface = [
+  ['.arc-text-primary', 'color: var(--text-primary)'],
+  ['.arc-text-lg', 'font-size: var(--text-lg)'],
+  ['.arc-bg-card', 'background-color: var(--bg-card)'],
+  ['.arc-border', 'border: 1px solid var(--border-default)'],
+  ['.arc-border-subtle', 'border-color: var(--border-subtle)'],
+  ['.arc-rounded-md', 'border-radius: var(--radius-md)'],
+  ['.arc-shadow-lg', 'box-shadow: var(--shadow-lg)'],
+  ['.arc-font-mono', 'font-family: var(--font-mono)'],
+];
+---
+
+<DocsLayout
+  title="Utilities"
+  description="An optional utility layer generated from the same design tokens ARC UI components compile against."
+  activeSlug="utilities"
+  headings={headings}
+  breadcrumbs={[{ label: 'Utilities' }]}
+>
+  <div class="prose-page">
+    <h1>Utilities</h1>
+
+    <section id="overview">
+      <p>
+        ARC UI components own everything inside their shadow boundary and nothing outside it.
+        The space <em>between</em> components is yours, and in practice everyone writes the same
+        flex, gap and padding CSS to fill it — against 381 custom properties
+        <code>base.css</code> already publishes with no ergonomic way to use them.
+      </p>
+      <p>
+        <strong>272 classes</strong>, about 2 KB over the wire, covering spacing, layout and
+        surface. It is a deliberate middle: enough to lay out a page around ARC components,
+        not enough to be a framework.
+      </p>
+    </section>
+
+    <section id="why">
+      <h2>Why not just use Tailwind</h2>
+      <p>
+        You can, and for most utility work you should. What Tailwind cannot do is know what
+        <code>arc-card</code> uses for its own padding.
+      </p>
+      <p>
+        These classes are generated from the same <code>tokens.js</code> the components compile
+        against, so <code>.arc-p-md</code> and a card's internal padding resolve to the same
+        value — and overriding one base token moves both:
+      </p>
+      <pre><code>{`:root { --space-md: 20px; }
+
+/* .arc-p-md and every component's internal md spacing move together */`}</code></pre>
+      <p>
+        Every declaration reads a <code>var()</code> rather than a literal, which is what keeps
+        that link intact. Use these where you want your layout to track the component system,
+        and anything else for the rest.
+      </p>
+    </section>
+
+    <section id="install">
+      <h2>Install</h2>
+      <p>Opt-in and standalone. Nobody who only wants tokens pays for it.</p>
+      <pre><code>{`import '@arclux/arc-ui/base.css';       /* defines the tokens */
+import '@arclux/arc-ui/utilities.css'; /* uses them */`}</code></pre>
+      <p>
+        Every class is <code>arc-</code> prefixed, because consumers run Tailwind or Bootstrap
+        and an unprefixed <code>.flex</code> would collide catastrophically. It costs the
+        terseness that makes utilities pleasant, and there is no way around it for a library.
+      </p>
+    </section>
+
+    <section id="spacing">
+      <h2>Spacing</h2>
+      <p>
+        Every step of the <code>--space-*</code> scale, on padding, margin and gap.
+        Suffixes are logical, not physical: <code>x</code>/<code>y</code> for the inline and
+        block axes, <code>s</code>/<code>e</code> for start and end, <code>t</code>/<code>b</code>
+        for block start and end. A layout built from these mirrors under
+        <code>dir="rtl"</code> without a second stylesheet.
+      </p>
+      <table>
+        <tbody>
+          {spacing.map(([name, decl]) => (
+            <tr><td><code>{name}</code></td><td><code>{decl}</code></td></tr>
+          ))}
+        </tbody>
+      </table>
+      <p>
+        Steps are <code>xs sm md lg xl 2xl 3xl 4xl</code>, plus <code>0</code> everywhere and
+        <code>auto</code> on margins.
+      </p>
+    </section>
+
+    <section id="layout">
+      <h2>Layout</h2>
+      <ul>
+        <li>
+          <strong>Display</strong> — <code>.arc-flex</code>, <code>.arc-inline-flex</code>,
+          <code>.arc-grid</code>, <code>.arc-block</code>, <code>.arc-contents</code>,
+          <code>.arc-hidden</code>.
+        </li>
+        <li>
+          <strong>Flex</strong> — <code>.arc-flex-col</code>, <code>.arc-flex-wrap</code>,
+          <code>.arc-flex-1</code>, <code>.arc-grow</code>, <code>.arc-shrink-0</code>.
+        </li>
+        <li>
+          <strong>Alignment</strong> — <code>.arc-items-center</code>,
+          <code>.arc-justify-between</code>, <code>.arc-self-end</code>.
+        </li>
+        <li>
+          <strong>Grid</strong> — <code>.arc-grid-cols-1</code> through <code>-6</code>,
+          <code>.arc-col-span-*</code>, <code>.arc-col-span-full</code>.
+        </li>
+        <li>
+          <strong>Size</strong> — <code>.arc-w-full</code>, <code>.arc-h-full</code>,
+          <code>.arc-max-w-full</code>, and <code>.arc-min-w-0</code>, which is the fix for a
+          flex child that refuses to shrink and text that refuses to ellipsis.
+        </li>
+      </ul>
+    </section>
+
+    <section id="surface">
+      <h2>Surface</h2>
+      <table>
+        <tbody>
+          {surface.map(([name, decl]) => (
+            <tr><td><code>{name}</code></td><td><code>{decl}</code></td></tr>
+          ))}
+        </tbody>
+      </table>
+      <p>
+        Colours use the token names directly, so <code>.arc-text-primary</code> is the
+        foreground colour and <code>.arc-text-lg</code> is a type size — the same split
+        <code>--text-primary</code> and <code>--text-lg</code> already have. The generator
+        fails the build if a future token ever makes those two collide.
+      </p>
+      <p>
+        Font classes name the five <strong>roles</strong>, not typefaces:
+        <code>.arc-font-body</code>, <code>-label</code>, <code>-mono</code>,
+        <code>-display</code>, <code>-quote</code>.
+      </p>
+    </section>
+
+    <section id="limits">
+      <h2>Limits</h2>
+      <ul>
+        <li>
+          <strong>Light DOM only.</strong> A class cannot cross a shadow boundary, so these
+          style the space around ARC components and never anything inside one. Reach for
+          <code>::part()</code> and the CSS custom properties for that.
+        </li>
+        <li>
+          <strong>No responsive or state variants.</strong> No <code>sm:</code>,
+          no <code>hover:</code>. That is where a utility layer becomes a framework, and this
+          one is deliberately not that. Write a media query.
+        </li>
+        <li>
+          <strong>No arbitrary values.</strong> The scale is the point — a class that resolves
+          to an arbitrary pixel value is not tracking the token system.
+        </li>
+        <li>
+          <strong>Requires the tokens.</strong> Every class reads a <code>var()</code>, so load
+          <code>base.css</code> or define the same variables yourself.
+        </li>
+      </ul>
+    </section>
+  </div>
+</DocsLayout>
+
+<style>
+  .prose-page { max-width: 70ch; }
+  .prose-page h1 { font-family: var(--font-display); margin-bottom: var(--space-lg); }
+  .prose-page h2 {
+    font-family: var(--font-display);
+    margin: var(--space-2xl) 0 var(--space-md);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--border-subtle);
+  }
+  .prose-page p { color: var(--text-secondary); line-height: 1.7; margin-bottom: var(--space-md); }
+  .prose-page ul { color: var(--text-secondary); line-height: 1.7; padding-inline-start: var(--space-lg); margin-bottom: var(--space-md); }
+  .prose-page li { margin-bottom: var(--space-sm); }
+  .prose-page pre {
+    background: var(--surface-raised);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    overflow-x: auto;
+    margin-bottom: var(--space-md);
+  }
+  .prose-page code { font-family: var(--font-mono); font-size: var(--_text-sm); }
+  .prose-page strong { color: var(--text-primary); }
+  .prose-page table {
+    inline-size: 100%;
+    border-collapse: collapse;
+    margin-bottom: var(--space-md);
+  }
+  .prose-page td {
+    padding: var(--space-sm) var(--space-md) var(--space-sm) 0;
+    border-bottom: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    vertical-align: top;
+  }
+</style>

@@ -143,7 +143,7 @@ if (problems.length) {
 // Sort exports: "." first, "./register" second, then alphabetical component keys,
 // then category barrels and special entries at the end
 const specialFirst = ['.', './register'];
-const specialLast = ['./base.css'];
+const specialLast = ['./base.css', './utilities.css'];
 
 const sorted = {};
 
