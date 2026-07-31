@@ -703,6 +703,30 @@ export const lightTokens = {
   glowCard: {
     hover: '0 0 20px rgba(var(--accent-primary-rgb),0.12), 0 0 40px rgba(var(--accent-secondary-rgb),0.06)',
   },
+
+  /* The interface tier, which had no light values at all.
+
+     Every glow the light theme overrode was display work — the hero emission,
+     the card ambient, the divider lines. --glow-hover was not among them, and
+     it is the one components actually spend: it backs --interactive-hover on
+     the form fields. The scale added in the v3 glow pass inherited the same
+     omission, so a light-mode hover was rendering at the alpha chosen against
+     near-black.
+
+     Ratio taken from glowCard.hover, the one precedent in the tree for a
+     subtle accent glow crossing themes: 0.08 dark to 0.12 light, ×1.5. A faint
+     wash needs more alpha on a light ground, not less — the bright emissions
+     above go the other way (primary drops 0.9 to 0.5) because at high alpha the
+     problem reverses and they glare. These are a starting point from that rule,
+     not a judgement made by looking. */
+  glowScale: {
+    xs:     '0 0 6px rgba(var(--accent-primary-rgb), 0.42)',
+    sm:     '0 0 8px rgba(var(--accent-primary-rgb), 0.42)',
+    md:     '0 0 12px rgba(var(--accent-primary-rgb), 0.36)',
+    status: '0 0 12px rgba(var(--_status-rgb), 0.22)',
+  },
+  glowHover: '0 0 12px rgba(var(--accent-primary-rgb), 0.22)',
+
   shadow: {
     xs:      '0 1px 2px rgba(var(--accent-primary-rgb),0.06)',
     sm:      '0 2px 4px rgba(var(--accent-primary-rgb),0.08), 0 1px 2px rgba(var(--accent-secondary-rgb),0.04)',
@@ -849,6 +873,12 @@ function renderOverrides(t, indent = '  ', label = 'theme') {
   if (t.glowCard) {
     for (const [k, v] of Object.entries(t.glowCard)) mapped({ hover: '--glow-card-hover' }, 'glowCard')(k, v);
   }
+  if (t.glowScale) {
+    const scaleVar = { xs: '--glow-xs', sm: '--glow-sm', md: '--glow-md', status: '--glow-status' };
+    for (const [k, v] of Object.entries(t.glowScale)) mapped(scaleVar, 'glowScale')(k, v);
+  }
+  // A scalar rather than a group, like the base tree's glowHover.
+  if (t.glowHover) add('--glow-hover', t.glowHover);
   if (t.glowLine) {
     const lineVar = { white: '--glow-line-white', primary: '--glow-line-blue' };
     for (const [k, v] of Object.entries(t.glowLine)) mapped(lineVar, 'glowLine')(k, v);
@@ -863,7 +893,8 @@ function renderOverrides(t, indent = '  ', label = 'theme') {
   }
 
   for (const group of Object.keys(t)) {
-    if (!['color', 'rgb', 'shadow', 'gradient', 'glow', 'glowCard', 'glowLine', 'utility'].includes(group)) {
+    if (!['color', 'rgb', 'shadow', 'gradient', 'glow', 'glowCard', 'glowScale',
+          'glowHover', 'glowLine', 'utility'].includes(group)) {
       unknown.push(group);
     }
   }
