@@ -73,7 +73,7 @@ export class ArcNavigationMenu extends LitElement {
       .nav__trigger--open {
         color: var(--text-primary);
         background: var(--surface-hover);
-        border-color: var(--border-default);
+        box-shadow: var(--glow-sm);
       }
 
       .nav__trigger--active {
@@ -350,13 +350,13 @@ export class ArcNavigationMenu extends LitElement {
         -webkit-tap-highlight-color: transparent;
         transition: color var(--transition-fast), background var(--transition-fast),
           border-color var(--transition-fast), box-shadow var(--transition-fast),
-          transform 80ms ease;
+          transform 80ms var(--ease-standard);
       }
 
       .mobile-trigger:hover {
         color: var(--text-primary);
         background: var(--surface-hover);
-        border-color: var(--border-default);
+        box-shadow: var(--glow-sm);
       }
 
       .mobile-trigger:active {
@@ -390,7 +390,7 @@ export class ArcNavigationMenu extends LitElement {
       .mobile-trigger--muted:hover {
         color: var(--text-primary);
         background: rgba(var(--text-primary-rgb), 0.06);
-        border-color: var(--border-subtle);
+        box-shadow: var(--glow-sm);
       }
 
       .mobile-trigger--muted.mobile-trigger--active {

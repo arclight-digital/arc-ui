@@ -56,7 +56,7 @@ export class ArcToggle extends FormControlMixin(LitElement) {
       }
 
       .toggle__track:hover {
-        border-color: var(--text-muted);
+        box-shadow: var(--glow-xs);
       }
 
       :host([checked]) .toggle__track {

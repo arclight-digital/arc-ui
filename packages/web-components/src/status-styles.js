@@ -9,9 +9,28 @@ import { css } from 'lit';
  * aliases are retired — v3 speaks one name per state.
  */
 export const statusVars = css`
-  :host([variant="info"]) {
+  /* Default, for a consumer that sets no variant at all. arc-alert and its
+     siblings default to info in the constructor and never see this; arc-badge
+     and arc-tag have no default variant, and without it their status glow
+     would resolve against an undefined --_status-rgb and simply not paint. */
+  :host {
     --_status-color: var(--accent-primary);
     --_status-rgb:   var(--accent-primary-rgb);
+  }
+
+  /* info is the accent, not --color-info. The two were both in use — statusVars
+     said accent-primary, arc-badge and arc-tag said --color-info — which made
+     "info" mean two different blues depending on which component you asked.
+     Settled here, since this is the shared mechanism. */
+  :host([variant="info"]),
+  :host([variant="primary"]) {
+    --_status-color: var(--accent-primary);
+    --_status-rgb:   var(--accent-primary-rgb);
+  }
+
+  :host([variant="secondary"]) {
+    --_status-color: var(--accent-secondary);
+    --_status-rgb:   var(--accent-secondary-rgb);
   }
 
   :host([variant="success"]),

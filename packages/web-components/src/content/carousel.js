@@ -88,7 +88,7 @@ export class ArcCarousel extends LitElement {
 
       .carousel__arrow:hover {
         background: var(--surface-overlay);
-        border-color: var(--border-bright);
+        box-shadow: var(--glow-sm);
         opacity: 1;
       }
 

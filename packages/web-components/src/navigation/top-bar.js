@@ -146,7 +146,7 @@ export class ArcTopBar extends LitElement {
 
       .topbar__menu-btn:hover {
         background: var(--surface-hover);
-        border-color: var(--border-default);
+        box-shadow: var(--glow-sm);
       }
 
       .topbar__menu-btn:focus-visible {

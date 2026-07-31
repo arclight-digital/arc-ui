@@ -155,8 +155,8 @@ export class ArcAppShell extends LitElement {
         opacity: 0;
         visibility: hidden;
         transition:
-          opacity 200ms ease,
-          visibility 200ms ease;
+          opacity var(--transition-base),
+          visibility var(--transition-base);
         -webkit-backdrop-filter: blur(2px);
         backdrop-filter: blur(2px);
       }

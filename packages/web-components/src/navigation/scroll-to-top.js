@@ -62,7 +62,7 @@ export class ArcScrollToTop extends LitElement {
 
       .scroll-to-top:hover {
         background: var(--accent-primary-subtle);
-        border-color: var(--accent-primary-border);
+        box-shadow: var(--glow-sm);
         color: var(--interactive);
       }
 

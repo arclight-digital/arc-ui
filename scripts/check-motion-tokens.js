@@ -67,7 +67,30 @@ function check(file) {
   const src = fs.readFileSync(file, 'utf8');
   const rel = path.relative(process.cwd(), file);
 
-  src.split('\n').forEach((line, i) => {
+  // Join multi-line declarations onto the line they start on. A transition
+  // wrapped across four lines hid a bare `ease` from the first version of this
+  // check — the continuation lines carry no `transition:` to match against, so
+  // they were skipped, and the check reported clean while the keyword was still
+  // there. Line numbers are preserved by padding the consumed lines out.
+  const raw = src.split('\n');
+  const lines = [];
+  for (let i = 0; i < raw.length; i++) {
+    if (/\b(transition|animation)(-timing-function)?\s*:/.test(raw[i]) && !raw[i].includes(';')) {
+      let joined = raw[i];
+      let j = i + 1;
+      while (j < raw.length && j < i + 8 && !joined.includes(';')) {
+        joined += ' ' + raw[j].trim();
+        j++;
+      }
+      lines.push(joined);
+      for (let k = i + 1; k < j; k++) lines.push('');
+      i = j - 1;
+    } else {
+      lines.push(raw[i]);
+    }
+  }
+
+  lines.forEach((line, i) => {
     const at = (msg) => failures.push({ file: rel, line: i + 1, msg, text: line.trim() });
 
     // Only look at declarations that actually set motion.

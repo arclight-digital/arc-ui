@@ -55,7 +55,7 @@ export class ArcAlert extends LitElement {
         inset-inline-end: 0;
         height: 2px;
         background: linear-gradient(90deg, transparent, var(--_status-color), transparent);
-        box-shadow: 0 0 12px rgba(var(--_status-rgb), 0.15);
+        box-shadow: var(--glow-status);
       }
 
       .alert__icon-wrap {

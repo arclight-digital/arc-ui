@@ -228,6 +228,7 @@
   --glow-xs: 0 0 6px rgba(var(--accent-primary-rgb), 0.3);
   --glow-sm: 0 0 8px rgba(var(--accent-primary-rgb), 0.3);
   --glow-md: 0 0 12px rgba(var(--accent-primary-rgb), 0.25);
+  --glow-status: 0 0 12px rgba(var(--_status-rgb), 0.15);
   --glow-hover: 0 0 12px rgba(var(--accent-primary-rgb), 0.15);
   --glow-card-hover: 0 0 20px rgba(var(--accent-primary-rgb),0.08), 0 0 40px rgba(var(--accent-secondary-rgb),0.04);
   --gradient-border-glow: linear-gradient(135deg, rgba(var(--accent-primary-rgb),0.15), rgba(var(--accent-secondary-rgb),0.1), rgba(var(--accent-primary-rgb),0.05));
@@ -734,7 +735,7 @@
       .arc-divider[data-variant="line-gradient"] .divider {
         max-width: 240px;
         background: var(--divider-glow);
-        box-shadow: 0 0 10px rgba(var(--accent-primary-rgb),0.25);
+        box-shadow: var(--glow-md);
       }
 
       /* Alignment — rewrite gradients to originate from one edge */
@@ -795,7 +796,7 @@
         width: 2px;
         max-width: none;
         background: linear-gradient(180deg, transparent, var(--accent-primary), var(--accent-secondary), transparent);
-        box-shadow: 0 0 10px rgba(var(--accent-primary-rgb),0.25);
+        box-shadow: var(--glow-md);
       }
 
       .arc-divider[vertical][data-variant="line-primary"] .divider {
@@ -1442,13 +1443,11 @@
         background: rgba(var(--color-info-rgb), 0.06);
       }
 
-      .arc-badge:hover .badge { border-color: var(--border-bright); }
-      .arc-badge[data-variant="primary"]:hover .badge { box-shadow: var(--interactive-hover); }
-      .arc-badge[data-variant="secondary"]:hover .badge { box-shadow: 0 0 12px rgba(var(--accent-secondary-rgb), 0.15); }
-      .arc-badge[data-variant="success"]:hover .badge { box-shadow: 0 0 12px rgba(var(--color-success-rgb), 0.15); }
-      .arc-badge[data-variant="warning"]:hover .badge { box-shadow: 0 0 12px rgba(var(--color-warning-rgb), 0.15); }
-      .arc-badge[data-variant="error"]:hover .badge { box-shadow: 0 0 12px rgba(var(--color-error-rgb), 0.15); }
-      .arc-badge[data-variant="info"]:hover .badge { box-shadow: 0 0 12px rgba(var(--color-info-rgb), 0.15); }
+      /* One hover rule for every variant: --glow-status takes its colour from
+         the --_status-rgb that statusVars sets on the host. This was six rules
+         saying the same thing in six colours. The border is deliberately left
+         alone — hover adds light, it does not move the edge. */
+      .arc-badge:hover .badge { box-shadow: var(--glow-status); }
 
       /* Sizes */
       .arc-badge[data-size="sm"] .badge { font-size: calc(var(--_text-xs) - 1px); padding: 2px var(--space-xs); }
@@ -2197,12 +2196,8 @@
         background: rgba(var(--color-error-rgb), 0.06);
       }
 
-      .arc-tag .tag:hover { border-color: var(--border-bright); }
-      .arc-tag[data-variant="primary"] .tag:hover { box-shadow: var(--interactive-hover); }
-      .arc-tag[data-variant="secondary"] .tag:hover { box-shadow: 0 0 12px rgba(var(--accent-secondary-rgb), 0.15); }
-      .arc-tag[data-variant="success"] .tag:hover { box-shadow: 0 0 12px rgba(var(--color-success-rgb), 0.15); }
-      .arc-tag[data-variant="warning"] .tag:hover { box-shadow: 0 0 12px rgba(var(--color-warning-rgb), 0.15); }
-      .arc-tag[data-variant="error"] .tag:hover { box-shadow: 0 0 12px rgba(var(--color-error-rgb), 0.15); }
+      /* One hover rule for every variant — see arc-badge. */
+      .arc-tag .tag:hover { box-shadow: var(--glow-status); }
 
       /* Sizes */
       .arc-tag[data-size="sm"] .tag { font-size: calc(var(--_text-xs) - 1px); padding: 2px var(--space-sm); letter-spacing: 1.5px; }
@@ -2277,7 +2272,7 @@
         border: 2px solid var(--surface-base);
         box-shadow:
           0 0 0 1px rgba(var(--accent-primary-rgb), 0.3),
-          0 0 8px rgba(var(--accent-primary-rgb), 0.25);
+          var(--glow-sm);
         flex-shrink: 0;
         z-index: 1;
         position: relative;
@@ -3246,7 +3241,7 @@
       }
 
       .arc-copy-button .copy-btn:hover {
-        border-color: var(--border-bright);
+        box-shadow: var(--glow-sm);
         color: var(--text-primary);
         background: var(--surface-hover);
       }
@@ -4593,7 +4588,7 @@
 
       .arc-top-bar .topbar__menu-btn:hover {
         background: var(--surface-hover);
-        border-color: var(--border-default);
+        box-shadow: var(--glow-sm);
       }
 
       .arc-top-bar .topbar__menu-btn:focus-visible {
@@ -4770,8 +4765,8 @@
         opacity: 0;
         visibility: hidden;
         transition:
-          opacity 200ms ease,
-          visibility 200ms ease;
+          opacity var(--transition-base),
+          visibility var(--transition-base);
         -webkit-backdrop-filter: blur(2px);
         backdrop-filter: blur(2px);
       }
@@ -5603,7 +5598,7 @@
         inset-inline-end: 0;
         height: 2px;
         background: linear-gradient(90deg, transparent, var(--_status-color), transparent);
-        box-shadow: 0 0 12px rgba(var(--_status-rgb), 0.15);
+        box-shadow: var(--glow-status);
       }
 
       .arc-alert .alert__icon-wrap {

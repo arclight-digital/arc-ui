@@ -60,7 +60,7 @@ export class ArcThemeToggle extends LitElement {
       }
 
       .theme-toggle:hover {
-        border-color: var(--border-bright);
+        box-shadow: var(--glow-sm);
         color: var(--text-primary);
         background: var(--surface-hover);
       }

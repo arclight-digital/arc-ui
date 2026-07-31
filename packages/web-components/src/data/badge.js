@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { statusVars } from '../status-styles.js';
 
 /**
  * Compact pill-shaped label for status indicators, category tags, and notification counts. Three
@@ -21,6 +22,7 @@ export class ArcBadge extends LitElement {
 
   static styles = [
     tokenStyles,
+    statusVars,
     css`
       :host { display: inline-flex; }
 
@@ -78,13 +80,11 @@ export class ArcBadge extends LitElement {
         background: rgba(var(--color-info-rgb), 0.06);
       }
 
-      :host(:hover) .badge { border-color: var(--border-bright); }
-      :host([variant="primary"]:hover) .badge { box-shadow: var(--interactive-hover); }
-      :host([variant="secondary"]:hover) .badge { box-shadow: 0 0 12px rgba(var(--accent-secondary-rgb), 0.15); }
-      :host([variant="success"]:hover) .badge { box-shadow: 0 0 12px rgba(var(--color-success-rgb), 0.15); }
-      :host([variant="warning"]:hover) .badge { box-shadow: 0 0 12px rgba(var(--color-warning-rgb), 0.15); }
-      :host([variant="error"]:hover) .badge { box-shadow: 0 0 12px rgba(var(--color-error-rgb), 0.15); }
-      :host([variant="info"]:hover) .badge { box-shadow: 0 0 12px rgba(var(--color-info-rgb), 0.15); }
+      /* One hover rule for every variant: --glow-status takes its colour from
+         the --_status-rgb that statusVars sets on the host. This was six rules
+         saying the same thing in six colours. The border is deliberately left
+         alone — hover adds light, it does not move the edge. */
+      :host(:hover) .badge { box-shadow: var(--glow-status); }
 
       /* Sizes */
       :host([size="sm"]) .badge { font-size: calc(var(--_text-xs) - 1px); padding: 2px var(--space-xs); }

@@ -67,8 +67,8 @@ export class ArcNotificationPanel extends LitElement {
            painting through the close once PositionController has promoted it to
            the top layer, where "closed" means display:none. */
         transition:
-          opacity 120ms ease-in,
-          transform 120ms ease-in,
+          opacity 120ms var(--ease-in),
+          transform 120ms var(--ease-in),
           display 120ms allow-discrete,
           overlay 120ms allow-discrete;
       }

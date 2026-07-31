@@ -38,7 +38,7 @@
         border: 2px solid var(--surface-base);
         box-shadow:
           0 0 0 1px rgba(var(--accent-primary-rgb), 0.3),
-          0 0 8px rgba(var(--accent-primary-rgb), 0.25);
+          var(--glow-sm);
         flex-shrink: 0;
         z-index: 1;
         position: relative;

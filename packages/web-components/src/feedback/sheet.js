@@ -45,8 +45,8 @@ export class ArcSheet extends OverlayMixin(LitElement) {
         opacity: 0;
         visibility: hidden;
         transition:
-          opacity var(--duration-exit) ease,
-          visibility var(--duration-exit) ease;
+          opacity var(--transition-exit),
+          visibility var(--transition-exit);
       }
 
       :host([open]) .sheet__backdrop {

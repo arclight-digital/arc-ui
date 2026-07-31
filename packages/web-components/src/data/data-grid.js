@@ -198,7 +198,7 @@ export class ArcDataGrid extends LitElement {
         transition: border-color var(--transition-fast), background var(--transition-fast);
       }
 
-      input[type="checkbox"]:hover { border-color: var(--interactive); }
+      input[type="checkbox"]:hover { box-shadow: var(--glow-xs); }
 
       input[type="checkbox"]:checked,
       input[type="checkbox"]:indeterminate {

@@ -346,6 +346,10 @@ export const tokens = {
     xs: '0 0 6px rgba(var(--accent-primary-rgb), 0.3)',
     sm: '0 0 8px rgba(var(--accent-primary-rgb), 0.3)',
     md: '0 0 12px rgba(var(--accent-primary-rgb), 0.25)',
+    /* Reads --_status-rgb from status-styles.js, so it takes the colour of
+       whatever variant the host is carrying. arc-badge and arc-tag each spelled
+       this out five times, once per variant; arc-alert a sixth. */
+    status: '0 0 12px rgba(var(--_status-rgb), 0.15)',
   },
 
   /* ── Hover Glow ── */

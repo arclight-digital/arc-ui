@@ -182,7 +182,7 @@ export class ArcDataTable extends LitElement {
       }
 
       input[type="checkbox"]:hover {
-        border-color: var(--interactive);
+        box-shadow: var(--glow-xs);
       }
 
       input[type="checkbox"]:checked {

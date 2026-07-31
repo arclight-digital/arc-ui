@@ -65,7 +65,7 @@ export class ArcDivider extends LitElement {
       :host([variant="line-gradient"]) .divider {
         max-width: 240px;
         background: var(--divider-glow);
-        box-shadow: 0 0 10px rgba(var(--accent-primary-rgb),0.25);
+        box-shadow: var(--glow-md);
       }
 
       /* Alignment — rewrite gradients to originate from one edge */
@@ -126,7 +126,7 @@ export class ArcDivider extends LitElement {
         width: 2px;
         max-width: none;
         background: linear-gradient(180deg, transparent, var(--accent-primary), var(--accent-secondary), transparent);
-        box-shadow: 0 0 10px rgba(var(--accent-primary-rgb),0.25);
+        box-shadow: var(--glow-md);
       }
 
       :host([vertical][variant="line-primary"]) .divider {

@@ -49,7 +49,7 @@ export class ArcCopyButton extends LitElement {
       }
 
       .copy-btn:hover {
-        border-color: var(--border-bright);
+        box-shadow: var(--glow-sm);
         color: var(--text-primary);
         background: var(--surface-hover);
       }

@@ -71,6 +71,7 @@ export class ArcOtpInput extends FormControlMixin(LitElement) {
 
       .otp__box:hover:not(:focus) {
         border-color: var(--border-bright);
+        box-shadow: var(--shadow-inset), var(--interactive-hover);
       }
 
       .otp__box:focus-visible {

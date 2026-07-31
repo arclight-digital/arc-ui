@@ -118,7 +118,7 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
       :host([size="lg"]) input { padding: var(--space-md) var(--space-lg); padding-inline-end: 40px; font-size: var(--_text-md); }
 
       input::placeholder { color: var(--text-muted); }
-      input:hover:not(:focus) { border-color: var(--border-bright); }
+      input:hover:not(:focus) { border-color: var(--border-bright); box-shadow: var(--shadow-inset), var(--interactive-hover); }
       input:focus-visible { outline: none; border-color: rgba(var(--interactive-rgb), 0.4); box-shadow: var(--interactive-focus); }
 
       .calendar-icon {

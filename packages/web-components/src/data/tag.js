@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { statusVars } from '../status-styles.js';
 
 /**
  * Compact pill-shaped label with colour variants, custom colour support, and an optional remove
@@ -28,6 +29,7 @@ export class ArcTag extends LitElement {
 
   static styles = [
     tokenStyles,
+    statusVars,
     css`
       :host { display: inline-flex; }
       :host([disabled]) { pointer-events: none; opacity: 0.5; }
@@ -81,12 +83,8 @@ export class ArcTag extends LitElement {
         background: rgba(var(--color-error-rgb), 0.06);
       }
 
-      .tag:hover { border-color: var(--border-bright); }
-      :host([variant="primary"]) .tag:hover { box-shadow: var(--interactive-hover); }
-      :host([variant="secondary"]) .tag:hover { box-shadow: 0 0 12px rgba(var(--accent-secondary-rgb), 0.15); }
-      :host([variant="success"]) .tag:hover { box-shadow: 0 0 12px rgba(var(--color-success-rgb), 0.15); }
-      :host([variant="warning"]) .tag:hover { box-shadow: 0 0 12px rgba(var(--color-warning-rgb), 0.15); }
-      :host([variant="error"]) .tag:hover { box-shadow: 0 0 12px rgba(var(--color-error-rgb), 0.15); }
+      /* One hover rule for every variant — see arc-badge. */
+      .tag:hover { box-shadow: var(--glow-status); }
 
       /* Sizes */
       :host([size="sm"]) .tag { font-size: calc(var(--_text-xs) - 1px); padding: 2px var(--space-sm); letter-spacing: 1.5px; }

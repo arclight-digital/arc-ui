@@ -111,6 +111,7 @@ export class ArcPinInput extends FormControlMixin(LitElement) {
 
       .pin__box:hover:not(:focus) {
         border-color: var(--border-bright);
+        box-shadow: var(--shadow-inset), var(--interactive-hover);
       }
 
       .pin__box:focus-visible {
