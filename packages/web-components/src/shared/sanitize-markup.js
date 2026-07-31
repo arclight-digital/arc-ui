@@ -25,7 +25,7 @@ const IGNORABLE = /[\s\u0000-\u001F\u007F-\u009F]+/g;
 
 /**
  * Strip the characters a browser throws away before it resolves a scheme, so
- * `java\tscript:` is recognised for what it is.
+ * `java\tscript:` is recognized for what it is.
  */
 export function normalizeUrl(value) {
   return value.replace(IGNORABLE, '').toLowerCase();

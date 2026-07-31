@@ -89,7 +89,7 @@ function typesFor(target) {
     return `./types/${mod[1]}.d.ts`;
   }
 
-  return undefined; // unrecognised — caller reports it
+  return undefined; // unrecognized — caller reports it
 }
 
 const problems = [];

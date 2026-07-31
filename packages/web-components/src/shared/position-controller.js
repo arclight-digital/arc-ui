@@ -7,7 +7,7 @@
  * is in the way: near a viewport edge the panel clipped, and inside an
  * `overflow: hidden` ancestor it was cut off entirely. Only menubar measured
  * anything, and only for a right-edge flip. This controller generalises that
- * measurement pass and gives every panel the same three behaviours:
+ * measurement pass and gives every panel the same three behaviors:
  *
  *   flip   — swap to the opposite side when the preferred one doesn't fit
  *   shift  — slide along the cross axis to stay inside the viewport
@@ -26,7 +26,7 @@
  * other `auto` popover in an unrelated part of the tree when it opens — a
  * tooltip would dismiss an open dropdown. Components already own dismissal via
  * ClickOutsideController and their own key handlers, so `manual` keeps
- * behaviour identical to before and leaves the dismiss policy with the
+ * behavior identical to before and leaves the dismiss policy with the
  * component.
  *
  * ## The attribute is applied imperatively, never rendered
@@ -68,7 +68,7 @@ const OPPOSITE = { top: 'bottom', bottom: 'top', left: 'right', right: 'left' };
 /**
  * Resolve a possibly-bogus placement to a real one.
  *
- * The CSS in position-styles.js treats any unrecognised `position` value as the
+ * The CSS in position-styles.js treats any unrecognized `position` value as the
  * default by selecting the default branch with `:not()` rather than by listing
  * it. This keeps that contract once positioning moves into JS: a component with
  * `position="sideways"` must behave exactly as if the attribute were absent.
@@ -83,7 +83,7 @@ function resolveAlignment(value, fallback) {
 }
 
 /**
- * Normalise an anchor to a viewport rect.
+ * Normalize an anchor to a viewport rect.
  *
  * An anchor is usually an element, but context-menu anchors to the pointer and
  * has no element to measure. Returning a plain `{x, y}` (or any partial rect)
@@ -124,9 +124,9 @@ export class PositionController {
    *   position against: an element, or a point/rect for a pointer-anchored menu.
    * @param {() => Element | null | undefined} opts.floating - The panel to position.
    * @param {() => string} [opts.placement] - Preferred side; unknown values fall back.
-   * @param {string} [opts.fallbackPlacement='bottom'] - Side used when placement is unrecognised.
+   * @param {string} [opts.fallbackPlacement='bottom'] - Side used when placement is unrecognized.
    * @param {() => string} [opts.align] - Cross-axis alignment ('start' | 'center' | 'end').
-   * @param {string} [opts.fallbackAlign='center'] - Alignment used when align is unrecognised.
+   * @param {string} [opts.fallbackAlign='center'] - Alignment used when align is unrecognized.
    * @param {number} [opts.offset=8] - Gap between anchor and panel, in px.
    * @param {number} [opts.crossOffset=0] - Nudge along the cross axis, in px.
    *   Menubar's submenus use a negative value to cancel the parent panel's own

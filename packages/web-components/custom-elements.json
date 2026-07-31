@@ -477,7 +477,7 @@
                 "text": "'info' | 'tip' | 'warning' | 'error'"
               },
               "default": "'info'",
-              "description": "Semantic variant that controls the colour scheme, top accent bar, and default icon",
+              "description": "Semantic variant that controls the color scheme, top accent bar, and default icon",
               "attribute": "variant",
               "reflects": true
             },
@@ -510,7 +510,7 @@
                 "text": "'info' | 'tip' | 'warning' | 'error'"
               },
               "default": "'info'",
-              "description": "Semantic variant that controls the colour scheme, top accent bar, and default icon",
+              "description": "Semantic variant that controls the color scheme, top accent bar, and default icon",
               "fieldName": "variant"
             },
             {
@@ -958,7 +958,7 @@
                 "text": "string"
               },
               "default": "'#4d7ef7'",
-              "description": "Any valid CSS colour value applied as the swatch background",
+              "description": "Any valid CSS color value applied as the swatch background",
               "attribute": "color"
             },
             {
@@ -969,7 +969,7 @@
                 "text": "string"
               },
               "default": "''",
-              "description": "Display label below the swatch; falls back to the colour value if empty",
+              "description": "Display label below the swatch; falls back to the color value if empty",
               "attribute": "label"
             },
             {
@@ -992,7 +992,7 @@
                 "text": "string"
               },
               "default": "'#4d7ef7'",
-              "description": "Any valid CSS colour value applied as the swatch background",
+              "description": "Any valid CSS color value applied as the swatch background",
               "fieldName": "color"
             },
             {
@@ -1001,7 +1001,7 @@
                 "text": "string"
               },
               "default": "''",
-              "description": "Display label below the swatch; falls back to the colour value if empty",
+              "description": "Display label below the swatch; falls back to the color value if empty",
               "fieldName": "label"
             },
             {
@@ -3528,7 +3528,7 @@
                 "text": "'primary' | 'secondary' | 'white'"
               },
               "default": "'primary'",
-              "description": "Colour of the spinner ring",
+              "description": "Color of the spinner ring",
               "attribute": "variant",
               "reflects": true
             }
@@ -3549,7 +3549,7 @@
                 "text": "'primary' | 'secondary' | 'white'"
               },
               "default": "'primary'",
-              "description": "Colour of the spinner ring",
+              "description": "Color of the spinner ring",
               "fieldName": "variant"
             }
           ],
@@ -8215,7 +8215,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "Compact pill-shaped label with colour variants, custom colour support, and an optional remove\nbutton, for categorisation, filtering, and selection feedback.",
+          "description": "Compact pill-shaped label with color variants, custom color support, and an optional remove\nbutton, for categorisation, filtering, and selection feedback.",
           "name": "ArcTag",
           "cssParts": [
             {
@@ -8243,7 +8243,7 @@
                 "text": "'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error'"
               },
               "default": "'default'",
-              "description": "Colour variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and error provide semantic status colours.",
+              "description": "Color variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and error provide semantic status colors.",
               "attribute": "variant",
               "reflects": true
             },
@@ -8291,7 +8291,7 @@
                 "text": "string"
               },
               "default": "''",
-              "description": "Custom colour as an RGB triplet (e.g. `\"77, 126, 247\"`). When set, overrides the variant colours for border, text, background, and hover glow. Useful for data-driven category colours.",
+              "description": "Custom color as an RGB triplet (e.g. `\"77, 126, 247\"`). When set, overrides the variant colors for border, text, background, and hover glow. Useful for data-driven category colors.",
               "attribute": "color"
             }
           ],
@@ -8311,7 +8311,7 @@
                 "text": "'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error'"
               },
               "default": "'default'",
-              "description": "Colour variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and error provide semantic status colours.",
+              "description": "Color variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and error provide semantic status colors.",
               "fieldName": "variant"
             },
             {
@@ -8347,7 +8347,7 @@
                 "text": "string"
               },
               "default": "''",
-              "description": "Custom colour as an RGB triplet (e.g. `\"77, 126, 247\"`). When set, overrides the variant colours for border, text, background, and hover glow. Useful for data-driven category colours.",
+              "description": "Custom color as an RGB triplet (e.g. `\"77, 126, 247\"`). When set, overrides the variant colors for border, text, background, and hover glow. Useful for data-driven category colors.",
               "fieldName": "color"
             }
           ],
@@ -9036,7 +9036,7 @@
                 "text": "'info' | 'success' | 'warning' | 'error'"
               },
               "default": "'info'",
-              "description": "Controls the semantic colour palette and icon. Use \"info\" for neutral guidance, \"success\" for confirmations, \"warning\" for caution states, and \"error\" for failures or blocking issues.",
+              "description": "Controls the semantic color palette and icon. Use \"info\" for neutral guidance, \"success\" for confirmations, \"warning\" for caution states, and \"error\" for failures or blocking issues.",
               "attribute": "variant",
               "reflects": true
             },
@@ -9092,7 +9092,7 @@
                 "text": "'info' | 'success' | 'warning' | 'error'"
               },
               "default": "'info'",
-              "description": "Controls the semantic colour palette and icon. Use \"info\" for neutral guidance, \"success\" for confirmations, \"warning\" for caution states, and \"error\" for failures or blocking issues.",
+              "description": "Controls the semantic color palette and icon. Use \"info\" for neutral guidance, \"success\" for confirmations, \"warning\" for caution states, and \"error\" for failures or blocking issues.",
               "fieldName": "variant"
             },
             {
@@ -9257,7 +9257,7 @@
                 "text": "'info' | 'success' | 'warning' | 'error'"
               },
               "default": "'info'",
-              "description": "Controls the semantic colour palette and icon. Use \"info\" for neutral announcements, \"success\" for positive confirmations, \"warning\" for caution states, and \"error\" for outages or critical failures.",
+              "description": "Controls the semantic color palette and icon. Use \"info\" for neutral announcements, \"success\" for positive confirmations, \"warning\" for caution states, and \"error\" for outages or critical failures.",
               "attribute": "variant",
               "reflects": true
             },
@@ -9302,7 +9302,7 @@
                 "text": "'info' | 'success' | 'warning' | 'error'"
               },
               "default": "'info'",
-              "description": "Controls the semantic colour palette and icon. Use \"info\" for neutral announcements, \"success\" for positive confirmations, \"warning\" for caution states, and \"error\" for outages or critical failures.",
+              "description": "Controls the semantic color palette and icon. Use \"info\" for neutral announcements, \"success\" for positive confirmations, \"warning\" for caution states, and \"error\" for outages or critical failures.",
               "fieldName": "variant"
             },
             {
@@ -9726,7 +9726,7 @@
           ],
           "slots": [
             {
-              "description": "Body content, for when the confirmation needs markup the `message` string cannot carry — a filename in `<code>`, an emphasised consequence, a short list of what is about to change. Falls back to `message` when nothing is slotted.",
+              "description": "Body content, for when the confirmation needs markup the `message` string cannot carry — a filename in `<code>`, an emphasized consequence, a short list of what is about to change. Falls back to `message` when nothing is slotted.",
               "name": ""
             }
           ],
@@ -9810,7 +9810,7 @@
                 "text": "'default' | 'error'"
               },
               "default": "'default'",
-              "description": "Controls the confirm button style. Use \"error\" for destructive actions — the confirm button renders in the error colour.",
+              "description": "Controls the confirm button style. Use \"error\" for destructive actions — the confirm button renders in the error color.",
               "attribute": "variant",
               "reflects": true
             }
@@ -9888,7 +9888,7 @@
                 "text": "'default' | 'error'"
               },
               "default": "'default'",
-              "description": "Controls the confirm button style. Use \"error\" for destructive actions — the confirm button renders in the error colour.",
+              "description": "Controls the confirm button style. Use \"error\" for destructive actions — the confirm button renders in the error color.",
               "fieldName": "variant"
             }
           ],
@@ -10086,7 +10086,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "A chat transcript: the scrollable column that holds arc-message children. Built for AI\nassistant panels — the layout, the role alignment, and the scroll behaviour all assume messages\narrive while the user is reading. While the reader sits near the bottom, new or growing\nmessages keep the view pinned to the latest; once they scroll up to re-read, the transcript\nnever yanks them back down. The arc-scroll-away and arc-scroll-return events report those\ntransitions with the distance from the bottom, so a consumer can float a \"jump to latest\" chip\nand wire it to scrollToEnd().",
+          "description": "A chat transcript: the scrollable column that holds arc-message children. Built for AI\nassistant panels — the layout, the role alignment, and the scroll behavior all assume messages\narrive while the user is reading. While the reader sits near the bottom, new or growing\nmessages keep the view pinned to the latest; once they scroll up to re-read, the transcript\nnever yanks them back down. The arc-scroll-away and arc-scroll-return events report those\ntransitions with the distance from the bottom, so a consumer can float a \"jump to latest\" chip\nand wire it to scrollToEnd().",
           "name": "ArcConversation",
           "cssParts": [
             {
@@ -10742,7 +10742,7 @@
                 "text": "'info' | 'success' | 'warning' | 'error'"
               },
               "default": "'info'",
-              "description": "Controls the icon and text colour. Use \"info\" for neutral hints, \"success\" for valid state feedback, \"warning\" for caution notes, and \"error\" for validation failures.",
+              "description": "Controls the icon and text color. Use \"info\" for neutral hints, \"success\" for valid state feedback, \"warning\" for caution notes, and \"error\" for validation failures.",
               "attribute": "variant",
               "reflects": true
             }
@@ -10754,7 +10754,7 @@
                 "text": "'info' | 'success' | 'warning' | 'error'"
               },
               "default": "'info'",
-              "description": "Controls the icon and text colour. Use \"info\" for neutral hints, \"success\" for valid state feedback, \"warning\" for caution notes, and \"error\" for validation failures.",
+              "description": "Controls the icon and text color. Use \"info\" for neutral hints, \"success\" for valid state feedback, \"warning\" for caution notes, and \"error\" for validation failures.",
               "fieldName": "variant"
             }
           ],
@@ -10888,7 +10888,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "One message in a conversation transcript. The speaker attribute decides the voice: user messages\nsit at the inline end on a faint accent tint, assistant messages sit at the inline start on a\nneutral surface, and system messages run centred, muted and small. The default slot is the\nmessage body — append text to it to stream a reply in — and with the markdown attribute set,\nthat slotted text renders through arc-markdown, re-rendering as the text grows. A pending\nmessage shows the typing indicator in place of its body. Slot an avatar for either speaker if\nthe product wants faces; none is built in.",
+          "description": "One message in a conversation transcript. The speaker attribute decides the voice: user messages\nsit at the inline end on a faint accent tint, assistant messages sit at the inline start on a\nneutral surface, and system messages run centered, muted and small. The default slot is the\nmessage body — append text to it to stream a reply in — and with the markdown attribute set,\nthat slotted text renders through arc-markdown, re-rendering as the text grows. A pending\nmessage shows the typing indicator in place of its body. Slot an avatar for either speaker if\nthe product wants faces; none is built in.",
           "name": "ArcMessage",
           "cssParts": [
             {
@@ -10920,7 +10920,7 @@
                 "text": "'user' | 'assistant' | 'system'"
               },
               "default": "'user'",
-              "description": "Whose message this is. \"user\" aligns to the inline end on an accent-tinted surface, \"assistant\" to the inline start on a neutral surface, and \"system\" runs centred and muted for notices in the transcript's own voice. An unrecognised value renders as \"user\".",
+              "description": "Whose message this is. \"user\" aligns to the inline end on an accent-tinted surface, \"assistant\" to the inline start on a neutral surface, and \"system\" runs centered and muted for notices in the transcript's own voice. An unrecognized value renders as \"user\".",
               "attribute": "speaker"
             },
             {
@@ -10977,7 +10977,7 @@
                 "text": "'user' | 'assistant' | 'system'"
               },
               "default": "'user'",
-              "description": "Whose message this is. \"user\" aligns to the inline end on an accent-tinted surface, \"assistant\" to the inline start on a neutral surface, and \"system\" runs centred and muted for notices in the transcript's own voice. An unrecognised value renders as \"user\".",
+              "description": "Whose message this is. \"user\" aligns to the inline end on an accent-tinted surface, \"assistant\" to the inline start on a neutral surface, and \"system\" runs centered and muted for notices in the transcript's own voice. An unrecognized value renders as \"user\".",
               "fieldName": "speaker"
             },
             {
@@ -11097,7 +11097,7 @@
                 "text": "string"
               },
               "default": "''",
-              "description": "Text displayed in the modal header bar. Automatically linked to the dialog via `aria-labelledby` for screen-reader accessibility. Keep it short and action-oriented (e.g. \"Delete Project\" rather than \"Are you sure?\").",
+              "description": "Text displayed in the modal header bar. Automatically linked to the dialog via `aria-labeledby` for screen-reader accessibility. Keep it short and action-oriented (e.g. \"Delete Project\" rather than \"Are you sure?\").",
               "attribute": "heading"
             },
             {
@@ -11169,7 +11169,7 @@
                 "text": "string"
               },
               "default": "''",
-              "description": "Text displayed in the modal header bar. Automatically linked to the dialog via `aria-labelledby` for screen-reader accessibility. Keep it short and action-oriented (e.g. \"Delete Project\" rather than \"Are you sure?\").",
+              "description": "Text displayed in the modal header bar. Automatically linked to the dialog via `aria-labeledby` for screen-reader accessibility. Keep it short and action-oriented (e.g. \"Delete Project\" rather than \"Are you sure?\").",
               "fieldName": "heading"
             },
             {
@@ -13094,7 +13094,7 @@
                 "text": "string"
               },
               "default": "''",
-              "description": "Visible text rendered beside the checkbox. Clicking the label toggles the checkbox, matching native HTML behaviour. Keep labels short, affirmative, and action-oriented for the best readability.",
+              "description": "Visible text rendered beside the checkbox. Clicking the label toggles the checkbox, matching native HTML behavior. Keep labels short, affirmative, and action-oriented for the best readability.",
               "attribute": "label"
             },
             {
@@ -13117,7 +13117,7 @@
                 "text": "string"
               },
               "default": "''",
-              "description": "The value sent with the form when the checkbox is checked. Defaults to \"on\" if omitted, matching native checkbox behaviour. Set explicit values when multiple checkboxes share the same name to distinguish them in the submitted data.",
+              "description": "The value sent with the form when the checkbox is checked. Defaults to \"on\" if omitted, matching native checkbox behavior. Set explicit values when multiple checkboxes share the same name to distinguish them in the submitted data.",
               "attribute": "value"
             },
             {
@@ -13321,7 +13321,7 @@
                 "text": "string"
               },
               "default": "''",
-              "description": "Visible text rendered beside the checkbox. Clicking the label toggles the checkbox, matching native HTML behaviour. Keep labels short, affirmative, and action-oriented for the best readability.",
+              "description": "Visible text rendered beside the checkbox. Clicking the label toggles the checkbox, matching native HTML behavior. Keep labels short, affirmative, and action-oriented for the best readability.",
               "fieldName": "label"
             },
             {
@@ -13339,7 +13339,7 @@
                 "text": "string"
               },
               "default": "''",
-              "description": "The value sent with the form when the checkbox is checked. Defaults to \"on\" if omitted, matching native checkbox behaviour. Set explicit values when multiple checkboxes share the same name to distinguish them in the submitted data.",
+              "description": "The value sent with the form when the checkbox is checked. Defaults to \"on\" if omitted, matching native checkbox behavior. Set explicit values when multiple checkboxes share the same name to distinguish them in the submitted data.",
               "fieldName": "value"
             },
             {
@@ -13766,14 +13766,14 @@
               "type": {
                 "text": "CustomEvent"
               },
-              "description": "Fired continuously as the colour changes, including every frame of a drag across the saturation area or hue track. Use for live previews. `event.detail.value` contains the hex string."
+              "description": "Fired continuously as the color changes, including every frame of a drag across the saturation area or hue track. Use for live previews. `event.detail.value` contains the hex string."
             },
             {
               "name": "arc-change",
               "type": {
                 "text": "CustomEvent"
               },
-              "description": "Fired once the colour is committed: the pointer released after a drag, a preset clicked, or a valid hex typed and blurred. Use for anything expensive. `event.detail.value` contains the hex string."
+              "description": "Fired once the color is committed: the pointer released after a drag, a preset clicked, or a valid hex typed and blurred. Use for anything expensive. `event.detail.value` contains the hex string."
             }
           ],
           "attributes": [
@@ -16030,7 +16030,7 @@
                 "text": "'xs' | 'sm' | 'md' | 'lg'"
               },
               "default": "'md'",
-              "description": "Button size controlling dimensions and icon scale. Icon-only sizes are circular: xs=28px, sm=32px, md=36px, lg=44px. The labelled form stays a rounded rectangle.",
+              "description": "Button size controlling dimensions and icon scale. Icon-only sizes are circular: xs=28px, sm=32px, md=36px, lg=44px. The labeled form stays a rounded rectangle.",
               "attribute": "size",
               "reflects": true
             },
@@ -16114,7 +16114,7 @@
                 "text": "'xs' | 'sm' | 'md' | 'lg'"
               },
               "default": "'md'",
-              "description": "Button size controlling dimensions and icon scale. Icon-only sizes are circular: xs=28px, sm=32px, md=36px, lg=44px. The labelled form stays a rounded rectangle.",
+              "description": "Button size controlling dimensions and icon scale. Icon-only sizes are circular: xs=28px, sm=32px, md=36px, lg=44px. The labeled form stays a rounded rectangle.",
               "fieldName": "size"
             },
             {
@@ -16411,7 +16411,7 @@
                 "text": "string"
               },
               "default": "''",
-              "description": "Accessible name for the control. The display state announces as \"Edit {label}\" and the edit field is labelled with it. Always provide one.",
+              "description": "Accessible name for the control. The display state announces as \"Edit {label}\" and the edit field is labeled with it. Always provide one.",
               "attribute": "label"
             },
             {
@@ -16625,7 +16625,7 @@
               "type": {
                 "text": "CustomEvent<{ value: string }>"
               },
-              "description": "Fired when an edit is cancelled (Escape or cancel()), with the retained value in detail.value. No arc-change accompanies it."
+              "description": "Fired when an edit is canceled (Escape or cancel()), with the retained value in detail.value. No arc-change accompanies it."
             },
             {
               "name": "arc-input",
@@ -16651,7 +16651,7 @@
                 "text": "string"
               },
               "default": "''",
-              "description": "Accessible name for the control. The display state announces as \"Edit {label}\" and the edit field is labelled with it. Always provide one.",
+              "description": "Accessible name for the control. The display state announces as \"Edit {label}\" and the edit field is labeled with it. Always provide one.",
               "fieldName": "label"
             },
             {
@@ -16877,7 +16877,7 @@
                 "text": "'text' | 'email' | 'tel' | 'url' | 'password'"
               },
               "default": "'text'",
-              "description": "The HTML input type. Controls browser validation behaviour and which virtual keyboard appears on mobile devices. Ignored when `multiline` is true.",
+              "description": "The HTML input type. Controls browser validation behavior and which virtual keyboard appears on mobile devices. Ignored when `multiline` is true.",
               "attribute": "type"
             },
             {
@@ -17143,7 +17143,7 @@
                 "text": "'text' | 'email' | 'tel' | 'url' | 'password'"
               },
               "default": "'text'",
-              "description": "The HTML input type. Controls browser validation behaviour and which virtual keyboard appears on mobile devices. Ignored when `multiline` is true.",
+              "description": "The HTML input type. Controls browser validation behavior and which virtual keyboard appears on mobile devices. Ignored when `multiline` is true.",
               "fieldName": "type"
             },
             {
@@ -19479,7 +19479,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "Password entry field with a built-in visibility toggle and an optional four-segment strength\nmeter. Shares its styling and form behaviour with Input, so mixed forms stay visually uniform.\n\nTrue when the password contains a 4+ run of consecutive chars (abcd, 4321). *\\/ function\nhasSequentialRun(pw) { const s = pw.toLowerCase(); let asc = 1; let desc = 1; for (let i = 1; i\n< s.length; i++) { const d = s.charCodeAt(i) - s.charCodeAt(i - 1); asc = d === 1 ? asc + 1 : 1;\ndesc = d === -1 ? desc + 1 : 1; if (asc >= 4 || desc >= 4) return true; } return false; }\nSelf-contained heuristic: 0 = empty, 1–4 = Weak…Strong. *\\/ function scorePassword(pw) { if\n(!pw) return 0; if (COMMON_PASSWORDS.has(pw.toLowerCase())) return 1; let score = 0; if\n(pw.length >= 8) score += 1; if (pw.length >= 12) score += 1; if (pw.length >= 16) score += 1;\nconst classes = (/[a-z]/.test(pw) ? 1 : 0) + (/[A-Z]/.test(pw) ? 1 : 0) + (/\\d/.test(pw) ? 1 :\n0) + (/[^A-Za-z0-9]/.test(pw) ? 1 : 0); if (classes >= 2) score += 1; if (classes >= 4) score +=\n1; if (/(.)\\1\\1/.test(pw)) score -= 1; if (hasSequentialRun(pw)) score -= 1; return Math.min(4,\nMath.max(1, score)); }",
+          "description": "Password entry field with a built-in visibility toggle and an optional four-segment strength\nmeter. Shares its styling and form behavior with Input, so mixed forms stay visually uniform.\n\nTrue when the password contains a 4+ run of consecutive chars (abcd, 4321). *\\/ function\nhasSequentialRun(pw) { const s = pw.toLowerCase(); let asc = 1; let desc = 1; for (let i = 1; i\n< s.length; i++) { const d = s.charCodeAt(i) - s.charCodeAt(i - 1); asc = d === 1 ? asc + 1 : 1;\ndesc = d === -1 ? desc + 1 : 1; if (asc >= 4 || desc >= 4) return true; } return false; }\nSelf-contained heuristic: 0 = empty, 1–4 = Weak…Strong. *\\/ function scorePassword(pw) { if\n(!pw) return 0; if (COMMON_PASSWORDS.has(pw.toLowerCase())) return 1; let score = 0; if\n(pw.length >= 8) score += 1; if (pw.length >= 12) score += 1; if (pw.length >= 16) score += 1;\nconst classes = (/[a-z]/.test(pw) ? 1 : 0) + (/[A-Z]/.test(pw) ? 1 : 0) + (/\\d/.test(pw) ? 1 :\n0) + (/[^A-Za-z0-9]/.test(pw) ? 1 : 0); if (classes >= 2) score += 1; if (classes >= 4) score +=\n1; if (/(.)\\1\\1/.test(pw)) score -= 1; if (hasSequentialRun(pw)) score -= 1; return Math.min(4,\nMath.max(1, score)); }",
           "name": "ArcPasswordInput",
           "cssParts": [
             {
@@ -23904,7 +23904,7 @@
                 "text": "string"
               },
               "default": "''",
-              "description": "Visible label rendered above the textarea in uppercase. Automatically linked to the field via `aria-labelledby`, ensuring screen readers announce it correctly.",
+              "description": "Visible label rendered above the textarea in uppercase. Automatically linked to the field via `aria-labeledby`, ensuring screen readers announce it correctly.",
               "attribute": "label"
             },
             {
@@ -24188,7 +24188,7 @@
                 "text": "string"
               },
               "default": "''",
-              "description": "Visible label rendered above the textarea in uppercase. Automatically linked to the field via `aria-labelledby`, ensuring screen readers announce it correctly.",
+              "description": "Visible label rendered above the textarea in uppercase. Automatically linked to the field via `aria-labeledby`, ensuring screen readers announce it correctly.",
               "fieldName": "label"
             },
             {
@@ -24370,7 +24370,7 @@
                 "text": "'xs' | 'sm' | 'md' | 'lg'"
               },
               "default": "'md'",
-              "description": "Box size when `icon-only`, on the same scale as arc-icon-button: xs=28px, sm=32px, md=36px, lg=44px. Set both controls to the same value when they sit side by side. Ignored by the labelled form, which is sized by its text.",
+              "description": "Box size when `icon-only`, on the same scale as arc-icon-button: xs=28px, sm=32px, md=36px, lg=44px. Set both controls to the same value when they sit side by side. Ignored by the labeled form, which is sized by its text.",
               "attribute": "size",
               "reflects": true
             }
@@ -24418,7 +24418,7 @@
                 "text": "'xs' | 'sm' | 'md' | 'lg'"
               },
               "default": "'md'",
-              "description": "Box size when `icon-only`, on the same scale as arc-icon-button: xs=28px, sm=32px, md=36px, lg=44px. Set both controls to the same value when they sit side by side. Ignored by the labelled form, which is sized by its text.",
+              "description": "Box size when `icon-only`, on the same scale as arc-icon-button: xs=28px, sm=32px, md=36px, lg=44px. Set both controls to the same value when they sit side by side. Ignored by the labeled form, which is sized by its text.",
               "fieldName": "size"
             }
           ],
@@ -29412,7 +29412,7 @@
                 "text": "boolean"
               },
               "default": "false",
-              "description": "Highlights the item with an accent-coloured bottom border to indicate the current route. Set this on the top-level NavItem that corresponds to the active page.",
+              "description": "Highlights the item with an accent-colored bottom border to indicate the current route. Set this on the top-level NavItem that corresponds to the active page.",
               "attribute": "active",
               "reflects": true
             },
@@ -29456,7 +29456,7 @@
                 "text": "boolean"
               },
               "default": "false",
-              "description": "Highlights the item with an accent-coloured bottom border to indicate the current route. Set this on the top-level NavItem that corresponds to the active page.",
+              "description": "Highlights the item with an accent-colored bottom border to indicate the current route. Set this on the top-level NavItem that corresponds to the active page.",
               "fieldName": "active"
             },
             {
@@ -30025,7 +30025,7 @@
                 "text": "'none' | 'ring' | 'read' | 'both'"
               },
               "default": "'none'",
-              "description": "How the reader's position through the document is shown. `ring` draws a progress arc beside the heading; `read` recedes the entries already scrolled past; `both` does each. Defaults to `none`, and an unrecognised value lands there too.",
+              "description": "How the reader's position through the document is shown. `ring` draws a progress arc beside the heading; `read` recedes the entries already scrolled past; `both` does each. Defaults to `none`, and an unrecognized value lands there too.",
               "attribute": "progress",
               "reflects": true
             }
@@ -30064,7 +30064,7 @@
                 "text": "'none' | 'ring' | 'read' | 'both'"
               },
               "default": "'none'",
-              "description": "How the reader's position through the document is shown. `ring` draws a progress arc beside the heading; `read` recedes the entries already scrolled past; `both` does each. Defaults to `none`, and an unrecognised value lands there too.",
+              "description": "How the reader's position through the document is shown. `ring` draws a progress arc beside the heading; `read` recedes the entries already scrolled past; `both` does each. Defaults to `none`, and an unrecognized value lands there too.",
               "fieldName": "progress"
             }
           ],
@@ -31910,6 +31910,51 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/shared/contrast.js",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "warnLowContrast",
+          "parameters": [
+            {
+              "name": "host",
+              "description": "The component, named in the message.",
+              "type": {
+                "text": "Element"
+              }
+            },
+            {
+              "name": "el",
+              "description": "The element whose text to measure.",
+              "type": {
+                "text": "Element | null | undefined"
+              }
+            },
+            {
+              "name": "note",
+              "description": "What the consumer set, e.g. the color they passed.",
+              "optional": true,
+              "type": {
+                "text": "string"
+              }
+            }
+          ],
+          "description": "Warn once if `el`'s text does not reach AA against what is behind it."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "warnLowContrast",
+          "declaration": {
+            "name": "warnLowContrast",
+            "module": "src/shared/contrast.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/shared/date-names.js",
       "declarations": [
         {
@@ -32952,7 +32997,7 @@
               "name": "value"
             }
           ],
-          "description": "Strip the characters a browser throws away before it resolves a scheme, so\n`java\\tscript:` is recognised for what it is."
+          "description": "Strip the characters a browser throws away before it resolves a scheme, so\n`java\\tscript:` is recognized for what it is."
         },
         {
           "kind": "function",
@@ -33465,7 +33510,7 @@
             "text": "object"
           },
           "default": "{}",
-          "description": "Components that cannot be server-rendered *by our own design*, with the reason.\n\n**Empty, and worth keeping empty.** Anything listed here is content a consumer\ncannot get into their initial payload.\n\nIt lives in the package rather than in scripts/ because two things depend on\nit and they are not both build tooling: scripts/check-ssr.js, which asserts\nthe list is neither short nor stale, and src/ssr.js, which must not define a\ncomponent that would throw the moment a page containing it is rendered.\n\n`arc-markdown` was the last entry. Its sanitiser was DOMParser-based and its\nrender used an `.innerHTML` property binding — which the server has nothing\nto serialise, so it emitted an empty div. Both are fixed; see\nsrc/shared/sanitize-markup.js.\n\n**Adding an entry is not just a matter of editing this object.** src/ssr.js\nregisters components through the `./register.js` barrel, which is all-or-\nnothing, so it asserts this list is empty rather than silently defining\nsomething that throws. A new entry has to come with a registration path that\ncan skip it."
+          "description": "Components that cannot be server-rendered *by our own design*, with the reason.\n\n**Empty, and worth keeping empty.** Anything listed here is content a consumer\ncannot get into their initial payload.\n\nIt lives in the package rather than in scripts/ because two things depend on\nit and they are not both build tooling: scripts/check-ssr.js, which asserts\nthe list is neither short nor stale, and src/ssr.js, which must not define a\ncomponent that would throw the moment a page containing it is rendered.\n\n`arc-markdown` was the last entry. Its sanitiser was DOMParser-based and its\nrender used an `.innerHTML` property binding — which the server has nothing\nto serialize, so it emitted an empty div. Both are fixed; see\nsrc/shared/sanitize-markup.js.\n\n**Adding an entry is not just a matter of editing this object.** src/ssr.js\nregisters components through the `./register.js` barrel, which is all-or-\nnothing, so it asserts this list is empty rather than silently defining\nsomething that throws. A new entry has to come with a registration path that\ncan skip it."
         }
       ],
       "exports": [
@@ -34478,7 +34523,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "Animated terminal window: a chrome'd frame that types commands\ncharacter-by-character and prints their output line by line.\n\nThe typing machinery mirrors arc-typewriter's setTimeout chain rather than\nimporting it — typewriter animates one string, this sequences many lines\nwith three behaviours, and a shared chain would serve neither cleanly.\n\nServer-side the full completed transcript renders (no animation in Node);\non the client, autoplay blanks it before first paint and replays it when\nthe element scrolls into view. Under prefers-reduced-motion the transcript\nrenders complete immediately and nothing animates — the same policy\narc-typewriter follows.",
+          "description": "Animated terminal window: a chrome'd frame that types commands\ncharacter-by-character and prints their output line by line.\n\nThe typing machinery mirrors arc-typewriter's setTimeout chain rather than\nimporting it — typewriter animates one string, this sequences many lines\nwith three behaviors, and a shared chain would serve neither cleanly.\n\nServer-side the full completed transcript renders (no animation in Node);\non the client, autoplay blanks it before first paint and replays it when\nthe element scrolls into view. Under prefers-reduced-motion the transcript\nrenders complete immediately and nothing animates — the same policy\narc-typewriter follows.",
           "name": "ArcTerminal",
           "cssParts": [
             {

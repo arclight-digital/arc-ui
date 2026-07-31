@@ -38,7 +38,7 @@ BottomNav is designed to complement TopBar — use TopBar for desktop viewports 
     dont: [
       'Do not display BottomNav and TopBar navigation simultaneously on the same viewport',
       'Do not use labels longer than two words — they will truncate on narrow screens',
-      'Do not add more than five items — prioritise the most important destinations',
+      'Do not add more than five items — prioritize the most important destinations',
       'Do not use BottomNav for actions (like "Create" or "Delete") — it is for navigation only',
       'Do not forget to provide icons — label-only items break the expected mobile pattern',
     ],

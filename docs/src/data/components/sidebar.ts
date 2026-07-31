@@ -40,7 +40,7 @@ Sidebar is designed to sit inside an AppShell or PageLayout, typically occupying
       'Do not mark more than one link as active at the same time',
       'Do not use Sidebar for top-level site-wide navigation — prefer TopBar for that role',
       'Do not add more than eight to ten links per section; split large groups into sub-sections',
-      'Do not omit headings on sections — unlabelled groups make navigation harder to scan',
+      'Do not omit headings on sections — unlabeled groups make navigation harder to scan',
       'Do not place actions (buttons, toggles) inside the Sidebar — it is for navigation links only',
     ],
   },

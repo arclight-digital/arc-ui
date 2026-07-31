@@ -1486,9 +1486,9 @@
         background: rgba(var(--color-info-rgb), 0.06);
       }
 
-      /* One hover rule for every variant: --glow-status takes its colour from
+      /* One hover rule for every variant: --glow-status takes its color from
          the --_status-rgb that statusVars sets on the host. This was six rules
-         saying the same thing in six colours. The border is deliberately left
+         saying the same thing in six colors. The border is deliberately left
          alone — hover adds light, it does not move the edge. */
       .arc-badge:hover .badge { box-shadow: var(--glow-status); }
 
@@ -2017,7 +2017,7 @@
         overflow: hidden;
       }
 
-      /* Widened default: any unrecognised orientation computes as vertical.
+      /* Widened default: any unrecognized orientation computes as vertical.
          Segment 0 sits at the bottom, so the meter fills upward. */
       .arc-level-meter:not([data-orientation="horizontal"]) .track {
         flex-direction: column-reverse;
@@ -3720,7 +3720,7 @@
       }
 
       /* Filled, not just outlined. The copied state is the component's only
-         piece of feedback and it was carried by border and text colour alone,
+         piece of feedback and it was carried by border and text color alone,
          which at this size is a few pixels of green. The tint reads at a glance
          and derives from the same token, so it follows the theme. */
       .arc-copy-button .copy-btn.is-copied {
@@ -3860,7 +3860,7 @@
       .arc-icon-button .btn__text {
         line-height: 1;
         /* letter-spacing also lands after the final letter, and that trailing
-           space is inside the box being centred — so the word rendered half of
+           space is inside the box being centered — so the word rendered half of
            it, 0.75px, to the left of centre. Pulled back off the end here, at
            the cause: the box then matches the ink and every size centres
            correctly, where compensating with padding would have meant patching
@@ -4196,7 +4196,7 @@
 
       /* Sizes — the track thickness and the thumb, since a slider has no text
          to scale. md is the base rule above. The two thumb pseudo-elements
-         cannot be combined into one selector: a browser that doesn't recognise
+         cannot be combined into one selector: a browser that doesn't recognize
          one drops the whole rule. */
       .arc-slider[data-size="sm"] input[type="range"] { height: 4px; }
       .arc-slider[data-size="sm"] input[type="range"]::-webkit-slider-thumb { width: 16px; height: 16px; }
@@ -4863,7 +4863,7 @@
       /* ── Links container ── */
       /* The links sit a step inside their heading, and the rail marks the group
          they belong to. Structural and neutral by rule: one flat --divider that
-         never takes a colour, a weight or a state from whichever link is
+         never takes a color, a weight or a state from whichever link is
          active. A left edge that tracks the current item is banned outright —
          the active row says "here" with tint and accent text, as everywhere
          else in the system. */
@@ -5057,7 +5057,7 @@
           border-color var(--transition-slow);
       }
 
-      /* An always-dark region has to be one colour, not two.
+      /* An always-dark region has to be one color, not two.
          arc-footer paints --surface-base flat, while this bar mixes it 85% with
          transparent. In dark mode that costs nothing — 15% of a near-black page
          bleeds through as near-black. In light mode the 15% is 15% of a
@@ -5157,7 +5157,7 @@
         flex-shrink: 0;
       }
 
-      /* Centred nav means centred in the *bar*, not in whatever space the brand
+      /* Centered nav means centered in the *bar*, not in whatever space the brand
          and the actions happen to leave over. With the flex row alone the nav
          sits at the midpoint of the gap between them, which is the middle of
          the viewport only when those two are identically wide — they never are.
@@ -6409,7 +6409,7 @@
       /* The default voice is the user: bubble at the inline end. Flex end
          follows the writing direction, so RTL mirrors for free. The base rule
          carries the user styling and the other roles override it, which is
-         what routes an unrecognised role onto the default. */
+         what routes an unrecognized role onto the default. */
       .arc-message .message--user { flex-direction: row-reverse; }
 
       .arc-message .message__main {
@@ -6458,7 +6458,7 @@
         color: var(--text-secondary);
       }
 
-      /* System notices: the transcript's own voice, centred and quiet. */
+      /* System notices: the transcript's own voice, centered and quiet. */
       .arc-message .message--system { justify-content: center; }
       .arc-message .message--system .message__main { align-items: center; }
       .arc-message .message--system .message__meta { justify-content: center; }

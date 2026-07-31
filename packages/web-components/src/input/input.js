@@ -13,7 +13,7 @@ let inputIdCounter = 0;
  * @tag arc-input
  * @prop {string} label - Visible label rendered above the input. Automatically associated with the field via a generated id, ensuring screen readers announce it correctly.
  * @prop {string} name - The `name` attribute sent with form data on submission. Also used by the Form component to track field state and validation.
- * @prop {'text' | 'email' | 'tel' | 'url' | 'password'} type - The HTML input type. Controls browser validation behaviour and which virtual keyboard appears on mobile devices. Ignored when `multiline` is true.
+ * @prop {'text' | 'email' | 'tel' | 'url' | 'password'} type - The HTML input type. Controls browser validation behavior and which virtual keyboard appears on mobile devices. Ignored when `multiline` is true.
  * @prop {string} placeholder - Hint text displayed inside the field when it is empty. Use it to show an example value -- never as a substitute for the label.
  * @prop {boolean} multiline - When true, renders a `<textarea>` instead of an `<input>`, allowing multi-row text entry. The textarea is vertically resizable by default.
  * @prop {boolean} disabled - Prevents user interaction and applies a muted visual treatment. The field value is excluded from form submission when disabled.

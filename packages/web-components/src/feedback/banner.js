@@ -9,7 +9,7 @@ import { getStatusIcon } from '../status-utils.js';
  *
  * @tag arc-banner
  * @requires arc-icon-button
- * @prop {'info' | 'success' | 'warning' | 'error'} variant - Controls the semantic colour palette and icon. Use "info" for neutral announcements, "success" for positive confirmations, "warning" for caution states, and "error" for outages or critical failures.
+ * @prop {'info' | 'success' | 'warning' | 'error'} variant - Controls the semantic color palette and icon. Use "info" for neutral announcements, "success" for positive confirmations, "warning" for caution states, and "error" for outages or critical failures.
  * @prop {boolean} dismissible - When true, renders a close button on the right side. Clicking it collapses the banner and fires an "arc-close" event.
  * @prop {boolean} sticky - When true, pins the banner to the top of the viewport with position: sticky so it remains visible as the user scrolls.
  * @fires {CustomEvent<void>} arc-close - Fired when a dismissible banner is closed by the user

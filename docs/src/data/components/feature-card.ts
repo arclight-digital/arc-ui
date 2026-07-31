@@ -43,7 +43,7 @@ The icon slot accepts custom content (SVG icons, emoji, or any markup) via the \
   },
 
   previewHtml: `<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 720px;">
-  <arc-feature-card icon="&#9889;" heading="Performance" description="Optimised builds for lightning-fast load times." href="#" action="Learn more"></arc-feature-card>
+  <arc-feature-card icon="&#9889;" heading="Performance" description="Optimized builds for lightning-fast load times." href="#" action="Learn more"></arc-feature-card>
   <arc-feature-card icon="&#9881;" heading="Themeable" description="Design tokens let you customize every detail." href="#" action="Customize"></arc-feature-card>
   <arc-feature-card icon="&#9878;" heading="Accessible" description="WCAG-compliant focus and keyboard support."></arc-feature-card>
 </div>`,
@@ -54,7 +54,7 @@ The icon slot accepts custom content (SVG icons, emoji, or any markup) via the \
       lang: 'html',
       code: `<arc-feature-card
   heading="Performance"
-  description="Optimised builds for lightning-fast load times."
+  description="Optimized builds for lightning-fast load times."
 ></arc-feature-card>`,
     },
     {
@@ -66,7 +66,7 @@ export default function Example() {
   return (
     <FeatureCard
       heading="Performance"
-      description="Optimised builds for lightning-fast load times."
+      description="Optimized builds for lightning-fast load times."
     />
   );
 }`,
@@ -82,7 +82,7 @@ import { FeatureCard } from '@arclux/arc-ui-vue';
 <template>
   <FeatureCard
     heading="Performance"
-    description="Optimised builds for lightning-fast load times." />
+    description="Optimized builds for lightning-fast load times." />
 </template>`,
     },
     {
@@ -94,7 +94,7 @@ import { FeatureCard } from '@arclux/arc-ui-vue';
 
 <FeatureCard
   heading="Performance"
-  description="Optimised builds for lightning-fast load times." />`,
+  description="Optimized builds for lightning-fast load times." />`,
     },
     {
       label: 'Angular',
@@ -107,7 +107,7 @@ import { FeatureCard } from '@arclux/arc-ui-angular';
   template: \`
     <arc-feature-card
       heading="Performance"
-      description="Optimised builds for lightning-fast load times."
+      description="Optimized builds for lightning-fast load times."
     ></arc-feature-card>
   \`,
 })
@@ -122,7 +122,7 @@ export default function Example() {
   return (
     <FeatureCard
       heading="Performance"
-      description="Optimised builds for lightning-fast load times." />
+      description="Optimized builds for lightning-fast load times." />
   );
 }`,
     },
@@ -135,7 +135,7 @@ export default function Example() {
   return (
     <FeatureCard
       heading="Performance"
-      description="Optimised builds for lightning-fast load times." />
+      description="Optimized builds for lightning-fast load times." />
   );
 }`,
     },

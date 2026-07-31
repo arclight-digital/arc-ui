@@ -65,7 +65,7 @@ function scorePassword(pw) {
 
 /**
  * Password entry field with a built-in visibility toggle and an optional four-segment strength
- * meter. Shares its styling and form behaviour with Input, so mixed forms stay visually uniform.
+ * meter. Shares its styling and form behavior with Input, so mixed forms stay visually uniform.
  *
  * True when the password contains a 4+ run of consecutive chars (abcd, 4321). *\/ function
  * hasSequentialRun(pw) { const s = pw.toLowerCase(); let asc = 1; let desc = 1; for (let i = 1; i

@@ -135,7 +135,7 @@ export class ArcTransferList extends FormControlMixin(LitElement) {
 
       /* Sizes — the row height and how much list is visible, which is what
          "smaller" means for a two-pane picker. md is the base rule below, so an
-         unrecognised value lands on it. */
+         unrecognized value lands on it. */
       :host([size="sm"]) .tl__listbox { height: 170px; }
       :host([size="sm"]) .tl__option { min-height: 26px; padding: 2px var(--space-xs); font-size: var(--_text-xs); }
       :host([size="lg"]) .tl__listbox { height: 280px; }

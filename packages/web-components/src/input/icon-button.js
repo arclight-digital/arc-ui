@@ -14,7 +14,7 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @prop {string} name - Name of the arc-icon to render. When empty, the default slot is used for custom icon content.
  * @prop {string} text - Optional text label displayed next to the icon. When provided, the button expands from a square to a wider labeled button with uppercase styling.
  * @prop {'ghost' | 'secondary' | 'primary'} variant - Visual style variant. Ghost is transparent, secondary has a border with glow, primary has a solid accent-primary fill.
- * @prop {'xs' | 'sm' | 'md' | 'lg'} size - Button size controlling dimensions and icon scale. Icon-only sizes are circular: xs=28px, sm=32px, md=36px, lg=44px. The labelled form stays a rounded rectangle.
+ * @prop {'xs' | 'sm' | 'md' | 'lg'} size - Button size controlling dimensions and icon scale. Icon-only sizes are circular: xs=28px, sm=32px, md=36px, lg=44px. The labeled form stays a rounded rectangle.
  * @prop {string} label - Accessible label for the button. Falls back to `text` if not provided. Required for icon-only usage.
  * @prop {string} href - When set, renders the button as an anchor tag for navigation links.
  * @prop {boolean} disabled - Disables the button, reducing opacity to 40% and blocking pointer events.
@@ -80,7 +80,7 @@ export class ArcIconButton extends LitElement {
       .btn__text {
         line-height: 1;
         /* letter-spacing also lands after the final letter, and that trailing
-           space is inside the box being centred — so the word rendered half of
+           space is inside the box being centered — so the word rendered half of
            it, 0.75px, to the left of centre. Pulled back off the end here, at
            the cause: the box then matches the ink and every size centres
            correctly, where compensating with padding would have meant patching

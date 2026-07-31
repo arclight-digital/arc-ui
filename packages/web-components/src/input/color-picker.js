@@ -13,8 +13,8 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @prop {boolean} disabled - Disables all interaction, reducing opacity to 40% and blocking pointer events.
  * @prop {boolean} readonly - Prevents changing the color via the area, hue slider, hex input, or swatches while the picker stays focusable and the value still submits.
  * @prop {'sm' | 'md' | 'lg'} size - Control size. `md` is the default; `sm` and `lg` scale the swatch and trigger.
- * @fires arc-input - Fired continuously as the colour changes, including every frame of a drag across the saturation area or hue track. Use for live previews. `event.detail.value` contains the hex string.
- * @fires arc-change - Fired once the colour is committed: the pointer released after a drag, a preset clicked, or a valid hex typed and blurred. Use for anything expensive. `event.detail.value` contains the hex string.
+ * @fires arc-input - Fired continuously as the color changes, including every frame of a drag across the saturation area or hue track. Use for live previews. `event.detail.value` contains the hex string.
+ * @fires arc-change - Fired once the color is committed: the pointer released after a drag, a preset clicked, or a valid hex typed and blurred. Use for anything expensive. `event.detail.value` contains the hex string.
  * @slot none
  * @csspart picker
  * @csspart label
@@ -178,8 +178,8 @@ export class ArcColorPicker extends FormControlMixin(LitElement) {
         box-sizing: border-box;
       }
 
-      /* Sizes — the current-colour preview and the preset swatches. md is the
-         base rule above, so an unrecognised value lands on it. */
+      /* Sizes — the current-color preview and the preset swatches. md is the
+         base rule above, so an unrecognized value lands on it. */
       :host([size="sm"]) .picker__preview { width: 26px; height: 26px; }
       :host([size="sm"]) .picker__swatch { width: 18px; height: 18px; }
       :host([size="lg"]) .picker__preview { width: 40px; height: 40px; }

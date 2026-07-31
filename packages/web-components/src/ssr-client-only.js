@@ -11,7 +11,7 @@
  *
  * `arc-markdown` was the last entry. Its sanitiser was DOMParser-based and its
  * render used an `.innerHTML` property binding — which the server has nothing
- * to serialise, so it emitted an empty div. Both are fixed; see
+ * to serialize, so it emitted an empty div. Both are fixed; see
  * src/shared/sanitize-markup.js.
  *
  * **Adding an entry is not just a matter of editing this object.** src/ssr.js

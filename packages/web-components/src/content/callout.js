@@ -8,7 +8,7 @@ import { statusVars } from '../status-styles.js';
  * @tag arc-callout
  * @requires arc-icon-button
  * @requires arc-icon
- * @prop {'info' | 'tip' | 'warning' | 'error'} variant - Semantic variant that controls the colour scheme, top accent bar, and default icon
+ * @prop {'info' | 'tip' | 'warning' | 'error'} variant - Semantic variant that controls the color scheme, top accent bar, and default icon
  * @prop {boolean} dismissible - Shows a close button that removes the callout. Fires an arc-close event on close.
  * @fires {CustomEvent<void>} arc-close - Fired when the dismiss button is clicked on a dismissible callout.
  * @slot icon

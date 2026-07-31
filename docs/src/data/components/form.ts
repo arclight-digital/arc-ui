@@ -15,7 +15,7 @@ Use Form whenever you collect more than a single field from the user — contact
 
 **Validation comes from the controls.** Form does not re-derive whether a field is filled; it calls each control's \`checkValidity()\` and reads its \`validationMessage\`. So a control that understands its own emptiness — a multi-select with an empty array, a date range with one end set — is judged on its own terms, and a control you have written yourself participates as long as it is form-associated. Form only clears error text it wrote, so an error you set from a server response survives a later submit attempt.
 
-**Fields can sit anywhere inside the form.** Nesting a control inside Fieldset, Card, or any layout component makes no difference to whether it is found, validated, serialised, or disabled along with the form.
+**Fields can sit anywhere inside the form.** Nesting a control inside Fieldset, Card, or any layout component makes no difference to whether it is found, validated, serialized, or disabled along with the form.
 
 **\`reset()\` restores, it does not empty.** Each control returns to the state it had when it first connected, which is what reset means in HTML — a field that shipped with a default value gets that value back, rather than being blanked.
 
@@ -24,7 +24,7 @@ All ARC UI form controls (Input, Textarea, Select, Checkbox, Toggle, RadioGroup)
   features: [
     'Intercepts native form submission and runs constraint validation on all associated fields',
     'Aggregates per-field errors and displays an optional error summary above the submit button',
-    'Fires `arc-submit` with a serialised FormData payload only when validation passes',
+    'Fires `arc-submit` with a serialized FormData payload only when validation passes',
     'Supports `novalidate` to bypass built-in checks for custom validation flows',
     'Coordinates `disabled` state — disabling the form disables every child field',
     'Works with any form-associated element, including native inputs and ARC UI components',
@@ -43,7 +43,7 @@ All ARC UI form controls (Input, Textarea, Select, Checkbox, Toggle, RadioGroup)
       'Set `required` on mandatory fields and let Form handle the validation messaging',
       'Provide a clear submit Button with `type="submit"` as the last child of the Form',
       'Use the `loading` prop to indicate an async submission in progress and prevent duplicate requests',
-      'Listen for `arc-submit` instead of native `submit` to receive validated, serialised data',
+      'Listen for `arc-submit` instead of native `submit` to receive validated, serialized data',
       'Include meaningful labels on every field so the error summary is readable',
     ],
     dont: [

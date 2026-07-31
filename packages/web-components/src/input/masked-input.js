@@ -24,7 +24,7 @@ const slotsOf = (mask) => [...mask].filter(isFillable);
 /**
  * Filter arbitrary text into the raw characters the mask accepts, in order.
  * Non-conforming characters are dropped, not blocking — pasting a card number
- * with dashes keeps the digits. Uppercase slots normalise their letter.
+ * with dashes keeps the digits. Uppercase slots normalize their letter.
  */
 function conform(mask, text) {
   const slots = slotsOf(mask);

@@ -11,10 +11,10 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @prop {boolean} checked - Controls whether the checkbox is in its checked (selected) state. When true, a checkmark icon is rendered inside the box. Bind to this property for two-way state management in frameworks that support it.
  * @prop {boolean} indeterminate - When true, displays a horizontal dash instead of a checkmark, representing a mixed or partially-selected state. Commonly used on a parent "select all" checkbox when only some children are checked. Clicking an indeterminate checkbox resolves it to fully checked.
  * @prop {boolean} disabled - Prevents all pointer and keyboard interaction and applies a dimmed visual treatment. Use this for options that are unavailable due to unmet prerequisites. Pair with a tooltip or helper text to explain why the option is locked.
- * @prop {string} label - Visible text rendered beside the checkbox. Clicking the label toggles the checkbox, matching native HTML behaviour. Keep labels short, affirmative, and action-oriented for the best readability.
+ * @prop {string} label - Visible text rendered beside the checkbox. Clicking the label toggles the checkbox, matching native HTML behavior. Keep labels short, affirmative, and action-oriented for the best readability.
  * @prop {'sm' | 'md' | 'lg'} size - Controls the checkbox size.
  * @prop {string} name - The form field name submitted when the checkbox lives inside a <form>. Required for native form submission and useful for serializing checkbox group values on the server.
- * @prop {string} value - The value sent with the form when the checkbox is checked. Defaults to "on" if omitted, matching native checkbox behaviour. Set explicit values when multiple checkboxes share the same name to distinguish them in the submitted data.
+ * @prop {string} value - The value sent with the form when the checkbox is checked. Defaults to "on" if omitted, matching native checkbox behavior. Set explicit values when multiple checkboxes share the same name to distinguish them in the submitted data.
  * @fires {CustomEvent<{ checked: boolean }>} arc-change - Fired when the checked state changes
  * @slot none
  * @csspart checkbox

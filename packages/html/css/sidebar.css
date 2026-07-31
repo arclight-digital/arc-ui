@@ -174,7 +174,7 @@
       /* ── Links container ── */
       /* The links sit a step inside their heading, and the rail marks the group
          they belong to. Structural and neutral by rule: one flat --divider that
-         never takes a colour, a weight or a state from whichever link is
+         never takes a color, a weight or a state from whichever link is
          active. A left edge that tracks the current item is banned outright —
          the active row says "here" with tint and accent text, as everywhere
          else in the system. */

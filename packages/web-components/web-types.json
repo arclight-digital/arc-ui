@@ -237,7 +237,7 @@
           "attributes": [
             {
               "name": "variant",
-              "description": "Semantic variant that controls the colour scheme, top accent bar, and default icon",
+              "description": "Semantic variant that controls the color scheme, top accent bar, and default icon",
               "value": {
                 "type": "'info' | 'tip' | 'warning' | 'error'",
                 "default": "'info'"
@@ -272,7 +272,7 @@
             "properties": [
               {
                 "name": "variant",
-                "description": "Semantic variant that controls the colour scheme, top accent bar, and default icon",
+                "description": "Semantic variant that controls the color scheme, top accent bar, and default icon",
                 "type": "'info' | 'tip' | 'warning' | 'error'"
               },
               {
@@ -511,7 +511,7 @@
           "attributes": [
             {
               "name": "color",
-              "description": "Any valid CSS colour value applied as the swatch background",
+              "description": "Any valid CSS color value applied as the swatch background",
               "value": {
                 "type": "string",
                 "default": "'#4d7ef7'"
@@ -519,7 +519,7 @@
             },
             {
               "name": "label",
-              "description": "Display label below the swatch; falls back to the colour value if empty",
+              "description": "Display label below the swatch; falls back to the color value if empty",
               "value": {
                 "type": "string",
                 "default": "''"
@@ -540,12 +540,12 @@
             "properties": [
               {
                 "name": "color",
-                "description": "Any valid CSS colour value applied as the swatch background",
+                "description": "Any valid CSS color value applied as the swatch background",
                 "type": "string"
               },
               {
                 "name": "label",
-                "description": "Display label below the swatch; falls back to the colour value if empty",
+                "description": "Display label below the swatch; falls back to the color value if empty",
                 "type": "string"
               },
               {
@@ -1891,7 +1891,7 @@
             },
             {
               "name": "variant",
-              "description": "Colour of the spinner ring",
+              "description": "Color of the spinner ring",
               "value": {
                 "type": "'primary' | 'secondary' | 'white'",
                 "default": "'primary'"
@@ -1909,7 +1909,7 @@
               },
               {
                 "name": "variant",
-                "description": "Colour of the spinner ring",
+                "description": "Color of the spinner ring",
                 "type": "'primary' | 'secondary' | 'white'"
               }
             ],
@@ -4473,12 +4473,12 @@
         },
         {
           "name": "arc-tag",
-          "description": "Compact pill-shaped label with colour variants, custom colour support, and an optional remove\nbutton, for categorisation, filtering, and selection feedback.\n---\n\n\n### **Events:**\n - **arc-remove** - Fired when the remove button on a removable tag is clicked\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **tag**\n- **label**\n- **remove**",
+          "description": "Compact pill-shaped label with color variants, custom color support, and an optional remove\nbutton, for categorisation, filtering, and selection feedback.\n---\n\n\n### **Events:**\n - **arc-remove** - Fired when the remove button on a removable tag is clicked\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **tag**\n- **label**\n- **remove**",
           "doc-url": "",
           "attributes": [
             {
               "name": "variant",
-              "description": "Colour variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and error provide semantic status colours.",
+              "description": "Color variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and error provide semantic status colors.",
               "value": {
                 "type": "'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error'",
                 "default": "'default'"
@@ -4510,7 +4510,7 @@
             },
             {
               "name": "color",
-              "description": "Custom colour as an RGB triplet (e.g. `\"77, 126, 247\"`). When set, overrides the variant colours for border, text, background, and hover glow. Useful for data-driven category colours.",
+              "description": "Custom color as an RGB triplet (e.g. `\"77, 126, 247\"`). When set, overrides the variant colors for border, text, background, and hover glow. Useful for data-driven category colors.",
               "value": {
                 "type": "string",
                 "default": "''"
@@ -4534,7 +4534,7 @@
             "properties": [
               {
                 "name": "variant",
-                "description": "Colour variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and error provide semantic status colours.",
+                "description": "Color variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and error provide semantic status colors.",
                 "type": "'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error'"
               },
               {
@@ -4554,7 +4554,7 @@
               },
               {
                 "name": "color",
-                "description": "Custom colour as an RGB triplet (e.g. `\"77, 126, 247\"`). When set, overrides the variant colours for border, text, background, and hover glow. Useful for data-driven category colours.",
+                "description": "Custom color as an RGB triplet (e.g. `\"77, 126, 247\"`). When set, overrides the variant colors for border, text, background, and hover glow. Useful for data-driven category colors.",
                 "type": "string"
               }
             ],
@@ -4874,7 +4874,7 @@
           "attributes": [
             {
               "name": "variant",
-              "description": "Controls the semantic colour palette and icon. Use \"info\" for neutral guidance, \"success\" for confirmations, \"warning\" for caution states, and \"error\" for failures or blocking issues.",
+              "description": "Controls the semantic color palette and icon. Use \"info\" for neutral guidance, \"success\" for confirmations, \"warning\" for caution states, and \"error\" for failures or blocking issues.",
               "value": {
                 "type": "'info' | 'success' | 'warning' | 'error'",
                 "default": "'info'"
@@ -4922,7 +4922,7 @@
             "properties": [
               {
                 "name": "variant",
-                "description": "Controls the semantic colour palette and icon. Use \"info\" for neutral guidance, \"success\" for confirmations, \"warning\" for caution states, and \"error\" for failures or blocking issues.",
+                "description": "Controls the semantic color palette and icon. Use \"info\" for neutral guidance, \"success\" for confirmations, \"warning\" for caution states, and \"error\" for failures or blocking issues.",
                 "type": "'info' | 'success' | 'warning' | 'error'"
               },
               {
@@ -4997,7 +4997,7 @@
           "attributes": [
             {
               "name": "variant",
-              "description": "Controls the semantic colour palette and icon. Use \"info\" for neutral announcements, \"success\" for positive confirmations, \"warning\" for caution states, and \"error\" for outages or critical failures.",
+              "description": "Controls the semantic color palette and icon. Use \"info\" for neutral announcements, \"success\" for positive confirmations, \"warning\" for caution states, and \"error\" for outages or critical failures.",
               "value": {
                 "type": "'info' | 'success' | 'warning' | 'error'",
                 "default": "'info'"
@@ -5037,7 +5037,7 @@
             "properties": [
               {
                 "name": "variant",
-                "description": "Controls the semantic colour palette and icon. Use \"info\" for neutral announcements, \"success\" for positive confirmations, \"warning\" for caution states, and \"error\" for outages or critical failures.",
+                "description": "Controls the semantic color palette and icon. Use \"info\" for neutral announcements, \"success\" for positive confirmations, \"warning\" for caution states, and \"error\" for outages or critical failures.",
                 "type": "'info' | 'success' | 'warning' | 'error'"
               },
               {
@@ -5265,7 +5265,7 @@
         },
         {
           "name": "arc-confirm",
-          "description": "Programmatic confirmation API that wraps dialog. Call ArcConfirm.open() and await the returned\npromise. Same visual treatment as dialog.\n---\n\n\n### **Events:**\n - **arc-confirm** - Fired when the user clicks the confirm button\n- **arc-cancel** - Fired when the user clicks cancel, presses Escape, or clicks the backdrop\n\n### **Slots:**\n - _default_ - Body content, for when the confirmation needs markup the `message` string cannot carry — a filename in `<code>`, an emphasised consequence, a short list of what is about to change. Falls back to `message` when nothing is slotted.\n\n### **CSS Parts:**\n - **message**\n- **cancel**\n- **confirm**",
+          "description": "Programmatic confirmation API that wraps dialog. Call ArcConfirm.open() and await the returned\npromise. Same visual treatment as dialog.\n---\n\n\n### **Events:**\n - **arc-confirm** - Fired when the user clicks the confirm button\n- **arc-cancel** - Fired when the user clicks cancel, presses Escape, or clicks the backdrop\n\n### **Slots:**\n - _default_ - Body content, for when the confirmation needs markup the `message` string cannot carry — a filename in `<code>`, an emphasized consequence, a short list of what is about to change. Falls back to `message` when nothing is slotted.\n\n### **CSS Parts:**\n - **message**\n- **cancel**\n- **confirm**",
           "doc-url": "",
           "attributes": [
             {
@@ -5309,7 +5309,7 @@
             },
             {
               "name": "variant",
-              "description": "Controls the confirm button style. Use \"error\" for destructive actions — the confirm button renders in the error colour.",
+              "description": "Controls the confirm button style. Use \"error\" for destructive actions — the confirm button renders in the error color.",
               "value": {
                 "type": "'default' | 'error'",
                 "default": "'default'"
@@ -5319,7 +5319,7 @@
           "slots": [
             {
               "name": "",
-              "description": "Body content, for when the confirmation needs markup the `message` string cannot carry — a filename in `<code>`, an emphasised consequence, a short list of what is about to change. Falls back to `message` when nothing is slotted."
+              "description": "Body content, for when the confirmation needs markup the `message` string cannot carry — a filename in `<code>`, an emphasized consequence, a short list of what is about to change. Falls back to `message` when nothing is slotted."
             }
           ],
           "events": [
@@ -5362,7 +5362,7 @@
               },
               {
                 "name": "variant",
-                "description": "Controls the confirm button style. Use \"error\" for destructive actions — the confirm button renders in the error colour.",
+                "description": "Controls the confirm button style. Use \"error\" for destructive actions — the confirm button renders in the error color.",
                 "type": "'default' | 'error'"
               }
             ],
@@ -5496,7 +5496,7 @@
         },
         {
           "name": "arc-conversation",
-          "description": "A chat transcript: the scrollable column that holds arc-message children. Built for AI\nassistant panels — the layout, the role alignment, and the scroll behaviour all assume messages\narrive while the user is reading. While the reader sits near the bottom, new or growing\nmessages keep the view pinned to the latest; once they scroll up to re-read, the transcript\nnever yanks them back down. The arc-scroll-away and arc-scroll-return events report those\ntransitions with the distance from the bottom, so a consumer can float a \"jump to latest\" chip\nand wire it to scrollToEnd().\n---\n\n\n### **Events:**\n - **arc-scroll-away** - Fired once when the reader scrolls up out of the near-bottom zone of the transcript. detail.value is the distance from the bottom in pixels.\n- **arc-scroll-return** - Fired once when the reader comes back within the near-bottom zone. detail.value is the distance from the bottom in pixels.\n\n### **Methods:**\n - **scrollToEnd()** - Scroll the transcript to its newest message.\n\n### **Slots:**\n - _default_ - Default content: the arc-message children making up the transcript.\n\n### **CSS Parts:**\n - **conversation**",
+          "description": "A chat transcript: the scrollable column that holds arc-message children. Built for AI\nassistant panels — the layout, the role alignment, and the scroll behavior all assume messages\narrive while the user is reading. While the reader sits near the bottom, new or growing\nmessages keep the view pinned to the latest; once they scroll up to re-read, the transcript\nnever yanks them back down. The arc-scroll-away and arc-scroll-return events report those\ntransitions with the distance from the bottom, so a consumer can float a \"jump to latest\" chip\nand wire it to scrollToEnd().\n---\n\n\n### **Events:**\n - **arc-scroll-away** - Fired once when the reader scrolls up out of the near-bottom zone of the transcript. detail.value is the distance from the bottom in pixels.\n- **arc-scroll-return** - Fired once when the reader comes back within the near-bottom zone. detail.value is the distance from the bottom in pixels.\n\n### **Methods:**\n - **scrollToEnd()** - Scroll the transcript to its newest message.\n\n### **Slots:**\n - _default_ - Default content: the arc-message children making up the transcript.\n\n### **CSS Parts:**\n - **conversation**",
           "doc-url": "",
           "attributes": [
             {
@@ -5894,7 +5894,7 @@
           "attributes": [
             {
               "name": "variant",
-              "description": "Controls the icon and text colour. Use \"info\" for neutral hints, \"success\" for valid state feedback, \"warning\" for caution notes, and \"error\" for validation failures.",
+              "description": "Controls the icon and text color. Use \"info\" for neutral hints, \"success\" for valid state feedback, \"warning\" for caution notes, and \"error\" for validation failures.",
               "value": {
                 "type": "'info' | 'success' | 'warning' | 'error'",
                 "default": "'info'"
@@ -5912,7 +5912,7 @@
             "properties": [
               {
                 "name": "variant",
-                "description": "Controls the icon and text colour. Use \"info\" for neutral hints, \"success\" for valid state feedback, \"warning\" for caution notes, and \"error\" for validation failures.",
+                "description": "Controls the icon and text color. Use \"info\" for neutral hints, \"success\" for valid state feedback, \"warning\" for caution notes, and \"error\" for validation failures.",
                 "type": "'info' | 'success' | 'warning' | 'error'"
               }
             ],
@@ -5974,12 +5974,12 @@
         },
         {
           "name": "arc-message",
-          "description": "One message in a conversation transcript. The speaker attribute decides the voice: user messages\nsit at the inline end on a faint accent tint, assistant messages sit at the inline start on a\nneutral surface, and system messages run centred, muted and small. The default slot is the\nmessage body — append text to it to stream a reply in — and with the markdown attribute set,\nthat slotted text renders through arc-markdown, re-rendering as the text grows. A pending\nmessage shows the typing indicator in place of its body. Slot an avatar for either speaker if\nthe product wants faces; none is built in.\n---\n\n\n### **Slots:**\n - _default_ - The message body. Text when markdown is set; any markup otherwise.\n- **avatar** - An optional avatar beside the bubble; the component ships none of its own.\n\n### **CSS Parts:**\n - **message**\n- **meta**\n- **bubble**",
+          "description": "One message in a conversation transcript. The speaker attribute decides the voice: user messages\nsit at the inline end on a faint accent tint, assistant messages sit at the inline start on a\nneutral surface, and system messages run centered, muted and small. The default slot is the\nmessage body — append text to it to stream a reply in — and with the markdown attribute set,\nthat slotted text renders through arc-markdown, re-rendering as the text grows. A pending\nmessage shows the typing indicator in place of its body. Slot an avatar for either speaker if\nthe product wants faces; none is built in.\n---\n\n\n### **Slots:**\n - _default_ - The message body. Text when markdown is set; any markup otherwise.\n- **avatar** - An optional avatar beside the bubble; the component ships none of its own.\n\n### **CSS Parts:**\n - **message**\n- **meta**\n- **bubble**",
           "doc-url": "",
           "attributes": [
             {
               "name": "speaker",
-              "description": "Whose message this is. \"user\" aligns to the inline end on an accent-tinted surface, \"assistant\" to the inline start on a neutral surface, and \"system\" runs centred and muted for notices in the transcript's own voice. An unrecognised value renders as \"user\".",
+              "description": "Whose message this is. \"user\" aligns to the inline end on an accent-tinted surface, \"assistant\" to the inline start on a neutral surface, and \"system\" runs centered and muted for notices in the transcript's own voice. An unrecognized value renders as \"user\".",
               "value": {
                 "type": "'user' | 'assistant' | 'system'",
                 "default": "'user'"
@@ -6033,7 +6033,7 @@
             "properties": [
               {
                 "name": "speaker",
-                "description": "Whose message this is. \"user\" aligns to the inline end on an accent-tinted surface, \"assistant\" to the inline start on a neutral surface, and \"system\" runs centred and muted for notices in the transcript's own voice. An unrecognised value renders as \"user\".",
+                "description": "Whose message this is. \"user\" aligns to the inline end on an accent-tinted surface, \"assistant\" to the inline start on a neutral surface, and \"system\" runs centered and muted for notices in the transcript's own voice. An unrecognized value renders as \"user\".",
                 "type": "'user' | 'assistant' | 'system'"
               },
               {
@@ -6075,7 +6075,7 @@
             },
             {
               "name": "heading",
-              "description": "Text displayed in the modal header bar. Automatically linked to the dialog via `aria-labelledby` for screen-reader accessibility. Keep it short and action-oriented (e.g. \"Delete Project\" rather than \"Are you sure?\").",
+              "description": "Text displayed in the modal header bar. Automatically linked to the dialog via `aria-labeledby` for screen-reader accessibility. Keep it short and action-oriented (e.g. \"Delete Project\" rather than \"Are you sure?\").",
               "value": {
                 "type": "string",
                 "default": "''"
@@ -6139,7 +6139,7 @@
               },
               {
                 "name": "heading",
-                "description": "Text displayed in the modal header bar. Automatically linked to the dialog via `aria-labelledby` for screen-reader accessibility. Keep it short and action-oriented (e.g. \"Delete Project\" rather than \"Are you sure?\").",
+                "description": "Text displayed in the modal header bar. Automatically linked to the dialog via `aria-labeledby` for screen-reader accessibility. Keep it short and action-oriented (e.g. \"Delete Project\" rather than \"Are you sure?\").",
                 "type": "string"
               },
               {
@@ -7192,7 +7192,7 @@
             },
             {
               "name": "label",
-              "description": "Visible text rendered beside the checkbox. Clicking the label toggles the checkbox, matching native HTML behaviour. Keep labels short, affirmative, and action-oriented for the best readability.",
+              "description": "Visible text rendered beside the checkbox. Clicking the label toggles the checkbox, matching native HTML behavior. Keep labels short, affirmative, and action-oriented for the best readability.",
               "value": {
                 "type": "string",
                 "default": "''"
@@ -7208,7 +7208,7 @@
             },
             {
               "name": "value",
-              "description": "The value sent with the form when the checkbox is checked. Defaults to \"on\" if omitted, matching native checkbox behaviour. Set explicit values when multiple checkboxes share the same name to distinguish them in the submitted data.",
+              "description": "The value sent with the form when the checkbox is checked. Defaults to \"on\" if omitted, matching native checkbox behavior. Set explicit values when multiple checkboxes share the same name to distinguish them in the submitted data.",
               "value": {
                 "type": "string",
                 "default": "''"
@@ -7261,7 +7261,7 @@
               },
               {
                 "name": "label",
-                "description": "Visible text rendered beside the checkbox. Clicking the label toggles the checkbox, matching native HTML behaviour. Keep labels short, affirmative, and action-oriented for the best readability.",
+                "description": "Visible text rendered beside the checkbox. Clicking the label toggles the checkbox, matching native HTML behavior. Keep labels short, affirmative, and action-oriented for the best readability.",
                 "type": "string"
               },
               {
@@ -7271,7 +7271,7 @@
               },
               {
                 "name": "value",
-                "description": "The value sent with the form when the checkbox is checked. Defaults to \"on\" if omitted, matching native checkbox behaviour. Set explicit values when multiple checkboxes share the same name to distinguish them in the submitted data.",
+                "description": "The value sent with the form when the checkbox is checked. Defaults to \"on\" if omitted, matching native checkbox behavior. Set explicit values when multiple checkboxes share the same name to distinguish them in the submitted data.",
                 "type": "string"
               },
               {
@@ -7373,7 +7373,7 @@
         },
         {
           "name": "arc-color-picker",
-          "description": "Full-featured color picker with a saturation/lightness area, hue slider, hex input, and optional\npreset swatches.\n---\n\n\n### **Events:**\n - **arc-input** - Fired continuously as the colour changes, including every frame of a drag across the saturation area or hue track. Use for live previews. `event.detail.value` contains the hex string.\n- **arc-change** - Fired once the colour is committed: the pointer released after a drag, a preset clicked, or a valid hex typed and blurred. Use for anything expensive. `event.detail.value` contains the hex string.\n\n### **CSS Parts:**\n - **picker**\n- **label**\n- **area**\n- **hue-track**\n- **hex-row**\n- **preview**\n- **hex-input**\n- **presets**",
+          "description": "Full-featured color picker with a saturation/lightness area, hue slider, hex input, and optional\npreset swatches.\n---\n\n\n### **Events:**\n - **arc-input** - Fired continuously as the color changes, including every frame of a drag across the saturation area or hue track. Use for live previews. `event.detail.value` contains the hex string.\n- **arc-change** - Fired once the color is committed: the pointer released after a drag, a preset clicked, or a valid hex typed and blurred. Use for anything expensive. `event.detail.value` contains the hex string.\n\n### **CSS Parts:**\n - **picker**\n- **label**\n- **area**\n- **hue-track**\n- **hex-row**\n- **preview**\n- **hex-input**\n- **presets**",
           "doc-url": "",
           "attributes": [
             {
@@ -7443,12 +7443,12 @@
             {
               "name": "arc-input",
               "type": "CustomEvent",
-              "description": "Fired continuously as the colour changes, including every frame of a drag across the saturation area or hue track. Use for live previews. `event.detail.value` contains the hex string."
+              "description": "Fired continuously as the color changes, including every frame of a drag across the saturation area or hue track. Use for live previews. `event.detail.value` contains the hex string."
             },
             {
               "name": "arc-change",
               "type": "CustomEvent",
-              "description": "Fired once the colour is committed: the pointer released after a drag, a preset clicked, or a valid hex typed and blurred. Use for anything expensive. `event.detail.value` contains the hex string."
+              "description": "Fired once the color is committed: the pointer released after a drag, a preset clicked, or a valid hex typed and blurred. Use for anything expensive. `event.detail.value` contains the hex string."
             }
           ],
           "js": {
@@ -7505,12 +7505,12 @@
               {
                 "name": "arc-input",
                 "type": "CustomEvent",
-                "description": "Fired continuously as the colour changes, including every frame of a drag across the saturation area or hue track. Use for live previews. `event.detail.value` contains the hex string."
+                "description": "Fired continuously as the color changes, including every frame of a drag across the saturation area or hue track. Use for live previews. `event.detail.value` contains the hex string."
               },
               {
                 "name": "arc-change",
                 "type": "CustomEvent",
-                "description": "Fired once the colour is committed: the pointer released after a drag, a preset clicked, or a valid hex typed and blurred. Use for anything expensive. `event.detail.value` contains the hex string."
+                "description": "Fired once the color is committed: the pointer released after a drag, a preset clicked, or a valid hex typed and blurred. Use for anything expensive. `event.detail.value` contains the hex string."
               }
             ]
           }
@@ -8563,7 +8563,7 @@
             },
             {
               "name": "size",
-              "description": "Button size controlling dimensions and icon scale. Icon-only sizes are circular: xs=28px, sm=32px, md=36px, lg=44px. The labelled form stays a rounded rectangle.",
+              "description": "Button size controlling dimensions and icon scale. Icon-only sizes are circular: xs=28px, sm=32px, md=36px, lg=44px. The labeled form stays a rounded rectangle.",
               "value": {
                 "type": "'xs' | 'sm' | 'md' | 'lg'",
                 "default": "'md'"
@@ -8628,7 +8628,7 @@
               },
               {
                 "name": "size",
-                "description": "Button size controlling dimensions and icon scale. Icon-only sizes are circular: xs=28px, sm=32px, md=36px, lg=44px. The labelled form stays a rounded rectangle.",
+                "description": "Button size controlling dimensions and icon scale. Icon-only sizes are circular: xs=28px, sm=32px, md=36px, lg=44px. The labeled form stays a rounded rectangle.",
                 "type": "'xs' | 'sm' | 'md' | 'lg'"
               },
               {
@@ -8735,7 +8735,7 @@
         },
         {
           "name": "arc-inline-edit",
-          "description": "Click-to-edit text: renders as plain text until activated, then swaps to a\npre-filled field. Enter or blur commits, Escape cancels. Built for track\nrenames, document titles, and other fields where a permanent input box would\nbe visual noise.\n\nThe display text inherits the surrounding typography (`font: inherit`) and\nthe edit field matches it, so the swap never changes the text's metrics —\nan inline-edit inside a heading edits at heading size, one in a table cell\nedits at cell size. This is why there is no `size` prop: sizing comes from\ncontext, and a fixed scale would fight it.\n\nWhile editing, keystrokes accumulate in an internal draft. `value` — and the\nvalue a form submits — only changes on commit, so Escape can always revert\nand a half-typed rename is never submitted. Committing an unchanged value\nfires no event at all.\n---\n\n\n### **Events:**\n - **arc-change** - Fired once on commit when the value actually changed, with the new value in detail.value.\n- **arc-cancel** - Fired when an edit is cancelled (Escape or cancel()), with the retained value in detail.value. No arc-change accompanies it.\n- **arc-input** - Fired on each keystroke while editing, with the draft text in detail.value.\n\n### **Methods:**\n - **edit()** - Enter edit mode: focus the field and select its text. No-op when disabled, readonly, or already editing.\n- **commit()** - Commit the current draft and leave edit mode. Fires arc-change only if the value changed.\n- **cancel()** - Discard the draft, keep the previous value, and leave edit mode. Fires arc-cancel.\n\n### **CSS Parts:**\n - **display** - The display-state button wrapping the text and pencil affordance.\n- **field** - The input or textarea shown while editing.\n- **icon** - The pencil affordance icon.",
+          "description": "Click-to-edit text: renders as plain text until activated, then swaps to a\npre-filled field. Enter or blur commits, Escape cancels. Built for track\nrenames, document titles, and other fields where a permanent input box would\nbe visual noise.\n\nThe display text inherits the surrounding typography (`font: inherit`) and\nthe edit field matches it, so the swap never changes the text's metrics —\nan inline-edit inside a heading edits at heading size, one in a table cell\nedits at cell size. This is why there is no `size` prop: sizing comes from\ncontext, and a fixed scale would fight it.\n\nWhile editing, keystrokes accumulate in an internal draft. `value` — and the\nvalue a form submits — only changes on commit, so Escape can always revert\nand a half-typed rename is never submitted. Committing an unchanged value\nfires no event at all.\n---\n\n\n### **Events:**\n - **arc-change** - Fired once on commit when the value actually changed, with the new value in detail.value.\n- **arc-cancel** - Fired when an edit is canceled (Escape or cancel()), with the retained value in detail.value. No arc-change accompanies it.\n- **arc-input** - Fired on each keystroke while editing, with the draft text in detail.value.\n\n### **Methods:**\n - **edit()** - Enter edit mode: focus the field and select its text. No-op when disabled, readonly, or already editing.\n- **commit()** - Commit the current draft and leave edit mode. Fires arc-change only if the value changed.\n- **cancel()** - Discard the draft, keep the previous value, and leave edit mode. Fires arc-cancel.\n\n### **CSS Parts:**\n - **display** - The display-state button wrapping the text and pencil affordance.\n- **field** - The input or textarea shown while editing.\n- **icon** - The pencil affordance icon.",
           "doc-url": "",
           "attributes": [
             {
@@ -8748,7 +8748,7 @@
             },
             {
               "name": "label",
-              "description": "Accessible name for the control. The display state announces as \"Edit {label}\" and the edit field is labelled with it. Always provide one.",
+              "description": "Accessible name for the control. The display state announces as \"Edit {label}\" and the edit field is labeled with it. Always provide one.",
               "value": {
                 "type": "string",
                 "default": "''"
@@ -8810,7 +8810,7 @@
             {
               "name": "arc-cancel",
               "type": "CustomEvent<{ value: string }>",
-              "description": "Fired when an edit is cancelled (Escape or cancel()), with the retained value in detail.value. No arc-change accompanies it."
+              "description": "Fired when an edit is canceled (Escape or cancel()), with the retained value in detail.value. No arc-change accompanies it."
             },
             {
               "name": "arc-input",
@@ -8827,7 +8827,7 @@
               },
               {
                 "name": "label",
-                "description": "Accessible name for the control. The display state announces as \"Edit {label}\" and the edit field is labelled with it. Always provide one.",
+                "description": "Accessible name for the control. The display state announces as \"Edit {label}\" and the edit field is labeled with it. Always provide one.",
                 "type": "string"
               },
               {
@@ -8879,7 +8879,7 @@
               {
                 "name": "arc-cancel",
                 "type": "CustomEvent<{ value: string }>",
-                "description": "Fired when an edit is cancelled (Escape or cancel()), with the retained value in detail.value. No arc-change accompanies it."
+                "description": "Fired when an edit is canceled (Escape or cancel()), with the retained value in detail.value. No arc-change accompanies it."
               },
               {
                 "name": "arc-input",
@@ -8934,7 +8934,7 @@
           "attributes": [
             {
               "name": "type",
-              "description": "The HTML input type. Controls browser validation behaviour and which virtual keyboard appears on mobile devices. Ignored when `multiline` is true.",
+              "description": "The HTML input type. Controls browser validation behavior and which virtual keyboard appears on mobile devices. Ignored when `multiline` is true.",
               "value": {
                 "type": "'text' | 'email' | 'tel' | 'url' | 'password'",
                 "default": "'text'"
@@ -9052,7 +9052,7 @@
             "properties": [
               {
                 "name": "type",
-                "description": "The HTML input type. Controls browser validation behaviour and which virtual keyboard appears on mobile devices. Ignored when `multiline` is true.",
+                "description": "The HTML input type. Controls browser validation behavior and which virtual keyboard appears on mobile devices. Ignored when `multiline` is true.",
                 "type": "'text' | 'email' | 'tel' | 'url' | 'password'"
               },
               {
@@ -10062,7 +10062,7 @@
         },
         {
           "name": "arc-password-input",
-          "description": "Password entry field with a built-in visibility toggle and an optional four-segment strength\nmeter. Shares its styling and form behaviour with Input, so mixed forms stay visually uniform.\n\nTrue when the password contains a 4+ run of consecutive chars (abcd, 4321). *\\/ function\nhasSequentialRun(pw) { const s = pw.toLowerCase(); let asc = 1; let desc = 1; for (let i = 1; i\n< s.length; i++) { const d = s.charCodeAt(i) - s.charCodeAt(i - 1); asc = d === 1 ? asc + 1 : 1;\ndesc = d === -1 ? desc + 1 : 1; if (asc >= 4 || desc >= 4) return true; } return false; }\nSelf-contained heuristic: 0 = empty, 1–4 = Weak…Strong. *\\/ function scorePassword(pw) { if\n(!pw) return 0; if (COMMON_PASSWORDS.has(pw.toLowerCase())) return 1; let score = 0; if\n(pw.length >= 8) score += 1; if (pw.length >= 12) score += 1; if (pw.length >= 16) score += 1;\nconst classes = (/[a-z]/.test(pw) ? 1 : 0) + (/[A-Z]/.test(pw) ? 1 : 0) + (/\\d/.test(pw) ? 1 :\n0) + (/[^A-Za-z0-9]/.test(pw) ? 1 : 0); if (classes >= 2) score += 1; if (classes >= 4) score +=\n1; if (/(.)\\1\\1/.test(pw)) score -= 1; if (hasSequentialRun(pw)) score -= 1; return Math.min(4,\nMath.max(1, score)); }\n---\n\n\n### **Events:**\n - **arc-strength-change** - Fired when the strength score changes (only while show-strength is set), with { score } detail (0-4)\n- **arc-input** - Fired on each keystroke with { value } detail\n- **arc-change** - Fired on blur when value has changed, with { value } detail\n\n### **CSS Parts:**\n - **strength**\n- **label**\n- **field**\n- **input**\n- **toggle**\n- **error**",
+          "description": "Password entry field with a built-in visibility toggle and an optional four-segment strength\nmeter. Shares its styling and form behavior with Input, so mixed forms stay visually uniform.\n\nTrue when the password contains a 4+ run of consecutive chars (abcd, 4321). *\\/ function\nhasSequentialRun(pw) { const s = pw.toLowerCase(); let asc = 1; let desc = 1; for (let i = 1; i\n< s.length; i++) { const d = s.charCodeAt(i) - s.charCodeAt(i - 1); asc = d === 1 ? asc + 1 : 1;\ndesc = d === -1 ? desc + 1 : 1; if (asc >= 4 || desc >= 4) return true; } return false; }\nSelf-contained heuristic: 0 = empty, 1–4 = Weak…Strong. *\\/ function scorePassword(pw) { if\n(!pw) return 0; if (COMMON_PASSWORDS.has(pw.toLowerCase())) return 1; let score = 0; if\n(pw.length >= 8) score += 1; if (pw.length >= 12) score += 1; if (pw.length >= 16) score += 1;\nconst classes = (/[a-z]/.test(pw) ? 1 : 0) + (/[A-Z]/.test(pw) ? 1 : 0) + (/\\d/.test(pw) ? 1 :\n0) + (/[^A-Za-z0-9]/.test(pw) ? 1 : 0); if (classes >= 2) score += 1; if (classes >= 4) score +=\n1; if (/(.)\\1\\1/.test(pw)) score -= 1; if (hasSequentialRun(pw)) score -= 1; return Math.min(4,\nMath.max(1, score)); }\n---\n\n\n### **Events:**\n - **arc-strength-change** - Fired when the strength score changes (only while show-strength is set), with { score } detail (0-4)\n- **arc-input** - Fired on each keystroke with { value } detail\n- **arc-change** - Fired on blur when value has changed, with { value } detail\n\n### **CSS Parts:**\n - **strength**\n- **label**\n- **field**\n- **input**\n- **toggle**\n- **error**",
           "doc-url": "",
           "attributes": [
             {
@@ -12022,7 +12022,7 @@
             },
             {
               "name": "label",
-              "description": "Visible label rendered above the textarea in uppercase. Automatically linked to the field via `aria-labelledby`, ensuring screen readers announce it correctly.",
+              "description": "Visible label rendered above the textarea in uppercase. Automatically linked to the field via `aria-labeledby`, ensuring screen readers announce it correctly.",
               "value": {
                 "type": "string",
                 "default": "''"
@@ -12132,7 +12132,7 @@
               },
               {
                 "name": "label",
-                "description": "Visible label rendered above the textarea in uppercase. Automatically linked to the field via `aria-labelledby`, ensuring screen readers announce it correctly.",
+                "description": "Visible label rendered above the textarea in uppercase. Automatically linked to the field via `aria-labeledby`, ensuring screen readers announce it correctly.",
                 "type": "string"
               },
               {
@@ -12234,7 +12234,7 @@
             },
             {
               "name": "size",
-              "description": "Box size when `icon-only`, on the same scale as arc-icon-button: xs=28px, sm=32px, md=36px, lg=44px. Set both controls to the same value when they sit side by side. Ignored by the labelled form, which is sized by its text.",
+              "description": "Box size when `icon-only`, on the same scale as arc-icon-button: xs=28px, sm=32px, md=36px, lg=44px. Set both controls to the same value when they sit side by side. Ignored by the labeled form, which is sized by its text.",
               "value": {
                 "type": "'xs' | 'sm' | 'md' | 'lg'",
                 "default": "'md'"
@@ -12268,7 +12268,7 @@
               },
               {
                 "name": "size",
-                "description": "Box size when `icon-only`, on the same scale as arc-icon-button: xs=28px, sm=32px, md=36px, lg=44px. Set both controls to the same value when they sit side by side. Ignored by the labelled form, which is sized by its text.",
+                "description": "Box size when `icon-only`, on the same scale as arc-icon-button: xs=28px, sm=32px, md=36px, lg=44px. Set both controls to the same value when they sit side by side. Ignored by the labeled form, which is sized by its text.",
                 "type": "'xs' | 'sm' | 'md' | 'lg'"
               }
             ],
@@ -14802,7 +14802,7 @@
             },
             {
               "name": "active",
-              "description": "Highlights the item with an accent-coloured bottom border to indicate the current route. Set this on the top-level NavItem that corresponds to the active page.",
+              "description": "Highlights the item with an accent-colored bottom border to indicate the current route. Set this on the top-level NavItem that corresponds to the active page.",
               "value": {
                 "type": "boolean",
                 "default": "false"
@@ -14855,7 +14855,7 @@
               },
               {
                 "name": "active",
-                "description": "Highlights the item with an accent-coloured bottom border to indicate the current route. Set this on the top-level NavItem that corresponds to the active page.",
+                "description": "Highlights the item with an accent-colored bottom border to indicate the current route. Set this on the top-level NavItem that corresponds to the active page.",
                 "type": "boolean"
               },
               {
@@ -15158,7 +15158,7 @@
             },
             {
               "name": "progress",
-              "description": "How the reader's position through the document is shown. `ring` draws a progress arc beside the heading; `read` recedes the entries already scrolled past; `both` does each. Defaults to `none`, and an unrecognised value lands there too.",
+              "description": "How the reader's position through the document is shown. `ring` draws a progress arc beside the heading; `read` recedes the entries already scrolled past; `both` does each. Defaults to `none`, and an unrecognized value lands there too.",
               "value": {
                 "type": "'none' | 'ring' | 'read' | 'both'",
                 "default": "'none'"
@@ -15192,7 +15192,7 @@
               },
               {
                 "name": "progress",
-                "description": "How the reader's position through the document is shown. `ring` draws a progress arc beside the heading; `read` recedes the entries already scrolled past; `both` does each. Defaults to `none`, and an unrecognised value lands there too.",
+                "description": "How the reader's position through the document is shown. `ring` draws a progress arc beside the heading; `read` recedes the entries already scrolled past; `both` does each. Defaults to `none`, and an unrecognized value lands there too.",
                 "type": "'none' | 'ring' | 'read' | 'both'"
               }
             ],
@@ -16847,7 +16847,7 @@
         },
         {
           "name": "arc-terminal",
-          "description": "Animated terminal window: a chrome'd frame that types commands\ncharacter-by-character and prints their output line by line.\n\nThe typing machinery mirrors arc-typewriter's setTimeout chain rather than\nimporting it — typewriter animates one string, this sequences many lines\nwith three behaviours, and a shared chain would serve neither cleanly.\n\nServer-side the full completed transcript renders (no animation in Node);\non the client, autoplay blanks it before first paint and replays it when\nthe element scrolls into view. Under prefers-reduced-motion the transcript\nrenders complete immediately and nothing animates — the same policy\narc-typewriter follows.\n---\n\n\n### **Events:**\n - **arc-complete** - Fired when the whole sequence has finished printing (each cycle, when looping)\n\n### **Methods:**\n - **play()** - Play the sequence from the beginning.\n- **reset()** - Return to the blank, pre-animation state without starting playback.\n\n### **CSS Parts:**\n - **terminal**\n- **titlebar**\n- **orbs**\n- **title**\n- **body**\n- **line**\n- **prompt**\n- **text**\n- **cursor**",
+          "description": "Animated terminal window: a chrome'd frame that types commands\ncharacter-by-character and prints their output line by line.\n\nThe typing machinery mirrors arc-typewriter's setTimeout chain rather than\nimporting it — typewriter animates one string, this sequences many lines\nwith three behaviors, and a shared chain would serve neither cleanly.\n\nServer-side the full completed transcript renders (no animation in Node);\non the client, autoplay blanks it before first paint and replays it when\nthe element scrolls into view. Under prefers-reduced-motion the transcript\nrenders complete immediately and nothing animates — the same policy\narc-typewriter follows.\n---\n\n\n### **Events:**\n - **arc-complete** - Fired when the whole sequence has finished printing (each cycle, when looping)\n\n### **Methods:**\n - **play()** - Play the sequence from the beginning.\n- **reset()** - Return to the blank, pre-animation state without starting playback.\n\n### **CSS Parts:**\n - **terminal**\n- **titlebar**\n- **orbs**\n- **title**\n- **body**\n- **line**\n- **prompt**\n- **text**\n- **cursor**",
           "doc-url": "",
           "attributes": [
             {

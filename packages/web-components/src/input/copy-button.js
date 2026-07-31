@@ -69,7 +69,7 @@ export class ArcCopyButton extends LitElement {
       }
 
       /* Filled, not just outlined. The copied state is the component's only
-         piece of feedback and it was carried by border and text colour alone,
+         piece of feedback and it was carried by border and text color alone,
          which at this size is a few pixels of green. The tint reads at a glance
          and derives from the same token, so it follows the theme. */
       .copy-btn.is-copied {

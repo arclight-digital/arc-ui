@@ -28,7 +28,7 @@
         overflow: hidden;
       }
 
-      /* Widened default: any unrecognised orientation computes as vertical.
+      /* Widened default: any unrecognized orientation computes as vertical.
          Segment 0 sits at the bottom, so the meter fills upward. */
       .arc-level-meter:not([data-orientation="horizontal"]) .track {
         flex-direction: column-reverse;

@@ -41,7 +41,7 @@ Inline Edit participates in forms through the same ElementInternals machinery as
       'Use `readonly` when a value is temporarily locked — the text stays in the reading order without inviting an edit',
     ],
     dont: [
-      'Do not use Inline Edit in a conventional form layout — a labelled Input communicates "fill me in"; Inline Edit deliberately hides that invitation',
+      'Do not use Inline Edit in a conventional form layout — a labeled Input communicates "fill me in"; Inline Edit deliberately hides that invitation',
       'Do not use it for values needing heavy validation or structured entry (emails, dates, numbers) — use Input, DatePicker, or NumberInput',
       'Do not treat `arc-input` as a save signal; it carries the in-progress draft, which Escape may still throw away',
       'Do not hide the only editing path behind hover alone on touch-heavy interfaces — the affordance also appears on focus, so keep the control reachable by keyboard',

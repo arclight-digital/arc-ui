@@ -140,7 +140,7 @@ export class ArcCard extends LitElement {
       </div>
     `;
 
-    // An explicit href always wins — established API, unchanged behaviour.
+    // An explicit href always wins — established API, unchanged behavior.
     if (this.href) {
       return html`<a class="card" href=${this.href} part="card"><div class="card__inner" part="inner">${content}</div></a>`;
     }

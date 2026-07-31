@@ -7,7 +7,7 @@ const NEAR_BOTTOM_PX = 100;
 
 /**
  * A chat transcript: the scrollable column that holds arc-message children. Built for AI
- * assistant panels — the layout, the role alignment, and the scroll behaviour all assume messages
+ * assistant panels — the layout, the role alignment, and the scroll behavior all assume messages
  * arrive while the user is reading. While the reader sits near the bottom, new or growing
  * messages keep the view pinned to the latest; once they scroll up to re-read, the transcript
  * never yanks them back down. The arc-scroll-away and arc-scroll-return events report those

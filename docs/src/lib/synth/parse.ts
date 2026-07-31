@@ -19,7 +19,7 @@ import {
 
 export interface ImportReport {
   state: SynthState;
-  /** Tokens recognised and applied. */
+  /** Tokens recognized and applied. */
   applied: string[];
   /** Declarations that named an ARC token the synthesizer does not edit. */
   ignored: string[];
@@ -40,7 +40,7 @@ function modeForSelector(selector: string): ThemeMode | null {
 }
 
 /**
- * A bare colour — someone pasting just an accent, which is the most common
+ * A bare color — someone pasting just an accent, which is the most common
  * thing anyone has on hand.
  */
 function parseBareColor(text: string): string | null {
@@ -64,7 +64,7 @@ export function importTheme(text: string, base?: SynthState): ImportReport {
       applied: ['--accent-primary'],
       ignored: [],
       ok: true,
-      message: 'Read a single colour and assigned it to the primary accent in both themes.',
+      message: 'Read a single color and assigned it to the primary accent in both themes.',
     };
   }
 
@@ -102,13 +102,13 @@ export function importTheme(text: string, base?: SynthState): ImportReport {
       applied: [],
       ignored: [],
       ok: false,
-      message: 'Found no :root or [data-theme] block. Paste a stylesheet, or a single colour to set the accent.',
+      message: 'Found no :root or [data-theme] block. Paste a stylesheet, or a single color to set the accent.',
     };
   }
 
   // Tokens a partial paste never mentions keep the shipped default for their
   // own theme — the state was seeded per-mode, so a dark-only stylesheet
-  // leaves a working light theme behind rather than a dark one mislabelled.
+  // leaves a working light theme behind rather than a dark one mislabeled.
   const uniqueApplied = [...new Set(applied)];
   const uniqueIgnored = [...new Set(ignored)];
   return {
@@ -125,7 +125,7 @@ export function importTheme(text: string, base?: SynthState): ImportReport {
 
 function applyDeclaration(state: SynthState, mode: ThemeMode, token: string, value: string): boolean {
   // The -rgb channels are derived on export; reading them back would let a
-  // stale triplet disagree with the colour it is supposed to mirror.
+  // stale triplet disagree with the color it is supposed to mirror.
   if (token.endsWith('-rgb')) return false;
 
   if (COLOR_TOKENS.includes(token)) {

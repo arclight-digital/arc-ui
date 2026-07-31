@@ -52,7 +52,7 @@ function walk(dir) {
  * Four real violations — data-grid's cell editor, input, masked-input and
  * password-input — sat unreported behind that until the tree was run through
  * prettier and the declarations landed on their own lines. Same blind spot
- * check-motion-tokens had, and the same fix: normalise the shape before
+ * check-motion-tokens had, and the same fix: normalize the shape before
  * matching, so how a rule is formatted cannot decide whether it is checked.
  */
 /** The contents of each css`…` tagged template, with its offset in the file. */

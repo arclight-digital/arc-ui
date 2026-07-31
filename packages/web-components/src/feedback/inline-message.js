@@ -8,7 +8,7 @@ import { getStatusIcon } from '../status-utils.js';
  * alert but compact — icon + text only, no background fill.
  *
  * @tag arc-inline-message
- * @prop {'info' | 'success' | 'warning' | 'error'} variant - Controls the icon and text colour. Use "info" for neutral hints, "success" for valid state feedback, "warning" for caution notes, and "error" for validation failures.
+ * @prop {'info' | 'success' | 'warning' | 'error'} variant - Controls the icon and text color. Use "info" for neutral hints, "success" for valid state feedback, "warning" for caution notes, and "error" for validation failures.
  * @slot - Default content.
  * @csspart icon
  * @csspart content

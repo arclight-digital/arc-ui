@@ -29,7 +29,7 @@ Every checkbox includes a built-in label, a form-compatible name/value pair, and
   guidelines: {
     do: [
       'Use checkboxes when users can select zero, one, or many options from a list',
-      'Provide a clear, concise label for every checkbox — never leave them unlabelled',
+      'Provide a clear, concise label for every checkbox — never leave them unlabeled',
       'Use the indeterminate state for "select all" controls that govern a partially-checked group',
       'Order checkbox lists logically — alphabetically, by frequency, or by importance',
       'Group related checkboxes together with a visible heading or fieldset legend',

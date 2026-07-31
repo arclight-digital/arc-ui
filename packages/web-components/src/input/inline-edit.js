@@ -23,7 +23,7 @@ import '../content/icon.js';
  * @tag arc-inline-edit
  * @requires arc-icon
  * @prop {string} value - The committed text. Updated only when an edit commits (Enter or blur); keystrokes accumulate in an internal draft until then.
- * @prop {string} label - Accessible name for the control. The display state announces as "Edit {label}" and the edit field is labelled with it. Always provide one.
+ * @prop {string} label - Accessible name for the control. The display state announces as "Edit {label}" and the edit field is labeled with it. Always provide one.
  * @prop {string} name - The `name` attribute sent with form data on submission. The submitted value is the committed `value`, never an in-progress draft.
  * @prop {string} placeholder - Text shown in muted italic when `value` is empty, and as the field placeholder while editing. Defaults to "Empty".
  * @prop {boolean} multiline - When true, editing uses a `<textarea>`: Enter inserts a newline and Cmd/Ctrl+Enter commits. Single-line commits on plain Enter.
@@ -32,7 +32,7 @@ import '../content/icon.js';
  * @prop {boolean} readonly - Renders the display state only: the text remains focusable for reading order, but activation is inert and no pencil affordance appears.
  * @fires {CustomEvent<{ value: string }>} arc-input - Fired on each keystroke while editing, with the draft text in detail.value.
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired once on commit when the value actually changed, with the new value in detail.value.
- * @fires {CustomEvent<{ value: string }>} arc-cancel - Fired when an edit is cancelled (Escape or cancel()), with the retained value in detail.value. No arc-change accompanies it.
+ * @fires {CustomEvent<{ value: string }>} arc-cancel - Fired when an edit is canceled (Escape or cancel()), with the retained value in detail.value. No arc-change accompanies it.
  * @csspart display - The display-state button wrapping the text and pencil affordance.
  * @csspart field - The input or textarea shown while editing.
  * @csspart icon - The pencil affordance icon.

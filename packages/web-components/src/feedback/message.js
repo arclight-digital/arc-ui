@@ -2,13 +2,13 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
 
-/** The role vocabulary. An unrecognised value renders as the default, user. */
+/** The role vocabulary. An unrecognized value renders as the default, user. */
 const ROLES = new Set(['user', 'assistant', 'system']);
 
 /**
  * One message in a conversation transcript. The speaker attribute decides the voice: user messages
  * sit at the inline end on a faint accent tint, assistant messages sit at the inline start on a
- * neutral surface, and system messages run centred, muted and small. The default slot is the
+ * neutral surface, and system messages run centered, muted and small. The default slot is the
  * message body — append text to it to stream a reply in — and with the markdown attribute set,
  * that slotted text renders through arc-markdown, re-rendering as the text grows. A pending
  * message shows the typing indicator in place of its body. Slot an avatar for either speaker if
@@ -17,7 +17,7 @@ const ROLES = new Set(['user', 'assistant', 'system']);
  * @tag arc-message
  * @requires arc-markdown
  * @requires arc-time-ago
- * @prop {'user' | 'assistant' | 'system'} speaker - Whose message this is. "user" aligns to the inline end on an accent-tinted surface, "assistant" to the inline start on a neutral surface, and "system" runs centred and muted for notices in the transcript's own voice. An unrecognised value renders as "user".
+ * @prop {'user' | 'assistant' | 'system'} speaker - Whose message this is. "user" aligns to the inline end on an accent-tinted surface, "assistant" to the inline start on a neutral surface, and "system" runs centered and muted for notices in the transcript's own voice. An unrecognized value renders as "user".
  * @prop {string} author - Display name shown in the muted meta line above the bubble. Omit it and the meta line only appears when a timestamp is set.
  * @prop {string} timestamp - When the message was sent, as an ISO 8601 string. Rendered as house relative time ("3 minutes ago") through arc-time-ago, with the absolute date on its title.
  * @prop {boolean} pending - Renders the typing indicator — three pulsing dots — in place of the body while a reply is being produced. Under prefers-reduced-motion the dots give way to a static ellipsis.
@@ -52,7 +52,7 @@ export class ArcMessage extends LitElement {
       /* The default voice is the user: bubble at the inline end. Flex end
          follows the writing direction, so RTL mirrors for free. The base rule
          carries the user styling and the other roles override it, which is
-         what routes an unrecognised role onto the default. */
+         what routes an unrecognized role onto the default. */
       .message--user { flex-direction: row-reverse; }
 
       .message__main {
@@ -101,7 +101,7 @@ export class ArcMessage extends LitElement {
         color: var(--text-secondary);
       }
 
-      /* System notices: the transcript's own voice, centred and quiet. */
+      /* System notices: the transcript's own voice, centered and quiet. */
       .message--system { justify-content: center; }
       .message--system .message__main { align-items: center; }
       .message--system .message__meta { justify-content: center; }

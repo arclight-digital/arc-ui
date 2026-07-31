@@ -8,7 +8,7 @@
  * This is the empirical half of the SSR audit in issue #4. Static analysis says
  * which components *mention* a browser global; only rendering them in Node says
  * which ones break, and those are not the same list — a global inside an event
- * handler is fine, one in a field initialiser is not.
+ * handler is fine, one in a field initializer is not.
  *
  * Server-side, Lit runs the constructor, willUpdate and render. It does not run
  * connectedCallback, firstUpdated, updated, or any reactive controller's
@@ -130,7 +130,7 @@ function sampleValue(tag, attr, variant = 0) {
 
   if (/\bboolean\b/.test(type)) return '';
   if (/\bnumber\b/.test(type)) return '1';
-  if (!/\bstring\b/.test(type)) return null; // anything else unrecognised
+  if (!/\bstring\b/.test(type)) return null; // anything else unrecognized
 
   if (tag === 'arc-icon' && attr.name === 'name') return SAMPLE_ICON;
   if (ICON_ATTRIBUTE.test(attr.name) && attr.name !== 'name') return SAMPLE_ICON;

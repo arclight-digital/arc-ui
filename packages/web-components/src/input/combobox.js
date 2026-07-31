@@ -83,7 +83,7 @@ export class ArcCombobox extends FormControlMixin(LitElement) {
         box-shadow: var(--shadow-inset);
       }
 
-      /* Sizes. md is the base rule above, so an unrecognised value lands on it. */
+      /* Sizes. md is the base rule above, so an unrecognized value lands on it. */
       :host([size="sm"]) .combobox__input { padding: var(--space-xs) var(--space-sm); font-size: var(--_text-sm); }
       :host([size="lg"]) .combobox__input { padding: var(--space-md) var(--space-lg); font-size: var(--_text-md); }
 

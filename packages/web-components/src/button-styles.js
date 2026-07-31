@@ -75,16 +75,16 @@ export const buttonVariantStyles = css`
  *
  * A consumer still supplies:
  * - the base `.btn` rule, including its border-radius
- * - the variant colours (buttonVariantStyles, or its own)
- * - anything the labelled, non-square form needs
+ * - the variant colors (buttonVariantStyles, or its own)
+ * - anything the labeled, non-square form needs
  *
- * Keyed on `.btn:not(.btn--has-text)`, so a component that also has a labelled
+ * Keyed on `.btn:not(.btn--has-text)`, so a component that also has a labeled
  * form marks it with `.btn--has-text` and keeps its own sizing for that.
  */
 export const iconBoxStyles = css`
   /* Circular. An icon-only control has no text to give it a reading direction,
      so a square is arbitrary about its corners in a way a circle is not; it
-     also separates the bare-glyph controls from the labelled, rectangular ones
+     also separates the bare-glyph controls from the labeled, rectangular ones
      at a glance. This is the shape arc-theme-toggle already had, now applied to
      both rather than to one of them. */
   .btn:not(.btn--has-text),
@@ -95,7 +95,7 @@ export const iconBoxStyles = css`
   .btn:not(.btn--has-text),
   .btn-slot::slotted(a) { min-width: var(--touch-min); min-height: var(--touch-min); }
 
-  /* The default arm is keyed on "not the others" so an unrecognised size lands
+  /* The default arm is keyed on "not the others" so an unrecognized size lands
      on it rather than on no rule at all — see check-enum-fallbacks.js. The
      explicit [size="md"] selector stays so prism can infer the union. */
   :host(:not([size="lg"]):not([size="sm"]):not([size="xs"])) .btn:not(.btn--has-text),

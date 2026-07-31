@@ -27,7 +27,7 @@
           border-color var(--transition-slow);
       }
 
-      /* An always-dark region has to be one colour, not two.
+      /* An always-dark region has to be one color, not two.
          arc-footer paints --surface-base flat, while this bar mixes it 85% with
          transparent. In dark mode that costs nothing — 15% of a near-black page
          bleeds through as near-black. In light mode the 15% is 15% of a
@@ -127,7 +127,7 @@
         flex-shrink: 0;
       }
 
-      /* Centred nav means centred in the *bar*, not in whatever space the brand
+      /* Centered nav means centered in the *bar*, not in whatever space the brand
          and the actions happen to leave over. With the flex row alone the nav
          sits at the midpoint of the gap between them, which is the middle of
          the viewport only when those two are identically wide — they never are.

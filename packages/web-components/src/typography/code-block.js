@@ -61,9 +61,9 @@ const LANG_IMPORT = {
  *
  * shiki is an optional peer — it is 13.6 MB with its grammars, and every other
  * component in the library reaches none of it — so its absence is a supported
- * state, not an error. The code still renders; it just isn't coloured. But a
+ * state, not an error. The code still renders; it just isn't colored. But a
  * missing highlighter that says nothing is indistinguishable from a broken
- * theme or an unrecognised language, so it says something.
+ * theme or an unrecognized language, so it says something.
  */
 let _warnedMissing = false;
 function warnMissingShiki(err) {

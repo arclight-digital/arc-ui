@@ -152,7 +152,7 @@ export class ArcForm extends LitElement {
         // guard didn't skip shadow content — it skipped the light content of
         // every wrapper that has a shadow root, which is every ARC layout
         // component. Controls inside <arc-fieldset>, <arc-card> or any grid
-        // were invisible to the form: not validated, not serialised, not
+        // were invisible to the form: not validated, not serialized, not
         // disabled with it.
         if (el.children?.length) {
           gather([...el.children]);

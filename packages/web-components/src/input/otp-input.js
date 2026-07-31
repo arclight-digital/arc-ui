@@ -61,7 +61,7 @@ export class ArcOtpInput extends FormControlMixin(LitElement) {
         box-sizing: border-box;
       }
 
-      /* Sizes. md is the base rule above, so an unrecognised value lands on it. */
+      /* Sizes. md is the base rule above, so an unrecognized value lands on it. */
       :host([size="sm"]) .otp__box { width: 36px; height: 42px; font-size: var(--_text-sm); }
       :host([size="lg"]) .otp__box { width: 52px; height: 62px; font-size: var(--_text-lg); }
 

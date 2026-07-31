@@ -143,7 +143,7 @@ export class ArcLink extends LitElement {
   }
 
   render() {
-    // An explicit href always wins — established API, unchanged behaviour.
+    // An explicit href always wins — established API, unchanged behavior.
     if (!this.href && this._slottedAnchor) {
       // The icon sits beside the adopted anchor rather than inside it; light DOM
       // is the consumer's to own, so `external` contributes the marker only and

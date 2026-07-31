@@ -76,7 +76,7 @@ export class ArcNavigationMenu extends LitElement {
         /* The inline padding is asymmetric by half the letter-spacing, which is
            what puts the word in the middle rather than merely putting its *box*
            there. letter-spacing adds its 2px after the final letter too, and
-           that trailing space is inside the box being centred — so the glyphs
+           that trailing space is inside the box being centered — so the glyphs
            end up sitting half of it, 1px, to the left. Derived from the same
            custom property the letter-spacing uses, so the two cannot drift. */
         padding-block: var(--space-sm);
@@ -101,7 +101,7 @@ export class ArcNavigationMenu extends LitElement {
         box-shadow: var(--glow-sm);
       }
 
-      /* Press feedback. There was none: the trigger transitioned colour,
+      /* Press feedback. There was none: the trigger transitioned color,
          background, border and shadow but had no :active rule and no transform
          in its transition list, so it was the one control in the bar that did
          not move under the pointer while the buttons and icon buttons beside it

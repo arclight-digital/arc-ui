@@ -487,7 +487,7 @@ export class ArcTreeSelect extends FormControlMixin(LitElement) {
           aria-haspopup="tree"
           aria-controls=${treeId}
           aria-activedescendant=${this._listbox.activeDescendantId || nothing}
-          aria-labelledby=${this.label ? labelId : nothing}
+          aria-labeledby=${this.label ? labelId : nothing}
           aria-label=${this.label ? nothing : this.placeholder || 'Select an option'}
           @click=${this._toggleOpen}
           @keydown=${this._handleTriggerKeydown}
@@ -502,7 +502,7 @@ export class ArcTreeSelect extends FormControlMixin(LitElement) {
           }
           <span class="tree-select__chevron" aria-hidden="true">&#9662;</span>
         </button>
-        <div id=${treeId} class="tree-select__panel" role="tree" part="panel" aria-labelledby=${this.label ? labelId : nothing}>
+        <div id=${treeId} class="tree-select__panel" role="tree" part="panel" aria-labeledby=${this.label ? labelId : nothing}>
           ${this._rows.map((row) => {
             if (!row.disabled) navIndex++;
             const isActive = !row.disabled && navIndex === this._listbox.activeIndex;

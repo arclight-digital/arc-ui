@@ -342,7 +342,7 @@ export class ArcSelect extends FormControlMixin(LitElement) {
           aria-haspopup="listbox"
           aria-controls=${listboxId}
           aria-activedescendant=${this._listbox.activeDescendantId || nothing}
-          aria-labelledby=${this.label ? labelId : nothing}
+          aria-labeledby=${this.label ? labelId : nothing}
           aria-label=${this.label ? nothing : this.placeholder || 'Select an option'}
           @click=${this._toggleOpen}
           @keydown=${this._handleTriggerKeydown}

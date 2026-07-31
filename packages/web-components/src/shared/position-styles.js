@@ -29,7 +29,7 @@ import { css, unsafeCSS } from 'lit';
  *   and computes to 0s — the panel would snap instead of animating.
  * @param {string} [opts.closedTransform] - Closed-state transform, replacing the
  *   scale. Lets a panel keep the entrance it already had (the menus slide down
- *   rather than scale) instead of every panel being normalised to one.
+ *   rather than scale) instead of every panel being normalized to one.
  */
 export function managedPanelStyles(
   cls,
@@ -136,7 +136,7 @@ export function positionStyles(cls, { offset = 'var(--space-sm)', scale = 0.95, 
   const s = unsafeCSS(scale);
 
   // The default branch is selected by "not one of the other three", so one
-  // selector covers an absent attribute, position="bottom", and any unrecognised
+  // selector covers an absent attribute, position="bottom", and any unrecognized
   // value. The explicit :host([position="bottom"]) branch is kept beside it so
   // prism can still infer `bottom` as a union member from the CSS.
   //

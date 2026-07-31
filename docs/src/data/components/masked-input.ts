@@ -46,7 +46,7 @@ MaskedInput follows the v3 commit contract: \`arc-input\` fires on each accepted
       'Listen for `arc-change` to validate or submit — it fires the moment the mask completes, so users need not leave the field first',
       'Set `autocomplete` to the matching token (for example `cc-number` on a card field) so browser autofill keeps working',
       'Always provide a `label`; the mask shape in the placeholder is a hint, not a name for the field',
-      'Prefer `A` over `a` for license and product keys so the stored value is case-normalised without the user caring',
+      'Prefer `A` over `a` for license and product keys so the stored value is case-normalized without the user caring',
     ],
     dont: [
       'Do not mask free-form values like names, email addresses, or search queries — a mask that fights variable-length input is worse than no mask; use Input instead',

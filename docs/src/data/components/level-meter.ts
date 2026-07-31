@@ -97,7 +97,7 @@ One element is one channel, deliberately: there is no stereo mode. Compose two m
 
 <script>
   // Drive it at signal rate; the meter tracks its own decaying peak.
-  analyser.onLevels = ({ left, right }) => {
+  analyzer.onLevels = ({ left, right }) => {
     document.getElementById('ch-l').value = left;  // dB
     document.getElementById('ch-r').value = right;
   };

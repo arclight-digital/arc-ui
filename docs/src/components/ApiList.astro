@@ -33,9 +33,9 @@
  * So the rank is carried by the type itself, in the one order that survives
  * this palette: the name is lifted to --text-primary and bolded, the type sits
  * at --text-secondary in mono, and the default reads as source — `= "md"` —
- * rather than as a labelled field. Stepping down the muted/ghost ramp instead
+ * rather than as a labeled field. Stepping down the muted/ghost ramp instead
  * would have bought almost nothing; those two are a handful of rgb points
- * apart, so weight, size and family do the work colour can't.
+ * apart, so weight, size and family do the work color can't.
  */
 interface Row {
   name: string;
@@ -135,7 +135,7 @@ const secondary = (r: Row) => (kind === 'event' ? r.detail : r.type);
   }
 
   /* `= "md"`, the way a default is written in the language being documented.
-     A labelled field made the reader parse a label to learn what a signature
+     A labeled field made the reader parse a label to learn what a signature
      already says. Absent simply means no default: there is no column to line
      up with, so nothing needs a placeholder dash. */
   .api .api__default {

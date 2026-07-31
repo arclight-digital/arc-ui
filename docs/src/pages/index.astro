@@ -306,7 +306,7 @@ function Settings() {
           <div class="console__controls">
             <div class="ctl">
               <span class="ctl__label" id="accent-label">Accent</span>
-              <div class="swatches" id="accent-swatches" role="group" aria-labelledby="accent-label">
+              <div class="swatches" id="accent-swatches" role="group" aria-labeledby="accent-label">
                 <button class="swatch is-active" aria-label="Arc default" aria-pressed="true" data-default="true" data-p={defaultAccent.p} data-prgb={defaultAccent.prgb} data-s={defaultAccent.s} data-srgb={defaultAccent.srgb} style={`--sw-a:${defaultAccent.p}; --sw-b:${defaultAccent.s}`}></button>
                 <button class="swatch" aria-label="Emerald and cyan" aria-pressed="false" data-p="#10b981" data-prgb="16,185,129" data-s="#22d3ee" data-srgb="34,211,238" style="--sw-a:#10b981; --sw-b:#22d3ee"></button>
                 <button class="swatch" aria-label="Amber and red" aria-pressed="false" data-p="#f59e0b" data-prgb="245,158,11" data-s="#ef4444" data-srgb="239,68,68" style="--sw-a:#f59e0b; --sw-b:#ef4444"></button>
@@ -731,7 +731,7 @@ function Settings() {
         //
         // How white the tip burns is a depth cue, not a constant. Distance
         // takes the heat out of a light before it takes the light out — so a
-        // beam far down the tube keeps its accent colour and only the near
+        // beam far down the tube keeps its accent color and only the near
         // ones go white. Grading it is what stops the far wall reading as
         // the same wall, dimmed.
         const depth = Math.min(1, (Z_SPAWN - b.z) / (Z_SPAWN - Z_KILL));
@@ -1346,7 +1346,7 @@ function Settings() {
 
     /* On light, the same trade the canvas beams make. Alpha-compositing a
        0.13 accent onto near-white gets you a pale grey suggestion of a
-       colour — the lighter the ground, the less an alpha can say. Multiply
+       color — the lighter the ground, the less an alpha can say. Multiply
        tints the ground instead of veiling it, so the accent arrives at full
        chroma and only the value moves, and the boost pays for the fact that
        multiply against white starts from no effect at all. Dark keeps normal
@@ -1370,12 +1370,12 @@ function Settings() {
      Fine noise over the whole hero, and it is not a texture effect — it is
      what makes the lobes possible at all.
 
-     Their colour lands around alpha 0.07 on a near-black ground, so
+     Their color lands around alpha 0.07 on a near-black ground, so
      consecutive steps of the gradient differ by one or two values out of
      255. Eight-bit quantisation turns those steps into flat plateaus with
      hard borders between them: a lobe stops looking like light and starts
      looking like two slightly different rectangles meeting at a crisp line.
-     Because the lobes drift, the borders sweep, which reads as the colour
+     Because the lobes drift, the borders sweep, which reads as the color
      breaking up rather than moving.
 
      A pixel of noise larger than the quantisation step scatters each pixel
@@ -1397,11 +1397,11 @@ function Settings() {
 
   /* Settles the hero into the page it sits on. `overflow: clip` would
      otherwise end the canvas and the lobes on a straight horizontal line
-     across the full width; this fades to the exact colour underneath, so
+     across the full width; this fades to the exact color underneath, so
      there is no boundary left to see.
 
      --bg-deep, not --bg-base. The body is painted --bg-deep, and --bg-base is
-     seven values lighter — fading to it left the hero settling into a colour
+     seven values lighter — fading to it left the hero settling into a color
      the page never uses, which reads as the fade stopping short of black
      rather than as no fade at all.
 

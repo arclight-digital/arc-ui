@@ -263,7 +263,7 @@ for (const tier of TIERS) {
       }
     }
 
-    // Documentation and behaviour have to agree. An undocumented event is
+    // Documentation and behavior have to agree. An undocumented event is
     // invisible to the manifest, the editor data and the wrappers, all of which
     // are generated from the JSDoc; a documented event that nothing dispatches
     // is a promise the component does not keep.

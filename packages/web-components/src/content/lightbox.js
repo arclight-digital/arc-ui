@@ -179,7 +179,7 @@ export class ArcLightbox extends OverlayMixin(LitElement) {
     this._onNavKeyDown = this._onNavKeyDown.bind(this);
   }
 
-  /** Entries normalised to `{ src, alt, caption }` regardless of input form. */
+  /** Entries normalized to `{ src, alt, caption }` regardless of input form. */
   _normalized() {
     return (Array.isArray(this.images) ? this.images : []).map((entry) =>
       typeof entry === 'string' ? { src: entry, alt: '', caption: '' } : entry,

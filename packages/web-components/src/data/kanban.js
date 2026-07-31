@@ -539,7 +539,7 @@ export class ArcKanban extends LitElement {
     this._focusCard(card.id);
     const origin = this._cols.find((c) => c.id === kb.originColumn);
     this._announce(
-      `Move cancelled. ${card.label} returned to position ${kb.originIndex + 1} in ${origin ? origin.title : ''}.`,
+      `Move canceled. ${card.label} returned to position ${kb.originIndex + 1} in ${origin ? origin.title : ''}.`,
     );
   }
 

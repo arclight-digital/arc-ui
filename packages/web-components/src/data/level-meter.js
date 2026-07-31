@@ -73,7 +73,7 @@ export class ArcLevelMeter extends LitElement {
         overflow: hidden;
       }
 
-      /* Widened default: any unrecognised orientation computes as vertical.
+      /* Widened default: any unrecognized orientation computes as vertical.
          Segment 0 sits at the bottom, so the meter fills upward. */
       :host(:not([orientation='horizontal'])) .track {
         flex-direction: column-reverse;

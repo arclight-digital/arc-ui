@@ -256,7 +256,7 @@
 .arc-rounded-full { border-radius: var(--radius-full); }
 .arc-rounded-none { border-radius: 0; }
 
-/* ── Colour ── */
+/* ── Color ── */
 .arc-text-xs { font-size: var(--text-xs); }
 .arc-text-sm { font-size: var(--text-sm); }
 .arc-text-md { font-size: var(--text-md); }

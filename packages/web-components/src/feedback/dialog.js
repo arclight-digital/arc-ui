@@ -43,7 +43,7 @@ export class ArcDialog extends LitElement {
         line-height: var(--body-lh);
       }
 
-      /* variant="error" recolours the confirm button by moving the accent tokens
+      /* variant="error" recolors the confirm button by moving the accent tokens
          it reads, rather than by adding a fourth arc-button variant. The button
          resolves --interactive from --accent-primary in its own context, so
          setting them on the instance is enough. */

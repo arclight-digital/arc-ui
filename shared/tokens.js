@@ -8,7 +8,7 @@
  *
  * The curve carries the meaning, not the duration:
  *
- *   standard — a state change on an element that stays put: a hover recolour, a
+ *   standard — a state change on an element that stays put: a hover recolor, a
  *     border shift. Symmetric, because nothing is arriving or leaving.
  *   out — something entering or expanding. Covers most of its distance
  *     immediately and settles, which is what makes an entrance read as already
@@ -147,15 +147,15 @@ export const tokens = {
    *
    * **`--text-*` deliberately carries two kinds of thing**, and it is the only
    * prefix in the tree that does: `--text-md` is a size from here, while
-   * `--text-primary` is a foreground colour from `color` below. Reading
+   * `--text-primary` is a foreground color from `color` below. Reading
    * base.css that looks like an inconsistency; it is load-bearing. The class
    * name in the utility layer *is* the token name, so `.arc-text-md` sizes and
-   * `.arc-text-primary` colours, and both read the variable a consumer would
+   * `.arc-text-primary` colors, and both read the variable a consumer would
    * override.
    *
    * That only works while the two key sets stay disjoint **by shape** — sizes
-   * are scale steps (`xs`, `md`, `2xl`), colours are semantic words
-   * (`primary`, `muted`). Adding a colour called `md`, or a size called
+   * are scale steps (`xs`, `md`, `2xl`), colors are semantic words
+   * (`primary`, `muted`). Adding a color called `md`, or a size called
    * `primary`, breaks it. `shared/utilities.js` asserts both directions and
    * fails the build, so this is a rule with a check behind it rather than a
    * convention to remember.
@@ -419,7 +419,7 @@ export const tokens = {
     xs: '0 0 6px rgba(var(--accent-primary-rgb), 0.3)',
     sm: '0 0 8px rgba(var(--accent-primary-rgb), 0.3)',
     md: '0 0 12px rgba(var(--accent-primary-rgb), 0.25)',
-    /* Reads --_status-rgb from status-styles.js, so it takes the colour of
+    /* Reads --_status-rgb from status-styles.js, so it takes the color of
        whatever variant the host is carrying. arc-badge and arc-tag each spelled
        this out five times, once per variant; arc-alert a sixth.
 
@@ -455,8 +455,8 @@ export const tokens = {
          cell, a row in a list. These sit close to their neighbours, and a
          four-layer glow reaching 40px would wash over whatever is beside them
          instead of marking what is focused.
-       error — the glow's shape in the error colour, with an inner 2px in the
-         surface colour so the ring stays legible against a red border. This
+       error — the glow's shape in the error color, with an inner 2px in the
+         surface color so the ring stays legible against a red border. This
          was written out by hand identically in four components before it was a
          token.
        inset — a full-bleed row inside a bordered container, where an outer
@@ -513,7 +513,7 @@ const accentTintOver = (palette) =>
 const textAccentKeys = ['accentPrimary', 'accentSecondary', 'success', 'warning', 'error', 'info'];
 
 /* This percentage is not applied to our palette. It is applied to whatever
- * colour a consumer hands a component — arc-tag takes one as a prop, and this
+ * color a consumer hands a component — arc-tag takes one as a prop, and this
  * site passes it greys for the component tiers — so solving it against the six
  * accents we happen to ship answers a question nobody asked. Two attempts did
  * exactly that: against the accents' own tints it came out 15%, against every
@@ -521,18 +521,18 @@ const textAccentKeys = ['accentPrimary', 'accentSecondary', 'success', 'warning'
  * had been quietly carrying.
  *
  * So the contract is the hard case rather than our case: any hue, at any
- * lightness a brand colour plausibly uses, on any surface the theme defines.
+ * lightness a brand color plausibly uses, on any surface the theme defines.
  * The worst of that space is a mid-tone with little chroma sitting near the
  * surface's own luminance — a grey, which is precisely what failed. Sampling
  * it is cheap and it is honest about what the token has to survive.
  *
  * The surfaces are ours to know; the seeds are not, so they are swept — but
- * only across seeds a designer could plausibly have meant. A colour already
+ * only across seeds a designer could plausibly have meant. A color already
  * below 3:1 on the page was never going to be read; carrying it to AA would
- * mean mixing every accent halfway to the text colour, which is what the sweep
- * demanded of the dark theme before this floor: 50%, to rescue colours nobody
+ * mean mixing every accent halfway to the text color, which is what the sweep
+ * demanded of the dark theme before this floor: 50%, to rescue colors nobody
  * passes, at the cost of washing out the ones everybody does. The promise is
- * that a visible colour stays legible, not that an invisible one is saved. */
+ * that a visible color stays legible, not that an invisible one is saved. */
 const surfaceKeys = ['bgDeep', 'bgSurface', 'bgBase', 'bgCard', 'bgElevated'];
 
 const SEED_SWEEP = [];
@@ -560,7 +560,7 @@ for (let l = 0.35; l <= 0.8; l += 0.05) {
  * that were marginal before any of this — 4.2:1 as a dark green on its own
  * tint. So the dark theme solves against the palette rather than the sweep,
  * and the open question is deliberately left open: how much the library owes a
- * consumer who hands a component a colour that was never going to read on
+ * consumer who hands a component a color that was never going to read on
  * their background. Answering it silently, in a number, is how this token got
  * here.
  */
@@ -889,7 +889,7 @@ export const lightTokens = {
     borderBright: 'rgb(190, 195, 205)',
     accentPrimary: 'rgb(55, 105, 235)',
     accentSecondary: 'rgb(120, 70, 230)',
-    /* Status colours, darkened for a light page.
+    /* Status colors, darkened for a light page.
      *
      * The dark-theme values are pitched to glow against near-black and were
      * never given light equivalents, so on rgb(242,242,248) they landed at
@@ -898,7 +898,7 @@ export const lightTokens = {
      * out at 1.81 on the landing page, which is what surfaced this.
      *
      * Same hues, retuned: success 4.64, error 5.30, warning 4.55, info 5.91.
-     * Only the solid colours move. The separate `rgb` set stays as it is —
+     * Only the solid colors move. The separate `rgb` set stays as it is —
      * those are used at 0.1 alpha for subtle fills, where a light tint of the
      * brighter hue is exactly what a light surface wants, and the darkened
      * text now sits on it with contrast to spare. */
@@ -1004,7 +1004,7 @@ export const lightTokens = {
     /* White, not the light ground. The near-white surface this theme would
        otherwise supply sits at 4.30:1 on the light accent — under AA for the
        primary button label and the active segment. Pure white clears it at
-       4.79:1 without moving the brand colour. */
+       4.79:1 without moving the brand color. */
     onAccent: 'rgb(var(--white-rgb))',
   },
 };
@@ -1026,7 +1026,7 @@ export const fixedDarkTokens = {
     borderBright: 'rgb(51, 51, 64)',
     accentPrimary: 'rgb(77, 126, 247)',
     accentSecondary: 'rgb(139, 92, 246)',
-    /* Status colours, pinned to the dark-tuned values. The statuses became
+    /* Status colors, pinned to the dark-tuned values. The statuses became
        themeable (light darkens them for a near-white page), so a fixed-dark
        region has to force them back: without these, a `success` badge inside
        the navy footer of a light page would render the darkened-for-light
@@ -1126,7 +1126,7 @@ const colorVarMap = {
   borderBright: '--border-bright',
   accentPrimary: '--accent-primary',
   accentSecondary: '--accent-secondary',
-  /* Status colours are themeable: they were declared once, tuned for a
+  /* Status colors are themeable: they were declared once, tuned for a
      near-black page, and reused unchanged on a near-white one. */
   success: '--color-success',
   error: '--color-error',
@@ -1364,7 +1364,7 @@ function renderTokenForwarding(tags) {
   // compounds on that element. Overriding the compound itself on the element
   // still works — an element selector outranks :where() — and :root/theme/
   // region overrides of the base token now cascade correctly, which is the
-  // behaviour consumers actually rely on.
+  // behavior consumers actually rely on.
   const names = [...generateHostTokensCSS('').matchAll(/^(--[a-zA-Z0-9_-]+)\s*:\s*([^;]+);/gm)]
     .filter(([, , value]) => !value.includes('var(--_'))
     .map((m) => m[1])
@@ -1668,7 +1668,7 @@ export function generateTokensCSS({ tags = [] } = {}) {
     ['--surface-hover', 'var(--bg-hover)'],
     ['--divider', 'var(--border-subtle)'],
     // Fixed regions keep the dark accent, so they keep the dark on-accent
-    // colour with it — without this the light theme's white would follow the
+    // color with it — without this the light theme's white would follow the
     // page into a region whose accent never changed.
     ['--on-accent', 'var(--surface-base)'],
     ['--glow-primary', tokens.glow.primary],

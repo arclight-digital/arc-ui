@@ -3,7 +3,7 @@
  *
  * Every default here is READ FROM `shared/tokens.js`, never retyped. The
  * previous synthesizer carried a hand-copied `DEFAULTS` map, and by v3 it had
- * silently drifted: three of the four text colours, every status colour in
+ * silently drifted: three of the four text colors, every status color in
  * light mode, and the whole font model were wrong, so the tool opened on a
  * theme the library does not ship and exported it as if it were the baseline.
  * Deriving the defaults makes that class of bug impossible — if a token moves
@@ -13,7 +13,7 @@ import { tokens, lightTokens } from '../../../../shared/tokens.js';
 
 export type ThemeMode = 'dark' | 'light';
 
-/** A colour token, edited per theme. */
+/** A color token, edited per theme. */
 export interface ColorControl {
   token: string;
   label: string;
@@ -56,7 +56,7 @@ export interface FontRole {
   familyFollowsBody?: boolean;
 }
 
-/* ── Colour ─────────────────────────────────────────────────────────────── */
+/* ── Color ─────────────────────────────────────────────────────────────── */
 
 export const COLOR_GROUPS: ColorGroup[] = [
   {
@@ -95,7 +95,7 @@ export const COLOR_GROUPS: ColorGroup[] = [
   {
     id: 'accent',
     label: 'Accent',
-    hint: 'The two colours the whole system is built on. Every gradient, glow and focus ring composes from these — change them and watch the preview.',
+    hint: 'The two colors the whole system is built on. Every gradient, glow and focus ring composes from these — change them and watch the preview.',
     controls: [
       { token: '--accent-primary', label: 'Primary', rgb: true },
       { token: '--accent-secondary', label: 'Secondary', rgb: true },
@@ -116,7 +116,7 @@ export const COLOR_GROUPS: ColorGroup[] = [
 
 export const COLOR_TOKENS: string[] = COLOR_GROUPS.flatMap((g) => g.controls.map((c) => c.token));
 
-/** Tokens whose `-rgb` channel triplet has to move with the colour. */
+/** Tokens whose `-rgb` channel triplet has to move with the color. */
 export const RGB_TOKENS: string[] = COLOR_GROUPS.flatMap((g) =>
   g.controls.filter((c) => c.rgb).map((c) => c.token),
 );
@@ -135,7 +135,7 @@ export const FONT_ROLES: FontRole[] = [
  * Only the fixed steps of the type scale are exposed.
  *
  * `--text-lg` and up are `clamp()` expressions that carry the responsive
- * behaviour of the whole system; handing them to a px slider would flatten
+ * behavior of the whole system; handing them to a px slider would flatten
  * every heading to a fixed size, which is a downgrade dressed up as a control.
  */
 export const TYPE_RANGES: RangeGroup = {

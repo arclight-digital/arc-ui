@@ -18,14 +18,14 @@ export const conversation: ComponentDef = {
     'messages',
   ],
 
-  overview: `Conversation is the transcript surface for an AI assistant panel. Slot \`<arc-message>\` children into it and each one takes a voice from its speaker attribute: user messages align to the inline end on a faint accent tint, assistant messages answer from the inline start on a neutral surface, and system messages run centred and muted for notices in the transcript's own voice. Because alignment is built on logical properties, the whole layout mirrors automatically in RTL.
+  overview: `Conversation is the transcript surface for an AI assistant panel. Slot \`<arc-message>\` children into it and each one takes a voice from its speaker attribute: user messages align to the inline end on a faint accent tint, assistant messages answer from the inline start on a neutral surface, and system messages run centered and muted for notices in the transcript's own voice. Because alignment is built on logical properties, the whole layout mirrors automatically in RTL.
 
 The container is the scroll area, and it knows the one rule every chat interface lives by: while the reader is near the bottom, new or growing messages keep the view pinned to the latest; the moment they scroll up to re-read, the transcript stays put. The \`arc-scroll-away\` and \`arc-scroll-return\` events report those transitions with the distance from the bottom, so a consumer can float a "jump to latest" chip and wire it to the \`scrollToEnd()\` method.
 
 Streaming needs no API of its own — a message body is its default slot, so appending text to the slot streams the reply in. With the \`markdown\` attribute set, the slotted text renders through the house markdown renderer and re-parses as it grows, and a \`pending\` message shows the typing indicator until the first tokens arrive. The transcript server-renders in full, typing dots included.`,
 
   features: [
-    'Three message voices: user on an accent tint at the inline end, assistant on a neutral surface, system centred and muted',
+    'Three message voices: user on an accent tint at the inline end, assistant on a neutral surface, system centered and muted',
     'Auto-scroll follows new and growing messages — only while the reader is already near the bottom',
     '`arc-scroll-away` / `arc-scroll-return` events with the distance from the bottom, for a "jump to latest" chip',
     '`scrollToEnd()` method to jump the transcript to its newest message',
@@ -40,7 +40,7 @@ Streaming needs no API of its own — a message body is its default slot, so app
 
   guidelines: {
     do: [
-      'Use Conversation for a dialogue between the user and a responder — the role attribution and scroll behaviour are the point',
+      'Use Conversation for a dialogue between the user and a responder — the role attribution and scroll behavior are the point',
       "Stream a reply by appending to the message's slotted text (for example, updating textContent as tokens arrive); with markdown set it re-renders as it grows",
       'Show a pending assistant message the moment a request is sent, then fill its slot when tokens arrive',
       'Give messages timestamps as ISO strings and let the house relative-time rendering do the rest',

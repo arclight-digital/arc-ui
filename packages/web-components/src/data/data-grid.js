@@ -652,7 +652,7 @@ export class ArcDataGrid extends LitElement {
   }
 
   _onEditorBlur(e) {
-    if (!this._editing) return; // already committed/cancelled
+    if (!this._editing) return; // already committed/canceled
     this._commitEdit(e.target.value, false);
   }
 

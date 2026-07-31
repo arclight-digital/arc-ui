@@ -18,7 +18,7 @@ const LOOP_PAUSE = 2000;
  *
  * The typing machinery mirrors arc-typewriter's setTimeout chain rather than
  * importing it — typewriter animates one string, this sequences many lines
- * with three behaviours, and a shared chain would serve neither cleanly.
+ * with three behaviors, and a shared chain would serve neither cleanly.
  *
  * Server-side the full completed transcript renders (no animation in Node);
  * on the client, autoplay blanks it before first paint and replays it when
@@ -240,7 +240,7 @@ export class ArcTerminal extends LitElement {
     }
   }
 
-  /** The lines array, defensively normalised so render never throws. */
+  /** The lines array, defensively normalized so render never throws. */
   _normalizedLines() {
     if (!Array.isArray(this.lines)) return [];
     return this.lines.filter(Boolean).map((line) => ({

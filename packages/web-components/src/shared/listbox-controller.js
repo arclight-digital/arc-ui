@@ -1,5 +1,5 @@
 /**
- * ListboxController — shared keyboard and active-option behaviour for the
+ * ListboxController — shared keyboard and active-option behavior for the
  * listbox-bearing inputs (select, combobox, multi-select, tag-input).
  *
  * All four grew the same `switch (e.key)` independently, and all four had the

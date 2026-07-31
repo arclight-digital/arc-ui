@@ -80,9 +80,9 @@ export class ArcBadge extends LitElement {
         background: rgba(var(--color-info-rgb), 0.06);
       }
 
-      /* One hover rule for every variant: --glow-status takes its colour from
+      /* One hover rule for every variant: --glow-status takes its color from
          the --_status-rgb that statusVars sets on the host. This was six rules
-         saying the same thing in six colours. The border is deliberately left
+         saying the same thing in six colors. The border is deliberately left
          alone — hover adds light, it does not move the edge. */
       :host(:hover) .badge { box-shadow: var(--glow-status); }
 

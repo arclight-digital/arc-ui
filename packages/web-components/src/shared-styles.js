@@ -58,7 +58,7 @@ export const tokenStyles = css`
 
      0.01ms rather than "animation: none" on purpose. A component that removes
      itself on animationend — the exiting toast and snackbar both do — would
-     wait forever for an event that a cancelled animation never fires. A
+     wait forever for an event that a canceled animation never fires. A
      duration this short is imperceptible and still completes. */
   @media (prefers-reduced-motion: reduce) {
     :host *,

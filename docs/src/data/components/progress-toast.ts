@@ -9,7 +9,7 @@ export const progressToast: ComponentDef = {
   description:
     'Toast variant with embedded progress bar for long-running operations. Same positioning and animation as toast but persists until complete.',
 
-  overview: `ProgressToast extends the toast pattern with an embedded progress bar for long-running operations like file uploads, data exports, and batch processing. Unlike standard toast (which auto-dismisses after a timeout), progress toast persists until the operation completes or is cancelled, giving users continuous visual feedback on the operation's progress.
+  overview: `ProgressToast extends the toast pattern with an embedded progress bar for long-running operations like file uploads, data exports, and batch processing. Unlike standard toast (which auto-dismisses after a timeout), progress toast persists until the operation completes or is canceled, giving users continuous visual feedback on the operation's progress.
 
 A single \`<arc-progress-toast>\` element acts as the host — place it once in your layout and call its \`show()\` method with a message, initial progress, and optional cancel callback. The method returns an ID that you use to update progress via \`updateToast(id, { progress })\` (optionally including a new \`message\`) and to signal completion via \`complete(id)\`. Multiple progress toasts can stack vertically, each tracking an independent operation.
 

@@ -87,7 +87,7 @@ export class ArcRating extends FormControlMixin(LitElement) {
       }
 
       /* Sizes — the glyph, since the control is nothing but glyphs. md is the
-         base rule above, so an unrecognised value lands on it. */
+         base rule above, so an unrecognized value lands on it. */
       :host([size="sm"]) .rating__star svg { width: 20px; height: 20px; }
       :host([size="lg"]) .rating__star svg { width: 36px; height: 36px; }
 

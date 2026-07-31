@@ -202,7 +202,7 @@ if (total === 0) {
 }
 
 // A whole-library breakage prints ~700 lines otherwise, which buries the shape.
-function summarise(rows, limit = 12) {
+function summarize(rows, limit = 12) {
   const byPkg = new Map();
   for (const r of rows) {
     const pkg = r.split('/')[0];
@@ -215,7 +215,7 @@ function summarise(rows, limit = 12) {
 console.error(`check-wrapper-slots: ${total} slot(s) do not reach a generated wrapper\n`);
 for (const [label, rows] of groups) {
   if (!rows.length) continue;
-  const { shown, rest, byPkg } = summarise(rows);
+  const { shown, rest, byPkg } = summarize(rows);
   console.error(`  ${label} — ${rows.length}:`);
   if (byPkg.size > 1) {
     console.error(`    by package: ${[...byPkg].map(([p, n]) => `${p} ${n}`).join(', ')}`);

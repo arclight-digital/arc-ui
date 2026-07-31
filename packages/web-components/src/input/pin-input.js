@@ -95,7 +95,7 @@ export class ArcPinInput extends FormControlMixin(LitElement) {
         -moz-appearance: textfield;
       }
 
-      /* Sizes. md is the base rule above, so an unrecognised value lands on it. */
+      /* Sizes. md is the base rule above, so an unrecognized value lands on it. */
       :host([size="sm"]) .pin__box { width: 34px; height: 40px; font-size: var(--_text-md); }
       :host([size="lg"]) .pin__box { width: 50px; height: 58px; font-size: var(--_text-xl); }
 

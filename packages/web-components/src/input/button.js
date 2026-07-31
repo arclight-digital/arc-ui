@@ -227,7 +227,7 @@ export class ArcButton extends LitElement {
 
   render() {
     // An explicit href always wins — it is the established API and stays
-    // byte-identical, so nothing that already works changes behaviour.
+    // byte-identical, so nothing that already works changes behavior.
     if (this.href) {
       return html`<a class="btn" href=${this.href} part="button">${this._renderContent()}</a>`;
     }

@@ -12,7 +12,7 @@ export const imageHotspots: ComponentDef = {
 
   overview: `Image Hotspots lays glowing pins over a picture and gives each pin a popover. Slot the image and the \`<arc-hotspot>\` children together — every pin positions itself from its own x and y attributes, given as percentages of the image, so source order never matters and the markup stays a flat list of facts about the picture.
 
-Each pin is a real button: keyboard-focusable, labelled for screen readers, and carrying \`aria-expanded\` popover semantics. Clicking or activating a pin opens its popover anchored above the pin, flipping to fit near viewport edges. The parent keeps one popover open at a time, and an open popover closes on Escape, on a click anywhere else, or on a second click of its pin.
+Each pin is a real button: keyboard-focusable, labeled for screen readers, and carrying \`aria-expanded\` popover semantics. Clicking or activating a pin opens its popover anchored above the pin, flipping to fit near viewport edges. The parent keeps one popover open at a time, and an open popover closes on Escape, on a click anywhere else, or on a second click of its pin.
 
 The pins render server-side at their coordinates because positioning is pure CSS derived from attributes; only the popover interaction needs JavaScript. Every hotspot reports its activity through \`arc-open\` and \`arc-close\` events that bubble to the parent, with \`detail.value\` carrying the hotspot's label — or its index when no label is set.`,
 
@@ -22,7 +22,7 @@ The pins render server-side at their coordinates because positioning is pure CSS
     'One popover open at a time, coordinated by the parent',
     'Escape and outside-click both dismiss the open popover',
     'Popovers flip and shift to stay inside the viewport',
-    'Pins are real buttons: focusable, labelled, `aria-expanded` state',
+    'Pins are real buttons: focusable, labeled, `aria-expanded` state',
     '`arc-open` / `arc-close` events with `detail.value` naming the hotspot',
     'Pins server-render at their positions; popovers stay closed without JS',
     'Ambient pulse is suppressed under `prefers-reduced-motion`',

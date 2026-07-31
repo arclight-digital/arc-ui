@@ -47,21 +47,21 @@ const SHADOW_KEYS = ['xs', 'sm', 'md', 'lg', 'xl', 'overlay', 'inset'];
  */
 const TEXT_SIZE_KEYS = ['xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl'];
 
-/** Foreground colours, as they are named in the token tree. */
+/** Foreground colors, as they are named in the token tree. */
 const TEXT_COLORS = ['primary', 'secondary', 'muted', 'ghost'];
 
 /** Background surfaces. */
 const BG_COLORS = ['deep', 'surface', 'base', 'card', 'elevated'];
 
-/** Border colours. */
+/** Border colors. */
 const BORDER_COLORS = ['subtle', 'default', 'bright'];
 
-/** Accent and status colours, available as both foreground and background. */
+/** Accent and status colors, available as both foreground and background. */
 const ACCENT_COLORS = ['accent-primary', 'accent-secondary', 'success', 'error', 'warning', 'info'];
 
 /**
  * The token behind an accent/status class. The class name is the bare key
- * (.arc-text-success), but base.css publishes the status colours under the
+ * (.arc-text-success), but base.css publishes the status colors under the
  * --color-* prefix — var(--success) does not exist and resolves to nothing.
  * The accents really are bare (--accent-primary), so only the statuses map.
  */
@@ -100,13 +100,13 @@ const SCALE_STEP = /^(?:xs|sm|md|lg|xl|\d+x[sl])$/;
 /**
  * Keep the two vocabularies sharing `--text-*` from ever converging.
  *
- * `--text-md` is a size and `--text-primary` is a colour, so `.arc-text-*` is
+ * `--text-md` is a size and `--text-primary` is a color, so `.arc-text-*` is
  * deliberately both — the class name is the token name, which is the point.
  * That only works because the key sets are disjoint *by shape*: sizes are scale
- * steps, colours are semantic words.
+ * steps, colors are semantic words.
  *
  * `assertNoCollisions` below catches the failure, but only once it has already
- * happened. This catches the cause: a colour named `md`, or a size named
+ * happened. This catches the cause: a color named `md`, or a size named
  * `primary`, fails here naming the mistake rather than three steps later naming
  * a duplicate selector.
  */
@@ -114,9 +114,9 @@ function assertNamespaceShapes() {
   for (const key of [...TEXT_COLORS, ...ACCENT_COLORS]) {
     if (!SCALE_STEP.test(key)) continue;
     throw new Error(
-      `utilities: the colour "${key}" is shaped like a step on the type scale, ` +
+      `utilities: the color "${key}" is shaped like a step on the type scale, ` +
         'and both emit .arc-text-* classes from the same token prefix.\n' +
-        'Foreground colours must stay semantic words (primary, muted, …) and ' +
+        'Foreground colors must stay semantic words (primary, muted, …) and ' +
         'sizes must stay scale steps (xs, md, 2xl, …), or --text-* stops ' +
         'saying which kind of thing it is.',
     );
@@ -125,7 +125,7 @@ function assertNamespaceShapes() {
     if (SCALE_STEP.test(key)) continue;
     throw new Error(
       `utilities: the type size "${key}" is not shaped like a scale step, so it ` +
-        'can collide with a foreground colour of the same name in .arc-text-*.\n' +
+        'can collide with a foreground color of the same name in .arc-text-*.\n' +
         'The semantic sizes (heading, body, …) are for components to read, not ' +
         'for consumers to reach past them with.',
     );
@@ -278,7 +278,7 @@ export function generateUtilitiesCSS() {
   );
 
   groups.push(
-    section('Colour', [
+    section('Color', [
       ...TEXT_SIZE_KEYS.map((k) => rule(`text-${k}`, `font-size: var(--text-${k});`)),
       ...TEXT_COLORS.map((k) => rule(`text-${k}`, `color: var(--text-${k});`)),
       ...ACCENT_COLORS.map((k) => rule(`text-${k}`, `color: var(${accentVar(k)});`)),

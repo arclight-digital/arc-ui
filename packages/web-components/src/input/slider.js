@@ -133,7 +133,7 @@ export class ArcSlider extends FormControlMixin(LitElement) {
 
       /* Sizes — the track thickness and the thumb, since a slider has no text
          to scale. md is the base rule above. The two thumb pseudo-elements
-         cannot be combined into one selector: a browser that doesn't recognise
+         cannot be combined into one selector: a browser that doesn't recognize
          one drops the whole rule. */
       :host([size="sm"]) input[type="range"] { height: 4px; }
       :host([size="sm"]) input[type="range"]::-webkit-slider-thumb { width: 16px; height: 16px; }

@@ -2,14 +2,14 @@
  * color.js — the contrast solver behind the theme.
  *
  * The two palettes used to be written by eye and corrected by incident. The
- * comments they accumulated read as a log: status colours darkened after an
+ * comments they accumulated read as a log: status colors darkened after an
  * install command rendered at 1.81 on the landing page, glows retuned because
  * the light theme inherited alphas chosen against near-black, the accent
  * caught at 4.18 against its own tint. Every fix was right and none of them
  * generalised, because a hand-picked hex answers one pairing and says nothing
  * about the next.
  *
- * A role does not want a colour. It wants a contrast against the thing it sits
+ * A role does not want a color. It wants a contrast against the thing it sits
  * on — 4.5:1 for body text, 3:1 for a large or non-text mark — and a hue that
  * still looks like the brand. So the palette states the contract and this
  * solves for it: hold hue and chroma from the seed, move lightness until the
@@ -22,7 +22,7 @@
  *
  * Everything here is build-time and dependency-free: `pnpm generate` writes
  * static values into base.css, so nothing is solved in a browser. The runtime
- * counterpart is the relative-colour clamp on the derived tokens, which is what
+ * counterpart is the relative-color clamp on the derived tokens, which is what
  * keeps a consumer's own --accent-primary legible without them solving anything.
  */
 
@@ -54,17 +54,17 @@ export function luminance(rgb) {
   return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 }
 
-/** Contrast ratio between two colours, 1 to 21. */
+/** Contrast ratio between two colors, 1 to 21. */
 export function contrast(a, b) {
   const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
   return (hi + 0.05) / (lo + 0.05);
 }
 
 /**
- * Composite a translucent colour over an opaque one — the background a role
+ * Composite a translucent color over an opaque one — the background a role
  * actually sits on when the surface under it is tinted. The accent-on-its-own
  * tint pairing is the strictest in the system and is invisible to anyone
- * checking the accent against the page colour.
+ * checking the accent against the page color.
  */
 export function composite(fg, alpha, bg) {
   return fg.map((c, i) => c * alpha + bg[i] * (1 - alpha));
@@ -104,7 +104,7 @@ export function oklchToRgb({ l: L, c: C, h: H }) {
  * Direction is inferred rather than asked for: contrast on a light ground comes
  * from going darker, on a dark ground from going lighter, and the background's
  * own luminance already says which. A seed that already clears the target is
- * returned untouched — the solver is a floor, not a normaliser, so a colour
+ * returned untouched — the solver is a floor, not a normalizer, so a color
  * chosen deliberately keeps its value.
  *
  * Binary search rather than a formula because OKLCH lightness and WCAG
@@ -140,7 +140,7 @@ export function solveContrast(seed, background, target) {
 }
 
 /**
- * Solve the `color-mix` percentage that carries a colour to its contract.
+ * Solve the `color-mix` percentage that carries a color to its contract.
  *
  * The theme already had this mechanism — --accent-text-mix, a percentage of
  * --text-primary blended into an accent so it stays legible as text — but the
@@ -148,10 +148,10 @@ export function solveContrast(seed, background, target) {
  * number covering six accents on an unstated background is a guess that
  * happens to be right about some of them.
  *
- * Mixing toward the page's own text colour is the right instrument, though: it
+ * Mixing toward the page's own text color is the right instrument, though: it
  * is theme-adaptive by construction, it needs no branch on which theme is
  * active, and because color-mix resolves in the browser it applies to a
- * consumer's brand colour as readily as to ours. So this keeps the mechanism
+ * consumer's brand color as readily as to ours. So this keeps the mechanism
  * and computes the number, returning the smallest percentage that satisfies
  * every pairing it is asked about — least change to the hue that clears the
  * bar, in 5% steps because a percentage nobody can see the difference of is
@@ -159,7 +159,7 @@ export function solveContrast(seed, background, target) {
  *
  * @param {Array<{seed: string, background: number[]}>} pairings - Each accent
  *   and the background it sits on as text.
- * @param {string} toward - The colour being mixed in, normally --text-primary.
+ * @param {string} toward - The color being mixed in, normally --text-primary.
  * @param {number} target - Contrast ratio to clear.
  * @returns {number} Percentage, 0 to 100.
  */
@@ -179,7 +179,7 @@ export function solveMixPercent(pairings, toward, target) {
         break;
       }
     }
-    // Unreachable means mixing toward the text colour cannot save this pairing
+    // Unreachable means mixing toward the text color cannot save this pairing
     // — the surface is the problem, not the accent. Reported as the ceiling so
     // the caller sees it rather than silently shipping an almost.
     worst = Math.max(worst, need ?? 100);

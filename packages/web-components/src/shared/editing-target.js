@@ -24,7 +24,7 @@
  *     if (e.key === ' ') togglePlayback();
  *   });
  *
- * Components that want to be recognised without importing anything also carry
+ * Components that want to be recognized without importing anything also carry
  * `data-arc-editing` on the host while their inner control holds focus, so
  * `e.target.matches('[data-arc-editing]')` works from plain CSS or a framework
  * template. `isEditingTarget` is the more reliable of the two: it needs no

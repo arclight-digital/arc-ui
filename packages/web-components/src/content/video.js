@@ -266,7 +266,7 @@ export class ArcVideo extends LitElement {
       }
 
       /* The two thumb pseudo-elements cannot share a selector: a browser that
-         does not recognise one drops the whole rule. */
+         does not recognize one drops the whole rule. */
       .video__scrubber:focus-visible::-webkit-slider-thumb {
         box-shadow: var(--interactive-focus-ring), var(--interactive-focus-thumb);
       }

@@ -90,7 +90,7 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
         transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
       }
 
-      /* Sizes. md is the base rule above, so an unrecognised value lands on it. */
+      /* Sizes. md is the base rule above, so an unrecognized value lands on it. */
       :host([size="sm"]) input { padding: var(--space-xs) var(--space-sm); padding-inline-end: 32px; font-size: var(--_text-sm); }
       :host([size="lg"]) input { padding: var(--space-md) var(--space-lg); padding-inline-end: 40px; font-size: var(--_text-md); }
 

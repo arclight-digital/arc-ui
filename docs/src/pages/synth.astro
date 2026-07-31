@@ -121,7 +121,7 @@ const description =
             </div>
 
             {COLOR_GROUPS.map((group) => (
-              <section class="rail-group" aria-labelledby={`grp-${group.id}`}>
+              <section class="rail-group" aria-labeledby={`grp-${group.id}`}>
                 <h2 class="rail-group__title" id={`grp-${group.id}`}>{group.label}</h2>
                 <p class="rail-group__hint">{group.hint}</p>
                 <div class="rail-group__body">
@@ -306,7 +306,7 @@ const description =
         <div class="stage-scroll">
           <!-- Interface: one composed screen, because a theme is judged as a
                whole and never as a grid of isolated widgets. -->
-          <div class="stage-panel" id="panel-interface" aria-labelledby="tab-interface" tabindex="0" data-stage-panel="interface" role="tabpanel">
+          <div class="stage-panel" id="panel-interface" aria-labeledby="tab-interface" tabindex="0" data-stage-panel="interface" role="tabpanel">
             <div class="demo-app">
               <div class="demo-app__head">
                 <div>
@@ -392,7 +392,7 @@ const description =
 
           <!-- Components: the matrix, for checking a token against every
                variant at once rather than against one composed screen. -->
-          <div class="stage-panel" id="panel-components" aria-labelledby="tab-components" tabindex="0" data-stage-panel="components" role="tabpanel" hidden>
+          <div class="stage-panel" id="panel-components" aria-labeledby="tab-components" tabindex="0" data-stage-panel="components" role="tabpanel" hidden>
             <div class="matrix">
               <section class="matrix-cell">
                 <h3 class="matrix-cell__title">Buttons</h3>
@@ -481,7 +481,7 @@ const description =
           </div>
 
           <!-- Contrast -->
-          <div class="stage-panel" id="panel-contrast" aria-labelledby="tab-contrast" tabindex="0" data-stage-panel="contrast" role="tabpanel" hidden>
+          <div class="stage-panel" id="panel-contrast" aria-labeledby="tab-contrast" tabindex="0" data-stage-panel="contrast" role="tabpanel" hidden>
             <div class="audit">
               <div class="audit__head">
                 <div>
@@ -528,13 +528,13 @@ const description =
               <arc-callout variant="info">
                 WCAG 2.1 ratios, computed from the tokens as you set them. Text pairs clearing 7:1
                 are marked AAA. This covers the pairings ARC UI actually paints; a component that
-                composites your colours at partial alpha can still land differently.
+                composites your colors at partial alpha can still land differently.
               </arc-callout>
             </div>
           </div>
 
           <!-- Code -->
-          <div class="stage-panel" id="panel-code" aria-labelledby="tab-code" tabindex="0" data-stage-panel="code" role="tabpanel" hidden>
+          <div class="stage-panel" id="panel-code" aria-labeledby="tab-code" tabindex="0" data-stage-panel="code" role="tabpanel" hidden>
             <div class="code-pane">
               <div class="code-pane__head">
                 <div>
@@ -588,7 +588,7 @@ const description =
   <arc-modal data-import-modal heading="Import a theme">
     <p class="modal-lede">
       Paste a stylesheet — what this tool exports, ARC UI's own <code>base.css</code>, or a theme
-      you hand-edited. A single colour works too, and becomes the primary accent.
+      you hand-edited. A single color works too, and becomes the primary accent.
     </p>
     <textarea
       class="import-area"
@@ -691,8 +691,8 @@ const description =
    *
    * Compound tokens are composed at `:root` and custom properties inherit
    * their already-substituted values, so scoping an accent override to a
-   * wrapper recolours direct `var(--accent-*)` uses and leaves every gradient,
-   * glow and focus ring inside it wearing the original colour. A preview that
+   * wrapper recolors direct `var(--accent-*)` uses and leaves every gradient,
+   * glow and focus ring inside it wearing the original color. A preview that
    * did that would contradict the library's central claim in the exact place
    * it is being demonstrated.
    */
@@ -712,7 +712,7 @@ const description =
    * `docs/src/styles/global.css` gives arcui.dev its own brand: it retunes
    * `--accent-secondary` to teal and hard-codes two compound tokens with the
    * channels spelled out. Left alone, the synthesizer would preview against
-   * that brand while exporting against the library's — you would pick colours
+   * that brand while exporting against the library's — you would pick colors
    * next to a teal gradient and ship a violet one. These re-compose the two
    * hard-coded tokens from whatever the base tokens currently are, which is
    * what they look like in a consuming project that never touched them.
@@ -737,7 +737,7 @@ const description =
     save();
   }
 
-  /* ── Rail: colours ───────────────────────────────────────────────────── */
+  /* ── Rail: colors ───────────────────────────────────────────────────── */
 
   function paintColorRows() {
     for (const row of $$('.color-row')) {
@@ -786,7 +786,7 @@ const description =
     if (!slot.firstElementChild) {
       const picker = document.createElement('arc-color-picker') as any;
       picker.value = state.colors[mode][token];
-      // The theme's own palette as quick-picks: most edits reuse a colour
+      // The theme's own palette as quick-picks: most edits reuse a color
       // already in the theme rather than inventing a new one.
       picker.presets = [
         state.colors[mode]['--accent-primary'],
@@ -1064,7 +1064,7 @@ const description =
       if (next !== mode) setMode(next, { syncDocument: false });
     }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
-    // Colour rows
+    // Color rows
     for (const row of $$('.color-row')) {
       const token = row.dataset.token!;
       $('[data-swatch]', row)!.addEventListener('click', () => togglePicker(row));
@@ -1459,7 +1459,7 @@ const description =
   }
 
   /* Marked underneath, where a tab's own affordance lives — never with a
-     coloured edge on the leading side. */
+     colored edge on the leading side. */
   .stage-tab[aria-selected='true']::after {
     content: '';
     position: absolute;
@@ -1582,7 +1582,7 @@ const description =
     color: var(--text-secondary);
   }
 
-  /* ── Colour rows ─────────────────────────────────────────────────────── */
+  /* ── Color rows ─────────────────────────────────────────────────────── */
 
   .color-row {
     display: grid;
@@ -1618,7 +1618,7 @@ const description =
   }
 
   /* A changed token lifts to primary rather than growing an edge marker —
-     hierarchy by weight of colour, not by a bar down the side. */
+     hierarchy by weight of color, not by a bar down the side. */
   .color-row.is-changed .color-row__label {
     color: var(--text-primary);
   }
@@ -2134,7 +2134,7 @@ const description =
     background: rgba(var(--color-success-rgb), 0.2);
   }
 
-  /* Reported, not judged: no threshold applies, so it gets no verdict colour. */
+  /* Reported, not judged: no threshold applies, so it gets no verdict color. */
   .ratio--info { color: var(--text-muted); }
   .ratio--info .ratio__tag {
     color: var(--text-ghost);

@@ -12,7 +12,7 @@
       /* The default voice is the user: bubble at the inline end. Flex end
          follows the writing direction, so RTL mirrors for free. The base rule
          carries the user styling and the other roles override it, which is
-         what routes an unrecognised role onto the default. */
+         what routes an unrecognized role onto the default. */
       .arc-message .message--user { flex-direction: row-reverse; }
 
       .arc-message .message__main {
@@ -61,7 +61,7 @@
         color: var(--text-secondary);
       }
 
-      /* System notices: the transcript's own voice, centred and quiet. */
+      /* System notices: the transcript's own voice, centered and quiet. */
       .arc-message .message--system { justify-content: center; }
       .arc-message .message--system .message__main { align-items: center; }
       .arc-message .message--system .message__meta { justify-content: center; }

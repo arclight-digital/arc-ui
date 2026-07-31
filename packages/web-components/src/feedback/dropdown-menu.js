@@ -127,7 +127,7 @@ export class ArcDropdownMenu extends LitElement {
       .dropdown__slot-host { display: none; }
     `,
     // The menu slides down rather than scaling; closedTransform keeps that
-    // entrance instead of normalising it to the default scale.
+    // entrance instead of normalizing it to the default scale.
     managedPanelStyles('dropdown__panel', { closedTransform: 'translateY(-4px)' }),
   ];
 

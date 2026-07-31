@@ -178,7 +178,7 @@ export class ArcNotificationPanel extends LitElement {
       floating: () => this.shadowRoot?.querySelector('.panel'),
       // This component's `position` names a corner rather than a side: the panel
       // always hangs below the trigger, and top-left/top-right choose which of
-      // its edges lines up. Anything unrecognised aligns like top-right, the
+      // its edges lines up. Anything unrecognized aligns like top-right, the
       // same fallback the CSS gives.
       align: () => (this.position === 'top-left' ? 'start' : 'end'),
       fallbackAlign: 'end',

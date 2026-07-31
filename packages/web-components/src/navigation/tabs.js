@@ -244,7 +244,7 @@ export class ArcTabs extends LitElement {
           class="tabs__panel"
           role="tabpanel"
           id="panel-${this.selected}"
-          aria-labelledby="tab-${this.selected}"
+          aria-labeledby="tab-${this.selected}"
         >
           <slot @slotchange=${this._onSlotChange}></slot>
         </div>

@@ -15,7 +15,7 @@ import { version } from '../data/site-stats';
    --accent-secondary to teal for this site, so the palette people actually
    see is blue → teal — while tokens.color.accentSecondary is the library
    default, violet. Reading the library token here painted every card in a
-   colour the site never shows, and then hardcoded teal beside it, so the
+   color the site never shows, and then hardcoded teal beside it, so the
    cards carried three accents to the site's two.
    Parsed rather than copied, for the same reason site-stats derives its
    numbers: a constant here would drift the first time the theme moved. */
@@ -85,14 +85,14 @@ function layer(background: string): Node {
    canvas blooms it; satori has neither — no filters, no animation — so what
    survives the render is thin diagonal lines across the type, which is
    scratches, not depth. The parts of the treatment that do survive a static
-   render are the colour and the falloff, and those are what is left.
+   render are the color and the falloff, and those are what is left.
 
    The lobes are the site's, at the site's positions — blue from the left,
    teal from the lower right, and the floor glow the whole thing sits on. The
    card used to light its own corners instead (10% 10%, 90% 90%), which put
    the brightest pixels exactly where a social platform crops and rounds.
 
-   Gone too: the 1px accent border and the coloured top and bottom edge
+   Gone too: the 1px accent border and the colored top and bottom edge
    glows, which framed the card like a component demo. The only frame left is
    a neutral hairline, so the card does not dissolve into a dark timeline. */
 export function backgroundLayers(): Node[] {
@@ -245,11 +245,11 @@ export interface PageCard {
   showFrameworks?: boolean;
 }
 
-/* Three pill treatments out of a two-colour palette. There used to be a
-   third colour to spend — the tier pill was violet and the interactivity
+/* Three pill treatments out of a two-color palette. There used to be a
+   third color to spend — the tier pill was violet and the interactivity
    pill teal — but the site only has blue and teal, so those two rendered
    identically once the palette was corrected. The distinction is carried by
-   whether the text takes the accent, not by adding a colour the brand does
+   whether the text takes the accent, not by adding a color the brand does
    not have: neutral reads as a label, the two accent treatments read as
    values. */
 const accents = {

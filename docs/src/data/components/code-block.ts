@@ -22,7 +22,7 @@ npm install shiki @shikijs/langs
 import '@arclux/arc-ui/code-block';
 \`\`\`
 
-Without shiki, CodeBlock still renders: the layout, the header, the copy button, and the code itself all work — the code is simply not coloured, and the console says so once. \`@arclux/arc-ui/register\` does not register CodeBlock for the same reason; import the subpath.
+Without shiki, CodeBlock still renders: the layout, the header, the copy button, and the code itself all work — the code is simply not colored, and the console says so once. \`@arclux/arc-ui/register\` does not register CodeBlock for the same reason; import the subpath.
 
 CodeBlock is marked as a hybrid component: the code display works without JavaScript (the layout and styling are pure CSS), but the copy-to-clipboard functionality requires JS and a secure context (HTTPS). The component gracefully handles copy failures with a silent try-catch, so it degrades without errors on HTTP or restricted environments.`,
 
@@ -31,7 +31,7 @@ CodeBlock is marked as a hybrid component: the code display works without JavaSc
     'Header bar with filename (monospace), language badge (uppercase Tomorrow), and copy button',
     'Horizontal scroll overflow for long code lines without wrapping',
     'Syntax highlighting via shiki — an optional peer dependency, imported only by this component',
-    'Renders uncoloured but fully functional when shiki is not installed',
+    'Renders uncolored but fully functional when shiki is not installed',
     'Code content via the "code" prop (this component has no default slot)',
     'JetBrains Mono font stack with 1.8 line-height and tab-size of 2',
     'Graceful degradation: copy fails silently on insecure contexts without breaking the UI',
@@ -43,14 +43,14 @@ CodeBlock is marked as a hybrid component: the code display works without JavaSc
     do: [
       'Set the language prop to help users identify the code syntax at a glance',
       'Provide a filename when showing code from a specific file for context',
-      'Install shiki and @shikijs/langs when you want highlighting — the component works without them, just uncoloured',
+      'Install shiki and @shikijs/langs when you want highlighting — the component works without them, just uncolored',
       'Import `@arclux/arc-ui/code-block` directly; the main barrel and `/register` deliberately exclude it',
       'Place CodeBlock in documentation pages, API references, and tutorial content',
       'Test copy functionality on HTTPS — the Clipboard API requires a secure context',
     ],
     dont: [
       'Do not pass content between the tags — there is no default slot; use the `code` prop',
-      'Do not expect highlighting without shiki installed — check the console if code renders uncoloured',
+      'Do not expect highlighting without shiki installed — check the console if code renders uncolored',
       'Do not use CodeBlock for single-line inline code; use arc-text variant="code" instead',
       'Do not omit the language prop when the syntax is not obvious from context',
       'Do not override the font-family unless you are intentionally switching to a different monospace font',

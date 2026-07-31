@@ -9,7 +9,7 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @requires arc-spy-link
  * @prop {string} active - The id of the currently active section. Reflects to an attribute and updates automatically as the user scrolls.
  * @prop {number} offset - Pixel distance from the top of the viewport at which a section counts as current. Increase it to account for taller sticky headers.
- * @prop {'none' | 'ring' | 'read' | 'both'} progress - How the reader's position through the document is shown. `ring` draws a progress arc beside the heading; `read` recedes the entries already scrolled past; `both` does each. Defaults to `none`, and an unrecognised value lands there too.
+ * @prop {'none' | 'ring' | 'read' | 'both'} progress - How the reader's position through the document is shown. `ring` draws a progress arc beside the heading; `read` recedes the entries already scrolled past; `both` does each. Defaults to `none`, and an unrecognized value lands there too.
  * @fires arc-change - Fired when the active spy target changes during scroll
  * @slot - Default content.
  * @csspart scroll-spy
@@ -32,7 +32,7 @@ export class ArcScrollSpy extends LitElement {
   static ringRadius = 6;
 
   /* Both readings of `progress` are derived, never stored, so the two can only
-     ever agree with the prop. An unrecognised value answers false to both and
+     ever agree with the prop. An unrecognized value answers false to both and
      so behaves as `none` — the default — rather than half-enabling something. */
   get _showRing() {
     return this.progress === 'ring' || this.progress === 'both';

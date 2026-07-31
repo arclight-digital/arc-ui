@@ -95,7 +95,7 @@ export class ArcKnob extends FormControlMixin(LitElement) {
       }
 
       /* Sizes — the dial diameter, since the readout and label type already sit
-         on the shared scale. md is the base rule above, so an unrecognised
+         on the shared scale. md is the base rule above, so an unrecognized
          value lands on it. */
       :host([size="sm"]) .knob__dial { width: 48px; height: 48px; }
       :host([size="lg"]) .knob__dial { width: 84px; height: 84px; }

@@ -17,11 +17,11 @@
  * button with no background, no border and no padding, and no error anywhere.
  *
  * The fix is to key the default on "not any of the other members" instead, so
- * an unrecognised value lands on it:
+ * an unrecognized value lands on it:
  *
  *   :host(:not([variant="secondary"]):not([variant="ghost"])) .btn { … }
  *
- * which matches an absent attribute, the default, and anything unrecognised.
+ * which matches an absent attribute, the default, and anything unrecognized.
  *
  * Note that the sibling `:host([variant="primary"])` selector usually left on
  * the same rule is *not* redundant even though the widened selector covers it:
@@ -30,7 +30,7 @@
  * generated union. check-prop-unions.js is the check for that half.
  *
  * Boolean props are exempt — absence is the whole semantic — as is the
- * `:host(:not([prop="value"]))` form, which already routes unrecognised values
+ * `:host(:not([prop="value"]))` form, which already routes unrecognized values
  * to the default by construction.
  *
  * Run via: pnpm check enum-fallbacks (and as part of pnpm generate)
@@ -83,7 +83,7 @@ for (const tier of TIERS) {
       const set = members.length >= 2 ? members : [...observed];
       problems.push(
         `${rel} — \`${prop}\` (${set.join(' | ')}) selects its default with ` +
-          `:host(:not([${prop}])), so an unrecognised value renders unstyled`,
+          `:host(:not([${prop}])), so an unrecognized value renders unstyled`,
       );
     }
   }
@@ -97,12 +97,12 @@ if (problems.length === 0) {
 }
 
 console.error(
-  `check-enum-fallbacks: ${problems.length} enum prop(s) render unstyled on an unrecognised value\n`,
+  `check-enum-fallbacks: ${problems.length} enum prop(s) render unstyled on an unrecognized value\n`,
 );
 for (const p of problems) console.error(`  ${p}`);
 console.error(
   '\nKey the default on the other members instead — :host(:not([prop="b"]):not([prop="c"]))\n' +
-    '— so an absent attribute, the default and an unrecognised value all reach it.\n' +
+    '— so an absent attribute, the default and an unrecognized value all reach it.\n' +
     'Keep the default\'s own :host([prop="a"]) selector: prism infers the prop union from it.',
 );
 process.exit(1);

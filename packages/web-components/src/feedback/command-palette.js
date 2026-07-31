@@ -205,7 +205,7 @@ export class ArcCommandPalette extends OverlayMixin(LitElement) {
 
       /* The matched characters. A <mark> is the right element — this is a
          relevance highlight, which is what mark means — but the UA paints it
-         black-on-yellow, so the colours are ours. */
+         black-on-yellow, so the colors are ours. */
       .palette__item-match {
         background: none;
         color: var(--interactive);

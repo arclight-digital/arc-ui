@@ -10,7 +10,7 @@ import { iconBoxStyles } from '../button-styles.js';
  * @prop {'dark' | 'light' | 'auto'} theme - The current theme mode. Automatically synced to localStorage and the document root `data-theme` attribute.
  * @prop {boolean} disabled - Prevents cycling and reduces opacity to 40%.
  * @prop {boolean} iconOnly - Renders the button as a compact square without the theme name label, matching an icon-only arc-icon-button of the same size. Attribute name is `icon-only`.
- * @prop {'xs' | 'sm' | 'md' | 'lg'} size - Box size when `icon-only`, on the same scale as arc-icon-button: xs=28px, sm=32px, md=36px, lg=44px. Set both controls to the same value when they sit side by side. Ignored by the labelled form, which is sized by its text.
+ * @prop {'xs' | 'sm' | 'md' | 'lg'} size - Box size when `icon-only`, on the same scale as arc-icon-button: xs=28px, sm=32px, md=36px, lg=44px. Set both controls to the same value when they sit side by side. Ignored by the labeled form, which is sized by its text.
  * @fires {CustomEvent<{ value: 'dark' | 'light' | 'auto' }>} arc-change - Fired when the theme is toggled, with { theme } detail
  * @slot none
  * @csspart button
@@ -36,7 +36,7 @@ export class ArcThemeToggle extends LitElement {
       :host { display: inline-flex; }
       :host([disabled]) { pointer-events: none; opacity: 0.5; }
 
-      /* Named .btn so the shared box rules reach it; the labelled form marks
+      /* Named .btn so the shared box rules reach it; the labeled form marks
          itself .btn--has-text, which is what excuses it from being square. */
       .btn {
         position: relative;
@@ -59,7 +59,7 @@ export class ArcThemeToggle extends LitElement {
           transform 120ms var(--ease-out-expo);
       }
 
-      /* The labelled form keeps its border: with a word in it, it reads as a
+      /* The labeled form keeps its border: with a word in it, it reads as a
          control you operate rather than as one of a row of bare glyphs. */
       .btn--has-text {
         border-color: var(--border-default);

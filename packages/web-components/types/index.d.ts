@@ -42,7 +42,7 @@ export declare class ArcActivityHeatmap extends LitElement {
  * Events: arc-close
  */
 export declare class ArcAlert extends LitElement {
-  /** Controls the semantic colour palette and icon. Use "info" for neutral guidance, "success" for confirmations, "warning" for caution states, and "error" for failures or blocking issues. @default 'info' */
+  /** Controls the semantic color palette and icon. Use "info" for neutral guidance, "success" for confirmations, "warning" for caution states, and "error" for failures or blocking issues. @default 'info' */
   variant: 'info' | 'success' | 'warning' | 'error';
   /** Visual density. 'compact' reduces padding and font sizes for inline or space-constrained usage. @default 'default' */
   density: 'default' | 'compact';
@@ -177,7 +177,7 @@ export declare class ArcBadge extends LitElement {
  * Events: arc-close
  */
 export declare class ArcBanner extends LitElement {
-  /** Controls the semantic colour palette and icon. Use "info" for neutral announcements, "success" for positive confirmations, "warning" for caution states, and "error" for outages or critical failures. @default 'info' */
+  /** Controls the semantic color palette and icon. Use "info" for neutral announcements, "success" for positive confirmations, "warning" for caution states, and "error" for outages or critical failures. @default 'info' */
   variant: 'info' | 'success' | 'warning' | 'error';
   /** When true, renders a close button on the right side. Clicking it collapses the banner and fires an "arc-close" event. @default false */
   dismissible: boolean;
@@ -296,7 +296,7 @@ export declare class ArcCalendar extends LitElement {
  * Events: arc-close
  */
 export declare class ArcCallout extends LitElement {
-  /** Semantic variant that controls the colour scheme, top accent bar, and default icon @default 'info' */
+  /** Semantic variant that controls the color scheme, top accent bar, and default icon @default 'info' */
   variant: 'info' | 'tip' | 'warning' | 'error';
   /** Shows a close button that removes the callout. Fires an arc-close event on close. @default false */
   dismissible: boolean;
@@ -381,11 +381,11 @@ export declare class ArcCheckbox extends LitElement {
   disabled: boolean;
   /** Controls the checkbox size. @default 'md' */
   size: 'sm' | 'md' | 'lg';
-  /** Visible text rendered beside the checkbox. Clicking the label toggles the checkbox, matching native HTML behaviour. Keep labels short, affirmative, and action-oriented for the best readability. @default '' */
+  /** Visible text rendered beside the checkbox. Clicking the label toggles the checkbox, matching native HTML behavior. Keep labels short, affirmative, and action-oriented for the best readability. @default '' */
   label: string;
   /** The form field name submitted when the checkbox lives inside a <form>. Required for native form submission and useful for serializing checkbox group values on the server. @default '' */
   name: string;
-  /** The value sent with the form when the checkbox is checked. Defaults to "on" if omitted, matching native checkbox behaviour. Set explicit values when multiple checkboxes share the same name to distinguish them in the submitted data. @default '' */
+  /** The value sent with the form when the checkbox is checked. Defaults to "on" if omitted, matching native checkbox behavior. Set explicit values when multiple checkboxes share the same name to distinguish them in the submitted data. @default '' */
   value: string;
   /** @default true */
   formAssociated: boolean;
@@ -506,9 +506,9 @@ export declare class ArcColorPicker extends LitElement {
  * `<arc-color-swatch>`
  */
 export declare class ArcColorSwatch extends LitElement {
-  /** Any valid CSS colour value applied as the swatch background @default '#4d7ef7' */
+  /** Any valid CSS color value applied as the swatch background @default '#4d7ef7' */
   color: string;
-  /** Display label below the swatch; falls back to the colour value if empty @default '' */
+  /** Display label below the swatch; falls back to the color value if empty @default '' */
   label: string;
   /** Controls swatch dimensions: sm (32px), md (48px), lg (64px) @default 'md' */
   size: 'sm' | 'md' | 'lg';
@@ -654,7 +654,7 @@ export declare class ArcConfirm extends LitElement {
   confirmLabel: string;
   /** Label for the cancel button. Use a specific alternative like "Keep" or "Go back" when possible. @default 'Cancel' */
   cancelLabel: string;
-  /** Controls the confirm button style. Use "error" for destructive actions — the confirm button renders in the error colour. @default 'default' */
+  /** Controls the confirm button style. Use "error" for destructive actions — the confirm button renders in the error color. @default 'default' */
   variant: 'default' | 'error';
 }
 
@@ -1223,7 +1223,7 @@ export declare class ArcIconButton extends LitElement {
   text: string;
   /** Visual style variant. Ghost is transparent, secondary has a border with glow, primary has a solid accent-primary fill. @default 'ghost' */
   variant: 'ghost' | 'secondary' | 'primary';
-  /** Button size controlling dimensions and icon scale. Icon-only sizes are circular: xs=28px, sm=32px, md=36px, lg=44px. The labelled form stays a rounded rectangle. @default 'md' */
+  /** Button size controlling dimensions and icon scale. Icon-only sizes are circular: xs=28px, sm=32px, md=36px, lg=44px. The labeled form stays a rounded rectangle. @default 'md' */
   size: 'xs' | 'sm' | 'md' | 'lg';
   /** Accessible label for the button. Falls back to `text` if not provided. Required for icon-only usage. @default '' */
   label: string;
@@ -1322,7 +1322,7 @@ export declare class ArcInfiniteScroll extends LitElement {
 export declare class ArcInlineEdit extends LitElement {
   /** The committed text. Updated only when an edit commits (Enter or blur); keystrokes accumulate in an internal draft until then. @default '' */
   value: string;
-  /** Accessible name for the control. The display state announces as "Edit {label}" and the edit field is labelled with it. Always provide one. @default '' */
+  /** Accessible name for the control. The display state announces as "Edit {label}" and the edit field is labeled with it. Always provide one. @default '' */
   label: string;
   /** The `name` attribute sent with form data on submission. The submitted value is the committed `value`, never an in-progress draft. @default '' */
   name: string;
@@ -1351,7 +1351,7 @@ export declare class ArcInlineEdit extends LitElement {
  * `<arc-inline-message>`
  */
 export declare class ArcInlineMessage extends LitElement {
-  /** Controls the icon and text colour. Use "info" for neutral hints, "success" for valid state feedback, "warning" for caution notes, and "error" for validation failures. @default 'info' */
+  /** Controls the icon and text color. Use "info" for neutral hints, "success" for valid state feedback, "warning" for caution notes, and "error" for validation failures. @default 'info' */
   variant: 'info' | 'success' | 'warning' | 'error';
 }
 
@@ -1362,7 +1362,7 @@ export declare class ArcInlineMessage extends LitElement {
 export declare class ArcInput extends LitElement {
   /** Runs its own constraint logic — owns the whole validity flag set. @default false */
   autoValidates: boolean;
-  /** The HTML input type. Controls browser validation behaviour and which virtual keyboard appears on mobile devices. Ignored when `multiline` is true. @default 'text' */
+  /** The HTML input type. Controls browser validation behavior and which virtual keyboard appears on mobile devices. Ignored when `multiline` is true. @default 'text' */
   type: 'text' | 'email' | 'tel' | 'url' | 'password';
   /** The `name` attribute sent with form data on submission. Also used by the Form component to track field state and validation. @default '' */
   name: string;
@@ -1747,7 +1747,7 @@ export declare class ArcMenubar extends LitElement {
  * `<arc-message>`
  */
 export declare class ArcMessage extends LitElement {
-  /** Whose message this is. "user" aligns to the inline end on an accent-tinted surface, "assistant" to the inline start on a neutral surface, and "system" runs centred and muted for notices in the transcript's own voice. An unrecognised value renders as "user". @default 'user' */
+  /** Whose message this is. "user" aligns to the inline end on an accent-tinted surface, "assistant" to the inline start on a neutral surface, and "system" runs centered and muted for notices in the transcript's own voice. An unrecognized value renders as "user". @default 'user' */
   speaker: 'user' | 'assistant' | 'system';
   /** Display name shown in the muted meta line above the bubble. Omit it and the meta line only appears when a timestamp is set. @default '' */
   author: string;
@@ -1786,7 +1786,7 @@ export declare class ArcMeter extends LitElement {
 export declare class ArcModal extends LitElement {
   /** Controls the visible state of the dialog. Set to `true` to open the modal and activate the focus trap; set to `false` to close it, run the exit animation, and restore focus to the previously-focused element. @default false */
   open: boolean;
-  /** Text displayed in the modal header bar. Automatically linked to the dialog via `aria-labelledby` for screen-reader accessibility. Keep it short and action-oriented (e.g. "Delete Project" rather than "Are you sure?"). @default '' */
+  /** Text displayed in the modal header bar. Automatically linked to the dialog via `aria-labeledby` for screen-reader accessibility. Keep it short and action-oriented (e.g. "Delete Project" rather than "Are you sure?"). @default '' */
   heading: string;
   /** Controls the maximum width of the dialog panel. `sm` (400px) is ideal for simple confirmations, `md` (560px) for standard forms, and `lg` (720px) for content-heavy dialogs with tables or multi-column layouts. @default 'md' */
   size: 'sm' | 'md' | 'lg';
@@ -1840,7 +1840,7 @@ export declare class ArcNavItem extends LitElement {
   hasChildren: unknown;
   /** Destination URL for the nav item. Required for leaf items that navigate. Omit on parent items that serve only as dropdown triggers. @default '' */
   href: string;
-  /** Highlights the item with an accent-coloured bottom border to indicate the current route. Set this on the top-level NavItem that corresponds to the active page. @default false */
+  /** Highlights the item with an accent-colored bottom border to indicate the current route. Set this on the top-level NavItem that corresponds to the active page. @default false */
   active: boolean;
   /** Visual style variant. `default` shows a subtle border and muted text with accent glow on active. `primary` uses accent-colored text and border in the resting state with a stronger glow on hover/active. `muted` renders a subdued style with no border and lighter text — ideal for secondary links like "Blog" or "Changelog". @default 'default' */
   variant: 'default' | 'primary' | 'muted';
@@ -2348,7 +2348,7 @@ export declare class ArcScrollSpy extends LitElement {
   active: string;
   /** Pixel distance from the top of the viewport at which a section counts as current. Increase it to account for taller sticky headers. @default 80 */
   offset: number;
-  /** How the reader's position through the document is shown. `ring` draws a progress arc beside the heading; `read` recedes the entries already scrolled past; `both` does each. Defaults to `none`, and an unrecognised value lands there too. @default 'none' */
+  /** How the reader's position through the document is shown. `ring` draws a progress arc beside the heading; `read` recedes the entries already scrolled past; `both` does each. Defaults to `none`, and an unrecognized value lands there too. @default 'none' */
   progress: 'none' | 'ring' | 'read' | 'both';
 }
 
@@ -2680,7 +2680,7 @@ export declare class ArcSpeedDial extends LitElement {
 export declare class ArcSpinner extends LitElement {
   /** Spinner dimensions: sm (16px), md (24px), lg (40px) @default 'md' */
   size: 'sm' | 'md' | 'lg';
-  /** Colour of the spinner ring @default 'primary' */
+  /** Color of the spinner ring @default 'primary' */
   variant: 'primary' | 'secondary' | 'white';
 }
 
@@ -2866,7 +2866,7 @@ export declare class ArcTabs extends LitElement {
  * Events: arc-remove
  */
 export declare class ArcTag extends LitElement {
-  /** Colour variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and error provide semantic status colours. @default 'default' */
+  /** Color variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and error provide semantic status colors. @default 'default' */
   variant: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error';
   /** Controls the tag size. @default 'md' */
   size: 'sm' | 'md' | 'lg';
@@ -2874,7 +2874,7 @@ export declare class ArcTag extends LitElement {
   removable: boolean;
   /** Disables the tag, reducing opacity to 40% and blocking pointer events including the remove button. @default false */
   disabled: boolean;
-  /** Custom colour as an RGB triplet (e.g. `"77, 126, 247"`). When set, overrides the variant colours for border, text, background, and hover glow. Useful for data-driven category colours. @default '' */
+  /** Custom color as an RGB triplet (e.g. `"77, 126, 247"`). When set, overrides the variant colors for border, text, background, and hover glow. Useful for data-driven category colors. @default '' */
   color: string;
 }
 
@@ -2960,7 +2960,7 @@ export declare class ArcTextarea extends LitElement {
   name: string;
   /** Hint text displayed inside the field when it is empty. Use it to show example input -- never as a substitute for the label. @default '' */
   placeholder: string;
-  /** Visible label rendered above the textarea in uppercase. Automatically linked to the field via `aria-labelledby`, ensuring screen readers announce it correctly. @default '' */
+  /** Visible label rendered above the textarea in uppercase. Automatically linked to the field via `aria-labeledby`, ensuring screen readers announce it correctly. @default '' */
   label: string;
   /** The number of visible text rows that set the initial height of the textarea. Does not limit content length -- the user can scroll or resize beyond this height. @default 4 */
   rows: number;
@@ -3002,7 +3002,7 @@ export declare class ArcThemeToggle extends LitElement {
   disabled: boolean;
   /** Renders the button as a compact square without the theme name label, matching an icon-only arc-icon-button of the same size. Attribute name is `icon-only`. @default false */
   iconOnly: boolean;
-  /** Box size when `icon-only`, on the same scale as arc-icon-button: xs=28px, sm=32px, md=36px, lg=44px. Set both controls to the same value when they sit side by side. Ignored by the labelled form, which is sized by its text. @default 'md' */
+  /** Box size when `icon-only`, on the same scale as arc-icon-button: xs=28px, sm=32px, md=36px, lg=44px. Set both controls to the same value when they sit side by side. Ignored by the labeled form, which is sized by its text. @default 'md' */
   size: 'xs' | 'sm' | 'md' | 'lg';
 }
 

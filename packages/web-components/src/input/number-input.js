@@ -149,7 +149,7 @@ export class ArcNumberInput extends FormControlMixin(LitElement) {
         -moz-appearance: textfield;
       }
 
-      /* Sizes. md is the base rule above, so an unrecognised value lands on it. */
+      /* Sizes. md is the base rule above, so an unrecognized value lands on it. */
       :host([size="sm"]) .number-input__field { padding: var(--space-xs); font-size: var(--_text-sm); }
       :host([size="lg"]) .number-input__field { padding: var(--space-md) var(--space-sm); font-size: var(--_text-md); }
 
