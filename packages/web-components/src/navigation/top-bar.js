@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { breakpoints } from '../generated/breakpoints.js';
 import '../layout/container.register.js';
 
 /**
@@ -283,11 +284,11 @@ export class ArcTopBar extends LitElement {
         transform: translateY(-5.25px) rotate(-45deg);
       }
 
-      /* 900px is not a breakpoint token, and arc-navigation-menu hardcodes the
-         same number for the width at which it collapses. The pair is
-         load-bearing: move one without the other and both hamburgers show at
-         once, or neither does. Change them together, or move both onto a token. */
-      @media (max-width: 900px) {
+      /* Shared with arc-navigation-menu, which collapses its links at the same
+         width. The pair is load-bearing — move one without the other and both
+         hamburgers show at once, or neither does — so both read the number from
+         the token tree rather than restating it. */
+      @media (max-width: ${breakpoints.navCollapse}px) {
         .topbar__menu-btn { display: flex; }
       }
     `,

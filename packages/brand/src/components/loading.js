@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import { injectTekturFont } from '../assets/inject-tektur.js';
+import { injectAzeretFont } from '../assets/inject-azeret.js';
 import './logo.js';
 
 const SIZES = {
@@ -53,10 +53,10 @@ export class ArclightLoading extends LitElement {
       }
 
       .label {
-        font-family: 'Tektur Subset', system-ui, sans-serif;
+        font-family: 'Azeret Mono Subset', ui-monospace, monospace;
         font-size: 10px;
         font-weight: 600;
-        letter-spacing: 3px;
+        letter-spacing: 1px;
         text-transform: uppercase;
         color: var(--text-ghost, #6b6b80);
       }
@@ -72,11 +72,11 @@ export class ArclightLoading extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    if (this.label) injectTekturFont();
+    if (this.label) injectAzeretFont();
   }
 
   updated() {
-    if (this.label) injectTekturFont();
+    if (this.label) injectAzeretFont();
   }
 
   render() {

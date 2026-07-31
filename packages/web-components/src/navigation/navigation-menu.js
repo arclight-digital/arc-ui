@@ -1,5 +1,6 @@
 import { LitElement, html, css, render as litRender } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { breakpoints } from '../generated/breakpoints.js';
 import { lockScroll, unlockScroll } from '../shared/scroll-lock.js';
 
 /**

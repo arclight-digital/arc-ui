@@ -290,6 +290,21 @@ export const tokens = {
     lg:   '1024px',
     xl:   '1280px',
     '2xl': '1536px',
+    /**
+     * The width at which the primary navigation collapses to a hamburger.
+     *
+     * Deliberately off the xs–2xl scale: it is not a layout step, it is the
+     * point where the nav stops fitting, which depends on how many top-level
+     * items there are rather than on any device class.
+     *
+     * It was written out four times — a media query in arc-top-bar, another in
+     * arc-navigation-menu, a window.innerWidth comparison in the same file, and
+     * arc-app-shell's `breakpoint` default. They have to agree: move one and
+     * you get two hamburgers at once or none at all. A media query cannot read
+     * a CSS custom property, so the shared value has to reach the components as
+     * a build-time constant — see scripts/generate-breakpoints.js.
+     */
+    navCollapse: '900px',
   },
 
   /* ── Opacity ── */

@@ -48,6 +48,6 @@ export const brandAssets = [
 ];
 
 export const brandFonts = {
-  display: { family: 'Tektur', weight: '400 900', usage: 'Headings, labels, badges' },
+  display: { family: 'Azeret Mono', weight: '100 900', usage: 'Headings, labels, badges' },
   body: { family: 'Host Grotesk', weight: '100 900', usage: 'Body text, wordmark' },
 };

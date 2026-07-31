@@ -17,7 +17,7 @@ export const tokenStyles = css`
 
   :host {
     --font-body: 'Host Grotesk', system-ui, sans-serif;
-    --font-accent: 'Tektur', system-ui, sans-serif;
+    --font-accent: 'Azeret Mono', ui-monospace, monospace;
 
     --space-xs: 4px;
     --space-sm: 8px;

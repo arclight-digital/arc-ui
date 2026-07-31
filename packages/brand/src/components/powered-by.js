@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import { injectTekturFont } from '../assets/inject-tektur.js';
+import { injectAzeretFont } from '../assets/inject-azeret.js';
 import './logo-wordmark.js';
 
 const SIZES = {
@@ -42,9 +42,9 @@ export class ArclightPoweredBy extends LitElement {
       }
 
       .label {
-        font-family: 'Tektur Subset', system-ui, sans-serif;
+        font-family: 'Azeret Mono Subset', ui-monospace, monospace;
         text-transform: uppercase;
-        letter-spacing: 3px;
+        letter-spacing: 1px;
         color: var(--text-ghost, #6b6b80);
         font-weight: 500;
         margin-top: 0.15em;
@@ -54,7 +54,7 @@ export class ArclightPoweredBy extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    injectTekturFont();
+    injectAzeretFont();
   }
 
   constructor() {

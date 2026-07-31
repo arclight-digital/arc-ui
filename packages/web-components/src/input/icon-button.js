@@ -71,12 +71,23 @@ export class ArcIconButton extends LitElement {
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
         text-transform: uppercase;
-        letter-spacing: 1.5px;
+        --_ls: 1.5px;
+        letter-spacing: var(--_ls);
         white-space: nowrap;
       }
 
       .btn__text {
         line-height: 1;
+        /* letter-spacing also lands after the final letter, and that trailing
+           space is inside the box being centred — so the word rendered half of
+           it, 0.75px, to the left of centre. Pulled back off the end here, at
+           the cause: the box then matches the ink and every size centres
+           correctly, where compensating with padding would have meant patching
+           each of the four size rules separately.
+           arc-navigation-menu does the same correction with asymmetric padding
+           instead, because its label is a bare text node with no element to
+           hang a margin on. */
+        margin-inline-end: calc(var(--_ls) * -1);
       }
 
       /* Sizes — icon-only: see iconBoxStyles in ../button-styles.js, shared with
