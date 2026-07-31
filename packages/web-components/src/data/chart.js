@@ -171,7 +171,7 @@ export class ArcChart extends LitElement {
       .chip {
         width: 8px;
         height: 8px;
-        border-radius: 2px;
+        border-radius: var(--radius-xs);
         flex: none;
       }
 

@@ -61,3 +61,54 @@ export const buttonVariantStyles = css`
   :host([disabled]) .btn,
   :host([disabled]) .btn-slot::slotted(a) { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
 `;
+
+/**
+ * The square icon-button box: one scale of sizes, shared.
+ *
+ * Split out of icon-button for the same reason buttonVariantStyles was split
+ * out of button — a second component needs the identical box and had been
+ * carrying its own copy of the numbers. arc-theme-toggle's icon-only form was
+ * 36px at radius-full with a visible border while arc-icon-button at size="sm"
+ * was 32px at radius-md with a transparent one; standing next to each other in
+ * a top bar, as they do on every page of the docs, the two read as different
+ * kinds of control. Numbers that must agree cannot live in two files.
+ *
+ * A consumer still supplies:
+ * - the base `.btn` rule, including its border-radius
+ * - the variant colours (buttonVariantStyles, or its own)
+ * - anything the labelled, non-square form needs
+ *
+ * Keyed on `.btn:not(.btn--has-text)`, so a component that also has a labelled
+ * form marks it with `.btn--has-text` and keeps its own sizing for that.
+ */
+export const iconBoxStyles = css`
+  /* Circular. An icon-only control has no text to give it a reading direction,
+     so a square is arbitrary about its corners in a way a circle is not; it
+     also separates the bare-glyph controls from the labelled, rectangular ones
+     at a glance. This is the shape arc-theme-toggle already had, now applied to
+     both rather than to one of them. */
+  .btn:not(.btn--has-text),
+  .btn-slot::slotted(a) { border-radius: var(--radius-full); }
+
+  .btn:not(.btn--has-text) { aspect-ratio: 1; }
+
+  .btn:not(.btn--has-text),
+  .btn-slot::slotted(a) { min-width: var(--touch-min); min-height: var(--touch-min); }
+
+  /* The default arm is keyed on "not the others" so an unrecognised size lands
+     on it rather than on no rule at all — see check-enum-fallbacks.js. The
+     explicit [size="md"] selector stays so prism can infer the union. */
+  :host(:not([size="lg"]):not([size="sm"]):not([size="xs"])) .btn:not(.btn--has-text),
+  :host(:not([size="lg"]):not([size="sm"]):not([size="xs"])) .btn-slot::slotted(a),
+  :host([size="md"]) .btn:not(.btn--has-text),
+  :host([size="md"]) .btn-slot::slotted(a) { width: 36px; height: 36px; }
+
+  :host([size="xs"]) .btn:not(.btn--has-text),
+  :host([size="xs"]) .btn-slot::slotted(a) { width: 28px; height: 28px; }
+
+  :host([size="sm"]) .btn:not(.btn--has-text),
+  :host([size="sm"]) .btn-slot::slotted(a) { width: 32px; height: 32px; }
+
+  :host([size="lg"]) .btn:not(.btn--has-text),
+  :host([size="lg"]) .btn-slot::slotted(a) { width: 44px; height: 44px; }
+`;

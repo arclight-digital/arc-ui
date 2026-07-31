@@ -8,7 +8,7 @@ const { headings } = Astro.props;
 
 {headings.length > 0 && (
   <nav class="toc" aria-label="On this page">
-    <arc-scroll-spy id="docs-toc">
+    <arc-scroll-spy id="docs-toc" progress="both">
       {headings.map((h) => (
         <arc-spy-link target={h.id} level={h.level ?? 0}>{h.label}</arc-spy-link>
       ))}

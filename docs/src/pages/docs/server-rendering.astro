@@ -1,5 +1,6 @@
 ---
 import DocsLayout from '../../layouts/DocsLayout.astro';
+import { elementCount } from '../../data/site-stats';
 
 const headings = [
   { id: 'overview', label: 'Overview' },
@@ -29,7 +30,7 @@ const headings = [
         The component's content is in the initial HTML response.
       </p>
       <p>
-        <strong>185 of 186 components</strong> render this way today. This is optional: a consumer
+        <strong>All {elementCount} components</strong> render this way today. This is optional: a consumer
         with no build step, or loading ARC from a CDN, needs none of it and loses nothing.
       </p>
     </section>
@@ -46,7 +47,7 @@ const headings = [
   description="Ships 40% less JavaScript"
 ></arc-feature-card>`}</code></pre>
       <p>
-        <strong>65 of 186 components</strong> are shaped like this — they have no default slot at
+        <strong>65 of {elementCount} components</strong> are shaped like this — they have no default slot at
         all, so there is no markup to fall back to. Server rendering is the only thing that puts
         their content in the payload. Slot-driven components already degrade gracefully, and gain
         less from it.
@@ -110,7 +111,7 @@ import '@arclux/arc-ui/register';`}</code></pre>
         <code>hostConnected</code>. Browser work belongs in those.
       </p>
       <ul>
-        <li><strong>All 186 components</strong> server-render, every one emitting declarative shadow DOM.</li>
+        <li><strong>All {elementCount} components</strong> server-render, every one emitting declarative shadow DOM.</li>
         <li>
           There are no client-only components. <code>arc-markdown</code> was the last one — its
           sanitiser needed <code>DOMParser</code> and its render used an <code>.innerHTML</code>

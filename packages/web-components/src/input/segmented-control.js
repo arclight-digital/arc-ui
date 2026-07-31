@@ -31,7 +31,9 @@ export class ArcSegmentedControl extends LitElement {
         align-items: center;
         background: var(--surface-primary);
         border: 1px solid var(--border-default);
-        border-radius: var(--radius-md);
+        /* Pill track, pill thumb — the thumb slides along it, and a capsule is
+           the shape that reads as a track rather than as a row of boxes. */
+        border-radius: var(--radius-full);
         padding: 3px; /* cosmetic inset for pill container */
         gap: 2px; /* cosmetic micro-spacing */
         box-sizing: border-box;
@@ -51,7 +53,10 @@ export class ArcSegmentedControl extends LitElement {
         color: var(--text-muted);
         background: transparent;
         border: 1px solid transparent;
-        border-radius: calc(var(--radius-md) - 2px);
+        /* No inset calc needed once both are pills: a capsule nested in a
+           capsule stays concentric at any size, which the md-minus-2px form
+           only approximated. */
+        border-radius: var(--radius-full);
         cursor: pointer;
         transition:
           background var(--transition-base),

@@ -14,6 +14,7 @@ declare module 'solid-js' {
 export interface ScrollSpyProps {
   active?: string;
   offset?: number;
+  progress?: 'none' | 'ring' | 'read' | 'both';
   onArcChange?: (e: CustomEvent) => void;
   children?: JSX.Element;
   class?: string;
@@ -44,9 +45,9 @@ export interface ScrollSpyProps {
 }
 
 export const ScrollSpy: Component<ScrollSpyProps> = (props) => {
-  const [local, rest] = splitProps(props, ['active', 'offset', 'onArcChange', 'children']);
+  const [local, rest] = splitProps(props, ['active', 'offset', 'progress', 'onArcChange', 'children']);
   return (
-    <arc-scroll-spy active={local.active} offset={local.offset} on:arc-change={local.onArcChange} {...rest}>
+    <arc-scroll-spy active={local.active} offset={local.offset} progress={local.progress} on:arc-change={local.onArcChange} {...rest}>
       {local.children}
     </arc-scroll-spy>
   );

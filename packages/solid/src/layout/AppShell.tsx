@@ -14,6 +14,7 @@ declare module 'solid-js' {
 export interface AppShellProps {
   sidebarOpen?: boolean;
   breakpoint?: number;
+  onArcSidebarToggle?: (e: CustomEvent) => void;
   children?: JSX.Element;
   class?: string;
   id?: string;
@@ -43,9 +44,9 @@ export interface AppShellProps {
 }
 
 export const AppShell: Component<AppShellProps> = (props) => {
-  const [local, rest] = splitProps(props, ['sidebarOpen', 'breakpoint', 'children']);
+  const [local, rest] = splitProps(props, ['sidebarOpen', 'breakpoint', 'onArcSidebarToggle', 'children']);
   return (
-    <arc-app-shell prop:sidebarOpen={local.sidebarOpen} breakpoint={local.breakpoint} {...rest}>
+    <arc-app-shell prop:sidebarOpen={local.sidebarOpen} breakpoint={local.breakpoint} on:arc-sidebar-toggle={local.onArcSidebarToggle} {...rest}>
       {local.children}
     </arc-app-shell>
   );

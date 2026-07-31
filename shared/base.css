@@ -315,6 +315,7 @@
   --max-width: 1120px;
   --max-width-sm: 720px;
   --nav-height: 64px;
+  --nav-row-inset: var(--space-sm);
 
   --bg-hover: rgba(255, 255, 255, 0.04);
   --overlay-backdrop: rgba(0, 0, 0, 0.6);
@@ -383,6 +384,10 @@
   --border-bright: rgb(190, 195, 205);
   --accent-primary: rgb(55, 105, 235);
   --accent-secondary: rgb(120, 70, 230);
+  --color-success: rgb(13, 124, 92);
+  --color-error: rgb(190, 42, 42);
+  --color-warning: rgb(147, 102, 0);
+  --color-info: rgb(27, 88, 190);
   --chart-1: #3769eb;
   --chart-4: #7846e6;
   --chart-6: #4d7c0f;
@@ -436,6 +441,10 @@
     --border-bright: rgb(190, 195, 205);
     --accent-primary: rgb(55, 105, 235);
     --accent-secondary: rgb(120, 70, 230);
+    --color-success: rgb(13, 124, 92);
+    --color-error: rgb(190, 42, 42);
+    --color-warning: rgb(147, 102, 0);
+    --color-info: rgb(27, 88, 190);
     --chart-1: #3769eb;
     --chart-4: #7846e6;
     --chart-6: #4d7c0f;
@@ -596,6 +605,15 @@
   --gradient-divider: linear-gradient(90deg, transparent, var(--border-subtle), transparent);
   --bg-hover: rgba(var(--white-rgb), 0.04);
   --overlay-backdrop: rgba(var(--black-rgb), 0.6);
+  --interactive: var(--accent-primary);
+  --interactive-rgb: var(--accent-primary-rgb);
+  --interactive-muted: var(--text-ghost);
+  --surface-base: var(--bg-deep);
+  --surface-primary: var(--bg-surface);
+  --surface-raised: var(--bg-card);
+  --surface-overlay: var(--bg-elevated);
+  --surface-hover: var(--bg-hover);
+  --divider: var(--border-subtle);
 }
 
 [data-theme="light"] .theme-fixed {
@@ -604,13 +622,13 @@
   --bg-base: rgb(16, 16, 62);
   --bg-card: rgb(20, 20, 70);
   --bg-elevated: rgb(26, 26, 80);
-  --text-secondary: rgb(179, 183, 212);
-  --text-muted: rgb(165, 170, 203);
-  --text-ghost: rgb(155, 160, 196);
+  --text-secondary: rgb(196, 198, 206);
+  --text-muted: rgb(152, 154, 164);
+  --text-ghost: rgb(130, 132, 144);
   --accent-primary: rgb(130, 164, 250);
-  --border-subtle: rgb(30, 30, 78);
-  --border-default: rgb(42, 42, 92);
-  --border-bright: rgb(56, 56, 108);
+  --border-subtle: rgb(52, 53, 96);
+  --border-default: rgb(78, 79, 112);
+  --border-bright: rgb(110, 111, 140);
   --accent-primary-rgb: 130, 164, 250;
 }
 
@@ -621,13 +639,13 @@
     --bg-base: rgb(16, 16, 62);
     --bg-card: rgb(20, 20, 70);
     --bg-elevated: rgb(26, 26, 80);
-    --text-secondary: rgb(179, 183, 212);
-    --text-muted: rgb(165, 170, 203);
-    --text-ghost: rgb(155, 160, 196);
+    --text-secondary: rgb(196, 198, 206);
+    --text-muted: rgb(152, 154, 164);
+    --text-ghost: rgb(130, 132, 144);
     --accent-primary: rgb(130, 164, 250);
-    --border-subtle: rgb(30, 30, 78);
-    --border-default: rgb(42, 42, 92);
-    --border-bright: rgb(56, 56, 108);
+    --border-subtle: rgb(52, 53, 96);
+    --border-default: rgb(78, 79, 112);
+    --border-bright: rgb(110, 111, 140);
     --accent-primary-rgb: 130, 164, 250;
   }
 }

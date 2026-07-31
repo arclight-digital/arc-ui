@@ -310,6 +310,28 @@ export const tokens = {
     maxWidth:   '1120px',
     maxWidthSm: '720px',
     navHeight:  '64px',
+    /**
+     * Inline inset from a highlighted navigation row's edge to its content.
+     *
+     * Every component that paints a selectable row — the sidebar link, the
+     * scroll-spy entry — reads this rather than reaching for a spacing step
+     * directly. Those two drifted to 4px and 8px, which is invisible in either
+     * one alone and obvious the moment both are on screen, as they are on every
+     * docs page. A shared name is what makes the two *have* to agree; a lint
+     * pass over "is this padding consistent" has no invariant to check.
+     *
+     * A composition on purpose, so overriding --space-sm moves the whole scale
+     * with it rather than leaving this one value behind.
+     *
+     * Which also means this is NOT a consumer override point, and silently so:
+     * renderTokenForwarding only forwards tokens whose value is a literal, so
+     * `:root { --nav-row-inset: 20px }` never reaches a component — the :host
+     * declaration wins and the override is simply ignored. Verified. The
+     * supported knob is --space-sm, which is a literal, is forwarded, and does
+     * move both rows. Anyone wanting this settable on its own has to give it a
+     * literal value here and accept that it stops tracking the scale.
+     */
+    navRowInset: 'var(--space-sm)',
   },
 
   /* ── Gradients ── */
@@ -639,6 +661,7 @@ ${Object.entries(tokens.glowScale).map(([k, v]) => `  --glow-${k}: ${v};`).join(
   --max-width: ${tokens.layout.maxWidth};
   --max-width-sm: ${tokens.layout.maxWidthSm};
   --nav-height: ${tokens.layout.navHeight};
+  --nav-row-inset: ${tokens.layout.navRowInset};
 
   --bg-hover: rgba(${tokens.rgb.white}, 0.04);
   --overlay-backdrop: rgba(${tokens.rgb.black}, 0.6);
@@ -699,6 +722,23 @@ export const lightTokens = {
     borderBright:  'rgb(190, 195, 205)',
     accentPrimary:   'rgb(55, 105, 235)',
     accentSecondary: 'rgb(120, 70, 230)',
+    /* Status colours, darkened for a light page.
+     *
+     * The dark-theme values are pitched to glow against near-black and were
+     * never given light equivalents, so on rgb(242,242,248) they landed at
+     * 1.50 to 2.48 — every one of them failing AA as text, and warning the
+     * worst of the four. An install command rendered in `success` green came
+     * out at 1.81 on the landing page, which is what surfaced this.
+     *
+     * Same hues, retuned: success 4.64, error 5.30, warning 4.55, info 5.91.
+     * Only the solid colours move. The separate `rgb` set stays as it is —
+     * those are used at 0.1 alpha for subtle fills, where a light tint of the
+     * brighter hue is exactly what a light surface wants, and the darkened
+     * text now sits on it with contrast to spare. */
+    success: 'rgb(13, 124, 92)',
+    error:   'rgb(190, 42, 42)',
+    warning: 'rgb(147, 102, 0)',
+    info:    'rgb(27, 88, 190)',
     /* Chart series — light-mode steps (brand accents shift; lime darkens
        to clear 3:1 on the light surface). Validated like the dark set. */
     chart1: '#3769eb',
@@ -817,13 +857,33 @@ export const lightFixedTokens = {
     bgBase:      'rgb(16, 16, 62)',
     bgCard:      'rgb(20, 20, 70)',
     bgElevated:  'rgb(26, 26, 80)',
-    textSecondary: 'rgb(179, 183, 212)',
-    textMuted:     'rgb(165, 170, 203)',
-    textGhost:     'rgb(155, 160, 196)',
+    /* Near-neutral, and spread out.
+     *
+     * These were rgb(179,183,212) / (165,170,203) / (155,160,196): each about
+     * forty points bluer in the blue channel than the red, and all three within
+     * ten points of each other. On the navy bar that made every piece of text —
+     * wordmark tagline, nav labels, badge — the same tinted grey at the same
+     * weight, so blue meant four different things at once and nothing outranked
+     * anything. Pulling them toward neutral leaves the accent as the only blue
+     * in the region, which is then free to mean "this is the current page".
+     *
+     * Tuned against the region's real surface, rgb(12, 12, 52): secondary
+     * 11.02, muted 6.70, ghost 5.06 — three clear ranks, all past AA.
+     *
+     * Muted deliberately sits *below* the 7.73 of the accent. It is what an
+     * inactive nav label uses, and the active one uses the accent; pitch the
+     * inactive labels any brighter and the current page becomes the quietest
+     * thing in the row, which is the opposite of what the highlight is for. */
+    textSecondary: 'rgb(196, 198, 206)',
+    textMuted:     'rgb(152, 154, 164)',
+    textGhost:     'rgb(130, 132, 144)',
     accentPrimary:   'rgb(130, 164, 250)',
-    borderSubtle:  'rgb(30, 30, 78)',
-    borderDefault: 'rgb(42, 42, 92)',
-    borderBright:  'rgb(56, 56, 108)',
+    /* Lifted off the background. The old values sat 14 to 40 points from a
+     * rgb(16,16,62) surface, which put a pill's outline at 1.2:1 — present in
+     * the stylesheet and invisible on screen. */
+    borderSubtle:  'rgb(52, 53, 96)',
+    borderDefault: 'rgb(78, 79, 112)',
+    borderBright:  'rgb(110, 111, 140)',
   },
   rgb: {
     accentPrimary: '130, 164, 250',
@@ -840,6 +900,10 @@ const colorVarMap = {
   borderSubtle: '--border-subtle', borderDefault: '--border-default',
   borderBright: '--border-bright',
   accentPrimary: '--accent-primary', accentSecondary: '--accent-secondary',
+  /* Status colours are themeable: they were declared once, tuned for a
+     near-black page, and reused unchanged on a near-white one. */
+  success: '--color-success', error: '--color-error',
+  warning: '--color-warning', info: '--color-info',
   chart1: '--chart-1', chart2: '--chart-2', chart3: '--chart-3',
   chart4: '--chart-4', chart5: '--chart-5', chart6: '--chart-6',
 };
@@ -1246,6 +1310,7 @@ export function generateHostTokensCSS(indent = '    ') {
     ['--max-width', tokens.layout.maxWidth],
     ['--max-width-sm', tokens.layout.maxWidthSm],
     ['--nav-height', tokens.layout.navHeight],
+    ['--nav-row-inset', tokens.layout.navRowInset],
   ]);
 
   return out.join('\n').replace(/\n+$/, '');
@@ -1278,6 +1343,26 @@ export function generateTokensCSS({ tags = [] } = {}) {
   const lightFixedVars = renderOverrides(lightFixedTokens);
   const lightFixedVarsNested = renderOverrides(lightFixedTokens, '    ');
 
+  // A custom property substitutes its var() references in the scope where it
+  // is DECLARED, then inherits the resolved value — so the :root semantic
+  // aliases (--surface-base: var(--bg-deep), …) carry the page theme's colors
+  // into .theme-fixed regions and ignore the forced tokens above them.
+  // Re-declaring the aliases inside .theme-fixed makes them re-substitute
+  // against the fixed values; the light-fixed variant needs no copy of its
+  // own, because the cascade settles --bg-*/--text-* on the element before
+  // the alias resolves there.
+  const fixedSemanticAliases = [
+    '  --interactive: var(--accent-primary);',
+    '  --interactive-rgb: var(--accent-primary-rgb);',
+    '  --interactive-muted: var(--text-ghost);',
+    '  --surface-base: var(--bg-deep);',
+    '  --surface-primary: var(--bg-surface);',
+    '  --surface-raised: var(--bg-card);',
+    '  --surface-overlay: var(--bg-elevated);',
+    '  --surface-hover: var(--bg-hover);',
+    '  --divider: var(--border-subtle);',
+  ].join('\n');
+
   return `/* Generated from shared/tokens.js — do not edit by hand */
 
 ${undefinedGuard}
@@ -1307,6 +1392,7 @@ ${tokenForwarding}
 /* Fixed Dark — always-dark regions (nav, footer) */
 .theme-fixed {
 ${fixedVars}
+${fixedSemanticAliases}
 }
 
 [data-theme="light"] .theme-fixed {

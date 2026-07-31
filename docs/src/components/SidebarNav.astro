@@ -7,14 +7,55 @@ interface Props {
 
 const { activeSlug } = Astro.props;
 
+/**
+ * Guide pages, grouped by what you came to the docs to do: get it running,
+ * make it yours, look something up. The old flat list of thirteen made all
+ * three read as one undifferentiated wall.
+ *
+ * The headings carry no icon, unlike the component tiers below: every link in
+ * here already has one, and a glyph on the heading as well is only a second
+ * thing to look past. The tiers earn theirs by having unadorned links.
+ */
+const guideSections = [
+  {
+    heading: 'Start',
+    links: [
+      { slug: 'getting-started',  label: 'Getting Started',  icon: 'rocket-launch' },
+      { slug: 'frameworks',       label: 'Frameworks',       icon: 'stack' },
+      { slug: 'server-rendering', label: 'Server Rendering', icon: 'hard-drives' },
+    ],
+  },
+  {
+    heading: 'Customize',
+    links: [
+      { slug: 'tokens',            label: 'Design Tokens',     icon: 'swatches' },
+      { slug: 'theming',           label: 'Theming',           icon: 'paint-brush' },
+      /* A tool that operates on the theming page's concepts, not a peer of them. */
+      { slug: 'theme-synthesizer', label: 'Theme Synthesizer', icon: 'sliders', level: 1 },
+      { slug: 'typography',        label: 'Typography',        icon: 'text-aa' },
+      { slug: 'utilities',         label: 'Utilities',         icon: 'wrench' },
+    ],
+  },
+  {
+    heading: 'Reference',
+    links: [
+      { slug: 'components',      label: 'All Components', icon: 'squares-four' },
+      { slug: 'accessibility',   label: 'Accessibility',  icon: 'person-arms-spread' },
+      { slug: 'browser-support', label: 'Browser Support', icon: 'browser' },
+      { slug: 'changelog',       label: 'Changelog',      icon: 'clock-counter-clockwise' },
+      { slug: 'contributing',    label: 'Contributing',   icon: 'git-pull-request' },
+    ],
+  },
+] as const;
+
 const tiers = [
-  { key: 'layout', label: 'Layout' },
-  { key: 'navigation', label: 'Navigation' },
-  { key: 'content', label: 'Content' },
-  { key: 'data', label: 'Data' },
-  { key: 'typography', label: 'Typography' },
-  { key: 'input', label: 'Input' },
-  { key: 'feedback', label: 'Feedback' },
+  { key: 'layout',     label: 'Layout',     icon: 'layout' },
+  { key: 'navigation', label: 'Navigation', icon: 'compass' },
+  { key: 'content',    label: 'Content',    icon: 'cards' },
+  { key: 'data',       label: 'Data',       icon: 'table' },
+  { key: 'typography', label: 'Typography', icon: 'text-t' },
+  { key: 'input',      label: 'Input',      icon: 'cursor-text' },
+  { key: 'feedback',   label: 'Feedback',   icon: 'bell-ringing' },
 ] as const;
 
 const byTier = Object.fromEntries(
@@ -33,28 +74,27 @@ const activeHref = activeSlug
   : '';
 ---
 
-<arc-sidebar slot="sidebar" active={activeHref} glow>
-  <arc-sidebar-section heading="Guide">
-    <arc-sidebar-link href="/docs/getting-started" active={activeSlug === 'getting-started' || undefined}>Getting Started</arc-sidebar-link>
-    <arc-sidebar-link href="/docs/frameworks" active={activeSlug === 'frameworks' || undefined}>Frameworks</arc-sidebar-link>
-    <arc-sidebar-link href="/docs/tokens" active={activeSlug === 'tokens' || undefined}>Design Tokens</arc-sidebar-link>
-    <arc-sidebar-link href="/docs/theming" active={activeSlug === 'theming' || undefined}>Theming</arc-sidebar-link>
-    <arc-sidebar-link href="/docs/typography" active={activeSlug === 'typography' || undefined}>Typography</arc-sidebar-link>
-    <arc-sidebar-link href="/docs/theme-synthesizer" active={activeSlug === 'theme-synthesizer' || undefined}>Theme Synthesizer</arc-sidebar-link>
-    <arc-sidebar-link href="/docs/utilities" active={activeSlug === 'utilities' || undefined}>Utilities</arc-sidebar-link>
-    <arc-sidebar-link href="/docs/accessibility" active={activeSlug === 'accessibility' || undefined}>Accessibility</arc-sidebar-link>
-    <arc-sidebar-link href="/docs/server-rendering" active={activeSlug === 'server-rendering' || undefined}>Server Rendering</arc-sidebar-link>
-    <arc-sidebar-link href="/docs/browser-support" active={activeSlug === 'browser-support' || undefined}>Browser Support</arc-sidebar-link>
-    <arc-sidebar-link href="/docs/changelog" active={activeSlug === 'changelog' || undefined}>Changelog</arc-sidebar-link>
-    <arc-sidebar-link href="/docs/contributing" active={activeSlug === 'contributing' || undefined}>Contributing</arc-sidebar-link>
-    <arc-sidebar-link href="/docs/components" active={activeSlug === 'components' || undefined}>All Components</arc-sidebar-link>
-  </arc-sidebar-section>
+<arc-sidebar slot="sidebar" active={activeHref} glow data-active-tier={activeTier ?? ''}>
+  {guideSections.map((section) => (
+    <arc-sidebar-section heading={section.heading}>
+      {section.links.map((link) => (
+        <arc-sidebar-link
+          href={`/docs/${link.slug}`}
+          icon={link.icon}
+          level={link.level}
+          active={activeSlug === link.slug || undefined}
+        >{link.label}</arc-sidebar-link>
+      ))}
+    </arc-sidebar-section>
+  ))}
 
   {tiers.map((tier) => (
     <arc-sidebar-section
       heading={tier.label}
+      icon={tier.icon}
       collapsible
-      open={activeTier === tier.key || !activeTier || undefined}
+      data-tier={tier.key}
+      open={activeTier === tier.key || undefined}
     >
       {byTier[tier.key].map((c) => (
         <arc-sidebar-link
@@ -65,3 +105,116 @@ const activeHref = activeSlug
     </arc-sidebar-section>
   ))}
 </arc-sidebar>
+
+<script>
+  /**
+   * Two bits of sidebar state the markup cannot carry.
+   *
+   * The server renders only the active tier expanded — with 170-odd component
+   * links, opening all seven turns the sidebar into a wall nobody scans. That
+   * makes any section a reader opens a deliberate act, so it has to survive the
+   * next navigation; otherwise every click re-collapses the thing they just
+   * opened. sessionStorage, not local: it is a reading-session preference, not
+   * a setting.
+   */
+  const STORE_KEY = 'arc-docs-sidebar-tiers';
+
+  function readStore(): Record<string, boolean> {
+    try {
+      return JSON.parse(sessionStorage.getItem(STORE_KEY) ?? '{}');
+    } catch {
+      return {};
+    }
+  }
+
+  function sections() {
+    return [...document.querySelectorAll('arc-sidebar-section[data-tier]')] as any[];
+  }
+
+  /**
+   * Set each tier's open state: the reader's own choice if they have made one,
+   * otherwise open iff it holds the page being read.
+   *
+   * The default cannot be expressed in the markup. `open` on arc-sidebar-section
+   * defaults to true in the constructor, and an absent boolean attribute never
+   * runs a setter, so omitting it leaves the section open — which is why the
+   * markup's `open={isActiveTier || undefined}` collapsed nothing at all. It
+   * stays on the element for the no-JS case, where every section being open is
+   * the right failure, and the real default is applied here.
+   */
+  function applyOpenState() {
+    const sidebar = document.querySelector('arc-sidebar') as any;
+    if (!sidebar) return;
+    const store = readStore();
+    const activeTier = sidebar.dataset.activeTier;
+    let changed = false;
+    for (const section of sections()) {
+      const tier = section.dataset.tier!;
+      const want = tier in store ? store[tier] : tier === activeTier;
+      if (section.open === want) continue;
+      section.open = want;
+      changed = true;
+    }
+    // arc-sidebar renders the links from its children's state, and nothing in
+    // that read is reactive — the host has to be told the state moved.
+    if (changed) sidebar.requestUpdate();
+  }
+
+  function recordOpenState() {
+    const store = readStore();
+    for (const section of sections()) store[section.dataset.tier] = !!section.open;
+    try {
+      sessionStorage.setItem(STORE_KEY, JSON.stringify(store));
+    } catch {
+      /* Private mode, quota — the sidebar just forgets. */
+    }
+  }
+
+  /**
+   * Bring the current page's link into view on a cold load.
+   *
+   * Deliberately not on view transitions: DocsLayout restores the scroll offset
+   * there, and a reader who navigated from the sidebar is already looking at
+   * the link they clicked. Only someone who arrived by URL needs the list moved
+   * under them.
+   *
+   * scrollIntoView is unusable here — it walks every scrollable ancestor,
+   * including the document, so centring the sidebar would also scroll the
+   * article out from under the reader. Setting scrollTop on the one container
+   * that actually scrolls is the whole fix.
+   */
+  function centreActiveLink() {
+    const sidebar = document.querySelector('arc-sidebar') as any;
+    const link = sidebar?.shadowRoot?.querySelector('a[aria-current="page"]');
+    if (!link) return;
+
+    const shell = document.querySelector('arc-app-shell') as any;
+    const container = [sidebar, shell?.shadowRoot?.querySelector('.shell__sidebar')]
+      .find((el) => el && el.scrollHeight > el.clientHeight + 1);
+    if (!container) return;
+
+    const offset = link.offsetTop - container.clientHeight / 2 + link.offsetHeight / 2;
+    container.scrollTop = Math.max(0, offset);
+  }
+
+  let cold = true;
+
+  /**
+   * Nothing here can run before arc-sidebar is upgraded: requestUpdate does not
+   * exist on the un-upgraded element, and the module defining it is loaded
+   * async, so on a cold load this script reliably wins the race and throws.
+   */
+  async function init() {
+    await customElements.whenDefined('arc-sidebar');
+    applyOpenState();
+    if (cold) {
+      cold = false;
+      // After the sidebar has rendered its links, which it does on slotchange.
+      requestAnimationFrame(() => requestAnimationFrame(centreActiveLink));
+    }
+  }
+
+  document.addEventListener('arc-toggle', recordOpenState);
+  document.addEventListener('astro:page-load', init);
+  init();
+</script>

@@ -8,6 +8,7 @@ export interface ThemeToggleProps {
   theme?: 'dark' | 'light' | 'auto';
   disabled?: boolean;
   iconOnly?: boolean;
+  size?: 'xs' | 'sm' | 'md' | 'lg';
   className?: string;
   onArcChange?: (e: CustomEvent) => void;
   onClick?: (e: Event) => void;

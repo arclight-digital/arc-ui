@@ -159,7 +159,7 @@ export class ArcProse extends LitElement {
         font-size: 0.9em;
         background: var(--surface-overlay);
         padding: 2px 6px;
-        border-radius: 4px;
+        border-radius: var(--radius-sm);
         color: var(--accent-primary);
       }
       arc-prose pre code {

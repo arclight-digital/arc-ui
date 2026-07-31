@@ -145,44 +145,6 @@ section + section::before {
   text-decoration: underline;
 }
 
-/* ── Top bar search trigger ── */
-.topbar-search {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 12px;
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-full);
-  background: transparent;
-  color: var(--text-muted);
-  font-family: inherit;
-  font-size: var(--text-xs);
-  cursor: pointer;
-  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
-}
-
-.topbar-search:hover {
-  border-color: rgba(var(--accent-primary-rgb), 0.4);
-  color: var(--text-primary);
-  background: rgba(var(--accent-primary-rgb), 0.05);
-}
-
-.topbar-search__kbd {
-  font-family: var(--font-accent);
-  font-size: 10px;
-  letter-spacing: 0.05em;
-  padding: 2px 6px;
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-sm);
-  color: var(--text-ghost);
-}
-
-@media (max-width: 768px) {
-  .topbar-search__text,
-  .topbar-search__kbd { display: none; }
-  .topbar-search { padding: 6px 8px; border-radius: var(--radius-full); }
-}
-
 /* ── Prev / Next pager ── */
 .component-pager {
   display: flex;

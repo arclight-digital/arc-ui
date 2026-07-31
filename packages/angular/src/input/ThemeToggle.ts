@@ -31,4 +31,11 @@ export class ThemeToggle {
   get iconOnly(): boolean {
     return this._el.iconOnly;
   }
+
+  @Input() set size(value: 'xs' | 'sm' | 'md' | 'lg') {
+    this._el.size = value;
+  }
+  get size(): 'xs' | 'sm' | 'md' | 'lg' {
+    return this._el.size;
+  }
 }

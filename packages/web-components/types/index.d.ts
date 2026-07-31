@@ -79,6 +79,7 @@ export declare class ArcAnnouncement extends LitElement {
 
 /**
  * `<arc-app-shell>`
+ * Events: arc-sidebar-toggle
  */
 export declare class ArcAppShell extends LitElement {
   /** Controls whether the sidebar is visible on mobile viewports (below 768 px). On desktop the sidebar is always shown regardless of this attribute. Toggle it from a hamburger button in your TopBar to give mobile users access to navigation. @default false */
@@ -1136,7 +1137,7 @@ export declare class ArcIconButton extends LitElement {
   text: string;
   /** Visual style variant. Ghost is transparent, secondary has a border with glow, primary has a solid accent-primary fill. @default 'ghost' */
   variant: 'ghost' | 'secondary' | 'primary';
-  /** Button size controlling dimensions and icon scale. Icon-only sizes: xs=28px, sm=32px, md=36px, lg=44px. @default 'md' */
+  /** Button size controlling dimensions and icon scale. Icon-only sizes are circular: xs=28px, sm=32px, md=36px, lg=44px. The labelled form stays a rounded rectangle. @default 'md' */
   size: 'xs' | 'sm' | 'md' | 'lg';
   /** Accessible label for the button. Falls back to `text` if not provided. Required for icon-only usage. @default '' */
   label: string;
@@ -2030,10 +2031,14 @@ export declare class ArcScrollIndicator extends LitElement {
  * Events: arc-change
  */
 export declare class ArcScrollSpy extends LitElement {
+  /** Ring geometry. r drives the dasharray, so the two cannot drift apart. @default 6 */
+  ringRadius: number;
   /** The id of the currently active section. Reflects to an attribute and updates automatically as the user scrolls. @default '' */
   active: string;
-  /** Pixel offset from the top of the viewport used in the IntersectionObserver rootMargin. Increase this value to account for taller sticky headers. @default 80 */
+  /** Pixel distance from the top of the viewport at which a section counts as current. Increase it to account for taller sticky headers. @default 80 */
   offset: number;
+  /** How the reader's position through the document is shown. `ring` draws a progress arc beside the heading; `read` recedes the entries already scrolled past; `both` does each. Defaults to `none`, and an unrecognised value lands there too. @default 'none' */
+  progress: 'none' | 'ring' | 'read' | 'both';
 }
 
 /**
@@ -2190,6 +2195,8 @@ export declare class ArcSidebarLink extends LitElement {
   active: boolean;
   /** Nesting depth for visual indentation. Level 0 links render at default size; level 1+ links are indented and use a smaller font size. @default 0 */
   level: number;
+  /** Name of an icon to render before the label. Use icons consistently within a section — a sidebar where only some links carry one reads as an oversight rather than a hierarchy. @default '' */
+  icon: string;
 }
 
 /**
@@ -2205,6 +2212,8 @@ export declare class ArcSidebarSection extends LitElement {
   collapsible: boolean;
   /** Controls whether a collapsible section is expanded (true) or collapsed (false). Only relevant when collapsible is true. @default true */
   open: boolean;
+  /** Name of an icon to render before the heading. Ignored when the section has no heading. @default '' */
+  icon: string;
 }
 
 /**
@@ -2625,8 +2634,10 @@ export declare class ArcThemeToggle extends LitElement {
   theme: 'dark' | 'light' | 'auto';
   /** Prevents cycling and reduces opacity to 40%. @default false */
   disabled: boolean;
-  /** Renders the button as a compact circle without the theme name label. Attribute name is `icon-only`. @default false */
+  /** Renders the button as a compact square without the theme name label, matching an icon-only arc-icon-button of the same size. Attribute name is `icon-only`. @default false */
   iconOnly: boolean;
+  /** Box size when `icon-only`, on the same scale as arc-icon-button: xs=28px, sm=32px, md=36px, lg=44px. Set both controls to the same value when they sit side by side. Ignored by the labelled form, which is sized by its text. @default 'md' */
+  size: 'xs' | 'sm' | 'md' | 'lg';
 }
 
 /**
@@ -2782,8 +2793,14 @@ export declare class ArcTooltip extends LitElement {
  * Events: eventName, arc-sidebar-toggle, arc-mobile-menu-toggle
  */
 export declare class ArcTopBar extends LitElement {
-  /** Brand text displayed in the top-left corner next to the optional logo slot. Rendered with the accent font family (Tektur), uppercase, and wide letter-spacing. Keep this to one or two words that identify the application. @default '' */
+  /** Brand text displayed in the top-left corner next to the optional logo slot. Rendered uppercase with wide letter-spacing at the wordmark size. Keep this to one or two words that identify the application. @default '' */
   heading: string;
+  /** Destination of the brand link. Defaults to `/`; set it when the app is mounted under a sub-path, or to an empty string to render the brand as plain text with no link at all. @default '/' */
+  homeHref: string;
+  /** Reflects whether the page has scrolled past the bar's threshold. Set by the component, not by you — read it to style a scrolled state from outside, via `arc-top-bar[scrolled]`. @default false */
+  scrolled: boolean;
+  /** Renders the bar with no background, blur or border until the page is scrolled, so a hero shows through it. Requires `fixed`. Suits marketing pages whose first screen is one composed image; leave it off in an application layout, where the bar should be a fixed edge among the other panels rather than something that appears and disappears. @default false */
+  immersive: boolean;
   /** When true, the bar uses position: fixed so it stays at the top of the viewport while content scrolls underneath. Automatically applied when TopBar is placed inside an AppShell. Be sure to add matching top padding to the content below to prevent overlap. @default false */
   fixed: boolean;
   /** Sets a max-width containment on the top bar content area. Accepts any CSS length or named size. @default null */

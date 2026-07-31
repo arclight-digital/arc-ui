@@ -35,6 +35,13 @@ export class SidebarSection {
     return this._el.open;
   }
 
+  @Input() set icon(value: string) {
+    this._el.icon = value;
+  }
+  get icon(): string {
+    return this._el.icon;
+  }
+
   @Output() openChange = new EventEmitter<boolean>();
 
   _onArcToggle(event: CustomEvent) {

@@ -73,6 +73,9 @@ importers:
       '@arclux/brand':
         specifier: workspace:*
         version: link:../packages/brand
+      '@arclux/glint':
+        specifier: ^0.1.0
+        version: 0.1.0
       '@astrojs/sitemap':
         specifier: ^3.7.3
         version: 3.7.3
@@ -286,6 +289,10 @@ packages:
     peerDependencies:
       rxjs: ^6.5.3 || ^7.4.0
       zone.js: ~0.14.0
+
+  '@arclux/glint@0.1.0':
+    resolution: {integrity: sha512-01TWq5XS75CRyJ2RGTCFLbuoAdfXKM8eLmTzlLtsgwKmhlUbYDGo2QiThNlIuHnzMM+l/vxStMSOdmYB38t73w==}
+    engines: {node: '>=22.0.0'}
 
   '@arclux/prism@https://codeload.github.com/arclight-digital/prism/tar.gz/92c3374181170bc568ec1b348fb30aeba233719e':
     resolution: {tarball: https://codeload.github.com/arclight-digital/prism/tar.gz/92c3374181170bc568ec1b348fb30aeba233719e}
@@ -5242,6 +5249,8 @@ snapshots:
       rxjs: 7.8.2
       tslib: 2.8.1
       zone.js: 0.14.10
+
+  '@arclux/glint@0.1.0': {}
 
   '@arclux/prism@https://codeload.github.com/arclight-digital/prism/tar.gz/92c3374181170bc568ec1b348fb30aeba233719e':
     dependencies:

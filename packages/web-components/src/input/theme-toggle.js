@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { iconBoxStyles } from '../button-styles.js';
 
 /**
  * Three-state theme toggle cycling through dark, light, and auto modes with animated icon
@@ -8,7 +9,8 @@ import { tokenStyles } from '../shared-styles.js';
  * @tag arc-theme-toggle
  * @prop {'dark' | 'light' | 'auto'} theme - The current theme mode. Automatically synced to localStorage and the document root `data-theme` attribute.
  * @prop {boolean} disabled - Prevents cycling and reduces opacity to 40%.
- * @prop {boolean} iconOnly - Renders the button as a compact circle without the theme name label. Attribute name is `icon-only`.
+ * @prop {boolean} iconOnly - Renders the button as a compact square without the theme name label, matching an icon-only arc-icon-button of the same size. Attribute name is `icon-only`.
+ * @prop {'xs' | 'sm' | 'md' | 'lg'} size - Box size when `icon-only`, on the same scale as arc-icon-button: xs=28px, sm=32px, md=36px, lg=44px. Set both controls to the same value when they sit side by side. Ignored by the labelled form, which is sized by its text.
  * @fires {CustomEvent<{ value: 'dark' | 'light' | 'auto' }>} arc-change - Fired when the theme is toggled, with { theme } detail
  * @slot none
  * @csspart button
@@ -20,28 +22,35 @@ export class ArcThemeToggle extends LitElement {
     theme:    { type: String, reflect: true },
     disabled: { type: Boolean, reflect: true },
     iconOnly: { type: Boolean, attribute: 'icon-only', reflect: true },
+    size:     { type: String, reflect: true },
   };
 
   static styles = [
     tokenStyles,
+    /* The square box, shared with arc-icon-button. The icon-only form used to
+       carry its own 36px/radius-full/1px-border rules, which put it beside a
+       ghost arc-icon-button in a top bar as a different size, a different
+       radius and the only one of the two with a visible edge. */
+    iconBoxStyles,
     css`
       :host { display: inline-flex; }
       :host([disabled]) { pointer-events: none; opacity: 0.5; }
 
-      .theme-toggle {
+      /* Named .btn so the shared box rules reach it; the labelled form marks
+         itself .btn--has-text, which is what excuses it from being square. */
+      .btn {
         position: relative;
         display: inline-flex;
         align-items: center;
         justify-content: center;
         gap: var(--space-sm);
         background: transparent;
-        border: 1px solid var(--border-default);
-        border-radius: var(--radius-sm);
+        border: 1px solid transparent;
+        border-radius: var(--radius-md);
         color: var(--text-muted);
         cursor: pointer;
-        padding: var(--space-sm);
-        min-width: 90px;
-        min-height: var(--touch-min);
+        padding: 0;
+        box-sizing: border-box;
         transition:
           background var(--transition-fast),
           border-color var(--transition-fast),
@@ -50,32 +59,33 @@ export class ArcThemeToggle extends LitElement {
           transform 120ms var(--ease-out-expo);
       }
 
-      :host([icon-only]) .theme-toggle {
-        width: 36px;
-        height: 36px;
-        min-width: var(--touch-min);
+      /* The labelled form keeps its border: with a word in it, it reads as a
+         control you operate rather than as one of a row of bare glyphs. */
+      .btn--has-text {
+        border-color: var(--border-default);
+        border-radius: var(--radius-sm);
+        padding: var(--space-sm);
+        min-width: 90px;
         min-height: var(--touch-min);
-        padding: 0;
-        border-radius: var(--radius-full);
       }
 
-      .theme-toggle:hover {
+      .btn:hover {
         box-shadow: var(--glow-sm);
         color: var(--text-primary);
         background: var(--surface-hover);
       }
 
-      .theme-toggle:active {
+      .btn:active {
         transform: scale(0.95);
       }
 
-      .theme-toggle:focus-visible {
+      .btn:focus-visible {
         outline: none;
         box-shadow: var(--interactive-focus);
       }
 
       /* ── Icon container ── */
-      .theme-toggle__icon {
+      .btn__icon {
         position: relative;
         display: inline-flex;
         align-items: center;
@@ -86,7 +96,7 @@ export class ArcThemeToggle extends LitElement {
       }
 
       /* All three icons sit on top of each other, opacity-animated */
-      .theme-toggle__icon svg {
+      .btn__icon svg {
         position: absolute;
         inset: 0;
         opacity: 0;
@@ -94,13 +104,13 @@ export class ArcThemeToggle extends LitElement {
         transition: opacity var(--transition-slow), transform var(--transition-slow);
       }
 
-      .theme-toggle__icon svg.is-active {
+      .btn__icon svg.is-active {
         opacity: 1;
         transform: scale(1) rotate(0deg);
       }
 
       /* ── Label ── */
-      .theme-toggle__label {
+      .btn__label {
         font-family: var(--font-body);
         font-size: var(--_text-sm);
         text-transform: capitalize;
@@ -109,7 +119,7 @@ export class ArcThemeToggle extends LitElement {
         text-align: start;
       }
 
-      :host([icon-only]) .theme-toggle__label {
+      :host([icon-only]) .btn__label {
         display: none;
       }
     `,
@@ -122,6 +132,7 @@ export class ArcThemeToggle extends LitElement {
     this.theme = 'auto';
     this.disabled = false;
     this.iconOnly = false;
+    this.size = 'md';
   }
 
   connectedCallback() {
@@ -162,7 +173,7 @@ export class ArcThemeToggle extends LitElement {
   render() {
     return html`
       <button
-        class="theme-toggle"
+        class="btn ${this.iconOnly ? '' : 'btn--has-text'}"
         @click=${this._cycle}
         @keydown=${this._handleKeydown}
         ?disabled=${this.disabled}
@@ -170,7 +181,7 @@ export class ArcThemeToggle extends LitElement {
         title="Theme: ${this.theme}"
         part="button"
       >
-        <span class="theme-toggle__icon" part="icon">
+        <span class="btn__icon" part="icon">
           <!-- Sun -->
           <svg class="${this.theme === 'light' ? 'is-active' : ''}" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <circle cx="12" cy="12" r="5"/>
@@ -194,7 +205,7 @@ export class ArcThemeToggle extends LitElement {
             <line x1="12" y1="17" x2="12" y2="21"/>
           </svg>
         </span>
-        <span class="theme-toggle__label" part="label">${this.theme}</span>
+        <span class="btn__label" part="label">${this.theme}</span>
       </button>
     `;
   }

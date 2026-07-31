@@ -9,6 +9,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @tag arc-sidebar
  * @requires arc-sidebar-section
  * @requires arc-sidebar-link
+ * @requires arc-icon
  * @prop {'left' | 'right'} position - Controls which side the sidebar appears on. Moves the border line to the opposite edge.
  * @prop {string} active - The href of the currently active sidebar link. Used to highlight the matching link with accent styling.
  * @prop {boolean} collapsed - When true, collapses the sidebar to icon-only mode, hiding labels and reducing width.
@@ -22,6 +23,8 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart heading
  * @csspart links
  * @csspart link
+ * @csspart link-icon
+ * @csspart heading-icon
  */
 export class ArcSidebar extends LitElement {
   static properties = {
@@ -116,26 +119,42 @@ export class ArcSidebar extends LitElement {
       }
 
       /* ── Static heading (non-collapsible) ── */
+      /* The gradient lives on the inner text span, not here: background-clip
+         text with a transparent fill clips every descendant, so an icon placed
+         inside a gradient-painted box renders as nothing at all. */
       .sidebar__heading {
-        display: block;
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
         font-size: var(--_text-xs);
         letter-spacing: 2px;
         text-transform: uppercase;
+        padding: var(--space-sm);
+        margin-bottom: var(--space-xs);
+      }
+
+      .sidebar__heading-text {
         background: var(--gradient-accent-text);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-        padding: var(--space-sm);
-        margin-bottom: var(--space-xs);
+      }
+
+      /* Headings read as one rank, so their icons stay quieter than the link
+         icons below them rather than competing for the same attention. */
+      .sidebar__heading-icon {
+        color: var(--text-ghost);
+        flex-shrink: 0;
+        -webkit-text-fill-color: unset;
       }
 
       /* ── Collapsible heading (toggle) ── */
       .sidebar__toggle {
         display: flex;
         align-items: center;
-        gap: var(--space-xs);
+        gap: var(--space-sm);
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
         font-size: var(--_text-xs);
@@ -192,10 +211,19 @@ export class ArcSidebar extends LitElement {
       }
 
       /* ── Links container ── */
+      /* The links sit a step inside their heading, and the rail marks the group
+         they belong to. Structural and neutral by rule: one flat --divider that
+         never takes a colour, a weight or a state from whichever link is
+         active. A left edge that tracks the current item is banned outright —
+         the active row says "here" with tint and accent text, as everywhere
+         else in the system. */
       .sidebar__links {
         display: flex;
         flex-direction: column;
         gap: 1px;
+        margin-inline-start: var(--space-sm);
+        padding-inline-start: var(--space-sm);
+        border-inline-start: 1px solid var(--divider);
       }
 
       .sidebar__links--hidden {
@@ -213,7 +241,11 @@ export class ArcSidebar extends LitElement {
         font-weight: 400;
         color: var(--text-muted);
         text-decoration: none;
-        padding: var(--touch-pad) var(--space-md) var(--touch-pad) calc(var(--space-sm) + 4px);
+        /* Logical, now that the container carries the indent. The four-value
+           shorthand this replaces ended in a physical padding-left, which put
+           the inset on the wrong edge in RTL. */
+        padding-block: var(--touch-pad);
+        padding-inline: var(--nav-row-inset) var(--space-md);
         border-radius: var(--radius-sm);
         cursor: pointer;
         transition:
@@ -223,6 +255,37 @@ export class ArcSidebar extends LitElement {
         border: none;
         background: none;
         text-align: start;
+      }
+
+      .sidebar__link-body {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+        min-width: 0;
+      }
+
+      /* Heading and link glyphs match in size; what separates the two ranks is
+         the heading's uppercase gradient text and the ghosted heading icon
+         against the link icon's willingness to take the accent when active. */
+      .sidebar__heading-icon,
+      .sidebar__link-icon {
+        flex-shrink: 0;
+      }
+
+      /* Ghosted by default so the label stays the thing being read; the icon is
+         a landmark you find on the second pass, not competition for the first. */
+      .sidebar__link-icon {
+        color: var(--text-ghost);
+        flex-shrink: 0;
+        transition: color var(--transition-fast);
+      }
+
+      .sidebar__link:hover .sidebar__link-icon {
+        color: var(--text-secondary);
+      }
+
+      .sidebar__link[aria-current="page"] .sidebar__link-icon {
+        color: var(--interactive);
       }
 
       .sidebar__link-arrow {
@@ -246,6 +309,14 @@ export class ArcSidebar extends LitElement {
         color: var(--interactive);
       }
 
+      /* Before the active rule: equal specificity, so the later selector wins,
+         and a nested link that was the current page rendered ghost-grey. */
+      .sidebar__link--nested {
+        font-size: var(--_text-xs);
+        color: var(--text-ghost);
+      }
+
+
       .sidebar__link:hover {
         color: var(--text-primary);
         background: var(--surface-hover);
@@ -266,11 +337,6 @@ export class ArcSidebar extends LitElement {
       .sidebar__link:focus-visible {
         outline: none;
         box-shadow: var(--interactive-focus);
-      }
-
-      .sidebar__link--nested {
-        font-size: var(--_text-xs);
-        color: var(--text-ghost);
       }
 
       .sidebar__slot-host { display: none; }
@@ -336,13 +402,22 @@ export class ArcSidebar extends LitElement {
                       aria-expanded=${String(isOpen)}
                       part="toggle"
                     >
+                      ${section.icon
+                        ? html`<arc-icon class="sidebar__heading-icon" part="heading-icon" name=${section.icon} size="sm"></arc-icon>`
+                        : ''}
                       <span class="sidebar__toggle-label">${section.heading}</span>
                       <span class="sidebar__toggle-count">${links.length}</span>
                       <svg class="sidebar__chevron ${isOpen ? '' : 'sidebar__chevron--closed'}" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true">
                         <path d="M4.5 6L8 9.5L11.5 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                       </svg>
                     </button>`
-                  : html`<div class="sidebar__heading" part="heading">${section.heading}</div>`
+                  : html`
+                    <div class="sidebar__heading" part="heading">
+                      ${section.icon
+                        ? html`<arc-icon class="sidebar__heading-icon" part="heading-icon" name=${section.icon} size="sm"></arc-icon>`
+                        : ''}
+                      <span class="sidebar__heading-text">${section.heading}</span>
+                    </div>`
                 : ''
               }
               <div class="sidebar__links ${!isOpen && isCollapsible ? 'sidebar__links--hidden' : ''}" part="links">
@@ -355,9 +430,16 @@ export class ArcSidebar extends LitElement {
                     aria-current=${(this.active === link.resolvedHref || link.active) ? 'page' : 'false'}
                     @click=${(e) => this._handleClick(e, link.resolvedHref)}
                     part="link"
-                    style=${level > 0 ? `padding-left: ${level * 14 + 12}px` : ''}
+                    style=${level > 0
+                      ? `padding-inline-start: calc(var(--nav-row-inset) + ${level * 12}px)`
+                      : ''}
                   >
-                    <span>${link.label}</span>
+                    <span class="sidebar__link-body">
+                      ${link.icon
+                        ? html`<arc-icon class="sidebar__link-icon" part="link-icon" name=${link.icon} size="sm"></arc-icon>`
+                        : ''}
+                      <span>${link.label}</span>
+                    </span>
                     <svg class="sidebar__link-arrow" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true">
                       <path d="M6 4L10 8L6 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>

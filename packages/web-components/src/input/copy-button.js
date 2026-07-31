@@ -33,7 +33,7 @@ export class ArcCopyButton extends LitElement {
         gap: var(--space-xs);
         background: var(--copy-btn-bg, var(--surface-overlay));
         border: 1px solid var(--border-default);
-        border-radius: var(--radius-sm);
+        border-radius: var(--radius-full);
         color: var(--text-muted);
         cursor: pointer;
         padding: var(--touch-pad) var(--space-sm);

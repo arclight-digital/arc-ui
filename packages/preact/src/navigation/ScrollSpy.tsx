@@ -7,6 +7,7 @@ import '@arclux/arc-ui/scroll-spy';
 export interface ScrollSpyProps {
   active?: string;
   offset?: number;
+  progress?: 'none' | 'ring' | 'read' | 'both';
   onArcChange?: (e: CustomEvent) => void;
   children?: preact.ComponentChildren;
   class?: string;
@@ -36,7 +37,7 @@ export interface ScrollSpyProps {
   [key: `on${string}`]: unknown;
 }
 
-export const ScrollSpy: FunctionComponent<ScrollSpyProps> = ({ active, offset, onArcChange, children, ...rest }) => {
+export const ScrollSpy: FunctionComponent<ScrollSpyProps> = ({ active, offset, progress, onArcChange, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -49,5 +50,5 @@ export const ScrollSpy: FunctionComponent<ScrollSpyProps> = ({ active, offset, o
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcChange]);
-  return h('arc-scroll-spy', { ref, active, offset, ...rest }, children);
+  return h('arc-scroll-spy', { ref, active, offset, progress, ...rest }, children);
 };

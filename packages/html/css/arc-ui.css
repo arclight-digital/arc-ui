@@ -244,6 +244,7 @@
   --max-width: 1120px;
   --max-width-sm: 720px;
   --nav-height: 64px;
+  --nav-row-inset: var(--space-sm);
 
   --bg-hover: rgba(255, 255, 255, 0.04);
   --overlay-backdrop: rgba(0, 0, 0, 0.6);
@@ -1401,7 +1402,7 @@
         color: var(--text-muted);
         padding: var(--space-xs) var(--space-sm);
         border: 1px solid var(--border-default);
-        border-radius: var(--radius-sm);
+        border-radius: var(--radius-full);
         background: var(--surface-hover);
         transition: box-shadow var(--transition-base), border-color var(--transition-base);
         line-height: 1.4;
@@ -2590,7 +2591,7 @@
       .arc-code-block .code-block__orb {
         width: 12px;
         height: 12px;
-        border-radius: 50%;
+        border-radius: var(--radius-full);
       }
 
       .arc-code-block .code-block__orb--close    { background: #ff5f57; }
@@ -2644,6 +2645,12 @@
         background-clip: text;
         background-size: 100% 100%;
         filter: drop-shadow(0 0 12px rgba(var(--accent-primary-rgb), 0.2));
+        /* Clipped text paints glyphs only where the box is — under a tight
+           inherited line-height the descenders leave the box and get chopped.
+           Extend the paint box in em so it scales with the type; the margin
+           gives it back so block layouts don't move. */
+        padding-block: 0.1em 0.2em;
+        margin-block: -0.1em -0.2em;
       }
 
       /* --- Variant gradients --- */
@@ -3137,7 +3144,13 @@
         text-transform: uppercase;
         letter-spacing: 2px;
         border: 1px solid transparent;
-        border-radius: var(--radius-md);
+        /* Pill. Circles are the house shape — the library is called ARC — and
+           the round icon-only controls, the tags, the badges and the toggles
+           already read that way; a rounded rectangle here was the odd one out
+           on a row that contains all of them. Breaking, and deliberately so:
+           there is no opt-out prop, because one shape being the shape is the
+           point. Groups follow via --_group-radius in button-group.js. */
+        border-radius: var(--radius-full);
         cursor: pointer;
         transition:
           background var(--transition-base),
@@ -3225,7 +3238,7 @@
         gap: var(--space-xs);
         background: var(--copy-btn-bg, var(--surface-overlay));
         border: 1px solid var(--border-default);
-        border-radius: var(--radius-sm);
+        border-radius: var(--radius-full);
         color: var(--text-muted);
         cursor: pointer;
         padding: var(--touch-pad) var(--space-sm);
@@ -3370,9 +3383,6 @@
         color: inherit;
       }
 
-      /* Icon-only (square) */
-      .arc-icon-button .btn:not(.btn--has-text) { aspect-ratio: 1; }
-
       /* With text */
       .arc-icon-button .btn--has-text {
         font-family: var(--font-label);
@@ -3386,19 +3396,8 @@
         line-height: 1;
       }
 
-      /* Sizes — icon-only */
-      .arc-icon-button .btn:not(.btn--has-text),
-      .arc-icon-button a { min-width: var(--touch-min); min-height: var(--touch-min); }
-      .arc-icon-button[data-size="xs"] .btn:not(.btn--has-text),
-      .arc-icon-button[data-size="xs"] a { width: 28px; height: 28px; border-radius: var(--radius-sm); }
-      .arc-icon-button[data-size="sm"] .btn:not(.btn--has-text),
-      .arc-icon-button[data-size="sm"] a { width: 32px; height: 32px; }
-      .arc-icon-button:not([data-data-size="lg"]):not([data-data-size="sm"]):not([data-data-size="xs"]) .btn:not(.btn--has-text),
-      .arc-icon-button:not([data-data-size="lg"]):not([data-data-size="sm"]):not([data-data-size="xs"]) a,
-      .arc-icon-button[data-size="md"] .btn:not(.btn--has-text),
-      .arc-icon-button[data-size="md"] a { width: 36px; height: 36px; }
-      .arc-icon-button[data-size="lg"] .btn:not(.btn--has-text),
-      .arc-icon-button[data-size="lg"] a { width: 44px; height: 44px; }
+      /* Sizes — icon-only: see iconBoxStyles in ../button-styles.js, shared with
+         arc-theme-toggle so the two cannot drift apart in a top bar. */
 
       /* Sizes — with text */
       .arc-icon-button .btn--has-text { min-height: var(--touch-min); }
@@ -4295,26 +4294,42 @@
       }
 
       /* ── Static heading (non-collapsible) ── */
+      /* The gradient lives on the inner text span, not here: background-clip
+         text with a transparent fill clips every descendant, so an icon placed
+         inside a gradient-painted box renders as nothing at all. */
       .arc-sidebar .sidebar__heading {
-        display: block;
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
         font-size: var(--_text-xs);
         letter-spacing: 2px;
         text-transform: uppercase;
+        padding: var(--space-sm);
+        margin-bottom: var(--space-xs);
+      }
+
+      .arc-sidebar .sidebar__heading-text {
         background: var(--gradient-accent-text);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-        padding: var(--space-sm);
-        margin-bottom: var(--space-xs);
+      }
+
+      /* Headings read as one rank, so their icons stay quieter than the link
+         icons below them rather than competing for the same attention. */
+      .arc-sidebar .sidebar__heading-icon {
+        color: var(--text-ghost);
+        flex-shrink: 0;
+        -webkit-text-fill-color: unset;
       }
 
       /* ── Collapsible heading (toggle) ── */
       .arc-sidebar .sidebar__toggle {
         display: flex;
         align-items: center;
-        gap: var(--space-xs);
+        gap: var(--space-sm);
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
         font-size: var(--_text-xs);
@@ -4371,10 +4386,19 @@
       }
 
       /* ── Links container ── */
+      /* The links sit a step inside their heading, and the rail marks the group
+         they belong to. Structural and neutral by rule: one flat --divider that
+         never takes a colour, a weight or a state from whichever link is
+         active. A left edge that tracks the current item is banned outright —
+         the active row says "here" with tint and accent text, as everywhere
+         else in the system. */
       .arc-sidebar .sidebar__links {
         display: flex;
         flex-direction: column;
         gap: 1px;
+        margin-inline-start: var(--space-sm);
+        padding-inline-start: var(--space-sm);
+        border-inline-start: 1px solid var(--divider);
       }
 
       .arc-sidebar .sidebar__links--hidden {
@@ -4392,7 +4416,11 @@
         font-weight: 400;
         color: var(--text-muted);
         text-decoration: none;
-        padding: var(--touch-pad) var(--space-md) var(--touch-pad) calc(var(--space-sm) + 4px);
+        /* Logical, now that the container carries the indent. The four-value
+           shorthand this replaces ended in a physical padding-left, which put
+           the inset on the wrong edge in RTL. */
+        padding-block: var(--touch-pad);
+        padding-inline: var(--nav-row-inset) var(--space-md);
         border-radius: var(--radius-sm);
         cursor: pointer;
         transition:
@@ -4402,6 +4430,37 @@
         border: none;
         background: none;
         text-align: start;
+      }
+
+      .arc-sidebar .sidebar__link-body {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+        min-width: 0;
+      }
+
+      /* Heading and link glyphs match in size; what separates the two ranks is
+         the heading's uppercase gradient text and the ghosted heading icon
+         against the link icon's willingness to take the accent when active. */
+      .arc-sidebar .sidebar__heading-icon,
+      .arc-sidebar .sidebar__link-icon {
+        flex-shrink: 0;
+      }
+
+      /* Ghosted by default so the label stays the thing being read; the icon is
+         a landmark you find on the second pass, not competition for the first. */
+      .arc-sidebar .sidebar__link-icon {
+        color: var(--text-ghost);
+        flex-shrink: 0;
+        transition: color var(--transition-fast);
+      }
+
+      .arc-sidebar .sidebar__link:hover .sidebar__link-icon {
+        color: var(--text-secondary);
+      }
+
+      .arc-sidebar .sidebar__link[aria-current="page"] .sidebar__link-icon {
+        color: var(--interactive);
       }
 
       .arc-sidebar .sidebar__link-arrow {
@@ -4425,6 +4484,14 @@
         color: var(--interactive);
       }
 
+      /* Before the active rule: equal specificity, so the later selector wins,
+         and a nested link that was the current page rendered ghost-grey. */
+      .arc-sidebar .sidebar__link--nested {
+        font-size: var(--_text-xs);
+        color: var(--text-ghost);
+      }
+
+
       .arc-sidebar .sidebar__link:hover {
         color: var(--text-primary);
         background: var(--surface-hover);
@@ -4445,11 +4512,6 @@
       .arc-sidebar .sidebar__link:focus-visible {
         outline: none;
         box-shadow: var(--interactive-focus);
-      }
-
-      .arc-sidebar .sidebar__link--nested {
-        font-size: var(--_text-xs);
-        color: var(--text-ghost);
       }
 
       .arc-sidebar .sidebar__slot-host { display: none; }
@@ -4504,6 +4566,46 @@
         backdrop-filter: blur(12px) saturate(130%);
         -webkit-backdrop-filter: blur(12px) saturate(130%);
         border-bottom: 1px solid var(--divider);
+        transition:
+          background var(--transition-slow),
+          backdrop-filter var(--transition-slow),
+          border-color var(--transition-slow);
+      }
+
+      /* An always-dark region has to be one colour, not two.
+         arc-footer paints --surface-base flat, while this bar mixes it 85% with
+         transparent. In dark mode that costs nothing — 15% of a near-black page
+         bleeds through as near-black. In light mode the 15% is 15% of a
+         near-white page, so the identical token renders rgb(46,46,81) up here
+         and the raw navy down there, and the two .theme-fixed regions visibly
+         disagree. Opaque when the region is pinned dark; the translucency stays
+         for bars that follow the page, which are the ones with something worth
+         seeing behind them. The blur goes with it, and loses nothing: it was
+         already imperceptible behind an 85%-opaque fill. */
+      .arc-top-bar.theme-fixed .topbar {
+        background: var(--surface-base);
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+      }
+
+      /* Immersive: at the top of the document the bar carries no chrome at all,
+         and takes on the blur, the fill and the border only once content is
+         actually passing underneath and the boundary starts doing work.
+         Opt-in, because it suits a page whose first screen is one designed
+         image — a hero, a landing page — and actively hurts an application
+         layout, where the bar is one panel among several defined panels and is
+         expected to be a fixed edge rather than something that comes and goes.
+         Also gated on [fixed]: a bar in the flow scrolls away with the page and
+         never overlays anything, so it has nothing to earn. */
+      .arc-top-bar[immersive][fixed]:not([data-scrolled]) .topbar {
+        background: transparent;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        border-bottom-color: transparent;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .arc-top-bar .topbar { transition: none; }
       }
 
       .arc-top-bar .topbar__content {
@@ -4560,6 +4662,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        min-width: 0;
       }
 
       .arc-top-bar .topbar__actions {
@@ -4567,6 +4670,38 @@
         align-items: center;
         gap: var(--space-sm);
         flex-shrink: 0;
+      }
+
+      /* Centred nav means centred in the *bar*, not in whatever space the brand
+         and the actions happen to leave over. With the flex row alone the nav
+         sits at the midpoint of the gap between them, which is the middle of
+         the viewport only when those two are identically wide — they never are.
+         Giving both sides an equal flex basis of zero makes them claim the same
+         width whatever they contain, so the middle column's centre is the bar's
+         centre. Only for nav-align=center: left and right alignment want the
+         brand to keep its natural width.
+
+         Keyed on "not the other two" as well as on the value itself: nav-align
+         defaults to center in the constructor and is not reflected, so
+         .arc-top-bar[data-nav-align="center"] alone matches nothing in the default case —
+         the very failure check-enum-fallbacks.js exists to catch. The explicit
+         selector stays beside it so prism can still infer the union. */
+      .arc-top-bar:not([data-data-nav-align="left"]):not([data-data-nav-align="right"]) .topbar__brand,
+      .arc-top-bar:not([data-data-nav-align="left"]):not([data-data-nav-align="right"]) .topbar__actions,
+      .arc-top-bar[data-nav-align="center"] .topbar__brand,
+      .arc-top-bar[data-nav-align="center"] .topbar__actions {
+        flex: 1 1 0;
+        min-width: 0;
+      }
+
+      .arc-top-bar:not([data-data-nav-align="left"]):not([data-data-nav-align="right"]) .topbar__actions,
+      .arc-top-bar[data-nav-align="center"] .topbar__actions {
+        justify-content: flex-end;
+      }
+
+      .arc-top-bar:not([data-data-nav-align="left"]):not([data-data-nav-align="right"]) .topbar__center,
+      .arc-top-bar[data-nav-align="center"] .topbar__center {
+        flex: 0 1 auto;
       }
 
       .arc-top-bar .topbar__menu-btn {
@@ -4578,11 +4713,16 @@
         min-width: 36px;
         aspect-ratio: 1;
         background: none;
-        border: 1px solid var(--border-subtle);
+        /* Circular and border-less, like the icon buttons it shares the bar
+           with. It was a --radius-sm square with a visible edge, which the
+           round-icon-button pass left behind — the one square control in a row
+           of circles, and the only one outlined. The open state still takes an
+           accent border, so the affordance is kept where it means something. */
+        border: 1px solid transparent;
         color: var(--text-primary);
         cursor: pointer;
         padding: 0;
-        border-radius: var(--radius-sm);
+        border-radius: var(--radius-full);
         transition: background var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
       }
 
@@ -4637,7 +4777,11 @@
         transform: translateY(-5.25px) rotate(-45deg);
       }
 
-      @media (max-width: 900px) {
+      /* 900px is not a breakpoint token, and arc-navigation-menu hardcodes the
+         same number for the width at which it collapses. The pair is
+         load-bearing: move one without the other and both hamburgers show at
+         once, or neither does. Change them together, or move both onto a token. */
+      .arc-top-bar @media (max-width: 900px) {
         .arc-top-bar .topbar__menu-btn { display: flex; }
       }
 
@@ -4700,7 +4844,13 @@
         align-self: flex-start;
         max-height: calc(100vh - var(--nav-height) - 2 * var(--space-xl));
         overflow-y: auto;
-        padding: 0 var(--space-lg) var(--space-md) 0;
+        /* Zero, not --space-md on the bottom only. The border below is drawn
+           down the padding box, so an unmatched bottom pad made the line
+           overhang the last entry with nothing balancing it above. Evened up by
+           removing the pad rather than by adding one on top, which would have
+           pushed the panel out of line with the article beside it. */
+        padding-block: 0;
+        padding-inline: 0 var(--space-lg);
         margin-bottom: var(--space-xl);
         border-inline-start: 1px solid var(--border-subtle);
       }
@@ -4730,7 +4880,17 @@
         width: 300px;
         max-width: 85vw;
         transform: translateX(-100%);
-        transition: transform 250ms var(--ease-out-expo);
+        /* visibility, not transform alone. Translated off-screen the drawer is
+           still visible to the browser, so its links stay in the tab order and
+           in the accessibility tree — 176 of them on a docs page, all invisible,
+           every one of them ahead of the content on a mobile keyboard.
+           Transitioned rather than set flat so the discrete flip lands at the
+           *end* of the slide out and at the start of the slide in, which is the
+           same delay-hide the overlays use for their backdrops. */
+        visibility: hidden;
+        transition:
+          transform 250ms var(--ease-out-expo),
+          visibility 250ms var(--ease-out-expo);
         background: var(--surface-primary);
         padding-top: var(--nav-height);
         overflow-y: auto;
@@ -4749,6 +4909,7 @@
 
       .arc-app-shell[mobile][sidebar-open] .shell__sidebar {
         transform: translateX(0);
+        visibility: visible;
       }
 
       /* Backdrop */

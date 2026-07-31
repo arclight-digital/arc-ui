@@ -6,6 +6,9 @@ import { ArcTopBar } from '@arclux/arc-ui/top-bar';
 
 export interface TopBarProps {
   heading?: string;
+  homeHref?: string;
+  scrolled?: boolean;
+  immersive?: boolean;
   fixed?: boolean;
   contained?: string;
   menuOpen?: boolean;

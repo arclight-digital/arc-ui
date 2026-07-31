@@ -31,6 +31,12 @@ export class ArcGradientText extends LitElement {
         background-clip: text;
         background-size: 100% 100%;
         filter: drop-shadow(0 0 12px rgba(var(--accent-primary-rgb), 0.2));
+        /* Clipped text paints glyphs only where the box is — under a tight
+           inherited line-height the descenders leave the box and get chopped.
+           Extend the paint box in em so it scales with the type; the margin
+           gives it back so block layouts don't move. */
+        padding-block: 0.1em 0.2em;
+        margin-block: -0.1em -0.2em;
       }
 
       /* --- Variant gradients --- */

@@ -1,7 +1,7 @@
 {
   "name": "arc-ui-docs",
   "private": true,
-  "version": "2.11.1",
+  "version": "3.0.0",
   "type": "module",
   "scripts": {
     "dev": "astro dev",
@@ -13,6 +13,7 @@
     "@arclux/arc-ui-svelte": "workspace:*",
     "@arclux/arc-ui-vue": "workspace:*",
     "@arclux/brand": "workspace:*",
+    "@arclux/glint": "^0.1.0",
     "@astrojs/sitemap": "^3.7.3",
     "astro": "^5.17.1",
     "lit": "^3.3.0",

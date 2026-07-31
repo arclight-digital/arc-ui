@@ -8,6 +8,7 @@ export interface SidebarSectionProps {
   heading?: string;
   collapsible?: boolean;
   open?: boolean;
+  icon?: string;
   className?: string;
   children?: React.ReactNode;
   onArcToggle?: (e: CustomEvent) => void;

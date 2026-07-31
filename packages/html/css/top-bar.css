@@ -21,6 +21,46 @@
         backdrop-filter: blur(12px) saturate(130%);
         -webkit-backdrop-filter: blur(12px) saturate(130%);
         border-bottom: 1px solid var(--divider);
+        transition:
+          background var(--transition-slow),
+          backdrop-filter var(--transition-slow),
+          border-color var(--transition-slow);
+      }
+
+      /* An always-dark region has to be one colour, not two.
+         arc-footer paints --surface-base flat, while this bar mixes it 85% with
+         transparent. In dark mode that costs nothing — 15% of a near-black page
+         bleeds through as near-black. In light mode the 15% is 15% of a
+         near-white page, so the identical token renders rgb(46,46,81) up here
+         and the raw navy down there, and the two .theme-fixed regions visibly
+         disagree. Opaque when the region is pinned dark; the translucency stays
+         for bars that follow the page, which are the ones with something worth
+         seeing behind them. The blur goes with it, and loses nothing: it was
+         already imperceptible behind an 85%-opaque fill. */
+      .arc-top-bar.theme-fixed .topbar {
+        background: var(--surface-base);
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+      }
+
+      /* Immersive: at the top of the document the bar carries no chrome at all,
+         and takes on the blur, the fill and the border only once content is
+         actually passing underneath and the boundary starts doing work.
+         Opt-in, because it suits a page whose first screen is one designed
+         image — a hero, a landing page — and actively hurts an application
+         layout, where the bar is one panel among several defined panels and is
+         expected to be a fixed edge rather than something that comes and goes.
+         Also gated on [fixed]: a bar in the flow scrolls away with the page and
+         never overlays anything, so it has nothing to earn. */
+      .arc-top-bar[immersive][fixed]:not([data-scrolled]) .topbar {
+        background: transparent;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        border-bottom-color: transparent;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .arc-top-bar .topbar { transition: none; }
       }
 
       .arc-top-bar .topbar__content {
@@ -77,6 +117,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        min-width: 0;
       }
 
       .arc-top-bar .topbar__actions {
@@ -84,6 +125,38 @@
         align-items: center;
         gap: var(--space-sm);
         flex-shrink: 0;
+      }
+
+      /* Centred nav means centred in the *bar*, not in whatever space the brand
+         and the actions happen to leave over. With the flex row alone the nav
+         sits at the midpoint of the gap between them, which is the middle of
+         the viewport only when those two are identically wide — they never are.
+         Giving both sides an equal flex basis of zero makes them claim the same
+         width whatever they contain, so the middle column's centre is the bar's
+         centre. Only for nav-align=center: left and right alignment want the
+         brand to keep its natural width.
+
+         Keyed on "not the other two" as well as on the value itself: nav-align
+         defaults to center in the constructor and is not reflected, so
+         .arc-top-bar[data-nav-align="center"] alone matches nothing in the default case —
+         the very failure check-enum-fallbacks.js exists to catch. The explicit
+         selector stays beside it so prism can still infer the union. */
+      .arc-top-bar:not([data-data-nav-align="left"]):not([data-data-nav-align="right"]) .topbar__brand,
+      .arc-top-bar:not([data-data-nav-align="left"]):not([data-data-nav-align="right"]) .topbar__actions,
+      .arc-top-bar[data-nav-align="center"] .topbar__brand,
+      .arc-top-bar[data-nav-align="center"] .topbar__actions {
+        flex: 1 1 0;
+        min-width: 0;
+      }
+
+      .arc-top-bar:not([data-data-nav-align="left"]):not([data-data-nav-align="right"]) .topbar__actions,
+      .arc-top-bar[data-nav-align="center"] .topbar__actions {
+        justify-content: flex-end;
+      }
+
+      .arc-top-bar:not([data-data-nav-align="left"]):not([data-data-nav-align="right"]) .topbar__center,
+      .arc-top-bar[data-nav-align="center"] .topbar__center {
+        flex: 0 1 auto;
       }
 
       .arc-top-bar .topbar__menu-btn {
@@ -95,11 +168,16 @@
         min-width: 36px;
         aspect-ratio: 1;
         background: none;
-        border: 1px solid var(--border-subtle);
+        /* Circular and border-less, like the icon buttons it shares the bar
+           with. It was a --radius-sm square with a visible edge, which the
+           round-icon-button pass left behind — the one square control in a row
+           of circles, and the only one outlined. The open state still takes an
+           accent border, so the affordance is kept where it means something. */
+        border: 1px solid transparent;
         color: var(--text-primary);
         cursor: pointer;
         padding: 0;
-        border-radius: var(--radius-sm);
+        border-radius: var(--radius-full);
         transition: background var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
       }
 
@@ -154,6 +232,10 @@
         transform: translateY(-5.25px) rotate(-45deg);
       }
 
-      @media (max-width: 900px) {
+      /* 900px is not a breakpoint token, and arc-navigation-menu hardcodes the
+         same number for the width at which it collapses. The pair is
+         load-bearing: move one without the other and both hamburgers show at
+         once, or neither does. Change them together, or move both onto a token. */
+      .arc-top-bar @media (max-width: 900px) {
         .arc-top-bar .topbar__menu-btn { display: flex; }
       }

@@ -2,11 +2,10 @@
 import BaseLayout from './BaseLayout.astro';
 import SidebarNav from '../components/SidebarNav.astro';
 import TableOfContents from '../components/TableOfContents.astro';
-import Wordmark from '../components/Wordmark.astro';
+import SiteTopBar from '../components/SiteTopBar.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import SiteSearch from '../components/SiteSearch.astro';
 import { ogPathFor } from '../lib/og-pages';
-import { versionShort } from '../data/site-stats';
 import '../styles/docs.css';
 
 interface Props {
@@ -82,38 +81,7 @@ const docsJsonLd = {
   <SiteSearch />
   <arc-app-shell>
     <!-- Top Bar -->
-    <arc-top-bar slot="topbar" fixed nav-align="left" class="theme-fixed">
-      <div slot="logo">
-        <Wordmark />
-      </div>
-      <arc-navigation-menu slot="center">
-        {/* Anchors live in light DOM so the nav is a working link list with JS
-            disabled and before the menu upgrades — arc-navigation-menu reads the
-            href off the child anchor and hides this markup once it takes over. */}
-        <arc-nav-item active={!activeSlug || !['components', 'tokens', 'theme-synthesizer'].includes(activeSlug) && !Astro.url.pathname.startsWith('/docs/components') || undefined}><a href="/docs/getting-started">Docs</a></arc-nav-item>
-        <arc-nav-item active={activeSlug === 'components' || Astro.url.pathname.startsWith('/docs/components') || undefined}><a href="/docs/components">Components</a></arc-nav-item>
-        <arc-nav-item active={activeSlug === 'tokens' || undefined}><a href="/docs/tokens">Tokens</a></arc-nav-item>
-        <arc-nav-item active={activeSlug === 'theme-synthesizer' || undefined}><a href="/docs/theme-synthesizer">Synthesizer</a></arc-nav-item>
-      </arc-navigation-menu>
-      <div slot="actions" class="topbar-actions">
-        <button
-          type="button"
-          class="topbar-search"
-          data-site-search-trigger
-          aria-label="Search docs"
-          aria-keyshortcuts="Meta+K Control+K"
-        >
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-            <path d="M11.5 7a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zm-.82 4.74a6 6 0 111.06-1.06l3.04 3.04a.75.75 0 11-1.06 1.06l-3.04-3.04z"/>
-          </svg>
-          <span class="topbar-search__text">Search</span>
-          <kbd class="topbar-search__kbd" data-search-kbd>⌘K</kbd>
-        </button>
-        <arc-badge variant="primary" class="topbar-version">{versionShort}</arc-badge>
-        <arc-theme-toggle icon-only></arc-theme-toggle>
-        <arc-icon-button href="https://github.com/Arclight-Digital/arc-ui" name="github-logo" label="GitHub" variant="ghost" size="sm"></arc-icon-button>
-      </div>
-    </arc-top-bar>
+    <SiteTopBar slotName="topbar" activeSlug={activeSlug} search />
 
     <!-- Sidebar -->
     <SidebarNav activeSlug={activeSlug} />
@@ -173,12 +141,6 @@ const docsJsonLd = {
 </script>
 
 <style>
-  .topbar-actions {
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-  }
-
   /* ── Main content area ── */
   arc-app-shell::part(content) {
     position: relative;

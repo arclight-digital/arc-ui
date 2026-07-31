@@ -1753,13 +1753,20 @@ export default {
   "attrs": [
    "theme",
    "disabled",
-   "icon-only"
+   "icon-only",
+   "size"
   ],
   "enums": {
    "theme": [
     "dark",
     "light",
     "auto"
+   ],
+   "size": [
+    "xs",
+    "sm",
+    "md",
+    "lg"
    ]
   },
   "slug": "theme-toggle"
@@ -2278,8 +2285,17 @@ export default {
  "arc-scroll-spy": {
   "attrs": [
    "active",
-   "offset"
+   "offset",
+   "progress"
   ],
+  "enums": {
+   "progress": [
+    "none",
+    "ring",
+    "read",
+    "both"
+   ]
+  },
   "slug": "scroll-spy"
  },
  "arc-scroll-to-top": {
@@ -2301,7 +2317,8 @@ export default {
   "attrs": [
    "href",
    "active",
-   "level"
+   "level",
+   "icon"
   ],
   "slug": "sidebar"
  },
@@ -2309,7 +2326,8 @@ export default {
   "attrs": [
    "heading",
    "collapsible",
-   "open"
+   "open",
+   "icon"
   ],
   "slug": "sidebar"
  },
@@ -2405,6 +2423,9 @@ export default {
  "arc-top-bar": {
   "attrs": [
    "heading",
+   "home-href",
+   "scrolled",
+   "immersive",
    "fixed",
    "contained",
    "menu-open",

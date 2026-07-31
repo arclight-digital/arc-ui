@@ -9,6 +9,7 @@ import { LitElement, html, css } from 'lit';
  * @prop {string} heading - Text label displayed above the group of links. Keep it short (one to three words) so the sidebar stays scannable. When omitted, links render without a heading divider.
  * @prop {boolean} collapsible - When true, the section heading becomes a toggle button that expands/collapses the child links.
  * @prop {boolean} open - Controls whether a collapsible section is expanded (true) or collapsed (false). Only relevant when collapsible is true.
+ * @prop {string} icon - Name of an icon to render before the heading. Ignored when the section has no heading.
  * @fires {CustomEvent<{ open: boolean }>} arc-toggle - Fired when a collapsible section expands or collapses.
  * @slot - Default content.
  */
@@ -17,6 +18,7 @@ export class ArcSidebarSection extends LitElement {
     heading:     { type: String, reflect: true },
     collapsible: { type: Boolean, reflect: true },
     open:        { type: Boolean, reflect: true },
+    icon:        { type: String, reflect: true },
   };
 
   static styles = css`
@@ -28,6 +30,7 @@ export class ArcSidebarSection extends LitElement {
     this.heading = '';
     this.collapsible = false;
     this.open = true;
+    this.icon = '';
   }
 
   /** Get child arc-sidebar-link elements */

@@ -285,7 +285,7 @@ export class ArcCodeBlock extends LitElement {
       .code-block__orb {
         width: 12px;
         height: 12px;
-        border-radius: 50%;
+        border-radius: var(--radius-full);
       }
 
       .code-block__orb--close    { background: #ff5f57; }

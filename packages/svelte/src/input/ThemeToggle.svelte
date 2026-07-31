@@ -7,6 +7,7 @@
     theme?: 'dark' | 'light' | 'auto';
     disabled?: boolean;
     iconOnly?: boolean;
+    size?: 'xs' | 'sm' | 'md' | 'lg';
     class?: string;
     id?: string;
     style?: string;
@@ -34,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { theme = 'auto', disabled = false, iconOnly = false, ...rest }: Props = $props();
+  let { theme = 'auto', disabled = false, iconOnly = false, size = 'md', ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {
@@ -44,5 +45,5 @@
   });
 </script>
 
-<arc-theme-toggle {theme} {disabled} bind:this={__el} {...rest}>
+<arc-theme-toggle {theme} {disabled} {size} bind:this={__el} {...rest}>
 </arc-theme-toggle>

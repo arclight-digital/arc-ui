@@ -8,6 +8,7 @@ export interface SidebarLinkProps {
   href?: string;
   active?: boolean;
   level?: number;
+  icon?: string;
   className?: string;
   children?: React.ReactNode;
 }

@@ -93,7 +93,10 @@ export class ArcButtonGroup extends LitElement {
     // Not in the constructor: that also runs on the server, where the element
     // shim has no `style` and this threw. connectedCallback is client-only and
     // still lands before first paint.
-    this.style.setProperty('--_group-radius', '10px');
+    // Follows the button shape rather than restating it: buttons are pills, so
+    // the outer corners of a group of them are pill ends. A literal here (it
+    // was '10px', the old --radius-md) silently outlives any change to that.
+    this.style.setProperty('--_group-radius', 'var(--radius-full)');
   }
 
   _onSlotChange(e) {

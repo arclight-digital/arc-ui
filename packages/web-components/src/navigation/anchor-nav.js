@@ -42,7 +42,8 @@ export class ArcAnchorNav extends LitElement {
       }
 
       .anchor-nav__link {
-        padding: var(--space-xs) var(--space-sm);
+        padding-block: var(--space-xs);
+        padding-inline: var(--nav-row-inset) var(--space-sm);
         font-family: var(--font-body);
         font-size: var(--_text-sm);
         color: var(--text-muted);
@@ -71,7 +72,8 @@ export class ArcAnchorNav extends LitElement {
 
       /* Slotted children styling */
       ::slotted(*) {
-        padding: var(--space-xs) var(--space-sm);
+        padding-block: var(--space-xs);
+        padding-inline: var(--nav-row-inset) var(--space-sm);
         font-family: var(--font-body);
         font-size: var(--_text-sm);
         color: var(--text-muted);

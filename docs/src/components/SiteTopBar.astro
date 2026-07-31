@@ -1,0 +1,190 @@
+---
+/**
+ * The one site top bar, used by both the landing page and DocsLayout.
+ * Markup and styles live here and only here — the nav's position drifted
+ * whenever the two pages hand-built the same bar with styles split between
+ * docs.css and page-scoped blocks (a .topbar-version margin here, a missing
+ * divider there). One source, no drift.
+ */
+import Wordmark from './Wordmark.astro';
+import { versionShort } from '../data/site-stats';
+
+interface Props {
+  /** Docs slug for active-state marking; outside /docs nothing is active. */
+  activeSlug?: string;
+  /** Render the ⌘K search trigger — only on pages that mount <SiteSearch />. */
+  search?: boolean;
+  /** Transparent until scrolled, for pages that open on a hero. */
+  immersive?: boolean;
+  /** Forwarded to arc-top-bar's slot attribute (app-shell layouts need "topbar"). */
+  slotName?: string;
+  /** arc-top-bar mobile-menu behavior; "nav" on pages with no app-shell sidebar. */
+  mobileMenu?: string;
+}
+
+const { activeSlug, search = false, immersive = false, slotName, mobileMenu } = Astro.props;
+
+const path = Astro.url.pathname;
+const inDocs = path.startsWith('/docs');
+const isComponents = activeSlug === 'components' || path.startsWith('/docs/components');
+const isTokens = activeSlug === 'tokens';
+const isSynth = activeSlug === 'theme-synthesizer';
+/** Any docs page that isn't one of the other three tabs files under Docs. */
+const isDocs = inDocs && !isComponents && !isTokens && !isSynth;
+---
+
+{/* theme-fixed (always-dark) only when the bar has a background of its own:
+    immersive renders transparent until scrolled, so it must follow the page
+    theme or light mode floats near-white text over a light hero. */}
+<arc-top-bar
+  slot={slotName}
+  fixed
+  immersive={immersive || undefined}
+  nav-align="left"
+  mobile-menu={mobileMenu}
+  class:list={[{ 'theme-fixed': !immersive }]}
+>
+  <div slot="logo">
+    <Wordmark />
+  </div>
+  {/* The version names the product, it is not something you can do — so it
+      belongs with the wordmark, leaving the actions cluster purely
+      interactive. */}
+  <arc-badge slot="subtitle" variant="primary" class="topbar-version">{versionShort}</arc-badge>
+  <span slot="center" class="topbar-brand-divider" aria-hidden="true"></span>
+  <arc-navigation-menu slot="center">
+    {/* Anchors live in light DOM so the nav is a working link list with JS
+        disabled and before the menu upgrades — arc-navigation-menu reads the
+        href off the child anchor and hides this markup once it takes over. */}
+    <arc-nav-item active={isDocs || undefined}><a href="/docs/getting-started">Docs</a></arc-nav-item>
+    <arc-nav-item active={isComponents || undefined}><a href="/docs/components">Components</a></arc-nav-item>
+    <arc-nav-item active={isTokens || undefined}><a href="/docs/tokens">Tokens</a></arc-nav-item>
+    <arc-nav-item active={isSynth || undefined}><a href="/docs/theme-synthesizer">Synthesizer</a></arc-nav-item>
+  </arc-navigation-menu>
+  <div slot="actions" class="topbar-actions">
+    {search && (
+      <>
+        <button
+          type="button"
+          class="topbar-search"
+          data-site-search-trigger
+          aria-label="Search docs"
+          aria-keyshortcuts="Meta+K Control+K"
+        >
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <path d="M11.5 7a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zm-.82 4.74a6 6 0 111.06-1.06l3.04 3.04a.75.75 0 11-1.06 1.06l-3.04-3.04z"/>
+          </svg>
+          <span class="topbar-search__text">Search</span>
+          <kbd class="topbar-search__kbd" data-search-kbd>⌘K</kbd>
+        </button>
+        {/* Separates the one control you operate from the two you merely toggle. */}
+        <span class="topbar-actions__divider" aria-hidden="true"></span>
+      </>
+    )}
+    <arc-theme-toggle icon-only></arc-theme-toggle>
+    {/* size matches arc-theme-toggle beside it — both md, both 36px circles. */}
+    <arc-icon-button href="https://github.com/Arclight-Digital/arc-ui" name="github-logo" label="GitHub" variant="ghost" size="md"></arc-icon-button>
+  </div>
+</arc-top-bar>
+
+<style>
+  .topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  /* ── Search trigger ── */
+  .topbar-search {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-full);
+    background: transparent;
+    color: var(--text-muted);
+    font-family: inherit;
+    font-size: var(--text-xs);
+    cursor: pointer;
+    transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+  }
+
+  .topbar-search:hover {
+    border-color: rgba(var(--accent-primary-rgb), 0.4);
+    color: var(--text-primary);
+    background: rgba(var(--accent-primary-rgb), 0.05);
+  }
+
+  /* Given a width so the shortcut sits at the far end rather than tight against
+     the word — that gap is what makes it read as a field you can type into
+     instead of three things that happen to be adjacent. */
+  .topbar-search {
+    min-width: 210px;
+  }
+
+  .topbar-search__kbd {
+    font-family: var(--font-accent);
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    padding: 2px 6px;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    color: var(--text-ghost);
+    margin-inline-start: auto;
+  }
+
+  /* Closes the brand cluster — wordmark plus version — off from the nav, so the
+     version reads as belonging to the product name rather than to the first link. */
+  .topbar-brand-divider {
+    inline-size: 1px;
+    block-size: 20px;
+    background: var(--divider);
+    margin-inline-end: var(--space-md);
+    flex-shrink: 0;
+  }
+
+  /* Separates the one control you operate from the two you merely toggle. */
+  .topbar-actions__divider {
+    inline-size: 1px;
+    block-size: 20px;
+    background: var(--divider);
+    margin-inline: var(--space-xs);
+    flex-shrink: 0;
+  }
+
+  /* Sits against the wordmark, so it needs to read as a suffix rather than as a
+     second thing competing with it. */
+  .topbar-version {
+    margin-inline-start: var(--space-xs);
+  }
+
+  /* Goes when the nav it divides goes. 900px, not the 768px the wordmark uses:
+     arc-navigation-menu collapses at 900, so between the two a divider would sit
+     there separating the brand from nothing. */
+  @media (max-width: 900px) {
+    .topbar-brand-divider { display: none; }
+  }
+
+  @media (max-width: 768px) {
+    .topbar-search__text,
+    .topbar-search__kbd { display: none; }
+    /* An explicit 36px square, matching arc-icon-button and arc-theme-toggle
+       beside it. Dropping the label and the ⌘K hint left this sized by its
+       padding alone — 32×28, so --radius-full made a stadium rather than a
+       circle, and it read as a squashed oval in a row of three circles. */
+    .topbar-search {
+      min-width: 0;
+      inline-size: 36px;
+      block-size: 36px;
+      padding: 0;
+      justify-content: center;
+      border-radius: var(--radius-full);
+      /* Border goes with the label. On desktop it outlines a field you can type
+         into; reduced to a lone glyph it just makes this the only ringed icon
+         in the row. */
+      border-color: transparent;
+    }
+    .topbar-actions__divider { display: none; }
+  }
+</style>

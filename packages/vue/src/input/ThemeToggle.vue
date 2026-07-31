@@ -8,10 +8,12 @@ const props = withDefaults(defineProps<{
   theme?: 'dark' | 'light' | 'auto';
   disabled?: boolean;
   iconOnly?: boolean;
+  size?: 'xs' | 'sm' | 'md' | 'lg';
 }>(), {
   theme: 'auto',
   disabled: false,
   iconOnly: false,
+  size: 'md',
 });
 
 const emit = defineEmits<{
@@ -24,6 +26,7 @@ const emit = defineEmits<{
     :theme="props.theme"
     :disabled="props.disabled"
     :iconOnly="props.iconOnly"
+    :size="props.size"
     @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
   >
   </arc-theme-toggle>

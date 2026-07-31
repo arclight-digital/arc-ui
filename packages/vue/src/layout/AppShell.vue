@@ -11,12 +11,17 @@ const props = withDefaults(defineProps<{
   sidebarOpen: false,
   breakpoint: 900,
 });
+
+const emit = defineEmits<{
+  'arc-sidebar-toggle': [event: CustomEvent];
+}>();
 </script>
 
 <template>
   <arc-app-shell
     :sidebarOpen="props.sidebarOpen"
     :breakpoint="props.breakpoint"
+    @arc-sidebar-toggle="(payload: CustomEvent) => emit('arc-sidebar-toggle', payload)"
   >
     <slot />
     <slot name="topbar" />

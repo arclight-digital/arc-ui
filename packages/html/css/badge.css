@@ -15,7 +15,7 @@
         color: var(--text-muted);
         padding: var(--space-xs) var(--space-sm);
         border: 1px solid var(--border-default);
-        border-radius: var(--radius-sm);
+        border-radius: var(--radius-full);
         background: var(--surface-hover);
         transition: box-shadow var(--transition-base), border-color var(--transition-base);
         line-height: 1.4;

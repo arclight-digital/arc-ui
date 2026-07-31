@@ -15,6 +15,7 @@ export interface SidebarSectionProps {
   heading?: string;
   collapsible?: boolean;
   open?: boolean;
+  icon?: string;
   onArcToggle?: (e: CustomEvent) => void;
   children?: JSX.Element;
   class?: string;
@@ -45,9 +46,9 @@ export interface SidebarSectionProps {
 }
 
 export const SidebarSection: Component<SidebarSectionProps> = (props) => {
-  const [local, rest] = splitProps(props, ['heading', 'collapsible', 'open', 'onArcToggle', 'children']);
+  const [local, rest] = splitProps(props, ['heading', 'collapsible', 'open', 'icon', 'onArcToggle', 'children']);
   return (
-    <arc-sidebar-section heading={local.heading} collapsible={local.collapsible} open={local.open} on:arc-toggle={local.onArcToggle} {...rest}>
+    <arc-sidebar-section heading={local.heading} collapsible={local.collapsible} open={local.open} icon={local.icon} on:arc-toggle={local.onArcToggle} {...rest}>
       {local.children}
     </arc-sidebar-section>
   );

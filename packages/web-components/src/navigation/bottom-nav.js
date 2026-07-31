@@ -75,7 +75,7 @@ export class ArcBottomNav extends LitElement {
         content: '';
         width: 20px;
         height: 2px;
-        border-radius: 1px;
+        border-radius: var(--radius-full);
         background: var(--interactive);
         box-shadow: var(--glow-sm);
         margin-top: 2px;

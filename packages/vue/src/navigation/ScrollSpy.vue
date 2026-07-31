@@ -7,9 +7,11 @@ defineOptions({ name: 'ScrollSpy' });
 const props = withDefaults(defineProps<{
   active?: string;
   offset?: number;
+  progress?: 'none' | 'ring' | 'read' | 'both';
 }>(), {
   active: '',
   offset: 80,
+  progress: 'none',
 });
 
 const emit = defineEmits<{
@@ -21,6 +23,7 @@ const emit = defineEmits<{
   <arc-scroll-spy
     :active="props.active"
     :offset="props.offset"
+    :progress="props.progress"
     @arc-change="(payload: CustomEvent) => emit('arc-change', payload)"
   >
     <slot />

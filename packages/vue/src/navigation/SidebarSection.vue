@@ -8,10 +8,12 @@ const props = withDefaults(defineProps<{
   heading?: string;
   collapsible?: boolean;
   open?: boolean;
+  icon?: string;
 }>(), {
   heading: '',
   collapsible: false,
   open: true,
+  icon: '',
 });
 
 const emit = defineEmits<{
@@ -33,6 +35,7 @@ function onArcToggle(payload: CustomEvent) {
     :heading="props.heading"
     :collapsible="props.collapsible"
     :open="props.open"
+    :icon="props.icon"
     @arc-toggle="onArcToggle"
   >
     <slot />

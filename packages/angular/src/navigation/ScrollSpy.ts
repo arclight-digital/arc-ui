@@ -24,4 +24,11 @@ export class ScrollSpy {
   get offset(): number {
     return this._el.offset;
   }
+
+  @Input() set progress(value: 'none' | 'ring' | 'read' | 'both') {
+    this._el.progress = value;
+  }
+  get progress(): 'none' | 'ring' | 'read' | 'both' {
+    return this._el.progress;
+  }
 }

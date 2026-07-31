@@ -5,6 +5,9 @@ import '@arclux/arc-ui/top-bar';
 
 export interface TopBarProps {
   heading?: string;
+  homeHref?: string;
+  scrolled?: boolean;
+  immersive?: boolean;
   fixed?: boolean;
   contained?: string;
   menuOpen?: boolean;
@@ -38,5 +41,5 @@ export interface TopBarProps {
   [key: `on${string}`]: unknown;
 }
 
-export const TopBar: FunctionComponent<TopBarProps> = ({ heading, fixed, contained, menuOpen, mobileMenu, menuPosition, navAlign, ...rest }) =>
-  h('arc-top-bar', { heading, fixed, contained, menuOpen, mobileMenu, menuPosition, navAlign, ...rest });
+export const TopBar: FunctionComponent<TopBarProps> = ({ heading, homeHref, scrolled, immersive, fixed, contained, menuOpen, mobileMenu, menuPosition, navAlign, ...rest }) =>
+  h('arc-top-bar', { heading, homeHref, scrolled, immersive, fixed, contained, menuOpen, mobileMenu, menuPosition, navAlign, ...rest });

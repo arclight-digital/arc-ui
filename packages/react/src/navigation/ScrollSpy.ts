@@ -7,10 +7,10 @@ import { ArcScrollSpy } from '@arclux/arc-ui/scroll-spy';
 export interface ScrollSpyProps {
   active?: string;
   offset?: number;
+  progress?: 'none' | 'ring' | 'read' | 'both';
   className?: string;
   children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;
-  onClick?: (e: Event) => void;
 }
 
 export const ScrollSpy = createComponent({
@@ -19,6 +19,5 @@ export const ScrollSpy = createComponent({
   react: React,
   events: {
     onArcChange: 'arc-change' as EventName<CustomEvent>,
-    onClick: 'click' as EventName<Event>,
   },
 });

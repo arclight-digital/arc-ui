@@ -56,16 +56,39 @@ export class ArcNavigationMenu extends LitElement {
         font-family: var(--font-label);
         font-size: var(--_text-xs);
         font-weight: var(--font-label-weight, 600);
-        letter-spacing: 2px;
+        --_trigger-ls: 2px;
+        letter-spacing: var(--_trigger-ls);
         text-transform: uppercase;
         color: var(--text-muted);
         background: transparent;
-        border: 1px solid var(--border-subtle);
-        border-radius: var(--radius-sm);
-        padding: var(--space-sm) calc(var(--space-sm) + var(--space-xs));
+        /* --border-default, not --border-subtle: this is a standalone control
+           floating on a bar, not a hairline between rows, and subtle put its
+           outline within a point of the background. */
+        border: 1px solid var(--border-default);
+        /* Pill, like every other standalone control in a top bar — the buttons,
+           the version badge, the icon-only toggles. The dropdown rows and the
+           mobile panel links below keep --radius-sm: those are rows inside a
+           container, the same class of thing as a sidebar link, and rounding
+           them would make a list read as a pile of separate objects. */
+        border-radius: var(--radius-full);
+        /* The inline padding is asymmetric by half the letter-spacing, which is
+           what puts the word in the middle rather than merely putting its *box*
+           there. letter-spacing adds its 2px after the final letter too, and
+           that trailing space is inside the box being centred — so the glyphs
+           end up sitting half of it, 1px, to the left. Derived from the same
+           custom property the letter-spacing uses, so the two cannot drift. */
+        padding-block: var(--space-sm);
+        padding-inline:
+          calc(var(--space-sm) + var(--space-xs) + var(--_trigger-ls) / 2)
+          calc(var(--space-sm) + var(--space-xs) - var(--_trigger-ls) / 2);
         cursor: pointer;
         text-decoration: none;
-        transition: color var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+        transition:
+          color var(--transition-fast),
+          background var(--transition-fast),
+          border-color var(--transition-fast),
+          box-shadow var(--transition-fast),
+          transform 120ms var(--ease-out-expo);
         white-space: nowrap;
       }
 
@@ -74,6 +97,17 @@ export class ArcNavigationMenu extends LitElement {
         color: var(--text-primary);
         background: var(--surface-hover);
         box-shadow: var(--glow-sm);
+      }
+
+      /* Press feedback. There was none: the trigger transitioned colour,
+         background, border and shadow but had no :active rule and no transform
+         in its transition list, so it was the one control in the bar that did
+         not move under the pointer while the buttons and icon buttons beside it
+         did. 0.97 and 120ms are what arc-button uses for a wide control —
+         arc-icon-button's 0.93 is pitched for a small square and reads as a
+         lurch across something this long. */
+      .nav__trigger:active {
+        transform: scale(0.97);
       }
 
       .nav__trigger--active {

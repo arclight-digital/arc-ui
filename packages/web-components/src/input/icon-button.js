@@ -1,6 +1,6 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import { buttonVariantStyles } from '../button-styles.js';
+import { buttonVariantStyles, iconBoxStyles } from '../button-styles.js';
 import { isLoneSlottedAnchor } from '../shared/anchor-adoption.js';
 import '../content/icon.js';
 
@@ -13,7 +13,7 @@ import '../content/icon.js';
  * @prop {string} name - Name of the arc-icon to render. When empty, the default slot is used for custom icon content.
  * @prop {string} text - Optional text label displayed next to the icon. When provided, the button expands from a square to a wider labeled button with uppercase styling.
  * @prop {'ghost' | 'secondary' | 'primary'} variant - Visual style variant. Ghost is transparent, secondary has a border with glow, primary has a solid accent-primary fill.
- * @prop {'xs' | 'sm' | 'md' | 'lg'} size - Button size controlling dimensions and icon scale. Icon-only sizes: xs=28px, sm=32px, md=36px, lg=44px.
+ * @prop {'xs' | 'sm' | 'md' | 'lg'} size - Button size controlling dimensions and icon scale. Icon-only sizes are circular: xs=28px, sm=32px, md=36px, lg=44px. The labelled form stays a rounded rectangle.
  * @prop {string} label - Accessible label for the button. Falls back to `text` if not provided. Required for icon-only usage.
  * @prop {string} href - When set, renders the button as an anchor tag for navigation links.
  * @prop {boolean} disabled - Disables the button, reducing opacity to 40% and blocking pointer events.
@@ -37,6 +37,7 @@ export class ArcIconButton extends LitElement {
   static styles = [
     tokenStyles,
     buttonVariantStyles,
+    iconBoxStyles,
     css`
       :host { display: inline-flex; }
       :host([disabled]) { pointer-events: none; }
@@ -65,9 +66,6 @@ export class ArcIconButton extends LitElement {
         color: inherit;
       }
 
-      /* Icon-only (square) */
-      .btn:not(.btn--has-text) { aspect-ratio: 1; }
-
       /* With text */
       .btn--has-text {
         font-family: var(--font-label);
@@ -81,19 +79,8 @@ export class ArcIconButton extends LitElement {
         line-height: 1;
       }
 
-      /* Sizes — icon-only */
-      .btn:not(.btn--has-text),
-      .btn-slot::slotted(a) { min-width: var(--touch-min); min-height: var(--touch-min); }
-      :host([size="xs"]) .btn:not(.btn--has-text),
-      :host([size="xs"]) .btn-slot::slotted(a) { width: 28px; height: 28px; border-radius: var(--radius-sm); }
-      :host([size="sm"]) .btn:not(.btn--has-text),
-      :host([size="sm"]) .btn-slot::slotted(a) { width: 32px; height: 32px; }
-      :host(:not([size="lg"]):not([size="sm"]):not([size="xs"])) .btn:not(.btn--has-text),
-      :host(:not([size="lg"]):not([size="sm"]):not([size="xs"])) .btn-slot::slotted(a),
-      :host([size="md"]) .btn:not(.btn--has-text),
-      :host([size="md"]) .btn-slot::slotted(a) { width: 36px; height: 36px; }
-      :host([size="lg"]) .btn:not(.btn--has-text),
-      :host([size="lg"]) .btn-slot::slotted(a) { width: 44px; height: 44px; }
+      /* Sizes — icon-only: see iconBoxStyles in ../button-styles.js, shared with
+         arc-theme-toggle so the two cannot drift apart in a top bar. */
 
       /* Sizes — with text */
       .btn--has-text { min-height: var(--touch-min); }

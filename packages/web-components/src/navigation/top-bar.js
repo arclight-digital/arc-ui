@@ -8,7 +8,10 @@ import '../layout/container.register.js';
  *
  * @tag arc-top-bar
  * @requires arc-container
- * @prop {string} heading - Brand text displayed in the top-left corner next to the optional logo slot. Rendered with the accent font family (Tektur), uppercase, and wide letter-spacing. Keep this to one or two words that identify the application.
+ * @prop {string} heading - Brand text displayed in the top-left corner next to the optional logo slot. Rendered uppercase with wide letter-spacing at the wordmark size. Keep this to one or two words that identify the application.
+ * @prop {string} homeHref - Destination of the brand link. Defaults to `/`; set it when the app is mounted under a sub-path, or to an empty string to render the brand as plain text with no link at all.
+ * @prop {boolean} scrolled - Reflects whether the page has scrolled past the bar's threshold. Set by the component, not by you — read it to style a scrolled state from outside, via `arc-top-bar[scrolled]`.
+ * @prop {boolean} immersive - Renders the bar with no background, blur or border until the page is scrolled, so a hero shows through it. Requires `fixed`. Suits marketing pages whose first screen is one composed image; leave it off in an application layout, where the bar should be a fixed edge among the other panels rather than something that appears and disappears.
  * @prop {boolean} fixed - When true, the bar uses position: fixed so it stays at the top of the viewport while content scrolls underneath. Automatically applied when TopBar is placed inside an AppShell. Be sure to add matching top padding to the content below to prevent overlap.
  * @prop {boolean} menuOpen - Reflects whether the mobile hamburger menu is open. Toggling this value updates the aria-expanded attribute on the menu button. Typically managed by AppShell in response to the arc-sidebar-toggle event rather than set directly.
  * @prop {'left' | 'center' | 'right'} navAlign - Controls the alignment of content in the center slot. Pulls nav toward the brand or actions without reordering DOM.
@@ -31,6 +34,13 @@ import '../layout/container.register.js';
 export class ArcTopBar extends LitElement {
   static properties = {
     heading:      { type: String },
+    homeHref:     { type: String, attribute: 'home-href' },
+    /* Declared, not just toggled onto the host: it was written with
+       toggleAttribute alone, so it styled correctly but appeared in no
+       manifest, no wrapper type and no documentation — API that exists and
+       cannot be found. */
+    scrolled:     { type: Boolean, reflect: true },
+    immersive:    { type: Boolean, reflect: true },
     fixed:        { type: Boolean, reflect: true },
     contained:    { type: String, reflect: true },
     menuOpen:     { type: Boolean, attribute: 'menu-open', reflect: true },
@@ -62,6 +72,46 @@ export class ArcTopBar extends LitElement {
         backdrop-filter: blur(12px) saturate(130%);
         -webkit-backdrop-filter: blur(12px) saturate(130%);
         border-bottom: 1px solid var(--divider);
+        transition:
+          background var(--transition-slow),
+          backdrop-filter var(--transition-slow),
+          border-color var(--transition-slow);
+      }
+
+      /* An always-dark region has to be one colour, not two.
+         arc-footer paints --surface-base flat, while this bar mixes it 85% with
+         transparent. In dark mode that costs nothing — 15% of a near-black page
+         bleeds through as near-black. In light mode the 15% is 15% of a
+         near-white page, so the identical token renders rgb(46,46,81) up here
+         and the raw navy down there, and the two .theme-fixed regions visibly
+         disagree. Opaque when the region is pinned dark; the translucency stays
+         for bars that follow the page, which are the ones with something worth
+         seeing behind them. The blur goes with it, and loses nothing: it was
+         already imperceptible behind an 85%-opaque fill. */
+      :host(.theme-fixed) .topbar {
+        background: var(--surface-base);
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+      }
+
+      /* Immersive: at the top of the document the bar carries no chrome at all,
+         and takes on the blur, the fill and the border only once content is
+         actually passing underneath and the boundary starts doing work.
+         Opt-in, because it suits a page whose first screen is one designed
+         image — a hero, a landing page — and actively hurts an application
+         layout, where the bar is one panel among several defined panels and is
+         expected to be a fixed edge rather than something that comes and goes.
+         Also gated on [fixed]: a bar in the flow scrolls away with the page and
+         never overlays anything, so it has nothing to earn. */
+      :host([immersive][fixed]:not([scrolled])) .topbar {
+        background: transparent;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        border-bottom-color: transparent;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .topbar { transition: none; }
       }
 
       .topbar__content {
@@ -118,6 +168,7 @@ export class ArcTopBar extends LitElement {
         display: flex;
         align-items: center;
         justify-content: center;
+        min-width: 0;
       }
 
       .topbar__actions {
@@ -125,6 +176,38 @@ export class ArcTopBar extends LitElement {
         align-items: center;
         gap: var(--space-sm);
         flex-shrink: 0;
+      }
+
+      /* Centred nav means centred in the *bar*, not in whatever space the brand
+         and the actions happen to leave over. With the flex row alone the nav
+         sits at the midpoint of the gap between them, which is the middle of
+         the viewport only when those two are identically wide — they never are.
+         Giving both sides an equal flex basis of zero makes them claim the same
+         width whatever they contain, so the middle column's centre is the bar's
+         centre. Only for nav-align=center: left and right alignment want the
+         brand to keep its natural width.
+
+         Keyed on "not the other two" as well as on the value itself: nav-align
+         defaults to center in the constructor and is not reflected, so
+         :host([nav-align="center"]) alone matches nothing in the default case —
+         the very failure check-enum-fallbacks.js exists to catch. The explicit
+         selector stays beside it so prism can still infer the union. */
+      :host(:not([nav-align="left"]):not([nav-align="right"])) .topbar__brand,
+      :host(:not([nav-align="left"]):not([nav-align="right"])) .topbar__actions,
+      :host([nav-align="center"]) .topbar__brand,
+      :host([nav-align="center"]) .topbar__actions {
+        flex: 1 1 0;
+        min-width: 0;
+      }
+
+      :host(:not([nav-align="left"]):not([nav-align="right"])) .topbar__actions,
+      :host([nav-align="center"]) .topbar__actions {
+        justify-content: flex-end;
+      }
+
+      :host(:not([nav-align="left"]):not([nav-align="right"])) .topbar__center,
+      :host([nav-align="center"]) .topbar__center {
+        flex: 0 1 auto;
       }
 
       .topbar__menu-btn {
@@ -136,11 +219,16 @@ export class ArcTopBar extends LitElement {
         min-width: 36px;
         aspect-ratio: 1;
         background: none;
-        border: 1px solid var(--border-subtle);
+        /* Circular and border-less, like the icon buttons it shares the bar
+           with. It was a --radius-sm square with a visible edge, which the
+           round-icon-button pass left behind — the one square control in a row
+           of circles, and the only one outlined. The open state still takes an
+           accent border, so the affordance is kept where it means something. */
+        border: 1px solid transparent;
         color: var(--text-primary);
         cursor: pointer;
         padding: 0;
-        border-radius: var(--radius-sm);
+        border-radius: var(--radius-full);
         transition: background var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
       }
 
@@ -195,6 +283,10 @@ export class ArcTopBar extends LitElement {
         transform: translateY(-5.25px) rotate(-45deg);
       }
 
+      /* 900px is not a breakpoint token, and arc-navigation-menu hardcodes the
+         same number for the width at which it collapses. The pair is
+         load-bearing: move one without the other and both hamburgers show at
+         once, or neither does. Change them together, or move both onto a token. */
       @media (max-width: 900px) {
         .topbar__menu-btn { display: flex; }
       }
@@ -204,12 +296,16 @@ export class ArcTopBar extends LitElement {
   constructor() {
     super();
     this.heading = '';
+    this.homeHref = '/';
+    this.scrolled = false;
+    this.immersive = false;
     this.fixed = false;
     this.contained = null;
     this.menuOpen = false;
     this.mobileMenu = 'sidebar';
     this.menuPosition = 'left';
     this.navAlign = 'center';
+    this._rafId = null;
     this._onExternalToggle = this._onExternalToggle.bind(this);
     this._onScroll = this._onScroll.bind(this);
   }
@@ -217,23 +313,50 @@ export class ArcTopBar extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     document.addEventListener('arc-mobile-menu-toggle', this._onExternalToggle);
-    window.addEventListener('scroll', this._onScroll, { passive: true });
-    this._onScroll();
+    document.addEventListener('arc-sidebar-toggle', this._onExternalToggle);
+    // Capture phase on the document, not the window: an app that scrolls a
+    // container rather than the page never fires a window scroll event, and the
+    // bar simply never learned it had been scrolled past.
+    document.addEventListener('scroll', this._onScroll, { capture: true, passive: true });
+    this._measure();
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
     document.removeEventListener('arc-mobile-menu-toggle', this._onExternalToggle);
-    window.removeEventListener('scroll', this._onScroll);
+    document.removeEventListener('arc-sidebar-toggle', this._onExternalToggle);
+    document.removeEventListener('scroll', this._onScroll, { capture: true });
+    if (this._rafId) cancelAnimationFrame(this._rafId);
+    this._rafId = null;
   }
 
+  /** Coalesce a burst of scroll events into one measurement per frame. */
   _onScroll() {
-    this.toggleAttribute('scrolled', window.scrollY > 20);
+    if (this._rafId) return;
+    this._rafId = requestAnimationFrame(() => {
+      this._rafId = null;
+      this._measure();
+    });
   }
 
+  _measure() {
+    const doc = document.scrollingElement || document.documentElement;
+    this.scrolled = doc.scrollTop > 20;
+  }
+
+  /**
+   * Adopt menu state someone else changed.
+   *
+   * Both modes need this, and only the nav one had it. In sidebar mode the
+   * drawer belongs to arc-app-shell, which also closes it on Escape, on a
+   * backdrop click and on navigation — none of which came back here, so the
+   * hamburger went on reporting aria-expanded="true" and showing its close icon
+   * for a drawer that had already slid away.
+   */
   _onExternalToggle(e) {
-    if (this.mobileMenu !== 'nav') return;
     if (e.target === this) return;
+    const forNav = e.type === 'arc-mobile-menu-toggle';
+    if (forNav !== (this.mobileMenu === 'nav')) return;
     this.menuOpen = e.detail?.value ?? !this.menuOpen;
   }
 
@@ -277,15 +400,26 @@ export class ArcTopBar extends LitElement {
     return ['sm', 'md', 'lg', 'xl', 'full'].includes(size) ? size : 'md';
   }
 
+  /** Brand contents, shared by the linked and unlinked forms. */
+  _renderBrand() {
+    return html`
+      <slot name="logo"></slot>
+      ${this.heading ? html`<span class="topbar__heading">${this.heading}</span>` : ''}
+      <slot name="subtitle"></slot>
+    `;
+  }
+
   _renderContent(menuLeft) {
     return html`
       <div class="topbar__content" part="content">
         ${menuLeft ? this._renderMenuButton() : ''}
-        <a class="topbar__brand" href="/" part="brand">
-          <slot name="logo"></slot>
-          ${this.heading ? html`<span class="topbar__heading">${this.heading}</span>` : ''}
-          <slot name="subtitle"></slot>
-        </a>
+        ${this.homeHref
+          ? html`
+            <a class="topbar__brand" href=${this.homeHref} part="brand">
+              ${this._renderBrand()}
+            </a>`
+          : html`<div class="topbar__brand" part="brand">${this._renderBrand()}</div>`
+        }
         <div class="topbar__center" part="center" style="justify-content:${this._navJustify}">
           <slot name="center"></slot>
         </div>

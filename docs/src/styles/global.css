@@ -11,6 +11,12 @@
   --accent-secondary:        rgb(20, 184, 166);
   --accent-secondary-rgb:    20, 184, 166;
 
+  /* ── Font trial: Trispace in the label/accent role (was Tektur).
+     Docs-level assignment through the role slot — the library default is
+     untouched, and OG cards still render with Tektur until this sticks.
+     Revert = delete this line (Tektur's @font-face is still loaded). ── */
+  --font-label-family: 'Trispace';
+
   /* Demo-specific: 3-stop gradient with midpoint accent */
   --gradient-display-text:   linear-gradient(135deg, rgb(232, 232, 236) 0%, rgb(77, 126, 247) 50%, rgb(20, 184, 166) 100%);
   /* Demo-specific: wider ellipse ambient layout */
@@ -228,11 +234,31 @@ arc-button:not(:defined) {
   min-height: 40px;
 }
 
+/* 36px, matching the md default both now render at. It said 32px, which was
+   the old icon-button sm — so every load reserved the wrong box and shifted. */
 arc-icon-button:not(:defined),
 arc-theme-toggle:not(:defined) {
   display: inline-flex;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
+}
+
+/* Bounds the divider before its shadow stylesheet lands. Server-rendered pages
+   ship each shadow root's CSS as an external <link>, which loads on its own
+   schedule; until it does, the shadow's inner <div> is an unstyled block that
+   takes whatever width the flex row will give it — a bar across the wordmark
+   where a hairline belongs. Constraining the host, and clipping it, means the
+   worst case is a line of the right size rather than a flash of the wrong one. */
+arc-divider:not(:defined) {
+  display: block;
+  overflow: hidden;
+  height: 1px;
+}
+
+arc-divider[vertical]:not(:defined) {
+  display: inline-block;
+  width: 2px;
+  height: auto;
 }
 
 arc-badge:not(:defined) {

@@ -37,7 +37,7 @@ export class ArcPageIndicator extends LitElement {
       .page-indicator__dot {
         width: 8px;
         height: 8px;
-        border-radius: 50%;
+        border-radius: var(--radius-full);
         background: var(--border-default);
         border: none;
         padding: 0;

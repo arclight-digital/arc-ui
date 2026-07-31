@@ -1,9 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Wordmark from '../components/Wordmark.astro';
+import SiteTopBar from '../components/SiteTopBar.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import { components } from '../data/components/index';
-import { frameworkCount, buildSteps, tokenCount, version, versionShort } from '../data/site-stats';
+import { buildSteps, tokenCount, testCount, utilityClassCount, elementCount, version, versionShort } from '../data/site-stats';
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -107,25 +107,10 @@ function Settings() {
 ---
 
 <BaseLayout description={jsonLd.description}>
-  <!-- Top Bar -->
-  <div class="theme-fixed">
-    <arc-top-bar fixed nav-align="left" mobile-menu="nav">
-      <div slot="logo">
-        <Wordmark />
-      </div>
-      <arc-navigation-menu slot="center">
-        <arc-nav-item href="/docs/getting-started">Docs</arc-nav-item>
-        <arc-nav-item href="/docs/components">Components</arc-nav-item>
-        <arc-nav-item href="/docs/tokens">Tokens</arc-nav-item>
-        <arc-nav-item href="/docs/theme-synthesizer">Synthesizer</arc-nav-item>
-      </arc-navigation-menu>
-      <div slot="actions" class="topbar-actions">
-        <arc-badge variant="primary" class="topbar-version">{versionShort}</arc-badge>
-        <arc-theme-toggle icon-only></arc-theme-toggle>
-        <arc-icon-button href="https://github.com/Arclight-Digital/arc-ui" name="github-logo" label="GitHub" variant="ghost" size="sm"></arc-icon-button>
-      </div>
-    </arc-top-bar>
-  </div>
+  <!-- Top Bar — shared with DocsLayout via SiteTopBar; immersive makes it
+       transparent over the hero and (inside the component) theme-following
+       instead of theme-fixed, so light mode stays readable. -->
+  <SiteTopBar immersive mobileMenu="nav" />
 
   <!-- Hero -->
   <header class="hero">
@@ -174,7 +159,7 @@ function Settings() {
     <div class="hero__content">
       <a href="/docs/changelog" class="hero__announcement">
         <span class="hero__announcement-badge">{versionShort}</span>
-        <span class="hero__announcement-text">Every import typed to the leaf, and typography you assign</span>
+        <span class="hero__announcement-text">Server rendering for every component, and utilities that read your tokens</span>
         <svg class="hero__announcement-arrow" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
       <h1 class="hero__headline">
@@ -204,462 +189,219 @@ function Settings() {
   <main>
     <arc-divider></arc-divider>
 
-    <!-- The multi-framework argument: same component, each framework's own idiom -->
-    <section class="idioms">
-      <div class="idioms__inner">
-        <div class="idioms__header reveal">
+    <!-- One component, seven dialects: idioms, code and Prism in a single chapter -->
+    <section class="native">
+      <div class="native__inner">
+        <div class="native__header" data-reveal="blur-in">
           <span class="section-label">Not a wrapper</span>
-          <h2 class="section-title">Native in every framework.</h2>
+          <h2 class="statement">
+            <span class="statement__quiet">One component.</span>
+            <span class="statement__lit">Seven dialects.</span>
+          </h2>
           <p class="section-desc">
-            Most libraries make you pick a framework, and that choice outlives its usefulness.
-            Prism reads each Lit component and generates a real package per target — so every
-            one speaks its own language rather than making you speak the library's.
+            <span class="section-desc__line">Prism generates a real, typed package per framework from one Lit source.</span>
+            <span class="section-desc__line">Hand-written wrappers: zero.</span>
           </p>
         </div>
 
-        <div class="idiom-groups">
-          <div class="idiom-group reveal">
-            <div class="idiom-group__head">
-              <span class="idiom-group__name">Two-way bound</span>
-              <span class="idiom-group__note">The binding your framework already has</span>
-            </div>
-            <ul class="idiom-list">
-              <li class="idiom">
-                <span class="idiom__fw">Svelte</span>
-                <code class="idiom__code">&lt;Slider <em>bind:value</em>=&#123;volume&#125; /&gt;</code>
-              </li>
-              <li class="idiom">
-                <span class="idiom__fw">Vue</span>
-                <code class="idiom__code">&lt;Slider <em>v-model:value</em>="volume" /&gt;</code>
-              </li>
-              <li class="idiom">
-                <span class="idiom__fw">Angular</span>
-                <code class="idiom__code">&lt;arc-slider <em>[(value)]</em>="volume"&gt;</code>
-              </li>
-            </ul>
+        <div class="native__grid" id="fw-switcher" data-reveal="fade-up">
+          <div class="fw-list" aria-label="Pick a framework">
+            <button class="fw-btn is-active" aria-pressed="true" data-fw="react">
+              <span class="fw-btn__name">React</span>
+              <code class="fw-btn__idiom"><em>onArcInput</em>=&#123;e =&gt; setV(e.detail.value)&#125;</code>
+            </button>
+            <button class="fw-btn" aria-pressed="false" data-fw="vue">
+              <span class="fw-btn__name">Vue</span>
+              <code class="fw-btn__idiom"><em>v-model:value</em>="volume"</code>
+            </button>
+            <button class="fw-btn" aria-pressed="false" data-fw="svelte">
+              <span class="fw-btn__name">Svelte</span>
+              <code class="fw-btn__idiom"><em>bind:value</em>=&#123;volume&#125;</code>
+            </button>
+            <button class="fw-btn" aria-pressed="false" data-fw="angular">
+              <span class="fw-btn__name">Angular</span>
+              <code class="fw-btn__idiom"><em>[(value)]</em>="volume"</code>
+            </button>
+            <button class="fw-btn" aria-pressed="false" data-fw="solid">
+              <span class="fw-btn__name">Solid</span>
+              <code class="fw-btn__idiom"><em>onArcInput</em>=&#123;handle&#125;</code>
+            </button>
+            <button class="fw-btn" aria-pressed="false" data-fw="preact">
+              <span class="fw-btn__name">Preact</span>
+              <code class="fw-btn__idiom"><em>onArcInput</em>=&#123;handle&#125;</code>
+            </button>
+            <button class="fw-btn" aria-pressed="false" data-fw="html">
+              <span class="fw-btn__name">HTML</span>
+              <code class="fw-btn__idiom">no build step at all</code>
+            </button>
           </div>
-
-          <div class="idiom-group reveal">
-            <div class="idiom-group__head">
-              <span class="idiom-group__name">Controlled</span>
-              <span class="idiom-group__note">Typed events, no <code>useRef</code> dance</span>
+          <div class="fw-panels">
+            <div class="fw-panel" data-fw="react">
+              <arc-code-block variant="window" filename="App.jsx" language="jsx" code={codeExamples.react}></arc-code-block>
             </div>
-            <ul class="idiom-list">
-              <li class="idiom">
-                <span class="idiom__fw">React</span>
-                <code class="idiom__code">&lt;Slider value=&#123;v&#125; <em>onArcInput</em>=&#123;e =&gt; setV(e.detail.value)&#125; /&gt;</code>
-              </li>
-              <li class="idiom">
-                <span class="idiom__fw">Solid</span>
-                <code class="idiom__code">&lt;Slider value=&#123;v()&#125; <em>onArcInput</em>=&#123;handle&#125; /&gt;</code>
-              </li>
-              <li class="idiom">
-                <span class="idiom__fw">Preact</span>
-                <code class="idiom__code">&lt;Slider value=&#123;v&#125; <em>onArcInput</em>=&#123;handle&#125; /&gt;</code>
-              </li>
-            </ul>
-          </div>
-
-          <div class="idiom-group reveal">
-            <div class="idiom-group__head">
-              <span class="idiom-group__name">No build step</span>
-              <span class="idiom-group__note">A script tag and an attribute</span>
+            <div class="fw-panel" data-fw="vue" hidden>
+              <arc-code-block variant="window" filename="App.vue" language="html" code={codeExamples.vue}></arc-code-block>
             </div>
-            <ul class="idiom-list">
-              <li class="idiom">
-                <span class="idiom__fw">HTML</span>
-                <code class="idiom__code">&lt;arc-slider <em>value</em>="64"&gt;&lt;/arc-slider&gt;</code>
-              </li>
-            </ul>
+            <div class="fw-panel" data-fw="svelte" hidden>
+              <arc-code-block variant="window" filename="App.svelte" language="html" code={codeExamples.svelte}></arc-code-block>
+            </div>
+            <div class="fw-panel" data-fw="angular" hidden>
+              <arc-code-block variant="window" filename="settings.component.ts" language="ts" code={codeExamples.angular}></arc-code-block>
+            </div>
+            <div class="fw-panel" data-fw="solid" hidden>
+              <arc-code-block variant="window" filename="Settings.jsx" language="jsx" code={codeExamples.solid}></arc-code-block>
+            </div>
+            <div class="fw-panel" data-fw="preact" hidden>
+              <arc-code-block variant="window" filename="Settings.jsx" language="jsx" code={codeExamples.preact}></arc-code-block>
+            </div>
+            <div class="fw-panel" data-fw="html" hidden>
+              <arc-code-block variant="window" filename="index.html" language="html" code={codeExamples.html}></arc-code-block>
+            </div>
           </div>
         </div>
 
-        <p class="idioms__footnote reveal">
-          Same component, same tokens, same accessibility — in every one. Forms submit through
-          <code>ElementInternals</code>, so <code>form.reset()</code> and validation work natively
-          rather than being reimplemented per framework.
-        </p>
       </div>
     </section>
 
-    <arc-divider></arc-divider>
-
-    <!-- Editor integration — a standing capability, not a release note -->
-    <section class="whats-new">
-      <div class="whats-new__inner">
-        <div class="whats-new__header reveal">
-          <span class="section-label">Editor integration</span>
-          <h2 class="section-title">Your editor already knows.</h2>
+    <!-- Yours: the server's render and your tokens, both live -->
+    <section class="yours">
+      <div class="yours__inner">
+        <div class="yours__header" data-reveal="blur-in">
+          <span class="section-label">Yours, not ours</span>
+          <h2 class="statement">
+            <span class="statement__quiet">Yours,</span>
+            <span class="statement__lit">all the way down.</span>
+          </h2>
           <p class="section-desc">
-            Every component documents its full API in <code>custom-elements.json</code>, which
-            becomes autocomplete in your editor, typed events in TypeScript, and warnings in your
-            console — including on the deep imports, which all publish types.
+            <span class="section-desc__line">Rendered on your server before the bundle loads.</span>
+            <span class="section-desc__line">Restyled by overriding a token.</span>
           </p>
         </div>
-        <div class="whats-new__grid">
-          <div class="editor-demo reveal" id="editor-demo">
-            <p class="sr-only">
-              Animated demo: an editor autocompletes the variant attribute of an
-              arc-button with the values primary, secondary, and ghost, showing hover
-              documentation, and the live button below updates as each value is accepted.
+        <div class="yours__grid">
+          <figure class="payload" data-reveal="fade-up">
+            <figcaption class="payload__chrome">
+              <span class="payload__method">GET</span>
+              <span class="payload__url">/pricing</span>
+              <span class="payload__meta">200 · text/html</span>
+            </figcaption>
+            <pre class="payload__code"><code><span class="payload__line"><span class="tk-p">&lt;</span><span class="tk-t">arc-feature-card</span> <span class="tk-a">heading</span><span class="tk-p">=</span><span class="tk-s">"Fast by default"</span><span class="tk-p">&gt;</span></span><span class="payload__line payload__line--hot">  <span class="tk-p">&lt;</span><span class="tk-t">template</span> <span class="tk-a">shadowrootmode</span><span class="tk-p">=</span><span class="tk-s">"open"</span><span class="tk-p">&gt;</span></span><span class="payload__line">    <span class="tk-p">&lt;</span><span class="tk-t">style</span><span class="tk-p">&gt;</span><span class="tk-c">…</span><span class="tk-p">&lt;/</span><span class="tk-t">style</span><span class="tk-p">&gt;</span></span><span class="payload__line">    <span class="tk-p">&lt;</span><span class="tk-t">div</span> <span class="tk-a">class</span><span class="tk-p">=</span><span class="tk-s">"card"</span> <span class="tk-a">part</span><span class="tk-p">=</span><span class="tk-s">"card"</span><span class="tk-p">&gt;</span></span><span class="payload__line">      <span class="tk-p">&lt;</span><span class="tk-t">h3</span> <span class="tk-a">class</span><span class="tk-p">=</span><span class="tk-s">"card__title"</span><span class="tk-p">&gt;</span>Fast by default<span class="tk-p">&lt;/</span><span class="tk-t">h3</span><span class="tk-p">&gt;</span></span><span class="payload__line">      <span class="tk-p">&lt;</span><span class="tk-t">p</span> <span class="tk-a">class</span><span class="tk-p">=</span><span class="tk-s">"card__desc"</span><span class="tk-p">&gt;</span>Ships 40% less JavaScript<span class="tk-p">&lt;/</span><span class="tk-t">p</span><span class="tk-p">&gt;</span></span><span class="payload__line">    <span class="tk-p">&lt;/</span><span class="tk-t">div</span><span class="tk-p">&gt;</span></span><span class="payload__line payload__line--hot">  <span class="tk-p">&lt;/</span><span class="tk-t">template</span><span class="tk-p">&gt;</span></span><span class="payload__line"><span class="tk-p">&lt;/</span><span class="tk-t">arc-feature-card</span><span class="tk-p">&gt;</span></span></code></pre>
+            <p class="payload__caption">
+              All {components.length} components ship their shadow DOM in the HTML, parsed before
+              any JavaScript runs. <a class="chapter-link" href="/docs/server-rendering">Server rendering →</a>
             </p>
-            <div class="editor-demo__window" aria-hidden="true">
-              <div class="editor-demo__chrome">
-                <span class="editor-demo__dot"></span>
-                <span class="editor-demo__dot"></span>
-                <span class="editor-demo__dot"></span>
-                <span class="editor-demo__filename">index.html</span>
+          </figure>
+          <div class="tokens-demo" data-reveal="fade-up">
+            <div class="tokens-demo__head">
+              <div class="swatches" id="accent-swatches" role="group" aria-label="Accent token pair">
+                <button class="swatch is-active" aria-label="Arc blue and violet" aria-pressed="true" data-p="#4d7ef7" data-prgb="77,126,247" data-s="#8b5cf6" data-srgb="139,92,246" style="--sw-a:#4d7ef7; --sw-b:#8b5cf6"></button>
+                <button class="swatch" aria-label="Emerald and cyan" aria-pressed="false" data-p="#10b981" data-prgb="16,185,129" data-s="#22d3ee" data-srgb="34,211,238" style="--sw-a:#10b981; --sw-b:#22d3ee"></button>
+                <button class="swatch" aria-label="Amber and red" aria-pressed="false" data-p="#f59e0b" data-prgb="245,158,11" data-s="#ef4444" data-srgb="239,68,68" style="--sw-a:#f59e0b; --sw-b:#ef4444"></button>
+                <button class="swatch" aria-label="Magenta and purple" aria-pressed="false" data-p="#ec4899" data-prgb="236,72,153" data-s="#a855f7" data-srgb="168,85,247" style="--sw-a:#ec4899; --sw-b:#a855f7"></button>
               </div>
-              <div class="editor-demo__code">
-                <span class="editor-demo__punct">&lt;</span><span class="editor-demo__tag">arc-button</span>&nbsp;<span class="editor-demo__attr">variant</span><span class="editor-demo__punct">=</span><span class="editor-demo__str">"<span id="editor-demo-typed"></span></span><span class="editor-demo__caret"></span>
-                <div class="editor-demo__suggest" id="editor-demo-suggest">
-                  <div class="editor-demo__rows">
-                    <div class="editor-demo__row is-active" data-value="primary"><span class="editor-demo__row-icon">□</span>primary</div>
-                    <div class="editor-demo__row" data-value="secondary"><span class="editor-demo__row-icon">□</span>secondary</div>
-                    <div class="editor-demo__row" data-value="ghost"><span class="editor-demo__row-icon">□</span>ghost</div>
-                  </div>
-                  <div class="editor-demo__doc">
-                    <span class="editor-demo__doc-title">variant</span>
-                    Controls the visual weight and emphasis. Primary is a filled button
-                    with a neon glow hover suited for the top-level CTA.
-                  </div>
+              <code class="tokens-demo__readout">--space-md: <em id="tokens-demo-readout">16px</em></code>
+            </div>
+            <div class="tokens-demo__stage" id="tokens-demo-stage">
+              <div class="arc-flex arc-flex-col arc-gap-md arc-p-md arc-bg-card arc-border arc-rounded-lg">
+                <div class="arc-flex arc-items-center arc-justify-between">
+                  <span class="tokens-demo__title">Workspace</span>
+                  <arc-badge variant="primary">Pro</arc-badge>
                 </div>
+                <div class="arc-flex arc-items-center arc-gap-md">
+                  <arc-avatar name="Ava Lane" size="sm"></arc-avatar>
+                  <arc-avatar name="Rio Kim" size="sm"></arc-avatar>
+                  <arc-button variant="secondary" size="sm">Invite</arc-button>
+                </div>
+                <arc-progress value="64" label="Storage"></arc-progress>
               </div>
             </div>
-            <div class="editor-demo__stage">
-              <span class="editor-demo__stage-label">Live component</span>
-              <arc-button variant="primary" size="md" id="editor-demo-btn">Launch</arc-button>
+            <div class="tokens-demo__controls">
+              <arc-slider id="tokens-demo-slider" label="--space-md" min="8" max="32" value="16"></arc-slider>
             </div>
-          </div>
-          <div class="whats-new__list">
-            <div class="whats-new__item reveal">
-              <div class="whats-new__icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M8 4c-2 0-2 2-2 3v2c0 1-1 2-2 2 1 0 2 1 2 2v3c0 1 0 3 2 3M16 4c2 0 2 2 2 3v2c0 1 1 2 2 2-1 0-2 1-2 2v3c0 1 0 3-2 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-              </div>
-              <div>
-                <h3 class="whats-new__title">Autocomplete everywhere</h3>
-                <p class="whats-new__desc">Tags, attributes, and allowed values complete in VS Code and JetBrains, hover docs included. One settings line to enable — or none.</p>
-              </div>
-            </div>
-            <div class="whats-new__item reveal">
-              <div class="whats-new__icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 7V5h10v2M9 5v14M7 19h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 13c0-1 1-2 2.5-2s2.5.8 2.5 2c0 2-5 2-5 4 0 1.2 1 2 2.5 2s2.5-1 2.5-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-              </div>
-              <div>
-                <h3 class="whats-new__title">Typed to the detail</h3>
-                <p class="whats-new__desc">Every arc-* event carries a typed payload in TypeScript, and React 19 JSX type-checks each tag — no wrapper required.</p>
-              </div>
-            </div>
-            <div class="whats-new__item reveal">
-              <div class="whats-new__icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 6l6 6-6 6M12 18h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-              <div>
-                <h3 class="whats-new__title">A console that coaches</h3>
-                <p class="whats-new__desc">Import <code>@arclux/arc-ui/dev</code> and invalid values, attribute typos, and camelCase slips get flagged — each with a link to the right docs page.</p>
-              </div>
-            </div>
-            <div class="whats-new__cta reveal">
-              <arc-button href="/docs/changelog" variant="ghost" size="sm">
-                Full changelog
-                <svg slot="suffix" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </arc-button>
-            </div>
+            <p class="tokens-demo__caption">
+              {utilityClassCount} utility classes and every component read the same tokens — one
+              override moves them all. <a class="chapter-link" href="/docs/utilities">Utilities →</a>
+            </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Stats -->
-    <arc-divider variant="glow"></arc-divider>
-    <section class="stats">
-      <div class="stats__ambient"></div>
-      <div class="stats__grid">
-        <div class="stat-custom reveal">
-          <arc-animated-number class="stat-custom__number" value="0" data-target={`${components.length}`}>{components.length}</arc-animated-number>
-          <div class="stat-custom__rule"></div>
-          <span class="stat-custom__label">Components</span>
-        </div>
-        <div class="stat-custom reveal">
-          <arc-animated-number class="stat-custom__number" value="0" data-target={`${frameworkCount}`}>{frameworkCount}</arc-animated-number>
-          <div class="stat-custom__rule"></div>
-          <span class="stat-custom__label">Frameworks</span>
-        </div>
-        <div class="stat-custom reveal">
-          <arc-animated-number class="stat-custom__number" value="0" data-target={`${buildSteps}`}>{buildSteps}</arc-animated-number>
-          <div class="stat-custom__rule"></div>
-          <span class="stat-custom__label">Build Steps</span>
-        </div>
-        <div class="stat-custom reveal">
-          <arc-animated-number class="stat-custom__number" value="0" data-target={`${tokenCount}`}>{tokenCount}</arc-animated-number>
-          <div class="stat-custom__rule"></div>
-          <span class="stat-custom__label">Design Tokens</span>
-        </div>
-      </div>
-    </section>
-    <arc-divider variant="glow"></arc-divider>
-
-    <!-- Features -->
-    <section class="features">
-      <div class="features__inner">
-        <div class="features__header reveal">
-          <span class="section-label">Why ARC UI</span>
-          <h2 class="section-title">Standards, not a stack.</h2>
+    <!-- Rigor — the actual CI pipeline, under its real gate names -->
+    <section class="gauntlet">
+      <div class="gauntlet__inner">
+        <div class="gauntlet__header" data-reveal="blur-in">
+          <span class="section-label">Rigor</span>
+          <h2 class="statement">
+            <span class="statement__quiet">Every push</span>
+            <span class="statement__lit">runs the gauntlet.</span>
+          </h2>
           <p class="section-desc">
-            The core is custom elements — a browser feature, not a dependency. That is what lets
-            one component serve seven targets, survive a framework migration, and still render
-            when the JavaScript never arrives.
+            The real CI gates on this repository, under their real names.
           </p>
         </div>
-
-        <div class="features__grid">
-          <arc-feature-card heading="Web Components First" description="Built on Lit, running on web standards. No proprietary abstractions — just custom elements that work everywhere." class="reveal">
-            <svg slot="icon" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </arc-feature-card>
-
-          <arc-feature-card heading="Typed to the leaf" description="Every subpath publishes types, not just the root — so a deep import is checked, not implicitly any. Object props carry their real shape, and each arc-* event a typed payload." class="reveal">
-            <svg slot="icon" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><line x1="4" y1="22" x2="4" y2="15" stroke="currentColor" stroke-width="1.5"/></svg>
-          </arc-feature-card>
-
-          <arc-feature-card heading="Yours, not ours" description="Override 2–4 base tokens and every gradient, glow and focus ring cascades. Typography is role slots, not bundled fonts — assign your own typefaces and the whole system follows." class="reveal">
-            <svg slot="icon" width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </arc-feature-card>
-
-          <arc-feature-card heading="Lean by Design" description="One runtime: Lit. Heavier extras — syntax highlighting, QR encoding — load only with the components that use them, and per-component imports keep the rest out of your bundle." class="reveal">
-            <svg slot="icon" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </arc-feature-card>
-
-          <arc-feature-card heading="Works before JavaScript" description="Links navigate and forms submit without the bundle. A standalone CSS package renders class-based components with no JS at all — server-rendered pages stay usable while everything else loads." class="reveal">
-            <svg slot="icon" width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="2" y="3" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M8 21h8M12 17v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </arc-feature-card>
-
-          <arc-feature-card heading="Accessible" description="WAI-ARIA APG patterns component by component — focus traps, roving tabindex, live regions, reduced motion. Keyboard-first, not keyboard-eventually." class="reveal">
-            <svg slot="icon" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </arc-feature-card>
-        </div>
-      </div>
-    </section>
-
-    <!-- Live Showcase -->
-    <section class="showcase-section">
-      <div class="showcase-section__inner">
-        <div class="showcase-section__header reveal">
-          <span class="section-label">Live Demo</span>
-          <h2 class="section-title">See it in action.</h2>
-          <p class="section-desc">Nothing below is a screenshot — every widget is a real ARC UI component running live on this page. Click around.</p>
-        </div>
-
-        <div class="showcase-grid">
-          <!-- 1. Buttons -->
-          <div class="showcase-card reveal">
-            <span class="showcase-card__label">Buttons</span>
-            <div class="showcase-card__body">
-              <arc-button variant="primary" size="sm">Primary</arc-button>
-              <arc-button variant="secondary" size="sm">Secondary</arc-button>
-              <arc-button variant="ghost" size="sm">Ghost</arc-button>
-              <arc-button variant="outline" size="sm">Outline</arc-button>
-              <arc-button variant="link" size="sm">Link</arc-button>
-            </div>
+        <div class="gauntlet__stats" data-reveal-stagger="80">
+          <div class="stat-custom" data-reveal="fade-up">
+            <arc-animated-number class="stat-custom__number" value="0" data-target={`${components.length}`}>{components.length}</arc-animated-number>
+            <div class="stat-custom__rule"></div>
+            <span class="stat-custom__label">Components</span>
           </div>
-
-          <!-- 2. Badges + Tags -->
-          <div class="showcase-card reveal">
-            <span class="showcase-card__label">Badges &amp; Tags</span>
-            <div class="showcase-card__body">
-              <arc-badge variant="primary">Primary</arc-badge>
-              <arc-badge variant="success">Success</arc-badge>
-              <arc-badge variant="warning">Warning</arc-badge>
-              <arc-badge variant="error">Error</arc-badge>
-              <arc-tag>React</arc-tag>
-              <arc-tag>Vue</arc-tag>
-              <arc-tag>Svelte</arc-tag>
-            </div>
+          <div class="stat-custom" data-reveal="fade-up">
+            <arc-animated-number class="stat-custom__number" value="0" data-target={`${testCount}`}>{testCount}</arc-animated-number>
+            <div class="stat-custom__rule"></div>
+            <span class="stat-custom__label">Tests</span>
           </div>
-
-          <!-- 3. Inputs -->
-          <div class="showcase-card reveal">
-            <span class="showcase-card__label">Inputs</span>
-            <div class="showcase-card__body showcase-card__body--stack">
-              <arc-input label="Email" placeholder="you@example.com" size="sm"></arc-input>
-              <arc-select label="Framework" size="sm">
-                <arc-option value="react">React</arc-option>
-                <arc-option value="vue">Vue</arc-option>
-                <arc-option value="svelte">Svelte</arc-option>
-              </arc-select>
-              <arc-slider label="Volume" value="65" size="sm"></arc-slider>
-            </div>
+          <div class="stat-custom" data-reveal="fade-up">
+            <arc-animated-number class="stat-custom__number" value="0" data-target={`${tokenCount}`}>{tokenCount}</arc-animated-number>
+            <div class="stat-custom__rule"></div>
+            <span class="stat-custom__label">Design Tokens</span>
           </div>
-
-          <!-- 4. Feedback -->
-          <div class="showcase-card reveal">
-            <span class="showcase-card__label">Feedback</span>
-            <div class="showcase-card__body showcase-card__body--stack">
-              <arc-alert variant="info" size="sm">Informational alert</arc-alert>
-              <arc-alert variant="success" size="sm">Operation successful</arc-alert>
-              <arc-progress value="72" label="Upload progress"></arc-progress>
-            </div>
-          </div>
-
-          <!-- 5. Toggles & Checks -->
-          <div class="showcase-card reveal">
-            <span class="showcase-card__label">Toggles &amp; Checks</span>
-            <div class="showcase-card__body showcase-card__body--stack">
-              <arc-toggle label="Email notifications" checked></arc-toggle>
-              <arc-toggle label="Push notifications"></arc-toggle>
-              <arc-checkbox label="Enable dark mode" checked></arc-checkbox>
-              <arc-checkbox label="Auto-save drafts"></arc-checkbox>
-            </div>
-          </div>
-
-          <!-- 6. Navigation -->
-          <div class="showcase-card reveal">
-            <span class="showcase-card__label">Navigation</span>
-            <div class="showcase-card__body showcase-card__body--stack">
-              <arc-tabs variant="underline" selected="0">
-                <arc-tab label="Overview">Overview content</arc-tab>
-                <arc-tab label="Settings">Settings content</arc-tab>
-                <arc-tab label="Activity">Activity content</arc-tab>
-              </arc-tabs>
-              <arc-breadcrumb>
-                <arc-breadcrumb-item href="#">Home</arc-breadcrumb-item>
-                <arc-breadcrumb-item href="#">Docs</arc-breadcrumb-item>
-                <arc-breadcrumb-item>Components</arc-breadcrumb-item>
-              </arc-breadcrumb>
-            </div>
-          </div>
-
-          <!-- 7. Data -->
-          <div class="showcase-card reveal">
-            <span class="showcase-card__label">Data</span>
-            <div class="showcase-card__body showcase-card__body--stack">
-              <arc-avatar-group>
-                <arc-avatar initials="AB" size="sm"></arc-avatar>
-                <arc-avatar initials="CD" size="sm"></arc-avatar>
-                <arc-avatar initials="EF" size="sm"></arc-avatar>
-                <arc-avatar initials="GH" size="sm"></arc-avatar>
-                <arc-avatar initials="+3" size="sm"></arc-avatar>
-              </arc-avatar-group>
-              <arc-stepper active="1">
-                <arc-step label="Order placed"></arc-step>
-                <arc-step label="Processing"></arc-step>
-                <arc-step label="Shipped"></arc-step>
-              </arc-stepper>
-            </div>
-          </div>
-
-          <!-- 8. Accordion -->
-          <div class="showcase-card reveal">
-            <span class="showcase-card__label">Accordion</span>
-            <div class="showcase-card__body showcase-card__body--stack" style="padding:0;">
-              <arc-accordion>
-                <arc-accordion-item question="Getting Started">Install with npm or use the CDN for instant setup.</arc-accordion-item>
-                <arc-accordion-item question="Theming">Override CSS custom properties to match your brand.</arc-accordion-item>
-                <arc-accordion-item question="Accessibility">WCAG 2.1 AA compliant with full keyboard support.</arc-accordion-item>
-              </arc-accordion>
-            </div>
+          <div class="stat-custom" data-reveal="fade-up">
+            <arc-animated-number class="stat-custom__number" value="0" data-target={`${buildSteps}`}>{buildSteps}</arc-animated-number>
+            <div class="stat-custom__rule"></div>
+            <span class="stat-custom__label">Build Steps</span>
           </div>
         </div>
-
-        <div class="showcase-see-all reveal">
-          <arc-button href="/docs/components" variant="ghost" size="sm">
-            See all {components.length} components
-            <svg slot="suffix" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </arc-button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Code Example -->
-    <section class="code-section">
-      <div class="code-section__inner">
-        <div class="code-section__text reveal">
-          <span class="section-label">Developer Experience</span>
-          <h2 class="section-title">Ship in minutes.</h2>
-          <p class="section-desc">
-            Import, use, done. Every component is self-contained with styles, accessibility,
-            and theming built in. No configuration files, no global CSS conflicts, no boilerplate.
-          </p>
-          <div class="code-section__features">
-            <div class="code-feature">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13.5 4.5L6 12 2.5 8.5" stroke="var(--color-success)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span>TypeScript types included</span>
-            </div>
-            <div class="code-feature">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13.5 4.5L6 12 2.5 8.5" stroke="var(--color-success)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span>Tree-shakeable imports</span>
-            </div>
-            <div class="code-feature">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13.5 4.5L6 12 2.5 8.5" stroke="var(--color-success)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span>Native form participation</span>
-            </div>
-            <div class="code-feature">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13.5 4.5L6 12 2.5 8.5" stroke="var(--color-success)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span>CDN ready — no build step</span>
-            </div>
-          </div>
-        </div>
-        <div class="code-section__code reveal">
-          <div class="code-tabs">
-            <arc-tabs variant="pills" selected="0">
-              <arc-tab label="React">
-                <arc-code-block variant="window" filename="App.jsx" language="jsx" code={codeExamples.react}></arc-code-block>
-              </arc-tab>
-              <arc-tab label="Vue">
-                <arc-code-block variant="window" filename="App.vue" language="html" code={codeExamples.vue}></arc-code-block>
-              </arc-tab>
-              <arc-tab label="Svelte">
-                <arc-code-block variant="window" filename="App.svelte" language="html" code={codeExamples.svelte}></arc-code-block>
-              </arc-tab>
-              <arc-tab label="Angular">
-                <arc-code-block variant="window" filename="settings.component.ts" language="ts" code={codeExamples.angular}></arc-code-block>
-              </arc-tab>
-              <arc-tab label="Solid">
-                <arc-code-block variant="window" filename="Settings.jsx" language="jsx" code={codeExamples.solid}></arc-code-block>
-              </arc-tab>
-              <arc-tab label="Preact">
-                <arc-code-block variant="window" filename="Settings.jsx" language="jsx" code={codeExamples.preact}></arc-code-block>
-              </arc-tab>
-              <arc-tab label="HTML">
-                <arc-code-block variant="window" filename="index.html" language="html" code={codeExamples.html}></arc-code-block>
-              </arc-tab>
-            </arc-tabs>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Framework Strip / Prism Visual -->
-    <section class="frameworks-strip">
-      <div class="frameworks-strip__inner">
-        <span class="section-label">Prism</span>
-        <h2 class="section-title" style="margin-top: var(--space-xs);">One source. Seven targets.</h2>
-        <p class="section-desc">
-          Prism, our code generator, reads each Lit component and produces a typed, native
-          package for every target — no hand-written wrappers.
+        <ul class="gates" data-reveal-stagger="70">
+          <li class="gate" data-reveal="fade-up">
+            <span class="gate__check" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M13.5 4.5L6 12 2.5 8.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="gate__name">Generated files match source</span>
+            <span class="gate__metric">0 diffs</span>
+          </li>
+          <li class="gate" data-reveal="fade-up">
+            <span class="gate__check" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M13.5 4.5L6 12 2.5 8.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="gate__name">Component tests</span>
+            <span class="gate__metric">{testCount} tests</span>
+          </li>
+          <li class="gate" data-reveal="fade-up">
+            <span class="gate__check" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M13.5 4.5L6 12 2.5 8.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="gate__name">SSR render check</span>
+            <span class="gate__metric">{elementCount}/{elementCount}</span>
+          </li>
+          <li class="gate" data-reveal="fade-up">
+            <span class="gate__check" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M13.5 4.5L6 12 2.5 8.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="gate__name">axe-core audit</span>
+            <span class="gate__metric">0 serious</span>
+          </li>
+          <li class="gate" data-reveal="fade-up">
+            <span class="gate__check" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M13.5 4.5L6 12 2.5 8.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="gate__name">Typecheck generated declarations</span>
+            <span class="gate__metric">every subpath</span>
+          </li>
+          <li class="gate" data-reveal="fade-up">
+            <span class="gate__check" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M13.5 4.5L6 12 2.5 8.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="gate__name">Smoke-test packed tarballs</span>
+            <span class="gate__metric">every package</span>
+          </li>
+        </ul>
+        <p class="gauntlet__note" data-reveal="fade-up">
+          APG patterns, focus management and reduced motion are built per component.
+          <a class="chapter-link" href="/docs/accessibility">Accessibility →</a>
         </p>
-        <div class="prism-visual reveal">
-          <div class="prism-source">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span>Lit Web Component</span>
-          </div>
-          <div class="prism-arrow">
-            <svg width="40" height="24" viewBox="0 0 40 24" fill="none"><path d="M2 12h32M28 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <div class="prism-targets">
-            <span class="prism-target">React</span>
-            <span class="prism-target">Vue</span>
-            <span class="prism-target">Svelte</span>
-            <span class="prism-target">Angular</span>
-            <span class="prism-target">Solid</span>
-            <span class="prism-target">Preact</span>
-            <span class="prism-target">HTML / CSS</span>
-          </div>
-        </div>
       </div>
     </section>
 
     <!-- CTA -->
-    <arc-cta-banner eyebrow="Ready to build?" headline="Start shipping with ARC UI." class="reveal">
+    <arc-cta-banner eyebrow="Ready to build?" headline="Start shipping with ARC UI." data-reveal="fade-up">
       <p>
         Install in seconds. Build in minutes. Ship production-ready interfaces that look
         incredible out of the box.
@@ -681,6 +423,14 @@ function Settings() {
 </BaseLayout>
 
 <script>
+  import { init as glintInit } from '@arclux/glint/full';
+  import '@arclux/glint/glint.css';
+  import '@arclux/arc-ui/utilities.css';
+  // arc-code-block is opt-in only (it lazy-loads a syntax highlighter), so
+  // the register barrel deliberately skips it — without this import the
+  // framework switcher's window never upgrades and the FOUC guard hides it.
+  import '@arclux/arc-ui/code-block';
+
   /* ── Light-Tunnel Canvas ──
      A tube of light beams the camera flies through: the core stays dark
      (that's where the headline lives), the walls stream with accent-colored
@@ -1058,21 +808,29 @@ function Settings() {
     }, { once: true });
   }
 
-  /* ── Reveal on scroll ── */
+  /* ── Reveal on scroll (glint) ──
+     The revealed state is the default: glint hides at runtime, so a script
+     failure leaves the page readable instead of blank. Reduced motion,
+     focus-into-pending, and the forced-reveal ceiling all come with it.
+     Durations and easing follow the ARC motion tokens (--duration-enter,
+     --ease-out) via glint.css. */
   function initReveal() {
-    const els = document.querySelectorAll('.reveal');
-    if (!els.length) return;
+    const glint = glintInit();
+    document.addEventListener('astro:before-swap', () => glint.destroy(), { once: true });
+  }
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-    els.forEach(el => observer.observe(el));
+  /* ── Utilities demo: one token moves everything ── */
+  function initTokensDemo() {
+    const stage = document.getElementById('tokens-demo-stage');
+    const slider = document.getElementById('tokens-demo-slider') as any;
+    const readout = document.getElementById('tokens-demo-readout');
+    if (!stage || !slider || slider.dataset.demoInit) return;
+    slider.dataset.demoInit = '1';
+    slider.addEventListener('arc-input', (e: any) => {
+      const v = Math.round(e.detail?.value ?? slider.value);
+      stage.style.setProperty('--space-md', `${v}px`);
+      if (readout) readout.textContent = `${v}px`;
+    });
   }
 
   /* ── Stat count-up ── */
@@ -1101,64 +859,81 @@ function Settings() {
     nums.forEach(el => observer.observe(el));
   }
 
-  /* ── Editor autocomplete demo ── */
-  function initEditorDemo() {
-    const demo = document.getElementById('editor-demo');
-    if (!demo || (demo as any).dataset.demoInit) return;
-    (demo as any).dataset.demoInit = '1';
+  /* ── Framework switcher: auto-advances until the visitor takes over ── */
+  function initFwSwitcher() {
+    const root = document.getElementById('fw-switcher');
+    if (!root || (root as any).dataset.init) return;
+    (root as any).dataset.init = '1';
 
-    const typed = document.getElementById('editor-demo-typed')!;
-    const suggest = document.getElementById('editor-demo-suggest')!;
-    const btn = document.getElementById('editor-demo-btn')!;
-    const rows = Array.from(suggest.querySelectorAll<HTMLElement>('.editor-demo__row'));
-    const values = rows.map((r) => r.dataset.value!);
+    const btns = Array.from(root.querySelectorAll<HTMLElement>('.fw-btn'));
+    const panels = Array.from(root.querySelectorAll<HTMLElement>('.fw-panel'));
+    let idx = 0;
+    let timer = 0;
+    let userTouched = false;
 
-    const setActive = (i: number) => rows.forEach((r, j) => r.classList.toggle('is-active', i === j));
+    const show = (i: number) => {
+      idx = i;
+      btns.forEach((b, j) => {
+        b.classList.toggle('is-active', i === j);
+        b.setAttribute('aria-pressed', String(i === j));
+      });
+      panels.forEach((p, j) => p.toggleAttribute('hidden', i !== j));
+    };
 
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      // Static tableau: dropdown open on the first value, docs visible.
-      suggest.classList.add('is-open');
-      return;
-    }
+    const stop = () => {
+      clearInterval(timer);
+      timer = 0;
+      root!.classList.remove('is-auto');
+    };
+    const start = () => {
+      if (timer || userTouched) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      // The class drives the timer bar under the active name, so the
+      // auto-advance is visible instead of a surprise. The interval comes
+      // from --fw-interval so the bar and the rotation stay one value.
+      root!.classList.add('is-auto');
+      const interval = (parseFloat(getComputedStyle(root!).getPropertyValue('--fw-interval')) || 6.5) * 1000;
+      timer = window.setInterval(() => show((idx + 1) % btns.length), interval);
+    };
 
-    let stopped = false;
-    document.addEventListener('astro:before-swap', () => { stopped = true; }, { once: true });
-    const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+    btns.forEach((b, i) => b.addEventListener('click', () => {
+      userTouched = true;
+      stop();
+      show(i);
+    }));
 
-    async function run() {
-      let target = 0;
-      for (;;) {
-        typed.textContent = '';
-        setActive(0);
-        await sleep(700);
-        if (stopped) return;
-        suggest.classList.add('is-open');
-        await sleep(900);
-        // Arrow down to the target value.
-        for (let i = 1; i <= target; i++) {
-          if (stopped) return;
-          setActive(i);
-          await sleep(420);
-        }
-        await sleep(650);
-        if (stopped) return;
-        // Accept: complete the attribute, close the dropdown, morph the button.
-        typed.textContent = `${values[target]}"`;
-        suggest.classList.remove('is-open');
-        btn.setAttribute('variant', values[target]);
-        await sleep(2400);
-        if (stopped) return;
-        target = (target + 1) % values.length;
-      }
-    }
+    const io = new IntersectionObserver(
+      ([entry]) => (entry.isIntersecting ? start() : stop()),
+      { threshold: 0.3 },
+    );
+    io.observe(root);
 
-    const io = new IntersectionObserver((entries) => {
-      if (entries.some((e) => e.isIntersecting)) {
-        io.disconnect();
-        run();
-      }
-    }, { threshold: 0.4 });
-    io.observe(demo);
+    document.addEventListener('astro:before-swap', () => {
+      stop();
+      io.disconnect();
+    }, { once: true });
+  }
+
+  /* ── Accent swatches: four data attributes repaint the whole stage ── */
+  function initAccentSwatches() {
+    const stage = document.getElementById('tokens-demo-stage');
+    const group = document.getElementById('accent-swatches');
+    if (!stage || !group || (group as any).dataset.init) return;
+    (group as any).dataset.init = '1';
+
+    group.addEventListener('click', (e) => {
+      const btn = (e.target as HTMLElement).closest<HTMLElement>('.swatch');
+      if (!btn) return;
+      const { p, prgb, s, srgb } = btn.dataset;
+      stage.style.setProperty('--accent-primary', p!);
+      stage.style.setProperty('--accent-primary-rgb', prgb!);
+      stage.style.setProperty('--accent-secondary', s!);
+      stage.style.setProperty('--accent-secondary-rgb', srgb!);
+      Array.from(group.children).forEach((c) => {
+        c.classList.toggle('is-active', c === btn);
+        c.setAttribute('aria-pressed', String(c === btn));
+      });
+    });
   }
 
   async function initNavigation() {
@@ -1175,20 +950,22 @@ function Settings() {
   initCanvas();
   initReveal();
   initStatCountUp();
-  initEditorDemo();
+  initFwSwitcher();
+  initTokensDemo();
+  initAccentSwatches();
   initNavigation();
   document.addEventListener('astro:page-load', () => {
     initCanvas();
     initReveal();
     initStatCountUp();
-    initEditorDemo();
+    initFwSwitcher();
+    initTokensDemo();
+    initAccentSwatches();
     initNavigation();
   });
 </script>
 
 <style>
-  .topbar-actions { display: flex; align-items: center; gap: var(--space-sm); }
-
   /* ── Hero ── */
   .hero {
     position: relative;
@@ -1454,6 +1231,13 @@ function Settings() {
 
   .hero__announcement-text {
     position: relative;
+    /* Matches the badge's box height exactly: 16px × 1.3 = 20.8px, which is
+       12px × 1.4 + 4px of padding. Without it the text is the tallest child, so
+       it — not the badge — sets the container height, and centring the shorter
+       badge in it added 3.2px above and below. The badge then sat 5px from the
+       left and 8.2px from the top, which is what read as off. Equal gaps also
+       keep the two pills concentric, since a pill's radius is half its height. */
+    line-height: 1.3;
   }
 
   .hero__announcement-arrow {
@@ -1494,7 +1278,7 @@ function Settings() {
 
   .hero__headline-glow {
     position: relative;
-    font-size: clamp(56px, 10vw, 96px);
+    font-size: clamp(60px, 10.5vw, 120px);
     font-weight: 600;
     letter-spacing: -3px;
     background: linear-gradient(135deg, rgb(255,255,255) 0%, var(--accent-primary) 50%, var(--accent-secondary) 100%);
@@ -1507,7 +1291,7 @@ function Settings() {
   .hero__headline-glow-shadow {
     position: absolute;
     inset: 0;
-    font-size: clamp(56px, 10vw, 96px);
+    font-size: clamp(60px, 10.5vw, 120px);
     font-weight: 600;
     letter-spacing: -3px;
     color: rgba(var(--accent-primary-rgb), 0.35);
@@ -1561,23 +1345,10 @@ function Settings() {
     filter: drop-shadow(0 0 8px rgba(var(--accent-primary-rgb),0.4));
   }
 
-  /* ── Reveal Animations ── */
-  .reveal {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 600ms var(--ease-out-expo), transform 600ms var(--ease-out-expo);
-  }
-
-  .reveal.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .reveal { opacity: 1; transform: none; transition: none; }
-  }
-
-  /* ── Section Labels ── */
+  /* ── Chapter type ──
+     Every chapter opens the same way: eyebrow, a two-line statement with one
+     lit line, one sentence. The statement is the section header now — there
+     are no card grids to carry the argument, the artifact below it does. */
   .section-label {
     font-family: var(--font-accent);
     font-weight: 600;
@@ -1590,151 +1361,237 @@ function Settings() {
     background-clip: text;
   }
 
-  .section-title {
-    font-size: clamp(28px, 4vw, 40px);
-    font-weight: 500;
-    letter-spacing: -1px;
-    background: var(--gradient-display-text);
+  .statement {
+    display: flex;
+    flex-direction: column;
+    margin-top: var(--space-sm);
+    font-size: clamp(44px, 7vw, 92px);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+
+  .statement__quiet {
+    font-weight: 200;
+    color: var(--text-primary);
+  }
+
+  .statement__lit {
+    font-weight: 600;
+    background: var(--gradient-accent-text);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-top: var(--space-sm);
+    filter: drop-shadow(0 0 28px rgba(var(--accent-primary-rgb), 0.28));
+  }
+
+  /* background-clip: text paints glyphs only where the element's box is —
+     any line-height tighter than the glyph extents chops descenders. Every
+     clipped element gets its paint box extended in em (so it scales with
+     the type) and pulled back with margin so layout doesn't move. */
+  .statement__lit,
+  .statement__quiet,
+  .fw-btn__name,
+  .stat-custom__number,
+  .hero__headline-glow {
+    padding-block: 0.1em 0.2em;
+    margin-block: -0.1em -0.2em;
   }
 
   .section-desc {
     color: var(--text-secondary);
     font-size: var(--text-md);
-    max-width: 560px;
+    max-width: 640px;
     text-wrap: balance;
     line-height: 1.7;
+    margin-top: var(--space-md);
   }
 
-  /* ── Idioms — the multi-framework argument ──
-     Deliberately quiet: the hero owns the page's one loud moment, so this
-     section argues in code rather than in decoration. The three groups are a
-     real taxonomy — which frameworks get two-way binding, which are controlled,
-     which need no build — not a rhythm of equal cards. */
-  .idioms {
+  /* One claim per line where the copy is written that way; re-wrap naturally
+     once the viewport can't hold a full sentence */
+  .section-desc__line {
+    display: block;
+  }
+
+  @media (max-width: 640px) {
+    .section-desc__line {
+      display: inline;
+    }
+  }
+
+  .chapter-link {
+    color: var(--interactive);
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .chapter-link:hover {
+    text-decoration: underline;
+  }
+
+  /* ── Native: the framework switcher ──
+     The first thing after the hero, so it keeps the hero's atmosphere: an
+     ambient accent field, the framework names as a display-scale type stack,
+     and the code window sitting in its own bloom of light. */
+  .native {
     position: relative;
-    padding: var(--space-3xl) 0 var(--space-2xl);
+    padding: var(--space-4xl) 0;
+    overflow: clip;
+    background:
+      radial-gradient(ellipse 55% 45% at 12% 15%, rgba(var(--accent-primary-rgb), 0.08), transparent 70%),
+      radial-gradient(ellipse 45% 55% at 92% 75%, rgba(var(--accent-secondary-rgb), 0.07), transparent 70%);
   }
 
-  .idioms__inner {
+  .native__inner {
     max-width: var(--max-width);
     margin-inline: auto;
     padding: 0 var(--space-lg);
   }
 
-  .idioms__header {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-    max-width: 64ch;
+  .native__header {
     margin-bottom: var(--space-2xl);
   }
 
-  .idiom-groups {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xl);
-  }
-
-  .idiom-group__head {
-    display: flex;
-    align-items: baseline;
-    gap: var(--space-md);
-    flex-wrap: wrap;
-    padding-bottom: var(--space-sm);
-    margin-bottom: var(--space-md);
-    border-bottom: 1px solid var(--divider);
-  }
-
-  .idiom-group__name {
-    font-family: var(--font-label);
-    font-size: var(--text-xs);
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text-primary);
-  }
-
-  .idiom-group__note,
-  .idiom-group__note code {
-    font-size: var(--text-xs);
-    color: var(--text-muted);
-  }
-
-  .idiom-list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xs);
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .idiom {
+  .native__grid {
+    /* One value drives both the rotation interval (read by the switcher
+       script) and the timer-bar animation. Seconds only. */
+    --fw-interval: 6.5s;
     display: grid;
-    grid-template-columns: 7rem 1fr;
-    align-items: baseline;
-    gap: var(--space-md);
-    padding: var(--space-xs) 0;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+    gap: var(--space-2xl);
+    align-items: center;
   }
 
-  .idiom__fw {
-    font-family: var(--font-label);
-    font-size: var(--text-xs);
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+  .fw-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .fw-btn {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    align-items: flex-start;
+    text-align: start;
+    padding: 7px 12px;
+    margin: 0;
+    background: none;
+    border: 0;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+  }
+
+  .fw-btn:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+  }
+
+  .fw-btn__name {
+    font-size: clamp(28px, 3.6vw, 52px);
+    font-weight: 200;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
     color: var(--text-ghost);
+    transition: color var(--transition-fast);
   }
 
-  .idiom__code {
-    font-family: var(--font-mono);
-    font-size: var(--code-size, var(--text-xs));
+  .fw-btn:hover .fw-btn__name {
     color: var(--text-secondary);
-    line-height: 1.7;
-    overflow-wrap: anywhere;
   }
 
-  /* The binding is the whole point of the line — everything else is context. */
-  .idiom__code em {
+  .fw-btn.is-active .fw-btn__name {
+    font-weight: 600;
+    color: transparent;
+    background: var(--gradient-accent-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 18px rgba(var(--accent-primary-rgb), 0.4));
+  }
+
+  .fw-btn__idiom {
+    display: none;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+  }
+
+  .fw-btn.is-active .fw-btn__idiom {
+    display: block;
+  }
+
+  .fw-btn__idiom em {
     font-style: normal;
     color: var(--interactive);
   }
 
-  .idioms__footnote {
-    max-width: 68ch;
-    margin-top: var(--space-2xl);
-    font-size: var(--text-sm);
-    color: var(--text-muted);
-    line-height: 1.7;
+  /* The auto-advance made visible: a timer bar fills under the active name,
+     so the rotation reads as a countdown instead of a surprise */
+  .fw-btn.is-active::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    margin-top: 4px;
+    border-radius: 1px;
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+    filter: drop-shadow(0 0 6px rgba(var(--accent-primary-rgb), 0.5));
+    transform-origin: left center;
   }
 
-  .idioms__footnote code {
-    font-family: var(--font-mono);
-    font-size: 0.9em;
-    color: var(--text-secondary);
+  .native__grid.is-auto .fw-btn.is-active::after {
+    animation: fw-timer var(--fw-interval) linear;
   }
 
-  @media (max-width: 640px) {
-    .idiom {
-      grid-template-columns: 1fr;
-      gap: 2px;
+  @keyframes fw-timer {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .native__grid.is-auto .fw-btn.is-active::after {
+      animation: none;
     }
   }
 
-  /* ── What's New ── */
-  .whats-new {
+  /* The code window floats in its own light */
+  .fw-panels {
     position: relative;
-    padding: var(--space-3xl) 0 var(--space-2xl);
+    min-width: 0;
   }
 
-  .whats-new::after {
+  .fw-panels::before {
     content: '';
     position: absolute;
-    bottom: 0;
+    inset: -10% -8%;
+    background:
+      radial-gradient(ellipse 60% 55% at 30% 40%, rgba(var(--accent-primary-rgb), 0.18), transparent 70%),
+      radial-gradient(ellipse 50% 60% at 75% 65%, rgba(var(--accent-secondary-rgb), 0.14), transparent 70%);
+    filter: blur(28px);
+    pointer-events: none;
+  }
+
+  .fw-panel {
+    position: relative;
+  }
+
+  .fw-panel[hidden] {
+    display: none;
+  }
+
+  /* ── Yours: the response and the tokens, both live ── */
+  .yours {
+    position: relative;
+    padding: var(--space-4xl) 0;
+  }
+
+  .yours::before {
+    content: '';
+    position: absolute;
+    top: 0;
     left: 0;
     right: 0;
     height: 2px;
@@ -1742,261 +1599,217 @@ function Settings() {
     opacity: 0.4;
   }
 
-  .whats-new__inner {
+  .yours__inner {
     max-width: var(--max-width);
     margin-inline: auto;
     padding: 0 var(--space-lg);
   }
 
-  .whats-new__header {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xs);
+  .yours__header {
     margin-bottom: var(--space-2xl);
   }
 
-  .whats-new__grid {
+  .yours__grid {
     display: grid;
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-    gap: var(--space-2xl);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-xl);
     align-items: start;
   }
 
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
-    border: 0;
-  }
-
-  /* ── Editor autocomplete demo ── */
-  .editor-demo {
-    display: flex;
-    flex-direction: column;
+  /* The response pane: what the server actually sends */
+  .payload {
+    margin: 0;
+    min-width: 0;
     border-radius: var(--radius-lg);
     border: 1px solid var(--border-subtle);
     background: var(--bg-card);
     overflow: hidden;
   }
 
-  .editor-demo__chrome {
+  .payload__chrome {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-sm);
+    padding: 10px var(--space-md);
+    border-bottom: 1px solid var(--border-subtle);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+  }
+
+  .payload__method {
+    font-weight: 700;
+    color: var(--accent-primary);
+  }
+
+  .payload__url {
+    color: var(--text-secondary);
+  }
+
+  .payload__meta {
+    margin-left: auto;
+    color: var(--text-muted);
+  }
+
+  .payload__code {
+    margin: 0;
+    padding: var(--space-lg) 0;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    line-height: 1.8;
+    overflow-x: auto;
+  }
+
+  .payload__line {
+    display: block;
+    padding: 0 var(--space-lg);
+    white-space: pre;
+    color: var(--text-secondary);
+  }
+
+  /* The two lines that carry the whole argument glow; a tint, not a border */
+  .payload__line--hot {
+    background: linear-gradient(90deg,
+      rgba(var(--accent-primary-rgb), 0.14),
+      rgba(var(--accent-secondary-rgb), 0.05) 70%,
+      transparent);
+  }
+
+  .payload__line--hot .tk-t,
+  .payload__line--hot .tk-a {
+    text-shadow: 0 0 12px rgba(var(--accent-primary-rgb), 0.5);
+  }
+
+  .tk-p { color: var(--text-muted); }
+  .tk-t { color: var(--accent-primary); }
+  .tk-a { color: var(--accent-secondary); }
+  .tk-s { color: var(--color-success, #7bd88f); }
+  .tk-c { color: var(--text-ghost); }
+
+  .payload__caption {
+    padding: var(--space-sm) var(--space-md);
+    border-top: 1px solid var(--border-subtle);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* ── Token stage ── */
+  .tokens-demo {
+    min-width: 0;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-card);
+    overflow: hidden;
+  }
+
+  .tokens-demo__head {
     display: flex;
     align-items: center;
-    gap: 6px;
+    justify-content: space-between;
+    gap: var(--space-md);
     padding: 10px var(--space-md);
     border-bottom: 1px solid var(--border-subtle);
   }
 
-  .editor-demo__dot {
-    width: 10px;
-    height: 10px;
+  .swatches {
+    display: flex;
+    gap: var(--space-xs);
+  }
+
+  .swatch {
+    width: 22px;
+    height: 22px;
+    padding: 0;
     border-radius: var(--radius-full);
-    background: var(--border-default);
-    opacity: 0.6;
-  }
-
-  .editor-demo__filename {
-    margin-left: var(--space-sm);
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    color: var(--text-muted);
-  }
-
-  .editor-demo__code {
-    position: relative;
-    padding: var(--space-lg) var(--space-lg) calc(var(--space-lg) + 128px);
-    font-family: var(--font-mono);
-    font-size: var(--text-sm);
-    line-height: 1.6;
-    white-space: nowrap;
-  }
-
-  .editor-demo__punct { color: var(--text-muted); }
-  .editor-demo__tag { color: var(--accent-primary); }
-  .editor-demo__attr { color: var(--accent-secondary); }
-  .editor-demo__str { color: var(--color-success, #7bd88f); }
-
-  .editor-demo__caret {
-    display: inline-block;
-    width: 1.5px;
-    height: 1.1em;
-    margin-left: 1px;
-    vertical-align: text-bottom;
-    background: var(--text-primary);
-    animation: editor-caret 1s steps(1) infinite;
-  }
-
-  @keyframes editor-caret {
-    50% { opacity: 0; }
-  }
-
-  .editor-demo__suggest {
-    position: absolute;
-    top: calc(var(--space-lg) + 1.9em);
-    left: min(calc(var(--space-lg) + 21ch), 40%);
-    display: flex;
-    align-items: flex-start;
-    gap: 2px;
-    opacity: 0;
-    transition: opacity 120ms ease;
-    pointer-events: none;
-  }
-
-  .editor-demo__suggest.is-open { opacity: 1; }
-
-  .editor-demo__rows {
-    min-width: 150px;
-    padding: 3px;
-    border-radius: var(--radius-sm);
     border: 1px solid var(--border-default);
-    background: var(--bg-elevated);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+    background: linear-gradient(135deg, var(--sw-a), var(--sw-b));
+    cursor: pointer;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
   }
 
-  .editor-demo__row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 4px 8px;
-    border-radius: 3px;
+  .swatch:hover {
+    transform: scale(1.12);
+  }
+
+  .swatch.is-active,
+  .swatch:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--bg-card), 0 0 0 4px var(--sw-a), 0 0 14px rgba(var(--accent-primary-rgb), 0.35);
+  }
+
+  .tokens-demo__readout {
     font-family: var(--font-mono);
     font-size: var(--text-xs);
     color: var(--text-secondary);
   }
 
-  .editor-demo__row.is-active {
-    background: rgba(var(--accent-primary-rgb), 0.16);
-    color: var(--text-primary);
-  }
-
-  .editor-demo__row-icon {
-    color: var(--accent-secondary);
-    font-size: 9px;
-  }
-
-  .editor-demo__doc {
-    max-width: 240px;
-    padding: var(--space-sm) var(--space-md);
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border-subtle);
-    background: var(--bg-elevated);
-    font-size: var(--text-xs);
-    line-height: 1.5;
-    color: var(--text-secondary);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
-  }
-
-  .editor-demo__doc-title {
-    display: block;
-    margin-bottom: 2px;
-    font-family: var(--font-mono);
-    color: var(--accent-secondary);
-  }
-
-  .editor-demo__stage {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--space-xl) var(--space-lg);
-    border-top: 1px solid var(--border-subtle);
-    background:
-      radial-gradient(ellipse at center, rgba(var(--accent-primary-rgb), 0.06), transparent 70%);
-  }
-
-  .editor-demo__stage-label {
-    position: absolute;
-    top: var(--space-sm);
-    right: var(--space-md);
-    font-family: var(--font-accent);
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text-muted);
-  }
-
-  /* ── Highlight list ── */
-  .whats-new__list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-lg);
-  }
-
-  .whats-new__item {
-    display: flex;
-    gap: var(--space-md);
-    align-items: flex-start;
-  }
-
-  .whats-new__icon {
-    flex-shrink: 0;
-    width: 42px;
-    height: 42px;
-    border-radius: var(--radius-md);
-    background: rgba(var(--accent-primary-rgb), 0.1);
-    border: 1px solid rgba(var(--accent-primary-rgb), 0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .tokens-demo__readout em {
+    font-style: normal;
     color: var(--accent-primary);
+    text-shadow: 0 0 10px rgba(var(--accent-primary-rgb), 0.4);
   }
 
-  .whats-new__title {
-    font-size: var(--text-md);
+  .tokens-demo__stage {
+    padding: var(--space-xl) var(--space-lg);
+    background: radial-gradient(ellipse at center, rgba(var(--accent-primary-rgb), 0.05), transparent 70%);
+  }
+
+  .tokens-demo__title {
     font-weight: 600;
     color: var(--text-primary);
-    margin-bottom: var(--space-xs);
   }
 
-  .whats-new__desc {
-    font-size: var(--text-sm);
-    color: var(--text-secondary);
+  .tokens-demo__controls {
+    padding: var(--space-md) var(--space-lg);
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .tokens-demo__caption {
+    padding: var(--space-sm) var(--space-md);
+    border-top: 1px solid var(--border-subtle);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
     line-height: 1.6;
   }
 
-  .whats-new__desc code {
+  .tokens-demo__caption code {
     font-family: var(--font-mono);
-    font-size: 0.9em;
-    color: var(--text-primary);
+    color: var(--text-secondary);
   }
 
-  .whats-new__cta {
-    margin-top: var(--space-sm);
-  }
-
-  @media (max-width: 900px) {
-    .editor-demo__doc { display: none; }
-  }
-
-  /* ── Stats ── */
-  .stats {
+  /* ── Gauntlet (CI gates) ── */
+  .gauntlet {
     position: relative;
-    padding: var(--space-3xl) 0;
+    padding: var(--space-4xl) 0;
   }
 
-  .stats__ambient {
+  .gauntlet::before {
+    content: '';
     position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 50% 80% at 25% 50%, rgba(var(--accent-primary-rgb), 0.1), transparent 70%),
-      radial-gradient(ellipse 50% 80% at 75% 50%, rgba(var(--accent-secondary-rgb), 0.08), transparent 70%);
-    pointer-events: none;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--glow-line-gradient);
+    opacity: 0.4;
   }
 
-  .stats__grid {
-    position: relative;
+  .gauntlet__inner {
     max-width: var(--max-width);
     margin-inline: auto;
     padding: 0 var(--space-lg);
+  }
+
+  .gauntlet__header {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .gauntlet__stats {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: var(--space-xl);
     text-align: center;
+    margin-bottom: var(--space-2xl);
   }
 
   .stat-custom {
@@ -2007,7 +1820,7 @@ function Settings() {
   }
 
   .stat-custom__number {
-    font-size: clamp(36px, 5vw, 56px);
+    font-size: clamp(48px, 7vw, 88px);
     font-weight: 700;
     background: var(--gradient-accent-text);
     -webkit-background-clip: text;
@@ -2032,289 +1845,78 @@ function Settings() {
     color: var(--text-ghost);
   }
 
-  /* ── Features ── */
-  .features {
-    padding: 0 0 var(--space-4xl);
-    position: relative;
-  }
-
-  .features::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: var(--glow-line-gradient);
-    opacity: 0.4;
-  }
-
-  .features__inner {
-    max-width: var(--max-width);
+  .gates {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-width: 720px;
     margin-inline: auto;
-    padding: var(--space-4xl) var(--space-lg) 0;
   }
 
-  .features__header {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xs);
-    margin-bottom: var(--space-2xl);
-  }
-
-  .features__grid {
+  .gate {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: var(--space-lg);
-  }
-
-  /* ── Showcase ── */
-  .showcase-section {
-    padding: var(--space-4xl) 0;
-    background: var(--bg-surface);
-    position: relative;
-  }
-
-  .showcase-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: var(--glow-line-gradient);
-    opacity: 0.4;
-  }
-
-  .showcase-section__inner {
-    max-width: var(--max-width);
-    margin-inline: auto;
-    padding: 0 var(--space-lg);
-  }
-
-  .showcase-section__header {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xs);
-    margin-bottom: var(--space-2xl);
-  }
-
-  .showcase-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
     gap: var(--space-md);
+    padding: var(--space-sm) 0;
   }
 
-  .showcase-card {
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-lg);
-    background: var(--bg-card);
-    transition: border-color var(--transition-fast), box-shadow var(--transition-base);
-    overflow: visible;
-    min-width: 0;
-    position: relative;
+  .gate + .gate {
+    border-top: 1px solid var(--divider);
   }
 
-  .showcase-card:focus-within {
-    z-index: 10;
-  }
-
-  .showcase-card:hover {
-    border-color: var(--border-default);
-    box-shadow: var(--glow-card-hover);
-  }
-
-  .showcase-card__label {
-    display: block;
-    font-family: var(--font-accent);
-    font-size: var(--text-xs);
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text-ghost);
-    padding: var(--space-sm) var(--space-md);
-    border-bottom: 1px solid var(--border-subtle);
-    background: var(--bg-elevated);
-    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  }
-
-  .showcase-card__body {
-    padding: var(--space-lg);
-    display: flex;
-    gap: var(--space-sm);
-    flex-wrap: wrap;
-    align-items: flex-start;
-  }
-
-  .showcase-card__body--stack {
-    flex-direction: column;
-  }
-
-  .showcase-see-all {
-    text-align: center;
-    margin-top: var(--space-xl);
-  }
-
-  /* ── Code Section ── */
-  .code-section {
-    padding: var(--space-4xl) 0;
-    position: relative;
-  }
-
-  .code-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: var(--glow-line-gradient);
-    opacity: 0.4;
-  }
-
-  .code-section__inner {
-    max-width: var(--max-width);
-    margin-inline: auto;
-    padding: 0 var(--space-lg);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-2xl);
-    align-items: center;
-  }
-
-  .code-section__text {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xs);
-    min-width: 0;
-  }
-
-  .code-section__features {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-    margin-top: var(--space-lg);
-  }
-
-  .code-feature {
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-    font-size: var(--text-sm);
-    color: var(--text-secondary);
-  }
-
-  .code-section__code {
-    position: relative;
-    min-width: 0;
-  }
-
-  .code-tabs {
-    min-width: 0;
-  }
-
-  /* ── Frameworks Strip / Prism ── */
-  .frameworks-strip {
-    position: relative;
-    padding: var(--space-3xl) 0;
-    text-align: center;
-    background:
-      radial-gradient(ellipse 60% 80% at 50% 50%, rgba(var(--accent-primary-rgb), 0.06), transparent 70%);
-  }
-
-  .frameworks-strip::before,
-  .frameworks-strip::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: var(--glow-line-gradient);
-    opacity: 0.4;
-  }
-
-  .frameworks-strip::before { top: 0; }
-  .frameworks-strip::after { bottom: 0; }
-
-  .frameworks-strip__inner {
-    max-width: var(--max-width);
-    margin-inline: auto;
-    padding: 0 var(--space-lg);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-sm);
-  }
-
-  .prism-visual {
-    display: flex;
-    align-items: center;
-    gap: var(--space-xl);
-    margin-top: var(--space-xl);
-  }
-
-  .prism-source {
+  .gate__check {
     display: inline-flex;
-    align-items: center;
-    gap: var(--space-sm);
-    padding: var(--space-sm) var(--space-lg);
-    border-radius: var(--radius-md);
-    border: 1px solid rgba(var(--accent-primary-rgb), 0.4);
-    background: rgba(var(--accent-primary-rgb), 0.08);
+    color: var(--color-success);
+    filter: drop-shadow(0 0 6px rgba(var(--accent-primary-rgb), 0.35));
+  }
+
+  .gate__name {
     font-family: var(--font-mono);
     font-size: var(--text-sm);
-    font-weight: 500;
+    font-weight: 600;
     color: var(--text-primary);
-    white-space: nowrap;
   }
 
-  .prism-source svg {
+  .gate__metric {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
     color: var(--accent-primary);
-    flex-shrink: 0;
-  }
-
-  .prism-arrow {
-    color: var(--text-ghost);
-    flex-shrink: 0;
-  }
-
-  .prism-targets {
-    display: grid;
-    grid-template-columns: repeat(4, auto);
-    gap: var(--space-sm);
-  }
-
-  .prism-target {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--space-xs) var(--space-md);
-    border-radius: var(--radius-md);
-    border: 1px solid var(--border-subtle);
-    background: var(--bg-elevated);
-    font-size: var(--text-sm);
-    font-weight: 500;
-    color: var(--text-secondary);
     white-space: nowrap;
-    transition: border-color var(--transition-fast), box-shadow var(--transition-fast), color var(--transition-fast);
   }
 
-  .prism-target:hover {
-    border-color: rgba(var(--accent-primary-rgb), 0.3);
-    box-shadow: var(--glow-card-hover);
-    color: var(--text-primary);
+  .gauntlet__note {
+    max-width: 720px;
+    margin-inline: auto;
+    margin-top: var(--space-xl);
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    line-height: 1.7;
   }
 
   /* ── Responsive ── */
   @media (max-width: 900px) {
-    .code-section__inner {
+    .native__grid,
+    .yours__grid {
       grid-template-columns: 1fr;
     }
-    .whats-new__grid {
-      grid-template-columns: repeat(2, 1fr);
+    .fw-list {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: var(--space-xs) var(--space-md);
     }
-    .prism-targets {
-      grid-template-columns: repeat(3, auto);
+    .fw-btn {
+      padding: 4px 2px;
+    }
+    .fw-btn__name {
+      font-size: clamp(20px, 4.5vw, 28px);
+    }
+    .fw-btn.is-active .fw-btn__idiom {
+      display: none;
+    }
+    .gauntlet__stats {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-lg);
     }
   }
 
@@ -2324,32 +1926,18 @@ function Settings() {
       min-height: auto;
     }
     .hero__actions { flex-direction: column; align-items: center; }
-    .whats-new { padding: var(--space-xl) 0; }
-    .whats-new__grid { grid-template-columns: 1fr; }
-    .stats { padding: var(--space-xl) 0; }
-    .stats__grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-lg); }
-    .features { padding: var(--space-xl) 0; }
-    .features__inner { padding-top: var(--space-xl); }
-    .features__grid { grid-template-columns: 1fr; }
-    .showcase-section { padding: var(--space-xl) 0; }
-    .showcase-grid { grid-template-columns: 1fr; }
-    .code-section { padding: var(--space-xl) 0; }
-    .frameworks-strip { padding: var(--space-xl) 0; }
-    .prism-visual {
-      flex-direction: column;
+    .native, .yours, .gauntlet { padding: var(--space-2xl) 0; }
+    .gate {
+      grid-template-columns: auto minmax(0, 1fr);
     }
-    .prism-arrow {
-      transform: rotate(90deg);
-    }
-    .prism-targets {
-      grid-template-columns: repeat(2, auto);
+    .gate__metric {
+      grid-column: 2;
     }
   }
 
   @media (max-width: 480px) {
     .hero__headline-top { font-size: 28px; }
     .hero__headline-glow,
-    .hero__headline-glow-shadow { font-size: 48px; }
-    .stats__grid { grid-template-columns: repeat(2, 1fr); }
+    .hero__headline-glow-shadow { font-size: 52px; }
   }
 </style>

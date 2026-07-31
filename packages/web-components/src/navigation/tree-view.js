@@ -56,7 +56,8 @@ export class ArcTreeView extends LitElement {
         color: var(--text-secondary);
         background: none;
         border: none;
-        padding: var(--space-xs) var(--space-sm);
+        padding-block: var(--space-xs);
+        padding-inline: var(--nav-row-inset) var(--space-sm);
         border-radius: var(--radius-sm);
         cursor: pointer;
         transition: background var(--transition-fast), color var(--transition-fast);
@@ -229,10 +230,10 @@ export class ArcTreeView extends LitElement {
 
           return html`
             <li class="tree__item" role="none" part="item">
-              ${level > 0 ? html`<div class="tree__line" style="left: ${level * 16 + 3}px"></div>` : ''}
+              ${level > 0 ? html`<div class="tree__line" style="inset-inline-start: ${level * 16 + 3}px"></div>` : ''}
               <button
                 class="tree__row ${isSelected ? 'tree__row--selected' : ''}"
-                style="padding-left: ${level * 16 + 8}px"
+                style="padding-inline-start: calc(var(--nav-row-inset) + ${level * 16}px)"
                 role="treeitem"
                 aria-expanded=${hasChildren ? String(expanded) : undefined}
                 aria-selected=${isSelected ? 'true' : 'false'}

@@ -31,4 +31,11 @@ export class SidebarLink {
   get level(): number {
     return this._el.level;
   }
+
+  @Input() set icon(value: string) {
+    this._el.icon = value;
+  }
+  get icon(): string {
+    return this._el.icon;
+  }
 }

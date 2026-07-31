@@ -803,6 +803,7 @@ declare module 'react' {
       'arc-scroll-spy': ArcBaseAttributes & {
         active?: string;
         offset?: number | string;
+        progress?: 'none' | 'ring' | 'read' | 'both';
       };
       'arc-scroll-to-top': ArcBaseAttributes & {
         threshold?: number | string;
@@ -862,11 +863,13 @@ declare module 'react' {
         href?: string;
         active?: boolean;
         level?: number | string;
+        icon?: string;
       };
       'arc-sidebar-section': ArcBaseAttributes & {
         heading?: string;
         collapsible?: boolean;
         open?: boolean;
+        icon?: string;
       };
       'arc-skeleton': ArcBaseAttributes & {
         variant?: 'text' | 'circle' | 'rect';
@@ -1029,6 +1032,7 @@ declare module 'react' {
         theme?: 'dark' | 'light' | 'auto';
         disabled?: boolean;
         'icon-only'?: boolean;
+        size?: 'xs' | 'sm' | 'md' | 'lg';
       };
       'arc-time-ago': ArcBaseAttributes & {
         datetime?: string;
@@ -1086,6 +1090,9 @@ declare module 'react' {
       };
       'arc-top-bar': ArcBaseAttributes & {
         heading?: string;
+        'home-href'?: string;
+        scrolled?: boolean;
+        immersive?: boolean;
         fixed?: boolean;
         contained?: string;
         'menu-open'?: boolean;

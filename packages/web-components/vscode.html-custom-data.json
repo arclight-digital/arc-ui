@@ -2601,7 +2601,7 @@
         },
         {
           "name": "size",
-          "description": "Button size controlling dimensions and icon scale. Icon-only sizes: xs=28px, sm=32px, md=36px, lg=44px.",
+          "description": "Button size controlling dimensions and icon scale. Icon-only sizes are circular: xs=28px, sm=32px, md=36px, lg=44px. The labelled form stays a rounded rectangle.",
           "values": [
             { "name": "xs" },
             { "name": "sm" },
@@ -3486,8 +3486,18 @@
         },
         {
           "name": "icon-only",
-          "description": "Renders the button as a compact circle without the theme name label. Attribute name is `icon-only`.",
+          "description": "Renders the button as a compact square without the theme name label, matching an icon-only arc-icon-button of the same size. Attribute name is `icon-only`.",
           "values": []
+        },
+        {
+          "name": "size",
+          "description": "Box size when `icon-only`, on the same scale as arc-icon-button: xs=28px, sm=32px, md=36px, lg=44px. Set both controls to the same value when they sit side by side. Ignored by the labelled form, which is sized by its text.",
+          "values": [
+            { "name": "xs" },
+            { "name": "sm" },
+            { "name": "md" },
+            { "name": "lg" }
+          ]
         }
       ],
       "references": []
@@ -3641,7 +3651,7 @@
     },
     {
       "name": "arc-app-shell",
-      "description": "Full-page layout scaffold that composes a TopBar, Sidebar, and scrollable content area into a\ncohesive application frame. Handles responsive collapse, sidebar toggling, and optional\ntable-of-contents rail out of the box.\n---\n\n\n### **Slots:**\n - **topbar**\n- **sidebar**\n- _default_ - Default content.\n- **toc**\n\n### **CSS Parts:**\n - **shell**\n- **body**\n- **sidebar**\n- **main**\n- **content**\n- **toc**",
+      "description": "Full-page layout scaffold that composes a TopBar, Sidebar, and scrollable content area into a\ncohesive application frame. Handles responsive collapse, sidebar toggling, and optional\ntable-of-contents rail out of the box.\n---\n\n\n### **Events:**\n - **arc-sidebar-toggle** - Fired when the shell itself opens or closes the mobile sidebar — on a backdrop click, on Escape, or on navigation. Listened to by arc-top-bar so its hamburger stays in step. Not fired for a toggle the shell merely received, so the two cannot echo each other.\n\n### **Slots:**\n - **topbar**\n- **sidebar**\n- _default_ - Default content.\n- **toc**\n\n### **CSS Parts:**\n - **shell**\n- **body**\n- **sidebar**\n- **main**\n- **content**\n- **toc**",
       "attributes": [
         {
           "name": "sidebar-open",
@@ -4431,7 +4441,7 @@
     },
     {
       "name": "arc-scroll-spy",
-      "description": "Tracks scroll position and highlights the active navigation link.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the active spy target changes during scroll\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **scroll-spy**\n- **heading**\n- **list**\n- **link**",
+      "description": "Tracks scroll position and highlights the active navigation link.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the active spy target changes during scroll\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **scroll-spy**\n- **heading**\n- **ring**\n- **list**\n- **link**",
       "attributes": [
         {
           "name": "active",
@@ -4440,8 +4450,18 @@
         },
         {
           "name": "offset",
-          "description": "Pixel offset from the top of the viewport used in the IntersectionObserver rootMargin. Increase this value to account for taller sticky headers.",
+          "description": "Pixel distance from the top of the viewport at which a section counts as current. Increase it to account for taller sticky headers.",
           "values": []
+        },
+        {
+          "name": "progress",
+          "description": "How the reader's position through the document is shown. `ring` draws a progress arc beside the heading; `read` recedes the entries already scrolled past; `both` does each. Defaults to `none`, and an unrecognised value lands there too.",
+          "values": [
+            { "name": "none" },
+            { "name": "ring" },
+            { "name": "read" },
+            { "name": "both" }
+          ]
         }
       ],
       "references": []
@@ -4491,6 +4511,11 @@
           "name": "level",
           "description": "Nesting depth for visual indentation. Level 0 links render at default size; level 1+ links are indented and use a smaller font size.",
           "values": []
+        },
+        {
+          "name": "icon",
+          "description": "Name of an icon to render before the label. Use icons consistently within a section — a sidebar where only some links carry one reads as an oversight rather than a hierarchy.",
+          "values": []
         }
       ],
       "references": []
@@ -4513,13 +4538,18 @@
           "name": "open",
           "description": "Controls whether a collapsible section is expanded (true) or collapsed (false). Only relevant when collapsible is true.",
           "values": []
+        },
+        {
+          "name": "icon",
+          "description": "Name of an icon to render before the heading. Ignored when the section has no heading.",
+          "values": []
         }
       ],
       "references": []
     },
     {
       "name": "arc-sidebar",
-      "description": "Collapsible navigation sidebar with grouped sections, heading labels, and active link\nhighlighting. Ideal for documentation sites, admin panels, and any layout that needs persistent\nvertical navigation.\n---\n\n\n### **Events:**\n - **arc-navigate** - Fired when a sidebar link is clicked\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **sidebar**\n- **section**\n- **toggle**\n- **heading**\n- **links**\n- **link**",
+      "description": "Collapsible navigation sidebar with grouped sections, heading labels, and active link\nhighlighting. Ideal for documentation sites, admin panels, and any layout that needs persistent\nvertical navigation.\n---\n\n\n### **Events:**\n - **arc-navigate** - Fired when a sidebar link is clicked\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **sidebar**\n- **section**\n- **toggle**\n- **heading**\n- **links**\n- **link**\n- **link-icon**\n- **heading-icon**",
       "attributes": [
         {
           "name": "active",
@@ -4686,7 +4716,22 @@
       "attributes": [
         {
           "name": "heading",
-          "description": "Brand text displayed in the top-left corner next to the optional logo slot. Rendered with the accent font family (Tektur), uppercase, and wide letter-spacing. Keep this to one or two words that identify the application.",
+          "description": "Brand text displayed in the top-left corner next to the optional logo slot. Rendered uppercase with wide letter-spacing at the wordmark size. Keep this to one or two words that identify the application.",
+          "values": []
+        },
+        {
+          "name": "home-href",
+          "description": "Destination of the brand link. Defaults to `/`; set it when the app is mounted under a sub-path, or to an empty string to render the brand as plain text with no link at all.",
+          "values": []
+        },
+        {
+          "name": "scrolled",
+          "description": "Reflects whether the page has scrolled past the bar's threshold. Set by the component, not by you — read it to style a scrolled state from outside, via `arc-top-bar[scrolled]`.",
+          "values": []
+        },
+        {
+          "name": "immersive",
+          "description": "Renders the bar with no background, blur or border until the page is scrolled, so a hero shows through it. Requires `fixed`. Suits marketing pages whose first screen is one composed image; leave it off in an application layout, where the bar should be a fixed edge among the other panels rather than something that appears and disappears.",
           "values": []
         },
         {

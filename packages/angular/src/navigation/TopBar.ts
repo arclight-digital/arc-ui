@@ -18,6 +18,27 @@ export class TopBar {
     return this._el.heading;
   }
 
+  @Input() set homeHref(value: string) {
+    this._el.homeHref = value;
+  }
+  get homeHref(): string {
+    return this._el.homeHref;
+  }
+
+  @Input() set scrolled(value: boolean) {
+    this._el.scrolled = value;
+  }
+  get scrolled(): boolean {
+    return this._el.scrolled;
+  }
+
+  @Input() set immersive(value: boolean) {
+    this._el.immersive = value;
+  }
+  get immersive(): boolean {
+    return this._el.immersive;
+  }
+
   @Input() set fixed(value: boolean) {
     this._el.fixed = value;
   }

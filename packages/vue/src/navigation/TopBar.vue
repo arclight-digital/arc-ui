@@ -6,6 +6,9 @@ defineOptions({ name: 'TopBar' });
 
 const props = withDefaults(defineProps<{
   heading?: string;
+  homeHref?: string;
+  scrolled?: boolean;
+  immersive?: boolean;
   fixed?: boolean;
   contained?: string;
   menuOpen?: boolean;
@@ -14,6 +17,9 @@ const props = withDefaults(defineProps<{
   navAlign?: 'left' | 'center' | 'right';
 }>(), {
   heading: '',
+  homeHref: '/',
+  scrolled: false,
+  immersive: false,
   fixed: false,
   contained: 'null',
   menuOpen: false,
@@ -26,6 +32,9 @@ const props = withDefaults(defineProps<{
 <template>
   <arc-top-bar
     :heading="props.heading"
+    :homeHref="props.homeHref"
+    :scrolled="props.scrolled"
+    :immersive="props.immersive"
     :fixed="props.fixed"
     :contained="props.contained"
     :menuOpen="props.menuOpen"

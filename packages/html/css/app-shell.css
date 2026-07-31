@@ -59,7 +59,13 @@
         align-self: flex-start;
         max-height: calc(100vh - var(--nav-height) - 2 * var(--space-xl));
         overflow-y: auto;
-        padding: 0 var(--space-lg) var(--space-md) 0;
+        /* Zero, not --space-md on the bottom only. The border below is drawn
+           down the padding box, so an unmatched bottom pad made the line
+           overhang the last entry with nothing balancing it above. Evened up by
+           removing the pad rather than by adding one on top, which would have
+           pushed the panel out of line with the article beside it. */
+        padding-block: 0;
+        padding-inline: 0 var(--space-lg);
         margin-bottom: var(--space-xl);
         border-inline-start: 1px solid var(--border-subtle);
       }
@@ -89,7 +95,17 @@
         width: 300px;
         max-width: 85vw;
         transform: translateX(-100%);
-        transition: transform 250ms var(--ease-out-expo);
+        /* visibility, not transform alone. Translated off-screen the drawer is
+           still visible to the browser, so its links stay in the tab order and
+           in the accessibility tree — 176 of them on a docs page, all invisible,
+           every one of them ahead of the content on a mobile keyboard.
+           Transitioned rather than set flat so the discrete flip lands at the
+           *end* of the slide out and at the start of the slide in, which is the
+           same delay-hide the overlays use for their backdrops. */
+        visibility: hidden;
+        transition:
+          transform 250ms var(--ease-out-expo),
+          visibility 250ms var(--ease-out-expo);
         background: var(--surface-primary);
         padding-top: var(--nav-height);
         overflow-y: auto;
@@ -108,6 +124,7 @@
 
       .arc-app-shell[mobile][sidebar-open] .shell__sidebar {
         transform: translateX(0);
+        visibility: visible;
       }
 
       /* Backdrop */

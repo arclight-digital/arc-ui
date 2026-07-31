@@ -28,9 +28,6 @@
         color: inherit;
       }
 
-      /* Icon-only (square) */
-      .arc-icon-button .btn:not(.btn--has-text) { aspect-ratio: 1; }
-
       /* With text */
       .arc-icon-button .btn--has-text {
         font-family: var(--font-label);
@@ -44,19 +41,8 @@
         line-height: 1;
       }
 
-      /* Sizes — icon-only */
-      .arc-icon-button .btn:not(.btn--has-text),
-      .arc-icon-button a { min-width: var(--touch-min); min-height: var(--touch-min); }
-      .arc-icon-button[data-size="xs"] .btn:not(.btn--has-text),
-      .arc-icon-button[data-size="xs"] a { width: 28px; height: 28px; border-radius: var(--radius-sm); }
-      .arc-icon-button[data-size="sm"] .btn:not(.btn--has-text),
-      .arc-icon-button[data-size="sm"] a { width: 32px; height: 32px; }
-      .arc-icon-button:not([data-data-size="lg"]):not([data-data-size="sm"]):not([data-data-size="xs"]) .btn:not(.btn--has-text),
-      .arc-icon-button:not([data-data-size="lg"]):not([data-data-size="sm"]):not([data-data-size="xs"]) a,
-      .arc-icon-button[data-size="md"] .btn:not(.btn--has-text),
-      .arc-icon-button[data-size="md"] a { width: 36px; height: 36px; }
-      .arc-icon-button[data-size="lg"] .btn:not(.btn--has-text),
-      .arc-icon-button[data-size="lg"] a { width: 44px; height: 44px; }
+      /* Sizes — icon-only: see iconBoxStyles in ../button-styles.js, shared with
+         arc-theme-toggle so the two cannot drift apart in a top bar. */
 
       /* Sizes — with text */
       .arc-icon-button .btn--has-text { min-height: var(--touch-min); }

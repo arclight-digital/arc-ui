@@ -8,6 +8,7 @@ export interface SidebarSectionProps {
   heading?: string;
   collapsible?: boolean;
   open?: boolean;
+  icon?: string;
   onArcToggle?: (e: CustomEvent) => void;
   children?: preact.ComponentChildren;
   class?: string;
@@ -37,7 +38,7 @@ export interface SidebarSectionProps {
   [key: `on${string}`]: unknown;
 }
 
-export const SidebarSection: FunctionComponent<SidebarSectionProps> = ({ heading, collapsible, open, onArcToggle, children, ...rest }) => {
+export const SidebarSection: FunctionComponent<SidebarSectionProps> = ({ heading, collapsible, open, icon, onArcToggle, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -50,5 +51,5 @@ export const SidebarSection: FunctionComponent<SidebarSectionProps> = ({ heading
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcToggle]);
-  return h('arc-sidebar-section', { ref, heading, collapsible, open, ...rest }, children);
+  return h('arc-sidebar-section', { ref, heading, collapsible, open, icon, ...rest }, children);
 };

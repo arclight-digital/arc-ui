@@ -80,26 +80,42 @@
       }
 
       /* ── Static heading (non-collapsible) ── */
+      /* The gradient lives on the inner text span, not here: background-clip
+         text with a transparent fill clips every descendant, so an icon placed
+         inside a gradient-painted box renders as nothing at all. */
       .arc-sidebar .sidebar__heading {
-        display: block;
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
         font-size: var(--_text-xs);
         letter-spacing: 2px;
         text-transform: uppercase;
+        padding: var(--space-sm);
+        margin-bottom: var(--space-xs);
+      }
+
+      .arc-sidebar .sidebar__heading-text {
         background: var(--gradient-accent-text);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-        padding: var(--space-sm);
-        margin-bottom: var(--space-xs);
+      }
+
+      /* Headings read as one rank, so their icons stay quieter than the link
+         icons below them rather than competing for the same attention. */
+      .arc-sidebar .sidebar__heading-icon {
+        color: var(--text-ghost);
+        flex-shrink: 0;
+        -webkit-text-fill-color: unset;
       }
 
       /* ── Collapsible heading (toggle) ── */
       .arc-sidebar .sidebar__toggle {
         display: flex;
         align-items: center;
-        gap: var(--space-xs);
+        gap: var(--space-sm);
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
         font-size: var(--_text-xs);
@@ -156,10 +172,19 @@
       }
 
       /* ── Links container ── */
+      /* The links sit a step inside their heading, and the rail marks the group
+         they belong to. Structural and neutral by rule: one flat --divider that
+         never takes a colour, a weight or a state from whichever link is
+         active. A left edge that tracks the current item is banned outright —
+         the active row says "here" with tint and accent text, as everywhere
+         else in the system. */
       .arc-sidebar .sidebar__links {
         display: flex;
         flex-direction: column;
         gap: 1px;
+        margin-inline-start: var(--space-sm);
+        padding-inline-start: var(--space-sm);
+        border-inline-start: 1px solid var(--divider);
       }
 
       .arc-sidebar .sidebar__links--hidden {
@@ -177,7 +202,11 @@
         font-weight: 400;
         color: var(--text-muted);
         text-decoration: none;
-        padding: var(--touch-pad) var(--space-md) var(--touch-pad) calc(var(--space-sm) + 4px);
+        /* Logical, now that the container carries the indent. The four-value
+           shorthand this replaces ended in a physical padding-left, which put
+           the inset on the wrong edge in RTL. */
+        padding-block: var(--touch-pad);
+        padding-inline: var(--nav-row-inset) var(--space-md);
         border-radius: var(--radius-sm);
         cursor: pointer;
         transition:
@@ -187,6 +216,37 @@
         border: none;
         background: none;
         text-align: start;
+      }
+
+      .arc-sidebar .sidebar__link-body {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+        min-width: 0;
+      }
+
+      /* Heading and link glyphs match in size; what separates the two ranks is
+         the heading's uppercase gradient text and the ghosted heading icon
+         against the link icon's willingness to take the accent when active. */
+      .arc-sidebar .sidebar__heading-icon,
+      .arc-sidebar .sidebar__link-icon {
+        flex-shrink: 0;
+      }
+
+      /* Ghosted by default so the label stays the thing being read; the icon is
+         a landmark you find on the second pass, not competition for the first. */
+      .arc-sidebar .sidebar__link-icon {
+        color: var(--text-ghost);
+        flex-shrink: 0;
+        transition: color var(--transition-fast);
+      }
+
+      .arc-sidebar .sidebar__link:hover .sidebar__link-icon {
+        color: var(--text-secondary);
+      }
+
+      .arc-sidebar .sidebar__link[aria-current="page"] .sidebar__link-icon {
+        color: var(--interactive);
       }
 
       .arc-sidebar .sidebar__link-arrow {
@@ -210,6 +270,14 @@
         color: var(--interactive);
       }
 
+      /* Before the active rule: equal specificity, so the later selector wins,
+         and a nested link that was the current page rendered ghost-grey. */
+      .arc-sidebar .sidebar__link--nested {
+        font-size: var(--_text-xs);
+        color: var(--text-ghost);
+      }
+
+
       .arc-sidebar .sidebar__link:hover {
         color: var(--text-primary);
         background: var(--surface-hover);
@@ -230,11 +298,6 @@
       .arc-sidebar .sidebar__link:focus-visible {
         outline: none;
         box-shadow: var(--interactive-focus);
-      }
-
-      .arc-sidebar .sidebar__link--nested {
-        font-size: var(--_text-xs);
-        color: var(--text-ghost);
       }
 
       .arc-sidebar .sidebar__slot-host { display: none; }

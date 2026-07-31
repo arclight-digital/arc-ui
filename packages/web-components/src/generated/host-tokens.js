@@ -133,6 +133,7 @@ export const hostTokens = css`
     --max-width: 1120px;
     --max-width-sm: 720px;
     --nav-height: 64px;
+    --nav-row-inset: var(--space-sm);
 `;
 
 /**

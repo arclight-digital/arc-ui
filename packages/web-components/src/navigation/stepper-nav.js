@@ -59,7 +59,7 @@ export class ArcStepperNav extends LitElement {
       .stepper-nav__indicator {
         width: 32px;
         height: 32px;
-        border-radius: 50%;
+        border-radius: var(--radius-full);
         display: flex;
         align-items: center;
         justify-content: center;
