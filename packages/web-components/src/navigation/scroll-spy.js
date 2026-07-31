@@ -197,15 +197,22 @@ export class ArcScrollSpy extends LitElement {
          say "here" as well as "ahead" at the same time. Hue can, and this is
          the treatment arc-sidebar gives its current page, which makes the two
          navigation panels agree about what current looks like. */
+      /* Pulled toward the page's own text colour rather than left at the raw
+         accent. The accent on its own 6% tint is 4.17:1 in the light theme —
+         the tint costs 0.73 against the 4.90 it manages on plain white — so
+         the one state that marks where the reader is was the one that failed
+         AA. Mixing toward --text-primary is theme-adaptive by construction:
+         it darkens the blue on a light page and lightens it on a dark one,
+         which is the direction contrast wants in both. */
       .scroll-spy__link[aria-current="location"] {
-        color: var(--interactive);
+        color: color-mix(in oklab, var(--interactive) 85%, var(--text-primary));
         font-weight: 500;
         background: var(--accent-primary-subtle);
         box-shadow: 0 0 12px rgba(var(--interactive-rgb), 0.08);
       }
 
       .scroll-spy__link[aria-current="location"]:hover {
-        color: var(--interactive);
+        color: color-mix(in oklab, var(--interactive) 85%, var(--text-primary));
       }
 
       .scroll-spy__link:focus-visible {
