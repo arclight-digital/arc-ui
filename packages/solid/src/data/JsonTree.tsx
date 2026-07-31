@@ -12,7 +12,7 @@ declare module 'solid-js' {
 }
 
 export interface JsonTreeProps {
-  data?: string;
+  data?: Record<string, unknown>;
   json?: string;
   expanded?: number | boolean;
   keysQuoted?: boolean;

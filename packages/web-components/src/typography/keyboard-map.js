@@ -405,7 +405,7 @@ export class ArcKeyboardMap extends LitElement {
   static properties = {
     layout: { type: String, reflect: true },
     highlight: {},
-    labels: { converter: { fromAttribute: (v) => v !== 'false' } },
+    labels: { type: Boolean, converter: { fromAttribute: (v) => v !== 'false' } },
     platform: { type: String },
     caption: { type: String },
     _detected: { state: true },

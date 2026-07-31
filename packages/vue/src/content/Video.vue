@@ -11,7 +11,7 @@ const props = withDefaults(defineProps<{
   autoplay?: boolean;
   loop?: boolean;
   muted?: boolean;
-  controls?: string;
+  controls?: boolean;
   preload?: 'none' | 'metadata' | 'auto';
 }>(), {
   src: '',
@@ -20,7 +20,7 @@ const props = withDefaults(defineProps<{
   autoplay: false,
   loop: false,
   muted: false,
-  controls: 'true',
+  controls: true,
   preload: 'metadata',
 });
 

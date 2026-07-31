@@ -8,12 +8,12 @@ const props = withDefaults(defineProps<{
   data?: Array<number | {value?: number, status?: 'up' | 'degraded' | 'down' | 'none', label?: string}>;
   startLabel?: string;
   endLabel?: string;
-  summary?: string;
+  summary?: boolean;
 }>(), {
   data: () => ([]),
   startLabel: '',
   endLabel: '',
-  summary: 'true',
+  summary: true,
 });
 </script>
 

@@ -4,7 +4,7 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
-    data?: string;
+    data?: Record<string, unknown>;
     json?: string;
     expanded?: number | boolean;
     keysQuoted?: boolean;

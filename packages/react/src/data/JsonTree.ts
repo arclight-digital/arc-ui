@@ -5,7 +5,7 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcJsonTree } from '@arclux/arc-ui/json-tree';
 
 export interface JsonTreeProps {
-  data?: string;
+  data?: Record<string, unknown>;
   json?: string;
   expanded?: number | boolean;
   keysQuoted?: boolean;

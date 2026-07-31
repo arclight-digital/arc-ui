@@ -7,7 +7,7 @@
     data?: Array<number | {value?: number, status?: 'up' | 'degraded' | 'down' | 'none', label?: string}>;
     startLabel?: string;
     endLabel?: string;
-    summary?: string;
+    summary?: boolean;
     class?: string;
     id?: string;
     style?: string;
@@ -35,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { data = [], startLabel = '', endLabel = '', summary = 'true', ...rest }: Props = $props();
+  let { data = [], startLabel = '', endLabel = '', summary = true, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

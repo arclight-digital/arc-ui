@@ -46,10 +46,10 @@ export class ActivityHeatmap {
     return this._el.max;
   }
 
-  @Input() set legend(value: string) {
+  @Input() set legend(value: boolean) {
     this._el.legend = value;
   }
-  get legend(): string {
+  get legend(): boolean {
     return this._el.legend;
   }
 }

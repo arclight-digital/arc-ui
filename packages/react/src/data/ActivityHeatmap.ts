@@ -10,7 +10,7 @@ export interface ActivityHeatmapProps {
   weeks?: number;
   weekStart?: string;
   max?: number;
-  legend?: string;
+  legend?: boolean;
   className?: string;
 }
 

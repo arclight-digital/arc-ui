@@ -14,10 +14,10 @@ import { ArcJsonTree } from '@arclux/arc-ui/json-tree';
 export class JsonTree {
   private readonly _el: ArcJsonTree = inject(ElementRef).nativeElement;
 
-  @Input() set data(value: string) {
+  @Input() set data(value: Record<string, unknown>) {
     this._el.data = value;
   }
-  get data(): string {
+  get data(): Record<string, unknown> {
     return this._el.data;
   }
 

@@ -32,10 +32,10 @@ export class Uptime {
     return this._el.endLabel;
   }
 
-  @Input() set summary(value: string) {
+  @Input() set summary(value: boolean) {
     this._el.summary = value;
   }
-  get summary(): string {
+  get summary(): boolean {
     return this._el.summary;
   }
 }

@@ -9,7 +9,7 @@
     weeks?: number;
     weekStart?: string;
     max?: number;
-    legend?: string;
+    legend?: boolean;
     class?: string;
     id?: string;
     style?: string;
@@ -37,7 +37,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { data = [], endDate = '', weeks = 52, weekStart = 'sunday', max, legend = 'true', ...rest }: Props = $props();
+  let { data = [], endDate = '', weeks = 52, weekStart = 'sunday', max, legend = true, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

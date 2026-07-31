@@ -8,7 +8,7 @@ export interface UptimeProps {
   data?: Array<number | {value?: number, status?: 'up' | 'degraded' | 'down' | 'none', label?: string}>;
   startLabel?: string;
   endLabel?: string;
-  summary?: string;
+  summary?: boolean;
   className?: string;
 }
 

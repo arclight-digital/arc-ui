@@ -39,7 +39,7 @@ const SEP = '\u001F';
  */
 export class ArcJsonTree extends LitElement {
   static properties = {
-    data: { attribute: false },
+    data: { type: Object, attribute: false },
     json: { type: String },
     expanded: {
       converter: {

@@ -5,7 +5,7 @@ import '@arclux/arc-ui/json-tree';
 defineOptions({ name: 'JsonTree' });
 
 const props = withDefaults(defineProps<{
-  data?: string;
+  data?: Record<string, unknown>;
   json?: string;
   expanded?: number | boolean;
   keysQuoted?: boolean;

@@ -25,10 +25,10 @@ export class KeyboardMap {
     return this._el.highlight;
   }
 
-  @Input() set labels(value: string) {
+  @Input() set labels(value: boolean) {
     this._el.labels = value;
   }
-  get labels(): string {
+  get labels(): boolean {
     return this._el.labels;
   }
 

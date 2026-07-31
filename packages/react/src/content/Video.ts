@@ -11,7 +11,7 @@ export interface VideoProps {
   autoplay?: boolean;
   loop?: boolean;
   muted?: boolean;
-  controls?: string;
+  controls?: boolean;
   preload?: 'none' | 'metadata' | 'auto';
   className?: string;
   onArcPlay?: (e: CustomEvent) => void;

@@ -65,7 +65,7 @@ export class ArcActivityHeatmap extends LitElement {
     weeks: { type: Number },
     weekStart: { type: String, attribute: 'week-start' },
     max: { type: Number },
-    legend: { converter: { fromAttribute: (v) => v !== 'false' } },
+    legend: { type: Boolean, converter: { fromAttribute: (v) => v !== 'false' } },
     _activeIndex: { state: true },
   };
 

@@ -53,10 +53,10 @@ export class Video {
     return this._el.muted;
   }
 
-  @Input() set controls(value: string) {
+  @Input() set controls(value: boolean) {
     this._el.controls = value;
   }
-  get controls(): string {
+  get controls(): boolean {
     return this._el.controls;
   }
 

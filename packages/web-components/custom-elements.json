@@ -6523,10 +6523,10 @@
               "kind": "field",
               "name": "data",
               "privacy": "public",
-              "default": "undefined",
               "type": {
                 "text": "object"
               },
+              "default": "undefined",
               "description": "The value to render. Set as a property for objects and arrays; takes precedence over the json attribute when both are set."
             },
             {

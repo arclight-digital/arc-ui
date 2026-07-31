@@ -51,7 +51,7 @@ export class ArcVideo extends LitElement {
     muted: { type: Boolean, reflect: true },
     // Default-true boolean: presence is still true, and the explicit string
     // "false" is the off switch (same pattern as arc-uptime's summary prop).
-    controls: { converter: { fromAttribute: (v) => v !== 'false' } },
+    controls: { type: Boolean, converter: { fromAttribute: (v) => v !== 'false' } },
     preload: { type: String },
     _started: { state: true },
     _playing: { state: true },

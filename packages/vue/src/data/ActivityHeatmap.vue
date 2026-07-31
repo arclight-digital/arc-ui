@@ -10,13 +10,13 @@ const props = withDefaults(defineProps<{
   weeks?: number;
   weekStart?: string;
   max?: number;
-  legend?: string;
+  legend?: boolean;
 }>(), {
   data: () => ([]),
   endDate: '',
   weeks: 52,
   weekStart: 'sunday',
-  legend: 'true',
+  legend: true,
 });
 </script>
 

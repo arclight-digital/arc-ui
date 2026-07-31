@@ -14,7 +14,7 @@ declare module 'solid-js' {
 export interface KeyboardMapProps {
   layout?: string;
   highlight?: string|string[];
-  labels?: string;
+  labels?: boolean;
   platform?: string;
   caption?: string;
   class?: string;

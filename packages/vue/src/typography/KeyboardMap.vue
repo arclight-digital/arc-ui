@@ -7,13 +7,13 @@ defineOptions({ name: 'KeyboardMap' });
 const props = withDefaults(defineProps<{
   layout?: string;
   highlight?: string|string[];
-  labels?: string;
+  labels?: boolean;
   platform?: string;
   caption?: string;
 }>(), {
   layout: 'compact',
   highlight: '',
-  labels: 'true',
+  labels: true,
   platform: 'auto',
   caption: '',
 });

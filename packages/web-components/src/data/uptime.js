@@ -28,7 +28,7 @@ export class ArcUptime extends LitElement {
     data: { attribute: false },
     startLabel: { type: String, attribute: 'start-label' },
     endLabel: { type: String, attribute: 'end-label' },
-    summary: { converter: { fromAttribute: (v) => v !== 'false' } },
+    summary: { type: Boolean, converter: { fromAttribute: (v) => v !== 'false' } },
     _activeIndex: { state: true },
   };
 
