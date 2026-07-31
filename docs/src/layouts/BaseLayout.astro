@@ -129,6 +129,17 @@ const siteJsonLd = {
       import '@arclux/arc-ui/theme-toggle';
       import '@arclux/brand/by';
       import('@arclux/arc-ui/register');
+
+      // arc-code-block is deliberately not in the register barrel — it carries
+      // the syntax highlighter. Without this import a page's code blocks render
+      // server-side (DSD) but never hydrate: the copy button is dead, and in
+      // dev they are an invisible hole. Load it only when the page actually
+      // renders one; astro:page-load re-checks after soft navigations.
+      const loadCodeBlock = () => {
+        if (document.querySelector('arc-code-block')) import('@arclux/arc-ui/code-block');
+      };
+      loadCodeBlock();
+      document.addEventListener('astro:page-load', loadCodeBlock);
     </script>
   </head>
   <body>

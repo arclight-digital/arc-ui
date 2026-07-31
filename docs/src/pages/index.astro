@@ -116,42 +116,55 @@ function Settings() {
   <header class="hero">
     <canvas class="hero__canvas" id="hero-canvas"></canvas>
     <div class="hero__stream" aria-hidden="true" inert>
-      <div class="stream-item" style="--lxr:-30; --ly:-4vh;  --dur:12s;   --delay:-2s;   --z0:-520px; --angle:4deg;    --trail:170px; --tint:var(--accent-primary-rgb)">
+      <div class="stream-item" style="--lxr:-30; --ly:-4vh;  --dur:12s;   --delay:-2s;   --z0:-520px; --trail:170px; --tint:var(--accent-primary-rgb)">
         <arc-button variant="primary" size="sm">Get started</arc-button>
       </div>
-      <div class="stream-item" style="--lxr:-23; --ly:15vh;  --dur:10s;   --delay:-7s;   --z0:-780px; --angle:-19deg;  --trail:150px; --tint:var(--accent-secondary-rgb)">
+      <div class="stream-item" style="--lxr:-23; --ly:15vh;  --dur:10s;   --delay:-7s;   --z0:-780px; --trail:150px; --tint:var(--accent-secondary-rgb)">
         <arc-toggle checked label="Dark mode"></arc-toggle>
       </div>
-      <div class="stream-item" style="--lxr:-35; --ly:7vh;   --dur:9s;    --delay:-4.5s; --z0:-380px; --angle:-6deg;   --trail:130px; --tint:var(--accent-primary-rgb)">
+      <div class="stream-item" style="--lxr:-35; --ly:7vh;   --dur:9s;    --delay:-4.5s; --z0:-380px; --trail:130px; --tint:var(--accent-primary-rgb)">
         <arc-badge variant="success">Stable</arc-badge>
       </div>
-      <div class="stream-item" style="--lxr:-20; --ly:-17vh; --dur:11s;   --delay:-9s;   --z0:-900px; --angle:24deg;   --trail:160px; --tint:var(--accent-secondary-rgb)">
+      <div class="stream-item" style="--lxr:-20; --ly:-17vh; --dur:11s;   --delay:-9s;   --z0:-900px; --trail:160px; --tint:var(--accent-secondary-rgb)">
         <arc-rating value="5" readonly></arc-rating>
       </div>
-      <div class="stream-item" style="--lxr:-33; --ly:-15vh; --dur:13s;   --delay:-6s;   --z0:-640px; --angle:14deg;   --trail:180px; --tint:var(--accent-primary-rgb)">
+      <div class="stream-item" style="--lxr:-33; --ly:-15vh; --dur:13s;   --delay:-6s;   --z0:-640px; --trail:180px; --tint:var(--accent-primary-rgb)">
         <arc-stat value={String(components.length)} label="Components" trend="up" change="+7"></arc-stat>
       </div>
-      <div class="stream-item" style="--lxr:-26; --ly:25vh;  --dur:10.5s; --delay:-1s;   --z0:-450px; --angle:-27deg;  --trail:150px; --tint:var(--accent-primary-rgb)">
+      <div class="stream-item" style="--lxr:-26; --ly:25vh;  --dur:10.5s; --delay:-1s;   --z0:-450px; --trail:150px; --tint:var(--accent-primary-rgb)">
         <arc-checkbox checked label="Ship it"></arc-checkbox>
       </div>
-      <div class="stream-item" style="--lxr:28;  --ly:-7vh;  --dur:10s;   --delay:-3s;   --z0:-560px; --angle:172deg;  --trail:160px; --tint:var(--accent-secondary-rgb)">
+      <div class="stream-item" style="--lxr:28;  --ly:-7vh;  --dur:10s;   --delay:-3s;   --z0:-560px; --trail:160px; --tint:var(--accent-secondary-rgb)">
         <arc-avatar name="Arc Light" status="online"></arc-avatar>
       </div>
-      <div class="stream-item" style="--lxr:31;  --ly:11vh;  --dur:12.5s; --delay:-8s;   --z0:-700px; --angle:-169deg; --trail:180px; --w:180px; --tint:var(--accent-primary-rgb)">
+      <div class="stream-item" style="--lxr:31;  --ly:11vh;  --dur:12.5s; --delay:-8s;   --z0:-700px; --trail:180px; --w:180px; --tint:var(--accent-primary-rgb)">
         <arc-progress value="72" label="Deploying"></arc-progress>
       </div>
-      <div class="stream-item" style="--lxr:22;  --ly:-19vh; --dur:9.5s;  --delay:-5.5s; --z0:-820px; --angle:155deg;  --trail:150px; --tint:var(--accent-primary-rgb)">
+      <div class="stream-item" style="--lxr:22;  --ly:-19vh; --dur:9.5s;  --delay:-5.5s; --z0:-820px; --trail:150px; --tint:var(--accent-primary-rgb)">
         <arc-chip selected>Web Components</arc-chip>
       </div>
-      <div class="stream-item" style="--lxr:35;  --ly:-12vh; --dur:11.5s; --delay:-0.5s; --z0:-360px; --angle:170deg;  --trail:130px; --tint:var(--accent-secondary-rgb)">
+      <div class="stream-item" style="--lxr:35;  --ly:-12vh; --dur:11.5s; --delay:-0.5s; --z0:-360px; --trail:130px; --tint:var(--accent-secondary-rgb)">
         <arc-tag>Lit 3</arc-tag>
       </div>
-      <div class="stream-item" style="--lxr:25;  --ly:21vh;  --dur:13.5s; --delay:-10s;  --z0:-880px; --angle:-156deg; --trail:170px; --w:160px; --tint:var(--accent-secondary-rgb)">
+      <div class="stream-item" style="--lxr:25;  --ly:21vh;  --dur:13.5s; --delay:-10s;  --z0:-880px; --trail:170px; --w:160px; --tint:var(--accent-secondary-rgb)">
         <arc-slider value="64" label="Glow"></arc-slider>
       </div>
-      <div class="stream-item" style="--lxr:34;  --ly:2vh;   --dur:10.8s; --delay:-6.8s; --z0:-600px; --angle:-178deg; --trail:160px; --tint:var(--accent-primary-rgb)">
+      <div class="stream-item" style="--lxr:34;  --ly:2vh;   --dur:10.8s; --delay:-6.8s; --z0:-600px; --trail:160px; --tint:var(--accent-primary-rgb)">
         <arc-sparkline data="4,9,6,12,9,16,13,20" fill></arc-sparkline>
       </div>
+    </div>
+    <!-- Every number here is in hero space — 50/50 is the middle of the
+         hero, --hrx is a radius as a fraction of the hero's width. The lobe
+         boxes are actually oversized (see .lobe); the conversion happens in
+         CSS so these stay readable and the oversize can change in one place
+         without re-deriving twelve coordinates by hand. -->
+    <div class="hero__lobes" aria-hidden="true">
+      <span class="lobe" style="--hrx:48; --hry:42; --hx:18; --hy:24;  --tint:var(--accent-primary-rgb);   --a:0.115; --stop:68%; --hdx:2.5;  --hdy:-1.8; --sc:1.07; --dur:29s; --delay:-4s"></span>
+      <span class="lobe" style="--hrx:42; --hry:48; --hx:84; --hy:30;  --tint:var(--accent-secondary-rgb); --a:0.1;   --stop:70%; --hdx:-2;   --hdy:2.2;  --sc:0.96; --dur:37s; --delay:-13s"></span>
+      <span class="lobe" style="--hrx:54; --hry:36; --hx:70; --hy:78;  --tint:var(--accent-primary-rgb);   --a:0.086; --stop:72%; --hdx:-2.8; --hdy:-1.4; --sc:1.08; --dur:23s; --delay:-9s"></span>
+      <span class="lobe" style="--hrx:40; --hry:44; --hx:12; --hy:70;  --tint:var(--accent-secondary-rgb); --a:0.08;  --stop:68%; --hdx:2.2;  --hdy:1.6;  --sc:0.94; --dur:43s; --delay:-21s"></span>
+      <span class="lobe" style="--hrx:34; --hry:30; --hx:52; --hy:2;   --tint:var(--accent-primary-rgb);   --a:0.069; --stop:70%; --hdx:-1.6; --hdy:2.4;  --sc:1.04; --dur:31s; --delay:-17s"></span>
+      <span class="lobe" style="--hrx:60; --hry:26; --hx:50; --hy:104; --tint:var(--accent-primary-rgb);   --a:0.092; --stop:62%; --hdx:1.4;  --hdy:-1.2; --sc:1.03; --dur:53s; --delay:-7s"></span>
     </div>
     <div class="hero__ambient"></div>
     <div class="hero__dots"></div>
@@ -159,7 +172,8 @@ function Settings() {
     <div class="hero__content">
       <a href="/docs/changelog" class="hero__announcement">
         <span class="hero__announcement-badge">{versionShort}</span>
-        <span class="hero__announcement-text">Server rendering for every component, and utilities that read your tokens</span>
+        <span class="hero__announcement-text hero__announcement-text--full">Server rendering for every component, and utilities that read your tokens</span>
+        <span class="hero__announcement-text hero__announcement-text--short">See what's new</span>
         <svg class="hero__announcement-arrow" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
       <h1 class="hero__headline">
@@ -482,6 +496,26 @@ function Settings() {
     let lastPx = 0;
     let lastPy = 0;
 
+    /* Bloom. The tunnel is drawn once, shrunk onto small offscreen canvases,
+       then drawn back over itself additively at full size. The downscale is
+       the blur — averaging pixels into one is a box blur nobody has to
+       write — and the upscale spreads it back out as a halo around whatever
+       was bright. It glows the tunnel's own light rather than adding a
+       second light: nothing appears that the beams did not already put
+       there, so there is no shape to line up and no edge to seam.
+
+       It shrinks in two steps, not one. drawImage does a single bilinear
+       sample, so a 5x reduction in one go reads four pixels out of twenty
+       five and throws the rest away — on beams a pixel or two wide, moving,
+       that samples them in and out of existence and the whole tunnel
+       crawls. Halving twice makes every step a 2x reduction, which bilinear
+       samples correctly. The small canvas then gets a real blur (cheap at
+       1/16th the area) so the upscale has nothing sharp left to make blocky. */
+    const half = document.createElement('canvas');
+    const hctx = half.getContext('2d');
+    const glow = document.createElement('canvas');
+    const gctx = glow.getContext('2d');
+
     interface Beam {
       theta: number;  // angle around the tube wall
       z: number;      // depth, world units in front of the camera
@@ -550,6 +584,21 @@ function Settings() {
       // desktop and a phone lands on them — so a 390px screen was paying the
       // same particle cost as a laptop. Lower floors below 640px.
       const small = width < 640;
+
+      // A smaller bloom buffer is both cheaper and softer — on a phone the
+      // wider, vaguer halo is also the one that reads best. Setting .width
+      // resets a context, so the sampling state is (re)applied right here.
+      half.width = Math.max(1, Math.round(width * 0.5));
+      half.height = Math.max(1, Math.round(height * 0.5));
+      glow.width = Math.max(1, Math.round(width * (small ? 0.2 : 0.26)));
+      glow.height = Math.max(1, Math.round(height * (small ? 0.2 : 0.26)));
+      if (hctx) hctx.imageSmoothingQuality = 'high';
+      if (gctx) {
+        gctx.imageSmoothingQuality = 'high';
+        gctx.filter = `blur(${small ? 1 : 1.4}px)`;
+      }
+      ctx!.imageSmoothingQuality = 'high';
+
       const beamTarget = Math.max(small ? 16 : 30, Math.min(56, Math.round((width * height) / 28000)));
       while (beams.length < beamTarget) {
         const b = {} as Beam;
@@ -609,8 +658,13 @@ function Settings() {
         for (const anim of streamAnims) anim.playbackRate = rate;
       }
 
-      const rx = width * 0.62;  // tube wall radii — outside the headline
-      const ry = height * 0.62;
+      // Tube cross-section. It follows the viewport, but only halfway: at
+      // 0.62 of each dimension a portrait phone gives an ellipse twice as
+      // tall as it is wide, and every beam rakes steeply up or down instead
+      // of radiating. Blending toward a circle keeps the spread even.
+      const mean = (width + height) / 2;
+      const rx = (width * 0.62 + mean * 0.62) / 2;
+      const ry = (height * 0.62 + mean * 0.62) / 2;
 
       ctx!.clearRect(0, 0, width, height);
       ctx!.globalCompositeOperation = light ? 'multiply' : 'lighter';
@@ -642,10 +696,17 @@ function Settings() {
         ) continue;
 
         // White-hot tips glow on dark; on light the tip stays tinted
-        // (white multiplies to nothing)
+        // (white multiplies to nothing).
+        //
+        // How white the tip burns is a depth cue, not a constant. Distance
+        // takes the heat out of a light before it takes the light out — so a
+        // beam far down the tube keeps its accent colour and only the near
+        // ones go white. Grading it is what stops the far wall reading as
+        // the same wall, dimmed.
+        const depth = Math.min(1, (Z_SPAWN - b.z) / (Z_SPAWN - Z_KILL));
         const tip = light
           ? `rgba(${b.color},${Math.min(1, a * 1.4)})`
-          : `rgba(255,255,255,${Math.min(1, a * 0.7)})`;
+          : `rgba(255,255,255,${Math.min(1, a * 0.7 * (0.2 + 0.8 * depth * depth))})`;
         const grad = ctx!.createLinearGradient(x1, y1, x2, y2);
         grad.addColorStop(0, tip);
         grad.addColorStop(0.18, `rgba(${b.color},${a})`);
@@ -690,6 +751,21 @@ function Settings() {
       }
 
       ctx!.globalAlpha = 1;
+
+      // Bloom pass. Skipped on light themes: there the beams composite with
+      // multiply, and an additive halo over them would only wash the page
+      // out. Surges bloom harder — that is the tunnel's own flare.
+      if (!light && hctx && gctx && glow.width > 1) {
+        hctx.globalCompositeOperation = 'copy';
+        hctx.drawImage(canvas, 0, 0, half.width, half.height);
+        gctx.globalCompositeOperation = 'copy';
+        gctx.drawImage(half, 0, 0, glow.width, glow.height);
+        ctx!.globalCompositeOperation = 'lighter';
+        ctx!.globalAlpha = Math.min(0.95, 0.6 + boost * 0.18);
+        ctx!.drawImage(glow, 0, 0, width, height);
+        ctx!.globalAlpha = 1;
+      }
+
       ctx!.globalCompositeOperation = 'source-over';
     }
 
@@ -710,11 +786,36 @@ function Settings() {
     // before anything is visible — no mid-flight speed snap
     if (stream) streamAnims = stream.getAnimations({ subtree: true });
 
+    /* The stream reveals on its own signal: not when the canvas is ready,
+       but when the components it is showing have actually upgraded. Fading
+       in with the canvas meant fading in a set of unstyled boxes that then
+       popped into components — the FOUC was happening inside the reveal.
+       The timeout is not a nicety: without it a component that never
+       registers leaves the stream at opacity 0 forever, so the failure mode
+       has to be "revealed slightly early", never "invisible". */
+    function revealStream() {
+      if (!stream) return;
+      const tags = [...new Set(
+        [...stream.querySelectorAll('*')]
+          .map((el) => el.tagName.toLowerCase())
+          .filter((t) => t.includes('-')),
+      )];
+      let done = false;
+      const show = () => {
+        if (done) return;
+        done = true;
+        requestAnimationFrame(() => hero.classList.add('hero--stream-live'));
+      };
+      Promise.all(tags.map((t) => customElements.whenDefined(t))).then(show);
+      setTimeout(show, 2500);
+    }
+
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) {
       // One still frame at cruise speed: the tube is visible, nothing moves
       drawFrame(0);
       hero.classList.add('hero--live');
+      revealStream();
       const redraw = () => {
         resize();
         drawFrame(0);
@@ -738,12 +839,20 @@ function Settings() {
       }
     }
 
-    // Scrolling feeds the warp: leaving the hero feels like launching
+    // Scrolling feeds the warp: leaving the hero feels like launching.
+    //
+    // The guard is not an optimisation. Boost only decays inside the draw
+    // loop, and the loop is parked whenever the hero is off screen — so
+    // scrolling down the page kept piling boost onto a frozen value, and
+    // scrolling back up handed the tunnel a full-warp surge it had no
+    // reason for. That is the speed changing at random: the tunnel was
+    // replaying scrolls it never saw. It accelerates only while on screen.
     function onScroll() {
       const y = window.scrollY;
       const dy = Math.abs(y - lastScrollY);
       lastScrollY = y;
-      boost = Math.min(3, boost + Math.min(0.5, dy * 0.0035));
+      if (!running) return;
+      boost = Math.min(2.2, boost + Math.min(0.4, dy * 0.0035));
     }
 
     // iOS fires resize when the URL bar collapses. The hero is sized in vh, so
@@ -760,6 +869,16 @@ function Settings() {
       });
     }
 
+    /* The hero's own size, not the window's. resize() pins the canvas with
+       an explicit style.width/height, which overrides `inset: 0` — so once
+       measured, the element stays that size no matter what the hero does.
+       And the hero does change after init: components upgrade, the code
+       block hydrates, fonts land. A window listener never hears any of it,
+       so the canvas kept its first measurement and left a dead band at the
+       bottom of a taller hero. Same debounced path, real trigger. */
+    const heroObserver = new ResizeObserver(onResize);
+    heroObserver.observe(canvas.parentElement!);
+
     window.addEventListener('resize', onResize);
     window.addEventListener('mousemove', onMouseMove, { passive: true });
     window.addEventListener('mouseout', onMouseOut);
@@ -774,12 +893,18 @@ function Settings() {
     function start() {
       if (running) return;
       running = true;
+      // Resume at cruise, from where the page actually is. A boost left
+      // over from before the pause would otherwise be the first thing the
+      // visitor sees on scrolling back up.
+      boost = 0;
+      lastScrollY = window.scrollY;
       animId = requestAnimationFrame((t) => {
         last = t;
         animId = requestAnimationFrame(frame);
         // Reveal only after the first frame is painted: load-time jank
         // happens behind a fade instead of in front of the visitor
         hero.classList.add('hero--live');
+        revealStream();
       });
     }
     function stop() {
@@ -799,6 +924,7 @@ function Settings() {
     document.addEventListener('astro:before-swap', () => {
       stop();
       io.disconnect();
+      heroObserver.disconnect();
       if (resizeRaf) cancelAnimationFrame(resizeRaf);
       window.removeEventListener('resize', onResize);
       window.removeEventListener('mousemove', onMouseMove);
@@ -991,6 +1117,7 @@ function Settings() {
     --stream-blend: normal;
     --glow-a: 0.4;
     --peak: 0.55;
+    --grain-a: 0.022;
   }
 
   @media (prefers-color-scheme: light) {
@@ -1001,6 +1128,7 @@ function Settings() {
       --stream-blend: normal;
       --glow-a: 0.4;
       --peak: 0.55;
+      --grain-a: 0.022;
     }
   }
 
@@ -1009,20 +1137,66 @@ function Settings() {
     inset: 0;
     pointer-events: none;
     z-index: 0;
-    /* everything the tunnel draws melts into bloom */
-    filter: blur(1.2px) saturate(1.15);
+    /* everything the tunnel draws melts into bloom — the blur itself is set
+       by the entrance rules below, which own both the from- and to-state */
   }
 
-  /* The tunnel fades in once its first frame has painted, so load-time
-     hitching never shows */
+  /* ── Entrance ──
+     Staged, because the three layers become ready at different moments and
+     a single fade has to wait for the slowest.
+
+     The tunnel arrives out of focus and pulls in: it starts scaled up and
+     heavily blurred, which is also exactly what a first frame looks like
+     when the browser is still busy, so load-time hitching happens inside an
+     effect instead of in front of the visitor. Note it settles in focus, not
+     in speed — the tunnel still starts at cruise, because a visible
+     deceleration reads as the page arriving late.
+
+     The lobes come up underneath on their own, slightly behind, so the light
+     in the room seems to rise before anything is in it.
+
+     The stream waits for its own custom elements to upgrade. It used to
+     reveal with the canvas, which meant the showcase components faded in as
+     unstyled boxes and then popped — the FOUC was inside the reveal. */
   .hero__canvas,
+  .hero__lobes,
   .hero__stream {
     opacity: 0;
-    transition: opacity 0.9s ease;
   }
 
-  .hero--live .hero__canvas,
-  .hero--live .hero__stream {
+
+  .hero__canvas {
+    transform: scale(1.09);
+    filter: blur(20px) saturate(1.35);
+    transition:
+      opacity 1.1s ease,
+      transform 1.9s cubic-bezier(0.16, 1, 0.3, 1),
+      filter 1.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .hero__lobes {
+    transform: scale(1.04);
+    transition:
+      opacity 1.6s ease 0.25s,
+      transform 2.2s cubic-bezier(0.16, 1, 0.3, 1) 0.25s;
+  }
+
+  .hero__stream {
+    transition: opacity 1.1s ease;
+  }
+
+  .hero--live .hero__canvas {
+    opacity: 1;
+    transform: none;
+    filter: blur(1.4px) saturate(1.35);
+  }
+
+  .hero--live .hero__lobes {
+    opacity: 1;
+    transform: none;
+  }
+
+  .hero--stream-live .hero__stream {
     opacity: 1;
   }
 
@@ -1051,14 +1225,117 @@ function Settings() {
     -webkit-mask-image: radial-gradient(ellipse 78% 74% at 50% 40%, transparent 48%, black 88%);
   }
 
+  /* ── Ambient lobes ──
+     The lit part of the hero, one element per lobe so each can live on its
+     own clock. As a single multi-stop background they were correct but
+     inert, and a static gradient is the thing that reads as a gradient.
+
+     Nothing here can seam: every lobe's gradient reaches transparent well
+     inside its own box, so translating or scaling the box moves only
+     already-invisible pixels — no mask, no overflow, no filter, nothing with
+     an edge to clip. Drifts are single-digit percentages over half a minute;
+     the point is that you cannot catch it moving, only notice later that it
+     has. Durations share no common factor, so the six never resync into a
+     visible pulse. */
+  .hero__lobes {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    /* The vignette, done by removing light instead of painting dark.
+       Darkening the rim from above could not win: --hero-rim is 55% of a
+       near-black over an already near-black page, so it moved the corners by
+       about four values out of 255 while the lobes sitting out there added
+       more than that — the edges stayed brighter than the middle and the
+       whole hero read as lit from outside in. Attenuating the lobes
+       themselves costs nothing and cannot go muddy. Reaching transparent at
+       exactly 100% means the container's own clip lands on zero alpha, and
+       no-repeat is required: mask-repeat defaults to repeat, which would
+       tile this gradient across the lobes' overhang. */
+    mask-image: radial-gradient(ellipse 80% 78% at 50% 42%,
+      #000 38%, rgba(0,0,0,0.4) 76%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 78% at 50% 42%,
+      #000 38%, rgba(0,0,0,0.4) 76%, transparent 100%);
+    mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat;
+  }
+
+  .lobe {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse var(--rx) var(--ry) at var(--x) var(--y),
+      rgba(var(--tint), var(--a)), transparent var(--stop));
+    /* alphas run ~15% over the static values they replace, because the
+       breathe cycle averages below full opacity */
+    animation: lobe-breathe var(--dur) ease-in-out infinite alternate;
+    animation-delay: var(--delay);
+    will-change: transform, opacity;
+  }
+
+  @keyframes lobe-breathe {
+    from { transform: none; opacity: 0.78; }
+    to   { transform: translate3d(var(--dx), var(--dy), 0) scale(var(--sc)); opacity: 1; }
+  }
+
+  /* ── Dither ──
+     Fine noise over the whole hero, and it is not a texture effect — it is
+     what makes the lobes possible at all.
+
+     Their colour lands around alpha 0.07 on a near-black ground, so
+     consecutive steps of the gradient differ by one or two values out of
+     255. Eight-bit quantisation turns those steps into flat plateaus with
+     hard borders between them: a lobe stops looking like light and starts
+     looking like two slightly different rectangles meeting at a crisp line.
+     Because the lobes drift, the borders sweep, which reads as the colour
+     breaking up rather than moving.
+
+     A pixel of noise larger than the quantisation step scatters each pixel
+     across the boundary instead of snapping it, and the plateau dissolves.
+     Standard dithering, and the reason it is barely visible is the point —
+     if you can see the grain it is too strong. Static, one tiled layer,
+     nothing per-frame. */
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: var(--grain-a, 0.038);
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 160px 160px;
+  }
+
   .hero__ambient {
     position: absolute;
     inset: 0;
+    /* The dark middle, and only that. It sits above .hero__lobes so it cuts
+       into them, which is what makes the profile an annulus: quiet at the
+       centre where the headline reads, brighter in the band the lobes make
+       further out, dark again at the rim.
+
+       There is deliberately no dark rim layer here. .hero__vignette is
+       already the rim treatment, so painting --hero-rim in this stack too
+       darkened the hero twice over — and worse, it landed on exactly the
+       radius the lobes peak at, so the annulus cancelled itself out and the
+       whole hero just went dim. Two darks and a band, not three. */
     background:
-      radial-gradient(ellipse 52% 46% at 50% 42%, var(--hero-core), transparent 68%),
-      radial-gradient(ellipse 80% 60% at 20% 40%, rgba(var(--accent-primary-rgb),0.12), transparent 70%),
-      radial-gradient(ellipse 60% 80% at 80% 60%, rgba(var(--accent-secondary-rgb),0.1), transparent 70%),
-      radial-gradient(circle at 50% 100%, rgba(var(--accent-primary-rgb),0.08), transparent 40%);
+      /* Settle to the page's own background at the bottom edge.
+         Left, right and top are the viewport — light leaving there reads as
+         light leaving the screen. The bottom is not: it is an interior
+         boundary with more page under it, and `overflow: clip` ends the
+         canvas and the lobes on a straight horizontal line across the full
+         width. Masking those layers was the wrong fix — it made the effect
+         visibly stop short of the hero, and it sliced whichever lobes
+         happened to be sitting low. This layer paints above both of them, so
+         one gradient settles everything at once, and because it fades to the
+         exact colour of the section below there is no boundary left to see.
+         Nothing is cut; it just arrives already dark. */
+      linear-gradient(to bottom, transparent 58%, var(--bg-base) 100%),
+      /* No rim layer. The vignette is .hero__lobes' mask — light removed at
+         the edge, not darkness painted over it. Painting it here dimmed the
+         lobes across their whole width to win a few values at the corners. */
+      radial-gradient(ellipse 52% 46% at 50% 42%, var(--hero-core), transparent 68%);
     pointer-events: none;
     z-index: 1;
   }
@@ -1096,23 +1373,36 @@ function Settings() {
   }
 
   /* Comet trail: a soft smear of light lagging behind, aimed back at the
-     vanishing point */
+     vanishing point.
+
+     The aim is derived, not authored. Each trail used to carry a hand-picked
+     --angle that was only correct at the aspect ratio it was eyeballed on —
+     on a portrait phone the same numbers pointed the trails off into nowhere.
+     atan2 over the item's own offset is exact at every viewport, and it is
+     scale-invariant, so perspective depth never changes the answer: the
+     offset direction from the vanishing point is all the aim ever was.
+     +180deg because the trail is drawn rightward from its origin and has to
+     travel back toward the centre. */
   .stream-item::before {
     content: '';
     position: absolute;
     left: 50%;
     top: 50%;
     width: var(--trail, 160px);
-    height: 6px;
+    height: 14px;
     z-index: -1;
     transform-origin: left center;
-    transform: translateY(-50%) rotate(var(--angle, 0deg));
-    background: linear-gradient(90deg,
-      rgba(var(--tint), calc(0.45 * var(--glow-a))),
-      rgba(var(--tint), calc(0.1 * var(--glow-a))) 55%,
-      transparent);
-    border-radius: 3px;
-    filter: blur(2px);
+    transform: translateY(-50%) rotate(calc(atan2(var(--ly), var(--lx)) + 180deg));
+    /* An ellipse, not a bar. A linear gradient only fades along its own
+       axis, so the trail kept crisp 6px edges down its length — invisible
+       against a dim backdrop, but the bloom lit them up and a rotated hard
+       edge is a staircase. A radial fades in every direction, so there is no
+       edge to alias no matter what angle it lands on. */
+    background: radial-gradient(ellipse 100% 100% at 0% 50%,
+      rgba(var(--tint), calc(0.5 * var(--glow-a))),
+      rgba(var(--tint), calc(0.14 * var(--glow-a))) 42%,
+      transparent 78%);
+    filter: blur(2.5px);
   }
 
   @keyframes stream-fly {
@@ -1123,8 +1413,24 @@ function Settings() {
   }
 
   @media (max-width: 768px) {
-    .stream-item { --lx: calc(var(--lxr) * 1.7vw); }
-    .stream-item:nth-child(even) { display: none; }
+    /* On a phone the content column is the full viewport, so there is no
+       edge lane left for the stream — pushing --lx out just parks items
+       half-clipped at the screen edge, and anything nearer crosses the
+       headline itself. The canvas streaks carry the tunnel alone here;
+       dropping the DOM stream is also the single biggest perf saving in
+       the hero (12 animated 3D layers, each with two drop-shadows). */
+    .hero__stream { display: none; }
+
+    /* The bloom buffer is already smaller here, and a smaller buffer is a
+       wider halo — so the canvas needs less blur of its own, not more.
+       Scoped to the settled state, or it would fight the entrance's
+       from-blur instead of overriding its destination. */
+    .hero--live .hero__canvas { filter: blur(1.1px) saturate(1.3); }
+
+    /* Six full-hero composited layers is a lot to ask of a phone for light
+       that is barely there; the four that carry the profile stay. */
+    .lobe:nth-child(3),
+    .lobe:nth-child(5) { display: none; }
 
     /* A full-viewport backdrop-filter re-samples everything beneath it every
        frame, and beneath it is an animating canvas — the most expensive thing
@@ -1137,17 +1443,19 @@ function Settings() {
       mask-image: none;
       -webkit-mask-image: none;
     }
-
-    /* Two drop-shadows per item, over a blend mode, on elements already
-       carrying a blurred trail. One glow is enough at this size. */
-    .stream-item {
-      filter:
-        saturate(1.4) brightness(1.15)
-        drop-shadow(0 0 10px rgba(var(--tint), calc(0.5 * var(--glow-a))));
-    }
   }
 
   @media (prefers-reduced-motion: reduce) {
+    /* The light still comes up — it just does not travel or pull focus */
+    .lobe { animation: none; opacity: 0.9; }
+
+    .hero__canvas,
+    .hero__lobes {
+      transform: none;
+      transition: opacity 0.6s ease;
+    }
+    .hero__canvas { filter: blur(1.4px) saturate(1.35); }
+
     .stream-item {
       animation: none;
       opacity: 0.3;
@@ -1246,6 +1554,16 @@ function Settings() {
     flex-shrink: 0;
   }
 
+  /* The full sentence wraps to three lines inside the pill on a phone, and a
+     three-line pill is a blob. Swap to a short line rather than ellipsize —
+     a cut-off sentence reads as an accident, a short one reads as written. */
+  .hero__announcement-text--short { display: none; }
+
+  @media (max-width: 640px) {
+    .hero__announcement-text--full { display: none; }
+    .hero__announcement-text--short { display: inline; white-space: nowrap; }
+  }
+
   .hero__announcement:hover .hero__announcement-arrow {
     transform: translateX(2px);
   }
@@ -1298,11 +1616,14 @@ function Settings() {
     font-weight: 600;
     letter-spacing: -3px;
     color: transparent;
+    /* Dialled back now that the tunnel behind it blooms: the word was
+       competing with its own backdrop and the two glows summed into haze.
+       The falloff shape is unchanged, just quieter. */
     text-shadow:
-      0 0 14px rgba(255, 255, 255, calc(0.35 * var(--glow-a, 1))),
-      0 0 32px rgba(var(--accent-primary-rgb), calc(0.65 * var(--glow-a, 1))),
-      0 0 70px rgba(var(--accent-primary-rgb), calc(0.45 * var(--glow-a, 1))),
-      0 0 130px rgba(var(--accent-secondary-rgb), calc(0.4 * var(--glow-a, 1)));
+      0 0 14px rgba(255, 255, 255, calc(0.2 * var(--glow-a, 1))),
+      0 0 32px rgba(var(--accent-primary-rgb), calc(0.38 * var(--glow-a, 1))),
+      0 0 70px rgba(var(--accent-primary-rgb), calc(0.26 * var(--glow-a, 1))),
+      0 0 130px rgba(var(--accent-secondary-rgb), calc(0.22 * var(--glow-a, 1)));
     filter: blur(6px);
     z-index: 0;
     pointer-events: none;
@@ -1311,8 +1632,8 @@ function Settings() {
   }
 
   @keyframes hero-glow-breathe {
-    from { opacity: 0.7; }
-    to   { opacity: 1; }
+    from { opacity: 0.62; }
+    to   { opacity: 0.88; }
   }
 
   @media (prefers-reduced-motion: reduce) {
