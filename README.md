@@ -118,7 +118,7 @@ Compound tokens (gradients, glows, focus rings) reference the base accents throu
 <html data-theme="auto">   <!-- Follow OS preference -->
 ```
 
-Use `theme-fixed-dark` / `theme-fixed-light` to pin a region to one scheme regardless of the page theme (e.g., top bar, footer). The `-soft` variants (`theme-fixed-dark-soft`) shift the region toward the surrounding page and tint it with your accent, so a pinned dark nav on a light page reads as deep blue rather than a black slab. `theme-fixed` is the hard dark pin under its original name.
+Use `theme-fixed-dark` / `theme-fixed-light` to pin a region to one scheme regardless of the page theme (e.g., top bar, footer). A pinned dark region is plain near-black on a dark page; on a light page it lifts to a deep color derived from your accent, rather than sitting there as a black slab.
 
 ### Token Categories
 

@@ -16,8 +16,9 @@ export default defineConfig({
     // indexing the pre-rewrite HTML would index markup that is not what ships.
     searchIndex(),
     sitemap({
-      // /docs/ is a redirect stub — keep it out of the index. /dev/ holds
-      // internal eyeballing pages, which are noindex and not public docs.
+      // /docs/ is a redirect stub — keep it out of the index. /dev/ is empty
+      // right now; the guard stays so the next throwaway eyeballing page is
+      // excluded by existing, rather than by someone remembering this.
       filter: (page) =>
         page !== 'https://arcui.dev/docs/' &&
         !page.includes('/dev/') &&

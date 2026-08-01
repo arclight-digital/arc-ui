@@ -1,0 +1,340 @@
+---
+/**
+ * Pinned schemes — an internal eyeballing page, not part of the public docs.
+ *
+ * Two classes, each with two landing points. `.theme-fixed-dark` is plain
+ * near-black on a dark page and lifts to an accent-derived deep color on a
+ * light one, because it is not allowed to go full light; `.theme-fixed-light`
+ * is the same in mirror. So each pinned row *should* differ between the two
+ * columns — that is the behavior, not a bug.
+ *
+ * A pinned region is only ever judged by what it sits next to, which is why
+ * both grounds are on screen at once.
+ *
+ * Kept out of the sitemap (astro.config.mjs filters /dev/) and marked noindex.
+ * Delete the file once the schemes have been signed off.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const VARIANTS = [
+  { cls: '', label: 'unpinned', note: 'the column itself — the baseline' },
+  { cls: 'theme-fixed-dark', label: '.theme-fixed-dark', note: 'black on dark, lifted on light' },
+  { cls: 'theme-fixed-light', label: '.theme-fixed-light', note: 'white on light, deepened on dark' },
+];
+
+/**
+ * The light column wears `.theme-fixed-light` to be light.
+ *
+ * A bare `[data-theme=light]` on a section does not work: it retunes
+ * `--bg-deep`, but the aliases built on it — `--surface-base: var(--bg-deep)`
+ * and the rest — were substituted back at `:root` and inherit already
+ * resolved, so they keep the dark answer. Only the pinned classes re-declare
+ * that closure, which is the whole reason they exist.
+ */
+const COLUMNS = [
+  { title: 'page: dark', cls: '', variants: VARIANTS },
+  { title: 'page: light', cls: 'theme-fixed-light', variants: VARIANTS },
+];
+
+const SURFACES = ['bg-deep', 'bg-surface', 'bg-base', 'bg-card', 'bg-elevated'];
+const TEXT = ['text-primary', 'text-secondary', 'text-muted', 'text-ghost'];
+const BORDERS = ['border-subtle', 'border-default', 'border-bright'];
+const TINTS = ['accent-primary', 'accent-secondary', 'color-success', 'color-error', 'color-warning', 'color-info'];
+---
+
+<BaseLayout
+  title="Pinned schemes — internal"
+  description="Internal eyeballing page for the pinned scheme variants."
+  noindex
+>
+  <main class="pin">
+    <header class="pin__head">
+      <h1>Pinned schemes</h1>
+      <p>
+        Each column paints a page ground, with the unpinned baseline followed by both pinned
+        classes. A pinned region matches its column when the schemes agree and lands on an
+        accent-derived deep colour when they don't — so the dark pin should read near-black on
+        the left and blue on the right, and the light pin the reverse.
+      </p>
+      <p class="pin__hint">
+        Change the accent to check that a custom brand reaches inside. The lifted ground takes
+        its hue from the accent and its lightness from the scheme, so a teal brand should give
+        a deep teal panel, and a monochrome one a grey panel.
+      </p>
+      <div class="pin__controls">
+        <label>
+          Accent
+          <input type="color" value="#4d7ef7" data-accent />
+        </label>
+        <button type="button" data-reset>Reset</button>
+      </div>
+    </header>
+
+    <div class="pin__grid">
+      {COLUMNS.map((col) => (
+        <section class:list={['pin__col', col.cls]}>
+          <h2 class="pin__col-title">{col.title}</h2>
+          {col.variants.map((v) => (
+            <article class:list={['pin__panel', v.cls]}>
+              <div class="pin__panel-head">
+                <code>{v.label}</code>
+                <span>{v.note}</span>
+              </div>
+
+              <div class="pin__swatches">
+                {SURFACES.map((t) => (
+                  <div class="pin__swatch" style={`background: var(--${t})`}>
+                    <span>{t.replace('bg-', '')}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div class="pin__ramp">
+                {TEXT.map((t) => (
+                  <span style={`color: var(--${t})`}>{t.replace('text-', '')}</span>
+                ))}
+              </div>
+
+              <div class="pin__ramp">
+                {TINTS.map((t) => (
+                  <span style={`color: var(--${t})`}>{t.replace('accent-', '').replace('color-', '')}</span>
+                ))}
+              </div>
+
+              {/* Borders on bg-card, the surface they actually outline — against
+                  the deepest ground they can measure fine and still vanish
+                  where they are used. */}
+              <div class="pin__borders">
+                {BORDERS.map((t) => (
+                  <div class="pin__border-box" style={`border-color: var(--${t})`}>
+                    {t.replace('border-', '')}
+                  </div>
+                ))}
+              </div>
+
+              <div class="pin__components">
+                <arc-button size="sm">Button</arc-button>
+                <arc-button variant="secondary" size="sm">Secondary</arc-button>
+                <arc-badge variant="primary">Badge</arc-badge>
+                <arc-input placeholder="Focus me" size="sm"></arc-input>
+                <arc-toggle label="Toggle" checked></arc-toggle>
+              </div>
+
+              <div class="pin__divider"></div>
+            </article>
+          ))}
+        </section>
+      ))}
+    </div>
+  </main>
+</BaseLayout>
+
+<script>
+  import '@arclux/arc-ui/register';
+
+  const root = document.documentElement;
+  const accent = document.querySelector<HTMLInputElement>('[data-accent]');
+  const reset = document.querySelector<HTMLButtonElement>('[data-reset]');
+
+  /* Both the solid token and its channel triplet: the triplet backs every glow,
+     tint and focus ring, so setting only the solid leaves those on the old hue
+     — which is one of the bugs this page exists to catch. */
+  const apply = (hex: string) => {
+    const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
+    root.style.setProperty('--accent-primary', `rgb(${r}, ${g}, ${b})`);
+    root.style.setProperty('--accent-primary-rgb', `${r}, ${g}, ${b}`);
+  };
+
+  accent?.addEventListener('input', () => apply(accent.value));
+  reset?.addEventListener('click', () => {
+    root.style.removeProperty('--accent-primary');
+    root.style.removeProperty('--accent-primary-rgb');
+    if (accent) accent.value = '#4d7ef7';
+  });
+</script>
+
+<style>
+  .pin {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--space-2xl) var(--space-lg);
+  }
+
+  .pin__head {
+    max-width: 60ch;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .pin__head h1 {
+    font-family: var(--font-display);
+    font-size: var(--text-3xl);
+    margin-bottom: var(--space-md);
+  }
+
+  .pin__head p {
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: var(--space-sm);
+  }
+
+  .pin__hint {
+    font-size: var(--text-sm);
+  }
+
+  .pin__controls {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+  }
+
+  .pin__controls label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+  }
+
+  .pin__controls input[type='color'] {
+    inline-size: 40px;
+    block-size: 28px;
+    padding: 0;
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-sm);
+    background: none;
+    cursor: pointer;
+  }
+
+  .pin__controls button {
+    font: inherit;
+    font-size: var(--text-sm);
+    padding: 4px 12px;
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+  }
+
+  .pin__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+  }
+
+  @media (max-width: 900px) {
+    .pin__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Each column paints its own page ground, so a panel is judged against the
+     page it would really sit in rather than against this document's theme. */
+  .pin__col {
+    background: var(--bg-deep);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    color: var(--text-primary);
+  }
+
+  .pin__col-title {
+    font-family: var(--font-label);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-ghost);
+    margin-bottom: var(--space-md);
+  }
+
+  .pin__panel {
+    background: var(--surface-base);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    margin-bottom: var(--space-lg);
+    color: var(--text-primary);
+  }
+
+  .pin__panel-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+    font-size: var(--text-xs);
+  }
+
+  .pin__panel-head code {
+    font-family: var(--font-mono);
+    color: var(--text-secondary);
+  }
+
+  .pin__panel-head span {
+    color: var(--text-ghost);
+  }
+
+  .pin__swatches {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2px;
+    margin-bottom: var(--space-md);
+  }
+
+  .pin__swatch {
+    aspect-ratio: 3 / 2;
+    display: flex;
+    align-items: flex-end;
+    padding: 4px;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xs);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--text-muted);
+  }
+
+  .pin__ramp {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm) var(--space-md);
+    margin-bottom: var(--space-md);
+    font-size: var(--text-sm);
+  }
+
+  .pin__borders {
+    display: flex;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+  }
+
+  /* On bg-card, because that is the surface these outline in practice. */
+  .pin__border-box {
+    flex: 1;
+    padding: var(--space-sm);
+    background: var(--bg-card);
+    border: 1px solid;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-muted);
+    text-align: center;
+  }
+
+  .pin__components {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+  }
+
+  .pin__components arc-input {
+    max-inline-size: 160px;
+  }
+
+  .pin__divider {
+    block-size: 1px;
+    background: var(--gradient-divider-glow);
+  }
+</style>

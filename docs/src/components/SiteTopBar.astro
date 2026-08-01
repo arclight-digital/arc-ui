@@ -47,7 +47,7 @@ const isDocs = inDocs && !isComponents && !isTokens && !isSynth;
   immersive={immersive || undefined}
   nav-align="left"
   mobile-menu={mobileMenu}
-  class:list={[{ 'theme-fixed-dark-soft': !immersive }]}
+  class:list={[{ 'theme-fixed-dark': !immersive }]}
 >
   <div slot="logo">
     <Wordmark />
@@ -116,7 +116,7 @@ const isDocs = inDocs && !isComponents && !isTokens && !isSynth;
   }
 
   .topbar-search:hover {
-    border-color: rgba(var(--accent-primary-rgb), 0.4);
+    border-color: color-mix(in srgb, var(--accent-primary) 40%, transparent);
     color: var(--text-primary);
     background: rgba(var(--accent-primary-rgb), 0.05);
   }

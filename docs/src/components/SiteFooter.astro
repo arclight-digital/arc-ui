@@ -1,4 +1,4 @@
-<div class="site-footer theme-fixed-dark-soft">
+<div class="site-footer theme-fixed-dark">
   <arc-footer contained class="site-footer__panel">
     <div class="site-footer__brand" slot="logo">
       <div class="site-footer__title">
@@ -103,7 +103,7 @@
     right: 0;
     height: 1px;
     background: var(--glow-line-gradient);
-    filter: drop-shadow(0 0 6px rgba(var(--accent-primary-rgb), 0.4));
+    filter: drop-shadow(0 0 6px color-mix(in srgb, var(--accent-primary) 40%, transparent));
     z-index: 1;
   }
 
@@ -113,9 +113,13 @@
     position: absolute;
     inset: 0;
     pointer-events: none;
+    /* Fading to `transparent` fades to transparent *black* — the keyword is
+       rgba(0,0,0,0), so the wash darkens on its way out and leaves a visible
+       step where it meets this box's edge. Zero-alpha in the wash's own color
+       fades to nothing instead. */
     background:
-      radial-gradient(ellipse 60% 50% at 20% 80%, rgba(var(--accent-primary-rgb), 0.05), transparent 70%),
-      radial-gradient(ellipse 50% 40% at 80% 20%, rgba(var(--accent-secondary-rgb), 0.04), transparent 70%);
+      radial-gradient(ellipse 60% 50% at 20% 80%, rgba(var(--accent-primary-rgb), 0.05), rgba(var(--accent-primary-rgb), 0) 70%),
+      radial-gradient(ellipse 50% 40% at 80% 20%, rgba(var(--accent-secondary-rgb), 0.04), rgba(var(--accent-secondary-rgb), 0) 70%);
     z-index: 0;
   }
 
@@ -182,7 +186,7 @@
   }
 
   .site-footer__name:hover {
-    filter: drop-shadow(0 0 8px rgba(var(--accent-primary-rgb), 0.6));
+    filter: drop-shadow(0 0 8px color-mix(in srgb, var(--accent-primary) 60%, transparent));
   }
 
   .site-footer__tagline {
@@ -227,7 +231,7 @@
   }
 
   .site-footer__col-links a:hover {
-    color: rgb(var(--accent-primary-rgb));
+    color: var(--accent-primary);
     transform: translateX(3px);
   }
 
@@ -254,7 +258,7 @@
 
   .site-footer__social-link:hover {
     --icon-button-color: var(--text-primary);
-    filter: drop-shadow(0 0 6px rgba(var(--accent-primary-rgb), 0.4));
+    filter: drop-shadow(0 0 6px color-mix(in srgb, var(--accent-primary) 40%, transparent));
   }
 
   /* ── Legal section ── */
@@ -292,7 +296,21 @@
   }
 
   /* ── Afterglow ── */
+  /* ── The afterglow is a logomark, not themed UI ──
+     It is the ARC UI name rendered as brand, so it holds one appearance in
+     every theme — the same reason a logo file does not have a light variant.
+     It only ever looked right by accident: .theme-fixed used to restate the
+     accent channels inside the region, so the word got ARC blue and ARC violet
+     regardless of the page, even though this site retunes secondary to teal at
+     :root. When pinned regions stopped restating those channels — so that a
+     consumer's accent could finally reach into a nav — the two stops here
+     started floating with the theme, and the word went teal in dark mode and
+     nearly invisible against the navy in light.
+     Pinned to the brand values it was drawn against, so nothing upstream can
+     move it again. Everything else in this footer is tokenised and should be. */
   .afterglow {
+    --afterglow-primary-rgb: 77, 126, 247;
+    --afterglow-secondary-rgb: 139, 92, 246;
     position: relative;
     z-index: 0;
     display: flex;
@@ -327,7 +345,7 @@
   .afterglow__bloom {
     position: absolute;
     inset: 0;
-    color: rgba(var(--accent-primary-rgb), 0.4);
+    color: rgba(var(--afterglow-primary-rgb), 0.4);
     filter: blur(30px);
   }
 
@@ -341,13 +359,21 @@
      which composites. */
   .afterglow__word {
     position: relative;
+    /* Brand literals, deliberately not tokens — see --afterglow-* above. */
+    /* Every stop fades in its own color at zero alpha, never the `transparent`
+       keyword — that keyword is transparent *black*, so the specular sweep
+       would darken as it fell off instead of thinning, and the word's sink
+       would end on a grey edge rather than on nothing. */
     background:
-      linear-gradient(105deg, transparent 34%, rgba(255, 255, 255, 0.26) 50%, transparent 66%),
+      linear-gradient(105deg,
+        rgba(255, 255, 255, 0) 34%,
+        rgba(255, 255, 255, 0.26) 50%,
+        rgba(255, 255, 255, 0) 66%),
       linear-gradient(180deg,
         rgba(255, 255, 255, 0.85),
-        rgba(var(--accent-primary-rgb), 0.7) 32%,
-        rgba(var(--accent-secondary-rgb), 0.3) 62%,
-        transparent 85%);
+        rgba(var(--afterglow-primary-rgb), 0.7) 32%,
+        rgba(var(--afterglow-secondary-rgb), 0.3) 62%,
+        rgba(var(--afterglow-secondary-rgb), 0) 85%);
     background-size: 140% 100%, 100% 100%;
     background-position: 22% 0, 0 0;
     -webkit-background-clip: text;
@@ -375,8 +401,8 @@
     height: 2px;
     background: var(--glow-line-gradient);
     filter:
-      drop-shadow(0 0 8px rgba(var(--accent-primary-rgb), 0.6))
-      drop-shadow(0 -6px 18px rgba(var(--accent-secondary-rgb), 0.35));
+      drop-shadow(0 0 8px rgba(var(--afterglow-primary-rgb), 0.6))
+      drop-shadow(0 -6px 18px rgba(var(--afterglow-secondary-rgb), 0.35));
   }
 
   /* ── Mobile ── */

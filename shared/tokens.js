@@ -367,13 +367,26 @@ export const tokens = {
     navRowInset: 'var(--space-sm)',
   },
 
-  /* ── Gradients ── */
+  /* ── Gradients ──
+   *
+   * Never the `transparent` keyword in a stop list. It is `rgba(0, 0, 0, 0)` —
+   * transparent *black* — so a stop fading to it darkens on the way out
+   * instead of thinning, and where the gradient meets its element's box you
+   * get a visible edge rather than nothing. Every fade-out is the adjacent
+   * stop's own color at zero alpha.
+   *
+   * This was invisible for as long as every surface was near-black, which is
+   * the same thing the fade was drifting toward. The softened schemes put a
+   * divider and a page wash on a navy ground and the cuts showed up as hard
+   * rectangles — first noticed under the footer wordmark, where two of these
+   * overlap. `check gradient-stops` fails the build on a bare keyword.
+   */
   gradient: {
     displayText: 'linear-gradient(135deg, rgb(232, 232, 236) 0%, rgb(124, 124, 137) 100%)',
     accentText: 'linear-gradient(90deg, rgb(77, 126, 247), rgb(139, 92, 246))',
-    divider: 'linear-gradient(90deg, transparent, rgb(24, 24, 30), transparent)',
+    divider: 'linear-gradient(90deg, rgba(24, 24, 30, 0), rgb(24, 24, 30), rgba(24, 24, 30, 0))',
     dividerGlow:
-      'linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.2), rgba(var(--accent-secondary-rgb),0.12), transparent)',
+      'linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), rgba(var(--accent-primary-rgb),0.2), rgba(var(--accent-secondary-rgb),0.12), rgba(var(--accent-secondary-rgb),0))',
   },
 
   /* ── Glow (box-shadow presets) ── */
@@ -678,47 +691,31 @@ function solvePalette(palette, label) {
  *
  * A region pinned to one scheme inside a page using the other is the only case
  * that needs anything beyond the two schemes, and what it needs is not a
- * palette — it is the same scheme, moved a little toward the page it sits in so
- * the boundary is a transition rather than a slab. Pinning dark inside a light
- * page with no softening is white-on-black; the softened variant is the escape
- * hatch from that, and it is opt-in because plenty of designs want the slab.
+ * palette — it is the same scheme, laid over the page's extreme so the boundary
+ * is a transition rather than a slab. Pinning dark inside a light page with no
+ * softening is white-on-black; the softened variant is the escape hatch from
+ * that, and it is opt-in because plenty of designs want the slab.
  *
- * Two dimensionless coefficients, both read off the deep blue that was hand
- * tuned for this site before any of it was derived:
+ * The rule is the plainest statement of what "soften" means here: the accent
+ * drawn over black for a dark region, over white for a light one, at a fixed
+ * percentage per surface step. One table, `SOFT_MIX`, holds those percentages
+ * and both consumers read it — the baked palette computed here and the
+ * color-mix() emitted into the stylesheet — so the two cannot drift. They were
+ * separate derivations once, an OKLCH lift and a mix, fitted to agree; that
+ * agreement lasted exactly until the percentages moved.
  *
- *   lift    how far the ground travels toward the page's ground, as a fraction
- *           of the perceptual distance between them. 10% — the navy sat at
- *           L 0.187 between a near-black 0.101 and a near-white 0.949.
- *   chroma  how much of the accent's own chroma the ground carries, so the
- *           result is a colored surface rather than a grey one. The navy took
- *           40% of the accent's chroma; it also takes the accent's hue, which
- *           is what makes this follow a consumer's brand color instead of
- *           baking ours in.
- *
- * The chroma fraction differs per scheme and honestly has to: the same chroma
- * that reads as a deep brand navy at L 0.19 reads as a saturated periwinkle
- * panel at L 0.86, because chroma carries much further on a light ground. A
- * single coefficient was tried and produced a light variant that failed the
- * contract at every step.
+ * Foregrounds are deliberately untouched. `solvePalette` re-solves them against
+ * whatever ground this produces, which is why the whole ramp can be brightened
+ * by editing one number and nothing needs re-tuning by hand.
  */
-const SOFT_LIFT = 0.1;
-
-/**
- * Move a palette's surfaces and borders toward the surrounding page, tinted
- * with the accent's hue. Foregrounds are left alone here — `solvePalette` then
- * re-solves them against the ground this produces, which is the whole reason
- * the softened schemes need no hand-tuning.
- */
-function softenSurfaces(palette, pageGround, chromaFraction) {
-  const pageL = rgbToOklch(parseColor(pageGround)).l;
-  const accent = rgbToOklch(parseColor(palette.accentPrimary));
+function softenSurfaces(palette, variant) {
+  const { over, pct } = SOFT_MIX[variant];
+  const src = mixSource(palette, variant);
+  const base = parseColor(over);
   const out = { ...palette };
 
-  for (const key of [...SURFACE_KEYS, ...BORDER_KEYS]) {
-    const { l } = rgbToOklch(parseColor(palette[key]));
-    out[key] = formatRgb(
-      oklchToRgb({ l: l + (pageL - l) * SOFT_LIFT, c: accent.c * chromaFraction, h: accent.h }),
-    );
+  for (const [key, percent] of Object.entries(pct)) {
+    out[key] = formatRgb(src.map((c, i) => base[i] + (c - base[i]) * (percent / 100)));
   }
   return out;
 }
@@ -953,16 +950,16 @@ ${Object.entries(tokens.duration)
   --gradient-display-text: ${tokens.gradient.displayText};
   --gradient-accent-text: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
   --gradient-divider: ${tokens.gradient.divider};
-  --gradient-divider-glow: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.2), rgba(var(--accent-secondary-rgb),0.12), transparent);
-  --gradient-page-ambient: radial-gradient(ellipse, rgba(${tokens.rgb.white},0.015) 0%, transparent 70%);
+  --gradient-divider-glow: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), rgba(var(--accent-primary-rgb),0.2), rgba(var(--accent-secondary-rgb),0.12), rgba(var(--accent-secondary-rgb),0));
+  --gradient-page-ambient: radial-gradient(ellipse, rgba(${tokens.rgb.white},0.015) 0%, rgba(${tokens.rgb.white},0) 70%);
 
   --glow-white: ${tokens.glow.white};
   --glow-primary: 0 0 8px rgba(var(--accent-primary-rgb),0.9), 0 0 20px rgba(var(--accent-primary-rgb),0.5), 0 0 44px rgba(var(--accent-primary-rgb),0.25), 0 0 80px rgba(var(--accent-primary-rgb),0.1);
   --glow-secondary: 0 0 8px rgba(var(--accent-secondary-rgb),0.9), 0 0 20px rgba(var(--accent-secondary-rgb),0.4), 0 0 40px rgba(var(--accent-secondary-rgb),0.15);
 
-  --glow-line-white: linear-gradient(90deg, transparent, rgba(var(--text-primary-rgb),0.35), transparent);
-  --glow-line-blue: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.7), transparent);
-  --glow-line-gradient: linear-gradient(90deg, transparent, var(--accent-primary), var(--accent-secondary), transparent);
+  --glow-line-white: linear-gradient(90deg, rgba(var(--text-primary-rgb),0), rgba(var(--text-primary-rgb),0.35), rgba(var(--text-primary-rgb),0));
+  --glow-line-blue: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), rgba(var(--accent-primary-rgb),0.7), rgba(var(--accent-primary-rgb),0));
+  --glow-line-gradient: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), var(--accent-primary), var(--accent-secondary), rgba(var(--accent-secondary-rgb),0));
 
 ${Object.entries(tokens.glowScale)
   .map(([k, v]) => `  --glow-${k}: ${v};`)
@@ -971,8 +968,8 @@ ${Object.entries(tokens.glowScale)
   --glow-hover: 0 0 12px rgba(var(--accent-primary-rgb), 0.15);
   --glow-card-hover: 0 0 20px rgba(var(--accent-primary-rgb),0.08), 0 0 40px rgba(var(--accent-secondary-rgb),0.04);
   --gradient-border-glow: linear-gradient(135deg, rgba(var(--accent-primary-rgb),0.15), rgba(var(--accent-secondary-rgb),0.1), rgba(var(--accent-primary-rgb),0.05));
-  --gradient-ambient: radial-gradient(circle at 15% 85%, rgba(var(--accent-primary-rgb),0.04) 0%, transparent 50%),
-                      radial-gradient(circle at 85% 15%, rgba(var(--accent-secondary-rgb),0.03) 0%, transparent 50%);
+  --gradient-ambient: radial-gradient(circle at 15% 85%, rgba(var(--accent-primary-rgb),0.04) 0%, rgba(var(--accent-primary-rgb),0) 50%),
+                      radial-gradient(circle at 85% 15%, rgba(var(--accent-secondary-rgb),0.03) 0%, rgba(var(--accent-secondary-rgb),0) 50%);
 
   --focus-ring: ${tokens.focus.ring};
   --focus-glow: ${tokens.focus.glow};
@@ -1150,20 +1147,21 @@ export const lightTokens = {
   gradient: {
     displayText: 'linear-gradient(135deg, var(--text-primary) 0%, var(--accent-primary) 100%)',
     divider:
-      'linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.2), transparent)',
+      'linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), rgba(var(--accent-primary-rgb),0.2), rgba(var(--accent-primary-rgb),0))',
     dividerGlow:
-      'linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.35), rgba(var(--accent-secondary-rgb),0.25), transparent)',
+      'linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), rgba(var(--accent-primary-rgb),0.35), rgba(var(--accent-secondary-rgb),0.25), rgba(var(--accent-secondary-rgb),0))',
     pageAmbient:
-      'radial-gradient(ellipse, rgba(var(--accent-primary-rgb),0.06) 0%, transparent 70%)',
+      'radial-gradient(ellipse, rgba(var(--accent-primary-rgb),0.06) 0%, rgba(var(--accent-primary-rgb),0) 70%)',
     borderGlow:
       'linear-gradient(135deg, rgba(var(--accent-primary-rgb),0.2), rgba(var(--accent-secondary-rgb),0.15), rgba(var(--accent-primary-rgb),0.08))',
     ambient:
-      'radial-gradient(circle at 15% 85%, rgba(var(--accent-primary-rgb),0.07) 0%, transparent 50%),\n    radial-gradient(circle at 85% 15%, rgba(var(--accent-secondary-rgb),0.05) 0%, transparent 50%)',
+      'radial-gradient(circle at 15% 85%, rgba(var(--accent-primary-rgb),0.07) 0%, rgba(var(--accent-primary-rgb),0) 50%),\n    radial-gradient(circle at 85% 15%, rgba(var(--accent-secondary-rgb),0.05) 0%, rgba(var(--accent-secondary-rgb),0) 50%)',
   },
   glowLine: {
-    white: 'linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.15), transparent)',
+    white:
+      'linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), rgba(var(--accent-primary-rgb),0.15), rgba(var(--accent-primary-rgb),0))',
     primary:
-      'linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.6), transparent)',
+      'linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), rgba(var(--accent-primary-rgb),0.6), rgba(var(--accent-primary-rgb),0))',
   },
   utility: {
     bgHover: 'rgba(55, 105, 235, 0.04)',
@@ -1190,18 +1188,77 @@ Object.assign(
 );
 syncChannels(lightTokens.color, lightTokens.rgb);
 
+/* The softening rule, and the only definition of it — the baked palettes below
+ * and the derived CSS both read this table, so the two cannot disagree. They
+ * were separate derivations fitted to agree once, which is a thing that stays
+ * true until someone edits one of them.
+ *
+ * `sourceL` normalizes the brand before mixing, and it is doing real work. The
+ * mix source is whatever accent the page carries, and the light scheme's accent
+ * is deliberately darker than the dark scheme's — so mixing the same percentage
+ * of it over black produced a *darker* ground in light mode than in dark, which
+ * is precisely the mode the softening exists for. The region ended up darker
+ * than the hand-tuned navy it replaced, defeating the point. Pinning the source
+ * to the scheme's own accent lightness makes the ground depend on the scheme
+ * and the hue depend on the consumer, which is the split that was intended.
+ *
+ * The percentages sit deliberately above the old navy rather than level with
+ * it: that palette was tuned as a dark island, and this is meant to read as a
+ * lit surface. bg-deep at 25% is L 0.248 against the navy's 0.187.
+ */
+const SOFT_MIX = {
+  dark: {
+    over: 'rgb(0, 0, 0)',
+    sourceL: rgbToOklch(parseColor(tokens.color.accentPrimary)).l,
+    pct: {
+      bgDeep: 25,
+      bgSurface: 32,
+      bgBase: 32,
+      bgCard: 34,
+      bgElevated: 37,
+      /* Above every surface step, and spaced to reproduce the dark scheme's own
+         border-to-card ratios — 1.10, 1.23, 1.56. Taken from the contrast solve
+         alone they landed at 34/40/51, which put border-subtle at exactly
+         bg-card: a card outlined in its own fill. A border has to clear the
+         surface it outlines, not merely satisfy a ratio against the deepest
+         ground. */
+      borderSubtle: 40,
+      borderDefault: 45,
+      borderBright: 56,
+    },
+  },
+  light: {
+    over: 'rgb(255, 255, 255)',
+    sourceL: rgbToOklch(parseColor(lightTokens.color.accentPrimary)).l,
+    pct: {
+      bgDeep: 25,
+      bgSurface: 22,
+      bgBase: 24,
+      bgCard: 22,
+      bgElevated: 27,
+      borderSubtle: 34,
+      borderDefault: 41,
+      borderBright: 54,
+    },
+  },
+};
+
+/** The brand re-lit to a scheme's accent lightness, as an rgb triplet. */
+const mixSource = (palette, variant) =>
+  oklchToRgb({
+    ...rgbToOklch(parseColor(palette.accentPrimary)),
+    l: SOFT_MIX[variant].sourceL,
+  });
+
 /* ── The two softened schemes ──
    Each is its parent scheme's surfaces moved toward the opposite page, with
    every foreground re-solved against the ground that produces. Nothing here is
    picked by hand, which is the point: change the accent and both retint,
    change a surface and both re-solve. */
 const softPalettes = {
-  dark: solvePalette(
-    softenSurfaces({ ...tokens.color }, lightTokens.color.bgDeep, 0.4),
-    'soft dark',
-  ),
+  dark: solvePalette(softenSurfaces({ ...tokens.color }, 'dark'), 'soft dark'),
   light: solvePalette(
-    softenSurfaces({ ...tokens.color, ...lightTokens.color }, tokens.color.bgDeep, 0.15),
+    softenSurfaces({ ...tokens.color, ...lightTokens.color }, 'light'),
     'soft light',
   ),
 };
@@ -1237,37 +1294,6 @@ const softPalettes = {
 const BRAND_PRIMARY = '--_brand-primary';
 const BRAND_SECONDARY = '--_brand-secondary';
 
-/* Percentages fitted against the solved soft palettes, so the derived ground
-   lands on the same lightness ramp the baked one did. */
-const SOFT_MIX = {
-  dark: {
-    over: 'rgb(0, 0, 0)',
-    pct: {
-      bgDeep: 15,
-      bgSurface: 22,
-      bgBase: 22,
-      bgCard: 24,
-      bgElevated: 27,
-      borderSubtle: 32,
-      borderDefault: 39,
-      borderBright: 52,
-    },
-  },
-  light: {
-    over: 'rgb(255, 255, 255)',
-    pct: {
-      bgDeep: 25,
-      bgSurface: 22,
-      bgBase: 24,
-      bgCard: 22,
-      bgElevated: 27,
-      borderSubtle: 34,
-      borderDefault: 41,
-      borderBright: 54,
-    },
-  },
-};
-
 /**
  * Re-light the brand to a scheme's accent lightness, keeping everything else
  * the consumer chose.
@@ -1291,12 +1317,22 @@ const accentShape = (palette) =>
     }),
   );
 
-/** Ground and border steps as the brand accent laid over the scheme's extreme. */
+/**
+ * Ground and border steps as the brand laid over the scheme's extreme — the
+ * runtime twin of `softenSurfaces`, reading the same table.
+ *
+ * The source is re-lit to the scheme's own accent lightness before mixing, for
+ * the same reason the baked side does it: the page's accent supplies the hue,
+ * the scheme supplies how light the result is. Mixing the raw
+ * `var(--_brand-primary)` meant a light page — whose accent is deliberately
+ * darker — produced a darker softened region than a dark page did, which is
+ * backwards for the one mode the softening exists to serve.
+ */
 const groundMix = (variant) =>
   Object.fromEntries(
     Object.entries(SOFT_MIX[variant].pct).map(([key, pct]) => [
       key,
-      `color-mix(in srgb, var(${BRAND_PRIMARY}) ${pct}%, ${SOFT_MIX[variant].over})`,
+      `color-mix(in srgb, oklch(from var(${BRAND_PRIMARY}) ${SOFT_MIX[variant].sourceL.toFixed(4)} c h) ${pct}%, ${SOFT_MIX[variant].over})`,
     ]),
   );
 
@@ -2080,113 +2116,92 @@ ${lightVarsNested}
 ${tokenForwarding}
 
 /* Fixed Scheme — a subtree pinned to one scheme regardless of the page theme.
-   .theme-fixed is the dark one under its original name.
 
-   On a page of the region's own scheme these declare nothing but the
-   color-scheme: "fixed dark" on a dark page means the page's dark mode,
-   consumer retunes included, not a second copy of ARC's palette. */
-.theme-fixed,
-.theme-fixed-dark,
-.theme-fixed-dark-soft {
+   Two classes, each with two landing points. A pinned dark region is plain
+   near-black on a dark page — nothing to do, the page is already there — and on
+   a light page it lands on an accent-lifted deep color instead, because it is
+   not allowed to go full light and a raw black slab against near-white is the
+   thing this exists to avoid. .theme-fixed-light is the same in mirror.
+   (No backticks anywhere in this comment: it lives inside a template literal,
+   so one would end the string and take the rest of the stylesheet with it.)
+
+   The lifted palette is not a third option a consumer picks. It is where the
+   pin *resolves* when the page disagrees, which is why it has no name in the
+   API: naming it alongside the scheme made it look like an independent choice
+   and produced a hard/soft axis that nothing needed.
+
+   Each block also restates every :root property that resolves against these —
+   the semantic aliases, the glows, the focus recipes. A custom property
+   substitutes where it is DECLARED and then inherits the resolved value, so
+   without the restatement --surface-base and friends arrive carrying the page's
+   colors and quietly ignore the scheme set here. That list is computed to a
+   fixpoint rather than hand-kept. */
+.theme-fixed-dark {
   color-scheme: dark;
-}
-
-.theme-fixed-light,
-.theme-fixed-light-soft {
-  color-scheme: light;
-}
-
-/* Forced — the page is the opposite scheme, so the region has to carry one. */
-[data-theme="light"] .theme-fixed,
-[data-theme="light"] .theme-fixed-dark {
 ${forced.dark}
 }
 
-@media (prefers-color-scheme: light) {
-  [data-theme="auto"] .theme-fixed,
-  [data-theme="auto"] .theme-fixed-dark {
-${forced.darkNested}
-  }
-}
-
-/* Softened — the same scheme, moved toward the page it is sitting in. Only
-   reachable in the forced case; matched, a pinned region is already seamless. */
-[data-theme="light"] .theme-fixed-dark-soft {
+/* On a light page it lifts rather than staying black. */
+[data-theme="light"] .theme-fixed-dark {
 ${forced.softDark}
 }
 
 @media (prefers-color-scheme: light) {
-  [data-theme="auto"] .theme-fixed-dark-soft {
+  [data-theme="auto"] .theme-fixed-dark {
 ${forced.softDarkNested}
   }
 }
 
-/* Dark is the default page, so the light variants cover an explicit dark theme
-   and the case where a consumer never sets the attribute at all. */
-[data-theme="dark"] .theme-fixed-light,
-:root:not([data-theme]) .theme-fixed-light {
+.theme-fixed-light {
+  color-scheme: light;
 ${forced.light}
 }
 
-@media (prefers-color-scheme: dark) {
-  [data-theme="auto"] .theme-fixed-light {
-${forced.lightNested}
-  }
-}
-
-[data-theme="dark"] .theme-fixed-light-soft,
-:root:not([data-theme]) .theme-fixed-light-soft {
+/* Dark is the default page, so this covers an explicit dark theme and the case
+   where a consumer never sets the attribute at all. */
+[data-theme="dark"] .theme-fixed-light,
+:root:not([data-theme]) .theme-fixed-light {
 ${forced.softLight}
 }
 
 @media (prefers-color-scheme: dark) {
-  [data-theme="auto"] .theme-fixed-light-soft {
+  [data-theme="auto"] .theme-fixed-light {
 ${forced.softLightNested}
   }
 }
 
-/* Carry the consumer's accent into a forced region. Only the forced case needs
-   this — a matched region inherits the page's accent already. Behind @supports
-   because relative color syntax is what moves a hue to another scheme's
-   lightness without washing it out; without it the region keeps the baked
-   palette above, which is right for ARC's own accent and merely fixed. */
+/* Carry the consumer's accent into a pinned region.
+   A region declares its own accent, so it cannot derive from the property it
+   declares — :root captures the accent privately and these read that. Behind
+   @supports because relative color syntax is what moves a hue to another
+   scheme's lightness without washing it out; without it a region keeps the
+   baked palette above, which is right for ARC's own accent and merely fixed. */
 @supports (color: oklch(from red l c h)) {
-  [data-theme="light"] .theme-fixed,
-  [data-theme="light"] .theme-fixed-dark {
+  .theme-fixed-dark {
 ${forcedAccents(tokens.color, '    ')}
+  }
+
+  [data-theme="light"] .theme-fixed-dark {
+${derived('dark', softPalettes.dark, '    ')}
+  }
+
+  .theme-fixed-light {
+${forcedAccents({ ...tokens.color, ...lightTokens.color }, '    ')}
   }
 
   [data-theme="dark"] .theme-fixed-light,
   :root:not([data-theme]) .theme-fixed-light {
-${forcedAccents({ ...tokens.color, ...lightTokens.color }, '    ')}
-  }
-
-  [data-theme="light"] .theme-fixed-dark-soft {
-${derived('dark', softPalettes.dark, '    ')}
-  }
-
-  [data-theme="dark"] .theme-fixed-light-soft,
-  :root:not([data-theme]) .theme-fixed-light-soft {
 ${derived('light', softPalettes.light, '    ')}
   }
 
   @media (prefers-color-scheme: light) {
-    [data-theme="auto"] .theme-fixed,
     [data-theme="auto"] .theme-fixed-dark {
-${forcedAccents(tokens.color, '      ')}
-    }
-
-    [data-theme="auto"] .theme-fixed-dark-soft {
 ${derived('dark', softPalettes.dark, '      ')}
     }
   }
 
   @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .theme-fixed-light {
-${forcedAccents({ ...tokens.color, ...lightTokens.color }, '      ')}
-    }
-
-    [data-theme="auto"] .theme-fixed-light-soft {
 ${derived('light', softPalettes.light, '      ')}
     }
   }

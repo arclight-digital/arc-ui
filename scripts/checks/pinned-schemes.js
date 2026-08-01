@@ -8,13 +8,12 @@
  * token visibly lighter when it doesn't. So it drops the translucency inside a
  * pinned region, via an explicit `:host(.theme-fixed…)` list.
  *
- * A list is exactly the thing that goes stale. When the softened variants were
- * added, the bar kept its three-name list, and `.theme-fixed-dark-soft` fell
- * through to the translucent path: the top bar rendered its softened blue at
- * 85% over a light page while the bar directly beneath it — a plain div with
- * the same class — painted the same token flat. Two pinned regions stacked
- * against each other, disagreeing, which reads as a rendering fault rather than
- * as a missing selector.
+ * A list is exactly the thing that goes stale. When the classes were renamed,
+ * the bar kept the old names, and the new one fell through to the translucent
+ * path: the top bar rendered its lifted blue at 85% over a light page while the
+ * bar directly beneath it — a plain div with the same class — painted the same
+ * token flat. Two pinned regions stacked against each other, disagreeing, which
+ * reads as a rendering fault rather than as a missing selector.
  *
  * Nothing failed. No test broke, no build warned; the class was real, the rule
  * was valid, and the only signal was a seam. So the list is checked against the

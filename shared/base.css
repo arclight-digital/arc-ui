@@ -297,17 +297,17 @@
 
   --gradient-display-text: linear-gradient(135deg, rgb(232, 232, 236) 0%, rgb(124, 124, 137) 100%);
   --gradient-accent-text: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-  --gradient-divider: linear-gradient(90deg, transparent, rgb(24, 24, 30), transparent);
-  --gradient-divider-glow: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.2), rgba(var(--accent-secondary-rgb),0.12), transparent);
-  --gradient-page-ambient: radial-gradient(ellipse, rgba(255, 255, 255,0.015) 0%, transparent 70%);
+  --gradient-divider: linear-gradient(90deg, rgba(24, 24, 30, 0), rgb(24, 24, 30), rgba(24, 24, 30, 0));
+  --gradient-divider-glow: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), rgba(var(--accent-primary-rgb),0.2), rgba(var(--accent-secondary-rgb),0.12), rgba(var(--accent-secondary-rgb),0));
+  --gradient-page-ambient: radial-gradient(ellipse, rgba(255, 255, 255,0.015) 0%, rgba(255, 255, 255,0) 70%);
 
   --glow-white: 0 0 6px rgba(var(--text-primary-rgb),0.6), 0 0 18px rgba(var(--text-primary-rgb),0.25), 0 0 40px rgba(var(--text-primary-rgb),0.1);
   --glow-primary: 0 0 8px rgba(var(--accent-primary-rgb),0.9), 0 0 20px rgba(var(--accent-primary-rgb),0.5), 0 0 44px rgba(var(--accent-primary-rgb),0.25), 0 0 80px rgba(var(--accent-primary-rgb),0.1);
   --glow-secondary: 0 0 8px rgba(var(--accent-secondary-rgb),0.9), 0 0 20px rgba(var(--accent-secondary-rgb),0.4), 0 0 40px rgba(var(--accent-secondary-rgb),0.15);
 
-  --glow-line-white: linear-gradient(90deg, transparent, rgba(var(--text-primary-rgb),0.35), transparent);
-  --glow-line-blue: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.7), transparent);
-  --glow-line-gradient: linear-gradient(90deg, transparent, var(--accent-primary), var(--accent-secondary), transparent);
+  --glow-line-white: linear-gradient(90deg, rgba(var(--text-primary-rgb),0), rgba(var(--text-primary-rgb),0.35), rgba(var(--text-primary-rgb),0));
+  --glow-line-blue: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), rgba(var(--accent-primary-rgb),0.7), rgba(var(--accent-primary-rgb),0));
+  --glow-line-gradient: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), var(--accent-primary), var(--accent-secondary), rgba(var(--accent-secondary-rgb),0));
 
   --glow-xs: 0 0 6px rgba(var(--accent-primary-rgb), 0.3);
   --glow-sm: 0 0 8px rgba(var(--accent-primary-rgb), 0.3);
@@ -317,8 +317,8 @@
   --glow-hover: 0 0 12px rgba(var(--accent-primary-rgb), 0.15);
   --glow-card-hover: 0 0 20px rgba(var(--accent-primary-rgb),0.08), 0 0 40px rgba(var(--accent-secondary-rgb),0.04);
   --gradient-border-glow: linear-gradient(135deg, rgba(var(--accent-primary-rgb),0.15), rgba(var(--accent-secondary-rgb),0.1), rgba(var(--accent-primary-rgb),0.05));
-  --gradient-ambient: radial-gradient(circle at 15% 85%, rgba(var(--accent-primary-rgb),0.04) 0%, transparent 50%),
-                      radial-gradient(circle at 85% 15%, rgba(var(--accent-secondary-rgb),0.03) 0%, transparent 50%);
+  --gradient-ambient: radial-gradient(circle at 15% 85%, rgba(var(--accent-primary-rgb),0.04) 0%, rgba(var(--accent-primary-rgb),0) 50%),
+                      radial-gradient(circle at 85% 15%, rgba(var(--accent-secondary-rgb),0.03) 0%, rgba(var(--accent-secondary-rgb),0) 50%);
 
   --focus-ring: 0 0 0 1px rgba(var(--accent-primary-rgb),0.25);
   --focus-glow: 0 0 0 1px rgba(var(--accent-primary-rgb),0.2), 0 0 6px rgba(var(--accent-primary-rgb),0.35), 0 0 16px rgba(var(--accent-primary-rgb),0.2), 0 0 40px rgba(var(--accent-secondary-rgb),0.12);
@@ -428,12 +428,12 @@
   --shadow-xl: 0 16px 48px rgba(var(--accent-primary-rgb),0.14), 0 8px 16px rgba(var(--accent-secondary-rgb),0.07);
   --shadow-overlay: 0 4px 24px rgba(var(--accent-primary-rgb),0.1), 0 8px 48px rgba(var(--accent-secondary-rgb),0.06);
   --gradient-display-text: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-primary) 100%);
-  --gradient-divider: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.2), transparent);
-  --gradient-divider-glow: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.35), rgba(var(--accent-secondary-rgb),0.25), transparent);
-  --gradient-page-ambient: radial-gradient(ellipse, rgba(var(--accent-primary-rgb),0.06) 0%, transparent 70%);
+  --gradient-divider: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), rgba(var(--accent-primary-rgb),0.2), rgba(var(--accent-primary-rgb),0));
+  --gradient-divider-glow: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), rgba(var(--accent-primary-rgb),0.35), rgba(var(--accent-secondary-rgb),0.25), rgba(var(--accent-secondary-rgb),0));
+  --gradient-page-ambient: radial-gradient(ellipse, rgba(var(--accent-primary-rgb),0.06) 0%, rgba(var(--accent-primary-rgb),0) 70%);
   --gradient-border-glow: linear-gradient(135deg, rgba(var(--accent-primary-rgb),0.2), rgba(var(--accent-secondary-rgb),0.15), rgba(var(--accent-primary-rgb),0.08));
-  --gradient-ambient: radial-gradient(circle at 15% 85%, rgba(var(--accent-primary-rgb),0.07) 0%, transparent 50%),
-    radial-gradient(circle at 85% 15%, rgba(var(--accent-secondary-rgb),0.05) 0%, transparent 50%);
+  --gradient-ambient: radial-gradient(circle at 15% 85%, rgba(var(--accent-primary-rgb),0.07) 0%, rgba(var(--accent-primary-rgb),0) 50%),
+    radial-gradient(circle at 85% 15%, rgba(var(--accent-secondary-rgb),0.05) 0%, rgba(var(--accent-secondary-rgb),0) 50%);
   --glow-primary: 0 0 8px rgba(var(--accent-primary-rgb),0.5), 0 0 24px rgba(var(--accent-primary-rgb),0.2), 0 0 48px rgba(var(--accent-primary-rgb),0.08);
   --glow-secondary: 0 0 8px rgba(var(--accent-secondary-rgb),0.5), 0 0 24px rgba(var(--accent-secondary-rgb),0.2), 0 0 48px rgba(var(--accent-secondary-rgb),0.08);
   --glow-white: 0 0 8px rgba(var(--accent-primary-rgb),0.15), 0 0 20px rgba(var(--accent-secondary-rgb),0.08);
@@ -447,8 +447,8 @@
   --focus-glow: 0 0 0 1px rgba(var(--accent-primary-rgb),0.3), 0 0 6px rgba(var(--accent-primary-rgb),0.5), 0 0 16px rgba(var(--accent-primary-rgb),0.3), 0 0 40px rgba(var(--accent-secondary-rgb),0.18);
   --focus-error: 0 0 0 2px var(--surface-base), 0 0 0 4px var(--color-error), 0 0 16px rgba(var(--color-error-rgb), 0.3);
   --focus-thumb: 0 0 8px rgba(var(--interactive-rgb), 0.5), 0 0 20px rgba(var(--interactive-rgb), 0.38);
-  --glow-line-white: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.15), transparent);
-  --glow-line-blue: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.6), transparent);
+  --glow-line-white: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), rgba(var(--accent-primary-rgb),0.15), rgba(var(--accent-primary-rgb),0));
+  --glow-line-blue: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), rgba(var(--accent-primary-rgb),0.6), rgba(var(--accent-primary-rgb),0));
   --bg-hover: rgba(55, 105, 235, 0.04);
   --overlay-backdrop: rgba(20, 20, 40, 0.25);
   --on-accent: rgb(var(--white-rgb));
@@ -490,12 +490,12 @@
     --shadow-xl: 0 16px 48px rgba(var(--accent-primary-rgb),0.14), 0 8px 16px rgba(var(--accent-secondary-rgb),0.07);
     --shadow-overlay: 0 4px 24px rgba(var(--accent-primary-rgb),0.1), 0 8px 48px rgba(var(--accent-secondary-rgb),0.06);
     --gradient-display-text: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-primary) 100%);
-    --gradient-divider: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.2), transparent);
-    --gradient-divider-glow: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.35), rgba(var(--accent-secondary-rgb),0.25), transparent);
-    --gradient-page-ambient: radial-gradient(ellipse, rgba(var(--accent-primary-rgb),0.06) 0%, transparent 70%);
+    --gradient-divider: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), rgba(var(--accent-primary-rgb),0.2), rgba(var(--accent-primary-rgb),0));
+    --gradient-divider-glow: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), rgba(var(--accent-primary-rgb),0.35), rgba(var(--accent-secondary-rgb),0.25), rgba(var(--accent-secondary-rgb),0));
+    --gradient-page-ambient: radial-gradient(ellipse, rgba(var(--accent-primary-rgb),0.06) 0%, rgba(var(--accent-primary-rgb),0) 70%);
     --gradient-border-glow: linear-gradient(135deg, rgba(var(--accent-primary-rgb),0.2), rgba(var(--accent-secondary-rgb),0.15), rgba(var(--accent-primary-rgb),0.08));
-    --gradient-ambient: radial-gradient(circle at 15% 85%, rgba(var(--accent-primary-rgb),0.07) 0%, transparent 50%),
-    radial-gradient(circle at 85% 15%, rgba(var(--accent-secondary-rgb),0.05) 0%, transparent 50%);
+    --gradient-ambient: radial-gradient(circle at 15% 85%, rgba(var(--accent-primary-rgb),0.07) 0%, rgba(var(--accent-primary-rgb),0) 50%),
+    radial-gradient(circle at 85% 15%, rgba(var(--accent-secondary-rgb),0.05) 0%, rgba(var(--accent-secondary-rgb),0) 50%);
     --glow-primary: 0 0 8px rgba(var(--accent-primary-rgb),0.5), 0 0 24px rgba(var(--accent-primary-rgb),0.2), 0 0 48px rgba(var(--accent-primary-rgb),0.08);
     --glow-secondary: 0 0 8px rgba(var(--accent-secondary-rgb),0.5), 0 0 24px rgba(var(--accent-secondary-rgb),0.2), 0 0 48px rgba(var(--accent-secondary-rgb),0.08);
     --glow-white: 0 0 8px rgba(var(--accent-primary-rgb),0.15), 0 0 20px rgba(var(--accent-secondary-rgb),0.08);
@@ -509,8 +509,8 @@
     --focus-glow: 0 0 0 1px rgba(var(--accent-primary-rgb),0.3), 0 0 6px rgba(var(--accent-primary-rgb),0.5), 0 0 16px rgba(var(--accent-primary-rgb),0.3), 0 0 40px rgba(var(--accent-secondary-rgb),0.18);
     --focus-error: 0 0 0 2px var(--surface-base), 0 0 0 4px var(--color-error), 0 0 16px rgba(var(--color-error-rgb), 0.3);
     --focus-thumb: 0 0 8px rgba(var(--interactive-rgb), 0.5), 0 0 20px rgba(var(--interactive-rgb), 0.38);
-    --glow-line-white: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.15), transparent);
-    --glow-line-blue: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.6), transparent);
+    --glow-line-white: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), rgba(var(--accent-primary-rgb),0.15), rgba(var(--accent-primary-rgb),0));
+    --glow-line-blue: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), rgba(var(--accent-primary-rgb),0.6), rgba(var(--accent-primary-rgb),0));
     --bg-hover: rgba(55, 105, 235, 0.04);
     --overlay-backdrop: rgba(20, 20, 40, 0.25);
     --on-accent: rgb(var(--white-rgb));
@@ -655,25 +655,28 @@
 }
 
 /* Fixed Scheme — a subtree pinned to one scheme regardless of the page theme.
-   .theme-fixed is the dark one under its original name.
 
-   On a page of the region's own scheme these declare nothing but the
-   color-scheme: "fixed dark" on a dark page means the page's dark mode,
-   consumer retunes included, not a second copy of ARC's palette. */
-.theme-fixed,
-.theme-fixed-dark,
-.theme-fixed-dark-soft {
+   Two classes, each with two landing points. A pinned dark region is plain
+   near-black on a dark page — nothing to do, the page is already there — and on
+   a light page it lands on an accent-lifted deep color instead, because it is
+   not allowed to go full light and a raw black slab against near-white is the
+   thing this exists to avoid. .theme-fixed-light is the same in mirror.
+   (No backticks anywhere in this comment: it lives inside a template literal,
+   so one would end the string and take the rest of the stylesheet with it.)
+
+   The lifted palette is not a third option a consumer picks. It is where the
+   pin *resolves* when the page disagrees, which is why it has no name in the
+   API: naming it alongside the scheme made it look like an independent choice
+   and produced a hard/soft axis that nothing needed.
+
+   Each block also restates every :root property that resolves against these —
+   the semantic aliases, the glows, the focus recipes. A custom property
+   substitutes where it is DECLARED and then inherits the resolved value, so
+   without the restatement --surface-base and friends arrive carrying the page's
+   colors and quietly ignore the scheme set here. That list is computed to a
+   fixpoint rather than hand-kept. */
+.theme-fixed-dark {
   color-scheme: dark;
-}
-
-.theme-fixed-light,
-.theme-fixed-light-soft {
-  color-scheme: light;
-}
-
-/* Forced — the page is the opposite scheme, so the region has to carry one. */
-[data-theme="light"] .theme-fixed,
-[data-theme="light"] .theme-fixed-dark {
   --bg-deep: rgb(3, 3, 7);
   --bg-surface: rgb(10, 10, 15);
   --bg-base: rgb(10, 10, 15);
@@ -704,11 +707,11 @@
   --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.35), 0 8px 16px rgba(0, 0, 0, 0.15);
   --shadow-overlay: 0 8px 32px rgba(0, 0, 0, 0.4);
   --gradient-display-text: linear-gradient(135deg, rgb(232, 232, 236) 0%, rgb(124, 124, 137) 100%);
-  --gradient-divider: linear-gradient(90deg, transparent, rgb(24, 24, 30), transparent);
-  --gradient-divider-glow: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.2), rgba(var(--accent-secondary-rgb),0.12), transparent);
-  --gradient-page-ambient: radial-gradient(ellipse, rgba(255, 255, 255,0.015) 0%, transparent 70%);
+  --gradient-divider: linear-gradient(90deg, rgba(24, 24, 30, 0), rgb(24, 24, 30), rgba(24, 24, 30, 0));
+  --gradient-divider-glow: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), rgba(var(--accent-primary-rgb),0.2), rgba(var(--accent-secondary-rgb),0.12), rgba(var(--accent-secondary-rgb),0));
+  --gradient-page-ambient: radial-gradient(ellipse, rgba(255, 255, 255,0.015) 0%, rgba(255, 255, 255,0) 70%);
   --gradient-border-glow: linear-gradient(135deg, rgba(var(--accent-primary-rgb),0.15), rgba(var(--accent-secondary-rgb),0.1), rgba(var(--accent-primary-rgb),0.05));
-  --gradient-ambient: radial-gradient(circle at 15% 85%, rgba(var(--accent-primary-rgb),0.04) 0%, transparent 50%), radial-gradient(circle at 85% 15%, rgba(var(--accent-secondary-rgb),0.03) 0%, transparent 50%);
+  --gradient-ambient: radial-gradient(circle at 15% 85%, rgba(var(--accent-primary-rgb),0.04) 0%, rgba(var(--accent-primary-rgb),0) 50%), radial-gradient(circle at 85% 15%, rgba(var(--accent-secondary-rgb),0.03) 0%, rgba(var(--accent-secondary-rgb),0) 50%);
   --glow-primary: 0 0 8px rgba(var(--accent-primary-rgb),0.9), 0 0 20px rgba(var(--accent-primary-rgb),0.5), 0 0 44px rgba(var(--accent-primary-rgb),0.25), 0 0 80px rgba(var(--accent-primary-rgb),0.1);
   --glow-secondary: 0 0 8px rgba(var(--accent-secondary-rgb),0.9), 0 0 20px rgba(var(--accent-secondary-rgb),0.4), 0 0 40px rgba(var(--accent-secondary-rgb),0.15);
   --glow-white: 0 0 6px rgba(var(--text-primary-rgb),0.6), 0 0 18px rgba(var(--text-primary-rgb),0.25), 0 0 40px rgba(var(--text-primary-rgb),0.1);
@@ -722,8 +725,8 @@
   --focus-glow: 0 0 0 1px rgba(var(--accent-primary-rgb),0.2), 0 0 6px rgba(var(--accent-primary-rgb),0.35), 0 0 16px rgba(var(--accent-primary-rgb),0.2), 0 0 40px rgba(var(--accent-secondary-rgb),0.12);
   --focus-error: 0 0 0 2px var(--surface-base), 0 0 0 4px var(--color-error), 0 0 16px rgba(var(--color-error-rgb), 0.2);
   --focus-thumb: 0 0 8px rgba(var(--interactive-rgb), 0.5), 0 0 20px rgba(var(--interactive-rgb), 0.25);
-  --glow-line-white: linear-gradient(90deg, transparent, rgba(var(--text-primary-rgb),0.35), transparent);
-  --glow-line-blue: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.7), transparent);
+  --glow-line-white: linear-gradient(90deg, rgba(var(--text-primary-rgb),0), rgba(var(--text-primary-rgb),0.35), rgba(var(--text-primary-rgb),0));
+  --glow-line-blue: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), rgba(var(--accent-primary-rgb),0.7), rgba(var(--accent-primary-rgb),0));
   --bg-hover: rgba(255, 255, 255, 0.04);
   --overlay-backdrop: rgba(0, 0, 0, 0.6);
   --on-accent: var(--surface-base);
@@ -736,7 +739,7 @@
   --accent-secondary-border: rgba(var(--accent-secondary-rgb), 0.12);
   --accent-secondary-glow: rgba(var(--accent-secondary-rgb), 0.2);
   --gradient-accent-text: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-  --glow-line-gradient: linear-gradient(90deg, transparent, var(--accent-primary), var(--accent-secondary), transparent);
+  --glow-line-gradient: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), var(--accent-primary), var(--accent-secondary), rgba(var(--accent-secondary-rgb),0));
   --interactive: var(--accent-primary);
   --interactive-rgb: var(--accent-primary-rgb);
   --interactive-hover: var(--glow-hover);
@@ -757,120 +760,32 @@
   --interactive-focus-inset: var(--focus-inset);
 }
 
-@media (prefers-color-scheme: light) {
-  [data-theme="auto"] .theme-fixed,
-  [data-theme="auto"] .theme-fixed-dark {
-    --bg-deep: rgb(3, 3, 7);
-    --bg-surface: rgb(10, 10, 15);
-    --bg-base: rgb(10, 10, 15);
-    --bg-card: rgb(13, 13, 18);
-    --bg-elevated: rgb(17, 17, 22);
-    --text-primary: rgb(232, 232, 236);
-    --text-secondary: rgb(150, 152, 162);
-    --text-muted: rgb(142, 142, 155);
-    --text-ghost: rgb(133, 133, 154);
-    --border-subtle: rgb(24, 24, 30);
-    --border-default: rgb(34, 34, 41);
-    --border-bright: rgb(51, 51, 64);
-    --accent-primary: rgb(77, 126, 247);
-    --accent-secondary: rgb(148, 102, 255);
-    --color-success: rgb(52, 211, 153);
-    --color-error: rgb(239, 68, 68);
-    --color-warning: rgb(245, 158, 11);
-    --color-info: rgb(59, 130, 246);
-    --chart-1: #4d7ef7;
-    --chart-4: #8b5cf6;
-    --chart-6: #65a30d;
-    --text-primary-rgb: 232, 232, 236;
-    --text-muted-rgb: 142, 142, 155;
-    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
-    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.15);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.25), 0 2px 4px rgba(0, 0, 0, 0.15);
-    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0, 0, 0, 0.15);
-    --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.35), 0 8px 16px rgba(0, 0, 0, 0.15);
-    --shadow-overlay: 0 8px 32px rgba(0, 0, 0, 0.4);
-    --gradient-display-text: linear-gradient(135deg, rgb(232, 232, 236) 0%, rgb(124, 124, 137) 100%);
-    --gradient-divider: linear-gradient(90deg, transparent, rgb(24, 24, 30), transparent);
-    --gradient-divider-glow: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.2), rgba(var(--accent-secondary-rgb),0.12), transparent);
-    --gradient-page-ambient: radial-gradient(ellipse, rgba(255, 255, 255,0.015) 0%, transparent 70%);
-    --gradient-border-glow: linear-gradient(135deg, rgba(var(--accent-primary-rgb),0.15), rgba(var(--accent-secondary-rgb),0.1), rgba(var(--accent-primary-rgb),0.05));
-    --gradient-ambient: radial-gradient(circle at 15% 85%, rgba(var(--accent-primary-rgb),0.04) 0%, transparent 50%), radial-gradient(circle at 85% 15%, rgba(var(--accent-secondary-rgb),0.03) 0%, transparent 50%);
-    --glow-primary: 0 0 8px rgba(var(--accent-primary-rgb),0.9), 0 0 20px rgba(var(--accent-primary-rgb),0.5), 0 0 44px rgba(var(--accent-primary-rgb),0.25), 0 0 80px rgba(var(--accent-primary-rgb),0.1);
-    --glow-secondary: 0 0 8px rgba(var(--accent-secondary-rgb),0.9), 0 0 20px rgba(var(--accent-secondary-rgb),0.4), 0 0 40px rgba(var(--accent-secondary-rgb),0.15);
-    --glow-white: 0 0 6px rgba(var(--text-primary-rgb),0.6), 0 0 18px rgba(var(--text-primary-rgb),0.25), 0 0 40px rgba(var(--text-primary-rgb),0.1);
-    --glow-card-hover: 0 0 20px rgba(var(--accent-primary-rgb),0.08), 0 0 40px rgba(var(--accent-secondary-rgb),0.04);
-    --glow-xs: 0 0 6px rgba(var(--accent-primary-rgb), 0.3);
-    --glow-sm: 0 0 8px rgba(var(--accent-primary-rgb), 0.3);
-    --glow-md: 0 0 12px rgba(var(--accent-primary-rgb), 0.25);
-    --glow-hover: 0 0 12px rgba(var(--accent-primary-rgb), 0.15);
-    --glow-status-alpha: 0.15;
-    --focus-ring: 0 0 0 1px rgba(var(--accent-primary-rgb),0.25);
-    --focus-glow: 0 0 0 1px rgba(var(--accent-primary-rgb),0.2), 0 0 6px rgba(var(--accent-primary-rgb),0.35), 0 0 16px rgba(var(--accent-primary-rgb),0.2), 0 0 40px rgba(var(--accent-secondary-rgb),0.12);
-    --focus-error: 0 0 0 2px var(--surface-base), 0 0 0 4px var(--color-error), 0 0 16px rgba(var(--color-error-rgb), 0.2);
-    --focus-thumb: 0 0 8px rgba(var(--interactive-rgb), 0.5), 0 0 20px rgba(var(--interactive-rgb), 0.25);
-    --glow-line-white: linear-gradient(90deg, transparent, rgba(var(--text-primary-rgb),0.35), transparent);
-    --glow-line-blue: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.7), transparent);
-    --bg-hover: rgba(255, 255, 255, 0.04);
-    --overlay-backdrop: rgba(0, 0, 0, 0.6);
-    --on-accent: var(--surface-base);
-    --accent-text-mix: 0%;
-    --accent-primary-subtle: rgba(var(--accent-primary-rgb), 0.06);
-    --accent-primary-border: rgba(var(--accent-primary-rgb), 0.12);
-    --accent-primary-glow: rgba(var(--accent-primary-rgb), 0.2);
-    --accent-primary-ring: rgba(var(--accent-primary-rgb), 0.15);
-    --accent-secondary-subtle: rgba(var(--accent-secondary-rgb), 0.06);
-    --accent-secondary-border: rgba(var(--accent-secondary-rgb), 0.12);
-    --accent-secondary-glow: rgba(var(--accent-secondary-rgb), 0.2);
-    --gradient-accent-text: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-    --glow-line-gradient: linear-gradient(90deg, transparent, var(--accent-primary), var(--accent-secondary), transparent);
-    --interactive: var(--accent-primary);
-    --interactive-rgb: var(--accent-primary-rgb);
-    --interactive-hover: var(--glow-hover);
-    --interactive-active: var(--glow-primary);
-    --interactive-focus: var(--focus-glow);
-    --interactive-focus-ring: var(--focus-ring);
-    --interactive-focus-error: var(--focus-error);
-    --interactive-focus-thumb: var(--focus-thumb);
-    --interactive-muted: var(--text-ghost);
-    --surface-base: var(--bg-deep);
-    --surface-primary: var(--bg-surface);
-    --surface-raised: var(--bg-card);
-    --surface-overlay: var(--bg-elevated);
-    --surface-hover: var(--bg-hover);
-    --divider: var(--border-subtle);
-    --divider-glow: var(--glow-line-gradient);
-    --focus-inset: inset 0 0 0 2px var(--interactive);
-    --interactive-focus-inset: var(--focus-inset);
-  }
-}
-
-/* Softened — the same scheme, moved toward the page it is sitting in. Only
-   reachable in the forced case; matched, a pinned region is already seamless. */
-[data-theme="light"] .theme-fixed-dark-soft {
-  --bg-deep: rgb(4, 15, 52);
-  --bg-surface: rgb(10, 25, 63);
-  --bg-base: rgb(10, 25, 63);
-  --bg-card: rgb(13, 29, 67);
-  --bg-elevated: rgb(17, 33, 72);
-  --border-subtle: rgb(24, 40, 80);
-  --border-default: rgb(33, 50, 91);
-  --border-bright: rgb(49, 68, 110);
+/* On a light page it lifts rather than staying black. */
+[data-theme="light"] .theme-fixed-dark {
+  --bg-deep: rgb(19, 32, 62);
+  --bg-surface: rgb(25, 40, 79);
+  --bg-base: rgb(25, 40, 79);
+  --bg-card: rgb(26, 43, 84);
+  --bg-elevated: rgb(28, 47, 91);
+  --border-subtle: rgb(31, 50, 99);
+  --border-default: rgb(35, 57, 111);
+  --border-bright: rgb(43, 71, 138);
   --text-primary: rgb(232, 232, 236);
-  --text-secondary: rgb(158, 160, 170);
-  --text-muted: rgb(150, 150, 163);
-  --text-ghost: rgb(140, 140, 162);
-  --accent-primary: rgb(83, 133, 255);
-  --accent-secondary: rgb(157, 112, 255);
+  --text-secondary: rgb(170, 173, 183);
+  --text-muted: rgb(162, 162, 175);
+  --text-ghost: rgb(152, 152, 174);
+  --accent-primary: rgb(96, 148, 255);
+  --accent-secondary: rgb(170, 127, 255);
   --color-success: rgb(52, 211, 153);
-  --color-error: rgb(248, 77, 76);
+  --color-error: rgb(255, 98, 94);
   --color-warning: rgb(245, 158, 11);
-  --color-info: rgb(65, 136, 253);
+  --color-info: rgb(79, 151, 255);
   --text-primary-rgb: 232, 232, 236;
-  --text-muted-rgb: 150, 150, 163;
-  --color-error-rgb: 248, 77, 76;
+  --text-muted-rgb: 162, 162, 175;
+  --color-error-rgb: 255, 98, 94;
   --color-success-rgb: 52, 211, 153;
   --color-warning-rgb: 245, 158, 11;
-  --color-info-rgb: 65, 136, 253;
+  --color-info-rgb: 79, 151, 255;
   --accent-primary-subtle: rgba(var(--accent-primary-rgb), 0.06);
   --accent-primary-border: rgba(var(--accent-primary-rgb), 0.12);
   --accent-primary-glow: rgba(var(--accent-primary-rgb), 0.2);
@@ -879,7 +794,7 @@
   --accent-secondary-border: rgba(var(--accent-secondary-rgb), 0.12);
   --accent-secondary-glow: rgba(var(--accent-secondary-rgb), 0.2);
   --gradient-accent-text: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-  --glow-line-gradient: linear-gradient(90deg, transparent, var(--accent-primary), var(--accent-secondary), transparent);
+  --glow-line-gradient: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), var(--accent-primary), var(--accent-secondary), rgba(var(--accent-secondary-rgb),0));
   --interactive: var(--accent-primary);
   --interactive-rgb: var(--accent-primary-rgb);
   --interactive-hover: var(--glow-hover);
@@ -901,31 +816,31 @@
 }
 
 @media (prefers-color-scheme: light) {
-  [data-theme="auto"] .theme-fixed-dark-soft {
-    --bg-deep: rgb(4, 15, 52);
-    --bg-surface: rgb(10, 25, 63);
-    --bg-base: rgb(10, 25, 63);
-    --bg-card: rgb(13, 29, 67);
-    --bg-elevated: rgb(17, 33, 72);
-    --border-subtle: rgb(24, 40, 80);
-    --border-default: rgb(33, 50, 91);
-    --border-bright: rgb(49, 68, 110);
+  [data-theme="auto"] .theme-fixed-dark {
+    --bg-deep: rgb(19, 32, 62);
+    --bg-surface: rgb(25, 40, 79);
+    --bg-base: rgb(25, 40, 79);
+    --bg-card: rgb(26, 43, 84);
+    --bg-elevated: rgb(28, 47, 91);
+    --border-subtle: rgb(31, 50, 99);
+    --border-default: rgb(35, 57, 111);
+    --border-bright: rgb(43, 71, 138);
     --text-primary: rgb(232, 232, 236);
-    --text-secondary: rgb(158, 160, 170);
-    --text-muted: rgb(150, 150, 163);
-    --text-ghost: rgb(140, 140, 162);
-    --accent-primary: rgb(83, 133, 255);
-    --accent-secondary: rgb(157, 112, 255);
+    --text-secondary: rgb(170, 173, 183);
+    --text-muted: rgb(162, 162, 175);
+    --text-ghost: rgb(152, 152, 174);
+    --accent-primary: rgb(96, 148, 255);
+    --accent-secondary: rgb(170, 127, 255);
     --color-success: rgb(52, 211, 153);
-    --color-error: rgb(248, 77, 76);
+    --color-error: rgb(255, 98, 94);
     --color-warning: rgb(245, 158, 11);
-    --color-info: rgb(65, 136, 253);
+    --color-info: rgb(79, 151, 255);
     --text-primary-rgb: 232, 232, 236;
-    --text-muted-rgb: 150, 150, 163;
-    --color-error-rgb: 248, 77, 76;
+    --text-muted-rgb: 162, 162, 175;
+    --color-error-rgb: 255, 98, 94;
     --color-success-rgb: 52, 211, 153;
     --color-warning-rgb: 245, 158, 11;
-    --color-info-rgb: 65, 136, 253;
+    --color-info-rgb: 79, 151, 255;
     --accent-primary-subtle: rgba(var(--accent-primary-rgb), 0.06);
     --accent-primary-border: rgba(var(--accent-primary-rgb), 0.12);
     --accent-primary-glow: rgba(var(--accent-primary-rgb), 0.2);
@@ -934,7 +849,7 @@
     --accent-secondary-border: rgba(var(--accent-secondary-rgb), 0.12);
     --accent-secondary-glow: rgba(var(--accent-secondary-rgb), 0.2);
     --gradient-accent-text: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-    --glow-line-gradient: linear-gradient(90deg, transparent, var(--accent-primary), var(--accent-secondary), transparent);
+    --glow-line-gradient: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), var(--accent-primary), var(--accent-secondary), rgba(var(--accent-secondary-rgb),0));
     --interactive: var(--accent-primary);
     --interactive-rgb: var(--accent-primary-rgb);
     --interactive-hover: var(--glow-hover);
@@ -956,10 +871,8 @@
   }
 }
 
-/* Dark is the default page, so the light variants cover an explicit dark theme
-   and the case where a consumer never sets the attribute at all. */
-[data-theme="dark"] .theme-fixed-light,
-:root:not([data-theme]) .theme-fixed-light {
+.theme-fixed-light {
+  color-scheme: light;
   --bg-deep: rgb(242, 242, 248);
   --bg-surface: rgb(248, 248, 252);
   --bg-base: rgb(244, 244, 250);
@@ -990,12 +903,12 @@
   --shadow-xl: 0 16px 48px rgba(var(--accent-primary-rgb),0.14), 0 8px 16px rgba(var(--accent-secondary-rgb),0.07);
   --shadow-overlay: 0 4px 24px rgba(var(--accent-primary-rgb),0.1), 0 8px 48px rgba(var(--accent-secondary-rgb),0.06);
   --gradient-display-text: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-primary) 100%);
-  --gradient-divider: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.2), transparent);
-  --gradient-divider-glow: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.35), rgba(var(--accent-secondary-rgb),0.25), transparent);
-  --gradient-page-ambient: radial-gradient(ellipse, rgba(var(--accent-primary-rgb),0.06) 0%, transparent 70%);
+  --gradient-divider: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), rgba(var(--accent-primary-rgb),0.2), rgba(var(--accent-primary-rgb),0));
+  --gradient-divider-glow: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), rgba(var(--accent-primary-rgb),0.35), rgba(var(--accent-secondary-rgb),0.25), rgba(var(--accent-secondary-rgb),0));
+  --gradient-page-ambient: radial-gradient(ellipse, rgba(var(--accent-primary-rgb),0.06) 0%, rgba(var(--accent-primary-rgb),0) 70%);
   --gradient-border-glow: linear-gradient(135deg, rgba(var(--accent-primary-rgb),0.2), rgba(var(--accent-secondary-rgb),0.15), rgba(var(--accent-primary-rgb),0.08));
-  --gradient-ambient: radial-gradient(circle at 15% 85%, rgba(var(--accent-primary-rgb),0.07) 0%, transparent 50%),
-    radial-gradient(circle at 85% 15%, rgba(var(--accent-secondary-rgb),0.05) 0%, transparent 50%);
+  --gradient-ambient: radial-gradient(circle at 15% 85%, rgba(var(--accent-primary-rgb),0.07) 0%, rgba(var(--accent-primary-rgb),0) 50%),
+    radial-gradient(circle at 85% 15%, rgba(var(--accent-secondary-rgb),0.05) 0%, rgba(var(--accent-secondary-rgb),0) 50%);
   --glow-primary: 0 0 8px rgba(var(--accent-primary-rgb),0.5), 0 0 24px rgba(var(--accent-primary-rgb),0.2), 0 0 48px rgba(var(--accent-primary-rgb),0.08);
   --glow-secondary: 0 0 8px rgba(var(--accent-secondary-rgb),0.5), 0 0 24px rgba(var(--accent-secondary-rgb),0.2), 0 0 48px rgba(var(--accent-secondary-rgb),0.08);
   --glow-white: 0 0 8px rgba(var(--accent-primary-rgb),0.15), 0 0 20px rgba(var(--accent-secondary-rgb),0.08);
@@ -1009,8 +922,8 @@
   --focus-glow: 0 0 0 1px rgba(var(--accent-primary-rgb),0.3), 0 0 6px rgba(var(--accent-primary-rgb),0.5), 0 0 16px rgba(var(--accent-primary-rgb),0.3), 0 0 40px rgba(var(--accent-secondary-rgb),0.18);
   --focus-error: 0 0 0 2px var(--surface-base), 0 0 0 4px var(--color-error), 0 0 16px rgba(var(--color-error-rgb), 0.3);
   --focus-thumb: 0 0 8px rgba(var(--interactive-rgb), 0.5), 0 0 20px rgba(var(--interactive-rgb), 0.38);
-  --glow-line-white: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.15), transparent);
-  --glow-line-blue: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.6), transparent);
+  --glow-line-white: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), rgba(var(--accent-primary-rgb),0.15), rgba(var(--accent-primary-rgb),0));
+  --glow-line-blue: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), rgba(var(--accent-primary-rgb),0.6), rgba(var(--accent-primary-rgb),0));
   --bg-hover: rgba(55, 105, 235, 0.04);
   --overlay-backdrop: rgba(20, 20, 40, 0.25);
   --on-accent: rgb(var(--white-rgb));
@@ -1023,7 +936,64 @@
   --accent-secondary-border: rgba(var(--accent-secondary-rgb), 0.12);
   --accent-secondary-glow: rgba(var(--accent-secondary-rgb), 0.2);
   --gradient-accent-text: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-  --glow-line-gradient: linear-gradient(90deg, transparent, var(--accent-primary), var(--accent-secondary), transparent);
+  --glow-line-gradient: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), var(--accent-primary), var(--accent-secondary), rgba(var(--accent-secondary-rgb),0));
+  --interactive: var(--accent-primary);
+  --interactive-rgb: var(--accent-primary-rgb);
+  --interactive-hover: var(--glow-hover);
+  --interactive-active: var(--glow-primary);
+  --interactive-focus: var(--focus-glow);
+  --interactive-focus-ring: var(--focus-ring);
+  --interactive-focus-error: var(--focus-error);
+  --interactive-focus-thumb: var(--focus-thumb);
+  --interactive-muted: var(--text-ghost);
+  --surface-base: var(--bg-deep);
+  --surface-primary: var(--bg-surface);
+  --surface-raised: var(--bg-card);
+  --surface-overlay: var(--bg-elevated);
+  --surface-hover: var(--bg-hover);
+  --divider: var(--border-subtle);
+  --divider-glow: var(--glow-line-gradient);
+  --focus-inset: inset 0 0 0 2px var(--interactive);
+  --interactive-focus-inset: var(--focus-inset);
+}
+
+/* Dark is the default page, so this covers an explicit dark theme and the case
+   where a consumer never sets the attribute at all. */
+[data-theme="dark"] .theme-fixed-light,
+:root:not([data-theme]) .theme-fixed-light {
+  --bg-deep: rgb(201, 213, 245);
+  --bg-surface: rgb(208, 218, 246);
+  --bg-base: rgb(203, 215, 245);
+  --bg-card: rgb(208, 218, 246);
+  --bg-elevated: rgb(197, 210, 244);
+  --border-subtle: rgb(182, 198, 241);
+  --border-default: rgb(167, 186, 239);
+  --border-bright: rgb(139, 164, 233);
+  --text-primary: rgb(35, 35, 55);
+  --text-secondary: rgb(59, 62, 80);
+  --text-muted: rgb(67, 70, 89);
+  --text-ghost: rgb(74, 76, 98);
+  --accent-primary: rgb(24, 66, 194);
+  --accent-secondary: rgb(97, 37, 200);
+  --color-success: rgb(0, 92, 62);
+  --color-error: rgb(165, 0, 18);
+  --color-warning: rgb(114, 71, 0);
+  --color-info: rgb(10, 74, 175);
+  --text-primary-rgb: 35, 35, 55;
+  --text-muted-rgb: 67, 70, 89;
+  --color-error-rgb: 165, 0, 18;
+  --color-success-rgb: 0, 92, 62;
+  --color-warning-rgb: 114, 71, 0;
+  --color-info-rgb: 10, 74, 175;
+  --accent-primary-subtle: rgba(var(--accent-primary-rgb), 0.06);
+  --accent-primary-border: rgba(var(--accent-primary-rgb), 0.12);
+  --accent-primary-glow: rgba(var(--accent-primary-rgb), 0.2);
+  --accent-primary-ring: rgba(var(--accent-primary-rgb), 0.15);
+  --accent-secondary-subtle: rgba(var(--accent-secondary-rgb), 0.06);
+  --accent-secondary-border: rgba(var(--accent-secondary-rgb), 0.12);
+  --accent-secondary-glow: rgba(var(--accent-secondary-rgb), 0.2);
+  --gradient-accent-text: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+  --glow-line-gradient: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), var(--accent-primary), var(--accent-secondary), rgba(var(--accent-secondary-rgb),0));
   --interactive: var(--accent-primary);
   --interactive-rgb: var(--accent-primary-rgb);
   --interactive-hover: var(--glow-hover);
@@ -1046,172 +1016,30 @@
 
 @media (prefers-color-scheme: dark) {
   [data-theme="auto"] .theme-fixed-light {
-    --bg-deep: rgb(242, 242, 248);
-    --bg-surface: rgb(248, 248, 252);
-    --bg-base: rgb(244, 244, 250);
-    --bg-card: rgb(248, 248, 252);
-    --bg-elevated: rgb(238, 238, 246);
+    --bg-deep: rgb(201, 213, 245);
+    --bg-surface: rgb(208, 218, 246);
+    --bg-base: rgb(203, 215, 245);
+    --bg-card: rgb(208, 218, 246);
+    --bg-elevated: rgb(197, 210, 244);
+    --border-subtle: rgb(182, 198, 241);
+    --border-default: rgb(167, 186, 239);
+    --border-bright: rgb(139, 164, 233);
     --text-primary: rgb(35, 35, 55);
-    --text-secondary: rgb(77, 80, 99);
-    --text-muted: rgb(84, 87, 107);
-    --text-ghost: rgb(91, 94, 116);
-    --border-subtle: rgb(224, 226, 232);
-    --border-default: rgb(210, 214, 222);
-    --border-bright: rgb(186, 191, 201);
-    --accent-primary: rgb(40, 87, 215);
-    --accent-secondary: rgb(113, 61, 221);
-    --color-success: rgb(0, 112, 81);
-    --color-error: rgb(187, 38, 39);
-    --color-warning: rgb(133, 89, 0);
-    --color-info: rgb(27, 88, 190);
-    --chart-1: #3769eb;
-    --chart-4: #7846e6;
-    --chart-6: #4d7c0f;
-    --text-primary-rgb: 35, 35, 55;
-    --text-muted-rgb: 84, 87, 107;
-    --shadow-xs: 0 1px 2px rgba(var(--accent-primary-rgb),0.06);
-    --shadow-sm: 0 2px 4px rgba(var(--accent-primary-rgb),0.08), 0 1px 2px rgba(var(--accent-secondary-rgb),0.04);
-    --shadow-md: 0 4px 12px rgba(var(--accent-primary-rgb),0.1), 0 2px 4px rgba(var(--accent-secondary-rgb),0.05);
-    --shadow-lg: 0 8px 24px rgba(var(--accent-primary-rgb),0.12), 0 4px 8px rgba(var(--accent-secondary-rgb),0.06);
-    --shadow-xl: 0 16px 48px rgba(var(--accent-primary-rgb),0.14), 0 8px 16px rgba(var(--accent-secondary-rgb),0.07);
-    --shadow-overlay: 0 4px 24px rgba(var(--accent-primary-rgb),0.1), 0 8px 48px rgba(var(--accent-secondary-rgb),0.06);
-    --gradient-display-text: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-primary) 100%);
-    --gradient-divider: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.2), transparent);
-    --gradient-divider-glow: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.35), rgba(var(--accent-secondary-rgb),0.25), transparent);
-    --gradient-page-ambient: radial-gradient(ellipse, rgba(var(--accent-primary-rgb),0.06) 0%, transparent 70%);
-    --gradient-border-glow: linear-gradient(135deg, rgba(var(--accent-primary-rgb),0.2), rgba(var(--accent-secondary-rgb),0.15), rgba(var(--accent-primary-rgb),0.08));
-    --gradient-ambient: radial-gradient(circle at 15% 85%, rgba(var(--accent-primary-rgb),0.07) 0%, transparent 50%),
-    radial-gradient(circle at 85% 15%, rgba(var(--accent-secondary-rgb),0.05) 0%, transparent 50%);
-    --glow-primary: 0 0 8px rgba(var(--accent-primary-rgb),0.5), 0 0 24px rgba(var(--accent-primary-rgb),0.2), 0 0 48px rgba(var(--accent-primary-rgb),0.08);
-    --glow-secondary: 0 0 8px rgba(var(--accent-secondary-rgb),0.5), 0 0 24px rgba(var(--accent-secondary-rgb),0.2), 0 0 48px rgba(var(--accent-secondary-rgb),0.08);
-    --glow-white: 0 0 8px rgba(var(--accent-primary-rgb),0.15), 0 0 20px rgba(var(--accent-secondary-rgb),0.08);
-    --glow-card-hover: 0 0 20px rgba(var(--accent-primary-rgb),0.12), 0 0 40px rgba(var(--accent-secondary-rgb),0.06);
-    --glow-xs: 0 0 6px rgba(var(--accent-primary-rgb), 0.42);
-    --glow-sm: 0 0 8px rgba(var(--accent-primary-rgb), 0.42);
-    --glow-md: 0 0 12px rgba(var(--accent-primary-rgb), 0.36);
-    --glow-hover: 0 0 12px rgba(var(--accent-primary-rgb), 0.22);
-    --glow-status-alpha: 0.22;
-    --focus-ring: 0 0 0 1px rgba(var(--accent-primary-rgb),0.38);
-    --focus-glow: 0 0 0 1px rgba(var(--accent-primary-rgb),0.3), 0 0 6px rgba(var(--accent-primary-rgb),0.5), 0 0 16px rgba(var(--accent-primary-rgb),0.3), 0 0 40px rgba(var(--accent-secondary-rgb),0.18);
-    --focus-error: 0 0 0 2px var(--surface-base), 0 0 0 4px var(--color-error), 0 0 16px rgba(var(--color-error-rgb), 0.3);
-    --focus-thumb: 0 0 8px rgba(var(--interactive-rgb), 0.5), 0 0 20px rgba(var(--interactive-rgb), 0.38);
-    --glow-line-white: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.15), transparent);
-    --glow-line-blue: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.6), transparent);
-    --bg-hover: rgba(55, 105, 235, 0.04);
-    --overlay-backdrop: rgba(20, 20, 40, 0.25);
-    --on-accent: rgb(var(--white-rgb));
-    --accent-text-mix: 55%;
-    --accent-primary-subtle: rgba(var(--accent-primary-rgb), 0.06);
-    --accent-primary-border: rgba(var(--accent-primary-rgb), 0.12);
-    --accent-primary-glow: rgba(var(--accent-primary-rgb), 0.2);
-    --accent-primary-ring: rgba(var(--accent-primary-rgb), 0.15);
-    --accent-secondary-subtle: rgba(var(--accent-secondary-rgb), 0.06);
-    --accent-secondary-border: rgba(var(--accent-secondary-rgb), 0.12);
-    --accent-secondary-glow: rgba(var(--accent-secondary-rgb), 0.2);
-    --gradient-accent-text: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-    --glow-line-gradient: linear-gradient(90deg, transparent, var(--accent-primary), var(--accent-secondary), transparent);
-    --interactive: var(--accent-primary);
-    --interactive-rgb: var(--accent-primary-rgb);
-    --interactive-hover: var(--glow-hover);
-    --interactive-active: var(--glow-primary);
-    --interactive-focus: var(--focus-glow);
-    --interactive-focus-ring: var(--focus-ring);
-    --interactive-focus-error: var(--focus-error);
-    --interactive-focus-thumb: var(--focus-thumb);
-    --interactive-muted: var(--text-ghost);
-    --surface-base: var(--bg-deep);
-    --surface-primary: var(--bg-surface);
-    --surface-raised: var(--bg-card);
-    --surface-overlay: var(--bg-elevated);
-    --surface-hover: var(--bg-hover);
-    --divider: var(--border-subtle);
-    --divider-glow: var(--glow-line-gradient);
-    --focus-inset: inset 0 0 0 2px var(--interactive);
-    --interactive-focus-inset: var(--focus-inset);
-  }
-}
-
-[data-theme="dark"] .theme-fixed-light-soft,
-:root:not([data-theme]) .theme-fixed-light-soft {
-  --bg-deep: rgb(204, 215, 235);
-  --bg-surface: rgb(210, 220, 240);
-  --bg-base: rgb(206, 216, 237);
-  --bg-card: rgb(210, 220, 240);
-  --bg-elevated: rgb(201, 211, 232);
-  --border-subtle: rgb(190, 200, 220);
-  --border-default: rgb(179, 189, 209);
-  --border-bright: rgb(158, 168, 188);
-  --text-primary: rgb(35, 35, 55);
-  --text-secondary: rgb(60, 63, 81);
-  --text-muted: rgb(68, 70, 90);
-  --text-ghost: rgb(74, 77, 98);
-  --accent-primary: rgb(25, 67, 194);
-  --accent-secondary: rgb(98, 38, 201);
-  --color-success: rgb(0, 93, 63);
-  --color-error: rgb(166, 2, 19);
-  --color-warning: rgb(114, 71, 0);
-  --color-info: rgb(11, 75, 176);
-  --text-primary-rgb: 35, 35, 55;
-  --text-muted-rgb: 68, 70, 90;
-  --color-error-rgb: 166, 2, 19;
-  --color-success-rgb: 0, 93, 63;
-  --color-warning-rgb: 114, 71, 0;
-  --color-info-rgb: 11, 75, 176;
-  --accent-primary-subtle: rgba(var(--accent-primary-rgb), 0.06);
-  --accent-primary-border: rgba(var(--accent-primary-rgb), 0.12);
-  --accent-primary-glow: rgba(var(--accent-primary-rgb), 0.2);
-  --accent-primary-ring: rgba(var(--accent-primary-rgb), 0.15);
-  --accent-secondary-subtle: rgba(var(--accent-secondary-rgb), 0.06);
-  --accent-secondary-border: rgba(var(--accent-secondary-rgb), 0.12);
-  --accent-secondary-glow: rgba(var(--accent-secondary-rgb), 0.2);
-  --gradient-accent-text: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-  --glow-line-gradient: linear-gradient(90deg, transparent, var(--accent-primary), var(--accent-secondary), transparent);
-  --interactive: var(--accent-primary);
-  --interactive-rgb: var(--accent-primary-rgb);
-  --interactive-hover: var(--glow-hover);
-  --interactive-active: var(--glow-primary);
-  --interactive-focus: var(--focus-glow);
-  --interactive-focus-ring: var(--focus-ring);
-  --interactive-focus-error: var(--focus-error);
-  --interactive-focus-thumb: var(--focus-thumb);
-  --interactive-muted: var(--text-ghost);
-  --surface-base: var(--bg-deep);
-  --surface-primary: var(--bg-surface);
-  --surface-raised: var(--bg-card);
-  --surface-overlay: var(--bg-elevated);
-  --surface-hover: var(--bg-hover);
-  --divider: var(--border-subtle);
-  --divider-glow: var(--glow-line-gradient);
-  --focus-inset: inset 0 0 0 2px var(--interactive);
-  --interactive-focus-inset: var(--focus-inset);
-}
-
-@media (prefers-color-scheme: dark) {
-  [data-theme="auto"] .theme-fixed-light-soft {
-    --bg-deep: rgb(204, 215, 235);
-    --bg-surface: rgb(210, 220, 240);
-    --bg-base: rgb(206, 216, 237);
-    --bg-card: rgb(210, 220, 240);
-    --bg-elevated: rgb(201, 211, 232);
-    --border-subtle: rgb(190, 200, 220);
-    --border-default: rgb(179, 189, 209);
-    --border-bright: rgb(158, 168, 188);
-    --text-primary: rgb(35, 35, 55);
-    --text-secondary: rgb(60, 63, 81);
-    --text-muted: rgb(68, 70, 90);
-    --text-ghost: rgb(74, 77, 98);
-    --accent-primary: rgb(25, 67, 194);
-    --accent-secondary: rgb(98, 38, 201);
-    --color-success: rgb(0, 93, 63);
-    --color-error: rgb(166, 2, 19);
+    --text-secondary: rgb(59, 62, 80);
+    --text-muted: rgb(67, 70, 89);
+    --text-ghost: rgb(74, 76, 98);
+    --accent-primary: rgb(24, 66, 194);
+    --accent-secondary: rgb(97, 37, 200);
+    --color-success: rgb(0, 92, 62);
+    --color-error: rgb(165, 0, 18);
     --color-warning: rgb(114, 71, 0);
-    --color-info: rgb(11, 75, 176);
+    --color-info: rgb(10, 74, 175);
     --text-primary-rgb: 35, 35, 55;
-    --text-muted-rgb: 68, 70, 90;
-    --color-error-rgb: 166, 2, 19;
-    --color-success-rgb: 0, 93, 63;
+    --text-muted-rgb: 67, 70, 89;
+    --color-error-rgb: 165, 0, 18;
+    --color-success-rgb: 0, 92, 62;
     --color-warning-rgb: 114, 71, 0;
-    --color-info-rgb: 11, 75, 176;
+    --color-info-rgb: 10, 74, 175;
     --accent-primary-subtle: rgba(var(--accent-primary-rgb), 0.06);
     --accent-primary-border: rgba(var(--accent-primary-rgb), 0.12);
     --accent-primary-glow: rgba(var(--accent-primary-rgb), 0.2);
@@ -1220,7 +1048,7 @@
     --accent-secondary-border: rgba(var(--accent-secondary-rgb), 0.12);
     --accent-secondary-glow: rgba(var(--accent-secondary-rgb), 0.2);
     --gradient-accent-text: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-    --glow-line-gradient: linear-gradient(90deg, transparent, var(--accent-primary), var(--accent-secondary), transparent);
+    --glow-line-gradient: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), var(--accent-primary), var(--accent-secondary), rgba(var(--accent-secondary-rgb),0));
     --interactive: var(--accent-primary);
     --interactive-rgb: var(--accent-primary-rgb);
     --interactive-hover: var(--glow-hover);
@@ -1242,89 +1070,77 @@
   }
 }
 
-/* Carry the consumer's accent into a forced region. Only the forced case needs
-   this — a matched region inherits the page's accent already. Behind @supports
-   because relative color syntax is what moves a hue to another scheme's
-   lightness without washing it out; without it the region keeps the baked
-   palette above, which is right for ARC's own accent and merely fixed. */
+/* Carry the consumer's accent into a pinned region.
+   A region declares its own accent, so it cannot derive from the property it
+   declares — :root captures the accent privately and these read that. Behind
+   @supports because relative color syntax is what moves a hue to another
+   scheme's lightness without washing it out; without it a region keeps the
+   baked palette above, which is right for ARC's own accent and merely fixed. */
 @supports (color: oklch(from red l c h)) {
-  [data-theme="light"] .theme-fixed,
-  [data-theme="light"] .theme-fixed-dark {
+  .theme-fixed-dark {
     --accent-primary: oklch(from var(--_brand-primary) 0.6225 c h);
     --accent-secondary: oklch(from var(--_brand-secondary) 0.6350 c h);
   }
 
-  [data-theme="dark"] .theme-fixed-light,
-  :root:not([data-theme]) .theme-fixed-light {
+  [data-theme="light"] .theme-fixed-dark {
+    --bg-deep: color-mix(in srgb, oklch(from var(--_brand-primary) 0.6225 c h) 25%, rgb(0, 0, 0));
+    --bg-surface: color-mix(in srgb, oklch(from var(--_brand-primary) 0.6225 c h) 32%, rgb(0, 0, 0));
+    --bg-base: color-mix(in srgb, oklch(from var(--_brand-primary) 0.6225 c h) 32%, rgb(0, 0, 0));
+    --bg-card: color-mix(in srgb, oklch(from var(--_brand-primary) 0.6225 c h) 34%, rgb(0, 0, 0));
+    --bg-elevated: color-mix(in srgb, oklch(from var(--_brand-primary) 0.6225 c h) 37%, rgb(0, 0, 0));
+    --border-subtle: color-mix(in srgb, oklch(from var(--_brand-primary) 0.6225 c h) 40%, rgb(0, 0, 0));
+    --border-default: color-mix(in srgb, oklch(from var(--_brand-primary) 0.6225 c h) 45%, rgb(0, 0, 0));
+    --border-bright: color-mix(in srgb, oklch(from var(--_brand-primary) 0.6225 c h) 56%, rgb(0, 0, 0));
+    --accent-primary: oklch(from var(--_brand-primary) 0.6809 c h);
+    --accent-secondary: oklch(from var(--_brand-secondary) 0.6942 c h);
+  }
+
+  .theme-fixed-light {
     --accent-primary: oklch(from var(--_brand-primary) 0.5072 c h);
     --accent-secondary: oklch(from var(--_brand-secondary) 0.5199 c h);
   }
 
-  [data-theme="light"] .theme-fixed-dark-soft {
-    --bg-deep: color-mix(in srgb, var(--_brand-primary) 15%, rgb(0, 0, 0));
-    --bg-surface: color-mix(in srgb, var(--_brand-primary) 22%, rgb(0, 0, 0));
-    --bg-base: color-mix(in srgb, var(--_brand-primary) 22%, rgb(0, 0, 0));
-    --bg-card: color-mix(in srgb, var(--_brand-primary) 24%, rgb(0, 0, 0));
-    --bg-elevated: color-mix(in srgb, var(--_brand-primary) 27%, rgb(0, 0, 0));
-    --border-subtle: color-mix(in srgb, var(--_brand-primary) 32%, rgb(0, 0, 0));
-    --border-default: color-mix(in srgb, var(--_brand-primary) 39%, rgb(0, 0, 0));
-    --border-bright: color-mix(in srgb, var(--_brand-primary) 52%, rgb(0, 0, 0));
-    --accent-primary: oklch(from var(--_brand-primary) 0.6445 c h);
-    --accent-secondary: oklch(from var(--_brand-secondary) 0.6584 c h);
-  }
-
-  [data-theme="dark"] .theme-fixed-light-soft,
-  :root:not([data-theme]) .theme-fixed-light-soft {
-    --bg-deep: color-mix(in srgb, var(--_brand-primary) 25%, rgb(255, 255, 255));
-    --bg-surface: color-mix(in srgb, var(--_brand-primary) 22%, rgb(255, 255, 255));
-    --bg-base: color-mix(in srgb, var(--_brand-primary) 24%, rgb(255, 255, 255));
-    --bg-card: color-mix(in srgb, var(--_brand-primary) 22%, rgb(255, 255, 255));
-    --bg-elevated: color-mix(in srgb, var(--_brand-primary) 27%, rgb(255, 255, 255));
-    --border-subtle: color-mix(in srgb, var(--_brand-primary) 34%, rgb(255, 255, 255));
-    --border-default: color-mix(in srgb, var(--_brand-primary) 41%, rgb(255, 255, 255));
-    --border-bright: color-mix(in srgb, var(--_brand-primary) 54%, rgb(255, 255, 255));
-    --accent-primary: oklch(from var(--_brand-primary) 0.4465 c h);
-    --accent-secondary: oklch(from var(--_brand-secondary) 0.4622 c h);
+  [data-theme="dark"] .theme-fixed-light,
+  :root:not([data-theme]) .theme-fixed-light {
+    --bg-deep: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5072 c h) 25%, rgb(255, 255, 255));
+    --bg-surface: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5072 c h) 22%, rgb(255, 255, 255));
+    --bg-base: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5072 c h) 24%, rgb(255, 255, 255));
+    --bg-card: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5072 c h) 22%, rgb(255, 255, 255));
+    --bg-elevated: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5072 c h) 27%, rgb(255, 255, 255));
+    --border-subtle: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5072 c h) 34%, rgb(255, 255, 255));
+    --border-default: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5072 c h) 41%, rgb(255, 255, 255));
+    --border-bright: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5072 c h) 54%, rgb(255, 255, 255));
+    --accent-primary: oklch(from var(--_brand-primary) 0.4444 c h);
+    --accent-secondary: oklch(from var(--_brand-secondary) 0.4593 c h);
   }
 
   @media (prefers-color-scheme: light) {
-    [data-theme="auto"] .theme-fixed,
     [data-theme="auto"] .theme-fixed-dark {
-      --accent-primary: oklch(from var(--_brand-primary) 0.6225 c h);
-      --accent-secondary: oklch(from var(--_brand-secondary) 0.6350 c h);
-    }
-
-    [data-theme="auto"] .theme-fixed-dark-soft {
-      --bg-deep: color-mix(in srgb, var(--_brand-primary) 15%, rgb(0, 0, 0));
-      --bg-surface: color-mix(in srgb, var(--_brand-primary) 22%, rgb(0, 0, 0));
-      --bg-base: color-mix(in srgb, var(--_brand-primary) 22%, rgb(0, 0, 0));
-      --bg-card: color-mix(in srgb, var(--_brand-primary) 24%, rgb(0, 0, 0));
-      --bg-elevated: color-mix(in srgb, var(--_brand-primary) 27%, rgb(0, 0, 0));
-      --border-subtle: color-mix(in srgb, var(--_brand-primary) 32%, rgb(0, 0, 0));
-      --border-default: color-mix(in srgb, var(--_brand-primary) 39%, rgb(0, 0, 0));
-      --border-bright: color-mix(in srgb, var(--_brand-primary) 52%, rgb(0, 0, 0));
-      --accent-primary: oklch(from var(--_brand-primary) 0.6445 c h);
-      --accent-secondary: oklch(from var(--_brand-secondary) 0.6584 c h);
+      --bg-deep: color-mix(in srgb, oklch(from var(--_brand-primary) 0.6225 c h) 25%, rgb(0, 0, 0));
+      --bg-surface: color-mix(in srgb, oklch(from var(--_brand-primary) 0.6225 c h) 32%, rgb(0, 0, 0));
+      --bg-base: color-mix(in srgb, oklch(from var(--_brand-primary) 0.6225 c h) 32%, rgb(0, 0, 0));
+      --bg-card: color-mix(in srgb, oklch(from var(--_brand-primary) 0.6225 c h) 34%, rgb(0, 0, 0));
+      --bg-elevated: color-mix(in srgb, oklch(from var(--_brand-primary) 0.6225 c h) 37%, rgb(0, 0, 0));
+      --border-subtle: color-mix(in srgb, oklch(from var(--_brand-primary) 0.6225 c h) 40%, rgb(0, 0, 0));
+      --border-default: color-mix(in srgb, oklch(from var(--_brand-primary) 0.6225 c h) 45%, rgb(0, 0, 0));
+      --border-bright: color-mix(in srgb, oklch(from var(--_brand-primary) 0.6225 c h) 56%, rgb(0, 0, 0));
+      --accent-primary: oklch(from var(--_brand-primary) 0.6809 c h);
+      --accent-secondary: oklch(from var(--_brand-secondary) 0.6942 c h);
     }
   }
 
   @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .theme-fixed-light {
-      --accent-primary: oklch(from var(--_brand-primary) 0.5072 c h);
-      --accent-secondary: oklch(from var(--_brand-secondary) 0.5199 c h);
-    }
-
-    [data-theme="auto"] .theme-fixed-light-soft {
-      --bg-deep: color-mix(in srgb, var(--_brand-primary) 25%, rgb(255, 255, 255));
-      --bg-surface: color-mix(in srgb, var(--_brand-primary) 22%, rgb(255, 255, 255));
-      --bg-base: color-mix(in srgb, var(--_brand-primary) 24%, rgb(255, 255, 255));
-      --bg-card: color-mix(in srgb, var(--_brand-primary) 22%, rgb(255, 255, 255));
-      --bg-elevated: color-mix(in srgb, var(--_brand-primary) 27%, rgb(255, 255, 255));
-      --border-subtle: color-mix(in srgb, var(--_brand-primary) 34%, rgb(255, 255, 255));
-      --border-default: color-mix(in srgb, var(--_brand-primary) 41%, rgb(255, 255, 255));
-      --border-bright: color-mix(in srgb, var(--_brand-primary) 54%, rgb(255, 255, 255));
-      --accent-primary: oklch(from var(--_brand-primary) 0.4465 c h);
-      --accent-secondary: oklch(from var(--_brand-secondary) 0.4622 c h);
+      --bg-deep: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5072 c h) 25%, rgb(255, 255, 255));
+      --bg-surface: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5072 c h) 22%, rgb(255, 255, 255));
+      --bg-base: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5072 c h) 24%, rgb(255, 255, 255));
+      --bg-card: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5072 c h) 22%, rgb(255, 255, 255));
+      --bg-elevated: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5072 c h) 27%, rgb(255, 255, 255));
+      --border-subtle: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5072 c h) 34%, rgb(255, 255, 255));
+      --border-default: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5072 c h) 41%, rgb(255, 255, 255));
+      --border-bright: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5072 c h) 54%, rgb(255, 255, 255));
+      --accent-primary: oklch(from var(--_brand-primary) 0.4444 c h);
+      --accent-secondary: oklch(from var(--_brand-secondary) 0.4593 c h);
     }
   }
 }

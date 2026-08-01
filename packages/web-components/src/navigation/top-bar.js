@@ -90,11 +90,8 @@ export class ArcTopBar extends LitElement {
          the ones with something worth seeing behind them. The blur goes with
          it, and loses nothing: it was already imperceptible behind an
          85%-opaque fill. */
-      :host(.theme-fixed) .topbar,
       :host(.theme-fixed-dark) .topbar,
-      :host(.theme-fixed-dark-soft) .topbar,
-      :host(.theme-fixed-light) .topbar,
-      :host(.theme-fixed-light-soft) .topbar {
+      :host(.theme-fixed-light) .topbar {
         background: var(--surface-base);
         backdrop-filter: none;
         -webkit-backdrop-filter: none;
