@@ -9,7 +9,7 @@ interface Props {
     weeks?: number;
     weekStart?: string;
     max?: number;
-    legend?: string;
+    legend?: boolean;
     class?: string;
     id?: string;
     style?: string;

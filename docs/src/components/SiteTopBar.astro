@@ -35,9 +35,11 @@ const isSynth = path.startsWith('/synth');
 const isDocs = inDocs && !isComponents && !isTokens && !isSynth;
 ---
 
-{/* theme-fixed (always-dark) only when the bar has a background of its own:
-    immersive renders transparent until scrolled, so it must follow the page
-    theme or light mode floats near-white text over a light hero. */}
+{/* Pinned dark only when the bar has a background of its own: immersive
+    renders transparent until scrolled, so it must follow the page theme or
+    light mode floats near-white text over a light hero.
+    The -soft variant rather than the hard pin, so on a light page the bar
+    lands on the accent's own deep blue instead of a near-black slab. */}
 <arc-top-bar
   slot={slotName}
   fixed
@@ -45,7 +47,7 @@ const isDocs = inDocs && !isComponents && !isTokens && !isSynth;
   immersive={immersive || undefined}
   nav-align="left"
   mobile-menu={mobileMenu}
-  class:list={[{ 'theme-fixed': !immersive }]}
+  class:list={[{ 'theme-fixed-dark-soft': !immersive }]}
 >
   <div slot="logo">
     <Wordmark />

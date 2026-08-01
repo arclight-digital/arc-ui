@@ -79,17 +79,22 @@ export class ArcTopBar extends LitElement {
           border-color var(--transition-slow);
       }
 
-      /* An always-dark region has to be one color, not two.
+      /* A pinned region has to be one color, not two.
          arc-footer paints --surface-base flat, while this bar mixes it 85% with
-         transparent. In dark mode that costs nothing — 15% of a near-black page
-         bleeds through as near-black. In light mode the 15% is 15% of a
-         near-white page, so the identical token renders rgb(46,46,81) up here
-         and the raw navy down there, and the two .theme-fixed regions visibly
-         disagree. Opaque when the region is pinned dark; the translucency stays
-         for bars that follow the page, which are the ones with something worth
-         seeing behind them. The blur goes with it, and loses nothing: it was
-         already imperceptible behind an 85%-opaque fill. */
-      :host(.theme-fixed) .topbar {
+         transparent. When the region's scheme matches the page that costs
+         nothing — 15% of a near-black page bleeds through as near-black. When
+         it doesn't, the 15% is 15% of the opposite ground, so the identical
+         token renders one color up here and another down there, and two regions
+         pinned to the same scheme visibly disagree. Opaque when the region is
+         pinned; the translucency stays for bars that follow the page, which are
+         the ones with something worth seeing behind them. The blur goes with
+         it, and loses nothing: it was already imperceptible behind an
+         85%-opaque fill. */
+      :host(.theme-fixed) .topbar,
+      :host(.theme-fixed-dark) .topbar,
+      :host(.theme-fixed-dark-soft) .topbar,
+      :host(.theme-fixed-light) .topbar,
+      :host(.theme-fixed-light-soft) .topbar {
         background: var(--surface-base);
         backdrop-filter: none;
         -webkit-backdrop-filter: none;

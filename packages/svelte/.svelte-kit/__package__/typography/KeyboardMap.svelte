@@ -6,7 +6,7 @@
   interface Props {
     layout?: string;
     highlight?: string|string[];
-    labels?: string;
+    labels?: boolean;
     platform?: string;
     caption?: string;
     class?: string;
@@ -36,7 +36,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { layout = 'compact', highlight = '', labels = 'true', platform = 'auto', caption = '', ...rest }: Props = $props();
+  let { layout = 'compact', highlight = '', labels = true, platform = 'auto', caption = '', ...rest }: Props = $props();
 </script>
 
 <arc-keyboard-map {layout} {highlight} {labels} {platform} {caption} {...rest}>

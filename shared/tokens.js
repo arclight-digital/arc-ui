@@ -39,11 +39,13 @@ const easing = {
 
 import {
   solveMixPercent,
+  solveContrast,
   composite,
   contrast,
   parseColor,
   formatRgb,
   oklchToRgb,
+  rgbToOklch,
 } from './color.js';
 
 export const tokens = {
@@ -580,6 +582,163 @@ const solveTextMix = (palette, seeds) => {
 
 const paletteAccents = (palette) => textAccentKeys.filter((k) => palette[k]).map((k) => palette[k]);
 
+/* ── The contrast contract ──────────────────────────────────────────────────
+ *
+ * One contract, four schemes: dark, light, and the softened variant of each
+ * that a pinned region uses when the page around it is the other one. Every
+ * scheme solves its own foregrounds against its own ground, so none of them is
+ * a special case and none of them needs a rescue.
+ *
+ * That is the lesson the fixed regions taught, expensively. The light theme
+ * shipped at the AA line with nothing to spare — its accent measured 4.30:1 as
+ * text on its own page, already under AA — and every variation attempted on
+ * top of it had to be hand-rescued: a pinned accent literal for the navy
+ * island, a 55% text mix, a white --on-accent exception, a container-scoped
+ * accent that only half-recolored. All of them were the same missing headroom
+ * showing up in a different place. Give each scheme a floor with room above it
+ * and the rescues stop being necessary, because a scheme that can absorb a
+ * ground shift is no longer a thing you have to tune by hand.
+ *
+ * The seed values in the trees below stay what a designer chose. The contract
+ * only ever raises a seed that falls short of it, by the least change that
+ * clears the bar and without moving its hue — so this reads as a floor under
+ * the palette, not a replacement for it.
+ */
+const CONTRAST_FLOOR = 5.5; // AA + ~1.0 of headroom, which is what dark already carried
+
+const FOREGROUND_KEYS = [
+  'textPrimary',
+  'textSecondary',
+  'textMuted',
+  'textGhost',
+  'accentPrimary',
+  'accentSecondary',
+  'success',
+  'error',
+  'warning',
+  'info',
+];
+const BORDER_KEYS = ['borderSubtle', 'borderDefault', 'borderBright'];
+const SURFACE_KEYS = ['bgDeep', 'bgSurface', 'bgBase', 'bgCard', 'bgElevated'];
+
+/* Ratios the dark scheme already achieves, used as the contract for the other
+ * three. Two of them can't be a flat floor:
+ *
+ *   The text ramp is a hierarchy. Flooring secondary/muted/ghost at one number
+ *   collapses them into each other — which is exactly the failure mode the
+ *   ramp already has in places, three steps within seventeen rgb points of one
+ *   another. Taking dark's three ratios keeps the spacing that makes them mean
+ *   different things.
+ *
+ *   Borders are not text and AA does not apply. They get dark's own ratios too
+ *   — around 1.16 to 1.66 — because the contract for a divider is "as visible
+ *   as it is in dark mode", not a WCAG number. Without this the dark scheme's
+ *   border-subtle on a softened ground measured 1.06: present in the
+ *   stylesheet, invisible on screen.
+ */
+const ratiosOf = (palette, keys) =>
+  Object.fromEntries(
+    keys.map((k) => [k, contrast(parseColor(palette[k]), parseColor(palette.bgDeep))]),
+  );
+
+const RAMP_CONTRACT = ratiosOf(tokens.color, ['textSecondary', 'textMuted', 'textGhost']);
+const BORDER_CONTRACT = ratiosOf(tokens.color, BORDER_KEYS);
+
+/** The ratio a key owes its own ground. */
+const contractFor = (key) => RAMP_CONTRACT[key] ?? BORDER_CONTRACT[key] ?? CONTRAST_FLOOR;
+
+/**
+ * Raise every foreground and border in a palette to the contract, against that
+ * palette's own `bgDeep`.
+ *
+ * @param {object} palette - A complete color set: surfaces, text, borders, accents.
+ * @param {string} label - Scheme name, for the error when a target is unreachable.
+ */
+function solvePalette(palette, label) {
+  const ground = palette.bgDeep;
+  const out = { ...palette };
+
+  for (const key of [...FOREGROUND_KEYS, ...BORDER_KEYS]) {
+    if (!palette[key]) continue;
+    const target = contractFor(key);
+    const solved = solveContrast(palette[key], ground, target);
+    if (!solved) {
+      throw new Error(
+        `tokens.js: the ${label} scheme cannot carry ${key} at ${target.toFixed(2)}:1 on ` +
+          `${ground} without leaving its hue — only black or white would reach it. Move the ` +
+          `ground, or lower the contract for this key deliberately.`,
+      );
+    }
+    out[key] = solved;
+  }
+  return out;
+}
+
+/* ── Softened schemes ───────────────────────────────────────────────────────
+ *
+ * A region pinned to one scheme inside a page using the other is the only case
+ * that needs anything beyond the two schemes, and what it needs is not a
+ * palette — it is the same scheme, moved a little toward the page it sits in so
+ * the boundary is a transition rather than a slab. Pinning dark inside a light
+ * page with no softening is white-on-black; the softened variant is the escape
+ * hatch from that, and it is opt-in because plenty of designs want the slab.
+ *
+ * Two dimensionless coefficients, both read off the deep blue that was hand
+ * tuned for this site before any of it was derived:
+ *
+ *   lift    how far the ground travels toward the page's ground, as a fraction
+ *           of the perceptual distance between them. 10% — the navy sat at
+ *           L 0.187 between a near-black 0.101 and a near-white 0.949.
+ *   chroma  how much of the accent's own chroma the ground carries, so the
+ *           result is a colored surface rather than a grey one. The navy took
+ *           40% of the accent's chroma; it also takes the accent's hue, which
+ *           is what makes this follow a consumer's brand color instead of
+ *           baking ours in.
+ *
+ * The chroma fraction differs per scheme and honestly has to: the same chroma
+ * that reads as a deep brand navy at L 0.19 reads as a saturated periwinkle
+ * panel at L 0.86, because chroma carries much further on a light ground. A
+ * single coefficient was tried and produced a light variant that failed the
+ * contract at every step.
+ */
+const SOFT_LIFT = 0.1;
+
+/**
+ * Move a palette's surfaces and borders toward the surrounding page, tinted
+ * with the accent's hue. Foregrounds are left alone here — `solvePalette` then
+ * re-solves them against the ground this produces, which is the whole reason
+ * the softened schemes need no hand-tuning.
+ */
+function softenSurfaces(palette, pageGround, chromaFraction) {
+  const pageL = rgbToOklch(parseColor(pageGround)).l;
+  const accent = rgbToOklch(parseColor(palette.accentPrimary));
+  const out = { ...palette };
+
+  for (const key of [...SURFACE_KEYS, ...BORDER_KEYS]) {
+    const { l } = rgbToOklch(parseColor(palette[key]));
+    out[key] = formatRgb(
+      oklchToRgb({ l: l + (pageL - l) * SOFT_LIFT, c: accent.c * chromaFraction, h: accent.h }),
+    );
+  }
+  return out;
+}
+
+/* The dark scheme, brought to the contract before anything reads it. Only
+   accentSecondary moves — it measured 4.86:1, the one value in the dark tree
+   that was under the floor the rest of it already cleared. */
+Object.assign(tokens.color, solvePalette(tokens.color, 'dark'));
+
+/* Channel copies exist for alpha compositing and are a separate set of tokens,
+   so a solved color has to be written back into them or the two desync — the
+   fill tints one color while the text renders another. Derived rather than
+   restated, for exactly that reason. */
+const syncChannels = (palette, channels) => {
+  for (const key of Object.keys(channels)) {
+    if (palette[key]) channels[key] = parseColor(palette[key]).map(Math.round).join(', ');
+  }
+};
+syncChannels(tokens.color, tokens.rgb);
+
 export const cssVariables = `
   --bg-deep: ${tokens.color.bgDeep};
   --bg-surface: ${tokens.color.bgSurface};
@@ -598,6 +757,14 @@ export const cssVariables = `
 
   --accent-primary: ${tokens.color.accentPrimary};
   --accent-secondary: ${tokens.color.accentSecondary};
+
+  /* The accent captured under a name pinned regions never redeclare, so they
+     can derive from it without referencing a property they are themselves
+     declaring — which would be a cycle, and would invalidate both. Private and
+     not part of the public token surface: override --accent-primary as usual
+     and this follows, including into a pinned nav or footer. */
+  --_brand-primary: var(--accent-primary);
+  --_brand-secondary: var(--accent-secondary);
 
   --accent-primary-rgb: ${tokens.rgb.accentPrimary};
   --accent-secondary-rgb: ${tokens.rgb.accentSecondary};
@@ -1009,105 +1176,196 @@ export const lightTokens = {
   },
 };
 
-/** Fixed dark tokens for nav/footer regions */
-export const fixedDarkTokens = {
-  color: {
-    bgDeep: 'rgb(3, 3, 7)',
-    bgSurface: 'rgb(10, 10, 15)',
-    bgBase: 'rgb(10, 10, 15)',
-    bgCard: 'rgb(13, 13, 18)',
-    bgElevated: 'rgb(17, 17, 22)',
-    textPrimary: 'rgb(232, 232, 236)',
-    textSecondary: 'rgb(150, 152, 162)',
-    textMuted: 'rgb(142, 142, 155)',
-    textGhost: 'rgb(133, 133, 154)',
-    borderSubtle: 'rgb(24, 24, 30)',
-    borderDefault: 'rgb(34, 34, 41)',
-    borderBright: 'rgb(51, 51, 64)',
-    accentPrimary: 'rgb(77, 126, 247)',
-    accentSecondary: 'rgb(139, 92, 246)',
-    /* Status colors, pinned to the dark-tuned values. The statuses became
-       themeable (light darkens them for a near-white page), so a fixed-dark
-       region has to force them back: without these, a `success` badge inside
-       the navy footer of a light page would render the darkened-for-light
-       green on rgb(12, 12, 52) at roughly 2:1. The bright values are correct
-       for both fixed grounds — near-black here, deep navy in the light-fixed
-       variant, which inherits these rather than restating them. */
-    success: 'rgb(52, 211, 153)',
-    error: 'rgb(239, 68, 68)',
-    warning: 'rgb(245, 158, 11)',
-    info: 'rgb(59, 130, 246)',
+/* The light scheme, brought to the same contract. Unlike dark, most of it
+   moves: this is the palette that shipped at the AA line, and the whole
+   downstream family of light-mode special cases traces back to it. */
+Object.assign(
+  lightTokens.color,
+  Object.fromEntries(
+    [...FOREGROUND_KEYS, ...BORDER_KEYS].map((key) => [
+      key,
+      solvePalette({ ...tokens.color, ...lightTokens.color }, 'light')[key],
+    ]),
+  ),
+);
+syncChannels(lightTokens.color, lightTokens.rgb);
+
+/* ── The two softened schemes ──
+   Each is its parent scheme's surfaces moved toward the opposite page, with
+   every foreground re-solved against the ground that produces. Nothing here is
+   picked by hand, which is the point: change the accent and both retint,
+   change a surface and both re-solve. */
+const softPalettes = {
+  dark: solvePalette(
+    softenSurfaces({ ...tokens.color }, lightTokens.color.bgDeep, 0.4),
+    'soft dark',
+  ),
+  light: solvePalette(
+    softenSurfaces({ ...tokens.color, ...lightTokens.color }, tokens.color.bgDeep, 0.15),
+    'soft light',
+  ),
+};
+
+/* ── Following a consumer's accent into a pinned region ─────────────────────
+ *
+ * A pinned region declares its scheme on its own element, and a value set on an
+ * element beats one inherited into it. That is what makes the pin hold — and it
+ * is also why `:root { --accent-primary: orange }` never reached inside one.
+ * The theme synthesizer showed this plainly: the page went orange and both
+ * pinned bars stayed ARC blue.
+ *
+ * The region cannot simply derive its accent from --accent-primary, because it
+ * declares that property; a declaration that references itself is a cycle and
+ * both halves go invalid. So :root captures the accent under a private name the
+ * pinned blocks never shadow, and they derive from that instead. It costs no
+ * public API — override --accent-primary as before and the capture follows.
+ *
+ * Two derivations, each using the mechanism that suits it:
+ *
+ *   Grounds are the accent drawn over the scheme's extreme — over black for a
+ *   dark region, over white for a light one — at a fixed percentage per step.
+ *   That is a plain color-mix, it is what "soften the accent into a surface"
+ *   actually means, and the percentages below were fitted to reproduce the
+ *   lightness ramp the deep blue already had in production.
+ *
+ *   Accents need their lightness moved without losing the hue, which a mix
+ *   toward white cannot do — carrying the light accent to the dark accent's
+ *   lightness that way lands on rgb(212, …), a wash rather than a blue. So they
+ *   use relative color, pinning the scheme's own lightness and chroma onto
+ *   whatever hue the consumer supplied.
+ */
+const BRAND_PRIMARY = '--_brand-primary';
+const BRAND_SECONDARY = '--_brand-secondary';
+
+/* Percentages fitted against the solved soft palettes, so the derived ground
+   lands on the same lightness ramp the baked one did. */
+const SOFT_MIX = {
+  dark: {
+    over: 'rgb(0, 0, 0)',
+    pct: {
+      bgDeep: 15,
+      bgSurface: 22,
+      bgBase: 22,
+      bgCard: 24,
+      bgElevated: 27,
+      borderSubtle: 32,
+      borderDefault: 39,
+      borderBright: 52,
+    },
   },
-  rgb: {
-    accentPrimary: '77, 126, 247',
-    accentSecondary: '139, 92, 246',
-    textPrimary: '232, 232, 236',
-    textMuted: '142, 142, 155',
-    success: '52, 211, 153',
-    error: '239, 68, 68',
-    warning: '245, 158, 11',
-    info: '59, 130, 246',
-    white: '255, 255, 255',
-    black: '0, 0, 0',
-  },
-  gradient: {
-    displayText: 'linear-gradient(135deg, rgb(232, 232, 236) 0%, rgb(124, 124, 137) 100%)',
-    divider: 'linear-gradient(90deg, transparent, var(--border-subtle), transparent)',
-  },
-  shadow: {
-    overlay: '0 8px 32px rgba(0, 0, 0, 0.4)',
-  },
-  utility: {
-    bgHover: 'rgba(var(--white-rgb), 0.04)',
-    overlayBackdrop: 'rgba(var(--black-rgb), 0.6)',
+  light: {
+    over: 'rgb(255, 255, 255)',
+    pct: {
+      bgDeep: 25,
+      bgSurface: 22,
+      bgBase: 24,
+      bgCard: 22,
+      bgElevated: 27,
+      borderSubtle: 34,
+      borderDefault: 41,
+      borderBright: 54,
+    },
   },
 };
+
+/**
+ * Re-light the brand to a scheme's accent lightness, keeping everything else
+ * the consumer chose.
+ *
+ * Only the lightness is pinned. Chroma and hue pass through from the source —
+ * `c` and `h`, not literals — because the scheme's contract is about how light
+ * the accent is against its ground, and nothing else. Pinning ARC's chroma
+ * here instead was a real bug with an obvious tell: a monochrome brand has
+ * near-zero chroma and therefore an arbitrary hue, so forcing 0.19 of chroma
+ * onto it manufactured a saturated color out of a grey. Monochrome came out
+ * pink.
+ */
+const accentShape = (palette) =>
+  Object.fromEntries(
+    [
+      ['accentPrimary', BRAND_PRIMARY],
+      ['accentSecondary', BRAND_SECONDARY],
+    ].map(([key, source]) => {
+      const { l } = rgbToOklch(parseColor(palette[key]));
+      return [key, `oklch(from var(${source}) ${l.toFixed(4)} c h)`];
+    }),
+  );
+
+/** Ground and border steps as the brand accent laid over the scheme's extreme. */
+const groundMix = (variant) =>
+  Object.fromEntries(
+    Object.entries(SOFT_MIX[variant].pct).map(([key, pct]) => [
+      key,
+      `color-mix(in srgb, var(${BRAND_PRIMARY}) ${pct}%, ${SOFT_MIX[variant].over})`,
+    ]),
+  );
+
+/* The accent's channel triplet cannot be derived. Relative color produces a
+   color, and `rgba(var(--accent-primary-rgb), 0.2)` needs three bare numbers —
+   there is no syntax that turns one into the other. So a pinned region cannot
+   restate these and still follow a consumer's brand, and every glow, focus
+   ring and tint in the library is built from them rather than from the solid
+   color: with the triplets pinned to ARC's blue, an orange theme produced an
+   orange nav wearing a blue focus ring and a blue checkbox.
+   Left to inherit instead. On a page of the same scheme that is exactly right.
+   On the opposite one it carries the other scheme's tuning of the same hue,
+   which at the 0.06–0.2 alphas these are used at is a shade of dimness, not a
+   wrong color — and far better than a hue that ignores the theme outright. */
+const BRAND_CHANNELS = new Set(['--accent-primary-rgb', '--accent-secondary-rgb']);
+const withoutBrandChannels = (pairs) => pairs.filter(([name]) => !BRAND_CHANNELS.has(name));
+
+/** A softened scheme, shaped as an override tree like lightTokens. */
+const softTokens = (palette) => ({
+  color: Object.fromEntries(
+    [...SURFACE_KEYS, ...BORDER_KEYS, ...FOREGROUND_KEYS].map((k) => [k, palette[k]]),
+  ),
+  rgb: Object.fromEntries(
+    Object.keys(tokens.rgb)
+      .filter((k) => palette[k] && !BRAND_CHANNELS.has(rgbVarMap[k]))
+      .map((k) => [k, parseColor(palette[k]).map(Math.round).join(', ')]),
+  ),
+});
+
+/* Solving and then checking are not the same act, and the check is the one
+   that survives a future edit. A hand-picked value dropped into any of these
+   trees, a surface moved, a status recolored — all of it lands here rather
+   than on a page. The 0.1 slack is 8-bit rounding: the solver works in OKLCH
+   and the last binary-search step can land a thousandth under once it is
+   quantized to a channel. */
+const CONTRACT_SLACK = 0.1;
+
+for (const [label, palette] of [
+  ['dark', tokens.color],
+  ['light', { ...tokens.color, ...lightTokens.color }],
+  ['soft dark', softPalettes.dark],
+  ['soft light', softPalettes.light],
+]) {
+  const ground = parseColor(palette.bgDeep);
+  const failures = [...FOREGROUND_KEYS, ...BORDER_KEYS]
+    .filter((key) => palette[key])
+    .map((key) => ({
+      key,
+      got: contrast(parseColor(palette[key]), ground),
+      want: contractFor(key),
+    }))
+    .filter(({ got, want }) => got < want - CONTRACT_SLACK);
+
+  if (failures.length) {
+    throw new Error(
+      `tokens.js: the ${label} scheme breaks its contrast contract on ${palette.bgDeep} — ` +
+        failures
+          .map((f) => `${f.key} ${f.got.toFixed(2)} (needs ${f.want.toFixed(2)})`)
+          .join(', ') +
+        `. Every scheme solves against its own ground; a value that lands here was either ` +
+        `pinned by hand or is sitting on a surface that moved out from under it.`,
+    );
+  }
+}
 
 lightTokens.utility.accentTextMix = `${solveTextMix({ ...tokens.color, ...lightTokens.color }, [
   ...SEED_SWEEP,
   ...paletteAccents({ ...tokens.color, ...lightTokens.color }),
 ])}%`;
-
-/** Light-mode fixed dark tokens (deep royal blue for nav/footer) */
-export const lightFixedTokens = {
-  color: {
-    bgDeep: 'rgb(12, 12, 52)',
-    bgSurface: 'rgb(16, 16, 62)',
-    bgBase: 'rgb(16, 16, 62)',
-    bgCard: 'rgb(20, 20, 70)',
-    bgElevated: 'rgb(26, 26, 80)',
-    /* Near-neutral, and spread out.
-     *
-     * These were rgb(179,183,212) / (165,170,203) / (155,160,196): each about
-     * forty points bluer in the blue channel than the red, and all three within
-     * ten points of each other. On the navy bar that made every piece of text —
-     * wordmark tagline, nav labels, badge — the same tinted grey at the same
-     * weight, so blue meant four different things at once and nothing outranked
-     * anything. Pulling them toward neutral leaves the accent as the only blue
-     * in the region, which is then free to mean "this is the current page".
-     *
-     * Tuned against the region's real surface, rgb(12, 12, 52): secondary
-     * 11.02, muted 6.70, ghost 5.06 — three clear ranks, all past AA.
-     *
-     * Muted deliberately sits *below* the 7.73 of the accent. It is what an
-     * inactive nav label uses, and the active one uses the accent; pitch the
-     * inactive labels any brighter and the current page becomes the quietest
-     * thing in the row, which is the opposite of what the highlight is for. */
-    textSecondary: 'rgb(196, 198, 206)',
-    textMuted: 'rgb(152, 154, 164)',
-    textGhost: 'rgb(130, 132, 144)',
-    accentPrimary: 'rgb(130, 164, 250)',
-    /* Lifted off the background. The old values sat 14 to 40 points from a
-     * rgb(16,16,62) surface, which put a pill's outline at 1.2:1 — present in
-     * the stylesheet and invisible on screen. */
-    borderSubtle: 'rgb(52, 53, 96)',
-    borderDefault: 'rgb(78, 79, 112)',
-    borderBright: 'rgb(110, 111, 140)',
-  },
-  rgb: {
-    accentPrimary: '130, 164, 250',
-  },
-};
 
 /* ── CSS Generator ── */
 
@@ -1180,9 +1438,9 @@ const gradientVarMap = {
   ambient: '--gradient-ambient',
 };
 
-function renderOverrides(t, indent = '  ', label = 'theme') {
+function collectOverrides(t, label = 'theme') {
   const lines = [];
-  const add = (name, val) => lines.push(`${indent}${name}: ${val};`);
+  const add = (name, val) => lines.push([name, val]);
 
   // Unknown keys used to be dropped on the floor: every branch below was
   // `if (varMap[k]) add(...)`, so a typo in a theme override, or a token added
@@ -1267,7 +1525,114 @@ function renderOverrides(t, indent = '  ', label = 'theme') {
     );
   }
 
-  return lines.join('\n');
+  return lines;
+}
+
+/** Format `[name, value]` pairs as an indented declaration block. */
+const renderDecls = (pairs, indent = '  ') =>
+  pairs.map(([name, value]) => `${indent}${name}: ${value};`).join('\n');
+
+const renderOverrides = (t, indent = '  ', label = 'theme') =>
+  renderDecls(collectOverrides(t, label), indent);
+
+/* ── Fixed-scheme regions ──
+ *
+ * A nav that stays dark on a light page — or a panel that stays light on a
+ * dark one — is not a palette. It is one of the two schemes the library
+ * already generates, applied to a subtree instead of to :root. So it is
+ * emitted from the same token data rather than hand-picked beside it.
+ *
+ * What used to live here was a third palette (near-black) and a fourth (deep
+ * navy, for the dark region on a light page), each hand-tuned, each free to
+ * drift from the theme it stood in for — and the navy one needed a lifted
+ * accent literal of its own, because a light-tuned accent on a dark ground
+ * lands at 3.55–4.00 and had to be pinned by hand. The dark scheme's accent on
+ * the dark scheme's ground is 5.53 with nothing pinned. The island stopped
+ * needing a solver as soon as it stopped being a special case.
+ *
+ * Two mechanisms, because a custom property substitutes its var() references
+ * in the scope where it is DECLARED and then inherits the resolved value:
+ *
+ *   1. The scheme's own values — everything the light theme retunes — restated
+ *      on the region, so they beat a [data-theme] sitting on an ancestor.
+ *   2. Every *other* :root property whose value transitively references one of
+ *      those, restated too. Without it --surface-base, --glow-md, --focus-glow
+ *      and friends arrive pre-substituted with the page theme's colors and
+ *      quietly ignore the scheme forced above them. That set is computed to a
+ *      fixpoint rather than hand-listed — the hand-list is what left
+ *      --divider-glow and the ambient gradients leaking across the boundary.
+ */
+
+/** Every `--name: value` the :root block declares, comments stripped. */
+const rootDeclarations = (() => {
+  const map = new Map();
+  const src = cssVariables.replace(/\/\*[\s\S]*?\*\//g, '');
+  for (const decl of src.split(';')) {
+    const m = decl.match(/(--[\w-]+)\s*:\s*([\s\S]+)/);
+    if (m) map.set(m[1], m[2].trim().replace(/\s*\n\s*/g, ' '));
+  }
+  return map;
+})();
+
+/* --glow-status stays out: it reads the shadow-private --_status-rgb and must
+   remain a :host declaration, so a copy here would be guaranteed-invalid. Its
+   themable half crosses as the bare --glow-status-alpha, which is in the
+   scheme block like any other retuned value. */
+const REGION_EXCLUDED = new Set([
+  '--glow-status',
+  /* The brand capture is the one thing a pinned region must NOT restate: its
+     whole job is to survive the region shadowing --accent-primary, and the
+     closure would helpfully re-declare it into the very scope it exists to
+     see past. */
+  '--_brand-primary',
+  '--_brand-secondary',
+]);
+
+/** The properties a scheme retunes. The light overrides define the set. */
+const schemeNames = collectOverrides(lightTokens, 'light theme').map(([name]) => name);
+
+/** :root properties that must re-substitute inside a fixed-scheme region. */
+const dependentDeclarations = (() => {
+  const needed = new Set(schemeNames);
+  const out = new Map();
+  for (let changed = true; changed; ) {
+    changed = false;
+    for (const [name, value] of rootDeclarations) {
+      if (needed.has(name) || REGION_EXCLUDED.has(name)) continue;
+      const refs = [...value.matchAll(/var\((--[\w-]+)/g)].map((m) => m[1]);
+      if (refs.some((ref) => needed.has(ref))) {
+        needed.add(name);
+        out.set(name, value);
+        changed = true;
+      }
+    }
+  }
+  return [...out];
+})();
+
+/**
+ * One scheme's complete declaration block, for a selector other than :root.
+ *
+ * @param {object|null} overrides - The scheme's override tree, or null for
+ *   dark, whose values are :root's own and are read back from it rather than
+ *   restated — that is what keeps the pinned region and the dark page identical
+ *   by construction.
+ */
+function schemeBlock(overrides, label, indent = '  ') {
+  const own = overrides
+    ? collectOverrides(overrides, label)
+    : schemeNames.map((name) => {
+        const value = rootDeclarations.get(name);
+        if (value === undefined) {
+          throw new Error(
+            `tokens.js: the light theme retunes ${name}, but :root never declares it, ` +
+              `so a fixed-dark region has no dark value to restate. Declare it in ` +
+              `cssVariables, or drop it from lightTokens.`,
+          );
+        }
+        return [name, value];
+      });
+  return renderDecls([...withoutBrandChannels(own), ...dependentDeclarations], indent);
 }
 
 /**
@@ -1639,63 +2004,54 @@ export function generateTokensCSS({ tags = [] } = {}) {
 
   const lightVars = renderOverrides(lightTokens);
   const lightVarsNested = renderOverrides(lightTokens, '    ');
-  const fixedVars = renderOverrides(fixedDarkTokens);
-  const fixedVarsNested = renderOverrides(fixedDarkTokens, '    ');
-  const lightFixedVars = renderOverrides(lightFixedTokens);
-  const lightFixedVarsNested = renderOverrides(lightFixedTokens, '    ');
+  /* ── Pinned regions declare nothing on a page of their own scheme ──
+   *
+   * "Fixed dark" means the region looks like dark mode no matter what the page
+   * is doing — and on a dark page, dark mode is whatever the page says it is,
+   * including every token a consumer retuned. Restating ARC's own literals
+   * there does not pin the scheme, it pins *our palette*, and the difference is
+   * invisible until someone themes the library: an orange theme produced a warm
+   * page with two stubbornly neutral bars welded across the top of it.
+   *
+   * So the scheme is forced only where it has to be — when the page is the
+   * opposite one — and inherited otherwise. That also makes the dark path the
+   * one that needs no machinery, which is the right way round for a dark-first
+   * library; before this the derived light-on-dark path was the one that
+   * carried a consumer's colors and the plain dark path was the one that
+   * dropped them.
+   */
+  const forced = {
+    dark: schemeBlock(null, 'fixed dark'),
+    darkNested: schemeBlock(null, 'fixed dark', '    '),
+    light: schemeBlock(lightTokens, 'fixed light'),
+    lightNested: schemeBlock(lightTokens, 'fixed light', '    '),
+    softDark: schemeBlock(softTokens(softPalettes.dark), 'soft dark'),
+    softDarkNested: schemeBlock(softTokens(softPalettes.dark), 'soft dark', '    '),
+    softLight: schemeBlock(softTokens(softPalettes.light), 'soft light'),
+    softLightNested: schemeBlock(softTokens(softPalettes.light), 'soft light', '    '),
+  };
 
-  // A custom property substitutes its var() references in the scope where it
-  // is DECLARED, then inherits the resolved value — so the :root semantic
-  // aliases (--surface-base: var(--bg-deep), …) and accent compounds
-  // (--glow-md, --focus-glow, …) carry the page theme's colors into
-  // .theme-fixed regions and ignore the forced tokens above them.
-  // Re-declaring them inside .theme-fixed makes them re-substitute against
-  // the fixed values; the light-fixed variant needs no copy of its own,
-  // because the cascade settles --bg-*/--accent-* on the element before the
-  // composition resolves there. Compound values come from the token tree, not
-  // a restated literal, so they cannot drift from the :root recipes.
-  // --glow-status is deliberately absent: it references the shadow-private
-  // --_status-rgb and must stay a :host declaration; its themable alpha is
-  // pinned back to the dark value here instead.
-  const fixedSemanticAliases = [
-    ['--interactive', 'var(--accent-primary)'],
-    ['--interactive-rgb', 'var(--accent-primary-rgb)'],
-    ['--interactive-muted', 'var(--text-ghost)'],
-    ['--surface-base', 'var(--bg-deep)'],
-    ['--surface-primary', 'var(--bg-surface)'],
-    ['--surface-raised', 'var(--bg-card)'],
-    ['--surface-overlay', 'var(--bg-elevated)'],
-    ['--surface-hover', 'var(--bg-hover)'],
-    ['--divider', 'var(--border-subtle)'],
-    // Fixed regions keep the dark accent, so they keep the dark on-accent
-    // color with it — without this the light theme's white would follow the
-    // page into a region whose accent never changed.
-    ['--on-accent', 'var(--surface-base)'],
-    ['--glow-primary', tokens.glow.primary],
-    ['--glow-secondary', tokens.glow.secondary],
-    ['--glow-white', tokens.glow.white],
-    ['--glow-xs', tokens.glowScale.xs],
-    ['--glow-sm', tokens.glowScale.sm],
-    ['--glow-md', tokens.glowScale.md],
-    ['--glow-status-alpha', tokens.glowStatusAlpha],
-    ['--glow-hover', tokens.glowHover],
-    ['--glow-card-hover', tokens.glowCard.hover],
-    ['--gradient-divider-glow', tokens.gradient.dividerGlow],
-    ['--focus-ring', tokens.focus.ring],
-    ['--focus-glow', tokens.focus.glow],
-    ['--focus-error', tokens.focus.error],
-    ['--focus-inset', tokens.focus.inset],
-    ['--focus-thumb', tokens.focus.thumb],
-    ['--interactive-hover', 'var(--glow-hover)'],
-    ['--interactive-active', 'var(--glow-primary)'],
-    ['--interactive-focus', 'var(--focus-glow)'],
-    ['--interactive-focus-ring', 'var(--focus-ring)'],
-    ['--interactive-focus-error', 'var(--focus-error)'],
-    ['--interactive-focus-inset', 'var(--focus-inset)'],
-    ['--interactive-focus-thumb', 'var(--focus-thumb)'],
-  ]
-    .map(([name, value]) => `  ${name}: ${value};`)
-    .join('\n');
+  /* The same forced values, derived from the brand capture instead of baked, so
+     a consumer's accent reaches a region even where the scheme has to be
+     overridden. Layered over the literals rather than replacing them: without
+     relative color syntax the region keeps exactly the palette it has today and
+     only loses the ability to follow. */
+  const derived = (variant, palette, indent) =>
+    renderDecls(
+      [
+        ...Object.entries(groundMix(variant)).map(([key, value]) => [colorVarMap[key], value]),
+        ...Object.entries(accentShape(palette)).map(([key, value]) => [colorVarMap[key], value]),
+      ],
+      indent,
+    );
+
+  /* Forced but not softened: the ground stays the scheme's own and only the
+     accent pair follows, re-lit from the page's accent to this scheme's. */
+  const forcedAccents = (palette, indent) =>
+    renderDecls(
+      Object.entries(accentShape(palette)).map(([key, value]) => [colorVarMap[key], value]),
+      indent,
+    );
 
   return `/* Generated from shared/tokens.js — do not edit by hand */
 
@@ -1723,19 +2079,116 @@ ${lightVarsNested}
 
 ${tokenForwarding}
 
-/* Fixed Dark — always-dark regions (nav, footer) */
-.theme-fixed {
-${fixedVars}
-${fixedSemanticAliases}
+/* Fixed Scheme — a subtree pinned to one scheme regardless of the page theme.
+   .theme-fixed is the dark one under its original name.
+
+   On a page of the region's own scheme these declare nothing but the
+   color-scheme: "fixed dark" on a dark page means the page's dark mode,
+   consumer retunes included, not a second copy of ARC's palette. */
+.theme-fixed,
+.theme-fixed-dark,
+.theme-fixed-dark-soft {
+  color-scheme: dark;
 }
 
-[data-theme="light"] .theme-fixed {
-${lightFixedVars}
+.theme-fixed-light,
+.theme-fixed-light-soft {
+  color-scheme: light;
+}
+
+/* Forced — the page is the opposite scheme, so the region has to carry one. */
+[data-theme="light"] .theme-fixed,
+[data-theme="light"] .theme-fixed-dark {
+${forced.dark}
 }
 
 @media (prefers-color-scheme: light) {
-  [data-theme="auto"] .theme-fixed {
-${lightFixedVarsNested}
+  [data-theme="auto"] .theme-fixed,
+  [data-theme="auto"] .theme-fixed-dark {
+${forced.darkNested}
+  }
+}
+
+/* Softened — the same scheme, moved toward the page it is sitting in. Only
+   reachable in the forced case; matched, a pinned region is already seamless. */
+[data-theme="light"] .theme-fixed-dark-soft {
+${forced.softDark}
+}
+
+@media (prefers-color-scheme: light) {
+  [data-theme="auto"] .theme-fixed-dark-soft {
+${forced.softDarkNested}
+  }
+}
+
+/* Dark is the default page, so the light variants cover an explicit dark theme
+   and the case where a consumer never sets the attribute at all. */
+[data-theme="dark"] .theme-fixed-light,
+:root:not([data-theme]) .theme-fixed-light {
+${forced.light}
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-theme="auto"] .theme-fixed-light {
+${forced.lightNested}
+  }
+}
+
+[data-theme="dark"] .theme-fixed-light-soft,
+:root:not([data-theme]) .theme-fixed-light-soft {
+${forced.softLight}
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-theme="auto"] .theme-fixed-light-soft {
+${forced.softLightNested}
+  }
+}
+
+/* Carry the consumer's accent into a forced region. Only the forced case needs
+   this — a matched region inherits the page's accent already. Behind @supports
+   because relative color syntax is what moves a hue to another scheme's
+   lightness without washing it out; without it the region keeps the baked
+   palette above, which is right for ARC's own accent and merely fixed. */
+@supports (color: oklch(from red l c h)) {
+  [data-theme="light"] .theme-fixed,
+  [data-theme="light"] .theme-fixed-dark {
+${forcedAccents(tokens.color, '    ')}
+  }
+
+  [data-theme="dark"] .theme-fixed-light,
+  :root:not([data-theme]) .theme-fixed-light {
+${forcedAccents({ ...tokens.color, ...lightTokens.color }, '    ')}
+  }
+
+  [data-theme="light"] .theme-fixed-dark-soft {
+${derived('dark', softPalettes.dark, '    ')}
+  }
+
+  [data-theme="dark"] .theme-fixed-light-soft,
+  :root:not([data-theme]) .theme-fixed-light-soft {
+${derived('light', softPalettes.light, '    ')}
+  }
+
+  @media (prefers-color-scheme: light) {
+    [data-theme="auto"] .theme-fixed,
+    [data-theme="auto"] .theme-fixed-dark {
+${forcedAccents(tokens.color, '      ')}
+    }
+
+    [data-theme="auto"] .theme-fixed-dark-soft {
+${derived('dark', softPalettes.dark, '      ')}
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    [data-theme="auto"] .theme-fixed-light {
+${forcedAccents({ ...tokens.color, ...lightTokens.color }, '      ')}
+    }
+
+    [data-theme="auto"] .theme-fixed-light-soft {
+${derived('light', softPalettes.light, '      ')}
+    }
   }
 }
 `;

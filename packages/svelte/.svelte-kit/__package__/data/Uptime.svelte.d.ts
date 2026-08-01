@@ -7,7 +7,7 @@ interface Props {
     }>;
     startLabel?: string;
     endLabel?: string;
-    summary?: string;
+    summary?: boolean;
     class?: string;
     id?: string;
     style?: string;

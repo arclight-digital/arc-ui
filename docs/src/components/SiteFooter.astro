@@ -1,4 +1,4 @@
-<div class="site-footer theme-fixed">
+<div class="site-footer theme-fixed-dark-soft">
   <arc-footer contained class="site-footer__panel">
     <div class="site-footer__brand" slot="logo">
       <div class="site-footer__title">
@@ -86,9 +86,10 @@
 
 <style>
   /* ── Glow horizon along the top ──
-     Safe to use the semantic token: .theme-fixed re-declares the surface
-     aliases in its own scope (shared/tokens.js), so --surface-base resolves
-     against the forced --bg-deep here and matches the bar exactly. */
+     Safe to use the semantic token: the pinned-scheme classes re-declare the
+     surface aliases in their own scope (shared/tokens.js), so --surface-base
+     resolves against the pinned --bg-deep here — including the softened one on
+     a light page — and matches the bar exactly. */
   .site-footer {
     position: relative;
     background: var(--surface-base);

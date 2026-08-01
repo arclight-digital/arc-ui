@@ -10,7 +10,7 @@
     autoplay?: boolean;
     loop?: boolean;
     muted?: boolean;
-    controls?: string;
+    controls?: boolean;
     preload?: 'none' | 'metadata' | 'auto';
     class?: string;
     id?: string;
@@ -39,7 +39,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { src = '', poster = '', label = '', autoplay = false, loop = false, muted = false, controls = 'true', preload = 'metadata', ...rest }: Props = $props();
+  let { src = '', poster = '', label = '', autoplay = false, loop = false, muted = false, controls = true, preload = 'metadata', ...rest }: Props = $props();
 </script>
 
 <arc-video {src} {poster} {label} {autoplay} {loop} {muted} {controls} {preload} {...rest}>

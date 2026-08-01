@@ -42,16 +42,21 @@ const description =
 
   <div class="synth">
     {/*
-      The command bar is `.theme-fixed` on purpose. Every other surface here
-      wears the theme being edited — that is the whole point — but a palette
-      with 1.2:1 text is a legitimate thing to build and briefly look at, and
-      when you do, the controls that undo it must still be readable. Fixed
-      regions force the --bg-*, --text-* and accent families, so Reset is
-      always visible no matter what the rest of the page is doing.
+      The command bar is pinned on purpose. Every other surface here wears the
+      theme being edited — that is the whole point — but a palette with 1.2:1
+      text is a legitimate thing to build and briefly look at, and when you do,
+      the controls that undo it must still be readable. Pinned regions force
+      the --bg-*, --text-* and accent families, so Reset is always visible no
+      matter what the rest of the page is doing.
+
+      The -soft variant specifically, matching SiteTopBar directly above it.
+      Two pinned regions stacked against each other have to agree: hard-pinned
+      here, the bar rendered a near-black slab immediately under the top bar's
+      softened blue, and the seam between them read as a rendering fault.
     */}
     {/* A div, not a <header>: arc-top-bar already contributes the page's one
         banner landmark, and a second <header> at this level would make two. */}
-    <div class="synth-bar theme-fixed" role="region" aria-label="Theme actions">
+    <div class="synth-bar theme-fixed-dark-soft" role="region" aria-label="Theme actions">
       <div class="synth-bar__group">
         <h1 class="synth-bar__title">Theme Synthesizer</h1>
         <span class="synth-bar__count" data-changed-count aria-live="polite"></span>
@@ -1344,6 +1349,14 @@ const description =
   }
 
   .synth-mirror:hover { color: var(--text-secondary); }
+
+  /* A native checkbox, so without this it paints the UA's own accent — a fixed
+     blue that ignores the theme entirely. Invisible while the bar was blue;
+     the moment the accent went orange it was the one thing in the region still
+     wearing the browser's mind rather than ours. */
+  .synth-mirror input {
+    accent-color: var(--interactive);
+  }
 
   /* ── Contrast chip ───────────────────────────────────────────────────── */
 

@@ -6,7 +6,7 @@ interface Props {
     autoplay?: boolean;
     loop?: boolean;
     muted?: boolean;
-    controls?: string;
+    controls?: boolean;
     preload?: 'none' | 'metadata' | 'auto';
     class?: string;
     id?: string;

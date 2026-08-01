@@ -1,5 +1,6 @@
 ---
 import DocsLayout from '../../layouts/DocsLayout.astro';
+import { tokens } from '../../../../shared/tokens.js';
 
 const headings = [
   { id: 'colors', label: 'Colors' },
@@ -20,35 +21,35 @@ const headings = [
   { id: 'utility', label: 'Utility' },
 ];
 
-const chartTokens = [
-  { name: 'chart-1', value: '#4d7ef7' },
-  { name: 'chart-2', value: '#ea580c' },
-  { name: 'chart-3', value: '#0d9488' },
-  { name: 'chart-4', value: '#8b5cf6' },
-  { name: 'chart-5', value: '#db2777' },
-  { name: 'chart-6', value: '#65a30d' },
-];
+/* Read from the token source rather than restated here. The hand-copied
+   version of this table had drifted — it listed text-secondary as
+   rgb(138, 138, 150) against an actual rgb(150, 152, 162), and would have
+   drifted again the moment the contrast contract moved a value. */
+const chartTokens = ([1, 2, 3, 4, 5, 6] as const).map((n) => ({
+  name: `chart-${n}`,
+  value: tokens.color[`chart${n}`],
+}));
 
 const colorTokens = [
-  { name: 'bg-deep', value: 'rgb(3, 3, 7)' },
-  { name: 'bg-surface', value: 'rgb(10, 10, 15)' },
-  { name: 'bg-base', value: 'rgb(10, 10, 15)' },
-  { name: 'bg-card', value: 'rgb(13, 13, 18)' },
-  { name: 'bg-elevated', value: 'rgb(17, 17, 22)' },
-  { name: 'text-primary', value: 'rgb(232, 232, 236)' },
-  { name: 'text-secondary', value: 'rgb(138, 138, 150)' },
-  { name: 'text-muted', value: 'rgb(124, 124, 137)' },
-  { name: 'text-ghost', value: 'rgb(107, 107, 128)' },
-  { name: 'border-subtle', value: 'rgb(24, 24, 30)' },
-  { name: 'border-default', value: 'rgb(34, 34, 41)' },
-  { name: 'border-bright', value: 'rgb(51, 51, 64)' },
-  { name: 'accent-primary', value: 'rgb(77, 126, 247)', accent: true },
-  { name: 'accent-secondary', value: 'rgb(139, 92, 246)', accent: true },
-  { name: 'color-success', value: 'rgb(52, 211, 153)', accent: true },
-  { name: 'color-warning', value: 'rgb(245, 158, 11)', accent: true },
-  { name: 'color-error', value: 'rgb(239, 68, 68)', accent: true },
-  { name: 'color-info', value: 'rgb(59, 130, 246)', accent: true },
-];
+  { name: 'bg-deep', key: 'bgDeep' },
+  { name: 'bg-surface', key: 'bgSurface' },
+  { name: 'bg-base', key: 'bgBase' },
+  { name: 'bg-card', key: 'bgCard' },
+  { name: 'bg-elevated', key: 'bgElevated' },
+  { name: 'text-primary', key: 'textPrimary' },
+  { name: 'text-secondary', key: 'textSecondary' },
+  { name: 'text-muted', key: 'textMuted' },
+  { name: 'text-ghost', key: 'textGhost' },
+  { name: 'border-subtle', key: 'borderSubtle' },
+  { name: 'border-default', key: 'borderDefault' },
+  { name: 'border-bright', key: 'borderBright' },
+  { name: 'accent-primary', key: 'accentPrimary', accent: true },
+  { name: 'accent-secondary', key: 'accentSecondary', accent: true },
+  { name: 'color-success', key: 'success', accent: true },
+  { name: 'color-warning', key: 'warning', accent: true },
+  { name: 'color-error', key: 'error', accent: true },
+  { name: 'color-info', key: 'info', accent: true },
+].map(({ name, key, accent }) => ({ name, value: tokens.color[key], accent }));
 
 const spacingTokens = [
   { name: 'xs', value: '4px' },

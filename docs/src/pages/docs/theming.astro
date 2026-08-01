@@ -116,16 +116,43 @@ document.documentElement.setAttribute('data-theme', saved);`}></arc-code-block><
       <h2 class="docs-heading">Fixed Regions</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        Some regions — navs, footers — should keep a consistent dark appearance regardless of
-        theme. Apply the <code>.theme-fixed</code> class to lock their tokens: near-black in
-        dark mode, deep royal blue in light mode. The top bar on this page uses it — flip to
-        light mode and watch it hold.
+        Some regions — navs, footers, a command bar — should hold their appearance regardless
+        of the page theme. <code>.theme-fixed-dark</code> and <code>.theme-fixed-light</code>
+        pin a subtree to one scheme. Not a separate palette: the same scheme the library
+        generates for <code>:root</code>, applied to a subtree instead. So a pinned region
+        carries exactly the contrast that scheme was tuned for.
+        <code>.theme-fixed</code> is the dark one under its original name.
       </p>
-      <div class="docs-code"><arc-code-block language="html" code={`<div class="theme-fixed">
+      <div class="docs-code"><arc-code-block language="html" code={`<div class="theme-fixed-dark">
   <arc-top-bar fixed>
-    <!-- Always uses dark tokens -->
+    <!-- Dark tokens, whatever the page is doing -->
   </arc-top-bar>
-</div>`}></arc-code-block></div>
+</div>
+
+<aside class="theme-fixed-light">
+  <!-- and the reverse, for a light panel on a dark page -->
+</aside>`}></arc-code-block></div>
+      <p class="docs-text">
+        Pinned hard, a dark region on a light page is a black slab against near-white — a
+        boundary far harder than anything else on the page. The <code>-soft</code> variants
+        are the escape hatch: the same scheme, moved a tenth of the way toward the page
+        around it and tinted with your accent's own hue, so the edge reads as a transition.
+        It applies only where the page is the opposite scheme; matched, a pinned region is
+        already seamless and gets nothing. The top bar and footer here use it — flip to
+        light mode and watch them land on blue rather than black.
+      </p>
+      <div class="docs-code"><arc-code-block language="html" code={`<header class="theme-fixed-dark-soft">
+  <!-- near-black on a dark page, deep accent-blue on a light one -->
+</header>`}></arc-code-block></div>
+      <arc-callout variant="note">
+        A pinned region declares its scheme on its own element, which beats anything
+        inherited — that is what makes the pin hold. It also means a
+        <code>:root</code> override does not reach inside one: to carry a custom accent
+        into a pinned region, set it on the region too.
+      </arc-callout>
+      <div class="docs-code"><arc-code-block language="css" code={`:root, .theme-fixed-dark-soft {
+  --accent-primary: rgb(0, 150, 136);
+}`}></arc-code-block></div>
     </section>
 
     <section id="custom-themes">

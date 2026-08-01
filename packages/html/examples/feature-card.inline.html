@@ -4,21 +4,21 @@
   @media (max-width: 768px) {
     .arc-feature-card .card__inner { padding: inherit; }
   }
-  .arc-feature-card .card:hover .card__icon { border-color: rgba(130, 164, 250,0.3);
-        box-shadow: 0 0 20px rgba(130, 164, 250, 0.2), 0 0 6px rgba(130, 164, 250, 0.12);
+  .arc-feature-card .card:hover .card__icon { border-color: rgba(40, 87, 215,0.3);
+        box-shadow: 0 0 20px rgba(40, 87, 215, 0.2), 0 0 6px rgba(40, 87, 215, 0.12);
         transform: translateY(-2px); }
-  .arc-feature-card .card:hover .card__title { color: rgb(232, 232, 236); }
-  .arc-feature-card .card:hover .card__action { color: rgb(130, 164, 250);
+  .arc-feature-card .card:hover .card__title { color: rgb(35, 35, 55); }
+  .arc-feature-card .card:hover .card__action { color: oklch(from var(--accent-primary) 0.4465 c h);
         gap: 10px; }
   .arc-feature-card .card:hover .card__action-arrow { transform: translateX(2px); }
   .arc-feature-card .card:hover .card__rule { opacity: 0.5; width: 48px; }
 </style>
 <div class="arc-feature-card" style="display: block; height: 100%">
   <div class="card" style="height: 100%"><div class="card__inner" style="padding: inherit; gap: inherit; z-index: 1">
-    <div class="card__icon" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: inherit; background: rgba(130, 164, 250, 0.06); border: 1px solid rgba(130, 164, 250, 0.12); color: rgb(130, 164, 250); font-size: 20px">★</div>
-    <h3 class="card__title" style="font-size: 17px; font-weight: 600; color: rgb(232, 232, 236); margin: 0">Heading</h3>
-    <p style="color: rgb(196, 198, 206); font-family: 'Host Grotesk', system-ui, sans-serif; font-size: 16px; line-height: 1.7; flex: 1; margin: 0">Description text goes here</p>
+    <div class="card__icon" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: inherit; background: rgba(40, 87, 215, 0.06); border: 1px solid rgba(40, 87, 215, 0.12); color: oklch(from var(--accent-primary) 0.4465 c h); font-size: 20px">★</div>
+    <h3 class="card__title" style="font-size: 17px; font-weight: 600; color: rgb(35, 35, 55); margin: 0">Heading</h3>
+    <p style="color: rgb(60, 63, 81); font-family: 'Host Grotesk', system-ui, sans-serif; font-size: 16px; line-height: 1.7; flex: 1; margin: 0">Description text goes here</p>
     Action
-    <span class="card__rule" style="width: 32px; height: 1px; background: linear-gradient(90deg, rgb(130, 164, 250), transparent); opacity: 0"></span>
+    <span class="card__rule" style="width: 32px; height: 1px; background: linear-gradient(90deg, oklch(from var(--accent-primary) 0.4465 c h), transparent); opacity: 0"></span>
   </div></div>
 </div>

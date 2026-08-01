@@ -21,10 +21,18 @@
   --border-bright: rgb(51, 51, 64);
 
   --accent-primary: rgb(77, 126, 247);
-  --accent-secondary: rgb(139, 92, 246);
+  --accent-secondary: rgb(148, 102, 255);
+
+  /* The accent captured under a name pinned regions never redeclare, so they
+     can derive from it without referencing a property they are themselves
+     declaring — which would be a cycle, and would invalidate both. Private and
+     not part of the public token surface: override --accent-primary as usual
+     and this follows, including into a pinned nav or footer. */
+  --_brand-primary: var(--accent-primary);
+  --_brand-secondary: var(--accent-secondary);
 
   --accent-primary-rgb: 77, 126, 247;
-  --accent-secondary-rgb: 139, 92, 246;
+  --accent-secondary-rgb: 148, 102, 255;
   --text-primary-rgb: 232, 232, 236;
   --text-muted-rgb: 142, 142, 155;
   --color-error-rgb: 239, 68, 68;
@@ -250,7 +258,7 @@
 
   --bg-hover: rgba(255, 255, 255, 0.04);
   --overlay-backdrop: rgba(0, 0, 0, 0.6);
-  --accent-text-mix: 10%;
+  --accent-text-mix: 0%;
 
   /* Text painted ON an accent fill — the primary button's label, the active
      segment, the selected day in a picker.
@@ -5057,17 +5065,22 @@
           border-color var(--transition-slow);
       }
 
-      /* An always-dark region has to be one color, not two.
+      /* A pinned region has to be one color, not two.
          arc-footer paints --surface-base flat, while this bar mixes it 85% with
-         transparent. In dark mode that costs nothing — 15% of a near-black page
-         bleeds through as near-black. In light mode the 15% is 15% of a
-         near-white page, so the identical token renders rgb(46,46,81) up here
-         and the raw navy down there, and the two .theme-fixed regions visibly
-         disagree. Opaque when the region is pinned dark; the translucency stays
-         for bars that follow the page, which are the ones with something worth
-         seeing behind them. The blur goes with it, and loses nothing: it was
-         already imperceptible behind an 85%-opaque fill. */
-      .arc-top-bar.theme-fixed .topbar {
+         transparent. When the region's scheme matches the page that costs
+         nothing — 15% of a near-black page bleeds through as near-black. When
+         it doesn't, the 15% is 15% of the opposite ground, so the identical
+         token renders one color up here and another down there, and two regions
+         pinned to the same scheme visibly disagree. Opaque when the region is
+         pinned; the translucency stays for bars that follow the page, which are
+         the ones with something worth seeing behind them. The blur goes with
+         it, and loses nothing: it was already imperceptible behind an
+         85%-opaque fill. */
+      .arc-top-bar.theme-fixed .topbar,
+      .arc-top-bar.theme-fixed-dark .topbar,
+      .arc-top-bar.theme-fixed-dark-soft .topbar,
+      .arc-top-bar.theme-fixed-light .topbar,
+      .arc-top-bar.theme-fixed-light-soft .topbar {
         background: var(--surface-base);
         backdrop-filter: none;
         -webkit-backdrop-filter: none;
