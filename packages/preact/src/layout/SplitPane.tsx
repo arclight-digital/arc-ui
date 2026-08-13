@@ -10,6 +10,7 @@ export interface SplitPaneProps {
   minRatio?: number;
   maxRatio?: number;
   onArcResize?: (e: CustomEvent) => void;
+  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -37,7 +38,7 @@ export interface SplitPaneProps {
   [key: `on${string}`]: unknown;
 }
 
-export const SplitPane: FunctionComponent<SplitPaneProps> = ({ orientation, ratio, minRatio, maxRatio, onArcResize, ...rest }) => {
+export const SplitPane: FunctionComponent<SplitPaneProps> = ({ orientation, ratio, minRatio, maxRatio, onArcResize, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -50,5 +51,5 @@ export const SplitPane: FunctionComponent<SplitPaneProps> = ({ orientation, rati
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcResize]);
-  return h('arc-split-pane', { ref, orientation, ratio, minRatio, maxRatio, ...rest });
+  return h('arc-split-pane', { ref, orientation, ratio, minRatio, maxRatio, ...rest }, children);
 };

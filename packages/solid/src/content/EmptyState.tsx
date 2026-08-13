@@ -14,6 +14,7 @@ declare module 'solid-js' {
 export interface EmptyStateProps {
   heading?: string;
   description?: string;
+  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -42,9 +43,10 @@ export interface EmptyStateProps {
 }
 
 export const EmptyState: Component<EmptyStateProps> = (props) => {
-  const [local, rest] = splitProps(props, ['heading', 'description']);
+  const [local, rest] = splitProps(props, ['heading', 'description', 'children']);
   return (
     <arc-empty-state heading={local.heading} description={local.description} {...rest}>
+      {local.children}
     </arc-empty-state>
   );
 };

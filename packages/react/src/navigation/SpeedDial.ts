@@ -10,6 +10,7 @@ export interface SpeedDialProps {
   position?: 'bottom-right' | 'bottom-left';
   items?: Array<{icon: string, label: string, value?: string}>;
   className?: string;
+  children?: React.ReactNode;
   onArcClose?: (e: CustomEvent) => void;
   onArcOpen?: (e: CustomEvent) => void;
   onArcAction?: (e: CustomEvent) => void;

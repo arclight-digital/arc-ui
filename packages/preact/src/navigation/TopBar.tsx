@@ -14,6 +14,7 @@ export interface TopBarProps {
   mobileMenu?: string;
   menuPosition?: string;
   navAlign?: 'left' | 'center' | 'right';
+  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -41,5 +42,5 @@ export interface TopBarProps {
   [key: `on${string}`]: unknown;
 }
 
-export const TopBar: FunctionComponent<TopBarProps> = ({ heading, homeHref, scrolled, immersive, fixed, contained, menuOpen, mobileMenu, menuPosition, navAlign, ...rest }) =>
-  h('arc-top-bar', { heading, homeHref, scrolled, immersive, fixed, contained, menuOpen, mobileMenu, menuPosition, navAlign, ...rest });
+export const TopBar: FunctionComponent<TopBarProps> = ({ heading, homeHref, scrolled, immersive, fixed, contained, menuOpen, mobileMenu, menuPosition, navAlign, children, ...rest }) =>
+  h('arc-top-bar', { heading, homeHref, scrolled, immersive, fixed, contained, menuOpen, mobileMenu, menuPosition, navAlign, ...rest }, children);

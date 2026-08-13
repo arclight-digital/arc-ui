@@ -16,6 +16,7 @@ export interface MaskedInputProps {
   error?: string;
   size?: 'sm' | 'md' | 'lg';
   className?: string;
+  children?: React.ReactNode;
   onArcInput?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
 }

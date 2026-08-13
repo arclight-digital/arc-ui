@@ -22,6 +22,7 @@ export interface TopBarProps {
   mobileMenu?: string;
   menuPosition?: string;
   navAlign?: 'left' | 'center' | 'right';
+  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -50,9 +51,10 @@ export interface TopBarProps {
 }
 
 export const TopBar: Component<TopBarProps> = (props) => {
-  const [local, rest] = splitProps(props, ['heading', 'homeHref', 'scrolled', 'immersive', 'fixed', 'contained', 'menuOpen', 'mobileMenu', 'menuPosition', 'navAlign']);
+  const [local, rest] = splitProps(props, ['heading', 'homeHref', 'scrolled', 'immersive', 'fixed', 'contained', 'menuOpen', 'mobileMenu', 'menuPosition', 'navAlign', 'children']);
   return (
     <arc-top-bar heading={local.heading} prop:homeHref={local.homeHref} scrolled={local.scrolled} immersive={local.immersive} fixed={local.fixed} contained={local.contained} prop:menuOpen={local.menuOpen} prop:mobileMenu={local.mobileMenu} prop:menuPosition={local.menuPosition} prop:navAlign={local.navAlign} {...rest}>
+      {local.children}
     </arc-top-bar>
   );
 };

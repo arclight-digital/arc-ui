@@ -10,6 +10,7 @@ export interface SplitPaneProps {
   minRatio?: number;
   maxRatio?: number;
   className?: string;
+  children?: React.ReactNode;
   onArcResize?: (e: CustomEvent) => void;
 }
 

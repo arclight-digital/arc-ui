@@ -9,6 +9,7 @@ export interface CommandBarProps {
   value?: string;
   icon?: string;
   className?: string;
+  children?: React.ReactNode;
   onArcInput?: (e: CustomEvent) => void;
   onArcSubmit?: (e: CustomEvent) => void;
 }

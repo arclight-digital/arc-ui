@@ -24,6 +24,7 @@ export interface MaskedInputProps {
   size?: 'sm' | 'md' | 'lg';
   onArcInput?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
+  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -52,9 +53,10 @@ export interface MaskedInputProps {
 }
 
 export const MaskedInput: Component<MaskedInputProps> = (props) => {
-  const [local, rest] = splitProps(props, ['mask', 'value', 'placeholderChar', 'label', 'name', 'disabled', 'required', 'autocomplete', 'error', 'size', 'onArcInput', 'onArcChange']);
+  const [local, rest] = splitProps(props, ['mask', 'value', 'placeholderChar', 'label', 'name', 'disabled', 'required', 'autocomplete', 'error', 'size', 'onArcInput', 'onArcChange', 'children']);
   return (
     <arc-masked-input mask={local.mask} value={local.value} prop:placeholderChar={local.placeholderChar} label={local.label} name={local.name} disabled={local.disabled} required={local.required} autocomplete={local.autocomplete} error={local.error} size={local.size} on:arc-input={local.onArcInput} on:arc-change={local.onArcChange} {...rest}>
+      {local.children}
     </arc-masked-input>
   );
 };

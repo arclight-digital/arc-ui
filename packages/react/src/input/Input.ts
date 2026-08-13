@@ -17,6 +17,7 @@ export interface InputProps {
   multiline?: boolean;
   rows?: number;
   className?: string;
+  children?: React.ReactNode;
   onArcInput?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
 }

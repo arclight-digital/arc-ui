@@ -15,6 +15,7 @@ export interface ValueCardProps {
   icon?: string;
   heading?: string;
   description?: string;
+  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -43,9 +44,10 @@ export interface ValueCardProps {
 }
 
 export const ValueCard: Component<ValueCardProps> = (props) => {
-  const [local, rest] = splitProps(props, ['icon', 'heading', 'description']);
+  const [local, rest] = splitProps(props, ['icon', 'heading', 'description', 'children']);
   return (
     <arc-value-card icon={local.icon} heading={local.heading} description={local.description} {...rest}>
+      {local.children}
     </arc-value-card>
   );
 };

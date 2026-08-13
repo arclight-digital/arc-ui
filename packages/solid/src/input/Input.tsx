@@ -25,6 +25,7 @@ export interface InputProps {
   rows?: number;
   onArcInput?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
+  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -53,9 +54,10 @@ export interface InputProps {
 }
 
 export const Input: Component<InputProps> = (props) => {
-  const [local, rest] = splitProps(props, ['type', 'name', 'label', 'placeholder', 'value', 'disabled', 'required', 'error', 'size', 'multiline', 'rows', 'onArcInput', 'onArcChange']);
+  const [local, rest] = splitProps(props, ['type', 'name', 'label', 'placeholder', 'value', 'disabled', 'required', 'error', 'size', 'multiline', 'rows', 'onArcInput', 'onArcChange', 'children']);
   return (
     <arc-input type={local.type} name={local.name} label={local.label} placeholder={local.placeholder} value={local.value} disabled={local.disabled} required={local.required} error={local.error} size={local.size} multiline={local.multiline} rows={local.rows} on:arc-input={local.onArcInput} on:arc-change={local.onArcChange} {...rest}>
+      {local.children}
     </arc-input>
   );
 };

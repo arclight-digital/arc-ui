@@ -17,7 +17,13 @@ import { NgTemplateOutlet } from '@angular/common';
 import {
   Component, ElementRef, HostListener, Input, TemplateRef, inject, signal,
 } from '@angular/core';
-import { ArcVirtualList } from '@arclux/arc-ui/virtual-list';
+// The bare import is what registers the element. `ArcVirtualList` below is only
+// ever a type, so on its own that import is erased by TypeScript along with the
+// `customElements.define` side effect — which is how every generated Angular
+// wrapper came to render an inert element before prism 2.13.0. This file is
+// hand-authored, so it needs the same two lines written out.
+import '@arclux/arc-ui/virtual-list';
+import type { ArcVirtualList } from '@arclux/arc-ui/virtual-list';
 
 @Component({
   selector: 'arc-virtual-list',

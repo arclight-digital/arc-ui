@@ -12,6 +12,7 @@ export interface ImageCompareProps {
   label?: string;
   onArcInput?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
+  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -39,7 +40,7 @@ export interface ImageCompareProps {
   [key: `on${string}`]: unknown;
 }
 
-export const ImageCompare: FunctionComponent<ImageCompareProps> = ({ position, orientation, beforeLabel, afterLabel, label, onArcInput, onArcChange, ...rest }) => {
+export const ImageCompare: FunctionComponent<ImageCompareProps> = ({ position, orientation, beforeLabel, afterLabel, label, onArcInput, onArcChange, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -57,5 +58,5 @@ export const ImageCompare: FunctionComponent<ImageCompareProps> = ({ position, o
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcInput, onArcChange]);
-  return h('arc-image-compare', { ref, position, orientation, beforeLabel, afterLabel, label, ...rest });
+  return h('arc-image-compare', { ref, position, orientation, beforeLabel, afterLabel, label, ...rest }, children);
 };

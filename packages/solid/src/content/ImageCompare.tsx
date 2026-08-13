@@ -19,6 +19,7 @@ export interface ImageCompareProps {
   label?: string;
   onArcInput?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
+  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -47,9 +48,10 @@ export interface ImageCompareProps {
 }
 
 export const ImageCompare: Component<ImageCompareProps> = (props) => {
-  const [local, rest] = splitProps(props, ['position', 'orientation', 'beforeLabel', 'afterLabel', 'label', 'onArcInput', 'onArcChange']);
+  const [local, rest] = splitProps(props, ['position', 'orientation', 'beforeLabel', 'afterLabel', 'label', 'onArcInput', 'onArcChange', 'children']);
   return (
     <arc-image-compare position={local.position} orientation={local.orientation} prop:beforeLabel={local.beforeLabel} prop:afterLabel={local.afterLabel} label={local.label} on:arc-input={local.onArcInput} on:arc-change={local.onArcChange} {...rest}>
+      {local.children}
     </arc-image-compare>
   );
 };

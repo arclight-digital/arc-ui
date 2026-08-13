@@ -17,6 +17,7 @@ export interface MaskedInputProps {
   size?: 'sm' | 'md' | 'lg';
   onArcInput?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
+  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -44,7 +45,7 @@ export interface MaskedInputProps {
   [key: `on${string}`]: unknown;
 }
 
-export const MaskedInput: FunctionComponent<MaskedInputProps> = ({ mask, value, placeholderChar, label, name, disabled, required, autocomplete, error, size, onArcInput, onArcChange, ...rest }) => {
+export const MaskedInput: FunctionComponent<MaskedInputProps> = ({ mask, value, placeholderChar, label, name, disabled, required, autocomplete, error, size, onArcInput, onArcChange, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -62,5 +63,5 @@ export const MaskedInput: FunctionComponent<MaskedInputProps> = ({ mask, value, 
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcInput, onArcChange]);
-  return h('arc-masked-input', { ref, mask, value, placeholderChar, label, name, disabled, required, autocomplete, error, size, ...rest });
+  return h('arc-masked-input', { ref, mask, value, placeholderChar, label, name, disabled, required, autocomplete, error, size, ...rest }, children);
 };

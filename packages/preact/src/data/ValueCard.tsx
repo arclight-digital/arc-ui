@@ -7,6 +7,7 @@ export interface ValueCardProps {
   icon?: string;
   heading?: string;
   description?: string;
+  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -34,5 +35,5 @@ export interface ValueCardProps {
   [key: `on${string}`]: unknown;
 }
 
-export const ValueCard: FunctionComponent<ValueCardProps> = ({ icon, heading, description, ...rest }) =>
-  h('arc-value-card', { icon, heading, description, ...rest });
+export const ValueCard: FunctionComponent<ValueCardProps> = ({ icon, heading, description, children, ...rest }) =>
+  h('arc-value-card', { icon, heading, description, ...rest }, children);

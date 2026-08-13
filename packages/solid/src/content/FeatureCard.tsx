@@ -17,6 +17,7 @@ export interface FeatureCardProps {
   description?: string;
   href?: string;
   action?: string;
+  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -45,9 +46,10 @@ export interface FeatureCardProps {
 }
 
 export const FeatureCard: Component<FeatureCardProps> = (props) => {
-  const [local, rest] = splitProps(props, ['icon', 'heading', 'description', 'href', 'action']);
+  const [local, rest] = splitProps(props, ['icon', 'heading', 'description', 'href', 'action', 'children']);
   return (
     <arc-feature-card icon={local.icon} heading={local.heading} description={local.description} href={local.href} action={local.action} {...rest}>
+      {local.children}
     </arc-feature-card>
   );
 };

@@ -11,6 +11,7 @@ export interface ImageCompareProps {
   afterLabel?: string;
   label?: string;
   className?: string;
+  children?: React.ReactNode;
   onArcInput?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
 }

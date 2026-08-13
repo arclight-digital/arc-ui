@@ -16,6 +16,7 @@ export interface TopBarProps {
   menuPosition?: string;
   navAlign?: 'left' | 'center' | 'right';
   className?: string;
+  children?: React.ReactNode;
 }
 
 export const TopBar = createComponent({

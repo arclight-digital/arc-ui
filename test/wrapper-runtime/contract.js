@@ -231,26 +231,15 @@ export function expectations(fixture) {
  * Every entry here is a defect in `@arclux/prism`'s emitters, not in this
  * repo's source, so none of them can be fixed from here. They are V4-PLAN 3.1's
  * subject, and 3.1 is explicitly gated on this harness existing first.
+ *
+ * Empty, and the ratchet is why it stayed that way for less than a day. The
+ * nine entries it opened with were findings #80 (the Angular package registered
+ * no custom elements at all), #81 and #82 (Angular and Solid discarded children
+ * on any component whose slots are all named). All three are fixed in
+ * `@arclux/prism` 2.13.0; every probe now passes unpinned, so the capabilities
+ * cannot regress unnoticed.
  */
-export const PINNED = {
-  angular: {
-    // #80 — the Angular package registers no custom elements at all.
-    defined: '#80',
-    upgraded: '#80',
-    'prop-unset-keeps-default': '#80',
-    'slot-default': '#80',
-    'slot-named-footer': '#80',
-    // #81 — no <ng-content> on any component without a *default* slot.
-    'slot-named-logo': '#81',
-    'slot-named-actions': '#81',
-  },
-  solid: {
-    // #82 — same root cause as #81, in the Solid emitter: no `children` at all
-    // for a component whose slots are all named.
-    'slot-named-logo': '#82',
-    'slot-named-actions': '#82',
-  },
-};
+export const PINNED = {};
 
 /** Probe → the capability it stands for, for the matrix's row labels. */
 export const CAPABILITY = {
