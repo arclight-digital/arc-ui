@@ -68,41 +68,62 @@ uncommitted. The only *new* files under `packages/web-components/src` are the
 three shared modules in 0.1; everything else is modification of long-committed
 code. Land in reviewable slices, each independently green.
 
-- [ ] **0.1 (M)** The spine, one commit: `src/shared/props.js` (with
-      `blockedBy`), `src/shared/subscriptions.js`,
-      `src/shared/dismiss-controller.js` + the `click-outside.js` deletion,
-      and `test/props.test.js`.
-- [ ] **0.2 (S)** The derived suites: `test/conformance.test.js`,
-      `test/conformance-surface.test.js`, updated `test/helpers.js`.
-- [ ] **0.3 (L)** Component migrations (vocabulary adoption across ~165
-      components, 291 props) + the source fixes for findings #53–#71. Split
-      by tier if review is easier.
-- [ ] **0.4 (S)** The four uncommitted checks as one reviewed batch:
-      `scripts/checks/boolean-defaults.js`, `empty-attributes.js`,
-      `inert-declarations.js`, `lifecycle-pairing.js`. Land as-is; their
-      shared-parser consolidation is 4.10, not a blocker.
-- [ ] **0.5 (M)** Everything else: remaining modified test files,
-      `scripts/mutate.js`, `scripts/test-run.sh` (its `.test-logs/`
-      `.gitignore` line rides with it), the jitter/startprobe runner configs,
-      the three ledger docs, and the remaining modified component sources.
-- [ ] **0.6 (S)** Zero-risk housekeeping, one commit:
-      - add `.svelte-kit/` to `.gitignore` and untrack
-        `packages/svelte/.svelte-kit` (430 committed build-artifact files);
-      - fix the two dead export subpaths in
-        `packages/web-components/package.json` — `./shared/click-outside`
-        and `./toast-manager` resolve to deleted files and ship
-        `ERR_MODULE_NOT_FOUND` today (also delete the stale
-        `types/shared/click-outside.d.ts`);
-      - fix `packages/html/package.json`: `files` **and** a matching
-        `./examples/*` export entry (either alone leaves the README claim
-        false);
-      - delete the stale `brand/` line at `CONTRIBUTING.md:34`.
-- [ ] **0.7 (S)** New check: `scripts/checks/export-map.js` — every subpath in
-      every published package.json resolves to a real file. Makes the 0.6
-      defect class structurally impossible.
+- [x] **0.1 (M)** The spine — `props.js`, `subscriptions.js`,
+      `dismiss-controller.js`, `helpers.js`, `props.test.js`,
+      `dismiss-controller.test.js`. **Landed without the `click-outside.js`
+      deletion** (see below).
+- [x] **0.2 + 0.3 + 0.4 (L)** **Landed as one commit, because they are not
+      separable.** The migration (171 components, 347 props), the findings
+      #53–#79 source fixes, both derived suites, the four new checks, the
+      generate pipeline (`prism-props.js`, `codemod-declared-props.js`,
+      `doc-claims`, `manifest.js`) and the generated output.
+- [x] **0.5 (M)** The behavioural suites, `mutate.js` / `mutate-sample.js` /
+      `test-run.sh`, the runner configs, the ledgers, `package.json`,
+      `pnpm-lock.yaml` and the CI mutation job.
+- [x] **0.6 (S)** Housekeeping: 430 `.svelte-kit` artifacts untracked and
+      ignored; the two dead export subpaths and the orphan
+      `types/shared/click-outside.d.ts` removed; `packages/html` `files` **and**
+      `./examples/*` both fixed; the stale `brand/` line deleted.
+- [x] **0.7 (S)** `scripts/checks/export-map.js` — 680 targets across 8
+      published packages. Verified by reintroducing both original defects.
+      Skips build outputs when a package is unbuilt: the first draft reported
+      2,332 failures because the wrapper packages export `./dist/...`, which
+      does not exist in a source checkout.
 
-**Gate:** clean `git status`; green CI on main; suite 0 failing at its
-current size.
+### What the slicing got wrong, and why it matters for the next phase
+
+**The plan's 0.1 → 0.2 → 0.3 → 0.4 order does not execute.** Four dependencies
+were only visible by trying it, each caught by running the suite at that
+commit rather than by reading:
+
+1. **0.1's `click-outside.js` deletion breaks that commit** — 17 components at
+   HEAD still imported it. It can only be deleted by the migration that stops
+   them.
+2. **`conformance.test.js` cannot precede the migration.** It asserts
+   `ADOPTED.length > 0` (`:76`), and with unmigrated components it derives
+   nothing and fails its own anti-vacuity guard.
+3. **`conformance-surface.test.js` cannot either.** It derives from
+   `custom-elements.json`, and the part/slot documentation it checks is fixed
+   *by* the migration — at HEAD, `arc-tree-view` renders a `part="tree"` the
+   HEAD manifest does not document.
+4. **`generate.js` invokes the four 0.4 checks**, so the generate pipeline does
+   not run without them — and those checks in turn report on defects the
+   migration fixes, so they cannot land first either.
+
+`helpers.js` also had to move from 0.2 into 0.1, because `props.test.js`
+imports `settle()` and HEAD's `helpers.js` has no such export.
+
+The general lesson, and the one to carry into Phase 4: **a slice plan written
+from a file list is a guess about the dependency graph.** Every one of these
+was found in seconds by checking out the slice and running the suite, and none
+of them was visible in the diff. Phase 4's workstreams are ordered by the same
+kind of reasoning — verify each boundary by building it, not by reading it.
+
+**Gate: MET (2026-08-13).** Landed on `v4-phase-0` in five commits, each
+verified green at that commit: 806 → 907 → 2,431 → 3,994 passing, 0 failing
+throughout. `pnpm check` 21/21, `pnpm generate` diff-clean and idempotent.
+The branch tip differs from the pre-landing snapshot only by the six files of
+new 0.6/0.7 work, so nothing was dropped across the slices.
 
 ---
 
