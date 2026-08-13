@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import solid from 'vite-plugin-solid';
 import { isAbsolute } from 'node:path';
+import { entriesFromExports } from '../../scripts/lib/wrapper-entries.js';
 
 // Compiled fallback for tooling without the Solid compiler. Solid-aware
 // bundlers should resolve the `solid` export condition to the source .tsx
@@ -10,7 +11,11 @@ export default defineConfig({
   plugins: [solid()],
   build: {
     lib: {
-      entry: 'src/index.ts',
+      // Every subpath this package publishes, not just the root barrel — see
+      // scripts/lib/wrapper-entries.js. `preserveModules` emits what the entry
+      // graph reaches, and the eight tier barrels plus the barrel-excluded
+      // `./CodeBlock` were reached by nothing.
+      entry: entriesFromExports(import.meta.dirname, ['.tsx', '.ts']),
       formats: ['es'],
     },
     rollupOptions: {
