@@ -6,7 +6,7 @@
  * are deliberately loose — direction of travel, not exact position.
  */
 import { expect } from '@esm-bundle/chai';
-import { mount, cleanup } from './helpers.js';
+import { mount, cleanup, until, wait } from './helpers.js';
 
 import { ArcLevelMeter } from '../src/data/level-meter.js';
 if (!customElements.get('arc-level-meter')) customElements.define('arc-level-meter', ArcLevelMeter);
@@ -17,7 +17,6 @@ const segs = (el) => [...el.shadowRoot.querySelectorAll('[part="segment"]')];
 const litSegs = (el) => segs(el).filter((s) => s.classList.contains('seg--lit'));
 const peakLine = (el) => el.shadowRoot.querySelector('[part="peak"]');
 const peakPos = (el) => parseFloat(peakLine(el).style.getPropertyValue('--_peak'));
-const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
 async function meter(attrs = '') {
   const el = mount(`<arc-level-meter ${attrs}></arc-level-meter>`);
@@ -110,16 +109,20 @@ describe('peak hold', () => {
     el.value = 0.1;
     await el.updateComplete;
 
-    await wait(150);
-    await el.updateComplete;
-    const fallen = peakPos(el);
-    expect(fallen).to.be.lessThan(90);
-    expect(fallen).to.be.at.least(10);
+    // Poll rather than sleep 150ms and read once. The decay runs on real rAF
+    // frames, so a fixed sleep asserts that the machine was free enough to
+    // deliver them — under full-suite load that is a guess, and it fails as
+    // "the peak never decays" rather than "the thread was busy".
+    expect(await until(() => peakPos(el) < 90), 'the hold line never started falling').to.equal(
+      true,
+    );
+    // The floor is the current level, at every instant, not just at rest.
+    expect(peakPos(el), 'fell past the level it is decaying toward').to.be.at.least(10);
 
-    await wait(300);
-    await el.updateComplete;
-    // Eventually the line comes to rest on the current level.
-    expect(peakPos(el)).to.be.closeTo(10, 20);
+    expect(
+      await until(() => peakPos(el) <= 15),
+      'never came to rest on the current level',
+    ).to.equal(true);
   });
 
   it('leaves the hold line alone when peak is consumer-supplied', async () => {

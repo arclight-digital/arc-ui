@@ -1,5 +1,5 @@
 import { expect } from '@esm-bundle/chai';
-import { mount, cleanup } from './helpers.js';
+import { mount, cleanup, useBaseCss } from './helpers.js';
 
 import '../src/typography/text.register.js';
 import '../src/input/slider.register.js';
@@ -93,17 +93,7 @@ describe('font role slots', () => {
   describe('back-compat', () => {
     // The alias lives in base.css at :root, which is what a real consumer
     // loads. Exercise it the same way rather than through a hand-built fixture.
-    before(async () => {
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = '/packages/web-components/src/base.css';
-      const loaded = new Promise((res, rej) => {
-        link.onload = res;
-        link.onerror = () => rej(new Error('base.css failed to load'));
-      });
-      document.head.appendChild(link);
-      await loaded;
-    });
+    useBaseCss();
 
     it('--font-accent still resolves to the label role', () => {
       setToken('--font-label-family', 'TestLabel');

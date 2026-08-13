@@ -1,5 +1,5 @@
 import { expect } from '@esm-bundle/chai';
-import { mount, cleanup } from './helpers.js';
+import { mount, cleanup, useBaseCss } from './helpers.js';
 
 import '../src/input/button.register.js';
 import '../src/input/icon-button.register.js';
@@ -43,17 +43,7 @@ afterEach(cleanup);
 // deliberately holds only the static tokens. Without it `var(--interactive)`
 // is unresolvable and *every* variant computes to transparent, which would let
 // a genuinely unstyled fallback pass unnoticed.
-before(async () => {
-  const link = document.createElement('link');
-  link.rel = 'stylesheet';
-  link.href = '/packages/web-components/src/base.css';
-  const loaded = new Promise((res, rej) => {
-    link.onload = res;
-    link.onerror = () => rej(new Error('base.css failed to load'));
-  });
-  document.head.appendChild(link);
-  await loaded;
-});
+useBaseCss();
 
 describe('unrecognised enum values fall back to the default', () => {
   it('arc-button variant="outline" keeps the primary fill', async () => {

@@ -1,5 +1,5 @@
 import { expect } from '@esm-bundle/chai';
-import { mount, cleanup } from './helpers.js';
+import { mount, cleanup, useBaseCss } from './helpers.js';
 
 import '../src/input/button.register.js';
 import '../src/input/input.register.js';
@@ -32,17 +32,7 @@ afterEach(() => {
 });
 
 // The role weights live at :root in base.css, so the real cascade needs it.
-before(async () => {
-  const link = document.createElement('link');
-  link.rel = 'stylesheet';
-  link.href = '/packages/web-components/src/base.css';
-  const loaded = new Promise((res, rej) => {
-    link.onload = res;
-    link.onerror = () => rej(new Error('base.css failed to load'));
-  });
-  document.head.appendChild(link);
-  await loaded;
-});
+useBaseCss();
 
 function weightOf(host, selector) {
   const node = host.shadowRoot.querySelector(selector);

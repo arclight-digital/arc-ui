@@ -149,3 +149,55 @@ jobs:
         env:
           SHARD: ${{ matrix.shard }}
         run: pnpm audit:a11y -- --shard="$SHARD/4"
+
+  # Its own job, not a step in `verify`, for two reasons that are both about
+  # scripts/mutate.js rewriting its source file in place: it must never share a
+  # working tree with the `git diff --quiet` generated-files check, and it must
+  # never run alongside the ordinary suite — that combination has already
+  # produced a "3668 passed, 0 failed" report that also contained a ❌, because
+  # a test file was reading a source file mid-write.
+  #
+  # It is also ~5 minutes of re-running one scoped test file per mutant, which
+  # has no business on the critical path to a green PR.
+  mutation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      # props.test.js does not import an icon module, but the pretest hook that
+      # regenerates them is a `pnpm test` hook and mutate.js calls the runner
+      # directly — so a fresh checkout needs them here explicitly.
+      - name: Generate vendored icons
+        run: pnpm generate:icons
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+
+      - name: Install Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      # The sampled set — eight shared modules, each gated just under its
+      # measured score so the numbers only ever ratchet up. props.js carries the
+      # highest threshold of the eight: 166 components sit on it, so a survivor
+      # there is a hole under all of them at once.
+      #
+      # listbox-controller and position-controller are in the set but not yet
+      # baselined, and are skipped explicitly rather than passing silently at
+      # `gate: null`. They are the two large ones (~59 and ~50 operator sites,
+      # against test files that mount real components), so they get their own
+      # pass rather than tripling this job's runtime on their first measurement.
+      - name: Sampled mutation gate
+        run: pnpm mutate:sample -- --skip listbox-controller,position-controller

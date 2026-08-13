@@ -14,6 +14,13 @@
  *
  * Number-valued controls (slider, number-input, rating) are exempt from the
  * required sweep: their defaults are real values, so "empty" has no meaning.
+ *
+ * **What the form actually submits is `form-data-sweep.test.js`**, which
+ * derives its subjects from `custom-elements.json` and covers all 26
+ * form-associated controls rather than the 14 hand-listed here. The two lists
+ * differing by twelve is why that file derives: this one is a hand list, and it
+ * went stale exactly the way HANDOFF's table predicts. The mixin's own
+ * mechanism is pinned in `form-control-mixin.test.js`.
  */
 import { expect } from '@esm-bundle/chai';
 import { mount, cleanup } from './helpers.js';
@@ -100,11 +107,29 @@ describe('readonly blocks user mutation', () => {
   });
 
   it('readonly does not exclude the value from submission', async () => {
-    const el = mount('<arc-input readonly name="f"></arc-input>');
+    // This asserted checkValidity() until the FormData sweep was written, which
+    // is not submission at all — a control can be valid and submit nothing.
+    // The distinction is the whole point of the test: `readonly` differs from
+    // `disabled` precisely in that its value is still submitted.
+    const form = mount('<form><arc-input readonly name="f"></arc-input></form>');
+    const el = form.firstElementChild;
     await el.updateComplete;
     el.value = 'kept';
     await el.updateComplete;
-    // Still a live form value — readonly is not disabled.
-    expect(el.checkValidity()).to.equal(true);
+
+    expect(new FormData(form).get('f')).to.equal('kept');
+  });
+
+  it('disabled does exclude the value from submission', async () => {
+    // The other half, which makes the one above mean something: without it,
+    // "the value is submitted" passes on an implementation that submits
+    // everything unconditionally.
+    const form = mount('<form><arc-input disabled name="f"></arc-input></form>');
+    const el = form.firstElementChild;
+    await el.updateComplete;
+    el.value = 'dropped';
+    await el.updateComplete;
+
+    expect([...new FormData(form).keys()]).to.eql([]);
   });
 });

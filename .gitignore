@@ -32,3 +32,4 @@ packages/web-components/src/icons/lucide/
 # the last build — it is a build artifact either way, and committing 365K of
 # extracted prose would put a large diff on every docs edit.
 docs/public/search-index.json
+.test-logs/

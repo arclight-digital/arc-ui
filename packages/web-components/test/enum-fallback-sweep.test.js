@@ -1,5 +1,5 @@
 import { expect } from '@esm-bundle/chai';
-import { mount, cleanup, tick } from './helpers.js';
+import { mount, cleanup, tick, useBaseCss } from './helpers.js';
 import { positionStyles } from '../src/shared/position-styles.js';
 
 import '../src/content/icon.register.js';
@@ -40,17 +40,7 @@ afterEach(() => {
 
 // base.css carries the colour and gradient tokens; without it many properties
 // compute to the same empty value for every variant and a real gap would pass.
-before(async () => {
-  const link = document.createElement('link');
-  link.rel = 'stylesheet';
-  link.href = '/packages/web-components/src/base.css';
-  const loaded = new Promise((res, rej) => {
-    link.onload = res;
-    link.onerror = () => rej(new Error('base.css failed to load'));
-  });
-  document.head.appendChild(link);
-  await loaded;
-});
+useBaseCss();
 
 /**
  * Each case: the component, the enum attribute, its default, one other member,

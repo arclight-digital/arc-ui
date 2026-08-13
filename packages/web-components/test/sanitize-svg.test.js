@@ -1,6 +1,15 @@
 import { expect } from '@esm-bundle/chai';
 import { sanitizeSvg } from '../src/content/sanitize-svg.js';
 import { iconRegistry } from '../src/content/icon-registry.js';
+import { generatedIconsPresent, ICONS_MISSING } from './helpers.js';
+
+// Only the blocks that resolve a real glyph are gated — the scanner tests are
+// pure string in, string out and must keep running on a fresh checkout, since
+// they are the ones guarding against a `>` inside a quoted attribute.
+const icons = await generatedIconsPresent();
+const itIcons = icons ? it : it.skip;
+const describeIcons = icons ? describe : describe.skip;
+if (!icons) console.warn(`↷ sanitize-svg: real-icon tests skipped — ${ICONS_MISSING}`);
 
 /**
  * arc-icon's sanitizer used to be DOMParser-based, which quietly made every
@@ -73,7 +82,7 @@ describe('sanitizeSvg', () => {
     expect(sanitizeSvg(null)).to.equal(null);
   });
 
-  it('leaves real icons from the shipped libraries intact', async function () {
+  itIcons('leaves real icons from the shipped libraries intact', async function () {
     // First call pulls in the Phosphor resolver — a module with an entry for
     // every one of 1,500 glyphs — which is well past the 2s default.
     this.timeout(15000);
@@ -92,7 +101,7 @@ describe('sanitizeSvg', () => {
   });
 });
 
-describe('iconRegistry synchronous cache', () => {
+describeIcons('iconRegistry synchronous cache', () => {
   it('returns null before an icon is resolved and the source after', async function () {
     this.timeout(15000);
     expect(iconRegistry.getSync('anchor')).to.equal(null);

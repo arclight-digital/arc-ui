@@ -13,6 +13,13 @@
  */
 import { expect } from '@esm-bundle/chai';
 import { iconRegistry } from '../src/content/icon-registry.js';
+import { generatedIconsPresent, ICONS_MISSING } from './helpers.js';
+
+// Every test in this file resolves a real glyph, so the whole file is gated on
+// the generated modules being present. See generatedIconsPresent().
+const icons = await generatedIconsPresent();
+const describeIcons = icons ? describe : describe.skip;
+if (!icons) console.warn(`↷ icon-aliases: ${ICONS_MISSING}`);
 
 const CROSS_LIBRARY = [
   'chevron-left', 'chevron-right', 'chevron-up', 'chevron-down',
@@ -24,6 +31,7 @@ const CROSS_LIBRARY = [
 // than letting whichever test happens to run first pay for it.
 before(async function warmResolvers() {
   this.timeout(20_000);
+  if (!icons) return;
   for (const library of ['phosphor', 'lucide']) {
     iconRegistry.use(library);
     await iconRegistry.get('plus');
@@ -33,7 +41,7 @@ before(async function warmResolvers() {
 
 afterEach(() => iconRegistry.use('phosphor'));
 
-describe('icon names ARC UI components use resolve in both libraries', () => {
+describeIcons('icon names ARC UI components use resolve in both libraries', () => {
   for (const library of ['phosphor', 'lucide']) {
     for (const name of CROSS_LIBRARY) {
       it(`${library}: ${name}`, async () => {
@@ -46,7 +54,7 @@ describe('icon names ARC UI components use resolve in both libraries', () => {
   }
 });
 
-describe('aliasing does not change what a name means for a consumer', () => {
+describeIcons('aliasing does not change what a name means for a consumer', () => {
   it('leaves an unaliased name alone', async () => {
     // `plus` exists under both spellings of its own accord.
     expect(await iconRegistry.get('plus')).to.contain('<svg');
