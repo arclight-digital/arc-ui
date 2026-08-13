@@ -35,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { content = '', position = 'top', delay = 200, children, ...rest }: Props = $props();
+  let { content = '', position, delay = 200, children, ...rest }: Props = $props();
 </script>
 
 <arc-tooltip {content} {position} {delay} {...rest}>

@@ -9,8 +9,8 @@
     name?: string;
     min?: string;
     max?: string;
-    step?: number;
-    format?: string;
+    step?: 1 | 5 | 15 | 30;
+    format?: '12h' | '24h';
     placeholder?: string;
     disabled?: boolean;
     label?: string;
@@ -42,7 +42,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { size = 'md', value = $bindable(''), name = '', min = '', max = '', step = 1, format = '12h', placeholder = 'Select time', disabled = false, label = '', open = false, ...rest }: Props = $props();
+  let { size, value = $bindable(''), name = '', min = '', max = '', step, format, placeholder = 'Select time', disabled = false, label = '', open = false, ...rest }: Props = $props();
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise

@@ -35,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { open = false, position = 'left', heading = '', children, ...rest }: Props = $props();
+  let { open, position, heading = '', children, ...rest }: Props = $props();
 </script>
 
 <arc-drawer {open} {position} {heading} {...rest}>

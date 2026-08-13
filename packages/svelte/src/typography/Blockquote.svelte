@@ -34,7 +34,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { cite = '', variant = 'default', children, ...rest }: Props = $props();
+  let { cite = '', variant, children, ...rest }: Props = $props();
 </script>
 
 <arc-blockquote {cite} {variant} {...rest}>

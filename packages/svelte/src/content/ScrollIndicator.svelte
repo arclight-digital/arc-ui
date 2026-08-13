@@ -35,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { target = '', position = 'top', size = 'sm', color = 'accent', ...rest }: Props = $props();
+  let { target = '', position, size, color, ...rest }: Props = $props();
 </script>
 
 <arc-scroll-indicator {target} {position} {size} {color} {...rest}>

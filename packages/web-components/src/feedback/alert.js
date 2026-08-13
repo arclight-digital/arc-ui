@@ -2,6 +2,7 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { statusVars } from '../status-styles.js';
 import { getStatusIcon } from '../status-utils.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Contextual alert banner with four semantic variants and optional dismiss button for delivering
@@ -21,11 +22,11 @@ import { getStatusIcon } from '../status-utils.js';
  * @csspart content
  * @csspart dismiss
  */
-export class ArcAlert extends LitElement {
+export class ArcAlert extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    variant: { type: String, reflect: true },
-    density: { type: String, reflect: true },
-    dismissible: { type: Boolean, reflect: true },
+    variant: oneOf(['info', 'success', 'warning', 'error']),
+    density: oneOf(['default', 'compact']),
+    dismissible: flag(false),
     heading: { type: String },
   };
 
@@ -101,9 +102,6 @@ export class ArcAlert extends LitElement {
 
   constructor() {
     super();
-    this.variant = 'info';
-    this.density = 'default';
-    this.dismissible = false;
     this.heading = '';
   }
 

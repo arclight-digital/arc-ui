@@ -2,6 +2,7 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { statusVars } from '../status-styles.js';
 import { getStatusIcon } from '../status-utils.js';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
  * Contextual feedback that sits inline in a form or content area. Same semantic color variants as
@@ -13,9 +14,9 @@ import { getStatusIcon } from '../status-utils.js';
  * @csspart icon
  * @csspart content
  */
-export class ArcInlineMessage extends LitElement {
+export class ArcInlineMessage extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    variant: { type: String, reflect: true },
+    variant: oneOf(['info', 'success', 'warning', 'error']),
   };
 
   static styles = [
@@ -46,7 +47,6 @@ export class ArcInlineMessage extends LitElement {
 
   constructor() {
     super();
-    this.variant = 'info';
   }
 
   render() {

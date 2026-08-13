@@ -35,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { navPosition = 'left', nav, children, ...rest }: Props = $props();
+  let { navPosition, nav, children, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

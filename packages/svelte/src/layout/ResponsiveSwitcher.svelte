@@ -34,7 +34,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { threshold = '600px', gap = 'md', children, ...rest }: Props = $props();
+  let { threshold = '600px', gap, children, ...rest }: Props = $props();
 </script>
 
 <arc-responsive-switcher {threshold} {gap} {...rest}>

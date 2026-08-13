@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Data-driven table with striped and compact-density variants, powered by columns and rows props.
@@ -17,12 +18,12 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart row
  * @csspart cell
  */
-export class ArcTable extends LitElement {
+export class ArcTable extends DeclaredPropsMixin(LitElement) {
   static properties = {
     columns: { type: Array },
     rows: { type: Array },
-    striped: { type: Boolean, reflect: true },
-    density: { type: String, reflect: true },
+    striped: flag(false),
+    density: oneOf(['default', 'compact']),
   };
 
   static styles = [
@@ -107,8 +108,6 @@ export class ArcTable extends LitElement {
     super();
     this.columns = [];
     this.rows = [];
-    this.striped = false;
-    this.density = 'default';
   }
 
   render() {

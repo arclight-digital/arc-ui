@@ -16,7 +16,7 @@ export interface AvatarProps {
   name?: string;
   size?: 'sm' | 'md' | 'lg';
   shape?: 'circle' | 'square' | 'rounded';
-  status?: 'online' | 'offline' | 'busy' | 'away';
+  status?: '' | 'online' | 'offline' | 'busy' | 'away';
   class?: string;
   id?: string;
   style?: string;

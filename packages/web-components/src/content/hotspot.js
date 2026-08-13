@@ -2,8 +2,9 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { managedPanelStyles } from '../shared/position-styles.js';
 import { PositionController } from '../shared/position-controller.js';
-import { ClickOutsideController } from '../shared/click-outside.js';
+import { DismissController } from '../shared/dismiss-controller.js';
 import { deepActiveElement } from '../shared/trigger-aria.js';
+import { DeclaredPropsMixin, flag, num } from '../shared/props.js';
 
 /**
  * A single glowing pin inside an Image Hotspots surface. The pin sits at percentage coordinates
@@ -21,12 +22,15 @@ import { deepActiveElement } from '../shared/trigger-aria.js';
  * @csspart pin
  * @csspart panel
  */
-export class ArcHotspot extends LitElement {
+export class ArcHotspot extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    x: { type: Number, reflect: true },
-    y: { type: Number, reflect: true },
+    // "Values outside the range are clamped; a non-numeric value falls back
+    // to 50" — which `_pct()` did at render time only, so the property kept
+    // the out-of-range number a consumer read back (finding #70).
+    x: num({ default: 50, min: 0, max: 100, clamp: 'toRange', reflect: true }),
+    y: num({ default: 50, min: 0, max: 100, clamp: 'toRange', reflect: true }),
     label: { type: String, reflect: true },
-    open: { type: Boolean, reflect: true },
+    open: flag(false),
   };
 
   static styles = [
@@ -201,19 +205,16 @@ export class ArcHotspot extends LitElement {
 
   constructor() {
     super();
-    this.x = 50;
-    this.y = 50;
     this.label = '';
-    this.open = false;
     /** Assigned by arc-image-hotspots on slotchange; the detail.value fallback. */
     this._index = 0;
     this._openedFrom = null;
     this._panelId = `hotspot-panel-${++ArcHotspot._idCounter}`;
     this._onKeyDown = this._onKeyDown.bind(this);
-    this._clickOutside = new ClickOutsideController(this, {
+    this._dismiss = new DismissController(this, {
       // close(false): the pointer chose a new target, so don't yank focus back
       // to the pin.
-      onClickOutside: () => this.close(false),
+      onDismiss: () => this.close(false),
     });
     this._position = new PositionController(this, {
       anchor: () => this.shadowRoot?.querySelector('.hotspot__pin'),
@@ -228,10 +229,10 @@ export class ArcHotspot extends LitElement {
       this.open ? this._position.show() : this._position.hide();
       if (this.open) {
         this._openedFrom = deepActiveElement();
-        this._clickOutside.activate();
+        this._dismiss.activate();
         document.addEventListener('keydown', this._onKeyDown);
       } else {
-        this._clickOutside.deactivate();
+        this._dismiss.deactivate();
         document.removeEventListener('keydown', this._onKeyDown);
       }
     }

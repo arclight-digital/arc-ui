@@ -2,6 +2,7 @@ import { LitElement, html, css, nothing } from 'lit';
 import { keyed } from 'lit/directives/keyed.js';
 import { tokenStyles } from '../shared-styles.js';
 import { OverlayMixin } from '../shared/overlay-mixin.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * Full-screen image viewer on the overlay stack: open from a thumbnail, step through a gallery
@@ -32,13 +33,13 @@ import { OverlayMixin } from '../shared/overlay-mixin.js';
  * @csspart image
  * @csspart caption
  */
-export class ArcLightbox extends OverlayMixin(LitElement) {
+export class ArcLightbox extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
   static properties = {
     // Attribute is off: an array can't survive a round trip through one, and
     // leaving it on invites `images="[...]"` that silently sets a string.
     images: { attribute: false },
     index: { type: Number },
-    open: { type: Boolean, reflect: true },
+    open: flag(false),
     _zoomed: { state: true },
     _loaded: { state: true },
   };
@@ -169,7 +170,6 @@ export class ArcLightbox extends OverlayMixin(LitElement) {
     super();
     this.images = [];
     this.index = 0;
-    this.open = false;
     this._zoomed = false;
     this._loaded = false;
     this._panX = 0;

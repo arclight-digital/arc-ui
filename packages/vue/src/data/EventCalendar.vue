@@ -14,7 +14,6 @@ const props = withDefaults(defineProps<{
   locale: '',
   firstDayOfWeek: 0,
   events: () => ([]),
-  view: 'month',
   date: '',
 });
 

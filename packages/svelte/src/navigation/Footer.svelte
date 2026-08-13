@@ -42,7 +42,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { density = 'default', border = true, contained, align = 'left', logo, social, legal, children, ...rest }: Props = $props();
+  let { density, border, contained, align, logo, social, legal, children, ...rest }: Props = $props();
 </script>
 
 <arc-footer {density} {border} {contained} {align} {...rest}>

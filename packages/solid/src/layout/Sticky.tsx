@@ -13,6 +13,7 @@ declare module 'solid-js' {
 
 export interface StickyProps {
   offset?: string;
+  stuck?: boolean;
   onArcStuck?: (e: CustomEvent) => void;
   children?: JSX.Element;
   class?: string;
@@ -43,9 +44,9 @@ export interface StickyProps {
 }
 
 export const Sticky: Component<StickyProps> = (props) => {
-  const [local, rest] = splitProps(props, ['offset', 'onArcStuck', 'children']);
+  const [local, rest] = splitProps(props, ['offset', 'stuck', 'onArcStuck', 'children']);
   return (
-    <arc-sticky offset={local.offset} on:arc-stuck={local.onArcStuck} {...rest}>
+    <arc-sticky offset={local.offset} stuck={local.stuck} on:arc-stuck={local.onArcStuck} {...rest}>
       {local.children}
     </arc-sticky>
   );

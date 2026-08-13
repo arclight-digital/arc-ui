@@ -1,9 +1,10 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import { ClickOutsideController } from '../shared/click-outside.js';
+import { DismissController } from '../shared/dismiss-controller.js';
 import { PositionController } from '../shared/position-controller.js';
 import { managedPanelStyles } from '../shared/position-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Scrollable column-based time picker with 12h/24h format support.
@@ -12,12 +13,12 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @prop {string} value - The selected time in 24-hour "HH:MM" format (e.g. "14:30"). Set this to pre-select a time. Updated when the user picks a time.
  * @prop {string} min - Minimum selectable time in "HH:MM" 24-hour format. Times before this are visually dimmed and non-interactive.
  * @prop {string} max - Maximum selectable time in "HH:MM" 24-hour format. Times after this are visually dimmed and non-interactive.
- * @prop {number} step - Minute step increment (1, 5, 15, or 30). Controls the granularity of minute options shown in the dropdown.
- * @prop {string} format - Display format: "12h" shows hours 1-12 with an AM/PM column, "24h" shows hours 0-23 without AM/PM.
+ * @prop {1 | 5 | 15 | 30} step - Minute step increment. Controls the granularity of minute options shown in the dropdown. Unrecognised values fall back to 1.
+ * @prop {'12h' | '24h'} format - Display format: "12h" shows hours 1-12 with an AM/PM column, "24h" shows hours 0-23 without AM/PM. Unrecognised values fall back to "12h".
  * @prop {string} placeholder - Placeholder text displayed in the input when no time is selected.
  * @prop {boolean} disabled - Disables the time picker, reducing opacity and preventing the dropdown from opening.
  * @prop {string} label - Label text rendered above the input in uppercase accent font styling.
- * @prop {boolean} open - Whether the time dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.
+ * @prop {boolean} open - Whether the time dropdown is visible. Reflected so it can be opened programmatically or styled from CSS. Held at `false` while `disabled`.
  * @prop {'sm' | 'md' | 'lg'} size - Control size. `md` is the default; `sm` and `lg` scale the field padding.
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired when a time is selected. Detail contains { value: "HH:MM" } in 24-hour format.
  * @slot none
@@ -27,19 +28,26 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @csspart input
  * @csspart dropdown
  */
-export class ArcTimePicker extends FormControlMixin(LitElement) {
+export class ArcTimePicker extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
   static properties = {
-    size: { type: String, reflect: true },
+    size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
+
     value: { type: String, reflect: true },
     name: { type: String, reflect: true },
     min: { type: String },
     max: { type: String },
-    step: { type: Number },
-    format: { type: String },
+    step: oneOf([1, 5, 15, 30], { default: 1 }),
+    format: oneOf(['12h', '24h']),
     placeholder: { type: String },
+    // NOT flag(): a form-associated custom element whose `disabled` content
+    // attribute is merely *present* is "actually disabled" per the HTML spec,
+    // so the platform calls formDisabledCallback(true) and the mixin sets the
+    // property back. `disabled="false"` is a disabled control here for exactly
+    // the reason it is on a native <input>. Native semantics win; see
+    // shared/props.js.
     disabled: { type: Boolean, reflect: true },
     label: { type: String },
-    open: { type: Boolean, reflect: true },
+    open: flag(false, { blockedBy: 'disabled' }),
     _selectedHour: { state: true },
     _selectedMinute: { state: true },
     _selectedPeriod: { state: true },
@@ -223,25 +231,21 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
 
   constructor() {
     super();
-    this.size = 'md';
     this.value = '';
     this.name = '';
     this.min = '';
     this.max = '';
-    this.step = 1;
-    this.format = '12h';
     this.placeholder = 'Select time';
     this.disabled = false;
     this.label = '';
-    this.open = false;
     this._selectedHour = null;
     this._selectedMinute = null;
     this._selectedPeriod = 'AM';
     this._focusedColumn = 'hour';
 
     this._handleEscape = this._handleEscape.bind(this);
-    this._clickOutside = new ClickOutsideController(this, {
-      onClickOutside: () => {
+    this._dismiss = new DismissController(this, {
+      onDismiss: () => {
         this.open = false;
       },
       when: () => this.open,
@@ -295,8 +299,24 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
   _toggleDropdown() {
     if (this.disabled || this.readonly) return;
     this.open = !this.open;
+  }
 
-    if (this.open) {
+  /**
+   * Prepare the panel's state whenever `open` turns true — on *either* path.
+   *
+   * This used to live in `_toggleDropdown`, which is only the click path, so
+   * `el.open = true` (documented and supported: "Reflected so it can be opened
+   * programmatically") produced a panel that had skipped its own setup — no
+   * highlighted time despite having one. Finding #59; `arc-select` has always
+   * done its open-side work from a lifecycle hook, which is the pattern here.
+   *
+   * `willUpdate` rather than `updated`: these are reactive state, so computing
+   * them before render folds into the same update instead of scheduling a
+   * second one.
+   */
+  willUpdate(changed) {
+    super.willUpdate(changed);
+    if (changed.has('open') && this.open) {
       this._syncFromValue();
       this._focusedColumn = 'hour';
     }
@@ -481,7 +501,7 @@ export class ArcTimePicker extends FormControlMixin(LitElement) {
     super.updated(changed);
     if (changed.has('open')) {
       this.open ? this._position.show() : this._position.hide();
-      this.open ? this._clickOutside.activate() : this._clickOutside.deactivate();
+      this.open ? this._dismiss.activate() : this._dismiss.deactivate();
     }
     if (changed.has('open') && this.open) {
       // Scroll selected items into view, then focus the hour tab stop

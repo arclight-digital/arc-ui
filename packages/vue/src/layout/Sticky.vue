@@ -6,19 +6,30 @@ defineOptions({ name: 'Sticky' });
 
 const props = withDefaults(defineProps<{
   offset?: string;
+  stuck?: boolean;
 }>(), {
   offset: '0px',
 });
 
 const emit = defineEmits<{
   'arc-stuck': [event: CustomEvent];
+  'update:stuck': [value: boolean];
 }>();
+
+function onArcStuck(payload: CustomEvent) {
+  emit('arc-stuck', payload);
+  const detail = payload.detail as Record<string, unknown> | null;
+  if (detail) {
+    if ('stuck' in detail) emit('update:stuck', detail.stuck as boolean);
+  }
+}
 </script>
 
 <template>
   <arc-sticky
     :offset="props.offset"
-    @arc-stuck="(payload: CustomEvent) => emit('arc-stuck', payload)"
+    :stuck="props.stuck"
+    @arc-stuck="onArcStuck"
   >
     <slot />
   </arc-sticky>

@@ -9,8 +9,6 @@ const props = withDefaults(defineProps<{
   size?: 'sm' | 'md' | 'lg';
   variant?: string;
 }>(), {
-  orientation: 'horizontal',
-  size: 'md',
   variant: '',
 });
 </script>

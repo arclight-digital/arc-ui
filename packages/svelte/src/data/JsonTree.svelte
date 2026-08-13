@@ -35,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { data, json = '', expanded = $bindable(1), keysQuoted = false, ...rest }: Props = $props();
+  let { data, json = '', expanded = $bindable(1), keysQuoted, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

@@ -22,10 +22,10 @@ export class Calendar {
     return this._el.locale;
   }
 
-  @Input() set firstDayOfWeek(value: number) {
+  @Input() set firstDayOfWeek(value: 0|1|2|3|4|5|6|7) {
     this._el.firstDayOfWeek = value;
   }
-  get firstDayOfWeek(): number {
+  get firstDayOfWeek(): 0|1|2|3|4|5|6|7 {
     return this._el.firstDayOfWeek;
   }
 

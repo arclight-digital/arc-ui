@@ -10,7 +10,6 @@ const props = withDefaults(defineProps<{
   maxHeight?: string;
 }>(), {
   open: false,
-  position: 'top-right',
   maxHeight: '400px',
 });
 

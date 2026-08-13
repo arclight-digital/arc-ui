@@ -9,7 +9,6 @@ const props = withDefaults(defineProps<{
   value?: string;
   items?: Array<{label: string, value: string}>;
 }>(), {
-  orientation: 'horizontal',
   value: '',
   items: () => ([]),
 });

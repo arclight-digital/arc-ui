@@ -34,7 +34,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { layout = 'horizontal', dividers = true, children, ...rest }: Props = $props();
+  let { layout, dividers, children, ...rest }: Props = $props();
 </script>
 
 <arc-key-value {layout} {dividers} {...rest}>

@@ -35,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { columns = 0, gap = 'var(--space-lg)', minColumnWidth = '280px', children, ...rest }: Props = $props();
+  let { columns, gap = 'var(--space-lg)', minColumnWidth = '280px', children, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

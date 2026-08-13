@@ -22,10 +22,8 @@ const props = withDefaults(defineProps<{
   label: '',
   name: '',
   disabled: false,
-  required: false,
   autocomplete: '',
   error: '',
-  size: 'md',
 });
 
 const emit = defineEmits<{

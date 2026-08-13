@@ -7,7 +7,7 @@ import { ArcImage } from '@arclux/arc-ui/image';
 export interface ImageProps {
   src?: string;
   alt?: string;
-  aspect?: '1/1' | '4/3' | '16/9' | '21/9' | '3/4' | '9/16';
+  aspect?: '' | '1/1' | '4/3' | '16/9' | '21/9' | '3/4' | '9/16';
   fit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down';
   loading?: 'lazy' | 'eager';
   fallback?: string;

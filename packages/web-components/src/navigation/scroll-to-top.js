@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Floating button that appears after scrolling and smoothly returns the user to the top of the
@@ -13,11 +14,11 @@ import { tokenStyles } from '../shared-styles.js';
  * @slot none
  * @csspart button
  */
-export class ArcScrollToTop extends LitElement {
+export class ArcScrollToTop extends DeclaredPropsMixin(LitElement) {
   static properties = {
     threshold: { type: Number },
-    smooth: { type: Boolean, reflect: true },
-    position: { type: String, reflect: true },
+    smooth: flag(true, { negative: 'no-smooth' }),
+    position: oneOf(['bottom-right', 'bottom-left']),
     offset: { type: String },
     _visible: { state: true },
   };
@@ -112,8 +113,6 @@ export class ArcScrollToTop extends LitElement {
   constructor() {
     super();
     this.threshold = 300;
-    this.smooth = true;
-    this.position = 'bottom-right';
     this.offset = 'var(--space-lg)';
     this._visible = false;
     this._onScroll = this._onScroll.bind(this);

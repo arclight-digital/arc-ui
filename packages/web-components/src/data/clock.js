@@ -1,5 +1,6 @@
 import { LitElement, html, css, svg } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Live clock with a digital or analog face, optionally pinned to an IANA timezone.
@@ -23,14 +24,14 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart hand-second
  * @csspart pin
  */
-export class ArcClock extends LitElement {
+export class ArcClock extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    variant: { type: String, reflect: true },
+    variant: oneOf(['digital', 'analog']),
     timezone: { type: String },
     label: { type: String },
-    showSeconds: { type: Boolean, reflect: true, attribute: 'show-seconds' },
+    showSeconds: flag(false, { attribute: 'show-seconds' }),
     hour12: { type: Boolean },
-    showTimezone: { type: Boolean, reflect: true, attribute: 'show-timezone' },
+    showTimezone: flag(false, { attribute: 'show-timezone' }),
     _now: { state: true },
   };
 
@@ -142,13 +143,10 @@ export class ArcClock extends LitElement {
 
   constructor() {
     super();
-    this.variant = 'digital';
     this.timezone = '';
     this.label = '';
-    this.showSeconds = false;
     // Left undefined so the locale decides; a boolean (either way) forces it.
     this.hour12 = undefined;
-    this.showTimezone = false;
     // Null until the first client-side tick. The server render (constructor,
     // willUpdate, render only — no connectedCallback) therefore shows the
     // static placeholder face and never touches Date or Intl.

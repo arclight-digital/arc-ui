@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * Individual row within an arc-list. Supports prefix/suffix slots, a description slot for
@@ -20,11 +21,11 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @csspart description
  * @csspart item
  */
-export class ArcListItem extends LitElement {
+export class ArcListItem extends DeclaredPropsMixin(LitElement) {
   static properties = {
     value: { type: String, reflect: true },
-    selected: { type: Boolean, reflect: true },
-    disabled: { type: Boolean, reflect: true },
+    selected: flag(false),
+    disabled: flag(false),
     href: { type: String },
     _hasPrefix: { state: true },
     _hasSuffix: { state: true },
@@ -128,8 +129,6 @@ export class ArcListItem extends LitElement {
   constructor() {
     super();
     this.value = '';
-    this.selected = false;
-    this.disabled = false;
     this.href = '';
     this._hasPrefix = false;
     this._hasSuffix = false;

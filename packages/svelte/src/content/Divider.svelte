@@ -5,7 +5,7 @@
 
   interface Props {
     variant?: 'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient';
-    align?: 'left' | 'right';
+    align?: '' | 'left' | 'right';
     vertical?: boolean;
     label?: string;
     class?: string;
@@ -35,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { variant = 'subtle', align, vertical = false, label = '', ...rest }: Props = $props();
+  let { variant, align, vertical, label = '', ...rest }: Props = $props();
 </script>
 
 <arc-divider {variant} {align} {vertical} {label} {...rest}>

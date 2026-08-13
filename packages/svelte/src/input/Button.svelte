@@ -42,7 +42,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { variant = 'primary', size = 'md', href = '', disabled = false, loading = false, type = 'button', prefix, suffix, children, ...rest }: Props = $props();
+  let { variant, size, href = '', disabled, loading, type, prefix, suffix, children, ...rest }: Props = $props();
 </script>
 
 <arc-button {variant} {size} {href} {disabled} {loading} {type} {...rest}>

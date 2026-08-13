@@ -4,19 +4,13 @@ import '@arclux/arc-ui/stack';
 
 defineOptions({ name: 'Stack' });
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   direction?: 'vertical' | 'horizontal';
   gap?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
   align?: 'start' | 'center' | 'end' | 'stretch';
   justify?: 'start' | 'center' | 'end' | 'between' | 'around';
   wrap?: boolean;
-}>(), {
-  direction: 'vertical',
-  gap: 'md',
-  align: 'stretch',
-  justify: 'start',
-  wrap: false,
-});
+}>();
 </script>
 
 <template>

@@ -1,6 +1,7 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * On/off switch with smooth animation, glow effect, and ARIA switch role.
@@ -18,11 +19,18 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @csspart thumb
  * @csspart label
  */
-export class ArcToggle extends FormControlMixin(LitElement) {
+export class ArcToggle extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
   static properties = {
-    checked: { type: Boolean, reflect: true },
+    checked: flag(false),
+    // NOT flag(): a form-associated custom element whose `disabled` content
+    // attribute is merely *present* is "actually disabled" per the HTML spec,
+    // so the platform calls formDisabledCallback(true) and the mixin sets the
+    // property back. `disabled="false"` is a disabled control here for exactly
+    // the reason it is on a native <input>. Native semantics win; see
+    // shared/props.js.
     disabled: { type: Boolean, reflect: true },
-    size: { type: String, reflect: true },
+    size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
+
     label: { type: String },
     name: { type: String, reflect: true },
   };
@@ -142,9 +150,7 @@ export class ArcToggle extends FormControlMixin(LitElement) {
 
   constructor() {
     super();
-    this.checked = false;
     this.disabled = false;
-    this.size = 'md';
     this.label = '';
     this.name = '';
   }

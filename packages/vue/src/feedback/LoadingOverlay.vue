@@ -9,9 +9,7 @@ const props = withDefaults(defineProps<{
   message?: string;
   global?: boolean;
 }>(), {
-  active: false,
   message: '',
-  global: false,
 });
 </script>
 

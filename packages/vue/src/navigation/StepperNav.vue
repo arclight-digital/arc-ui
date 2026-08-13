@@ -11,7 +11,6 @@ const props = withDefaults(defineProps<{
 }>(), {
   steps: () => ([]),
   active: 0,
-  linear: false,
 });
 
 const emit = defineEmits<{

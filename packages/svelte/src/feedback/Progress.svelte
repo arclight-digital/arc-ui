@@ -37,7 +37,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = 0, variant = 'bar', size = 'md', indeterminate = false, showValue = false, label = '', ...rest }: Props = $props();
+  let { value, variant, size, indeterminate, showValue, label = '', ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

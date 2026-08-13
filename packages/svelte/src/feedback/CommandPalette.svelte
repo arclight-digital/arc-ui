@@ -35,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { open = false, placeholder = 'Type a command...', maxResults = 50, children, ...rest }: Props = $props();
+  let { open, placeholder = 'Type a command...', maxResults = 50, children, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

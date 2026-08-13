@@ -4,13 +4,10 @@ import '@arclux/arc-ui/inset';
 
 defineOptions({ name: 'Inset' });
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   space?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
   bleed?: boolean;
-}>(), {
-  space: 'md',
-  bleed: false,
-});
+}>();
 </script>
 
 <template>

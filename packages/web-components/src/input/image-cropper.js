@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { observeResize } from '../shared/subscriptions.js';
 
 const MIN_SIZE = 32;
 const HANDLES = ['nw', 'n', 'ne', 'e', 'se', 's', 'sw', 'w'];
@@ -276,27 +277,25 @@ export class ArcImageCropper extends LitElement {
     this._natH = 0;
     this._drag = null;
     this._changeRaf = 0;
-    this._resizeObserver = null;
     this._onPointerMoveBound = this._onPointerMove.bind(this);
     this._onPointerUpBound = this._onPointerUp.bind(this);
-  }
-
-  firstUpdated() {
-    const stage = this.shadowRoot.querySelector('.stage');
-    this._resizeObserver = new ResizeObserver(() => {
+    // The stage is handed back on each delivery rather than closed over, so a
+    // re-rendered stage cannot leave this measuring a detached element.
+    observeResize(this, '.stage', (stage) => {
       this._stageW = stage.clientWidth;
       if (this._rect) {
         this._rect = this._clampRect(this._rect);
         this._scheduleChange();
       }
     });
-    this._resizeObserver.observe(stage);
-    this._stageW = stage.clientWidth;
+  }
+
+  firstUpdated() {
+    this._stageW = this.shadowRoot.querySelector('.stage')?.clientWidth ?? 0;
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    this._resizeObserver?.disconnect();
     if (this._changeRaf) cancelAnimationFrame(this._changeRaf);
     this._changeRaf = 0;
     window.removeEventListener('pointermove', this._onPointerMoveBound);

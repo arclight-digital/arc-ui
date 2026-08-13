@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * Expandable content sections with smooth height animations. Ideal for FAQs, settings panels, and
@@ -12,9 +13,9 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @slot - Default content.
  * @csspart accordion
  */
-export class ArcAccordion extends LitElement {
+export class ArcAccordion extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    multiple: { type: Boolean, reflect: true },
+    multiple: flag(false),
     _items: { state: true },
     _openItems: { state: true },
   };
@@ -118,7 +119,6 @@ export class ArcAccordion extends LitElement {
 
   constructor() {
     super();
-    this.multiple = false;
     this._items = [];
     this._openItems = new Set();
   }

@@ -1,6 +1,8 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import '../content/spinner.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
+import { observeIntersect } from '../shared/subscriptions.js';
 
 /**
  * Intersection Observer-powered container that fires a load event when the user scrolls near the
@@ -20,12 +22,12 @@ import '../content/spinner.js';
  * @csspart end-text
  * @csspart spinner
  */
-export class ArcInfiniteScroll extends LitElement {
+export class ArcInfiniteScroll extends DeclaredPropsMixin(LitElement) {
   static properties = {
     threshold: { type: Number },
-    loading: { type: Boolean, reflect: true },
-    finished: { type: Boolean, reflect: true },
-    disabled: { type: Boolean, reflect: true },
+    loading: flag(false),
+    finished: flag(false),
+    disabled: flag(false),
   };
 
   static styles = [
@@ -72,36 +74,21 @@ export class ArcInfiniteScroll extends LitElement {
   constructor() {
     super();
     this.threshold = 200;
-    this.loading = false;
-    this.finished = false;
-    this.disabled = false;
-    this._observer = null;
-  }
 
-  firstUpdated() {
-    this._setupObserver();
-  }
-
-  updated(changed) {
-    if (changed.has('finished') || changed.has('disabled')) {
-      this._setupObserver();
-    }
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    this._destroyObserver();
-  }
-
-  _setupObserver() {
-    this._destroyObserver();
-
-    if (this.finished || this.disabled) return;
-
-    const sentinel = this.shadowRoot.querySelector('.infinite-scroll__sentinel');
-    if (!sentinel) return;
-
-    this._observer = new IntersectionObserver(
+    // Was created in firstUpdated and destroyed in disconnectedCallback, which
+    // do not pair — so the first reparenting stopped it loading more, silently
+    // and for good (finding #64). `updated` re-created it only when `finished`
+    // or `disabled` changed, which a reconnect does not.
+    //
+    // Returning null from the resolver is how "stop watching" is expressed now:
+    // the controller releases the observation and takes it back if the state
+    // reverses, so there is no second teardown path to keep paired.
+    observeIntersect(
+      this,
+      () =>
+        this.finished || this.disabled
+          ? null
+          : (this.shadowRoot?.querySelector('.infinite-scroll__sentinel') ?? null),
       (entries) => {
         const entry = entries[0];
         if (entry && entry.isIntersecting && !this.loading && !this.finished && !this.disabled) {
@@ -113,19 +100,8 @@ export class ArcInfiniteScroll extends LitElement {
           );
         }
       },
-      {
-        rootMargin: `0px 0px ${this.threshold}px 0px`,
-      },
+      { rootMargin: `0px 0px ${this.threshold}px 0px` },
     );
-
-    this._observer.observe(sentinel);
-  }
-
-  _destroyObserver() {
-    if (this._observer) {
-      this._observer.disconnect();
-      this._observer = null;
-    }
   }
 
   render() {

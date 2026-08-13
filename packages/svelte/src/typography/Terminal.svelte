@@ -36,7 +36,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { lines, prompt = '$', title = '', speed = 50, autoplay = true, loop = false, ...rest }: Props = $props();
+  let { lines, prompt = '$', title = '', speed = 50, autoplay, loop, ...rest }: Props = $props();
 </script>
 
 <arc-terminal {lines} {prompt} {title} {speed} {autoplay} {loop} {...rest}>

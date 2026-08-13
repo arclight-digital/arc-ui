@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Multi-line text input with integrated label, placeholder, resize control, and live character
@@ -28,7 +29,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @csspart error
  * @csspart counter
  */
-export class ArcTextarea extends FormControlMixin(LitElement) {
+export class ArcTextarea extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
   static properties = {
     value: { type: String },
     name: { type: String, reflect: true },
@@ -36,11 +37,19 @@ export class ArcTextarea extends FormControlMixin(LitElement) {
     label: { type: String },
     rows: { type: Number },
     maxlength: { type: Number },
+    // NOT flag(): a form-associated custom element whose `disabled` content
+    // attribute is merely *present* is "actually disabled" per the HTML spec,
+    // so the platform calls formDisabledCallback(true) and the mixin sets the
+    // property back. `disabled="false"` is a disabled control here for exactly
+    // the reason it is on a native <input>. Native semantics win; see
+    // shared/props.js.
     disabled: { type: Boolean, reflect: true },
-    readonly: { type: Boolean, reflect: true },
-    resize: { type: String, reflect: true },
-    size: { type: String, reflect: true },
-    autoResize: { type: Boolean, attribute: 'auto-resize', reflect: true },
+    readonly: flag(false),
+    resize: oneOf(['none', 'vertical', 'horizontal', 'both'], { default: 'vertical' }),
+
+    size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
+
+    autoResize: flag(false, { attribute: 'auto-resize' }),
     error: { type: String },
   };
 
@@ -158,10 +167,6 @@ export class ArcTextarea extends FormControlMixin(LitElement) {
     this.rows = 4;
     this.maxlength = 0;
     this.disabled = false;
-    this.readonly = false;
-    this.resize = 'vertical';
-    this.size = 'md';
-    this.autoResize = false;
     this.error = '';
   }
 

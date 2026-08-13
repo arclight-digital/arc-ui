@@ -34,7 +34,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { maxHeight = '', orientation = 'vertical', children, ...rest }: Props = $props();
+  let { maxHeight = '', orientation, children, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

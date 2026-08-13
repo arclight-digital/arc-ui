@@ -34,7 +34,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { variant = 'body', as = 'p', children, ...rest }: Props = $props();
+  let { variant, as, children, ...rest }: Props = $props();
 </script>
 
 <arc-text {variant} {as} {...rest}>

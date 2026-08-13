@@ -12,9 +12,6 @@ const props = withDefaults(defineProps<{
   variant?: 'bars' | 'mirror';
   label?: string;
 }>(), {
-  position: 0,
-  interactive: false,
-  variant: 'bars',
   label: '',
 });
 

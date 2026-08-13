@@ -37,7 +37,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { variant = 'default', size = 'md', removable = false, disabled = false, color = '', children, ...rest }: Props = $props();
+  let { variant, size, removable, disabled, color = '', children, ...rest }: Props = $props();
 </script>
 
 <arc-tag {variant} {size} {removable} {disabled} {color} {...rest}>

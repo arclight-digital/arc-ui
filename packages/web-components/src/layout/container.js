@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Max-width wrapper for page sections.
@@ -11,11 +12,11 @@ import { tokenStyles } from '../shared-styles.js';
  * @slot - Default content.
  * @csspart container
  */
-export class ArcContainer extends LitElement {
+export class ArcContainer extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    narrow: { type: Boolean, reflect: true },
-    size: { type: String, reflect: true },
-    padding: { type: String, reflect: true },
+    narrow: flag(false),
+    size: oneOf(['sm', 'md', 'lg', 'xl', 'full'], { default: 'md' }),
+    padding: oneOf(['none', 'sm', 'md', 'lg'], { default: 'md' }),
   };
 
   static styles = [
@@ -46,9 +47,6 @@ export class ArcContainer extends LitElement {
 
   constructor() {
     super();
-    this.narrow = false;
-    this.size = 'md';
-    this.padding = 'md';
   }
 
   render() {

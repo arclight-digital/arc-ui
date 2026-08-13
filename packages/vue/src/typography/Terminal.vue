@@ -15,8 +15,6 @@ const props = withDefaults(defineProps<{
   prompt: '$',
   title: '',
   speed: 50,
-  autoplay: true,
-  loop: false,
 });
 
 const emit = defineEmits<{

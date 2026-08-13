@@ -37,7 +37,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { data = '', type = 'line', color = '', width = 120, height = 32, fill = false, ...rest }: Props = $props();
+  let { data = '', type, color = '', width = 120, height = 32, fill, ...rest }: Props = $props();
 </script>
 
 <arc-sparkline {data} {type} {color} {width} {height} {fill} {...rest}>

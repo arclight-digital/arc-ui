@@ -11,7 +11,6 @@ const props = withDefaults(defineProps<{
 }>(), {
   text: '',
   query: '',
-  caseSensitive: false,
 });
 </script>
 

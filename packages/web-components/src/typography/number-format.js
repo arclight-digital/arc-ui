@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
  * Locale-aware number, currency, percentage, and compact formatter using Intl.NumberFormat.
@@ -14,14 +15,14 @@ import { tokenStyles } from '../shared-styles.js';
  * @slot none
  * @csspart number
  */
-export class ArcNumberFormat extends LitElement {
+export class ArcNumberFormat extends DeclaredPropsMixin(LitElement) {
   static properties = {
     value: { type: Number },
-    type: { type: String, reflect: true },
+    type: oneOf(['number', 'currency', 'percent', 'compact']),
     locale: { type: String },
     currency: { type: String },
     decimals: { type: Number },
-    notation: { type: String },
+    notation: oneOf(['standard', 'compact'], { reflect: false }),
   };
 
   static styles = [
@@ -38,11 +39,9 @@ export class ArcNumberFormat extends LitElement {
   constructor() {
     super();
     this.value = 0;
-    this.type = 'number';
     this.locale = 'en-US';
     this.currency = 'USD';
     this.decimals = undefined;
-    this.notation = 'standard';
   }
 
   /** @returns {string} */

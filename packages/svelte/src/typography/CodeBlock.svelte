@@ -35,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { language = '', filename = '', code = '', variant = 'default', ...rest }: Props = $props();
+  let { language = '', filename = '', code = '', variant, ...rest }: Props = $props();
 </script>
 
 <arc-code-block {language} {filename} {code} {variant} {...rest}>

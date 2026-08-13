@@ -34,7 +34,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { text = '', query = '', caseSensitive = false, ...rest }: Props = $props();
+  let { text = '', query = '', caseSensitive, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

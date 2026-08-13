@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
  * Flex-wrap primitive for variable-width children like tags, chips, and buttons with token gap
@@ -11,11 +12,11 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {'start' | 'center' | 'end' | 'space-between' | 'space-around'} justify - Horizontal distribution of items (maps to justify-content). Use "space-between" for navigation-style spacing.
  * @slot - Default content.
  */
-export class ArcCluster extends LitElement {
+export class ArcCluster extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    gap: { type: String, reflect: true },
-    align: { type: String, reflect: true },
-    justify: { type: String, reflect: true },
+    gap: oneOf(['xs', 'sm', 'md', 'lg', 'xl'], { default: 'sm' }),
+    align: oneOf(['start', 'center', 'end'], { default: 'center' }),
+    justify: oneOf(['start', 'center', 'end', 'space-between', 'space-around']),
   };
 
   static styles = [
@@ -51,9 +52,6 @@ export class ArcCluster extends LitElement {
 
   constructor() {
     super();
-    this.gap = 'sm';
-    this.align = 'center';
-    this.justify = 'start';
   }
 
   render() {

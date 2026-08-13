@@ -7,11 +7,12 @@ defineOptions({ name: 'Stat' });
 const props = withDefaults(defineProps<{
   value?: string;
   label?: string;
-  trend?: 'up' | 'down' | 'neutral';
+  trend?: '' | 'up' | 'down' | 'neutral';
   change?: string;
 }>(), {
   value: '',
   label: '',
+  trend: '',
   change: '',
 });
 </script>

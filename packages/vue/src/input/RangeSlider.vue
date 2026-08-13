@@ -16,7 +16,6 @@ const props = withDefaults(defineProps<{
   label?: string;
   showValues?: boolean;
 }>(), {
-  size: 'md',
   min: 0,
   max: 100,
   step: 1,
@@ -25,7 +24,6 @@ const props = withDefaults(defineProps<{
   name: '',
   disabled: false,
   label: '',
-  showValues: true,
 });
 
 const emit = defineEmits<{

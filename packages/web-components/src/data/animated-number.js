@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
  * Smooth count-up/down number animation with formatting options.
@@ -15,11 +16,11 @@ import { tokenStyles } from '../shared-styles.js';
  * @slot none
  * @csspart value
  */
-export class ArcAnimatedNumber extends LitElement {
+export class ArcAnimatedNumber extends DeclaredPropsMixin(LitElement) {
   static properties = {
     value: { type: Number, reflect: true },
     duration: { type: Number },
-    format: { type: String, reflect: true },
+    format: oneOf(['number', 'currency', 'percent']),
     prefix: { type: String },
     suffix: { type: String },
     decimals: { type: Number },
@@ -45,7 +46,6 @@ export class ArcAnimatedNumber extends LitElement {
     super();
     this.value = 0;
     this.duration = 1000;
-    this.format = 'number';
     this.prefix = '';
     this.suffix = '';
     this.decimals = 0;

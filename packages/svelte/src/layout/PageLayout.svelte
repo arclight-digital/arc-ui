@@ -39,7 +39,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { layout = 'centered', maxWidth = '1120px', gap = 'var(--space-xl)', sidebar, aside, children, ...rest }: Props = $props();
+  let { layout, maxWidth = '1120px', gap = 'var(--space-xl)', sidebar, aside, children, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

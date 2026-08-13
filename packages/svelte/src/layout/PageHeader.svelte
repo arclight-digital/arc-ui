@@ -45,7 +45,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { heading = '', description = '', border = false, above, aside, below, heading_, description_, children, ...rest }: Props = $props();
+  let { heading = '', description = '', border, above, aside, below, heading_, description_, children, ...rest }: Props = $props();
 </script>
 
 <arc-page-header {heading} {description} {border} {...rest}>

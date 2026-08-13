@@ -37,7 +37,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { peaks, position = 0, duration, interactive = false, variant = 'bars', label = '', ...rest }: Props = $props();
+  let { peaks, position, duration, interactive, variant, label = '', ...rest }: Props = $props();
 </script>
 
 <arc-waveform {peaks} {position} {duration} {interactive} {variant} {label} {...rest}>

@@ -35,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { open = false, trigger, children, ...rest }: Props = $props();
+  let { open, trigger, children, ...rest }: Props = $props();
 </script>
 
 <arc-dropdown-menu {open} {...rest}>

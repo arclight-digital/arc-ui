@@ -11,7 +11,6 @@ const props = withDefaults(defineProps<{
 }>(), {
   label: '',
   icon: '',
-  expanded: false,
 });
 </script>
 

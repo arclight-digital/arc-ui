@@ -4,11 +4,9 @@ import '@arclux/arc-ui/sortable-list';
 
 defineOptions({ name: 'SortableList' });
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   disabled?: boolean;
-}>(), {
-  disabled: false,
-});
+}>();
 
 const emit = defineEmits<{
   'arc-change': [event: CustomEvent];

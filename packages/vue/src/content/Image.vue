@@ -7,15 +7,13 @@ defineOptions({ name: 'Image' });
 const props = withDefaults(defineProps<{
   src?: string;
   alt?: string;
-  aspect?: '1/1' | '4/3' | '16/9' | '21/9' | '3/4' | '9/16';
+  aspect?: '' | '1/1' | '4/3' | '16/9' | '21/9' | '3/4' | '9/16';
   fit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down';
   loading?: 'lazy' | 'eager';
   fallback?: string;
 }>(), {
   src: '',
   alt: '',
-  fit: 'cover',
-  loading: 'lazy',
   fallback: '',
 });
 

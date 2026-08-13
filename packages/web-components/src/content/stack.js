@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Flexbox layout component for vertical or horizontal stacking with token-based spacing.
@@ -12,13 +13,13 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {boolean} wrap - Enable flex-wrap for responsive wrapping
  * @slot - Default content.
  */
-export class ArcStack extends LitElement {
+export class ArcStack extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    direction: { type: String, reflect: true },
-    gap: { type: String, reflect: true },
-    align: { type: String, reflect: true },
-    justify: { type: String, reflect: true },
-    wrap: { type: Boolean, reflect: true },
+    direction: oneOf(['vertical', 'horizontal']),
+    gap: oneOf(['xs', 'sm', 'md', 'lg', 'xl', '2xl'], { default: 'md' }),
+    align: oneOf(['start', 'center', 'end', 'stretch'], { default: 'stretch' }),
+    justify: oneOf(['start', 'center', 'end', 'between', 'around']),
+    wrap: flag(false),
   };
 
   static styles = [
@@ -64,11 +65,6 @@ export class ArcStack extends LitElement {
 
   constructor() {
     super();
-    this.direction = 'vertical';
-    this.gap = 'md';
-    this.align = 'stretch';
-    this.justify = 'start';
-    this.wrap = false;
   }
 
   render() {

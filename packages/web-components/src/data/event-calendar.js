@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { monthNames, weekdayNames, firstDayOfWeek, weekdayOffset } from '../shared/date-names.js';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
  * Scheduling calendar with month and week views that renders all-day and multi-day event chips
@@ -34,12 +35,12 @@ import { monthNames, weekdayNames, firstDayOfWeek, weekdayOffset } from '../shar
  * @prop {string} locale - BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language.
  * @prop {number} firstDayOfWeek - Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention.
  */
-export class ArcEventCalendar extends LitElement {
+export class ArcEventCalendar extends DeclaredPropsMixin(LitElement) {
   static properties = {
     locale: { type: String },
     firstDayOfWeek: { type: Number, attribute: 'first-day-of-week' },
     events: { type: Array },
-    view: { type: String, reflect: true },
+    view: oneOf(['month', 'week']),
     date: { type: String },
     _focusedIso: { state: true },
   };
@@ -328,7 +329,6 @@ export class ArcEventCalendar extends LitElement {
     this.locale = '';
     this.firstDayOfWeek = 0;
     this.events = [];
-    this.view = 'month';
     // Resolved to today in connectedCallback so the constructor stays deterministic.
     this.date = '';
     this._focusedIso = '';
@@ -529,11 +529,13 @@ export class ArcEventCalendar extends LitElement {
       case 'ArrowUp':
         target = this._addDays(d, -7);
         break;
+      // Row ends are relative to where the week starts, so this has to go
+      // through weekdayOffset rather than the Sunday-based getDay().
       case 'Home':
-        target = this._addDays(d, -d.getDay());
+        target = this._addDays(d, -weekdayOffset(d, this._firstDay));
         break;
       case 'End':
-        target = this._addDays(d, 6 - d.getDay());
+        target = this._addDays(d, 6 - weekdayOffset(d, this._firstDay));
         break;
       case 'PageUp':
         target = this.view === 'week' ? this._addDays(d, -7) : this._addMonths(d, -1);

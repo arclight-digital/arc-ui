@@ -4,17 +4,12 @@ import '@arclux/arc-ui/theme-toggle';
 
 defineOptions({ name: 'ThemeToggle' });
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   theme?: 'dark' | 'light' | 'auto';
   disabled?: boolean;
   iconOnly?: boolean;
   size?: 'xs' | 'sm' | 'md' | 'lg';
-}>(), {
-  theme: 'auto',
-  disabled: false,
-  iconOnly: false,
-  size: 'md',
-});
+}>();
 
 const emit = defineEmits<{
   'arc-change': [event: CustomEvent];

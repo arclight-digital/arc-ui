@@ -35,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { target = '', label = '', expired = 'Expired', hideZeroSegments = false, ...rest }: Props = $props();
+  let { target = '', label = '', expired = 'Expired', hideZeroSegments, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

@@ -11,9 +11,6 @@ const props = withDefaults(defineProps<{
   color?: 'accent' | 'gradient';
 }>(), {
   target: '',
-  position: 'top',
-  size: 'sm',
-  color: 'accent',
 });
 </script>
 

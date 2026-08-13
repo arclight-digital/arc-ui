@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import '../layout/container.register.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Page footer with branding, link columns, and legal text. Provides a structured layout with slots
@@ -22,12 +23,12 @@ import '../layout/container.register.js';
  * @csspart legal
  * @csspart base
  */
-export class ArcFooter extends LitElement {
+export class ArcFooter extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    density: { type: String, reflect: true },
-    border: { type: Boolean, reflect: true },
+    density: oneOf(['default', 'compact']),
+    border: flag(true, { negative: 'no-border' }),
     contained: { type: String, reflect: true },
-    align: { type: String, reflect: true },
+    align: oneOf(['left', 'center']),
   };
 
   static styles = [
@@ -116,10 +117,7 @@ export class ArcFooter extends LitElement {
 
   constructor() {
     super();
-    this.density = 'default';
-    this.border = true;
     this.contained = null;
-    this.align = 'left';
   }
 
   get _containerSize() {

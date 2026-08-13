@@ -36,7 +36,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { x = 50, y = 50, label = '', open = false, children, ...rest }: Props = $props();
+  let { x, y, label = '', open, children, ...rest }: Props = $props();
 </script>
 
 <arc-hotspot {x} {y} {label} {open} {...rest}>

@@ -12,12 +12,10 @@ const props = withDefaults(defineProps<{
   cancelLabel?: string;
   variant?: 'default' | 'error';
 }>(), {
-  open: false,
   heading: '',
   message: '',
   confirmLabel: 'Confirm',
   cancelLabel: 'Cancel',
-  variant: 'default',
 });
 
 const emit = defineEmits<{

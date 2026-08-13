@@ -5,7 +5,7 @@
 
   interface Props {
     locale?: string;
-    firstDayOfWeek?: number;
+    firstDayOfWeek?: 0|1|2|3|4|5|6|7;
     value?: string;
     min?: string;
     max?: string;
@@ -38,7 +38,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { locale = '', firstDayOfWeek = 0, value = $bindable(''), min = '', max = '', month = $bindable(), year = $bindable(), ...rest }: Props = $props();
+  let { locale = '', firstDayOfWeek, value = $bindable(''), min = '', max = '', month = $bindable(), year = $bindable(), ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

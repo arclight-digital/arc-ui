@@ -33,7 +33,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { politeness = 'polite', message = '', ...rest }: Props = $props();
+  let { politeness, message = '', ...rest }: Props = $props();
 </script>
 
 <arc-announcement {politeness} {message} {...rest}>

@@ -5,6 +5,7 @@ import { OverlayMixin } from '../shared/overlay-mixin.js';
 import { matchItem, highlightRuns, snippetAround } from '../shared/fuzzy-match.js';
 import '../content/icon.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * Spotlight-style command palette with fuzzy search and keyboard shortcuts.
@@ -39,9 +40,9 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @csspart group-heading
  * @csspart footer
  */
-export class ArcCommandPalette extends OverlayMixin(LitElement) {
+export class ArcCommandPalette extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
   static properties = {
-    open: { type: Boolean, reflect: true },
+    open: flag(false),
     placeholder: { type: String },
     maxResults: { type: Number, attribute: 'max-results' },
     _query: { state: true },
@@ -256,7 +257,6 @@ export class ArcCommandPalette extends OverlayMixin(LitElement) {
 
   constructor() {
     super();
-    this.open = false;
     this.placeholder = 'Type a command...';
     this.maxResults = 50;
     this._query = '';

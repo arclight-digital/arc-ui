@@ -4,6 +4,7 @@ import { buttonVariantStyles, iconBoxStyles } from '../button-styles.js';
 import { isLoneSlottedAnchor } from '../shared/anchor-adoption.js';
 import '../content/icon.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Compact button that renders an icon with optional text label, supporting ghost, secondary, and
@@ -22,15 +23,15 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @slot - Default content. Slotting a single `<a>` as the only child adopts it as the button's control — the recommended form for links that must work before hydration or without JavaScript. Put the icon inside that anchor; `::part(button)` does not apply in this form.
  * @csspart button
  */
-export class ArcIconButton extends LitElement {
+export class ArcIconButton extends DeclaredPropsMixin(LitElement) {
   static properties = {
     name: { type: String, reflect: true },
     text: { type: String },
-    variant: { type: String, reflect: true },
-    size: { type: String, reflect: true },
+    variant: oneOf(['ghost', 'secondary', 'primary']),
+    size: oneOf(['xs', 'sm', 'md', 'lg'], { default: 'md' }),
     label: { type: String },
     href: { type: String },
-    disabled: { type: Boolean, reflect: true },
+    disabled: flag(false),
     type: { type: String },
     _slottedAnchor: { state: true },
   };
@@ -152,11 +153,8 @@ export class ArcIconButton extends LitElement {
     super();
     this.name = '';
     this.text = '';
-    this.variant = 'ghost';
-    this.size = 'md';
     this.label = '';
     this.href = '';
-    this.disabled = false;
     this.type = 'button';
     this._slottedAnchor = false;
   }
@@ -202,7 +200,11 @@ export class ArcIconButton extends LitElement {
     }
 
     if (this.href) {
-      return html`<a class=${classes} href=${this.href} aria-label=${this.label || nothing} part="button">${icon}${textEl}</a>`;
+      // Same as arc-button: an anchor has no `disabled` attribute, so a disabled
+      // link icon-button stayed focusable and followable. Dropping `href` is how
+      // the platform removes a link from the tab order (finding #61).
+      const off = this.disabled;
+      return html`<a class=${classes} href=${off ? nothing : this.href} role=${off ? 'link' : nothing} aria-disabled=${off ? 'true' : nothing} aria-label=${this.label || nothing} part="button">${icon}${textEl}</a>`;
     }
     return html`
       <button

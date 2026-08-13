@@ -36,7 +36,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { variant = 'info', dismissible = false, icon, children, ...rest }: Props = $props();
+  let { variant, dismissible, icon, children, ...rest }: Props = $props();
 </script>
 
 <arc-callout {variant} {dismissible} {...rest}>

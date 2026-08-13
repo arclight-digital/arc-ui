@@ -1,5 +1,6 @@
 import { LitElement, css, nothing } from 'lit';
 import { isEditingTarget } from '../shared/editing-target.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * Invisible keyboard shortcut listener that supports modifier combos (Ctrl+K) and chord sequences
@@ -15,11 +16,11 @@ import { isEditingTarget } from '../shared/editing-target.js';
  * @fires {CustomEvent<{ keys: string }>} arc-hotkey-trigger - Fired when the full key pattern is matched. `event.detail.keys` contains the matched pattern string.
  * @slot none
  */
-export class ArcHotkey extends LitElement {
+export class ArcHotkey extends DeclaredPropsMixin(LitElement) {
   static properties = {
     keys: { type: String },
-    disabled: { type: Boolean, reflect: true },
-    global: { type: Boolean },
+    disabled: flag(false),
+    global: flag(false, { reflect: false }),
   };
 
   static styles = css`
@@ -29,8 +30,6 @@ export class ArcHotkey extends LitElement {
   constructor() {
     super();
     this.keys = '';
-    this.disabled = false;
-    this.global = false;
     this._chordIndex = 0;
     this._chordTimer = null;
     this._parsedChords = [];

@@ -11,9 +11,6 @@ const props = withDefaults(defineProps<{
   disabled?: boolean;
 }>(), {
   threshold: 200,
-  loading: false,
-  finished: false,
-  disabled: false,
 });
 
 const emit = defineEmits<{

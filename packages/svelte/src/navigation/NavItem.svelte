@@ -36,7 +36,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { href = '', active = false, variant = 'default', description = '', children, ...rest }: Props = $props();
+  let { href = '', active, variant, description = '', children, ...rest }: Props = $props();
 </script>
 
 <arc-nav-item {href} {active} {variant} {description} {...rest}>

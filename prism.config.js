@@ -1,4 +1,10 @@
+import { propsFrom } from './scripts/prism-props.js';
+
 export default {
+  // Our property declarations are built by the vocabulary in
+  // src/shared/props.js, which prism's reader cannot follow. See
+  // scripts/prism-props.js — the semantics stay in this repo on purpose.
+  propsFrom,
   // Where to find Lit web components
   components: 'packages/web-components/src',
   // Tier directories to scan (maps to output subdirectories)

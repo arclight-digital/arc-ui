@@ -35,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { variant = 'info', dismissible = false, sticky = false, children, ...rest }: Props = $props();
+  let { variant, dismissible, sticky, children, ...rest }: Props = $props();
 </script>
 
 <arc-banner {variant} {dismissible} {sticky} {...rest}>

@@ -4,15 +4,11 @@ import '@arclux/arc-ui/dock';
 
 defineOptions({ name: 'Dock' });
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   position?: 'bottom' | 'left' | 'right';
   autoHide?: boolean;
   open?: boolean;
-}>(), {
-  position: 'bottom',
-  autoHide: false,
-  open: false,
-});
+}>();
 </script>
 
 <template>

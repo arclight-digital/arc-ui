@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { getStatusIcon } from '../status-utils.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /** Returns inline style string setting --_status-color/rgb for a given variant */
 function statusStyle(variant) {
@@ -42,12 +43,12 @@ function statusStyle(variant) {
  * @csspart action
  * @csspart dismiss
  */
-export class ArcToast extends LitElement {
+export class ArcToast extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    position: { type: String, reflect: true },
+    position: oneOf(['top-right', 'top-left', 'top-center', 'bottom-right', 'bottom-left', 'bottom-center']),
     duration: { type: Number },
     maxVisible: { type: Number, attribute: 'max-visible' },
-    dedupe: { type: Boolean },
+    dedupe: flag(true, { negative: 'no-dedupe', reflect: false }),
     queueLimit: { type: Number, attribute: 'queue-limit' },
     _toasts: { state: true },
   };
@@ -157,10 +158,8 @@ export class ArcToast extends LitElement {
 
   constructor() {
     super();
-    this.position = 'top-right';
     this.duration = 4000;
     this.maxVisible = 3;
-    this.dedupe = true;
     this.queueLimit = 20;
     this._toasts = [];
     this._queue = [];

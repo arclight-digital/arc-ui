@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, oneOf, num } from '../shared/props.js';
 
 /**
  * Segmented audio level meter with peak-hold — the live vertical sibling of arc-meter,
@@ -30,16 +31,17 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart fill - The continuous fill bar (segments=0 only).
  * @csspart peak - The thin peak-hold line.
  */
-export class ArcLevelMeter extends LitElement {
+export class ArcLevelMeter extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    value: { type: Number },
+    // See arc-meter (finding #70).
+    value: num({ default: 0, min: 'min', max: 'max', clamp: 'toRange' }),
     min: { type: Number },
     max: { type: Number },
     peak: { type: Number },
-    orientation: { type: String, reflect: true },
+    orientation: oneOf(['vertical', 'horizontal']),
     segments: { type: Number },
-    warn: { type: Number },
-    clip: { type: Number },
+    warn: num({ default: 0.75, min: 0, max: 1, clamp: 'toRange' }),
+    clip: num({ default: 0.9, min: 0, max: 1, clamp: 'toRange' }),
     label: { type: String },
   };
 
@@ -148,14 +150,10 @@ export class ArcLevelMeter extends LitElement {
 
   constructor() {
     super();
-    this.value = 0;
     this.min = 0;
     this.max = 1;
     this.peak = undefined;
-    this.orientation = 'vertical';
     this.segments = 20;
-    this.warn = 0.75;
-    this.clip = 0.9;
     this.label = '';
 
     /** @private Self-tracked peak, as a fraction of the range. */
@@ -216,8 +214,8 @@ export class ArcLevelMeter extends LitElement {
 
   /** @private Zone for a position given as a fraction of the range. */
   _zoneAt(f) {
-    const warn = Number.isFinite(this.warn) ? this.warn : 0.75;
-    const clip = Number.isFinite(this.clip) ? this.clip : 0.9;
+    const warn = this.warn;
+    const clip = this.clip;
     if (f >= clip) return 'error';
     if (f >= warn) return 'warning';
     return 'success';

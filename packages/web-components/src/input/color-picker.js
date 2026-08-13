@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Full-featured color picker with a saturation/lightness area, hue slider, hex input, and optional
@@ -25,12 +26,19 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @csspart hex-input
  * @csspart presets
  */
-export class ArcColorPicker extends FormControlMixin(LitElement) {
+export class ArcColorPicker extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
   static properties = {
-    size: { type: String, reflect: true },
+    size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
+
     value: { type: String, reflect: true },
     name: { type: String, reflect: true },
     presets: { type: Array },
+    // NOT flag(): a form-associated custom element whose `disabled` content
+    // attribute is merely *present* is "actually disabled" per the HTML spec,
+    // so the platform calls formDisabledCallback(true) and the mixin sets the
+    // property back. `disabled="false"` is a disabled control here for exactly
+    // the reason it is on a native <input>. Native semantics win; see
+    // shared/props.js.
     disabled: { type: Boolean, reflect: true },
     label: { type: String },
     _hue: { state: true },
@@ -202,12 +210,14 @@ export class ArcColorPicker extends FormControlMixin(LitElement) {
 
   constructor() {
     super();
-    this.size = 'md';
     this.value = '#4d7ef7';
     this.name = '';
     this.presets = [];
     this.disabled = false;
     this.label = '';
+    // Seeded from `value` by connectedCallback's _parseHex; these are only the
+    // pre-connection placeholders. They were hand-written approximations of
+    // #4d7ef7 and did not convert back to it.
     this._hue = 225;
     this._sat = 92;
     this._lit = 64;
@@ -257,9 +267,16 @@ export class ArcColorPicker extends FormControlMixin(LitElement) {
       else if (max === g) h = ((b - r) / d + 2) * 60;
       else h = ((r - g) / d + 4) * 60;
     }
-    this._hue = Math.round(h);
-    this._sat = Math.round(s * 100);
-    this._lit = Math.round(l * 100);
+    // Deliberately *not* rounded. Integer HSL has far fewer points than the
+    // 16.7M hex colours this accepts, so rounding here cannot represent most of
+    // its own input — `#4d7ef7`, which used to be this component's default,
+    // came back as `#507ff7`. The visible symptom was a colour that jumped to a
+    // neighbour it had never been on as soon as the hue slider moved one pixel
+    // (finding #62). The pointer handlers still round, and should: those values
+    // come from pixels and are quantised already.
+    this._hue = h;
+    this._sat = s * 100;
+    this._lit = l * 100;
   }
 
   _hslToHex(h, s, l) {
@@ -331,7 +348,7 @@ export class ArcColorPicker extends FormControlMixin(LitElement) {
   /* ---- Area (saturation / lightness) interaction ---- */
 
   _onAreaPointerDown(e) {
-    if (this.readonly) return;
+    if (this.disabled || this.readonly) return;
     e.preventDefault();
     this._draggingArea = true;
     this._areaEl = this.shadowRoot.querySelector('.picker__area');
@@ -360,7 +377,7 @@ export class ArcColorPicker extends FormControlMixin(LitElement) {
   /* ---- Hue slider interaction ---- */
 
   _onHuePointerDown(e) {
-    if (this.readonly) return;
+    if (this.disabled || this.readonly) return;
     e.preventDefault();
     this._draggingHue = true;
     this._hueTrackEl = this.shadowRoot.querySelector('.picker__hue-track');
@@ -406,7 +423,7 @@ export class ArcColorPicker extends FormControlMixin(LitElement) {
   }
 
   _onHexBlur() {
-    if (this.readonly) return;
+    if (this.disabled || this.readonly) return;
     let hex = this._hexInput.trim();
     if (!hex.startsWith('#')) hex = '#' + hex;
     if (/^#[0-9a-f]{6}$/i.test(hex)) {
@@ -439,7 +456,7 @@ export class ArcColorPicker extends FormControlMixin(LitElement) {
 
   /** A discrete pick: edit and commit in one click, so both fire. */
   _selectPreset(hex) {
-    if (this.readonly) return;
+    if (this.disabled || this.readonly) return;
     this.value = hex.toLowerCase();
     this._hexInput = this.value;
     this._parseHex(this.value);
@@ -513,6 +530,7 @@ export class ArcColorPicker extends FormControlMixin(LitElement) {
             type="text"
             maxlength="7"
             .value=${this._hexInput}
+            ?disabled=${this.disabled}
             ?readonly=${this.readonly}
             @input=${this._onHexInput}
             @blur=${this._onHexBlur}
@@ -534,6 +552,7 @@ export class ArcColorPicker extends FormControlMixin(LitElement) {
                 role="option"
                 aria-selected=${c.toLowerCase() === this.value ? 'true' : 'false'}
                 aria-label=${c}
+                ?disabled=${this.disabled}
                 @click=${() => this._selectPreset(c)}
               ></button>
             `,

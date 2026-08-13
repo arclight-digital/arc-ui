@@ -37,7 +37,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { open = false, heading = '', message = '', confirmLabel = 'Confirm', cancelLabel = 'Cancel', variant = 'default', ...rest }: Props = $props();
+  let { open, heading = '', message = '', confirmLabel = 'Confirm', cancelLabel = 'Cancel', variant, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

@@ -35,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { variant = 'default', size = 'md', color = '', children, ...rest }: Props = $props();
+  let { variant, size, color = '', children, ...rest }: Props = $props();
 </script>
 
 <arc-badge {variant} {size} {color} {...rest}>

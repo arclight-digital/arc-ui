@@ -11,11 +11,7 @@ const props = withDefaults(defineProps<{
   fullscreen?: boolean;
   closable?: boolean;
 }>(), {
-  open: false,
   heading: '',
-  size: 'md',
-  fullscreen: false,
-  closable: true,
 });
 
 const emit = defineEmits<{

@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
  * Long-form content container that applies typographic rhythm and styling to slotted HTML
@@ -10,9 +11,9 @@ import { tokenStyles } from '../shared-styles.js';
  * @slot - Default content.
  * @csspart prose
  */
-export class ArcProse extends LitElement {
+export class ArcProse extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    size: { type: String, reflect: true },
+    size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
   };
 
   static styles = [
@@ -113,7 +114,6 @@ export class ArcProse extends LitElement {
 
   constructor() {
     super();
-    this.size = 'md';
   }
 
   connectedCallback() {

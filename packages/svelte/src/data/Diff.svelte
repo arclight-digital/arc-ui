@@ -34,7 +34,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { original = '', revised = '', mode = 'inline', ...rest }: Props = $props();
+  let { original = '', revised = '', mode, ...rest }: Props = $props();
 </script>
 
 <arc-diff {original} {revised} {mode} {...rest}>

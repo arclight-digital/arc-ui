@@ -7,7 +7,7 @@ import { ArcStat } from '@arclux/arc-ui/stat';
 export interface StatProps {
   value?: string;
   label?: string;
-  trend?: 'up' | 'down' | 'neutral';
+  trend?: '' | 'up' | 'down' | 'neutral';
   change?: string;
   className?: string;
 }

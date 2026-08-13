@@ -1,6 +1,7 @@
 import { LitElement, html, css, svg } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Rotary knob input for continuous parameters — the control a slider can't be when the panel
@@ -31,17 +32,30 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @csspart indicator
  * @csspart value
  */
-export class ArcKnob extends FormControlMixin(LitElement) {
+export class ArcKnob extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
   static properties = {
-    size: { type: String, reflect: true },
+    size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
+
     value: { type: Number, reflect: true },
     min: { type: Number },
     max: { type: Number },
     step: { type: Number },
     name: { type: String, reflect: true },
+    // NOT flag(): a form-associated custom element whose `disabled` content
+    // attribute is merely *present* is "actually disabled" per the HTML spec,
+    // so the platform calls formDisabledCallback(true) and the mixin sets the
+    // property back. `disabled="false"` is a disabled control here for exactly
+    // the reason it is on a native <input>. Native semantics win; see
+    // shared/props.js.
     disabled: { type: Boolean, reflect: true },
     label: { type: String },
     detents: {
+      // `type` is stated even though `converter` overrides it: without it the
+      // declaration carries no type for prism to read, and `detents` reached
+      // none of the six generated wrappers — documented in full, absent from
+      // every framework surface. Caught by prism 2.12.0's
+      // unparsed-prop-declaration.
+      type: Array,
       attribute: 'detents',
       // The default converter for an Array type wants JSON; a knob's detents
       // read better as the comma list a patch file would carry.
@@ -174,7 +188,6 @@ export class ArcKnob extends FormControlMixin(LitElement) {
 
   constructor() {
     super();
-    this.size = 'md';
     this.value = 0;
     this.min = 0;
     this.max = 100;

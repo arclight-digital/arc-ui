@@ -13,7 +13,7 @@ declare module 'solid-js' {
 
 export interface CalendarProps {
   locale?: string;
-  firstDayOfWeek?: number;
+  firstDayOfWeek?: 0|1|2|3|4|5|6|7;
   value?: string;
   min?: string;
   max?: string;

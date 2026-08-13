@@ -106,8 +106,20 @@ for (const tier of fs.readdirSync(SRC, { withFileTypes: true })) {
     for (const m of src.matchAll(/part="([^"$]+)"/g)) {
       for (const p of m[1].split(/\s+/)) rendered.add(p);
     }
-    // A dynamic `part=${…}` means the set can't be known; don't guess.
-    const dynamicParts = /part=\$\{/.test(src);
+    // A part whose name is chosen at render time — `part="${level === 0 ? 'tree'
+    // : 'group'}"` — is invisible to the literal pattern above, because that
+    // pattern excludes `$` deliberately. Harvest the string literals out of the
+    // expression instead of skipping: the set of names a ternary can produce is
+    // exactly its quoted literals, so this stays a check rather than becoming a
+    // guess. arc-tree-view renders both of its list parts this way, and they
+    // read as undocumented without it.
+    for (const m of src.matchAll(/part="?\$\{([^}]*)\}"?/g)) {
+      for (const [, literal] of m[1].matchAll(/'([\w-]+)'/g)) rendered.add(literal);
+    }
+
+    // An unquoted, fully dynamic `part=${…}` that yielded no literals — a
+    // computed name, not a choice between known ones — still can't be known.
+    const dynamicParts = /part=\$\{/.test(src) && !/part=\$\{[^}]*'[\w-]+'/.test(src);
     if (!dynamicParts) {
       for (const [, name] of doc.matchAll(/@csspart\s+([\w-]+)/g)) {
         if (!rendered.has(name)) {

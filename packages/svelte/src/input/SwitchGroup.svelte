@@ -36,7 +36,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { label = '', orientation = 'vertical', size = 'md', disabled = false, children, ...rest }: Props = $props();
+  let { label = '', orientation, size, disabled, children, ...rest }: Props = $props();
 </script>
 
 <arc-switch-group {label} {orientation} {size} {disabled} {...rest}>

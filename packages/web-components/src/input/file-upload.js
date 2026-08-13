@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * Drag-and-drop file upload zone with preview.
@@ -18,12 +19,12 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart file-list
  * @csspart file-item
  */
-export class ArcFileUpload extends LitElement {
+export class ArcFileUpload extends DeclaredPropsMixin(LitElement) {
   static properties = {
     accept: { type: String },
-    multiple: { type: Boolean, reflect: true },
+    multiple: flag(false),
     maxSize: { type: Number, attribute: 'max-size' },
-    disabled: { type: Boolean, reflect: true },
+    disabled: flag(false),
     _files: { state: true },
     _dragOver: { state: true },
     _error: { state: true },
@@ -170,9 +171,7 @@ export class ArcFileUpload extends LitElement {
   constructor() {
     super();
     this.accept = '';
-    this.multiple = false;
     this.maxSize = 0;
-    this.disabled = false;
     this._files = [];
     this._dragOver = false;
     this._error = '';
@@ -242,6 +241,10 @@ export class ArcFileUpload extends LitElement {
   }
 
   _handleClick() {
+    // `:host([disabled]) { pointer-events: none }` was the only enforcement,
+    // and it says nothing about the keyboard: Enter on the dropzone opened the
+    // file picker on a disabled control (finding #61).
+    if (this.disabled) return;
     this.shadowRoot.querySelector('input[type="file"]')?.click();
   }
 
@@ -269,6 +272,9 @@ export class ArcFileUpload extends LitElement {
     e.preventDefault();
     e.stopPropagation();
     this._dragOver = false;
+    // A drop is a pointer gesture, but the drag-and-drop API delivers it
+    // regardless of pointer-events, so this needs its own guard too.
+    if (this.disabled) return;
 
     if (e.dataTransfer?.files.length > 0) {
       this._addFiles(e.dataTransfer.files);
@@ -289,7 +295,8 @@ export class ArcFileUpload extends LitElement {
           class="dropzone ${this._dragOver ? 'drag-over' : ''}"
           part="dropzone"
           role="button"
-          tabindex="0"
+          tabindex=${this.disabled ? '-1' : '0'}
+          aria-disabled=${this.disabled ? 'true' : 'false'}
           aria-label="Upload files. Click or drag and drop."
           @click=${this._handleClick}
           @keydown=${this._handleKeydown}

@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * Multi-step onboarding that composes spotlight with popover-styled tooltips at each step. Step
@@ -23,11 +24,11 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart prev
  * @csspart next
  */
-export class ArcGuidedTour extends LitElement {
+export class ArcGuidedTour extends DeclaredPropsMixin(LitElement) {
   static properties = {
     steps: { state: true },
     active: { state: true },
-    open: { type: Boolean, reflect: true },
+    open: flag(false),
   };
 
   static styles = [
@@ -104,7 +105,6 @@ export class ArcGuidedTour extends LitElement {
     super();
     this.steps = [];
     this.active = 0;
-    this.open = false;
     this._rect = null;
     this._onScroll = () => this._updatePosition();
   }

@@ -9,7 +9,6 @@ const props = withDefaults(defineProps<{
   disabled?: boolean;
 }>(), {
   columns: () => ([]),
-  disabled: false,
 });
 
 const emit = defineEmits<{

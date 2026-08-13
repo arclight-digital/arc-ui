@@ -1,6 +1,7 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * One-character-per-box input for PINs, OTPs, and verification codes with auto-advance, paste
@@ -25,15 +26,23 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @csspart boxes
  * @csspart box
  */
-export class ArcPinInput extends FormControlMixin(LitElement) {
+export class ArcPinInput extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
   static properties = {
-    size: { type: String, reflect: true },
+    size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
+
     length: { type: Number },
     value: { type: String, reflect: true },
     name: { type: String, reflect: true },
+    // NOT flag(): a form-associated custom element whose `disabled` content
+    // attribute is merely *present* is "actually disabled" per the HTML spec,
+    // so the platform calls formDisabledCallback(true) and the mixin sets the
+    // property back. `disabled="false"` is a disabled control here for exactly
+    // the reason it is on a native <input>. Native semantics win; see
+    // shared/props.js.
     disabled: { type: Boolean, reflect: true },
-    mask: { type: Boolean, reflect: true },
-    type: { type: String, reflect: true },
+    mask: flag(false),
+    type: oneOf(['number', 'alphanumeric', 'text']),
+
     separator: { type: Number },
     label: { type: String },
   };
@@ -140,13 +149,10 @@ export class ArcPinInput extends FormControlMixin(LitElement) {
 
   constructor() {
     super();
-    this.size = 'md';
     this.length = 4;
     this.value = '';
     this.name = '';
     this.disabled = false;
-    this.mask = false;
-    this.type = 'number';
     this.separator = 0;
     this.label = '';
   }

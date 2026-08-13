@@ -35,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { label = '', icon = '', expanded = false, children, ...rest }: Props = $props();
+  let { label = '', icon = '', expanded, children, ...rest }: Props = $props();
 </script>
 
 <arc-tree-item {label} {icon} {expanded} {...rest}>

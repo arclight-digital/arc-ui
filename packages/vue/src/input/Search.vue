@@ -15,8 +15,6 @@ const props = withDefaults(defineProps<{
   value: '',
   placeholder: 'Search...',
   label: '',
-  disabled: false,
-  loading: false,
   open: false,
 });
 

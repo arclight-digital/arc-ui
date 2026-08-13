@@ -38,7 +38,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { text = '', speed = 50, delay = 0, cursor = true, loop = false, nowrap = false, pauseEnd = 2000, ...rest }: Props = $props();
+  let { text = '', speed = 50, delay = 0, cursor, loop, nowrap, pauseEnd = 2000, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

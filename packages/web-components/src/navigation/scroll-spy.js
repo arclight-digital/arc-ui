@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
  * Tracks scroll position and highlights the active navigation link.
@@ -18,11 +19,11 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @csspart list
  * @csspart link
  */
-export class ArcScrollSpy extends LitElement {
+export class ArcScrollSpy extends DeclaredPropsMixin(LitElement) {
   static properties = {
     active: { type: String, reflect: true },
     offset: { type: Number },
-    progress: { type: String, reflect: true },
+    progress: oneOf(['none', 'ring', 'read', 'both']),
     _active: { state: true },
     _links: { state: true },
     _progress: { state: true },
@@ -228,7 +229,6 @@ export class ArcScrollSpy extends LitElement {
     super();
     this.active = '';
     this.offset = 80;
-    this.progress = 'none';
     this._active = '';
     this._links = [];
     this._progress = 0;

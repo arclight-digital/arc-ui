@@ -4,11 +4,9 @@ import '@arclux/arc-ui/guided-tour';
 
 defineOptions({ name: 'GuidedTour' });
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   open?: boolean;
-}>(), {
-  open: false,
-});
+}>();
 
 const emit = defineEmits<{
   'arc-change': [event: CustomEvent];

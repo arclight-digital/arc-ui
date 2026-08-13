@@ -6,7 +6,7 @@
   interface Props {
     src?: string;
     alt?: string;
-    aspect?: '1/1' | '4/3' | '16/9' | '21/9' | '3/4' | '9/16';
+    aspect?: '' | '1/1' | '4/3' | '16/9' | '21/9' | '3/4' | '9/16';
     fit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down';
     loading?: 'lazy' | 'eager';
     fallback?: string;
@@ -37,7 +37,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { src = '', alt = '', aspect, fit = 'cover', loading = 'lazy', fallback = '', ...rest }: Props = $props();
+  let { src = '', alt = '', aspect, fit, loading, fallback = '', ...rest }: Props = $props();
 </script>
 
 <arc-image {src} {alt} {aspect} {fit} {loading} {fallback} {...rest}>

@@ -9,7 +9,6 @@ const props = withDefaults(defineProps<{
   expanded?: boolean;
 }>(), {
   lines: 3,
-  expanded: false,
 });
 
 const emit = defineEmits<{

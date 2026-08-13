@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
  * Typography component with variants matching the arclight type scale.
@@ -10,10 +11,10 @@ import { tokenStyles } from '../shared-styles.js';
  * @slot - Default content.
  * @csspart text
  */
-export class ArcText extends LitElement {
+export class ArcText extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    variant: { type: String, reflect: true },
-    as: { type: String },
+    variant: oneOf(['display', 'heading', 'body', 'muted', 'ghost', 'accent', 'label', 'wordmark', 'code'], { default: 'body' }),
+    as: oneOf(['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span'], { reflect: false }),
   };
 
   static styles = [
@@ -100,8 +101,6 @@ export class ArcText extends LitElement {
 
   constructor() {
     super();
-    this.variant = 'body';
-    this.as = 'p';
   }
 
   render() {

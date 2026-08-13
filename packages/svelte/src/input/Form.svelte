@@ -38,7 +38,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { action = '', method = '', novalidate = false, loading = false, disabled = false, errorSummary = true, children, ...rest }: Props = $props();
+  let { action = '', method = '', novalidate, loading, disabled = false, errorSummary, children, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

@@ -9,7 +9,6 @@ const props = withDefaults(defineProps<{
   gap?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 }>(), {
   threshold: '600px',
-  gap: 'md',
 });
 </script>
 

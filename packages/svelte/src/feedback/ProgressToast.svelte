@@ -32,7 +32,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { position = 'bottom-right', ...rest }: Props = $props();
+  let { position, ...rest }: Props = $props();
 </script>
 
 <arc-progress-toast {position} {...rest}>

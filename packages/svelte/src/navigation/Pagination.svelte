@@ -35,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { total = 1, current = 1, siblings = 1, compact = false, ...rest }: Props = $props();
+  let { total = 1, current = 1, siblings = 1, compact, ...rest }: Props = $props();
 </script>
 
 <arc-pagination {total} {current} {siblings} {compact} {...rest}>

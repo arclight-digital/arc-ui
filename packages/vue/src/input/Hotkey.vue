@@ -10,8 +10,6 @@ const props = withDefaults(defineProps<{
   global?: boolean;
 }>(), {
   keys: '',
-  disabled: false,
-  global: false,
 });
 
 const emit = defineEmits<{

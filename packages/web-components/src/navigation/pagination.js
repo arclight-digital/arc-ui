@@ -1,5 +1,6 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * Page navigation control with previous/next arrows, numbered page buttons, and smart ellipsis
@@ -19,12 +20,12 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart ellipsis
  * @csspart page
  */
-export class ArcPagination extends LitElement {
+export class ArcPagination extends DeclaredPropsMixin(LitElement) {
   static properties = {
     total: { type: Number },
     current: { type: Number, reflect: true },
     siblings: { type: Number },
-    compact: { type: Boolean, reflect: true },
+    compact: flag(false),
   };
 
   static styles = [
@@ -112,7 +113,6 @@ export class ArcPagination extends LitElement {
     this.total = 1;
     this.current = 1;
     this.siblings = 1;
-    this.compact = false;
   }
 
   _getPageRange() {

@@ -37,7 +37,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { autoPlay = false, interval = 5000, loop = true, showDots = true, showArrows = true, children, ...rest }: Props = $props();
+  let { autoPlay, interval, loop, showDots, showArrows, children, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

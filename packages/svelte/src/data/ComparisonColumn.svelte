@@ -34,7 +34,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { heading = '', highlight = false, values = '[]', ...rest }: Props = $props();
+  let { heading = '', highlight, values = '[]', ...rest }: Props = $props();
 </script>
 
 <arc-comparison-column {heading} {highlight} {values} {...rest}>

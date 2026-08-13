@@ -1,5 +1,6 @@
 import { LitElement, html, css, svg, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 const MAX_SERIES = 6; // --chart-1..6; extras fold into "Other"
 const CHAR_W = 6.2; // rough glyph width at --text-xs, for label-fit estimates
@@ -31,16 +32,16 @@ const num = (v) => {
  * @csspart chart
  * @csspart legend
  */
-export class ArcChart extends LitElement {
+export class ArcChart extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    type: { type: String, reflect: true },
+    type: oneOf(['line', 'area', 'bar', 'donut']),
     series: { type: Array },
     labels: { type: Array },
-    stacked: { type: Boolean, reflect: true },
-    hideLegend: { type: Boolean, reflect: true, attribute: 'hide-legend' },
-    hideAxis: { type: Boolean, reflect: true, attribute: 'hide-axis' },
+    stacked: flag(false),
+    hideLegend: flag(false, { attribute: 'hide-legend' }),
+    hideAxis: flag(false, { attribute: 'hide-axis' }),
     height: { type: Number },
-    valueFormat: { type: String, attribute: 'value-format' },
+    valueFormat: oneOf(['number', 'percent', 'currency'], { attribute: 'value-format', reflect: false }),
     currency: { type: String },
     _width: { state: true },
     _hover: { state: true },
@@ -232,14 +233,9 @@ export class ArcChart extends LitElement {
 
   constructor() {
     super();
-    this.type = 'line';
     this.series = [];
     this.labels = [];
-    this.stacked = false;
-    this.hideLegend = false;
-    this.hideAxis = false;
     this.height = 260;
-    this.valueFormat = 'number';
     this.currency = 'USD';
     this._width = 0;
     this._hover = null;

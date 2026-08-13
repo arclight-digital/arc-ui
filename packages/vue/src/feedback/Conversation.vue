@@ -4,11 +4,9 @@ import '@arclux/arc-ui/conversation';
 
 defineOptions({ name: 'Conversation' });
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   autoScroll?: boolean;
-}>(), {
-  autoScroll: true,
-});
+}>();
 </script>
 
 <template>

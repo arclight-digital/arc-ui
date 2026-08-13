@@ -15,7 +15,6 @@ const props = withDefaults(defineProps<{
 }>(), {
   value: 0,
   duration: 1000,
-  format: 'number',
   prefix: '',
   suffix: '',
   decimals: 0,

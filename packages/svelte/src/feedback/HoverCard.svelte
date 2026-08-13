@@ -37,7 +37,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { position = 'bottom', openDelay = 400, closeDelay = 300, content, children, ...rest }: Props = $props();
+  let { position, openDelay = 400, closeDelay = 300, content, children, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

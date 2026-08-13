@@ -4,11 +4,9 @@ import '@arclux/arc-ui/dropdown-menu';
 
 defineOptions({ name: 'DropdownMenu' });
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   open?: boolean;
-}>(), {
-  open: false,
-});
+}>();
 
 const emit = defineEmits<{
   'arc-close': [event: CustomEvent];

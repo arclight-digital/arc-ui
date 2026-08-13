@@ -39,7 +39,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { rows = [], sortable = false, selectable = false, sortColumn = '', sortDirection = 'asc', virtual = false, rowHeight = 40, children, ...rest }: Props = $props();
+  let { rows = [], sortable, selectable, sortColumn = '', sortDirection, virtual, rowHeight = 40, children, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

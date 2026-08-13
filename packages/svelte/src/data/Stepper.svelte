@@ -33,7 +33,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { active = 0, children, ...rest }: Props = $props();
+  let { active, children, ...rest }: Props = $props();
 </script>
 
 <arc-stepper {active} {...rest}>

@@ -33,7 +33,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { variant = 'info', children, ...rest }: Props = $props();
+  let { variant, children, ...rest }: Props = $props();
 </script>
 
 <arc-inline-message {variant} {...rest}>

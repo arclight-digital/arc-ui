@@ -14,7 +14,7 @@ declare module 'solid-js' {
 export interface StatProps {
   value?: string;
   label?: string;
-  trend?: 'up' | 'down' | 'neutral';
+  trend?: '' | 'up' | 'down' | 'neutral';
   change?: string;
   class?: string;
   id?: string;

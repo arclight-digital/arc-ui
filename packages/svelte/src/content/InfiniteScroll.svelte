@@ -36,7 +36,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { threshold = 200, loading = false, finished = false, disabled = false, children, ...rest }: Props = $props();
+  let { threshold = 200, loading, finished, disabled, children, ...rest }: Props = $props();
 </script>
 
 <arc-infinite-scroll {threshold} {loading} {finished} {disabled} {...rest}>

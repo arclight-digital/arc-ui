@@ -1,9 +1,10 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { MenuKeyboardController } from '../shared/menu-keyboard.js';
-import { ClickOutsideController } from '../shared/click-outside.js';
+import { DismissController } from '../shared/dismiss-controller.js';
 import '../input/icon-button.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Horizontal toolbar with start, center, and end slots.
@@ -26,12 +27,12 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @csspart center
  * @csspart end
  */
-export class ArcToolbar extends LitElement {
+export class ArcToolbar extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    sticky: { type: Boolean, reflect: true },
-    size: { type: String, reflect: true },
-    border: { type: Boolean, reflect: true },
-    overflow: { type: Boolean, reflect: true },
+    sticky: flag(false),
+    size: oneOf(['md', 'sm']),
+    border: flag(true, { negative: 'no-border' }),
+    overflow: flag(false),
     _overflowItems: { state: true },
     _menuOpen: { state: true },
   };
@@ -172,10 +173,6 @@ export class ArcToolbar extends LitElement {
 
   constructor() {
     super();
-    this.sticky = false;
-    this.size = 'md';
-    this.border = true;
-    this.overflow = false;
     this._overflowItems = [];
     this._menuOpen = false;
     this._widthCache = new WeakMap();
@@ -187,8 +184,8 @@ export class ArcToolbar extends LitElement {
       onSelect: (i) => this._activateItem(i),
       onClose: () => this._closeMenu(true),
     });
-    this._clickOutside = new ClickOutsideController(this, {
-      onClickOutside: () => this._closeMenu(false),
+    this._dismiss = new DismissController(this, {
+      onDismiss: () => this._closeMenu(false),
       when: () => this._menuOpen,
     });
   }
@@ -228,11 +225,11 @@ export class ArcToolbar extends LitElement {
         requestAnimationFrame(() => {
           if (!this._menuOpen) return;
           this._menuKb.attach();
-          this._clickOutside.activate();
+          this._dismiss.activate();
         });
       } else {
         this._menuKb.detach();
-        this._clickOutside.deactivate();
+        this._dismiss.deactivate();
       }
     }
 

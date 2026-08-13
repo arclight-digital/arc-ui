@@ -11,7 +11,6 @@ const props = withDefaults(defineProps<{
 }>(), {
   original: '',
   revised: '',
-  mode: 'inline',
 });
 </script>
 

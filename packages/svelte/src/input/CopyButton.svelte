@@ -33,7 +33,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = '', disabled = false, ...rest }: Props = $props();
+  let { value = '', disabled, ...rest }: Props = $props();
 </script>
 
 <arc-copy-button {value} {disabled} {...rest}>

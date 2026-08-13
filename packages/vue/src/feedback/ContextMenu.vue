@@ -4,11 +4,9 @@ import '@arclux/arc-ui/context-menu';
 
 defineOptions({ name: 'ContextMenu' });
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   open?: boolean;
-}>(), {
-  open: false,
-});
+}>();
 
 const emit = defineEmits<{
   'arc-open': [event: CustomEvent];

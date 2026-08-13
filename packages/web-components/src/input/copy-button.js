@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * One-click copy-to-clipboard button with confirmation.
@@ -13,10 +14,10 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart icon
  * @csspart label
  */
-export class ArcCopyButton extends LitElement {
+export class ArcCopyButton extends DeclaredPropsMixin(LitElement) {
   static properties = {
     value: { type: String },
-    disabled: { type: Boolean, reflect: true },
+    disabled: flag(false),
     _copied: { state: true },
   };
 
@@ -99,7 +100,6 @@ export class ArcCopyButton extends LitElement {
   constructor() {
     super();
     this.value = '';
-    this.disabled = false;
     this._copied = false;
     this._timeout = null;
   }

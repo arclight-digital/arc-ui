@@ -4,11 +4,9 @@ import '@arclux/arc-ui/stepper';
 
 defineOptions({ name: 'Stepper' });
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   active?: number;
-}>(), {
-  active: 0,
-});
+}>();
 </script>
 
 <template>

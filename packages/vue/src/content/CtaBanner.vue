@@ -11,7 +11,6 @@ const props = withDefaults(defineProps<{
 }>(), {
   eyebrow: '',
   headline: '',
-  nogradient: false,
 });
 </script>
 

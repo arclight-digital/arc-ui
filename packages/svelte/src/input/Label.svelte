@@ -40,7 +40,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { for: forProp = '', required = false, size = 'md', disabled = false, tooltip, description, children, ...rest }: Props = $props();
+  let { for: forProp = '', required, size, disabled, tooltip, description, children, ...rest }: Props = $props();
 </script>
 
 <arc-label for={forProp} {required} {size} {disabled} {...rest}>

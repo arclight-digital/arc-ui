@@ -1,6 +1,7 @@
 import { LitElement, html, css, nothing } from 'lit';
 import qrcode from 'qrcode-generator';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Client-side QR code renderer that encodes any string into a crisp inline SVG. Themes
@@ -18,14 +19,14 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart svg
  * @csspart card
  */
-export class ArcQrCode extends LitElement {
+export class ArcQrCode extends DeclaredPropsMixin(LitElement) {
   static properties = {
     value: { type: String },
     size: { type: Number },
-    level: { type: String, reflect: true },
+    level: oneOf(['L', 'M', 'Q', 'H'], { default: 'M' }),
     label: { type: String },
     quietZone: { type: Number, attribute: 'quiet-zone' },
-    contrast: { type: Boolean, reflect: true },
+    contrast: flag(false),
     _path: { state: true },
     _count: { state: true },
   };
@@ -75,10 +76,8 @@ export class ArcQrCode extends LitElement {
     super();
     this.value = '';
     this.size = 160;
-    this.level = 'M';
     this.label = '';
     this.quietZone = 2;
-    this.contrast = false;
     this._path = '';
     this._count = 0;
   }

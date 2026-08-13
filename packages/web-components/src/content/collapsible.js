@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * A disclosure widget with a clickable heading that toggles the visibility of its slotted content
@@ -15,9 +16,9 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart heading
  * @csspart body
  */
-export class ArcCollapsible extends LitElement {
+export class ArcCollapsible extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    open: { type: Boolean, reflect: true },
+    open: flag(false),
     heading: { type: String },
   };
 
@@ -107,7 +108,6 @@ export class ArcCollapsible extends LitElement {
 
   constructor() {
     super();
-    this.open = false;
     this.heading = '';
   }
 

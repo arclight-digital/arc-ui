@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * Page title area with positional slots for composing breadcrumbs, actions, tabs, or any content
@@ -24,11 +25,11 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart below
  * @csspart content
  */
-export class ArcPageHeader extends LitElement {
+export class ArcPageHeader extends DeclaredPropsMixin(LitElement) {
   static properties = {
     heading: { type: String },
     description: { type: String },
-    border: { type: Boolean, reflect: true },
+    border: flag(false),
   };
 
   static styles = [
@@ -104,7 +105,6 @@ export class ArcPageHeader extends LitElement {
     super();
     this.heading = '';
     this.description = '';
-    this.border = false;
   }
 
   render() {

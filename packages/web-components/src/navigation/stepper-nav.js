@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * Wizard navigation with back/next/skip controls and step validation gates. Steps connected by
@@ -20,7 +21,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart panel
  * @csspart controls
  */
-export class ArcStepperNav extends LitElement {
+export class ArcStepperNav extends DeclaredPropsMixin(LitElement) {
   static properties = {
     steps: {
       converter: {
@@ -34,7 +35,7 @@ export class ArcStepperNav extends LitElement {
       },
     },
     active: { type: Number, reflect: true },
-    linear: { type: Boolean, reflect: true },
+    linear: flag(false),
   };
 
   static styles = [
@@ -129,7 +130,6 @@ export class ArcStepperNav extends LitElement {
     super();
     this.steps = [];
     this.active = 0;
-    this.linear = false;
   }
 
   _goTo(index) {

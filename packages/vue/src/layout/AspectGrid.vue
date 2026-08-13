@@ -10,8 +10,6 @@ const props = withDefaults(defineProps<{
   gap?: 'sm' | 'md' | 'lg';
 }>(), {
   columns: 3,
-  ratio: '1/1',
-  gap: 'md',
 });
 </script>
 

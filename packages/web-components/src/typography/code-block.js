@@ -3,6 +3,8 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { tokenStyles } from '../shared-styles.js';
 import '../input/copy-button.js';
 import '../layout/status-bar.js';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
+import { observeResize } from '../shared/subscriptions.js';
 
 /* ── Shared Shiki highlighter (singleton, lazy — loaded on first use) ── */
 let _hlReady;
@@ -141,12 +143,12 @@ async function getHL(lang) {
  * @csspart pre
  * @csspart code
  */
-export class ArcCodeBlock extends LitElement {
+export class ArcCodeBlock extends DeclaredPropsMixin(LitElement) {
   static properties = {
     language: { type: String, reflect: true },
     filename: { type: String, reflect: true },
     code: { type: String },
-    variant: { type: String, reflect: true },
+    variant: oneOf(['default', 'window', 'basic']),
     _highlightedHtml: { state: true },
     _overflows: { state: true },
   };
@@ -374,27 +376,15 @@ export class ArcCodeBlock extends LitElement {
     this.language = '';
     this.filename = '';
     this.code = '';
-    this.variant = 'default';
     this._highlightedHtml = '';
     this._overflows = false;
-    this._resizeObserver = null;
+    // Watch the scroller rather than the host: the answer depends on the code's
+    // width against the viewport's, and either can change without the other.
+    observeResize(this, '.code-block__body', () => this._measureOverflow());
   }
 
   firstUpdated() {
-    // Watch the scroller rather than the host: the answer depends on the code's
-    // width against the viewport's, and either can change without the other.
-    if (typeof ResizeObserver === 'undefined') return;
-    const body = this.shadowRoot?.querySelector('.code-block__body');
-    if (!body) return;
-    this._resizeObserver = new ResizeObserver(() => this._measureOverflow());
-    this._resizeObserver.observe(body);
     this._measureOverflow();
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    this._resizeObserver?.disconnect();
-    this._resizeObserver = null;
   }
 
   /**
@@ -417,7 +407,21 @@ export class ArcCodeBlock extends LitElement {
       this._highlight();
     }
     // After a re-highlight the content width has changed under us.
-    if (changedProperties.has('_highlightedHtml')) this._measureOverflow();
+    //
+    // `code` is here too, and needs to be. The ResizeObserver watches the body's
+    // *box*, and shrinking the code from a long line to a short one does not
+    // change it — same height, same container-constrained width — so no resize
+    // fires. And when there is no `language`, `_highlightedHtml` stays `''`, so
+    // it does not change either. Between the two, replacing long code with short
+    // code left `_overflows` stuck at true and the copy button permanently in
+    // its quiet state (finding #69).
+    if (
+      changedProperties.has('_highlightedHtml') ||
+      changedProperties.has('code') ||
+      changedProperties.has('language')
+    ) {
+      this._measureOverflow();
+    }
   }
 
   async _highlight() {

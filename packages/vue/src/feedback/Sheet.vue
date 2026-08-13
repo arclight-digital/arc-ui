@@ -9,8 +9,6 @@ const props = withDefaults(defineProps<{
   side?: 'bottom' | 'right';
   heading?: string;
 }>(), {
-  open: false,
-  side: 'bottom',
   heading: '',
 });
 

@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /*
  * Pacing between lines when a line carries no explicit delay. A command waits
@@ -45,14 +46,14 @@ const LOOP_PAUSE = 2000;
  * @csspart text
  * @csspart cursor
  */
-export class ArcTerminal extends LitElement {
+export class ArcTerminal extends DeclaredPropsMixin(LitElement) {
   static properties = {
     lines: { attribute: false },
     prompt: { type: String },
     title: { type: String },
     speed: { type: Number },
-    autoplay: { type: Boolean },
-    loop: { type: Boolean, reflect: true },
+    autoplay: flag(true, { negative: 'no-autoplay', reflect: false }),
+    loop: flag(false),
     _lineIndex: { state: true },
     _charIndex: { state: true },
     _started: { state: true },
@@ -176,8 +177,6 @@ export class ArcTerminal extends LitElement {
     this.prompt = '$';
     this.title = '';
     this.speed = 50;
-    this.autoplay = true;
-    this.loop = false;
     this._lineIndex = 0;
     this._charIndex = 0;
     this._started = false;

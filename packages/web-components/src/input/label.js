@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Form label with required indicator, optional description text, and tooltip slot. Pairs with any
@@ -17,12 +18,12 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @csspart label
  * @csspart description
  */
-export class ArcLabel extends LitElement {
+export class ArcLabel extends DeclaredPropsMixin(LitElement) {
   static properties = {
     for: { type: String, reflect: true },
-    required: { type: Boolean, reflect: true },
-    size: { type: String, reflect: true },
-    disabled: { type: Boolean, reflect: true },
+    required: flag(false),
+    size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
+    disabled: flag(false),
     _hasDescription: { state: true },
     _hasTooltip: { state: true },
   };
@@ -85,9 +86,6 @@ export class ArcLabel extends LitElement {
   constructor() {
     super();
     this.for = '';
-    this.required = false;
-    this.size = 'md';
-    this.disabled = false;
     this._hasDescription = false;
     this._hasTooltip = false;
   }

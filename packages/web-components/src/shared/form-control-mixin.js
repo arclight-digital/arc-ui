@@ -26,6 +26,7 @@
  * isEditingTarget() is the more reliable check where an event is available.
  */
 import { isEditingNode, setEditingMarker } from './editing-target.js';
+import { flag } from './props.js';
 
 export const FormControlMixin = (superClass) =>
   class extends superClass {
@@ -39,14 +40,22 @@ export const FormControlMixin = (superClass) =>
      * gestures mutate state).
      */
     static properties = {
-      required: { type: Boolean, reflect: true },
-      readonly: { type: Boolean, reflect: true },
+      // flag(), unlike `disabled`. The exclusion in props.js is specifically
+      // about form-associated *platform* semantics: a `disabled` content
+      // attribute that is merely present makes the element actually disabled
+      // per the HTML spec, and formDisabledCallback assigns the property back,
+      // so no converter can win. Neither of these is platform-mapped —
+      // `required` is enforced by _computeValidity() below and `readonly` by
+      // each component's own interaction handlers — so the stock converter buys
+      // nothing here and costs the usual bug: `required="false"` read as true,
+      // blocking submission of a form the author meant to leave optional.
+      // Finding #48's shape, across all 26 form controls at once.
+      required: flag(false),
+      readonly: flag(false),
     };
 
     constructor() {
       super();
-      this.required = false;
-      this.readonly = false;
       this._internals = this.attachInternals();
       // Bound once so the same reference removes cleanly on disconnect.
       this.__onEditingFocusIn = (e) => {

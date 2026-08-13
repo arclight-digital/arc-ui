@@ -11,8 +11,6 @@ const props = withDefaults(defineProps<{
   description?: string;
 }>(), {
   href: '',
-  active: false,
-  variant: 'default',
   description: '',
 });
 </script>

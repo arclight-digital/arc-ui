@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Viewport-bottom floating toolbar with surface-overlay background, backdrop blur, and spring
@@ -13,10 +14,10 @@ import { tokenStyles } from '../shared-styles.js';
  * @slot - Default content.
  * @csspart bar
  */
-export class ArcFloatBar extends LitElement {
+export class ArcFloatBar extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    open: { type: Boolean, reflect: true },
-    position: { type: String, reflect: true },
+    open: flag(false),
+    position: oneOf(['bottom', 'top']),
   };
 
   static styles = [
@@ -71,8 +72,6 @@ export class ArcFloatBar extends LitElement {
 
   constructor() {
     super();
-    this.open = false;
-    this.position = 'bottom';
   }
 
   updated(changed) {

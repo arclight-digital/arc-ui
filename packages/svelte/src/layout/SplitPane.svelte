@@ -39,7 +39,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { orientation = 'horizontal', ratio = $bindable(0.5), minRatio = 0.15, maxRatio = 0.85, primary, secondary, ...rest }: Props = $props();
+  let { orientation, ratio = $bindable(), minRatio = 0.15, maxRatio = 0.85, primary, secondary, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

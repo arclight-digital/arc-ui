@@ -14,8 +14,6 @@ const props = withDefaults(defineProps<{
   value: '',
   name: '',
   disabled: false,
-  size: 'md',
-  orientation: 'vertical',
 });
 
 const emit = defineEmits<{

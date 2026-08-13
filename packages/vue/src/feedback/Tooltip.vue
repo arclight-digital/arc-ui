@@ -10,7 +10,6 @@ const props = withDefaults(defineProps<{
   delay?: number;
 }>(), {
   content: '',
-  position: 'top',
   delay: 200,
 });
 </script>

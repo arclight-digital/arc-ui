@@ -14,7 +14,6 @@ const props = withDefaults(defineProps<{
   field: '',
   key: '',
   label: '',
-  sortable: false,
   width: '',
 });
 </script>

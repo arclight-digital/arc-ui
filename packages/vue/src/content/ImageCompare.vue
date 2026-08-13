@@ -11,8 +11,6 @@ const props = withDefaults(defineProps<{
   afterLabel?: string;
   label?: string;
 }>(), {
-  position: 50,
-  orientation: 'horizontal',
   beforeLabel: '',
   afterLabel: '',
   label: '',

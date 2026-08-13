@@ -12,12 +12,7 @@ const props = withDefaults(defineProps<{
   loading?: boolean;
   type?: 'button' | 'submit' | 'reset';
 }>(), {
-  variant: 'primary',
-  size: 'md',
   href: '',
-  disabled: false,
-  loading: false,
-  type: 'button',
 });
 </script>
 

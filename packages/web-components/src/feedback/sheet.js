@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { OverlayMixin } from '../shared/overlay-mixin.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * A sliding overlay panel that emerges from the bottom or right edge of the viewport, with a
@@ -24,10 +25,11 @@ import { OverlayMixin } from '../shared/overlay-mixin.js';
  * @csspart body
  * @csspart footer
  */
-export class ArcSheet extends OverlayMixin(LitElement) {
+export class ArcSheet extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
   static properties = {
-    open: { type: Boolean, reflect: true },
-    side: { type: String, reflect: true },
+    open: flag(false),
+    side: oneOf(['bottom', 'right']),
+
     heading: { type: String },
   };
 
@@ -164,8 +166,6 @@ export class ArcSheet extends OverlayMixin(LitElement) {
 
   constructor() {
     super();
-    this.open = false;
-    this.side = 'bottom';
     this.heading = '';
   }
 

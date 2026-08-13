@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * Node within a TreeView. Can nest for sub-trees.
@@ -9,11 +10,11 @@ import { LitElement, html, css } from 'lit';
  * @prop {boolean} expanded - Expand child items
  * @slot - Default content.
  */
-export class ArcTreeItem extends LitElement {
+export class ArcTreeItem extends DeclaredPropsMixin(LitElement) {
   static properties = {
     label: { type: String, reflect: true },
     icon: { type: String },
-    expanded: { type: Boolean, reflect: true },
+    expanded: flag(false),
   };
 
   static styles = css`
@@ -24,7 +25,6 @@ export class ArcTreeItem extends LitElement {
     super();
     this.label = '';
     this.icon = '';
-    this.expanded = false;
   }
 
   /** Nested arc-tree-item children */

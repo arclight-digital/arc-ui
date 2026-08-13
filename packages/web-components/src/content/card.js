@@ -3,6 +3,7 @@ import { tokenStyles } from '../shared-styles.js';
 import { cardHoverStyles } from '../card-styles.js';
 import { isLoneSlottedAnchor } from '../shared/anchor-adoption.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Content container with subtle border styling and hover effects. Links the entire card surface
@@ -19,11 +20,11 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @csspart card
  * @csspart inner
  */
-export class ArcCard extends LitElement {
+export class ArcCard extends DeclaredPropsMixin(LitElement) {
   static properties = {
     href: { type: String },
-    padding: { type: String, reflect: true },
-    interactive: { type: Boolean, reflect: true },
+    padding: oneOf(['none', 'sm', 'md', 'lg'], { default: 'md' }),
+    interactive: flag(false),
     _hasFooter: { state: true },
     _slottedAnchor: { state: true },
   };
@@ -111,8 +112,6 @@ export class ArcCard extends LitElement {
   constructor() {
     super();
     this.href = '';
-    this.padding = 'md';
-    this.interactive = false;
     this._slottedAnchor = false;
     this._hasFooter = false;
   }

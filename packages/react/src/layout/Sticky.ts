@@ -6,6 +6,7 @@ import { ArcSticky } from '@arclux/arc-ui/sticky';
 
 export interface StickyProps {
   offset?: string;
+  stuck?: boolean;
   className?: string;
   children?: React.ReactNode;
   onArcStuck?: (e: CustomEvent) => void;

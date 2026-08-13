@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
  * Page structure primitive that arranges content into sidebar-left, sidebar-right, centered, or
@@ -18,9 +19,9 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart main
  * @csspart aside
  */
-export class ArcPageLayout extends LitElement {
+export class ArcPageLayout extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    layout: { type: String, reflect: true },
+    layout: oneOf(['sidebar-left', 'sidebar-right', 'centered', 'wide'], { default: 'centered' }),
     maxWidth: { type: String, attribute: 'max-width' },
     gap: { type: String },
   };
@@ -95,7 +96,6 @@ export class ArcPageLayout extends LitElement {
 
   constructor() {
     super();
-    this.layout = 'centered';
     this.maxWidth = '1120px';
     this.gap = 'var(--space-xl)';
   }

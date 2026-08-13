@@ -40,7 +40,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = 0, min = 0, max = 1, peak, orientation = 'vertical', segments = 20, warn = 0.75, clip = 0.9, label = '', ...rest }: Props = $props();
+  let { value, min = 0, max = 1, peak, orientation, segments = 20, warn, clip, label = '', ...rest }: Props = $props();
 </script>
 
 <arc-level-meter {value} {min} {max} {peak} {orientation} {segments} {warn} {clip} {label} {...rest}>

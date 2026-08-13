@@ -3789,6 +3789,13 @@
       .arc-fieldset .legend__slot { display: contents; }
       .arc-fieldset .legend__slot--empty { display: none; }
 
+      /* The <legend> renders unconditionally so its slots exist for slotchange
+         to fire on; this hides it when it would be empty. Making the whole
+         block conditional on _hasLegend was circular — the flag is set by the
+         slotchange of a slot that only existed once the flag was set, so a
+         slotted legend never appeared at all. */
+      .arc-fieldset .fieldset__legend--empty { display: none; }
+
       .arc-fieldset .fieldset__header {
         display: flex;
         align-items: center;

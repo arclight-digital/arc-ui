@@ -35,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { narrow = false, size = 'md', padding = 'md', children, ...rest }: Props = $props();
+  let { narrow, size, padding, children, ...rest }: Props = $props();
 </script>
 
 <arc-container {narrow} {size} {padding} {...rest}>

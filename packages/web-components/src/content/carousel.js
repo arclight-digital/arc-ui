@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, flag, num } from '../shared/props.js';
 
 /**
  * A scrollable slide container with navigation arrows, dot indicators, auto-play, looping, and
@@ -21,13 +22,19 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @csspart dots
  * @csspart dot
  */
-export class ArcCarousel extends LitElement {
+export class ArcCarousel extends DeclaredPropsMixin(LitElement) {
+  /**
+   * The three true-by-default flags each take a negative attribute: a true
+   * default has no presence-based markup for its false state, and reflecting
+   * `="false"` would make `:host([loop])` match while looping is off. See
+   * findings #20, #48 and #49.
+   */
   static properties = {
-    autoPlay: { type: Boolean, attribute: 'auto-play', reflect: true },
-    interval: { type: Number },
-    loop: { type: Boolean, reflect: true },
-    showDots: { type: Boolean, attribute: 'show-dots', reflect: true },
-    showArrows: { type: Boolean, attribute: 'show-arrows', reflect: true },
+    autoPlay: flag(false, { attribute: 'auto-play' }),
+    interval: num({ default: 5000, min: 0 }),
+    loop: flag(true, { negative: 'no-loop' }),
+    showDots: flag(true, { attribute: 'show-dots', negative: 'no-dots' }),
+    showArrows: flag(true, { attribute: 'show-arrows', negative: 'no-arrows' }),
     _current: { state: true },
     _total: { state: true },
   };
@@ -149,11 +156,6 @@ export class ArcCarousel extends LitElement {
 
   constructor() {
     super();
-    this.autoPlay = false;
-    this.interval = 5000;
-    this.loop = true;
-    this.showDots = true;
-    this.showArrows = true;
     this._current = 0;
     this._total = 0;
     this._autoPlayTimer = null;

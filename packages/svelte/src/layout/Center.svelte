@@ -35,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { maxWidth = '60ch', intrinsic = false, text = false, children, ...rest }: Props = $props();
+  let { maxWidth = '60ch', intrinsic, text, children, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

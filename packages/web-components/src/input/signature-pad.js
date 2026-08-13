@@ -2,6 +2,7 @@ import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 import './icon-button.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * Canvas signature capture that participates in forms. A bordered drawing surface with a muted
@@ -36,11 +37,17 @@ import './icon-button.js';
  * @csspart placeholder
  * @csspart clear
  */
-export class ArcSignaturePad extends FormControlMixin(LitElement) {
+export class ArcSignaturePad extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
   static properties = {
     value: { type: String },
     name: { type: String, reflect: true },
     label: { type: String },
+    // NOT flag(): a form-associated custom element whose `disabled` content
+    // attribute is merely *present* is "actually disabled" per the HTML spec,
+    // so the platform calls formDisabledCallback(true) and the mixin sets the
+    // property back. `disabled="false"` is a disabled control here for exactly
+    // the reason it is on a native <input>. Native semantics win; see
+    // shared/props.js.
     disabled: { type: Boolean, reflect: true },
     penColor: { type: String, attribute: 'pen-color' },
     penWidth: { type: Number, attribute: 'pen-width' },

@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
  * Toast variant with embedded progress bar for long-running operations. Same positioning and
@@ -17,9 +18,9 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart track
  * @csspart fill
  */
-export class ArcProgressToast extends LitElement {
+export class ArcProgressToast extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    position: { type: String, reflect: true },
+    position: oneOf(['top-right', 'bottom-right'], { default: 'bottom-right' }),
     _toasts: { state: true },
   };
 
@@ -107,7 +108,6 @@ export class ArcProgressToast extends LitElement {
 
   constructor() {
     super();
-    this.position = 'bottom-right';
     this._toasts = [];
     this._counter = 0;
   }

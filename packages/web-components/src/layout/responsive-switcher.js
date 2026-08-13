@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
  * Container-query-based layout that flips between horizontal and vertical at a threshold width. No
@@ -11,10 +12,10 @@ import { tokenStyles } from '../shared-styles.js';
  * @slot - Default content.
  * @csspart switcher
  */
-export class ArcResponsiveSwitcher extends LitElement {
+export class ArcResponsiveSwitcher extends DeclaredPropsMixin(LitElement) {
   static properties = {
     threshold: { type: String, reflect: true },
-    gap: { type: String, reflect: true },
+    gap: oneOf(['xs', 'sm', 'md', 'lg', 'xl'], { default: 'md' }),
   };
 
   static styles = [
@@ -52,7 +53,6 @@ export class ArcResponsiveSwitcher extends LitElement {
   constructor() {
     super();
     this.threshold = '600px';
-    this.gap = 'md';
     this._sheet = null;
   }
 

@@ -1,6 +1,8 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
+import { listen } from '../shared/subscriptions.js';
 
 /**
  * A data-driven table component that renders rows from a JavaScript array. Declarative column
@@ -18,7 +20,7 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @prop {boolean} virtual - Enables virtual scrolling for large datasets. When true, only the visible rows plus an overscan buffer are rendered in the DOM, keeping performance constant regardless of row count.
  * @prop {number} rowHeight - Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations.
  * @fires {CustomEvent<{ column: string, direction: 'asc' | 'desc' }>} arc-sort - Fired when a sortable column header is clicked
- * @fires arc-select - Fired when row selection changes. detail: { value, selected, row, index } — value is the sorted selected indices; detail.all is true for header select-all toggles
+ * @fires arc-select - Fired when row selection changes. detail: { value, selected, row, index } — `value` is the selected row objects themselves, in `rows` order, so it stays correct across sorting; `row` is the one toggled, `index` its position in `rows`, and `all` is true for header select-all toggles.
  * @slot - Default content.
  * @csspart row
  * @csspart cell
@@ -27,14 +29,14 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @csspart head
  * @csspart body
  */
-export class ArcDataTable extends LitElement {
+export class ArcDataTable extends DeclaredPropsMixin(LitElement) {
   static properties = {
     rows: { type: Array },
-    sortable: { type: Boolean, reflect: true },
-    selectable: { type: Boolean, reflect: true },
+    sortable: flag(false),
+    selectable: flag(false),
     sortColumn: { type: String, attribute: 'sort-column' },
-    sortDirection: { type: String, reflect: true, attribute: 'sort-direction' },
-    virtual: { type: Boolean, reflect: true },
+    sortDirection: oneOf(['asc', 'desc'], { attribute: 'sort-direction' }),
+    virtual: flag(false),
     rowHeight: { type: Number, attribute: 'row-height' },
     _columns: { state: true },
     _selectedRows: { state: true },
@@ -225,11 +227,7 @@ export class ArcDataTable extends LitElement {
   constructor() {
     super();
     this.rows = [];
-    this.sortable = false;
-    this.selectable = false;
     this.sortColumn = '';
-    this.sortDirection = 'asc';
-    this.virtual = false;
     this.rowHeight = 40;
     this._columns = [];
     this._selectedRows = new Set();
@@ -237,6 +235,12 @@ export class ArcDataTable extends LitElement {
     this._visibleCount = 0;
     this._rafId = null;
     this._onScroll = this._onScroll.bind(this);
+    // Finding #64 (a recurrence of #55). This used to attach in `firstUpdated`
+    // and detach in `disconnectedCallback`, which do not pair — the first runs
+    // once per *element*, the second once per *connection* — so the first
+    // reparenting killed virtual scrolling silently. The controller subscribes
+    // per connection and re-binds if the wrapper is re-rendered.
+    listen(this, '.table-wrapper', 'scroll', this._onScroll, { passive: true });
   }
 
   _onSlotChange(e) {
@@ -247,45 +251,24 @@ export class ArcDataTable extends LitElement {
 
   firstUpdated() {
     hydrateSlots(this);
-    if (this.virtual) this._attachScrollListener();
+    if (this.virtual) this._recalcVirtual();
   }
 
   updated(changed) {
-    if (changed.has('virtual')) {
-      if (this.virtual) {
-        this._attachScrollListener();
-        this._recalcVirtual();
-      } else {
-        this._detachScrollListener();
-      }
-    }
-    if (changed.has('rows') && this.virtual) {
+    super.updated(changed);
+    if ((changed.has('virtual') || changed.has('rows')) && this.virtual) {
       this._recalcVirtual();
     }
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    this._detachScrollListener();
-  }
-
-  _attachScrollListener() {
-    this.updateComplete.then(() => {
-      const wrapper = this.shadowRoot.querySelector('.table-wrapper');
-      if (wrapper) {
-        wrapper.addEventListener('scroll', this._onScroll, { passive: true });
-        this._recalcVirtual();
-      }
-    });
-  }
-
-  _detachScrollListener() {
+    // The listener is the controller's to manage; this only drops the pending
+    // frame so a queued recalc cannot land on a detached element.
     if (this._rafId) {
       cancelAnimationFrame(this._rafId);
       this._rafId = null;
     }
-    const wrapper = this.shadowRoot?.querySelector('.table-wrapper');
-    wrapper?.removeEventListener('scroll', this._onScroll);
   }
 
   _onScroll() {
@@ -334,16 +317,12 @@ export class ArcDataTable extends LitElement {
 
   _handleSelectAll(e) {
     const checked = e.target.checked;
-    if (checked) {
-      this._selectedRows = new Set(this.rows.map((_, i) => i));
-    } else {
-      this._selectedRows = new Set();
-    }
+    this._selectedRows = checked ? new Set(this.rows) : new Set();
 
     this.dispatchEvent(
       new CustomEvent('arc-select', {
         detail: {
-          value: [...this._selectedRows].sort((a, b) => a - b),
+          value: this._selectionInRowOrder(),
           selected: checked,
           all: true,
         },
@@ -353,25 +332,22 @@ export class ArcDataTable extends LitElement {
     );
   }
 
-  _handleRowSelect(e, row, index) {
+  _handleRowSelect(e, row) {
     const checked = e.target.checked;
     const next = new Set(this._selectedRows);
 
-    if (checked) {
-      next.add(index);
-    } else {
-      next.delete(index);
-    }
+    if (checked) next.add(row);
+    else next.delete(row);
 
     this._selectedRows = next;
 
     this.dispatchEvent(
       new CustomEvent('arc-select', {
         detail: {
-          value: [...next].sort((a, b) => a - b),
+          value: this._selectionInRowOrder(),
           selected: checked,
           row,
-          index,
+          index: this.rows.indexOf(row),
         },
         bubbles: true,
         composed: true,
@@ -419,7 +395,33 @@ export class ArcDataTable extends LitElement {
   }
 
   get _allSelected() {
-    return this.rows.length > 0 && this._selectedRows.size === this.rows.length;
+    return this.rows.length > 0 && this.rows.every((row) => this._selectedRows.has(row));
+  }
+
+  /**
+   * The selection as row references, in `rows` order.
+   *
+   * `rows` order rather than selection order or rendered order: it is the one
+   * ordering that does not change when the user sorts, which is the whole point
+   * of finding #63.
+   */
+  _selectionInRowOrder() {
+    return this.rows.filter((row) => this._selectedRows.has(row));
+  }
+
+  /**
+   * Drop selections whose rows are gone.
+   *
+   * Selection is held by object identity, so a replaced `rows` array would
+   * otherwise pin the old objects alive in the set forever and report them in
+   * every subsequent `arc-select`.
+   */
+  willUpdate(changed) {
+    super.willUpdate(changed);
+    if (!changed.has('rows') || this._selectedRows.size === 0) return;
+    const live = new Set(this.rows);
+    const kept = new Set([...this._selectedRows].filter((row) => live.has(row)));
+    if (kept.size !== this._selectedRows.size) this._selectedRows = kept;
   }
 
   _renderSortIndicator(column) {
@@ -461,7 +463,7 @@ export class ArcDataTable extends LitElement {
 
   _renderRow(row, i) {
     return html`
-      <tr class="${this._selectedRows.has(i) ? 'selected' : ''}" part="row">
+      <tr class="${this._selectedRows.has(row) ? 'selected' : ''}" part="row">
         ${
           this.selectable
             ? html`
@@ -469,8 +471,8 @@ export class ArcDataTable extends LitElement {
             <input
               type="checkbox"
               aria-label="Select row ${i + 1}"
-              .checked=${this._selectedRows.has(i)}
-              @change=${(e) => this._handleRowSelect(e, row, i)}
+              .checked=${this._selectedRows.has(row)}
+              @change=${(e) => this._handleRowSelect(e, row)}
             />
           </td>
         `

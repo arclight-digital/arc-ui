@@ -52,6 +52,7 @@ export default {
     "rounded"
    ],
    "status": [
+    "",
     "online",
     "offline",
     "busy",
@@ -93,11 +94,11 @@ export default {
  },
  "arc-carousel": {
   "attrs": [
-   "auto-play",
+   "autoPlay",
    "interval",
    "loop",
-   "show-dots",
-   "show-arrows"
+   "showDots",
+   "showArrows"
   ],
   "slug": "carousel"
  },
@@ -157,6 +158,7 @@ export default {
     "line-gradient"
    ],
    "align": [
+    "",
     "left",
     "right"
    ]
@@ -242,6 +244,7 @@ export default {
   ],
   "enums": {
    "aspect": [
+    "",
     "1/1",
     "4/3",
     "16/9",
@@ -283,7 +286,7 @@ export default {
   "attrs": [
    "speed",
    "direction",
-   "pause-on-hover",
+   "pauseOnHover",
    "gap"
   ],
   "enums": {
@@ -530,10 +533,10 @@ export default {
    "series",
    "labels",
    "stacked",
-   "hide-legend",
-   "hide-axis",
+   "hideLegend",
+   "hideAxis",
    "height",
-   "value-format",
+   "valueFormat",
    "currency"
   ],
   "enums": {
@@ -543,7 +546,7 @@ export default {
     "bar",
     "donut"
    ],
-   "value-format": [
+   "valueFormat": [
     "number",
     "percent",
     "currency"
@@ -556,9 +559,9 @@ export default {
    "variant",
    "timezone",
    "label",
-   "show-seconds",
+   "showSeconds",
    "hour12",
-   "show-timezone"
+   "showTimezone"
   ],
   "enums": {
    "variant": [
@@ -587,7 +590,7 @@ export default {
    "target",
    "label",
    "expired",
-   "hide-zero-segments"
+   "hideZeroSegments"
   ],
   "slug": "countdown-timer"
  },
@@ -596,7 +599,7 @@ export default {
    "columns",
    "rows",
    "sort",
-   "manual-sort",
+   "manualSort",
    "selectable",
    "virtual",
    "row-height"
@@ -609,12 +612,12 @@ export default {
    "sortable",
    "selectable",
    "sort-column",
-   "sort-direction",
+   "sortDirection",
    "virtual",
    "row-height"
   ],
   "enums": {
-   "sort-direction": [
+   "sortDirection": [
     "asc",
     "desc"
    ]
@@ -675,7 +678,7 @@ export default {
    "label",
    "unit",
    "variant",
-   "show-value"
+   "showValue"
   ],
   "enums": {
    "variant": [
@@ -689,7 +692,7 @@ export default {
   "attrs": [
    "json",
    "expanded",
-   "keys-quoted"
+   "keysQuoted"
   ],
   "slug": "json-tree"
  },
@@ -809,6 +812,7 @@ export default {
   ],
   "enums": {
    "trend": [
+    "",
     "up",
     "down",
     "neutral"
@@ -877,7 +881,7 @@ export default {
  },
  "arc-timeline": {
   "attrs": [
-   "heading-level"
+   "headingLevel"
   ],
   "slug": "timeline"
  },
@@ -1018,7 +1022,7 @@ export default {
  },
  "arc-conversation": {
   "attrs": [
-   "auto-scroll"
+   "autoScroll"
   ],
   "slug": "conversation"
  },
@@ -1173,7 +1177,7 @@ export default {
    "variant",
    "size",
    "indeterminate",
-   "show-value",
+   "showValue",
    "label"
   ],
   "enums": {
@@ -1311,7 +1315,7 @@ export default {
  "arc-calendar": {
   "attrs": [
    "locale",
-   "first-day-of-week",
+   "firstDayOfWeek",
    "value",
    "min",
    "max",
@@ -1481,7 +1485,7 @@ export default {
    "novalidate",
    "loading",
    "disabled",
-   "error-summary"
+   "errorSummary"
   ],
   "slug": "form"
  },
@@ -1724,7 +1728,7 @@ export default {
    "error",
    "size",
    "autocomplete",
-   "show-strength",
+   "showStrength",
    "readonly"
   ],
   "enums": {
@@ -1805,7 +1809,7 @@ export default {
    "name",
    "disabled",
    "label",
-   "show-values",
+   "showValues",
    "required",
    "readonly"
   ],
@@ -1951,7 +1955,7 @@ export default {
    "suggestions",
    "delimiter",
    "max-tags",
-   "allow-custom",
+   "allowCustom",
    "label",
    "placeholder",
    "name",
@@ -1981,7 +1985,7 @@ export default {
    "readonly",
    "resize",
    "size",
-   "auto-resize",
+   "autoResize",
    "error",
    "required"
   ],
@@ -2004,7 +2008,7 @@ export default {
   "attrs": [
    "theme",
    "disabled",
-   "icon-only",
+   "iconOnly",
    "size"
   ],
   "enums": {
@@ -2043,6 +2047,10 @@ export default {
     "sm",
     "md",
     "lg"
+   ],
+   "format": [
+    "12h",
+    "24h"
    ]
   },
   "slug": "time-picker"
@@ -2113,7 +2121,7 @@ export default {
  },
  "arc-app-shell": {
   "attrs": [
-   "sidebar-open",
+   "sidebarOpen",
    "breakpoint"
   ],
   "slug": "app-shell"
@@ -2221,7 +2229,7 @@ export default {
  "arc-dock": {
   "attrs": [
    "position",
-   "auto-hide",
+   "autoHide",
    "open"
   ],
   "enums": {
@@ -2340,10 +2348,10 @@ export default {
  },
  "arc-settings-layout": {
   "attrs": [
-   "nav-position"
+   "navPosition"
   ],
   "enums": {
-   "nav-position": [
+   "navPosition": [
     "left",
     "top"
    ]
@@ -2703,13 +2711,13 @@ export default {
    "immersive",
    "fixed",
    "contained",
-   "menu-open",
+   "menuOpen",
    "mobile-menu",
    "menu-position",
-   "nav-align"
+   "navAlign"
   ],
   "enums": {
-   "nav-align": [
+   "navAlign": [
     "left",
     "center",
     "right"
@@ -2800,7 +2808,7 @@ export default {
   "attrs": [
    "text",
    "query",
-   "case-sensitive"
+   "caseSensitive"
   ],
   "slug": "highlight"
  },

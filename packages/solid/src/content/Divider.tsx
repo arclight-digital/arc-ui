@@ -13,7 +13,7 @@ declare module 'solid-js' {
 
 export interface DividerProps {
   variant?: 'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient';
-  align?: 'left' | 'right';
+  align?: '' | 'left' | 'right';
   vertical?: boolean;
   label?: string;
   class?: string;

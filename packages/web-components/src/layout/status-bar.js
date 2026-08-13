@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
  * Bottom status bar with start, center, and end slots.
@@ -14,9 +15,9 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart center
  * @csspart end
  */
-export class ArcStatusBar extends LitElement {
+export class ArcStatusBar extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    position: { type: String, reflect: true },
+    position: oneOf(['static', 'fixed']),
   };
 
   static styles = [
@@ -74,7 +75,6 @@ export class ArcStatusBar extends LitElement {
 
   constructor() {
     super();
-    this.position = 'static';
   }
 
   render() {

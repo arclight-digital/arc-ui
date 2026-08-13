@@ -1,12 +1,14 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Horizontal rule with multiple visual styles from subtle to glowing.
  *
  * @tag arc-divider
  * @prop {'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient'} variant - Visual style
- * @prop {'left' | 'right'} align - Shifts the gradient origin so it fades from one edge instead of both. Useful for asymmetric layouts where the divider should visually connect to content on one side.
+ * @prop {'' | 'left' | 'right'} align - Shifts the gradient origin so it fades from one edge
+ *   instead of both. Empty (the default) fades from both edges. Useful for asymmetric layouts where the divider should visually connect to content on one side.
  * @prop {boolean} vertical - Renders the divider as a vertical line. Switches to `inline-flex` display and rotates gradient directions to run top-to-bottom. Use inside flex rows to separate inline content.
  * @prop {string} label - Text displayed in the center of the divider, splitting it into two lines. Common use: 'OR' between form options. Only applies to horizontal dividers.
  * @slot none
@@ -14,11 +16,11 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart line
  * @csspart label
  */
-export class ArcDivider extends LitElement {
+export class ArcDivider extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    variant: { type: String, reflect: true },
-    align: { type: String, reflect: true },
-    vertical: { type: Boolean, reflect: true },
+    variant: oneOf(['subtle', 'glow', 'line-white', 'line-primary', 'line-gradient']),
+    align: oneOf(['', 'left', 'right']),
+    vertical: flag(false),
     label: { type: String },
   };
 
@@ -182,8 +184,6 @@ export class ArcDivider extends LitElement {
 
   constructor() {
     super();
-    this.variant = 'subtle';
-    this.vertical = false;
     this.label = '';
   }
 

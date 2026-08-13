@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Collapsible navigation sidebar with grouped sections, heading labels, and active link
@@ -27,13 +28,13 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @csspart link-icon
  * @csspart heading-icon
  */
-export class ArcSidebar extends LitElement {
+export class ArcSidebar extends DeclaredPropsMixin(LitElement) {
   static properties = {
     active: { type: String, reflect: true },
-    collapsed: { type: Boolean, reflect: true },
-    position: { type: String, reflect: true },
+    collapsed: flag(false),
+    position: oneOf(['left', 'right']),
     width: { type: String },
-    glow: { type: Boolean, reflect: true },
+    glow: flag(false),
     label: { type: String },
     _sections: { state: true },
   };
@@ -357,10 +358,7 @@ export class ArcSidebar extends LitElement {
   constructor() {
     super();
     this.active = '';
-    this.collapsed = false;
-    this.position = 'left';
     this.width = '280px';
-    this.glow = false;
     this.label = 'Sidebar navigation';
     this._sections = [];
   }

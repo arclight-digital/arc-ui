@@ -18,10 +18,10 @@ export class Divider {
     return this._el.variant;
   }
 
-  @Input() set align(value: 'left' | 'right') {
+  @Input() set align(value: '' | 'left' | 'right') {
     this._el.align = value;
   }
-  get align(): 'left' | 'right' {
+  get align(): '' | 'left' | 'right' {
     return this._el.align;
   }
 

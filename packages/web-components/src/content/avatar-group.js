@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
  * Stack of avatars with overflow count badge.
@@ -12,10 +13,10 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @csspart group
  * @csspart overflow
  */
-export class ArcAvatarGroup extends LitElement {
+export class ArcAvatarGroup extends DeclaredPropsMixin(LitElement) {
   static properties = {
     max: { type: Number },
-    overlap: { type: String, reflect: true },
+    overlap: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
   };
 
   static styles = [
@@ -63,7 +64,6 @@ export class ArcAvatarGroup extends LitElement {
   constructor() {
     super();
     this.max = Infinity;
-    this.overlap = 'md';
   }
 
   /** @private */

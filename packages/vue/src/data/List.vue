@@ -12,10 +12,6 @@ const props = withDefaults(defineProps<{
   value?: string;
   label?: string;
 }>(), {
-  variant: 'default',
-  size: 'md',
-  selectable: false,
-  multiple: false,
   value: '',
   label: '',
 });

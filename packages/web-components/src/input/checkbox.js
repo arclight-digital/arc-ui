@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Multi-select form control supporting checked, indeterminate, and disabled states. Ideal for
@@ -21,12 +22,19 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @csspart box
  * @csspart label
  */
-export class ArcCheckbox extends FormControlMixin(LitElement) {
+export class ArcCheckbox extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
   static properties = {
-    checked: { type: Boolean, reflect: true },
-    indeterminate: { type: Boolean, reflect: true },
+    checked: flag(false),
+    indeterminate: flag(false),
+    // NOT flag(): a form-associated custom element whose `disabled` content
+    // attribute is merely *present* is "actually disabled" per the HTML spec,
+    // so the platform calls formDisabledCallback(true) and the mixin sets the
+    // property back. `disabled="false"` is a disabled control here for exactly
+    // the reason it is on a native <input>. Native semantics win; see
+    // shared/props.js.
     disabled: { type: Boolean, reflect: true },
-    size: { type: String, reflect: true },
+    size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
+
     label: { type: String },
     name: { type: String, reflect: true },
     value: { type: String },
@@ -124,10 +132,7 @@ export class ArcCheckbox extends FormControlMixin(LitElement) {
 
   constructor() {
     super();
-    this.checked = false;
-    this.indeterminate = false;
     this.disabled = false;
-    this.size = 'md';
     this.label = '';
     this.name = '';
     this.value = '';

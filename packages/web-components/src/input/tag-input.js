@@ -4,7 +4,8 @@ import { PositionController } from '../shared/position-controller.js';
 import { ListboxController } from '../shared/listbox-controller.js';
 import { managedPanelStyles } from '../shared/position-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
-import { ClickOutsideController } from '../shared/click-outside.js';
+import { DismissController } from '../shared/dismiss-controller.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Free-text token entry field with optional autocomplete suggestions, delimiter splitting, and
@@ -34,17 +35,24 @@ import { ClickOutsideController } from '../shared/click-outside.js';
  * @csspart option
  * @csspart error
  */
-export class ArcTagInput extends FormControlMixin(LitElement) {
+export class ArcTagInput extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
   static properties = {
-    size: { type: String, reflect: true },
+    size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
+
     value: { type: Array },
     suggestions: { type: Array },
     delimiter: { type: String },
     maxTags: { type: Number, attribute: 'max-tags' },
-    allowCustom: { type: Boolean, attribute: 'allow-custom' },
+    allowCustom: flag(true, { attribute: 'allow-custom', negative: 'no-custom', reflect: false }),
     label: { type: String },
     placeholder: { type: String },
     name: { type: String, reflect: true },
+    // NOT flag(): a form-associated custom element whose `disabled` content
+    // attribute is merely *present* is "actually disabled" per the HTML spec,
+    // so the platform calls formDisabledCallback(true) and the mixin sets the
+    // property back. `disabled="false"` is a disabled control here for exactly
+    // the reason it is on a native <input>. Native semantics win; see
+    // shared/props.js.
     disabled: { type: Boolean, reflect: true },
     error: { type: String },
     _query: { state: true },
@@ -264,12 +272,10 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
 
   constructor() {
     super();
-    this.size = 'md';
     this.value = [];
     this.suggestions = [];
     this.delimiter = ',';
     this.maxTags = 0;
-    this.allowCustom = true;
     this.label = '';
     this.placeholder = '';
     this.name = '';
@@ -281,8 +287,8 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
     this._shakeValue = null;
     this._shakeTimer = 0;
     this._tiId = `tag-input-${++ArcTagInput._idCounter}`;
-    this._clickOutside = new ClickOutsideController(this, {
-      onClickOutside: () => {
+    this._dismiss = new DismissController(this, {
+      onDismiss: () => {
         this._open = false;
         this._focused = false;
       },
@@ -339,9 +345,13 @@ export class ArcTagInput extends FormControlMixin(LitElement) {
     if (changed.has('_open')) {
       this._open ? this._position.show() : this._position.hide();
     }
-    if (changed.has('_open')) {
-      if (this._open) this._clickOutside.activate();
-      else this._clickOutside.deactivate();
+    // Keyed on `_focused` as well as `_open`, because this control carries focus
+    // state that outlives its panel: the field keeps its focus ring while the
+    // suggestion list is closed. Subscribing only while open left the ring stuck
+    // on a control the user had already tabbed away from (finding #60).
+    if (changed.has('_open') || changed.has('_focused')) {
+      if (this._open || this._focused) this._dismiss.activate();
+      else this._dismiss.deactivate();
     }
     if (changed.has('_query') || changed.has('suggestions') || changed.has('value')) {
       this._listbox.clampToCount();

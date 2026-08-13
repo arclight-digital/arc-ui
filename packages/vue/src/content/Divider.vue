@@ -6,12 +6,10 @@ defineOptions({ name: 'Divider' });
 
 const props = withDefaults(defineProps<{
   variant?: 'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient';
-  align?: 'left' | 'right';
+  align?: '' | 'left' | 'right';
   vertical?: boolean;
   label?: string;
 }>(), {
-  variant: 'subtle',
-  vertical: false,
   label: '',
 });
 </script>

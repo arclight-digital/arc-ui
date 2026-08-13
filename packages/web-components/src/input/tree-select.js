@@ -1,10 +1,11 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
-import { ClickOutsideController } from '../shared/click-outside.js';
+import { DismissController } from '../shared/dismiss-controller.js';
 import { PositionController } from '../shared/position-controller.js';
 import { ListboxController } from '../shared/listbox-controller.js';
 import { managedPanelStyles } from '../shared/position-styles.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Dropdown select whose panel is a hierarchical tree — categories, instrument banks, folder
@@ -21,7 +22,7 @@ import { managedPanelStyles } from '../shared/position-styles.js';
  * @prop {string} name - Form field name submitted with the selected leaf value via ElementInternals.
  * @prop {boolean} disabled - When true, the trigger becomes non-interactive: it cannot be opened, focused, or clicked, and renders with reduced opacity.
  * @prop {string} error - Error message displayed below the trigger. When set, the trigger border turns red.
- * @prop {boolean} open - Controls whether the tree panel is visible. Automatically set to false when a leaf is selected, Escape is pressed, or the user clicks outside.
+ * @prop {boolean} open - Controls whether the tree panel is visible. Automatically set to false when a leaf is selected, Escape is pressed, or the user clicks outside. Held at `false` while `disabled`.
  * @fires arc-change - Fired when a leaf is selected. `detail.value` is the leaf value, `detail.label` its label, and `detail.path` the array of ancestor group values from root to parent.
  * @slot none
  * @csspart tree-select
@@ -31,7 +32,7 @@ import { managedPanelStyles } from '../shared/position-styles.js';
  * @csspart row
  * @csspart error
  */
-export class ArcTreeSelect extends FormControlMixin(LitElement) {
+export class ArcTreeSelect extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
   static properties = {
     items: { attribute: false },
     value: { type: String, reflect: true },
@@ -39,10 +40,17 @@ export class ArcTreeSelect extends FormControlMixin(LitElement) {
     placeholder: { type: String },
     label: { type: String },
     name: { type: String, reflect: true },
+    // NOT flag(): a form-associated custom element whose `disabled` content
+    // attribute is merely *present* is "actually disabled" per the HTML spec,
+    // so the platform calls formDisabledCallback(true) and the mixin sets the
+    // property back. `disabled="false"` is a disabled control here for exactly
+    // the reason it is on a native <input>. Native semantics win; see
+    // shared/props.js.
     disabled: { type: Boolean, reflect: true },
-    size: { type: String, reflect: true },
+    size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
+
     error: { type: String },
-    open: { type: Boolean, reflect: true },
+    open: flag(false, { blockedBy: 'disabled' }),
     _expandedKeys: { state: true },
   };
 
@@ -269,16 +277,14 @@ export class ArcTreeSelect extends FormControlMixin(LitElement) {
     this.label = '';
     this.name = '';
     this.disabled = false;
-    this.size = 'md';
     this.error = '';
-    this.open = false;
     this._expandedKeys = new Set();
     // Flattened render model, rebuilt in willUpdate: every visible row, and the
     // keyboard-reachable subset (disabled rows render but are not navigable).
     this._rows = [];
     this._navRows = [];
-    this._clickOutside = new ClickOutsideController(this, {
-      onClickOutside: () => {
+    this._dismiss = new DismissController(this, {
+      onDismiss: () => {
         this.open = false;
       },
     });
@@ -350,10 +356,10 @@ export class ArcTreeSelect extends FormControlMixin(LitElement) {
     super.updated(changed);
     if (changed.has('open')) {
       if (this.open) {
-        this._clickOutside.activate();
+        this._dismiss.activate();
         this._position.show();
       } else {
-        this._clickOutside.deactivate();
+        this._dismiss.deactivate();
         this._position.hide();
         this._listbox.reset();
       }
@@ -483,6 +489,7 @@ export class ArcTreeSelect extends FormControlMixin(LitElement) {
           id=${triggerId}
           class="tree-select__trigger"
           role="combobox"
+          ?disabled=${this.disabled}
           aria-expanded=${this.open ? 'true' : 'false'}
           aria-haspopup="tree"
           aria-controls=${treeId}

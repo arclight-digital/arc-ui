@@ -41,7 +41,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { open = false, position = 'top-right', maxHeight = '400px', trigger, header, footer, children, ...rest }: Props = $props();
+  let { open = false, position, maxHeight = '400px', trigger, header, footer, children, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

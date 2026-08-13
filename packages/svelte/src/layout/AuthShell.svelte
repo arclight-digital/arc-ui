@@ -39,7 +39,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { variant = 'centered', logo, footer, aside, children, ...rest }: Props = $props();
+  let { variant, logo, footer, aside, children, ...rest }: Props = $props();
 </script>
 
 <arc-auth-shell {variant} {...rest}>

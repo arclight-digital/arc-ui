@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /** The role vocabulary. An unrecognized value renders as the default, user. */
 const ROLES = new Set(['user', 'assistant', 'system']);
@@ -28,13 +29,13 @@ const ROLES = new Set(['user', 'assistant', 'system']);
  * @csspart meta
  * @csspart bubble
  */
-export class ArcMessage extends LitElement {
+export class ArcMessage extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    speaker: { type: String },
+    speaker: oneOf(['user', 'assistant', 'system'], { reflect: false }),
     author: { type: String },
     timestamp: { type: String },
-    pending: { type: Boolean, reflect: true },
-    markdown: { type: Boolean, reflect: true },
+    pending: flag(false),
+    markdown: flag(false),
     _source: { state: true },
   };
 
@@ -161,11 +162,8 @@ export class ArcMessage extends LitElement {
 
   constructor() {
     super();
-    this.speaker = 'user';
     this.author = '';
     this.timestamp = '';
-    this.pending = false;
-    this.markdown = false;
     /** Slotted text captured for the markdown path; state, so updates re-render. */
     this._source = '';
   }

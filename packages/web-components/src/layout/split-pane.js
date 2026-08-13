@@ -1,12 +1,15 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, num, oneOf } from '../shared/props.js';
 
 /**
  * Resizable split layout with two panes.
  *
  * @tag arc-split-pane
  * @prop {'horizontal' | 'vertical'} orientation - Controls the split direction. Horizontal places panes side by side with a vertical divider. Vertical stacks panes top and bottom with a horizontal divider.
- * @prop {number} ratio - The proportion of space allocated to the primary pane, from 0 to 1. A value of 0.4 gives the primary pane 40% of the available width (or height in vertical mode).
+ * @prop {number} ratio - The proportion of space allocated to the primary pane, clamped to
+ *   `minRatio`..`maxRatio` on every path. The drag handle always honoured those bounds;
+ *   assigning `ratio` from script used to bypass them entirely. From 0 to 1. A value of 0.4 gives the primary pane 40% of the available width (or height in vertical mode).
  * @prop {number} minRatio - Minimum allowed ratio. The divider cannot be dragged below this value, preventing the primary pane from collapsing.
  * @prop {number} maxRatio - Maximum allowed ratio. The divider cannot be dragged above this value, preventing the secondary pane from collapsing.
  * @fires {CustomEvent<{ ratio: number }>} arc-resize - Fired during divider drag with { ratio } detail
@@ -17,10 +20,10 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart handle
  * @csspart secondary
  */
-export class ArcSplitPane extends LitElement {
+export class ArcSplitPane extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    orientation: { type: String, reflect: true },
-    ratio: { type: Number },
+    orientation: oneOf(['horizontal', 'vertical']),
+    ratio: num({ default: 0.5, min: 'minRatio', max: 'maxRatio', clamp: 'toRange' }),
     minRatio: { type: Number, attribute: 'min-ratio' },
     maxRatio: { type: Number, attribute: 'max-ratio' },
   };
@@ -86,8 +89,6 @@ export class ArcSplitPane extends LitElement {
 
   constructor() {
     super();
-    this.orientation = 'horizontal';
-    this.ratio = 0.5;
     this.minRatio = 0.15;
     this.maxRatio = 0.85;
     this._dragging = false;

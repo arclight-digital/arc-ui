@@ -4,15 +4,11 @@ import '@arclux/arc-ui/cluster';
 
 defineOptions({ name: 'Cluster' });
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   gap?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   align?: 'start' | 'center' | 'end';
   justify?: 'start' | 'center' | 'end' | 'space-between' | 'space-around';
-}>(), {
-  gap: 'sm',
-  align: 'center',
-  justify: 'start',
-});
+}>();
 </script>
 
 <template>

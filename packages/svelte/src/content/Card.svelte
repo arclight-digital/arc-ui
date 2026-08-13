@@ -37,7 +37,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { href = '', padding = 'md', interactive = false, footer, children, ...rest }: Props = $props();
+  let { href = '', padding, interactive, footer, children, ...rest }: Props = $props();
 </script>
 
 <arc-card {href} {padding} {interactive} {...rest}>

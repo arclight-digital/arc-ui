@@ -41,7 +41,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { legend = '', description = '', disabled = false, error = '', variant = 'default', legend_, actions, children, ...rest }: Props = $props();
+  let { legend = '', description = '', disabled, error = '', variant, legend_, actions, children, ...rest }: Props = $props();
 </script>
 
 <arc-fieldset {legend} {description} {disabled} {error} {variant} {...rest}>

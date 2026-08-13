@@ -4,9 +4,10 @@ import { PositionController } from '../shared/position-controller.js';
 import { ListboxController } from '../shared/listbox-controller.js';
 import { managedPanelStyles } from '../shared/position-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
-import { ClickOutsideController } from '../shared/click-outside.js';
+import { DismissController } from '../shared/dismiss-controller.js';
 import '../shared/option.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Searchable dropdown with type-ahead filtering.
@@ -27,13 +28,20 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @csspart listbox
  * @csspart option
  */
-export class ArcCombobox extends FormControlMixin(LitElement) {
+export class ArcCombobox extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
   static properties = {
-    size: { type: String, reflect: true },
+    size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
+
     value: { type: String, reflect: true },
     placeholder: { type: String },
     label: { type: String },
     name: { type: String, reflect: true },
+    // NOT flag(): a form-associated custom element whose `disabled` content
+    // attribute is merely *present* is "actually disabled" per the HTML spec,
+    // so the platform calls formDisabledCallback(true) and the mixin sets the
+    // property back. `disabled="false"` is a disabled control here for exactly
+    // the reason it is on a native <input>. Native semantics win; see
+    // shared/props.js.
     disabled: { type: Boolean, reflect: true },
     _query: { state: true },
     _open: { state: true },
@@ -175,7 +183,6 @@ export class ArcCombobox extends FormControlMixin(LitElement) {
 
   constructor() {
     super();
-    this.size = 'md';
     this.value = '';
     this.placeholder = '';
     this.label = '';
@@ -185,8 +192,8 @@ export class ArcCombobox extends FormControlMixin(LitElement) {
     this._open = false;
     this._options = [];
     this._comboId = `combobox-${++ArcCombobox._idCounter}`;
-    this._clickOutside = new ClickOutsideController(this, {
-      onClickOutside: () => {
+    this._dismiss = new DismissController(this, {
+      onDismiss: () => {
         this._open = false;
       },
     });
@@ -293,8 +300,8 @@ export class ArcCombobox extends FormControlMixin(LitElement) {
       }
     }
     if (changed.has('_open')) {
-      if (this._open) this._clickOutside.activate();
-      else this._clickOutside.deactivate();
+      if (this._open) this._dismiss.activate();
+      else this._dismiss.deactivate();
     }
     // Filtering can leave fewer options than the active index, which would point
     // aria-activedescendant at an option that no longer exists.

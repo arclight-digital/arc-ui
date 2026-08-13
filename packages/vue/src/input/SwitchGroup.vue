@@ -11,9 +11,6 @@ const props = withDefaults(defineProps<{
   disabled?: boolean;
 }>(), {
   label: '',
-  orientation: 'vertical',
-  size: 'md',
-  disabled: false,
 });
 </script>
 

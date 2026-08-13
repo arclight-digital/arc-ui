@@ -12,8 +12,6 @@ const props = withDefaults(defineProps<{
 }>(), {
   columns: () => ([]),
   rows: () => ([]),
-  striped: false,
-  density: 'default',
 });
 </script>
 

@@ -35,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { gap = 'sm', align = 'center', justify = 'start', children, ...rest }: Props = $props();
+  let { gap, align, justify, children, ...rest }: Props = $props();
 </script>
 
 <arc-cluster {gap} {align} {justify} {...rest}>

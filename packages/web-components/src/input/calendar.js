@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { monthNames, weekdayNames, firstDayOfWeek, weekdayOffset } from '../shared/date-names.js';
+import { DeclaredPropsMixin, oneOf, int } from '../shared/props.js';
 
 /**
  * Interactive month-view calendar grid for date selection with min/max constraints, keyboard
@@ -10,7 +11,9 @@ import { monthNames, weekdayNames, firstDayOfWeek, weekdayOffset } from '../shar
  * @prop {string} value - The selected date as an ISO string (YYYY-MM-DD). Empty string means no date is selected.
  * @prop {string} min - Minimum selectable date as an ISO string. Days before this date are disabled.
  * @prop {string} max - Maximum selectable date as an ISO string. Days after this date are disabled.
- * @prop {number} month - The currently displayed month (0-based, 0=January). Defaults to the current month.
+ * @prop {number} month - The currently displayed month (0-based, 0=January). Defaults to the
+ *   current month. Clamped to 0-11: an out-of-range month reached `new Date(year, month)`,
+ *   which silently rolls into another year.
  * @prop {number} year - The currently displayed year. Defaults to the current year.
  * @fires arc-change - Fired when a date is selected. `event.detail.value` contains the ISO date string (YYYY-MM-DD).
  * @fires {CustomEvent<{ month: number, year: number }>} arc-month-change - Fired when the visible month or year changes via the navigation buttons.
@@ -24,17 +27,22 @@ import { monthNames, weekdayNames, firstDayOfWeek, weekdayOffset } from '../shar
  * @csspart dow
  * @csspart day
  * @prop {string} locale - BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language.
- * @prop {number} firstDayOfWeek - Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention.
+ * @prop {0|1|2|3|4|5|6|7} firstDayOfWeek - Which day the week starts on, 1 = Monday … 7 = Sunday.
+ *   0 (the default) follows the locale's own convention. An unrecognised value falls back to 0
+ *   rather than reaching weekdayOffset() and reordering the week arbitrarily.
  */
-export class ArcCalendar extends LitElement {
+export class ArcCalendar extends DeclaredPropsMixin(LitElement) {
   static properties = {
     locale: { type: String },
-    firstDayOfWeek: { type: Number, attribute: 'first-day-of-week' },
+    firstDayOfWeek: oneOf([0, 1, 2, 3, 4, 5, 6, 7], {
+      default: 0,
+      attribute: 'first-day-of-week',
+    }),
     value: { type: String },
     min: { type: String },
     max: { type: String },
-    month: { type: Number },
-    year: { type: Number },
+    month: int({ default: () => new Date().getMonth(), min: 0, max: 11, clamp: 'toRange' }),
+    year: int({ default: () => new Date().getFullYear() }),
     _focusedDay: { state: true },
   };
 
@@ -169,13 +177,9 @@ export class ArcCalendar extends LitElement {
   constructor() {
     super();
     this.locale = '';
-    this.firstDayOfWeek = 0;
-    const now = new Date();
     this.value = '';
     this.min = '';
     this.max = '';
-    this.month = now.getMonth();
-    this.year = now.getFullYear();
     this._focusedDay = null;
   }
   /** The week's first day: an explicit prop, else whatever the locale says. */

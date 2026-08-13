@@ -2,6 +2,7 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { breakpoints } from '../generated/breakpoints.js';
 import '../layout/container.register.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Fixed header bar that anchors every page with a brand slot on the left, an optional center
@@ -32,7 +33,7 @@ import '../layout/container.register.js';
  * @csspart actions
  * @csspart topbar
  */
-export class ArcTopBar extends LitElement {
+export class ArcTopBar extends DeclaredPropsMixin(LitElement) {
   static properties = {
     heading: { type: String },
     homeHref: { type: String, attribute: 'home-href' },
@@ -40,14 +41,15 @@ export class ArcTopBar extends LitElement {
        toggleAttribute alone, so it styled correctly but appeared in no
        manifest, no wrapper type and no documentation — API that exists and
        cannot be found. */
-    scrolled: { type: Boolean, reflect: true },
-    immersive: { type: Boolean, reflect: true },
-    fixed: { type: Boolean, reflect: true },
+    // Output, not input — see the @prop note above: the component sets this.
+    scrolled: flag(false, { derived: true }),
+    immersive: flag(false),
+    fixed: flag(false),
     contained: { type: String, reflect: true },
-    menuOpen: { type: Boolean, attribute: 'menu-open', reflect: true },
+    menuOpen: flag(false, { attribute: 'menu-open' }),
     mobileMenu: { type: String, attribute: 'mobile-menu' },
     menuPosition: { type: String, attribute: 'menu-position' },
-    navAlign: { type: String, attribute: 'nav-align' },
+    navAlign: oneOf(['left', 'center', 'right'], { default: 'center', attribute: 'nav-align', reflect: false }),
   };
 
   static styles = [
@@ -314,14 +316,9 @@ export class ArcTopBar extends LitElement {
     super();
     this.heading = '';
     this.homeHref = '/';
-    this.scrolled = false;
-    this.immersive = false;
-    this.fixed = false;
     this.contained = null;
-    this.menuOpen = false;
     this.mobileMenu = 'sidebar';
     this.menuPosition = 'left';
-    this.navAlign = 'center';
     this._rafId = null;
     this._onExternalToggle = this._onExternalToggle.bind(this);
     this._onScroll = this._onScroll.bind(this);

@@ -11,7 +11,6 @@ const props = withDefaults(defineProps<{
 }>(), {
   color: '#4d7ef7',
   label: '',
-  size: 'md',
 });
 </script>
 

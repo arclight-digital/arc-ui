@@ -4,11 +4,9 @@ import '@arclux/arc-ui/progress-toast';
 
 defineOptions({ name: 'ProgressToast' });
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   position?: 'top-right' | 'bottom-right';
-}>(), {
-  position: 'bottom-right',
-});
+}>();
 
 const emit = defineEmits<{
   'arc-complete': [event: CustomEvent];

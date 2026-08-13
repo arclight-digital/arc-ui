@@ -39,7 +39,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { src = '', poster = '', label = '', autoplay = false, loop = false, muted = false, controls = true, preload = 'metadata', ...rest }: Props = $props();
+  let { src = '', poster = '', label = '', autoplay, loop, muted, controls = true, preload, ...rest }: Props = $props();
 </script>
 
 <arc-video {src} {poster} {label} {autoplay} {loop} {muted} {controls} {preload} {...rest}>

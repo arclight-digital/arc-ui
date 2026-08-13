@@ -11,7 +11,6 @@ const props = withDefaults(defineProps<{
   value?: string;
 }>(), {
   shortcut: '',
-  disabled: false,
   icon: '',
   value: '',
 });

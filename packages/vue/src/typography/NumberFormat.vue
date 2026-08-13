@@ -13,10 +13,8 @@ const props = withDefaults(defineProps<{
   notation?: 'standard' | 'compact';
 }>(), {
   value: 0,
-  type: 'number',
   locale: 'en-US',
   currency: 'USD',
-  notation: 'standard',
 });
 </script>
 

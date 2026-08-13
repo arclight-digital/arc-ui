@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Programmatic confirmation API that wraps dialog. Call ArcConfirm.open() and await the returned
@@ -21,14 +22,14 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart cancel
  * @csspart confirm
  */
-export class ArcConfirm extends LitElement {
+export class ArcConfirm extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    open: { type: Boolean, reflect: true },
+    open: flag(false),
     heading: { type: String },
     message: { type: String },
     confirmLabel: { type: String, attribute: 'confirm-label' },
     cancelLabel: { type: String, attribute: 'cancel-label' },
-    variant: { type: String, reflect: true },
+    variant: oneOf(['default', 'error']),
   };
 
   static styles = [
@@ -67,12 +68,10 @@ export class ArcConfirm extends LitElement {
 
   constructor() {
     super();
-    this.open = false;
     this.heading = '';
     this.message = '';
     this.confirmLabel = 'Confirm';
     this.cancelLabel = 'Cancel';
-    this.variant = 'default';
   }
 
   /**

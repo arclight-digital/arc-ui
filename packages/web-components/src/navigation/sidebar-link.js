@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { resolveCarrierHref } from '../shared/anchor-adoption.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * A navigation link rendered inside a SidebarSection. Supports an active state to indicate the
@@ -13,13 +14,13 @@ import { resolveCarrierHref } from '../shared/anchor-adoption.js';
  * @prop {boolean} external - Marks a destination that leaves the surrounding section — an app on its own route, another site, a repository. The link gains a persistent box-arrow glyph in place of the hover chevron, so the departure is legible before the click rather than after it.
  * @slot - Default content.
  */
-export class ArcSidebarLink extends LitElement {
+export class ArcSidebarLink extends DeclaredPropsMixin(LitElement) {
   static properties = {
     href: { type: String, reflect: true },
-    active: { type: Boolean, reflect: true },
+    active: flag(false),
     level: { type: Number, reflect: true },
     icon: { type: String, reflect: true },
-    external: { type: Boolean, reflect: true },
+    external: flag(false),
   };
 
   static styles = css`
@@ -29,10 +30,8 @@ export class ArcSidebarLink extends LitElement {
   constructor() {
     super();
     this.href = '';
-    this.active = false;
     this.level = 0;
     this.icon = '';
-    this.external = false;
   }
 
   /**

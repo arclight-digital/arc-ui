@@ -2,6 +2,7 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { statusVars } from '../status-styles.js';
 import { warnLowContrast } from '../shared/contrast.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Compact pill-shaped label with color variants, custom color support, and an optional remove
@@ -19,12 +20,12 @@ import { warnLowContrast } from '../shared/contrast.js';
  * @csspart label
  * @csspart remove
  */
-export class ArcTag extends LitElement {
+export class ArcTag extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    variant: { type: String, reflect: true },
-    size: { type: String, reflect: true },
-    removable: { type: Boolean, reflect: true },
-    disabled: { type: Boolean, reflect: true },
+    variant: oneOf(['default', 'primary', 'secondary', 'success', 'warning', 'error']),
+    size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
+    removable: flag(false),
+    disabled: flag(false),
     color: { type: String },
   };
 
@@ -126,10 +127,6 @@ export class ArcTag extends LitElement {
 
   constructor() {
     super();
-    this.variant = 'default';
-    this.size = 'md';
-    this.removable = false;
-    this.disabled = false;
     this.color = '';
   }
 

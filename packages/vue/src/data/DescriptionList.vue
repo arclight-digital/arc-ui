@@ -9,7 +9,6 @@ const props = withDefaults(defineProps<{
   dividers?: boolean;
 }>(), {
   columns: 1,
-  dividers: true,
 });
 </script>
 

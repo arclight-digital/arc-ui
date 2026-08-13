@@ -4,13 +4,10 @@ import '@arclux/arc-ui/callout';
 
 defineOptions({ name: 'Callout' });
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   variant?: 'info' | 'tip' | 'warning' | 'error';
   dismissible?: boolean;
-}>(), {
-  variant: 'info',
-  dismissible: false,
-});
+}>();
 
 const emit = defineEmits<{
   'arc-close': [event: CustomEvent];

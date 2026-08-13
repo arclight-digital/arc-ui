@@ -11,8 +11,6 @@ const props = withDefaults(defineProps<{
   icon?: string;
 }>(), {
   heading: '',
-  collapsible: false,
-  open: true,
   icon: '',
 });
 

@@ -4,11 +4,9 @@ import '@arclux/arc-ui/status-bar';
 
 defineOptions({ name: 'StatusBar' });
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   position?: 'static' | 'fixed';
-}>(), {
-  position: 'static',
-});
+}>();
 </script>
 
 <template>

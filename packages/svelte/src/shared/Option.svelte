@@ -35,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = '', disabled = false, selected = false, children, ...rest }: Props = $props();
+  let { value = '', disabled, selected, children, ...rest }: Props = $props();
 </script>
 
 <arc-option {value} {disabled} {selected} {...rest}>

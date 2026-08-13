@@ -13,7 +13,6 @@ const props = withDefaults(defineProps<{
   optimum?: number;
   label?: string;
 }>(), {
-  value: 0,
   min: 0,
   max: 100,
   label: '',

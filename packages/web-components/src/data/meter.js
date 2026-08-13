@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, num } from '../shared/props.js';
 
 /**
  * Semantic gauge display with color-coded fill zones (success, warning, error) based on
@@ -21,9 +22,14 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart track
  * @csspart fill
  */
-export class ArcMeter extends LitElement {
+export class ArcMeter extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    value: { type: Number, reflect: true },
+    // Clamped to the declared bounds, which are themselves props — the whole
+    // reason `min`/`max` accept a property name. `aria-valuenow` read
+    // `this.value` directly, so an out-of-range value drew a full bar and
+    // announced the raw number: the visual and the accessible value
+    // disagreed (finding #70).
+    value: num({ default: 0, min: 'min', max: 'max', clamp: 'toRange', reflect: true }),
     min: { type: Number },
     max: { type: Number },
     low: { type: Number },
@@ -86,7 +92,6 @@ export class ArcMeter extends LitElement {
 
   constructor() {
     super();
-    this.value = 0;
     this.min = 0;
     this.max = 100;
     this.low = undefined;

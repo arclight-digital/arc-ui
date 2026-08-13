@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /** How close to the bottom, in pixels, still counts as reading the live end. */
 const NEAR_BOTTOM_PX = 100;
@@ -22,9 +23,9 @@ const NEAR_BOTTOM_PX = 100;
  * @slot - Default content: the arc-message children making up the transcript.
  * @csspart conversation
  */
-export class ArcConversation extends LitElement {
+export class ArcConversation extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    autoScroll: { type: Boolean, attribute: 'auto-scroll', reflect: true },
+    autoScroll: flag(true, { attribute: 'auto-scroll', negative: 'no-auto-scroll' }),
   };
 
   static styles = [
@@ -64,7 +65,6 @@ export class ArcConversation extends LitElement {
 
   constructor() {
     super();
-    this.autoScroll = true;
     /** Whether the reader was near the live end at the last scroll sample. */
     this._nearEnd = true;
     this._observer = null;

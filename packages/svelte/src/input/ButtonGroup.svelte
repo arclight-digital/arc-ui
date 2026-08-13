@@ -35,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { orientation = 'horizontal', size = 'md', variant = '', children, ...rest }: Props = $props();
+  let { orientation, size, variant = '', children, ...rest }: Props = $props();
 </script>
 
 <arc-button-group {orientation} {size} {variant} {...rest}>

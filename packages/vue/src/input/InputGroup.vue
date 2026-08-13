@@ -4,11 +4,9 @@ import '@arclux/arc-ui/input-group';
 
 defineOptions({ name: 'InputGroup' });
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   size?: 'sm' | 'md' | 'lg';
-}>(), {
-  size: 'md',
-});
+}>();
 </script>
 
 <template>

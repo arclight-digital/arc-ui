@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
  * Settings page with side navigation and content area.
@@ -12,9 +13,9 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart nav
  * @csspart content
  */
-export class ArcSettingsLayout extends LitElement {
+export class ArcSettingsLayout extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    navPosition: { type: String, reflect: true, attribute: 'nav-position' },
+    navPosition: oneOf(['left', 'top'], { attribute: 'nav-position' }),
   };
 
   static styles = [
@@ -77,7 +78,6 @@ export class ArcSettingsLayout extends LitElement {
 
   constructor() {
     super();
-    this.navPosition = 'left';
   }
 
   render() {

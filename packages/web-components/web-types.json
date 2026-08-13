@@ -190,9 +190,9 @@
             },
             {
               "name": "status",
-              "description": "Shows a status indicator dot. Options: 'online', 'offline', 'busy', 'away'.",
+              "description": "Shows a status indicator dot. Empty (the default) shows none. An unrecognised value falls back to empty rather than rendering an uncoloured dot that screen readers announce by its bogus name.",
               "value": {
-                "type": "'online' | 'offline' | 'busy' | 'away'",
+                "type": "'' | 'online' | 'offline' | 'busy' | 'away'",
                 "default": "''"
               }
             }
@@ -217,14 +217,14 @@
                 "type": "'sm' | 'md' | 'lg'"
               },
               {
+                "name": "status",
+                "description": "Shows a status indicator dot. Empty (the default) shows none. An unrecognised value falls back to empty rather than rendering an uncoloured dot that screen readers announce by its bogus name.",
+                "type": "'' | 'online' | 'offline' | 'busy' | 'away'"
+              },
+              {
                 "name": "shape",
                 "description": "Controls the avatar shape. Options: 'circle', 'square', 'rounded'.",
                 "type": "'circle' | 'square' | 'rounded'"
-              },
-              {
-                "name": "status",
-                "description": "Shows a status indicator dot. Options: 'online', 'offline', 'busy', 'away'.",
-                "type": "'online' | 'offline' | 'busy' | 'away'"
               }
             ],
             "events": []
@@ -357,7 +357,7 @@
           "doc-url": "",
           "attributes": [
             {
-              "name": "auto-play",
+              "name": "autoPlay",
               "description": "Enables automatic slide advancement on a timer. Pauses on hover and focus, respects prefers-reduced-motion.",
               "value": {
                 "type": "boolean",
@@ -381,7 +381,7 @@
               }
             },
             {
-              "name": "show-dots",
+              "name": "showDots",
               "description": "Shows dot indicators below the viewport for direct slide navigation.",
               "value": {
                 "type": "boolean",
@@ -389,7 +389,7 @@
               }
             },
             {
-              "name": "show-arrows",
+              "name": "showArrows",
               "description": "Shows previous/next arrow buttons on the left and right edges of the viewport.",
               "value": {
                 "type": "boolean",
@@ -485,14 +485,14 @@
           "js": {
             "properties": [
               {
-                "name": "open",
-                "description": "Controls whether the content is visible. Reflected as an attribute and toggleable by clicking the heading.",
-                "type": "boolean"
-              },
-              {
                 "name": "heading",
                 "description": "Text displayed in the clickable trigger row. Also used as the ARIA label for the content region.",
                 "type": "string"
+              },
+              {
+                "name": "open",
+                "description": "Controls whether the content is visible. Reflected as an attribute and toggleable by clicking the heading.",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -632,14 +632,14 @@
                 "type": "string"
               },
               {
-                "name": "sortable",
-                "description": "When true (and the parent DataTable also has `sortable`), clicking this column's header toggles ascending/descending sort on the corresponding data field. A sort indicator arrow appears next to the label.",
-                "type": "boolean"
-              },
-              {
                 "name": "width",
                 "description": "Sets a fixed CSS width on the column (e.g., \"100px\", \"20%\"). Useful for constraining narrow columns like status badges or actions so they do not stretch unnecessarily.",
                 "type": "string"
+              },
+              {
+                "name": "sortable",
+                "description": "When true (and the parent DataTable also has `sortable`), clicking this column's header toggles ascending/descending sort on the corresponding data field. A sort indicator arrow appears next to the label.",
+                "type": "boolean"
               }
             ],
             "events": []
@@ -727,9 +727,10 @@
             },
             {
               "name": "align",
-              "description": "Shifts the gradient origin so it fades from one edge instead of both. Useful for asymmetric layouts where the divider should visually connect to content on one side.",
+              "description": "Shifts the gradient origin so it fades from one edge instead of both. Empty (the default) fades from both edges. Useful for asymmetric layouts where the divider should visually connect to content on one side.",
               "value": {
-                "type": "'left' | 'right'"
+                "type": "'' | 'left' | 'right'",
+                "default": "''"
               }
             },
             {
@@ -754,24 +755,24 @@
           "js": {
             "properties": [
               {
-                "name": "variant",
-                "description": "Visual style",
-                "type": "'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient'"
-              },
-              {
-                "name": "vertical",
-                "description": "Renders the divider as a vertical line. Switches to `inline-flex` display and rotates gradient directions to run top-to-bottom. Use inside flex rows to separate inline content.",
-                "type": "boolean"
-              },
-              {
                 "name": "label",
                 "description": "Text displayed in the center of the divider, splitting it into two lines. Common use: 'OR' between form options. Only applies to horizontal dividers.",
                 "type": "string"
               },
               {
+                "name": "variant",
+                "description": "Visual style",
+                "type": "'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient'"
+              },
+              {
                 "name": "align",
-                "description": "Shifts the gradient origin so it fades from one edge instead of both. Useful for asymmetric layouts where the divider should visually connect to content on one side.",
-                "type": "'left' | 'right'"
+                "description": "Shifts the gradient origin so it fades from one edge instead of both. Empty (the default) fades from both edges. Useful for asymmetric layouts where the divider should visually connect to content on one side.",
+                "type": "'' | 'left' | 'right'"
+              },
+              {
+                "name": "vertical",
+                "description": "Renders the divider as a vertical line. Switches to `inline-flex` display and rotates gradient directions to run top-to-bottom. Use inside flex rows to separate inline content.",
+                "type": "boolean"
               }
             ],
             "events": []
@@ -966,6 +967,11 @@
           "js": {
             "properties": [
               {
+                "name": "label",
+                "description": "Accessible name for the pin button, repeated as the heading of the popover. Always set it — without a label the pin announces nothing useful to a screen reader.",
+                "type": "string"
+              },
+              {
                 "name": "x",
                 "description": "Horizontal position of the pin as a percentage of the image width, from 0 (left edge) to 100 (right edge). Values outside the range are clamped; a non-numeric value falls back to 50.",
                 "type": "number"
@@ -974,11 +980,6 @@
                 "name": "y",
                 "description": "Vertical position of the pin as a percentage of the image height, from 0 (top edge) to 100 (bottom edge). Values outside the range are clamped; a non-numeric value falls back to 50.",
                 "type": "number"
-              },
-              {
-                "name": "label",
-                "description": "Accessible name for the pin button, repeated as the heading of the popover. Always set it — without a label the pin announces nothing useful to a screen reader.",
-                "type": "string"
               },
               {
                 "name": "open",
@@ -1153,16 +1154,6 @@
           "js": {
             "properties": [
               {
-                "name": "position",
-                "description": "Divider position as a percentage, 0 to 100. 0 shows only the after layer, 100 only the before layer. Clamped, reflected, and updated as the user drags.",
-                "type": "number"
-              },
-              {
-                "name": "orientation",
-                "description": "Axis the divider moves along. `horizontal` (default) moves a vertical divider line left-right; `vertical` moves a horizontal line up-down.",
-                "type": "'horizontal' | 'vertical'"
-              },
-              {
                 "name": "beforeLabel",
                 "description": "Optional caption for the before layer, rendered as a floating chip in the start corner.",
                 "type": "string"
@@ -1176,6 +1167,16 @@
                 "name": "label",
                 "description": "Accessible name for the divider handle, announced as the slider label.",
                 "type": "string"
+              },
+              {
+                "name": "position",
+                "description": "Divider position as a percentage, 0 to 100. 0 shows only the after layer, 100 only the before layer. Clamped, reflected, and updated as the user drags.",
+                "type": "number"
+              },
+              {
+                "name": "orientation",
+                "description": "Axis the divider moves along. `horizontal` (default) moves a vertical divider line left-right; `vertical` moves a horizontal line up-down.",
+                "type": "'horizontal' | 'vertical'"
               }
             ],
             "events": [
@@ -1232,9 +1233,9 @@
             },
             {
               "name": "aspect",
-              "description": "Constrains the container to a fixed aspect ratio, preventing layout shift during loading.",
+              "description": "Constrains the container to a fixed aspect ratio, preventing layout shift during loading. Empty (the default) leaves the container unconstrained; an unrecognised ratio falls back to it.",
               "value": {
-                "type": "'1/1' | '4/3' | '16/9' | '21/9' | '3/4' | '9/16'",
+                "type": "'' | '1/1' | '4/3' | '16/9' | '21/9' | '3/4' | '9/16'",
                 "default": "''"
               }
             },
@@ -1289,9 +1290,14 @@
                 "type": "string"
               },
               {
+                "name": "fallback",
+                "description": "URL of a fallback image to display if the primary `src` fails to load.",
+                "type": "string"
+              },
+              {
                 "name": "aspect",
-                "description": "Constrains the container to a fixed aspect ratio, preventing layout shift during loading.",
-                "type": "'1/1' | '4/3' | '16/9' | '21/9' | '3/4' | '9/16'"
+                "description": "Constrains the container to a fixed aspect ratio, preventing layout shift during loading. Empty (the default) leaves the container unconstrained; an unrecognised ratio falls back to it.",
+                "type": "'' | '1/1' | '4/3' | '16/9' | '21/9' | '3/4' | '9/16'"
               },
               {
                 "name": "fit",
@@ -1302,11 +1308,6 @@
                 "name": "loading",
                 "description": "Native loading strategy. Lazy defers off-screen images until they approach the viewport.",
                 "type": "'lazy' | 'eager'"
-              },
-              {
-                "name": "fallback",
-                "description": "URL of a fallback image to display if the primary `src` fails to load.",
-                "type": "string"
               }
             ],
             "events": [
@@ -1505,7 +1506,7 @@
               }
             },
             {
-              "name": "pause-on-hover",
+              "name": "pauseOnHover",
               "description": "When true, the animation pauses while the cursor hovers over the marquee.",
               "value": {
                 "type": "boolean",
@@ -1536,6 +1537,11 @@
                 "type": "number"
               },
               {
+                "name": "gap",
+                "description": "CSS length value for the gap between slotted items. Accepts any valid CSS length or custom property.",
+                "type": "string"
+              },
+              {
                 "name": "direction",
                 "description": "Scroll direction. `left` scrolls content from right to left (default), `right` reverses the direction.",
                 "type": "'left' | 'right'"
@@ -1544,11 +1550,6 @@
                 "name": "pauseOnHover",
                 "description": "When true, the animation pauses while the cursor hovers over the marquee.",
                 "type": "boolean"
-              },
-              {
-                "name": "gap",
-                "description": "CSS length value for the gap between slotted items. Accepts any valid CSS length or custom property.",
-                "type": "string"
               }
             ],
             "events": []
@@ -1623,11 +1624,6 @@
                 "type": "number"
               },
               {
-                "name": "level",
-                "description": "Error-correction level: L (~7% recovery), M (~15%), Q (~25%), H (~30%). Higher levels tolerate more damage/occlusion but produce denser codes.",
-                "type": "'L' | 'M' | 'Q' | 'H'"
-              },
-              {
                 "name": "label",
                 "description": "Accessible description announced to screen readers (falls back to \"QR code\"). Describe the purpose, not the encoded value — the value is never exposed by default since it may be a secret.",
                 "type": "string"
@@ -1636,6 +1632,11 @@
                 "name": "quietZone",
                 "description": "Width of the empty border around the code, measured in modules. Scanners rely on this margin to find the code; keep at least 2 against busy backgrounds.",
                 "type": "number"
+              },
+              {
+                "name": "level",
+                "description": "Error-correction level: L (~7% recovery), M (~15%), Q (~25%), H (~30%). Higher levels tolerate more damage/occlusion but produce denser codes.",
+                "type": "'L' | 'M' | 'Q' | 'H'"
               },
               {
                 "name": "contrast",
@@ -1792,14 +1793,14 @@
           "js": {
             "properties": [
               {
-                "name": "orientation",
-                "description": "Controls the divider direction. Vertical separators display as inline-flex with full parent height.",
-                "type": "'horizontal' | 'vertical'"
-              },
-              {
                 "name": "label",
                 "description": "Optional text displayed centered between two line segments. Only applies to horizontal orientation.",
                 "type": "string"
+              },
+              {
+                "name": "orientation",
+                "description": "Controls the divider direction. Vertical separators display as inline-flex with full parent height.",
+                "type": "'horizontal' | 'vertical'"
               },
               {
                 "name": "variant",
@@ -1853,11 +1854,6 @@
           "js": {
             "properties": [
               {
-                "name": "variant",
-                "description": "Shape of the skeleton: text for lines, circle for avatars, rect for blocks",
-                "type": "'text' | 'circle' | 'rect'"
-              },
-              {
                 "name": "width",
                 "description": "CSS width value (e.g. \"200px\", \"100%\")",
                 "type": "string"
@@ -1871,6 +1867,11 @@
                 "name": "count",
                 "description": "Renders multiple skeleton items stacked vertically with spacing. Useful for placeholder lists.",
                 "type": "number"
+              },
+              {
+                "name": "variant",
+                "description": "Shape of the skeleton: text for lines, circle for avatars, rect for blocks",
+                "type": "'text' | 'circle' | 'rect'"
               }
             ],
             "events": []
@@ -2106,6 +2107,11 @@
                 "type": "string"
               },
               {
+                "name": "controls",
+                "description": "Shows the custom control bar once playback has started, and enables the player keyboard shortcuts. Defaults to true; set `controls=\"false\"` for ambient or presentation video.",
+                "type": "boolean"
+              },
+              {
                 "name": "autoplay",
                 "description": "Starts playback as soon as the browser allows. Browsers only honor autoplay when the video is muted, so pair it with `muted`; when autoplay is blocked, the play overlay simply remains and the user starts playback themselves.",
                 "type": "boolean"
@@ -2118,11 +2124,6 @@
               {
                 "name": "muted",
                 "description": "Mutes the audio track. Toggled live by the mute button and the M key.",
-                "type": "boolean"
-              },
-              {
-                "name": "controls",
-                "description": "Shows the custom control bar once playback has started, and enables the player keyboard shortcuts. Defaults to true; set `controls=\"false\"` for ambient or presentation video.",
                 "type": "boolean"
               },
               {
@@ -2389,11 +2390,6 @@
                 "type": "number"
               },
               {
-                "name": "format",
-                "description": "Controls how the number is formatted using Intl.NumberFormat. Use currency with a prefix like $ or percent with a suffix like %.",
-                "type": "'number' | 'currency' | 'percent'"
-              },
-              {
                 "name": "prefix",
                 "description": "String prepended before the number (e.g., \"$\")",
                 "type": "string"
@@ -2412,6 +2408,11 @@
                 "name": "locale",
                 "description": "BCP 47 locale tag passed to Intl.NumberFormat for locale-aware number formatting (thousands separators, decimal marks).",
                 "type": "string"
+              },
+              {
+                "name": "format",
+                "description": "Controls how the number is formatted using Intl.NumberFormat. Use currency with a prefix like $ or percent with a suffix like %.",
+                "type": "'number' | 'currency' | 'percent'"
               }
             ],
             "events": []
@@ -2457,6 +2458,11 @@
           "js": {
             "properties": [
               {
+                "name": "color",
+                "description": "Custom RGB color value (e.g. `\"255, 100, 50\"`) that overrides the variant color. Sets the border, text, background tint, and hover glow to the specified color.",
+                "type": "string"
+              },
+              {
                 "name": "variant",
                 "description": "Controls the badge color scheme. Default renders a neutral gray. Primary and secondary use the accent token colors. Success, warning, error, and info map to the corresponding semantic color tokens for status-oriented labels.",
                 "type": "'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'"
@@ -2465,11 +2471,6 @@
                 "name": "size",
                 "description": "Controls the badge size. Options: 'sm', 'md', 'lg'.",
                 "type": "'sm' | 'md' | 'lg'"
-              },
-              {
-                "name": "color",
-                "description": "Custom RGB color value (e.g. `\"255, 100, 50\"`) that overrides the variant color. Sets the border, text, background tint, and hover glow to the specified color.",
-                "type": "string"
               }
             ],
             "events": []
@@ -2513,7 +2514,7 @@
               }
             },
             {
-              "name": "hide-legend",
+              "name": "hideLegend",
               "description": "Suppresses the legend. By default the legend renders for two or more series and is omitted for a single series.",
               "value": {
                 "type": "boolean",
@@ -2521,7 +2522,7 @@
               }
             },
             {
-              "name": "hide-axis",
+              "name": "hideAxis",
               "description": "Removes the axis layer — gridlines, y tick labels, and x category labels — for compact trend panels where exact values are read from the tooltip.",
               "value": {
                 "type": "boolean",
@@ -2537,7 +2538,7 @@
               }
             },
             {
-              "name": "value-format",
+              "name": "valueFormat",
               "description": "How values are formatted in tooltips, the axis, and the accessible data table, via Intl.NumberFormat. Percent expects fractional data (0.24 → 24%). Axis numbers are abbreviated (1.2k, 3.4M).",
               "value": {
                 "type": "'number' | 'percent' | 'currency'",
@@ -2564,11 +2565,6 @@
           "js": {
             "properties": [
               {
-                "name": "type",
-                "description": "The chart form. Line and area share the x axis across all series; bar renders grouped columns (or stacked with the `stacked` attribute); donut renders one segment per series (or per category when a single series is given).",
-                "type": "'line' | 'area' | 'bar' | 'donut'"
-              },
-              {
                 "name": "series",
                 "description": "The data that drives the chart. Each entry is one series; all series share the x axis defined by `labels`. Set via JavaScript property, not an attribute. Colors are assigned in fixed order from --chart-1 to --chart-6; series beyond six are summed into an \"Other\" series noted in the legend.",
                 "type": "Array<{label:string,data:number[]}>"
@@ -2577,6 +2573,21 @@
                 "name": "labels",
                 "description": "Category labels for the x axis (or donut segment names when a single series is given). Labels that would collide are automatically thinned — every Nth label renders based on available width.",
                 "type": "string[]"
+              },
+              {
+                "name": "height",
+                "description": "Chart height in pixels. Width is fluid and tracked with a ResizeObserver.",
+                "type": "number"
+              },
+              {
+                "name": "currency",
+                "description": "ISO 4217 currency code used when value-format=\"currency\".",
+                "type": "string"
+              },
+              {
+                "name": "type",
+                "description": "The chart form. Line and area share the x axis across all series; bar renders grouped columns (or stacked with the `stacked` attribute); donut renders one segment per series (or per category when a single series is given).",
+                "type": "'line' | 'area' | 'bar' | 'donut'"
               },
               {
                 "name": "stacked",
@@ -2594,19 +2605,9 @@
                 "type": "boolean"
               },
               {
-                "name": "height",
-                "description": "Chart height in pixels. Width is fluid and tracked with a ResizeObserver.",
-                "type": "number"
-              },
-              {
                 "name": "valueFormat",
                 "description": "How values are formatted in tooltips, the axis, and the accessible data table, via Intl.NumberFormat. Percent expects fractional data (0.24 → 24%). Axis numbers are abbreviated (1.2k, 3.4M).",
                 "type": "'number' | 'percent' | 'currency'"
-              },
-              {
-                "name": "currency",
-                "description": "ISO 4217 currency code used when value-format=\"currency\".",
-                "type": "string"
               }
             ],
             "events": [
@@ -2648,7 +2649,7 @@
               }
             },
             {
-              "name": "show-seconds",
+              "name": "showSeconds",
               "description": "Show seconds on the digital face, or the second hand on the analog face.",
               "value": {
                 "type": "boolean",
@@ -2664,7 +2665,7 @@
               }
             },
             {
-              "name": "show-timezone",
+              "name": "showTimezone",
               "description": "Render the timezone abbreviation, muted, beside the digital time.",
               "value": {
                 "type": "boolean",
@@ -2677,11 +2678,6 @@
           "js": {
             "properties": [
               {
-                "name": "variant",
-                "description": "Which face to render. Digital shows a mono-spaced time string; analog shows an SVG dial with hands.",
-                "type": "'digital' | 'analog'"
-              },
-              {
                 "name": "timezone",
                 "description": "IANA timezone name (e.g. \"Asia/Tokyo\"). Defaults to the viewer's local timezone; an unrecognized value falls back to local.",
                 "type": "string"
@@ -2692,13 +2688,18 @@
                 "type": "string"
               },
               {
-                "name": "showSeconds",
-                "description": "Show seconds on the digital face, or the second hand on the analog face.",
+                "name": "hour12",
+                "description": "Force 12-hour display on the digital face. When unset, the viewer's locale decides. Set the property to false to force 24-hour display.",
                 "type": "boolean"
               },
               {
-                "name": "hour12",
-                "description": "Force 12-hour display on the digital face. When unset, the viewer's locale decides. Set the property to false to force 24-hour display.",
+                "name": "variant",
+                "description": "Which face to render. Digital shows a mono-spaced time string; analog shows an SVG dial with hands.",
+                "type": "'digital' | 'analog'"
+              },
+              {
+                "name": "showSeconds",
+                "description": "Show seconds on the digital face, or the second hand on the analog face.",
                 "type": "boolean"
               },
               {
@@ -2750,14 +2751,14 @@
                 "type": "string"
               },
               {
-                "name": "highlight",
-                "description": "When true, adds an accent background to the header and all cells in this column.",
-                "type": "boolean"
-              },
-              {
                 "name": "values",
                 "description": "JSON array of values matching the features order. Use \"true\"/\"false\" for check/cross icons, or any string for text values.",
                 "type": "string"
+              },
+              {
+                "name": "highlight",
+                "description": "When true, adds an accent background to the header and all cells in this column.",
+                "type": "boolean"
               }
             ],
             "events": []
@@ -2825,7 +2826,7 @@
               }
             },
             {
-              "name": "hide-zero-segments",
+              "name": "hideZeroSegments",
               "description": "Hide leading segments that are zero",
               "value": {
                 "type": "boolean",
@@ -2903,7 +2904,7 @@
               }
             },
             {
-              "name": "manual-sort",
+              "name": "manualSort",
               "description": "Skips internal sorting. Rows render in the order given, while headers still cycle the `sort` state and emit `arc-sort` — use this to implement server-side sorting.",
               "value": {
                 "type": "boolean",
@@ -2971,6 +2972,11 @@
                 "type": "Array<{key:string,direction:'asc'|'desc'}>"
               },
               {
+                "name": "rowHeight",
+                "description": "Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations.",
+                "type": "number"
+              },
+              {
                 "name": "manualSort",
                 "description": "Skips internal sorting. Rows render in the order given, while headers still cycle the `sort` state and emit `arc-sort` — use this to implement server-side sorting.",
                 "type": "boolean"
@@ -2984,11 +2990,6 @@
                 "name": "virtual",
                 "description": "Enables virtual scrolling for large datasets. Only visible rows plus an overscan buffer are rendered, keeping performance constant regardless of row count.",
                 "type": "boolean"
-              },
-              {
-                "name": "rowHeight",
-                "description": "Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations.",
-                "type": "number"
               }
             ],
             "events": [
@@ -3012,7 +3013,7 @@
         },
         {
           "name": "arc-data-table",
-          "description": "A data-driven table component that renders rows from a JavaScript array. Declarative column\ndefinitions via `arc-column` children control which fields appear, their headers, widths, and\nsort behavior. Built-in support for column sorting, row selection with checkboxes, and an\nempty-state fallback.\n---\n\n\n### **Events:**\n - **arc-sort** - Fired when a sortable column header is clicked\n- **arc-select** - Fired when row selection changes. detail: { value, selected, row, index } — value is the sorted selected indices; detail.all is true for header select-all toggles\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **row**\n- **cell**\n- **wrapper**\n- **table**\n- **head**\n- **body**",
+          "description": "A data-driven table component that renders rows from a JavaScript array. Declarative column\ndefinitions via `arc-column` children control which fields appear, their headers, widths, and\nsort behavior. Built-in support for column sorting, row selection with checkboxes, and an\nempty-state fallback.\n---\n\n\n### **Events:**\n - **arc-sort** - Fired when a sortable column header is clicked\n- **arc-select** - Fired when row selection changes. detail: { value, selected, row, index } — `value` is the selected row objects themselves, in `rows` order, so it stays correct across sorting; `row` is the one toggled, `index` its position in `rows`, and `all` is true for header select-all toggles.\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **row**\n- **cell**\n- **wrapper**\n- **table**\n- **head**\n- **body**",
           "doc-url": "",
           "attributes": [
             {
@@ -3048,7 +3049,7 @@
               }
             },
             {
-              "name": "sort-direction",
+              "name": "sortDirection",
               "description": "The current sort direction. Works in tandem with `sort-column` to control the initial sort state. Reflected as an attribute so it can be read from the DOM or targeted with CSS selectors.",
               "value": {
                 "type": "'asc' | 'desc'",
@@ -3087,7 +3088,7 @@
             {
               "name": "arc-select",
               "type": "CustomEvent",
-              "description": "Fired when row selection changes. detail: { value, selected, row, index } — value is the sorted selected indices; detail.all is true for header select-all toggles"
+              "description": "Fired when row selection changes. detail: { value, selected, row, index } — `value` is the selected row objects themselves, in `rows` order, so it stays correct across sorting; `row` is the one toggled, `index` its position in `rows`, and `all` is true for header select-all toggles."
             }
           ],
           "js": {
@@ -3096,6 +3097,16 @@
                 "name": "rows",
                 "description": "The data array that drives the table. Each object in the array becomes a row, and its keys are matched against the `key` attribute of each `arc-column` child. Set this property via JavaScript — it is not an HTML attribute. Changing this array triggers a re-render.",
                 "type": "Array<Record<string, any>>"
+              },
+              {
+                "name": "sortColumn",
+                "description": "The `key` of the currently sorted column. Set this attribute to pre-sort the table on a specific column when it first renders. Updated automatically when the user clicks a sortable column header.",
+                "type": "string"
+              },
+              {
+                "name": "rowHeight",
+                "description": "Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations.",
+                "type": "number"
               },
               {
                 "name": "sortable",
@@ -3108,11 +3119,6 @@
                 "type": "boolean"
               },
               {
-                "name": "sortColumn",
-                "description": "The `key` of the currently sorted column. Set this attribute to pre-sort the table on a specific column when it first renders. Updated automatically when the user clicks a sortable column header.",
-                "type": "string"
-              },
-              {
                 "name": "sortDirection",
                 "description": "The current sort direction. Works in tandem with `sort-column` to control the initial sort state. Reflected as an attribute so it can be read from the DOM or targeted with CSS selectors.",
                 "type": "'asc' | 'desc'"
@@ -3121,11 +3127,6 @@
                 "name": "virtual",
                 "description": "Enables virtual scrolling for large datasets. When true, only the visible rows plus an overscan buffer are rendered in the DOM, keeping performance constant regardless of row count.",
                 "type": "boolean"
-              },
-              {
-                "name": "rowHeight",
-                "description": "Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations.",
-                "type": "number"
               }
             ],
             "events": [
@@ -3137,7 +3138,7 @@
               {
                 "name": "arc-select",
                 "type": "CustomEvent",
-                "description": "Fired when row selection changes. detail: { value, selected, row, index } — value is the sorted selected indices; detail.all is true for header select-all toggles"
+                "description": "Fired when row selection changes. detail: { value, selected, row, index } — `value` is the selected row objects themselves, in `rows` order, so it stays correct across sorting; `row` is the one toggled, `index` its position in `rows`, and `all` is true for header select-all toggles."
               }
             ]
           }
@@ -3354,14 +3355,14 @@
                 "type": "Array<{date:string,end?:string,label:string,color?:number}>"
               },
               {
-                "name": "view",
-                "description": "Which period layout to render. Also switchable by the user via the header view toggle.",
-                "type": "'month' | 'week'"
-              },
-              {
                 "name": "date",
                 "description": "ISO date string (YYYY-MM-DD) anchoring the visible period. Defaults to today when left empty.",
                 "type": "string"
+              },
+              {
+                "name": "view",
+                "description": "Which period layout to render. Also switchable by the user via the header view toggle.",
+                "type": "'month' | 'week'"
               }
             ],
             "events": [
@@ -3461,7 +3462,7 @@
               }
             },
             {
-              "name": "show-value",
+              "name": "showValue",
               "description": "Whether to render the numeric value in the center of the arc. Defaults to true; disable via the `showValue` property.",
               "value": {
                 "type": "boolean",
@@ -3473,11 +3474,6 @@
           "events": [],
           "js": {
             "properties": [
-              {
-                "name": "value",
-                "description": "Current gauge value. Clamped between `min` and `max`. Reflected as an attribute.",
-                "type": "number"
-              },
               {
                 "name": "min",
                 "description": "Minimum value representing the empty end of the arc.",
@@ -3512,6 +3508,11 @@
                 "name": "unit",
                 "description": "Unit suffix rendered after the value (e.g. \"%\", \"ms\", \"GB\").",
                 "type": "string"
+              },
+              {
+                "name": "value",
+                "description": "Current gauge value. Clamped between `min` and `max`. Reflected as an attribute.",
+                "type": "number"
               },
               {
                 "name": "variant",
@@ -3549,7 +3550,7 @@
               }
             },
             {
-              "name": "keys-quoted",
+              "name": "keysQuoted",
               "description": "Render object keys with quotes. Off by default, matching devtools.",
               "value": {
                 "type": "boolean",
@@ -3819,11 +3820,6 @@
           "js": {
             "properties": [
               {
-                "name": "value",
-                "description": "Current level. Interpreted against `min` and `max`, so with the defaults (0 and 1) it is a linear fraction, and with `min=\"-60\" max=\"0\"` it is a dB reading. Values outside the range are clamped.",
-                "type": "number"
-              },
-              {
                 "name": "min",
                 "description": "Value at the empty end of the meter. Defaults to 0.",
                 "type": "number"
@@ -3839,14 +3835,24 @@
                 "type": "number"
               },
               {
-                "name": "orientation",
-                "description": "Meter direction. Vertical (the default) fills bottom-up like a channel strip; horizontal fills from the inline start. Unknown values fall back to vertical.",
-                "type": "'vertical' | 'horizontal'"
-              },
-              {
                 "name": "segments",
                 "description": "Number of discrete segments. Defaults to 20. Set 0 for a continuous, unsegmented bar.",
                 "type": "number"
+              },
+              {
+                "name": "label",
+                "description": "Accessible name applied as aria-label on the meter. The component renders no visible text, so this is the only name screen readers get — use something like \"Master left\" rather than \"Level\".",
+                "type": "string"
+              },
+              {
+                "name": "value",
+                "description": "Current level. Interpreted against `min` and `max`, so with the defaults (0 and 1) it is a linear fraction, and with `min=\"-60\" max=\"0\"` it is a dB reading. Values outside the range are clamped.",
+                "type": "number"
+              },
+              {
+                "name": "orientation",
+                "description": "Meter direction. Vertical (the default) fills bottom-up like a channel strip; horizontal fills from the inline start. Unknown values fall back to vertical.",
+                "type": "'vertical' | 'horizontal'"
               },
               {
                 "name": "warn",
@@ -3857,11 +3863,6 @@
                 "name": "clip",
                 "description": "Fraction of the range (0..1) where the clip (error) zone begins. Defaults to 0.9.",
                 "type": "number"
-              },
-              {
-                "name": "label",
-                "description": "Accessible name applied as aria-label on the meter. The component renders no visible text, so this is the only name screen readers get — use something like \"Master left\" rather than \"Level\".",
-                "type": "string"
               }
             ],
             "events": []
@@ -3935,6 +3936,11 @@
                 "type": "string"
               },
               {
+                "name": "href",
+                "description": "When set, renders the item as an anchor tag for navigation.",
+                "type": "string"
+              },
+              {
                 "name": "selected",
                 "description": "Whether this item is currently selected. Managed automatically by the parent list.",
                 "type": "boolean"
@@ -3943,11 +3949,6 @@
                 "name": "disabled",
                 "description": "Prevents interaction and dims the item.",
                 "type": "boolean"
-              },
-              {
-                "name": "href",
-                "description": "When set, renders the item as an anchor tag for navigation.",
-                "type": "string"
               }
             ],
             "events": [
@@ -4034,6 +4035,16 @@
           "js": {
             "properties": [
               {
+                "name": "value",
+                "description": "The currently selected value(s). Comma-separated when `multiple` is true.",
+                "type": "string"
+              },
+              {
+                "name": "label",
+                "description": "Accessible name for the list, applied as `aria-label`. Required when `selectable` is set so the listbox has an accessible name.",
+                "type": "string"
+              },
+              {
                 "name": "variant",
                 "description": "Visual style. Bordered wraps the list in an outlined container. Separated adds bottom borders between items.",
                 "type": "'default' | 'bordered' | 'separated'"
@@ -4052,16 +4063,6 @@
                 "name": "multiple",
                 "description": "Allows multiple items to be selected simultaneously. Only applies when `selectable` is true.",
                 "type": "boolean"
-              },
-              {
-                "name": "value",
-                "description": "The currently selected value(s). Comma-separated when `multiple` is true.",
-                "type": "string"
-              },
-              {
-                "name": "label",
-                "description": "Accessible name for the list, applied as `aria-label`. Required when `selectable` is set so the listbox has an accessible name.",
-                "type": "string"
               }
             ],
             "events": [
@@ -4145,11 +4146,6 @@
           "js": {
             "properties": [
               {
-                "name": "value",
-                "description": "Current meter value. Clamped between `min` and `max`. Reflected as an attribute.",
-                "type": "number"
-              },
-              {
                 "name": "min",
                 "description": "Minimum value representing the left edge (empty) of the meter.",
                 "type": "number"
@@ -4178,6 +4174,11 @@
                 "name": "label",
                 "description": "Label text displayed in the header row alongside the current percentage.",
                 "type": "string"
+              },
+              {
+                "name": "value",
+                "description": "Current meter value. Clamped between `min` and `max`. Reflected as an attribute.",
+                "type": "number"
               }
             ],
             "events": []
@@ -4247,11 +4248,6 @@
                 "type": "string"
               },
               {
-                "name": "type",
-                "description": "Chart type. Line renders a polyline with optional area fill; bar renders evenly spaced rectangles.",
-                "type": "'line' | 'bar'"
-              },
-              {
                 "name": "color",
                 "description": "CSS color override applied to strokes and fills. Accepts any valid CSS color value. Defaults to var(--accent-primary) when not set.",
                 "type": "string"
@@ -4265,6 +4261,11 @@
                 "name": "height",
                 "description": "SVG viewport height in pixels.",
                 "type": "number"
+              },
+              {
+                "name": "type",
+                "description": "Chart type. Line renders a polyline with optional area fill; bar renders evenly spaced rectangles.",
+                "type": "'line' | 'bar'"
               },
               {
                 "name": "fill",
@@ -4298,9 +4299,9 @@
             },
             {
               "name": "trend",
-              "description": "Shows a trend indicator arrow below the label.",
+              "description": "Shows a trend indicator arrow below the label. Empty (the default) shows none; an unrecognised value falls back to empty rather than rendering an uncoloured dash that no `:host([trend=...])` rule matches.",
               "value": {
-                "type": "'up' | 'down' | 'neutral'",
+                "type": "'' | 'up' | 'down' | 'neutral'",
                 "default": "''"
               }
             },
@@ -4329,8 +4330,8 @@
               },
               {
                 "name": "trend",
-                "description": "Shows a trend indicator arrow below the label.",
-                "type": "'up' | 'down' | 'neutral'"
+                "description": "Shows a trend indicator arrow below the label. Empty (the default) shows none; an unrecognised value falls back to empty rather than rendering an uncoloured dash that no `:host([trend=...])` rule matches.",
+                "type": "'' | 'up' | 'down' | 'neutral'"
               },
               {
                 "name": "change",
@@ -4380,7 +4381,7 @@
           "attributes": [
             {
               "name": "active",
-              "description": "Zero-indexed active step — steps before this index show as completed",
+              "description": "Zero-indexed active step — steps before this index show as completed. Clamped to the range of rendered steps.",
               "value": {
                 "type": "number",
                 "default": "0"
@@ -4398,7 +4399,7 @@
             "properties": [
               {
                 "name": "active",
-                "description": "Zero-indexed active step — steps before this index show as completed",
+                "description": "Zero-indexed active step — steps before this index show as completed. Clamped to the range of rendered steps.",
                 "type": "number"
               }
             ],
@@ -4533,6 +4534,11 @@
           "js": {
             "properties": [
               {
+                "name": "color",
+                "description": "Custom color as an RGB triplet (e.g. `\"77, 126, 247\"`). When set, overrides the variant colors for border, text, background, and hover glow. Useful for data-driven category colors.",
+                "type": "string"
+              },
+              {
                 "name": "variant",
                 "description": "Color variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and error provide semantic status colors.",
                 "type": "'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error'"
@@ -4551,11 +4557,6 @@
                 "name": "disabled",
                 "description": "Disables the tag, reducing opacity to 40% and blocking pointer events including the remove button.",
                 "type": "boolean"
-              },
-              {
-                "name": "color",
-                "description": "Custom color as an RGB triplet (e.g. `\"77, 126, 247\"`). When set, overrides the variant colors for border, text, background, and hover glow. Useful for data-driven category colors.",
-                "type": "string"
               }
             ],
             "events": [
@@ -4622,7 +4623,8 @@
           "doc-url": "",
           "attributes": [
             {
-              "name": "heading-level",
+              "name": "headingLevel",
+              "description": "ARIA heading level for each event title. Clamped to 1 or greater: `aria-level` below 1 is invalid and is dropped by assistive technology.",
               "value": {
                 "type": "number",
                 "default": "3"
@@ -4640,6 +4642,7 @@
             "properties": [
               {
                 "name": "headingLevel",
+                "description": "ARIA heading level for each event title. Clamped to 1 or greater: `aria-level` below 1 is invalid and is dropped by assistive technology.",
                 "type": "number"
               }
             ],
@@ -4828,13 +4831,18 @@
                 "type": "Array"
               },
               {
-                "name": "position",
-                "description": "Current playhead position as a fraction of the total, 0 to 1. Not seconds: multiply by `duration` yourself if you track seconds. Updated by the component during scrubbing and reflected as an attribute.",
+                "name": "duration",
+                "description": "Total duration in seconds. Optional; when set, time readouts render below the waveform and the slider announces times instead of percentages.",
                 "type": "number"
               },
               {
-                "name": "duration",
-                "description": "Total duration in seconds. Optional; when set, time readouts render below the waveform and the slider announces times instead of percentages.",
+                "name": "label",
+                "description": "Accessible name for the waveform. Announced as the slider label when interactive, or as the image description otherwise.",
+                "type": "string"
+              },
+              {
+                "name": "position",
+                "description": "Current playhead position as a fraction of the total, 0 to 1. Not seconds: multiply by `duration` yourself if you track seconds. Updated by the component during scrubbing and reflected as an attribute.",
                 "type": "number"
               },
               {
@@ -4846,11 +4854,6 @@
                 "name": "variant",
                 "description": "Rendering style. `bars` draws discrete bar pairs mirrored around the center line; `mirror` draws a filled min/max envelope.",
                 "type": "'bars' | 'mirror'"
-              },
-              {
-                "name": "label",
-                "description": "Accessible name for the waveform. Announced as the slider label when interactive, or as the image description otherwise.",
-                "type": "string"
               }
             ],
             "events": [
@@ -4921,14 +4924,14 @@
           "js": {
             "properties": [
               {
+                "name": "heading",
+                "description": "Optional bold heading rendered above the body slot. Use it for a scannable one-line summary so users can quickly gauge the alert's importance before reading the full message.",
+                "type": "string"
+              },
+              {
                 "name": "variant",
                 "description": "Controls the semantic color palette and icon. Use \"info\" for neutral guidance, \"success\" for confirmations, \"warning\" for caution states, and \"error\" for failures or blocking issues.",
                 "type": "'info' | 'success' | 'warning' | 'error'"
-              },
-              {
-                "name": "density",
-                "description": "Visual density. 'compact' reduces padding and font sizes for inline or space-constrained usage.",
-                "type": "'default' | 'compact'"
               },
               {
                 "name": "dismissible",
@@ -4936,9 +4939,9 @@
                 "type": "boolean"
               },
               {
-                "name": "heading",
-                "description": "Optional bold heading rendered above the body slot. Use it for a scannable one-line summary so users can quickly gauge the alert's importance before reading the full message.",
-                "type": "string"
+                "name": "density",
+                "description": "Visual density. 'compact' reduces padding and font sizes for inline or space-constrained usage.",
+                "type": "'default' | 'compact'"
               }
             ],
             "events": [
@@ -4977,14 +4980,14 @@
           "js": {
             "properties": [
               {
-                "name": "politeness",
-                "description": "Controls the ARIA live region politeness level. Polite waits for the screen reader to finish before announcing; assertive interrupts immediately.",
-                "type": "'polite' | 'assertive'"
-              },
-              {
                 "name": "message",
                 "description": "The text to announce to screen readers. Each time this property changes, a new announcement is triggered.",
                 "type": "string"
+              },
+              {
+                "name": "politeness",
+                "description": "Controls the ARIA live region politeness level. Polite waits for the screen reader to finish before announcing; assertive interrupts immediately.",
+                "type": "'polite' | 'assertive'"
               }
             ],
             "events": []
@@ -5234,11 +5237,6 @@
           "js": {
             "properties": [
               {
-                "name": "open",
-                "description": "Controls whether the palette is visible. When set to true, the dialog animates in, the search input auto-focuses, and body scroll is locked. Set to false to close.",
-                "type": "boolean"
-              },
-              {
                 "name": "placeholder",
                 "description": "Placeholder text displayed in the search input when the query is empty.",
                 "type": "string"
@@ -5247,6 +5245,11 @@
                 "name": "maxResults",
                 "description": "How many ranked results to render. Truncation happens after ranking, so what survives is the best of the set. Raise it for a short command list; the default suits a large one.",
                 "type": "number"
+              },
+              {
+                "name": "open",
+                "description": "Controls whether the palette is visible. When set to true, the dialog animates in, the search input auto-focuses, and body scroll is locked. Set to false to close.",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -5272,7 +5275,8 @@
               "name": "open",
               "description": "Controls whether the confirmation dialog is visible. For declarative usage; the imperative API manages this automatically.",
               "value": {
-                "type": "boolean"
+                "type": "boolean",
+                "default": "false"
               }
             },
             {
@@ -5336,10 +5340,6 @@
           ],
           "js": {
             "properties": [
-              {
-                "name": "open",
-                "type": "boolean"
-              },
               {
                 "name": "heading",
                 "description": "The heading text displayed at the top of the confirmation dialog.",
@@ -5500,7 +5500,7 @@
           "doc-url": "",
           "attributes": [
             {
-              "name": "auto-scroll",
+              "name": "autoScroll",
               "description": "Follow new content: when a message is added or grows while the reader is near the bottom, scroll to keep the latest visible. A reader who has scrolled up is never pulled back down. Defaults to true; set the property to false to leave scrolling entirely to the consumer.",
               "value": {
                 "type": "boolean",
@@ -5618,11 +5618,6 @@
           "js": {
             "properties": [
               {
-                "name": "open",
-                "description": "Whether the dialog is visible",
-                "type": "boolean"
-              },
-              {
                 "name": "heading",
                 "description": "Dialog title text",
                 "type": "string"
@@ -5641,6 +5636,11 @@
                 "name": "cancelLabel",
                 "description": "Text for the cancel button",
                 "type": "string"
+              },
+              {
+                "name": "open",
+                "description": "Whether the dialog is visible",
+                "type": "boolean"
               },
               {
                 "name": "variant",
@@ -5858,11 +5858,6 @@
           "js": {
             "properties": [
               {
-                "name": "position",
-                "description": "Controls which side of the trigger the card appears on. The card is centered along the perpendicular axis using CSS transforms.",
-                "type": "'bottom' | 'top' | 'left' | 'right'"
-              },
-              {
                 "name": "openDelay",
                 "description": "Milliseconds to wait after hover/focus before showing the card. Prevents accidental activation during fast cursor movement.",
                 "type": "number"
@@ -5871,6 +5866,11 @@
                 "name": "closeDelay",
                 "description": "Milliseconds to wait after the cursor leaves the trigger before hiding the card. Moving into the card cancels this timer.",
                 "type": "number"
+              },
+              {
+                "name": "position",
+                "description": "Controls which side of the trigger the card appears on. The card is centered along the perpendicular axis using CSS transforms.",
+                "type": "'bottom' | 'top' | 'left' | 'right'"
               }
             ],
             "events": [
@@ -5954,14 +5954,14 @@
           "js": {
             "properties": [
               {
-                "name": "active",
-                "description": "Controls whether the loading overlay is visible. When true, the overlay fades in and blocks interaction with the content behind it.",
-                "type": "boolean"
-              },
-              {
                 "name": "message",
                 "description": "Optional text displayed below the spinner. Use it to communicate what is loading or the current progress step.",
                 "type": "string"
+              },
+              {
+                "name": "active",
+                "description": "Controls whether the loading overlay is visible. When true, the overlay fades in and blocks interaction with the content behind it.",
+                "type": "boolean"
               },
               {
                 "name": "global",
@@ -6032,11 +6032,6 @@
           "js": {
             "properties": [
               {
-                "name": "speaker",
-                "description": "Whose message this is. \"user\" aligns to the inline end on an accent-tinted surface, \"assistant\" to the inline start on a neutral surface, and \"system\" runs centered and muted for notices in the transcript's own voice. An unrecognized value renders as \"user\".",
-                "type": "'user' | 'assistant' | 'system'"
-              },
-              {
                 "name": "author",
                 "description": "Display name shown in the muted meta line above the bubble. Omit it and the meta line only appears when a timestamp is set.",
                 "type": "string"
@@ -6045,6 +6040,11 @@
                 "name": "timestamp",
                 "description": "When the message was sent, as an ISO 8601 string. Rendered as house relative time (\"3 minutes ago\") through arc-time-ago, with the absolute date on its title.",
                 "type": "string"
+              },
+              {
+                "name": "speaker",
+                "description": "Whose message this is. \"user\" aligns to the inline end on an accent-tinted surface, \"assistant\" to the inline start on a neutral surface, and \"system\" runs centered and muted for notices in the transcript's own voice. An unrecognized value renders as \"user\".",
+                "type": "'user' | 'assistant' | 'system'"
               },
               {
                 "name": "pending",
@@ -6133,14 +6133,14 @@
           "js": {
             "properties": [
               {
-                "name": "open",
-                "description": "Controls the visible state of the dialog. Set to `true` to open the modal and activate the focus trap; set to `false` to close it, run the exit animation, and restore focus to the previously-focused element.",
-                "type": "boolean"
-              },
-              {
                 "name": "heading",
                 "description": "Text displayed in the modal header bar. Automatically linked to the dialog via `aria-labelledby` for screen-reader accessibility. Keep it short and action-oriented (e.g. \"Delete Project\" rather than \"Are you sure?\").",
                 "type": "string"
+              },
+              {
+                "name": "open",
+                "description": "Controls the visible state of the dialog. Set to `true` to open the modal and activate the focus trap; set to `false` to close it, run the exit animation, and restore focus to the previously-focused element.",
+                "type": "boolean"
               },
               {
                 "name": "size",
@@ -6148,13 +6148,13 @@
                 "type": "'sm' | 'md' | 'lg'"
               },
               {
-                "name": "fullscreen",
-                "description": "Makes the modal fill the entire viewport. Useful for mobile forms or complex workflows.",
+                "name": "closable",
+                "description": "When `true`, renders the built-in X close button and allows dismissal via Escape key and backdrop click. Set to `false` for critical decision modals where the user must explicitly choose an action from the footer buttons.",
                 "type": "boolean"
               },
               {
-                "name": "closable",
-                "description": "When `true`, renders the built-in X close button and allows dismissal via Escape key and backdrop click. Set to `false` for critical decision modals where the user must explicitly choose an action from the footer buttons.",
+                "name": "fullscreen",
+                "description": "Makes the modal fill the entire viewport. Useful for mobile forms or complex workflows.",
                 "type": "boolean"
               }
             ],
@@ -6232,6 +6232,11 @@
           "js": {
             "properties": [
               {
+                "name": "maxHeight",
+                "description": "Maximum height of the scrollable body area. Prevents long notification lists from overflowing the viewport.",
+                "type": "string"
+              },
+              {
                 "name": "open",
                 "description": "Controls whether the notification panel is visible. Toggle this programmatically or let the built-in trigger click handler manage it.",
                 "type": "boolean"
@@ -6240,11 +6245,6 @@
                 "name": "position",
                 "description": "Horizontal alignment of the panel relative to the trigger element. Use top-right when the trigger is near the right edge of the viewport.",
                 "type": "'top-right' | 'top-left'"
-              },
-              {
-                "name": "maxHeight",
-                "description": "Maximum height of the scrollable body area. Prevents long notification lists from overflowing the viewport.",
-                "type": "string"
               }
             ],
             "events": [
@@ -6315,6 +6315,11 @@
           "js": {
             "properties": [
               {
+                "name": "trigger",
+                "description": "Reserved for future trigger-mode configuration (click, hover, manual).",
+                "type": "string"
+              },
+              {
                 "name": "open",
                 "description": "Whether the popover panel is currently visible. Reflected as an attribute.",
                 "type": "boolean"
@@ -6323,11 +6328,6 @@
                 "name": "position",
                 "description": "Placement of the panel relative to the trigger element.",
                 "type": "'top' | 'bottom' | 'left' | 'right'"
-              },
-              {
-                "name": "trigger",
-                "description": "Reserved for future trigger-mode configuration (click, hover, manual).",
-                "type": "string"
               }
             ],
             "events": [
@@ -6431,7 +6431,7 @@
               }
             },
             {
-              "name": "show-value",
+              "name": "showValue",
               "description": "Displays the current percentage value next to the label.",
               "value": {
                 "type": "boolean",
@@ -6451,6 +6451,11 @@
           "events": [],
           "js": {
             "properties": [
+              {
+                "name": "label",
+                "description": "Accessible label text applied as aria-label on the underlying progressbar role element. This is the only way screen readers can convey the purpose of the indicator. Always provide a meaningful label such as \"Uploading report.pdf\" rather than a generic \"Loading\".",
+                "type": "string"
+              },
               {
                 "name": "value",
                 "description": "Current completion percentage from 0 to 100. Only meaningful in determinate mode. The bar fills proportionally and aria-valuenow updates to match, giving screen readers a live reading.",
@@ -6475,11 +6480,6 @@
                 "name": "showValue",
                 "description": "Displays the current percentage value next to the label.",
                 "type": "boolean"
-              },
-              {
-                "name": "label",
-                "description": "Accessible label text applied as aria-label on the underlying progressbar role element. This is the only way screen readers can convey the purpose of the indicator. Always provide a meaningful label such as \"Uploading report.pdf\" rather than a generic \"Loading\".",
-                "type": "string"
               }
             ],
             "events": []
@@ -6542,6 +6542,11 @@
           "js": {
             "properties": [
               {
+                "name": "heading",
+                "description": "Text displayed in the header row. Also used as the `aria-label` for the dialog panel.",
+                "type": "string"
+              },
+              {
                 "name": "open",
                 "description": "Controls whether the sheet is visible. Reflected as an attribute and toggleable programmatically.",
                 "type": "boolean"
@@ -6550,11 +6555,6 @@
                 "name": "side",
                 "description": "Which edge the panel slides in from. Bottom sheets have a max-height of 80vh; right sheets are 400px wide.",
                 "type": "'bottom' | 'right'"
-              },
-              {
-                "name": "heading",
-                "description": "Text displayed in the header row. Also used as the `aria-label` for the dialog panel.",
-                "type": "string"
               }
             ],
             "events": [
@@ -6609,14 +6609,14 @@
           "js": {
             "properties": [
               {
-                "name": "position",
-                "description": "Anchors the snackbar to a bottom edge of the viewport. Bottom-center is the conventional position for material-style snackbars.",
-                "type": "'bottom-center' | 'bottom-left' | 'bottom-right'"
-              },
-              {
                 "name": "duration",
                 "description": "Time in milliseconds before the snackbar auto-dismisses. Can be overridden per-show via the duration option. Set to 0 to persist until manually dismissed.",
                 "type": "number"
+              },
+              {
+                "name": "position",
+                "description": "Anchors the snackbar to a bottom edge of the viewport. Bottom-center is the conventional position for material-style snackbars.",
+                "type": "'bottom-center' | 'bottom-left' | 'bottom-right'"
               }
             ],
             "events": [
@@ -6679,14 +6679,14 @@
                 "type": "string"
               },
               {
-                "name": "active",
-                "description": "Controls whether the spotlight overlay is visible. Set to true to activate the dimming overlay and highlight the target element.",
-                "type": "boolean"
-              },
-              {
                 "name": "padding",
                 "description": "Padding in pixels around the target element cutout. Increase for larger glow rings or to give the target more breathing room.",
                 "type": "number"
+              },
+              {
+                "name": "active",
+                "description": "Controls whether the spotlight overlay is visible. Set to true to activate the dimming overlay and highlight the target element.",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -6765,11 +6765,6 @@
           "js": {
             "properties": [
               {
-                "name": "position",
-                "description": "Anchors the toast stack to a fixed edge of the viewport. Top-right is the most conventional position for web applications. Bottom positions work well for media players or editors where the top area is occupied by toolbars.",
-                "type": "'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center'"
-              },
-              {
                 "name": "duration",
                 "description": "Time in milliseconds before a toast auto-dismisses. Applies as the default for every show() call but can be overridden per-toast via the duration option in the show() payload. Set to 0 to disable auto-dismiss entirely, requiring the user to click the close button.",
                 "type": "number"
@@ -6780,14 +6775,19 @@
                 "type": "number"
               },
               {
-                "name": "dedupe",
-                "description": "When true, a show() whose message and variant match a visible or queued toast is coalesced: the existing toast gains a \"(×N)\" counter and a fresh timer instead of a second toast appearing. Set the property to false from JS to disable.",
-                "type": "boolean"
-              },
-              {
                 "name": "queueLimit",
                 "description": "Maximum queued (not visible) toasts (attribute: queue-limit). Beyond it the oldest queued entries are dropped and arc-queue-overflow fires with the drop count.",
                 "type": "number"
+              },
+              {
+                "name": "position",
+                "description": "Anchors the toast stack to a fixed edge of the viewport. Top-right is the most conventional position for web applications. Bottom positions work well for media players or editors where the top area is occupied by toolbars.",
+                "type": "'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center'"
+              },
+              {
+                "name": "dedupe",
+                "description": "When true, a show() whose message and variant match a visible or queued toast is coalesced: the existing toast gains a \"(×N)\" counter and a fresh timer instead of a second toast appearing. Set the property to false from JS to disable.",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -6854,14 +6854,14 @@
                 "type": "string"
               },
               {
-                "name": "position",
-                "description": "Controls which side of the trigger the tooltip appears on. Top is the most common default. Switch to bottom, left, or right when the trigger sits near a viewport edge or when the surrounding layout makes another direction more natural.",
-                "type": "'top' | 'bottom' | 'left' | 'right'"
-              },
-              {
                 "name": "delay",
                 "description": "Time in milliseconds to wait after mouseenter or focusin before the tooltip becomes visible. The default of 200 ms prevents accidental activation during casual pointer movement. Increase to 400-600 ms in dense toolbars; avoid setting to 0 as it creates a jittery experience.",
                 "type": "number"
+              },
+              {
+                "name": "position",
+                "description": "Controls which side of the trigger the tooltip appears on. Top is the most common default. Switch to bottom, left, or right when the trigger sits near a viewport edge or when the surrounding layout makes another direction more natural.",
+                "type": "'top' | 'bottom' | 'left' | 'right'"
               }
             ],
             "events": []
@@ -6907,6 +6907,11 @@
           "js": {
             "properties": [
               {
+                "name": "variant",
+                "description": "Button variant cascaded to all children (e.g., \"ghost\", \"outline\").",
+                "type": "string"
+              },
+              {
                 "name": "orientation",
                 "description": "Layout direction. Vertical stacks buttons top-to-bottom.",
                 "type": "'horizontal' | 'vertical'"
@@ -6915,11 +6920,6 @@
                 "name": "size",
                 "description": "Size cascaded to all child buttons.",
                 "type": "'sm' | 'md' | 'lg'"
-              },
-              {
-                "name": "variant",
-                "description": "Button variant cascaded to all children (e.g., \"ghost\", \"outline\").",
-                "type": "string"
               }
             ],
             "events": []
@@ -6995,6 +6995,11 @@
           "js": {
             "properties": [
               {
+                "name": "href",
+                "description": "When provided, the button renders as an <a> element instead of a <button>, making it a navigational link. This is the recommended approach for any action that takes the user to a new page or section.",
+                "type": "string"
+              },
+              {
                 "name": "variant",
                 "description": "Controls the visual weight and emphasis. Primary is a filled button with a neon glow hover suited for the top-level CTA. Secondary uses a bordered outline for supporting actions. Ghost renders with no border or background, ideal for low-priority or tertiary actions.",
                 "type": "'primary' | 'secondary' | 'ghost'"
@@ -7003,11 +7008,6 @@
                 "name": "size",
                 "description": "Sets the button size. Large (lg) is intended for hero sections and high-impact areas. Medium (md) is the default for general UI. Small (sm) fits compact toolbars, table rows, and inline contexts.",
                 "type": "'sm' | 'md' | 'lg'"
-              },
-              {
-                "name": "href",
-                "description": "When provided, the button renders as an <a> element instead of a <button>, making it a navigational link. This is the recommended approach for any action that takes the user to a new page or section.",
-                "type": "string"
               },
               {
                 "name": "disabled",
@@ -7042,10 +7042,10 @@
               }
             },
             {
-              "name": "first-day-of-week",
-              "description": "Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention.",
+              "name": "firstDayOfWeek",
+              "description": "Which day the week starts on, 1 = Monday … 7 = Sunday. 0 (the default) follows the locale's own convention. An unrecognised value falls back to 0 rather than reaching weekdayOffset() and reordering the week arbitrarily.",
               "value": {
-                "type": "number",
+                "type": "0|1|2|3|4|5|6|7",
                 "default": "0"
               }
             },
@@ -7075,7 +7075,7 @@
             },
             {
               "name": "month",
-              "description": "The currently displayed month (0-based, 0=January). Defaults to the current month.",
+              "description": "The currently displayed month (0-based, 0=January). Defaults to the current month. Clamped to 0-11: an out-of-range month reached `new Date(year, month)`, which silently rolls into another year.",
               "value": {
                 "type": "number"
               }
@@ -7109,11 +7109,6 @@
                 "type": "string"
               },
               {
-                "name": "firstDayOfWeek",
-                "description": "Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention.",
-                "type": "number"
-              },
-              {
                 "name": "value",
                 "description": "The selected date as an ISO string (YYYY-MM-DD). Empty string means no date is selected.",
                 "type": "string"
@@ -7130,13 +7125,18 @@
               },
               {
                 "name": "month",
-                "description": "The currently displayed month (0-based, 0=January). Defaults to the current month.",
+                "description": "The currently displayed month (0-based, 0=January). Defaults to the current month. Clamped to 0-11: an out-of-range month reached `new Date(year, month)`, which silently rolls into another year.",
                 "type": "number"
               },
               {
                 "name": "year",
                 "description": "The currently displayed year. Defaults to the current year.",
                 "type": "number"
+              },
+              {
+                "name": "firstDayOfWeek",
+                "description": "Which day the week starts on, 1 = Monday … 7 = Sunday. 0 (the default) follows the locale's own convention. An unrecognised value falls back to 0 rather than reaching weekdayOffset() and reordering the week arbitrarily.",
+                "type": "0|1|2|3|4|5|6|7"
               }
             ],
             "events": [
@@ -7217,15 +7217,13 @@
             {
               "name": "required",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             }
           ],
@@ -7240,24 +7238,9 @@
           "js": {
             "properties": [
               {
-                "name": "checked",
-                "description": "Controls whether the checkbox is in its checked (selected) state. When true, a checkmark icon is rendered inside the box. Bind to this property for two-way state management in frameworks that support it.",
-                "type": "boolean"
-              },
-              {
-                "name": "indeterminate",
-                "description": "When true, displays a horizontal dash instead of a checkmark, representing a mixed or partially-selected state. Commonly used on a parent \"select all\" checkbox when only some children are checked. Clicking an indeterminate checkbox resolves it to fully checked.",
-                "type": "boolean"
-              },
-              {
                 "name": "disabled",
                 "description": "Prevents all pointer and keyboard interaction and applies a dimmed visual treatment. Use this for options that are unavailable due to unmet prerequisites. Pair with a tooltip or helper text to explain why the option is locked.",
                 "type": "boolean"
-              },
-              {
-                "name": "size",
-                "description": "Controls the checkbox size.",
-                "type": "'sm' | 'md' | 'lg'"
               },
               {
                 "name": "label",
@@ -7275,6 +7258,21 @@
                 "type": "string"
               },
               {
+                "name": "checked",
+                "description": "Controls whether the checkbox is in its checked (selected) state. When true, a checkmark icon is rendered inside the box. Bind to this property for two-way state management in frameworks that support it.",
+                "type": "boolean"
+              },
+              {
+                "name": "indeterminate",
+                "description": "When true, displays a horizontal dash instead of a checkmark, representing a mixed or partially-selected state. Commonly used on a parent \"select all\" checkbox when only some children are checked. Clicking an indeterminate checkbox resolves it to fully checked.",
+                "type": "boolean"
+              },
+              {
+                "name": "size",
+                "description": "Controls the checkbox size.",
+                "type": "'sm' | 'md' | 'lg'"
+              },
+              {
                 "name": "form"
               },
               {
@@ -7284,12 +7282,10 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required",
-                "type": "boolean"
+                "name": "required"
               },
               {
-                "name": "readonly",
-                "type": "boolean"
+                "name": "readonly"
               }
             ],
             "events": [
@@ -7347,6 +7343,11 @@
           "js": {
             "properties": [
               {
+                "name": "value",
+                "description": "Machine-readable identifier for this chip, included in the `arc-change` event detail.",
+                "type": "string"
+              },
+              {
                 "name": "selected",
                 "description": "Whether the chip is currently selected. Reflected as an attribute and toggled on click or keypress.",
                 "type": "boolean"
@@ -7355,11 +7356,6 @@
                 "name": "disabled",
                 "description": "Disables interaction, reducing opacity to 40% and blocking pointer events.",
                 "type": "boolean"
-              },
-              {
-                "name": "value",
-                "description": "Machine-readable identifier for this chip, included in the `arc-change` event detail.",
-                "type": "string"
               }
             ],
             "events": [
@@ -7426,15 +7422,13 @@
             {
               "name": "required",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             }
           ],
@@ -7453,11 +7447,6 @@
           ],
           "js": {
             "properties": [
-              {
-                "name": "size",
-                "description": "Control size. `md` is the default; `sm` and `lg` scale the swatch and trigger.",
-                "type": "'sm' | 'md' | 'lg'"
-              },
               {
                 "name": "value",
                 "description": "Current color as a 6-digit hex string (e.g. `#4d7ef7`). Reflected as an attribute.",
@@ -7488,6 +7477,11 @@
                 "type": "boolean"
               },
               {
+                "name": "size",
+                "description": "Control size. `md` is the default; `sm` and `lg` scale the swatch and trigger.",
+                "type": "'sm' | 'md' | 'lg'"
+              },
+              {
                 "name": "form"
               },
               {
@@ -7497,8 +7491,7 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required",
-                "type": "boolean"
+                "name": "required"
               }
             ],
             "events": [
@@ -7570,15 +7563,13 @@
             {
               "name": "required",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             }
           ],
@@ -7602,11 +7593,6 @@
           ],
           "js": {
             "properties": [
-              {
-                "name": "size",
-                "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
-                "type": "'sm' | 'md' | 'lg'"
-              },
               {
                 "name": "value",
                 "description": "The currently selected option value. Reflected as an attribute so it can be read from the DOM. Updated automatically when the user selects an option.",
@@ -7637,6 +7623,11 @@
                 "type": "boolean"
               },
               {
+                "name": "size",
+                "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
+                "type": "'sm' | 'md' | 'lg'"
+              },
+              {
                 "name": "form"
               },
               {
@@ -7646,8 +7637,7 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required",
-                "type": "boolean"
+                "name": "required"
               }
             ],
             "events": [
@@ -7786,7 +7776,7 @@
             },
             {
               "name": "open",
-              "description": "Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.",
+              "description": "Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS. Held at `false` while `disabled`.",
               "value": {
                 "type": "boolean",
                 "default": "false"
@@ -7811,15 +7801,13 @@
             {
               "name": "required",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             }
           ],
@@ -7833,11 +7821,6 @@
           ],
           "js": {
             "properties": [
-              {
-                "name": "size",
-                "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
-                "type": "'sm' | 'md' | 'lg'"
-              },
               {
                 "name": "value",
                 "description": "The selected date as an ISO string (YYYY-MM-DD). Set this to pre-select a date. Updated when the user picks a date from the calendar.",
@@ -7873,11 +7856,6 @@
                 "type": "string"
               },
               {
-                "name": "open",
-                "description": "Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.",
-                "type": "boolean"
-              },
-              {
                 "name": "locale",
                 "description": "BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language.",
                 "type": "string"
@@ -7886,6 +7864,16 @@
                 "name": "firstDayOfWeek",
                 "description": "Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention, so most of the world gets Monday and the US gets Sunday without configuring anything.",
                 "type": "number"
+              },
+              {
+                "name": "open",
+                "description": "Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS. Held at `false` while `disabled`.",
+                "type": "boolean"
+              },
+              {
+                "name": "size",
+                "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
+                "type": "'sm' | 'md' | 'lg'"
               },
               {
                 "name": "form"
@@ -7897,12 +7885,10 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required",
-                "type": "boolean"
+                "name": "required"
               },
               {
-                "name": "readonly",
-                "type": "boolean"
+                "name": "readonly"
               }
             ],
             "events": [
@@ -8033,7 +8019,7 @@
             },
             {
               "name": "open",
-              "description": "Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.",
+              "description": "Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS. Held at `false` while `disabled`.",
               "value": {
                 "type": "boolean",
                 "default": "false"
@@ -8042,8 +8028,7 @@
             {
               "name": "readonly",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             }
           ],
@@ -8061,11 +8046,6 @@
                 "name": "value",
                 "description": "Read-derived ISO 8601 interval (\"start/end\") when both dates are set, otherwise an empty string. This is the value submitted with forms. Assigning \"start/end\" sets both dates.",
                 "type": "string"
-              },
-              {
-                "name": "size",
-                "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
-                "type": "'sm' | 'md' | 'lg'"
               },
               {
                 "name": "locale",
@@ -8123,19 +8103,24 @@
                 "type": "boolean"
               },
               {
-                "name": "required",
-                "description": "Marks the control invalid (valueMissing) until a complete range is selected.",
-                "type": "boolean"
-              },
-              {
                 "name": "label",
                 "description": "Label text rendered above the input in uppercase accent font styling.",
                 "type": "string"
               },
               {
-                "name": "open",
-                "description": "Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.",
+                "name": "required",
+                "description": "Marks the control invalid (valueMissing) until a complete range is selected.",
                 "type": "boolean"
+              },
+              {
+                "name": "open",
+                "description": "Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS. Held at `false` while `disabled`.",
+                "type": "boolean"
+              },
+              {
+                "name": "size",
+                "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
+                "type": "'sm' | 'md' | 'lg'"
               },
               {
                 "name": "form"
@@ -8147,8 +8132,7 @@
                 "name": "validationMessage"
               },
               {
-                "name": "readonly",
-                "type": "boolean"
+                "name": "readonly"
               }
             ],
             "events": [
@@ -8232,14 +8216,14 @@
                 "type": "string"
               },
               {
-                "name": "disabled",
-                "description": "Disables all child controls and dims the fieldset.",
-                "type": "boolean"
-              },
-              {
                 "name": "error",
                 "description": "Error message displayed below the content with `role=\"alert\"`.",
                 "type": "string"
+              },
+              {
+                "name": "disabled",
+                "description": "Disables all child controls and dims the fieldset.",
+                "type": "boolean"
               },
               {
                 "name": "variant",
@@ -8309,14 +8293,14 @@
                 "type": "string"
               },
               {
-                "name": "multiple",
-                "description": "When true, allows selecting multiple files. Each drop or browse interaction appends to the existing file list rather than replacing it.",
-                "type": "boolean"
-              },
-              {
                 "name": "maxSize",
                 "description": "Maximum file size in bytes. Files exceeding this limit are rejected with an inline error message. Set to 0 for no limit.",
                 "type": "number"
+              },
+              {
+                "name": "multiple",
+                "description": "When true, allows selecting multiple files. Each drop or browse interaction appends to the existing file list rather than replacing it.",
+                "type": "boolean"
               },
               {
                 "name": "disabled",
@@ -8384,7 +8368,7 @@
               }
             },
             {
-              "name": "error-summary",
+              "name": "errorSummary",
               "description": "When true, renders an aggregated list of validation errors above the submit area after a failed submission attempt. Set to false to handle error display manually.",
               "value": {
                 "type": "boolean",
@@ -8428,6 +8412,11 @@
                 "type": "string"
               },
               {
+                "name": "disabled",
+                "description": "Disables the entire form, propagating the disabled state to every child field. Useful for read-only previews or while awaiting permissions.",
+                "type": "boolean"
+              },
+              {
                 "name": "novalidate",
                 "description": "When true, skips built-in constraint validation on submit. Use this when you need to implement a fully custom validation flow while still leveraging Form for data serialisation.",
                 "type": "boolean"
@@ -8435,11 +8424,6 @@
               {
                 "name": "loading",
                 "description": "Indicates an asynchronous submission is in progress. Disables the submit button and shows a loading indicator to prevent duplicate requests.",
-                "type": "boolean"
-              },
-              {
-                "name": "disabled",
-                "description": "Disables the entire form, propagating the disabled state to every child field. Useful for read-only previews or while awaiting permissions.",
                 "type": "boolean"
               },
               {
@@ -8622,16 +8606,6 @@
                 "type": "string"
               },
               {
-                "name": "variant",
-                "description": "Visual style variant. Ghost is transparent, secondary has a border with glow, primary has a solid accent-primary fill.",
-                "type": "'ghost' | 'secondary' | 'primary'"
-              },
-              {
-                "name": "size",
-                "description": "Button size controlling dimensions and icon scale. Icon-only sizes are circular: xs=28px, sm=32px, md=36px, lg=44px. The labeled form stays a rounded rectangle.",
-                "type": "'xs' | 'sm' | 'md' | 'lg'"
-              },
-              {
                 "name": "label",
                 "description": "Accessible label for the button. Falls back to `text` if not provided. Required for icon-only usage.",
                 "type": "string"
@@ -8642,14 +8616,24 @@
                 "type": "string"
               },
               {
-                "name": "disabled",
-                "description": "Disables the button, reducing opacity to 40% and blocking pointer events.",
-                "type": "boolean"
-              },
-              {
                 "name": "type",
                 "description": "HTML button type attribute. Only applies when `href` is not set.",
                 "type": "string"
+              },
+              {
+                "name": "variant",
+                "description": "Visual style variant. Ghost is transparent, secondary has a border with glow, primary has a solid accent-primary fill.",
+                "type": "'ghost' | 'secondary' | 'primary'"
+              },
+              {
+                "name": "size",
+                "description": "Button size controlling dimensions and icon scale. Icon-only sizes are circular: xs=28px, sm=32px, md=36px, lg=44px. The labeled form stays a rounded rectangle.",
+                "type": "'xs' | 'sm' | 'md' | 'lg'"
+              },
+              {
+                "name": "disabled",
+                "description": "Disables the button, reducing opacity to 40% and blocking pointer events.",
+                "type": "boolean"
               }
             ],
             "events": []
@@ -8789,15 +8773,13 @@
             {
               "name": "required",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             }
           ],
@@ -8841,13 +8823,13 @@
                 "type": "string"
               },
               {
-                "name": "multiline",
-                "description": "When true, editing uses a `<textarea>`: Enter inserts a newline and Cmd/Ctrl+Enter commits. Single-line commits on plain Enter.",
+                "name": "disabled",
+                "description": "Prevents activation and applies a muted treatment. The value is excluded from form submission while disabled.",
                 "type": "boolean"
               },
               {
-                "name": "disabled",
-                "description": "Prevents activation and applies a muted treatment. The value is excluded from form submission while disabled.",
+                "name": "multiline",
+                "description": "When true, editing uses a `<textarea>`: Enter inserts a newline and Cmd/Ctrl+Enter commits. Single-line commits on plain Enter.",
                 "type": "boolean"
               },
               {
@@ -9023,8 +9005,7 @@
             {
               "name": "readonly",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             }
           ],
@@ -9051,11 +9032,6 @@
           "js": {
             "properties": [
               {
-                "name": "type",
-                "description": "The HTML input type. Controls browser validation behavior and which virtual keyboard appears on mobile devices. Ignored when `multiline` is true.",
-                "type": "'text' | 'email' | 'tel' | 'url' | 'password'"
-              },
-              {
                 "name": "name",
                 "description": "The `name` attribute sent with form data on submission. Also used by the Form component to track field state and validation.",
                 "type": "string"
@@ -9081,24 +9057,9 @@
                 "type": "boolean"
               },
               {
-                "name": "required",
-                "description": "Marks the field as required. Displays a required indicator next to the label and triggers native constraint validation on form submission.",
-                "type": "boolean"
-              },
-              {
                 "name": "error",
                 "description": "Error message displayed below the input. When set, the input border turns red and the error text appears.",
                 "type": "string"
-              },
-              {
-                "name": "size",
-                "description": "Controls the input size. Options: 'sm', 'md', 'lg'.",
-                "type": "'sm' | 'md' | 'lg'"
-              },
-              {
-                "name": "multiline",
-                "description": "When true, renders a `<textarea>` instead of an `<input>`, allowing multi-row text entry. The textarea is vertically resizable by default.",
-                "type": "boolean"
               },
               {
                 "name": "rows",
@@ -9106,9 +9067,29 @@
                 "type": "number"
               },
               {
+                "name": "type",
+                "description": "The HTML input type. Controls browser validation behavior and which virtual keyboard appears on mobile devices. Ignored when `multiline` is true.",
+                "type": "'text' | 'email' | 'tel' | 'url' | 'password'"
+              },
+              {
+                "name": "multiline",
+                "description": "When true, renders a `<textarea>` instead of an `<input>`, allowing multi-row text entry. The textarea is vertically resizable by default.",
+                "type": "boolean"
+              },
+              {
+                "name": "required",
+                "description": "Marks the field as required. Displays a required indicator next to the label and triggers native constraint validation on form submission.",
+                "type": "boolean"
+              },
+              {
                 "name": "readonly",
                 "description": "Prevents the user from editing the value while keeping the field focusable, and the value is still submitted with the form.",
                 "type": "boolean"
+              },
+              {
+                "name": "size",
+                "description": "Controls the input size. Options: 'sm', 'md', 'lg'.",
+                "type": "'sm' | 'md' | 'lg'"
               },
               {
                 "name": "form"
@@ -9213,15 +9194,13 @@
             {
               "name": "required",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             }
           ],
@@ -9240,11 +9219,6 @@
           ],
           "js": {
             "properties": [
-              {
-                "name": "size",
-                "description": "Control size. `md` is the default; `sm` and `lg` scale the dial.",
-                "type": "'sm' | 'md' | 'lg'"
-              },
               {
                 "name": "value",
                 "description": "Current knob value. Reflected as an attribute and updated on user interaction.",
@@ -9295,6 +9269,11 @@
                 "type": "boolean"
               },
               {
+                "name": "size",
+                "description": "Control size. `md` is the default; `sm` and `lg` scale the dial.",
+                "type": "'sm' | 'md' | 'lg'"
+              },
+              {
                 "name": "form"
               },
               {
@@ -9304,8 +9283,7 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required",
-                "type": "boolean"
+                "name": "required"
               }
             ],
             "events": [
@@ -9487,8 +9465,7 @@
             {
               "name": "readonly",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             }
           ],
@@ -9549,11 +9526,6 @@
                 "type": "boolean"
               },
               {
-                "name": "required",
-                "description": "Marks the field as required. An empty field fails validation with valueMissing; a partially filled one fails with an \"Incomplete value\" pattern error.",
-                "type": "boolean"
-              },
-              {
                 "name": "autocomplete",
                 "description": "Passed through to the inner input, e.g. `cc-number` on a card field so browser autofill can offer saved cards.",
                 "type": "string"
@@ -9564,14 +9536,19 @@
                 "type": "string"
               },
               {
-                "name": "size",
-                "description": "Controls the input size. Options: 'sm', 'md', 'lg'.",
-                "type": "'sm' | 'md' | 'lg'"
+                "name": "required",
+                "description": "Marks the field as required. An empty field fails validation with valueMissing; a partially filled one fails with an \"Incomplete value\" pattern error.",
+                "type": "boolean"
               },
               {
                 "name": "readonly",
                 "description": "Prevents the user from editing the value while keeping the field focusable, and the value is still submitted with the form.",
                 "type": "boolean"
+              },
+              {
+                "name": "size",
+                "description": "Controls the input size. Options: 'sm', 'md', 'lg'.",
+                "type": "'sm' | 'md' | 'lg'"
               },
               {
                 "name": "form"
@@ -9652,15 +9629,13 @@
             {
               "name": "required",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             }
           ],
@@ -9684,11 +9659,6 @@
           ],
           "js": {
             "properties": [
-              {
-                "name": "size",
-                "description": "Control size. `md` is the default; `sm` and `lg` scale the control height and padding.",
-                "type": "'sm' | 'md' | 'lg'"
-              },
               {
                 "name": "value",
                 "description": "Array of selected option values. Updated when items are toggled and emitted via `arc-change`.",
@@ -9719,6 +9689,11 @@
                 "type": "boolean"
               },
               {
+                "name": "size",
+                "description": "Control size. `md` is the default; `sm` and `lg` scale the control height and padding.",
+                "type": "'sm' | 'md' | 'lg'"
+              },
+              {
                 "name": "form"
               },
               {
@@ -9728,8 +9703,7 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required",
-                "type": "boolean"
+                "name": "required"
               }
             ],
             "events": [
@@ -9817,15 +9791,13 @@
             {
               "name": "required",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             }
           ],
@@ -9844,11 +9816,6 @@
           ],
           "js": {
             "properties": [
-              {
-                "name": "size",
-                "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
-                "type": "'sm' | 'md' | 'lg'"
-              },
               {
                 "name": "value",
                 "description": "Current numeric value. Reflected as an attribute and updated on user interaction.",
@@ -9889,6 +9856,11 @@
                 "type": "boolean"
               },
               {
+                "name": "size",
+                "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
+                "type": "'sm' | 'md' | 'lg'"
+              },
+              {
                 "name": "form"
               },
               {
@@ -9898,8 +9870,7 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required",
-                "type": "boolean"
+                "name": "required"
               }
             ],
             "events": [
@@ -9971,15 +9942,13 @@
             {
               "name": "required",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             }
           ],
@@ -9998,11 +9967,6 @@
           ],
           "js": {
             "properties": [
-              {
-                "name": "size",
-                "description": "Control size. `md` is the default; `sm` and `lg` scale the digit boxes.",
-                "type": "'sm' | 'md' | 'lg'"
-              },
               {
                 "name": "length",
                 "description": "Number of individual character boxes to render. Reflected as an attribute.",
@@ -10023,14 +9987,19 @@
                 "type": "boolean"
               },
               {
+                "name": "readonly",
+                "description": "Prevents typing, pasting, and clearing digits while the boxes stay focusable and the value still submits.",
+                "type": "boolean"
+              },
+              {
                 "name": "type",
                 "description": "Input mode. `number` filters non-digits and uses the numeric keyboard; `text` allows any character.",
                 "type": "'number' | 'text'"
               },
               {
-                "name": "readonly",
-                "description": "Prevents typing, pasting, and clearing digits while the boxes stay focusable and the value still submits.",
-                "type": "boolean"
+                "name": "size",
+                "description": "Control size. `md` is the default; `sm` and `lg` scale the digit boxes.",
+                "type": "'sm' | 'md' | 'lg'"
               },
               {
                 "name": "form"
@@ -10042,8 +10011,7 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required",
-                "type": "boolean"
+                "name": "required"
               }
             ],
             "events": [
@@ -10138,7 +10106,7 @@
               }
             },
             {
-              "name": "show-strength",
+              "name": "showStrength",
               "description": "Renders a four-segment strength meter with a Weak / Fair / Good / Strong label under the field, scored by a built-in heuristic (length, character variety, common-pattern penalties).",
               "value": {
                 "type": "boolean",
@@ -10148,8 +10116,7 @@
             {
               "name": "readonly",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             }
           ],
@@ -10199,24 +10166,24 @@
                 "type": "boolean"
               },
               {
-                "name": "required",
-                "description": "Marks the field as required and enables native constraint validation on form submission.",
-                "type": "boolean"
-              },
-              {
                 "name": "error",
                 "description": "Error message displayed below the field. When set, the border turns red and the message is announced.",
                 "type": "string"
               },
               {
-                "name": "size",
-                "description": "Controls the field size. Options: 'sm', 'md', 'lg'.",
-                "type": "'sm' | 'md' | 'lg'"
-              },
-              {
                 "name": "autocomplete",
                 "description": "Passed through to the inner input. Use `new-password` on registration or change-password forms so password managers offer generation.",
                 "type": "string"
+              },
+              {
+                "name": "required",
+                "description": "Marks the field as required and enables native constraint validation on form submission.",
+                "type": "boolean"
+              },
+              {
+                "name": "size",
+                "description": "Controls the field size. Options: 'sm', 'md', 'lg'.",
+                "type": "'sm' | 'md' | 'lg'"
               },
               {
                 "name": "showStrength",
@@ -10233,8 +10200,7 @@
                 "name": "validationMessage"
               },
               {
-                "name": "readonly",
-                "type": "boolean"
+                "name": "readonly"
               }
             ],
             "events": [
@@ -10335,15 +10301,13 @@
             {
               "name": "required",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             }
           ],
@@ -10368,11 +10332,6 @@
           "js": {
             "properties": [
               {
-                "name": "size",
-                "description": "Control size. `md` is the default; `sm` and `lg` scale the digit boxes.",
-                "type": "'sm' | 'md' | 'lg'"
-              },
-              {
                 "name": "length",
                 "description": "Number of input boxes to render. Determines the expected code length.",
                 "type": "number"
@@ -10392,16 +10351,6 @@
                 "type": "boolean"
               },
               {
-                "name": "mask",
-                "description": "When true, obscures entered characters with dots for sensitive codes.",
-                "type": "boolean"
-              },
-              {
-                "name": "type",
-                "description": "Character validation mode. `number` allows digits only, `alphanumeric` allows letters and digits, `text` allows any character.",
-                "type": "'number' | 'alphanumeric' | 'text'"
-              },
-              {
                 "name": "separator",
                 "description": "Inserts a visual dash separator every N boxes. Set to 0 to disable separators.",
                 "type": "number"
@@ -10412,9 +10361,24 @@
                 "type": "string"
               },
               {
+                "name": "type",
+                "description": "Character validation mode. `number` allows digits only, `alphanumeric` allows letters and digits, `text` allows any character.",
+                "type": "'number' | 'alphanumeric' | 'text'"
+              },
+              {
+                "name": "mask",
+                "description": "When true, obscures entered characters with dots for sensitive codes.",
+                "type": "boolean"
+              },
+              {
                 "name": "readonly",
                 "description": "Prevents entering, deleting, or pasting characters while the boxes stay focusable and the value still submits.",
                 "type": "boolean"
+              },
+              {
+                "name": "size",
+                "description": "Control size. `md` is the default; `sm` and `lg` scale the digit boxes.",
+                "type": "'sm' | 'md' | 'lg'"
               },
               {
                 "name": "form"
@@ -10426,8 +10390,7 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required",
-                "type": "boolean"
+                "name": "required"
               }
             ],
             "events": [
@@ -10497,15 +10460,13 @@
             {
               "name": "required",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             }
           ],
@@ -10540,14 +10501,14 @@
                 "type": "boolean"
               },
               {
-                "name": "size",
-                "description": "Controls the radio button and label size.",
-                "type": "'sm' | 'md' | 'lg'"
-              },
-              {
                 "name": "orientation",
                 "description": "Controls the layout direction of the radio options. Vertical stacks options top-to-bottom and maps Arrow Up/Down to navigation. Horizontal places options in a row and maps Arrow Left/Right.",
                 "type": "'vertical' | 'horizontal'"
+              },
+              {
+                "name": "size",
+                "description": "Controls the radio button and label size.",
+                "type": "'sm' | 'md' | 'lg'"
               },
               {
                 "name": "form"
@@ -10559,12 +10520,10 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required",
-                "type": "boolean"
+                "name": "required"
               },
               {
-                "name": "readonly",
-                "type": "boolean"
+                "name": "readonly"
               }
             ],
             "events": [
@@ -10701,7 +10660,7 @@
               }
             },
             {
-              "name": "show-values",
+              "name": "showValues",
               "description": "Whether to display the numeric \"low – high\" readout in the header.",
               "value": {
                 "type": "boolean",
@@ -10711,15 +10670,13 @@
             {
               "name": "required",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             }
           ],
@@ -10738,11 +10695,6 @@
           ],
           "js": {
             "properties": [
-              {
-                "name": "size",
-                "description": "Control size. `md` is the default; `sm` and `lg` scale the track and thumbs.",
-                "type": "'sm' | 'md' | 'lg'"
-              },
               {
                 "name": "min",
                 "description": "Minimum allowed value at the left edge of the track.",
@@ -10788,6 +10740,11 @@
                 "type": "boolean"
               },
               {
+                "name": "size",
+                "description": "Control size. `md` is the default; `sm` and `lg` scale the track and thumbs.",
+                "type": "'sm' | 'md' | 'lg'"
+              },
+              {
                 "name": "form"
               },
               {
@@ -10797,12 +10754,10 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required",
-                "type": "boolean"
+                "name": "required"
               },
               {
-                "name": "readonly",
-                "type": "boolean"
+                "name": "readonly"
               }
             ],
             "events": [
@@ -10874,8 +10829,7 @@
             {
               "name": "required",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             }
           ],
@@ -10889,11 +10843,6 @@
           ],
           "js": {
             "properties": [
-              {
-                "name": "size",
-                "description": "Control size. `md` is the default; `sm` and `lg` scale the star glyphs.",
-                "type": "'sm' | 'md' | 'lg'"
-              },
               {
                 "name": "value",
                 "description": "Current rating value. Reflected as an attribute and updated on user interaction.",
@@ -10919,6 +10868,11 @@
                 "type": "boolean"
               },
               {
+                "name": "size",
+                "description": "Control size. `md` is the default; `sm` and `lg` scale the star glyphs.",
+                "type": "'sm' | 'md' | 'lg'"
+              },
+              {
                 "name": "form"
               },
               {
@@ -10928,8 +10882,7 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required",
-                "type": "boolean"
+                "name": "required"
               }
             ],
             "events": [
@@ -11200,7 +11153,7 @@
             },
             {
               "name": "open",
-              "description": "Controls whether the dropdown is visible. Set programmatically to open or close the dropdown. Automatically set to `false` when an option is selected or the user clicks outside.",
+              "description": "Controls whether the dropdown is visible. Set programmatically to open or close the dropdown. Automatically set to `false` when an option is selected or the user clicks outside. Held at `false` while `disabled`.",
               "value": {
                 "type": "boolean",
                 "default": "false"
@@ -11209,15 +11162,13 @@
             {
               "name": "required",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             }
           ],
@@ -11262,18 +11213,18 @@
                 "type": "boolean"
               },
               {
-                "name": "size",
-                "description": "Controls the select trigger size.",
-                "type": "'sm' | 'md' | 'lg'"
-              },
-              {
                 "name": "error",
                 "description": "Error message displayed below the select. When set, the trigger border turns red.",
                 "type": "string"
               },
               {
+                "name": "size",
+                "description": "Controls the select trigger size.",
+                "type": "'sm' | 'md' | 'lg'"
+              },
+              {
                 "name": "open",
-                "description": "Controls whether the dropdown is visible. Set programmatically to open or close the dropdown. Automatically set to `false` when an option is selected or the user clicks outside.",
+                "description": "Controls whether the dropdown is visible. Set programmatically to open or close the dropdown. Automatically set to `false` when an option is selected or the user clicks outside. Held at `false` while `disabled`.",
                 "type": "boolean"
               },
               {
@@ -11286,12 +11237,10 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required",
-                "type": "boolean"
+                "name": "required"
               },
               {
-                "name": "readonly",
-                "type": "boolean"
+                "name": "readonly"
               }
             ],
             "events": [
@@ -11359,15 +11308,13 @@
             {
               "name": "required",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             }
           ],
@@ -11531,15 +11478,13 @@
             {
               "name": "required",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             }
           ],
@@ -11558,11 +11503,6 @@
           ],
           "js": {
             "properties": [
-              {
-                "name": "size",
-                "description": "Control size. `md` is the default; `sm` and `lg` scale the track and thumb.",
-                "type": "'sm' | 'md' | 'lg'"
-              },
               {
                 "name": "value",
                 "description": "Current slider value. Reflected as an attribute and updated on user interaction.",
@@ -11603,6 +11543,11 @@
                 "type": "boolean"
               },
               {
+                "name": "size",
+                "description": "Control size. `md` is the default; `sm` and `lg` scale the track and thumb.",
+                "type": "'sm' | 'md' | 'lg'"
+              },
+              {
                 "name": "form"
               },
               {
@@ -11612,8 +11557,7 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required",
-                "type": "boolean"
+                "name": "required"
               }
             ],
             "events": [
@@ -11826,7 +11770,7 @@
               }
             },
             {
-              "name": "allow-custom",
+              "name": "allowCustom",
               "description": "When false, only values from `suggestions` can be added; free text is rejected.",
               "value": {
                 "type": "boolean",
@@ -11876,15 +11820,13 @@
             {
               "name": "required",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             }
           ],
@@ -11904,11 +11846,6 @@
           "js": {
             "properties": [
               {
-                "name": "size",
-                "description": "Control size. `md` is the default; `sm` and `lg` scale the field height and padding.",
-                "type": "'sm' | 'md' | 'lg'"
-              },
-              {
                 "name": "value",
                 "description": "Array of current tags. Updated on add/remove and emitted via `arc-change`.",
                 "type": "string[]"
@@ -11927,11 +11864,6 @@
                 "name": "maxTags",
                 "description": "Maximum number of tags (0 = unlimited). At the limit, entry is disabled with a \"-- max reached\" hint.",
                 "type": "number"
-              },
-              {
-                "name": "allowCustom",
-                "description": "When false, only values from `suggestions` can be added; free text is rejected.",
-                "type": "boolean"
               },
               {
                 "name": "label",
@@ -11959,9 +11891,19 @@
                 "type": "string"
               },
               {
+                "name": "allowCustom",
+                "description": "When false, only values from `suggestions` can be added; free text is rejected.",
+                "type": "boolean"
+              },
+              {
                 "name": "readonly",
                 "description": "Prevents adding or removing tags while the field stays focusable and the tags still submit with the form.",
                 "type": "boolean"
+              },
+              {
+                "name": "size",
+                "description": "Control size. `md` is the default; `sm` and `lg` scale the field height and padding.",
+                "type": "'sm' | 'md' | 'lg'"
               },
               {
                 "name": "form"
@@ -11973,8 +11915,7 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required",
-                "type": "boolean"
+                "name": "required"
               }
             ],
             "events": [
@@ -12077,7 +12018,7 @@
               }
             },
             {
-              "name": "auto-resize",
+              "name": "autoResize",
               "description": "Automatically grows the textarea height to fit its content. Disables manual resize when enabled.",
               "value": {
                 "type": "boolean",
@@ -12095,8 +12036,7 @@
             {
               "name": "required",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             }
           ],
@@ -12151,14 +12091,19 @@
                 "type": "boolean"
               },
               {
-                "name": "readonly",
-                "description": "Allows the user to select and copy text but prevents editing. The field has a subtle background change to indicate its read-only state.",
-                "type": "boolean"
+                "name": "error",
+                "description": "Error message string. When non-empty, the textarea border turns red and the message is displayed below the field with `role=\"alert\"` for screen reader announcement.",
+                "type": "string"
               },
               {
                 "name": "resize",
                 "description": "Controls whether and in which direction the user can drag to resize the textarea. Defaults to vertical-only resizing.",
                 "type": "'none' | 'vertical' | 'horizontal' | 'both'"
+              },
+              {
+                "name": "readonly",
+                "description": "Allows the user to select and copy text but prevents editing. The field has a subtle background change to indicate its read-only state.",
+                "type": "boolean"
               },
               {
                 "name": "size",
@@ -12171,11 +12116,6 @@
                 "type": "boolean"
               },
               {
-                "name": "error",
-                "description": "Error message string. When non-empty, the textarea border turns red and the message is displayed below the field with `role=\"alert\"` for screen reader announcement.",
-                "type": "string"
-              },
-              {
                 "name": "form"
               },
               {
@@ -12185,8 +12125,7 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required",
-                "type": "boolean"
+                "name": "required"
               }
             ],
             "events": [
@@ -12225,7 +12164,7 @@
               }
             },
             {
-              "name": "icon-only",
+              "name": "iconOnly",
               "description": "Renders the button as a compact square without the theme name label, matching an icon-only arc-icon-button of the same size. Attribute name is `icon-only`.",
               "value": {
                 "type": "boolean",
@@ -12327,17 +12266,17 @@
             },
             {
               "name": "step",
-              "description": "Minute step increment (1, 5, 15, or 30). Controls the granularity of minute options shown in the dropdown.",
+              "description": "Minute step increment. Controls the granularity of minute options shown in the dropdown. Unrecognised values fall back to 1.",
               "value": {
-                "type": "number",
+                "type": "1 | 5 | 15 | 30",
                 "default": "1"
               }
             },
             {
               "name": "format",
-              "description": "Display format: \"12h\" shows hours 1-12 with an AM/PM column, \"24h\" shows hours 0-23 without AM/PM.",
+              "description": "Display format: \"12h\" shows hours 1-12 with an AM/PM column, \"24h\" shows hours 0-23 without AM/PM. Unrecognised values fall back to \"12h\".",
               "value": {
-                "type": "string",
+                "type": "'12h' | '24h'",
                 "default": "'12h'"
               }
             },
@@ -12367,7 +12306,7 @@
             },
             {
               "name": "open",
-              "description": "Whether the time dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.",
+              "description": "Whether the time dropdown is visible. Reflected so it can be opened programmatically or styled from CSS. Held at `false` while `disabled`.",
               "value": {
                 "type": "boolean",
                 "default": "false"
@@ -12376,15 +12315,13 @@
             {
               "name": "required",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             }
           ],
@@ -12398,11 +12335,6 @@
           ],
           "js": {
             "properties": [
-              {
-                "name": "size",
-                "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
-                "type": "'sm' | 'md' | 'lg'"
-              },
               {
                 "name": "value",
                 "description": "The selected time in 24-hour \"HH:MM\" format (e.g. \"14:30\"). Set this to pre-select a time. Updated when the user picks a time.",
@@ -12423,16 +12355,6 @@
                 "type": "string"
               },
               {
-                "name": "step",
-                "description": "Minute step increment (1, 5, 15, or 30). Controls the granularity of minute options shown in the dropdown.",
-                "type": "number"
-              },
-              {
-                "name": "format",
-                "description": "Display format: \"12h\" shows hours 1-12 with an AM/PM column, \"24h\" shows hours 0-23 without AM/PM.",
-                "type": "string"
-              },
-              {
                 "name": "placeholder",
                 "description": "Placeholder text displayed in the input when no time is selected.",
                 "type": "string"
@@ -12448,9 +12370,24 @@
                 "type": "string"
               },
               {
+                "name": "step",
+                "description": "Minute step increment. Controls the granularity of minute options shown in the dropdown. Unrecognised values fall back to 1.",
+                "type": "1 | 5 | 15 | 30"
+              },
+              {
+                "name": "format",
+                "description": "Display format: \"12h\" shows hours 1-12 with an AM/PM column, \"24h\" shows hours 0-23 without AM/PM. Unrecognised values fall back to \"12h\".",
+                "type": "'12h' | '24h'"
+              },
+              {
                 "name": "open",
-                "description": "Whether the time dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.",
+                "description": "Whether the time dropdown is visible. Reflected so it can be opened programmatically or styled from CSS. Held at `false` while `disabled`.",
                 "type": "boolean"
+              },
+              {
+                "name": "size",
+                "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
+                "type": "'sm' | 'md' | 'lg'"
               },
               {
                 "name": "form"
@@ -12462,12 +12399,10 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required",
-                "type": "boolean"
+                "name": "required"
               },
               {
-                "name": "readonly",
-                "type": "boolean"
+                "name": "readonly"
               }
             ],
             "events": [
@@ -12527,15 +12462,13 @@
             {
               "name": "required",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             }
           ],
@@ -12550,19 +12483,9 @@
           "js": {
             "properties": [
               {
-                "name": "checked",
-                "description": "Whether the toggle is in the on position. When set, the thumb slides to the active side and the track displays the accent glow.",
-                "type": "boolean"
-              },
-              {
                 "name": "disabled",
                 "description": "Prevents user interaction. The toggle appears at reduced opacity and ignores pointer and keyboard events.",
                 "type": "boolean"
-              },
-              {
-                "name": "size",
-                "description": "Controls the toggle size.",
-                "type": "'sm' | 'md' | 'lg'"
               },
               {
                 "name": "label",
@@ -12575,6 +12498,16 @@
                 "type": "string"
               },
               {
+                "name": "checked",
+                "description": "Whether the toggle is in the on position. When set, the thumb slides to the active side and the track displays the accent glow.",
+                "type": "boolean"
+              },
+              {
+                "name": "size",
+                "description": "Controls the toggle size.",
+                "type": "'sm' | 'md' | 'lg'"
+              },
+              {
                 "name": "form"
               },
               {
@@ -12584,12 +12517,10 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required",
-                "type": "boolean"
+                "name": "required"
               },
               {
-                "name": "readonly",
-                "type": "boolean"
+                "name": "readonly"
               }
             ],
             "events": [
@@ -12673,15 +12604,13 @@
             {
               "name": "required",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             }
           ],
@@ -12695,11 +12624,6 @@
           ],
           "js": {
             "properties": [
-              {
-                "name": "size",
-                "description": "Control size. `md` is the default; `sm` and `lg` scale the row height and list panels.",
-                "type": "'sm' | 'md' | 'lg'"
-              },
               {
                 "name": "options",
                 "description": "The full universe of items. Items whose value is in `value` render in the Selected pane; the rest render in Available.",
@@ -12721,11 +12645,6 @@
                 "type": "boolean"
               },
               {
-                "name": "searchable",
-                "description": "Adds a filter input to each pane that narrows that pane only, case-insensitively. Move-all respects the filter.",
-                "type": "boolean"
-              },
-              {
                 "name": "sourceLabel",
                 "description": "Heading for the left (available) pane. Attribute: `source-label`.",
                 "type": "string"
@@ -12736,9 +12655,19 @@
                 "type": "string"
               },
               {
+                "name": "searchable",
+                "description": "Adds a filter input to each pane that narrows that pane only, case-insensitively. Move-all respects the filter.",
+                "type": "boolean"
+              },
+              {
                 "name": "readonly",
                 "description": "Prevents moving items between panes while the lists stay focusable and filterable; the selected values still submit with the form.",
                 "type": "boolean"
+              },
+              {
+                "name": "size",
+                "description": "Control size. `md` is the default; `sm` and `lg` scale the row height and list panels.",
+                "type": "'sm' | 'md' | 'lg'"
               },
               {
                 "name": "form"
@@ -12750,8 +12679,7 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required",
-                "type": "boolean"
+                "name": "required"
               }
             ],
             "events": [
@@ -12834,7 +12762,7 @@
             },
             {
               "name": "open",
-              "description": "Controls whether the tree panel is visible. Automatically set to false when a leaf is selected, Escape is pressed, or the user clicks outside.",
+              "description": "Controls whether the tree panel is visible. Automatically set to false when a leaf is selected, Escape is pressed, or the user clicks outside. Held at `false` while `disabled`.",
               "value": {
                 "type": "boolean",
                 "default": "false"
@@ -12843,15 +12771,13 @@
             {
               "name": "required",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "string"
               }
             }
           ],
@@ -12901,18 +12827,18 @@
                 "type": "boolean"
               },
               {
-                "name": "size",
-                "description": "Controls the trigger size.",
-                "type": "'sm' | 'md' | 'lg'"
-              },
-              {
                 "name": "error",
                 "description": "Error message displayed below the trigger. When set, the trigger border turns red.",
                 "type": "string"
               },
               {
+                "name": "size",
+                "description": "Controls the trigger size.",
+                "type": "'sm' | 'md' | 'lg'"
+              },
+              {
                 "name": "open",
-                "description": "Controls whether the tree panel is visible. Automatically set to false when a leaf is selected, Escape is pressed, or the user clicks outside.",
+                "description": "Controls whether the tree panel is visible. Automatically set to false when a leaf is selected, Escape is pressed, or the user clicks outside. Held at `false` while `disabled`.",
                 "type": "boolean"
               },
               {
@@ -12925,12 +12851,10 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required",
-                "type": "boolean"
+                "name": "required"
               },
               {
-                "name": "readonly",
-                "type": "boolean"
+                "name": "readonly"
               }
             ],
             "events": [
@@ -12948,7 +12872,7 @@
           "doc-url": "",
           "attributes": [
             {
-              "name": "sidebar-open",
+              "name": "sidebarOpen",
               "description": "Controls whether the sidebar is visible on mobile viewports (below 768 px). On desktop the sidebar is always shown regardless of this attribute. Toggle it from a hamburger button in your TopBar to give mobile users access to navigation.",
               "value": {
                 "type": "boolean",
@@ -12988,14 +12912,14 @@
           "js": {
             "properties": [
               {
-                "name": "sidebarOpen",
-                "description": "Controls whether the sidebar is visible on mobile viewports (below 768 px). On desktop the sidebar is always shown regardless of this attribute. Toggle it from a hamburger button in your TopBar to give mobile users access to navigation.",
-                "type": "boolean"
-              },
-              {
                 "name": "breakpoint",
                 "description": "Viewport width in pixels at which the layout switches between mobile and desktop modes.",
                 "type": "number"
+              },
+              {
+                "name": "sidebarOpen",
+                "description": "Controls whether the sidebar is visible on mobile viewports (below 768 px). On desktop the sidebar is always shown regardless of this attribute. Toggle it from a hamburger button in your TopBar to give mobile users access to navigation.",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -13320,11 +13244,6 @@
           "js": {
             "properties": [
               {
-                "name": "columns",
-                "description": "Number of columns when using explicit column mode. When this attribute is set on the element, the grid switches from auto-fill to a fixed repeat(N, 1fr) layout.",
-                "type": "number"
-              },
-              {
                 "name": "gap",
                 "description": "Gap between grid cells. Accepts any CSS length value or spacing token. Maps to the --gap CSS custom property.",
                 "type": "string"
@@ -13333,6 +13252,11 @@
                 "name": "minColumnWidth",
                 "description": "Minimum column width in auto-fill mode. Controls the minmax() threshold at which columns wrap to the next row. Maps to the --min-col CSS custom property.",
                 "type": "string"
+              },
+              {
+                "name": "columns",
+                "description": "Number of columns when using explicit column mode. When this attribute is set on the element, the grid switches from auto-fill to a fixed repeat(N, 1fr) layout.",
+                "type": "number"
               }
             ],
             "events": []
@@ -13352,7 +13276,7 @@
               }
             },
             {
-              "name": "auto-hide",
+              "name": "autoHide",
               "description": "When true, the dock hides itself when the cursor moves away from the edge and reveals on hover. Set to false to keep the dock permanently visible.",
               "value": {
                 "type": "boolean",
@@ -13686,11 +13610,6 @@
           "js": {
             "properties": [
               {
-                "name": "layout",
-                "description": "Controls the column structure of the page. sidebar-left creates a 240px fixed column on the left for navigation. sidebar-right creates a 300px fixed column on the right for contextual content. centered constrains the main area to max-width with auto margins. wide allows content to stretch the full available width.",
-                "type": "'sidebar-left' | 'sidebar-right' | 'centered' | 'wide'"
-              },
-              {
                 "name": "maxWidth",
                 "description": "Maximum width of the content area when using the centered layout. Accepts any valid CSS length value. Has no effect on sidebar-left, sidebar-right, or wide layouts. Maps to the --max-width CSS custom property.",
                 "type": "string"
@@ -13699,6 +13618,11 @@
                 "name": "gap",
                 "description": "Gap between the sidebar/aside and main content regions. Accepts any valid CSS length or spacing token. Maps to the --gap CSS custom property and applies to the CSS Grid gap in sidebar layouts.",
                 "type": "string"
+              },
+              {
+                "name": "layout",
+                "description": "Controls the column structure of the page. sidebar-left creates a 240px fixed column on the left for navigation. sidebar-right creates a 300px fixed column on the right for contextual content. centered constrains the main area to max-width with auto margins. wide allows content to stretch the full available width.",
+                "type": "'sidebar-left' | 'sidebar-right' | 'centered' | 'wide'"
               }
             ],
             "events": []
@@ -13758,11 +13682,6 @@
           "js": {
             "properties": [
               {
-                "name": "direction",
-                "description": "Controls which edge the drag handle appears on. Horizontal places the handle on the right edge and resizes width; vertical places it on the bottom edge and resizes height.",
-                "type": "'horizontal' | 'vertical'"
-              },
-              {
                 "name": "minSize",
                 "description": "Minimum allowed size in pixels. The panel cannot be dragged smaller than this value.",
                 "type": "number"
@@ -13776,6 +13695,11 @@
                 "name": "size",
                 "description": "Current size of the panel in pixels. Updated in real time during drag. Maps to the --panel-size CSS custom property.",
                 "type": "number"
+              },
+              {
+                "name": "direction",
+                "description": "Controls which edge the drag handle appears on. Horizontal places the handle on the right edge and resizes width; vertical places it on the bottom edge and resizes height.",
+                "type": "'horizontal' | 'vertical'"
               }
             ],
             "events": [
@@ -13870,7 +13794,7 @@
           "doc-url": "",
           "attributes": [
             {
-              "name": "nav-position",
+              "name": "navPosition",
               "description": "Controls whether the navigation panel appears as a left sidebar (220px wide, CSS Grid) or a top bar (full-width, flexbox column). The left layout collapses to stacked on screens narrower than 768px.",
               "value": {
                 "type": "'left' | 'top'",
@@ -13914,7 +13838,7 @@
             },
             {
               "name": "ratio",
-              "description": "The proportion of space allocated to the primary pane, from 0 to 1. A value of 0.4 gives the primary pane 40% of the available width (or height in vertical mode).",
+              "description": "The proportion of space allocated to the primary pane, clamped to `minRatio`..`maxRatio` on every path. The drag handle always honoured those bounds; assigning `ratio` from script used to bypass them entirely. From 0 to 1. A value of 0.4 gives the primary pane 40% of the available width (or height in vertical mode).",
               "value": {
                 "type": "number",
                 "default": "0.5"
@@ -13955,16 +13879,6 @@
           "js": {
             "properties": [
               {
-                "name": "orientation",
-                "description": "Controls the split direction. Horizontal places panes side by side with a vertical divider. Vertical stacks panes top and bottom with a horizontal divider.",
-                "type": "'horizontal' | 'vertical'"
-              },
-              {
-                "name": "ratio",
-                "description": "The proportion of space allocated to the primary pane, from 0 to 1. A value of 0.4 gives the primary pane 40% of the available width (or height in vertical mode).",
-                "type": "number"
-              },
-              {
                 "name": "minRatio",
                 "description": "Minimum allowed ratio. The divider cannot be dragged below this value, preventing the primary pane from collapsing.",
                 "type": "number"
@@ -13972,6 +13886,16 @@
               {
                 "name": "maxRatio",
                 "description": "Maximum allowed ratio. The divider cannot be dragged above this value, preventing the secondary pane from collapsing.",
+                "type": "number"
+              },
+              {
+                "name": "orientation",
+                "description": "Controls the split direction. Horizontal places panes side by side with a vertical divider. Vertical stacks panes top and bottom with a horizontal divider.",
+                "type": "'horizontal' | 'vertical'"
+              },
+              {
+                "name": "ratio",
+                "description": "The proportion of space allocated to the primary pane, clamped to `minRatio`..`maxRatio` on every path. The drag handle always honoured those bounds; assigning `ratio` from script used to bypass them entirely. From 0 to 1. A value of 0.4 gives the primary pane 40% of the available width (or height in vertical mode).",
                 "type": "number"
               }
             ],
@@ -14214,11 +14138,6 @@
           "js": {
             "properties": [
               {
-                "name": "orientation",
-                "description": "Layout direction. Vertical renders a column of links; horizontal renders a row.",
-                "type": "'vertical' | 'horizontal'"
-              },
-              {
                 "name": "value",
                 "description": "The value of the currently active link. Controls which item is highlighted.",
                 "type": "string"
@@ -14227,6 +14146,11 @@
                 "name": "items",
                 "description": "Declarative list of items to render. Each object needs a label (display text) and value (identifier). Alternative to slotting children.",
                 "type": "Array<{label: string, value: string}>"
+              },
+              {
+                "name": "orientation",
+                "description": "Layout direction. Vertical renders a column of links; horizontal renders a row.",
+                "type": "'vertical' | 'horizontal'"
               }
             ],
             "events": [
@@ -14560,6 +14484,11 @@
           "js": {
             "properties": [
               {
+                "name": "heading",
+                "description": "Text displayed in the drawer header bar. Also used as the `aria-label` for the dialog panel, ensuring screen readers announce the panel purpose when it opens.",
+                "type": "string"
+              },
+              {
                 "name": "open",
                 "description": "Controls the visible state of the drawer. Set to `true` to slide the panel into view and activate the backdrop; set to `false` to run the exit animation, remove the backdrop, and restore body scroll.",
                 "type": "boolean"
@@ -14568,11 +14497,6 @@
                 "name": "position",
                 "description": "Which edge of the viewport the drawer slides in from. Use `left` for primary navigation menus and `right` for contextual detail panels, filter sidebars, or settings trays.",
                 "type": "'left' | 'right'"
-              },
-              {
-                "name": "heading",
-                "description": "Text displayed in the drawer header bar. Also used as the `aria-label` for the dialog panel, ensuring screen readers announce the panel purpose when it opens.",
-                "type": "string"
               }
             ],
             "events": [
@@ -14641,6 +14565,11 @@
           "js": {
             "properties": [
               {
+                "name": "contained",
+                "description": "Sets a max-width containment on the footer content. Accepts any CSS length value or named size token.",
+                "type": "string"
+              },
+              {
                 "name": "density",
                 "description": "Visual density. 'compact' reduces internal padding and spacing throughout the footer — for dashboard layouts or admin panels where vertical space is limited.",
                 "type": "'default' | 'compact'"
@@ -14649,11 +14578,6 @@
                 "name": "border",
                 "description": "Renders a subtle top border on the footer to visually separate it from the page content above. Enabled by default; disable it only when the footer sits against a dark background where the border would be redundant.",
                 "type": "boolean"
-              },
-              {
-                "name": "contained",
-                "description": "Sets a max-width containment on the footer content. Accepts any CSS length value or named size token.",
-                "type": "string"
               },
               {
                 "name": "align",
@@ -14730,11 +14654,6 @@
                 "type": "'default' | 'muted' | 'nav'"
               },
               {
-                "name": "underline",
-                "description": "Controls underline behavior: 'hover' underlines on hover, 'always' keeps it visible, 'never' omits it.",
-                "type": "'hover' | 'always' | 'never'"
-              },
-              {
                 "name": "active",
                 "description": "Active state — applies accent-primary color for navigation highlighting.",
                 "type": "boolean"
@@ -14743,6 +14662,11 @@
                 "name": "external",
                 "description": "When true, adds `target=\"_blank\"` and `rel=\"noopener noreferrer\"`, and renders an external link icon after the text.",
                 "type": "boolean"
+              },
+              {
+                "name": "underline",
+                "description": "Controls underline behavior: 'hover' underlines on hover, 'always' keeps it visible, 'never' omits it.",
+                "type": "'hover' | 'always' | 'never'"
               }
             ],
             "events": []
@@ -14854,6 +14778,11 @@
                 "type": "string"
               },
               {
+                "name": "description",
+                "description": "Secondary text displayed below the item label inside a dropdown. Use this to add context like \"Real-time dashboards and metrics\" so users can scan the mega-menu without clicking through.",
+                "type": "string"
+              },
+              {
                 "name": "active",
                 "description": "Highlights the item with an accent-colored bottom border to indicate the current route. Set this on the top-level NavItem that corresponds to the active page.",
                 "type": "boolean"
@@ -14862,11 +14791,6 @@
                 "name": "variant",
                 "description": "Visual style variant. `default` shows a subtle border and muted text with accent glow on active. `primary` uses accent-colored text and border in the resting state with a stronger glow on hover/active. `muted` renders a subdued style with no border and lighter text — ideal for secondary links like \"Blog\" or \"Changelog\".",
                 "type": "'default' | 'primary' | 'muted'"
-              },
-              {
-                "name": "description",
-                "description": "Secondary text displayed below the item label inside a dropdown. Use this to add context like \"Real-time dashboards and metrics\" so users can scan the mega-menu without clicking through.",
-                "type": "string"
               }
             ],
             "events": []
@@ -15253,6 +15177,11 @@
                 "type": "number"
               },
               {
+                "name": "offset",
+                "description": "Distance from viewport edges. Accepts any CSS length value.",
+                "type": "string"
+              },
+              {
                 "name": "smooth",
                 "description": "Use smooth scrolling animation. Falls back to instant when prefers-reduced-motion is set.",
                 "type": "boolean"
@@ -15261,11 +15190,6 @@
                 "name": "position",
                 "description": "Corner placement.",
                 "type": "'bottom-right' | 'bottom-left'"
-              },
-              {
-                "name": "offset",
-                "description": "Distance from viewport edges. Accepts any CSS length value.",
-                "type": "string"
               }
             ],
             "events": []
@@ -15340,11 +15264,6 @@
                 "type": "string"
               },
               {
-                "name": "active",
-                "description": "When true, applies a highlighted style (accent-colored text and a left-edge indicator) to signal that this link corresponds to the currently viewed page. Only one link should be active at a time.",
-                "type": "boolean"
-              },
-              {
                 "name": "level",
                 "description": "Nesting depth for visual indentation. Level 0 links render at default size; level 1+ links are indented and use a smaller font size.",
                 "type": "number"
@@ -15353,6 +15272,11 @@
                 "name": "icon",
                 "description": "Name of an icon to render before the label. Use icons consistently within a section — a sidebar where only some links carry one reads as an oversight rather than a hierarchy.",
                 "type": "string"
+              },
+              {
+                "name": "active",
+                "description": "When true, applies a highlighted style (accent-colored text and a left-edge indicator) to signal that this link corresponds to the currently viewed page. Only one link should be active at a time.",
+                "type": "boolean"
               },
               {
                 "name": "external",
@@ -15426,6 +15350,11 @@
                 "type": "string"
               },
               {
+                "name": "icon",
+                "description": "Name of an icon to render before the heading. Ignored when the section has no heading.",
+                "type": "string"
+              },
+              {
                 "name": "collapsible",
                 "description": "When true, the section heading becomes a toggle button that expands/collapses the child links.",
                 "type": "boolean"
@@ -15434,11 +15363,6 @@
                 "name": "open",
                 "description": "Controls whether a collapsible section is expanded (true) or collapsed (false). Only relevant when collapsible is true.",
                 "type": "boolean"
-              },
-              {
-                "name": "icon",
-                "description": "Name of an icon to render before the heading. Ignored when the section has no heading.",
-                "type": "string"
               }
             ],
             "events": [
@@ -15523,9 +15447,13 @@
                 "type": "string"
               },
               {
-                "name": "collapsed",
-                "description": "When true, collapses the sidebar to icon-only mode, hiding labels and reducing width.",
-                "type": "boolean"
+                "name": "width",
+                "description": "Width of the sidebar. Accepts any CSS length value.",
+                "type": "string"
+              },
+              {
+                "name": "label",
+                "type": "string"
               },
               {
                 "name": "position",
@@ -15533,18 +15461,14 @@
                 "type": "'left' | 'right'"
               },
               {
-                "name": "width",
-                "description": "Width of the sidebar. Accepts any CSS length value.",
-                "type": "string"
+                "name": "collapsed",
+                "description": "When true, collapses the sidebar to icon-only mode, hiding labels and reducing width.",
+                "type": "boolean"
               },
               {
                 "name": "glow",
                 "description": "Enables an accent glow effect on the active sidebar link for enhanced visual emphasis.",
                 "type": "boolean"
-              },
-              {
-                "name": "label",
-                "type": "string"
               }
             ],
             "events": [
@@ -15650,6 +15574,11 @@
           "js": {
             "properties": [
               {
+                "name": "items",
+                "description": "Array of secondary action items to display when the speed dial is open. Each item needs an icon and label.",
+                "type": "Array<{icon: string, label: string, value?: string}>"
+              },
+              {
                 "name": "open",
                 "description": "Whether the secondary actions are currently visible.",
                 "type": "boolean"
@@ -15663,11 +15592,6 @@
                 "name": "position",
                 "description": "Fixed viewport corner where the speed dial is anchored.",
                 "type": "'bottom-right' | 'bottom-left'"
-              },
-              {
-                "name": "items",
-                "description": "Array of secondary action items to display when the speed dial is open. Each item needs an icon and label.",
-                "type": "Array<{icon: string, label: string, value?: string}>"
               }
             ],
             "events": [
@@ -15986,7 +15910,7 @@
               }
             },
             {
-              "name": "menu-open",
+              "name": "menuOpen",
               "description": "Reflects whether the mobile hamburger menu is open. Toggling this value updates the aria-expanded attribute on the menu button. Typically managed by AppShell in response to the arc-sidebar-toggle event rather than set directly.",
               "value": {
                 "type": "boolean",
@@ -16010,7 +15934,7 @@
               }
             },
             {
-              "name": "nav-align",
+              "name": "navAlign",
               "description": "Controls the alignment of content in the center slot. Pulls nav toward the brand or actions without reordering DOM.",
               "value": {
                 "type": "'left' | 'center' | 'right'",
@@ -16059,6 +15983,21 @@
                 "type": "string"
               },
               {
+                "name": "contained",
+                "description": "Sets a max-width containment on the top bar content area. Accepts any CSS length or named size.",
+                "type": "string"
+              },
+              {
+                "name": "mobileMenu",
+                "description": "Controls the mobile menu behavior. When set to a value like \"nav\", the hamburger toggles an inline navigation panel instead of triggering sidebar toggle.",
+                "type": "string"
+              },
+              {
+                "name": "menuPosition",
+                "description": "Position of the mobile menu panel when mobile-menu is active.",
+                "type": "string"
+              },
+              {
                 "name": "scrolled",
                 "description": "Reflects whether the page has scrolled past the bar's threshold. Set by the component, not by you — read it to style a scrolled state from outside, via `arc-top-bar[scrolled]`.",
                 "type": "boolean"
@@ -16074,24 +16013,9 @@
                 "type": "boolean"
               },
               {
-                "name": "contained",
-                "description": "Sets a max-width containment on the top bar content area. Accepts any CSS length or named size.",
-                "type": "string"
-              },
-              {
                 "name": "menuOpen",
                 "description": "Reflects whether the mobile hamburger menu is open. Toggling this value updates the aria-expanded attribute on the menu button. Typically managed by AppShell in response to the arc-sidebar-toggle event rather than set directly.",
                 "type": "boolean"
-              },
-              {
-                "name": "mobileMenu",
-                "description": "Controls the mobile menu behavior. When set to a value like \"nav\", the hamburger toggles an inline navigation panel instead of triggering sidebar toggle.",
-                "type": "string"
-              },
-              {
-                "name": "menuPosition",
-                "description": "Position of the mobile menu panel when mobile-menu is active.",
-                "type": "string"
               },
               {
                 "name": "navAlign",
@@ -16182,7 +16106,7 @@
         },
         {
           "name": "arc-tree-view",
-          "description": "Hierarchical tree structure with expandable/collapsible nodes, selection tracking, keyboard\nnavigation, and indentation guide lines.\n---\n\n\n### **Events:**\n - **arc-toggle** - Fired when a tree node is expanded or collapsed\n- **arc-select** - Fired when a tree item is selected\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **item**\n- **row**",
+          "description": "Hierarchical tree structure with expandable/collapsible nodes, selection tracking, keyboard\nnavigation, and indentation guide lines.\n---\n\n\n### **Events:**\n - **arc-toggle** - Fired when a tree node is expanded or collapsed\n- **arc-select** - Fired when a tree item is selected\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **tree** - The root list. The nested lists at deeper levels are `group`.\n- **group** - A nested list under an expanded branch.\n- **item**\n- **row**",
           "doc-url": "",
           "attributes": [],
           "slots": [
@@ -16293,11 +16217,6 @@
                 "type": "string"
               },
               {
-                "name": "disabled",
-                "description": "Disables the item, preventing interaction.",
-                "type": "boolean"
-              },
-              {
                 "name": "icon",
                 "description": "Name of the icon to display before the label.",
                 "type": "string"
@@ -16306,6 +16225,11 @@
                 "name": "value",
                 "description": "Stable identifier carried on the arc-select detail. Defaults to the label, which is fine until two items share one — give anything a handler must act on its own value rather than matching against display text.",
                 "type": "string"
+              },
+              {
+                "name": "disabled",
+                "description": "Disables the item, preventing interaction.",
+                "type": "boolean"
               }
             ],
             "events": []
@@ -16335,7 +16259,7 @@
             {
               "name": "selected",
               "value": {
-                "type": "boolean",
+                "type": "string",
                 "default": "false"
               }
             }
@@ -16364,8 +16288,7 @@
                 "type": "boolean"
               },
               {
-                "name": "selected",
-                "type": "boolean"
+                "name": "selected"
               }
             ],
             "events": []
@@ -16522,14 +16445,14 @@
           "js": {
             "properties": [
               {
-                "name": "variant",
-                "description": "Predefined gradient variant to apply",
-                "type": "'accent' | 'display' | 'sunset' | 'ocean' | 'custom'"
-              },
-              {
                 "name": "gradient",
                 "description": "Custom CSS gradient string, used when variant is set to custom",
                 "type": "string"
+              },
+              {
+                "name": "variant",
+                "description": "Predefined gradient variant to apply",
+                "type": "'accent' | 'display' | 'sunset' | 'ocean' | 'custom'"
               },
               {
                 "name": "animated",
@@ -16562,7 +16485,7 @@
               }
             },
             {
-              "name": "case-sensitive",
+              "name": "caseSensitive",
               "description": "Whether matching should be case-sensitive",
               "value": {
                 "type": "boolean",
@@ -16785,11 +16708,6 @@
                 "type": "number"
               },
               {
-                "name": "type",
-                "description": "Formatting style to apply",
-                "type": "'number' | 'currency' | 'percent' | 'compact'"
-              },
-              {
                 "name": "locale",
                 "description": "BCP 47 locale tag for locale-aware formatting",
                 "type": "string"
@@ -16803,6 +16721,11 @@
                 "name": "decimals",
                 "description": "Number of decimal places (defaults: 0 for number, 2 for currency, 1 for percent)",
                 "type": "number"
+              },
+              {
+                "name": "type",
+                "description": "Formatting style to apply",
+                "type": "'number' | 'currency' | 'percent' | 'compact'"
               },
               {
                 "name": "notation",
@@ -17026,14 +16949,14 @@
                 "type": "string"
               },
               {
-                "name": "live",
-                "description": "Auto-update the relative time on an adaptive interval.",
-                "type": "boolean"
-              },
-              {
                 "name": "locale",
                 "description": "BCP 47 locale tag for Intl.RelativeTimeFormat output.",
                 "type": "string"
+              },
+              {
+                "name": "live",
+                "description": "Auto-update the relative time on an adaptive interval.",
+                "type": "boolean"
               }
             ],
             "events": []
@@ -17144,7 +17067,7 @@
             {
               "name": "nowrap",
               "value": {
-                "type": "boolean",
+                "type": "string",
                 "default": "false"
               }
             },
@@ -17183,12 +17106,13 @@
                 "type": "number"
               },
               {
-                "name": "cursor",
-                "description": "Show a blinking cursor during and after typing",
-                "type": "boolean"
+                "name": "pauseEnd",
+                "description": "Milliseconds to pause at the end before looping",
+                "type": "number"
               },
               {
-                "name": "nowrap",
+                "name": "cursor",
+                "description": "Show a blinking cursor during and after typing",
                 "type": "boolean"
               },
               {
@@ -17197,9 +17121,7 @@
                 "type": "boolean"
               },
               {
-                "name": "pauseEnd",
-                "description": "Milliseconds to pause at the end before looping",
-                "type": "number"
+                "name": "nowrap"
               }
             ],
             "events": [
@@ -19376,6 +19298,14 @@
         },
         {
           "name": "part(topbar)"
+        },
+        {
+          "name": "part(tree)",
+          "description": "The root list. The nested lists at deeper levels are `group`."
+        },
+        {
+          "name": "part(group)",
+          "description": "A nested list under an expanded branch."
         },
         {
           "name": "part(item)"

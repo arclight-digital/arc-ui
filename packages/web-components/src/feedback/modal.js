@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { OverlayMixin } from '../shared/overlay-mixin.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * General-purpose focus-trapping overlay with backdrop blur, slide-up animation, and ESC-to-close
@@ -25,13 +26,14 @@ import { OverlayMixin } from '../shared/overlay-mixin.js';
  * @csspart body
  * @csspart footer
  */
-export class ArcModal extends OverlayMixin(LitElement) {
+export class ArcModal extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
   static properties = {
-    open: { type: Boolean, reflect: true },
+    open: flag(false),
     heading: { type: String },
-    size: { type: String, reflect: true },
-    fullscreen: { type: Boolean, reflect: true },
-    closable: { type: Boolean, reflect: true },
+    size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
+
+    fullscreen: flag(false),
+    closable: flag(true, { negative: 'no-closable' }),
   };
 
   static styles = [
@@ -162,11 +164,7 @@ export class ArcModal extends OverlayMixin(LitElement) {
 
   constructor() {
     super();
-    this.open = false;
     this.heading = '';
-    this.size = 'md';
-    this.fullscreen = false;
-    this.closable = true;
   }
 
   /**

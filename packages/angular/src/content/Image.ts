@@ -25,10 +25,10 @@ export class Image {
     return this._el.alt;
   }
 
-  @Input() set aspect(value: '1/1' | '4/3' | '16/9' | '21/9' | '3/4' | '9/16') {
+  @Input() set aspect(value: '' | '1/1' | '4/3' | '16/9' | '21/9' | '3/4' | '9/16') {
     this._el.aspect = value;
   }
-  get aspect(): '1/1' | '4/3' | '16/9' | '21/9' | '3/4' | '9/16' {
+  get aspect(): '' | '1/1' | '4/3' | '16/9' | '21/9' | '3/4' | '9/16' {
     return this._el.aspect;
   }
 

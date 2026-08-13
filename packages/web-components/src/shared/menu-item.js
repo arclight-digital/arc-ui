@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * A single action entry inside the context menu.
@@ -11,10 +12,10 @@ import { LitElement, html, css } from 'lit';
  * @prop {string} value - Stable identifier carried on the arc-select detail. Defaults to the label, which is fine until two items share one — give anything a handler must act on its own value rather than matching against display text.
  * @slot - Default content.
  */
-export class ArcMenuItem extends LitElement {
+export class ArcMenuItem extends DeclaredPropsMixin(LitElement) {
   static properties = {
     shortcut: { type: String, reflect: true },
-    disabled: { type: Boolean, reflect: true },
+    disabled: flag(false),
     icon: { type: String },
     value: { type: String },
   };
@@ -26,7 +27,6 @@ export class ArcMenuItem extends LitElement {
   constructor() {
     super();
     this.shortcut = '';
-    this.disabled = false;
     this.icon = '';
     this.value = '';
   }

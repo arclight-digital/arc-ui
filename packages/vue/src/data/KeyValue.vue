@@ -4,13 +4,10 @@ import '@arclux/arc-ui/key-value';
 
 defineOptions({ name: 'KeyValue' });
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   layout?: 'horizontal' | 'stacked';
   dividers?: boolean;
-}>(), {
-  layout: 'horizontal',
-  dividers: true,
-});
+}>();
 </script>
 
 <template>

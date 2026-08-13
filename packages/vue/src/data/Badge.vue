@@ -9,8 +9,6 @@ const props = withDefaults(defineProps<{
   size?: 'sm' | 'md' | 'lg';
   color?: string;
 }>(), {
-  variant: 'default',
-  size: 'md',
   color: '',
 });
 </script>

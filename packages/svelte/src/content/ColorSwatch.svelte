@@ -34,7 +34,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { color = '#4d7ef7', label = '', size = 'md', ...rest }: Props = $props();
+  let { color = '#4d7ef7', label = '', size, ...rest }: Props = $props();
 </script>
 
 <arc-color-swatch {color} {label} {size} {...rest}>

@@ -9,7 +9,6 @@ const props = withDefaults(defineProps<{
   openDelay?: number;
   closeDelay?: number;
 }>(), {
-  position: 'bottom',
   openDelay: 400,
   closeDelay: 300,
 });

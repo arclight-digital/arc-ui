@@ -37,7 +37,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { open = false, position = 'bottom', trigger = '', trigger_, children, ...rest }: Props = $props();
+  let { open, position, trigger = '', trigger_, children, ...rest }: Props = $props();
 </script>
 
 <arc-popover {open} {position} {trigger} {...rest}>

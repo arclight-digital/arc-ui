@@ -35,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { open = false, content, children, ...rest }: Props = $props();
+  let { open, content, children, ...rest }: Props = $props();
 </script>
 
 <arc-context-menu {open} {...rest}>

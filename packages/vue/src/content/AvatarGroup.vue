@@ -9,7 +9,6 @@ const props = withDefaults(defineProps<{
   overlap?: 'sm' | 'md' | 'lg';
 }>(), {
   max: Infinity,
-  overlap: 'md',
 });
 </script>
 

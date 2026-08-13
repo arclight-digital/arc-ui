@@ -34,7 +34,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { keys = '', disabled = false, global = false, ...rest }: Props = $props();
+  let { keys = '', disabled, global, ...rest }: Props = $props();
 </script>
 
 <arc-hotkey {keys} {disabled} {global} {...rest}>

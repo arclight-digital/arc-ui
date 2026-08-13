@@ -2,6 +2,7 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Single-select option group with arrow-key navigation and ARIA radiogroup semantics. Ideal for
@@ -21,13 +22,21 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @csspart circle
  * @csspart label
  */
-export class ArcRadioGroup extends FormControlMixin(LitElement) {
+export class ArcRadioGroup extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
   static properties = {
     value: { type: String, reflect: true },
     name: { type: String, reflect: true },
+    // NOT flag(): a form-associated custom element whose `disabled` content
+    // attribute is merely *present* is "actually disabled" per the HTML spec,
+    // so the platform calls formDisabledCallback(true) and the mixin sets the
+    // property back. `disabled="false"` is a disabled control here for exactly
+    // the reason it is on a native <input>. Native semantics win; see
+    // shared/props.js.
     disabled: { type: Boolean, reflect: true },
-    size: { type: String, reflect: true },
-    orientation: { type: String, reflect: true },
+    size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
+
+    orientation: oneOf(['vertical', 'horizontal']),
+
     _radios: { state: true },
   };
 
@@ -127,8 +136,6 @@ export class ArcRadioGroup extends FormControlMixin(LitElement) {
     this.value = '';
     this.name = '';
     this.disabled = false;
-    this.size = 'md';
-    this.orientation = 'vertical';
     this._radios = [];
   }
 

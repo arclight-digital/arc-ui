@@ -12,11 +12,6 @@ const props = withDefaults(defineProps<{
   showValue?: boolean;
   label?: string;
 }>(), {
-  value: 0,
-  variant: 'bar',
-  size: 'md',
-  indeterminate: false,
-  showValue: false,
   label: '',
 });
 </script>

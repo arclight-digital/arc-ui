@@ -13,11 +13,9 @@ const props = withDefaults(defineProps<{
   fill?: boolean;
 }>(), {
   data: '',
-  type: 'line',
   color: '',
   width: 120,
   height: 32,
-  fill: false,
 });
 </script>
 

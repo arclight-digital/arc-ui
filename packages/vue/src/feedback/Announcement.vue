@@ -8,7 +8,6 @@ const props = withDefaults(defineProps<{
   politeness?: 'polite' | 'assertive';
   message?: string;
 }>(), {
-  politeness: 'polite',
   message: '',
 });
 </script>

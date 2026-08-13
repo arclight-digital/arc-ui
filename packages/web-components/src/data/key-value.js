@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * A styled definition list for displaying labeled key-value pairs. Supports horizontal and stacked
@@ -12,10 +13,10 @@ import { tokenStyles } from '../shared-styles.js';
  * @slot - Default content.
  * @csspart list
  */
-export class ArcKeyValue extends LitElement {
+export class ArcKeyValue extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    layout: { type: String, reflect: true },
-    dividers: { type: Boolean, reflect: true },
+    layout: oneOf(['horizontal', 'stacked']),
+    dividers: flag(true, { negative: 'no-dividers' }),
   };
 
   static styles = [
@@ -71,8 +72,6 @@ export class ArcKeyValue extends LitElement {
 
   constructor() {
     super();
-    this.layout = 'horizontal';
-    this.dividers = true;
   }
 
   render() {

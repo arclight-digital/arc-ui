@@ -1,5 +1,7 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
+import { listen } from '../shared/subscriptions.js';
 
 /**
  * A spreadsheet-grade grid for working with tabular data: inline cell editing, multi-column
@@ -28,14 +30,14 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart header
  * @csspart body
  */
-export class ArcDataGrid extends LitElement {
+export class ArcDataGrid extends DeclaredPropsMixin(LitElement) {
   static properties = {
     columns: { type: Array },
     rows: { type: Array },
     sort: { type: Array },
-    manualSort: { type: Boolean, attribute: 'manual-sort' },
-    selectable: { type: Boolean, reflect: true },
-    virtual: { type: Boolean, reflect: true },
+    manualSort: flag(false, { attribute: 'manual-sort', reflect: false }),
+    selectable: flag(false),
+    virtual: flag(false),
     rowHeight: { type: Number, attribute: 'row-height' },
     _rows: { state: true },
     _selected: { state: true },
@@ -270,9 +272,6 @@ export class ArcDataGrid extends LitElement {
     this.columns = [];
     this.rows = [];
     this.sort = [];
-    this.manualSort = false;
-    this.selectable = false;
-    this.virtual = false;
     this.rowHeight = 40;
     this._rows = [];
     this._selected = new Set();
@@ -284,6 +283,7 @@ export class ArcDataGrid extends LitElement {
     this._scrolledX = false;
     this._rafId = null;
     this._onScroll = this._onScroll.bind(this);
+    listen(this, '.grid-wrapper', 'scroll', this._onScroll, { passive: true });
   }
 
   willUpdate(changed) {
@@ -296,8 +296,6 @@ export class ArcDataGrid extends LitElement {
   }
 
   firstUpdated() {
-    const wrapper = this.shadowRoot.querySelector('.grid-wrapper');
-    wrapper?.addEventListener('scroll', this._onScroll, { passive: true });
     if (this.virtual) this._recalcVirtual();
   }
 
@@ -315,7 +313,6 @@ export class ArcDataGrid extends LitElement {
       cancelAnimationFrame(this._rafId);
       this._rafId = null;
     }
-    this.shadowRoot?.querySelector('.grid-wrapper')?.removeEventListener('scroll', this._onScroll);
   }
 
   /* ---------- Scrolling / virtualization ---------- */

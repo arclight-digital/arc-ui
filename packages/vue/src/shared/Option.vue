@@ -10,8 +10,6 @@ const props = withDefaults(defineProps<{
   selected?: boolean;
 }>(), {
   value: '',
-  disabled: false,
-  selected: false,
 });
 </script>
 

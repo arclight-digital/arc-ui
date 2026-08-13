@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * A collapsible group within a Sidebar. Each section renders an optional heading label above its
@@ -13,11 +14,11 @@ import { LitElement, html, css } from 'lit';
  * @fires {CustomEvent<{ open: boolean }>} arc-toggle - Fired when a collapsible section expands or collapses.
  * @slot - Default content.
  */
-export class ArcSidebarSection extends LitElement {
+export class ArcSidebarSection extends DeclaredPropsMixin(LitElement) {
   static properties = {
     heading: { type: String, reflect: true },
-    collapsible: { type: Boolean, reflect: true },
-    open: { type: Boolean, reflect: true },
+    collapsible: flag(false),
+    open: flag(true, { negative: 'no-open' }),
     icon: { type: String, reflect: true },
   };
 
@@ -28,8 +29,6 @@ export class ArcSidebarSection extends LitElement {
   constructor() {
     super();
     this.heading = '';
-    this.collapsible = false;
-    this.open = true;
     this.icon = '';
   }
 

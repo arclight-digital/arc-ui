@@ -4,13 +4,10 @@ import '@arclux/arc-ui/spinner';
 
 defineOptions({ name: 'Spinner' });
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   size?: 'sm' | 'md' | 'lg';
   variant?: 'primary' | 'secondary' | 'white';
-}>(), {
-  size: 'md',
-  variant: 'primary',
-});
+}>();
 </script>
 
 <template>

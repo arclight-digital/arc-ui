@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Groups multiple toggle switches under a shared label with consistent sizing and disabled state.
@@ -16,12 +17,12 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @csspart legend
  * @csspart group
  */
-export class ArcSwitchGroup extends LitElement {
+export class ArcSwitchGroup extends DeclaredPropsMixin(LitElement) {
   static properties = {
     label: { type: String },
-    orientation: { type: String, reflect: true },
-    size: { type: String, reflect: true },
-    disabled: { type: Boolean, reflect: true },
+    orientation: oneOf(['vertical', 'horizontal']),
+    size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
+    disabled: flag(false),
   };
 
   static styles = [
@@ -69,9 +70,6 @@ export class ArcSwitchGroup extends LitElement {
   constructor() {
     super();
     this.label = '';
-    this.orientation = 'vertical';
-    this.size = 'md';
-    this.disabled = false;
   }
 
   _onSlotChange(e) {

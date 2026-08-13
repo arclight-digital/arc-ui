@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
  * Color sample square with label — useful for token docs.
@@ -13,11 +14,11 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart color
  * @csspart label
  */
-export class ArcColorSwatch extends LitElement {
+export class ArcColorSwatch extends DeclaredPropsMixin(LitElement) {
   static properties = {
     color: { type: String },
     label: { type: String },
-    size: { type: String, reflect: true },
+    size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
   };
 
   static styles = [
@@ -64,7 +65,6 @@ export class ArcColorSwatch extends LitElement {
     super();
     this.color = '#4d7ef7';
     this.label = '';
-    this.size = 'md';
   }
 
   render() {

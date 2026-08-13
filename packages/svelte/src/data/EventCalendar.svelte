@@ -36,7 +36,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { locale = '', firstDayOfWeek = 0, events = [], view = $bindable('month'), date = $bindable(''), ...rest }: Props = $props();
+  let { locale = '', firstDayOfWeek = 0, events = [], view = $bindable(), date = $bindable(''), ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

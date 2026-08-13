@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Dual-thumb range slider for selecting a numeric interval within a defined range, with
@@ -29,18 +30,25 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @csspart thumb-low
  * @csspart thumb-high
  */
-export class ArcRangeSlider extends FormControlMixin(LitElement) {
+export class ArcRangeSlider extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
   static properties = {
-    size: { type: String, reflect: true },
+    size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
+
     min: { type: Number },
     max: { type: Number },
     step: { type: Number },
     low: { type: Number, reflect: true },
     high: { type: Number, reflect: true },
     name: { type: String, reflect: true },
+    // NOT flag(): a form-associated custom element whose `disabled` content
+    // attribute is merely *present* is "actually disabled" per the HTML spec,
+    // so the platform calls formDisabledCallback(true) and the mixin sets the
+    // property back. `disabled="false"` is a disabled control here for exactly
+    // the reason it is on a native <input>. Native semantics win; see
+    // shared/props.js.
     disabled: { type: Boolean, reflect: true },
     label: { type: String },
-    showValues: { type: Boolean, reflect: true, attribute: 'show-values' },
+    showValues: flag(true, { attribute: 'show-values', negative: 'no-values' }),
     /** @internal */ _dragging: { state: true },
   };
 
@@ -159,7 +167,6 @@ export class ArcRangeSlider extends FormControlMixin(LitElement) {
 
   constructor() {
     super();
-    this.size = 'md';
     this.min = 0;
     this.max = 100;
     this.step = 1;
@@ -168,7 +175,6 @@ export class ArcRangeSlider extends FormControlMixin(LitElement) {
     this.name = '';
     this.disabled = false;
     this.label = '';
-    this.showValues = true;
     this._dragging = null; // 'low' | 'high' | null
     this._onPointerMoveBound = this._onPointerMove.bind(this);
     this._onPointerUpBound = this._onPointerUp.bind(this);
@@ -365,8 +371,9 @@ export class ArcRangeSlider extends FormControlMixin(LitElement) {
           <div
             class="range-slider__thumb range-slider__thumb--low ${this._dragging === 'low' ? 'range-slider__thumb--active' : ''}"
             part="thumb-low"
-            tabindex="0"
+            tabindex=${this.disabled ? '-1' : '0'}
             role="slider"
+            aria-disabled=${this.disabled ? 'true' : 'false'}
             aria-label="${this.label ? `${this.label} low` : 'Range low'}"
             aria-valuemin=${this.min}
             aria-valuemax=${this.high}
@@ -378,8 +385,9 @@ export class ArcRangeSlider extends FormControlMixin(LitElement) {
           <div
             class="range-slider__thumb range-slider__thumb--high ${this._dragging === 'high' ? 'range-slider__thumb--active' : ''}"
             part="thumb-high"
-            tabindex="0"
+            tabindex=${this.disabled ? '-1' : '0'}
             role="slider"
+            aria-disabled=${this.disabled ? 'true' : 'false'}
             aria-label="${this.label ? `${this.label} high` : 'Range high'}"
             aria-valuemin=${this.low}
             aria-valuemax=${this.max}

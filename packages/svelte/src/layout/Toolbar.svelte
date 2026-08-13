@@ -40,7 +40,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { sticky = false, size = 'md', border = true, overflow = false, start, end, children, ...rest }: Props = $props();
+  let { sticky, size, border, overflow, start, end, children, ...rest }: Props = $props();
 </script>
 
 <arc-toolbar {sticky} {size} {border} {overflow} {...rest}>

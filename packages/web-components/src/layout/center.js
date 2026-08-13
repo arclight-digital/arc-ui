@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * Content centering primitive with max-width, intrinsic centering, and text-center options.
@@ -10,11 +11,11 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {boolean} text - Adds text-align: center for centering inline text content within the block.
  * @slot - Default content.
  */
-export class ArcCenter extends LitElement {
+export class ArcCenter extends DeclaredPropsMixin(LitElement) {
   static properties = {
     maxWidth: { type: String, reflect: true, attribute: 'max-width' },
-    intrinsic: { type: Boolean, reflect: true },
-    text: { type: Boolean, reflect: true },
+    intrinsic: flag(false),
+    text: flag(false),
   };
 
   static styles = [
@@ -43,8 +44,6 @@ export class ArcCenter extends LitElement {
   constructor() {
     super();
     this.maxWidth = '60ch';
-    this.intrinsic = false;
-    this.text = false;
   }
 
   updated(changed) {

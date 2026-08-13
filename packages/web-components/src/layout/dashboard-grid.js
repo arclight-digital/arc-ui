@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, int } from '../shared/props.js';
 
 /**
  * Responsive grid for dashboard metric cards.
@@ -11,9 +12,9 @@ import { tokenStyles } from '../shared-styles.js';
  * @slot - Default content.
  * @csspart grid
  */
-export class ArcDashboardGrid extends LitElement {
+export class ArcDashboardGrid extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    columns: { type: Number },
+    columns: int({ default: 0, min: 0, clamp: 'toRange' }),
     gap: { type: String },
     minColumnWidth: { type: String, attribute: 'min-column-width' },
   };
@@ -40,7 +41,6 @@ export class ArcDashboardGrid extends LitElement {
 
   constructor() {
     super();
-    this.columns = 0;
     this.gap = 'var(--space-lg)';
     this.minColumnWidth = '280px';
   }

@@ -12,10 +12,8 @@ const props = withDefaults(defineProps<{
   external?: boolean;
 }>(), {
   href: '',
-  active: false,
   level: 0,
   icon: '',
-  external: false,
 });
 </script>
 

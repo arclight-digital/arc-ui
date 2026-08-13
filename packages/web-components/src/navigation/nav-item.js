@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { loneAnchorChild, resolveCarrierHref } from '../shared/anchor-adoption.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * A single entry inside NavigationMenu. When used at the top level and containing nested NavItem
@@ -13,11 +14,11 @@ import { loneAnchorChild, resolveCarrierHref } from '../shared/anchor-adoption.j
  * @prop {string} description - Secondary text displayed below the item label inside a dropdown. Use this to add context like "Real-time dashboards and metrics" so users can scan the mega-menu without clicking through.
  * @slot - Default content.
  */
-export class ArcNavItem extends LitElement {
+export class ArcNavItem extends DeclaredPropsMixin(LitElement) {
   static properties = {
     href: { type: String, reflect: true },
-    active: { type: Boolean, reflect: true },
-    variant: { type: String, reflect: true },
+    active: flag(false),
+    variant: oneOf(['default', 'primary', 'muted']),
     description: { type: String },
   };
 
@@ -28,8 +29,6 @@ export class ArcNavItem extends LitElement {
   constructor() {
     super();
     this.href = '';
-    this.active = false;
-    this.variant = 'default';
     this.description = '';
   }
 

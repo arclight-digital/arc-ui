@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import '../content/spinner.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * Semi-transparent surface-overlay with backdrop blur covering a container or page. Centers a
@@ -16,11 +17,11 @@ import '../content/spinner.js';
  * @csspart spinner
  * @csspart message
  */
-export class ArcLoadingOverlay extends LitElement {
+export class ArcLoadingOverlay extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    active: { type: Boolean, reflect: true },
+    active: flag(false),
     message: { type: String },
-    global: { type: Boolean, reflect: true },
+    global: flag(false),
   };
 
   static styles = [
@@ -68,9 +69,7 @@ export class ArcLoadingOverlay extends LitElement {
 
   constructor() {
     super();
-    this.active = false;
     this.message = '';
-    this.global = false;
   }
 
   render() {

@@ -11,7 +11,6 @@ const props = withDefaults(defineProps<{
 }>(), {
   active: '',
   offset: 80,
-  progress: 'none',
 });
 
 const emit = defineEmits<{

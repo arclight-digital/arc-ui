@@ -17,16 +17,12 @@ const props = withDefaults(defineProps<{
   multiline?: boolean;
   rows?: number;
 }>(), {
-  type: 'text',
   name: '',
   label: '',
   placeholder: '',
   value: '',
   disabled: false,
-  required: false,
   error: '',
-  size: 'md',
-  multiline: false,
   rows: 5,
 });
 

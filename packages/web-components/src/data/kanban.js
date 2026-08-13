@@ -2,6 +2,7 @@ import { LitElement, html, css } from 'lit';
 import { repeat } from 'lit/directives/repeat.js';
 import { tokenStyles } from '../shared-styles.js';
 import './tag.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * A drag-and-drop kanban board driven by a `columns` data array. Cards can be dragged between and
@@ -27,10 +28,10 @@ import './tag.js';
  * @csspart dropzone
  * @csspart board
  */
-export class ArcKanban extends LitElement {
+export class ArcKanban extends DeclaredPropsMixin(LitElement) {
   static properties = {
     columns: { type: Array },
-    disabled: { type: Boolean, reflect: true },
+    disabled: flag(false),
     _cols: { state: true },
     _drag: { state: true },
     _dropTarget: { state: true },
@@ -231,7 +232,6 @@ export class ArcKanban extends LitElement {
   constructor() {
     super();
     this.columns = [];
-    this.disabled = false;
     this._cols = [];
     this._drag = null;
     this._dropTarget = null;

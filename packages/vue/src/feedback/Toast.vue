@@ -11,10 +11,8 @@ const props = withDefaults(defineProps<{
   dedupe?: boolean;
   queueLimit?: number;
 }>(), {
-  position: 'top-right',
   duration: 4000,
   maxVisible: 3,
-  dedupe: true,
   queueLimit: 20,
 });
 

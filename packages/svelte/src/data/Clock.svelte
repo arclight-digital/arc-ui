@@ -37,7 +37,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { variant = 'digital', timezone = '', label = '', showSeconds = false, hour12, showTimezone = false, ...rest }: Props = $props();
+  let { variant, timezone = '', label = '', showSeconds, hour12, showTimezone, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

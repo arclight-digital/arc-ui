@@ -11,9 +11,7 @@ const props = withDefaults(defineProps<{
   label?: string;
   name?: string;
 }>(), {
-  checked: false,
   disabled: false,
-  size: 'md',
   label: '',
   name: '',
 });

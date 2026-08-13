@@ -1,13 +1,15 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, int } from '../shared/props.js';
 
 /**
  * Step indicator for multi-step workflows.
  *
  * @tag arc-stepper
  * @requires arc-step
- * @prop {number} active - Zero-indexed active step — steps before this index show as completed
+ * @prop {number} active - Zero-indexed active step — steps before this index show as completed.
+ *   Clamped to the range of rendered steps.
  * @slot - Default content.
  * @csspart stepper
  * @csspart step
@@ -15,11 +17,23 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @csspart circle
  * @csspart label
  */
-export class ArcStepper extends LitElement {
+export class ArcStepper extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    active: { type: Number, reflect: true },
+    active: int({ default: 0, min: 0, max: '_maxStep', clamp: 'toRange', reflect: true }),
     _steps: { state: true },
   };
+
+  /**
+   * Upper bound for `active`; undefined while there are no steps to bound it.
+   *
+   * Returning 0 instead would clamp an `active="2"` set in markup down to 0
+   * before the slot has populated, and clamping is destructive — the value
+   * would not come back when the steps arrive. `bound()` ignores a non-number,
+   * which is what makes the deferred case safe. Same shape as arc-tabs.
+   */
+  get _maxStep() {
+    return this._steps?.length ? this._steps.length - 1 : undefined;
+  }
 
   static styles = [
     tokenStyles,
@@ -174,7 +188,6 @@ export class ArcStepper extends LitElement {
 
   constructor() {
     super();
-    this.active = 0;
     this._steps = [];
   }
 

@@ -4,6 +4,7 @@ import { PositionController } from '../shared/position-controller.js';
 import { managedPanelStyles } from '../shared/position-styles.js';
 import { setTriggerAria } from '../shared/trigger-aria.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
  * Contextual hint that appears on hover or focus, providing supplementary information without
@@ -17,10 +18,10 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @csspart trigger
  * @csspart popup
  */
-export class ArcTooltip extends LitElement {
+export class ArcTooltip extends DeclaredPropsMixin(LitElement) {
   static properties = {
     content: { type: String },
-    position: { type: String, reflect: true },
+    position: oneOf(['top', 'bottom', 'left', 'right']),
     delay: { type: Number },
     _visible: { state: true },
   };
@@ -194,7 +195,6 @@ export class ArcTooltip extends LitElement {
   constructor() {
     super();
     this.content = '';
-    this.position = 'top';
     this.delay = 200;
     this._visible = false;
     this._showTimeout = null;

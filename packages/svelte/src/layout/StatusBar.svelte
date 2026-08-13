@@ -37,7 +37,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { position = 'static', start, end, children, ...rest }: Props = $props();
+  let { position, start, end, children, ...rest }: Props = $props();
 </script>
 
 <arc-status-bar {position} {...rest}>

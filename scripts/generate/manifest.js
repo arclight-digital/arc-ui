@@ -8,7 +8,7 @@
  * (Called automatically by `pnpm generate`)
  */
 import { execFileSync } from 'node:child_process';
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -52,9 +52,84 @@ for (const mod of manifest.modules) {
   }
 }
 
+
+/**
+ * Fill in defaults the analyzer cannot see.
+ *
+ * The analyzer reads a default from a constructor assignment. Since the
+ * declared-props vocabulary landed, the default lives in the *declaration*
+ * (`flag(true, …)`, `oneOf([…], { default })`) and the constructor assignment
+ * is gone — so regenerating dropped 588 `default` entries across the manifest,
+ * silently, and every downstream reader (docs tables, VS Code and JetBrains
+ * data, prism) would have shipped without them.
+ *
+ * Parsed statically rather than by importing the component: these four helpers
+ * have simple, closed default rules, and evaluating a component module in Node
+ * would need a DOM.
+ *
+ * A computed default (`default: () => new Date().getMonth()`) is deliberately
+ * skipped — it has no serialisable value to publish, and "the current month" is
+ * documented in prose on the prop.
+ */
+const DECL = /^\s*(\w+):\s*(flag|oneOf|num|int)\(([\s\S]*?)\),?\s*$/gm;
+
+/** Serialise a JS value the way the analyzer spells defaults. */
+const spell = (v) => (typeof v === 'string' ? `'${v}'` : String(v));
+
+function declaredDefaults(source) {
+  const out = new Map();
+  for (const m of source.matchAll(DECL)) {
+    const [, name, helper, rawArgs] = m;
+    const args = rawArgs.trim();
+    if (/default:\s*\(/.test(args) || /default:\s*function/.test(args)) continue; // computed
+
+    if (helper === 'flag') {
+      const lead = args.match(/^(true|false)\b/);
+      out.set(name, lead ? lead[1] === 'true' : false);
+    } else if (helper === 'oneOf') {
+      const list = args.match(/^\[([\s\S]*?)\]/);
+      if (!list) continue;
+      const members = list[1].split(',').map((x) => x.trim()).filter(Boolean);
+      const explicit = args.match(/default:\s*([^,}\n]+)/);
+      const raw = (explicit ? explicit[1] : members[0] ?? '').trim();
+      if (!raw) continue;
+      const unquoted = raw.replace(/^['"]|['"]$/g, '');
+      out.set(name, /^-?[\d.]+$/.test(unquoted) ? Number(unquoted) : unquoted);
+    } else {
+      const explicit = args.match(/default:\s*(-?[\d.]+)/);
+      out.set(name, explicit ? Number(explicit[1]) : 0);
+    }
+  }
+  return out;
+}
+
+let filled = 0;
+for (const mod of manifest.modules) {
+  const file = resolve(wcDir, mod.path ?? '');
+  if (!existsSync(file)) continue;
+  const defaults = declaredDefaults(readFileSync(file, 'utf-8'));
+  if (!defaults.size) continue;
+
+  for (const decl of mod.declarations ?? []) {
+    for (const member of decl.members ?? []) {
+      if (member.default === undefined && defaults.has(member.name)) {
+        member.default = spell(defaults.get(member.name));
+        filled += 1;
+      }
+    }
+    for (const attr of decl.attributes ?? []) {
+      const name = attr.fieldName ?? attr.name;
+      if (attr.default === undefined && defaults.has(name)) {
+        attr.default = spell(defaults.get(name));
+        filled += 1;
+      }
+    }
+  }
+}
+
 writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n');
 
 const count = manifest.modules
   .flatMap((m) => m.declarations ?? [])
   .filter((d) => d.customElement && d.tagName).length;
-console.log(`✓ custom-elements.json — ${count} custom elements`);
+console.log(`✓ custom-elements.json — ${count} custom elements, ${filled} defaults from declarations`);

@@ -4,9 +4,10 @@ import { PositionController } from '../shared/position-controller.js';
 import { ListboxController } from '../shared/listbox-controller.js';
 import { managedPanelStyles } from '../shared/position-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
-import { ClickOutsideController } from '../shared/click-outside.js';
+import { DismissController } from '../shared/dismiss-controller.js';
 import '../shared/option.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Multi-value select with tag chips, inline search filtering, and keyboard navigation.
@@ -28,13 +29,20 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @csspart dropdown
  * @csspart option
  */
-export class ArcMultiSelect extends FormControlMixin(LitElement) {
+export class ArcMultiSelect extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
   static properties = {
-    size: { type: String, reflect: true },
+    size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
+
     value: { type: Array },
     placeholder: { type: String },
     label: { type: String },
     name: { type: String, reflect: true },
+    // NOT flag(): a form-associated custom element whose `disabled` content
+    // attribute is merely *present* is "actually disabled" per the HTML spec,
+    // so the platform calls formDisabledCallback(true) and the mixin sets the
+    // property back. `disabled="false"` is a disabled control here for exactly
+    // the reason it is on a native <input>. Native semantics win; see
+    // shared/props.js.
     disabled: { type: Boolean, reflect: true },
     _query: { state: true },
     _open: { state: true },
@@ -241,7 +249,6 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
 
   constructor() {
     super();
-    this.size = 'md';
     this.value = [];
     this.placeholder = '';
     this.label = '';
@@ -252,8 +259,8 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
     this._focused = false;
     this._options = [];
     this._msId = `multi-select-${++ArcMultiSelect._idCounter}`;
-    this._clickOutside = new ClickOutsideController(this, {
-      onClickOutside: () => {
+    this._dismiss = new DismissController(this, {
+      onDismiss: () => {
         this._open = false;
         this._focused = false;
       },
@@ -310,8 +317,8 @@ export class ArcMultiSelect extends FormControlMixin(LitElement) {
       this._open ? this._position.show() : this._position.hide();
     }
     if (changed.has('_open')) {
-      if (this._open) this._clickOutside.activate();
-      else this._clickOutside.deactivate();
+      if (this._open) this._dismiss.activate();
+      else this._dismiss.deactivate();
     }
     if (changed.has('_query') || changed.has('_options') || changed.has('suggestions')) {
       this._listbox.clampToCount();

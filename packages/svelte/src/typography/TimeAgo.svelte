@@ -34,7 +34,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { datetime = '', live = true, locale = 'en-US', ...rest }: Props = $props();
+  let { datetime = '', live, locale = 'en-US', ...rest }: Props = $props();
 </script>
 
 <arc-time-ago {datetime} {live} {locale} {...rest}>

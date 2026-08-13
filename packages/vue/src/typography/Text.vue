@@ -4,13 +4,10 @@ import '@arclux/arc-ui/text';
 
 defineOptions({ name: 'Text' });
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   variant?: 'display' | 'heading' | 'body' | 'muted' | 'ghost' | 'accent' | 'label' | 'wordmark' | 'code';
   as?: 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span';
-}>(), {
-  variant: 'body',
-  as: 'p',
-});
+}>();
 </script>
 
 <template>

@@ -42,7 +42,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { size = 'md', value = $bindable(''), name = '', min = '', max = '', placeholder = 'Select date', disabled = false, label = '', open = false, locale = '', firstDayOfWeek = 0, ...rest }: Props = $props();
+  let { size, value = $bindable(''), name = '', min = '', max = '', placeholder = 'Select date', disabled = false, label = '', open = false, locale = '', firstDayOfWeek = 0, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

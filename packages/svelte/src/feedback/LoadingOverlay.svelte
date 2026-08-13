@@ -34,7 +34,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { active = false, message = '', global = false, ...rest }: Props = $props();
+  let { active, message = '', global, ...rest }: Props = $props();
 </script>
 
 <arc-loading-overlay {active} {message} {global} {...rest}>

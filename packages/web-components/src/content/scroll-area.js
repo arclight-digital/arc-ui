@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
  * Styled scrollable container with custom thin scrollbar styling for Webkit and Firefox,
@@ -11,10 +12,10 @@ import { tokenStyles } from '../shared-styles.js';
  * @slot - Default content.
  * @csspart scroll-area
  */
-export class ArcScrollArea extends LitElement {
+export class ArcScrollArea extends DeclaredPropsMixin(LitElement) {
   static properties = {
     maxHeight: { type: String, attribute: 'max-height', reflect: true },
-    orientation: { type: String, reflect: true },
+    orientation: oneOf(['vertical', 'horizontal', 'both']),
   };
 
   static styles = [
@@ -83,7 +84,6 @@ export class ArcScrollArea extends LitElement {
   constructor() {
     super();
     this.maxHeight = '';
-    this.orientation = 'vertical';
   }
 
   render() {

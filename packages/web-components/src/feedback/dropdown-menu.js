@@ -2,13 +2,14 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { MenuKeyboardController } from '../shared/menu-keyboard.js';
 import { PositionController } from '../shared/position-controller.js';
-import { ClickOutsideController } from '../shared/click-outside.js';
+import { DismissController } from '../shared/dismiss-controller.js';
 import { managedPanelStyles } from '../shared/position-styles.js';
 import { setTriggerAria, deepActiveElement } from '../shared/trigger-aria.js';
 import '../shared/menu-item.js';
 import '../shared/menu-divider.js';
 import '../content/separator.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * Menu dropdown triggered by a button with keyboard navigation.
@@ -26,9 +27,9 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @csspart trigger
  * @csspart panel
  */
-export class ArcDropdownMenu extends LitElement {
+export class ArcDropdownMenu extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    open: { type: Boolean, reflect: true },
+    open: flag(false),
     _children: { state: true },
   };
 
@@ -133,13 +134,12 @@ export class ArcDropdownMenu extends LitElement {
 
   constructor() {
     super();
-    this.open = false;
     this._children = [];
     this._openedFrom = null;
     this._lastFocusedIndex = -1;
-    this._clickOutside = new ClickOutsideController(this, {
+    this._dismiss = new DismissController(this, {
       // _close(false): the pointer chose a new target, so don't yank focus back.
-      onClickOutside: () => this._close(false),
+      onDismiss: () => this._close(false),
     });
     this._menuKb = new MenuKeyboardController(this, {
       getItemCount: () => this._menuItems.length,
@@ -177,13 +177,13 @@ export class ArcDropdownMenu extends LitElement {
       if (this.open) {
         this._openedFrom = deepActiveElement();
         this._menuKb.reset();
-        this._clickOutside.activate();
+        this._dismiss.activate();
         // The keyboard controller still waits a frame: it attaches a keydown
         // listener, and the Enter or Space that opened the menu would otherwise
         // arrive at the freshly opened menu as an item activation.
         requestAnimationFrame(() => this._menuKb.attach());
       } else {
-        this._clickOutside.deactivate();
+        this._dismiss.deactivate();
         this._menuKb.detach();
       }
     }

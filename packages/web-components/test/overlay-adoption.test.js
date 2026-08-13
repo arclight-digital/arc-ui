@@ -6,9 +6,15 @@ import '../src/feedback/dropdown-menu.register.js';
 import '../src/feedback/spotlight.register.js';
 import '../src/feedback/notification-panel.register.js';
 import '../src/input/date-picker.register.js';
+import '../src/input/multi-select.register.js';
+import '../src/input/combobox.register.js';
+import '../src/input/tag-input.register.js';
+// arc-option must be a *defined* element, not just parsed markup — unupgraded it
+// has no `label` or `value` at all. See listbox-controller.test.js.
+import '../src/shared/option.register.js';
 import { mount, cleanup, tick, pressKey, deepActive } from './helpers.js';
 
-/** A pointerdown where ClickOutsideController listens for it. */
+/** A pointerdown where DismissController listens for it. */
 function clickAt(target) {
   target.dispatchEvent(new PointerEvent('pointerdown', {
     bubbles: true, composed: true, cancelable: true,
@@ -145,7 +151,7 @@ describe('OverlayMixin adoption: arc-command-palette', () => {
   });
 });
 
-describe('ClickOutsideController adoption', () => {
+describe('DismissController adoption — pointer', () => {
   afterEach(cleanup);
 
   const cases = [
@@ -191,7 +197,7 @@ describe('ClickOutsideController adoption', () => {
       // handler; the controller only subscribes while open.
       const el = mount(markup);
       await el.updateComplete;
-      expect(el._clickOutside._active).to.equal(false);
+      expect(el._dismiss._active).to.equal(false);
     });
   }
 
@@ -211,7 +217,73 @@ describe('ClickOutsideController adoption', () => {
   });
 });
 
-describe('ClickOutsideController boundary: arc-spotlight', () => {
+/**
+ * The focus half of DismissController — finding #60.
+ *
+ * These three *open on focus*, which is what made the missing half fatal for
+ * them rather than merely untidy: there was no pointer event anywhere in the
+ * interaction, so a keyboard user could open a panel and never close it. The
+ * three components that open on a trigger click were unaffected, and that is
+ * why the gap survived so long — every component you would think to test by
+ * hand behaved perfectly.
+ *
+ * The sweep sits here rather than in each component's own file so that a fourth
+ * component adopting focus-to-open is one line away from being covered.
+ */
+describe('DismissController adoption — focus', () => {
+  afterEach(cleanup);
+
+  const OPTION = '<arc-option value="a">Alpha</arc-option>';
+
+  const cases = [
+    ['arc-multi-select', `<arc-multi-select>${OPTION}</arc-multi-select>`, '.ms__input', (el) => el._open],
+    ['arc-combobox', '<arc-combobox></arc-combobox>', 'input', (el) => el._open],
+    // tag-input does not open a panel on focus; what it does carry is the
+    // focus ring, which was equally stuck.
+    ['arc-tag-input', '<arc-tag-input></arc-tag-input>', 'input', (el) => el._focused],
+  ];
+
+  for (const [tag, markup, fieldSel, state] of cases) {
+    it(`${tag} lets go when focus moves to another element`, async () => {
+      const host = mount(`<div>${markup}<button id="away">away</button></div>`);
+      const el = host.querySelector(tag);
+      await el.updateComplete;
+      await tick();
+
+      el.shadowRoot.querySelector(fieldSel).focus();
+      await el.updateComplete;
+      expect(state(el), `${tag} did not take focus state at all`).to.equal(true);
+
+      host.querySelector('#away').focus();
+      await el.updateComplete;
+
+      expect(deepActive().id, 'focus did not actually move').to.equal('away');
+      expect(state(el), `${tag} held on after focus left`).to.equal(false);
+    });
+
+    it(`${tag} holds on while focus moves within itself`, async () => {
+      // The counterweight. focusout fires for every internal focus move too, so
+      // a dismiss that did not check `relatedTarget` would pass the test above
+      // and still be useless.
+      const host = mount(`<div>${markup}</div>`);
+      const el = host.querySelector(tag);
+      await el.updateComplete;
+      await tick();
+
+      const field = el.shadowRoot.querySelector(fieldSel);
+      field.focus();
+      await el.updateComplete;
+
+      field.blur();
+      field.focus();
+      await el.updateComplete;
+
+      expect(state(el), `${tag} dismissed on its own internal focus move`).to.equal(true);
+    });
+  }
+});
+
+describe('DismissController boundary: arc-spotlight', () => {
   afterEach(cleanup);
 
   async function mountSpotlight() {

@@ -10,9 +10,6 @@ const props = withDefaults(defineProps<{
   dismissible?: boolean;
   heading?: string;
 }>(), {
-  variant: 'info',
-  density: 'default',
-  dismissible: false,
   heading: '',
 });
 

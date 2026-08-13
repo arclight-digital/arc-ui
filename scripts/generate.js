@@ -30,6 +30,8 @@ const phases = [
       check('child-registrations'),
       check('event-conventions'),
       check('doc-claims'),
+      check('boolean-defaults'),
+      check('empty-attributes'),
       check('breakpoint-drift'),
     ],
   },

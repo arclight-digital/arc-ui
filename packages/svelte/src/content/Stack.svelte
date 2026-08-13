@@ -37,7 +37,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { direction = 'vertical', gap = 'md', align = 'stretch', justify = 'start', wrap = false, children, ...rest }: Props = $props();
+  let { direction, gap, align, justify, wrap, children, ...rest }: Props = $props();
 </script>
 
 <arc-stack {direction} {gap} {align} {justify} {wrap} {...rest}>

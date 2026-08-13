@@ -11,7 +11,6 @@ const props = withDefaults(defineProps<{
 }>(), {
   heading: '',
   description: '',
-  border: false,
 });
 </script>
 

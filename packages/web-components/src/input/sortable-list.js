@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * Drag-and-drop reorderable list with grip handles, keyboard reordering support, and visual
@@ -15,9 +16,9 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @csspart handle
  * @csspart content
  */
-export class ArcSortableList extends LitElement {
+export class ArcSortableList extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    disabled: { type: Boolean, reflect: true },
+    disabled: flag(false),
     _items: { state: true },
     _dragIndex: { state: true },
     _overIndex: { state: true },
@@ -127,7 +128,6 @@ export class ArcSortableList extends LitElement {
 
   constructor() {
     super();
-    this.disabled = false;
     this._items = [];
     this._dragIndex = -1;
     this._overIndex = -1;

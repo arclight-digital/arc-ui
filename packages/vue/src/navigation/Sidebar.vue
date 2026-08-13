@@ -13,10 +13,7 @@ const props = withDefaults(defineProps<{
   label?: string;
 }>(), {
   active: '',
-  collapsed: false,
-  position: 'left',
   width: '280px',
-  glow: false,
   label: 'Sidebar navigation',
 });
 </script>

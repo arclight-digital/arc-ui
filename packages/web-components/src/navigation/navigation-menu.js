@@ -593,6 +593,11 @@ export class ArcNavigationMenu extends LitElement {
     this._portal.setAttribute('data-arc-nav-portal', '');
     this._portalRoot = this._portal.attachShadow({ mode: 'open' });
     document.body.appendChild(this._portal);
+    // Fill it now rather than waiting for the next render. `updated()` is the
+    // only other caller, and a reconnect does not by itself request an update —
+    // so a reparented menu was left holding an empty, unstyled portal until
+    // something unrelated happened to re-render it (finding #67).
+    this._renderPortal();
   }
 
   _destroyPortal() {
@@ -642,9 +647,14 @@ export class ArcNavigationMenu extends LitElement {
         return;
       }
       if (this._openIndex >= 0) {
+        // Captured *before* closing: `_close()` sets `_openIndex` to -1, so
+        // reading it afterwards indexed the trigger list with -1, got undefined,
+        // and the optional chaining swallowed it — Escape closed the panel and
+        // dropped focus to the top of the document, silently (finding #66).
+        const index = this._openIndex;
         this._close();
         const triggers = this.shadowRoot.querySelectorAll('.nav__trigger');
-        triggers[this._openIndex]?.focus();
+        triggers[index]?.focus();
       }
     }
   }
@@ -785,12 +795,18 @@ export class ArcNavigationMenu extends LitElement {
 
   _renderPortal() {
     if (!this._portalRoot) return;
-    if (!this._portalStyled) {
+    // Keyed on the portal root's own state, not on an instance flag.
+    // `_createPortal` runs on every connect and builds a *new* shadow root,
+    // while a `_portalStyled` boolean survived the reconnect — so after a
+    // reparenting the styling step was skipped for a root that had never been
+    // styled, and the mobile overlay rendered as unstyled markup over the page.
+    // A portal shadow root inherits nothing from its host, so there is no
+    // fallback to degrade to (finding #67).
+    if (!this._portalRoot.adoptedStyleSheets.length) {
       const sheet = new CSSStyleSheet();
       const cssTexts = (this.constructor.elementStyles || []).map((s) => s.cssText ?? s.toString());
       sheet.replaceSync(cssTexts.join('\n'));
       this._portalRoot.adoptedStyleSheets = [sheet];
-      this._portalStyled = true;
     }
     litRender(this._renderMobileOverlay(), this._portalRoot);
   }

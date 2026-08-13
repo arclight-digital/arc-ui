@@ -15,13 +15,10 @@ const props = withDefaults(defineProps<{
   separator?: number;
   label?: string;
 }>(), {
-  size: 'md',
   length: 4,
   value: '',
   name: '',
   disabled: false,
-  mask: false,
-  type: 'number',
   separator: 0,
   label: '',
 });

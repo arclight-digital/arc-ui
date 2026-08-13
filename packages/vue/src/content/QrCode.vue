@@ -14,10 +14,8 @@ const props = withDefaults(defineProps<{
 }>(), {
   value: '',
   size: 160,
-  level: 'M',
   label: '',
   quietZone: 2,
-  contrast: false,
 });
 </script>
 

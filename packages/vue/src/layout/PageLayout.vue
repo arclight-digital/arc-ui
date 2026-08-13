@@ -9,7 +9,6 @@ const props = withDefaults(defineProps<{
   maxWidth?: string;
   gap?: string;
 }>(), {
-  layout: 'centered',
   maxWidth: '1120px',
   gap: 'var(--space-xl)',
 });

@@ -1,6 +1,7 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Structured list container with optional selection, keyboard navigation, and multiple visual
@@ -19,12 +20,12 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @slot - Default content.
  * @csspart list
  */
-export class ArcList extends LitElement {
+export class ArcList extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    variant: { type: String, reflect: true },
-    size: { type: String, reflect: true },
-    selectable: { type: Boolean, reflect: true },
-    multiple: { type: Boolean },
+    variant: oneOf(['default', 'bordered', 'separated']),
+    size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
+    selectable: flag(false),
+    multiple: flag(false, { reflect: false }),
     value: { type: String },
     label: { type: String },
     _items: { state: true },
@@ -63,10 +64,6 @@ export class ArcList extends LitElement {
 
   constructor() {
     super();
-    this.variant = 'default';
-    this.size = 'md';
-    this.selectable = false;
-    this.multiple = false;
     this.value = '';
     this.label = '';
     this._items = [];

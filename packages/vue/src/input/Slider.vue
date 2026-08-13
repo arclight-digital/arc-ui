@@ -14,7 +14,6 @@ const props = withDefaults(defineProps<{
   disabled?: boolean;
   label?: string;
 }>(), {
-  size: 'md',
   value: 0,
   min: 0,
   max: 100,

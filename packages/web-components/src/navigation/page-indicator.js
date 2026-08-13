@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * Dot-based position indicator for page-level navigation or onboarding flows. Active dot fills
@@ -14,11 +15,11 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart base
  * @csspart dot
  */
-export class ArcPageIndicator extends LitElement {
+export class ArcPageIndicator extends DeclaredPropsMixin(LitElement) {
   static properties = {
     count: { type: Number },
     value: { type: Number, reflect: true },
-    clickable: { type: Boolean, reflect: true },
+    clickable: flag(false),
   };
 
   static styles = [
@@ -65,7 +66,6 @@ export class ArcPageIndicator extends LitElement {
     super();
     this.count = 0;
     this.value = 0;
-    this.clickable = false;
   }
 
   _select(index) {

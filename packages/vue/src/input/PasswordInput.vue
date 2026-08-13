@@ -21,11 +21,8 @@ const props = withDefaults(defineProps<{
   placeholder: '',
   value: '',
   disabled: false,
-  required: false,
   error: '',
-  size: 'md',
   autocomplete: 'current-password',
-  showStrength: false,
 });
 
 const emit = defineEmits<{

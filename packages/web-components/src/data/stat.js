@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
  * Numeric statistic display with gradient value and label.
@@ -7,7 +8,9 @@ import { tokenStyles } from '../shared-styles.js';
  * @tag arc-stat
  * @prop {string} value - The stat value (e.g. "99%")
  * @prop {string} label - Label below the value
- * @prop {'up' | 'down' | 'neutral'} trend - Shows a trend indicator arrow below the label.
+ * @prop {'' | 'up' | 'down' | 'neutral'} trend - Shows a trend indicator arrow below the label.
+ *   Empty (the default) shows none; an unrecognised value falls back to empty rather than
+ *   rendering an uncoloured dash that no `:host([trend=...])` rule matches.
  * @prop {string} change - Text displayed next to the trend arrow, typically a percentage like '+12%' or '-3.5%'.
  * @slot none
  * @csspart stat
@@ -15,11 +18,11 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart label
  * @csspart trend
  */
-export class ArcStat extends LitElement {
+export class ArcStat extends DeclaredPropsMixin(LitElement) {
   static properties = {
     value: { type: String },
     label: { type: String },
-    trend: { type: String, reflect: true },
+    trend: oneOf(['', 'up', 'down', 'neutral']),
     change: { type: String },
   };
 

@@ -9,12 +9,10 @@ const props = withDefaults(defineProps<{
   name?: string;
   size?: 'sm' | 'md' | 'lg';
   shape?: 'circle' | 'square' | 'rounded';
-  status?: 'online' | 'offline' | 'busy' | 'away';
+  status?: '' | 'online' | 'offline' | 'busy' | 'away';
 }>(), {
   src: '',
   name: '',
-  size: 'md',
-  shape: 'circle',
 });
 </script>
 

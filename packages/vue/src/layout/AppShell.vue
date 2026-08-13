@@ -4,12 +4,10 @@ import '@arclux/arc-ui/app-shell';
 
 defineOptions({ name: 'AppShell' });
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   sidebarOpen?: boolean;
   breakpoint?: number;
-}>(), {
-  sidebarOpen: false,
-});
+}>();
 
 const emit = defineEmits<{
   'arc-sidebar-toggle': [event: CustomEvent];

@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * Live countdown to a target date/time with days, hours, minutes, and seconds segments.
@@ -17,12 +18,12 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart label
  * @csspart container
  */
-export class ArcCountdownTimer extends LitElement {
+export class ArcCountdownTimer extends DeclaredPropsMixin(LitElement) {
   static properties = {
     target: { type: String },
     label: { type: String },
     expired: { type: String },
-    hideZeroSegments: { type: Boolean, reflect: true, attribute: 'hide-zero-segments' },
+    hideZeroSegments: flag(false, { attribute: 'hide-zero-segments' }),
     _days: { state: true },
     _hours: { state: true },
     _minutes: { state: true },
@@ -115,7 +116,6 @@ export class ArcCountdownTimer extends LitElement {
     this.target = '';
     this.label = '';
     this.expired = 'Expired';
-    this.hideZeroSegments = false;
     this._days = 0;
     this._hours = 0;
     this._minutes = 0;

@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
  * ARIA live-region wrapper with no visual output. Announces dynamic content changes to screen
@@ -10,9 +11,9 @@ import { LitElement, html, css } from 'lit';
  * @slot none
  * @csspart region
  */
-export class ArcAnnouncement extends LitElement {
+export class ArcAnnouncement extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    politeness: { type: String, reflect: true },
+    politeness: oneOf(['polite', 'assertive']),
     message: { type: String },
   };
 
@@ -32,7 +33,6 @@ export class ArcAnnouncement extends LitElement {
 
   constructor() {
     super();
-    this.politeness = 'polite';
     this.message = '';
   }
 

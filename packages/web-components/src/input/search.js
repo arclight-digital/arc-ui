@@ -1,9 +1,10 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import { ClickOutsideController } from '../shared/click-outside.js';
+import { DismissController } from '../shared/dismiss-controller.js';
 import { PositionController } from '../shared/position-controller.js';
 import { managedPanelStyles } from '../shared/position-styles.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * Search input with a magnifying glass icon, clear button, loading spinner, and autocomplete
@@ -31,14 +32,14 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @csspart suggestions
  * @csspart suggestion
  */
-export class ArcSearch extends LitElement {
+export class ArcSearch extends DeclaredPropsMixin(LitElement) {
   static properties = {
     value: { type: String },
     placeholder: { type: String },
     label: { type: String },
-    disabled: { type: Boolean, reflect: true },
-    loading: { type: Boolean, reflect: true },
-    open: { type: Boolean, reflect: true },
+    disabled: flag(false),
+    loading: flag(false),
+    open: flag(false),
     _activeIndex: { state: true },
     _suggestions: { state: true },
   };
@@ -208,13 +209,10 @@ export class ArcSearch extends LitElement {
     this.value = '';
     this.placeholder = 'Search...';
     this.label = '';
-    this.disabled = false;
-    this.loading = false;
-    this.open = false;
     this._activeIndex = -1;
     this._suggestions = [];
-    this._clickOutside = new ClickOutsideController(this, {
-      onClickOutside: () => {
+    this._dismiss = new DismissController(this, {
+      onDismiss: () => {
         this.open = false;
       },
     });
@@ -231,7 +229,7 @@ export class ArcSearch extends LitElement {
     // the same condition render() uses for the --open class.
     const showing = this.open && this._suggestions.length > 0;
     showing ? this._position.show() : this._position.hide();
-    showing ? this._clickOutside.activate() : this._clickOutside.deactivate();
+    showing ? this._dismiss.activate() : this._dismiss.deactivate();
   }
 
   _onSlotChange(e) {

@@ -42,7 +42,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = '', selected = false, disabled = false, href = '', prefix, description, suffix, children, ...rest }: Props = $props();
+  let { value = '', selected, disabled, href = '', prefix, description, suffix, children, ...rest }: Props = $props();
 </script>
 
 <arc-list-item {value} {selected} {disabled} {href} {...rest}>

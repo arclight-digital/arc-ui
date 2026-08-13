@@ -37,7 +37,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { field = '', key = '', label = '', sortable = false, width = '', children, ...rest }: Props = $props();
+  let { field = '', key = '', label = '', sortable, width = '', children, ...rest }: Props = $props();
 </script>
 
 <arc-column {field} {key} {label} {sortable} {width} {...rest}>

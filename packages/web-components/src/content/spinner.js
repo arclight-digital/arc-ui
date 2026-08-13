@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
  * Animated loading spinner in three sizes.
@@ -10,10 +11,10 @@ import { tokenStyles } from '../shared-styles.js';
  * @slot none
  * @csspart spinner
  */
-export class ArcSpinner extends LitElement {
+export class ArcSpinner extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    size: { type: String, reflect: true },
-    variant: { type: String, reflect: true },
+    size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
+    variant: oneOf(['primary', 'secondary', 'white']),
   };
 
   static styles = [
@@ -57,8 +58,6 @@ export class ArcSpinner extends LitElement {
 
   constructor() {
     super();
-    this.size = 'md';
-    this.variant = 'primary';
   }
 
   render() {

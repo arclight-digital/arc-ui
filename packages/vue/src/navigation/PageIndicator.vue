@@ -11,7 +11,6 @@ const props = withDefaults(defineProps<{
 }>(), {
   count: 0,
   value: 0,
-  clickable: false,
 });
 
 const emit = defineEmits<{

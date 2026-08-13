@@ -10,10 +10,7 @@ const props = withDefaults(defineProps<{
   label?: string;
   open?: boolean;
 }>(), {
-  x: 50,
-  y: 50,
   label: '',
-  open: false,
 });
 
 const emit = defineEmits<{

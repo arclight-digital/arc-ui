@@ -12,7 +12,6 @@ const props = withDefaults(defineProps<{
   name?: string;
   disabled?: boolean;
 }>(), {
-  size: 'md',
   value: () => ([]),
   placeholder: '',
   label: '',

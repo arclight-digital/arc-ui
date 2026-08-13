@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
  * Vertical or horizontal in-page link bar with active highlight. Active link gets accent-primary
@@ -15,9 +16,9 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @csspart base
  * @csspart link
  */
-export class ArcAnchorNav extends LitElement {
+export class ArcAnchorNav extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    orientation: { type: String, reflect: true },
+    orientation: oneOf(['vertical', 'horizontal'], { default: 'horizontal' }),
     value: { type: String, reflect: true },
     items: {
       converter: {
@@ -109,7 +110,6 @@ export class ArcAnchorNav extends LitElement {
 
   constructor() {
     super();
-    this.orientation = 'horizontal';
     this.value = '';
     this.items = [];
     this._observer = null;
@@ -118,6 +118,7 @@ export class ArcAnchorNav extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     this._setupObserver();
+    this._observeSections();
   }
 
   disconnectedCallback() {
@@ -132,6 +133,33 @@ export class ArcAnchorNav extends LitElement {
     if (changed.has('value')) {
       this._updateSlottedActive();
     }
+    // The sections to watch come from the items, so a changed list means a
+    // different set of targets.
+    if (changed.has('items')) this._observeSections();
+  }
+
+  /**
+   * Point the observer at the sections the links refer to.
+   *
+   * This was missing entirely: `_setupObserver` built an IntersectionObserver
+   * and nothing ever called `observe()` on it, so the documented active-link
+   * highlight only ever moved on click and never on scroll. The teardown test
+   * passed throughout because it asked whether an observer *object* existed,
+   * not whether it was watching anything (finding #65).
+   */
+  _observeSections() {
+    if (!this._observer) return;
+    this._observer.disconnect();
+    for (const value of this._sectionValues()) {
+      const section = document.getElementById(value);
+      if (section) this._observer.observe(section);
+    }
+  }
+
+  /** Item values, from the `items` property or from slotted children. */
+  _sectionValues() {
+    if (this.items?.length) return this.items.map((item) => item.value).filter(Boolean);
+    return [...this.querySelectorAll('[value]')].map((el) => el.getAttribute('value'));
   }
 
   _updateSlottedActive() {
@@ -181,6 +209,9 @@ export class ArcAnchorNav extends LitElement {
 
   _onSlotChange(e) {
     const nodes = e.target.assignedElements({ flatten: true });
+    // Slotted items arrive after connectedCallback, so the sections they name
+    // are only knowable here.
+    this._observeSections();
     for (const node of nodes) {
       const val = node.getAttribute('value');
       if (val) {

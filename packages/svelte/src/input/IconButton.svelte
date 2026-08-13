@@ -40,7 +40,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { name = '', text = '', variant = 'ghost', size = 'md', label = '', href = '', disabled = false, type = 'button', children, ...rest }: Props = $props();
+  let { name = '', text = '', variant, size, label = '', href = '', disabled, type = 'button', children, ...rest }: Props = $props();
 </script>
 
 <arc-icon-button {name} {text} {variant} {size} {label} {href} {disabled} {type} {...rest}>

@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, oneOf, int } from '../shared/props.js';
 
 /**
  * Tabbed content navigation with keyboard support and ARIA roles.
@@ -15,14 +16,24 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @slot - Default content.
  * @csspart tabs
  */
-export class ArcTabs extends LitElement {
+export class ArcTabs extends DeclaredPropsMixin(LitElement) {
+  /**
+   * `max` names a getter rather than a literal, so the bound tracks the tab
+   * count — this is what makes the "clamped to the nearest valid index" claim
+   * in the JSDoc above true rather than aspirational (finding #1).
+   */
   static properties = {
-    selected: { type: Number, reflect: true },
-    align: { type: String, reflect: true },
-    variant: { type: String, reflect: true },
-    orientation: { type: String, reflect: true },
+    selected: int({ default: 0, min: 0, max: '_maxIndex', clamp: 'toRange', reflect: true }),
+    align: oneOf(['start', 'center', 'end']),
+    variant: oneOf(['underline', 'pills']),
+    orientation: oneOf(['horizontal', 'vertical']),
     _tabs: { state: true },
   };
+
+  /** Upper bound for `selected`; undefined while there are no tabs to bound it. */
+  get _maxIndex() {
+    return this._tabs?.length ? this._tabs.length - 1 : undefined;
+  }
 
   static styles = [
     tokenStyles,
@@ -151,10 +162,6 @@ export class ArcTabs extends LitElement {
 
   constructor() {
     super();
-    this.selected = 0;
-    this.align = 'start';
-    this.variant = 'underline';
-    this.orientation = 'horizontal';
     this._tabs = [];
   }
 

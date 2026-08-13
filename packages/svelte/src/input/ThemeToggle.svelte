@@ -35,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { theme = 'auto', disabled = false, iconOnly = false, size = 'md', ...rest }: Props = $props();
+  let { theme, disabled, iconOnly, size, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

@@ -1,8 +1,6 @@
 export declare const FormControlMixin: (superClass: any) => {
     new (): {
         [x: string]: any;
-        required: boolean;
-        readonly: boolean;
         _internals: any;
         __onEditingFocusIn: (e: any) => void;
         __onEditingFocusOut: () => void;
@@ -52,10 +50,34 @@ export declare const FormControlMixin: (superClass: any) => {
         required: {
             type: BooleanConstructor;
             reflect: boolean;
+            attribute?: string | undefined;
+            converter: {
+                fromAttribute: (v: any) => boolean;
+                toAttribute: (v: any) => "" | null;
+            };
+            arc: {
+                kind: string;
+                default: boolean;
+                negative: string;
+                derived: any;
+                blockedBy: string | undefined;
+            };
         };
         readonly: {
             type: BooleanConstructor;
             reflect: boolean;
+            attribute?: string | undefined;
+            converter: {
+                fromAttribute: (v: any) => boolean;
+                toAttribute: (v: any) => "" | null;
+            };
+            arc: {
+                kind: string;
+                default: boolean;
+                negative: string;
+                derived: any;
+                blockedBy: string | undefined;
+            };
         };
     };
     /**

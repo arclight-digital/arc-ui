@@ -1,4 +1,5 @@
 import { LitElement, nothing } from 'lit';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * Data-holder child element that defines a single column in the comparison grid. Renders nothing
@@ -10,17 +11,16 @@ import { LitElement, nothing } from 'lit';
  * @prop {string} values - JSON array of values matching the features order. Use "true"/"false" for check/cross icons, or any string for text values.
  * @slot none
  */
-export class ArcComparisonColumn extends LitElement {
+export class ArcComparisonColumn extends DeclaredPropsMixin(LitElement) {
   static properties = {
     heading: { type: String, reflect: true },
-    highlight: { type: Boolean, reflect: true },
+    highlight: flag(false),
     values: { type: String },
   };
 
   constructor() {
     super();
     this.heading = '';
-    this.highlight = false;
     this.values = '[]';
   }
 

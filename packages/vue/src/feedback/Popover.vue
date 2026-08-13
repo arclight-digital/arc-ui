@@ -9,8 +9,6 @@ const props = withDefaults(defineProps<{
   position?: 'top' | 'bottom' | 'left' | 'right';
   trigger?: string;
 }>(), {
-  open: false,
-  position: 'bottom',
   trigger: '',
 });
 

@@ -40,7 +40,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { position = 50, orientation = 'horizontal', beforeLabel = '', afterLabel = '', label = '', after, before, ...rest }: Props = $props();
+  let { position, orientation, beforeLabel = '', afterLabel = '', label = '', after, before, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

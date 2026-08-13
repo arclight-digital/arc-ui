@@ -1,5 +1,6 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * Text highlighting with search query match markers.
@@ -12,11 +13,11 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart text
  * @csspart mark
  */
-export class ArcHighlight extends LitElement {
+export class ArcHighlight extends DeclaredPropsMixin(LitElement) {
   static properties = {
     text: { type: String },
     query: { type: String },
-    caseSensitive: { type: Boolean, reflect: true, attribute: 'case-sensitive' },
+    caseSensitive: flag(false, { attribute: 'case-sensitive' }),
   };
 
   static styles = [
@@ -39,7 +40,6 @@ export class ArcHighlight extends LitElement {
     super();
     this.text = '';
     this.query = '';
-    this.caseSensitive = false;
   }
 
   /** Escape regex special characters so arbitrary query strings are safe. */

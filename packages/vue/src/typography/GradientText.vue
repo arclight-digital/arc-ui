@@ -9,9 +9,7 @@ const props = withDefaults(defineProps<{
   gradient?: string;
   animated?: boolean;
 }>(), {
-  variant: 'accent',
   gradient: '',
-  animated: false,
 });
 </script>
 

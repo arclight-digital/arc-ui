@@ -37,7 +37,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { href = '', variant = 'default', underline = 'hover', active = false, external = false, children, ...rest }: Props = $props();
+  let { href = '', variant, underline, active, external, children, ...rest }: Props = $props();
 </script>
 
 <arc-link {href} {variant} {underline} {active} {external} {...rest}>

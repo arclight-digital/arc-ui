@@ -12,12 +12,10 @@ const props = withDefaults(defineProps<{
   disabled?: boolean;
   readonly?: boolean;
 }>(), {
-  size: 'md',
   value: 0,
   max: 5,
   name: '',
   disabled: false,
-  readonly: false,
 });
 
 const emit = defineEmits<{

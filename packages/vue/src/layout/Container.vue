@@ -4,15 +4,11 @@ import '@arclux/arc-ui/container';
 
 defineOptions({ name: 'Container' });
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   narrow?: boolean;
   size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
   padding?: 'none' | 'sm' | 'md' | 'lg';
-}>(), {
-  narrow: false,
-  size: 'md',
-  padding: 'md',
-});
+}>();
 </script>
 
 <template>

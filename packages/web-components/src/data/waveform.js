@@ -1,6 +1,7 @@
 import { LitElement, html, css, svg, nothing } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag, num, oneOf } from '../shared/props.js';
 
 /**
  * Audio waveform visualization that doubles as a scrubber. Renders a peaks array as an SVG
@@ -34,15 +35,15 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart playhead - The playhead line.
  * @csspart time - The time readout row (renders only when duration is set).
  */
-export class ArcWaveform extends LitElement {
+export class ArcWaveform extends DeclaredPropsMixin(LitElement) {
   static properties = {
     // No attribute: an array cannot round-trip through one, and peaks lists are
     // long enough that nobody should be writing them into markup anyway.
     peaks: { attribute: false },
-    position: { type: Number, reflect: true },
+    position: num({ default: 0, min: 0, max: 1, clamp: 'toRange', reflect: true }),
     duration: { type: Number },
-    interactive: { type: Boolean, reflect: true },
-    variant: { type: String, reflect: true },
+    interactive: flag(false),
+    variant: oneOf(['bars', 'mirror']),
     label: { type: String },
   };
 
@@ -145,10 +146,7 @@ export class ArcWaveform extends LitElement {
   constructor() {
     super();
     this.peaks = [];
-    this.position = 0;
     this.duration = null;
-    this.interactive = false;
-    this.variant = 'bars';
     this.label = '';
     this._onWindowPointerMove = this._onWindowPointerMove.bind(this);
     this._onWindowPointerUp = this._onWindowPointerUp.bind(this);

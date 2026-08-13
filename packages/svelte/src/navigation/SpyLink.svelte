@@ -34,7 +34,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { target = '', level = 0, children, ...rest }: Props = $props();
+  let { target = '', level, children, ...rest }: Props = $props();
 </script>
 
 <arc-spy-link {target} {level} {...rest}>

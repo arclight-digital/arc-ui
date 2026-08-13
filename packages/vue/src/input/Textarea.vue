@@ -25,10 +25,6 @@ const props = withDefaults(defineProps<{
   rows: 4,
   maxlength: 0,
   disabled: false,
-  readonly: false,
-  resize: 'vertical',
-  size: 'md',
-  autoResize: false,
   error: '',
 });
 

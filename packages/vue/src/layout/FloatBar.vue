@@ -4,13 +4,10 @@ import '@arclux/arc-ui/float-bar';
 
 defineOptions({ name: 'FloatBar' });
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   open?: boolean;
   position?: 'bottom' | 'top';
-}>(), {
-  open: false,
-  position: 'bottom',
-});
+}>();
 </script>
 
 <template>

@@ -45,7 +45,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { mask = '', value = $bindable(''), placeholderChar = '_', label = '', name = '', disabled = false, required = false, autocomplete = '', error = '', size = 'md', prefix, suffix, ...rest }: Props = $props();
+  let { mask = '', value = $bindable(''), placeholderChar = '_', label = '', name = '', disabled = false, required, autocomplete = '', error = '', size, prefix, suffix, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

@@ -11,10 +11,6 @@ const props = withDefaults(defineProps<{
   disabled?: boolean;
   color?: string;
 }>(), {
-  variant: 'default',
-  size: 'md',
-  removable: false,
-  disabled: false,
   color: '',
 });
 

@@ -15,13 +15,9 @@ const props = withDefaults(defineProps<{
   clip?: number;
   label?: string;
 }>(), {
-  value: 0,
   min: 0,
   max: 1,
-  orientation: 'vertical',
   segments: 20,
-  warn: 0.75,
-  clip: 0.9,
   label: '',
 });
 </script>

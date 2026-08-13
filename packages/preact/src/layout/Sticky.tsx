@@ -6,6 +6,7 @@ import '@arclux/arc-ui/sticky';
 
 export interface StickyProps {
   offset?: string;
+  stuck?: boolean;
   onArcStuck?: (e: CustomEvent) => void;
   children?: preact.ComponentChildren;
   class?: string;
@@ -35,7 +36,7 @@ export interface StickyProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Sticky: FunctionComponent<StickyProps> = ({ offset, onArcStuck, children, ...rest }) => {
+export const Sticky: FunctionComponent<StickyProps> = ({ offset, stuck, onArcStuck, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -48,5 +49,5 @@ export const Sticky: FunctionComponent<StickyProps> = ({ offset, onArcStuck, chi
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcStuck]);
-  return h('arc-sticky', { ref, offset, ...rest }, children);
+  return h('arc-sticky', { ref, offset, stuck, ...rest }, children);
 };

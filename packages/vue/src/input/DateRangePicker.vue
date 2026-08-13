@@ -21,7 +21,6 @@ const props = withDefaults(defineProps<{
   label?: string;
   open?: boolean;
 }>(), {
-  size: 'md',
   locale: '',
   firstDayOfWeek: 0,
   start: '',
@@ -33,7 +32,6 @@ const props = withDefaults(defineProps<{
   presets: () => ([]),
   placeholder: 'Select date range',
   disabled: false,
-  required: false,
   label: '',
   open: false,
 });

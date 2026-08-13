@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
  * Uniform aspect-ratio cell grid with configurable columns and ratio.
@@ -11,11 +12,11 @@ import { tokenStyles } from '../shared-styles.js';
  * @slot - Default content.
  * @csspart grid
  */
-export class ArcAspectGrid extends LitElement {
+export class ArcAspectGrid extends DeclaredPropsMixin(LitElement) {
   static properties = {
     columns: { type: Number, reflect: true },
-    ratio: { type: String, reflect: true },
-    gap: { type: String, reflect: true },
+    ratio: oneOf(['1/1', '16/9', '4/3']),
+    gap: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
   };
 
   static styles = [
@@ -55,8 +56,6 @@ export class ArcAspectGrid extends LitElement {
   constructor() {
     super();
     this.columns = 3;
-    this.ratio = '1/1';
-    this.gap = 'md';
   }
 
   updated(changed) {

@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
  * User avatar with image or initials fallback.
@@ -8,7 +9,9 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {string} src - Image URL for the avatar. When provided, renders an `<img>` element. When empty, displays initials derived from the `name` prop.
  * @prop {string} name - User name used to generate initials (first letter, uppercased) and as the `alt` text / `aria-label` for the avatar.
  * @prop {'sm' | 'md' | 'lg'} size - Controls avatar dimensions: `sm` (32px), `md` (40px), `lg` (56px).
- * @prop {'online' | 'offline' | 'busy' | 'away'} status - Shows a status indicator dot. Options: 'online', 'offline', 'busy', 'away'.
+ * @prop {'' | 'online' | 'offline' | 'busy' | 'away'} status - Shows a status indicator dot.
+ *   Empty (the default) shows none. An unrecognised value falls back to empty rather than
+ *   rendering an uncoloured dot that screen readers announce by its bogus name.
  * @prop {'circle' | 'square' | 'rounded'} shape - Controls the avatar shape. Options: 'circle', 'square', 'rounded'.
  * @slot none
  * @csspart img
@@ -16,13 +19,13 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart avatar
  * @csspart status
  */
-export class ArcAvatar extends LitElement {
+export class ArcAvatar extends DeclaredPropsMixin(LitElement) {
   static properties = {
     src: { type: String },
     name: { type: String, reflect: true },
-    size: { type: String, reflect: true },
-    shape: { type: String, reflect: true },
-    status: { type: String, reflect: true },
+    size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
+    shape: oneOf(['circle', 'square', 'rounded']),
+    status: oneOf(['', 'online', 'offline', 'busy', 'away']),
     _imgState: { state: true },
   };
 
@@ -146,9 +149,6 @@ export class ArcAvatar extends LitElement {
     super();
     this.src = '';
     this.name = '';
-    this.size = 'md';
-    this.shape = 'circle';
-    this.status = '';
     this._imgState = 'loading';
   }
 

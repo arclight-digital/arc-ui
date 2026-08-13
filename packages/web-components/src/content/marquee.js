@@ -1,6 +1,8 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { observeResize } from '../shared/subscriptions.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Continuously scrolling content strip with configurable speed, direction, gap, and pause-on-hover
@@ -16,11 +18,11 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @csspart group
  * @csspart group-duplicate
  */
-export class ArcMarquee extends LitElement {
+export class ArcMarquee extends DeclaredPropsMixin(LitElement) {
   static properties = {
     speed: { type: Number },
-    direction: { type: String, reflect: true },
-    pauseOnHover: { type: Boolean, reflect: true, attribute: 'pause-on-hover' },
+    direction: oneOf(['left', 'right']),
+    pauseOnHover: flag(true, { attribute: 'pause-on-hover', negative: 'no-pause-on-hover' }),
     gap: { type: String },
     _animDuration: { state: true },
   };
@@ -82,17 +84,17 @@ export class ArcMarquee extends LitElement {
   constructor() {
     super();
     this.speed = 40;
-    this.direction = 'left';
-    this.pauseOnHover = true;
     this.gap = 'var(--space-xl)';
     this._animDuration = '10s';
-    this._resizeObserver = null;
+    // Was set up in firstUpdated and torn down in disconnectedCallback, which do
+    // not pair: the first reparenting left the marquee no longer recalculating
+    // its duration when its content resized (finding #64).
+    observeResize(this, '.marquee__group--primary', () => this._recalcDuration());
   }
 
   firstUpdated() {
     hydrateSlots(this);
     this._updateDuplicate();
-    this._setupResizeObserver();
   }
 
   updated(changed) {
@@ -101,22 +103,6 @@ export class ArcMarquee extends LitElement {
     }
   }
 
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    if (this._resizeObserver) {
-      this._resizeObserver.disconnect();
-      this._resizeObserver = null;
-    }
-  }
-
-  _setupResizeObserver() {
-    if (this._resizeObserver) {
-      this._resizeObserver.disconnect();
-    }
-    this._resizeObserver = new ResizeObserver(() => this._recalcDuration());
-    const group = this.shadowRoot.querySelector('.marquee__group--primary');
-    if (group) this._resizeObserver.observe(group);
-  }
 
   _recalcDuration() {
     requestAnimationFrame(() => {

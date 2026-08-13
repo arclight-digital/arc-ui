@@ -18,13 +18,8 @@ const props = withDefaults(defineProps<{
 }>(), {
   heading: '',
   homeHref: '/',
-  scrolled: false,
-  immersive: false,
-  fixed: false,
-  menuOpen: false,
   mobileMenu: 'sidebar',
   menuPosition: 'left',
-  navAlign: 'center',
 });
 </script>
 

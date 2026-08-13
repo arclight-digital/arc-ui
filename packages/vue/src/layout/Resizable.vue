@@ -10,7 +10,6 @@ const props = withDefaults(defineProps<{
   maxSize?: number;
   size?: number;
 }>(), {
-  direction: 'horizontal',
   minSize: 100,
   maxSize: Infinity,
   size: 300,

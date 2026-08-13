@@ -9,7 +9,6 @@ const props = withDefaults(defineProps<{
   placeholder?: string;
   maxResults?: number;
 }>(), {
-  open: false,
   placeholder: 'Type a command...',
   maxResults: 50,
 });

@@ -14,12 +14,10 @@ const props = withDefaults(defineProps<{
   sourceLabel?: string;
   targetLabel?: string;
 }>(), {
-  size: 'md',
   options: () => ([]),
   value: () => ([]),
   name: '',
   disabled: false,
-  searchable: false,
   sourceLabel: 'Available',
   targetLabel: 'Selected',
 });

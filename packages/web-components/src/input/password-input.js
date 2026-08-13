@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 let passwordInputIdCounter = 0;
 
@@ -101,7 +102,7 @@ function scorePassword(pw) {
  * @csspart toggle
  * @csspart error
  */
-export class ArcPasswordInput extends FormControlMixin(LitElement) {
+export class ArcPasswordInput extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
   /** Runs its own constraint logic — owns the whole validity flag set. */
   static autoValidates = false;
 
@@ -110,12 +111,19 @@ export class ArcPasswordInput extends FormControlMixin(LitElement) {
     label: { type: String },
     placeholder: { type: String },
     value: { type: String },
+    // NOT flag(): a form-associated custom element whose `disabled` content
+    // attribute is merely *present* is "actually disabled" per the HTML spec,
+    // so the platform calls formDisabledCallback(true) and the mixin sets the
+    // property back. `disabled="false"` is a disabled control here for exactly
+    // the reason it is on a native <input>. Native semantics win; see
+    // shared/props.js.
     disabled: { type: Boolean, reflect: true },
-    required: { type: Boolean, reflect: true },
+    required: flag(false),
     error: { type: String },
-    size: { type: String, reflect: true },
+    size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
+
     autocomplete: { type: String },
-    showStrength: { type: Boolean, reflect: true, attribute: 'show-strength' },
+    showStrength: flag(false, { attribute: 'show-strength' }),
     _visible: { state: true },
     _score: { state: true },
   };
@@ -276,11 +284,8 @@ export class ArcPasswordInput extends FormControlMixin(LitElement) {
     this.placeholder = '';
     this.value = '';
     this.disabled = false;
-    this.required = false;
     this.error = '';
-    this.size = 'md';
     this.autocomplete = 'current-password';
-    this.showStrength = false;
     this._visible = false;
     this._score = 0;
     this._fieldId = `arc-password-input-${++passwordInputIdCounter}`;

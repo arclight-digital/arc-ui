@@ -33,7 +33,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { size = 'md', variant = 'primary', ...rest }: Props = $props();
+  let { size, variant, ...rest }: Props = $props();
 </script>
 
 <arc-spinner {size} {variant} {...rest}>

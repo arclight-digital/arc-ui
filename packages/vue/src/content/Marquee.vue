@@ -11,8 +11,6 @@ const props = withDefaults(defineProps<{
   gap?: string;
 }>(), {
   speed: 40,
-  direction: 'left',
-  pauseOnHover: true,
   gap: 'var(--space-xl)',
 });
 </script>

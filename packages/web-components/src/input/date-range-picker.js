@@ -4,7 +4,8 @@ import { monthNames, weekdayNames, firstDayOfWeek, weekdayOffset } from '../shar
 import { PositionController } from '../shared/position-controller.js';
 import { managedPanelStyles } from '../shared/position-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
-import { ClickOutsideController } from '../shared/click-outside.js';
+import { DismissController } from '../shared/dismiss-controller.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Dual-calendar picker for selecting a start/end date range with presets and full keyboard
@@ -23,7 +24,7 @@ import { ClickOutsideController } from '../shared/click-outside.js';
  * @prop {string} name - Form field name used when the interval value is submitted with a form.
  * @prop {boolean} required - Marks the control invalid (valueMissing) until a complete range is selected.
  * @prop {boolean} disabled - Disables the picker, reducing opacity and preventing the popup from opening.
- * @prop {boolean} open - Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.
+ * @prop {boolean} open - Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS. Held at `false` while `disabled`.
  * @prop {'sm' | 'md' | 'lg'} size - Control size. `md` is the default; `sm` and `lg` scale the field padding.
  * @fires {CustomEvent<{ start: string, end: string }>} arc-change - Fired when a complete range is committed (second day clicked or preset applied). detail: { start, end }
  * @slot none
@@ -41,12 +42,13 @@ import { ClickOutsideController } from '../shared/click-outside.js';
  * @prop {string} locale - BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language.
  * @prop {number} firstDayOfWeek - Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention.
  */
-export class ArcDateRangePicker extends FormControlMixin(LitElement) {
+export class ArcDateRangePicker extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
   /** Runs its own constraint logic — owns the whole validity flag set. */
   static autoValidates = false;
 
   static properties = {
-    size: { type: String, reflect: true },
+    size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
+
     locale: { type: String },
     firstDayOfWeek: { type: Number, attribute: 'first-day-of-week' },
     start: { type: String },
@@ -57,10 +59,16 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
     months: { type: Number },
     presets: { type: Array },
     placeholder: { type: String },
+    // NOT flag(): a form-associated custom element whose `disabled` content
+    // attribute is merely *present* is "actually disabled" per the HTML spec,
+    // so the platform calls formDisabledCallback(true) and the mixin sets the
+    // property back. `disabled="false"` is a disabled control here for exactly
+    // the reason it is on a native <input>. Native semantics win; see
+    // shared/props.js.
     disabled: { type: Boolean, reflect: true },
-    required: { type: Boolean, reflect: true },
+    required: flag(false),
     label: { type: String },
-    open: { type: Boolean, reflect: true },
+    open: flag(false, { blockedBy: 'disabled' }),
     _viewMonth: { state: true },
     _viewYear: { state: true },
     _focusedIso: { state: true },
@@ -357,7 +365,6 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
 
   constructor() {
     super();
-    this.size = 'md';
     this.locale = '';
     this.firstDayOfWeek = 0;
     this.start = '';
@@ -369,17 +376,15 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
     this.presets = [];
     this.placeholder = 'Select date range';
     this.disabled = false;
-    this.required = false;
     this.label = '';
-    this.open = false;
     this._viewMonth = null;
     this._viewYear = null;
     this._focusedIso = null;
     this._previewIso = null;
     this._announcement = '';
 
-    this._clickOutside = new ClickOutsideController(this, {
-      onClickOutside: () => {
+    this._dismiss = new DismissController(this, {
+      onDismiss: () => {
         this.open = false;
       },
       when: () => this.open,
@@ -447,16 +452,32 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
   _toggleDropdown() {
     if (this.disabled || this.readonly) return;
     this.open = !this.open;
-    if (this.open) {
-      this._focusedIso = null;
-      this._previewIso = null;
-      const anchor = this.start || this.end;
-      if (anchor) {
-        const d = new Date(anchor + 'T00:00:00');
-        if (!isNaN(d)) {
-          this._viewMonth = d.getMonth();
-          this._viewYear = d.getFullYear();
-        }
+  }
+
+  /**
+   * Anchor the calendar whenever `open` turns true — on *either* path.
+   *
+   * This used to live in `_toggleDropdown`, which is only the click path, so
+   * `el.open = true` (documented and supported) showed today's month rather
+   * than the month the range starts in, and kept the previous preview highlight.
+   * Finding #59.
+   *
+   * `willUpdate` rather than `updated`: these are reactive state, so computing
+   * them before render folds into the same update instead of scheduling a
+   * second one.
+   */
+  willUpdate(changed) {
+    super.willUpdate(changed);
+    if (!changed.has('open') || !this.open) return;
+
+    this._focusedIso = null;
+    this._previewIso = null;
+    const anchor = this.start || this.end;
+    if (anchor) {
+      const d = new Date(anchor + 'T00:00:00');
+      if (!isNaN(d)) {
+        this._viewMonth = d.getMonth();
+        this._viewYear = d.getFullYear();
       }
     }
   }
@@ -659,11 +680,13 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
       case 'ArrowUp':
         d.setDate(d.getDate() - 7);
         break;
+      // Row ends are relative to where the week starts, so this has to go
+      // through weekdayOffset rather than the Sunday-based getDay().
       case 'Home':
-        d.setDate(d.getDate() - d.getDay());
+        d.setDate(d.getDate() - weekdayOffset(d, this._firstDay));
         break;
       case 'End':
-        d.setDate(d.getDate() + (6 - d.getDay()));
+        d.setDate(d.getDate() + (6 - weekdayOffset(d, this._firstDay)));
         break;
       case 'PageUp':
         this._shiftMonthClamped(d, -1);
@@ -736,12 +759,12 @@ export class ArcDateRangePicker extends FormControlMixin(LitElement) {
     }
     if (changed.has('open')) {
       if (this.open) {
-        this._clickOutside.activate();
+        this._dismiss.activate();
         this.updateComplete.then(() => {
           this.shadowRoot.querySelector('.day[tabindex="0"]')?.focus();
         });
       } else {
-        this._clickOutside.deactivate();
+        this._dismiss.deactivate();
       }
     }
   }

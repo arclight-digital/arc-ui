@@ -1,5 +1,6 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * How many children of one object or array render before the tree inserts a
@@ -37,7 +38,7 @@ const SEP = '\u001F';
  * @csspart preview
  * @csspart error
  */
-export class ArcJsonTree extends LitElement {
+export class ArcJsonTree extends DeclaredPropsMixin(LitElement) {
   static properties = {
     data: { type: Object, attribute: false },
     json: { type: String },
@@ -51,7 +52,7 @@ export class ArcJsonTree extends LitElement {
         },
       },
     },
-    keysQuoted: { type: Boolean, attribute: 'keys-quoted' },
+    keysQuoted: flag(false, { attribute: 'keys-quoted', reflect: false }),
     _focusedKey: { state: true },
   };
 
@@ -231,7 +232,6 @@ export class ArcJsonTree extends LitElement {
     this.data = undefined;
     this.json = '';
     this.expanded = 1;
-    this.keysQuoted = false;
     this._focusedKey = null;
     this._overrides = new Map();
     this._shown = new Map();

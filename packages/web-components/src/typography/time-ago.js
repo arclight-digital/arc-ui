@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * Relative time display that auto-updates ("3 minutes ago", "yesterday").
@@ -11,10 +12,10 @@ import { tokenStyles } from '../shared-styles.js';
  * @slot none
  * @csspart time
  */
-export class ArcTimeAgo extends LitElement {
+export class ArcTimeAgo extends DeclaredPropsMixin(LitElement) {
   static properties = {
     datetime: { type: String },
-    live: { type: Boolean, reflect: true },
+    live: flag(true, { negative: 'no-live' }),
     locale: { type: String },
   };
 
@@ -37,7 +38,6 @@ export class ArcTimeAgo extends LitElement {
   constructor() {
     super();
     this.datetime = '';
-    this.live = true;
     this.locale = 'en-US';
     /** @type {number|undefined} */
     this._timer = undefined;

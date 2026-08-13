@@ -37,7 +37,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { size = 'md', prefix, suffix, children, ...rest }: Props = $props();
+  let { size, prefix, suffix, children, ...rest }: Props = $props();
 </script>
 
 <arc-input-group {size} {...rest}>

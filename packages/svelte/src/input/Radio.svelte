@@ -34,7 +34,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = '', disabled = false, children, ...rest }: Props = $props();
+  let { value = '', disabled, children, ...rest }: Props = $props();
 </script>
 
 <arc-radio {value} {disabled} {...rest}>

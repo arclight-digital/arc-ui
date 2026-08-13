@@ -16,13 +16,10 @@ const props = withDefaults(defineProps<{
   variant?: 'full' | 'half';
   showValue?: boolean;
 }>(), {
-  value: 0,
   min: 0,
   max: 100,
   label: '',
   unit: '',
-  variant: 'full',
-  showValue: true,
 });
 </script>
 

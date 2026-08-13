@@ -10,9 +10,6 @@ const props = withDefaults(defineProps<{
   position?: 'bottom-right' | 'bottom-left';
   items?: Array<{icon: string, label: string, value?: string}>;
 }>(), {
-  open: false,
-  direction: 'up',
-  position: 'bottom-right',
   items: () => ([]),
 });
 

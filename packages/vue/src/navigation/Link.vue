@@ -12,10 +12,6 @@ const props = withDefaults(defineProps<{
   external?: boolean;
 }>(), {
   href: '',
-  variant: 'default',
-  underline: 'hover',
-  active: false,
-  external: false,
 });
 </script>
 

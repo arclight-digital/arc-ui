@@ -3,6 +3,7 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { tokenStyles } from '../shared-styles.js';
 import { iconRegistry } from './icon-registry.js';
 import { sanitizeSvg } from './sanitize-svg.js';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
  * An unknown icon name used to render an empty box and say nothing, which is
@@ -39,9 +40,13 @@ function warnUnknownIcon(name) {
  * @slot - Default content.
  * @csspart icon
  */
-export class ArcIcon extends LitElement {
+export class ArcIcon extends DeclaredPropsMixin(LitElement) {
   static properties = {
     name: { type: String, reflect: true },
+    // NOT oneOf(): the JSDoc union above lists the five named sizes, but the
+    // code below also accepts any positive number as a pixel size. The
+    // documented set is narrower than the accepted set, so normalising to it
+    // would silently reject `size="18"`. See test-findings.md.
     size: { type: String, reflect: true },
     label: { type: String },
     _svgContent: { state: true },

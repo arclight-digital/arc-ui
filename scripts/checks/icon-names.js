@@ -32,6 +32,16 @@ const root = path.resolve(__dirname, '..', '..');
 const SRC = path.join(root, 'packages/web-components/src');
 const LIBRARIES = ['phosphor', 'lucide'];
 
+// The resolvers are generated and gitignored, so on a fresh checkout this check
+// used to die with a raw readFileSync ENOENT stack. Fail with the fix instead,
+// matching scripts/smoke-test-wrappers.js.
+for (const lib of LIBRARIES) {
+  if (!fs.existsSync(path.join(SRC, 'icons', lib, '_resolver.js'))) {
+    console.error('✗ generated icon modules missing — run `pnpm generate:icons` first');
+    process.exit(1);
+  }
+}
+
 /** Icon names available in a library, read from its generated resolver. */
 function libraryNames(lib) {
   const file = path.join(SRC, 'icons', lib, '_resolver.js');

@@ -9,7 +9,6 @@ const props = withDefaults(defineProps<{
   level?: number;
 }>(), {
   target: '',
-  level: 0,
 });
 </script>
 

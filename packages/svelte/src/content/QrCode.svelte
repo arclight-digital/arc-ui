@@ -37,7 +37,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = '', size = 160, level = 'M', label = '', quietZone = 2, contrast = false, ...rest }: Props = $props();
+  let { value = '', size = 160, level, label = '', quietZone = 2, contrast, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

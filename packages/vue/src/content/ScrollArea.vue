@@ -9,7 +9,6 @@ const props = withDefaults(defineProps<{
   orientation?: 'vertical' | 'horizontal' | 'both';
 }>(), {
   maxHeight: '',
-  orientation: 'vertical',
 });
 </script>
 

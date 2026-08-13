@@ -16,7 +16,6 @@ const props = withDefaults(defineProps<{
   label: '',
   name: '',
   placeholder: 'Empty',
-  multiline: false,
   disabled: false,
 });
 

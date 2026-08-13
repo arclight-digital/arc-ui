@@ -10,7 +10,6 @@ const props = withDefaults(defineProps<{
   values?: string;
 }>(), {
   heading: '',
-  highlight: false,
   values: '[]',
 });
 </script>

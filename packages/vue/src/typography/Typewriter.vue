@@ -16,9 +16,6 @@ const props = withDefaults(defineProps<{
   text: '',
   speed: 50,
   delay: 0,
-  cursor: true,
-  loop: false,
-  nowrap: false,
   pauseEnd: 2000,
 });
 

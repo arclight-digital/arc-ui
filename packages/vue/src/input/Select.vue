@@ -19,7 +19,6 @@ const props = withDefaults(defineProps<{
   label: '',
   name: '',
   disabled: false,
-  size: 'md',
   error: '',
   open: false,
 });

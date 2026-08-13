@@ -17,12 +17,10 @@ const props = withDefaults(defineProps<{
   disabled?: boolean;
   error?: string;
 }>(), {
-  size: 'md',
   value: () => ([]),
   suggestions: () => ([]),
   delimiter: ',',
   maxTags: 0,
-  allowCustom: true,
   label: '',
   placeholder: '',
   name: '',

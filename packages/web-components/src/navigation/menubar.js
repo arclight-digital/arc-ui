@@ -1,6 +1,6 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import { ClickOutsideController } from '../shared/click-outside.js';
+import { DismissController } from '../shared/dismiss-controller.js';
 import { PositionController } from '../shared/position-controller.js';
 import { managedPanelStyles } from '../shared/position-styles.js';
 
@@ -235,8 +235,8 @@ export class ArcMenubar extends LitElement {
     this._positions = new Map();
     this._focusAfterUpdate = null;
     this._hoverTimer = null;
-    this._clickOutside = new ClickOutsideController(this, {
-      onClickOutside: () => this._closeAll(false),
+    this._dismiss = new DismissController(this, {
+      onDismiss: () => this._closeAll(false),
       when: () => this._openTop >= 0,
     });
   }
@@ -258,8 +258,8 @@ export class ArcMenubar extends LitElement {
   }
 
   updated() {
-    if (this._openTop >= 0) this._clickOutside.activate();
-    else this._clickOutside.deactivate();
+    if (this._openTop >= 0) this._dismiss.activate();
+    else this._dismiss.deactivate();
 
     this._positionOpenMenus();
 
@@ -320,6 +320,11 @@ export class ArcMenubar extends LitElement {
     for (const [key, controller] of this._positions) {
       if (!live.has(key)) {
         controller.hide();
+        // removeController is the other half of the addController that
+        // PositionController's constructor makes. Dropping the map entry alone
+        // leaves Lit holding the controller for the life of the element, so
+        // every reopen of a menu accumulated one more (finding #56).
+        this.removeController(controller);
         this._positions.delete(key);
       }
     }
@@ -665,7 +670,7 @@ export class ArcMenubar extends LitElement {
     const rt = e.relatedTarget;
     // Null relatedTarget also happens when a collapsing submenu removes the
     // focused node (focus falls to body before we restore it) — ignore it;
-    // outside clicks are handled by ClickOutsideController.
+    // outside clicks are handled by DismissController.
     if (!rt || this.contains(rt) || this.shadowRoot.contains(rt)) return;
     this._closeAll(false);
   }

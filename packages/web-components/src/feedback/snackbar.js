@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
  * Bottom-anchored single-line notification with optional action button. Darker than toast —
@@ -18,9 +19,9 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart action
  * @csspart dismiss
  */
-export class ArcSnackbar extends LitElement {
+export class ArcSnackbar extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    position: { type: String, reflect: true },
+    position: oneOf(['bottom-center', 'bottom-left', 'bottom-right']),
     duration: { type: Number },
     _snackbars: { state: true },
   };
@@ -98,7 +99,6 @@ export class ArcSnackbar extends LitElement {
 
   constructor() {
     super();
-    this.position = 'bottom-center';
     this.duration = 5000;
     this._snackbars = [];
     this._counter = 0;

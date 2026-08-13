@@ -1,5 +1,6 @@
 import { LitElement, html, svg, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag, oneOf, num } from '../shared/props.js';
 
 /**
  * Radial gauge displaying a scalar value on an arc with color-coded zones (success, warning,
@@ -27,9 +28,11 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart unit
  * @csspart label
  */
-export class ArcGauge extends LitElement {
+export class ArcGauge extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    value: { type: Number, reflect: true },
+    // See arc-meter: clamped against the sibling props, so `aria-valuenow`
+    // cannot contradict the arc that is drawn (finding #70).
+    value: num({ default: 0, min: 'min', max: 'max', clamp: 'toRange', reflect: true }),
     min: { type: Number },
     max: { type: Number },
     low: { type: Number },
@@ -37,8 +40,8 @@ export class ArcGauge extends LitElement {
     optimum: { type: Number },
     label: { type: String },
     unit: { type: String },
-    variant: { type: String, reflect: true },
-    showValue: { type: Boolean, reflect: true, attribute: 'show-value' },
+    variant: oneOf(['full', 'half']),
+    showValue: flag(true, { attribute: 'show-value', negative: 'no-value' }),
   };
 
   static styles = [
@@ -136,7 +139,6 @@ export class ArcGauge extends LitElement {
 
   constructor() {
     super();
-    this.value = 0;
     this.min = 0;
     this.max = 100;
     this.low = undefined;
@@ -144,8 +146,6 @@ export class ArcGauge extends LitElement {
     this.optimum = undefined;
     this.label = '';
     this.unit = '';
-    this.variant = 'full';
-    this.showValue = true;
   }
 
   /** Unknown variant values fall back to the full horseshoe. */

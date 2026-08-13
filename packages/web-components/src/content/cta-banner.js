@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * Full-width call-to-action banner with gradient background, eyebrow text, headline, body copy,
@@ -21,11 +22,11 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart body
  * @csspart actions
  */
-export class ArcCtaBanner extends LitElement {
+export class ArcCtaBanner extends DeclaredPropsMixin(LitElement) {
   static properties = {
     eyebrow: { type: String },
     headline: { type: String },
-    nogradient: { type: Boolean, reflect: true },
+    nogradient: flag(false),
   };
 
   static styles = [
@@ -122,7 +123,6 @@ export class ArcCtaBanner extends LitElement {
     super();
     this.eyebrow = '';
     this.headline = '';
-    this.nogradient = false;
   }
 
   render() {

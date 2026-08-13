@@ -1,12 +1,13 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
-import { ClickOutsideController } from '../shared/click-outside.js';
+import { DismissController } from '../shared/dismiss-controller.js';
 import { PositionController } from '../shared/position-controller.js';
 import { ListboxController } from '../shared/listbox-controller.js';
 import { managedPanelStyles } from '../shared/position-styles.js';
 import '../shared/option.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Dropdown select with searchable options, keyboard navigation, and full ARIA listbox semantics
@@ -20,7 +21,7 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @prop {string} name - Form field name submitted with the selected value. Required for native form integration via ElementInternals.
  * @prop {boolean} disabled - When true, the select trigger becomes non-interactive: it cannot be opened, focused via keyboard, or clicked. The component renders with reduced opacity to visually convey the unavailable state.
  * @prop {string} error - Error message displayed below the select. When set, the trigger border turns red.
- * @prop {boolean} open - Controls whether the dropdown is visible. Set programmatically to open or close the dropdown. Automatically set to `false` when an option is selected or the user clicks outside.
+ * @prop {boolean} open - Controls whether the dropdown is visible. Set programmatically to open or close the dropdown. Automatically set to `false` when an option is selected or the user clicks outside. Held at `false` while `disabled`.
  * @fires arc-change - Fired when the selected option changes
  * @slot - Default content.
  * @csspart select
@@ -29,16 +30,23 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @csspart dropdown
  * @csspart error
  */
-export class ArcSelect extends FormControlMixin(LitElement) {
+export class ArcSelect extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
   static properties = {
     value: { type: String, reflect: true },
     placeholder: { type: String },
     label: { type: String },
     name: { type: String, reflect: true },
+    // NOT flag(): a form-associated custom element whose `disabled` content
+    // attribute is merely *present* is "actually disabled" per the HTML spec,
+    // so the platform calls formDisabledCallback(true) and the mixin sets the
+    // property back. `disabled="false"` is a disabled control here for exactly
+    // the reason it is on a native <input>. Native semantics win; see
+    // shared/props.js.
     disabled: { type: Boolean, reflect: true },
-    size: { type: String, reflect: true },
+    size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
+
     error: { type: String },
-    open: { type: Boolean, reflect: true },
+    open: flag(false, { blockedBy: 'disabled' }),
     _options: { state: true },
   };
 
@@ -208,12 +216,10 @@ export class ArcSelect extends FormControlMixin(LitElement) {
     this.label = '';
     this.name = '';
     this.disabled = false;
-    this.size = 'md';
     this.error = '';
-    this.open = false;
     this._options = [];
-    this._clickOutside = new ClickOutsideController(this, {
-      onClickOutside: () => {
+    this._dismiss = new DismissController(this, {
+      onDismiss: () => {
         this.open = false;
       },
     });
@@ -252,14 +258,14 @@ export class ArcSelect extends FormControlMixin(LitElement) {
     super.updated(changed);
     if (changed.has('open')) {
       if (this.open) {
-        this._clickOutside.activate();
+        this._dismiss.activate();
         this._position.show();
         // Open onto the selected option, so arrowing starts from where the user
         // already is rather than from the top of the list.
         const selected = this._options.findIndex((o) => o.value === this.value);
         if (selected >= 0) this._listbox.setActive(selected);
       } else {
-        this._clickOutside.deactivate();
+        this._dismiss.deactivate();
         this._position.hide();
         this._listbox.reset();
       }
@@ -338,6 +344,7 @@ export class ArcSelect extends FormControlMixin(LitElement) {
           id=${triggerId}
           class="select__trigger"
           role="combobox"
+          ?disabled=${this.disabled}
           aria-expanded=${this.open ? 'true' : 'false'}
           aria-haspopup="listbox"
           aria-controls=${listboxId}

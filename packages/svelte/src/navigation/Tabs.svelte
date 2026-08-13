@@ -36,7 +36,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { selected = 0, align = 'start', variant = 'underline', orientation = 'horizontal', children, ...rest }: Props = $props();
+  let { selected, align, variant, orientation, children, ...rest }: Props = $props();
 </script>
 
 <arc-tabs {selected} {align} {variant} {orientation} {...rest}>

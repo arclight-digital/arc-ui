@@ -25,7 +25,7 @@
  * brings its own light-dismiss and Escape handling, but it also closes every
  * other `auto` popover in an unrelated part of the tree when it opens — a
  * tooltip would dismiss an open dropdown. Components already own dismissal via
- * ClickOutsideController and their own key handlers, so `manual` keeps
+ * DismissController and their own key handlers, so `manual` keeps
  * behavior identical to before and leaves the dismiss policy with the
  * component.
  *

@@ -34,7 +34,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { orientation = 'horizontal', label = '', variant = 'line', ...rest }: Props = $props();
+  let { orientation, label = '', variant, ...rest }: Props = $props();
 </script>
 
 <arc-separator {orientation} {label} {variant} {...rest}>

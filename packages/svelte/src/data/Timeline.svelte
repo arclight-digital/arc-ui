@@ -33,7 +33,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { headingLevel = 3, children, ...rest }: Props = $props();
+  let { headingLevel, children, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

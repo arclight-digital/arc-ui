@@ -4,6 +4,7 @@ import { positionStyles } from '../shared/position-styles.js';
 import { PositionController } from '../shared/position-controller.js';
 import { setTriggerAria } from '../shared/trigger-aria.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
  * Card that appears on hover with a delay.
@@ -19,9 +20,9 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @csspart trigger
  * @csspart card
  */
-export class ArcHoverCard extends LitElement {
+export class ArcHoverCard extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    position: { type: String, reflect: true },
+    position: oneOf(['bottom', 'top', 'left', 'right']),
     openDelay: { type: Number, attribute: 'open-delay' },
     closeDelay: { type: Number, attribute: 'close-delay' },
     _visible: { state: true },
@@ -66,7 +67,6 @@ export class ArcHoverCard extends LitElement {
 
   constructor() {
     super();
-    this.position = 'bottom';
     this.openDelay = 400;
     this.closeDelay = 300;
     this._visible = false;

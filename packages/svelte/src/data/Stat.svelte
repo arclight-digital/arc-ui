@@ -6,7 +6,7 @@
   interface Props {
     value?: string;
     label?: string;
-    trend?: 'up' | 'down' | 'neutral';
+    trend?: '' | 'up' | 'down' | 'neutral';
     change?: string;
     class?: string;
     id?: string;
@@ -35,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = '', label = '', trend, change = '', ...rest }: Props = $props();
+  let { value = '', label = '', trend = '', change = '', ...rest }: Props = $props();
 </script>
 
 <arc-stat {value} {label} {trend} {change} {...rest}>

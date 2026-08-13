@@ -10,7 +10,6 @@ const props = withDefaults(defineProps<{
   open?: boolean;
 }>(), {
   index: 0,
-  open: false,
 });
 
 const emit = defineEmits<{

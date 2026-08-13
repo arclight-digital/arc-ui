@@ -16,7 +16,6 @@ const props = withDefaults(defineProps<{
   detents?: number[] | string;
   format?: Function;
 }>(), {
-  size: 'md',
   value: 0,
   min: 0,
   max: 100,

@@ -1,5 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
+import { observeResize } from '../shared/subscriptions.js';
 
 /**
  * Multi-line text clamping with expandable show-more toggle.
@@ -12,10 +14,10 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart content
  * @csspart toggle
  */
-export class ArcTruncate extends LitElement {
+export class ArcTruncate extends DeclaredPropsMixin(LitElement) {
   static properties = {
     lines: { type: Number, reflect: true },
-    expanded: { type: Boolean, reflect: true },
+    expanded: flag(false),
   };
 
   static styles = [
@@ -67,27 +69,11 @@ export class ArcTruncate extends LitElement {
   constructor() {
     super();
     this.lines = 3;
-    this.expanded = false;
     this._overflows = false;
-    this._resizeObserver = null;
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-    this._resizeObserver = new ResizeObserver(() => this._checkOverflow());
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    this._resizeObserver?.disconnect();
-    this._resizeObserver = null;
+    observeResize(this, '.truncate__content', () => this._checkOverflow());
   }
 
   firstUpdated() {
-    const content = this.shadowRoot.querySelector('.truncate__content');
-    if (content) {
-      this._resizeObserver?.observe(content);
-    }
     this._checkOverflow();
   }
 

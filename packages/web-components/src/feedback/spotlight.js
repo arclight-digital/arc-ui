@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import { ClickOutsideController } from '../shared/click-outside.js';
+import { DismissController } from '../shared/dismiss-controller.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * Dims the entire page except a targeted element, which gets an accent-primary glow ring and
@@ -14,10 +15,10 @@ import { ClickOutsideController } from '../shared/click-outside.js';
  * @slot none
  * @csspart ring
  */
-export class ArcSpotlight extends LitElement {
+export class ArcSpotlight extends DeclaredPropsMixin(LitElement) {
   static properties = {
     target: { type: String },
-    active: { type: Boolean, reflect: true },
+    active: flag(false),
     padding: { type: Number },
   };
 
@@ -44,15 +45,14 @@ export class ArcSpotlight extends LitElement {
   constructor() {
     super();
     this.target = '';
-    this.active = false;
     this.padding = 8;
     this._rect = null;
-    this._clickOutside = new ClickOutsideController(this, {
+    this._dismiss = new DismissController(this, {
       // The spotlight is a ring drawn around some *other* element, so "inside"
       // is that element rather than this host. A target that has gone away
       // leaves no inside at all, and the next click dismisses.
       boundary: () => (this.target ? document.querySelector(this.target) : null),
-      onClickOutside: () => this._dismiss(),
+      onDismiss: () => this._close(),
     });
     this._onScroll = () => this._updatePosition();
   }
@@ -66,10 +66,10 @@ export class ArcSpotlight extends LitElement {
     if (changed.has('active') || changed.has('target')) {
       this._updatePosition();
       if (this.active) {
-        this._clickOutside.activate();
+        this._dismiss.activate();
         document.addEventListener('scroll', this._onScroll, { capture: true, passive: true });
       } else {
-        this._clickOutside.deactivate();
+        this._dismiss.deactivate();
         document.removeEventListener('scroll', this._onScroll, true);
       }
     }
@@ -96,7 +96,8 @@ export class ArcSpotlight extends LitElement {
     this.requestUpdate();
   }
 
-  _dismiss() {
+  /** Cancelable close: `arc-close` can preventDefault to keep the spotlight up. */
+  _close() {
     if (
       !this.dispatchEvent(
         new CustomEvent('arc-close', { bubbles: true, composed: true, cancelable: true }),

@@ -9,9 +9,7 @@ const props = withDefaults(defineProps<{
   label?: string;
   variant?: 'line' | 'dashed' | 'dotted' | 'fade';
 }>(), {
-  orientation: 'horizontal',
   label: '',
-  variant: 'line',
 });
 </script>
 

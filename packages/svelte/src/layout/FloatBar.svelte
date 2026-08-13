@@ -34,7 +34,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { open = false, position = 'bottom', children, ...rest }: Props = $props();
+  let { open, position, children, ...rest }: Props = $props();
 </script>
 
 <arc-float-bar {open} {position} {...rest}>

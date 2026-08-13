@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
  * Combines an input with prefix and suffix addon slots for labels, icons, or buttons attached to
@@ -16,9 +17,9 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @csspart content
  * @csspart suffix
  */
-export class ArcInputGroup extends LitElement {
+export class ArcInputGroup extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    size: { type: String, reflect: true },
+    size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
     _hasPrefix: { state: true },
     _hasSuffix: { state: true },
   };
@@ -99,7 +100,6 @@ export class ArcInputGroup extends LitElement {
 
   constructor() {
     super();
-    this.size = 'md';
     this._hasPrefix = false;
     this._hasSuffix = false;
   }

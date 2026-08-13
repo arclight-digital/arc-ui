@@ -10,7 +10,6 @@ const props = withDefaults(defineProps<{
   height?: string;
   count?: number;
 }>(), {
-  variant: 'text',
   width: '',
   height: '',
   count: 1,

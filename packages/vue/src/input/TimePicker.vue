@@ -10,20 +10,17 @@ const props = withDefaults(defineProps<{
   name?: string;
   min?: string;
   max?: string;
-  step?: number;
-  format?: string;
+  step?: 1 | 5 | 15 | 30;
+  format?: '12h' | '24h';
   placeholder?: string;
   disabled?: boolean;
   label?: string;
   open?: boolean;
 }>(), {
-  size: 'md',
   value: '',
   name: '',
   min: '',
   max: '',
-  step: 1,
-  format: '12h',
   placeholder: 'Select time',
   disabled: false,
   label: '',

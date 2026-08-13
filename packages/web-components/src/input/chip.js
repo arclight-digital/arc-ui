@@ -1,6 +1,7 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import '../data/tag.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * A toggleable pill-shaped element for filters, tags, or multi-select options, with a selected
@@ -15,10 +16,10 @@ import '../data/tag.js';
  * @slot - Default content.
  * @csspart chip
  */
-export class ArcChip extends LitElement {
+export class ArcChip extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    selected: { type: Boolean, reflect: true },
-    disabled: { type: Boolean, reflect: true },
+    selected: flag(false),
+    disabled: flag(false),
     value: { type: String },
     _inListbox: { state: true },
   };
@@ -41,8 +42,6 @@ export class ArcChip extends LitElement {
 
   constructor() {
     super();
-    this.selected = false;
-    this.disabled = false;
     this.value = '';
     this._inListbox = false;
   }

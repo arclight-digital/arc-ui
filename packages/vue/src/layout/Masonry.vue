@@ -9,7 +9,6 @@ const props = withDefaults(defineProps<{
   gap?: 'sm' | 'md' | 'lg';
 }>(), {
   columns: 3,
-  gap: 'md',
 });
 </script>
 

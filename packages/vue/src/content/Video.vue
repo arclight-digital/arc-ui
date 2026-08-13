@@ -17,11 +17,7 @@ const props = withDefaults(defineProps<{
   src: '',
   poster: '',
   label: '',
-  autoplay: false,
-  loop: false,
-  muted: false,
   controls: true,
-  preload: 'metadata',
 });
 
 const emit = defineEmits<{

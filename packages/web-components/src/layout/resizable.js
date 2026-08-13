@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
  * Resizable panel with drag handle.
@@ -14,9 +15,9 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart container
  * @csspart handle
  */
-export class ArcResizable extends LitElement {
+export class ArcResizable extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    direction: { type: String, reflect: true },
+    direction: oneOf(['horizontal', 'vertical']),
     minSize: { type: Number, attribute: 'min-size' },
     maxSize: { type: Number, attribute: 'max-size' },
     size: { type: Number },
@@ -108,7 +109,6 @@ export class ArcResizable extends LitElement {
 
   constructor() {
     super();
-    this.direction = 'horizontal';
     this.minSize = 100;
     this.maxSize = Infinity;
     this.size = 300;

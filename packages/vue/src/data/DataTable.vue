@@ -14,11 +14,7 @@ const props = withDefaults(defineProps<{
   rowHeight?: number;
 }>(), {
   rows: () => ([]),
-  sortable: false,
-  selectable: false,
   sortColumn: '',
-  sortDirection: 'asc',
-  virtual: false,
   rowHeight: 40,
 });
 

@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
  * Line-based text diff viewer with inline and side-by-side display modes.
@@ -14,11 +15,11 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart prefix
  * @csspart container
  */
-export class ArcDiff extends LitElement {
+export class ArcDiff extends DeclaredPropsMixin(LitElement) {
   static properties = {
     original: { type: String },
     revised: { type: String },
-    mode: { type: String, reflect: true },
+    mode: oneOf(['inline', 'side-by-side']),
   };
 
   static styles = [
@@ -106,7 +107,6 @@ export class ArcDiff extends LitElement {
     super();
     this.original = '';
     this.revised = '';
-    this.mode = 'inline';
   }
 
   /** Compute LCS-based diff of two line arrays. */

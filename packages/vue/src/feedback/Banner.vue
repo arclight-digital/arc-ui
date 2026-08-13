@@ -4,15 +4,11 @@ import '@arclux/arc-ui/banner';
 
 defineOptions({ name: 'Banner' });
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   variant?: 'info' | 'success' | 'warning' | 'error';
   dismissible?: boolean;
   sticky?: boolean;
-}>(), {
-  variant: 'info',
-  dismissible: false,
-  sticky: false,
-});
+}>();
 
 const emit = defineEmits<{
   'arc-close': [event: CustomEvent];

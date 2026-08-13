@@ -34,7 +34,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { space = 'md', bleed = false, children, ...rest }: Props = $props();
+  let { space, bleed, children, ...rest }: Props = $props();
 </script>
 
 <arc-inset {space} {bleed} {...rest}>

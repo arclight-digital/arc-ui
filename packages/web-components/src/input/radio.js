@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * Individual radio option rendered inside a RadioGroup. Each Radio represents a single selectable
@@ -10,10 +11,10 @@ import { LitElement, html, css } from 'lit';
  * @prop {boolean} disabled - When true, dims this individual option and removes it from keyboard navigation. The option cannot be selected by click or arrow keys.
  * @slot - Default content.
  */
-export class ArcRadio extends LitElement {
+export class ArcRadio extends DeclaredPropsMixin(LitElement) {
   static properties = {
     value: { type: String, reflect: true },
-    disabled: { type: Boolean, reflect: true },
+    disabled: flag(false),
   };
 
   static styles = css`
@@ -23,7 +24,6 @@ export class ArcRadio extends LitElement {
   constructor() {
     super();
     this.value = '';
-    this.disabled = false;
   }
 
   get label() {

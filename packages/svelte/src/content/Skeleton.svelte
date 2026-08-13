@@ -35,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { variant = 'text', width = '', height = '', count = 1, ...rest }: Props = $props();
+  let { variant, width = '', height = '', count = 1, ...rest }: Props = $props();
 </script>
 
 <arc-skeleton {variant} {width} {height} {count} {...rest}>

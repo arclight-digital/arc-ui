@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
  * Pinterest-style vertical-pack grid using CSS columns for efficient masonry layout without
@@ -11,10 +12,10 @@ import { tokenStyles } from '../shared-styles.js';
  * @slot - Default content.
  * @csspart masonry
  */
-export class ArcMasonry extends LitElement {
+export class ArcMasonry extends DeclaredPropsMixin(LitElement) {
   static properties = {
     columns: { type: Number, reflect: true },
-    gap: { type: String, reflect: true },
+    gap: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
   };
 
   static styles = [
@@ -59,7 +60,6 @@ export class ArcMasonry extends LitElement {
   constructor() {
     super();
     this.columns = 3;
-    this.gap = 'md';
   }
 
   updated(changed) {

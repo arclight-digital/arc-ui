@@ -36,7 +36,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { variant = 'info', density = 'default', dismissible = false, heading = '', children, ...rest }: Props = $props();
+  let { variant, density, dismissible, heading = '', children, ...rest }: Props = $props();
 </script>
 
 <arc-alert {variant} {density} {dismissible} {heading} {...rest}>

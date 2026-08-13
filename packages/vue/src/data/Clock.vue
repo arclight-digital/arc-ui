@@ -12,11 +12,8 @@ const props = withDefaults(defineProps<{
   hour12?: boolean;
   showTimezone?: boolean;
 }>(), {
-  variant: 'digital',
   timezone: '',
   label: '',
-  showSeconds: false,
-  showTimezone: false,
 });
 </script>
 

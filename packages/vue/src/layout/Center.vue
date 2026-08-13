@@ -10,8 +10,6 @@ const props = withDefaults(defineProps<{
   text?: boolean;
 }>(), {
   maxWidth: '60ch',
-  intrinsic: false,
-  text: false,
 });
 </script>
 

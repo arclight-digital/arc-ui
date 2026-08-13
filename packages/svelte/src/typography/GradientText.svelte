@@ -35,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { variant = 'accent', gradient = '', animated = false, children, ...rest }: Props = $props();
+  let { variant, gradient = '', animated, children, ...rest }: Props = $props();
 </script>
 
 <arc-gradient-text {variant} {gradient} {animated} {...rest}>

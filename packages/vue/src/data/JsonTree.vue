@@ -12,7 +12,6 @@ const props = withDefaults(defineProps<{
 }>(), {
   json: '',
   expanded: 1,
-  keysQuoted: false,
 });
 
 const emit = defineEmits<{

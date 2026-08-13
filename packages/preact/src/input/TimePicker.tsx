@@ -10,8 +10,8 @@ export interface TimePickerProps {
   name?: string;
   min?: string;
   max?: string;
-  step?: number;
-  format?: string;
+  step?: 1 | 5 | 15 | 30;
+  format?: '12h' | '24h';
   placeholder?: string;
   disabled?: boolean;
   label?: string;

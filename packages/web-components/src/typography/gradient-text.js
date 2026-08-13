@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Inline text wrapper that applies gradient fills to text declaratively.
@@ -11,11 +12,11 @@ import { tokenStyles } from '../shared-styles.js';
  * @slot - Default content.
  * @csspart text
  */
-export class ArcGradientText extends LitElement {
+export class ArcGradientText extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    variant: { type: String, reflect: true },
+    variant: oneOf(['accent', 'display', 'sunset', 'ocean', 'custom']),
     gradient: { type: String },
-    animated: { type: Boolean, reflect: true },
+    animated: flag(false),
   };
 
   static styles = [
@@ -92,9 +93,7 @@ export class ArcGradientText extends LitElement {
 
   constructor() {
     super();
-    this.variant = 'accent';
     this.gradient = '';
-    this.animated = false;
   }
 
   render() {

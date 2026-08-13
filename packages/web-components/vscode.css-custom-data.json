@@ -767,6 +767,14 @@
     { "name": "::part(center)" },
     { "name": "::part(actions)" },
     { "name": "::part(topbar)" },
+    {
+      "name": "::part(tree)",
+      "description": "The root list. The nested lists at deeper levels are `group`."
+    },
+    {
+      "name": "::part(group)",
+      "description": "A nested list under an expanded branch."
+    },
     { "name": "::part(item)" },
     { "name": "::part(row)" },
     { "name": "::part(blockquote)" },

@@ -39,7 +39,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { open = false, side = 'bottom', heading = '', header, footer, children, ...rest }: Props = $props();
+  let { open, side, heading = '', header, footer, children, ...rest }: Props = $props();
 </script>
 
 <arc-sheet {open} {side} {heading} {...rest}>

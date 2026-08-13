@@ -33,7 +33,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { size = 'md', children, ...rest }: Props = $props();
+  let { size, children, ...rest }: Props = $props();
 </script>
 
 <arc-prose {size} {...rest}>

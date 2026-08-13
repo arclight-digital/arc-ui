@@ -40,7 +40,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { type = 'line', series = [], labels = [], stacked = false, hideLegend = false, hideAxis = false, height = 260, valueFormat = 'number', currency = 'USD', ...rest }: Props = $props();
+  let { type, series = [], labels = [], stacked, hideLegend, hideAxis, height = 260, valueFormat, currency = 'USD', ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

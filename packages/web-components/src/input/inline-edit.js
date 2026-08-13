@@ -2,6 +2,7 @@ import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 import '../content/icon.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * Click-to-edit text: renders as plain text until activated, then swaps to a
@@ -37,13 +38,19 @@ import '../content/icon.js';
  * @csspart field - The input or textarea shown while editing.
  * @csspart icon - The pencil affordance icon.
  */
-export class ArcInlineEdit extends FormControlMixin(LitElement) {
+export class ArcInlineEdit extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
   static properties = {
     value: { type: String },
     label: { type: String },
     name: { type: String, reflect: true },
     placeholder: { type: String },
-    multiline: { type: Boolean, reflect: true },
+    multiline: flag(false),
+    // NOT flag(): a form-associated custom element whose `disabled` content
+    // attribute is merely *present* is "actually disabled" per the HTML spec,
+    // so the platform calls formDisabledCallback(true) and the mixin sets the
+    // property back. `disabled="false"` is a disabled control here for exactly
+    // the reason it is on a native <input>. Native semantics win; see
+    // shared/props.js.
     disabled: { type: Boolean, reflect: true },
     _editing: { state: true },
     _draft: { state: true },
@@ -180,7 +187,6 @@ export class ArcInlineEdit extends FormControlMixin(LitElement) {
     this.label = '';
     this.name = '';
     this.placeholder = 'Empty';
-    this.multiline = false;
     this.disabled = false;
     this._editing = false;
     this._draft = '';

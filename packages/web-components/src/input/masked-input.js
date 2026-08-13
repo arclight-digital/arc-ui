@@ -2,6 +2,7 @@ import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 let maskedInputIdCounter = 0;
 
@@ -121,7 +122,7 @@ function caretForRaw(mask, formattedLength, rawIndex) {
  * @csspart hint
  * @csspart error
  */
-export class ArcMaskedInput extends FormControlMixin(LitElement) {
+export class ArcMaskedInput extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
   /** Runs its own constraint logic — owns the whole validity flag set. */
   static autoValidates = false;
 
@@ -131,11 +132,18 @@ export class ArcMaskedInput extends FormControlMixin(LitElement) {
     placeholderChar: { type: String, attribute: 'placeholder-char' },
     label: { type: String },
     name: { type: String, reflect: true },
+    // NOT flag(): a form-associated custom element whose `disabled` content
+    // attribute is merely *present* is "actually disabled" per the HTML spec,
+    // so the platform calls formDisabledCallback(true) and the mixin sets the
+    // property back. `disabled="false"` is a disabled control here for exactly
+    // the reason it is on a native <input>. Native semantics win; see
+    // shared/props.js.
     disabled: { type: Boolean, reflect: true },
-    required: { type: Boolean, reflect: true },
+    required: flag(false),
     autocomplete: { type: String },
     error: { type: String },
-    size: { type: String, reflect: true },
+    size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
+
     _hasPrefix: { state: true },
     _hasSuffix: { state: true },
   };
@@ -294,10 +302,8 @@ export class ArcMaskedInput extends FormControlMixin(LitElement) {
     this.label = '';
     this.name = '';
     this.disabled = false;
-    this.required = false;
     this.autocomplete = '';
     this.error = '';
-    this.size = 'md';
     this._fieldId = `arc-masked-input-${++maskedInputIdCounter}`;
     this._hasPrefix = false;
     this._hasSuffix = false;

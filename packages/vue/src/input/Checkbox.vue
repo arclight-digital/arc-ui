@@ -13,10 +13,7 @@ const props = withDefaults(defineProps<{
   name?: string;
   value?: string;
 }>(), {
-  checked: false,
-  indeterminate: false,
   disabled: false,
-  size: 'md',
   label: '',
   name: '',
   value: '',

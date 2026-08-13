@@ -4,11 +4,9 @@ import '@arclux/arc-ui/inline-message';
 
 defineOptions({ name: 'InlineMessage' });
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   variant?: 'info' | 'success' | 'warning' | 'error';
-}>(), {
-  variant: 'info',
-});
+}>();
 </script>
 
 <template>

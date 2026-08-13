@@ -40,7 +40,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = $bindable(''), placeholder = 'Select...', label = '', name = '', disabled = false, size = 'md', error = '', open = false, children, ...rest }: Props = $props();
+  let { value = $bindable(''), placeholder = 'Select...', label = '', name = '', disabled = false, size, error = '', open = false, children, ...rest }: Props = $props();
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise

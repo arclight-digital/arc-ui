@@ -32,7 +32,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { open = false, ...rest }: Props = $props();
+  let { open, ...rest }: Props = $props();
 </script>
 
 <arc-guided-tour {open} {...rest}>

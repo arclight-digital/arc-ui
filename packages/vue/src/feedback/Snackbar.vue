@@ -8,7 +8,6 @@ const props = withDefaults(defineProps<{
   position?: 'bottom-center' | 'bottom-left' | 'bottom-right';
   duration?: number;
 }>(), {
-  position: 'bottom-center',
   duration: 5000,
 });
 

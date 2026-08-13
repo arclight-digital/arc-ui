@@ -14,10 +14,7 @@ const props = withDefaults(defineProps<{
 }>(), {
   action: '',
   method: '',
-  novalidate: false,
-  loading: false,
   disabled: false,
-  errorSummary: true,
 });
 
 const emit = defineEmits<{

@@ -38,7 +38,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { variant = 'default', size = 'md', selectable = false, multiple = false, value = $bindable(''), label = '', children, ...rest }: Props = $props();
+  let { variant, size, selectable, multiple, value = $bindable(''), label = '', children, ...rest }: Props = $props();
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise

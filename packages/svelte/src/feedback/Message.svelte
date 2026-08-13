@@ -39,7 +39,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { speaker = 'user', author = '', timestamp = '', pending = false, markdown = false, avatar, children, ...rest }: Props = $props();
+  let { speaker, author = '', timestamp = '', pending, markdown, avatar, children, ...rest }: Props = $props();
 </script>
 
 <arc-message {speaker} {author} {timestamp} {pending} {markdown} {...rest}>

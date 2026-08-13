@@ -41,7 +41,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = 0, min = 0, max = 100, low, high, optimum, label = '', unit = '', variant = 'full', showValue = true, ...rest }: Props = $props();
+  let { value, min = 0, max = 100, low, high, optimum, label = '', unit = '', variant, showValue, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

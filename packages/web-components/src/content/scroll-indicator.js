@@ -1,5 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
+import { listen } from '../shared/subscriptions.js';
 
 /**
  * Thin progress bar that tracks scroll position of the page or a target container. Sticks to the
@@ -14,12 +16,12 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart bar
  * @csspart fill
  */
-export class ArcScrollIndicator extends LitElement {
+export class ArcScrollIndicator extends DeclaredPropsMixin(LitElement) {
   static properties = {
     target: { type: String },
-    position: { type: String, reflect: true },
-    size: { type: String, reflect: true },
-    color: { type: String, reflect: true },
+    position: oneOf(['top', 'bottom']),
+    size: oneOf(['sm', 'md', 'lg']),
+    color: oneOf(['accent', 'gradient']),
     _progress: { state: true },
   };
 
@@ -75,49 +77,38 @@ export class ArcScrollIndicator extends LitElement {
   constructor() {
     super();
     this.target = '';
-    this.position = 'top';
-    this.size = 'sm';
-    this.color = 'accent';
     this._progress = 0;
     this._rafId = null;
     this._onScroll = this._onScroll.bind(this);
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-    this._attachListener();
+    // `listen` remembers the element it attached to, which hand-rolled teardown
+    // did not: `_detachListener` re-resolved the selector, so changing `target`
+    // unsubscribed from the *new* container and left the old one listening for
+    // the life of the page (finding #68). Nothing on screen showed it —
+    // `_updateProgress` re-reads the current target either way — so the damage
+    // was a retained reference to a detached container and wasted frames.
+    listen(this, () => this._getTarget(), 'scroll', this._onScroll, { passive: true });
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    this._detachListener();
+    // The subscription belongs to the controller; this only drops the pending
+    // frame so a queued measurement cannot land on a detached element.
+    if (this._rafId) {
+      cancelAnimationFrame(this._rafId);
+      this._rafId = null;
+    }
   }
 
   updated(changed) {
-    if (changed.has('target')) {
-      this._detachListener();
-      this._attachListener();
-    }
+    // The controller re-binds the listener itself when the resolver starts
+    // returning a different element; this only re-reads the new container so the
+    // bar is correct before the next scroll rather than after it.
+    if (changed.has('target')) this._updateProgress();
   }
 
   _getTarget() {
     if (!this.target) return window;
     return document.querySelector(this.target) || window;
-  }
-
-  _attachListener() {
-    const el = this._getTarget();
-    (el === window ? window : el).addEventListener('scroll', this._onScroll, { passive: true });
-    this._updateProgress();
-  }
-
-  _detachListener() {
-    if (this._rafId) {
-      cancelAnimationFrame(this._rafId);
-      this._rafId = null;
-    }
-    const el = this._getTarget();
-    (el === window ? window : el).removeEventListener('scroll', this._onScroll);
   }
 
   _onScroll() {

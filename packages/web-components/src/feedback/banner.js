@@ -2,6 +2,7 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { statusVars } from '../status-styles.js';
 import { getStatusIcon } from '../status-utils.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Full-width persistent strip pinned to viewport or section top. Uses semantic variants like alert
@@ -19,11 +20,11 @@ import { getStatusIcon } from '../status-utils.js';
  * @csspart message
  * @csspart dismiss
  */
-export class ArcBanner extends LitElement {
+export class ArcBanner extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    variant: { type: String, reflect: true },
-    dismissible: { type: Boolean, reflect: true },
-    sticky: { type: Boolean, reflect: true },
+    variant: oneOf(['info', 'success', 'warning', 'error']),
+    dismissible: flag(false),
+    sticky: flag(false),
   };
 
   static styles = [
@@ -78,9 +79,6 @@ export class ArcBanner extends LitElement {
 
   constructor() {
     super();
-    this.variant = 'info';
-    this.dismissible = false;
-    this.sticky = false;
   }
 
   _dismiss() {

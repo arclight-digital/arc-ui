@@ -1,12 +1,15 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, int } from '../shared/props.js';
 
 /**
  * Vertical timeline with dated events.
  *
  * @tag arc-timeline
  * @requires arc-timeline-item
+ * @prop {number} headingLevel - ARIA heading level for each event title. Clamped to 1 or
+ *   greater: `aria-level` below 1 is invalid and is dropped by assistive technology.
  * @slot - Default content.
  * @csspart timeline
  * @csspart item
@@ -18,9 +21,9 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @csspart description
  * @csspart date
  */
-export class ArcTimeline extends LitElement {
+export class ArcTimeline extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    headingLevel: { type: Number, attribute: 'heading-level' },
+    headingLevel: int({ default: 3, min: 1, clamp: 'toRange', attribute: 'heading-level' }),
     _items: { state: true },
   };
 
@@ -136,7 +139,6 @@ export class ArcTimeline extends LitElement {
 
   constructor() {
     super();
-    this.headingLevel = 3;
     this._items = [];
   }
 

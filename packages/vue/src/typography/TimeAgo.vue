@@ -10,7 +10,6 @@ const props = withDefaults(defineProps<{
   locale?: string;
 }>(), {
   datetime: '',
-  live: true,
   locale: 'en-US',
 });
 </script>

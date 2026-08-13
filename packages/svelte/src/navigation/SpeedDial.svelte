@@ -37,7 +37,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { open = false, direction = 'up', position = 'bottom-right', items = [], trigger, ...rest }: Props = $props();
+  let { open, direction, position, items = [], trigger, ...rest }: Props = $props();
 </script>
 
 <arc-speed-dial {open} {direction} {position} {items} {...rest}>

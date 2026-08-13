@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { statusVars } from '../status-styles.js';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
  * Compact pill-shaped label for status indicators, category tags, and notification counts. Three
@@ -13,10 +14,10 @@ import { statusVars } from '../status-styles.js';
  * @slot - Default content.
  * @csspart badge
  */
-export class ArcBadge extends LitElement {
+export class ArcBadge extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    variant: { type: String, reflect: true },
-    size: { type: String, reflect: true },
+    variant: oneOf(['default', 'primary', 'secondary', 'success', 'warning', 'error', 'info']),
+    size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
     color: { type: String },
   };
 
@@ -94,8 +95,6 @@ export class ArcBadge extends LitElement {
 
   constructor() {
     super();
-    this.variant = 'default';
-    this.size = 'md';
     this.color = '';
   }
 

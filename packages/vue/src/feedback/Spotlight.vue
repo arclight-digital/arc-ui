@@ -10,7 +10,6 @@ const props = withDefaults(defineProps<{
   padding?: number;
 }>(), {
   target: '',
-  active: false,
   padding: 8,
 });
 

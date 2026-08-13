@@ -18,21 +18,48 @@ export class MenuKeyboardController {
     this._onSelect = onSelect;
     this._onClose = onClose;
     this.focusedIndex = -1;
+    this._attached = false;
+    this._reattach = false;
     this._onKeyDown = this._onKeyDown.bind(this);
     host.addController(this);
   }
 
   attach() {
+    this._attached = true;
     document.addEventListener('keydown', this._onKeyDown);
   }
 
   detach() {
+    this._attached = false;
     document.removeEventListener('keydown', this._onKeyDown);
     this.focusedIndex = -1;
   }
 
+  /**
+   * Re-attach after a reparent — finding #72's shape a third time, alongside
+   * #73. All three consumers call attach()/detach() from `updated()` keyed on
+   * an open-state *change* (dropdown-menu:184, command-palette:478,
+   * toolbar:227); moving an element changes nothing, so `hostDisconnected` was
+   * a one-way door and an open menu came back rendering normally while
+   * answering no key at all.
+   *
+   * The focused index is carried across deliberately. `detach()` clears it
+   * because closing a menu should forget where you were — but a reparent is
+   * not a close, and losing your place mid-navigation is the visible half of
+   * this bug.
+   */
+  hostConnected() {
+    if (!this._reattach) return;
+    const index = this.focusedIndex;
+    this.attach();
+    this.focusedIndex = index;
+  }
+
   hostDisconnected() {
+    this._reattach = this._attached;
+    const index = this.focusedIndex;
     this.detach();
+    this.focusedIndex = index;
   }
 
   reset() {

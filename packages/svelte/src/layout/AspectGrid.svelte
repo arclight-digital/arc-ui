@@ -35,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { columns = 3, ratio = '1/1', gap = 'md', children, ...rest }: Props = $props();
+  let { columns = 3, ratio, gap, children, ...rest }: Props = $props();
 </script>
 
 <arc-aspect-grid {columns} {ratio} {gap} {...rest}>

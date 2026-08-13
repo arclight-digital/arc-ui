@@ -37,7 +37,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { href = '', active = false, level = 0, icon = '', external = false, children, ...rest }: Props = $props();
+  let { href = '', active, level = 0, icon = '', external, children, ...rest }: Props = $props();
 </script>
 
 <arc-sidebar-link {href} {active} {level} {icon} {external} {...rest}>

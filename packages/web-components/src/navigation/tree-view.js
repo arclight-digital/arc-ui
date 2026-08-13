@@ -11,6 +11,8 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @fires arc-toggle - Fired when a tree node is expanded or collapsed
  * @fires arc-select - Fired when a tree item is selected
  * @slot - Default content.
+ * @csspart tree - The root list. The nested lists at deeper levels are `group`.
+ * @csspart group - A nested list under an expanded branch.
  * @csspart item
  * @csspart row
  */

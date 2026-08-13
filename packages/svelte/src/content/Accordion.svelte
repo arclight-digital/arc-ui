@@ -33,7 +33,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { multiple = false, children, ...rest }: Props = $props();
+  let { multiple, children, ...rest }: Props = $props();
 </script>
 
 <arc-accordion {multiple} {...rest}>

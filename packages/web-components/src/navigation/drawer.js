@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { OverlayMixin } from '../shared/overlay-mixin.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Slide-out panel with backdrop overlay, keyboard dismissal, and left/right positioning for
@@ -20,10 +21,11 @@ import { OverlayMixin } from '../shared/overlay-mixin.js';
  * @csspart close
  * @csspart body
  */
-export class ArcDrawer extends OverlayMixin(LitElement) {
+export class ArcDrawer extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
   static properties = {
-    open: { type: Boolean, reflect: true },
-    position: { type: String, reflect: true },
+    open: flag(false),
+    position: oneOf(['left', 'right']),
+
     heading: { type: String },
   };
 
@@ -109,8 +111,6 @@ export class ArcDrawer extends OverlayMixin(LitElement) {
 
   constructor() {
     super();
-    this.open = false;
-    this.position = 'left';
     this.heading = '';
   }
 

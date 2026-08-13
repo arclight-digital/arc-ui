@@ -1,7 +1,8 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { PositionController } from '../shared/position-controller.js';
-import { ClickOutsideController } from '../shared/click-outside.js';
+import { DismissController } from '../shared/dismiss-controller.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Notification dropdown panel triggered by a button.
@@ -22,10 +23,10 @@ import { ClickOutsideController } from '../shared/click-outside.js';
  * @csspart body
  * @csspart footer
  */
-export class ArcNotificationPanel extends LitElement {
+export class ArcNotificationPanel extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    open: { type: Boolean, reflect: true },
-    position: { type: String, reflect: true },
+    open: flag(false),
+    position: oneOf(['top-right', 'top-left']),
     maxHeight: { type: String, attribute: 'max-height' },
   };
 
@@ -165,11 +166,9 @@ export class ArcNotificationPanel extends LitElement {
 
   constructor() {
     super();
-    this.open = false;
-    this.position = 'top-right';
     this.maxHeight = '400px';
-    this._clickOutside = new ClickOutsideController(this, {
-      onClickOutside: () => {
+    this._dismiss = new DismissController(this, {
+      onDismiss: () => {
         this.open = false;
       },
     });
@@ -194,10 +193,10 @@ export class ArcNotificationPanel extends LitElement {
 
     if (changedProperties.has('open')) {
       if (this.open) {
-        this._clickOutside.activate();
+        this._dismiss.activate();
         this.dispatchEvent(new CustomEvent('arc-open', { bubbles: true, composed: true }));
       } else {
-        this._clickOutside.deactivate();
+        this._dismiss.deactivate();
         if (changedProperties.get('open') === true) {
           this.dispatchEvent(new CustomEvent('arc-close', { bubbles: true, composed: true }));
         }

@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Padding primitive consuming spacing tokens with optional negative-margin bleed mode.
@@ -9,10 +10,10 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {boolean} bleed - When true, applies negative margins equal to the space value, allowing children to break out of a parent container's padding for full-bleed layouts.
  * @slot - Default content.
  */
-export class ArcInset extends LitElement {
+export class ArcInset extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    space: { type: String, reflect: true },
-    bleed: { type: Boolean, reflect: true },
+    space: oneOf(['xs', 'sm', 'md', 'lg', 'xl', '2xl'], { default: 'md' }),
+    bleed: flag(false),
   };
 
   static styles = [
@@ -43,8 +44,6 @@ export class ArcInset extends LitElement {
 
   constructor() {
     super();
-    this.space = 'md';
-    this.bleed = false;
   }
 
   render() {

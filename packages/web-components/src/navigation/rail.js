@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * Ultra-narrow icon-only vertical navigation like VS Code's activity bar. Icons use text-muted at
@@ -15,7 +16,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart base
  * @csspart item
  */
-export class ArcRail extends LitElement {
+export class ArcRail extends DeclaredPropsMixin(LitElement) {
   static properties = {
     items: {
       converter: {
@@ -29,7 +30,7 @@ export class ArcRail extends LitElement {
       },
     },
     value: { type: String, reflect: true },
-    expanded: { type: Boolean, reflect: true },
+    expanded: flag(false),
   };
 
   static styles = [
@@ -82,7 +83,6 @@ export class ArcRail extends LitElement {
     super();
     this.items = [];
     this.value = '';
-    this.expanded = false;
   }
 
   _select(val) {

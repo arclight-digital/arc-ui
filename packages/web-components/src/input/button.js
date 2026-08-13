@@ -1,8 +1,9 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { buttonVariantStyles } from '../button-styles.js';
 import { isLoneSlottedAnchor } from '../shared/anchor-adoption.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Primary call-to-action element with three visual variants that map to action hierarchy. Supports
@@ -21,14 +22,14 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @slot suffix
  * @csspart button
  */
-export class ArcButton extends LitElement {
+export class ArcButton extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    variant: { type: String, reflect: true },
-    size: { type: String, reflect: true },
+    variant: oneOf(['primary', 'secondary', 'ghost']),
+    size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
     href: { type: String },
-    disabled: { type: Boolean, reflect: true },
-    loading: { type: Boolean, reflect: true },
-    type: { type: String },
+    disabled: flag(false),
+    loading: flag(false),
+    type: oneOf(['button', 'submit', 'reset'], { reflect: false }),
     _hasPrefix: { state: true },
     _hasSuffix: { state: true },
     _slottedAnchor: { state: true },
@@ -153,12 +154,7 @@ export class ArcButton extends LitElement {
 
   constructor() {
     super();
-    this.variant = 'primary';
-    this.size = 'md';
     this.href = '';
-    this.disabled = false;
-    this.loading = false;
-    this.type = 'button';
     this._hasPrefix = false;
     this._hasSuffix = false;
     this._slottedAnchor = false;
@@ -229,7 +225,13 @@ export class ArcButton extends LitElement {
     // An explicit href always wins — it is the established API and stays
     // byte-identical, so nothing that already works changes behavior.
     if (this.href) {
-      return html`<a class="btn" href=${this.href} part="button">${this._renderContent()}</a>`;
+      // `<a>` has no `disabled` attribute and CSS pointer-events does not reach
+      // the keyboard, so a disabled link button used to stay focusable and
+      // followable (finding #61; test-audit.md §5, bug 2). Dropping `href` is
+      // how the platform removes a link from the tab order; aria-disabled keeps
+      // it announced, and role="link" keeps it a link once href is gone.
+      const off = this.disabled || this.loading;
+      return html`<a class="btn" href=${off ? nothing : this.href} role=${off ? 'link' : nothing} aria-disabled=${off ? 'true' : nothing} part="button">${this._renderContent()}</a>`;
     }
     if (this._slottedAnchor) {
       return html`<slot class="btn-slot" @slotchange=${this._onDefaultSlotChange}></slot>`;

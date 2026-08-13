@@ -12,12 +12,10 @@ const props = withDefaults(defineProps<{
   disabled?: boolean;
   type?: 'number' | 'text';
 }>(), {
-  size: 'md',
   length: 6,
   value: '',
   name: '',
   disabled: false,
-  type: 'number',
 });
 
 const emit = defineEmits<{

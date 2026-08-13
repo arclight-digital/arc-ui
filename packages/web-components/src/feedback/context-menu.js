@@ -7,6 +7,7 @@ import '../shared/menu-divider.js';
 import '../content/icon.js';
 import '../content/separator.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * Right-click context menu with keyboard shortcuts.
@@ -23,9 +24,9 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @csspart menu
  * @csspart divider
  */
-export class ArcContextMenu extends LitElement {
+export class ArcContextMenu extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    open: { type: Boolean, reflect: true },
+    open: flag(false),
     _activeIndex: { state: true },
     _children: { state: true },
   };
@@ -138,7 +139,6 @@ export class ArcContextMenu extends LitElement {
 
   constructor() {
     super();
-    this.open = false;
     this._x = 0;
     this._y = 0;
     this._activeIndex = -1;

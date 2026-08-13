@@ -36,7 +36,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { direction = 'horizontal', minSize = 100, maxSize = Infinity, size = $bindable(300), children, ...rest }: Props = $props();
+  let { direction, minSize = 100, maxSize = Infinity, size = $bindable(300), children, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

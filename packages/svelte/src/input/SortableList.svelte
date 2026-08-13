@@ -33,7 +33,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { disabled = false, children, ...rest }: Props = $props();
+  let { disabled, children, ...rest }: Props = $props();
 </script>
 
 <arc-sortable-list {disabled} {...rest}>

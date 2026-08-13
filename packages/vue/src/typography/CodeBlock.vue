@@ -13,7 +13,6 @@ const props = withDefaults(defineProps<{
   language: '',
   filename: '',
   code: '',
-  variant: 'default',
 });
 </script>
 

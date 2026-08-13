@@ -49,17 +49,17 @@ export class TimePicker {
     return this._el.max;
   }
 
-  @Input() set step(value: number) {
+  @Input() set step(value: 1 | 5 | 15 | 30) {
     this._el.step = value;
   }
-  get step(): number {
+  get step(): 1 | 5 | 15 | 30 {
     return this._el.step;
   }
 
-  @Input() set format(value: string) {
+  @Input() set format(value: '12h' | '24h') {
     this._el.format = value;
   }
-  get format(): string {
+  get format(): '12h' | '24h' {
     return this._el.format;
   }
 

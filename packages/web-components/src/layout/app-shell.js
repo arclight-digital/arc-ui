@@ -4,6 +4,7 @@ import { breakpoints } from '../generated/breakpoints.js';
 import { lockScroll, unlockScroll } from '../shared/scroll-lock.js';
 import { trapTabKey, focusFirst, deepActiveElement } from '../shared/focus-trap.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * Full-page layout scaffold that composes a TopBar, Sidebar, and scrollable content area into a
@@ -25,9 +26,9 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @csspart content
  * @csspart toc
  */
-export class ArcAppShell extends LitElement {
+export class ArcAppShell extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    sidebarOpen: { type: Boolean, reflect: true, attribute: 'sidebar-open' },
+    sidebarOpen: flag(false, { attribute: 'sidebar-open' }),
     breakpoint: { type: Number },
     _mobile: { state: true },
     _hasToc: { state: true },
@@ -201,7 +202,6 @@ export class ArcAppShell extends LitElement {
 
   constructor() {
     super();
-    this.sidebarOpen = false;
     // The same width the top bar reveals its hamburger at, and the nav menu
     // collapses at — this shell's sidebar has to switch to its drawer on the
     // same line, or the button is there with nothing to open.

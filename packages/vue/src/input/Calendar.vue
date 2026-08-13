@@ -6,7 +6,7 @@ defineOptions({ name: 'Calendar' });
 
 const props = withDefaults(defineProps<{
   locale?: string;
-  firstDayOfWeek?: number;
+  firstDayOfWeek?: 0|1|2|3|4|5|6|7;
   value?: string;
   min?: string;
   max?: string;
@@ -14,7 +14,6 @@ const props = withDefaults(defineProps<{
   year?: number;
 }>(), {
   locale: '',
-  firstDayOfWeek: 0,
   value: '',
   min: '',
   max: '',

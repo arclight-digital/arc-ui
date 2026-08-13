@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag, num, oneOf } from '../shared/props.js';
 
 /**
  * Progress indicator as a bar or spinner, with determinate and indeterminate modes. Shows
@@ -20,13 +21,13 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart track
  * @csspart fill
  */
-export class ArcProgress extends LitElement {
+export class ArcProgress extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    value: { type: Number },
-    variant: { type: String, reflect: true },
-    size: { type: String, reflect: true },
-    indeterminate: { type: Boolean, reflect: true },
-    showValue: { type: Boolean, attribute: 'show-value', reflect: true },
+    value: num({ default: 0, min: 0, max: 100, clamp: 'toRange' }),
+    variant: oneOf(['bar', 'spinner']),
+    size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
+    indeterminate: flag(false),
+    showValue: flag(false, { attribute: 'show-value' }),
     label: { type: String },
   };
 
@@ -144,16 +145,13 @@ export class ArcProgress extends LitElement {
 
   constructor() {
     super();
-    this.value = 0;
-    this.variant = 'bar';
-    this.size = 'md';
-    this.indeterminate = false;
-    this.showValue = false;
     this.label = '';
   }
 
   render() {
-    const clampedValue = Math.max(0, Math.min(100, this.value));
+    // Kept as a local for readability; `value` is now clamped on the state by
+    // its declaration, so this no longer has to defend the render.
+    const clampedValue = this.value;
 
     if (this.variant === 'spinner') {
       return html`

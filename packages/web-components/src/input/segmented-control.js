@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * A radio-group-style toggle bar that renders slotted arc-option elements as a row of mutually
@@ -14,10 +15,10 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @csspart control
  * @csspart option
  */
-export class ArcSegmentedControl extends LitElement {
+export class ArcSegmentedControl extends DeclaredPropsMixin(LitElement) {
   static properties = {
     value: { type: String, reflect: true },
-    disabled: { type: Boolean, reflect: true },
+    disabled: flag(false),
     _options: { state: true },
   };
 
@@ -101,7 +102,6 @@ export class ArcSegmentedControl extends LitElement {
   constructor() {
     super();
     this.value = '';
-    this.disabled = false;
     this._options = [];
   }
 

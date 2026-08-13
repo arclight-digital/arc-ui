@@ -25,10 +25,10 @@ export class Stat {
     return this._el.label;
   }
 
-  @Input() set trend(value: 'up' | 'down' | 'neutral') {
+  @Input() set trend(value: '' | 'up' | 'down' | 'neutral') {
     this._el.trend = value;
   }
-  get trend(): 'up' | 'down' | 'neutral' {
+  get trend(): '' | 'up' | 'down' | 'neutral' {
     return this._el.trend;
   }
 

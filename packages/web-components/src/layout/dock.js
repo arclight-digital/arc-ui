@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Edge-snapped auto-hide panel with a 1px border edge line and subtle accent glow on hover-reveal.
@@ -14,11 +15,11 @@ import { tokenStyles } from '../shared-styles.js';
  * @slot - Default content.
  * @csspart dock
  */
-export class ArcDock extends LitElement {
+export class ArcDock extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    position: { type: String, reflect: true },
-    autoHide: { type: Boolean, reflect: true, attribute: 'auto-hide' },
-    open: { type: Boolean, reflect: true },
+    position: oneOf(['bottom', 'left', 'right']),
+    autoHide: flag(false, { attribute: 'auto-hide' }),
+    open: flag(false),
     _hovered: { state: true },
   };
 
@@ -87,9 +88,6 @@ export class ArcDock extends LitElement {
 
   constructor() {
     super();
-    this.position = 'bottom';
-    this.autoHide = false;
-    this.open = false;
     this._hovered = false;
   }
 

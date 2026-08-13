@@ -36,7 +36,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { shortcut = '', disabled = false, icon = '', value = '', children, ...rest }: Props = $props();
+  let { shortcut = '', disabled, icon = '', value = '', children, ...rest }: Props = $props();
 </script>
 
 <arc-menu-item {shortcut} {disabled} {icon} {value} {...rest}>

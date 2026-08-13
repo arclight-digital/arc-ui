@@ -16,11 +16,8 @@ const props = withDefaults(defineProps<{
 }>(), {
   name: '',
   text: '',
-  variant: 'ghost',
-  size: 'md',
   label: '',
   href: '',
-  disabled: false,
   type: 'button',
 });
 </script>

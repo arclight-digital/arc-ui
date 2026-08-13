@@ -4,16 +4,12 @@ import '@arclux/arc-ui/footer';
 
 defineOptions({ name: 'Footer' });
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   density?: 'default' | 'compact';
   border?: boolean;
   contained?: string;
   align?: 'left' | 'center';
-}>(), {
-  density: 'default',
-  border: true,
-  align: 'left',
-});
+}>();
 </script>
 
 <template>

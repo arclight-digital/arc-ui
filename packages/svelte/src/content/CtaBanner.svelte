@@ -41,7 +41,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { eyebrow = '', headline = '', nogradient = false, actions, eyebrow_, headline_, children, ...rest }: Props = $props();
+  let { eyebrow = '', headline = '', nogradient, actions, eyebrow_, headline_, children, ...rest }: Props = $props();
 </script>
 
 <arc-cta-banner {eyebrow} {headline} {nogradient} {...rest}>

@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * Character-by-character text reveal animation with blinking cursor.
@@ -15,14 +16,14 @@ import { tokenStyles } from '../shared-styles.js';
  * @slot none
  * @csspart text
  */
-export class ArcTypewriter extends LitElement {
+export class ArcTypewriter extends DeclaredPropsMixin(LitElement) {
   static properties = {
     text: { type: String },
     speed: { type: Number },
     delay: { type: Number },
-    cursor: { type: Boolean, reflect: true },
-    loop: { type: Boolean, reflect: true },
-    nowrap: { type: Boolean, reflect: true },
+    cursor: flag(true, { negative: 'no-cursor' }),
+    loop: flag(false),
+    nowrap: flag(false),
     pauseEnd: { type: Number, reflect: true, attribute: 'pause-end' },
     _displayText: { state: true },
     _complete: { state: true },
@@ -83,9 +84,6 @@ export class ArcTypewriter extends LitElement {
     this.text = '';
     this.speed = 50;
     this.delay = 0;
-    this.cursor = true;
-    this.nowrap = false;
-    this.loop = false;
     this.pauseEnd = 2000;
     this._displayText = '';
     this._complete = false;

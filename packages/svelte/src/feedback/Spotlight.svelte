@@ -34,7 +34,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { target = '', active = false, padding = 8, ...rest }: Props = $props();
+  let { target = '', active, padding = 8, ...rest }: Props = $props();
 </script>
 
 <arc-spotlight {target} {active} {padding} {...rest}>

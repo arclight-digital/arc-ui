@@ -85,8 +85,9 @@
         },
         {
           "name": "status",
-          "description": "Shows a status indicator dot. Options: 'online', 'offline', 'busy', 'away'.",
+          "description": "Shows a status indicator dot. Empty (the default) shows none. An unrecognised value falls back to empty rather than rendering an uncoloured dot that screen readers announce by its bogus name.",
           "values": [
+            { "name": "''" },
             { "name": "online" },
             { "name": "offline" },
             { "name": "busy" },
@@ -150,7 +151,7 @@
       "description": "A scrollable slide container with navigation arrows, dot indicators, auto-play, looping, and\nkeyboard controls.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the active slide changes\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **carousel**\n- **viewport**\n- **arrow-prev**\n- **arrow-next**\n- **dots**\n- **dot**",
       "attributes": [
         {
-          "name": "auto-play",
+          "name": "autoPlay",
           "description": "Enables automatic slide advancement on a timer. Pauses on hover and focus, respects prefers-reduced-motion.",
           "values": []
         },
@@ -165,12 +166,12 @@
           "values": []
         },
         {
-          "name": "show-dots",
+          "name": "showDots",
           "description": "Shows dot indicators below the viewport for direct slide navigation.",
           "values": []
         },
         {
-          "name": "show-arrows",
+          "name": "showArrows",
           "description": "Shows previous/next arrow buttons on the left and right edges of the viewport.",
           "values": []
         }
@@ -287,8 +288,8 @@
         },
         {
           "name": "align",
-          "description": "Shifts the gradient origin so it fades from one edge instead of both. Useful for asymmetric layouts where the divider should visually connect to content on one side.",
-          "values": [{ "name": "left" }, { "name": "right" }]
+          "description": "Shifts the gradient origin so it fades from one edge instead of both. Empty (the default) fades from both edges. Useful for asymmetric layouts where the divider should visually connect to content on one side.",
+          "values": [{ "name": "''" }, { "name": "left" }, { "name": "right" }]
         },
         {
           "name": "vertical",
@@ -459,8 +460,9 @@
         },
         {
           "name": "aspect",
-          "description": "Constrains the container to a fixed aspect ratio, preventing layout shift during loading.",
+          "description": "Constrains the container to a fixed aspect ratio, preventing layout shift during loading. Empty (the default) leaves the container unconstrained; an unrecognised ratio falls back to it.",
           "values": [
+            { "name": "''" },
             { "name": "1/1" },
             { "name": "4/3" },
             { "name": "16/9" },
@@ -552,7 +554,7 @@
           "values": [{ "name": "left" }, { "name": "right" }]
         },
         {
-          "name": "pause-on-hover",
+          "name": "pauseOnHover",
           "description": "When true, the animation pauses while the cursor hovers over the marquee.",
           "values": []
         },
@@ -997,12 +999,12 @@
           "values": []
         },
         {
-          "name": "hide-legend",
+          "name": "hideLegend",
           "description": "Suppresses the legend. By default the legend renders for two or more series and is omitted for a single series.",
           "values": []
         },
         {
-          "name": "hide-axis",
+          "name": "hideAxis",
           "description": "Removes the axis layer — gridlines, y tick labels, and x category labels — for compact trend panels where exact values are read from the tooltip.",
           "values": []
         },
@@ -1012,7 +1014,7 @@
           "values": []
         },
         {
-          "name": "value-format",
+          "name": "valueFormat",
           "description": "How values are formatted in tooltips, the axis, and the accessible data table, via Intl.NumberFormat. Percent expects fractional data (0.24 → 24%). Axis numbers are abbreviated (1.2k, 3.4M).",
           "values": [
             { "name": "number" },
@@ -1048,7 +1050,7 @@
           "values": []
         },
         {
-          "name": "show-seconds",
+          "name": "showSeconds",
           "description": "Show seconds on the digital face, or the second hand on the analog face.",
           "values": []
         },
@@ -1058,7 +1060,7 @@
           "values": []
         },
         {
-          "name": "show-timezone",
+          "name": "showTimezone",
           "description": "Render the timezone abbreviation, muted, beside the digital time.",
           "values": []
         }
@@ -1119,7 +1121,7 @@
           "values": []
         },
         {
-          "name": "hide-zero-segments",
+          "name": "hideZeroSegments",
           "description": "Hide leading segments that are zero",
           "values": []
         }
@@ -1157,7 +1159,7 @@
           ]
         },
         {
-          "name": "manual-sort",
+          "name": "manualSort",
           "description": "Skips internal sorting. Rows render in the order given, while headers still cycle the `sort` state and emit `arc-sort` — use this to implement server-side sorting.",
           "values": []
         },
@@ -1181,7 +1183,7 @@
     },
     {
       "name": "arc-data-table",
-      "description": "A data-driven table component that renders rows from a JavaScript array. Declarative column\ndefinitions via `arc-column` children control which fields appear, their headers, widths, and\nsort behavior. Built-in support for column sorting, row selection with checkboxes, and an\nempty-state fallback.\n---\n\n\n### **Events:**\n - **arc-sort** - Fired when a sortable column header is clicked\n- **arc-select** - Fired when row selection changes. detail: { value, selected, row, index } — value is the sorted selected indices; detail.all is true for header select-all toggles\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **row**\n- **cell**\n- **wrapper**\n- **table**\n- **head**\n- **body**",
+      "description": "A data-driven table component that renders rows from a JavaScript array. Declarative column\ndefinitions via `arc-column` children control which fields appear, their headers, widths, and\nsort behavior. Built-in support for column sorting, row selection with checkboxes, and an\nempty-state fallback.\n---\n\n\n### **Events:**\n - **arc-sort** - Fired when a sortable column header is clicked\n- **arc-select** - Fired when row selection changes. detail: { value, selected, row, index } — `value` is the selected row objects themselves, in `rows` order, so it stays correct across sorting; `row` is the one toggled, `index` its position in `rows`, and `all` is true for header select-all toggles.\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **row**\n- **cell**\n- **wrapper**\n- **table**\n- **head**\n- **body**",
       "attributes": [
         {
           "name": "rows",
@@ -1204,7 +1206,7 @@
           "values": []
         },
         {
-          "name": "sort-direction",
+          "name": "sortDirection",
           "description": "The current sort direction. Works in tandem with `sort-column` to control the initial sort state. Reflected as an attribute so it can be read from the DOM or targeted with CSS selectors.",
           "values": [{ "name": "asc" }, { "name": "desc" }]
         },
@@ -1359,7 +1361,7 @@
           "values": [{ "name": "full" }, { "name": "half" }]
         },
         {
-          "name": "show-value",
+          "name": "showValue",
           "description": "Whether to render the numeric value in the center of the arc. Defaults to true; disable via the `showValue` property.",
           "values": []
         }
@@ -1381,7 +1383,7 @@
           "values": []
         },
         {
-          "name": "keys-quoted",
+          "name": "keysQuoted",
           "description": "Render object keys with quotes. Off by default, matching devtools.",
           "values": []
         }
@@ -1658,8 +1660,9 @@
         },
         {
           "name": "trend",
-          "description": "Shows a trend indicator arrow below the label.",
+          "description": "Shows a trend indicator arrow below the label. Empty (the default) shows none; an unrecognised value falls back to empty rather than rendering an uncoloured dash that no `:host([trend=...])` rule matches.",
           "values": [
+            { "name": "''" },
             { "name": "up" },
             { "name": "down" },
             { "name": "neutral" }
@@ -1687,7 +1690,7 @@
       "attributes": [
         {
           "name": "active",
-          "description": "Zero-indexed active step — steps before this index show as completed",
+          "description": "Zero-indexed active step — steps before this index show as completed. Clamped to the range of rendered steps.",
           "values": []
         }
       ],
@@ -1775,7 +1778,13 @@
     {
       "name": "arc-timeline",
       "description": "Vertical timeline with dated events.\n---\n\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **timeline**\n- **item**\n- **marker**\n- **dot**\n- **line**\n- **content**\n- **title**\n- **description**\n- **date**",
-      "attributes": [{ "name": "heading-level", "values": [] }],
+      "attributes": [
+        {
+          "name": "headingLevel",
+          "description": "ARIA heading level for each event title. Clamped to 1 or greater: `aria-level` below 1 is invalid and is dropped by assistive technology.",
+          "values": []
+        }
+      ],
       "references": []
     },
     {
@@ -2048,7 +2057,7 @@
       "description": "A chat transcript: the scrollable column that holds arc-message children. Built for AI\nassistant panels — the layout, the role alignment, and the scroll behavior all assume messages\narrive while the user is reading. While the reader sits near the bottom, new or growing\nmessages keep the view pinned to the latest; once they scroll up to re-read, the transcript\nnever yanks them back down. The arc-scroll-away and arc-scroll-return events report those\ntransitions with the distance from the bottom, so a consumer can float a \"jump to latest\" chip\nand wire it to scrollToEnd().\n---\n\n\n### **Events:**\n - **arc-scroll-away** - Fired once when the reader scrolls up out of the near-bottom zone of the transcript. detail.value is the distance from the bottom in pixels.\n- **arc-scroll-return** - Fired once when the reader comes back within the near-bottom zone. detail.value is the distance from the bottom in pixels.\n\n### **Methods:**\n - **scrollToEnd()** - Scroll the transcript to its newest message.\n\n### **Slots:**\n - _default_ - Default content: the arc-message children making up the transcript.\n\n### **CSS Parts:**\n - **conversation**",
       "attributes": [
         {
-          "name": "auto-scroll",
+          "name": "autoScroll",
           "description": "Follow new content: when a message is added or grows while the reader is near the bottom, scroll to keep the latest visible. A reader who has scrolled up is never pulled back down. Defaults to true; set the property to false to leave scrolling entirely to the consumer.",
           "values": []
         }
@@ -2342,7 +2351,7 @@
           "values": []
         },
         {
-          "name": "show-value",
+          "name": "showValue",
           "description": "Displays the current percentage value next to the label.",
           "values": []
         },
@@ -2562,9 +2571,18 @@
           "values": []
         },
         {
-          "name": "first-day-of-week",
-          "description": "Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention.",
-          "values": []
+          "name": "firstDayOfWeek",
+          "description": "Which day the week starts on, 1 = Monday … 7 = Sunday. 0 (the default) follows the locale's own convention. An unrecognised value falls back to 0 rather than reaching weekdayOffset() and reordering the week arbitrarily.",
+          "values": [
+            { "name": "0" },
+            { "name": "1" },
+            { "name": "2" },
+            { "name": "3" },
+            { "name": "4" },
+            { "name": "5" },
+            { "name": "6" },
+            { "name": "7" }
+          ]
         },
         {
           "name": "value",
@@ -2583,7 +2601,7 @@
         },
         {
           "name": "month",
-          "description": "The currently displayed month (0-based, 0=January). Defaults to the current month.",
+          "description": "The currently displayed month (0-based, 0=January). Defaults to the current month. Clamped to 0-11: an out-of-range month reached `new Date(year, month)`, which silently rolls into another year.",
           "values": []
         },
         {
@@ -2789,7 +2807,7 @@
         },
         {
           "name": "open",
-          "description": "Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.",
+          "description": "Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS. Held at `false` while `disabled`.",
           "values": []
         },
         {
@@ -2886,7 +2904,7 @@
         },
         {
           "name": "open",
-          "description": "Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.",
+          "description": "Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS. Held at `false` while `disabled`.",
           "values": []
         },
         { "name": "readonly", "values": [] }
@@ -2982,7 +3000,7 @@
           "values": []
         },
         {
-          "name": "error-summary",
+          "name": "errorSummary",
           "description": "When true, renders an aggregated list of validation errors above the submit area after a failed submission attempt. Set to false to handle error display manually.",
           "values": []
         }
@@ -3514,7 +3532,7 @@
           "values": []
         },
         {
-          "name": "show-strength",
+          "name": "showStrength",
           "description": "Renders a four-segment strength meter with a Weak / Fair / Good / Strong label under the field, scored by a built-in heuristic (length, character variety, common-pattern penalties).",
           "values": []
         },
@@ -3673,7 +3691,7 @@
           "values": []
         },
         {
-          "name": "show-values",
+          "name": "showValues",
           "description": "Whether to display the numeric \"low – high\" readout in the header.",
           "values": []
         },
@@ -3811,7 +3829,7 @@
         },
         {
           "name": "open",
-          "description": "Controls whether the dropdown is visible. Set programmatically to open or close the dropdown. Automatically set to `false` when an option is selected or the user clicks outside.",
+          "description": "Controls whether the dropdown is visible. Set programmatically to open or close the dropdown. Automatically set to `false` when an option is selected or the user clicks outside. Held at `false` while `disabled`.",
           "values": []
         },
         { "name": "required", "values": [] },
@@ -3980,7 +3998,7 @@
           "values": []
         },
         {
-          "name": "allow-custom",
+          "name": "allowCustom",
           "description": "When false, only values from `suggestions` can be added; free text is rejected.",
           "values": []
         },
@@ -4074,7 +4092,7 @@
           "values": [{ "name": "sm" }, { "name": "md" }, { "name": "lg" }]
         },
         {
-          "name": "auto-resize",
+          "name": "autoResize",
           "description": "Automatically grows the textarea height to fit its content. Disables manual resize when enabled.",
           "values": []
         },
@@ -4106,7 +4124,7 @@
           "values": []
         },
         {
-          "name": "icon-only",
+          "name": "iconOnly",
           "description": "Renders the button as a compact square without the theme name label, matching an icon-only arc-icon-button of the same size. Attribute name is `icon-only`.",
           "values": []
         },
@@ -4150,13 +4168,18 @@
         },
         {
           "name": "step",
-          "description": "Minute step increment (1, 5, 15, or 30). Controls the granularity of minute options shown in the dropdown.",
-          "values": []
+          "description": "Minute step increment. Controls the granularity of minute options shown in the dropdown. Unrecognised values fall back to 1.",
+          "values": [
+            { "name": "1" },
+            { "name": "5" },
+            { "name": "15" },
+            { "name": "30" }
+          ]
         },
         {
           "name": "format",
-          "description": "Display format: \"12h\" shows hours 1-12 with an AM/PM column, \"24h\" shows hours 0-23 without AM/PM.",
-          "values": []
+          "description": "Display format: \"12h\" shows hours 1-12 with an AM/PM column, \"24h\" shows hours 0-23 without AM/PM. Unrecognised values fall back to \"12h\".",
+          "values": [{ "name": "12h" }, { "name": "24h" }]
         },
         {
           "name": "placeholder",
@@ -4175,7 +4198,7 @@
         },
         {
           "name": "open",
-          "description": "Whether the time dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.",
+          "description": "Whether the time dropdown is visible. Reflected so it can be opened programmatically or styled from CSS. Held at `false` while `disabled`.",
           "values": []
         },
         { "name": "required", "values": [] },
@@ -4316,7 +4339,7 @@
         },
         {
           "name": "open",
-          "description": "Controls whether the tree panel is visible. Automatically set to false when a leaf is selected, Escape is pressed, or the user clicks outside.",
+          "description": "Controls whether the tree panel is visible. Automatically set to false when a leaf is selected, Escape is pressed, or the user clicks outside. Held at `false` while `disabled`.",
           "values": []
         },
         { "name": "required", "values": [] },
@@ -4329,7 +4352,7 @@
       "description": "Full-page layout scaffold that composes a TopBar, Sidebar, and scrollable content area into a\ncohesive application frame. Handles responsive collapse, sidebar toggling, and optional\ntable-of-contents rail out of the box.\n---\n\n\n### **Events:**\n - **arc-sidebar-toggle** - Fired when the shell itself opens or closes the mobile sidebar — on a backdrop click, on Escape, or on navigation. Listened to by arc-top-bar so its hamburger stays in step. Not fired for a toggle the shell merely received, so the two cannot echo each other.\n\n### **Slots:**\n - **topbar**\n- **sidebar**\n- _default_ - Default content.\n- **toc**\n\n### **CSS Parts:**\n - **shell**\n- **body**\n- **sidebar**\n- **main**\n- **content**\n- **toc**",
       "attributes": [
         {
-          "name": "sidebar-open",
+          "name": "sidebarOpen",
           "description": "Controls whether the sidebar is visible on mobile viewports (below 768 px). On desktop the sidebar is always shown regardless of this attribute. Toggle it from a hamburger button in your TopBar to give mobile users access to navigation.",
           "values": []
         },
@@ -4504,7 +4527,7 @@
           ]
         },
         {
-          "name": "auto-hide",
+          "name": "autoHide",
           "description": "When true, the dock hides itself when the cursor moves away from the edge and reveals on hover. Set to false to keep the dock permanently visible.",
           "values": []
         },
@@ -4690,7 +4713,7 @@
       "description": "Settings page with side navigation and content area.\n---\n\n\n### **Slots:**\n - **nav**\n- _default_ - Default content.\n\n### **CSS Parts:**\n - **layout**\n- **nav**\n- **content**",
       "attributes": [
         {
-          "name": "nav-position",
+          "name": "navPosition",
           "description": "Controls whether the navigation panel appears as a left sidebar (220px wide, CSS Grid) or a top bar (full-width, flexbox column). The left layout collapses to stacked on screens narrower than 768px.",
           "values": [{ "name": "left" }, { "name": "top" }]
         }
@@ -4708,7 +4731,7 @@
         },
         {
           "name": "ratio",
-          "description": "The proportion of space allocated to the primary pane, from 0 to 1. A value of 0.4 gives the primary pane 40% of the available width (or height in vertical mode).",
+          "description": "The proportion of space allocated to the primary pane, clamped to `minRatio`..`maxRatio` on every path. The drag handle always honoured those bounds; assigning `ratio` from script used to bypass them entirely. From 0 to 1. A value of 0.4 gives the primary pane 40% of the available width (or height in vertical mode).",
           "values": []
         },
         {
@@ -5425,7 +5448,7 @@
           "values": []
         },
         {
-          "name": "menu-open",
+          "name": "menuOpen",
           "description": "Reflects whether the mobile hamburger menu is open. Toggling this value updates the aria-expanded attribute on the menu button. Typically managed by AppShell in response to the arc-sidebar-toggle event rather than set directly.",
           "values": []
         },
@@ -5440,7 +5463,7 @@
           "values": []
         },
         {
-          "name": "nav-align",
+          "name": "navAlign",
           "description": "Controls the alignment of content in the center slot. Pulls nav toward the brand or actions without reordering DOM.",
           "values": [
             { "name": "left" },
@@ -5467,7 +5490,7 @@
     },
     {
       "name": "arc-tree-view",
-      "description": "Hierarchical tree structure with expandable/collapsible nodes, selection tracking, keyboard\nnavigation, and indentation guide lines.\n---\n\n\n### **Events:**\n - **arc-toggle** - Fired when a tree node is expanded or collapsed\n- **arc-select** - Fired when a tree item is selected\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **item**\n- **row**",
+      "description": "Hierarchical tree structure with expandable/collapsible nodes, selection tracking, keyboard\nnavigation, and indentation guide lines.\n---\n\n\n### **Events:**\n - **arc-toggle** - Fired when a tree node is expanded or collapsed\n- **arc-select** - Fired when a tree item is selected\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **tree** - The root list. The nested lists at deeper levels are `group`.\n- **group** - A nested list under an expanded branch.\n- **item**\n- **row**",
       "attributes": [],
       "references": []
     },
@@ -5613,7 +5636,7 @@
           "values": []
         },
         {
-          "name": "case-sensitive",
+          "name": "caseSensitive",
           "description": "Whether matching should be case-sensitive",
           "values": []
         }

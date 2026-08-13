@@ -34,7 +34,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { columns = 3, gap = 'md', children, ...rest }: Props = $props();
+  let { columns = 3, gap, children, ...rest }: Props = $props();
 </script>
 
 <arc-masonry {columns} {gap} {...rest}>

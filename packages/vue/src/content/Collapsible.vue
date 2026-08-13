@@ -8,7 +8,6 @@ const props = withDefaults(defineProps<{
   open?: boolean;
   heading?: string;
 }>(), {
-  open: false,
   heading: '',
 });
 

@@ -4,11 +4,9 @@ import '@arclux/arc-ui/accordion';
 
 defineOptions({ name: 'Accordion' });
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   multiple?: boolean;
-}>(), {
-  multiple: false,
-});
+}>();
 </script>
 
 <template>

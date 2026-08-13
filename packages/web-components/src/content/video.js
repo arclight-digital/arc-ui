@@ -1,6 +1,7 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * House-styled video player. Before the first play it shows the poster with a large glowing
@@ -41,18 +42,18 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart mute-button - The mute toggle button.
  * @csspart fullscreen-button - The fullscreen button.
  */
-export class ArcVideo extends LitElement {
+export class ArcVideo extends DeclaredPropsMixin(LitElement) {
   static properties = {
     src: { type: String },
     poster: { type: String },
     label: { type: String },
-    autoplay: { type: Boolean, reflect: true },
-    loop: { type: Boolean, reflect: true },
-    muted: { type: Boolean, reflect: true },
+    autoplay: flag(false),
+    loop: flag(false),
+    muted: flag(false),
     // Default-true boolean: presence is still true, and the explicit string
     // "false" is the off switch (same pattern as arc-uptime's summary prop).
     controls: { type: Boolean, converter: { fromAttribute: (v) => v !== 'false' } },
-    preload: { type: String },
+    preload: oneOf(['none', 'metadata', 'auto'], { default: 'metadata', reflect: false }),
     _started: { state: true },
     _playing: { state: true },
     _currentTime: { state: true },
@@ -301,11 +302,7 @@ export class ArcVideo extends LitElement {
     this.src = '';
     this.poster = '';
     this.label = '';
-    this.autoplay = false;
-    this.loop = false;
-    this.muted = false;
     this.controls = true;
-    this.preload = 'metadata';
     this._started = false;
     this._playing = false;
     this._currentTime = 0;

@@ -35,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { threshold = 300, smooth = true, position = 'bottom-right', offset = 'var(--space-lg)', ...rest }: Props = $props();
+  let { threshold = 300, smooth, position, offset = 'var(--space-lg)', ...rest }: Props = $props();
 </script>
 
 <arc-scroll-to-top {threshold} {smooth} {position} {offset} {...rest}>

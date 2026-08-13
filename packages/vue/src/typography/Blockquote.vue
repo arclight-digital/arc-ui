@@ -9,7 +9,6 @@ const props = withDefaults(defineProps<{
   variant?: 'default' | 'accent';
 }>(), {
   cite: '',
-  variant: 'default',
 });
 </script>
 

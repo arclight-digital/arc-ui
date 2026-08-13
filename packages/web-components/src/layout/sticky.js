@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * Wrapper that goes sticky at a configurable offset and emits a stuck attribute/event for visual
@@ -11,10 +12,15 @@ import { tokenStyles } from '../shared-styles.js';
  * @fires arc-stuck - Fired when the stuck state changes. Event detail contains `{ stuck: boolean }` indicating whether the element is currently stuck.
  * @slot - Default content.
  */
-export class ArcSticky extends LitElement {
+export class ArcSticky extends DeclaredPropsMixin(LitElement) {
   static properties = {
     offset: { type: String, reflect: true },
-    stuck: { type: Boolean, reflect: true, state: true },
+    // `state: true` used to sit here alongside `reflect: true`. In Lit, state
+    // means *no attribute at all*, so the reflect was dead and `[stuck]` never
+    // appeared — which broke the component's own `:host([stuck])` rule below as
+    // well as the selector its @prop documentation tells consumers to use. It
+    // is an output, not an input: see `derived` in shared/props.js.
+    stuck: flag(false, { derived: true }),
   };
 
   static styles = [
@@ -47,7 +53,6 @@ export class ArcSticky extends LitElement {
   constructor() {
     super();
     this.offset = '0px';
-    this.stuck = false;
     this._observer = null;
   }
 

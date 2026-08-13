@@ -5,6 +5,7 @@
 
   interface Props {
     offset?: string;
+    stuck?: boolean;
     children?: Snippet;
     class?: string;
     id?: string;
@@ -33,9 +34,22 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { offset = '0px', children, ...rest }: Props = $props();
+  let { offset = '0px', stuck = $bindable(), children, ...rest }: Props = $props();
+
+  // Two-way binding — mirror the event detail back onto the prop, then
+  // forward to the consumer's own handler, which {...rest} would otherwise
+  // have attached. These are declared after {...rest} below so they win.
+  function __onArcStuck(e: Event) {
+    const detail = (e as CustomEvent).detail as Record<string, unknown> | null;
+    if (detail) {
+      if ('stuck' in detail) stuck = detail.stuck as boolean;
+    }
+    (rest['onarc-stuck'] as ((e: Event) => void) | undefined)?.(e);
+  }
 </script>
 
-<arc-sticky {offset} {...rest}>
+<arc-sticky {offset} {stuck} {...rest}
+  onarc-stuck={__onArcStuck}
+>
   {@render children?.()}
 </arc-sticky>

@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { statusVars } from '../status-styles.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Styled callout box for tips, warnings, and info.
@@ -20,10 +21,10 @@ import { statusVars } from '../status-styles.js';
  * @csspart dismiss
  * @csspart content
  */
-export class ArcCallout extends LitElement {
+export class ArcCallout extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    variant: { type: String, reflect: true },
-    dismissible: { type: Boolean, reflect: true },
+    variant: oneOf(['info', 'tip', 'warning', 'error']),
+    dismissible: flag(false),
     _dismissed: { state: true },
   };
 
@@ -82,8 +83,6 @@ export class ArcCallout extends LitElement {
 
   constructor() {
     super();
-    this.variant = 'info';
-    this.dismissible = false;
     this._dismissed = false;
   }
 

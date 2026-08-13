@@ -1,5 +1,6 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
  * Styled pull-quote with optional citation for editorial emphasis.
@@ -12,10 +13,10 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart quote
  * @csspart cite
  */
-export class ArcBlockquote extends LitElement {
+export class ArcBlockquote extends DeclaredPropsMixin(LitElement) {
   static properties = {
     cite: { type: String },
-    variant: { type: String, reflect: true },
+    variant: oneOf(['default', 'accent']),
   };
 
   static styles = [
@@ -91,7 +92,6 @@ export class ArcBlockquote extends LitElement {
   constructor() {
     super();
     this.cite = '';
-    this.variant = 'default';
   }
 
   render() {

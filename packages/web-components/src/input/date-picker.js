@@ -1,10 +1,11 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { monthNames, weekdayNames, firstDayOfWeek, weekdayOffset } from '../shared/date-names.js';
-import { ClickOutsideController } from '../shared/click-outside.js';
+import { DismissController } from '../shared/dismiss-controller.js';
 import { PositionController } from '../shared/position-controller.js';
 import { managedPanelStyles } from '../shared/position-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Calendar-based date picker with keyboard navigation.
@@ -16,7 +17,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @prop {string} placeholder - Placeholder text displayed in the input when no date is selected.
  * @prop {boolean} disabled - Disables the date picker, reducing opacity and preventing the calendar from opening.
  * @prop {string} label - Label text rendered above the input in uppercase accent font styling.
- * @prop {boolean} open - Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.
+ * @prop {boolean} open - Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS. Held at `false` while `disabled`.
  * @prop {string} locale - BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language.
  * @prop {number} firstDayOfWeek - Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention, so most of the world gets Monday and the US gets Sunday without configuring anything.
  * @prop {'sm' | 'md' | 'lg'} size - Control size. `md` is the default; `sm` and `lg` scale the field padding.
@@ -28,17 +29,24 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
  * @csspart input
  * @csspart dropdown
  */
-export class ArcDatePicker extends FormControlMixin(LitElement) {
+export class ArcDatePicker extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
   static properties = {
-    size: { type: String, reflect: true },
+    size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
+
     value: { type: String, reflect: true },
     name: { type: String, reflect: true },
     min: { type: String },
     max: { type: String },
     placeholder: { type: String },
+    // NOT flag(): a form-associated custom element whose `disabled` content
+    // attribute is merely *present* is "actually disabled" per the HTML spec,
+    // so the platform calls formDisabledCallback(true) and the mixin sets the
+    // property back. `disabled="false"` is a disabled control here for exactly
+    // the reason it is on a native <input>. Native semantics win; see
+    // shared/props.js.
     disabled: { type: Boolean, reflect: true },
     label: { type: String },
-    open: { type: Boolean, reflect: true },
+    open: flag(false, { blockedBy: 'disabled' }),
     locale: { type: String },
     firstDayOfWeek: { type: Number, attribute: 'first-day-of-week' },
     _viewMonth: { state: true },
@@ -309,7 +317,6 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
 
   constructor() {
     super();
-    this.size = 'md';
     this.value = '';
     this.name = '';
     this.min = '';
@@ -317,7 +324,6 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
     this.placeholder = 'Select date';
     this.disabled = false;
     this.label = '';
-    this.open = false;
     this.locale = '';
     this.firstDayOfWeek = 0;
     this._mode = 'days'; // 'days' | 'months' | 'years'
@@ -327,8 +333,8 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
     this._viewYear = null;
 
     this._handleEscape = this._handleEscape.bind(this);
-    this._clickOutside = new ClickOutsideController(this, {
-      onClickOutside: () => {
+    this._dismiss = new DismissController(this, {
+      onDismiss: () => {
         this.open = false;
       },
       when: () => this.open,
@@ -369,16 +375,33 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
   _toggleDropdown() {
     if (this.disabled || this.readonly) return;
     this.open = !this.open;
+  }
 
-    if (!this.open) this._mode = 'days';
-    if (this.open) {
-      this._focusedIso = null;
-      if (this.value) {
-        const d = new Date(this.value + 'T00:00:00');
-        if (!isNaN(d)) {
-          this._viewMonth = d.getMonth();
-          this._viewYear = d.getFullYear();
-        }
+  /**
+   * Anchor the calendar whenever `open` changes — on *either* path.
+   *
+   * This used to live in `_toggleDropdown`, which is only the click path, so
+   * `el.open = true` (documented and supported) showed today's month rather
+   * than the month the value is in. Finding #59.
+   *
+   * `willUpdate` rather than `updated`: `_viewMonth`/`_viewYear`/`_mode` are
+   * reactive state, and computing them before render folds into the same
+   * update instead of scheduling a second one.
+   */
+  willUpdate(changed) {
+    super.willUpdate(changed);
+    if (!changed.has('open')) return;
+
+    if (!this.open) {
+      this._mode = 'days';
+      return;
+    }
+    this._focusedIso = null;
+    if (this.value) {
+      const d = new Date(this.value + 'T00:00:00');
+      if (!isNaN(d)) {
+        this._viewMonth = d.getMonth();
+        this._viewYear = d.getFullYear();
       }
     }
   }
@@ -555,11 +578,13 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
       case 'ArrowUp':
         d.setDate(d.getDate() - 7);
         break;
+      // Row ends are relative to where the week starts, so this has to go
+      // through weekdayOffset rather than the Sunday-based getDay().
       case 'Home':
-        d.setDate(d.getDate() - d.getDay());
+        d.setDate(d.getDate() - weekdayOffset(d, this._firstDay));
         break;
       case 'End':
-        d.setDate(d.getDate() + (6 - d.getDay()));
+        d.setDate(d.getDate() + (6 - weekdayOffset(d, this._firstDay)));
         break;
       default:
         handled = false;
@@ -588,7 +613,7 @@ export class ArcDatePicker extends FormControlMixin(LitElement) {
     super.updated(changed);
     if (changed.has('open')) {
       this.open ? this._position.show() : this._position.hide();
-      this.open ? this._clickOutside.activate() : this._clickOutside.deactivate();
+      this.open ? this._dismiss.activate() : this._dismiss.deactivate();
     }
     if (changed.has('open') && this.open && this._mode === 'days') {
       // Move focus to the roving tab stop when the popup opens

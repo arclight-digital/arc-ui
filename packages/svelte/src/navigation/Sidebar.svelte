@@ -38,7 +38,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { active = '', collapsed = false, position = 'left', width = '280px', glow = false, label = 'Sidebar navigation', children, ...rest }: Props = $props();
+  let { active = '', collapsed, position, width = '280px', glow, label = 'Sidebar navigation', children, ...rest }: Props = $props();
 </script>
 
 <arc-sidebar {active} {collapsed} {position} {width} {glow} {label} {...rest}>

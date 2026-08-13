@@ -2,6 +2,7 @@ import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 import './icon-button.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Dual-listbox for moving items between an available and a selected pane, ideal for permissions
@@ -27,14 +28,21 @@ import './icon-button.js';
  * @csspart option
  * @csspart controls
  */
-export class ArcTransferList extends FormControlMixin(LitElement) {
+export class ArcTransferList extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
   static properties = {
-    size: { type: String, reflect: true },
+    size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
+
     options: { type: Array },
     value: { type: Array },
     name: { type: String, reflect: true },
+    // NOT flag(): a form-associated custom element whose `disabled` content
+    // attribute is merely *present* is "actually disabled" per the HTML spec,
+    // so the platform calls formDisabledCallback(true) and the mixin sets the
+    // property back. `disabled="false"` is a disabled control here for exactly
+    // the reason it is on a native <input>. Native semantics win; see
+    // shared/props.js.
     disabled: { type: Boolean, reflect: true },
-    searchable: { type: Boolean, reflect: true },
+    searchable: flag(false),
     sourceLabel: { type: String, attribute: 'source-label' },
     targetLabel: { type: String, attribute: 'target-label' },
     _sourceQuery: { state: true },
@@ -290,12 +298,10 @@ export class ArcTransferList extends FormControlMixin(LitElement) {
 
   constructor() {
     super();
-    this.size = 'md';
     this.options = [];
     this.value = [];
     this.name = '';
     this.disabled = false;
-    this.searchable = false;
     this.sourceLabel = 'Available';
     this.targetLabel = 'Selected';
     this._sourceQuery = '';

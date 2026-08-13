@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
  * Connects multiple buttons into a single visual unit with shared borders and collapsed radii.
@@ -13,10 +14,10 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @slot - Default content.
  * @csspart group
  */
-export class ArcButtonGroup extends LitElement {
+export class ArcButtonGroup extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    orientation: { type: String, reflect: true },
-    size: { type: String, reflect: true },
+    orientation: oneOf(['horizontal', 'vertical']),
+    size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
     variant: { type: String, reflect: true },
   };
 
@@ -84,8 +85,6 @@ export class ArcButtonGroup extends LitElement {
 
   constructor() {
     super();
-    this.orientation = 'horizontal';
-    this.size = 'md';
     this.variant = '';
   }
 

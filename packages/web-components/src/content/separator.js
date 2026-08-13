@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
  * Visual divider for separating content sections. Supports horizontal and vertical orientations,
@@ -14,11 +15,11 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart line
  * @csspart label
  */
-export class ArcSeparator extends LitElement {
+export class ArcSeparator extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    orientation: { type: String, reflect: true },
+    orientation: oneOf(['horizontal', 'vertical']),
     label: { type: String },
-    variant: { type: String, reflect: true },
+    variant: oneOf(['line', 'dashed', 'dotted', 'fade']),
   };
 
   static styles = [
@@ -131,9 +132,7 @@ export class ArcSeparator extends LitElement {
 
   constructor() {
     super();
-    this.orientation = 'horizontal';
     this.label = '';
-    this.variant = 'line';
   }
 
   render() {

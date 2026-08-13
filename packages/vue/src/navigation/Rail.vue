@@ -11,7 +11,6 @@ const props = withDefaults(defineProps<{
 }>(), {
   items: () => ([]),
   value: '',
-  expanded: false,
 });
 
 const emit = defineEmits<{

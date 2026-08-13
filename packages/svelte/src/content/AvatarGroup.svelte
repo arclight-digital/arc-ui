@@ -34,7 +34,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { max = Infinity, overlap = 'md', children, ...rest }: Props = $props();
+  let { max = Infinity, overlap, children, ...rest }: Props = $props();
 </script>
 
 <arc-avatar-group {max} {overlap} {...rest}>

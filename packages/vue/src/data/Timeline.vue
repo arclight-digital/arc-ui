@@ -4,11 +4,9 @@ import '@arclux/arc-ui/timeline';
 
 defineOptions({ name: 'Timeline' });
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   headingLevel?: number;
-}>(), {
-  headingLevel: 3,
-});
+}>();
 </script>
 
 <template>

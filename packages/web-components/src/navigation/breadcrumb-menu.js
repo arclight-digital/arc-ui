@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import { ClickOutsideController } from '../shared/click-outside.js';
+import { DismissController } from '../shared/dismiss-controller.js';
 import { PositionController } from '../shared/position-controller.js';
 import { managedPanelStyles } from '../shared/position-styles.js';
 
@@ -146,8 +146,8 @@ export class ArcBreadcrumbMenu extends LitElement {
     this.label = 'Breadcrumb';
     this.items = [];
     this._openIndex = -1;
-    this._clickOutside = new ClickOutsideController(this, {
-      onClickOutside: () => {
+    this._dismiss = new DismissController(this, {
+      onDismiss: () => {
         this._openIndex = -1;
       },
     });
@@ -165,7 +165,7 @@ export class ArcBreadcrumbMenu extends LitElement {
     if (changed.has('_openIndex')) {
       const open = this._openIndex >= 0;
       open ? this._position.show() : this._position.hide();
-      open ? this._clickOutside.activate() : this._clickOutside.deactivate();
+      open ? this._dismiss.activate() : this._dismiss.deactivate();
     }
   }
 

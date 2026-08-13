@@ -13,7 +13,6 @@ const props = withDefaults(defineProps<{
   target: '',
   label: '',
   expired: 'Expired',
-  hideZeroSegments: false,
 });
 
 const emit = defineEmits<{

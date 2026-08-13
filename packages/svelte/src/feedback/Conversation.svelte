@@ -33,7 +33,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { autoScroll = true, children, ...rest }: Props = $props();
+  let { autoScroll, children, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

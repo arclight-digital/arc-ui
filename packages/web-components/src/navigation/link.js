@@ -2,6 +2,7 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { isLoneSlottedAnchor } from '../shared/anchor-adoption.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Styled anchor with nav, muted, and default variants.
@@ -15,13 +16,13 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @slot - Default content. Slotting a single `<a>` as the only child adopts it as the link — the recommended form for links that must work before hydration or without JavaScript. In this form `external` contributes the marker icon only; put `target`/`rel` on your own anchor, and note that `::part(link)` does not apply.
  * @csspart link
  */
-export class ArcLink extends LitElement {
+export class ArcLink extends DeclaredPropsMixin(LitElement) {
   static properties = {
     href: { type: String },
-    variant: { type: String, reflect: true },
-    underline: { type: String, reflect: true },
-    active: { type: Boolean, reflect: true },
-    external: { type: Boolean, reflect: true },
+    variant: oneOf(['default', 'muted', 'nav']),
+    underline: oneOf(['hover', 'always', 'never']),
+    active: flag(false),
+    external: flag(false),
     _slottedAnchor: { state: true },
   };
 
@@ -117,10 +118,6 @@ export class ArcLink extends LitElement {
   constructor() {
     super();
     this.href = '';
-    this.variant = 'default';
-    this.underline = 'hover';
-    this.active = false;
-    this.external = false;
     this._slottedAnchor = false;
   }
 

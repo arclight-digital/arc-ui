@@ -10,8 +10,6 @@ const props = withDefaults(defineProps<{
   minRatio?: number;
   maxRatio?: number;
 }>(), {
-  orientation: 'horizontal',
-  ratio: 0.5,
   minRatio: 0.15,
   maxRatio: 0.85,
 });

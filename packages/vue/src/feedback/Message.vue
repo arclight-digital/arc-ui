@@ -11,11 +11,8 @@ const props = withDefaults(defineProps<{
   pending?: boolean;
   markdown?: boolean;
 }>(), {
-  speaker: 'user',
   author: '',
   timestamp: '',
-  pending: false,
-  markdown: false,
 });
 </script>
 

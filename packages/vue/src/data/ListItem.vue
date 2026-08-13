@@ -11,8 +11,6 @@ const props = withDefaults(defineProps<{
   href?: string;
 }>(), {
   value: '',
-  selected: false,
-  disabled: false,
   href: '',
 });
 

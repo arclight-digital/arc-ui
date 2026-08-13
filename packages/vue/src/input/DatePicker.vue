@@ -17,7 +17,6 @@ const props = withDefaults(defineProps<{
   locale?: string;
   firstDayOfWeek?: number;
 }>(), {
-  size: 'md',
   value: '',
   name: '',
   min: '',

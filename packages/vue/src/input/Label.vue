@@ -11,9 +11,6 @@ const props = withDefaults(defineProps<{
   disabled?: boolean;
 }>(), {
   for: '',
-  required: false,
-  size: 'md',
-  disabled: false,
 });
 </script>
 

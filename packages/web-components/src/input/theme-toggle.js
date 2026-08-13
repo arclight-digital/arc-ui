@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { iconBoxStyles } from '../button-styles.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Three-state theme toggle cycling through dark, light, and auto modes with animated icon
@@ -17,12 +18,12 @@ import { iconBoxStyles } from '../button-styles.js';
  * @csspart icon
  * @csspart label
  */
-export class ArcThemeToggle extends LitElement {
+export class ArcThemeToggle extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    theme: { type: String, reflect: true },
-    disabled: { type: Boolean, reflect: true },
-    iconOnly: { type: Boolean, attribute: 'icon-only', reflect: true },
-    size: { type: String, reflect: true },
+    theme: oneOf(['dark', 'light', 'auto'], { default: 'auto' }),
+    disabled: flag(false),
+    iconOnly: flag(false, { attribute: 'icon-only' }),
+    size: oneOf(['xs', 'sm', 'md', 'lg'], { default: 'md' }),
   };
 
   static styles = [
@@ -129,14 +130,15 @@ export class ArcThemeToggle extends LitElement {
 
   constructor() {
     super();
-    this.theme = 'auto';
-    this.disabled = false;
-    this.iconOnly = false;
-    this.size = 'md';
   }
 
   connectedCallback() {
     super.connectedCallback();
+    // An explicit `theme` in markup is the author stating the answer, and used
+    // to be discarded: this sampled storage and the document root
+    // unconditionally, so `<arc-theme-toggle theme="dark">` rendered as
+    // whatever was stored. Found by the derived conformance suite.
+    if (this.hasAttribute('theme')) return;
     const stored = localStorage.getItem('arc-theme');
     if (stored && ArcThemeToggle._themeOrder.includes(stored)) {
       this.theme = stored;

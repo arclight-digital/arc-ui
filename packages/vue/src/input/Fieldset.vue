@@ -13,9 +13,7 @@ const props = withDefaults(defineProps<{
 }>(), {
   legend: '',
   description: '',
-  disabled: false,
   error: '',
-  variant: 'default',
 });
 </script>
 

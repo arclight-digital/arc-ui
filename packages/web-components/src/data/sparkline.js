@@ -1,5 +1,6 @@
 import { LitElement, html, css, svg } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Tiny inline SVG chart for embedding lightweight line or bar visualizations inside tables, stat
@@ -19,14 +20,14 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart bar
  * @csspart svg
  */
-export class ArcSparkline extends LitElement {
+export class ArcSparkline extends DeclaredPropsMixin(LitElement) {
   static properties = {
     data: { type: String },
-    type: { type: String, reflect: true },
+    type: oneOf(['line', 'bar']),
     color: { type: String },
     width: { type: Number },
     height: { type: Number },
-    fill: { type: Boolean },
+    fill: flag(false, { reflect: false }),
   };
 
   static styles = [
@@ -95,11 +96,9 @@ export class ArcSparkline extends LitElement {
   constructor() {
     super();
     this.data = '';
-    this.type = 'line';
     this.color = '';
     this.width = 120;
     this.height = 32;
-    this.fill = false;
   }
 
   /** Parse comma-separated data string into number array */

@@ -2,9 +2,10 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { positionStyles } from '../shared/position-styles.js';
 import { PositionController } from '../shared/position-controller.js';
-import { ClickOutsideController } from '../shared/click-outside.js';
+import { DismissController } from '../shared/dismiss-controller.js';
 import { setTriggerAria, deepActiveElement } from '../shared/trigger-aria.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Floating content panel anchored to a trigger element, with four placement positions and
@@ -21,10 +22,10 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @csspart trigger
  * @csspart panel
  */
-export class ArcPopover extends LitElement {
+export class ArcPopover extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    open: { type: Boolean, reflect: true },
-    position: { type: String, reflect: true },
+    open: flag(false),
+    position: oneOf(['top', 'bottom', 'left', 'right'], { default: 'bottom' }),
     trigger: { type: String },
   };
 
@@ -72,15 +73,13 @@ export class ArcPopover extends LitElement {
 
   constructor() {
     super();
-    this.open = false;
-    this.position = 'bottom';
     this.trigger = '';
     this._openedFrom = null;
     this._onKeyDown = this._onKeyDown.bind(this);
-    this._clickOutside = new ClickOutsideController(this, {
+    this._dismiss = new DismissController(this, {
       // _close(false): the pointer chose a new target, so don't yank focus back
       // to the trigger.
-      onClickOutside: () => this._close(false),
+      onDismiss: () => this._close(false),
     });
     this._position = new PositionController(this, {
       anchor: () => this.shadowRoot?.querySelector('.popover__trigger'),
@@ -97,10 +96,10 @@ export class ArcPopover extends LitElement {
       this._syncTriggerAria();
       if (this.open) {
         this._openedFrom = deepActiveElement();
-        this._clickOutside.activate();
+        this._dismiss.activate();
         document.addEventListener('keydown', this._onKeyDown);
       } else {
-        this._clickOutside.deactivate();
+        this._dismiss.deactivate();
         document.removeEventListener('keydown', this._onKeyDown);
       }
     }

@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, oneOf, num } from '../shared/props.js';
 
 /**
  * Before/after image comparison: two layered images with a draggable divider revealing one over
@@ -47,10 +48,13 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart label-before - The before caption chip.
  * @csspart label-after - The after caption chip.
  */
-export class ArcImageCompare extends LitElement {
+export class ArcImageCompare extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    position: { type: Number, reflect: true },
-    orientation: { type: String, reflect: true },
+    // "Divider position as a percentage, 0 to 100". The component clamped on
+    // every path it owned; declaring it means the property path is covered
+    // too, and conformance derives the assertion (finding #70).
+    position: num({ default: 50, min: 0, max: 100, clamp: 'toRange', reflect: true }),
+    orientation: oneOf(['horizontal', 'vertical']),
     beforeLabel: { type: String, attribute: 'before-label' },
     afterLabel: { type: String, attribute: 'after-label' },
     label: { type: String },
@@ -228,8 +232,6 @@ export class ArcImageCompare extends LitElement {
 
   constructor() {
     super();
-    this.position = 50;
-    this.orientation = 'horizontal';
     this.beforeLabel = '';
     this.afterLabel = '';
     this.label = '';

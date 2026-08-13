@@ -13,7 +13,6 @@ const props = withDefaults(defineProps<{
   total: 1,
   current: 1,
   siblings: 1,
-  compact: false,
 });
 
 const emit = defineEmits<{

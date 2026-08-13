@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * Defines a single column within a DataTable. Each Column maps a data field key to a visible table
@@ -13,12 +14,12 @@ import { LitElement, html, css } from 'lit';
  * @prop {string} width - Sets a fixed CSS width on the column (e.g., "100px", "20%"). Useful for constraining narrow columns like status badges or actions so they do not stretch unnecessarily.
  * @slot - Default content.
  */
-export class ArcColumn extends LitElement {
+export class ArcColumn extends DeclaredPropsMixin(LitElement) {
   static properties = {
     field: { type: String, reflect: true },
     key: { type: String, reflect: true },
     label: { type: String, reflect: true },
-    sortable: { type: Boolean, reflect: true },
+    sortable: flag(false),
     width: { type: String },
   };
 
@@ -40,7 +41,6 @@ export class ArcColumn extends LitElement {
     this.field = '';
     this.key = '';
     this.label = '';
-    this.sortable = false;
     this.width = '';
   }
 

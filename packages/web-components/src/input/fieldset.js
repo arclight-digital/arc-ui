@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Grouped form section with legend, description, error message, and optional card variant. Wraps
@@ -21,13 +22,13 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @csspart content
  * @csspart error
  */
-export class ArcFieldset extends LitElement {
+export class ArcFieldset extends DeclaredPropsMixin(LitElement) {
   static properties = {
     legend: { type: String },
     description: { type: String },
-    disabled: { type: Boolean, reflect: true },
+    disabled: flag(false),
     error: { type: String },
-    variant: { type: String, reflect: true },
+    variant: oneOf(['default', 'card']),
     _hasLegend: { state: true },
     _hasActions: { state: true },
   };
@@ -69,6 +70,13 @@ export class ArcFieldset extends LitElement {
 
       .legend__slot { display: contents; }
       .legend__slot--empty { display: none; }
+
+      /* The <legend> renders unconditionally so its slots exist for slotchange
+         to fire on; this hides it when it would be empty. Making the whole
+         block conditional on _hasLegend was circular — the flag is set by the
+         slotchange of a slot that only existed once the flag was set, so a
+         slotted legend never appeared at all. */
+      .fieldset__legend--empty { display: none; }
 
       .fieldset__header {
         display: flex;
@@ -114,9 +122,7 @@ export class ArcFieldset extends LitElement {
     super();
     this.legend = '';
     this.description = '';
-    this.disabled = false;
     this.error = '';
-    this.variant = 'default';
     this._hasLegend = false;
     this._hasActions = false;
   }
@@ -135,14 +141,12 @@ export class ArcFieldset extends LitElement {
   }
 
   render() {
-    const showLegend = this.legend || this._hasLegend;
+    const hasContent = this.legend || this._hasLegend || this._hasActions;
 
     return html`
       <fieldset ?disabled=${this.disabled} part="fieldset">
-        ${
-          showLegend
-            ? html`
-          <legend part="legend">
+        ${html`
+          <legend part="legend" class="${hasContent ? '' : 'fieldset__legend--empty'}">
             <div class="fieldset__header">
               <span>
                 ${this.legend}
@@ -156,7 +160,6 @@ export class ArcFieldset extends LitElement {
             </div>
           </legend>
         `
-            : ''
         }
         ${this.description ? html`<div class="fieldset__description" part="description">${this.description}</div>` : ''}
         <div class="fieldset__content" part="content">

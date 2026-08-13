@@ -11,8 +11,6 @@ const props = withDefaults(defineProps<{
   offset?: string;
 }>(), {
   threshold: 300,
-  smooth: true,
-  position: 'bottom-right',
   offset: 'var(--space-lg)',
 });
 </script>

@@ -15,14 +15,9 @@ const props = withDefaults(defineProps<{
   valueFormat?: 'number' | 'percent' | 'currency';
   currency?: string;
 }>(), {
-  type: 'line',
   series: () => ([]),
   labels: () => ([]),
-  stacked: false,
-  hideLegend: false,
-  hideAxis: false,
   height: 260,
-  valueFormat: 'number',
   currency: 'USD',
 });
 

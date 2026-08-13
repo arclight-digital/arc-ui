@@ -35,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { position = 'bottom', autoHide = false, open = false, children, ...rest }: Props = $props();
+  let { position, autoHide, open, children, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

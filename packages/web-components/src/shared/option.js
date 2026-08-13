@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * Individual option element slotted into the segmented control. The `value` attribute identifies
@@ -12,11 +13,11 @@ import { LitElement, html, css } from 'lit';
  * @prop {boolean} disabled - When true, dims this option and prevents it from being selected.
  * @slot - Default content.
  */
-export class ArcOption extends LitElement {
+export class ArcOption extends DeclaredPropsMixin(LitElement) {
   static properties = {
     value: { type: String, reflect: true },
-    disabled: { type: Boolean, reflect: true },
-    selected: { type: Boolean, reflect: true },
+    disabled: flag(false),
+    selected: flag(false),
   };
 
   static styles = css`
@@ -26,8 +27,6 @@ export class ArcOption extends LitElement {
   constructor() {
     super();
     this.value = '';
-    this.disabled = false;
-    this.selected = false;
   }
 
   /** Expose text content as label */

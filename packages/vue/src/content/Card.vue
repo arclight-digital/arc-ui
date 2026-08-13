@@ -10,8 +10,6 @@ const props = withDefaults(defineProps<{
   interactive?: boolean;
 }>(), {
   href: '',
-  padding: 'md',
-  interactive: false,
 });
 </script>
 

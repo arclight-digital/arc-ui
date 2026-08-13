@@ -1,5 +1,6 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * Form wrapper with built-in validation, error aggregation, and submit handling. Composes Input,
@@ -20,14 +21,20 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart layout
  * @csspart errors
  */
-export class ArcForm extends LitElement {
+export class ArcForm extends DeclaredPropsMixin(LitElement) {
   static properties = {
     action: { type: String },
     method: { type: String },
-    novalidate: { type: Boolean, reflect: true },
-    loading: { type: Boolean, reflect: true },
+    novalidate: flag(false),
+    loading: flag(false),
+    // NOT flag(): a form-associated custom element whose `disabled` content
+    // attribute is merely *present* is "actually disabled" per the HTML spec,
+    // so the platform calls formDisabledCallback(true) and the mixin sets the
+    // property back. `disabled="false"` is a disabled control here for exactly
+    // the reason it is on a native <input>. Native semantics win; see
+    // shared/props.js.
     disabled: { type: Boolean, reflect: true },
-    errorSummary: { type: Boolean, reflect: true, attribute: 'error-summary' },
+    errorSummary: flag(true, { attribute: 'error-summary', negative: 'no-error-summary' }),
     _errors: { state: true },
   };
 
@@ -95,10 +102,7 @@ export class ArcForm extends LitElement {
     super();
     this.action = '';
     this.method = '';
-    this.novalidate = false;
-    this.loading = false;
     this.disabled = false;
-    this.errorSummary = true;
     this._errors = [];
     // Controls this form has written an error onto, so it can clear its own
     // messages without clobbering ones the consumer set.

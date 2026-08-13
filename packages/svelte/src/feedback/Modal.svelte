@@ -41,7 +41,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { open = false, heading = '', size = 'md', fullscreen = false, closable = true, header, footer, children, ...rest }: Props = $props();
+  let { open, heading = '', size, fullscreen, closable, header, footer, children, ...rest }: Props = $props();
 </script>
 
 <arc-modal {open} {heading} {size} {fullscreen} {closable} {...rest}>

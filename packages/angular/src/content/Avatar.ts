@@ -39,10 +39,10 @@ export class Avatar {
     return this._el.shape;
   }
 
-  @Input() set status(value: 'online' | 'offline' | 'busy' | 'away') {
+  @Input() set status(value: '' | 'online' | 'offline' | 'busy' | 'away') {
     this._el.status = value;
   }
-  get status(): 'online' | 'offline' | 'busy' | 'away' {
+  get status(): '' | 'online' | 'offline' | 'busy' | 'away' {
     return this._el.status;
   }
 }

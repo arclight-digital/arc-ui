@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
  * Authentication page layout with centered and split variants for sign-in, sign-up,
@@ -19,9 +20,9 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart footer
  * @csspart aside
  */
-export class ArcAuthShell extends LitElement {
+export class ArcAuthShell extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    variant: { type: String, reflect: true },
+    variant: oneOf(['centered', 'split']),
   };
 
   static styles = [
@@ -127,7 +128,6 @@ export class ArcAuthShell extends LitElement {
 
   constructor() {
     super();
-    this.variant = 'centered';
   }
 
   render() {

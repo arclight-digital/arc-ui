@@ -12,7 +12,6 @@ const props = withDefaults(defineProps<{
   disabled?: boolean;
   label?: string;
 }>(), {
-  size: 'md',
   value: '#4d7ef7',
   name: '',
   presets: () => ([]),
