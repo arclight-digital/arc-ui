@@ -416,7 +416,7 @@ six packages.
 
 ## Phase 3 — Releases that don't wait for v4
 
-- [ ] **3.1 (M) → ships as v3.3.0, not a patch — gated on 2.4a's Angular
+- [x] **3.1 (M) → ships as v3.3.0, not a patch — gated on 2.4a's Angular
       runtime test being green first.** Prism emits `<ng-content />` whenever
       the component renders **any** `<slot>` — fixes the 10 wrappers that
       silently drop all projected content (`top-bar`, `input`,
@@ -447,6 +447,21 @@ six packages.
       **And 3.1 is no longer the biggest Angular bug** — #80 is. A consumer
       who applies 3.1 alone still gets an inert page, because the package
       registers no custom elements at all. Ship them together or #80 first.
+      **Done 2026-08-13, shipped together with #80 as one prism release.**
+      `@arclux/prism` 2.13.0 carries all three emitter fixes and the wrappers
+      here are regenerated from it: 235 files across angular (205), react (10),
+      preact (10) and solid (10). The harness that gated this item is now
+      **6 packages × 15 probes, `PINNED` empty**. Each of (a), (b) and (c) above
+      held up under the fix — one bare `<ng-content />` is sufficient for named
+      slots, both emitters needed the change, and `arc-virtual-list` stayed out
+      of the sweep (hand-authored per package; the Angular one took the #80
+      import fix by hand). See test-findings.md §80–82.
+      **Two release prerequisites before this can go green in CI**, in order:
+      publish prism 2.13.0 (unpublished as of this writing — the registry's
+      latest is 2.12.0), then bump arc-ui's devDependency and refresh the
+      lockfile. Until then `pnpm install --frozen-lockfile` cannot resolve it,
+      and `scripts/checks/prism-version.js` fails `pnpm generate` on purpose —
+      because an older prism does not error, it silently reverts all 235 files.
 - [ ] **3.2 (S, after the 1.2 decision)** True patch fixes (v3.2.x), only in
       components 1.2 keeps: memoize `data/diff.js`'s LCS off the render path
       (caller-invisible) and add `data/json-tree.js`'s WeakSet cycle guard

@@ -3757,7 +3757,7 @@ capability.
 | named slots, no default slot | ok   | ok     | **#82** | ok | ok    | **#81** |
 | event out + state written back | ok | ok     | ok    | ok  | ok     | ok      |
 
-### 80. The Angular package registers no custom elements — **correctness, all 207 wrappers**
+### 80. The Angular package registers no custom elements — **correctness, all 207 wrappers — FIXED**
 
 `@arclux/arc-ui-angular` contains **zero imports of `@arclux/arc-ui`** in its
 built output. Every wrapper opens
@@ -3789,7 +3789,7 @@ against a package that registers nothing*. Without those two probes the Angular
 column would have read eleven greens and one slot failure, and the diagnosis
 would have been "a slot bug".
 
-### 81. Angular projects no content unless the component has a *default* slot — **correctness, 10 components**
+### 81. Angular projects no content unless the component has a *default* slot — **correctness, 10 components — FIXED**
 
 Prism emits `template: '<ng-content />'` only when the component declares a
 default `@slot`. `arc-top-bar` declares four named slots and no default, so its
@@ -3811,7 +3811,7 @@ it. Two corrections to that item from the measurement:
   (`item-${index}`) and React's wrapper is hand-written around a `renderItem`
   API; a catch-all outlet is not the fix there.
 
-### 82. The Solid package has the same defect as Angular, in the same 10 components — **correctness**
+### 82. The Solid package has the same defect as Angular, in the same 10 components — **correctness — FIXED**
 
 Not mentioned anywhere in V4-PLAN, which treats the projection bug as
 Angular-only. `Solid`'s emitter has the identical rule and the identical gap:
@@ -3897,6 +3897,53 @@ The residue is 14 types *widened* by Phase 0's deliberate JSDoc corrections
 omitted it) and 4 props that genuinely reflect now because `oneOf`/`flag` reflect
 by default (`arc-time-picker.step`, `.format`, `arc-calendar.firstDayOfWeek`,
 `arc-confirm.open`).
+
+### How #80–#82 were fixed — `@arclux/prism` 2.13.0
+
+All three were emitter defects, so none was fixable from this repo. Prism 2.13.0
+fixes them and the wrappers here are regenerated from it.
+
+**#80** — every Angular wrapper now emits the side-effect import next to the
+type-only one:
+
+```ts
+import '@arclux/arc-ui/card';
+import type { ArcCard } from '@arclux/arc-ui/card';
+```
+
+The bare import is what survives type erasure, and it is the line that carries
+`customElements.define`. `arc-virtual-list` is hand-authored in each package
+rather than generated — its slots are dynamic (`item-${index}`) — so the Angular
+one needed the same two lines written by hand.
+
+**#81/#82** — the rule is now "any declared slot means the wrapper forwards
+children", replacing "only a default slot does". Angular emits
+`template: `<ng-content />``; Solid takes `children` through `splitProps` and
+renders `{local.children}`. The single bare `<ng-content />` was confirmed
+sufficient for named slots, so `namedSlotOutlets: true` stayed rejected.
+
+React and Preact were already correct at runtime; their exported `*Props`
+interfaces gained the `children` they had always accepted, which closes a
+type/runtime disagreement nobody had noticed.
+
+**The harness is now 6 packages × 15 probes with `PINNED` empty.** It held nine
+entries for less than a day. That is the ratchet doing its job: a pinned probe
+that starts passing fails the run, so a fix upstream cannot be shipped and
+forgotten, and the pin cannot outlive the defect.
+
+### One trap the fix created, and the guard for it
+
+`pnpm generate` rewrites all 235 wrapper files from whatever prism is installed.
+An older prism therefore does not fail — **it reverts.** Regenerating on 2.12.0
+undoes 205 Angular, 10 React, 10 Preact and 10 Solid files, and the only signal
+is a large unexplained diff in generated files nobody reads. Measured, not
+assumed: it was run once on purpose to see exactly what came back.
+
+CI would have caught it, but as *"generated files are out of date"* — which
+reads as stale committed output and invites the precise wrong fix, committing
+the revert. `scripts/checks/prism-version.js` now asserts a version floor as the
+first step of `pnpm generate`, before the prism step it guards, and names the
+real cause.
 
 ### What this batch establishes
 

@@ -27,6 +27,9 @@ const phases = [
     // reads only hand-written source and tokens.js, so it asserts here.
     title: 'Assert sources',
     steps: [
+      // First, and before the prism step it guards: an older prism does not
+      // fail, it silently reverts all 235 wrapper files to the pre-fix output.
+      check('prism-version'),
       check('child-registrations'),
       check('event-conventions'),
       check('doc-claims'),
