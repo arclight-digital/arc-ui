@@ -97,6 +97,16 @@ jobs:
       - name: Smoke-test packed tarballs
         run: pnpm smoke:wrappers
 
+      # Here rather than in `verify`, because this is the only job with built
+      # wrappers. `export-map.js` skips `./dist/...` targets when the package
+      # has not been built — correct for a source checkout, but it meant the
+      # half of the export map that points at build output was never checked
+      # anywhere. It was hiding 18 published subpaths that resolved to files no
+      # build produced: every tier barrel in @arclux/arc-ui-vue and
+      # @arclux/arc-ui-solid, plus `./CodeBlock` in both.
+      - name: Export maps resolve against built output
+        run: node scripts/checks/export-map.js
+
   accessibility:
     runs-on: ubuntu-latest
     # The audit is ~730s of this job's ~825s; the docs build and the browser
@@ -201,3 +211,46 @@ jobs:
       # pass rather than tripling this job's runtime on their first measurement.
       - name: Sampled mutation gate
         run: pnpm mutate:sample -- --skip listbox-controller,position-controller
+
+  # Mounts every wrapper package in a real browser — the only job that does.
+  # `wrapper-builds` proves a tarball compiles inside a consumer, which a
+  # wrapper that drops every child it is handed, or that never registers the
+  # custom element it wraps, passes without complaint. Both of those are real
+  # and pinned (findings #80–#82).
+  #
+  # Its own job because it packs six tarballs, npm-installs six scratch
+  # consumers and runs six real framework builds (the Angular CLI among them) —
+  # ~10 minutes that has no business on the critical path to a green PR, and
+  # network access that the `verify` job deliberately does not need.
+  wrapper-runtime:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      # The per-icon modules are generated and gitignored, and packing without
+      # them is the v2.3.0 broken publish. The harness refuses to start without
+      # them rather than failing inside a scratch app's bundler output.
+      - name: Generate vendored icons
+        run: pnpm generate:icons
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+
+      - name: Install Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Wrapper runtime matrix
+        run: pnpm test:wrappers

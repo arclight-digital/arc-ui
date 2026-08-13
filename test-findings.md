@@ -3722,3 +3722,192 @@ to point at.
   global error listener before any listener a test can add, so it claims the
   reaction's error first. Invoking `connectedCallback()` directly is the same
   code path with a catchable stack.
+
+---
+
+## The wrapper runtime harness — six packages, four findings
+
+**Nothing in this repo had ever mounted a wrapper.** Every wrapper check was
+static: `wrapper-slots.js` reads generated source, `smoke-test-wrappers.js`
+proves a packed tarball *builds* inside a real consumer, and the component suite
+tests the custom element the wrappers wrap. All three were green while one
+published package registered no custom elements at all.
+
+V4-PLAN 2.4a costed this as six framework test toolchains (none exists anywhere
+in the monorepo) plus ~300 LOC of test bodies each. That shape was rejected:
+six hand-written suites drift, and a matrix whose rows assert different things
+cannot be read as a matrix — the same reasoning that made the FormData sweep
+derive its subjects instead of listing them. It is one harness instead
+(`scripts/wrapper-runtime.js`), packing the real tarballs, scaffolding one
+scratch consumer per framework, building each with that framework's real
+toolchain, and running **one shared probe set** (`test/wrapper-runtime/
+contract.js`) against all six. The fixture apps hold no assertions; they render
+the DOM the contract describes, each in its own framework's idiom — `v-model:value`
+for Vue, `bind:value` for Svelte, `[(value)]` for Angular, `onArcChange` for the
+rest — because a capability a consumer cannot reach the normal way is not a
+capability.
+
+15 probes × 6 packages. 81 green, 9 pinned across three findings.
+
+|                            | react | preact | solid | vue | svelte | angular |
+|----------------------------|-------|--------|-------|-----|--------|---------|
+| element defined + upgraded  | ok    | ok     | ok    | ok  | ok     | **#80** |
+| props (string, array, number, camelCase, unset-default) | ok | ok | ok | ok | ok | **#80** |
+| default slot, named `footer` | ok   | ok     | ok    | ok  | ok     | **#80** |
+| named slots, no default slot | ok   | ok     | **#82** | ok | ok    | **#81** |
+| event out + state written back | ok | ok     | ok    | ok  | ok     | ok      |
+
+### 80. The Angular package registers no custom elements — **correctness, all 207 wrappers**
+
+`@arclux/arc-ui-angular` contains **zero imports of `@arclux/arc-ui`** in its
+built output. Every wrapper opens
+
+```ts
+import { ArcCard } from '@arclux/arc-ui/card';
+```
+
+and then uses `ArcCard` **only in type position** (`private readonly _el: ArcCard
+= inject(ElementRef).nativeElement`). TypeScript elides an import whose every
+use is erased, so the side effect that calls `customElements.define` never
+reaches the bundle. `grep -c '@arclux/arc-ui' dist/fesm2022/*.mjs` → `0`.
+
+What an Angular consumer gets is an `HTMLUnknownElement`: no shadow root, no
+styles, no behaviour. The docs page for Angular
+(`docs/src/pages/docs/frameworks.astro:109-137`) shows exactly this usage and
+never mentions importing anything else, so the documented path produces an inert
+page.
+
+The other five packages are unaffected for two different reasons, both
+accidental rather than designed: React binds the class as a *value*
+(`elementClass: ArcCard` in `createComponent`), and Vue/Svelte/Solid/Preact emit
+a bare `import '@arclux/arc-ui/card'` with no binding to erase.
+
+**This is why the harness probes `defined` and `upgraded` first, and why they
+are their own verdicts.** On a non-upgraded element `el.padding = 'lg'` writes
+an expando to a plain object and reads back `'lg'` — so *every prop probe passes
+against a package that registers nothing*. Without those two probes the Angular
+column would have read eleven greens and one slot failure, and the diagnosis
+would have been "a slot bug".
+
+### 81. Angular projects no content unless the component has a *default* slot — **correctness, 10 components**
+
+Prism emits `template: '<ng-content />'` only when the component declares a
+default `@slot`. `arc-top-bar` declares four named slots and no default, so its
+wrapper is `template: ''` and every child an Angular consumer writes is
+discarded — the probe reports `ABSENT FROM LIGHT DOM`.
+
+This is V4-PLAN 3.1, which is gated on exactly this runtime proof and now has
+it. Two corrections to that item from the measurement:
+
+- **A bare `<ng-content />` is sufficient for named slots too**, which confirms
+  3.1's proposed rule (any declared slot ⇒ `<ng-content>`) over the
+  `namedSlotOutlets: true` alternative. Angular's job is to put the children in
+  the host's light DOM with their `slot` attributes intact; assignment is the
+  custom element's job. `arc-card` — which *does* get an `<ng-content />` —
+  places both its default and its `footer` child correctly, once #80 is out of
+  the way.
+- 3.1's list of 10 is right, but `arc-virtual-list` is an **eleventh, different**
+  case and must not be swept in with them. Its slots are dynamic
+  (`item-${index}`) and React's wrapper is hand-written around a `renderItem`
+  API; a catch-all outlet is not the fix there.
+
+### 82. The Solid package has the same defect as Angular, in the same 10 components — **correctness**
+
+Not mentioned anywhere in V4-PLAN, which treats the projection bug as
+Angular-only. `Solid`'s emitter has the identical rule and the identical gap:
+
+```tsx
+export const TopBar: Component<TopBarProps> = (props) => {
+  const [local, rest] = splitProps(props, ['heading', /* … */]);
+  return <arc-top-bar heading={local.heading} /* … */ {...rest}></arc-top-bar>;
+};
+```
+
+No `children` in `TopBarProps`, no `{local.children}` in the body, and Solid's
+spread does not insert children the way Preact's `h(tag, props)` does — which is
+the only reason Preact survives the same generated shape. `Card`, which has a
+default slot, gets both.
+
+**The fix for #81 and #82 is one rule applied to two emitters**, and #82 says
+the 3.1 change cannot be Angular-only.
+
+### 83. 18 published subpaths in two packages resolve to files no build produces — **packaging**
+
+Found by the harness's own `pnpm pack`: once anything builds, `export-map.js`
+stops skipping `./dist/...` and immediately names them. Every tier barrel
+(`./content`, `./data`, `./input`, `./layout`, `./navigation`, `./feedback`,
+`./typography`, `./shared`) in both `@arclux/arc-ui-vue` and
+`@arclux/arc-ui-solid`, plus `./CodeBlock` in each.
+
+Both build with Vite `lib` + `preserveModules` from the single entry
+`src/index.ts`, and `preserveModules` preserves only what the entry graph
+*reaches*. `src/index.ts` re-exports components directly
+(`export { default as Card } from './content/Card.vue'`), never through the tier
+barrels — so `src/content/index.ts` and its seven siblings were compiled by
+nothing. `./CodeBlock` went the same way for the opposite reason: it is
+`barrelExclude`d so the root barrel never imports it (shiki is 13.6 MB), which
+also meant nothing did — and that subpath is the *only* documented way to reach
+it.
+
+Fixed by deriving the build entries from the package's own `exports` map
+(`scripts/lib/wrapper-entries.js`) rather than listing them, so the build and
+the export map are the same statement. A subpath with no source behind it now
+throws at build time, naming itself.
+
+**The check was right and nobody was running it in a tree where it could speak.**
+`export-map.js` skips unbuilt `./dist/...` targets — correct for a source
+checkout, and it meant that half of the export map was verified nowhere, because
+`pnpm check` runs in `verify`, which never builds the wrappers. It now also runs
+in `wrapper-builds`, after the build. Against a fully built tree it verifies
+3,012 targets across 8 packages.
+
+### 84. The declared-props migration stripped `type` and `reflects` from the manifest — **regression, caught before push**
+
+`custom-elements.json` is generated by an analyzer that reads `static
+properties` **statically**. A vocabulary declaration is a *function call*
+(`nowrap: flag(false)`), which it cannot evaluate — so the migration silently
+dropped metadata for every migrated prop. Phase 0 found and patched one third of
+this (588 lost `default` entries, backfilled in `scripts/generate/manifest.js`)
+and missed the rest: **34 members and 50 attributes lost `type.text`, and 359
+members lost `reflects`.**
+
+Nothing in the repo could see it. `pnpm generate` is diff-clean because the
+manifest is generated; `pnpm check` reads the manifest and therefore agrees with
+whatever it says; the derived suites derive from it too. The one thing that
+noticed was `ng-packagr`: `types/index.d.ts` degraded `nowrap: boolean` to
+`nowrap: unknown` while the Angular wrapper's generated getter still returned
+`boolean`, and **the Angular package stopped compiling** — which is how the
+wrapper runtime harness found it, being unable to pack a tarball that will not
+build.
+
+The fix extends the existing backfill to carry `type` and `reflects` alongside
+`default`, from the same parse. Two things it had to learn:
+
+- `reflects` is a **member-only** key. The analyzer never writes it on the
+  attribute entry, and writing it in both places adds 359 keys no
+  pre-vocabulary manifest ever had.
+- A **mixin's** declarations appear in none of its consumers' sources.
+  `required` and `readonly` are declared once in `FormControlMixin` and
+  inherited by 27 controls — 76 of the 84 remaining gaps after the first pass.
+
+Verified by diffing every public field and attribute against the
+pre-vocabulary manifest: **0 lost types, 0 lost `reflects`, 0 lost defaults.**
+The residue is 14 types *widened* by Phase 0's deliberate JSDoc corrections
+(`status: '' | 'online' | …`, where `''` is the real default and the old union
+omitted it) and 4 props that genuinely reflect now because `oneOf`/`flag` reflect
+by default (`arc-time-picker.step`, `.format`, `arc-calendar.firstDayOfWeek`,
+`arc-confirm.open`).
+
+### What this batch establishes
+
+**A wrapper that compiles is not a wrapper that works.** Every one of #80–#83
+survives `tsc`, `ng-packagr --strictTemplates`, a production Vite build, and a
+scratch consumer that imports the package and renders a component. Four of the
+six checks this repo already had are static readers of generated source, and the
+fifth builds without mounting. The capability gap was invisible to all of them.
+
+**And the pins are a ratchet, not a suppression.** A pinned probe that starts
+*passing* fails the run as loudly as an unpinned one that fails, so #80–#82
+cannot be quietly fixed-and-forgotten upstream, and cannot regress further
+without a name. That is what lets the harness enter CI at all: a permanently red
+job stops being read.

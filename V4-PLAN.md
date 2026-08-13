@@ -305,7 +305,7 @@ of this file is restated in V4-SCOPE §1.4 with the revised numbers —
       only real constraints; grep for the recurring shape — a constraint
       enforced on the interaction, render, or stylesheet instead of the
       state (#1, #14, #47, #58, #59, #61, #70).
-- [ ] **2.4a (L)** **Wrapper runtime harness** — its own workstream, not a
+- [x] **2.4a (L)** **Wrapper runtime harness** — its own workstream, not a
       bullet: nothing in the repo mounts a wrapper and no framework test
       toolchain exists anywhere in the monorepo (no vitest/jest/karma/
       testing-library in any package.json), so this is six harnesses + CI
@@ -316,6 +316,32 @@ of this file is restated in V4-SCOPE §1.4 with the revised numbers —
       slot content landed. **Blocks 3.1 and every 4.6 decision.** Catches the
       live Angular bug and answers the Preact/Solid undefined-clobber
       question on day one.
+      **Done 2026-08-13** — but not in the shape costed above. Six framework
+      test toolchains were rejected for one harness
+      (`scripts/wrapper-runtime.js`) that packs the real tarballs, builds a
+      scratch consumer per framework with that framework's own toolchain, and
+      runs **one shared probe set** (`test/wrapper-runtime/contract.js`)
+      against all six in a real browser. Six hand-written suites drift, and a
+      matrix whose rows assert different things cannot be read as a matrix.
+      15 probes × 6 packages: 81 green, 9 pinned across findings #80–#82.
+      The undefined-clobber question is answered **no** — Preact and Solid both
+      keep the element's default for an unpassed prop, as do Vue and Svelte.
+      Four findings, of which two rewrite items elsewhere in this plan:
+      **#80** `@arclux/arc-ui-angular` registers **no custom elements at all** —
+      the `import { ArcCard }` in all 207 wrappers is type-only and TypeScript
+      elides it, so an Angular consumer gets `HTMLUnknownElement` and the
+      documented docs example produces an inert page. Bigger than the slot bug
+      and previously unrecorded.
+      **#81/#82** the projection bug is **not Angular-only** — Solid's emitter
+      has the identical rule and the identical gap in the identical 10
+      components (see the 3.1 corrections below).
+      **#83** 18 published subpaths in `vue` and `solid` resolved to files no
+      build produced (every tier barrel plus `./CodeBlock`); fixed by deriving
+      build entries from each package's own `exports` map.
+      **#84** a Phase 0 regression the harness caught before push: the
+      declared-props migration stripped `type` from 84 manifest entries and
+      `reflects` from 359, which broke the Angular package's build. See
+      test-findings.md §80–84.
 - [x] **2.4b (M)** **FormData sweep**: `form-contract.test.js` never calls
       `new FormData`; fix the mislabeled :102-109, sweep all 26
       `FormControlMixin` controls, subsume the 12 ad-hoc per-component
@@ -404,6 +430,23 @@ six packages.
       the correct fix and false-pass on loose name matching), and not
       deletion. Applies to the v3 catalog regardless of Phase 1 verdicts —
       the fix is one prism rule, so per-component cost is zero.
+      **Ungated as of 2026-08-13: 2.4a exists and the Angular row is red and
+      pinned.** Three corrections it forces:
+      (a) **The rule is right.** A bare `<ng-content />` is sufficient for
+      named slots too — Angular's job is to put the children in the host's
+      light DOM with their `slot` attributes intact, and assignment is the
+      custom element's job. Confirmed against `arc-card`, which already emits
+      one and places both its default and `footer` children correctly.
+      (b) **It is two emitters, not one.** Solid has the identical defect in
+      the identical 10 components (#82). An Angular-only fix leaves half of it
+      shipped.
+      (c) **`arc-virtual-list` is not one of the 10.** Its slots are dynamic
+      (`item-${index}`) and React's wrapper is hand-written around a
+      `renderItem` API; a catch-all outlet is the wrong fix there and it needs
+      its own decision.
+      **And 3.1 is no longer the biggest Angular bug** — #80 is. A consumer
+      who applies 3.1 alone still gets an inert page, because the package
+      registers no custom elements at all. Ship them together or #80 first.
 - [ ] **3.2 (S, after the 1.2 decision)** True patch fixes (v3.2.x), only in
       components 1.2 keeps: memoize `data/diff.js`'s LCS off the render path
       (caller-invisible) and add `data/json-tree.js`'s WeakSet cycle guard

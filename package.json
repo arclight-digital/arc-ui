@@ -29,6 +29,7 @@
     "check": "node scripts/check.js",
     "publish-all": "pnpm -r publish --access public",
     "smoke:wrappers": "node scripts/smoke-test-wrappers.js",
+    "test:wrappers": "node scripts/wrapper-runtime.js",
     "mutate": "node scripts/mutate.js",
     "mutate:props": "node scripts/mutate.js --source packages/web-components/src/shared/props.js --tests packages/web-components/test/props.test.js --gate 90",
     "mutate:sample": "node scripts/mutate-sample.js",
