@@ -7217,13 +7217,15 @@
             {
               "name": "required",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             }
           ],
@@ -7282,10 +7284,12 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required"
+                "name": "required",
+                "type": "boolean"
               },
               {
-                "name": "readonly"
+                "name": "readonly",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -7422,13 +7426,15 @@
             {
               "name": "required",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             }
           ],
@@ -7491,7 +7497,8 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required"
+                "name": "required",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -7563,13 +7570,15 @@
             {
               "name": "required",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             }
           ],
@@ -7637,7 +7646,8 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required"
+                "name": "required",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -7801,13 +7811,15 @@
             {
               "name": "required",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             }
           ],
@@ -7885,10 +7897,12 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required"
+                "name": "required",
+                "type": "boolean"
               },
               {
-                "name": "readonly"
+                "name": "readonly",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -8028,7 +8042,8 @@
             {
               "name": "readonly",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             }
           ],
@@ -8132,7 +8147,8 @@
                 "name": "validationMessage"
               },
               {
-                "name": "readonly"
+                "name": "readonly",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -8773,13 +8789,15 @@
             {
               "name": "required",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             }
           ],
@@ -9005,7 +9023,8 @@
             {
               "name": "readonly",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             }
           ],
@@ -9194,13 +9213,15 @@
             {
               "name": "required",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             }
           ],
@@ -9283,7 +9304,8 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required"
+                "name": "required",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -9465,7 +9487,8 @@
             {
               "name": "readonly",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             }
           ],
@@ -9629,13 +9652,15 @@
             {
               "name": "required",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             }
           ],
@@ -9703,7 +9728,8 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required"
+                "name": "required",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -9791,13 +9817,15 @@
             {
               "name": "required",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             }
           ],
@@ -9870,7 +9898,8 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required"
+                "name": "required",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -9942,13 +9971,15 @@
             {
               "name": "required",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             }
           ],
@@ -10011,7 +10042,8 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required"
+                "name": "required",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -10116,7 +10148,8 @@
             {
               "name": "readonly",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             }
           ],
@@ -10200,7 +10233,8 @@
                 "name": "validationMessage"
               },
               {
-                "name": "readonly"
+                "name": "readonly",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -10301,13 +10335,15 @@
             {
               "name": "required",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             }
           ],
@@ -10390,7 +10426,8 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required"
+                "name": "required",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -10460,13 +10497,15 @@
             {
               "name": "required",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             }
           ],
@@ -10520,10 +10559,12 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required"
+                "name": "required",
+                "type": "boolean"
               },
               {
-                "name": "readonly"
+                "name": "readonly",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -10670,13 +10711,15 @@
             {
               "name": "required",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             }
           ],
@@ -10754,10 +10797,12 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required"
+                "name": "required",
+                "type": "boolean"
               },
               {
-                "name": "readonly"
+                "name": "readonly",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -10829,7 +10874,8 @@
             {
               "name": "required",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             }
           ],
@@ -10882,7 +10928,8 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required"
+                "name": "required",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -11162,13 +11209,15 @@
             {
               "name": "required",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             }
           ],
@@ -11237,10 +11286,12 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required"
+                "name": "required",
+                "type": "boolean"
               },
               {
-                "name": "readonly"
+                "name": "readonly",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -11308,13 +11359,15 @@
             {
               "name": "required",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             }
           ],
@@ -11478,13 +11531,15 @@
             {
               "name": "required",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             }
           ],
@@ -11557,7 +11612,8 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required"
+                "name": "required",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -11820,13 +11876,15 @@
             {
               "name": "required",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             }
           ],
@@ -11915,7 +11973,8 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required"
+                "name": "required",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -12036,7 +12095,8 @@
             {
               "name": "required",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             }
           ],
@@ -12125,7 +12185,8 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required"
+                "name": "required",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -12315,13 +12376,15 @@
             {
               "name": "required",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             }
           ],
@@ -12399,10 +12462,12 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required"
+                "name": "required",
+                "type": "boolean"
               },
               {
-                "name": "readonly"
+                "name": "readonly",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -12462,13 +12527,15 @@
             {
               "name": "required",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             }
           ],
@@ -12517,10 +12584,12 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required"
+                "name": "required",
+                "type": "boolean"
               },
               {
-                "name": "readonly"
+                "name": "readonly",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -12604,13 +12673,15 @@
             {
               "name": "required",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             }
           ],
@@ -12679,7 +12750,8 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required"
+                "name": "required",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -12771,13 +12843,15 @@
             {
               "name": "required",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             },
             {
               "name": "readonly",
               "value": {
-                "type": "string"
+                "type": "boolean",
+                "default": "false"
               }
             }
           ],
@@ -12851,10 +12925,12 @@
                 "name": "validationMessage"
               },
               {
-                "name": "required"
+                "name": "required",
+                "type": "boolean"
               },
               {
-                "name": "readonly"
+                "name": "readonly",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -16259,7 +16335,7 @@
             {
               "name": "selected",
               "value": {
-                "type": "string",
+                "type": "boolean",
                 "default": "false"
               }
             }
@@ -16288,7 +16364,8 @@
                 "type": "boolean"
               },
               {
-                "name": "selected"
+                "name": "selected",
+                "type": "boolean"
               }
             ],
             "events": []
@@ -17067,7 +17144,7 @@
             {
               "name": "nowrap",
               "value": {
-                "type": "string",
+                "type": "boolean",
                 "default": "false"
               }
             },
@@ -17121,7 +17198,8 @@
                 "type": "boolean"
               },
               {
-                "name": "nowrap"
+                "name": "nowrap",
+                "type": "boolean"
               }
             ],
             "events": [

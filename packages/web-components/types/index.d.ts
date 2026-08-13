@@ -396,8 +396,10 @@ export declare class ArcCheckbox extends LitElement {
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
-  required: unknown;
-  readonly: unknown;
+  /** @default false */
+  required: boolean;
+  /** @default false */
+  readonly: boolean;
 }
 
 /**
@@ -483,7 +485,7 @@ export declare class ArcColorPicker extends LitElement {
   disabled: boolean;
   /** Label text displayed above the picker in uppercase accent font. @default '' */
   label: string;
-  /** Prevents changing the color via the area, hue slider, hex input, or swatches while the picker stays focusable and the value still submits. */
+  /** Prevents changing the color via the area, hue slider, hex input, or swatches while the picker stays focusable and the value still submits. @default false */
   readonly: boolean;
   /** Control size. `md` is the default; `sm` and `lg` scale the swatch and trigger. @default 'md' */
   size: 'sm' | 'md' | 'lg';
@@ -496,7 +498,8 @@ export declare class ArcColorPicker extends LitElement {
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
-  required: unknown;
+  /** @default false */
+  required: boolean;
 }
 
 /**
@@ -544,7 +547,7 @@ export declare class ArcCombobox extends LitElement {
   name: string;
   /** Disables the input and prevents interaction. The host element receives reduced opacity and pointer-events: none. @default false */
   disabled: boolean;
-  /** Prevents typing and selecting an option while the input stays focusable; the list can still be opened for viewing and the value still submits. */
+  /** Prevents typing and selecting an option while the input stays focusable; the list can still be opened for viewing and the value still submits. @default false */
   readonly: boolean;
   /** Control size. `md` is the default; `sm` and `lg` scale the field padding. @default 'md' */
   size: 'sm' | 'md' | 'lg';
@@ -557,7 +560,8 @@ export declare class ArcCombobox extends LitElement {
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
-  required: unknown;
+  /** @default false */
+  required: boolean;
 }
 
 /**
@@ -819,8 +823,10 @@ export declare class ArcDatePicker extends LitElement {
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
-  required: unknown;
-  readonly: unknown;
+  /** @default false */
+  required: boolean;
+  /** @default false */
+  readonly: boolean;
 }
 
 /**
@@ -869,7 +875,8 @@ export declare class ArcDateRangePicker extends LitElement {
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
-  readonly: unknown;
+  /** @default false */
+  readonly: boolean;
 }
 
 /**
@@ -1323,9 +1330,9 @@ export declare class ArcInlineEdit extends LitElement {
   disabled: boolean;
   /** When true, editing uses a `<textarea>`: Enter inserts a newline and Cmd/Ctrl+Enter commits. Single-line commits on plain Enter. @default false */
   multiline: boolean;
-  /** Marks the field as required. An empty committed value is invalid — including in display state, which shows a subtle error tint. */
+  /** Marks the field as required. An empty committed value is invalid — including in display state, which shows a subtle error tint. @default false */
   required: boolean;
-  /** Renders the display state only: the text remains focusable for reading order, but activation is inert and no pencil affordance appears. */
+  /** Renders the display state only: the text remains focusable for reading order, but activation is inert and no pencil affordance appears. @default false */
   readonly: boolean;
   /** @default true */
   formAssociated: boolean;
@@ -1373,7 +1380,7 @@ export declare class ArcInput extends LitElement {
   multiline: boolean;
   /** Marks the field as required. Displays a required indicator next to the label and triggers native constraint validation on form submission. @default false */
   required: boolean;
-  /** Prevents the user from editing the value while keeping the field focusable, and the value is still submitted with the form. */
+  /** Prevents the user from editing the value while keeping the field focusable, and the value is still submitted with the form. @default false */
   readonly: boolean;
   /** Controls the input size. Options: 'sm', 'md', 'lg'. @default 'md' */
   size: 'sm' | 'md' | 'lg';
@@ -1491,7 +1498,7 @@ export declare class ArcKnob extends LitElement {
   detents: number[] | string;
   /** `(value) => string` shaping the readout and the accessible value text, for example adding a unit suffix. Defaults to the plain number. @default undefined */
   format: Function;
-  /** Prevents dragging, wheel, and key changes while the dial stays focusable and the value still submits. */
+  /** Prevents dragging, wheel, and key changes while the dial stays focusable and the value still submits. @default false */
   readonly: boolean;
   /** Control size. `md` is the default; `sm` and `lg` scale the dial. @default 'md' */
   size: 'sm' | 'md' | 'lg';
@@ -1504,7 +1511,8 @@ export declare class ArcKnob extends LitElement {
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
-  required: unknown;
+  /** @default false */
+  required: boolean;
 }
 
 /**
@@ -1677,7 +1685,7 @@ export declare class ArcMaskedInput extends LitElement {
   error: string;
   /** Marks the field as required. An empty field fails validation with valueMissing; a partially filled one fails with an "Incomplete value" pattern error. @default false */
   required: boolean;
-  /** Prevents the user from editing the value while keeping the field focusable, and the value is still submitted with the form. */
+  /** Prevents the user from editing the value while keeping the field focusable, and the value is still submitted with the form. @default false */
   readonly: boolean;
   /** Controls the input size. Options: 'sm', 'md', 'lg'. @default 'md' */
   size: 'sm' | 'md' | 'lg';
@@ -1801,7 +1809,7 @@ export declare class ArcMultiSelect extends LitElement {
   name: string;
   /** Disables the control, preventing interaction and reducing opacity to 50%. @default false */
   disabled: boolean;
-  /** Prevents toggling options or removing chips while the control stays focusable; the dropdown can still be opened for viewing and the values still submit. */
+  /** Prevents toggling options or removing chips while the control stays focusable; the dropdown can still be opened for viewing and the values still submit. @default false */
   readonly: boolean;
   /** Control size. `md` is the default; `sm` and `lg` scale the control height and padding. @default 'md' */
   size: 'sm' | 'md' | 'lg';
@@ -1814,7 +1822,8 @@ export declare class ArcMultiSelect extends LitElement {
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
-  required: unknown;
+  /** @default false */
+  required: boolean;
 }
 
 /**
@@ -1896,7 +1905,7 @@ export declare class ArcNumberInput extends LitElement {
   name: string;
   /** Disables interaction, reducing opacity to 40% and blocking pointer events. @default false */
   disabled: boolean;
-  /** Prevents value changes from typing, stepper buttons, and arrow keys while keeping the field focusable and its value submitted. */
+  /** Prevents value changes from typing, stepper buttons, and arrow keys while keeping the field focusable and its value submitted. @default false */
   readonly: boolean;
   /** Control size. `md` is the default; `sm` and `lg` scale the field padding. @default 'md' */
   size: 'sm' | 'md' | 'lg';
@@ -1909,7 +1918,8 @@ export declare class ArcNumberInput extends LitElement {
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
-  required: unknown;
+  /** @default false */
+  required: boolean;
 }
 
 /**
@@ -1923,7 +1933,7 @@ export declare class ArcOption extends LitElement {
   /** When true, dims this option and prevents it from being selected. @default false */
   disabled: boolean;
   /** @default false */
-  selected: unknown;
+  selected: boolean;
 }
 
 /**
@@ -1939,7 +1949,7 @@ export declare class ArcOtpInput extends LitElement {
   name: string;
   /** Disables all input boxes, reducing opacity to 40% and blocking pointer events. @default false */
   disabled: boolean;
-  /** Prevents typing, pasting, and clearing digits while the boxes stay focusable and the value still submits. */
+  /** Prevents typing, pasting, and clearing digits while the boxes stay focusable and the value still submits. @default false */
   readonly: boolean;
   /** Input mode. `number` filters non-digits and uses the numeric keyboard; `text` allows any character. @default 'number' */
   type: 'number' | 'text';
@@ -1954,7 +1964,8 @@ export declare class ArcOtpInput extends LitElement {
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
-  required: unknown;
+  /** @default false */
+  required: boolean;
 }
 
 /**
@@ -2043,7 +2054,8 @@ export declare class ArcPasswordInput extends LitElement {
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
-  readonly: unknown;
+  /** @default false */
+  readonly: boolean;
 }
 
 /**
@@ -2067,7 +2079,7 @@ export declare class ArcPinInput extends LitElement {
   type: 'number' | 'alphanumeric' | 'text';
   /** When true, obscures entered characters with dots for sensitive codes. @default false */
   mask: boolean;
-  /** Prevents entering, deleting, or pasting characters while the boxes stay focusable and the value still submits. */
+  /** Prevents entering, deleting, or pasting characters while the boxes stay focusable and the value still submits. @default false */
   readonly: boolean;
   /** Control size. `md` is the default; `sm` and `lg` scale the digit boxes. @default 'md' */
   size: 'sm' | 'md' | 'lg';
@@ -2080,7 +2092,8 @@ export declare class ArcPinInput extends LitElement {
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
-  required: unknown;
+  /** @default false */
+  required: boolean;
 }
 
 /**
@@ -2184,8 +2197,10 @@ export declare class ArcRadioGroup extends LitElement {
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
-  required: unknown;
-  readonly: unknown;
+  /** @default false */
+  required: boolean;
+  /** @default false */
+  readonly: boolean;
 }
 
 /**
@@ -2235,8 +2250,10 @@ export declare class ArcRangeSlider extends LitElement {
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
-  required: unknown;
-  readonly: unknown;
+  /** @default false */
+  required: boolean;
+  /** @default false */
+  readonly: boolean;
 }
 
 /**
@@ -2265,7 +2282,8 @@ export declare class ArcRating extends LitElement {
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
-  required: unknown;
+  /** @default false */
+  required: boolean;
 }
 
 /**
@@ -2414,8 +2432,10 @@ export declare class ArcSelect extends LitElement {
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
-  required: unknown;
-  readonly: unknown;
+  /** @default false */
+  required: boolean;
+  /** @default false */
+  readonly: boolean;
 }
 
 /**
@@ -2526,9 +2546,9 @@ export declare class ArcSignaturePad extends LitElement {
   penColor: string;
   /** Base pen width in CSS pixels. The drawn line scales with stroke velocity — up to 40% thicker on slow, deliberate movement and 40% thinner on fast flicks. Attribute: `pen-width`. Default 2. @default 2 */
   penWidth: number;
-  /** Prevents drawing and hides the clear button while the pad stays focusable and the value still submits. */
+  /** Prevents drawing and hides the clear button while the pad stays focusable and the value still submits. @default false */
   readonly: boolean;
-  /** When true and the pad is blank, the control is invalid with `valueMissing`. */
+  /** When true and the pad is blank, the control is invalid with `valueMissing`. @default false */
   required: boolean;
   /** @default true */
   formAssociated: boolean;
@@ -2582,7 +2602,7 @@ export declare class ArcSlider extends LitElement {
   disabled: boolean;
   /** Label text displayed above the slider with the current value shown on the right. @default '' */
   label: string;
-  /** Prevents dragging and arrow-key changes while the thumb stays focusable and the value still submits. */
+  /** Prevents dragging and arrow-key changes while the thumb stays focusable and the value still submits. @default false */
   readonly: boolean;
   /** Control size. `md` is the default; `sm` and `lg` scale the track and thumb. @default 'md' */
   size: 'sm' | 'md' | 'lg';
@@ -2595,7 +2615,8 @@ export declare class ArcSlider extends LitElement {
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
-  required: unknown;
+  /** @default false */
+  required: boolean;
 }
 
 /**
@@ -2880,7 +2901,7 @@ export declare class ArcTagInput extends LitElement {
   error: string;
   /** When false, only values from `suggestions` can be added; free text is rejected. @default true */
   allowCustom: boolean;
-  /** Prevents adding or removing tags while the field stays focusable and the tags still submit with the form. */
+  /** Prevents adding or removing tags while the field stays focusable and the tags still submit with the form. @default false */
   readonly: boolean;
   /** Control size. `md` is the default; `sm` and `lg` scale the field height and padding. @default 'md' */
   size: 'sm' | 'md' | 'lg';
@@ -2893,7 +2914,8 @@ export declare class ArcTagInput extends LitElement {
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
-  required: unknown;
+  /** @default false */
+  required: boolean;
 }
 
 /**
@@ -2963,7 +2985,8 @@ export declare class ArcTextarea extends LitElement {
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
-  required: unknown;
+  /** @default false */
+  required: boolean;
 }
 
 /**
@@ -3029,8 +3052,10 @@ export declare class ArcTimePicker extends LitElement {
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
-  required: unknown;
-  readonly: unknown;
+  /** @default false */
+  required: boolean;
+  /** @default false */
+  readonly: boolean;
 }
 
 /**
@@ -3094,8 +3119,10 @@ export declare class ArcToggle extends LitElement {
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
-  required: unknown;
-  readonly: unknown;
+  /** @default false */
+  required: boolean;
+  /** @default false */
+  readonly: boolean;
 }
 
 /**
@@ -3171,7 +3198,7 @@ export declare class ArcTransferList extends LitElement {
   targetLabel: string;
   /** Adds a filter input to each pane that narrows that pane only, case-insensitively. Move-all respects the filter. @default false */
   searchable: boolean;
-  /** Prevents moving items between panes while the lists stay focusable and filterable; the selected values still submit with the form. */
+  /** Prevents moving items between panes while the lists stay focusable and filterable; the selected values still submit with the form. @default false */
   readonly: boolean;
   /** Control size. `md` is the default; `sm` and `lg` scale the row height and list panels. @default 'md' */
   size: 'sm' | 'md' | 'lg';
@@ -3184,7 +3211,8 @@ export declare class ArcTransferList extends LitElement {
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
-  required: unknown;
+  /** @default false */
+  required: boolean;
 }
 
 /**
@@ -3236,8 +3264,10 @@ export declare class ArcTreeSelect extends LitElement {
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
-  required: unknown;
-  readonly: unknown;
+  /** @default false */
+  required: boolean;
+  /** @default false */
+  readonly: boolean;
 }
 
 /**
@@ -3276,7 +3306,7 @@ export declare class ArcTypewriter extends LitElement {
   /** Loop the animation indefinitely @default false */
   loop: boolean;
   /** @default false */
-  nowrap: unknown;
+  nowrap: boolean;
 }
 
 /**

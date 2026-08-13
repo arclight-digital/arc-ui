@@ -8,7 +8,7 @@
  * (Called automatically by `pnpm generate`)
  */
 import { execFileSync } from 'node:child_process';
-import { readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, readdirSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -70,59 +70,155 @@ for (const mod of manifest.modules) {
  * A computed default (`default: () => new Date().getMonth()`) is deliberately
  * skipped — it has no serialisable value to publish, and "the current month" is
  * documented in prose on the prop.
+ *
+ * **`type` and `reflects` go the same way, for the same reason.** The first
+ * pass at this file restored `default` only, and the loss was wider than one
+ * key: against the pre-vocabulary manifest, 34 members and 50 attributes also
+ * lost `type.text` and 359 members lost `reflects`. That was invisible to every
+ * gate in the repo — `pnpm generate` is diff-clean because the manifest is
+ * generated, `pnpm check` reads the manifest and so agrees with whatever it
+ * says, and the derived suites derive from it too. The one thing that did
+ * notice was `ng-packagr`: `types/index.d.ts` degraded `nowrap: boolean` to
+ * `nowrap: unknown` while the Angular wrapper's generated getter still returned
+ * `boolean`, and the Angular package stopped compiling. Found by the wrapper
+ * runtime harness (V4-PLAN 2.4a), which cannot pack a tarball that will not
+ * build.
+ *
+ * The values are not invented here. `flag()` and `oneOf()` default to
+ * `reflect: true`, `num()`/`int()` to `reflect: false` — props.js:99, 165, 187 —
+ * and an explicit `reflect:` in the declaration overrides. `type` is whatever
+ * Lit is handed: `Boolean`, `String`/`Number` for `oneOf` by its members,
+ * `Number` for the numeric pair.
+ *
+ * Only ever *fills a gap*: a `@prop {'sm' | 'md'} size` JSDoc already gives the
+ * analyzer a richer union type than the declaration can, and that keeps winning.
  */
 const DECL = /^\s*(\w+):\s*(flag|oneOf|num|int)\(([\s\S]*?)\),?\s*$/gm;
 
 /** Serialise a JS value the way the analyzer spells defaults. */
 const spell = (v) => (typeof v === 'string' ? `'${v}'` : String(v));
 
-function declaredDefaults(source) {
+/**
+ * Parse every vocabulary declaration in a component source into the three
+ * facts the analyzer cannot read out of a function call.
+ *
+ * @returns {Map<string, {default?: unknown, type: string, reflects: boolean}>}
+ */
+function declaredContracts(source) {
   const out = new Map();
   for (const m of source.matchAll(DECL)) {
     const [, name, helper, rawArgs] = m;
     const args = rawArgs.trim();
-    if (/default:\s*\(/.test(args) || /default:\s*function/.test(args)) continue; // computed
+
+    // An explicit `reflect:` wins; otherwise the helper's own default applies.
+    const explicitReflect = args.match(/\breflect:\s*(true|false)\b/);
+    const reflects = explicitReflect
+      ? explicitReflect[1] === 'true'
+      : helper === 'flag' || helper === 'oneOf';
+
+    const entry = { reflects };
+
+    // A computed default has no serialisable value to publish, but its `type`
+    // and `reflects` are as knowable as any other declaration's.
+    const computed = /default:\s*\(/.test(args) || /default:\s*function/.test(args);
 
     if (helper === 'flag') {
+      entry.type = 'boolean';
       const lead = args.match(/^(true|false)\b/);
-      out.set(name, lead ? lead[1] === 'true' : false);
+      if (!computed) entry.default = lead ? lead[1] === 'true' : false;
     } else if (helper === 'oneOf') {
       const list = args.match(/^\[([\s\S]*?)\]/);
       if (!list) continue;
       const members = list[1].split(',').map((x) => x.trim()).filter(Boolean);
-      const explicit = args.match(/default:\s*([^,}\n]+)/);
-      const raw = (explicit ? explicit[1] : members[0] ?? '').trim();
-      if (!raw) continue;
-      const unquoted = raw.replace(/^['"]|['"]$/g, '');
-      out.set(name, /^-?[\d.]+$/.test(unquoted) ? Number(unquoted) : unquoted);
+      // `oneOf` is String-typed unless every member is a number — props.js:150,
+      // where a closed numeric set (time-picker's `step`) is a real contract and
+      // not a range.
+      const numeric = members.length > 0 && members.every((v) => /^-?[\d.]+$/.test(v));
+      entry.type = numeric
+        ? 'number'
+        : members.map((v) => `'${v.replace(/^['"]|['"]$/g, '')}'`).join(' | ');
+
+      if (!computed) {
+        const explicit = args.match(/default:\s*([^,}\n]+)/);
+        const raw = (explicit ? explicit[1] : members[0] ?? '').trim();
+        if (!raw) continue;
+        const unquoted = raw.replace(/^['"]|['"]$/g, '');
+        entry.default = /^-?[\d.]+$/.test(unquoted) ? Number(unquoted) : unquoted;
+      }
     } else {
-      const explicit = args.match(/default:\s*(-?[\d.]+)/);
-      out.set(name, explicit ? Number(explicit[1]) : 0);
+      entry.type = 'number';
+      if (!computed) {
+        const explicit = args.match(/default:\s*(-?[\d.]+)/);
+        entry.default = explicit ? Number(explicit[1]) : 0;
+      }
     }
+    out.set(name, entry);
   }
   return out;
 }
 
 let filled = 0;
+
+/**
+ * Fill `default`, `type` and `reflects` on one member or attribute entry.
+ *
+ * `reflects` is a member-only key: the analyzer records reflection on the field
+ * and never on the attribute entry, and writing it in both places puts 359
+ * spurious keys into the manifest that no pre-vocabulary version ever had.
+ */
+function backfill(node, contract, { isMember }) {
+  if (node.default === undefined && contract.default !== undefined) {
+    node.default = spell(contract.default);
+    filled += 1;
+  }
+  // The JSDoc type is richer than the declaration wherever it exists, so this
+  // only ever fills an absence.
+  if (!node.type?.text) {
+    node.type = { text: contract.type };
+    filled += 1;
+  }
+  // The analyzer writes `reflects` only when true and omits it otherwise, so a
+  // non-reflecting prop is spelled by the key's absence, not by `false`.
+  if (isMember && contract.reflects && !node.reflects) {
+    node.reflects = true;
+    filled += 1;
+  }
+}
+
+/**
+ * A mixin's declarations land on every component that applies it, and appear in
+ * none of their sources — `required` and `readonly` are declared once, in
+ * `FormControlMixin`, and inherited by 27 controls. Reading component sources
+ * alone leaves those 27 × 2 with no type and no reflection, which is 76 of the
+ * 84 entries the first pass still missed.
+ *
+ * Mixins only. `shared/option.js` and `shared/menu-item.js` also declare
+ * vocabulary props, but they are base classes with their own manifest modules,
+ * so their own sources are already read on their own pass.
+ */
+const inherited = new Map();
+for (const file of readdirSync(resolve(wcDir, 'src/shared'))) {
+  if (!file.endsWith('-mixin.js')) continue;
+  const source = readFileSync(resolve(wcDir, 'src/shared', file), 'utf-8');
+  for (const [name, contract] of declaredContracts(source)) inherited.set(name, contract);
+}
+
 for (const mod of manifest.modules) {
   const file = resolve(wcDir, mod.path ?? '');
   if (!existsSync(file)) continue;
-  const defaults = declaredDefaults(readFileSync(file, 'utf-8'));
-  if (!defaults.size) continue;
+  const own = declaredContracts(readFileSync(file, 'utf-8'));
+  // A component's own declaration wins; the mixin's only fills what it never
+  // declared.
+  const contractFor = (name) => own.get(name) ?? inherited.get(name);
 
   for (const decl of mod.declarations ?? []) {
     for (const member of decl.members ?? []) {
-      if (member.default === undefined && defaults.has(member.name)) {
-        member.default = spell(defaults.get(member.name));
-        filled += 1;
-      }
+      const contract = contractFor(member.name);
+      if (contract) backfill(member, contract, { isMember: true });
     }
     for (const attr of decl.attributes ?? []) {
-      const name = attr.fieldName ?? attr.name;
-      if (attr.default === undefined && defaults.has(name)) {
-        attr.default = spell(defaults.get(name));
-        filled += 1;
-      }
+      const contract = contractFor(attr.fieldName ?? attr.name);
+      if (contract) backfill(attr, contract, { isMember: false });
     }
   }
 }
@@ -132,4 +228,6 @@ writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n');
 const count = manifest.modules
   .flatMap((m) => m.declarations ?? [])
   .filter((d) => d.customElement && d.tagName).length;
-console.log(`✓ custom-elements.json — ${count} custom elements, ${filled} defaults from declarations`);
+console.log(
+  `✓ custom-elements.json — ${count} custom elements, ${filled} facts recovered from declarations`
+);

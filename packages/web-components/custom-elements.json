@@ -95,7 +95,8 @@
               },
               "description": "When true, allows multiple accordion panels to be open simultaneously. When false (default), opening one panel closes any other open panel.",
               "attribute": "multiple",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -243,7 +244,8 @@
               },
               "description": "Overlap density preset. sm = -8px, md = -12px, lg = -16px negative margin between avatars.",
               "attribute": "overlap",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -347,7 +349,8 @@
               },
               "description": "Controls avatar dimensions: `sm` (32px), `md` (40px), `lg` (56px).",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -358,7 +361,8 @@
               },
               "description": "Shows a status indicator dot. Empty (the default) shows none. An unrecognised value falls back to empty rather than rendering an uncoloured dot that screen readers announce by its bogus name.",
               "attribute": "status",
-              "default": "''"
+              "default": "''",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -369,7 +373,8 @@
               },
               "description": "Controls the avatar shape. Options: 'circle', 'square', 'rounded'.",
               "attribute": "shape",
-              "default": "'circle'"
+              "default": "'circle'",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -491,7 +496,8 @@
               },
               "description": "Semantic variant that controls the color scheme, top accent bar, and default icon",
               "attribute": "variant",
-              "default": "'info'"
+              "default": "'info'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -502,7 +508,8 @@
               },
               "description": "Shows a close button that removes the callout. Fires an arc-close event on close.",
               "attribute": "dismissible",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "events": [
@@ -611,7 +618,8 @@
               },
               "description": "Controls internal spacing. Options: 'none', 'sm', 'md', 'lg'.",
               "attribute": "padding",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -622,7 +630,8 @@
               },
               "description": "Enables hover effects for clickable cards that trigger JS instead of navigating via href.",
               "attribute": "interactive",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -723,7 +732,8 @@
               },
               "description": "Enables automatic slide advancement on a timer. Pauses on hover and focus, respects prefers-reduced-motion.",
               "attribute": "autoPlay",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -745,7 +755,8 @@
               },
               "description": "Enables wrapping at the edges so the last slide connects to the first and vice versa.",
               "attribute": "loop",
-              "default": "true"
+              "default": "true",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -756,7 +767,8 @@
               },
               "description": "Shows dot indicators below the viewport for direct slide navigation.",
               "attribute": "showDots",
-              "default": "true"
+              "default": "true",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -767,7 +779,8 @@
               },
               "description": "Shows previous/next arrow buttons on the left and right edges of the viewport.",
               "attribute": "showArrows",
-              "default": "true"
+              "default": "true",
+              "reflects": true
             }
           ],
           "events": [
@@ -900,7 +913,8 @@
               },
               "description": "Controls whether the content is visible. Reflected as an attribute and toggleable by clicking the heading.",
               "attribute": "open",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "events": [
@@ -1009,7 +1023,8 @@
               },
               "description": "Controls swatch dimensions: sm (32px), md (48px), lg (64px)",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -1143,7 +1158,8 @@
               },
               "description": "When true (and the parent DataTable also has `sortable`), clicking this column's header toggles ascending/descending sort on the corresponding data field. A sort indicator arrow appears next to the label.",
               "attribute": "sortable",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -1296,7 +1312,8 @@
               },
               "description": "When true, disables the radial gradient background effect for quieter contexts.",
               "attribute": "nogradient",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -1394,7 +1411,8 @@
               },
               "description": "Visual style",
               "attribute": "variant",
-              "default": "'subtle'"
+              "default": "'subtle'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -1405,7 +1423,8 @@
               },
               "description": "Shifts the gradient origin so it fades from one edge instead of both. Empty (the default) fades from both edges. Useful for asymmetric layouts where the divider should visually connect to content on one side.",
               "attribute": "align",
-              "default": "''"
+              "default": "''",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -1416,7 +1435,8 @@
               },
               "description": "Renders the divider as a vertical line. Switches to `inline-flex` display and rotates gradient directions to run top-to-bottom. Use inside flex rows to separate inline content.",
               "attribute": "vertical",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -1790,7 +1810,8 @@
               },
               "description": "Horizontal position of the pin as a percentage of the image width, from 0 (left edge) to 100 (right edge). Values outside the range are clamped; a non-numeric value falls back to 50.",
               "attribute": "x",
-              "default": "50"
+              "default": "50",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -1801,7 +1822,8 @@
               },
               "description": "Vertical position of the pin as a percentage of the image height, from 0 (top edge) to 100 (bottom edge). Values outside the range are clamped; a non-numeric value falls back to 50.",
               "attribute": "y",
-              "default": "50"
+              "default": "50",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -1812,7 +1834,8 @@
               },
               "description": "Whether the pin's popover is currently visible. Reflected as an attribute. Opens on click; closes on Escape, outside click, or a second click on the pin.",
               "attribute": "open",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "events": [
@@ -2169,7 +2192,8 @@
               },
               "description": "Divider position as a percentage, 0 to 100. 0 shows only the after layer, 100 only the before layer. Clamped, reflected, and updated as the user drags.",
               "attribute": "position",
-              "default": "50"
+              "default": "50",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -2180,7 +2204,8 @@
               },
               "description": "Axis the divider moves along. `horizontal` (default) moves a vertical divider line left-right; `vertical` moves a horizontal line up-down.",
               "attribute": "orientation",
-              "default": "'horizontal'"
+              "default": "'horizontal'",
+              "reflects": true
             }
           ],
           "events": [
@@ -2373,7 +2398,8 @@
               },
               "description": "Constrains the container to a fixed aspect ratio, preventing layout shift during loading. Empty (the default) leaves the container unconstrained; an unrecognised ratio falls back to it.",
               "attribute": "aspect",
-              "default": "''"
+              "default": "''",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -2384,7 +2410,8 @@
               },
               "description": "CSS object-fit mode controlling how the image fills its container.",
               "attribute": "fit",
-              "default": "'cover'"
+              "default": "'cover'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -2547,7 +2574,8 @@
               },
               "description": "When true, displays a spinner in the footer and suppresses additional `arc-load-more` events.",
               "attribute": "loading",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -2558,7 +2586,8 @@
               },
               "description": "When true, disconnects the observer and displays \"No more items\" text in the footer.",
               "attribute": "finished",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -2569,7 +2598,8 @@
               },
               "description": "Disables the component, disconnects the observer, and reduces opacity to 40%.",
               "attribute": "disabled",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "events": [
@@ -2741,7 +2771,8 @@
               },
               "description": "Controls the visible state of the viewer. Set to `true` to open at the current `index` and activate the focus trap; set to `false` to close and restore focus to the previously-focused element.",
               "attribute": "open",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "events": [
@@ -2873,7 +2904,8 @@
               },
               "description": "Scroll direction. `left` scrolls content from right to left (default), `right` reverses the direction.",
               "attribute": "direction",
-              "default": "'left'"
+              "default": "'left'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -2884,7 +2916,8 @@
               },
               "description": "When true, the animation pauses while the cursor hovers over the marquee.",
               "attribute": "pauseOnHover",
-              "default": "true"
+              "default": "true",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -3021,7 +3054,8 @@
               },
               "description": "Error-correction level: L (~7% recovery), M (~15%), Q (~25%), H (~30%). Higher levels tolerate more damage/occlusion but produce denser codes.",
               "attribute": "level",
-              "default": "'M'"
+              "default": "'M'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -3032,7 +3066,8 @@
               },
               "description": "Renders the code on a white rounded card with forced dark modules, guaranteeing dark-on-light scanability in both themes. Overrides --qr-fg/--qr-bg. Recommended for scan-critical codes.",
               "attribute": "contrast",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -3183,7 +3218,8 @@
               },
               "description": "Scroll direction. `vertical` shows a vertical scrollbar, `horizontal` shows a horizontal scrollbar, `both` shows both.",
               "attribute": "orientation",
-              "default": "'vertical'"
+              "default": "'vertical'",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -3269,7 +3305,8 @@
               },
               "description": "Which edge the indicator sticks to.",
               "attribute": "position",
-              "default": "'top'"
+              "default": "'top'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -3280,7 +3317,8 @@
               },
               "description": "Bar thickness: sm (2px), md (3px), lg (4px).",
               "attribute": "size",
-              "default": "'sm'"
+              "default": "'sm'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -3291,7 +3329,8 @@
               },
               "description": "Fill color mode. Accent uses `--accent-primary`. Gradient blends from primary to secondary.",
               "attribute": "color",
-              "default": "'accent'"
+              "default": "'accent'",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -3398,7 +3437,8 @@
               },
               "description": "Controls the divider direction. Vertical separators display as inline-flex with full parent height.",
               "attribute": "orientation",
-              "default": "'horizontal'"
+              "default": "'horizontal'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -3409,7 +3449,8 @@
               },
               "description": "Controls the line style. Fade uses a gradient that tapers to transparent at both ends.",
               "attribute": "variant",
-              "default": "'line'"
+              "default": "'line'",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -3523,7 +3564,8 @@
               },
               "description": "Shape of the skeleton: text for lines, circle for avatars, rect for blocks",
               "attribute": "variant",
-              "default": "'text'"
+              "default": "'text'",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -3613,7 +3655,8 @@
               },
               "description": "Spinner dimensions: sm (16px), md (24px), lg (40px)",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -3624,7 +3667,8 @@
               },
               "description": "Color of the spinner ring",
               "attribute": "variant",
-              "default": "'primary'"
+              "default": "'primary'",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -3696,7 +3740,8 @@
               },
               "description": "Flex direction — vertical is column, horizontal is row",
               "attribute": "direction",
-              "default": "'vertical'"
+              "default": "'vertical'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -3707,7 +3752,8 @@
               },
               "description": "Gap between children, maps to --space-* tokens",
               "attribute": "gap",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -3718,7 +3764,8 @@
               },
               "description": "Cross-axis alignment (align-items)",
               "attribute": "align",
-              "default": "'stretch'"
+              "default": "'stretch'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -3729,7 +3776,8 @@
               },
               "description": "Main-axis alignment (justify-content)",
               "attribute": "justify",
-              "default": "'start'"
+              "default": "'start'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -3740,7 +3788,8 @@
               },
               "description": "Enable flex-wrap for responsive wrapping",
               "attribute": "wrap",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -3920,7 +3969,8 @@
               },
               "description": "Starts playback as soon as the browser allows. Browsers only honor autoplay when the video is muted, so pair it with `muted`; when autoplay is blocked, the play overlay simply remains and the user starts playback themselves.",
               "attribute": "autoplay",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -3931,7 +3981,8 @@
               },
               "description": "Restarts playback from the beginning when the video ends.",
               "attribute": "loop",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -3942,7 +3993,8 @@
               },
               "description": "Mutes the audio track. Toggled live by the mute button and the M key.",
               "attribute": "muted",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -4482,7 +4534,8 @@
               },
               "description": "Controls how the number is formatted using Intl.NumberFormat. Use currency with a prefix like $ or percent with a suffix like %.",
               "attribute": "format",
-              "default": "'number'"
+              "default": "'number'",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -4615,7 +4668,8 @@
               },
               "description": "Controls the badge color scheme. Default renders a neutral gray. Primary and secondary use the accent token colors. Success, warning, error, and info map to the corresponding semantic color tokens for status-oriented labels.",
               "attribute": "variant",
-              "default": "'default'"
+              "default": "'default'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -4626,7 +4680,8 @@
               },
               "description": "Controls the badge size. Options: 'sm', 'md', 'lg'.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -4760,7 +4815,8 @@
               },
               "description": "The chart form. Line and area share the x axis across all series; bar renders grouped columns (or stacked with the `stacked` attribute); donut renders one segment per series (or per category when a single series is given).",
               "attribute": "type",
-              "default": "'line'"
+              "default": "'line'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -4771,7 +4827,8 @@
               },
               "description": "Bar type only. Stacks series segments on a shared baseline with 2px surface gaps between segments; only the outermost segment gets the rounded value end. Assumes non-negative data.",
               "attribute": "stacked",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -4782,7 +4839,8 @@
               },
               "description": "Suppresses the legend. By default the legend renders for two or more series and is omitted for a single series.",
               "attribute": "hideLegend",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -4793,7 +4851,8 @@
               },
               "description": "Removes the axis layer — gridlines, y tick labels, and x category labels — for compact trend panels where exact values are read from the tooltip.",
               "attribute": "hideAxis",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -5025,7 +5084,8 @@
               },
               "description": "Which face to render. Digital shows a mono-spaced time string; analog shows an SVG dial with hands.",
               "attribute": "variant",
-              "default": "'digital'"
+              "default": "'digital'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -5036,7 +5096,8 @@
               },
               "description": "Show seconds on the digital face, or the second hand on the analog face.",
               "attribute": "showSeconds",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -5047,7 +5108,8 @@
               },
               "description": "Render the timezone abbreviation, muted, beside the digital time.",
               "attribute": "showTimezone",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -5173,7 +5235,8 @@
               },
               "description": "When true, adds an accent background to the header and all cells in this column.",
               "attribute": "highlight",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -5370,7 +5433,8 @@
               },
               "description": "Hide leading segments that are zero",
               "attribute": "hideZeroSegments",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "events": [
@@ -5545,7 +5609,8 @@
               },
               "description": "Adds a checkbox column with a select-all header checkbox (indeterminate when partially selected). Space toggles selection from the keyboard. Emits `arc-select` with the selected row indices.",
               "attribute": "selectable",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -5556,7 +5621,8 @@
               },
               "description": "Enables virtual scrolling for large datasets. Only visible rows plus an overscan buffer are rendered, keeping performance constant regardless of row count.",
               "attribute": "virtual",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "events": [
@@ -5749,7 +5815,8 @@
               },
               "description": "Enables the sorting system at the table level. When true, columns that also have their own `sortable` attribute become clickable, toggling between ascending and descending order. The table performs client-side sorting by default and emits an `arc-sort` event with the active column key and direction.",
               "attribute": "sortable",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -5760,7 +5827,8 @@
               },
               "description": "Adds a checkbox column to the left of the table for row selection. A \"select all\" checkbox appears in the header. Selected rows receive a visual highlight. The component emits `arc-select` with the current selection (detail.value) when any row or the header checkbox is toggled; detail.all marks header toggles.",
               "attribute": "selectable",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -5771,7 +5839,8 @@
               },
               "description": "The current sort direction. Works in tandem with `sort-column` to control the initial sort state. Reflected as an attribute so it can be read from the DOM or targeted with CSS selectors.",
               "attribute": "sortDirection",
-              "default": "'asc'"
+              "default": "'asc'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -5782,7 +5851,8 @@
               },
               "description": "Enables virtual scrolling for large datasets. When true, only the visible rows plus an overscan buffer are rendered in the DOM, keeping performance constant regardless of row count.",
               "attribute": "virtual",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "events": [
@@ -6000,7 +6070,8 @@
               },
               "description": "Show horizontal dividers between rows and vertical dividers between columns.",
               "attribute": "dividers",
-              "default": "true"
+              "default": "true",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -6103,7 +6174,8 @@
               },
               "description": "Display mode: 'inline' renders changes in a single column, 'side-by-side' renders two panes in a grid.",
               "attribute": "mode",
-              "default": "'inline'"
+              "default": "'inline'",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -6276,7 +6348,8 @@
               },
               "description": "Which period layout to render. Also switchable by the user via the header view toggle.",
               "attribute": "view",
-              "default": "'month'"
+              "default": "'month'",
+              "reflects": true
             }
           ],
           "events": [
@@ -6496,7 +6569,8 @@
               },
               "description": "Current gauge value. Clamped between `min` and `max`. Reflected as an attribute.",
               "attribute": "value",
-              "default": "0"
+              "default": "0",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -6507,7 +6581,8 @@
               },
               "description": "Arc shape: `full` is a 270-degree horseshoe, `half` a 180-degree semicircle.",
               "attribute": "variant",
-              "default": "'full'"
+              "default": "'full'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -6518,7 +6593,8 @@
               },
               "description": "Whether to render the numeric value in the center of the arc. Defaults to true; disable via the `showValue` property.",
               "attribute": "showValue",
-              "default": "true"
+              "default": "true",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -6840,7 +6916,8 @@
               },
               "description": "Disables all pointer and keyboard interaction and dims the board.",
               "attribute": "disabled",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "events": [
@@ -6933,7 +7010,8 @@
               },
               "description": "Controls pair arrangement. Horizontal uses a CSS grid with key and value side by side. Stacked places the key above the value.",
               "attribute": "layout",
-              "default": "'horizontal'"
+              "default": "'horizontal'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -6944,7 +7022,8 @@
               },
               "description": "When true, renders a subtle border between each key-value pair.",
               "attribute": "dividers",
-              "default": "true"
+              "default": "true",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -7164,7 +7243,8 @@
               },
               "description": "Meter direction. Vertical (the default) fills bottom-up like a channel strip; horizontal fills from the inline start. Unknown values fall back to vertical.",
               "attribute": "orientation",
-              "default": "'vertical'"
+              "default": "'vertical'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -7364,7 +7444,8 @@
               },
               "description": "Whether this item is currently selected. Managed automatically by the parent list.",
               "attribute": "selected",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -7375,7 +7456,8 @@
               },
               "description": "Prevents interaction and dims the item.",
               "attribute": "disabled",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "events": [
@@ -7501,7 +7583,8 @@
               },
               "description": "Visual style. Bordered wraps the list in an outlined container. Separated adds bottom borders between items.",
               "attribute": "variant",
-              "default": "'default'"
+              "default": "'default'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -7512,7 +7595,8 @@
               },
               "description": "Controls the base font size for the list and its children.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -7523,7 +7607,8 @@
               },
               "description": "Enables selection mode. Sets `role=\"listbox\"` and manages `aria-selected` on child items.",
               "attribute": "selectable",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -7739,7 +7824,8 @@
               },
               "description": "Current meter value. Clamped between `min` and `max`. Reflected as an attribute.",
               "attribute": "value",
-              "default": "0"
+              "default": "0",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -7909,7 +7995,8 @@
               },
               "description": "Chart type. Line renders a polyline with optional area fill; bar renders evenly spaced rectangles.",
               "attribute": "type",
-              "default": "'line'"
+              "default": "'line'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -8059,7 +8146,8 @@
               },
               "default": "''",
               "description": "Shows a trend indicator arrow below the label. Empty (the default) shows none; an unrecognised value falls back to empty rather than rendering an uncoloured dash that no `:host([trend=...])` rule matches.",
-              "attribute": "trend"
+              "attribute": "trend",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -8235,7 +8323,8 @@
               },
               "description": "Zero-indexed active step — steps before this index show as completed. Clamped to the range of rendered steps.",
               "attribute": "active",
-              "default": "0"
+              "default": "0",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -8335,7 +8424,8 @@
               },
               "description": "Alternating row backgrounds for improved scanability.",
               "attribute": "striped",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -8346,7 +8436,8 @@
               },
               "description": "Row density. 'compact' reduces cell padding for dense data displays.",
               "attribute": "density",
-              "default": "'default'"
+              "default": "'default'",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -8458,7 +8549,8 @@
               },
               "description": "Color variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and error provide semantic status colors.",
               "attribute": "variant",
-              "default": "'default'"
+              "default": "'default'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -8469,7 +8561,8 @@
               },
               "description": "Controls the tag size.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -8480,7 +8573,8 @@
               },
               "description": "When true, shows a close button that fires `arc-remove` when clicked.",
               "attribute": "removable",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -8491,7 +8585,8 @@
               },
               "description": "Disables the tag, reducing opacity to 40% and blocking pointer events including the remove button.",
               "attribute": "disabled",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "events": [
@@ -9099,7 +9194,8 @@
               },
               "description": "Current playhead position as a fraction of the total, 0 to 1. Not seconds: multiply by `duration` yourself if you track seconds. Updated by the component during scrubbing and reflected as an attribute.",
               "attribute": "position",
-              "default": "0"
+              "default": "0",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -9110,7 +9206,8 @@
               },
               "description": "Enables scrubbing. The waveform becomes a focusable slider: click or drag to seek, arrow keys to nudge, Home/End to jump. Without it the waveform is a static image.",
               "attribute": "interactive",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -9121,7 +9218,8 @@
               },
               "description": "Rendering style. `bars` draws discrete bar pairs mirrored around the center line; `mirror` draws a filled min/max envelope.",
               "attribute": "variant",
-              "default": "'bars'"
+              "default": "'bars'",
+              "reflects": true
             }
           ],
           "events": [
@@ -9264,7 +9362,8 @@
               },
               "description": "Controls the semantic color palette and icon. Use \"info\" for neutral guidance, \"success\" for confirmations, \"warning\" for caution states, and \"error\" for failures or blocking issues.",
               "attribute": "variant",
-              "default": "'info'"
+              "default": "'info'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -9275,7 +9374,8 @@
               },
               "description": "When true, renders a close button in the top-right corner. Clicking it removes the alert from the DOM and fires an \"arc-close\" event that parent components can listen to.",
               "attribute": "dismissible",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -9286,7 +9386,8 @@
               },
               "description": "Visual density. 'compact' reduces padding and font sizes for inline or space-constrained usage.",
               "attribute": "density",
-              "default": "'default'"
+              "default": "'default'",
+              "reflects": true
             }
           ],
           "events": [
@@ -9396,7 +9497,8 @@
               },
               "description": "Controls the ARIA live region politeness level. Polite waits for the screen reader to finish before announcing; assertive interrupts immediately.",
               "attribute": "politeness",
-              "default": "'polite'"
+              "default": "'polite'",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -9482,7 +9584,8 @@
               },
               "description": "Controls the semantic color palette and icon. Use \"info\" for neutral announcements, \"success\" for positive confirmations, \"warning\" for caution states, and \"error\" for outages or critical failures.",
               "attribute": "variant",
-              "default": "'info'"
+              "default": "'info'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -9493,7 +9596,8 @@
               },
               "description": "When true, renders a close button on the right side. Clicking it collapses the banner and fires an \"arc-close\" event.",
               "attribute": "dismissible",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -9504,7 +9608,8 @@
               },
               "description": "When true, pins the banner to the top of the viewport with position: sticky so it remains visible as the user scrolls.",
               "attribute": "sticky",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "events": [
@@ -9858,7 +9963,8 @@
               },
               "description": "Controls whether the palette is visible. When set to true, the dialog animates in, the search input auto-focuses, and body scroll is locked. Set to false to close.",
               "attribute": "open",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "events": [
@@ -9977,7 +10083,8 @@
                 "text": "boolean"
               },
               "attribute": "open",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -10032,7 +10139,8 @@
               },
               "description": "Controls the confirm button style. Use \"error\" for destructive actions — the confirm button renders in the error color.",
               "attribute": "variant",
-              "default": "'default'"
+              "default": "'default'",
+              "reflects": true
             }
           ],
           "events": [
@@ -10250,7 +10358,8 @@
               },
               "description": "Controls the visibility of the context menu. Set to true when the contextmenu event fires; set to false when the user selects an item, clicks the backdrop, or presses Escape.",
               "attribute": "open",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "events": [
@@ -10346,7 +10455,8 @@
               },
               "description": "Follow new content: when a message is added or grows while the reader is near the bottom, scroll to keep the latest visible. A reader who has scrolled up is never pulled back down. Defaults to true; set the property to false to leave scrolling entirely to the consumer.",
               "attribute": "autoScroll",
-              "default": "true"
+              "default": "true",
+              "reflects": true
             }
           ],
           "events": [
@@ -10480,7 +10590,8 @@
               },
               "description": "Whether the dialog is visible",
               "attribute": "open",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -10491,7 +10602,8 @@
               },
               "description": "Visual variant — error adds red accent line, glow border, and red confirm button",
               "attribute": "variant",
-              "default": "'default'"
+              "default": "'default'",
+              "reflects": true
             }
           ],
           "events": [
@@ -10635,7 +10747,8 @@
               },
               "description": "Controls whether the menu panel is visible. Toggled by clicking the trigger. Set to false when the user selects an item, clicks outside, or presses Escape.",
               "attribute": "open",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "events": [
@@ -10757,7 +10870,8 @@
               },
               "description": "Controls whether the tour is active. Set to true to start the tour from the first step.",
               "attribute": "open",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "events": [
@@ -10894,7 +11008,8 @@
               },
               "description": "Controls which side of the trigger the card appears on. The card is centered along the perpendicular axis using CSS transforms.",
               "attribute": "position",
-              "default": "'bottom'"
+              "default": "'bottom'",
+              "reflects": true
             }
           ],
           "events": [
@@ -10999,7 +11114,8 @@
               },
               "description": "Controls the icon and text color. Use \"info\" for neutral hints, \"success\" for valid state feedback, \"warning\" for caution notes, and \"error\" for validation failures.",
               "attribute": "variant",
-              "default": "'info'"
+              "default": "'info'",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -11079,7 +11195,8 @@
               },
               "description": "Controls whether the loading overlay is visible. When true, the overlay fades in and blocks interaction with the content behind it.",
               "attribute": "active",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -11090,7 +11207,8 @@
               },
               "description": "When true, the overlay uses fixed positioning to cover the entire viewport instead of just its parent container. Includes a focus trap in this mode.",
               "attribute": "global",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -11219,7 +11337,8 @@
               },
               "description": "Renders the typing indicator — three pulsing dots — in place of the body while a reply is being produced. Under prefers-reduced-motion the dots give way to a static ellipsis.",
               "attribute": "pending",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -11230,7 +11349,8 @@
               },
               "description": "Render the slotted text through the house markdown renderer. The slot's text content is the source; it re-parses whenever the slot changes, so streaming into the slot streams through the renderer. When false, slotted content renders as-is.",
               "attribute": "markdown",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -11366,7 +11486,8 @@
               },
               "description": "Controls the visible state of the dialog. Set to `true` to open the modal and activate the focus trap; set to `false` to close it, run the exit animation, and restore focus to the previously-focused element.",
               "attribute": "open",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -11377,7 +11498,8 @@
               },
               "description": "Controls the maximum width of the dialog panel. `sm` (400px) is ideal for simple confirmations, `md` (560px) for standard forms, and `lg` (720px) for content-heavy dialogs with tables or multi-column layouts.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -11388,7 +11510,8 @@
               },
               "description": "When `true`, renders the built-in X close button and allows dismissal via Escape key and backdrop click. Set to `false` for critical decision modals where the user must explicitly choose an action from the footer buttons.",
               "attribute": "closable",
-              "default": "true"
+              "default": "true",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -11399,7 +11522,8 @@
               },
               "description": "Makes the modal fill the entire viewport. Useful for mobile forms or complex workflows.",
               "attribute": "fullscreen",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "events": [
@@ -11555,7 +11679,8 @@
               },
               "description": "Controls whether the notification panel is visible. Toggle this programmatically or let the built-in trigger click handler manage it.",
               "attribute": "open",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -11566,7 +11691,8 @@
               },
               "description": "Horizontal alignment of the panel relative to the trigger element. Use top-right when the trigger is near the right edge of the viewport.",
               "attribute": "position",
-              "default": "'top-right'"
+              "default": "'top-right'",
+              "reflects": true
             }
           ],
           "events": [
@@ -11685,7 +11811,8 @@
               },
               "description": "Whether the popover panel is currently visible. Reflected as an attribute.",
               "attribute": "open",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -11696,7 +11823,8 @@
               },
               "description": "Placement of the panel relative to the trigger element.",
               "attribute": "position",
-              "default": "'bottom'"
+              "default": "'bottom'",
+              "reflects": true
             }
           ],
           "events": [
@@ -11835,7 +11963,8 @@
               },
               "description": "Anchors the progress toast stack to a fixed corner of the viewport.",
               "attribute": "position",
-              "default": "'bottom-right'"
+              "default": "'bottom-right'",
+              "reflects": true
             }
           ],
           "events": [
@@ -11951,7 +12080,8 @@
               },
               "description": "Selects the visual shape. Bar renders a horizontal track with a fill that grows from left to right — best for wide containers and known percentages. Spinner renders a circular indicator suited to compact inline or button contexts.",
               "attribute": "variant",
-              "default": "'bar'"
+              "default": "'bar'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -11962,7 +12092,8 @@
               },
               "description": "Controls the thickness of the bar track or the diameter of the spinner. Small (sm) fits inside table cells and tight layouts. Medium (md) is the standard default. Large (lg) is appropriate for page-level or hero loading states.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -11973,7 +12104,8 @@
               },
               "description": "When true, the bar pulses or the spinner loops without a fixed endpoint. Use this when the total work is unknown. Switch to determinate (indeterminate=false) and set a value as soon as real progress data becomes available.",
               "attribute": "indeterminate",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -11984,7 +12116,8 @@
               },
               "description": "Displays the current percentage value next to the label.",
               "attribute": "showValue",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -12132,7 +12265,8 @@
               },
               "description": "Controls whether the sheet is visible. Reflected as an attribute and toggleable programmatically.",
               "attribute": "open",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -12143,7 +12277,8 @@
               },
               "description": "Which edge the panel slides in from. Bottom sheets have a max-height of 80vh; right sheets are 400px wide.",
               "attribute": "side",
-              "default": "'bottom'"
+              "default": "'bottom'",
+              "reflects": true
             }
           ],
           "events": [
@@ -12273,7 +12408,8 @@
               },
               "description": "Anchors the snackbar to a bottom edge of the viewport. Bottom-center is the conventional position for material-style snackbars.",
               "attribute": "position",
-              "default": "'bottom-center'"
+              "default": "'bottom-center'",
+              "reflects": true
             }
           ],
           "events": [
@@ -12383,7 +12519,8 @@
               },
               "description": "Controls whether the spotlight overlay is visible. Set to true to activate the dimming overlay and highlight the target element.",
               "attribute": "active",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "events": [
@@ -12549,7 +12686,8 @@
               },
               "description": "Anchors the toast stack to a fixed edge of the viewport. Top-right is the most conventional position for web applications. Bottom positions work well for media players or editors where the top area is occupied by toolbars.",
               "attribute": "position",
-              "default": "'top-right'"
+              "default": "'top-right'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -12712,7 +12850,8 @@
               },
               "description": "Controls which side of the trigger the tooltip appears on. Top is the most common default. Switch to bottom, left, or right when the trigger sits near a viewport edge or when the surrounding layout makes another direction more natural.",
               "attribute": "position",
-              "default": "'top'"
+              "default": "'top'",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -12877,7 +13016,8 @@
               },
               "description": "Layout direction. Vertical stacks buttons top-to-bottom.",
               "attribute": "orientation",
-              "default": "'horizontal'"
+              "default": "'horizontal'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -12888,7 +13028,8 @@
               },
               "description": "Size cascaded to all child buttons.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -12991,7 +13132,8 @@
               },
               "description": "Controls the visual weight and emphasis. Primary is a filled button with a neon glow hover suited for the top-level CTA. Secondary uses a bordered outline for supporting actions. Ghost renders with no border or background, ideal for low-priority or tertiary actions.",
               "attribute": "variant",
-              "default": "'primary'"
+              "default": "'primary'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -13002,7 +13144,8 @@
               },
               "description": "Sets the button size. Large (lg) is intended for hero sections and high-impact areas. Medium (md) is the default for general UI. Small (sm) fits compact toolbars, table rows, and inline contexts.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -13013,7 +13156,8 @@
               },
               "description": "When true, dims the button and prevents all pointer and keyboard interaction. Applies reduced opacity and removes hover/focus effects. Consider pairing with a tooltip that explains why the action is unavailable.",
               "attribute": "disabled",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -13024,7 +13168,8 @@
               },
               "description": "Shows a spinner and disables the button. Use for async operations like form submission or API calls.",
               "attribute": "loading",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -13228,7 +13373,8 @@
               },
               "description": "Which day the week starts on, 1 = Monday … 7 = Sunday. 0 (the default) follows the locale's own convention. An unrecognised value falls back to 0 rather than reaching weekdayOffset() and reordering the week arbitrarily.",
               "attribute": "firstDayOfWeek",
-              "default": "0"
+              "default": "0",
+              "reflects": true
             }
           ],
           "events": [
@@ -13411,7 +13557,8 @@
               },
               "description": "Controls whether the checkbox is in its checked (selected) state. When true, a checkmark icon is rendered inside the box. Bind to this property for two-way state management in frameworks that support it.",
               "attribute": "checked",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -13422,7 +13569,8 @@
               },
               "description": "When true, displays a horizontal dash instead of a checkmark, representing a mixed or partially-selected state. Commonly used on a parent \"select all\" checkbox when only some children are checked. Clicking an indeterminate checkbox resolves it to fully checked.",
               "attribute": "indeterminate",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -13433,7 +13581,8 @@
               },
               "description": "Controls the checkbox size.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -13561,7 +13710,12 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
             },
             {
               "kind": "field",
@@ -13571,7 +13725,12 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
             }
           ],
           "events": [
@@ -13653,6 +13812,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             },
             {
@@ -13661,6 +13824,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             }
           ],
@@ -13733,7 +13900,8 @@
               },
               "description": "Whether the chip is currently selected. Reflected as an attribute and toggled on click or keypress.",
               "attribute": "selected",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -13744,7 +13912,8 @@
               },
               "description": "Disables interaction, reducing opacity to 40% and blocking pointer events.",
               "attribute": "disabled",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "events": [
@@ -13915,7 +14084,9 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -13926,7 +14097,8 @@
               },
               "description": "Control size. `md` is the default; `sm` and `lg` scale the swatch and trigger.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -14054,7 +14226,12 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
             }
           ],
           "events": [
@@ -14133,6 +14310,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             },
             {
@@ -14141,6 +14322,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             }
           ],
@@ -14274,7 +14459,9 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -14285,7 +14472,8 @@
               },
               "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -14413,7 +14601,12 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
             }
           ],
           "events": [
@@ -14492,6 +14685,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             },
             {
@@ -14500,6 +14697,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             }
           ],
@@ -14573,7 +14774,8 @@
               },
               "description": "Disables the button, preventing clicks and reducing visual opacity.",
               "attribute": "disabled",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "events": [
@@ -14767,7 +14969,8 @@
               },
               "description": "Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS. Held at `false` while `disabled`.",
               "attribute": "open",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -14778,7 +14981,8 @@
               },
               "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -14906,7 +15110,12 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
             },
             {
               "kind": "field",
@@ -14916,7 +15125,12 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
             }
           ],
           "events": [
@@ -15033,6 +15247,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             },
             {
@@ -15041,6 +15259,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             }
           ],
@@ -15287,7 +15509,8 @@
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
               },
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -15298,7 +15521,8 @@
               },
               "description": "Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS. Held at `false` while `disabled`.",
               "attribute": "open",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -15309,7 +15533,8 @@
               },
               "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -15423,7 +15648,12 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
             }
           ],
           "events": [
@@ -15581,6 +15811,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             }
           ],
@@ -15693,7 +15927,8 @@
               },
               "description": "Disables all child controls and dims the fieldset.",
               "attribute": "disabled",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -15704,7 +15939,8 @@
               },
               "description": "Visual style. Card adds a surface background and shadow.",
               "attribute": "variant",
-              "default": "'default'"
+              "default": "'default'",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -15837,7 +16073,8 @@
               },
               "description": "When true, allows selecting multiple files. Each drop or browse interaction appends to the existing file list rather than replacing it.",
               "attribute": "multiple",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -15848,7 +16085,8 @@
               },
               "description": "Disables the dropzone, preventing drag-and-drop and click interactions. Reduces opacity to 0.4.",
               "attribute": "disabled",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "events": [
@@ -16009,7 +16247,8 @@
               },
               "description": "When true, skips built-in constraint validation on submit. Use this when you need to implement a fully custom validation flow while still leveraging Form for data serialisation.",
               "attribute": "novalidate",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -16020,7 +16259,8 @@
               },
               "description": "Indicates an asynchronous submission is in progress. Disables the submit button and shows a loading indicator to prevent duplicate requests.",
               "attribute": "loading",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -16031,7 +16271,8 @@
               },
               "description": "When true, renders an aggregated list of validation errors above the submit area after a failed submission attempt. Set to false to handle error display manually.",
               "attribute": "errorSummary",
-              "default": "true"
+              "default": "true",
+              "reflects": true
             }
           ],
           "events": [
@@ -16168,7 +16409,8 @@
               },
               "description": "Temporarily suspends the shortcut listener.",
               "attribute": "disabled",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -16330,7 +16572,8 @@
               },
               "description": "Visual style variant. Ghost is transparent, secondary has a border with glow, primary has a solid accent-primary fill.",
               "attribute": "variant",
-              "default": "'ghost'"
+              "default": "'ghost'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -16341,7 +16584,8 @@
               },
               "description": "Button size controlling dimensions and icon scale. Icon-only sizes are circular: xs=28px, sm=32px, md=36px, lg=44px. The labeled form stays a rounded rectangle.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -16352,7 +16596,8 @@
               },
               "description": "Disables the button, reducing opacity to 40% and blocking pointer events.",
               "attribute": "disabled",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -16739,7 +16984,8 @@
               },
               "description": "When true, editing uses a `<textarea>`: Enter inserts a newline and Cmd/Ctrl+Enter commits. Single-line commits on plain Enter.",
               "attribute": "multiline",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -16753,7 +16999,9 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -16767,7 +17015,9 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -16972,6 +17222,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             },
             {
@@ -16980,6 +17234,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             }
           ],
@@ -17056,7 +17314,8 @@
               },
               "description": "Controls addon padding and font size.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -17245,7 +17504,8 @@
               },
               "description": "When true, renders a `<textarea>` instead of an `<input>`, allowing multi-row text entry. The textarea is vertically resizable by default.",
               "attribute": "multiline",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -17260,7 +17520,8 @@
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
               },
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -17274,7 +17535,9 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -17285,7 +17548,8 @@
               },
               "description": "Controls the input size. Options: 'sm', 'md', 'lg'.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -17518,6 +17782,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             }
           ],
@@ -17738,7 +18006,9 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -17749,7 +18019,8 @@
               },
               "description": "Control size. `md` is the default; `sm` and `lg` scale the dial.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -17864,7 +18135,12 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
             }
           ],
           "events": [
@@ -17970,6 +18246,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             },
             {
@@ -17978,6 +18258,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             }
           ],
@@ -18060,7 +18344,8 @@
               },
               "description": "Shows a red asterisk (*) after the label text.",
               "attribute": "required",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -18071,7 +18356,8 @@
               },
               "description": "Controls the label font size.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -18082,7 +18368,8 @@
               },
               "description": "Reduces opacity and blocks pointer events.",
               "attribute": "disabled",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -18311,7 +18598,8 @@
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
               },
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -18325,7 +18613,9 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -18336,7 +18626,8 @@
               },
               "description": "Controls the input size. Options: 'sm', 'md', 'lg'.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -18560,6 +18851,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             }
           ],
@@ -18695,7 +18990,9 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -18706,7 +19003,8 @@
               },
               "description": "Control size. `md` is the default; `sm` and `lg` scale the control height and padding.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -18834,7 +19132,12 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
             }
           ],
           "events": [
@@ -18913,6 +19216,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             },
             {
@@ -18921,6 +19228,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             }
           ],
@@ -19074,7 +19385,9 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -19085,7 +19398,8 @@
               },
               "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -19213,7 +19527,12 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
             }
           ],
           "events": [
@@ -19310,6 +19629,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             },
             {
@@ -19318,6 +19641,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             }
           ],
@@ -19427,7 +19754,9 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -19449,7 +19778,8 @@
               },
               "description": "Control size. `md` is the default; `sm` and `lg` scale the digit boxes.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -19577,7 +19907,12 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
             }
           ],
           "events": [
@@ -19656,6 +19991,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             },
             {
@@ -19664,6 +20003,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             }
           ],
@@ -19832,7 +20175,8 @@
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
               },
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -19843,7 +20187,8 @@
               },
               "description": "Controls the field size. Options: 'sm', 'md', 'lg'.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -19854,7 +20199,8 @@
               },
               "description": "Renders a four-segment strength meter with a Weak / Fair / Good / Strong label under the field, scored by a built-in heuristic (length, character variety, common-pattern penalties).",
               "attribute": "showStrength",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -19968,7 +20314,12 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
             }
           ],
           "events": [
@@ -20095,6 +20446,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             }
           ],
@@ -20228,7 +20583,8 @@
               },
               "description": "Character validation mode. `number` allows digits only, `alphanumeric` allows letters and digits, `text` allows any character.",
               "attribute": "type",
-              "default": "'number'"
+              "default": "'number'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -20239,7 +20595,8 @@
               },
               "description": "When true, obscures entered characters with dots for sensitive codes.",
               "attribute": "mask",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -20253,7 +20610,9 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -20264,7 +20623,8 @@
               },
               "description": "Control size. `md` is the default; `sm` and `lg` scale the digit boxes.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -20392,7 +20752,12 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
             }
           ],
           "events": [
@@ -20505,6 +20870,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             },
             {
@@ -20513,6 +20882,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             }
           ],
@@ -20616,7 +20989,8 @@
               },
               "description": "Controls the layout direction of the radio options. Vertical stacks options top-to-bottom and maps Arrow Up/Down to navigation. Horizontal places options in a row and maps Arrow Left/Right.",
               "attribute": "orientation",
-              "default": "'vertical'"
+              "default": "'vertical'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -20627,7 +21001,8 @@
               },
               "description": "Controls the radio button and label size.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -20755,7 +21130,12 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
             },
             {
               "kind": "field",
@@ -20765,7 +21145,12 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
             }
           ],
           "events": [
@@ -20829,6 +21214,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             },
             {
@@ -20837,6 +21226,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             }
           ],
@@ -20910,7 +21303,8 @@
               },
               "description": "When true, dims this individual option and removes it from keyboard navigation. The option cannot be selected by click or arrow keys.",
               "attribute": "disabled",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -21110,7 +21504,8 @@
               },
               "description": "Whether to display the numeric \"low – high\" readout in the header.",
               "attribute": "showValues",
-              "default": "true"
+              "default": "true",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -21121,7 +21516,8 @@
               },
               "description": "Control size. `md` is the default; `sm` and `lg` scale the track and thumbs.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -21236,7 +21632,12 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
             },
             {
               "kind": "field",
@@ -21246,7 +21647,12 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
             }
           ],
           "events": [
@@ -21361,6 +21767,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             },
             {
@@ -21369,6 +21779,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             }
           ],
@@ -21479,7 +21893,8 @@
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
               },
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -21490,7 +21905,8 @@
               },
               "description": "Control size. `md` is the default; `sm` and `lg` scale the star glyphs.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -21618,7 +22034,12 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
             }
           ],
           "events": [
@@ -21694,6 +22115,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             }
           ],
@@ -21809,7 +22234,8 @@
               },
               "description": "Disables the input, reducing opacity and blocking interaction.",
               "attribute": "disabled",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -21820,7 +22246,8 @@
               },
               "description": "Shows a spinning indicator in place of the clear button to signal in-progress loading.",
               "attribute": "loading",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -21831,7 +22258,8 @@
               },
               "description": "Whether the suggestion dropdown is visible. Reflected so it can be opened programmatically or styled from CSS.",
               "attribute": "open",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "events": [
@@ -21989,7 +22417,8 @@
               },
               "description": "Disables the entire control, reducing opacity to 40% and blocking pointer events.",
               "attribute": "disabled",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "events": [
@@ -22156,7 +22585,8 @@
               },
               "description": "Controls the select trigger size.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -22167,7 +22597,8 @@
               },
               "description": "Controls whether the dropdown is visible. Set programmatically to open or close the dropdown. Automatically set to `false` when an option is selected or the user clicks outside. Held at `false` while `disabled`.",
               "attribute": "open",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -22295,7 +22726,12 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
             },
             {
               "kind": "field",
@@ -22305,7 +22741,12 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
             }
           ],
           "events": [
@@ -22396,6 +22837,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             },
             {
@@ -22404,6 +22849,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             }
           ],
@@ -22583,7 +23032,9 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -22597,7 +23048,9 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -22789,6 +23242,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             },
             {
@@ -22797,6 +23254,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             }
           ],
@@ -22950,7 +23411,9 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -22961,7 +23424,8 @@
               },
               "description": "Control size. `md` is the default; `sm` and `lg` scale the track and thumb.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -23089,7 +23553,12 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
             }
           ],
           "events": [
@@ -23186,6 +23655,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             },
             {
@@ -23194,6 +23667,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             }
           ],
@@ -23264,7 +23741,8 @@
               },
               "description": "Disables all interaction, reducing opacity to 40% and blocking pointer events.",
               "attribute": "disabled",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "events": [
@@ -23421,7 +23899,8 @@
               },
               "description": "Layout direction. Vertical stacks toggles, horizontal arranges them in a row.",
               "attribute": "orientation",
-              "default": "'vertical'"
+              "default": "'vertical'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -23432,7 +23911,8 @@
               },
               "description": "Size cascaded to all child arc-toggle elements.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -23443,7 +23923,8 @@
               },
               "description": "Disables all child toggles and dims the group.",
               "attribute": "disabled",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -23666,7 +24147,9 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -23677,7 +24160,8 @@
               },
               "description": "Control size. `md` is the default; `sm` and `lg` scale the field height and padding.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -23805,7 +24289,12 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
             }
           ],
           "events": [
@@ -23930,6 +24419,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             },
             {
@@ -23938,6 +24431,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             }
           ],
@@ -24096,7 +24593,8 @@
               },
               "description": "Controls whether and in which direction the user can drag to resize the textarea. Defaults to vertical-only resizing.",
               "attribute": "resize",
-              "default": "'vertical'"
+              "default": "'vertical'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -24111,7 +24609,8 @@
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
               },
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -24122,7 +24621,8 @@
               },
               "description": "Controls the textarea size. Options: 'sm', 'md', 'lg'.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -24133,7 +24633,8 @@
               },
               "description": "Automatically grows the textarea height to fit its content. Disables manual resize when enabled.",
               "attribute": "autoResize",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -24261,7 +24762,12 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
             }
           ],
           "events": [
@@ -24399,6 +24905,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             }
           ],
@@ -24461,7 +24971,8 @@
               },
               "description": "The current theme mode. Automatically synced to localStorage and the document root `data-theme` attribute.",
               "attribute": "theme",
-              "default": "'auto'"
+              "default": "'auto'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -24472,7 +24983,8 @@
               },
               "description": "Prevents cycling and reduces opacity to 40%.",
               "attribute": "disabled",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -24483,7 +24995,8 @@
               },
               "description": "Renders the button as a compact square without the theme name label, matching an icon-only arc-icon-button of the same size. Attribute name is `icon-only`.",
               "attribute": "iconOnly",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -24494,7 +25007,8 @@
               },
               "description": "Box size when `icon-only`, on the same scale as arc-icon-button: xs=28px, sm=32px, md=36px, lg=44px. Set both controls to the same value when they sit side by side. Ignored by the labeled form, which is sized by its text.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             }
           ],
           "events": [
@@ -24684,7 +25198,8 @@
               },
               "description": "Minute step increment. Controls the granularity of minute options shown in the dropdown. Unrecognised values fall back to 1.",
               "attribute": "step",
-              "default": "1"
+              "default": "1",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -24695,7 +25210,8 @@
               },
               "description": "Display format: \"12h\" shows hours 1-12 with an AM/PM column, \"24h\" shows hours 0-23 without AM/PM. Unrecognised values fall back to \"12h\".",
               "attribute": "format",
-              "default": "'12h'"
+              "default": "'12h'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -24706,7 +25222,8 @@
               },
               "description": "Whether the time dropdown is visible. Reflected so it can be opened programmatically or styled from CSS. Held at `false` while `disabled`.",
               "attribute": "open",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -24717,7 +25234,8 @@
               },
               "description": "Control size. `md` is the default; `sm` and `lg` scale the field padding.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -24845,7 +25363,12 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
             },
             {
               "kind": "field",
@@ -24855,7 +25378,12 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
             }
           ],
           "events": [
@@ -24972,6 +25500,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             },
             {
@@ -24980,6 +25512,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             }
           ],
@@ -25080,7 +25616,8 @@
               },
               "description": "Whether the toggle is in the on position. When set, the thumb slides to the active side and the track displays the accent glow.",
               "attribute": "checked",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -25091,7 +25628,8 @@
               },
               "description": "Controls the toggle size.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -25219,7 +25757,12 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
             },
             {
               "kind": "field",
@@ -25229,7 +25772,12 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
             }
           ],
           "events": [
@@ -25293,6 +25841,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             },
             {
@@ -25301,6 +25853,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             }
           ],
@@ -25440,7 +25996,8 @@
               },
               "description": "Adds a filter input to each pane that narrows that pane only, case-insensitively. Move-all respects the filter.",
               "attribute": "searchable",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -25454,7 +26011,9 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -25465,7 +26024,8 @@
               },
               "description": "Control size. `md` is the default; `sm` and `lg` scale the row height and list panels.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -25593,7 +26153,12 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
             }
           ],
           "events": [
@@ -25684,6 +26249,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             },
             {
@@ -25692,6 +26261,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             }
           ],
@@ -25853,7 +26426,8 @@
               },
               "description": "Controls the trigger size.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -25864,7 +26438,8 @@
               },
               "description": "Controls whether the tree panel is visible. Automatically set to false when a leaf is selected, Escape is pressed, or the user clicks outside. Held at `false` while `disabled`.",
               "attribute": "open",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -25992,7 +26567,12 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
             },
             {
               "kind": "field",
@@ -26002,7 +26582,12 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
-              }
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
             }
           ],
           "events": [
@@ -26102,6 +26687,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             },
             {
@@ -26110,6 +26699,10 @@
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
               }
             }
           ],
@@ -26205,7 +26798,8 @@
               },
               "description": "Controls whether the sidebar is visible on mobile viewports (below 768 px). On desktop the sidebar is always shown regardless of this attribute. Toggle it from a hamburger button in your TopBar to give mobile users access to navigation.",
               "attribute": "sidebarOpen",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "events": [
@@ -26302,7 +26896,8 @@
               },
               "description": "Aspect ratio applied to every cell. 1/1 for squares, 16/9 for widescreen, 4/3 for classic landscape.",
               "attribute": "ratio",
-              "default": "'1/1'"
+              "default": "'1/1'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -26313,7 +26908,8 @@
               },
               "description": "Spacing between grid cells, mapped to design system spacing tokens (--space-sm, --space-md, --space-lg).",
               "attribute": "gap",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -26423,7 +27019,8 @@
               },
               "description": "Controls the page layout. Centered places a single card in the middle of the viewport, best for focused credential flows. Split divides the viewport into a form side and an aside panel for marketing content or illustrations. On mobile, split collapses to a single-column centered layout automatically.",
               "attribute": "variant",
-              "default": "'centered'"
+              "default": "'centered'",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -26498,7 +27095,8 @@
               },
               "description": "Enables intrinsic centering mode using flexbox, which centers children based on their natural width rather than stretching to max-width.",
               "attribute": "intrinsic",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -26509,7 +27107,8 @@
               },
               "description": "Adds text-align: center for centering inline text content within the block.",
               "attribute": "text",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -26590,7 +27189,8 @@
               },
               "description": "Spacing between items, mapped to design system spacing tokens. Use sm for dense tag groups, md for button groups.",
               "attribute": "gap",
-              "default": "'sm'"
+              "default": "'sm'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -26601,7 +27201,8 @@
               },
               "description": "Vertical alignment of items within each row (maps to align-items).",
               "attribute": "align",
-              "default": "'center'"
+              "default": "'center'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -26612,7 +27213,8 @@
               },
               "description": "Horizontal distribution of items (maps to justify-content). Use \"space-between\" for navigation-style spacing.",
               "attribute": "justify",
-              "default": "'start'"
+              "default": "'start'",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -26698,7 +27300,8 @@
               },
               "description": "Use the narrow max-width (720px vs 1120px)",
               "attribute": "narrow",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -26709,7 +27312,8 @@
               },
               "description": "Controls the maximum width.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -26720,7 +27324,8 @@
               },
               "description": "Controls inline padding.",
               "attribute": "padding",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -26914,7 +27519,8 @@
               },
               "description": "Which viewport edge the dock snaps to. Bottom is the most common for media controls and action bars; left and right are suited for tool palettes in canvas editors.",
               "attribute": "position",
-              "default": "'bottom'"
+              "default": "'bottom'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -26925,7 +27531,8 @@
               },
               "description": "When true, the dock hides itself when the cursor moves away from the edge and reveals on hover. Set to false to keep the dock permanently visible.",
               "attribute": "autoHide",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -26936,7 +27543,8 @@
               },
               "description": "Controls the visible state of the dock programmatically. When auto-hide is true, this reflects the current hover-reveal state; when auto-hide is false, use this to toggle visibility manually.",
               "attribute": "open",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "events": [
@@ -27032,7 +27640,8 @@
               },
               "description": "Controls visibility of the float bar. Set to true when a triggering condition is met (e.g., items selected, form dirty) and false when the condition resolves.",
               "attribute": "open",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -27043,7 +27652,8 @@
               },
               "description": "Which edge of the viewport the float bar appears at. Bottom is standard for bulk-action bars; top works for consent banners or global alerts.",
               "attribute": "position",
-              "default": "'bottom'"
+              "default": "'bottom'",
+              "reflects": true
             }
           ],
           "events": [
@@ -27125,7 +27735,8 @@
               },
               "description": "Padding size mapped to a design system spacing token. Controls all four sides equally.",
               "attribute": "space",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -27136,7 +27747,8 @@
               },
               "description": "When true, applies negative margins equal to the space value, allowing children to break out of a parent container's padding for full-bleed layouts.",
               "attribute": "bleed",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -27225,7 +27837,8 @@
               },
               "description": "Spacing between columns and rows, mapped to design system spacing tokens (--space-sm, --space-md, --space-lg).",
               "attribute": "gap",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -27360,7 +27973,8 @@
               },
               "description": "When set, renders a subtle bottom border below the header to visually separate it from page content.",
               "attribute": "border",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -27483,7 +28097,8 @@
               },
               "description": "Controls the column structure of the page. sidebar-left creates a 240px fixed column on the left for navigation. sidebar-right creates a 300px fixed column on the right for contextual content. centered constrains the main area to max-width with auto margins. wide allows content to stretch the full available width.",
               "attribute": "layout",
-              "default": "'centered'"
+              "default": "'centered'",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -27605,7 +28220,8 @@
               },
               "description": "Controls which edge the drag handle appears on. Horizontal places the handle on the right edge and resizes width; vertical places it on the bottom edge and resizes height.",
               "attribute": "direction",
-              "default": "'horizontal'"
+              "default": "'horizontal'",
+              "reflects": true
             }
           ],
           "events": [
@@ -27721,7 +28337,8 @@
               },
               "description": "Spacing between children in both horizontal and vertical modes, mapped to design system spacing tokens.",
               "attribute": "gap",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -27872,7 +28489,8 @@
               },
               "description": "Controls whether the navigation panel appears as a left sidebar (220px wide, CSS Grid) or a top bar (full-width, flexbox column). The left layout collapses to stacked on screens narrower than 768px.",
               "attribute": "navPosition",
-              "default": "'left'"
+              "default": "'left'",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -27973,7 +28591,8 @@
               },
               "description": "Controls the split direction. Horizontal places panes side by side with a vertical divider. Vertical stacks panes top and bottom with a horizontal divider.",
               "attribute": "orientation",
-              "default": "'horizontal'"
+              "default": "'horizontal'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -28103,7 +28722,8 @@
               },
               "description": "Controls whether the status bar flows with the document (static) or pins to the bottom of the viewport (fixed). Fixed mode sets bottom: 0, left: 0, right: 0 with z-index: 100.",
               "attribute": "position",
-              "default": "'static'"
+              "default": "'static'",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -28178,7 +28798,8 @@
               },
               "description": "Read-only attribute set by the IntersectionObserver when the element is currently stuck. Use the `[stuck]` CSS selector to style the stuck state.",
               "attribute": "stuck",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "events": [
@@ -28288,7 +28909,8 @@
               },
               "description": "When set, the toolbar uses position: sticky with top: 0 and z-index: 50, keeping it visible as the user scrolls through content below.",
               "attribute": "sticky",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -28299,7 +28921,8 @@
               },
               "description": "Controls the toolbar height. The default md size is 48px for primary toolbars. The sm size is 36px for secondary or nested toolbars.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -28310,7 +28933,8 @@
               },
               "description": "Renders a subtle bottom border (--border-subtle) to visually separate the toolbar from the content below. Enabled by default.",
               "attribute": "border",
-              "default": "true"
+              "default": "true",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -28321,7 +28945,8 @@
               },
               "description": "Enables responsive overflow collapse. A ResizeObserver measures available width; slotted items that do not fit are collapsed (hidden via the reversible hidden attribute) from the end of the item list, and a \"More\" trigger opens a menu of proxy items that re-dispatch clicks to the hidden originals. Note: because slotted nodes cannot be moved into the overflow panel, complex custom content is represented in the menu only by its text label (or the label attribute on arc-button / arc-icon-button).",
               "attribute": "overflow",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "events": [
@@ -28451,7 +29076,8 @@
               },
               "description": "Layout direction. Vertical renders a column of links; horizontal renders a row.",
               "attribute": "orientation",
-              "default": "'horizontal'"
+              "default": "'horizontal'",
+              "reflects": true
             }
           ],
           "events": [
@@ -29062,7 +29688,8 @@
               },
               "description": "Controls the visible state of the drawer. Set to `true` to slide the panel into view and activate the backdrop; set to `false` to run the exit animation, remove the backdrop, and restore body scroll.",
               "attribute": "open",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -29073,7 +29700,8 @@
               },
               "description": "Which edge of the viewport the drawer slides in from. Use `left` for primary navigation menus and `right` for contextual detail panels, filter sidebars, or settings trays.",
               "attribute": "position",
-              "default": "'left'"
+              "default": "'left'",
+              "reflects": true
             }
           ],
           "events": [
@@ -29205,7 +29833,8 @@
               },
               "description": "Visual density. 'compact' reduces internal padding and spacing throughout the footer — for dashboard layouts or admin panels where vertical space is limited.",
               "attribute": "density",
-              "default": "'default'"
+              "default": "'default'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -29216,7 +29845,8 @@
               },
               "description": "Renders a subtle top border on the footer to visually separate it from the page content above. Enabled by default; disable it only when the footer sits against a dark background where the border would be redundant.",
               "attribute": "border",
-              "default": "true"
+              "default": "true",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -29227,7 +29857,8 @@
               },
               "description": "Controls footer content alignment.",
               "attribute": "align",
-              "default": "'left'"
+              "default": "'left'",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -29333,7 +29964,8 @@
               },
               "description": "Link style variant. `default` uses accent-primary color, `muted` uses muted text, `nav` uses secondary text with 14px size and flex layout.",
               "attribute": "variant",
-              "default": "'default'"
+              "default": "'default'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -29344,7 +29976,8 @@
               },
               "description": "Active state — applies accent-primary color for navigation highlighting.",
               "attribute": "active",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -29355,7 +29988,8 @@
               },
               "description": "When true, adds `target=\"_blank\"` and `rel=\"noopener noreferrer\"`, and renders an external link icon after the text.",
               "attribute": "external",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -29366,7 +30000,8 @@
               },
               "description": "Controls underline behavior: 'hover' underlines on hover, 'always' keeps it visible, 'never' omits it.",
               "attribute": "underline",
-              "default": "'hover'"
+              "default": "'hover'",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -29591,7 +30226,8 @@
               },
               "description": "Highlights the item with an accent-colored bottom border to indicate the current route. Set this on the top-level NavItem that corresponds to the active page.",
               "attribute": "active",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -29602,7 +30238,8 @@
               },
               "description": "Visual style variant. `default` shows a subtle border and muted text with accent glow on active. `primary` uses accent-colored text and border in the resting state with a stronger glow on hover/active. `muted` renders a subdued style with no border and lighter text — ideal for secondary links like \"Blog\" or \"Changelog\".",
               "attribute": "variant",
-              "default": "'default'"
+              "default": "'default'",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -29803,7 +30440,8 @@
               },
               "description": "When true, dots become interactive tap targets that dispatch arc-change on click.",
               "attribute": "clickable",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "events": [
@@ -29942,7 +30580,8 @@
               },
               "description": "Shows only previous/next buttons with a 'current / total' label. Hides individual page numbers.",
               "attribute": "compact",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "events": [
@@ -30072,7 +30711,8 @@
               },
               "description": "When true, the Rail widens to show text labels beside each icon. Can be toggled on hover or set permanently.",
               "attribute": "expanded",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "events": [
@@ -30212,7 +30852,8 @@
               },
               "description": "How the reader's position through the document is shown. `ring` draws a progress arc beside the heading; `read` recedes the entries already scrolled past; `both` does each. Defaults to `none`, and an unrecognized value lands there too.",
               "attribute": "progress",
-              "default": "'none'"
+              "default": "'none'",
+              "reflects": true
             }
           ],
           "events": [
@@ -30324,7 +30965,8 @@
               },
               "description": "Use smooth scrolling animation. Falls back to instant when prefers-reduced-motion is set.",
               "attribute": "smooth",
-              "default": "true"
+              "default": "true",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -30335,7 +30977,8 @@
               },
               "description": "Corner placement.",
               "attribute": "position",
-              "default": "'bottom-right'"
+              "default": "'bottom-right'",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -30473,7 +31116,8 @@
               },
               "description": "When true, applies a highlighted style (accent-colored text and a left-edge indicator) to signal that this link corresponds to the currently viewed page. Only one link should be active at a time.",
               "attribute": "active",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -30484,7 +31128,8 @@
               },
               "description": "Marks a destination that leaves the surrounding section — an app on its own route, another site, a repository. The link gains a persistent box-arrow glyph in place of the hover chevron, so the departure is legible before the click rather than after it.",
               "attribute": "external",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -30617,7 +31262,8 @@
               },
               "description": "When true, the section heading becomes a toggle button that expands/collapses the child links.",
               "attribute": "collapsible",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -30628,7 +31274,8 @@
               },
               "description": "Controls whether a collapsible section is expanded (true) or collapsed (false). Only relevant when collapsible is true.",
               "attribute": "open",
-              "default": "true"
+              "default": "true",
+              "reflects": true
             }
           ],
           "events": [
@@ -30786,7 +31433,8 @@
               },
               "description": "Controls which side the sidebar appears on. Moves the border line to the opposite edge.",
               "attribute": "position",
-              "default": "'left'"
+              "default": "'left'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -30797,7 +31445,8 @@
               },
               "description": "When true, collapses the sidebar to icon-only mode, hiding labels and reducing width.",
               "attribute": "collapsed",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -30808,7 +31457,8 @@
               },
               "description": "Enables an accent glow effect on the active sidebar link for enhanced visual emphasis.",
               "attribute": "glow",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "events": [
@@ -31007,7 +31657,8 @@
               },
               "description": "Whether the secondary actions are currently visible.",
               "attribute": "open",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -31018,7 +31669,8 @@
               },
               "description": "The direction in which child actions fan out from the trigger.",
               "attribute": "direction",
-              "default": "'up'"
+              "default": "'up'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -31029,7 +31681,8 @@
               },
               "description": "Fixed viewport corner where the speed dial is anchored.",
               "attribute": "position",
-              "default": "'bottom-right'"
+              "default": "'bottom-right'",
+              "reflects": true
             }
           ],
           "events": [
@@ -31159,7 +31812,8 @@
               },
               "description": "Nesting depth for visual indentation. Level 0 links render at default size; level 1+ links are indented and use a smaller font size.",
               "attribute": "level",
-              "default": "0"
+              "default": "0",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -31274,7 +31928,8 @@
               },
               "description": "When true, prevents jumping to future steps — the user must complete each step sequentially.",
               "attribute": "linear",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "events": [
@@ -31434,7 +32089,8 @@
               },
               "description": "Zero-based index of the currently active tab. Changing this value programmatically switches the visible panel and updates ARIA attributes. Out-of-range values are clamped to the nearest valid index.",
               "attribute": "selected",
-              "default": "0"
+              "default": "0",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -31445,7 +32101,8 @@
               },
               "description": "Aligns the tab list. Options: 'start', 'center', 'end'.",
               "attribute": "align",
-              "default": "'start'"
+              "default": "'start'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -31456,7 +32113,8 @@
               },
               "description": "Visual style of the tabs. Options: 'underline', 'pills'.",
               "attribute": "variant",
-              "default": "'underline'"
+              "default": "'underline'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -31467,7 +32125,8 @@
               },
               "description": "Layout direction of the tab list. Use 'vertical' to place tabs in a sidebar column with the panel to the right. Arrow-key navigation automatically switches to up/down in vertical mode.",
               "attribute": "orientation",
-              "default": "'horizontal'"
+              "default": "'horizontal'",
+              "reflects": true
             }
           ],
           "events": [
@@ -31650,7 +32309,8 @@
               },
               "description": "Reflects whether the page has scrolled past the bar's threshold. Set by the component, not by you — read it to style a scrolled state from outside, via `arc-top-bar[scrolled]`.",
               "attribute": "scrolled",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -31661,7 +32321,8 @@
               },
               "description": "Renders the bar with no background, blur or border until the page is scrolled, so a hero shows through it. Requires `fixed`. Suits marketing pages whose first screen is one composed image; leave it off in an application layout, where the bar should be a fixed edge among the other panels rather than something that appears and disappears.",
               "attribute": "immersive",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -31672,7 +32333,8 @@
               },
               "description": "When true, the bar uses position: fixed so it stays at the top of the viewport while content scrolls underneath. Automatically applied when TopBar is placed inside an AppShell. Be sure to add matching top padding to the content below to prevent overlap.",
               "attribute": "fixed",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -31683,7 +32345,8 @@
               },
               "description": "Reflects whether the mobile hamburger menu is open. Toggling this value updates the aria-expanded attribute on the menu button. Typically managed by AppShell in response to the arc-sidebar-toggle event rather than set directly.",
               "attribute": "menuOpen",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -31888,7 +32551,8 @@
               },
               "description": "Expand child items",
               "attribute": "expanded",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -32609,26 +33273,40 @@
               "name": "required",
               "privacy": "public",
               "attribute": "required",
-              "default": "false"
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
             },
             {
               "kind": "field",
               "name": "readonly",
               "privacy": "public",
               "attribute": "readonly",
-              "default": "false"
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
             }
           ],
           "attributes": [
             {
               "name": "required",
               "fieldName": "required",
-              "default": "false"
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              }
             },
             {
               "name": "readonly",
               "fieldName": "readonly",
-              "default": "false"
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              }
             }
           ],
           "parameters": [
@@ -32994,7 +33672,8 @@
               },
               "description": "Disables the item, preventing interaction.",
               "attribute": "disabled",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -33102,14 +33781,19 @@
               },
               "description": "When true, dims this option and prevents it from being selected.",
               "attribute": "disabled",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
               "name": "selected",
               "privacy": "public",
               "attribute": "selected",
-              "default": "false"
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
             }
           ],
           "attributes": [
@@ -33134,7 +33818,10 @@
             {
               "name": "selected",
               "fieldName": "selected",
-              "default": "false"
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              }
             }
           ],
           "mixins": [
@@ -34169,7 +34856,8 @@
               },
               "description": "Visual variant. Accent applies a gradient text fill to the quote content.",
               "attribute": "variant",
-              "default": "'default'"
+              "default": "'default'",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -34309,7 +34997,8 @@
               },
               "description": "Visual variant. `default` shows the standard layout with optional filename header and status bar. `window` adds a macOS-style title bar with colored orbs and centered filename. `basic` strips all chrome for a compact, minimal display.",
               "attribute": "variant",
-              "default": "'default'"
+              "default": "'default'",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -34415,7 +35104,8 @@
               },
               "description": "Predefined gradient variant to apply",
               "attribute": "variant",
-              "default": "'accent'"
+              "default": "'accent'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -34426,7 +35116,8 @@
               },
               "description": "Animate the gradient with a shifting background-position cycle",
               "attribute": "animated",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -34532,7 +35223,8 @@
               },
               "description": "Whether matching should be case-sensitive",
               "attribute": "caseSensitive",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -34905,7 +35597,8 @@
               },
               "description": "Formatting style to apply",
               "attribute": "type",
-              "default": "'number'"
+              "default": "'number'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -35029,7 +35722,8 @@
               },
               "description": "Controls the base font size of the prose container. Affects paragraph text; headings and code maintain their own scale.",
               "attribute": "size",
-              "default": "'md'"
+              "default": "'md'",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -35180,7 +35874,8 @@
               },
               "description": "Replay the transcript indefinitely, pausing briefly at the end of each cycle.",
               "attribute": "loop",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "events": [
@@ -35293,7 +35988,8 @@
               },
               "description": "Typography variant that controls font size, weight, letter-spacing, line-height, and color.",
               "attribute": "variant",
-              "default": "'body'"
+              "default": "'body'",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -35398,7 +36094,8 @@
               },
               "description": "Auto-update the relative time on an adaptive interval.",
               "attribute": "live",
-              "default": "true"
+              "default": "true",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -35499,7 +36196,8 @@
               },
               "description": "Whether the text is fully expanded",
               "attribute": "expanded",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             }
           ],
           "events": [
@@ -35630,7 +36328,8 @@
               },
               "description": "Show a blinking cursor during and after typing",
               "attribute": "cursor",
-              "default": "true"
+              "default": "true",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -35641,14 +36340,19 @@
               },
               "description": "Loop the animation indefinitely",
               "attribute": "loop",
-              "default": "false"
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
               "name": "nowrap",
               "privacy": "public",
               "attribute": "nowrap",
-              "default": "false"
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
             }
           ],
           "events": [
@@ -35709,7 +36413,10 @@
             {
               "name": "nowrap",
               "fieldName": "nowrap",
-              "default": "false"
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              }
             },
             {
               "name": "pause-end",
