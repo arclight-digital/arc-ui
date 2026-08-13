@@ -33,3 +33,6 @@ packages/web-components/src/icons/lucide/
 # extracted prose would put a large diff on every docs edit.
 docs/public/search-index.json
 .test-logs/
+
+# SvelteKit build artifacts — 430 files that were tracked by mistake.
+.svelte-kit/

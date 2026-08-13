@@ -8,10 +8,12 @@
   "license": "MIT",
   "type": "module",
   "files": [
-    "css/"
+    "css/",
+    "examples/"
   ],
   "exports": {
-    "./css/*": "./css/*"
+    "./css/*": "./css/*",
+    "./examples/*": "./examples/*"
   },
   "publishConfig": {
     "access": "public"

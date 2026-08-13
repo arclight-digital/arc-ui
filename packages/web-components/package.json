@@ -676,10 +676,6 @@
       "types": "./types/shared-styles.d.ts",
       "default": "./src/shared-styles.js"
     },
-    "./shared/click-outside": {
-      "types": "./types/shared/click-outside.d.ts",
-      "default": "./src/shared/click-outside.js"
-    },
     "./shared/editing-target": {
       "types": "./types/shared/editing-target.d.ts",
       "default": "./src/shared/editing-target.js"
@@ -859,10 +855,6 @@
     "./toast": {
       "types": "./types/index.d.ts",
       "default": "./src/feedback/toast.register.js"
-    },
-    "./toast-manager": {
-      "types": "./types/index.d.ts",
-      "default": "./src/feedback/toast-manager.register.js"
     },
     "./toggle": {
       "types": "./types/index.d.ts",

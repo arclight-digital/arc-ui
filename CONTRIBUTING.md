@@ -31,7 +31,6 @@ packages/
   solid/            # Solid wrappers      (GENERATED)
   preact/           # Preact wrappers     (GENERATED)
   html/             # Standalone CSS + HTML examples (GENERATED)
-  brand/            # ARC brand assets (versioned separately from the library)
 docs/               # Astro documentation site (arcui.dev)
 shared/             # Design tokens: tokens.js (source), base.css (GENERATED)
 scripts/            # The generate pipeline + static assertion checks
