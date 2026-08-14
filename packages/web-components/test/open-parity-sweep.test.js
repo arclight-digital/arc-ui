@@ -34,6 +34,11 @@ import '../src/input/date-range-picker.register.js';
 import '../src/input/time-picker.register.js';
 import '../src/input/select.register.js';
 import '../src/input/tree-select.register.js';
+import '../src/feedback/dropdown-menu.register.js';
+import '../src/feedback/popover.register.js';
+import '../src/content/hotspot.register.js';
+import '../src/feedback/notification-panel.register.js';
+import '../src/navigation/speed-dial.register.js';
 
 afterEach(() => cleanup());
 
@@ -80,7 +85,116 @@ const CASES = [
       ],
     },
   },
+
+  // ── Trigger-and-panel overlays ────────────────────────────────────────────
+  // Added when the sweep was converted to derived coverage. Every one of these
+  // renders its own trigger, so both paths exist and the comparison is the same
+  // one #59 was about — they were simply never listed.
+  {
+    tag: 'arc-dropdown-menu',
+    markup:
+      '<arc-dropdown-menu label="Menu"><arc-menu-item>One</arc-menu-item><arc-menu-item>Two</arc-menu-item></arc-dropdown-menu>',
+    panel: '[part="panel"]',
+    field: '[part="trigger"]',
+  },
+  {
+    tag: 'arc-popover',
+    markup: '<arc-popover label="More"><p>Body</p></arc-popover>',
+    panel: '[part="panel"]',
+    field: '[part="trigger"]',
+  },
+  {
+    tag: 'arc-hotspot',
+    markup: '<arc-hotspot label="Pin"><p>Detail</p></arc-hotspot>',
+    panel: '[part="panel"]',
+    field: '[part="pin"]',
+  },
+  {
+    tag: 'arc-notification-panel',
+    markup: '<arc-notification-panel></arc-notification-panel>',
+    panel: '[part="panel"]',
+    field: '[part="trigger"]',
+  },
+  {
+    tag: 'arc-speed-dial',
+    markup: '<arc-speed-dial></arc-speed-dial>',
+    panel: '[part="actions"]',
+    field: '[part="trigger"]',
+    // Its actions come from an `items` array, not from slotted children — so a
+    // markup-only fixture opens an empty fan and the anti-vacuity guard
+    // correctly refuses it.
+    props: { items: [{ label: 'One', icon: 'plus' }, { label: 'Two', icon: 'minus' }] },
+  },
 ];
+
+/**
+ * Why this list is no longer allowed to be hand-written alone.
+ *
+ * HANDOFF's table flags `CASES` as "at risk", and it was right: the sweep
+ * exists because one shape came back four times, and it was guarding five of
+ * the twenty-four components that can open. Nothing said which twenty-four, so
+ * nothing could notice the nineteen.
+ *
+ * The population is derived from the manifest — every custom element with a
+ * public `open` member — and every one of them must appear either as a case
+ * above or as an exemption below, with a reason. A new component that opens
+ * fails this until someone decides which it is. The cases still cannot be
+ * derived (the panel and trigger selectors are per-component facts), but their
+ * *completeness* now is.
+ *
+ * Five cases became ten this way. The five additions are exactly the components
+ * that render their own trigger and were simply never listed.
+ */
+const manifest = await fetch(new URL('../custom-elements.json', import.meta.url)).then((r) =>
+  r.json()
+);
+
+const OPENABLE = manifest.modules
+  .flatMap((m) => m.declarations ?? [])
+  .filter((d) => d.customElement && d.tagName && (d.members ?? []).some((x) => x.name === 'open'))
+  .map((d) => d.tagName);
+
+/** Openable, but with no second path to compare — each with the reason why. */
+const NO_SECOND_PATH = {
+  'arc-modal': 'no trigger of its own; the application opens it',
+  'arc-sheet': 'no trigger of its own; the application opens it',
+  'arc-drawer': 'no trigger of its own; the application opens it',
+  'arc-lightbox': 'no trigger of its own; opened from a gallery click',
+  'arc-command-palette': 'no trigger of its own; opened by a global shortcut',
+  'arc-confirm': 'no trigger of its own; wraps arc-modal for an imperative API',
+  'arc-dialog': 'no trigger of its own; wraps arc-modal for an imperative API',
+  'arc-guided-tour': 'no trigger of its own; the application starts the tour',
+  'arc-context-menu': 'opens from a contextmenu event on a separate target, not from a click on itself',
+  'arc-search': 'the panel opens on typing, so there is no click path to compare',
+  'arc-collapsible': 'a disclosure: the heading click is the only path there is',
+  'arc-sidebar-section': 'a disclosure: the heading click is the only path there is',
+  'arc-dock': 'visibility is driven by hover and auto-hide, not by a trigger',
+  'arc-float-bar': 'visibility tracks a selection, not a trigger',
+};
+
+describe('open parity: the sweep covers everything that opens', () => {
+  it('found the openable population', () => {
+    // Anti-vacuity: a manifest shape change must fail here rather than quietly
+    // reducing the required coverage to nothing.
+    expect(OPENABLE.length, 'openable components derived from the manifest').to.be.greaterThan(20);
+  });
+
+  it('every openable component is either a case or an explained exemption', () => {
+    const covered = new Set([...CASES.map((c) => c.tag), ...Object.keys(NO_SECOND_PATH)]);
+    const missing = OPENABLE.filter((t) => !covered.has(t));
+    expect(missing, 'openable, but neither swept nor exempted').to.eql([]);
+  });
+
+  it('no case or exemption names a component that cannot open', () => {
+    const claimed = [...CASES.map((c) => c.tag), ...Object.keys(NO_SECOND_PATH)];
+    expect(claimed.filter((t) => !OPENABLE.includes(t)), 'listed but not openable').to.eql([]);
+  });
+
+  it('nothing is both swept and exempted', () => {
+    const swept = CASES.map((c) => c.tag);
+    expect(swept.filter((t) => t in NO_SECOND_PATH), 'in both lists').to.eql([]);
+  });
+});
 
 /**
  * Strip the things that legitimately differ between two separate elements.

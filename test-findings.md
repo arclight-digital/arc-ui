@@ -3958,3 +3958,127 @@ fifth builds without mounting. The capability gap was invisible to all of them.
 cannot be quietly fixed-and-forgotten upstream, and cannot regress further
 without a name. That is what lets the harness enter CI at all: a permanently red
 job stops being read.
+
+---
+
+## The dismissal contract — 24 subjects, two findings
+
+Escape was asserted in 22 test files and centrally in none. That is not 22
+redundant tests; it is 22 *different* tests, which is why the library has four
+answers to "what closes an overlay" and no statement of what the answer should
+be: `OverlayMixin` handles Escape for five components, `DismissController`
+handles pointer and focus for eleven, six hand-roll a keydown listener, and
+three have no dismissal mechanism at all.
+
+`dismissal-contract.test.js` states it once, for every component with a public
+`open` member. The population comes from the manifest (24), the close event each
+one must fire comes from its own `@fires`, and — the part worth copying — **the
+dismissal affordances each one must honour come from its own documented
+description.** A component whose `@prop open` says "closes on Escape" is
+asserted to close on Escape, and nobody typed that expectation into the test.
+
+That rule is deliberately one-way. Documentation is trustworthy when it *claims*
+a capability and not when it omits one: `arc-modal` closes on Escape and its
+`open` description never mentions it. So a claim is a test, an omission is not a
+licence, and the omitted cases live in a hand-written `POLICY` table whose
+*completeness* is derived — a subject with no row fails the coverage guard
+instead of being silently skipped. Same shape as `scripts/checks/scope-coverage.js`.
+
+### The probe was wrong before the components were
+
+26 assertions failed on the first run. **Fifteen of them were the harness, not
+the library**, and that ratio is the main methodological lesson here — a central
+sweep replaces per-component gestures with one gesture, and one gesture is
+exactly what a heterogeneous population does not have.
+
+- **Escape has an origin.** Dispatching on `document` — the obvious first
+  draft — reaches only the five components whose handler `OverlayMixin` put on
+  `document`, and misses every component that binds `@keydown` inside its own
+  template. A real Escape starts at the focused node and bubbles through all of
+  them. Fixing the origin fixed eleven failures at once. A subtlety inside the
+  subtlety: several of these are focusable *hosts*, so `el.focus()` leaves the
+  host active, and dispatching there still misses a listener on a descendant.
+- **"Outside" is two geometries.** An anchored panel is dismissed by a
+  pointerdown elsewhere in the document. A backdrop overlay covers the viewport,
+  so there is no "elsewhere" — the gesture is a click on its own backdrop, and a
+  document pointerdown is not something a user can perform on it at all. Which
+  applies is derived from whether the open component renders a backdrop, and the
+  search for one has to cross shadow boundaries: `arc-confirm` and `arc-dialog`
+  wrap `arc-modal`, so their backdrop is two roots down.
+- **An empty fixture is not an open panel.** `arc-search` arms its
+  `DismissController` only when it has suggestions to show (search.js:230), so
+  dismissing an empty one proves nothing.
+
+The three real findings survived that filtering. The discipline that mattered
+was refusing to relax an expectation until the probe had been proven right —
+every one of the fifteen would have been a plausible-looking "known limitation".
+
+### 85. An empty `arc-context-menu` cannot be dismissed by the keyboard — **correctness**
+
+`_handleKeydown` opens with a guard belonging to the arrow-key cases below it:
+
+```js
+const selectable = this._selectableItems;
+if (selectable.length === 0) return;   // ArrowDown/Up/Home/End index into this
+```
+
+Escape needs none of that and is blocked by it anyway. A context menu with no
+items still renders a full-viewport backdrop, so it is dismissible by mouse (the
+backdrop's own click handler is independent) and not by keyboard.
+
+Narrower than it first looked, and the boundary is worth stating because it
+inverts the obvious guess: **disabled items still count as selectable**, so the
+common "every command is disabled in this context" menu is fine. The reachable
+case is a menu whose items have not arrived yet. Pinned with both halves of the
+boundary asserted, so a future "fix" that narrows `_selectableItems` to enabled
+items reintroduces the bug for the most common context-menu state there is.
+
+The fix is to move the `Escape` case above the guard. This is the same shape as
+#78 — two conditions on one value that disagree — and of the family in #1, #14,
+#47, #58, #59: a constraint enforced where it is convenient rather than where it
+belongs.
+
+### 86. Three overlays have no keyboard dismissal at all — **a11y — PINNED, not fixed**
+
+`arc-guided-tour`, `arc-notification-panel` and `arc-speed-dial` contain no
+keydown handling of any kind. They open, and Escape does nothing.
+
+- `arc-notification-panel` has a `DismissController`, so pointer and focus
+  dismissal work; only the keyboard is missing.
+- `arc-speed-dial` has **nothing** — no controller, no backdrop, no key
+  handling. Once open, the only way to close it is clicking the trigger again.
+  Pinned on both axes.
+- `arc-guided-tour` renders a backdrop over the page with no way to leave it
+  from the keyboard.
+
+None of the three traps focus, so this is not a keyboard trap — you can Tab
+away. It is still three overlays a keyboard user cannot dismiss.
+
+Pinned rather than fixed because the fix is three components' dismissal
+behaviour, and V4-PLAN 4.4 converges all of them onto `OverlayMixin` — which
+supplies Escape for free and is where this should land, rather than three more
+hand-rolled listeners. The pins assert the broken behaviour and name the
+finding, so they flip the moment 4.4 touches them.
+
+### `open-parity-sweep`'s hand list, converted
+
+HANDOFF's table flagged `CASES` as "at risk". It was: the sweep exists because
+one shape came back four times, and it was guarding **5 of the 24 components
+that can open**, with nothing recording which 24 — so nothing could notice the
+other 19.
+
+The population is now derived, and every openable component must appear either
+as a case or as an exemption *with a reason*. The cases themselves still cannot
+be derived — panel and trigger selectors are per-component facts — but their
+completeness now is, and a new component that opens fails the suite until
+someone decides which it is.
+
+**Five cases became ten.** The additions are exactly the components that render
+their own trigger and were simply never listed: `arc-dropdown-menu`,
+`arc-popover`, `arc-hotspot`, `arc-notification-panel`, `arc-speed-dial`. All
+five pass, so #59's shape has not spread — which is worth recording as a
+measured negative rather than an assumption. The remaining fourteen are exempt
+for a stated reason: eight have no trigger of their own, `arc-context-menu`
+opens from a `contextmenu` event on a separate target, `arc-search` opens on
+typing, two are disclosures whose heading click is the only path there is, and
+two are layout affordances driven by hover or selection.

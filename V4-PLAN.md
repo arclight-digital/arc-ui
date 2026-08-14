@@ -367,10 +367,34 @@ of this file is restated in V4-SCOPE §1.4 with the revised numbers —
       `<fieldset disabled>` is a one-way door for all 27 form controls, and
       every candidate fix changes the `disabled` contract across ~30
       stylesheets. See test-findings.md §72–75.
-- [ ] **2.4d (M)** **Central dismissal contract** (Escape is asserted in ~20
+- [x] **2.4d (M)** **Central dismissal contract** (Escape is asserted in ~20
       files, centrally in zero) — derive subjects from components declaring
       `open`; same pass converts `open-parity-sweep`'s hand `CASES` list to
       derived subjects (flagged "at risk" in HANDOFF's own table).
+      **Done 2026-08-13** — `dismissal-contract.test.js`, 24 subjects derived
+      from the manifest, 114 new tests, two findings. The expectations are
+      derived too: each component's *documented* claims become its assertions
+      (`@prop open` saying "closes on Escape" **is** the test), with a hand
+      `POLICY` table for what the docs omit whose **completeness** is
+      guard-enforced — a new `open`-declaring component fails until someone
+      states whether it is dismissible.
+      **#85** an empty `arc-context-menu` cannot be dismissed by the keyboard —
+      an arrow-key guard (`if (selectable.length === 0) return`) swallows
+      Escape. **#86 pinned** — `arc-guided-tour`, `arc-notification-panel` and
+      `arc-speed-dial` have no keydown handling at all; deliberately left for
+      4.4 to fix by adopting `OverlayMixin` rather than hand-rolling three more
+      listeners.
+      **`open-parity-sweep` went from 5 cases to 10** with the same
+      derived-coverage guard; the five additions (dropdown-menu, popover,
+      hotspot, notification-panel, speed-dial) all pass, so #59's shape has not
+      spread — a measured negative, not an assumption. The other 14 are exempt
+      with a stated reason each.
+      **The lesson worth carrying into 4.4:** 15 of the 26 initial failures
+      were the *probe*, not the library. A central sweep replaces per-component
+      gestures with one gesture, and Escape has an origin (the focused node,
+      not `document`) while "outside" is two different geometries (document
+      pointerdown vs. backdrop click, derived from whether the component renders
+      a backdrop). See test-findings.md §85–86.
 - [x] **2.4e (S)** Document the conditional-skip sites: 3 constructs
       (`conformance.test.js:161` derived-props, `icon-aliases.test.js:21` and
       `sanitize-svg.test.js:10-11` gated on generated icon modules) expand to
