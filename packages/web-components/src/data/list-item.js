@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
 import { DeclaredPropsMixin, flag } from '../shared/props.js';
@@ -25,6 +25,14 @@ export class ArcListItem extends DeclaredPropsMixin(LitElement) {
   static properties = {
     value: { type: String, reflect: true },
     selected: flag(false),
+    /**
+     * Whether this item sits in a selection list, which decides its role
+     * (finding #28). Pushed by the parent arc-list rather than read from the
+     * DOM: the parent's `role="listbox"` lives in *its* shadow root, so
+     * `closest('[role="listbox"]')` — arc-chip's test for the same question —
+     * cannot see it from out here.
+     */
+    _selectable: { state: true },
     disabled: flag(false),
     href: { type: String },
     _hasPrefix: { state: true },
@@ -128,6 +136,7 @@ export class ArcListItem extends DeclaredPropsMixin(LitElement) {
 
   constructor() {
     super();
+    this._selectable = false;
     this.value = '';
     this.href = '';
     this._hasPrefix = false;
@@ -180,14 +189,38 @@ export class ArcListItem extends DeclaredPropsMixin(LitElement) {
     hydrateSlots(this);
   }
 
+  /**
+   * `option` inside a listbox, `listitem` inside a plain list.
+   *
+   * Rendering `role="option"` unconditionally made a non-selectable arc-list a
+   * `role="list"` containing options: a list with no listitem in it, and
+   * options outside any listbox. Both halves are invalid, and screen readers
+   * announce item counts and positions from these roles. arc-chip solves the
+   * same question by checking its ancestor; here the answer comes from the
+   * parent list, which is the only thing that knows.
+   */
+  get _role() {
+    if (this._selectable) return 'option';
+    // Lit's server-side element shim has no `closest`, and neither of the two
+    // paths that set `_selectable` runs there — the parent sets it from
+    // `updated()` and from its slotchange, and the server runs neither. So a
+    // server-rendered item is a `listitem` and becomes an `option` on
+    // hydration if its list is selectable. That is the right way round: plain
+    // lists are the default and are now correct in the served HTML, where they
+    // used to ship `role="option"` permanently.
+    if (typeof this.closest !== 'function') return 'listitem';
+    return this.closest('[role="listbox"], [role="group"]') ? 'option' : 'listitem';
+  }
+
   render() {
+    const asOption = this._role === 'option';
     if (this.href) {
       return html`
         <a
           class="item"
           href=${this.href}
-          role="option"
-          aria-selected=${this.selected ? 'true' : 'false'}
+          role=${this._role}
+          aria-selected=${asOption ? (this.selected ? 'true' : 'false') : nothing}
           aria-disabled=${this.disabled ? 'true' : 'false'}
           @click=${this._onClick}
           part="item"
@@ -198,8 +231,8 @@ export class ArcListItem extends DeclaredPropsMixin(LitElement) {
     return html`
       <div
         class="item"
-        role="option"
-        aria-selected=${this.selected ? 'true' : 'false'}
+        role=${this._role}
+        aria-selected=${asOption ? (this.selected ? 'true' : 'false') : nothing}
         aria-disabled=${this.disabled ? 'true' : 'false'}
         tabindex=${this.disabled ? '-1' : '0'}
         @click=${this._onClick}

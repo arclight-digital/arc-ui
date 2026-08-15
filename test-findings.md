@@ -28,7 +28,7 @@ marker are still open.
 
 | # | Component | Finding |
 |---|---|---|
-| 26 | `arc-list` | a value containing a comma is recorded but never marked selected |
+| 26 | `arc-list` | **FIXED** — a value containing a comma was recorded but never marked selected |
 | 8 | `arc-rating` | **FIXED** — `required` was satisfied by an unrated control; the form submitted `"0"` |
 | 21-23 | `arc-tree-view` | **FIXED** — expansion and selection keyed on label, so same-named nodes shared state |
 | 31 | `arc-context-menu` | a second right-click while open leaves the menu at the old point |
@@ -41,7 +41,7 @@ marker are still open.
 |---|---|---|
 | 16 | `arc-speed-dial` | closed actions stay focusable and clickable — invisible tab stops |
 | 29 | `arc-command-bar` | the input has no accessible name and no way to give it one |
-| 28, 27 | `arc-list` | items claim `role="option"` inside a plain `role="list"`; stray `aria-multiselectable` |
+| 28, 27 | `arc-list` | **FIXED** — items claimed `role="option"` inside a plain `role="list"`; stray `aria-multiselectable` |
 | 2 | `arc-tabs` | **FIXED** — `aria-controls` pointed at ids that do not exist |
 | 24, 25 | five components | **FIXED** — `aria-expanded=""` and four more attributes rendered empty instead of omitted |
 | 9-12 | `arc-rating` | **FIXED** — ArrowLeft raised the rating; no route back to unrated; value below its own min; hardcoded name |
@@ -1179,7 +1179,26 @@ reported the last one as "no longer violates — delete it".
 
 ## arc-list / arc-list-item
 
-### 26. A value containing a comma cannot be tracked — **correctness**
+### 26. A value containing a comma cannot be tracked — **correctness — FIXED**
+
+**Fixed by making the selection a list and `value` its serialised view**, which
+is the shape the finding pointed at without the breaking change it feared. The
+selection is held as an array of values; `value` is written from it and parsed
+back only when something *outside* assigns it — told apart by recording the last
+string the component wrote, the same device `arc-theme-toggle` needed for #15.
+
+What that buys, precisely, because half a fix here would look like a whole one:
+
+- **Every interaction path is exact**, commas and all: select, deselect, and
+  select alongside another value. The toggle path is where the round trip used
+  to fail — the value was found in `value` and not among its own splits.
+- **Single-select round-trips through the property too**, because it does not
+  split at all.
+- **Multi-select assignment from outside still cannot express a comma**, since
+  the comma is the format's separator. That is inherent to a string-valued
+  multi-select rather than a defect, and it is now stated on `@prop value`
+  instead of being left for a consumer to discover. The array-valued form is
+  4.3's sitewide dialect migration, not a fix.
 
 `value` is a single comma-joined string (`data/list.js:101`), split apart again
 on every read (`:117`). A value that itself contains a comma — `"Smith, John"`,
@@ -1190,11 +1209,17 @@ on screen.
 
 - Pinned by: `test/list.test.js` — "BUG: an item whose value contains a comma
   cannot be tracked".
-- An array-valued `value` would fix it, at the cost of the attribute form.
-  `arc-multi-select` and `arc-tag-input` both take arrays (`form-contract.test.js:42, 50`),
-  so there is precedent either way.
+- An array-valued `value` was the obvious fix and was **not** taken: it is a
+  breaking change to a public attribute, and 4.3 migrates the whole library's
+  array props onto 2.2's `list()` primitive in one pass. Doing it here would
+  mean changing this surface twice.
 
-### 27. A non-selectable list still carries `aria-multiselectable` — **a11y**
+### 27. A non-selectable list still carries `aria-multiselectable` — **a11y — FIXED**
+
+`nothing` when the list is not selectable, as the finding prescribed. The pair
+matters and is pinned: `false` is a **legal and meaningful** value on a listbox,
+so the fix had to omit the attribute without also dropping the single-select
+declaration.
 
 `aria-multiselectable` is bound unconditionally (`list.js:194`), so a plain list
 renders `role="list" aria-multiselectable="false"`. That attribute is defined
@@ -1205,7 +1230,27 @@ allowed, which is what axe's `aria-allowed-attr` rule reports.
   aria-multiselectable anyway".
 - `nothing` is the fix, and this file already imports it for `aria-label`.
 
-### 28. Items claim `role="option"` even inside a plain list — **a11y**
+### 28. Items claim `role="option"` even inside a plain list — **a11y — FIXED**
+
+`option` inside a listbox, `listitem` inside a plain list, with `aria-selected`
+only in the first case.
+
+**The parent has to push the answer; the child cannot read it.** arc-chip solves
+the same question with `closest('[role="listbox"]')`, and that does not work
+here: arc-list's `role="listbox"` lives in *its* shadow root, so a light-DOM
+`closest` from the item cannot see it. So `arc-list` sets `_selectable` on each
+item — from its slotchange and again whenever `selectable` changes, since a list
+can change its mind and the items are light-DOM siblings rather than reactive
+inputs. The `closest` test is kept as the fallback for an item used outside
+arc-list.
+
+**And it turned up an SSR constraint worth recording.** `check-ssr` failed with
+`this.closest is not a function`: Lit's server-side element shim has no
+`closest`, and neither path that sets `_selectable` runs on the server —
+`updated()` and slotchange are both client-only. So a server-rendered item is a
+`listitem` and becomes an `option` on hydration when its list is selectable.
+That is the right way round: plain lists are the default and are now correct in
+the served HTML, where they previously shipped `role="option"` permanently.
 
 `arc-list-item` renders `role="option"` and `aria-selected` unconditionally
 (`data/list-item.js:190, 202`), regardless of its parent. A non-selectable

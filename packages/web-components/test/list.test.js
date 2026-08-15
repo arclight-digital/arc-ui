@@ -190,23 +190,60 @@ describe('arc-list selection', () => {
     expect(event.composed).to.equal(true);
   });
 
-  // BUG: `value` is a single comma-joined string (list.js:101), split back
-  // apart on every read (list.js:117). A value that itself contains a comma —
-  // "Smith, John", a locale-formatted number, a tag list — cannot survive the
-  // round trip: _syncSelection looks for the whole string among the split
-  // fragments and never finds it, so the item is selected in `value` but never
-  // marked selected on screen.
-  it('BUG: an item whose value contains a comma cannot be tracked', async () => {
-    const el = await list('selectable multiple label="L"', `
-      <arc-list-item value="Smith, John">Smith, John</arc-list-item>
-      <arc-list-item value="b">Bravo</arc-list-item>
-    `);
+  // Was a BUG pin (finding #26). `value` was the selection, so it was split
+  // apart on every read — and a value containing a comma never matched its own
+  // fragments: it was recorded in `value` and never marked selected on screen.
+  // The selection is a list of values now, and `value` is its serialised view.
+  const COMMA_ITEMS = `
+    <arc-list-item value="Smith, John">Smith, John</arc-list-item>
+    <arc-list-item value="b">Bravo</arc-list-item>
+  `;
+
+  it('tracks an item whose value contains a comma', async () => {
+    const el = await list('selectable multiple label="L"', COMMA_ITEMS);
 
     activate(items(el)[0]);
     await settle(el);
 
     expect(el.value, 'the value is recorded').to.equal('Smith, John');
-    expect(selected(el), 'but the item is not marked selected').to.deep.equal([]);
+    expect(selected(el), 'and the item is marked selected').to.deep.equal(['Smith, John']);
+  });
+
+  it('deselects it again on a second activation', async () => {
+    // The toggle path reads the selection back, which is where the round trip
+    // used to fail — the value was found in `value` and not among its splits.
+    const el = await list('selectable multiple label="L"', COMMA_ITEMS);
+
+    activate(items(el)[0]);
+    await settle(el);
+    activate(items(el)[0]);
+    await settle(el);
+
+    expect(el.value).to.equal('');
+    expect(selected(el)).to.deep.equal([]);
+  });
+
+  it('keeps a comma value alongside an ordinary one', async () => {
+    const el = await list('selectable multiple label="L"', COMMA_ITEMS);
+
+    activate(items(el)[0]);
+    await settle(el);
+    activate(items(el)[1]);
+    await settle(el);
+
+    expect(selected(el)).to.deep.equal(['Smith, John', 'b']);
+  });
+
+  it('round-trips a comma value through the property in single-select', async () => {
+    // Single-select does not split at all, so any value survives assignment
+    // from outside. Multi-select cannot represent one — the comma is the
+    // format's separator — and that limit is documented on the prop.
+    const el = await list('selectable label="L"', COMMA_ITEMS);
+
+    el.value = 'Smith, John';
+    await settle(el);
+
+    expect(selected(el)).to.deep.equal(['Smith, John']);
   });
 });
 
@@ -292,30 +329,54 @@ describe('arc-list ARIA structure', () => {
     expect(container(el).getAttribute('aria-multiselectable')).to.equal('true');
   });
 
-  // BUG: aria-multiselectable is bound unconditionally (list.js:194), so a
-  // plain list renders role="list" aria-multiselectable="false".
-  // aria-multiselectable is only defined for listbox, grid, tree and tablist —
-  // on role="list" it is not an allowed attribute, which is what axe's
-  // aria-allowed-attr rule reports.
-  it('BUG: a non-selectable list carries aria-multiselectable anyway', async () => {
+  // Was a BUG pin (finding #27). aria-multiselectable is defined for listbox,
+  // grid, tree and tablist and for nothing else, so a plain role="list" must
+  // not carry it — axe reports it as aria-allowed-attr.
+  it('omits aria-multiselectable on a plain list', async () => {
     const el = await list();
     expect(container(el).getAttribute('role')).to.equal('list');
+    expect(container(el).hasAttribute('aria-multiselectable')).to.equal(false);
+  });
+
+  it('still declares single-select on a selectable list', async () => {
+    // Anti-vacuity, and the case that is easy to lose: false is a legal and
+    // meaningful value on a listbox, so it must survive.
+    const el = await list('selectable label="L"');
     expect(container(el).getAttribute('aria-multiselectable')).to.equal('false');
   });
 
-  // BUG: arc-list-item renders role="option" and aria-selected unconditionally
-  // (list-item.js:190, 202), regardless of whether its parent is a listbox. A
-  // non-selectable arc-list is therefore a role="list" containing role="option"
-  // children — a list with no listitem in it, and options outside any listbox.
-  // arc-chip solves exactly this by checking its ancestor before choosing a
-  // role (chip.js:54).
-  it('BUG: items claim role=option even inside a plain list', async () => {
+  // Was a BUG pin (finding #28). arc-list-item rendered role="option" and
+  // aria-selected unconditionally, so a non-selectable arc-list was a
+  // role="list" containing options — a list with no listitem in it, and
+  // options outside any listbox. Both halves are invalid, and screen readers
+  // announce item counts and positions from these roles.
+  it('renders listitems inside a plain list', async () => {
     const el = await list();
     expect(container(el).getAttribute('role')).to.equal('list');
 
     const roles = items(el).map((i) => rowOf(i).getAttribute('role'));
-    expect(roles, 'a list should contain listitems').to.deep.equal(['option', 'option', 'option']);
-    expect(rowOf(items(el)[0]).getAttribute('aria-selected'), 'and options carry selection state')
-      .to.equal('false');
+    expect(roles).to.deep.equal(['listitem', 'listitem', 'listitem']);
+    expect(rowOf(items(el)[0]).hasAttribute('aria-selected'), 'and carry no selection state')
+      .to.equal(false);
+  });
+
+  it('renders options inside a selectable list', async () => {
+    const el = await list('selectable label="L"');
+    const roles = items(el).map((i) => rowOf(i).getAttribute('role'));
+    expect(roles).to.deep.equal(['option', 'option', 'option']);
+    expect(rowOf(items(el)[0]).getAttribute('aria-selected')).to.equal('false');
+  });
+
+  it('follows selectable being flipped after mount', async () => {
+    // The role comes from the parent list, which can change its mind — and the
+    // items are light-DOM siblings, not reactive inputs of the list.
+    const el = await list();
+    expect(rowOf(items(el)[0]).getAttribute('role')).to.equal('listitem');
+
+    el.selectable = true;
+    el.label = 'L';
+    await settle(el);
+
+    expect(rowOf(items(el)[0]).getAttribute('role')).to.equal('option');
   });
 });

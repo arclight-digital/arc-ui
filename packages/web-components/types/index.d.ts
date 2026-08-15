@@ -1595,7 +1595,7 @@ export declare class ArcLink extends LitElement {
  * Events: arc-select, arc-change
  */
 export declare class ArcList extends LitElement {
-  /** The currently selected value(s). Comma-separated when `multiple` is true. @default '' */
+  /** The currently selected value(s). Comma-separated when `multiple` is true. The selection itself is held as a list of values, so a value containing a comma is selected and rendered correctly; only the *serialised* multi-select string cannot represent one, since the comma is its separator. Single-select is exact for any value. @default '' */
   value: string;
   /** Accessible name for the list, applied as `aria-label`. Required when `selectable` is set so the listbox has an accessible name. @default '' */
   label: string;

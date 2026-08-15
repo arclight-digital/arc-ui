@@ -13,7 +13,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @prop {'sm' | 'md' | 'lg'} size - Controls the base font size for the list and its children.
  * @prop {boolean} selectable - Enables selection mode. Sets `role="listbox"` and manages `aria-selected` on child items.
  * @prop {boolean} multiple - Allows multiple items to be selected simultaneously. Only applies when `selectable` is true.
- * @prop {string} value - The currently selected value(s). Comma-separated when `multiple` is true.
+ * @prop {string} value - The currently selected value(s). Comma-separated when `multiple` is true. The selection itself is held as a list of values, so a value containing a comma is selected and rendered correctly; only the *serialised* multi-select string cannot represent one, since the comma is its separator. Single-select is exact for any value.
  * @prop {string} label - Accessible name for the list, applied as `aria-label`. Required when `selectable` is set so the listbox has an accessible name.
  * @fires {CustomEvent<{ value: string }>} arc-select - Fired from the activated arc-list-item when a selectable list is driven by Enter or Space.
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired when the selection changes. `event.detail.value` contains the new value string.
@@ -67,6 +67,14 @@ export class ArcList extends DeclaredPropsMixin(LitElement) {
     this.value = '';
     this.label = '';
     this._items = [];
+    // The selection, as values. `value` is the serialised *view* of this, and
+    // splitting it back apart was the whole of finding #26: `"Smith, John"` was
+    // recorded in `value` and then looked for among `["Smith", " John"]`, so it
+    // was never marked selected on screen. The list is the source of truth now.
+    this._selection = [];
+    // The last `value` this component wrote, so an assignment from outside can
+    // be told from its own serialisation.
+    this._serialised = '';
   }
 
   connectedCallback() {
@@ -83,6 +91,7 @@ export class ArcList extends DeclaredPropsMixin(LitElement) {
     this._items = e.target
       .assignedElements({ flatten: true })
       .filter((el) => el.tagName === 'ARC-LIST-ITEM');
+    this._applySelectable();
     this._syncSelection();
   }
 
@@ -90,17 +99,17 @@ export class ArcList extends DeclaredPropsMixin(LitElement) {
     if (!this.selectable) return;
 
     const itemValue = e.detail.value;
+    let next;
     if (this.multiple) {
-      const values = this.value ? this.value.split(',').filter(Boolean) : [];
-      const idx = values.indexOf(itemValue);
-      if (idx >= 0) values.splice(idx, 1);
-      else values.push(itemValue);
-      this.value = values.join(',');
+      next = [...this._selection];
+      const idx = next.indexOf(itemValue);
+      if (idx >= 0) next.splice(idx, 1);
+      else next.push(itemValue);
     } else {
-      this.value = this.value === itemValue ? '' : itemValue;
+      next = this._selection[0] === itemValue ? [] : [itemValue];
     }
+    this._setSelection(next);
 
-    this._syncSelection();
     this.dispatchEvent(
       new CustomEvent('arc-change', {
         bubbles: true,
@@ -110,11 +119,35 @@ export class ArcList extends DeclaredPropsMixin(LitElement) {
     );
   };
 
+  /** Adopt a selection chosen here, and serialise it into `value`. */
+  _setSelection(values) {
+    this._selection = values;
+    this._serialised = values.join(',');
+    this.value = this._serialised;
+    this._syncSelection();
+  }
+
+  /**
+   * Adopt a `value` assigned from outside.
+   *
+   * Single-select does not split at all, so any value round-trips — including
+   * one with a comma. Multi-select splits, because the comma is the format's
+   * separator; that limit is inherent to a string-valued multi-select and is
+   * documented on the prop.
+   */
+  _adoptValue() {
+    this._selection = this.multiple
+      ? (this.value ? this.value.split(',').filter(Boolean) : [])
+      : (this.value ? [this.value] : []);
+    this._serialised = this.value;
+    this._syncSelection();
+  }
+
   _syncSelection() {
     if (!this.selectable) return;
-    const values = this.value ? this.value.split(',') : [];
     for (const item of this._items) {
-      item.selected = values.includes(item.value);
+      item.selected = this._selection.includes(item.value);
+      item._selectable = true;
     }
   }
 
@@ -172,9 +205,17 @@ export class ArcList extends DeclaredPropsMixin(LitElement) {
   }
 
   updated(changed) {
-    if (changed.has('value')) {
-      this._syncSelection();
+    if (changed.has('value') && this.value !== this._serialised) {
+      this._adoptValue();
     }
+    // The role each item renders depends on this list (finding #28), and
+    // `selectable` can be flipped after mount.
+    if (changed.has('selectable')) this._applySelectable();
+  }
+
+  /** Tell each item whether it is inside a listbox or a plain list. */
+  _applySelectable() {
+    for (const item of this._items) item._selectable = this.selectable === true;
   }
 
   /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
@@ -183,12 +224,15 @@ export class ArcList extends DeclaredPropsMixin(LitElement) {
   }
 
   render() {
+    // aria-multiselectable is defined for listbox/grid/tree/tablist and for
+    // nothing else, so a plain role="list" must not carry it at all — axe
+    // reports it as aria-allowed-attr (finding #27).
     return html`
       <div
         class="list"
         role=${this.selectable ? 'listbox' : 'list'}
         aria-label=${this.label || nothing}
-        aria-multiselectable=${this.selectable && this.multiple ? 'true' : 'false'}
+        aria-multiselectable=${this.selectable ? String(this.multiple === true) : nothing}
         @keydown=${this._handleKeydown}
         part="list"
       >
