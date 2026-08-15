@@ -409,11 +409,65 @@ of this file is restated in V4-SCOPE §1.4 with the revised numbers —
       on the property path (markup unchanged), and the six navigation props
       return their default rather than `null` when the attribute is removed.
 
-- [ ] **2.3 (M)** Finish the prose-constraint survey: ~70 remaining `@prop`
+- [x] **2.3 (M)** Finish the prose-constraint survey: ~70 remaining `@prop`
       prose constraints. Survey first (the uncovered-sweep discipline), adopt
       only real constraints; grep for the recurring shape — a constraint
-      enforced on the interaction, render, or stylesheet instead of the
-      state (#1, #14, #47, #58, #59, #61, #70).
+      enforced on the interaction, render, or stylesheet instead of the state
+      (#1, #14, #47, #58, #59, #61, #70).
+
+      **DONE 2026-08-15.** Suite **4,492 → 4,607 passing**, `pnpm check` 22/22,
+      `pnpm generate` diff-clean, `props.js` mutation pair **91.78% → 92.94%**
+      (79/85, gate ≥90).
+
+      The survey: 844 `@prop` lines, 125 stating a constraint, **95 numeric
+      props still on raw `{ type: Number }`**. Rather than adopt all 95 on
+      principle, I searched for the shape this item names and found **47**.
+      Both surveys now report **zero** — there is no numeric prop left in the
+      library whose contract is enforced somewhere other than where the value
+      is held. The scripts are in the session scratchpad; they are three
+      screenfuls and worth rewriting rather than keeping.
+
+      **The item's real finding was one it did not anticipate: `nullable`.**
+      Fourteen props were stuck on raw declarations for the same reason — their
+      *unset* state is a **third meaning**, not a synonym for the default.
+      `arc-gauge`/`arc-meter` `low`/`high`/`optimum` derive their zones from the
+      range when unset; `arc-number-input` `min`/`max` mean unbounded;
+      `arc-waveform.duration` and `arc-level-meter.peak` mean nothing to show;
+      `arc-activity-heatmap.max` means quartile mapping rather than a linear
+      scale; `arc-number-format.decimals` means a per-format default; and
+      `arc-clock.hour12` means *let the viewer's locale decide*. The vocabulary
+      would have collapsed every one onto its declared default — making every
+      clock 24-hour and every gauge draw zones nobody asked for.
+
+      `nullable` is kind-agnostic and sits ahead of every branch in
+      `normalizeValue`, because what it expresses is not about numbers or
+      booleans. Fourteen instances, well past the bar `oneOf`'s numeric members
+      cleared. **It also retires `boolean-defaults.js`'s second exemption** —
+      `clock.hour12` is declared now, so that check is back to one.
+
+      **The other two gaps 2.2 flagged did *not* earn a term**, and saying so is
+      part of the deliverable:
+
+      - A string **pattern** (`arc-aspect-ratio.ratio`) is still one instance.
+        Normalised by hand in 2.1, with the reasoning at the call site. Invent
+        `pattern()` when a second prop wants it.
+      - **0-as-sentinel** (`maxTags`, `maxlength`, `maxSize`, `separator`,
+        `aspect`, `segments`, `duration`) needs nothing: 0 is inside
+        `min: 0`, so the existing vocabulary already says it.
+
+      **One real defect surfaced by declaring rather than by reading.**
+      `arc-number-format.decimals` had no upper bound, and `Intl.NumberFormat`
+      throws a `RangeError` above 20 — from a getter the render calls, so
+      `<arc-number-format decimals="30">` took the component down. The ceiling
+      belonged to a library the component happens to call, and nothing checked
+      it. The conformance probe found it by assigning 9999.
+
+      And the bounds pass is **the other half of finding #70**: that item fixed
+      `value` on `arc-meter` and `arc-gauge` and left `min`/`max` behind, so
+      `<arc-meter min="abc">` still rendered `aria-valuemin="NaN"`. Worth
+      remembering as a shape — fixing the obvious prop of a pair and leaving its
+      siblings is how a finding half-closes.
+
 - [x] **2.4a (L)** **Wrapper runtime harness** — its own workstream, not a
       bullet: nothing in the repo mounts a wrapper and no framework test
       toolchain exists anywhere in the monorepo (no vitest/jest/karma/

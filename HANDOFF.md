@@ -31,7 +31,15 @@ see "What changed under the plan" below.
   ~3,400 tests with the *same* detection, after fault injection showed one
   broken mechanism was being reported 238 times. See "Test posture" in
   test-findings.md before reading any test-count trend as progress.
-- **V4-PLAN Phase 2 is done except 2.3, 2.5 and 2.6.** 2.2 closed 2026-08-15:
+- **V4-PLAN Phase 2 is done except 2.5 and 2.6.** 2.3 closed 2026-08-15: every
+  numeric prop in the library is declared, and the vocabulary gained
+  **`nullable`** — a kind-agnostic option for props whose *unset* state is a
+  third meaning rather than the default. Fourteen props needed it (arc-gauge and
+  arc-meter's zone thresholds, number-input's bounds, waveform.duration,
+  level-meter.peak, activity-heatmap.max, number-format.decimals, clock.hour12),
+  and it retired `boolean-defaults.js`'s second exemption. The pattern gap
+  (arc-aspect-ratio.ratio) is still one instance and did **not** earn a term.
+- **Earlier the same day**, 2.2 closed:
   `list()` is the vocabulary's array term, the four array dialects are named in
   its docstring, and `boolean-defaults.js` now asserts that *every* boolean prop
   is declared through `flag()` — its BASELINE is gone rather than emptied, and
