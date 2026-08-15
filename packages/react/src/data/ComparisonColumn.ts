@@ -7,7 +7,7 @@ import { ArcComparisonColumn } from '@arclux/arc-ui/comparison-column';
 export interface ComparisonColumnProps {
   heading?: string;
   highlight?: boolean;
-  values?: string;
+  values?: string[];
   className?: string;
 }
 

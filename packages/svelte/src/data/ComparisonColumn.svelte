@@ -6,7 +6,7 @@
   interface Props {
     heading?: string;
     highlight?: boolean;
-    values?: string;
+    values?: string[];
     class?: string;
     id?: string;
     style?: string;
@@ -34,7 +34,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { heading = '', highlight, values = '[]', ...rest }: Props = $props();
+  let { heading = '', highlight, values, ...rest }: Props = $props();
 </script>
 
 <arc-comparison-column {heading} {highlight} {values} {...rest}>

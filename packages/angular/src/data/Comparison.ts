@@ -12,10 +12,10 @@ import type { ArcComparison } from '@arclux/arc-ui/comparison';
 export class Comparison {
   private readonly _el: ArcComparison = inject(ElementRef).nativeElement;
 
-  @Input() set features(value: string) {
+  @Input() set features(value: string[]) {
     this._el.features = value;
   }
-  get features(): string {
+  get features(): string[] {
     return this._el.features;
   }
 }

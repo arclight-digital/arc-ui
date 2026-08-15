@@ -93,7 +93,7 @@ for (const mod of manifest.modules) {
  * Only ever *fills a gap*: a `@prop {'sm' | 'md'} size` JSDoc already gives the
  * analyzer a richer union type than the declaration can, and that keeps winning.
  */
-const DECL = /^\s*(\w+):\s*(flag|oneOf|num|int)\(([\s\S]*?)\),?\s*$/gm;
+const DECL = /^\s*(\w+):\s*(flag|oneOf|num|int|list)\(([\s\S]*?)\),?\s*$/gm;
 
 /** Serialise a JS value the way the analyzer spells defaults. */
 const spell = (v) => (typeof v === 'string' ? `'${v}'` : String(v));
@@ -115,6 +115,9 @@ function declaredContracts(source) {
     const reflects = explicitReflect
       ? explicitReflect[1] === 'true'
       : helper === 'flag' || helper === 'oneOf';
+    // `list` never reflects unless asked: an array serialises to JSON, and
+    // writing a row set back into an attribute on every change is DOM churn no
+    // CSS selector can use. See props.js.
 
     const entry = { reflects };
 
@@ -144,6 +147,17 @@ function declaredContracts(source) {
         if (!raw) continue;
         const unquoted = raw.replace(/^['"]|['"]$/g, '');
         entry.default = /^-?[\d.]+$/.test(unquoted) ? Number(unquoted) : unquoted;
+      }
+    } else if (helper === 'list') {
+      entry.type = 'array';
+      // A list default is always a fresh array — `list()` holds it as a factory
+      // so two elements cannot share one — so there is no *value* to publish
+      // beyond "empty unless the declaration says otherwise". A literal default
+      // is spelled straight through; anything computed is left unset, as with
+      // every other helper.
+      if (!computed) {
+        const explicit = args.match(/default:\s*(\[[\s\S]*?\])/);
+        entry.default = explicit ? explicit[1].replace(/\s+/g, ' ') : '[]';
       }
     } else {
       entry.type = 'number';

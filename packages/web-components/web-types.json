@@ -2736,9 +2736,9 @@
             },
             {
               "name": "values",
-              "description": "JSON array of values matching the features order. Use \"true\"/\"false\" for check/cross icons, or any string for text values.",
+              "description": "Values matching the features order. Settable as a property, or as a JSON array in markup. Use \"true\"/\"false\" for check/cross icons, or any string for text values.",
               "value": {
-                "type": "string",
+                "type": "string[]",
                 "default": "'[]'"
               }
             }
@@ -2753,14 +2753,14 @@
                 "type": "string"
               },
               {
-                "name": "values",
-                "description": "JSON array of values matching the features order. Use \"true\"/\"false\" for check/cross icons, or any string for text values.",
-                "type": "string"
-              },
-              {
                 "name": "highlight",
                 "description": "When true, adds an accent background to the header and all cells in this column.",
                 "type": "boolean"
+              },
+              {
+                "name": "values",
+                "description": "Values matching the features order. Settable as a property, or as a JSON array in markup. Use \"true\"/\"false\" for check/cross icons, or any string for text values.",
+                "type": "string[]"
               }
             ],
             "events": []
@@ -2773,9 +2773,9 @@
           "attributes": [
             {
               "name": "features",
-              "description": "JSON array of feature label strings, e.g. '[\"Storage\",\"Bandwidth\",\"Support\"]'. Each entry becomes a row in the comparison grid.",
+              "description": "Feature label strings, one row each. Settable as a property, or as a JSON array in markup: `features='[\"Storage\",\"Bandwidth\"]'`. A malformed value falls back to an empty list rather than throwing.",
               "value": {
-                "type": "string",
+                "type": "string[]",
                 "default": "'[]'"
               }
             }
@@ -2791,8 +2791,8 @@
             "properties": [
               {
                 "name": "features",
-                "description": "JSON array of feature label strings, e.g. '[\"Storage\",\"Bandwidth\",\"Support\"]'. Each entry becomes a row in the comparison grid.",
-                "type": "string"
+                "description": "Feature label strings, one row each. Settable as a property, or as a JSON array in markup: `features='[\"Storage\",\"Bandwidth\"]'`. A malformed value falls back to an empty list rather than throwing.",
+                "type": "string[]"
               }
             ],
             "events": []

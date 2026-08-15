@@ -625,8 +625,8 @@ export declare class ArcCommandPalette extends LitElement {
  * `<arc-comparison>`
  */
 export declare class ArcComparison extends LitElement {
-  /** JSON array of feature label strings, e.g. '["Storage","Bandwidth","Support"]'. Each entry becomes a row in the comparison grid. @default '[]' */
-  features: string;
+  /** Feature label strings, one row each. Settable as a property, or as a JSON array in markup: `features='["Storage","Bandwidth"]'`. A malformed value falls back to an empty list rather than throwing. @default '[]' */
+  features: string[];
 }
 
 /**
@@ -635,10 +635,10 @@ export declare class ArcComparison extends LitElement {
 export declare class ArcComparisonColumn extends LitElement {
   /** Column header text displayed at the top of this column (e.g., "Free", "Pro"). @default '' */
   heading: string;
-  /** JSON array of values matching the features order. Use "true"/"false" for check/cross icons, or any string for text values. @default '[]' */
-  values: string;
   /** When true, adds an accent background to the header and all cells in this column. @default false */
   highlight: boolean;
+  /** Values matching the features order. Settable as a property, or as a JSON array in markup. Use "true"/"false" for check/cross icons, or any string for text values. @default '[]' */
+  values: string[];
 }
 
 /**

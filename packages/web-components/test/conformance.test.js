@@ -124,6 +124,11 @@ async function make(tag, attrs = '') {
 function illegalFor(meta) {
   if (meta.kind === 'enum') return NOT_A_MEMBER;
   if (meta.kind === 'flag') return '__not_a_boolean__';
+  // A list is probed with a scalar rather than a malformed array literal: the
+  // markup half of this test spells the probe into an attribute, and
+  // `items="__not_a_list__"` is exactly the JSON.parse failure list() exists to
+  // absorb without throwing.
+  if (meta.kind === 'list') return '__not_a_list__';
   // A clamped number is probed out of range, which exercises the clamp wiring;
   // an unclamped one is probed with a non-number, which exercises the fallback.
   return meta.clamp === 'toRange' ? 9999 : '__not_a_number__';
@@ -151,7 +156,14 @@ for (const tag of ADOPTED) {
         const el = document.createElement(tag);
         // Resolved, not read raw: a computed default (arc-calendar's month and
         // year) is a function on the declaration and a value on the element.
-        expect(el[name], `${tag}.${name} does not start on its declared default`).to.equal(
+        //
+        // Deep rather than strict, which matters for exactly one kind: a
+        // `list()` default is a *factory*, so two elements never share one
+        // array and `defaultOf` returns a fresh one on every call. Strict
+        // equality would fail every list prop in the library for the reason the
+        // factory exists. Deep equality is identical to strict for every scalar
+        // kind, so this stays one assertion rather than a per-kind branch.
+        expect(el[name], `${tag}.${name} does not start on its declared default`).to.eql(
           defaultOf(el, meta),
         );
       });

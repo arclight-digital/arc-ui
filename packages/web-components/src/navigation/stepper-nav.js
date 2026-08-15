@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import { DeclaredPropsMixin, flag, int } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, int, list } from '../shared/props.js';
 
 /**
  * Wizard navigation with back/next/skip controls and step validation gates. Steps connected by
@@ -23,17 +23,7 @@ import { DeclaredPropsMixin, flag, int } from '../shared/props.js';
  */
 export class ArcStepperNav extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    steps: {
-      converter: {
-        fromAttribute: (v) => {
-          try {
-            return JSON.parse(v);
-          } catch {
-            return [];
-          }
-        },
-      },
-    },
+    steps: list(),
     /**
      * Bounded by the step list rather than by nothing (finding #78). The sharp
      * form of the unbounded version was two conditions on the same value

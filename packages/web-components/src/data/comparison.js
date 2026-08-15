@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import { DeclaredPropsMixin, list } from '../shared/props.js';
 import { tokenStyles } from '../shared-styles.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
 
@@ -8,16 +9,16 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  *
  * @tag arc-comparison
  * @requires arc-comparison-column
- * @prop {string} features - JSON array of feature label strings, e.g. '["Storage","Bandwidth","Support"]'. Each entry becomes a row in the comparison grid.
+ * @prop {string[]} features - Feature label strings, one row each. Settable as a property, or as a JSON array in markup: `features='["Storage","Bandwidth"]'`. A malformed value falls back to an empty list rather than throwing.
  * @slot - Default content.
  * @csspart table
  * @csspart header
  * @csspart feature
  * @csspart cell
  */
-export class ArcComparison extends LitElement {
+export class ArcComparison extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    features: { type: String },
+    features: list(),
     _columns: { state: true },
   };
 
@@ -124,7 +125,6 @@ export class ArcComparison extends LitElement {
 
   constructor() {
     super();
-    this.features = '[]';
     this._columns = [];
   }
 
@@ -132,14 +132,6 @@ export class ArcComparison extends LitElement {
     this._columns = e.target
       .assignedElements({ flatten: true })
       .filter((el) => el.tagName === 'ARC-COMPARISON-COLUMN');
-  }
-
-  _parseJSON(str) {
-    try {
-      return JSON.parse(str);
-    } catch {
-      return [];
-    }
   }
 
   _renderCheck() {
@@ -170,7 +162,7 @@ export class ArcComparison extends LitElement {
   }
 
   render() {
-    const features = this._parseJSON(this.features);
+    const features = this.features;
     const cols = this._columns;
     const colCount = cols.length + 1;
 
@@ -195,7 +187,7 @@ export class ArcComparison extends LitElement {
             <div class="row" role="row">
               <div class="cell cell--feature" part="feature" role="rowheader">${feature}</div>
               ${cols.map((col) => {
-                const values = this._parseJSON(col.values);
+                const values = col.values;
                 const val = values[i] ?? '';
                 return html`
                   <div class="cell ${col.highlight ? 'cell--highlight' : ''}" part="cell" role="cell">

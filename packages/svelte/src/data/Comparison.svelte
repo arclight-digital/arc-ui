@@ -4,7 +4,7 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
-    features?: string;
+    features?: string[];
     children?: Snippet;
     class?: string;
     id?: string;
@@ -33,7 +33,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { features = '[]', children, ...rest }: Props = $props();
+  let { features, children, ...rest }: Props = $props();
 </script>
 
 <arc-comparison {features} {...rest}>

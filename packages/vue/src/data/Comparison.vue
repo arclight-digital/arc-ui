@@ -4,11 +4,9 @@ import '@arclux/arc-ui/comparison';
 
 defineOptions({ name: 'Comparison' });
 
-const props = withDefaults(defineProps<{
-  features?: string;
-}>(), {
-  features: '[]',
-});
+const props = defineProps<{
+  features?: string[];
+}>();
 </script>
 
 <template>

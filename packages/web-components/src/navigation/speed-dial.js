@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, oneOf, list } from '../shared/props.js';
 
 /**
  * Floating action button that fans out secondary actions with staggered scale-in animation.
@@ -29,17 +29,7 @@ export class ArcSpeedDial extends DeclaredPropsMixin(LitElement) {
     // position previously anchored the dial nowhere at all — finding #17.
     direction: oneOf(['up', 'down', 'left', 'right']),
     position: oneOf(['bottom-right', 'bottom-left']),
-    items: {
-      converter: {
-        fromAttribute: (v) => {
-          try {
-            return JSON.parse(v);
-          } catch {
-            return [];
-          }
-        },
-      },
-    },
+    items: list(),
   };
 
   static styles = [

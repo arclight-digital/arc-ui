@@ -23,6 +23,7 @@ const HELPER_TYPES = {
   oneOf: 'String',
   num: 'Number',
   int: 'Number',
+  list: 'Array',
 };
 
 /** `reflect` when the helper is called without an explicit override. */
@@ -31,6 +32,7 @@ const HELPER_REFLECT_DEFAULT = {
   oneOf: true,
   num: false,
   int: false,
+  list: false,
 };
 
 /** The balanced `{ ... }` beginning at `start`, braces included. */

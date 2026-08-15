@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import { DeclaredPropsMixin, list } from '../shared/props.js';
 import { tokenStyles } from '../shared-styles.js';
 import { DismissController } from '../shared/dismiss-controller.js';
 import { PositionController } from '../shared/position-controller.js';
@@ -19,19 +20,9 @@ import { managedPanelStyles } from '../shared/position-styles.js';
  * @csspart dropdown
  * @csspart dropdown-item
  */
-export class ArcBreadcrumbMenu extends LitElement {
+export class ArcBreadcrumbMenu extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    items: {
-      converter: {
-        fromAttribute: (v) => {
-          try {
-            return JSON.parse(v);
-          } catch {
-            return [];
-          }
-        },
-      },
-    },
+    items: list(),
     label: { type: String },
     _openIndex: { type: Number, state: true },
   };

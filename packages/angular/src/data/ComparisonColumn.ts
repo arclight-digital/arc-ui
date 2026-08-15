@@ -26,10 +26,10 @@ export class ComparisonColumn {
     return this._el.highlight;
   }
 
-  @Input() set values(value: string) {
+  @Input() set values(value: string[]) {
     this._el.values = value;
   }
-  get values(): string {
+  get values(): string[] {
     return this._el.values;
   }
 }

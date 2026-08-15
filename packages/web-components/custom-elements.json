@@ -5246,17 +5246,6 @@
             },
             {
               "kind": "field",
-              "name": "values",
-              "privacy": "public",
-              "type": {
-                "text": "string"
-              },
-              "default": "'[]'",
-              "description": "JSON array of values matching the features order. Use \"true\"/\"false\" for check/cross icons, or any string for text values.",
-              "attribute": "values"
-            },
-            {
-              "kind": "field",
               "name": "highlight",
               "privacy": "public",
               "type": {
@@ -5266,6 +5255,17 @@
               "attribute": "highlight",
               "default": "false",
               "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "values",
+              "privacy": "public",
+              "type": {
+                "text": "string[]"
+              },
+              "description": "Values matching the features order. Settable as a property, or as a JSON array in markup. Use \"true\"/\"false\" for check/cross icons, or any string for text values.",
+              "attribute": "values",
+              "default": "'[]'"
             }
           ],
           "attributes": [
@@ -5290,11 +5290,11 @@
             {
               "name": "values",
               "type": {
-                "text": "string"
+                "text": "string[]"
               },
-              "default": "'[]'",
-              "description": "JSON array of values matching the features order. Use \"true\"/\"false\" for check/cross icons, or any string for text values.",
-              "fieldName": "values"
+              "description": "Values matching the features order. Settable as a property, or as a JSON array in markup. Use \"true\"/\"false\" for check/cross icons, or any string for text values.",
+              "fieldName": "values",
+              "default": "'[]'"
             }
           ],
           "mixins": [
@@ -5356,22 +5356,28 @@
               "name": "features",
               "privacy": "public",
               "type": {
-                "text": "string"
+                "text": "string[]"
               },
-              "default": "'[]'",
-              "description": "JSON array of feature label strings, e.g. '[\"Storage\",\"Bandwidth\",\"Support\"]'. Each entry becomes a row in the comparison grid.",
-              "attribute": "features"
+              "description": "Feature label strings, one row each. Settable as a property, or as a JSON array in markup: `features='[\"Storage\",\"Bandwidth\"]'`. A malformed value falls back to an empty list rather than throwing.",
+              "attribute": "features",
+              "default": "'[]'"
             }
           ],
           "attributes": [
             {
               "name": "features",
               "type": {
-                "text": "string"
+                "text": "string[]"
               },
-              "default": "'[]'",
-              "description": "JSON array of feature label strings, e.g. '[\"Storage\",\"Bandwidth\",\"Support\"]'. Each entry becomes a row in the comparison grid.",
-              "fieldName": "features"
+              "description": "Feature label strings, one row each. Settable as a property, or as a JSON array in markup: `features='[\"Storage\",\"Bandwidth\"]'`. A malformed value falls back to an empty list rather than throwing.",
+              "fieldName": "features",
+              "default": "'[]'"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "DeclaredPropsMixin",
+              "module": "/src/shared/props.js"
             }
           ],
           "superclass": {
@@ -29511,6 +29517,12 @@
               "fieldName": "value"
             }
           ],
+          "mixins": [
+            {
+              "name": "DeclaredPropsMixin",
+              "module": "/src/shared/props.js"
+            }
+          ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
@@ -29678,6 +29690,12 @@
               },
               "default": "'Breadcrumb'",
               "fieldName": "label"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "DeclaredPropsMixin",
+              "module": "/src/shared/props.js"
             }
           ],
           "superclass": {
@@ -34409,6 +34427,24 @@
         },
         {
           "kind": "function",
+          "name": "list",
+          "parameters": [
+            {
+              "name": "{ default: fallback = [], attribute, reflect = false, derived = false }",
+              "default": "{}"
+            },
+            {
+              "name": "opts",
+              "optional": true,
+              "type": {
+                "text": "@param {unknown[]|(() => unknown[])} [opts.default=[]] literal (copied per\n *   element) or factory\n "
+              }
+            }
+          ],
+          "description": "An array-valued prop, parsed from a JSON attribute.\n\nThe library had **four** spellings of this and no term for it, which is why\nV4-PLAN 2.2 creates it before anything else in that item:\n\n  1. `{ type: Array }` — Lit's own converter, which calls `JSON.parse` and\n     lets it **throw**. `<arc-chart series=\"oops\">` raises during attribute\n     processing, where a custom-element reaction's exception is reported\n     globally rather than propagated (finding #79's shape).\n  2. `{ attribute: false }` — property-only, so the prop has no markup form\n     at all and static HTML cannot set it.\n  3. A hand-rolled `converter.fromAttribute` with a try/catch — six copies of\n     the same eight lines in `navigation/`.\n  4. JSON-as-String — `arc-comparison.features` declared `{ type: String }`\n     and parsed by hand at the point of use, so the property held a string\n     and the component held an array.\n\n`list()` is the fifth spelling only in the sense that it is the one the other\nfour collapse into. What it settles:\n\n- **A malformed attribute falls back; it never throws.** That is the whole\n  difference from dialect 1, and it is the reason this cannot be \"just use\n  `type: Array`\".\n- **A removed attribute returns to the declared default**, not to `null`.\n  The six hand-rolled converters got this wrong together: `JSON.parse(null)`\n  coerces to the string `\"null\"`, parses fine, and returns `null` — so\n  removing the attribute left a non-array on a prop typed as an array.\n- **Each element gets its own array.** The default is held as a factory, so\n  two instances of a component cannot share one mutable list. A literal\n  `default: [...]` is accepted and copied per element rather than shared.\n- **`reflect` is off by default.** An array serialises to JSON, and writing a\n  row set back into an attribute on every change is a lot of DOM churn for\n  something no CSS selector can use. Pass `reflect: true` where a component\n  genuinely wants it."
+        },
+        {
+          "kind": "function",
           "name": "defaultOf",
           "parameters": [
             {
@@ -34495,6 +34531,14 @@
           "name": "int",
           "declaration": {
             "name": "int",
+            "module": "src/shared/props.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "list",
+          "declaration": {
+            "name": "list",
             "module": "src/shared/props.js"
           }
         },

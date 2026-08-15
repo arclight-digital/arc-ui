@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import { DeclaredPropsMixin, list } from '../shared/props.js';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
@@ -16,19 +17,9 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart icon
  * @csspart label
  */
-export class ArcBottomNav extends LitElement {
+export class ArcBottomNav extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    items: {
-      converter: {
-        fromAttribute: (v) => {
-          try {
-            return JSON.parse(v);
-          } catch {
-            return [];
-          }
-        },
-      },
-    },
+    items: list(),
     value: { type: String, reflect: true },
   };
 

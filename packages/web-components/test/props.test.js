@@ -25,6 +25,7 @@ import {
   oneOf,
   num,
   int,
+  list,
   normalizeValue,
   declaredProps,
   DeclaredPropsMixin,
@@ -196,12 +197,120 @@ describe('num() and int()', () => {
   });
 });
 
+
+// ---------------------------------------------------------------------------
+// list()
+// ---------------------------------------------------------------------------
+
+describe('list()', () => {
+  const from = (decl, v) => decl.converter.fromAttribute(v);
+
+  it('is an Array-typed prop that does not reflect', () => {
+    expect(list().type).to.equal(Array);
+    expect(list().reflect, 'an array serialises to JSON — not a selector CSS can use')
+      .to.equal(false);
+    expect(meta(list())).to.include({ kind: 'list' });
+  });
+
+  it('reflects when asked to', () => {
+    expect(list({ reflect: true }).reflect).to.equal(true);
+  });
+
+  it('parses a JSON array from the attribute', () => {
+    expect(from(list(), '["a","b"]')).to.eql(['a', 'b']);
+    expect(from(list(), '[1,2,3]')).to.eql([1, 2, 3]);
+  });
+
+  it('falls back instead of throwing on malformed JSON', () => {
+    // The whole difference from `{ type: Array }`, whose converter lets
+    // JSON.parse throw — from inside attributeChangedCallback, where a custom
+    // element reaction's exception is reported globally and nothing at the call
+    // site can catch it.
+    expect(() => from(list(), 'oops')).to.not.throw();
+    expect(from(list(), 'oops')).to.eql([]);
+    expect(from(list(), '{ unterminated')).to.eql([]);
+  });
+
+  it('falls back for valid JSON that is not an array', () => {
+    // `JSON.parse('{"a":1}')` succeeds and returns an object, which would leave
+    // a non-array on a prop the whole library types as an array.
+    expect(from(list(), '{"a":1}')).to.eql([]);
+    expect(from(list(), '"a string"')).to.eql([]);
+    expect(from(list(), '42')).to.eql([]);
+    expect(from(list(), 'null')).to.eql([]);
+  });
+
+  it('returns to the declared default when the attribute is removed', () => {
+    // The bug all six hand-rolled converters shared: `JSON.parse(null)` coerces
+    // to the string "null", parses fine and returns null — so removing the
+    // attribute left a non-array behind rather than restoring the default.
+    expect(from(list(), null)).to.eql([]);
+    expect(from(list({ default: ['x'] }), null)).to.eql(['x']);
+  });
+
+  it('gives every element its own array', () => {
+    // A shared default would let one component mutate the list every later
+    // instance starts with.
+    const decl = list({ default: ['x'] });
+    const a = from(decl, null);
+    const b = from(decl, null);
+    expect(a).to.eql(b);
+    expect(a, 'same contents, different arrays').to.not.equal(b);
+
+    a.push('mutated');
+    expect(from(decl, null), 'the declaration is unchanged').to.eql(['x']);
+  });
+
+  it('takes a factory default', () => {
+    const decl = list({ default: () => [1, 2] });
+    expect(from(decl, null)).to.eql([1, 2]);
+  });
+
+  it('serialises back to JSON when reflected', () => {
+    const decl = list({ reflect: true });
+    expect(decl.converter.toAttribute(['a', 'b'])).to.equal('["a","b"]');
+    expect(decl.converter.toAttribute('not an array')).to.equal(null);
+  });
+
+  it('is an input unless declared derived', () => {
+    // `derived` marks a prop the component computes and publishes rather than
+    // accepts. conformance.test.js skips its "enforces its declaration on both
+    // paths" probe for those, because handing a value to an output tests the
+    // wrong direction — so a list that defaulted to derived would silently opt
+    // every list prop in the library out of half its coverage.
+    expect(meta(list()).derived).to.equal(false);
+    expect(meta(list({ derived: true })).derived).to.equal(true);
+  });
+
+  it('renames the attribute when asked', () => {
+    expect(list({ attribute: 'expanded-values' }).attribute).to.equal('expanded-values');
+    expect(list().attribute, 'and derives it from the name otherwise').to.equal(undefined);
+  });
+});
+
 // ---------------------------------------------------------------------------
 // normalizeValue() — the coercion every adopted component runs on
 // ---------------------------------------------------------------------------
 
 describe('normalizeValue()', () => {
   const host = {};
+
+  it('passes an array through by identity', () => {
+    // Identity, not contents: conformance.test.js asserts a fixed point —
+    // `normalizeValue(el, meta, el[name])` must *equal* `el[name]` — and
+    // returning a fresh copy of an already-valid array would fail that for
+    // every list prop in the library.
+    const decl = list();
+    const value = ['a'];
+    expect(normalizeValue(host, meta(decl), value)).to.equal(value);
+  });
+
+  it('replaces a non-array with the declared default', () => {
+    const decl = list({ default: ['fallback'] });
+    for (const bad of ['a string', 42, null, undefined, { a: 1 }]) {
+      expect(normalizeValue(host, meta(decl), bad), String(bad)).to.eql(['fallback']);
+    }
+  });
 
   describe('enums', () => {
     const m = meta(oneOf(['a', 'b'], { default: 'b' }));

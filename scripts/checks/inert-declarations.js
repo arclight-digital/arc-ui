@@ -32,7 +32,7 @@ const SRC = path.join(root, 'packages', 'web-components', 'src');
 const TIERS = ['content', 'data', 'feedback', 'input', 'layout', 'navigation', 'typography', 'shared'];
 
 /** A declaration helper used as a property value: `foo: flag(...)`. */
-const DECLARES = /^\s*\w+:\s*(flag|oneOf|num|int)\(/m;
+const DECLARES = /^\s*\w+:\s*(flag|oneOf|num|int|list)\(/m;
 const ADOPTS = /extends\s+DeclaredPropsMixin\(/;
 
 const inert = [];

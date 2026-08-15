@@ -191,6 +191,77 @@ export function num(
 export const int = (opts = {}) => num({ ...opts, int: true });
 
 /**
+ * An array-valued prop, parsed from a JSON attribute.
+ *
+ * The library had **four** spellings of this and no term for it, which is why
+ * V4-PLAN 2.2 creates it before anything else in that item:
+ *
+ *   1. `{ type: Array }` — Lit's own converter, which calls `JSON.parse` and
+ *      lets it **throw**. `<arc-chart series="oops">` raises during attribute
+ *      processing, where a custom-element reaction's exception is reported
+ *      globally rather than propagated (finding #79's shape).
+ *   2. `{ attribute: false }` — property-only, so the prop has no markup form
+ *      at all and static HTML cannot set it.
+ *   3. A hand-rolled `converter.fromAttribute` with a try/catch — six copies of
+ *      the same eight lines in `navigation/`.
+ *   4. JSON-as-String — `arc-comparison.features` declared `{ type: String }`
+ *      and parsed by hand at the point of use, so the property held a string
+ *      and the component held an array.
+ *
+ * `list()` is the fifth spelling only in the sense that it is the one the other
+ * four collapse into. What it settles:
+ *
+ * - **A malformed attribute falls back; it never throws.** That is the whole
+ *   difference from dialect 1, and it is the reason this cannot be "just use
+ *   `type: Array`".
+ * - **A removed attribute returns to the declared default**, not to `null`.
+ *   The six hand-rolled converters got this wrong together: `JSON.parse(null)`
+ *   coerces to the string `"null"`, parses fine, and returns `null` — so
+ *   removing the attribute left a non-array on a prop typed as an array.
+ * - **Each element gets its own array.** The default is held as a factory, so
+ *   two instances of a component cannot share one mutable list. A literal
+ *   `default: [...]` is accepted and copied per element rather than shared.
+ * - **`reflect` is off by default.** An array serialises to JSON, and writing a
+ *   row set back into an attribute on every change is a lot of DOM churn for
+ *   something no CSS selector can use. Pass `reflect: true` where a component
+ *   genuinely wants it.
+ *
+ * @param {object}   [opts]
+ * @param {unknown[]|(() => unknown[])} [opts.default=[]] literal (copied per
+ *   element) or factory
+ */
+export function list({ default: fallback = [], attribute, reflect = false, derived = false } = {}) {
+  // Held as a factory so no two elements share one array. A literal is copied
+  // rather than captured: `list({ default: ['a'] })` on two elements must give
+  // two arrays, or a component that mutates its own default corrupts the next
+  // instance to be created.
+  const factory =
+    typeof fallback === 'function' ? fallback : () => (Array.isArray(fallback) ? [...fallback] : []);
+
+  return {
+    type: Array,
+    reflect,
+    ...(attribute ? { attribute } : {}),
+    converter: {
+      fromAttribute: (v, type) => {
+        if (v === null) return factory();
+        try {
+          const parsed = JSON.parse(v);
+          return Array.isArray(parsed) ? parsed : factory();
+        } catch {
+          // The point of the helper. Lit's stock Array converter throws here,
+          // and it throws inside attributeChangedCallback where nothing at the
+          // call site can catch it.
+          return factory();
+        }
+      },
+      toAttribute: (v) => (Array.isArray(v) ? JSON.stringify(v) : null),
+    },
+    [ARC]: { kind: 'list', default: factory, derived },
+  };
+}
+
+/**
  * Resolve a declared default, which may be computed.
  *
  * `arc-calendar` is the case: `month` and `year` default to the *current* month
@@ -245,6 +316,14 @@ export function normalizeValue(el, meta, value) {
     const candidate = meta.numeric && typeof value === 'string' ? Number(value) : value;
     return meta.values.includes(candidate) ? candidate : defaultOf(el, meta);
   }
+  if (meta.kind === 'list') {
+    // Identity-preserving on the way through, which the conformance suite's
+    // fixed-point check depends on: `normalizeValue(el, meta, el[name])` has to
+    // equal `el[name]`, and returning a fresh copy of an already-valid array
+    // would fail that for every list prop in the library.
+    return Array.isArray(value) ? value : defaultOf(el, meta);
+  }
+
   if (meta.kind === 'number') {
     let next = typeof value === 'number' ? value : Number(value);
     if (!Number.isFinite(next)) return defaultOf(el, meta);

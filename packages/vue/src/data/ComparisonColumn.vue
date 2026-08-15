@@ -7,10 +7,9 @@ defineOptions({ name: 'ComparisonColumn' });
 const props = withDefaults(defineProps<{
   heading?: string;
   highlight?: boolean;
-  values?: string;
+  values?: string[];
 }>(), {
   heading: '',
-  values: '[]',
 });
 </script>
 

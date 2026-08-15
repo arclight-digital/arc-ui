@@ -12,7 +12,7 @@ declare module 'solid-js' {
 }
 
 export interface ComparisonProps {
-  features?: string;
+  features?: string[];
   children?: JSX.Element;
   class?: string;
   id?: string;

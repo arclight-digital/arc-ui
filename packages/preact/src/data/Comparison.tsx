@@ -4,7 +4,7 @@ import { h, type FunctionComponent } from 'preact';
 import '@arclux/arc-ui/comparison';
 
 export interface ComparisonProps {
-  features?: string;
+  features?: string[];
   children?: preact.ComponentChildren;
   class?: string;
   id?: string;

@@ -1089,8 +1089,8 @@
         },
         {
           "name": "values",
-          "description": "JSON array of values matching the features order. Use \"true\"/\"false\" for check/cross icons, or any string for text values.",
-          "values": []
+          "description": "Values matching the features order. Settable as a property, or as a JSON array in markup. Use \"true\"/\"false\" for check/cross icons, or any string for text values.",
+          "values": [{ "name": "string[]" }]
         }
       ],
       "references": []
@@ -1101,8 +1101,8 @@
       "attributes": [
         {
           "name": "features",
-          "description": "JSON array of feature label strings, e.g. '[\"Storage\",\"Bandwidth\",\"Support\"]'. Each entry becomes a row in the comparison grid.",
-          "values": []
+          "description": "Feature label strings, one row each. Settable as a property, or as a JSON array in markup: `features='[\"Storage\",\"Bandwidth\"]'`. A malformed value falls back to an empty list rather than throwing.",
+          "values": [{ "name": "string[]" }]
         }
       ],
       "references": []

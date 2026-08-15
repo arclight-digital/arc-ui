@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
-import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
+import { DeclaredPropsMixin, oneOf, list } from '../shared/props.js';
 
 /**
  * Vertical or horizontal in-page link bar with active highlight. Active link gets accent-primary
@@ -20,17 +20,7 @@ export class ArcAnchorNav extends DeclaredPropsMixin(LitElement) {
   static properties = {
     orientation: oneOf(['vertical', 'horizontal'], { default: 'horizontal' }),
     value: { type: String, reflect: true },
-    items: {
-      converter: {
-        fromAttribute: (v) => {
-          try {
-            return JSON.parse(v);
-          } catch {
-            return [];
-          }
-        },
-      },
-    },
+    items: list(),
   };
 
   static styles = [

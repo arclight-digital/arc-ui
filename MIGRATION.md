@@ -1,8 +1,15 @@
-# v2 → v3 migration notes
+# Migration notes
 
-A for-posterity record of every breaking change on the v3 line, one section per
-change, each with what changed, why, and the mechanical fix. Commit hashes point
-at the full story.
+A for-posterity record of every breaking change, one section per change, each
+with what changed, why, and the mechanical fix. Commit hashes point at the full
+story.
+
+**v3 → v4 is in progress.** Its sections are collected under
+[v4 breaking changes](#v4-breaking-changes) at the bottom and are written as the
+work lands, not at tag time — V4-PLAN 4.11 completes and orders them, it does not
+discover them.
+
+## v2 → v3
 
 - [Event contract](#event-contract)
 - [arc-input for edits, arc-change for commits](#arc-input-for-edits-arc-change-for-commits)
@@ -17,6 +24,11 @@ at the full story.
 - [65 wrappers stop accepting children](#65-wrappers-stop-accepting-children)
 - [Wrapper build outputs and subpaths](#wrapper-build-outputs-and-subpaths)
 - [Peer-dependency ranges](#peer-dependency-ranges)
+
+**v4:**
+
+- [Array props take arrays, not JSON strings](#array-props-take-arrays-not-json-strings)
+- [Malformed array attributes fall back instead of throwing](#malformed-array-attributes-fall-back-instead-of-throwing)
 
 ## Event contract
 
@@ -265,3 +277,57 @@ didn't upgrade.
 **Fix.** Install `@arclux/arc-ui` (and `lit`, if your package manager does not
 auto-install peers) alongside a wrapper. Consumers of the HTML package that
 relied on published examples fetch them from the docs site instead.
+
+---
+
+# v4 breaking changes
+
+## Array props take arrays, not JSON strings
+
+**Affects `arc-comparison.features` and `arc-comparison-column.values`.**
+
+Both were declared `{ type: String }` and documented as *"JSON array of …"*, so
+the property held a string and the component parsed it at the point of use. They
+are declared `list()` now, which means the **property** takes a real array:
+
+```js
+// before
+el.features = '["Storage","Bandwidth"]';
+
+// after
+el.features = ['Storage', 'Bandwidth'];
+```
+
+**Markup is unchanged.** `features='["Storage","Bandwidth"]'` works exactly as
+before — the JSON spelling is what an attribute is *for*, and `list()` parses it.
+Only the property path changed, and only for these two props.
+
+Assigning a string now normalises to the declared default (an empty list) rather
+than being parsed, so the failure is a component that renders nothing rather than
+a thrown error. If you set these from script, the mechanical fix is to delete the
+`JSON.stringify` you were doing — or the string literal's quotes.
+
+The generated wrapper types moved with it: `features?: string` became
+`features?: string[]` in all six packages, so TypeScript consumers get a compile
+error rather than the silent empty render.
+
+**Why:** the library had four spellings of "this prop is an array" and no term
+for it. `list()` is the term. See V4-PLAN 2.2 and the `list()` docstring in
+`shared/props.js` for what each dialect got wrong; the sitewide migration of the
+remaining array props is 4.3, and each will be recorded here as it lands.
+
+## Malformed array attributes fall back instead of throwing
+
+**Affects the six `navigation/` components that took a JSON `items`/`steps`
+attribute:** `arc-anchor-nav`, `arc-bottom-nav`, `arc-breadcrumb-menu`,
+`arc-rail`, `arc-speed-dial`, `arc-stepper-nav`.
+
+Each carried its own copy of a try/catch `JSON.parse` converter. They all now
+use `list()`, which behaves the same on a well-formed attribute and differs in
+one case they all got wrong: **removing the attribute** used to leave `null` on
+the property (`JSON.parse(null)` coerces to the string `"null"`, parses fine, and
+returns `null`), and now returns the declared default. Code that tested
+`items === null` to mean "unset" should test `items.length === 0`.
+
+This is a fix rather than a break for anything that iterated the value, which
+previously threw on `null`.
