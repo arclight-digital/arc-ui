@@ -95,7 +95,10 @@ const PAIRS = [
     name: 'subscriptions',
     source: 'packages/web-components/src/shared/subscriptions.js',
     tests: 'packages/web-components/test/reconnect-sweep.test.js',
-    // measured 83.33% (5/6) 2026-08-13
+    // measured 83.33% (5/6) 2026-08-13; 87.50% (7/8) 2026-08-15 after
+    // observeAttributes landed for finding #15. The floor stays at 80: a
+    // ratchet guards against regression, and raising it on the strength of one
+    // reading of a larger mutant set is how a gate becomes flaky.
     gate: 80,
     why: 'connection-scoped subscriptions — finding #55',
   },
@@ -103,14 +106,30 @@ const PAIRS = [
     name: 'listbox-controller',
     source: 'packages/web-components/src/shared/listbox-controller.js',
     tests: 'packages/web-components/test/listbox-controller.test.js',
-    gate: null,
+    // measured 50.00% (39/78) twice — 2026-08-15, either side of the
+    // per-option disabled work for finding #6, which added mutants and killed
+    // its share of them. Ratcheted on the second identical reading, per the
+    // rule at the top of this file.
+    //
+    // 50 is a floor, not a target. It is the lowest score in the set and the
+    // largest module in it, which is what makes it V4-PLAN 2.5's first stop —
+    // the gate exists so the climb cannot slide backwards while it happens.
+    gate: 50,
     why: 'the select family spine',
   },
   {
     name: 'position-controller',
     source: 'packages/web-components/src/shared/position-controller.js',
     tests: 'packages/web-components/test/position-controller.test.js',
-    gate: null,
+    // measured 52.83% (28/53) twice, 2026-08-15. Same reasoning as
+    // listbox-controller above: a floor to climb from, not an endorsement.
+    //
+    // Its surviving mutants cluster in the flip/shift arithmetic — five
+    // `false -> true` and four `>= -> >` at the edge comparisons — which is
+    // exactly the geometry 4.4 replaces with CSS anchor positioning. Worth
+    // knowing before spending 2.5 effort here: some of this code is scheduled
+    // to become the fallback path rather than the main one.
+    gate: 52,
     why: 'overlay placement — 20 consumers',
   },
 ];

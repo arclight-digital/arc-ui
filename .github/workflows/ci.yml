@@ -199,18 +199,25 @@ jobs:
       - name: Install Chromium
         run: pnpm exec playwright install --with-deps chromium
 
-      # The sampled set — eight shared modules, each gated just under its
-      # measured score so the numbers only ever ratchet up. props.js carries the
-      # highest threshold of the eight: 166 components sit on it, so a survivor
-      # there is a hole under all of them at once.
+      # The sampled set — ten shared modules, each gated just under its measured
+      # score so the numbers only ever ratchet up. props.js carries the highest
+      # threshold: 166 components sit on it, so a survivor there is a hole under
+      # all of them at once.
       #
-      # listbox-controller and position-controller are in the set but not yet
-      # baselined, and are skipped explicitly rather than passing silently at
-      # `gate: null`. They are the two large ones (~59 and ~50 operator sites,
-      # against test files that mount real components), so they get their own
-      # pass rather than tripling this job's runtime on their first measurement.
+      # listbox-controller and position-controller were skipped here while they
+      # sat at `gate: null` — reported but unenforced — rather than passing
+      # silently. Both have now produced the same reading twice (50.00% and
+      # 52.83%, 2026-08-15), which is this file's own condition for ratcheting,
+      # so the skip is gone and all ten are enforced.
+      #
+      # Their floors are low on purpose. They are the two large ones (~59 and
+      # ~50 operator sites, against test files that mount real components) and
+      # they are V4-PLAN 2.5's first stop; the gate exists so the climb cannot
+      # slide backwards while it happens, not to claim the current score is
+      # good. Expect this job to get slower — that is the cost of enforcing them
+      # rather than watching them.
       - name: Sampled mutation gate
-        run: pnpm mutate:sample -- --skip listbox-controller,position-controller
+        run: pnpm mutate:sample
 
   # Mounts every wrapper package in a real browser — the only job that does.
   # `wrapper-builds` proves a tarball compiles inside a consumer, which a
