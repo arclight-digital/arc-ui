@@ -61,6 +61,11 @@ export class ListboxController {
    *   scrolling listbox element.
    * @param {(index: number) => string} [opts.getItemLabel] - Option text, needed
    *   only when typeahead is enabled.
+   * @param {(index: number) => boolean} [opts.isItemDisabled] - Whether an
+   *   option refuses selection. Disabled options stay rendered and stay
+   *   counted — they are skipped by the arrow keys, Home, End and typeahead,
+   *   and Enter will not activate one. Omit it and nothing is disabled, which
+   *   is the behaviour every consumer had before finding #6.
    * @param {boolean} [opts.typeahead=false] - Jump to an option by typing its
    *   first letters. Off by default: in a combobox or tag-input the same
    *   keystrokes belong to the text field, and stealing them would break typing.
@@ -81,6 +86,38 @@ export class ListboxController {
   /** The active (virtually focused) option index, or -1 for none. */
   get activeIndex() {
     return this._activeIndex;
+  }
+
+  /** Whether the option at `index` refuses selection. */
+  isDisabled(index) {
+    return this.opts.isItemDisabled?.(index) === true;
+  }
+
+  /**
+   * The nearest selectable index at or *including* `from`, walking by `step`,
+   * or -1 when there is no selectable option that way.
+   *
+   * Bounded by the option count rather than written as a `while`, so a listbox
+   * whose options are all disabled terminates instead of spinning — the same
+   * shape as `arc-tabs._seek`. Honours `wrap`: a non-wrapping listbox runs off
+   * the end rather than round it, and -1 there means "stay where you are".
+   */
+  _seek(from, step, count) {
+    if (count === 0) return -1;
+    const wrap = this.opts.wrap !== false;
+    for (let n = 0; n < count; n += 1) {
+      let i = from + step * n;
+      if (wrap) i = ((i % count) + count) % count;
+      else if (i < 0 || i > count - 1) return -1;
+      if (!this.isDisabled(i)) return i;
+    }
+    return -1;
+  }
+
+  /** Move to the nearest selectable option from `from`, or stay put. */
+  _moveActive(from, step, count) {
+    const next = this._seek(from, step, count);
+    if (next >= 0) this.setActive(next);
   }
 
   /**
@@ -149,32 +186,34 @@ export class ListboxController {
         // Opening with a direction key lands on the near end of the list, which
         // is what the pattern calls for and what makes one keypress enough to
         // reach either extreme.
-        if (!open) return this._open(0);
-        this.setActive(this._step(1, count));
+        if (!open) return this._open(0, 1);
+        this._moveActive(this._step(1, count), 1, count);
         return true;
 
       case 'ArrowUp':
         e.preventDefault();
-        if (!open) return this._open(count - 1);
-        this.setActive(this._step(-1, count));
+        if (!open) return this._open(count - 1, -1);
+        this._moveActive(this._step(-1, count), -1, count);
         return true;
 
       case 'Home':
         if (!open || count === 0) return false;
         e.preventDefault();
-        this.setActive(0);
+        this._moveActive(0, 1, count);
         return true;
 
       case 'End':
         if (!open || count === 0) return false;
         e.preventDefault();
-        this.setActive(count - 1);
+        this._moveActive(count - 1, -1, count);
         return true;
 
       case 'Enter':
         if (!open || this._activeIndex < 0) return false;
         e.preventDefault();
-        this.opts.onSelect?.(this._activeIndex);
+        // The key is consumed either way — a disabled active option must not
+        // fall through to a form submit just because it refused to select.
+        if (!this.isDisabled(this._activeIndex)) this.opts.onSelect?.(this._activeIndex);
         return true;
 
       case 'Escape':
@@ -189,12 +228,21 @@ export class ListboxController {
     }
   }
 
-  /** Ask the host to open, and pre-select an end of the list. */
-  _open(index) {
+  /**
+   * Ask the host to open, and pre-select an end of the list.
+   *
+   * `step` is the direction to search from that end, so an opening keypress
+   * whose near end is disabled lands on the first selectable option instead of
+   * on nothing.
+   */
+  _open(index, step) {
     this.opts.onOpen?.();
     // After onOpen the option set may only exist post-render, so settle the
     // active index once the host has rendered rather than against a stale count.
-    this.host.updateComplete?.then(() => this.setActive(index < 0 ? 0 : index));
+    this.host.updateComplete?.then(() => {
+      const count = this.opts.getItemCount();
+      this._moveActive(index < 0 ? 0 : Math.min(index, Math.max(count - 1, 0)), step, count);
+    });
     return true;
   }
 
@@ -239,6 +287,7 @@ export class ListboxController {
     const from = repeat || this._typeahead.length === 1 ? this._activeIndex + 1 : 0;
     for (let n = 0; n < count; n++) {
       const i = (from + n + count) % count;
+      if (this.isDisabled(i)) continue;
       if ((this.opts.getItemLabel(i) || '').toLowerCase().startsWith(needle)) {
         e.preventDefault();
         this.setActive(i);

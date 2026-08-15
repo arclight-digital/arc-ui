@@ -57,6 +57,10 @@ const FILL = {
   'arc-combobox': (el) => { el.value = 'a'; },
   'arc-multi-select': (el) => { el.value = ['a', 'b']; },
   'arc-radio-group': (el) => { el.value = 'a'; },
+  // Form-associated as of finding #7: it looked exactly like a radio group and
+  // submitted nothing. Fills by property, like radio-group — the sweep mounts
+  // it childless, and the value does not need an arc-option to exist.
+  'arc-segmented-control': (el) => { el.value = 'a'; },
   'arc-checkbox': (el) => { el.checked = true; },
   'arc-toggle': (el) => { el.checked = true; },
   'arc-date-picker': (el) => { el.value = '2026-07-30'; },

@@ -11087,7 +11087,15 @@
           "attributes": [
             {
               "name": "value",
-              "description": "The value of the currently selected option. Reflected as an attribute and auto-set to the first option if empty.",
+              "description": "The value of the currently selected option. Reflected as an attribute and auto-set to the first selectable option if empty.",
+              "value": {
+                "type": "string",
+                "default": "''"
+              }
+            },
+            {
+              "name": "name",
+              "description": "The form field name submitted with the selected value. Required for native form integration — without it, the selection will not appear in FormData.",
               "value": {
                 "type": "string",
                 "default": "''"
@@ -11096,6 +11104,20 @@
             {
               "name": "disabled",
               "description": "Disables the entire control, reducing opacity to 40% and blocking pointer events.",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
+            },
+            {
+              "name": "required",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
+            },
+            {
+              "name": "readonly",
               "value": {
                 "type": "boolean",
                 "default": "false"
@@ -11119,12 +11141,34 @@
             "properties": [
               {
                 "name": "value",
-                "description": "The value of the currently selected option. Reflected as an attribute and auto-set to the first option if empty.",
+                "description": "The value of the currently selected option. Reflected as an attribute and auto-set to the first selectable option if empty.",
+                "type": "string"
+              },
+              {
+                "name": "name",
+                "description": "The form field name submitted with the selected value. Required for native form integration — without it, the selection will not appear in FormData.",
                 "type": "string"
               },
               {
                 "name": "disabled",
                 "description": "Disables the entire control, reducing opacity to 40% and blocking pointer events.",
+                "type": "boolean"
+              },
+              {
+                "name": "form"
+              },
+              {
+                "name": "validity"
+              },
+              {
+                "name": "validationMessage"
+              },
+              {
+                "name": "required",
+                "type": "boolean"
+              },
+              {
+                "name": "readonly",
                 "type": "boolean"
               }
             ],
@@ -15829,6 +15873,14 @@
                 "type": "string",
                 "default": "''"
               }
+            },
+            {
+              "name": "disabled",
+              "description": "When true, the tab button is dimmed, is skipped by the arrow keys and cannot be selected by click. A disabled tab that is already selected stays visible — disabling is not a way to hide a panel.",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
             }
           ],
           "slots": [
@@ -15844,6 +15896,11 @@
                 "name": "label",
                 "description": "Text displayed on the tab button. Keep labels concise — one or two words — to prevent the tab bar from overflowing.",
                 "type": "string"
+              },
+              {
+                "name": "disabled",
+                "description": "When true, the tab button is dimmed, is skipped by the arrow keys and cannot be selected by click. A disabled tab that is already selected stays visible — disabling is not a way to hide a panel.",
+                "type": "boolean"
               }
             ],
             "events": []

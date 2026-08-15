@@ -1855,7 +1855,10 @@ export default {
  "arc-segmented-control": {
   "attrs": [
    "value",
-   "disabled"
+   "name",
+   "disabled",
+   "required",
+   "readonly"
   ],
   "slug": "segmented-control"
  },
@@ -2675,7 +2678,8 @@ export default {
  },
  "arc-tab": {
   "attrs": [
-   "label"
+   "label",
+   "disabled"
   ],
   "slug": "tabs"
  },

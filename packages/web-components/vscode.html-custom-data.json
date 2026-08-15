@@ -3777,14 +3777,21 @@
       "attributes": [
         {
           "name": "value",
-          "description": "The value of the currently selected option. Reflected as an attribute and auto-set to the first option if empty.",
+          "description": "The value of the currently selected option. Reflected as an attribute and auto-set to the first selectable option if empty.",
+          "values": []
+        },
+        {
+          "name": "name",
+          "description": "The form field name submitted with the selected value. Required for native form integration — without it, the selection will not appear in FormData.",
           "values": []
         },
         {
           "name": "disabled",
           "description": "Disables the entire control, reducing opacity to 40% and blocking pointer events.",
           "values": []
-        }
+        },
+        { "name": "required", "values": [] },
+        { "name": "readonly", "values": [] }
       ],
       "references": []
     },
@@ -5377,6 +5384,11 @@
         {
           "name": "label",
           "description": "Text displayed on the tab button. Keep labels concise — one or two words — to prevent the tab bar from overflowing.",
+          "values": []
+        },
+        {
+          "name": "disabled",
+          "description": "When true, the tab button is dimmed, is skipped by the arrow keys and cannot be selected by click. A disabled tab that is already selected stays visible — disabling is not a way to hide a panel.",
           "values": []
         }
       ],

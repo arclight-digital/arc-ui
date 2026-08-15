@@ -18,4 +18,11 @@ export class Tab {
   get label(): string {
     return this._el.label;
   }
+
+  @Input() set disabled(value: boolean) {
+    this._el.disabled = value;
+  }
+  get disabled(): boolean {
+    return this._el.disabled;
+  }
 }

@@ -13,6 +13,7 @@ declare module 'solid-js' {
 
 export interface SegmentedControlProps {
   value?: string;
+  name?: string;
   disabled?: boolean;
   onArcChange?: (e: CustomEvent) => void;
   children?: JSX.Element;
@@ -44,9 +45,9 @@ export interface SegmentedControlProps {
 }
 
 export const SegmentedControl: Component<SegmentedControlProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'disabled', 'onArcChange', 'children']);
+  const [local, rest] = splitProps(props, ['value', 'name', 'disabled', 'onArcChange', 'children']);
   return (
-    <arc-segmented-control value={local.value} disabled={local.disabled} on:arc-change={local.onArcChange} {...rest}>
+    <arc-segmented-control value={local.value} name={local.name} disabled={local.disabled} on:arc-change={local.onArcChange} {...rest}>
       {local.children}
     </arc-segmented-control>
   );

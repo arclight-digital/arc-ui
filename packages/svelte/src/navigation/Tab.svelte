@@ -5,6 +5,7 @@
 
   interface Props {
     label?: string;
+    disabled?: boolean;
     children?: Snippet;
     class?: string;
     id?: string;
@@ -33,9 +34,9 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { label = '', children, ...rest }: Props = $props();
+  let { label = '', disabled, children, ...rest }: Props = $props();
 </script>
 
-<arc-tab {label} {...rest}>
+<arc-tab {label} {disabled} {...rest}>
   {@render children?.()}
 </arc-tab>

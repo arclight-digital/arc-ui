@@ -4,8 +4,8 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
 import { DismissController } from '../shared/dismiss-controller.js';
 import { PositionController } from '../shared/position-controller.js';
 import { ListboxController } from '../shared/listbox-controller.js';
+import { isOptionDisabled } from '../shared/option.js';
 import { managedPanelStyles } from '../shared/position-styles.js';
-import '../shared/option.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
 import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
@@ -165,11 +165,18 @@ export class ArcSelect extends DeclaredPropsMixin(FormControlMixin(LitElement)) 
         transition: background var(--transition-fast), color var(--transition-fast);
       }
 
-      .select__option:hover,
+      .select__option:hover:not(.select__option--disabled),
       .select__option--active {
         background: rgba(var(--interactive-rgb), 0.08);
         color: var(--text-primary);
         outline: none;
+      }
+
+      /* Per-option disabled (finding #6). It stays rendered and stays counted —
+         hiding it would silently renumber the list under aria-activedescendant. */
+      .select__option--disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
       }
 
       .select__option[aria-selected="true"] {
@@ -251,6 +258,7 @@ export class ArcSelect extends DeclaredPropsMixin(FormControlMixin(LitElement)) 
       // "jump to the option starting with this" — as a native select does.
       typeahead: true,
       getItemLabel: (i) => this._options[i]?.label ?? '',
+      isItemDisabled: (i) => isOptionDisabled(this._options[i]),
     });
   }
 
@@ -290,6 +298,9 @@ export class ArcSelect extends DeclaredPropsMixin(FormControlMixin(LitElement)) 
   }
 
   _selectOption(opt) {
+    // arc-option's own `disabled` — every path in has to read it, not just the
+    // keyboard one the controller covers (finding #6).
+    if (isOptionDisabled(opt)) return;
     this.value = opt.value;
     this.open = false;
     this.dispatchEvent(
@@ -367,9 +378,10 @@ export class ArcSelect extends DeclaredPropsMixin(FormControlMixin(LitElement)) 
             (opt, i) => html`
             <div
               id="${this._selectId}-opt-${i}"
-              class="select__option ${i === this._listbox.activeIndex ? 'select__option--active' : ''}"
+              class="select__option ${i === this._listbox.activeIndex ? 'select__option--active' : ''} ${isOptionDisabled(opt) ? 'select__option--disabled' : ''}"
               role="option"
               aria-selected=${opt.value === this.value ? 'true' : 'false'}
+              aria-disabled=${isOptionDisabled(opt) ? 'true' : nothing}
               @click=${() => this._selectOption(opt)}
               part="option"
             >${opt.label}</div>

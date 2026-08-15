@@ -290,6 +290,26 @@ describe('FormControlMixin: reset', () => {
     expect(el.other, 'state outside `value` is restored too').to.equal('o0');
   });
 
+  it('_recaptureFormResetState moves the baseline to a derived initial value', async () => {
+    // The escape hatch for the previous test's trap. A control whose initial
+    // value arrives from slotted children — arc-segmented-control auto-selects
+    // its first option on the first slotchange — has nothing to baseline at
+    // connect, so reset() would clear it rather than restore it (finding #7).
+    const { form, el } = await inForm();
+
+    el.value = 'derived from the children';
+    await settle(el);
+    el._recaptureFormResetState();
+
+    el.value = 'user picked something else';
+    await settle(el);
+    form.reset();
+    await settle(el);
+
+    expect(el.value).to.equal('derived from the children');
+    expect(submitted(form).get('f'), 'and the form agrees').to.equal('derived from the children');
+  });
+
   it('reset puts the restored value back into the form', async () => {
     const form = mount('<form></form>');
     const el = document.createElement('arc-form-probe');

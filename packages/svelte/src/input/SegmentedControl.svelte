@@ -5,6 +5,7 @@
 
   interface Props {
     value?: string;
+    name?: string;
     disabled?: boolean;
     children?: Snippet;
     class?: string;
@@ -34,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = $bindable(''), disabled, children, ...rest }: Props = $props();
+  let { value = $bindable(''), name = '', disabled, children, ...rest }: Props = $props();
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
@@ -48,7 +49,7 @@
   }
 </script>
 
-<arc-segmented-control {value} {disabled} {...rest}
+<arc-segmented-control {value} {name} {disabled} {...rest}
   onarc-change={__onArcChange}
 >
   {@render children?.()}

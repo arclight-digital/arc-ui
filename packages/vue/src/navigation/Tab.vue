@@ -6,6 +6,7 @@ defineOptions({ name: 'Tab' });
 
 const props = withDefaults(defineProps<{
   label?: string;
+  disabled?: boolean;
 }>(), {
   label: '',
 });
@@ -14,6 +15,7 @@ const props = withDefaults(defineProps<{
 <template>
   <arc-tab
     :label="props.label"
+    :disabled="props.disabled"
   >
     <slot />
   </arc-tab>

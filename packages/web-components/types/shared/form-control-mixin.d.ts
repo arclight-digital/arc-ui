@@ -28,6 +28,17 @@ export declare const FormControlMixin: (superClass: any) => {
         updated(changed: any): void;
         formDisabledCallback(disabled: any): void;
         disabled: any;
+        /**
+         * Re-capture the reset baseline, for controls whose initial value does not
+         * exist yet at connect time.
+         *
+         * connectedCallback captures the baseline before the first slotchange, so
+         * a control that derives its initial value from slotted children — the
+         * segmented control auto-selecting its first option — captures the empty
+         * pre-slot state, and form.reset() then *clears* it instead of restoring
+         * it. Call this immediately after assigning such a derived initial value.
+         */
+        _recaptureFormResetState(): void;
         formResetCallback(): void;
         formStateRestoreCallback(state: any): void;
         value: string | undefined;

@@ -2396,10 +2396,25 @@ export declare class ArcSection extends LitElement {
  * Events: arc-change
  */
 export declare class ArcSegmentedControl extends LitElement {
-  /** The value of the currently selected option. Reflected as an attribute and auto-set to the first option if empty. @default '' */
+  /** The value of the currently selected option. Reflected as an attribute and auto-set to the first selectable option if empty. @default '' */
   value: string;
+  /** The form field name submitted with the selected value. Required for native form integration — without it, the selection will not appear in FormData. @default '' */
+  name: string;
   /** Disables the entire control, reducing opacity to 40% and blocking pointer events. @default false */
   disabled: boolean;
+  /** @default true */
+  formAssociated: boolean;
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped — // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers — so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
+  properties: Record<string, unknown>;
+  /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
+  autoValidates: boolean;
+  form: unknown;
+  validity: unknown;
+  validationMessage: unknown;
+  /** @default false */
+  required: boolean;
+  /** @default false */
+  readonly: boolean;
 }
 
 /**
@@ -2828,6 +2843,8 @@ export declare class ArcSwitchGroup extends LitElement {
 export declare class ArcTab extends LitElement {
   /** Text displayed on the tab button. Keep labels concise — one or two words — to prevent the tab bar from overflowing. @default '' */
   label: string;
+  /** When true, the tab button is dimmed, is skipped by the arrow keys and cannot be selected by click. A disabled tab that is already selected stays visible — disabling is not a way to hide a panel. @default false */
+  disabled: boolean;
 }
 
 /**

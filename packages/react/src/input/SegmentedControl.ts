@@ -6,6 +6,7 @@ import { ArcSegmentedControl } from '@arclux/arc-ui/segmented-control';
 
 export interface SegmentedControlProps {
   value?: string;
+  name?: string;
   disabled?: boolean;
   className?: string;
   children?: React.ReactNode;

@@ -938,7 +938,10 @@ declare module 'react' {
       };
       'arc-segmented-control': ArcBaseAttributes & {
         value?: string;
+        name?: string;
         disabled?: boolean;
+        required?: boolean;
+        readonly?: boolean;
       };
       'arc-select': ArcBaseAttributes & {
         value?: string;
@@ -1099,6 +1102,7 @@ declare module 'react' {
       };
       'arc-tab': ArcBaseAttributes & {
         label?: string;
+        disabled?: boolean;
       };
       'arc-table': ArcBaseAttributes & {
         columns?: string;

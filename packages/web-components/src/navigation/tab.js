@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * An individual tab panel within a Tabs group. Each Tab renders a button in the tab bar and owns
@@ -7,11 +8,13 @@ import { LitElement, html, css } from 'lit';
  *
  * @tag arc-tab
  * @prop {string} label - Text displayed on the tab button. Keep labels concise — one or two words — to prevent the tab bar from overflowing.
+ * @prop {boolean} disabled - When true, the tab button is dimmed, is skipped by the arrow keys and cannot be selected by click. A disabled tab that is already selected stays visible — disabling is not a way to hide a panel.
  * @slot - Default content.
  */
-export class ArcTab extends LitElement {
+export class ArcTab extends DeclaredPropsMixin(LitElement) {
   static properties = {
     label: { type: String, reflect: true },
+    disabled: flag(false),
   };
 
   static styles = css`
@@ -22,6 +25,21 @@ export class ArcTab extends LitElement {
   constructor() {
     super();
     this.label = '';
+  }
+
+  /**
+   * The tab bar renders `label` and `disabled` off its arc-tab children, which
+   * are light-DOM siblings rather than reactive inputs of the group — so a
+   * change here has to tell the group, or the button keeps the old text and
+   * stays clickable after being disabled.
+   */
+  updated(changed) {
+    // A *change*, not the initial assignment: on the first update every entry's
+    // previous value is undefined, and the group is mid-render anyway.
+    const moved = (name) => changed.has(name) && changed.get(name) !== undefined;
+    if (moved('label') || moved('disabled')) {
+      this.closest('arc-tabs')?.requestUpdate();
+    }
   }
 
   render() {

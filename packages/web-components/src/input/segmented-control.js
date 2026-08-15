@@ -1,6 +1,8 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { FormControlMixin } from '../shared/form-control-mixin.js';
+import { isOptionDisabled } from '../shared/option.js';
 import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
@@ -8,16 +10,18 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * exclusive buttons with an active highlight.
  *
  * @tag arc-segmented-control
- * @prop {string} value - The value of the currently selected option. Reflected as an attribute and auto-set to the first option if empty.
+ * @prop {string} value - The value of the currently selected option. Reflected as an attribute and auto-set to the first selectable option if empty.
+ * @prop {string} name - The form field name submitted with the selected value. Required for native form integration — without it, the selection will not appear in FormData.
  * @prop {boolean} disabled - Disables the entire control, reducing opacity to 40% and blocking pointer events.
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired when the selected segment changes
  * @slot - Default content.
  * @csspart control
  * @csspart option
  */
-export class ArcSegmentedControl extends DeclaredPropsMixin(LitElement) {
+export class ArcSegmentedControl extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
   static properties = {
     value: { type: String, reflect: true },
+    name: { type: String, reflect: true },
     disabled: flag(false),
     _options: { state: true },
   };
@@ -70,9 +74,16 @@ export class ArcSegmentedControl extends DeclaredPropsMixin(LitElement) {
         line-height: 1.4;
       }
 
-      .segmented__option:hover:not(.is-active) {
+      .segmented__option:hover:not(.is-active):not(:disabled) {
         color: var(--text-primary);
         background: var(--surface-hover);
+      }
+
+      /* The per-option disabled state (finding #6). The host rule above covers
+         the whole control; this covers one segment of an otherwise live one. */
+      .segmented__option:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
       }
 
       .segmented__option.is-active {
@@ -102,6 +113,7 @@ export class ArcSegmentedControl extends DeclaredPropsMixin(LitElement) {
   constructor() {
     super();
     this.value = '';
+    this.name = '';
     this._options = [];
   }
 
@@ -131,14 +143,41 @@ export class ArcSegmentedControl extends DeclaredPropsMixin(LitElement) {
       .filter((el) => el.tagName === 'ARC-OPTION');
     if (!options.length && !this._options.length) return;
     this._options = options;
-    // Auto-select first if no value set
+    // Auto-select the first *selectable* option if no value set — landing the
+    // initial selection on a disabled segment would defeat the whole guard.
     if (!this.value && this._options.length > 0) {
-      this.value = this._options[0].getAttribute('value') || '';
+      const first = this._options.find((opt) => !this._isDisabled(opt));
+      this.value = first?.getAttribute('value') || '';
+      // That auto-selection *is* this control's initial state, but it happens
+      // after connectedCallback captured the reset baseline — so without this,
+      // form.reset() would clear the bar rather than return it here.
+      this._recaptureFormResetState();
     }
+  }
+
+  /** Whether this option refuses selection — see shared/option.js, finding #6. */
+  _isDisabled(option) {
+    return isOptionDisabled(option);
+  }
+
+  /**
+   * The next selectable index walking `step` from `from`, wrapping, or
+   * `undefined` when every option is disabled. Bounded so an all-disabled
+   * control terminates rather than spinning.
+   */
+  _seek(from, step) {
+    const n = this._options.length;
+    for (let i = 1; i <= n; i += 1) {
+      const candidate = (from + step * i + n * i) % n;
+      if (!this._isDisabled(this._options[candidate])) return candidate;
+    }
+    return undefined;
   }
 
   _select(optionValue) {
     if (this.disabled || optionValue === this.value) return;
+    const option = this._options.find((opt) => (opt.getAttribute('value') || '') === optionValue);
+    if (option && this._isDisabled(option)) return;
     this.value = optionValue;
     this.dispatchEvent(
       new CustomEvent('arc-change', {
@@ -154,10 +193,10 @@ export class ArcSegmentedControl extends DeclaredPropsMixin(LitElement) {
 
     if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
       e.preventDefault();
-      nextIndex = (index + 1) % this._options.length;
+      nextIndex = this._seek(index, 1);
     } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
       e.preventDefault();
-      nextIndex = (index - 1 + this._options.length) % this._options.length;
+      nextIndex = this._seek(index, -1);
     } else if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       const val = this._options[index]?.getAttribute('value') || '';
@@ -165,14 +204,17 @@ export class ArcSegmentedControl extends DeclaredPropsMixin(LitElement) {
       return;
     } else if (e.key === 'Home') {
       e.preventDefault();
-      nextIndex = 0;
+      nextIndex = this._seek(-1, 1);
     } else if (e.key === 'End') {
       e.preventDefault();
-      nextIndex = this._options.length - 1;
+      nextIndex = this._seek(this._options.length, -1);
     } else {
       return;
     }
 
+    // The key stays claimed above whether or not a selectable option survives
+    // the walk; an all-disabled control must not scroll the page instead.
+    if (nextIndex === undefined) return;
     const val = this._options[nextIndex]?.getAttribute('value') || '';
     this._select(val);
     this.updateComplete.then(() => {
@@ -196,13 +238,14 @@ export class ArcSegmentedControl extends DeclaredPropsMixin(LitElement) {
           const val = opt.getAttribute('value') || '';
           const label = opt.textContent?.trim() || val;
           const isActive = val === this.value;
+          const optionDisabled = this._isDisabled(opt);
           return html`
             <button
               class="segmented__option ${isActive ? 'is-active' : ''}"
               role="radio"
               aria-checked=${isActive ? 'true' : 'false'}
               tabindex=${isActive ? '0' : '-1'}
-              ?disabled=${this.disabled}
+              ?disabled=${this.disabled || optionDisabled}
               @click=${() => this._select(val)}
               @keydown=${(e) => this._handleKeydown(e, i)}
               part="option"

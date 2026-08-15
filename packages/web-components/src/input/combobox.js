@@ -1,7 +1,8 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { PositionController } from '../shared/position-controller.js';
 import { ListboxController } from '../shared/listbox-controller.js';
+import { isOptionDisabled } from '../shared/option.js';
 import { managedPanelStyles } from '../shared/position-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 import { DismissController } from '../shared/dismiss-controller.js';
@@ -158,13 +159,20 @@ export class ArcCombobox extends DeclaredPropsMixin(FormControlMixin(LitElement)
         transition: background var(--transition-fast);
       }
 
-      .combobox__option:hover,
+      .combobox__option:hover:not(.combobox__option--disabled),
       .combobox__option--active {
         background: rgba(var(--interactive-rgb), 0.1);
       }
 
       .combobox__option--selected {
         color: var(--interactive);
+      }
+
+      /* Per-option disabled (finding #6). Still rendered and still counted —
+         dropping it would renumber the list under aria-activedescendant. */
+      .combobox__option--disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
       }
 
       .combobox__empty {
@@ -215,6 +223,7 @@ export class ArcCombobox extends DeclaredPropsMixin(FormControlMixin(LitElement)
       onSelect: (i) => this._selectItem(this._filteredItems[i]),
       optionId: (i) => `${this._comboId}-opt-${i}`,
       scrollContainer: () => this.shadowRoot?.querySelector('.combobox__listbox'),
+      isItemDisabled: (i) => this._filteredItems[i]?.disabled === true,
     });
   }
 
@@ -239,7 +248,13 @@ export class ArcCombobox extends DeclaredPropsMixin(FormControlMixin(LitElement)
   }
 
   get _normalizedItems() {
-    return this._options.map((opt) => ({ label: opt.label, value: opt.value }));
+    // `disabled` rides along because the listbox renders these plain objects,
+    // not the arc-option elements they came from (finding #6).
+    return this._options.map((opt) => ({
+      label: opt.label,
+      value: opt.value,
+      disabled: isOptionDisabled(opt),
+    }));
   }
 
   get _filteredItems() {
@@ -266,7 +281,7 @@ export class ArcCombobox extends DeclaredPropsMixin(FormControlMixin(LitElement)
   }
 
   _selectItem(item) {
-    if (this.readonly) return;
+    if (this.readonly || item?.disabled) return;
     this.value = item.value;
     this._query = item.label;
     this._open = false;
@@ -355,9 +370,10 @@ export class ArcCombobox extends DeclaredPropsMixin(FormControlMixin(LitElement)
                   (item, i) => html`
                 <div
                   id="${this._comboId}-opt-${i}"
-                  class="combobox__option ${i === this._listbox.activeIndex ? 'combobox__option--active' : ''} ${item.value === this.value ? 'combobox__option--selected' : ''}"
+                  class="combobox__option ${i === this._listbox.activeIndex ? 'combobox__option--active' : ''} ${item.value === this.value ? 'combobox__option--selected' : ''} ${item.disabled ? 'combobox__option--disabled' : ''}"
                   role="option"
                   aria-selected=${item.value === this.value ? 'true' : 'false'}
+                  aria-disabled=${item.disabled ? 'true' : nothing}
                   @click=${() => this._selectItem(item)}
                   part="option"
                 >${item.label}</div>

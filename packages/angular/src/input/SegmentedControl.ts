@@ -22,6 +22,13 @@ export class SegmentedControl {
     return this._el.value;
   }
 
+  @Input() set name(value: string) {
+    this._el.name = value;
+  }
+  get name(): string {
+    return this._el.name;
+  }
+
   @Input() set disabled(value: boolean) {
     this._el.disabled = value;
   }

@@ -22404,8 +22404,20 @@
                 "text": "string"
               },
               "default": "''",
-              "description": "The value of the currently selected option. Reflected as an attribute and auto-set to the first option if empty.",
+              "description": "The value of the currently selected option. Reflected as an attribute and auto-set to the first selectable option if empty.",
               "attribute": "value",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The form field name submitted with the selected value. Required for native form integration — without it, the selection will not appear in FormData.",
+              "attribute": "name",
               "reflects": true
             },
             {
@@ -22418,6 +22430,154 @@
               "description": "Disables the entire control, reducing opacity to 40% and blocking pointer events.",
               "attribute": "disabled",
               "default": "false",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "formAssociated",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "true",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "properties",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped — // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers — so the stock converter buys // nothing here and costs the usual bug: `required=\"false\"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), }",
+              "description": "Lit merges static properties up the prototype chain, so every consumer\ngets these without declaring them. `required` participates in constraint\nvalidation below; `readonly` reflects for styling and is enforced by\neach component's interaction handlers (the mixin can't know which\ngestures mutate state).",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "autoValidates",
+              "type": {
+                "text": "boolean"
+              },
+              "static": true,
+              "default": "true",
+              "description": "Components that run their own constraint-validation logic (pattern\nchecks, range checks) opt out of the automatic required sync by\noverriding this to false, and own the whole validity flag set instead.",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "formDisabledCallback",
+              "parameters": [
+                {
+                  "name": "disabled"
+                }
+              ],
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "formResetCallback",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "formStateRestoreCallback",
+              "parameters": [
+                {
+                  "name": "state"
+                }
+              ],
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "form",
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "validity",
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "validationMessage",
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "checkValidity",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "reportValidity",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "privacy": "public",
+              "attribute": "required",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              },
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "readonly",
+              "privacy": "public",
+              "attribute": "readonly",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              },
               "reflects": true
             }
           ],
@@ -22437,8 +22597,17 @@
                 "text": "string"
               },
               "default": "''",
-              "description": "The value of the currently selected option. Reflected as an attribute and auto-set to the first option if empty.",
+              "description": "The value of the currently selected option. Reflected as an attribute and auto-set to the first selectable option if empty.",
               "fieldName": "value"
+            },
+            {
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The form field name submitted with the selected value. Required for native form integration — without it, the selection will not appear in FormData.",
+              "fieldName": "name"
             },
             {
               "name": "disabled",
@@ -22448,12 +22617,40 @@
               "description": "Disables the entire control, reducing opacity to 40% and blocking pointer events.",
               "fieldName": "disabled",
               "default": "false"
+            },
+            {
+              "name": "required",
+              "fieldName": "required",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              }
+            },
+            {
+              "name": "readonly",
+              "fieldName": "readonly",
+              "inheritedFrom": {
+                "name": "FormControlMixin",
+                "module": "src/shared/form-control-mixin.js"
+              },
+              "default": "false",
+              "type": {
+                "text": "boolean"
+              }
             }
           ],
           "mixins": [
             {
               "name": "DeclaredPropsMixin",
               "module": "/src/shared/props.js"
+            },
+            {
+              "name": "FormControlMixin",
+              "module": "/src/shared/form-control-mixin.js"
             }
           ],
           "superclass": {
@@ -32028,6 +32225,18 @@
               "description": "Text displayed on the tab button. Keep labels concise — one or two words — to prevent the tab bar from overflowing.",
               "attribute": "label",
               "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "When true, the tab button is dimmed, is skipped by the arrow keys and cannot be selected by click. A disabled tab that is already selected stays visible — disabling is not a way to hide a panel.",
+              "attribute": "disabled",
+              "default": "false",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -32039,6 +32248,21 @@
               "default": "''",
               "description": "Text displayed on the tab button. Keep labels concise — one or two words — to prevent the tab bar from overflowing.",
               "fieldName": "label"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "When true, the tab button is dimmed, is skipped by the arrow keys and cannot be selected by click. A disabled tab that is already selected stays visible — disabling is not a way to hide a panel.",
+              "fieldName": "disabled",
+              "default": "false"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "DeclaredPropsMixin",
+              "module": "/src/shared/props.js"
             }
           ],
           "superclass": {
@@ -33494,6 +33718,16 @@
               "readonly": true
             },
             {
+              "kind": "method",
+              "name": "isDisabled",
+              "parameters": [
+                {
+                  "name": "index"
+                }
+              ],
+              "description": "Whether the option at `index` refuses selection."
+            },
+            {
               "kind": "field",
               "name": "activeDescendantId",
               "description": "The value for `aria-activedescendant` on the focused control, or an empty\nstring when nothing is active. Empty rather than absent because a stale id\npointing at a removed option is worse than none — assistive technology\nannounces nothing at all.",
@@ -33744,6 +33978,24 @@
       "path": "src/shared/option.js",
       "declarations": [
         {
+          "kind": "function",
+          "name": "isOptionDisabled",
+          "parameters": [
+            {
+              "name": "option",
+              "type": {
+                "text": "Element | null | undefined"
+              }
+            }
+          ],
+          "description": "Whether an `arc-option` element refuses selection.\n\nShared because all four consumers need the same answer and all four had the\nsame wrong one — they read the *group's* `disabled` and never the option's\n(finding #6). Reads the attribute as well as the property: on the slotchange\nthat builds a listbox an arc-option may not have upgraded yet, and an\nun-upgraded element has no `disabled` property at all.",
+          "return": {
+            "type": {
+              "text": "boolean"
+            }
+          }
+        },
+        {
           "kind": "class",
           "description": "Individual option element slotted into the segmented control. The `value` attribute identifies\nthe option and the text content becomes the label.\n\nAlso used inside Select and MultiSelect, where each option provides a value for form submission\nand its text content becomes the label shown in the dropdown.",
           "name": "ArcOption",
@@ -33839,6 +34091,14 @@
         }
       ],
       "exports": [
+        {
+          "kind": "js",
+          "name": "isOptionDisabled",
+          "declaration": {
+            "name": "isOptionDisabled",
+            "module": "src/shared/option.js"
+          }
+        },
         {
           "kind": "js",
           "name": "ArcOption",

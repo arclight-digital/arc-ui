@@ -70,8 +70,14 @@ export class ArcTabs extends DeclaredPropsMixin(LitElement) {
         white-space: nowrap;
       }
 
-      .tabs__tab:hover { color: var(--text-primary); }
-      .tabs__tab:active { transform: scale(0.95); }
+      .tabs__tab:hover:not(:disabled) { color: var(--text-primary); }
+      .tabs__tab:active:not(:disabled) { transform: scale(0.95); }
+
+      .tabs__tab:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
       .tabs__tab[aria-selected="true"] {
         color: var(--interactive);
         border-bottom-color: var(--interactive);
@@ -180,7 +186,28 @@ export class ArcTabs extends DeclaredPropsMixin(LitElement) {
     });
   }
 
+  /** Whether the tab at `index` refuses selection (finding #4). */
+  _isDisabled(index) {
+    return this._tabs[index]?.disabled === true;
+  }
+
+  /**
+   * The next selectable index walking `step` from `from`, wrapping, or
+   * `undefined` when every tab is disabled. Written as a bounded walk rather
+   * than a `while` so a fully disabled bar terminates instead of spinning.
+   */
+  _seek(from, step) {
+    const n = this._tabs.length;
+    for (let i = 1; i <= n; i += 1) {
+      const candidate = (from + step * i + n * i) % n;
+      if (!this._isDisabled(candidate)) return candidate;
+    }
+    return undefined;
+  }
+
   _select(index) {
+    if (this._isDisabled(index)) return;
+
     this.selected = index;
     this._syncVisibility();
 
@@ -204,13 +231,16 @@ export class ArcTabs extends DeclaredPropsMixin(LitElement) {
     const nextKey = isVertical ? 'ArrowDown' : 'ArrowRight';
     const prevKey = isVertical ? 'ArrowUp' : 'ArrowLeft';
 
-    if (e.key === nextKey) next = (current + 1) % tabs.length;
-    else if (e.key === prevKey) next = (current - 1 + tabs.length) % tabs.length;
-    else if (e.key === 'Home') next = 0;
-    else if (e.key === 'End') next = tabs.length - 1;
+    if (e.key === nextKey) next = this._seek(current, 1);
+    else if (e.key === prevKey) next = this._seek(current, -1);
+    else if (e.key === 'Home') next = this._seek(-1, 1);
+    else if (e.key === 'End') next = this._seek(tabs.length, -1);
     else return;
 
+    // The key is ours whether or not a target survives the disabled filter —
+    // an all-disabled bar must not scroll the page instead.
     e.preventDefault();
+    if (next === undefined) return;
     tabs[next].focus();
     this._select(next);
   }
@@ -227,30 +257,35 @@ export class ArcTabs extends DeclaredPropsMixin(LitElement) {
   }
 
   render() {
-    const labels = this._tabs.map((t) => t.label);
-
     return html`
       <div class="tabs" part="tabs">
         <div class="tabs__list" role="tablist" aria-orientation=${this.orientation} @keydown=${this._handleKeydown}>
-          ${labels.map(
-            (label, i) => html`
+          ${this._tabs.map(
+            (tab, i) => html`
             <button
               class="tabs__tab"
               role="tab"
               aria-selected=${i === this.selected ? 'true' : 'false'}
+              ?disabled=${tab.disabled === true}
               tabindex=${i === this.selected ? '0' : '-1'}
               id="tab-${i}"
-              aria-controls="panel-${i}"
+              aria-controls="panel"
               @click=${() => this._select(i)}
-            >${label}</button>
+            >${tab.label}</button>
           `,
           )}
         </div>
 
+        <!--
+          One panel, one id. Every tab's aria-controls points at it because
+          every tab controls it — the panel does not swap elements, it swaps
+          which arc-tab child is unhidden inside it. Per-tab ids were the
+          defect: only the selected tab's reference resolved (finding #2).
+        -->
         <div
           class="tabs__panel"
           role="tabpanel"
-          id="panel-${this.selected}"
+          id="panel"
           aria-labelledby="tab-${this.selected}"
         >
           <slot @slotchange=${this._onSlotChange}></slot>

@@ -354,3 +354,185 @@ describe('ListboxController: all four inputs share it', () => {
     });
   }
 });
+
+/**
+ * Per-option `disabled` — finding #6.
+ *
+ * arc-option has always declared it; all four consumers read the *group's*
+ * flag and never the option's, so a disabled option was reachable by arrow
+ * key, by typeahead and by Enter. The skip is the controller's job because
+ * the keyboard is; refusing the click is each component's own, and pinned in
+ * their suites.
+ */
+describe('ListboxController: disabled options', () => {
+  afterEach(cleanup);
+
+  /** A select whose options at `disabledIndexes` refuse selection. */
+  async function mountWithDisabled(count, disabledIndexes) {
+    const options = Array.from({ length: count }, (_, i) =>
+      `<arc-option value="v${i}" ${disabledIndexes.includes(i) ? 'disabled' : ''}>Option ${i}</arc-option>`).join('');
+    const el = mount(`<arc-select label="Pick">${options}</arc-select>`);
+    await el.updateComplete;
+    await tick();
+    await el.updateComplete;
+    return el;
+  }
+
+  async function opened(count, disabledIndexes) {
+    const el = await mountWithDisabled(count, disabledIndexes);
+    el.open = true;
+    await el.updateComplete;
+    await tick();
+    await el.updateComplete;
+    return el;
+  }
+
+  it('ArrowDown steps over a disabled option', async () => {
+    const el = await opened(4, [1, 2]);
+    el._listbox.setActive(0);
+    key(trigger(el), 'ArrowDown');
+    await el.updateComplete;
+    expect(el._listbox.activeIndex).to.equal(3);
+  });
+
+  it('ArrowUp steps over a disabled option', async () => {
+    const el = await opened(4, [1, 2]);
+    el._listbox.setActive(3);
+    key(trigger(el), 'ArrowUp');
+    await el.updateComplete;
+    expect(el._listbox.activeIndex).to.equal(0);
+  });
+
+  it('Home and End land on the nearest selectable option', async () => {
+    const el = await opened(4, [0, 3]);
+
+    key(trigger(el), 'Home');
+    await el.updateComplete;
+    expect(el._listbox.activeIndex, 'not the disabled index 0').to.equal(1);
+
+    key(trigger(el), 'End');
+    await el.updateComplete;
+    expect(el._listbox.activeIndex, 'not the disabled index 3').to.equal(2);
+  });
+
+  it('opens onto the first selectable option, not the first option', async () => {
+    const el = await mountWithDisabled(4, [0]);
+    key(trigger(el), 'ArrowDown');
+    await el.updateComplete;
+    await tick();
+    await el.updateComplete;
+    expect(el._listbox.activeIndex).to.equal(1);
+  });
+
+  it('opens upward onto the last selectable option', async () => {
+    const el = await mountWithDisabled(4, [3]);
+    key(trigger(el), 'ArrowUp');
+    await el.updateComplete;
+    await tick();
+    await el.updateComplete;
+    expect(el._listbox.activeIndex).to.equal(2);
+  });
+
+  it('typeahead skips a disabled match', async () => {
+    // Both options start with "O"; the first refuses, so the letter has to
+    // reach past it rather than parking virtual focus on something inert.
+    const el = await opened(3, [0, 1]);
+    key(trigger(el), 'O');
+    await el.updateComplete;
+    expect(el._listbox.activeIndex).to.equal(2);
+  });
+
+  it('Enter on a disabled option selects nothing, and still eats the key', async () => {
+    const el = await opened(3, [1]);
+    el._listbox.setActive(1);
+    await el.updateComplete;
+
+    const event = new KeyboardEvent('keydown', {
+      key: 'Enter', bubbles: true, composed: true, cancelable: true,
+    });
+    trigger(el).dispatchEvent(event);
+    await el.updateComplete;
+
+    expect(el.value, 'nothing was selected').to.equal('');
+    expect(el.open, 'and the listbox stayed open').to.equal(true);
+    expect(event.defaultPrevented, 'or Enter falls through to a form submit').to.equal(true);
+  });
+
+  it('does not move or spin when every option is disabled', async () => {
+    const el = await opened(3, [0, 1, 2]);
+    key(trigger(el), 'ArrowDown');
+    await el.updateComplete;
+    expect(el._listbox.activeIndex).to.equal(-1);
+  });
+
+  it('keeps disabled options rendered and counted', async () => {
+    // Filtering them out would renumber every option after them, and
+    // aria-activedescendant is an index into what is rendered.
+    const el = await opened(4, [1]);
+    expect(options(el)).to.have.lengthOf(4);
+    expect(options(el)[1].getAttribute('aria-disabled')).to.equal('true');
+    expect(options(el)[0].hasAttribute('aria-disabled'), 'only where it applies').to.equal(false);
+  });
+});
+
+/**
+ * The click path is each component's own — the controller never sees a click.
+ * Swept across all three arc-option consumers here rather than in three files,
+ * because the defect was identical in all three and a shared assertion is what
+ * makes "all three" checkable.
+ */
+describe('arc-option disabled: every consumer refuses the click', () => {
+  afterEach(cleanup);
+
+  const cases = [
+    {
+      tag: 'arc-select',
+      optionSelector: '.select__option',
+      open: (el) => { el.open = true; },
+      read: (el) => el.value,
+      empty: '',
+    },
+    {
+      tag: 'arc-combobox',
+      optionSelector: '.combobox__option',
+      open: (el) => { el._open = true; },
+      read: (el) => el.value,
+      empty: '',
+    },
+    {
+      tag: 'arc-multi-select',
+      optionSelector: '.ms__option',
+      open: (el) => { el._open = true; },
+      read: (el) => [...(el.value || [])].join(','),
+      empty: '',
+    },
+  ];
+
+  for (const { tag, optionSelector, open, read, empty } of cases) {
+    it(`${tag} ignores a click on a disabled option`, async () => {
+      const el = mount(`<${tag} label="Pick">
+        <arc-option value="a">Alpha</arc-option>
+        <arc-option value="b" disabled>Bravo</arc-option>
+      </${tag}>`);
+      await el.updateComplete;
+      await tick();
+      open(el);
+      await el.updateComplete;
+      await tick();
+      await el.updateComplete;
+
+      const rendered = [...el.shadowRoot.querySelectorAll(optionSelector)];
+      expect(rendered, 'the disabled option is still drawn').to.have.lengthOf(2);
+
+      rendered[1].click();
+      await el.updateComplete;
+      expect(read(el), 'the disabled option must not become the value').to.equal(empty);
+
+      // Anti-vacuity: the enabled sibling must still be clickable, or this
+      // whole block would pass against a listbox that ignores every click.
+      rendered[0].click();
+      await el.updateComplete;
+      expect(read(el)).to.equal('a');
+    });
+  }
+});

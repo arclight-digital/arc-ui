@@ -6,6 +6,7 @@ import { ArcTab } from '@arclux/arc-ui/tab';
 
 export interface TabProps {
   label?: string;
+  disabled?: boolean;
   className?: string;
   children?: React.ReactNode;
 }

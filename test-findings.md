@@ -18,6 +18,12 @@ nothing at all (`arc-collapsible`,
 
 Ordered by what a consumer loses, not by discovery order.
 
+**Closing pass (V4-PLAN 2.1), from 2026-08-15.** Each row below carries its
+status. `FIXED` means the source changed and the `BUG:` pin was inverted into a
+regression test — never deleted. `CLOSED` means the finding was answered without
+a source change, with the reasoning recorded at the finding itself. Rows with no
+marker are still open.
+
 ### Data and correctness — wrong results, silently
 
 | # | Component | Finding |
@@ -36,22 +42,22 @@ Ordered by what a consumer loses, not by discovery order.
 | 16 | `arc-speed-dial` | closed actions stay focusable and clickable — invisible tab stops |
 | 29 | `arc-command-bar` | the input has no accessible name and no way to give it one |
 | 28, 27 | `arc-list` | items claim `role="option"` inside a plain `role="list"`; stray `aria-multiselectable` |
-| 2 | `arc-tabs` | `aria-controls` points at ids that do not exist |
+| 2 | `arc-tabs` | **FIXED** — `aria-controls` pointed at ids that do not exist |
 | 24, 25 | five components | `aria-expanded=""` and four more attributes rendered empty instead of omitted |
 | 9-12 | `arc-rating` | ArrowLeft raises the rating; no route back to unrated; value below its own min; hardcoded name |
-| 3 | `arc-tabs` | an unknown `orientation` reaches `aria-orientation` verbatim |
+| 3 | `arc-tabs` | **FIXED** — an unknown `orientation` reached `aria-orientation` verbatim |
 
 ### API and documentation
 
 | # | Scope | Finding |
 |---|---|---|
 | 20 | **library-wide** | 20 boolean props default `true` and cannot be disabled from markup |
-| 6 | `arc-option` | `disabled` is documented but never read by `arc-segmented-control` |
-| 1 | `arc-tabs` | `selected` documented as clamped; nothing clamps |
+| 6 | `arc-option` | **FIXED** — `disabled` was documented and read by *none* of its four consumers |
+| 1 | `arc-tabs` | **FIXED** — `selected` documented as clamped; nothing clamped |
 | 32 | `arc-menu-item` | `label` documented as a prop, implemented as a read-only getter |
 | 17, 18 | `arc-speed-dial` | unknown `position` anchors nowhere; documented per-item `value` never emitted |
 | 30 | `arc-command-bar` | Enter inside a form submits twice |
-| 4, 5, 7, 13 | various | smaller doc/structure gaps, detailed below |
+| 4, 5, 7, 13 | various | **4 FIXED, 5 CLOSED, 7 FIXED** — smaller doc/structure gaps, detailed below |
 
 ### Now enforced by a check
 
@@ -66,7 +72,13 @@ occurrences without turning CI red:
 
 ## arc-tabs
 
-### 1. `selected` is documented as clamped, and is not — **doc-mismatch**
+### 1. `selected` is documented as clamped, and is not — **doc-mismatch — FIXED**
+
+**Fixed by the declared-props vocabulary.** `selected` is now
+`int({ default: 0, min: 0, max: '_maxIndex', clamp: 'toRange' })`, where `max`
+names a *getter* so the bound tracks the tab count instead of freezing at
+whatever it was when the class was written. The pins inverted into
+"clamps an out-of-range selected to the last tab" and its negative-index pair.
 
 `navigation/tabs.js:10` declares:
 
@@ -83,7 +95,15 @@ hides **all three** and renders an empty panel. Same for a negative index.
 - Not caught by `scripts/checks/doc-claims.js`, which verifies that `@prop`
   *exists* as a reactive property, not that its prose is true.
 
-### 2. `aria-controls` points at ids that do not exist — **a11y**
+### 2. `aria-controls` points at ids that do not exist — **a11y — FIXED**
+
+**Fixed by giving the one panel one id.** The choice was between "a panel per
+tab" and "one id, honestly referenced", and the second is the one that matches
+what the component actually does: it does not swap panel elements, it unhides
+one arc-tab child inside a single panel. Per-tab ids described an
+implementation that was never built, and two of every three references dangled
+as a result. Every tab now renders `aria-controls="panel"`, which resolves from
+every tab and stays resolved across a selection change — both pinned.
 
 Every tab renders `aria-controls="panel-${i}"` (`tabs.js:236`), but there is one
 panel and its id is `panel-${this.selected}` (`tabs.js:246`). Only the selected
@@ -96,7 +116,12 @@ tab's reference resolves. From any other tab, a screen reader's
   The former is the standard tabs pattern and would also fix the fact that the
   panel is not re-announced on switch.
 
-### 3. An unrecognised `orientation` reaches the accessibility tree verbatim — **a11y**
+### 3. An unrecognised `orientation` reaches the accessibility tree verbatim — **a11y — FIXED**
+
+**Fixed by the declared-props vocabulary.** `oneOf(['horizontal','vertical'])`
+normalises on both the attribute and the property path, so the value the render
+binds and the value `_handleKeydown` branches on are now the same value. The two
+fallbacks could not disagree even if someone wanted them to.
 
 `aria-orientation=${this.orientation}` (`tabs.js:227`) is bound straight from the
 prop. `<arc-tabs orientation="diagonal">` emits `aria-orientation="diagonal"`,
@@ -108,7 +133,25 @@ two fallbacks do not have to agree, and here they need not.
   aria-orientation verbatim", alongside a test asserting the key handling does
   correctly fall back to horizontal.
 
-### 4. `arc-tab` documents per-tab disabling it does not have — **doc-mismatch**
+### 4. `arc-tab` documents per-tab disabling it does not have — **doc-mismatch — FIXED**
+
+**Fixed by building the property rather than deleting the sentence.** Two ways
+to close a doc-mismatch, and here the docs were right about what a tab bar
+should do: `arc-tab` gains `disabled: flag(false)`, and `arc-tabs` honours it on
+every path in — the button renders `disabled`, `_select()` refuses, and the
+arrow keys, Home and End walk past it via a bounded `_seek()` that terminates on
+an all-disabled bar instead of spinning. The key stays `preventDefault`ed even
+when no target survives the walk, or a fully disabled bar scrolls the page.
+
+Two things this turned up that reading would not have:
+
+- **A disabled tab is not a hidden tab.** If the selected tab is disabled after
+  the fact, its panel stays visible. Hiding it would mean "disabled" silently
+  moves the selection, which is a different feature.
+- **The group renders its children's state but is not reactive to it.** `label`
+  had the same latent gap and nobody had hit it. `arc-tab.updated()` now asks
+  the group to re-render, guarded on the *previous* value being defined so the
+  initial assignment — where the group is mid-render anyway — does not count.
 
 `navigation/tab.js:5-6` says to use the sub-component "when you need fine-grained
 control over individual tab behavior, such as **disabling a specific tab** or
@@ -116,10 +159,11 @@ attaching per-tab event listeners". `ArcTab` declares exactly one property,
 `label` (`tab.js:13-15`). There is no `disabled`, and `arc-tabs` has no notion of
 a disabled tab in its key handling or its click handler.
 
-- Not pinned by a test — there is no behaviour to pin. Flagged here because the
-  claim is in prose rather than a `@prop`, so `doc-claims.js` cannot see it.
+- Was not pinned by a test — there was no behaviour to pin. It was flagged here
+  because the claim is in prose rather than a `@prop`, so `doc-claims.js` cannot
+  see it. Now pinned by `arc-tabs disabled tabs`, seven tests.
 
-### 5. `arc-tabs` schedules an update after its update completes — **smell**
+### 5. `arc-tabs` schedules an update after its update completes — **smell — CLOSED, library-wide by design**
 
 Running any `arc-tabs` test logs the Lit dev-mode warning:
 
@@ -132,11 +176,46 @@ double-pass `settle()` helper, and so would any consumer awaiting a render.
 
 `arc-segmented-control` has the same shape, for the same reason.
 
+**Closed as by-design, not fixed.** It is not an `arc-tabs` defect: it is what
+slot-driven composition costs. A component that renders from its light-DOM
+children learns what those children are from `slotchange`, which fires *during*
+the first update — so the render that reads them is necessarily the second one.
+One run of the suite logs the same warning for **ten** components
+(`radio-group`, `search`, `select`, `sortable-list`, `tree-select`, `scroll-spy`,
+`sidebar`, `tabs`, `truncate`, `typewriter`), and every one of them is this
+shape. The alternatives are to stop rendering from children, or to make `_tabs`
+non-reactive and re-render by hand — both worse than one extra dev-mode render.
+
+What it costs is real and stays documented: `updateComplete` alone does not
+settle these components, which is exactly why `helpers.js` exports the
+two-pass `settle()` and why every test here uses it.
+
 ---
 
 ## arc-segmented-control / arc-option
 
-### 6. A disabled `arc-option` is fully selectable — **doc-mismatch**
+### 6. A disabled `arc-option` is fully selectable — **doc-mismatch — FIXED**
+
+**Fixed on all four paths the finding named, plus one it did not.** `_select()`
+refuses a disabled option (by value lookup, so the programmatic path is covered
+too, not just the click), `_handleKeydown` walks past it with the same bounded
+`_seek()` as `arc-tabs`, and the button renders `disabled` when *either* the
+group or the option says so.
+
+The path the original write-up missed: **the auto-selection.** `_readOptions`
+set `value` from `_options[0]`, so `<arc-option disabled>` in first position
+became the initial selection — a guard on every path *in* is worthless if the
+control starts out sitting on the thing it is guarding. It now takes the first
+selectable option.
+
+`_isDisabled()` reads the attribute as well as the property, because on the
+slotchange that builds the bar an `arc-option` may not have upgraded yet, and an
+un-upgraded element has no `disabled` property to read.
+
+The same reactivity gap as #4 applies and is closed the same way: consumers
+render an option's state into *their* shadow DOM (`arc-option` is
+`display: none`), so `ArcOption.updated()` asks its nearest Lit ancestor to
+re-render on a real change to `disabled`, `value` or `selected`.
 
 `shared/option.js:12` declares:
 
@@ -152,21 +231,71 @@ double-pass `settle()` helper, and so would any consumer awaiting a render.
 So `<arc-option value="week" disabled>` is selectable by click **and** reachable
 by arrow key, and firing `arc-change` as it goes.
 
-- Pinned by: `test/segmented-control.test.js` — "BUG: a disabled arc-option is
-  still selectable" (covers both the click and the arrow-key path).
-- Worth checking the other `arc-option` consumers in the same pass — `arc-select`,
-  `arc-combobox` and `arc-multi-select` all accept `arc-option`, and only
-  `ListboxController` is known to be tested. This is the kind of defect that is
-  per-consumer, not per-option.
+- Was pinned by: `test/segmented-control.test.js` — "BUG: a disabled arc-option
+  is still selectable". Now `arc-segmented-control per-option disabled`, eight
+  tests.
+- The write-up's own suspicion was right, and it was the larger half of the
+  finding: **all four `arc-option` consumers had it.** See below.
 
-### 7. `value` does not participate in forms — **gap, not a bug**
+#### 6b. The same defect in the other three consumers — **FIXED**
 
-`arc-segmented-control` has a reflected `value` and no `name`, and does not use
-`FormControlMixin`. Putting one in a `<form>` submits nothing. That is consistent
-with its own docs (no `@prop name`, no form claims), so it is pinned as
-current behaviour rather than flagged — but it is a surprise for a control that
-looks exactly like a radio group, and every other value-bearing input in the
-library is form-associated.
+`grep -rl ARC-OPTION src/` returns exactly four files, and `arc-select`,
+`arc-combobox` and `arc-multi-select` had the identical gap — not one of them
+read an option's own `disabled`. Verified against the source rather than
+assumed: `select.js:_selectOption` set `value` unconditionally, and neither
+combobox nor multi-select mentioned the word outside their *own* host flag.
+
+**The keyboard half belongs to `ListboxController`, not to the components.**
+All three route their keys through it, so the skip is one option —
+`isItemDisabled(index)` — and one `_seek()` alongside the existing `_step()`.
+Disabled options stay rendered and stay *counted*: filtering them out would
+renumber every option after them, and `aria-activedescendant` is an index into
+what is rendered. Arrow keys, Home, End, typeahead and the opening keypress all
+walk past them; Enter on one selects nothing and still consumes the key, or a
+refused selection falls through to a form submit.
+
+**The click half belongs to each component**, because the controller never sees
+a click — one guard each, plus `aria-disabled` and a dimmed class. Swept in one
+place (`arc-option disabled: every consumer refuses the click`) with an
+anti-vacuity click on the enabled sibling, so a listbox that ignored *every*
+click could not pass it.
+
+`arc-tag-input` uses `ListboxController` too but has no `arc-option` children —
+its items come from a `suggestions` array — so it takes the controller change
+and needs nothing else.
+
+**One trap this turned up**, worth carrying: the manifest analyzer binds a
+JSDoc block to *whatever declaration follows it*. Adding `isOptionDisabled`
+between `arc-option`'s doc comment and its class silently moved the `@tag` onto
+the function — `ArcOption` lost its `tagName`, vanished from `types/index.d.ts`,
+and the React wrapper stopped compiling. Caught by `pnpm generate`'s wrapper
+typecheck, not by the suite. A shared helper goes *above* the element's doc
+block or below the class, never between them.
+
+### 7. `value` does not participate in forms — **gap — FIXED**
+
+`arc-segmented-control` had a reflected `value` and no `name`, and did not use
+`FormControlMixin`. Putting one in a `<form>` submitted nothing — consistent
+with its own docs, which is why this was filed as a gap rather than a bug, but
+a surprise for a control that looks exactly like a radio group when every other
+value-bearing input in the library is form-associated.
+
+**Fixed by adopting the mixin**, which is three lines — `FormControlMixin` in
+the composition, a `name` prop, and the doc. No `_updateFormValue()` calls: the
+mixin's own `updated()` hook already syncs on a `value` change.
+
+The one thing that was not free, and is the reusable part: **the reset baseline
+is captured in `connectedCallback`, before the first `slotchange`.** A control
+that derives its initial value from slotted children — this one auto-selects its
+first selectable option — therefore baselines the *empty pre-slot state*, and
+`form.reset()` cleared the bar instead of restoring it. The mixin gains a named
+`_recaptureFormResetState()` for exactly this shape rather than the component
+reaching into `__resetState`; it is pinned in `form-control-mixin.test.js`
+next to the "baselines on first connect" trap it is the escape hatch for.
+
+It also joins the derived sweeps for free: `form-data-sweep.test.js` derives its
+subjects from `formAssociated` in the manifest, so the control appeared there
+the moment the mixin landed and failed until someone said how to fill it.
 
 ---
 

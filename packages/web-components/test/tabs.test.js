@@ -7,10 +7,11 @@
  * and wrap, and arc-change carries the index on detail.value per the v3
  * contract — but only for user activation, not for a programmatic set.
  *
- * One test below is marked BUG: it asserts what the component does today, which
- * is not what its own documentation promises. See test-findings.md. Two others
- * were BUG pins until `selected` and `orientation` adopted the declared-props
- * vocabulary in shared/props.js, which fixed findings #1 and #3 outright.
+ * No BUG pins remain here. Four were: `selected` clamping (#1) and the
+ * `orientation` leak into ARIA (#3) fell to the declared-props vocabulary in
+ * shared/props.js; the dangling `aria-controls` (#2) and arc-tab's undelivered
+ * per-tab `disabled` (#4) are fixed below, each with the pin inverted into a
+ * regression test. See test-findings.md.
  */
 import { expect } from '@esm-bundle/chai';
 import { mount, cleanup, settle, keyOn, deepActive, record } from './helpers.js';
@@ -148,18 +149,114 @@ describe('arc-tabs ARIA', () => {
     expect(panel(el).getAttribute('aria-labelledby')).to.equal(buttons(el)[1].id);
   });
 
-  // BUG: every tab renders aria-controls="panel-${i}" (tabs.js:236) but there is
-  // only one panel, and its id is panel-${selected} (tabs.js:246). So only the
-  // selected tab's aria-controls resolves; the others point at ids that are not
-  // in the document, and assistive tech's "move to controlled element" does
-  // nothing from them.
-  it('BUG: aria-controls on unselected tabs points at an id that does not exist', async () => {
+  // Was a BUG pin: every tab rendered aria-controls="panel-${i}" against a
+  // single panel whose id was panel-${selected}, so two of the three references
+  // were dangling and "move to controlled element" did nothing from them.
+  // Fixed by giving the one panel one stable id — finding #2.
+  it('points every tab at the panel it actually controls', async () => {
     const el = await tabs();
     const targets = buttons(el).map((b) => b.getAttribute('aria-controls'));
-    expect(targets).to.deep.equal(['panel-0', 'panel-1', 'panel-2']);
 
-    const resolves = targets.map((id) => el.shadowRoot.getElementById(id) !== null);
-    expect(resolves, 'only the selected tab points at a live panel').to.deep.equal([true, false, false]);
+    const resolves = targets.map((id) => el.shadowRoot.getElementById(id));
+    expect(resolves.every((node) => node !== null), 'no dangling IDREF').to.equal(true);
+    expect(new Set(resolves).size, 'and they all name the one panel').to.equal(1);
+    expect(resolves[0]).to.equal(panel(el));
+  });
+
+  it('keeps the reference live across a selection change', async () => {
+    const el = await tabs();
+    el.selected = 2;
+    await settle(el);
+    const targets = buttons(el).map((b) => b.getAttribute('aria-controls'));
+    expect(targets.every((id) => el.shadowRoot.getElementById(id) === panel(el))).to.equal(true);
+  });
+});
+
+/**
+ * arc-tab's own docs promised per-tab disabling ("such as disabling a specific
+ * tab") against a component that declared nothing but `label` — finding #4.
+ * These are the regression tests for the property that claim now has.
+ */
+describe('arc-tabs disabled tabs', () => {
+  const DISABLED = `
+    <arc-tab label="First">One</arc-tab>
+    <arc-tab label="Second" disabled>Two</arc-tab>
+    <arc-tab label="Third">Three</arc-tab>
+  `;
+
+  it('marks the disabled tab button disabled', async () => {
+    const el = await tabs('', DISABLED);
+    expect(buttons(el).map((b) => b.disabled)).to.deep.equal([false, true, false]);
+  });
+
+  it('refuses a click on a disabled tab, silently', async () => {
+    const el = await tabs('', DISABLED);
+    const seen = record(el, ['arc-change']);
+
+    buttons(el)[1].click();
+    await settle(el);
+
+    expect(el.selected, 'the selection does not move').to.equal(0);
+    expect(seen, 'and no change is announced').to.deep.equal([]);
+  });
+
+  it('refuses a programmatic _select of a disabled tab', async () => {
+    const el = await tabs('', DISABLED);
+    el._select(1);
+    await settle(el);
+    expect(el.selected).to.equal(0);
+  });
+
+  it('steps over a disabled tab with the arrows, in both directions', async () => {
+    const el = await tabs('', DISABLED);
+
+    keyOn(buttons(el)[0], 'ArrowRight');
+    await settle(el);
+    expect(el.selected, 'skips index 1').to.equal(2);
+
+    keyOn(buttons(el)[2], 'ArrowLeft');
+    await settle(el);
+    expect(el.selected, 'and skips it going back too').to.equal(0);
+  });
+
+  it('lands Home and End on the nearest selectable tab', async () => {
+    const el = await tabs('', `
+      <arc-tab label="First" disabled>One</arc-tab>
+      <arc-tab label="Second">Two</arc-tab>
+      <arc-tab label="Third" disabled>Three</arc-tab>
+    `);
+
+    keyOn(buttons(el)[1], 'End');
+    await settle(el);
+    expect(el.selected, 'End skips the disabled last tab').to.equal(1);
+
+    keyOn(buttons(el)[1], 'Home');
+    await settle(el);
+    expect(el.selected, 'Home skips the disabled first tab').to.equal(1);
+  });
+
+  it('does not spin or move when every tab is disabled', async () => {
+    const el = await tabs('', `
+      <arc-tab label="First" disabled>One</arc-tab>
+      <arc-tab label="Second" disabled>Two</arc-tab>
+    `);
+    const seen = record(el, ['arc-change']);
+
+    const event = new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true });
+    buttons(el)[0].dispatchEvent(event);
+    await settle(el);
+
+    expect(el.selected).to.equal(0);
+    expect(seen).to.deep.equal([]);
+    expect(event.defaultPrevented, 'the key is still ours — the page must not scroll').to.equal(true);
+  });
+
+  it('re-renders the bar when a tab is disabled after mount', async () => {
+    const el = await tabs();
+    el.querySelectorAll('arc-tab')[1].disabled = true;
+    await settle(el);
+
+    expect(buttons(el)[1].disabled, 'the group reads its children at render time').to.equal(true);
   });
 });
 

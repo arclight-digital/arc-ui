@@ -6,9 +6,11 @@ defineOptions({ name: 'SegmentedControl' });
 
 const props = withDefaults(defineProps<{
   value?: string;
+  name?: string;
   disabled?: boolean;
 }>(), {
   value: '',
+  name: '',
 });
 
 const emit = defineEmits<{
@@ -28,6 +30,7 @@ function onArcChange(payload: CustomEvent) {
 <template>
   <arc-segmented-control
     :value="props.value"
+    :name="props.name"
     :disabled="props.disabled"
     @arc-change="onArcChange"
   >

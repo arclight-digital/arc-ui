@@ -6,6 +6,7 @@ import '@arclux/arc-ui/segmented-control';
 
 export interface SegmentedControlProps {
   value?: string;
+  name?: string;
   disabled?: boolean;
   onArcChange?: (e: CustomEvent) => void;
   children?: preact.ComponentChildren;
@@ -36,7 +37,7 @@ export interface SegmentedControlProps {
   [key: `on${string}`]: unknown;
 }
 
-export const SegmentedControl: FunctionComponent<SegmentedControlProps> = ({ value, disabled, onArcChange, children, ...rest }) => {
+export const SegmentedControl: FunctionComponent<SegmentedControlProps> = ({ value, name, disabled, onArcChange, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -49,5 +50,5 @@ export const SegmentedControl: FunctionComponent<SegmentedControlProps> = ({ val
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcChange]);
-  return h('arc-segmented-control', { ref, value, disabled, ...rest }, children);
+  return h('arc-segmented-control', { ref, value, name, disabled, ...rest }, children);
 };

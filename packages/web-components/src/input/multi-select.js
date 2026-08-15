@@ -1,7 +1,8 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { PositionController } from '../shared/position-controller.js';
 import { ListboxController } from '../shared/listbox-controller.js';
+import { isOptionDisabled } from '../shared/option.js';
 import { managedPanelStyles } from '../shared/position-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 import { DismissController } from '../shared/dismiss-controller.js';
@@ -216,9 +217,16 @@ export class ArcMultiSelect extends DeclaredPropsMixin(FormControlMixin(LitEleme
         transition: background var(--transition-fast);
       }
 
-      .ms__option:hover,
+      .ms__option:hover:not(.ms__option--disabled),
       .ms__option--active {
         background: rgba(var(--interactive-rgb), 0.1);
+      }
+
+      /* Per-option disabled (finding #6). Still rendered and still counted —
+         dropping it would renumber the list under aria-activedescendant. */
+      .ms__option--disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
       }
 
       .ms__check {
@@ -283,6 +291,7 @@ export class ArcMultiSelect extends DeclaredPropsMixin(FormControlMixin(LitEleme
       onSelect: (i) => this._toggleItem(this._filteredItems[i]),
       optionId: (i) => `${this._msId}-option-${i}`,
       scrollContainer: () => this.shadowRoot?.querySelector('.ms__dropdown'),
+      isItemDisabled: (i) => this._filteredItems[i]?.disabled === true,
     });
   }
 
@@ -326,7 +335,13 @@ export class ArcMultiSelect extends DeclaredPropsMixin(FormControlMixin(LitEleme
   }
 
   get _normalizedItems() {
-    return this._options.map((opt) => ({ label: opt.label, value: opt.value }));
+    // `disabled` rides along because the listbox renders these plain objects,
+    // not the arc-option elements they came from (finding #6).
+    return this._options.map((opt) => ({
+      label: opt.label,
+      value: opt.value,
+      disabled: isOptionDisabled(opt),
+    }));
   }
 
   get _filteredItems() {
@@ -340,7 +355,7 @@ export class ArcMultiSelect extends DeclaredPropsMixin(FormControlMixin(LitEleme
   }
 
   _toggleItem(item) {
-    if (this.readonly) return;
+    if (this.readonly || item?.disabled) return;
     const current = [...(this.value || [])];
     const idx = current.indexOf(item.value);
 
@@ -537,9 +552,10 @@ export class ArcMultiSelect extends DeclaredPropsMixin(FormControlMixin(LitEleme
                 return html`
                 <div
                   id="${this._msId}-option-${i}"
-                  class="ms__option ${i === this._listbox.activeIndex ? 'ms__option--active' : ''}"
+                  class="ms__option ${i === this._listbox.activeIndex ? 'ms__option--active' : ''} ${item.disabled ? 'ms__option--disabled' : ''}"
                   role="option"
                   aria-selected=${String(checked)}
+                  aria-disabled=${item.disabled ? 'true' : nothing}
                   @click=${() => this._toggleItem(item)}
                   part="option"
                 >

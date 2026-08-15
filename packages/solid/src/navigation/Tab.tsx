@@ -13,6 +13,7 @@ declare module 'solid-js' {
 
 export interface TabProps {
   label?: string;
+  disabled?: boolean;
   children?: JSX.Element;
   class?: string;
   id?: string;
@@ -42,9 +43,9 @@ export interface TabProps {
 }
 
 export const Tab: Component<TabProps> = (props) => {
-  const [local, rest] = splitProps(props, ['label', 'children']);
+  const [local, rest] = splitProps(props, ['label', 'disabled', 'children']);
   return (
-    <arc-tab label={local.label} {...rest}>
+    <arc-tab label={local.label} disabled={local.disabled} {...rest}>
       {local.children}
     </arc-tab>
   );

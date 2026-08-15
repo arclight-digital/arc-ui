@@ -5,6 +5,7 @@ import '@arclux/arc-ui/tab';
 
 export interface TabProps {
   label?: string;
+  disabled?: boolean;
   children?: preact.ComponentChildren;
   class?: string;
   id?: string;
@@ -33,5 +34,5 @@ export interface TabProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Tab: FunctionComponent<TabProps> = ({ label, children, ...rest }) =>
-  h('arc-tab', { label, ...rest }, children);
+export const Tab: FunctionComponent<TabProps> = ({ label, disabled, children, ...rest }) =>
+  h('arc-tab', { label, disabled, ...rest }, children);
