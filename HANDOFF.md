@@ -9,8 +9,8 @@ see "What changed under the plan" below.
 
 ## Where things stand
 
-- **Suite: 3,994 passing, 0 failing, 2 skipped**, ~25s, clean (2026-08-13).
-  `pnpm check` 19/19.
+- **Suite: 4,436 passing, 0 failing, 2 skipped**, ~25s, clean (2026-08-15).
+  `pnpm check` 22/22, `pnpm generate` diff-clean, `pnpm mutate:sample` green.
 - **Per-component coverage is effectively closed.** 64 components have a
   dedicated suite; the 38 with none are all presentational primitives
   (`arc-stack`, `arc-center`, `arc-skeleton`, `arc-kbd` …) whose whole contract
@@ -31,17 +31,38 @@ see "What changed under the plan" below.
   ~3,400 tests with the *same* detection, after fault injection showed one
   broken mechanism was being reported 238 times. See "Test posture" in
   test-findings.md before reading any test-count trend as progress.
-- **V4-PLAN Phase 2's catalog-independent items are done**: 2.0 (mutation
-  referee in CI), 2.4b (the FormData sweep), 2.4c (direct suites for the six
-  widest-blast-radius shared modules), 2.4e (the skip-site write-up). The rest
-  of Phase 2 is gated on Phase 1's keep/cut verdicts and was deliberately not
-  started.
+- **V4-PLAN Phase 2 is done except 2.2, 2.3, 2.5 and 2.6.** 2.0 (mutation
+  referee in CI), 2.4a–e, and now **2.1 — the findings ledger is closed**
+  (2026-08-15). Every finding in `test-findings.md` carries a disposition in
+  its own heading; `BUG:` pins went **47 → 9**, and all nine are pinned by
+  decision — six on `arc-speed-dial`/`arc-guided-tour`, which 4.1 deletes, plus
+  #74 and #86. Read the 2.1 entry in V4-PLAN for the five lessons; the two that
+  will bite again are that **findings under-count their own population** (three
+  were filed against one component and had four, or filed as five instances and
+  were nine) and that **a component cited as the reference has to be checked,
+  not copied** (`arc-resizable` is named three times here as the working example
+  and had #89 in it).
+- **Two scanner traps, both live.** The manifest analyzer binds a JSDoc block to
+  *whatever declaration follows it*, so inserting a shared helper between an
+  element's doc comment and its class silently un-tags the element —
+  `ArcOption` lost its `tagName` and the React wrapper stopped compiling.
+  And `event-conventions.js` balances quotes across `new CustomEvent(...)`
+  argument text **without skipping comments**, so one apostrophe in a comment
+  inside those arguments makes every later dispatch in the file invisible to it.
+  Both are caught by `pnpm generate`, neither by the suite.
 - **`pnpm test` is now correct by construction** — a `pretest` hook regenerates
   the gitignored icon modules (0.13s), so the 17 "pre-existing failures" that
   used to be normal are gone. A red suite means something now.
 - **Source is no longer frozen.** The pin-don't-fix policy was superseded when
-  this became v4 work. 169 source files changed; every behavioural change is
-  described in `test-findings.md`.
+  this became v4 work. Every behavioural change is described in
+  `test-findings.md`, and 2.1 flipped each `BUG:` pin it fixed into a regression
+  test rather than deleting it.
+- **Three checks tightened, and one grew a runtime half.**
+  `empty-attributes.js`'s BASELINE is **empty** and the rule is strict;
+  `conformance-surface.test.js` gained the runtime sweep for the same class,
+  because the static check reads source and states its own blind spots; and
+  `form-contract.test.js` no longer excuses `arc-rating` from its `required`
+  sweep.
 
 Run everything with `pnpm` directly (it is on PATH now — older notes saying
 `corepack pnpm exec` are stale).

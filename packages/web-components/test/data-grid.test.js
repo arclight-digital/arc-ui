@@ -782,7 +782,7 @@ describe('arc-data-grid keyboard (APG grid)', () => {
   });
 
   it('ignores Space on a non-checkbox header cell', async () => {
-    // Was a BUG pin (finding #90). Enter on the same cell sorts, because
+    // Was a BUG pin (finding #53). Enter on the same cell sorts, because
     // _activateCell checks `c === 0` before treating the press as a selection
     // toggle. The Space branch of _onGridKeydown checked only `r === 0`, so
     // Space anywhere in the header row toggled all rows — including on a column

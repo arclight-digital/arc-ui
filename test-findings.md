@@ -18,11 +18,23 @@ nothing at all (`arc-collapsible`,
 
 Ordered by what a consumer loses, not by discovery order.
 
-**Closing pass (V4-PLAN 2.1), from 2026-08-15.** Each row below carries its
-status. `FIXED` means the source changed and the `BUG:` pin was inverted into a
-regression test — never deleted. `CLOSED` means the finding was answered without
-a source change, with the reasoning recorded at the finding itself. Rows with no
-marker are still open.
+**Closing pass (V4-PLAN 2.1) — COMPLETE, 2026-08-15.** Every finding in this
+file now carries a disposition in its own heading, and every row below carries
+one too.
+
+- **FIXED** — the source changed and the `BUG:` pin was inverted into a
+  regression test, never deleted.
+- **CLOSED** — answered without a source change, with the reasoning recorded at
+  the finding itself.
+- **CLOSED by removal** — the component does not survive Phase 1
+  (`arc-speed-dial`, `arc-guided-tour`). Their pins **stay until 4.1 performs
+  the deletion**, per V4-PLAN ground rule 1: a pin removed ahead of the deletion
+  would leave the component unguarded in between.
+- **PINNED** — #74 and #86 only, each by its own recorded decision, and each
+  naming the workstream that will take it.
+
+Nine `BUG:` pins remain, and all nine are in those last two categories. There is
+no finding here whose disposition is "not looked at".
 
 ### Data and correctness — wrong results, silently
 
@@ -39,7 +51,7 @@ marker are still open.
 
 | # | Component | Finding |
 |---|---|---|
-| 16 | `arc-speed-dial` | closed actions stay focusable and clickable — invisible tab stops |
+| 16 | `arc-speed-dial` | **CLOSED by removal** — closed actions stayed focusable and clickable |
 | 29 | `arc-command-bar` | **FIXED** — the input had no accessible name and no way to give it one |
 | 28, 27 | `arc-list` | **FIXED** — items claimed `role="option"` inside a plain `role="list"`; stray `aria-multiselectable` |
 | 2 | `arc-tabs` | **FIXED** — `aria-controls` pointed at ids that do not exist |
@@ -51,11 +63,11 @@ marker are still open.
 
 | # | Scope | Finding |
 |---|---|---|
-| 20 | **library-wide** | 20 boolean props default `true` and cannot be disabled from markup |
+| 20 | **library-wide** | **FIXED by `flag()`** — 20 boolean props defaulted `true` and could not be disabled from markup; see #48 |
 | 6 | `arc-option` | **FIXED** — `disabled` was documented and read by *none* of its four consumers |
 | 1 | `arc-tabs` | **FIXED** — `selected` documented as clamped; nothing clamped |
 | 32 | `arc-menu-item` | **FIXED** — `label` documented as a prop, implemented as a read-only getter |
-| 17, 18 | `arc-speed-dial` | unknown `position` anchors nowhere; documented per-item `value` never emitted |
+| 17, 18 | `arc-speed-dial` | **CLOSED by removal** — unknown `position` anchored nowhere; documented per-item `value` never emitted |
 | 30 | `arc-command-bar` | **FIXED** — Enter inside a form submitted twice |
 | 4, 5, 7, 13 | various | **4 FIXED, 5 CLOSED, 7 FIXED** — smaller doc/structure gaps, detailed below |
 
@@ -498,9 +510,17 @@ name; a junk value in `localStorage` is correctly ignored.
 
 ---
 
-## arc-speed-dial
+## arc-speed-dial — **CLOSED, resolved by removal**
 
-### 16. Closed actions stay focusable and clickable — **a11y**
+`V4-SCOPE.md` §4 deletes `arc-speed-dial` — "broken as stable" — so #16, #17 and
+#18 are closed as resolved-by-removal per V4-PLAN's ground rule 1 rather than
+fixed. **Their pins stay until 4.1 actually deletes the component**, which is
+what the ground rule requires: nothing is deleted until its replacement is green,
+and a pin removed ahead of the deletion would leave the component unguarded in
+between. The tombstone names `arc-tour` (4.8) as the forthcoming alternative.
+
+
+### 16. Closed actions stay focusable and clickable — **a11y — CLOSED, resolved by removal**
 
 The closed state is `opacity: 0` plus a transform (`navigation/speed-dial.js:109`),
 with no `visibility`, `pointer-events`, `inert` or `aria-hidden`. The action
@@ -514,7 +534,7 @@ they cannot see; an invisible button sits over whatever is beneath it.
 - The opacity transition is why `display: none` was presumably avoided;
   `visibility: hidden` transitions fine and fixes focus, pointer and AT together.
 
-### 17. An unrecognised `position` is not anchored to any corner — **enum fallback**
+### 17. An unrecognised `position` is not anchored to any corner — **enum fallback — CLOSED, resolved by removal**
 
 Both corner rules are exact-match selectors — `:host([position="bottom-right"])`
 and `:host([position="bottom-left"])` (`speed-dial.js:58, 63`). An unrecognised
@@ -529,7 +549,7 @@ in `enum-fallback-sweep.test.js`.
 - Pinned by: `test/speed-dial.test.js` — "BUG: an unrecognised position is not
   anchored to any corner".
 
-### 18. The documented per-item `value` is never emitted — **doc-mismatch**
+### 18. The documented per-item `value` is never emitted — **doc-mismatch — CLOSED, resolved by removal**
 
 `items` is declared as `Array<{icon: string, label: string, value?: string}>`
 (`speed-dial.js:14`), but nothing reads `value`: `render` uses `icon` and `label`
@@ -586,7 +606,7 @@ calls `_prev()`/`_next()` directly, so the keyboard reaches it.
 
 ## Library-wide — 20 boolean props cannot be turned off from markup
 
-### 20. `type: Boolean` + a `true` default is not disableable by attribute — **API**
+### 20. `type: Boolean` + a `true` default is not disableable by attribute — **API — SUPERSEDED by #48, fixed by `flag()`**
 
 Lit's boolean converter maps attribute **presence** to `true`, and an absent
 attribute never fires `attributeChangedCallback`, so the constructor default
@@ -671,7 +691,7 @@ yield `false`, flips the pinning test in `carousel.test.js` to failing (as it
 should — it pins the broken behaviour), and leaves the other 25 carousel tests
 green.
 
-### 48. The same defect turns *on* every false-defaulting boolean — **API, 197 props**
+### 48. The same defect turns *on* every false-defaulting boolean — **API, 197 props — FIXED by `flag()`**
 
 #20 framed this as a problem with the twenty true-defaulting props. It is not.
 Lit's stock boolean `fromAttribute` is `value !== null` — **presence**, with the
@@ -696,7 +716,7 @@ are mostly *configuration* — `showDots`, `dividers`, `legend`, `closable` — 
 native mirrors, and they are written from framework templates where
 `disabled={false}` forwards as the string `"false"`.
 
-### 49. A non-default boolean does not survive a serialise → re-parse round trip — **SSR / hydration**
+### 49. A non-default boolean does not survive a serialise → re-parse round trip — **SSR / hydration — FIXED by `flag()`**
 
 188 of the 201 boolean props carry `reflect: true`. Reflection writes presence
 for `true` and removes the attribute for `false`, so for a **true-defaulting**
@@ -932,7 +952,7 @@ because "every declared part renders" fails honestly-conditional parts —
 suite that cries wolf gets deleted. The inverse has no such failure mode, and it
 is the direction nothing else covers.
 
-### 50. `arc-fieldset`'s `legend` and `actions` slots cannot be used at all — **correctness**
+### 50. `arc-fieldset`'s `legend` and `actions` slots cannot be used at all — **correctness — FIXED**
 
 Found by the surface suite on its first run.
 
@@ -956,7 +976,7 @@ hide them when empty. Only the outer conditional was wrong. The `<legend>` now
 renders unconditionally with a `--empty` class, so the slots exist for
 `slotchange` to fire on and the visual result is unchanged.
 
-### 51. `doc-claims.js` could not see a part whose name is chosen at render time
+### 51. `doc-claims.js` could not see a part whose name is chosen at render time — **FIXED**
 
 `arc-tree-view` renders `part="${level === 0 ? 'tree' : 'group'}"`. The check's
 literal pattern excludes `$` deliberately, and its dynamic-part escape hatch
@@ -1699,9 +1719,16 @@ tablet.
 
 ---
 
-## arc-guided-tour
+## arc-guided-tour — **CLOSED, resolved by removal**
 
-### 43. Reopening a finished tour resumes on the last step — **doc-mismatch**
+`V4-SCOPE.md` §4 deletes `arc-guided-tour` — "broken as stable" — so #43 and #44
+are closed as resolved-by-removal, on the same terms as arc-speed-dial above:
+the pins stay until 4.1 performs the deletion. The tombstone names `arc-tour`
+(4.8) as the forthcoming replacement, and 4.8's entry says outright that it is
+"the correct rebuild replacing guided-tour/spotlight".
+
+
+### 43. Reopening a finished tour resumes on the last step — **doc-mismatch — CLOSED, resolved by removal**
 
 `feedback/guided-tour.js:12` documents `open` as *"Set to true to start the tour
 from the first step."* Nothing resets `active` — not `_complete`
@@ -1713,7 +1740,7 @@ Finish.
 - Pinned by: `test/guided-tour.test.js` — "BUG: reopening a finished tour resumes
   on the last step, not the first" and the equivalent after a skip.
 
-### 44. `active` is documented read-only but is writable and silent — **doc-mismatch**
+### 44. `active` is documented read-only but is writable and silent — **doc-mismatch — CLOSED, resolved by removal**
 
 `guided-tour.js:11` declares *"Read-only property reflecting the zero-based index
 of the currently active step."* It is an ordinary reactive property with no
@@ -1795,7 +1822,19 @@ Two details worth noting for anyone testing it later:
 
 ## arc-date-range-picker
 
-### 45. `detail.value` is an object while the `value` property is a string — **contract**
+### 45. `detail.value` is an object while the `value` property is a string — **contract — FIXED**
+
+`detail.value` now carries the ISO 8601 interval string, the same shape
+`this.value` returns, with `start` and `end` alongside it unchanged. Dropping
+the named keys to make `value` canonical would have been a worse break than the
+mismatch — they are what the component is *for*. The `@fires` annotation
+declares all three keys, which was the second half of the finding.
+
+**Why no check caught it, stated once because it applies to the whole family:**
+`event-conventions.js` verifies that `detail.value` **exists**, not that it
+agrees with the property of the same name. That is the right scope for a static
+check — it cannot know what a component's value *means* — and it is why #39 and
+#45 both had to be found by reading.
 
 `arc-change` carries `detail.value` as `{ start, end }`
 (`input/date-range-picker.js:509`), but the `value` property it is named after is
@@ -1982,7 +2021,18 @@ the harder half of the claim: every index that leaves the component (`arc-select
 even while the grid is displaying a sorted view. That is the kind of promise
 that is usually only half-true, and here it is not.
 
-### 53. Space in the header row selects every row from any column — **inconsistency**
+### 53. Space in the header row selects every row from any column — **inconsistency — FIXED**
+
+**Fixed with the one condition the finding prescribed**, and the shape of the
+fix is worth keeping: `_activateCell`, which Enter goes through, always had the
+`c === 0` guard. Two paths to the same gesture on the same cell, and only one of
+them checked the column.
+
+The asymmetry that remains is deliberate and is now pinned: "select all" is a
+specific control that lives in the header's checkbox cell, while selecting a
+*row* is about the row you are on — so Space anywhere in a data row still
+toggles it. The early return sits before `preventDefault()`, so a header press
+the grid declines still scrolls the page.
 
 `data/data-grid.js:559` handles Space by checking the row only:
 
@@ -2010,7 +2060,7 @@ two activation paths read the same way.
   the checkbox column first. Paired with the two tests that pin the *correct*
   behaviour, so a fix flips exactly one of the three.
 
-### 54. The scroll listener is not restored after a reconnect — **lifecycle**
+### 54. The scroll listener is not restored after a reconnect — **lifecycle — FIXED, generalised as #55**
 
 `firstUpdated` (`data-grid.js:299`) binds the wrapper's `scroll` listener and
 `disconnectedCallback` (`data-grid.js:319`) removes it. Nothing rebinds it:
@@ -3080,7 +3130,7 @@ Recommended before Tier B starts:
 Two sweeps, 30 tests, covering the shared failure modes of components that wrap
 a browser API rather than the behaviour each one layers on top.
 
-### 52. `arc-sticky`'s `[stuck]` attribute never existed — **correctness / a11y of its own CSS**
+### 52. `arc-sticky`'s `[stuck]` attribute never existed — **correctness / a11y of its own CSS — FIXED**
 
 ```js
 stuck: { type: Boolean, reflect: true, state: true },   // sticky.js:17
@@ -4328,7 +4378,7 @@ default slot, gets both.
 **The fix for #81 and #82 is one rule applied to two emitters**, and #82 says
 the 3.1 change cannot be Angular-only.
 
-### 83. 18 published subpaths in two packages resolve to files no build produces — **packaging**
+### 83. 18 published subpaths in two packages resolve to files no build produces — **packaging — FIXED**
 
 Found by the harness's own `pnpm pack`: once anything builds, `export-map.js`
 stops skipping `./dist/...` and immediately names them. Every tier barrel
@@ -4358,7 +4408,7 @@ checkout, and it meant that half of the export map was verified nowhere, because
 in `wrapper-builds`, after the build. Against a fully built tree it verifies
 3,012 targets across 8 packages.
 
-### 84. The declared-props migration stripped `type` and `reflects` from the manifest — **regression, caught before push**
+### 84. The declared-props migration stripped `type` and `reflects` from the manifest — **regression — FIXED before push**
 
 `custom-elements.json` is generated by an analyzer that reads `static
 properties` **statically**. A vocabulary declaration is a *function call*
@@ -4684,35 +4734,3 @@ reading it had a defect of its own.
 
 
 ---
-
-### 90. Space on a non-checkbox header selects every row — **correctness — FIXED**
-
-`arc-data-grid` had two paths to the same gesture and they disagreed.
-`_activateCell`, which `Enter` goes through, checks `c === 0` before treating a
-press as a selection toggle — so Enter on a sortable column header sorts. The
-`Space` branch of `_onGridKeydown` checked only `r === 0`, so Space **anywhere**
-in the header row toggled every row, including on a column with nothing to do
-with selection.
-
-Fixed by giving Space the guard Enter already had. The asymmetry that remains is
-deliberate and is pinned: "select all" is a specific control that lives in the
-header's checkbox cell, while selecting a *row* is about the row you are on — so
-Space anywhere in a data row still toggles it. The early return sits before
-`preventDefault()`, so a header press the grid declines still scrolls the page.
-
-### 45. `detail.value` is an object while the `value` property is a string — **contract — FIXED**
-
-`detail.value` now carries the ISO 8601 interval string, the same shape
-`this.value` returns, with `start` and `end` alongside it unchanged. Dropping the
-named keys to make `value` canonical would have been a worse break than the
-mismatch — they are what the component is *for*.
-
-The `@fires` annotation declares all three keys now, which was the second half of
-the finding: the manifest, the six wrappers and the docs site described a detail
-shape missing its canonical key.
-
-**Why no check caught it, stated once because it applies to the whole family:**
-`event-conventions.js` verifies that `detail.value` **exists**, not that it
-agrees with the property of the same name. That is the right scope for a static
-check — it cannot know what a component's value *means* — and it is why #39 and
-#45 both had to be found by reading.

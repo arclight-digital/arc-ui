@@ -282,50 +282,65 @@ of this file is restated in V4-SCOPE §1.4 with the revised numbers —
       and are the obvious next pass. The merged-grid pair is post-Phase-1 and
       the 2.6 trim targets are post-Phase-1 by definition. Readings and the
       equivalent-mutant analysis are in test-findings.md.
-- [ ] **2.1 (L)** Close the findings ledger. Every unfixed finding in
-      `test-findings.md`'s triage tables (#1–#3, #6, #8–#15, #19, #21–#32,
-      #33–#35, #41–#42, #47, …): **fix it** if the component survives Phase 1
-      (pin-don't-fix is already superseded), **close as resolved-by-removal**
-      if it doesn't. Each fix flips its `it('BUG: …')` pin into a regression
-      test — that is how the ~40 BUG pins disappear correctly: converted or
-      moved to issues, never just deleted.
+- [x] **2.1 (L)** Close the findings ledger. Every unfixed finding in
+      `test-findings.md`'s triage tables: **fix it** if the component survives
+      Phase 1, **close as resolved-by-removal** if it doesn't. Each fix flips
+      its `it('BUG: …')` pin into a regression test — converted or moved to
+      issues, never just deleted.
 
-      **In progress — 26 findings closed, 2026-08-15, in five commits.** Pins
-      went from 47 to **32**; the suite from 4,108 to 4,387 passing, 0 failing,
-      `pnpm check` 22/22 and `pnpm generate` diff-clean at every commit, and
-      `pnpm mutate:sample` green on all eight ratcheted pairs.
+      **DONE 2026-08-15, in twelve commits.** Every finding in the file carries
+      a disposition in its own heading; there is none whose status is "not
+      looked at". Pins went **47 → 9**, and all nine are pinned by decision:
+      six on `arc-speed-dial`/`arc-guided-tour`, which 4.1 deletes — kept until
+      then, because ground rule 1 says a pin removed ahead of the deletion
+      leaves the component unguarded in between — plus #74 and #86.
 
-      Closed: **#1–#7** (per-item `disabled` honoured by every consumer that
-      renders it; arc-segmented-control form-associated) · **#8–#13** (arc-rating:
-      0 decided as a legal unrated state, and six findings follow from it) ·
-      **#19, #38, #39** (a key at a rail announces nothing, because nothing
-      moved) · **#24, #25, #36, #87** (no component renders an empty ARIA
-      attribute; `empty-attributes.js`'s BASELINE emptied and the rule made
-      strict) · **#47, #76–#79** (five props that documented a bound and
-      enforced it in the render).
+      Suite **4,108 → 4,436 passing, 0 failing**; `pnpm check` 22/22 and
+      `pnpm generate` diff-clean at every commit; `pnpm mutate:sample` green,
+      with `subscriptions` ratcheting 83.33% → 87.50% on the way.
 
-      Three things the pass taught that are worth carrying:
+      Four findings were opened *by* the closing pass and closed with it: **#87**
+      (four more empty ARIA attributes, found by generalising #24/#25/#36),
+      **#88** (the light-DOM-child reactivity gap behind #4, #6 and #32, now
+      `notifyOwner()`), **#89** (both resize handles reported the axis they
+      resize rather than the axis they are), and #53's rediscovery — filed as a
+      new finding before a search of the ledger turned up the original.
 
-      1. **Findings under-count.** #6 was filed against one consumer and had
-         all four; #24/#25/#36 were filed as five bindings and were nine. Ask
-         "is this the whole population?" before closing, and derive the answer.
+      **Five things the pass taught, in the order they cost the most:**
+
+      1. **Findings under-count their own population.** #6 was filed against one
+         consumer and had all four. #24/#25/#36 were filed as five bindings and
+         were nine. #53 was already in the ledger when it was found again. Before
+         closing one, ask what the population is and *derive* the answer.
       2. **Fix the root, not the finding.** arc-rating's six dissolved into one
-         decision about what `value = 0` means. #78's two disagreeing guards
-         were fixed by bounding the value they both read, not by editing either.
-      3. **A static check and a runtime sweep are complementary.**
+         decision about what `value = 0` means. #78's two disagreeing guards were
+         fixed by bounding the value they both read — editing either would have
+         left the pair free to drift again.
+      3. **Removing a wrong thing can leave a gap it was standing in front of.**
+         `aria-grabbed` was dead, and it was also the only ARIA state
+         `arc-sortable-list` rows carried; deleting it left the whole keyboard
+         reorder protocol silent. Check what a defect was doing before deleting
+         it.
+      4. **A component cited as the reference has to be checked, not copied.**
+         `arc-resizable` is named three times in the ledger as the working
+         example; building `arc-split-pane`'s divider against it surfaced #89 in
+         the reference itself.
+      5. **A static check and a runtime sweep catch different halves.**
          `empty-attributes.js` reads source, states its blind spots, and fails
-         before the 35s prism step; the new `conformance-surface` sweep sees
-         what reached the DOM. Neither found all nine alone.
+         before the 35s prism step; the new `conformance-surface` sweep sees what
+         reached the DOM. Neither found all nine alone. Its BASELINE is empty and
+         the rule is strict now.
 
-      Still open (32 pins): **#14/#15** theme-toggle · **#21–#23** tree-view ·
-      **#26–#28** arc-list · **#29/#30** command-bar · **#31/#32**
-      context-menu/menu-item · **#33–#35** split-pane · **#37** enum ternaries ·
-      **#40** file-upload · **#41/#42** sortable-list · **#45**
-      date-range-picker · **#85** context-menu Escape · the uncovered-sweep,
-      data-grid and date-picker pins. **#20/#48/#49** are 2.2's `flag()` work,
-      not 2.1's. **#16–#18** (speed-dial) and **#43/#44** (guided-tour) close as
-      resolved-by-removal when 4.1 deletes both; **#74** and **#86** stay pinned
-      by their own recorded decisions.
+      Two traps worth carrying out of the pass: the manifest analyzer binds a
+      JSDoc block to **whatever declaration follows it**, so a shared helper
+      inserted between an element's doc comment and its class silently un-tags
+      the element (`ArcOption` lost its `tagName` and the React wrapper stopped
+      compiling). And `event-conventions.js` balances quotes across
+      `new CustomEvent(...)` argument text **without skipping comments**, so one
+      apostrophe in a comment inside the arguments makes every later dispatch in
+      the file invisible to it — comment-skipping belongs in **4.10**'s shared
+      scanner, not in a rule.
+
 - [ ] **2.2 (M)** Finish vocabulary adoption on survivors (~30–40 components
       via `scripts/codemod-declared-props.js`, hand-reviewed;
       `inert-declarations.js` now catches the forgot-the-mixin trap). **This
