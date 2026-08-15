@@ -781,12 +781,13 @@ describe('arc-data-grid keyboard (APG grid)', () => {
     expect(seen).to.have.lengthOf(0);
   });
 
-  it('BUG: Space on a non-checkbox header selects every row', async () => {
-    // Enter on the same cell sorts, because _activateCell checks `c === 0`
-    // before treating the press as a selection toggle. The Space branch of
-    // _onGridKeydown checks only `r === 0`, so Space anywhere in the header row
-    // toggles all rows — including on a column that has nothing to do with
-    // selection. See test-findings.md.
+  it('ignores Space on a non-checkbox header cell', async () => {
+    // Was a BUG pin (finding #90). Enter on the same cell sorts, because
+    // _activateCell checks `c === 0` before treating the press as a selection
+    // toggle. The Space branch of _onGridKeydown checked only `r === 0`, so
+    // Space anywhere in the header row toggled all rows — including on a column
+    // with nothing to do with selection. The two paths disagreed about the same
+    // gesture on the same cell. See test-findings.md.
     const el = await grid({ selectable: true });
     const seen = [];
     el.addEventListener('arc-select', (e) => seen.push(e.detail.value));
@@ -797,7 +798,58 @@ describe('arc-data-grid keyboard (APG grid)', () => {
     keyOn(cellAt(el, 0, 1), ' ');
     await settle(el);
 
+    expect(seen, 'a sortable column header is not a select-all control').to.eql([]);
+  });
+
+  it('still selects every row from the checkbox header', async () => {
+    // Anti-vacuity for the guard above: it must not have disabled select-all.
+    const el = await grid({ selectable: true });
+    const seen = [];
+    el.addEventListener('arc-select', (e) => seen.push(e.detail.value));
+
+    keyOn(cellAt(el, 0, 0), ' ');
+    await settle(el);
+
     expect(seen.at(-1)).to.deep.equal([0, 1, 2, 3]);
+  });
+
+  it('still selects a row from any cell in it', async () => {
+    // Selecting a row is about the row you are on, so the guard is header-only
+    // — Space anywhere in a data row still toggles that row.
+    const el = await grid({ selectable: true });
+    const seen = [];
+    el.addEventListener('arc-select', (e) => seen.push(e.detail.value));
+
+    // The handler reads `this._focusRow`/`_focusCol`, not the event target, so
+    // the roving focus has to actually be moved there.
+    keyOn(cellAt(el, 0, 0), 'ArrowDown');
+    await settle(el);
+    keyOn(cellAt(el, 1, 0), 'ArrowRight');
+    await settle(el);
+    keyOn(cellAt(el, 1, 1), 'ArrowRight');
+    await settle(el);
+    expect([el._focusRow, el._focusCol]).to.deep.equal([1, 2]);
+
+    keyOn(cellAt(el, 1, 2), ' ');
+    await settle(el);
+
+    expect(seen.at(-1)).to.deep.equal([0]);
+  });
+
+  it('leaves Space on a header cell for the page', async () => {
+    // The early return is before preventDefault, so a key the grid declines
+    // still scrolls.
+    const el = await grid({ selectable: true });
+    keyOn(cellAt(el, 0, 0), 'ArrowRight');
+    await settle(el);
+
+    const event = new KeyboardEvent('keydown', {
+      key: ' ', bubbles: true, composed: true, cancelable: true,
+    });
+    cellAt(el, 0, 1).dispatchEvent(event);
+    await settle(el);
+
+    expect(event.defaultPrevented).to.equal(false);
   });
 
   it('leaves other keys to the browser', async () => {

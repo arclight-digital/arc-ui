@@ -554,6 +554,14 @@ export class ArcDataGrid extends DeclaredPropsMixin(LitElement) {
         return;
       case ' ': {
         if (!this.selectable) return;
+        // "Select all" is a specific control and it lives in the header's
+        // checkbox cell. This branch checked only `r === 0`, so Space on *any*
+        // header cell toggled every row — including on a column with nothing to
+        // do with selection. `_activateCell`, which Enter goes through, always
+        // had the `c === 0` guard; the two disagreed about the same gesture on
+        // the same cell. Selecting a row is different: it is about the row you
+        // are on, so Space anywhere in a data row still toggles it.
+        if (r === 0 && c !== 0) return;
         e.preventDefault();
         if (r === 0) {
           this._toggleAll();

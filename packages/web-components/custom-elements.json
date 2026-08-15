@@ -160,13 +160,34 @@
           "members": [
             {
               "kind": "field",
+              "name": "DEFAULT_RATIO",
+              "type": {
+                "text": "string"
+              },
+              "static": true,
+              "default": "'16/9'",
+              "description": "The documented default, and what anything unusable normalises to."
+            },
+            {
+              "kind": "method",
+              "name": "parseRatio",
+              "static": true,
+              "parameters": [
+                {
+                  "name": "value"
+                }
+              ],
+              "description": "`W/H` if the string is a usable ratio, else null.\n\nA zero on either side is rejected rather than passed through: `0/5` matched\nthe old format check, reached the CSS as `aspect-ratio: 0 / 5`, and\ncollapsed the box. The guard for exactly that (`if (w === 0) …`) existed —\ninside `_paddingFallback`, a getter the render never called, so the check\nhad been written and then stranded. That getter is gone; its docstring\npromised a padding-top fallback \"for browsers that don't support the\naspect-ratio CSS property\" and nothing rendered one, which is the same\ndoc/code drift as the rest of this batch."
+            },
+            {
+              "kind": "field",
               "name": "ratio",
               "privacy": "public",
               "type": {
                 "text": "string"
               },
               "default": "'16/9'",
-              "description": "Aspect ratio as a `W/H` string. Supports integers and decimals. Falls back to `16/9` if invalid.",
+              "description": "Aspect ratio as a `W/H` string. Supports integers and decimals. An unparseable value, or one with a zero on either side, is normalised **on the property** to `16/9` — so reading `ratio` back always gives the ratio the component is actually using.",
               "attribute": "ratio",
               "reflects": true
             }
@@ -178,7 +199,7 @@
                 "text": "string"
               },
               "default": "'16/9'",
-              "description": "Aspect ratio as a `W/H` string. Supports integers and decimals. Falls back to `16/9` if invalid.",
+              "description": "Aspect ratio as a `W/H` string. Supports integers and decimals. An unparseable value, or one with a zero on either side, is normalised **on the property** to `16/9` — so reading `ratio` back always gives the ratio the component is actually using.",
               "fieldName": "ratio"
             }
           ],
@@ -15668,9 +15689,9 @@
             {
               "name": "arc-change",
               "type": {
-                "text": "CustomEvent<{ start: string, end: string }>"
+                "text": "CustomEvent<{ value: string, start: string, end: string }>"
               },
-              "description": "Fired when a complete range is committed (second day clicked or preset applied). detail: { start, end }"
+              "description": "Fired when a complete range is committed (second day clicked or preset applied). `detail.value` is the ISO 8601 interval string, the same shape as the `value` property; `start` and `end` carry the two ends separately."
             }
           ],
           "attributes": [

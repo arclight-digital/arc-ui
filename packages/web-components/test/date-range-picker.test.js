@@ -157,17 +157,15 @@ describe('arc-date-range-picker selection', () => {
     expect(event.composed).to.equal(true);
   });
 
-  // BUG: detail.value is an object, `{ start, end }`
-  // (input/date-range-picker.js:509), while the `value` property it is named
-  // after is an ISO 8601 interval string (`date-range-picker.js:403`). A
-  // consumer reading e.detail.value gets a different shape from el.value on the
-  // same component.
-  //
-  // The point of the canonical key, per scripts/checks/event-conventions.js:88,
-  // is that "one generic handler could read detail.value on every emitter" —
-  // which works only if detail.value means the control's value. The @fires
-  // annotation also omits `value` entirely, declaring only { start, end }.
-  it('BUG: detail.value is an object while the value property is a string', async () => {
+  // Was a BUG pin (finding #45). `detail.value` was an object, `{ start, end }`,
+  // while the `value` property it is named after is an ISO 8601 interval
+  // string — so reading `e.detail.value` and reading `el.value` on the same
+  // component gave two different types. The point of the canonical key, per
+  // event-conventions.js, is that "one generic handler could read detail.value
+  // on every emitter", which holds only if detail.value means the control's
+  // value. `event-conventions.js` passed the whole time because it verifies the
+  // key *exists*, not that it agrees with the property.
+  it('carries the control value on detail.value, in the property shape', async () => {
     const el = await picker();
     el.start = '';
     el.end = '';
@@ -181,9 +179,28 @@ describe('arc-date-range-picker selection', () => {
     pickable(el).find((d) => d.dataset.iso === toIso).click();
     await settle(el);
 
-    expect(details[0].value, 'the event carries an object').to.be.an('object');
-    expect(el.value, 'the property is an interval string').to.be.a('string');
+    expect(details[0].value, 'the same type as the property').to.be.a('string');
+    expect(details[0].value, 'and the same value').to.equal(el.value);
     expect(el.value).to.contain('/');
+  });
+
+  it('keeps the two ends alongside it', async () => {
+    // The named keys are what the component is *for*; dropping them to make
+    // detail.value canonical would have been a worse break than the mismatch.
+    const el = await picker();
+    el.start = '';
+    el.end = '';
+    await open(el);
+
+    const details = [];
+    el.addEventListener('arc-change', (e) => details.push(e.detail));
+    const toIso = pickable(el)[2].dataset.iso;
+    pickable(el)[0].click();
+    await settle(el);
+    pickable(el).find((d) => d.dataset.iso === toIso).click();
+    await settle(el);
+
+    expect(details[0].value).to.equal(`${details[0].start}/${details[0].end}`);
   });
 });
 

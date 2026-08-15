@@ -76,12 +76,12 @@
         },
         {
           "name": "arc-aspect-ratio",
-          "description": "Container that enforces a consistent width-to-height ratio on its content, ideal for images,\nvideos, and embedded media.\n---\n\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **container**\n- **inner**",
+          "description": "Container that enforces a consistent width-to-height ratio on its content, ideal for images,\nvideos, and embedded media.\n---\n\n\n### **Methods:**\n - **parseRatio(value)** - `W/H` if the string is a usable ratio, else null.\n\nA zero on either side is rejected rather than passed through: `0/5` matched\nthe old format check, reached the CSS as `aspect-ratio: 0 / 5`, and\ncollapsed the box. The guard for exactly that (`if (w === 0) …`) existed —\ninside `_paddingFallback`, a getter the render never called, so the check\nhad been written and then stranded. That getter is gone; its docstring\npromised a padding-top fallback \"for browsers that don't support the\naspect-ratio CSS property\" and nothing rendered one, which is the same\ndoc/code drift as the rest of this batch.\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **container**\n- **inner**",
           "doc-url": "",
           "attributes": [
             {
               "name": "ratio",
-              "description": "Aspect ratio as a `W/H` string. Supports integers and decimals. Falls back to `16/9` if invalid.",
+              "description": "Aspect ratio as a `W/H` string. Supports integers and decimals. An unparseable value, or one with a zero on either side, is normalised **on the property** to `16/9` — so reading `ratio` back always gives the ratio the component is actually using.",
               "value": {
                 "type": "string",
                 "default": "'16/9'"
@@ -99,7 +99,7 @@
             "properties": [
               {
                 "name": "ratio",
-                "description": "Aspect ratio as a `W/H` string. Supports integers and decimals. Falls back to `16/9` if invalid.",
+                "description": "Aspect ratio as a `W/H` string. Supports integers and decimals. An unparseable value, or one with a zero on either side, is normalised **on the property** to `16/9` — so reading `ratio` back always gives the ratio the component is actually using.",
                 "type": "string"
               }
             ],
@@ -7918,7 +7918,7 @@
         },
         {
           "name": "arc-date-range-picker",
-          "description": "Dual-calendar picker for selecting a start/end date range with presets and full keyboard\nnavigation.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when a complete range is committed (second day clicked or preset applied). detail: { start, end }\n\n### **CSS Parts:**\n - **calendar**\n- **panel-title**\n- **day**\n- **wrapper**\n- **label**\n- **input-wrapper**\n- **input**\n- **panel**\n- **presets**\n- **preset**\n- **header**",
+          "description": "Dual-calendar picker for selecting a start/end date range with presets and full keyboard\nnavigation.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when a complete range is committed (second day clicked or preset applied). `detail.value` is the ISO 8601 interval string, the same shape as the `value` property; `start` and `end` carry the two ends separately.\n\n### **CSS Parts:**\n - **calendar**\n- **panel-title**\n- **day**\n- **wrapper**\n- **label**\n- **input-wrapper**\n- **input**\n- **panel**\n- **presets**\n- **preset**\n- **header**",
           "doc-url": "",
           "attributes": [
             {
@@ -8053,8 +8053,8 @@
           "events": [
             {
               "name": "arc-change",
-              "type": "CustomEvent<{ start: string, end: string }>",
-              "description": "Fired when a complete range is committed (second day clicked or preset applied). detail: { start, end }"
+              "type": "CustomEvent<{ value: string, start: string, end: string }>",
+              "description": "Fired when a complete range is committed (second day clicked or preset applied). `detail.value` is the ISO 8601 interval string, the same shape as the `value` property; `start` and `end` carry the two ends separately."
             }
           ],
           "js": {
@@ -8156,8 +8156,8 @@
             "events": [
               {
                 "name": "arc-change",
-                "type": "CustomEvent<{ start: string, end: string }>",
-                "description": "Fired when a complete range is committed (second day clicked or preset applied). detail: { start, end }"
+                "type": "CustomEvent<{ value: string, start: string, end: string }>",
+                "description": "Fired when a complete range is committed (second day clicked or preset applied). `detail.value` is the ISO 8601 interval string, the same shape as the `value` property; `start` and `end` carry the two ends separately."
               }
             ]
           }

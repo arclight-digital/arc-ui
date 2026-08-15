@@ -3366,8 +3366,29 @@ constraint on the render, or nowhere:
 | `arc-dashboard-grid` | `columns` | NaN and negatives reached the grid template |
 | `arc-aspect-ratio` | `ratio` | documented fallback applied in the render; `el.ratio` keeps the invalid value |
 
-All but the last are now declared. `ratio` is a **pattern**, not a set or a
-range, which the vocabulary cannot express — pinned as current behaviour.
+All but the last are declared. **`ratio` is fixed too, by hand** — it is a
+*pattern*, not a set or a range, and the vocabulary has no term for one:
+`oneOf` is a membership test and `num` is a range. Inventing a `pattern()` kind
+for a single prop is speculative generality, so the normalisation is a
+`willUpdate` in the component with the reasoning at the call site, and **V4-PLAN
+2.3** — the survey of the ~70 remaining prose constraints — is where that term
+earns its place if a second prop wants it.
+
+Closing it turned out to close three pins, not one, because they were one defect
+wearing three hats:
+
+- The fallback was applied in the render, so `el.ratio` kept `banana` while a
+  16/9 box was drawn. The component displayed one ratio and held another.
+- `0/5` matched the format check, reached the CSS as `aspect-ratio: 0 / 5` and
+  collapsed the box. **The guard for exactly that already existed** — inside
+  `_paddingFallback`, a getter the render never called. The check had been
+  written and then stranded.
+- `_paddingFallback` itself promised a padding-top percentage "for browsers that
+  don't support the aspect-ratio CSS property" and nothing rendered one.
+
+Normalising on the state fixes the first two and makes the third's dead code
+genuinely dead, so it is gone. One parser, used by both the normaliser and the
+render, is what stops them disagreeing again.
 
 **The sentinel insight, which recurs three times.** `trend: ''`, `columns: 0` and
 `firstDayOfWeek: 0` each looked like a prop the vocabulary could not express,
@@ -4660,3 +4681,38 @@ the first was fixed.
 reference for a fix has to be *checked*, not just copied. `arc-resizable` was
 cited three times in this ledger as the working example, and on the fourth
 reading it had a defect of its own.
+
+
+---
+
+### 90. Space on a non-checkbox header selects every row — **correctness — FIXED**
+
+`arc-data-grid` had two paths to the same gesture and they disagreed.
+`_activateCell`, which `Enter` goes through, checks `c === 0` before treating a
+press as a selection toggle — so Enter on a sortable column header sorts. The
+`Space` branch of `_onGridKeydown` checked only `r === 0`, so Space **anywhere**
+in the header row toggled every row, including on a column with nothing to do
+with selection.
+
+Fixed by giving Space the guard Enter already had. The asymmetry that remains is
+deliberate and is pinned: "select all" is a specific control that lives in the
+header's checkbox cell, while selecting a *row* is about the row you are on — so
+Space anywhere in a data row still toggles it. The early return sits before
+`preventDefault()`, so a header press the grid declines still scrolls the page.
+
+### 45. `detail.value` is an object while the `value` property is a string — **contract — FIXED**
+
+`detail.value` now carries the ISO 8601 interval string, the same shape
+`this.value` returns, with `start` and `end` alongside it unchanged. Dropping the
+named keys to make `value` canonical would have been a worse break than the
+mismatch — they are what the component is *for*.
+
+The `@fires` annotation declares all three keys now, which was the second half of
+the finding: the manifest, the six wrappers and the docs site described a detail
+shape missing its canonical key.
+
+**Why no check caught it, stated once because it applies to the whole family:**
+`event-conventions.js` verifies that `detail.value` **exists**, not that it
+agrees with the property of the same name. That is the right scope for a static
+check — it cannot know what a component's value *means* — and it is why #39 and
+#45 both had to be found by reading.

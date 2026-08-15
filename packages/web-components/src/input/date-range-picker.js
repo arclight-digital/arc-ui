@@ -26,7 +26,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @prop {boolean} disabled - Disables the picker, reducing opacity and preventing the popup from opening.
  * @prop {boolean} open - Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS. Held at `false` while `disabled`.
  * @prop {'sm' | 'md' | 'lg'} size - Control size. `md` is the default; `sm` and `lg` scale the field padding.
- * @fires {CustomEvent<{ start: string, end: string }>} arc-change - Fired when a complete range is committed (second day clicked or preset applied). detail: { start, end }
+ * @fires {CustomEvent<{ value: string, start: string, end: string }>} arc-change - Fired when a complete range is committed (second day clicked or preset applied). `detail.value` is the ISO 8601 interval string, the same shape as the `value` property; `start` and `end` carry the two ends separately.
  * @slot none
  * @csspart calendar
  * @csspart panel-title
@@ -527,7 +527,13 @@ export class ArcDateRangePicker extends DeclaredPropsMixin(FormControlMixin(LitE
 
     this.dispatchEvent(
       new CustomEvent('arc-change', {
-        detail: { value: { start: this.start, end: this.end }, start: this.start, end: this.end },
+        // `detail.value` is the control's value — the ISO 8601 interval string
+        // `this.value` returns — not a second shape named after it. It carried
+        // `{ start, end }`, so reading `e.detail.value` and reading `el.value`
+        // on the same component gave two different types (finding #45), which
+        // defeats the point of the canonical key: one generic handler reading
+        // detail.value on every emitter. `start`/`end` stay alongside.
+        detail: { value: this.value, start: this.start, end: this.end },
         bubbles: true,
         composed: true,
       }),
@@ -547,7 +553,13 @@ export class ArcDateRangePicker extends DeclaredPropsMixin(FormControlMixin(LitE
 
     this.dispatchEvent(
       new CustomEvent('arc-change', {
-        detail: { value: { start: this.start, end: this.end }, start: this.start, end: this.end },
+        // `detail.value` is the control's value — the ISO 8601 interval string
+        // `this.value` returns — not a second shape named after it. It carried
+        // `{ start, end }`, so reading `e.detail.value` and reading `el.value`
+        // on the same component gave two different types (finding #45), which
+        // defeats the point of the canonical key: one generic handler reading
+        // detail.value on every emitter. `start`/`end` stay alongside.
+        detail: { value: this.value, start: this.start, end: this.end },
         bubbles: true,
         composed: true,
       }),

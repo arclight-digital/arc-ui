@@ -122,7 +122,9 @@ export declare class ArcAspectGrid extends LitElement {
  * `<arc-aspect-ratio>`
  */
 export declare class ArcAspectRatio extends LitElement {
-  /** Aspect ratio as a `W/H` string. Supports integers and decimals. Falls back to `16/9` if invalid. @default '16/9' */
+  /** The documented default, and what anything unusable normalises to. @default '16/9' */
+  DEFAULT_RATIO: string;
+  /** Aspect ratio as a `W/H` string. Supports integers and decimals. An unparseable value, or one with a zero on either side, is normalised **on the property** to `16/9` — so reading `ratio` back always gives the ratio the component is actually using. @default '16/9' */
   ratio: string;
 }
 

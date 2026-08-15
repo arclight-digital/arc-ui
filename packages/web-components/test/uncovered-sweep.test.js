@@ -153,32 +153,58 @@ describe('arc-aspect-ratio', () => {
     expect(box(el).getAttribute('style')).to.contain('16 / 9');
   });
 
-  // BUG: the documented fallback is applied in the render, not to the state, so
-  // the property keeps a value the component does not honour. Same shape as
-  // findings #1, #47 and #70. A consumer reading `el.ratio` back gets 'banana'.
-  it('BUG: keeps the invalid value on the property', async () => {
+  // Was three BUG pins, and they were one defect wearing three hats.
+  //
+  // The documented fallback was applied in the *render*, so the property kept a
+  // value the component did not honour — same shape as findings #1, #47 and
+  // #70. `0/5` matched the format check, reached the CSS as
+  // `aspect-ratio: 0 / 5` and collapsed the box; the guard for exactly that
+  // lived in `_paddingFallback`, a getter the render never called, so the check
+  // had been written and then stranded. And that getter's docstring promised a
+  // padding-top fallback "for browsers that don't support the aspect-ratio CSS
+  // property" which nothing rendered.
+  //
+  // Normalising on the state fixes the first two and makes the third's dead
+  // code genuinely dead, so it is gone.
+  it('normalises an unparseable ratio on the property', async () => {
     const el = await ratio('ratio="banana"');
-    expect(el.ratio, 'pinning current behaviour, not endorsing it').to.equal('banana');
+    expect(el.ratio, 'the property, not just the render').to.equal('16/9');
+    expect(box(el).getAttribute('style')).to.contain('16 / 9');
   });
 
-  // BUG: `0/5` matches the format regex, so a zero width reaches the CSS as
-  // `aspect-ratio: 0 / 5` and the box collapses. The guard for exactly this
-  // (`if (w === 0) return '56.25%'`) exists — in `_paddingFallback`, which the
-  // render never calls. The check was written and then stranded.
-  it('BUG: a zero width passes the format check and collapses the box', async () => {
-    const el = await ratio('ratio="0/5"');
-    expect(box(el).getAttribute('style')).to.contain('0 / 5');
+  it('rejects a zero on either side rather than collapsing the box', async () => {
+    for (const bad of ['0/5', '5/0']) {
+      const el = await ratio(`ratio="${bad}"`);
+      expect(el.ratio, bad).to.equal('16/9');
+      expect(box(el).getAttribute('style'), bad).to.contain('16 / 9');
+      cleanup();
+    }
   });
 
-  // BUG: `_paddingFallback` is dead code. Its docstring promises a padding-top
-  // percentage "for browsers that don't support the aspect-ratio CSS property",
-  // and nothing renders it — the documented fallback does not exist. Low impact
-  // today (support is universal), but the comment states a guarantee the
-  // component does not provide, which is the same doc/code drift the whole
-  // audit is about.
-  it('BUG: renders no padding-top fallback, despite documenting one', async () => {
+  it('keeps a valid ratio exactly as given', async () => {
+    // Anti-vacuity: a component that normalised everything to 16/9 would pass
+    // both tests above.
+    const el = await ratio('ratio="21/9"');
+    expect(el.ratio).to.equal('21/9');
+    expect(box(el).getAttribute('style')).to.contain('21 / 9');
+  });
+
+  it('keeps a decimal ratio, which the format allows', async () => {
+    const el = await ratio('ratio="1.85/1"');
+    expect(el.ratio).to.equal('1.85/1');
+  });
+
+  it('re-normalises a bad value assigned after mount', async () => {
+    const el = await ratio('ratio="4/3"');
+    el.ratio = 'banana';
+    await settle(el);
+    expect(el.ratio).to.equal('16/9');
+  });
+
+  it('renders no padding-top fallback, and no longer claims one', async () => {
     const el = await ratio('ratio="4/3"');
     expect(el.shadowRoot.innerHTML).to.not.contain('padding-top');
+    expect(el._paddingFallback, 'the dead getter is gone').to.equal(undefined);
   });
 });
 
