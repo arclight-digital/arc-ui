@@ -289,6 +289,43 @@ of this file is restated in V4-SCOPE §1.4 with the revised numbers —
       if it doesn't. Each fix flips its `it('BUG: …')` pin into a regression
       test — that is how the ~40 BUG pins disappear correctly: converted or
       moved to issues, never just deleted.
+
+      **In progress — 26 findings closed, 2026-08-15, in five commits.** Pins
+      went from 47 to **32**; the suite from 4,108 to 4,387 passing, 0 failing,
+      `pnpm check` 22/22 and `pnpm generate` diff-clean at every commit, and
+      `pnpm mutate:sample` green on all eight ratcheted pairs.
+
+      Closed: **#1–#7** (per-item `disabled` honoured by every consumer that
+      renders it; arc-segmented-control form-associated) · **#8–#13** (arc-rating:
+      0 decided as a legal unrated state, and six findings follow from it) ·
+      **#19, #38, #39** (a key at a rail announces nothing, because nothing
+      moved) · **#24, #25, #36, #87** (no component renders an empty ARIA
+      attribute; `empty-attributes.js`'s BASELINE emptied and the rule made
+      strict) · **#47, #76–#79** (five props that documented a bound and
+      enforced it in the render).
+
+      Three things the pass taught that are worth carrying:
+
+      1. **Findings under-count.** #6 was filed against one consumer and had
+         all four; #24/#25/#36 were filed as five bindings and were nine. Ask
+         "is this the whole population?" before closing, and derive the answer.
+      2. **Fix the root, not the finding.** arc-rating's six dissolved into one
+         decision about what `value = 0` means. #78's two disagreeing guards
+         were fixed by bounding the value they both read, not by editing either.
+      3. **A static check and a runtime sweep are complementary.**
+         `empty-attributes.js` reads source, states its blind spots, and fails
+         before the 35s prism step; the new `conformance-surface` sweep sees
+         what reached the DOM. Neither found all nine alone.
+
+      Still open (32 pins): **#14/#15** theme-toggle · **#21–#23** tree-view ·
+      **#26–#28** arc-list · **#29/#30** command-bar · **#31/#32**
+      context-menu/menu-item · **#33–#35** split-pane · **#37** enum ternaries ·
+      **#40** file-upload · **#41/#42** sortable-list · **#45**
+      date-range-picker · **#85** context-menu Escape · the uncovered-sweep,
+      data-grid and date-picker pins. **#20/#48/#49** are 2.2's `flag()` work,
+      not 2.1's. **#16–#18** (speed-dial) and **#43/#44** (guided-tour) close as
+      resolved-by-removal when 4.1 deletes both; **#74** and **#86** stay pinned
+      by their own recorded decisions.
 - [ ] **2.2 (M)** Finish vocabulary adoption on survivors (~30–40 components
       via `scripts/codemod-declared-props.js`, hand-reviewed;
       `inert-declarations.js` now catches the forgot-the-mixin trap). **This
