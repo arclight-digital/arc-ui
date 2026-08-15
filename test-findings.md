@@ -33,7 +33,7 @@ marker are still open.
 | 21-23 | `arc-tree-view` | expansion and selection keyed on label, so same-named nodes share state |
 | 31 | `arc-context-menu` | a second right-click while open leaves the menu at the old point |
 | 19 | `arc-carousel` | **FIXED** — an arrow key at the rails announced a move that did not happen |
-| 14, 15 | `arc-theme-toggle` | setting `theme` from script does not sync the page; two toggles desync |
+| 14, 15 | `arc-theme-toggle` | **FIXED** — setting `theme` from script did not sync the page; two toggles desynced |
 
 ### Accessibility — invalid or unusable output
 
@@ -423,7 +423,18 @@ JSDoc and tested to the same depth as the components above; nothing was found.
 
 ## arc-theme-toggle
 
-### 14. Setting `theme` from script does not sync the page — **doc-mismatch**
+### 14. Setting `theme` from script does not sync the page — **doc-mismatch — FIXED**
+
+**Fixed in `updated()`, which is where the finding said it belonged** — and the
+sync now runs for every path that moves `theme` rather than for the click path
+only.
+
+One guard was not obvious from the finding and matters: the sync fires on a
+*change*, not on the first render. `:root:not([data-theme])` and
+`[data-theme="auto"]` are **different rules in `base.css`** — the first is dark,
+the second follows the OS — so writing the default out on mount would repaint
+any page that merely contains a toggle. Mounting a control is not the user
+choosing a theme.
 
 `input/theme-toggle.js:10` declares:
 
@@ -438,7 +449,32 @@ user's saved preference — repaints the button and leaves the page on its old t
   not sync the document or storage".
 - Fix belongs in `updated()`, which is also what would fix #15.
 
-### 15. A second toggle on the page silently desyncs — **correctness**
+### 15. A second toggle on the page silently desyncs — **correctness — FIXED**
+
+**Fixed by observing the root**, which is the first of the two routes the
+finding offered, and the better one: it also covers a theme set by something
+that is not a toggle at all — an app restoring a preference at boot, a keyboard
+shortcut, another library. That is the same page state, and the control has to
+render it. Listening for `arc-change` between instances would have covered only
+arc's own writes.
+
+**It needed a third subscription kind**, and `subscriptions.js` says outright
+that one should be added there rather than hand-rolled — so `observeAttributes`
+is now beside `observeResize` and `observeIntersect`. Its case differs from
+theirs in a way worth stating: the target is **outside** the host, and a
+subscription to shared global state is precisely the kind that must not survive
+a disconnect, because every stale instance would keep answering. Both
+directions — survives a reparent, stops while detached — are pinned in
+`reconnect-sweep.test.js`, which is also the mutation pair for the module.
+
+Two loops had to be closed by hand, and they are the whole cost of the fix:
+`updated()` writes the root attribute, and the observer would see that write and
+assign it back. `_appliedTheme` records what the instance has already accounted
+for, and the observer sets it *before* assigning, so a value that came from the
+document is never pushed back to it.
+
+**Measured:** the `subscriptions` mutation pair went 83.33% (5/6) → **87.50%
+(7/8)** with the new helper, against a ≥80 gate.
 
 Each instance reads global state once, in `connectedCallback`
 (`theme-toggle.js:138-146`), and `_cycle` updates only the instance that was
@@ -448,8 +484,10 @@ button still renders the old one.
 
 - Pinned by: `test/theme-toggle.test.js` — "BUG: a second toggle on the page
   desyncs when the first is clicked".
-- Both findings dissolve if the component observes `data-theme` on the root (or
-  a `storage` event) rather than sampling it once.
+- Both findings dissolved exactly that way: the component observes `data-theme`
+  on the root rather than sampling it once. The `storage` variant was not taken
+  — it fires only for *other* tabs, so it would have fixed neither finding on
+  the page where they happen.
 
 **Checked and correct**, recorded so they are not re-investigated: the `size`
 scale really does resolve to 28/32/36/44px and really does match

@@ -42,6 +42,7 @@ import '../src/typography/code-block.register.js';
 import '../src/input/image-cropper.register.js';
 import '../src/data/data-grid.register.js';
 import '../src/content/scroll-indicator.register.js';
+import '../src/input/theme-toggle.register.js';
 
 const LONG = 'The quick brown fox jumps over the lazy dog. '.repeat(20);
 
@@ -168,6 +169,59 @@ describe('arc-data-grid reconnect', () => {
     wrapper.dispatchEvent(new Event('scroll'));
     expect(el._rafId).to.not.equal(null);
     await nextFrame();
+  });
+});
+
+describe('arc-theme-toggle reconnect', () => {
+  // The third subscription kind — observeAttributes — and the first whose
+  // target is *outside* the host: arc-theme-toggle watches the document root's
+  // data-theme so every toggle on a page agrees (finding #15). A subscription
+  // to shared global state is exactly the kind that must survive a reparent
+  // and must not survive a disconnect, so both directions are asserted here.
+  let storedBefore;
+  let attrBefore;
+
+  beforeEach(() => {
+    storedBefore = localStorage.getItem('arc-theme');
+    attrBefore = document.documentElement.getAttribute('data-theme');
+    localStorage.removeItem('arc-theme');
+    document.documentElement.removeAttribute('data-theme');
+  });
+
+  afterEach(() => {
+    if (storedBefore === null) localStorage.removeItem('arc-theme');
+    else localStorage.setItem('arc-theme', storedBefore);
+    if (attrBefore === null) document.documentElement.removeAttribute('data-theme');
+    else document.documentElement.setAttribute('data-theme', attrBefore);
+  });
+
+  it('still follows the page theme after a reparent', async () => {
+    const host = mount('<div><arc-theme-toggle></arc-theme-toggle></div>');
+    const el = host.querySelector('arc-theme-toggle');
+    await settle(el);
+
+    document.documentElement.setAttribute('data-theme', 'light');
+    await settle(el);
+    expect(el.theme, 'follows before the move').to.equal('light');
+
+    await recycle(el);
+
+    document.documentElement.setAttribute('data-theme', 'dark');
+    await settle(el);
+    expect(el.theme, 'and still follows after it').to.equal('dark');
+  });
+
+  it('stops following while detached', async () => {
+    const host = mount('<div><arc-theme-toggle></arc-theme-toggle></div>');
+    const el = host.querySelector('arc-theme-toggle');
+    await settle(el);
+
+    el.remove();
+    await nextFrame();
+
+    document.documentElement.setAttribute('data-theme', 'light');
+    await settle(el);
+    expect(el.theme, 'a detached instance is not part of the page').to.equal('auto');
   });
 });
 

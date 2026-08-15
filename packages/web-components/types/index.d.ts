@@ -3013,7 +3013,7 @@ export declare class ArcTextarea extends LitElement {
  * Events: arc-change
  */
 export declare class ArcThemeToggle extends LitElement {
-  /** The current theme mode. Automatically synced to localStorage and the document root `data-theme` attribute. @default 'auto' */
+  /** The current theme mode. Synced in both directions: changing it — by click, by key, or by assigning the property — writes the document root's `data-theme` and localStorage, and a change to that attribute from anywhere else is adopted back, so every toggle on the page agrees. @default 'auto' */
   theme: 'dark' | 'light' | 'auto';
   /** Prevents cycling and reduces opacity to 40%. @default false */
   disabled: boolean;

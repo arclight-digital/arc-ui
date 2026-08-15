@@ -2,13 +2,14 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { iconBoxStyles } from '../button-styles.js';
 import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
+import { observeAttributes } from '../shared/subscriptions.js';
 
 /**
  * Three-state theme toggle cycling through dark, light, and auto modes with animated icon
  * transitions and localStorage persistence.
  *
  * @tag arc-theme-toggle
- * @prop {'dark' | 'light' | 'auto'} theme - The current theme mode. Automatically synced to localStorage and the document root `data-theme` attribute.
+ * @prop {'dark' | 'light' | 'auto'} theme - The current theme mode. Synced in both directions: changing it — by click, by key, or by assigning the property — writes the document root's `data-theme` and localStorage, and a change to that attribute from anywhere else is adopted back, so every toggle on the page agrees.
  * @prop {boolean} disabled - Prevents cycling and reduces opacity to 40%.
  * @prop {boolean} iconOnly - Renders the button as a compact square without the theme name label, matching an icon-only arc-icon-button of the same size. Attribute name is `icon-only`.
  * @prop {'xs' | 'sm' | 'md' | 'lg'} size - Box size when `icon-only`, on the same scale as arc-icon-button: xs=28px, sm=32px, md=36px, lg=44px. Set both controls to the same value when they sit side by side. Ignored by the labeled form, which is sized by its text.
@@ -130,20 +131,77 @@ export class ArcThemeToggle extends DeclaredPropsMixin(LitElement) {
 
   constructor() {
     super();
+    // The page is the single source of truth, and this component is one of
+    // possibly several views onto it. Following the root attribute is what
+    // makes a second toggle agree with the first (finding #15) — each used to
+    // sample global state once, on connect, so the one that was not clicked
+    // kept rendering the previous theme while the page had already moved.
+    observeAttributes(this, () => document.documentElement, ['data-theme'], () => {
+      this._adoptDocumentTheme();
+    });
+  }
+
+  /** Take the root's theme without writing it back. */
+  _adoptDocumentTheme() {
+    const next = document.documentElement.getAttribute('data-theme');
+    if (!ArcThemeToggle._themeOrder.includes(next) || next === this.theme) return;
+    // Marked applied first: this value *came from* the document, so pushing it
+    // back would be a write per instance per change, and each write would
+    // re-notify every observer.
+    this._appliedTheme = next;
+    this.theme = next;
   }
 
   connectedCallback() {
     super.connectedCallback();
+    // Whatever the component connects with is already in effect as far as it is
+    // concerned; only a later value is a change worth writing out.
+    this._appliedTheme = this.theme;
     // An explicit `theme` in markup is the author stating the answer, and used
     // to be discarded: this sampled storage and the document root
     // unconditionally, so `<arc-theme-toggle theme="dark">` rendered as
     // whatever was stored. Found by the derived conformance suite.
-    if (this.hasAttribute('theme')) return;
+    if (this.hasAttribute('theme')) {
+      this._appliedTheme = this.theme;
+      return;
+    }
     const stored = localStorage.getItem('arc-theme');
     if (stored && ArcThemeToggle._themeOrder.includes(stored)) {
       this.theme = stored;
     } else {
       this.theme = document.documentElement.getAttribute('data-theme') || 'auto';
+    }
+    this._appliedTheme = this.theme;
+  }
+
+  /**
+   * The "automatically synced" half of the documented contract — finding #14.
+   *
+   * The sync used to live inside `_cycle()` and nowhere else, so it happened on
+   * a click and not on `el.theme = 'dark'`, which is the documented way to
+   * drive the component from application state and the only way to restore a
+   * saved preference. The button repainted and the page kept its old theme.
+   *
+   * Guarded against the *initial* value rather than against every render:
+   * merely putting a toggle on a page must not stamp the document with a theme
+   * nobody chose. `:root:not([data-theme])` and `[data-theme="auto"]` are
+   * different rules in base.css, so writing `auto` on mount would be a visible
+   * change, not a no-op.
+   */
+  updated(changed) {
+    if (!changed.has('theme')) return;
+    if (this.theme === this._appliedTheme) return;
+    this._appliedTheme = this.theme;
+    this._writeGlobalTheme();
+  }
+
+  /** Push `theme` to the two pieces of global state the prop documents. */
+  _writeGlobalTheme() {
+    if (document.documentElement.getAttribute('data-theme') !== this.theme) {
+      document.documentElement.setAttribute('data-theme', this.theme);
+    }
+    if (localStorage.getItem('arc-theme') !== this.theme) {
+      localStorage.setItem('arc-theme', this.theme);
     }
   }
 
@@ -153,10 +211,9 @@ export class ArcThemeToggle extends DeclaredPropsMixin(LitElement) {
     const order = ArcThemeToggle._themeOrder;
     const currentIdx = order.indexOf(this.theme);
     const nextIdx = (currentIdx + 1) % order.length;
+    // `updated()` performs the sync now, for every path that moves `theme`
+    // rather than for this one only.
     this.theme = order[nextIdx];
-
-    document.documentElement.setAttribute('data-theme', this.theme);
-    localStorage.setItem('arc-theme', this.theme);
 
     this.dispatchEvent(
       new CustomEvent('arc-change', {

@@ -163,3 +163,37 @@ export function listen(host, target, type, handler, options) {
     (el) => el.removeEventListener(type, handler, options),
   );
 }
+
+/**
+ * Observe attribute changes on an element for as long as the host is connected.
+ *
+ * The third kind, added here rather than hand-rolled per this file's own rule.
+ * Its case is different from the other two in one way worth stating: the target
+ * is usually **outside** the host — `document.documentElement` for
+ * `arc-theme-toggle`, which has to follow the page theme rather than only write
+ * it (finding #15). A subscription to shared global state is exactly the kind
+ * that must not survive a disconnect, because every stale instance keeps
+ * answering the callback.
+ *
+ * `names` is the attribute filter, passed straight to `MutationObserver`.
+ * `callback` receives the observed element, matching the other two helpers, so
+ * a component never closes over a target that may be replaced.
+ *
+ * One observer per call site, created lazily and reused across connection
+ * cycles. `disconnect()` rather than an unobserve — MutationObserver has no
+ * per-target release, and re-`observe()` on the next attach restores it.
+ */
+export function observeAttributes(host, target, names, callback) {
+  if (typeof MutationObserver === 'undefined') return null;
+  const resolve = targetResolver(host, target);
+  let observer = null;
+  return new ConnectedSubscription(
+    host,
+    resolve,
+    (el) => {
+      observer ??= new MutationObserver(() => callback(el));
+      observer.observe(el, { attributes: true, attributeFilter: names });
+    },
+    () => observer?.disconnect(),
+  );
+}

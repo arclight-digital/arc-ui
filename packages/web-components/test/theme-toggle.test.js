@@ -11,8 +11,12 @@
  * detail.value, `disabled` muting the cycle, and the connect-time restore from
  * storage.
  *
- * Two tests are marked BUG: the documented "automatically synced" claim only
- * holds for the click path, not for the property. See test-findings.md.
+ * No BUG pins remain. The documented "automatically synced" claim used to hold
+ * for the click path and nothing else (#14), and each instance sampled global
+ * state once on connect so two toggles disagreed the moment either was used
+ * (#15). Both dissolved into one change: the page is the source of truth, the
+ * component writes to it on any change and reads back from it whoever wrote.
+ * See test-findings.md.
  */
 import { expect } from '@esm-bundle/chai';
 import { mount, cleanup, settle, keyOn, record } from './helpers.js';
@@ -197,26 +201,37 @@ describe('arc-theme-toggle global state', () => {
     expect(el.theme, 'an unrecognised stored theme must not be adopted').to.equal('auto');
   });
 
-  // BUG: theme-toggle.js:10 documents `theme` as "Automatically synced to
-  // localStorage and the document root `data-theme` attribute." Only _cycle()
-  // (theme-toggle.js:156-157) performs that sync, so assigning the property —
-  // the documented way to drive the component from application state — updates
-  // the button and nothing else. The page keeps its old theme.
-  it('BUG: setting theme from script does not sync the document or storage', async () => {
+  // Was a BUG pin (finding #14). `theme` is documented as "automatically
+  // synced", and the sync lived inside `_cycle()` and nowhere else — so it
+  // happened on a click and not on `el.theme = 'dark'`, which is the documented
+  // way to drive the component from application state and the only way to
+  // restore a saved preference. The button repainted; the page did not move.
+  it('syncs the document and storage when theme is set from script', async () => {
     const el = await toggle();
     el.theme = 'dark';
     await settle(el);
 
     expect(label(el).textContent.trim(), 'the button updates').to.equal('dark');
-    expect(docTheme(), 'but the page theme does not follow').to.equal(null);
-    expect(localStorage.getItem('arc-theme'), 'and nothing is persisted').to.equal(null);
+    expect(docTheme(), 'and so does the page').to.equal('dark');
+    expect(localStorage.getItem('arc-theme'), 'and it persists').to.equal('dark');
   });
 
-  // BUG: two toggles on one page do not agree. Each reads global state once, on
-  // connect, and _cycle updates only the instance that was clicked — so the
-  // other keeps rendering the previous theme while the page is already on the
-  // new one.
-  it('BUG: a second toggle on the page desyncs when the first is clicked', async () => {
+  it('does not stamp the document merely for existing', async () => {
+    // The guard that keeps the sync from becoming a side effect of mounting.
+    // `:root:not([data-theme])` and `[data-theme="auto"]` are different rules
+    // in base.css, so writing `auto` on mount would be a visible change to a
+    // page that never asked for one.
+    const el = await toggle();
+    expect(el.theme).to.equal('auto');
+    expect(docTheme()).to.equal(null);
+    expect(localStorage.getItem('arc-theme')).to.equal(null);
+  });
+
+  // Was a BUG pin (finding #15). Each instance read global state once, on
+  // connect, and `_cycle` updated only the instance that was clicked — so a
+  // header toggle and a settings-panel toggle disagreed the moment either was
+  // used, with the page on the new theme and the other button on the old one.
+  it('a second toggle on the page follows the first', async () => {
     const wrap = mount('<div><arc-theme-toggle></arc-theme-toggle><arc-theme-toggle></arc-theme-toggle></div>');
     const [first, second] = wrap.querySelectorAll('arc-theme-toggle');
     await settle(first);
@@ -227,8 +242,53 @@ describe('arc-theme-toggle global state', () => {
     await settle(second);
 
     expect(docTheme(), 'the page moved').to.equal(first.theme);
-    expect(second.theme, 'the other toggle still shows the old theme').to.equal('auto');
-    expect(second.theme).to.not.equal(first.theme);
+    expect(second.theme, 'and the other toggle moved with it').to.equal(first.theme);
+    expect(label(second).textContent.trim()).to.equal(first.theme);
+  });
+
+  it('follows a theme set by something that is not a toggle at all', async () => {
+    // The reason this observes the root rather than listening for arc-change:
+    // an app that writes data-theme itself — restoring a preference at boot, a
+    // keyboard shortcut, another library — is the same page state, and the
+    // toggle has to render it.
+    const el = await toggle();
+    document.documentElement.setAttribute('data-theme', 'light');
+    await settle(el);
+
+    expect(el.theme).to.equal('light');
+    expect(label(el).textContent.trim()).to.equal('light');
+  });
+
+  it('adopting the page theme does not announce a user change', async () => {
+    const el = await toggle();
+    const seen = record(el, ['arc-change']);
+
+    document.documentElement.setAttribute('data-theme', 'light');
+    await settle(el);
+
+    expect(el.theme).to.equal('light');
+    expect(seen, 'arc-change means the user operated *this* control').to.deep.equal([]);
+  });
+
+  it('ignores a junk value written to the root', async () => {
+    const el = await toggle();
+    document.documentElement.setAttribute('data-theme', 'neon');
+    await settle(el);
+    expect(el.theme, 'an unrecognised theme must not be adopted').to.equal('auto');
+  });
+
+  it('stops following the page once it is disconnected', async () => {
+    // The subscription is connection-scoped, which for shared global state is
+    // the point rather than a detail: a detached instance that kept answering
+    // would keep re-rendering off a page it is no longer part of.
+    const el = await toggle();
+    el.remove();
+    await settle(el);
+
+    document.documentElement.setAttribute('data-theme', 'light');
+    await settle(el);
+
+    expect(el.theme).to.equal('auto');
   });
 });
 

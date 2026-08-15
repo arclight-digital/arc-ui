@@ -25200,7 +25200,7 @@
               "type": {
                 "text": "'dark' | 'light' | 'auto'"
               },
-              "description": "The current theme mode. Automatically synced to localStorage and the document root `data-theme` attribute.",
+              "description": "The current theme mode. Synced in both directions: changing it — by click, by key, or by assigning the property — writes the document root's `data-theme` and localStorage, and a change to that attribute from anywhere else is adopted back, so every toggle on the page agrees.",
               "attribute": "theme",
               "default": "'auto'",
               "reflects": true
@@ -25257,7 +25257,7 @@
               "type": {
                 "text": "'dark' | 'light' | 'auto'"
               },
-              "description": "The current theme mode. Automatically synced to localStorage and the document root `data-theme` attribute.",
+              "description": "The current theme mode. Synced in both directions: changing it — by click, by key, or by assigning the property — writes the document root's `data-theme` and localStorage, and a change to that attribute from anywhere else is adopted back, so every toggle on the page agrees.",
               "fieldName": "theme",
               "default": "'auto'"
             },
@@ -34517,6 +34517,25 @@
             }
           ],
           "description": "Listen on a rendered element for as long as the host is connected.\n\n`handler` is subscribed and unsubscribed by identity, so pass a bound method\nheld on the instance — a fresh arrow per attach would still work here, since\nthis controller owns both halves, but it makes the component harder to reason\nabout from the outside."
+        },
+        {
+          "kind": "function",
+          "name": "observeAttributes",
+          "parameters": [
+            {
+              "name": "host"
+            },
+            {
+              "name": "target"
+            },
+            {
+              "name": "names"
+            },
+            {
+              "name": "callback"
+            }
+          ],
+          "description": "Observe attribute changes on an element for as long as the host is connected.\n\nThe third kind, added here rather than hand-rolled per this file's own rule.\nIts case is different from the other two in one way worth stating: the target\nis usually **outside** the host — `document.documentElement` for\n`arc-theme-toggle`, which has to follow the page theme rather than only write\nit (finding #15). A subscription to shared global state is exactly the kind\nthat must not survive a disconnect, because every stale instance keeps\nanswering the callback.\n\n`names` is the attribute filter, passed straight to `MutationObserver`.\n`callback` receives the observed element, matching the other two helpers, so\na component never closes over a target that may be replaced.\n\nOne observer per call site, created lazily and reused across connection\ncycles. `disconnect()` rather than an unobserve — MutationObserver has no\nper-target release, and re-`observe()` on the next attach restores it."
         }
       ],
       "exports": [
@@ -34541,6 +34560,14 @@
           "name": "listen",
           "declaration": {
             "name": "listen",
+            "module": "src/shared/subscriptions.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "observeAttributes",
+          "declaration": {
+            "name": "observeAttributes",
             "module": "src/shared/subscriptions.js"
           }
         }
