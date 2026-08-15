@@ -9,12 +9,14 @@ const props = withDefaults(defineProps<{
   value?: number;
   max?: number;
   name?: string;
+  label?: string;
   disabled?: boolean;
   readonly?: boolean;
 }>(), {
   value: 0,
   max: 5,
   name: '',
+  label: '',
   disabled: false,
 });
 
@@ -38,6 +40,7 @@ function onArcChange(payload: CustomEvent) {
     :value="props.value"
     :max="props.max"
     :name="props.name"
+    :label="props.label"
     :disabled="props.disabled"
     :readonly="props.readonly"
     @arc-change="onArcChange"

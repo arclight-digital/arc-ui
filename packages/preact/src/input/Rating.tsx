@@ -9,6 +9,7 @@ export interface RatingProps {
   value?: number;
   max?: number;
   name?: string;
+  label?: string;
   disabled?: boolean;
   readonly?: boolean;
   onArcChange?: (e: CustomEvent) => void;
@@ -39,7 +40,7 @@ export interface RatingProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Rating: FunctionComponent<RatingProps> = ({ size, value, max, name, disabled, readonly, onArcChange, ...rest }) => {
+export const Rating: FunctionComponent<RatingProps> = ({ size, value, max, name, label, disabled, readonly, onArcChange, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -52,5 +53,5 @@ export const Rating: FunctionComponent<RatingProps> = ({ size, value, max, name,
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcChange]);
-  return h('arc-rating', { ref, size, value, max, name, disabled, readonly, ...rest });
+  return h('arc-rating', { ref, size, value, max, name, label, disabled, readonly, ...rest });
 };

@@ -9,6 +9,7 @@ export interface RatingProps {
   value?: number;
   max?: number;
   name?: string;
+  label?: string;
   disabled?: boolean;
   readonly?: boolean;
   className?: string;

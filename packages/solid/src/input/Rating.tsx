@@ -16,6 +16,7 @@ export interface RatingProps {
   value?: number;
   max?: number;
   name?: string;
+  label?: string;
   disabled?: boolean;
   readonly?: boolean;
   onArcChange?: (e: CustomEvent) => void;
@@ -47,9 +48,9 @@ export interface RatingProps {
 }
 
 export const Rating: Component<RatingProps> = (props) => {
-  const [local, rest] = splitProps(props, ['size', 'value', 'max', 'name', 'disabled', 'readonly', 'onArcChange']);
+  const [local, rest] = splitProps(props, ['size', 'value', 'max', 'name', 'label', 'disabled', 'readonly', 'onArcChange']);
   return (
-    <arc-rating size={local.size} value={local.value} max={local.max} name={local.name} disabled={local.disabled} readonly={local.readonly} on:arc-change={local.onArcChange} {...rest}>
+    <arc-rating size={local.size} value={local.value} max={local.max} name={local.name} label={local.label} disabled={local.disabled} readonly={local.readonly} on:arc-change={local.onArcChange} {...rest}>
     </arc-rating>
   );
 };

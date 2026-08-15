@@ -890,6 +890,7 @@ declare module 'react' {
         value?: number | string;
         max?: number | string;
         name?: string;
+        label?: string;
         disabled?: boolean;
         readonly?: boolean;
         required?: boolean;

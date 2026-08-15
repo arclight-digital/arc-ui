@@ -1834,6 +1834,7 @@ export default {
    "value",
    "max",
    "name",
+   "label",
    "disabled",
    "readonly",
    "required"

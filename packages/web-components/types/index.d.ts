@@ -2261,12 +2261,14 @@ export declare class ArcRangeSlider extends LitElement {
  * Events: arc-change
  */
 export declare class ArcRating extends LitElement {
-  /** Current rating value. Reflected as an attribute and updated on user interaction. @default 0 */
+  /** Current rating value, 0 to `max`. **0 means unrated** — it is a legal state of the control, not a rating of zero: it submits nothing, announces as "No rating", and is what Home and a left-arrow at the first star return to. Clicking the star that is already selected also clears back to it. Reflected as an attribute and updated on user interaction. @default 0 */
   value: number;
   /** Maximum number of stars to render. Determines the upper bound of the rating scale. @default 5 */
   max: number;
   /** @default '' */
   name: string;
+  /** Accessible name for the control. Several ratings on one page are indistinguishable without it. Defaults to "Rating". @default '' */
+  label: string;
   /** Disables interaction, reducing opacity to 40% and blocking pointer events. @default false */
   disabled: boolean;
   /** Prevents interaction while maintaining full visual appearance. Useful for displaying existing ratings. @default false */

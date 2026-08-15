@@ -43,6 +43,13 @@ export class Rating {
     return this._el.name;
   }
 
+  @Input() set label(value: string) {
+    this._el.label = value;
+  }
+  get label(): string {
+    return this._el.label;
+  }
+
   @Input() set disabled(value: boolean) {
     this._el.disabled = value;
   }

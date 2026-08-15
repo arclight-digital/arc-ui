@@ -21855,7 +21855,7 @@
                 "text": "number"
               },
               "default": "0",
-              "description": "Current rating value. Reflected as an attribute and updated on user interaction.",
+              "description": "Current rating value, 0 to `max`. **0 means unrated** — it is a legal state of the control, not a rating of zero: it submits nothing, announces as \"No rating\", and is what Home and a left-arrow at the first star return to. Clicking the star that is already selected also clears back to it. Reflected as an attribute and updated on user interaction.",
               "attribute": "value",
               "reflects": true
             },
@@ -21881,6 +21881,17 @@
               "default": "''",
               "attribute": "name",
               "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Accessible name for the control. Several ratings on one page are indistinguishable without it. Defaults to \"Rating\".",
+              "attribute": "label"
             },
             {
               "kind": "field",
@@ -22081,7 +22092,7 @@
                 "text": "number"
               },
               "default": "0",
-              "description": "Current rating value. Reflected as an attribute and updated on user interaction.",
+              "description": "Current rating value, 0 to `max`. **0 means unrated** — it is a legal state of the control, not a rating of zero: it submits nothing, announces as \"No rating\", and is what Home and a left-arrow at the first star return to. Clicking the star that is already selected also clears back to it. Reflected as an attribute and updated on user interaction.",
               "fieldName": "value"
             },
             {
@@ -22100,6 +22111,15 @@
               },
               "default": "''",
               "fieldName": "name"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Accessible name for the control. Several ratings on one page are indistinguishable without it. Defaults to \"Rating\".",
+              "fieldName": "label"
             },
             {
               "name": "disabled",

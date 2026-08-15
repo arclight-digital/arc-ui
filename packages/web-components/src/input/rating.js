@@ -4,15 +4,25 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
 import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
+ * One star outline. Filled and empty are the same geometry — the `fill`
+ * attribute is what carries the difference. It used to be a ternary whose two
+ * branches were the identical string, which read as an unfinished intent that
+ * any refactor would have preserved untouched (finding #13).
+ */
+const STAR_PATH =
+  'M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.27 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z';
+
+/**
  * A star-based rating input with hover preview, keyboard navigation, filled/unfilled SVG stars,
  * and configurable max value.
  *
  * @tag arc-rating
- * @prop {number} value - Current rating value. Reflected as an attribute and updated on user interaction.
+ * @prop {number} value - Current rating value, 0 to `max`. **0 means unrated** — it is a legal state of the control, not a rating of zero: it submits nothing, announces as "No rating", and is what Home and a left-arrow at the first star return to. Clicking the star that is already selected also clears back to it. Reflected as an attribute and updated on user interaction.
  * @prop {number} max - Maximum number of stars to render. Determines the upper bound of the rating scale.
  * @prop {boolean} disabled - Disables interaction, reducing opacity to 40% and blocking pointer events.
  * @prop {boolean} readonly - Prevents interaction while maintaining full visual appearance. Useful for displaying existing ratings.
  * @prop {'sm' | 'md' | 'lg'} size - Control size. `md` is the default; `sm` and `lg` scale the star glyphs.
+ * @prop {string} label - Accessible name for the control. Several ratings on one page are indistinguishable without it. Defaults to "Rating".
  * @fires {CustomEvent<{ value: number }>} arc-change - Fired when the rating value changes
  * @slot none
  * @csspart star
@@ -25,6 +35,7 @@ export class ArcRating extends DeclaredPropsMixin(FormControlMixin(LitElement)) 
     value: { type: Number, reflect: true },
     max: { type: Number, reflect: true },
     name: { type: String, reflect: true },
+    label: { type: String },
     // NOT flag(): a form-associated custom element whose `disabled` content
     // attribute is merely *present* is "actually disabled" per the HTML spec,
     // so the platform calls formDisabledCallback(true) and the mixin sets the
@@ -110,17 +121,32 @@ export class ArcRating extends DeclaredPropsMixin(FormControlMixin(LitElement)) 
     this.value = 0;
     this.max = 5;
     this.name = '';
+    this.label = '';
     this.disabled = false;
     this._hoverValue = 0;
   }
 
+  /**
+   * An unrated control submits nothing (finding #8).
+   *
+   * `String(0)` is `"0"`, and `_formValueIsEmpty` counts only `null` and `''`
+   * as empty — so `<arc-rating required>` reported `checkValidity() === true`
+   * with nothing rated. The exemption in `form-contract.test.js` ("number-valued
+   * controls have no meaningful empty") is right for slider and number-input
+   * and wrong here: 0 is not a rating, it is the absence of one.
+   */
   _formValue() {
-    return this.value == null ? null : String(this.value);
+    if (this.value == null || this.value === 0) return null;
+    return String(this.value);
   }
 
   _onStarClick(index) {
     if (this.disabled || this.readonly) return;
-    this.value = index;
+    // Clicking the star that is already selected clears the rating — the mouse
+    // half of finding #10. Without it, 0 is a state the control can start in
+    // and no gesture can return to, which is what made `required` look
+    // satisfiable and the whole family of #8-#12 possible.
+    this.value = index === this.value ? 0 : index;
     this._updateFormValue();
     this.dispatchEvent(
       new CustomEvent('arc-change', {
@@ -156,11 +182,15 @@ export class ArcRating extends DeclaredPropsMixin(FormControlMixin(LitElement)) 
       case 'ArrowLeft':
       case 'ArrowDown':
         e.preventDefault();
-        newValue = Math.max(this.value - 1, 1);
+        // Floor 0, not 1 (findings #9 and #10). From the unrated default,
+        // `Math.max(0 - 1, 1)` was 1 — the key meaning "less" raised the
+        // rating — and once any rating was set nothing could clear it.
+        newValue = Math.max(this.value - 1, 0);
         break;
       case 'Home':
         e.preventDefault();
-        newValue = 1;
+        // The minimum, per the slider pattern, and the minimum is unrated.
+        newValue = 0;
         break;
       case 'End':
         e.preventDefault();
@@ -188,10 +218,6 @@ export class ArcRating extends DeclaredPropsMixin(FormControlMixin(LitElement)) 
     const filled = index <= displayValue;
     const hovered = this._hoverValue > 0 && index <= this._hoverValue;
 
-    const starPath = filled
-      ? 'M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.27 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z'
-      : 'M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.27 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 2z';
-
     return html`
       <span
         class="rating__star ${filled ? 'rating__star--filled' : ''} ${hovered ? 'rating__star--hovered' : ''}"
@@ -201,7 +227,7 @@ export class ArcRating extends DeclaredPropsMixin(FormControlMixin(LitElement)) 
         part="star"
       >
         <svg viewBox="0 0 24 24" fill=${filled ? 'currentColor' : 'none'} stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-          <path d=${starPath} />
+          <path d=${STAR_PATH} />
         </svg>
       </span>
     `;
@@ -217,10 +243,11 @@ export class ArcRating extends DeclaredPropsMixin(FormControlMixin(LitElement)) 
       <div
         class="rating"
         role="slider"
-        aria-label="Rating"
-        aria-valuemin="1"
+        aria-label=${this.label || 'Rating'}
+        aria-valuemin="0"
         aria-valuemax=${this.max}
         aria-valuenow=${this.value}
+        aria-valuetext=${this.value === 0 ? 'No rating' : `${this.value} of ${this.max}`}
         aria-disabled=${this.disabled ? 'true' : 'false'}
         aria-readonly=${this.readonly ? 'true' : 'false'}
         tabindex=${this.disabled ? '-1' : '0'}

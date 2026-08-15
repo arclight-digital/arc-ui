@@ -29,7 +29,7 @@ marker are still open.
 | # | Component | Finding |
 |---|---|---|
 | 26 | `arc-list` | a value containing a comma is recorded but never marked selected |
-| 8 | `arc-rating` | `required` is satisfied by an unrated control — the form submits `"0"` |
+| 8 | `arc-rating` | **FIXED** — `required` was satisfied by an unrated control; the form submitted `"0"` |
 | 21-23 | `arc-tree-view` | expansion and selection keyed on label, so same-named nodes share state |
 | 31 | `arc-context-menu` | a second right-click while open leaves the menu at the old point |
 | 19 | `arc-carousel` | an arrow key at the rails announces a move that did not happen |
@@ -44,7 +44,7 @@ marker are still open.
 | 28, 27 | `arc-list` | items claim `role="option"` inside a plain `role="list"`; stray `aria-multiselectable` |
 | 2 | `arc-tabs` | **FIXED** — `aria-controls` pointed at ids that do not exist |
 | 24, 25 | five components | `aria-expanded=""` and four more attributes rendered empty instead of omitted |
-| 9-12 | `arc-rating` | ArrowLeft raises the rating; no route back to unrated; value below its own min; hardcoded name |
+| 9-12 | `arc-rating` | **FIXED** — ArrowLeft raised the rating; no route back to unrated; value below its own min; hardcoded name |
 | 3 | `arc-tabs` | **FIXED** — an unknown `orientation` reached `aria-orientation` verbatim |
 
 ### API and documentation
@@ -299,13 +299,45 @@ the moment the mixin landed and failed until someone said how to fill it.
 
 ---
 
-## arc-rating
+## arc-rating — **ALL SIX FIXED**
 
-Four findings, and they share one root: **`value = 0` means "unrated" to the
-component's own rendering, and means "a real value" to everything else.**
-Deciding what 0 means would fix all four together.
+Four findings, and they shared one root: **`value = 0` meant "unrated" to the
+component's own rendering, and "a real value" to everything else.** Deciding
+what 0 means would fix all four together, and it did — six, counting #12 and
+#13, which came along in the same pass.
 
-### 8. `required` is satisfied by an unrated control — **doc-mismatch / data**
+**The decision: 0 is a legal, reachable, unrated state of the control.** Every
+fix below follows from it rather than from its own finding, which is why they
+are recorded together:
+
+| finding | what the decision implies |
+|---|---|
+| #8 | an unrated control submits **nothing** — `_formValue()` returns `null` at 0 |
+| #9 | the decrement floor is 0, so "less" can never mean more |
+| #10 | Home *is* the route back to unrated, because 0 is the minimum |
+| #11 | `aria-valuemin="0"` — the unrated state is inside the declared range |
+| #12 | a `label` prop, because a nameless control cannot be told from its neighbour |
+| #13 | the dead ternary branch goes, and the one geometry becomes a constant |
+
+Two things the decision forced that no single finding asked for:
+
+- **`aria-valuetext`.** `aria-valuenow="0"` on a 0..5 scale is in range and says
+  nothing useful. The control announces "No rating" at 0 and "3 of 5" otherwise
+  — the reason 0 is legal is that it *means* something, so it has to say what.
+- **A mouse route back.** #10 is titled as a keyboard finding, and its body
+  names mouse users in passing: "Mouse users cannot either — there is no clear
+  affordance." Clicking the already-selected star now clears. What it replaced
+  was a genuine no-op — the click path had no equality guard, so re-clicking
+  re-announced the value it already held, which `rating.test.js` pinned as
+  current behaviour while flagging it as odd. Nothing was lost.
+
+**And the exemption went with it.** `form-contract.test.js` excused rating from
+its `required` sweep on the grounds that "number-valued controls have no
+meaningful empty". That is right for slider and number-input and was wrong here
+all along — the finding said so, and the sweep is the place that has to agree.
+`arc-rating` is swept like every other control now.
+
+### 8. `required` is satisfied by an unrated control — **doc-mismatch / data — FIXED**
 
 `_formValue()` (`input/rating.js:112`) returns `String(this.value)`, so an
 unrated rating submits `"0"`. `FormControlMixin._formValueIsEmpty` treats only
@@ -323,7 +355,7 @@ control considers legal.
 - Fix is one line — `_formValue()` returning `null` at 0 — but it changes what an
   unrated rating submits, so it is a behaviour decision, not a typo.
 
-### 9. ArrowLeft on an unrated control *raises* the rating — **a11y / usability**
+### 9. ArrowLeft on an unrated control *raises* the rating — **a11y / usability — FIXED**
 
 The decrement floor is 1 (`rating.js:150`: `Math.max(this.value - 1, 1)`). From
 the default value of 0, ArrowLeft computes `Math.max(-1, 1) === 1`, so the key
@@ -332,7 +364,7 @@ meaning "less" increases the rating.
 - Pinned by: `test/rating.test.js` — "BUG: ArrowLeft from unrated raises the
   rating instead of lowering it".
 
-### 10. There is no keyboard route back to unrated — **a11y**
+### 10. There is no keyboard route back to unrated — **a11y — FIXED, keyboard and mouse**
 
 Same floor. Once any rating is set, neither ArrowLeft nor Home can return to 0, so
 a keyboard user who mis-rates cannot clear it. Mouse users cannot either — there
@@ -341,7 +373,7 @@ is no clear affordance.
 - Pinned by: `test/rating.test.js` — "BUG: no keyboard route back to unrated once
   a rating is set".
 
-### 11. An unrated control reports a value outside its own declared range — **a11y**
+### 11. An unrated control reports a value outside its own declared range — **a11y — FIXED**
 
 `aria-valuemin` is the literal `"1"` (`rating.js:215`) while `aria-valuenow` is
 bound from `value`, which defaults to 0. `aria-valuenow="0"` against
@@ -350,7 +382,7 @@ bound from `value`, which defaults to 0. `aria-valuenow="0"` against
 - Pinned by: `test/rating.test.js` — "BUG: an unrated control reports a value
   below its own declared minimum".
 
-### 12. The accessible name is hardcoded — **a11y**
+### 12. The accessible name is hardcoded — **a11y — FIXED**
 
 `aria-label="Rating"` is a literal (`rating.js:214`) and there is no `label`
 prop. Several ratings on one page are indistinguishable to a screen reader, and
@@ -362,7 +394,7 @@ an author-supplied `aria-label` on the host does not reach the slider node.
   (`knob.test.js:44`), `arc-gauge`, `arc-level-meter` — and falls back to a
   generic name only when unset. Rating is the outlier.
 
-### 13. The two star paths are identical — **smell**
+### 13. The two star paths are identical — **smell — FIXED**
 
 `_renderStar` (`rating.js:185-187`) picks `starPath` from a ternary whose two
 branches are the same string. Filled vs. empty is carried entirely by the `fill`

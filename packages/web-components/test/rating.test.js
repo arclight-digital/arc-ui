@@ -7,9 +7,11 @@
  * disabled and readonly both mute every gesture while readonly keeps submitting,
  * and the control participates in a form under its name.
  *
- * Four tests are marked BUG. The common root is that `value = 0` means
- * "unrated" everywhere except in the places that decide ARIA range, keyboard
- * floor and form validity. See test-findings.md.
+ * No BUG pins remain. Six findings (#8-#13) shared one root — `value = 0` meant
+ * "unrated" to the rendering and "a real value" to everything that decided ARIA
+ * range, keyboard floor and form validity — and closing them meant answering
+ * that question once: **0 is a legal, reachable, unrated state.** See
+ * test-findings.md.
  */
 import { expect } from '@esm-bundle/chai';
 import { mount, cleanup, settle, keyOn, record } from './helpers.js';
@@ -107,17 +109,28 @@ describe('arc-rating click', () => {
     expect(event.composed).to.equal(true);
   });
 
-  it('re-clicking the same star re-announces the same value', async () => {
-    // No equality guard on the click path, unlike the keyboard path. Pinned as
-    // current behaviour: a consumer counting events sees two.
+  it('re-clicking the selected star clears the rating', async () => {
+    // The mouse route back to unrated (finding #10). It replaced a no-op that
+    // re-announced the value it already had — the click path had no equality
+    // guard, unlike the keyboard path — so nothing is lost by it.
     const el = await rating('value="2"');
     const seen = record(el, ['arc-change']);
 
     stars(el)[1].click();
     await settle(el);
 
-    expect(el.value).to.equal(2);
-    expect(seen).to.deep.equal([['change', 2]]);
+    expect(el.value).to.equal(0);
+    expect(filledCount(el)).to.equal(0);
+    expect(seen, 'and it is announced like any other change').to.deep.equal([['change', 0]]);
+  });
+
+  it('clicking a different star still moves the rating there', async () => {
+    // Anti-vacuity for the clear above: a control that cleared on *every*
+    // click would pass it.
+    const el = await rating('value="2"');
+    stars(el)[3].click();
+    await settle(el);
+    expect(el.value).to.equal(4);
   });
 });
 
@@ -182,7 +195,7 @@ describe('arc-rating keyboard', () => {
     expect(el.value).to.equal(1);
   });
 
-  it('Home and End hit the rails', async () => {
+  it('Home and End hit the rails, and the low rail is unrated', async () => {
     const el = await rating('value="3" max="5"');
     keyOn(slider(el), 'End');
     await settle(el);
@@ -190,7 +203,7 @@ describe('arc-rating keyboard', () => {
 
     keyOn(slider(el), 'Home');
     await settle(el);
-    expect(el.value).to.equal(1);
+    expect(el.value, 'the minimum of a 0..max scale is 0').to.equal(0);
   });
 
   it('announces each keyboard move once', async () => {
@@ -221,26 +234,39 @@ describe('arc-rating keyboard', () => {
     expect(el.value).to.equal(before);
   });
 
-  // BUG: the decrement floor is 1, not 0 (rating.js:150). From the unrated
-  // default of 0, ArrowLeft computes Math.max(0 - 1, 1) === 1 — so the key that
-  // means "less" raises the rating, and there is no keyboard route back to
-  // unrated at all.
-  it('BUG: ArrowLeft from unrated raises the rating instead of lowering it', async () => {
+  // Was two BUG pins (findings #9 and #10). The decrement floor was 1, so from
+  // the unrated default `Math.max(0 - 1, 1)` was 1 — the key meaning "less"
+  // raised the rating — and once any rating was set, neither ArrowLeft nor Home
+  // could clear it.
+  it('a decrement key at the floor stays put and stays silent', async () => {
     const el = await rating();
+    const seen = record(el, ['arc-change']);
     expect(el.value).to.equal(0);
 
     keyOn(slider(el), 'ArrowLeft');
     await settle(el);
 
-    expect(el.value, 'a decrement key increased the value').to.equal(1);
+    expect(el.value, 'a decrement key must never increase the value').to.equal(0);
+    expect(seen, 'and an unchanged value announces nothing').to.deep.equal([]);
   });
 
-  it('BUG: no keyboard route back to unrated once a rating is set', async () => {
+  it('ArrowLeft from the first star clears back to unrated', async () => {
     const el = await rating('value="1"');
+    const seen = record(el, ['arc-change']);
+
     keyOn(slider(el), 'ArrowLeft');
+    await settle(el);
+
+    expect(el.value).to.equal(0);
+    expect(filledCount(el)).to.equal(0);
+    expect(seen).to.deep.equal([['change', 0]]);
+  });
+
+  it('Home clears back to unrated from anywhere', async () => {
+    const el = await rating('value="4"');
     keyOn(slider(el), 'Home');
     await settle(el);
-    expect(el.value, 'the floor is 1, so 0 is unreachable').to.equal(1);
+    expect(el.value).to.equal(0);
   });
 });
 
@@ -248,7 +274,7 @@ describe('arc-rating ARIA', () => {
   it('is a slider carrying its range and current value', async () => {
     const el = await rating('value="3" max="7"');
     const node = slider(el);
-    expect(node.getAttribute('aria-valuemin')).to.equal('1');
+    expect(node.getAttribute('aria-valuemin'), 'unrated is in range').to.equal('0');
     expect(node.getAttribute('aria-valuemax')).to.equal('7');
     expect(node.getAttribute('aria-valuenow')).to.equal('3');
   });
@@ -274,21 +300,35 @@ describe('arc-rating ARIA', () => {
       .to.equal(true);
   });
 
-  // BUG: aria-valuemin is the literal "1" (rating.js:215) while the default
-  // value is 0, so an unrated control reports aria-valuenow="0" against a
-  // declared minimum of 1 — out of range, which is invalid ARIA and leaves the
-  // announced value undefined by spec.
-  it('BUG: an unrated control reports a value below its own declared minimum', async () => {
+  // Was a BUG pin (finding #11): aria-valuemin was the literal "1" while the
+  // default value is 0, so an unrated control reported a value below its own
+  // declared minimum — invalid ARIA, and the announced value undefined by spec.
+  it('keeps the unrated state inside its own declared range', async () => {
     const el = await rating();
     expect(slider(el).getAttribute('aria-valuenow')).to.equal('0');
-    expect(slider(el).getAttribute('aria-valuemin')).to.equal('1');
+    expect(slider(el).getAttribute('aria-valuemin')).to.equal('0');
   });
 
-  // BUG: aria-label is hardcoded (rating.js:214) and there is no `label` prop,
-  // so every rating on a page announces as "Rating" with no way to tell them
-  // apart, and an author-supplied aria-label on the host does not reach it.
-  it('BUG: the accessible name is hardcoded and cannot be set', async () => {
-    const el = await rating('aria-label="Delivery speed"');
+  it('says what unrated means rather than announcing a bare 0', async () => {
+    // aria-valuenow="0" on a 0..5 scale is in range but says nothing useful.
+    const el = await rating();
+    expect(slider(el).getAttribute('aria-valuetext')).to.equal('No rating');
+
+    el.value = 3;
+    await settle(el);
+    expect(slider(el).getAttribute('aria-valuetext')).to.equal('3 of 5');
+  });
+
+  // Was a BUG pin (finding #12): aria-label was hardcoded and there was no
+  // `label` prop, so several ratings on a page were indistinguishable and an
+  // author-supplied aria-label on the host did not reach the slider node.
+  it('takes an accessible name', async () => {
+    const el = await rating('label="Delivery speed"');
+    expect(slider(el).getAttribute('aria-label')).to.equal('Delivery speed');
+  });
+
+  it('falls back to a generic name rather than going unnamed', async () => {
+    const el = await rating();
     expect(slider(el).getAttribute('aria-label')).to.equal('Rating');
   });
 });
@@ -358,17 +398,40 @@ describe('arc-rating form participation', () => {
     expect(new FormData(form).get('stars')).to.equal('3');
   });
 
-  // BUG: _formValue() stringifies the value (rating.js:112), so an unrated
-  // control submits "0" — which FormControlMixin._formValueIsEmpty does not
-  // treat as empty (only null and ''). `required` on a rating is therefore
-  // satisfied by never rating anything. form-contract.test.js:15-16 exempts
-  // rating from its required sweep on the grounds that number-valued controls
-  // have no meaningful "empty", but 0 is exactly that for this control — it is
-  // outside the component's own aria-valuemin of 1.
-  it('BUG: required is satisfied by an unrated control', async () => {
+  // Was a BUG pin (finding #8): `_formValue()` stringified the value, so an
+  // unrated control submitted "0" — which `_formValueIsEmpty` does not treat as
+  // empty — and `required` was satisfied by never rating anything.
+  it('required is unsatisfied by an unrated control', async () => {
     const el = await rating('required name="stars"');
     expect(el.value).to.equal(0);
-    expect(el.checkValidity(), 'an unrated required rating reports valid').to.equal(true);
+    expect(el.checkValidity()).to.equal(false);
+    expect(el.validity.valueMissing).to.equal(true);
+  });
+
+  it('required is satisfied as soon as something is rated', async () => {
+    const el = await rating('required name="stars"');
+    stars(el)[2].click();
+    await settle(el);
+    expect(el.checkValidity()).to.equal(true);
     expect(el.validity.valueMissing).to.equal(false);
+  });
+
+  it('an unrated control submits nothing at all', async () => {
+    const form = mount('<form><arc-rating name="stars"></arc-rating></form>');
+    const el = form.querySelector('arc-rating');
+    await settle(el);
+
+    expect(new FormData(form).getAll('stars'), 'not the string "0"').to.eql([]);
+  });
+
+  it('clearing a rating removes it from the form again', async () => {
+    const form = mount('<form><arc-rating name="stars" value="3"></arc-rating></form>');
+    const el = form.querySelector('arc-rating');
+    await settle(el);
+    expect(new FormData(form).get('stars')).to.equal('3');
+
+    el.value = 0;
+    await settle(el);
+    expect(new FormData(form).getAll('stars')).to.eql([]);
   });
 });

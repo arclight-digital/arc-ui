@@ -3717,7 +3717,7 @@
         },
         {
           "name": "value",
-          "description": "Current rating value. Reflected as an attribute and updated on user interaction.",
+          "description": "Current rating value, 0 to `max`. **0 means unrated** — it is a legal state of the control, not a rating of zero: it submits nothing, announces as \"No rating\", and is what Home and a left-arrow at the first star return to. Clicking the star that is already selected also clears back to it. Reflected as an attribute and updated on user interaction.",
           "values": []
         },
         {
@@ -3726,6 +3726,11 @@
           "values": []
         },
         { "name": "name", "values": [] },
+        {
+          "name": "label",
+          "description": "Accessible name for the control. Several ratings on one page are indistinguishable without it. Defaults to \"Rating\".",
+          "values": []
+        },
         {
           "name": "disabled",
           "description": "Disables interaction, reducing opacity to 40% and blocking pointer events.",

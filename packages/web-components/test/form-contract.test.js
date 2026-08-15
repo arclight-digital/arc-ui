@@ -12,8 +12,11 @@
  *     here on representative gestures; per-control guards live in the
  *     components).
  *
- * Number-valued controls (slider, number-input, rating) are exempt from the
- * required sweep: their defaults are real values, so "empty" has no meaning.
+ * Number-valued controls are exempt from the required sweep where their
+ * defaults are real values, so "empty" has no meaning — slider and
+ * number-input. **`arc-rating` is no longer among them** (finding #8): 0 is not
+ * a rating, it is the absence of one, so an unrated control is empty and is
+ * swept like every other.
  *
  * **What the form actually submits is `form-data-sweep.test.js`**, which
  * derives its subjects from `custom-elements.json` and covers all 26
@@ -39,6 +42,7 @@ import '../src/input/otp-input.register.js';
 import '../src/input/pin-input.register.js';
 import '../src/input/tag-input.register.js';
 import '../src/input/password-input.register.js';
+import '../src/input/rating.register.js';
 
 /** tag → how to programmatically make the control non-empty. */
 const REQUIRED_SWEEP = [
@@ -56,6 +60,8 @@ const REQUIRED_SWEEP = [
   ['arc-pin-input', (el) => { el.value = '1234'; }],
   ['arc-tag-input', (el) => { el.value = ['a']; }],
   ['arc-password-input', (el) => { el.value = 'hunter2'; }],
+  // The one number-valued control with a meaningful empty — see the header.
+  ['arc-rating', (el) => { el.value = 4; }],
 ];
 
 describe('required ⇒ valueMissing until filled', () => {
