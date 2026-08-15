@@ -2167,8 +2167,8 @@
               }
             },
             {
-              "name": "item-height",
-              "description": "Height in pixels of each row. Must match what actually renders.",
+              "name": "itemHeight",
+              "description": "Height in pixels of each row. Must match what actually renders, and must be at least 1 — it is a divisor, so a zero would put NaN through every window calculation.",
               "value": {
                 "type": "number",
                 "default": "40"
@@ -2176,7 +2176,7 @@
             },
             {
               "name": "overscan",
-              "description": "Rows rendered above and below the visible window to cover fast scrolling.",
+              "description": "Rows rendered above and below the visible window to cover fast scrolling. Never negative.",
               "value": {
                 "type": "number",
                 "default": "5"
@@ -2213,12 +2213,12 @@
               },
               {
                 "name": "itemHeight",
-                "description": "Height in pixels of each row. Must match what actually renders.",
+                "description": "Height in pixels of each row. Must match what actually renders, and must be at least 1 — it is a divisor, so a zero would put NaN through every window calculation.",
                 "type": "number"
               },
               {
                 "name": "overscan",
-                "description": "Rows rendered above and below the visible window to cover fast scrolling.",
+                "description": "Rows rendered above and below the visible window to cover fast scrolling. Never negative.",
                 "type": "number"
               }
             ],
@@ -2246,17 +2246,17 @@
             },
             {
               "name": "weeks",
-              "description": "How many week columns to render, counting back from the week containing the end date (default 52). The last column is truncated after the end date, so the newest cell is always the end date itself.",
+              "description": "How many week columns to render, counting back from the week containing the end date (default 52), at least 1. The last column is truncated after the end date, so the newest cell is always the end date itself.",
               "value": {
                 "type": "number",
                 "default": "52"
               }
             },
             {
-              "name": "week-start",
-              "description": "Which day starts each column: \"sunday\" (default, the GitHub convention) or \"monday\".",
+              "name": "weekStart",
+              "description": "Which day starts each column: \"sunday\" (default, the GitHub convention) or \"monday\". An unrecognised value falls back to sunday.",
               "value": {
-                "type": "string",
+                "type": "'sunday' | 'monday'",
                 "default": "'sunday'"
               }
             },
@@ -2270,7 +2270,7 @@
             },
             {
               "name": "legend",
-              "description": "Whether to render the Less→More swatch strip under the grid (default true; set the attribute to the string \"false\" to disable from markup).",
+              "description": "Whether to render the Less→More swatch strip under the grid. Default true; disable from markup with either `no-legend` or `legend=\"false\"`.",
               "value": {
                 "type": "boolean",
                 "default": "true"
@@ -2293,13 +2293,13 @@
               },
               {
                 "name": "weeks",
-                "description": "How many week columns to render, counting back from the week containing the end date (default 52). The last column is truncated after the end date, so the newest cell is always the end date itself.",
+                "description": "How many week columns to render, counting back from the week containing the end date (default 52), at least 1. The last column is truncated after the end date, so the newest cell is always the end date itself.",
                 "type": "number"
               },
               {
                 "name": "weekStart",
-                "description": "Which day starts each column: \"sunday\" (default, the GitHub convention) or \"monday\".",
-                "type": "string"
+                "description": "Which day starts each column: \"sunday\" (default, the GitHub convention) or \"monday\". An unrecognised value falls back to sunday.",
+                "type": "'sunday' | 'monday'"
               },
               {
                 "name": "max",
@@ -2308,7 +2308,7 @@
               },
               {
                 "name": "legend",
-                "description": "Whether to render the Less→More swatch strip under the grid (default true; set the attribute to the string \"false\" to disable from markup).",
+                "description": "Whether to render the Less→More swatch strip under the grid. Default true; disable from markup with either `no-legend` or `legend=\"false\"`.",
                 "type": "boolean"
               }
             ],
@@ -16729,7 +16729,7 @@
               "name": "layout",
               "description": "Board shape: \"compact\" (default, a 60%-style block) or \"ansi\" (adds the F-row and nav cluster). Unknown values fall back to compact.",
               "value": {
-                "type": "string",
+                "type": "'compact' | 'ansi'",
                 "default": "'compact'"
               }
             },
@@ -16743,7 +16743,7 @@
             },
             {
               "name": "labels",
-              "description": "Whether keys render their legends (default true; set the attribute to the string \"false\" to disable from markup).",
+              "description": "Whether keys render their legends. Default true; disable from markup with either `no-labels` or `labels=\"false\"`.",
               "value": {
                 "type": "boolean",
                 "default": "true"
@@ -16753,7 +16753,7 @@
               "name": "platform",
               "description": "Which platform's modifier legends and `mod` resolution to use: \"auto\" (default — detected in the browser, mac on the server), \"mac\", or \"win\".",
               "value": {
-                "type": "string",
+                "type": "'auto' | 'mac' | 'win'",
                 "default": "'auto'"
               }
             },
@@ -16773,7 +16773,7 @@
               {
                 "name": "layout",
                 "description": "Board shape: \"compact\" (default, a 60%-style block) or \"ansi\" (adds the F-row and nav cluster). Unknown values fall back to compact.",
-                "type": "string"
+                "type": "'compact' | 'ansi'"
               },
               {
                 "name": "highlight",
@@ -16782,13 +16782,13 @@
               },
               {
                 "name": "labels",
-                "description": "Whether keys render their legends (default true; set the attribute to the string \"false\" to disable from markup).",
+                "description": "Whether keys render their legends. Default true; disable from markup with either `no-labels` or `labels=\"false\"`.",
                 "type": "boolean"
               },
               {
                 "name": "platform",
                 "description": "Which platform's modifier legends and `mod` resolution to use: \"auto\" (default — detected in the browser, mac on the server), \"mac\", or \"win\".",
-                "type": "string"
+                "type": "'auto' | 'mac' | 'win'"
               },
               {
                 "name": "caption",

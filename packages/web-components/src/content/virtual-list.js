@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import { DeclaredPropsMixin, num, int } from '../shared/props.js';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
@@ -27,21 +28,21 @@ import { tokenStyles } from '../shared-styles.js';
  * @tag arc-virtual-list
  * @prop {Array} items - The full data array. Only the visible slice is rendered at any given time.
  * @prop {Function} renderItem - `(item, index) => unknown` returning one row's content. Anything Lit can render: a template, a DOM node, a string. When set, rows come from here and the slots are not used.
- * @prop {number} itemHeight - Height in pixels of each row. Must match what actually renders.
- * @prop {number} overscan - Rows rendered above and below the visible window to cover fast scrolling.
+ * @prop {number} itemHeight - Height in pixels of each row. Must match what actually renders, and must be at least 1 — it is a divisor, so a zero would put NaN through every window calculation.
+ * @prop {number} overscan - Rows rendered above and below the visible window to cover fast scrolling. Never negative.
  * @fires {CustomEvent<{value: {start: number, end: number}, start: number, end: number}>} arc-range-change - Fired when the visible range changes. `end` is exclusive.
  * @slot item-${index}
  * @csspart spacer
  * @csspart item
  */
-export class ArcVirtualList extends LitElement {
+export class ArcVirtualList extends DeclaredPropsMixin(LitElement) {
   static properties = {
     items: { type: Array },
     // Attribute is off: a function can't survive a round trip through one, and
     // leaving it on invites `render-item="handleRow"` that silently sets a string.
     renderItem: { attribute: false },
-    itemHeight: { type: Number, attribute: 'item-height' },
-    overscan: { type: Number },
+    itemHeight: num({ default: 40, min: 1, clamp: 'toRange', attribute: 'item-height' }),
+    overscan: int({ default: 5, min: 0, clamp: 'toRange' }),
     _startIndex: { state: true },
     _visibleCount: { state: true },
   };

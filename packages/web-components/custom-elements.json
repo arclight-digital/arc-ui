@@ -3987,7 +3987,8 @@
               },
               "default": "true",
               "description": "Shows the custom control bar once playback has started, and enables the player keyboard shortcuts. Defaults to true; set `controls=\"false\"` for ambient or presentation video.",
-              "attribute": "controls"
+              "attribute": "controls",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -4226,8 +4227,8 @@
                 "text": "number"
               },
               "default": "40",
-              "description": "Height in pixels of each row. Must match what actually renders.",
-              "attribute": "item-height"
+              "description": "Height in pixels of each row. Must match what actually renders, and must be at least 1 — it is a divisor, so a zero would put NaN through every window calculation.",
+              "attribute": "itemHeight"
             },
             {
               "kind": "field",
@@ -4237,7 +4238,7 @@
                 "text": "number"
               },
               "default": "5",
-              "description": "Rows rendered above and below the visible window to cover fast scrolling.",
+              "description": "Rows rendered above and below the visible window to cover fast scrolling. Never negative.",
               "attribute": "overscan"
             }
           ],
@@ -4261,12 +4262,12 @@
               "fieldName": "items"
             },
             {
-              "name": "item-height",
+              "name": "itemHeight",
               "type": {
                 "text": "number"
               },
               "default": "40",
-              "description": "Height in pixels of each row. Must match what actually renders.",
+              "description": "Height in pixels of each row. Must match what actually renders, and must be at least 1 — it is a divisor, so a zero would put NaN through every window calculation.",
               "fieldName": "itemHeight"
             },
             {
@@ -4275,8 +4276,14 @@
                 "text": "number"
               },
               "default": "5",
-              "description": "Rows rendered above and below the visible window to cover fast scrolling.",
+              "description": "Rows rendered above and below the visible window to cover fast scrolling. Never negative.",
               "fieldName": "overscan"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "DeclaredPropsMixin",
+              "module": "/src/shared/props.js"
             }
           ],
           "superclass": {
@@ -4369,7 +4376,7 @@
                 "text": "number"
               },
               "default": "52",
-              "description": "How many week columns to render, counting back from the week containing the end date (default 52). The last column is truncated after the end date, so the newest cell is always the end date itself.",
+              "description": "How many week columns to render, counting back from the week containing the end date (default 52), at least 1. The last column is truncated after the end date, so the newest cell is always the end date itself.",
               "attribute": "weeks"
             },
             {
@@ -4377,11 +4384,12 @@
               "name": "weekStart",
               "privacy": "public",
               "type": {
-                "text": "string"
+                "text": "'sunday' | 'monday'"
               },
               "default": "'sunday'",
-              "description": "Which day starts each column: \"sunday\" (default, the GitHub convention) or \"monday\".",
-              "attribute": "week-start"
+              "description": "Which day starts each column: \"sunday\" (default, the GitHub convention) or \"monday\". An unrecognised value falls back to sunday.",
+              "attribute": "weekStart",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -4402,8 +4410,9 @@
                 "text": "boolean"
               },
               "default": "true",
-              "description": "Whether to render the Less→More swatch strip under the grid (default true; set the attribute to the string \"false\" to disable from markup).",
-              "attribute": "legend"
+              "description": "Whether to render the Less→More swatch strip under the grid. Default true; disable from markup with either `no-legend` or `legend=\"false\"`.",
+              "attribute": "legend",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -4422,16 +4431,16 @@
                 "text": "number"
               },
               "default": "52",
-              "description": "How many week columns to render, counting back from the week containing the end date (default 52). The last column is truncated after the end date, so the newest cell is always the end date itself.",
+              "description": "How many week columns to render, counting back from the week containing the end date (default 52), at least 1. The last column is truncated after the end date, so the newest cell is always the end date itself.",
               "fieldName": "weeks"
             },
             {
-              "name": "week-start",
+              "name": "weekStart",
               "type": {
-                "text": "string"
+                "text": "'sunday' | 'monday'"
               },
               "default": "'sunday'",
-              "description": "Which day starts each column: \"sunday\" (default, the GitHub convention) or \"monday\".",
+              "description": "Which day starts each column: \"sunday\" (default, the GitHub convention) or \"monday\". An unrecognised value falls back to sunday.",
               "fieldName": "weekStart"
             },
             {
@@ -4449,8 +4458,14 @@
                 "text": "boolean"
               },
               "default": "true",
-              "description": "Whether to render the Less→More swatch strip under the grid (default true; set the attribute to the string \"false\" to disable from markup).",
+              "description": "Whether to render the Less→More swatch strip under the grid. Default true; disable from markup with either `no-legend` or `legend=\"false\"`.",
               "fieldName": "legend"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "DeclaredPropsMixin",
+              "module": "/src/shared/props.js"
             }
           ],
           "superclass": {
@@ -8991,7 +9006,8 @@
               },
               "default": "true",
               "description": "Whether to render the overall percentage above the track (default true; set the attribute to the string \"false\" to disable from markup). The percentage is the mean of every finite value in the data; when no entry carries a value the line is omitted regardless.",
-              "attribute": "summary"
+              "attribute": "summary",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -9021,6 +9037,12 @@
               "default": "true",
               "description": "Whether to render the overall percentage above the track (default true; set the attribute to the string \"false\" to disable from markup). The percentage is the mean of every finite value in the data; when no entry carries a value the line is omitted regardless.",
               "fieldName": "summary"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "DeclaredPropsMixin",
+              "module": "/src/shared/props.js"
             }
           ],
           "superclass": {
@@ -35847,7 +35869,7 @@
               "name": "layout",
               "privacy": "public",
               "type": {
-                "text": "string"
+                "text": "'compact' | 'ansi'"
               },
               "default": "'compact'",
               "description": "Board shape: \"compact\" (default, a 60%-style block) or \"ansi\" (adds the F-row and nav cluster). Unknown values fall back to compact.",
@@ -35873,15 +35895,16 @@
                 "text": "boolean"
               },
               "default": "true",
-              "description": "Whether keys render their legends (default true; set the attribute to the string \"false\" to disable from markup).",
-              "attribute": "labels"
+              "description": "Whether keys render their legends. Default true; disable from markup with either `no-labels` or `labels=\"false\"`.",
+              "attribute": "labels",
+              "reflects": true
             },
             {
               "kind": "field",
               "name": "platform",
               "privacy": "public",
               "type": {
-                "text": "string"
+                "text": "'auto' | 'mac' | 'win'"
               },
               "default": "'auto'",
               "description": "Which platform's modifier legends and `mod` resolution to use: \"auto\" (default — detected in the browser, mac on the server), \"mac\", or \"win\".",
@@ -35903,7 +35926,7 @@
             {
               "name": "layout",
               "type": {
-                "text": "string"
+                "text": "'compact' | 'ansi'"
               },
               "default": "'compact'",
               "description": "Board shape: \"compact\" (default, a 60%-style block) or \"ansi\" (adds the F-row and nav cluster). Unknown values fall back to compact.",
@@ -35924,13 +35947,13 @@
                 "text": "boolean"
               },
               "default": "true",
-              "description": "Whether keys render their legends (default true; set the attribute to the string \"false\" to disable from markup).",
+              "description": "Whether keys render their legends. Default true; disable from markup with either `no-labels` or `labels=\"false\"`.",
               "fieldName": "labels"
             },
             {
               "name": "platform",
               "type": {
-                "text": "string"
+                "text": "'auto' | 'mac' | 'win'"
               },
               "default": "'auto'",
               "description": "Which platform's modifier legends and `mod` resolution to use: \"auto\" (default — detected in the browser, mac on the server), \"mac\", or \"win\".",
@@ -35944,6 +35967,12 @@
               "default": "''",
               "description": "Optional caption rendered below the board in muted text.",
               "fieldName": "caption"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "DeclaredPropsMixin",
+              "module": "/src/shared/props.js"
             }
           ],
           "superclass": {

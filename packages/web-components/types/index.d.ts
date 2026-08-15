@@ -27,13 +27,13 @@ export declare class ArcActivityHeatmap extends LitElement {
   data: Array<{date: string, value: number, label?: string}>;
   /** The newest day shown, as an ISO string (YYYY-MM-DD). Unset: today in the browser; on the server, the newest date in `data` (see above). @default '' */
   endDate: string;
-  /** How many week columns to render, counting back from the week containing the end date (default 52). The last column is truncated after the end date, so the newest cell is always the end date itself. @default 52 */
+  /** How many week columns to render, counting back from the week containing the end date (default 52), at least 1. The last column is truncated after the end date, so the newest cell is always the end date itself. @default 52 */
   weeks: number;
-  /** Which day starts each column: "sunday" (default, the GitHub convention) or "monday". @default 'sunday' */
-  weekStart: string;
+  /** Which day starts each column: "sunday" (default, the GitHub convention) or "monday". An unrecognised value falls back to sunday. @default 'sunday' */
+  weekStart: 'sunday' | 'monday';
   /** When set, intensity is a linear scale from 0 to this value instead of the default quartile mapping: each nonzero value lands on step 1-4 by `value / max`. Values at or above `max` render as step 4. @default null */
   max: number;
-  /** Whether to render the Less→More swatch strip under the grid (default true; set the attribute to the string "false" to disable from markup). @default true */
+  /** Whether to render the Less→More swatch strip under the grid. Default true; disable from markup with either `no-legend` or `legend="false"`. @default true */
   legend: boolean;
 }
 
@@ -1462,13 +1462,13 @@ export declare class ArcKeyValue extends LitElement {
  */
 export declare class ArcKeyboardMap extends LitElement {
   /** Board shape: "compact" (default, a 60%-style block) or "ansi" (adds the F-row and nav cluster). Unknown values fall back to compact. @default 'compact' */
-  layout: string;
+  layout: 'compact' | 'ansi';
   /** Key chords to light up: an array property (e.g. ["mod+z", "mod+shift+z"]) or a comma- or space-separated attribute string. Each chord joins keys with "+" ("mod+shift+p"); `mod` resolves to Cmd on mac and Ctrl on win, mirroring arc-hotkey's aliases (cmd/command → meta, option → alt, control → ctrl). Single keys are fine ("g", "escape"). Unknown key names are ignored. @default '' */
   highlight: string|string[];
-  /** Whether keys render their legends (default true; set the attribute to the string "false" to disable from markup). @default true */
+  /** Whether keys render their legends. Default true; disable from markup with either `no-labels` or `labels="false"`. @default true */
   labels: boolean;
   /** Which platform's modifier legends and `mod` resolution to use: "auto" (default — detected in the browser, mac on the server), "mac", or "win". @default 'auto' */
-  platform: string;
+  platform: 'auto' | 'mac' | 'win';
   /** Optional caption rendered below the board in muted text. @default '' */
   caption: string;
 }
@@ -3402,9 +3402,9 @@ export declare class ArcVirtualList extends LitElement {
   items: Array;
   /** `(item, index) => unknown` returning one row's content. Anything Lit can render: a template, a DOM node, a string. When set, rows come from here and the slots are not used. @default null */
   renderItem: Function;
-  /** Height in pixels of each row. Must match what actually renders. @default 40 */
+  /** Height in pixels of each row. Must match what actually renders, and must be at least 1 — it is a divisor, so a zero would put NaN through every window calculation. @default 40 */
   itemHeight: number;
-  /** Rows rendered above and below the visible window to cover fast scrolling. @default 5 */
+  /** Rows rendered above and below the visible window to cover fast scrolling. Never negative. @default 5 */
   overscan: number;
 }
 

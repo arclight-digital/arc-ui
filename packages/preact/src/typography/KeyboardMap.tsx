@@ -4,10 +4,10 @@ import { h, type FunctionComponent } from 'preact';
 import '@arclux/arc-ui/keyboard-map';
 
 export interface KeyboardMapProps {
-  layout?: string;
+  layout?: 'compact' | 'ansi';
   highlight?: string|string[];
   labels?: boolean;
-  platform?: string;
+  platform?: 'auto' | 'mac' | 'win';
   caption?: string;
   class?: string;
   id?: string;

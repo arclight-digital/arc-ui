@@ -4,10 +4,10 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
-    layout?: string;
+    layout?: 'compact' | 'ansi';
     highlight?: string|string[];
     labels?: boolean;
-    platform?: string;
+    platform?: 'auto' | 'mac' | 'win';
     caption?: string;
     class?: string;
     id?: string;

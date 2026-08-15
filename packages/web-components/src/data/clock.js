@@ -30,6 +30,12 @@ export class ArcClock extends DeclaredPropsMixin(LitElement) {
     timezone: { type: String },
     label: { type: String },
     showSeconds: flag(false, { attribute: 'show-seconds' }),
+    // NOT flag(): a documented tri-state, where *unset* is a third meaning
+    // rather than a synonym for false — true forces 12-hour, false forces
+    // 24-hour, and undefined lets the viewer's locale decide, which is what
+    // `_format()` reads on the line `if (typeof this.hour12 === 'boolean')`.
+    // flag() collapses a non-boolean onto the declared default, which would
+    // delete that third state and make every clock 24-hour everywhere.
     hour12: { type: Boolean },
     showTimezone: flag(false, { attribute: 'show-timezone' }),
     _now: { state: true },

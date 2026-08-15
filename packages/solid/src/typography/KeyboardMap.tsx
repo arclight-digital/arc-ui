@@ -12,10 +12,10 @@ declare module 'solid-js' {
 }
 
 export interface KeyboardMapProps {
-  layout?: string;
+  layout?: 'compact' | 'ansi';
   highlight?: string|string[];
   labels?: boolean;
-  platform?: string;
+  platform?: 'auto' | 'mac' | 'win';
   caption?: string;
   class?: string;
   id?: string;

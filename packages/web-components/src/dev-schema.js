@@ -475,7 +475,7 @@ export default {
  "arc-virtual-list": {
   "attrs": [
    "items",
-   "item-height",
+   "itemHeight",
    "overscan"
   ],
   "slug": "virtual-list"
@@ -484,10 +484,16 @@ export default {
   "attrs": [
    "end-date",
    "weeks",
-   "week-start",
+   "weekStart",
    "max",
    "legend"
   ],
+  "enums": {
+   "weekStart": [
+    "sunday",
+    "monday"
+   ]
+  },
   "slug": "activity-heatmap"
  },
  "arc-animated-number": {
@@ -2838,6 +2844,17 @@ export default {
    "platform",
    "caption"
   ],
+  "enums": {
+   "layout": [
+    "compact",
+    "ansi"
+   ],
+   "platform": [
+    "auto",
+    "mac",
+    "win"
+   ]
+  },
   "slug": "keyboard-map"
  },
  "arc-markdown": {

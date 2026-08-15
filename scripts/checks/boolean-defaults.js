@@ -2,8 +2,18 @@
 /**
  * check-boolean-defaults.js
  *
- * Asserts that no `type: Boolean` prop defaulting to `true` is left without a
- * way to turn it off from markup.
+ * Asserts that every boolean prop is declared through `flag()`, and names the
+ * only two reasons one may not be.
+ *
+ * **This rule changed shape once the migration finished (V4-PLAN 2.2).** It
+ * shipped as "no `type: Boolean` prop defaulting to `true` may be left without
+ * a way to turn it off from markup", carrying a BASELINE of the twenty props
+ * that already were. Finding #20 said what should happen when the vocabulary
+ * landed: *"it is rewritten to flag any `type: Boolean` not declared through
+ * `flag()`, which turns its BASELINE from a list of twenty into a list of one
+ * rule."* That is this file now. The BASELINE is gone, not emptied.
+ *
+ * The original problem, kept because it is why `flag()` exists at all:
  *
  * Lit's boolean converter maps attribute *presence* to `true`, and an absent
  * attribute never fires `attributeChangedCallback` — so a prop whose
@@ -23,33 +33,41 @@
  * (see check-wrapper-slots.js): the tests that exist set the property from
  * script, where it works.
  *
- * The library already solved this four times, with an explicit escape hatch:
+ * `flag()` settles it for both directions at once — `flag(false)` reads an
+ * explicit falsey string as false, and `flag(true, { negative: 'no-x' })` gives
+ * a true default a markup spelling for its false state. The four components
+ * that once carried a hand-written escape-hatch converter (arc-activity-heatmap
+ * `legend`, arc-uptime `summary`, arc-video `controls`, arc-keyboard-map
+ * `labels`) are on `flag()` now, and so are the other sixteen.
  *
- *   legend: { type: Boolean, converter: { fromAttribute: (v) => v !== 'false' } }
+ * THE TWO EXEMPTIONS, each of which must be spelled in the source:
  *
- * — arc-activity-heatmap (`legend`), arc-uptime (`summary`), arc-video
- * (`controls`) and arc-keyboard-map (`labels`). arc-activity-heatmap documents
- * it on the prop: "default true; set the attribute to the string 'false' to
- * disable from markup". This check is that convention, enforced.
+ *   1. **`disabled` on a form-associated element.** The platform owns that
+ *      attribute: an element whose `disabled` content attribute is merely
+ *      *present* is "actually disabled" per the HTML spec, the platform calls
+ *      `formDisabledCallback(true)`, and the mixin assigns the property back —
+ *      so no converter can win. `disabled="false"` is a disabled control here
+ *      for exactly the reason it is on a native `<input>`. Native semantics
+ *      win; see the note in shared/props.js. 27 controls.
+ *   2. **A documented tri-state**, where *unset* is a third meaning rather than
+ *      a synonym for false. `arc-clock.hour12` is the only one: true forces
+ *      12-hour, false forces 24-hour, and undefined lets the viewer's locale
+ *      decide. `flag()` collapses undefined onto the declared default, which
+ *      would delete the third state.
  *
- * WHAT IS NOT A FAILURE, and why each allowance exists:
+ * Both are recognised by a `// NOT flag():` comment on the line above the
+ * declaration, so an exemption has to be *stated* rather than inferred from a
+ * shape — a check that guesses at intent is a check that can be fooled by
+ * accident. A new exemption means writing down why.
  *
- *   - A prop carrying its own `converter`. That is the fix; any converter is
- *     accepted rather than only the `v !== 'false'` spelling, because a
- *     component may reasonably accept more than one falsy word.
+ * WHAT IS STILL NOT A FAILURE:
+ *
  *   - A prop declared `attribute: false`. It is script-only by design, so there
  *     is no markup path to break.
- *   - A prop defaulting to `false` or left undefined. Presence-means-true is
- *     exactly right there — that is what a boolean attribute is for.
- *   - An assignment nested inside the constructor rather than at its top level.
- *     arc-select and arc-tree-select both build a ListboxController in the
- *     constructor whose callbacks assign `this.open = true`; the default those
- *     components actually ship is `false`, set on the line above.
+ *   - `state: true`. Internal, not a prop.
  *
- * The twenty props that already ship this way are listed in BASELINE below, so
- * the rule blocks new occurrences without turning CI red on day one. Note that
  * check.js discards a passing check's stdout, so `pnpm check` shows only `ok` —
- * run this file directly to print the outstanding list:
+ * run this file directly to see the count it verified:
  *
  *   node scripts/checks/boolean-defaults.js
  *
@@ -62,22 +80,6 @@ import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const SRC = path.join(__dirname, '..', '..', 'packages', 'web-components', 'src');
 const TIERS = ['content', 'data', 'feedback', 'input', 'layout', 'navigation', 'typography', 'shared'];
-
-/**
- * Empty, and the rule is therefore strict.
- *
- * It held twenty props when this check was written, as the same device as the
- * ALLOWED list in rtl-intl.test.js: a rule is worth having the moment it stops
- * the *next* one, and holding it back until the backlog is burned down means it
- * lands never. The backlog is burned down — every one of them now declares
- * through `flag()` in shared/props.js, which supplies the converter and a
- * round-trippable negative attribute for the true-defaulting ones.
- *
- * The list emptied itself, in the sense that mattered: a BASELINE entry that no
- * longer violates is reported as loudly as a new violation, so the migration
- * could not silently finish without this file noticing.
- */
-const BASELINE = [];
 
 /** The body of the first `{ … }` at or after `from`, read by brace depth. */
 function balanced(src, from) {
@@ -145,9 +147,31 @@ function attributeFor(prop, decl) {
   return named ? named[1] : prop.toLowerCase();
 }
 
-const baseline = new Set(BASELINE);
+/**
+ * Declarations carrying a `// NOT flag():` comment on the line above.
+ *
+ * Stated rather than inferred: an exemption a check can *deduce* from a shape
+ * is one a component can acquire by accident. Writing the reason down is the
+ * price of taking it.
+ */
+function exempted(src) {
+  const out = new Set();
+  const lines = src.split('\n');
+  for (let i = 1; i < lines.length; i++) {
+    const decl = /^\s*(\w+)\s*:/.exec(lines[i]);
+    if (!decl) continue;
+    // Walk back over a contiguous comment block, so a multi-line reason counts.
+    for (let j = i - 1; j >= 0 && /^\s*(\/\/|\*|\/\*)/.test(lines[j]); j--) {
+      if (/NOT flag\(\)/.test(lines[j])) {
+        out.add(decl[1]);
+        break;
+      }
+    }
+  }
+  return out;
+}
+
 const problems = [];
-const outstanding = [];
 let checked = 0;
 
 for (const tier of TIERS) {
@@ -162,53 +186,40 @@ for (const tier of TIERS) {
 
     const decls = declarations(src);
     if (!decls.size) continue;
-    const defaults = defaultedTrue(src);
-    if (!defaults.size) continue;
-
+    const waived = exempted(src);
 
     for (const [prop, decl] of decls) {
       if (!/type\s*:\s*Boolean/.test(decl)) continue;
-      if (!defaults.has(prop)) continue;
+      if (/\bstate\s*:\s*true/.test(decl)) continue;
       if (/attribute\s*:\s*false/.test(decl)) continue;
 
       checked++;
-      if (/converter\s*:/.test(decl)) continue;
+      if (waived.has(prop)) continue;
 
-      const id = `${rel}:${prop}`;
-      const message =
-        `${rel} — \`${prop}\` defaults to true, so \`${attributeFor(prop, decl)}="false"\` ` +
-        'reads as true and there is no markup spelling that disables it';
-
-      if (baseline.has(id)) outstanding.push(message);
-      else problems.push(message);
-      baseline.delete(id);
+      problems.push(
+        `${rel} — \`${prop}\` is a raw \`type: Boolean\`; declare it with flag() ` +
+          `so \`${attributeFor(prop, decl)}="false"\` means false`,
+      );
     }
   }
 }
 
 const REMEDY =
-  'Give the prop the converter the library already uses for exactly this —\n' +
-  "  { type: Boolean, converter: { fromAttribute: (v) => v !== 'false' } }\n" +
-  '— as arc-activity-heatmap (legend), arc-uptime (summary), arc-video (controls)\n' +
-  'and arc-keyboard-map (labels) do, and note it on the @prop line the way\n' +
-  'arc-activity-heatmap does. Inverting the prop so the default is false\n' +
-  '(`no-dots` rather than `show-dots`) is the other way out, at the cost of a\n' +
-  'breaking rename.';
-
-// A baseline entry that no longer violates has been fixed — say so, so the
-// list shrinks with the work instead of drifting out of date.
-if (baseline.size) {
-  console.error(
-    `check-boolean-defaults: ${baseline.size} BASELINE entr(ies) no longer violate — delete them:\n`,
-  );
-  for (const id of baseline) console.error(`  ${id}`);
-  process.exit(1);
-}
+  'Declare the prop through the vocabulary:\n' +
+  '  import { flag } from "../shared/props.js";\n' +
+  '  showDots: flag(true, { negative: "no-dots" })   // a true default\n' +
+  '  removable: flag(false)                          // a false default\n' +
+  'A true default REQUIRES a `negative` attribute name — flag() throws without\n' +
+  'one, because presence-means-true has no markup spelling for the false state.\n' +
+  '\n' +
+  'If the prop is genuinely one of the two exemptions — platform-owned\n' +
+  '`disabled` on a form-associated element, or a documented tri-state where\n' +
+  'unset is a third meaning — put a `// NOT flag(): <reason>` comment on the\n' +
+  'line above the declaration. The reason is the point; see the header.';
 
 if (problems.length) {
   console.error(
-    `check-boolean-defaults: ${problems.length} new true-by-default boolean prop(s) ` +
-      'cannot be turned off from markup\n',
+    `check-boolean-defaults: ${problems.length} boolean prop(s) not declared through flag()\n`,
   );
   for (const p of problems) console.error(`  ${p}`);
   console.error(`\n${REMEDY}`);
@@ -216,11 +227,7 @@ if (problems.length) {
 }
 
 console.log(
-  `check-boolean-defaults: no new violations (${checked} true-by-default boolean prop(s) checked)`,
+  `check-boolean-defaults: ${checked} boolean prop(s) checked, every one declared ` +
+    'through flag() or exempt with a stated reason',
 );
-if (outstanding.length) {
-  console.log(`\n  ${outstanding.length} known violation(s) outstanding, from BASELINE:\n`);
-  for (const p of outstanding) console.log(`    ${p}`);
-  console.log(`\n${REMEDY.replace(/^/gm, '  ')}`);
-}
 process.exit(0);

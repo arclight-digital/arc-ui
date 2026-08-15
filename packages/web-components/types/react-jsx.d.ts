@@ -37,7 +37,7 @@ declare module 'react' {
       'arc-activity-heatmap': ArcBaseAttributes & {
         'end-date'?: string;
         weeks?: number | string;
-        'week-start'?: string;
+        weekStart?: 'sunday' | 'monday';
         max?: number | string;
         legend?: boolean;
       };
@@ -593,10 +593,10 @@ declare module 'react' {
         dividers?: boolean;
       };
       'arc-keyboard-map': ArcBaseAttributes & {
-        layout?: string;
+        layout?: 'compact' | 'ansi';
         highlight?: string;
         labels?: boolean;
-        platform?: string;
+        platform?: 'auto' | 'mac' | 'win';
         caption?: string;
       };
       'arc-knob': ArcBaseAttributes & {
@@ -1306,7 +1306,7 @@ declare module 'react' {
       };
       'arc-virtual-list': ArcBaseAttributes & {
         items?: string;
-        'item-height'?: number | string;
+        itemHeight?: number | string;
         overscan?: number | string;
       };
       'arc-waveform': ArcBaseAttributes & {

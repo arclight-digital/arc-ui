@@ -5,10 +5,10 @@ import { createComponent } from '@lit/react';
 import { ArcKeyboardMap } from '@arclux/arc-ui/keyboard-map';
 
 export interface KeyboardMapProps {
-  layout?: string;
+  layout?: 'compact' | 'ansi';
   highlight?: string|string[];
   labels?: boolean;
-  platform?: string;
+  platform?: 'auto' | 'mac' | 'win';
   caption?: string;
   className?: string;
 }

@@ -1,4 +1,5 @@
 import { LitElement, html, css, nothing } from 'lit';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 import { tokenStyles } from '../shared-styles.js';
 import { PositionController } from '../shared/position-controller.js';
 import { managedPanelStyles } from '../shared/position-styles.js';
@@ -23,12 +24,12 @@ import { managedPanelStyles } from '../shared/position-styles.js';
  * @csspart detail
  * @csspart caption
  */
-export class ArcUptime extends LitElement {
+export class ArcUptime extends DeclaredPropsMixin(LitElement) {
   static properties = {
     data: { attribute: false },
     startLabel: { type: String, attribute: 'start-label' },
     endLabel: { type: String, attribute: 'end-label' },
-    summary: { type: Boolean, converter: { fromAttribute: (v) => v !== 'false' } },
+    summary: flag(true, { negative: 'no-summary' }),
     _activeIndex: { state: true },
   };
 

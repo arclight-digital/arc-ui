@@ -12,10 +12,10 @@ import type { ArcKeyboardMap } from '@arclux/arc-ui/keyboard-map';
 export class KeyboardMap {
   private readonly _el: ArcKeyboardMap = inject(ElementRef).nativeElement;
 
-  @Input() set layout(value: string) {
+  @Input() set layout(value: 'compact' | 'ansi') {
     this._el.layout = value;
   }
-  get layout(): string {
+  get layout(): 'compact' | 'ansi' {
     return this._el.layout;
   }
 
@@ -33,10 +33,10 @@ export class KeyboardMap {
     return this._el.labels;
   }
 
-  @Input() set platform(value: string) {
+  @Input() set platform(value: 'auto' | 'mac' | 'win') {
     this._el.platform = value;
   }
-  get platform(): string {
+  get platform(): 'auto' | 'mac' | 'win' {
     return this._el.platform;
   }
 

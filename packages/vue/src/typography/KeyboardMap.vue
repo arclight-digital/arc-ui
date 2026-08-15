@@ -5,10 +5,10 @@ import '@arclux/arc-ui/keyboard-map';
 defineOptions({ name: 'KeyboardMap' });
 
 const props = withDefaults(defineProps<{
-  layout?: string;
+  layout?: 'compact' | 'ansi';
   highlight?: string|string[];
   labels?: boolean;
-  platform?: string;
+  platform?: 'auto' | 'mac' | 'win';
   caption?: string;
 }>(), {
   layout: 'compact',

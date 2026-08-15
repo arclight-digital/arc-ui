@@ -1,4 +1,5 @@
 import { LitElement, html, css, nothing } from 'lit';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 import { tokenStyles } from '../shared-styles.js';
 
 /* ── Layout tables ──
@@ -390,10 +391,10 @@ function chordName({ mods, key }, platform) {
  * keys do something; wiring real shortcuts is arc-hotkey's job.
  *
  * @tag arc-keyboard-map
- * @prop {string} layout - Board shape: "compact" (default, a 60%-style block) or "ansi" (adds the F-row and nav cluster). Unknown values fall back to compact.
+ * @prop {'compact' | 'ansi'} layout - Board shape: "compact" (default, a 60%-style block) or "ansi" (adds the F-row and nav cluster). Unknown values fall back to compact.
  * @prop {string|string[]} highlight - Key chords to light up: an array property (e.g. ["mod+z", "mod+shift+z"]) or a comma- or space-separated attribute string. Each chord joins keys with "+" ("mod+shift+p"); `mod` resolves to Cmd on mac and Ctrl on win, mirroring arc-hotkey's aliases (cmd/command → meta, option → alt, control → ctrl). Single keys are fine ("g", "escape"). Unknown key names are ignored.
- * @prop {boolean} labels - Whether keys render their legends (default true; set the attribute to the string "false" to disable from markup).
- * @prop {string} platform - Which platform's modifier legends and `mod` resolution to use: "auto" (default — detected in the browser, mac on the server), "mac", or "win".
+ * @prop {boolean} labels - Whether keys render their legends. Default true; disable from markup with either `no-labels` or `labels="false"`.
+ * @prop {'auto' | 'mac' | 'win'} platform - Which platform's modifier legends and `mod` resolution to use: "auto" (default — detected in the browser, mac on the server), "mac", or "win".
  * @prop {string} caption - Optional caption rendered below the board in muted text.
  * @slot none
  * @csspart board
@@ -401,12 +402,12 @@ function chordName({ mods, key }, platform) {
  * @csspart key-highlighted
  * @csspart caption
  */
-export class ArcKeyboardMap extends LitElement {
+export class ArcKeyboardMap extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    layout: { type: String, reflect: true },
+    layout: oneOf(['compact', 'ansi']),
     highlight: {},
-    labels: { type: Boolean, converter: { fromAttribute: (v) => v !== 'false' } },
-    platform: { type: String },
+    labels: flag(true, { negative: 'no-labels' }),
+    platform: oneOf(['auto', 'mac', 'win'], { reflect: false }),
     caption: { type: String },
     _detected: { state: true },
   };

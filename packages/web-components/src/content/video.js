@@ -52,7 +52,7 @@ export class ArcVideo extends DeclaredPropsMixin(LitElement) {
     muted: flag(false),
     // Default-true boolean: presence is still true, and the explicit string
     // "false" is the off switch (same pattern as arc-uptime's summary prop).
-    controls: { type: Boolean, converter: { fromAttribute: (v) => v !== 'false' } },
+    controls: flag(true, { negative: 'no-controls' }),
     preload: oneOf(['none', 'metadata', 'auto'], { default: 'metadata', reflect: false }),
     _started: { state: true },
     _playing: { state: true },

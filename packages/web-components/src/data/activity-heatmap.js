@@ -1,4 +1,5 @@
 import { LitElement, html, css, nothing } from 'lit';
+import { DeclaredPropsMixin, flag, oneOf, int } from '../shared/props.js';
 import { tokenStyles } from '../shared-styles.js';
 import { monthNames, weekdayNames, defaultLocale } from '../shared/date-names.js';
 import { PositionController } from '../shared/position-controller.js';
@@ -42,10 +43,10 @@ const dowOf = (epochDay) => ((epochDay % 7) + 7 + 4) % 7;
  * @tag arc-activity-heatmap
  * @prop {Array<{date: string, value: number, label?: string}>} data - One entry per day with activity: an ISO `date` (YYYY-MM-DD), a numeric `value` mapped to the intensity ramp, and an optional `label` shown in the hover detail in place of the bare value (e.g. "7 commits"). Days in the rendered span with no entry render as empty cells, so sparse data is fine. Property only — set it from script or a framework binding.
  * @prop {string} endDate - The newest day shown, as an ISO string (YYYY-MM-DD). Unset: today in the browser; on the server, the newest date in `data` (see above).
- * @prop {number} weeks - How many week columns to render, counting back from the week containing the end date (default 52). The last column is truncated after the end date, so the newest cell is always the end date itself.
- * @prop {string} weekStart - Which day starts each column: "sunday" (default, the GitHub convention) or "monday".
+ * @prop {number} weeks - How many week columns to render, counting back from the week containing the end date (default 52), at least 1. The last column is truncated after the end date, so the newest cell is always the end date itself.
+ * @prop {'sunday' | 'monday'} weekStart - Which day starts each column: "sunday" (default, the GitHub convention) or "monday". An unrecognised value falls back to sunday.
  * @prop {number} max - When set, intensity is a linear scale from 0 to this value instead of the default quartile mapping: each nonzero value lands on step 1-4 by `value / max`. Values at or above `max` render as step 4.
- * @prop {boolean} legend - Whether to render the Less→More swatch strip under the grid (default true; set the attribute to the string "false" to disable from markup).
+ * @prop {boolean} legend - Whether to render the Less→More swatch strip under the grid. Default true; disable from markup with either `no-legend` or `legend="false"`.
  * @slot none
  * @csspart heatmap
  * @csspart months
@@ -58,14 +59,14 @@ const dowOf = (epochDay) => ((epochDay % 7) + 7 + 4) % 7;
  * @csspart legend
  * @csspart swatch
  */
-export class ArcActivityHeatmap extends LitElement {
+export class ArcActivityHeatmap extends DeclaredPropsMixin(LitElement) {
   static properties = {
     data: { attribute: false },
     endDate: { type: String, attribute: 'end-date' },
-    weeks: { type: Number },
-    weekStart: { type: String, attribute: 'week-start' },
+    weeks: int({ default: 52, min: 1, clamp: 'toRange' }),
+    weekStart: oneOf(['sunday', 'monday'], { attribute: 'week-start' }),
     max: { type: Number },
-    legend: { type: Boolean, converter: { fromAttribute: (v) => v !== 'false' } },
+    legend: flag(true, { negative: 'no-legend' }),
     _activeIndex: { state: true },
   };
 
@@ -327,8 +328,10 @@ export class ArcActivityHeatmap extends LitElement {
    * sits at row i % 7 and column floor(i / 7) with no placement styles.
    */
   _layout() {
-    let weeks = Math.floor(Number(this.weeks));
-    if (!Number.isFinite(weeks) || weeks < 1) weeks = 52;
+    // `weeks` and `weekStart` are declared, so both arrive here already
+    // normalised — the floor-and-fallback that used to live on these two lines
+    // is the declaration now (V4-PLAN 2.2).
+    const weeks = this.weeks;
     const ws = this.weekStart === 'monday' ? 1 : 0;
     const end = this._resolveEndEpoch();
     if (end === null) return { end: null, start: null, count: 0, weekCount: 0, ws };

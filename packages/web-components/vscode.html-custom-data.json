@@ -852,13 +852,13 @@
           "values": [{ "name": "Array" }]
         },
         {
-          "name": "item-height",
-          "description": "Height in pixels of each row. Must match what actually renders.",
+          "name": "itemHeight",
+          "description": "Height in pixels of each row. Must match what actually renders, and must be at least 1 — it is a divisor, so a zero would put NaN through every window calculation.",
           "values": []
         },
         {
           "name": "overscan",
-          "description": "Rows rendered above and below the visible window to cover fast scrolling.",
+          "description": "Rows rendered above and below the visible window to cover fast scrolling. Never negative.",
           "values": []
         }
       ],
@@ -875,13 +875,13 @@
         },
         {
           "name": "weeks",
-          "description": "How many week columns to render, counting back from the week containing the end date (default 52). The last column is truncated after the end date, so the newest cell is always the end date itself.",
+          "description": "How many week columns to render, counting back from the week containing the end date (default 52), at least 1. The last column is truncated after the end date, so the newest cell is always the end date itself.",
           "values": []
         },
         {
-          "name": "week-start",
-          "description": "Which day starts each column: \"sunday\" (default, the GitHub convention) or \"monday\".",
-          "values": []
+          "name": "weekStart",
+          "description": "Which day starts each column: \"sunday\" (default, the GitHub convention) or \"monday\". An unrecognised value falls back to sunday.",
+          "values": [{ "name": "sunday" }, { "name": "monday" }]
         },
         {
           "name": "max",
@@ -890,7 +890,7 @@
         },
         {
           "name": "legend",
-          "description": "Whether to render the Less→More swatch strip under the grid (default true; set the attribute to the string \"false\" to disable from markup).",
+          "description": "Whether to render the Less→More swatch strip under the grid. Default true; disable from markup with either `no-legend` or `legend=\"false\"`.",
           "values": []
         }
       ],
@@ -5694,7 +5694,7 @@
         {
           "name": "layout",
           "description": "Board shape: \"compact\" (default, a 60%-style block) or \"ansi\" (adds the F-row and nav cluster). Unknown values fall back to compact.",
-          "values": []
+          "values": [{ "name": "compact" }, { "name": "ansi" }]
         },
         {
           "name": "highlight",
@@ -5703,13 +5703,13 @@
         },
         {
           "name": "labels",
-          "description": "Whether keys render their legends (default true; set the attribute to the string \"false\" to disable from markup).",
+          "description": "Whether keys render their legends. Default true; disable from markup with either `no-labels` or `labels=\"false\"`.",
           "values": []
         },
         {
           "name": "platform",
           "description": "Which platform's modifier legends and `mod` resolution to use: \"auto\" (default — detected in the browser, mac on the server), \"mac\", or \"win\".",
-          "values": []
+          "values": [{ "name": "auto" }, { "name": "mac" }, { "name": "win" }]
         },
         {
           "name": "caption",

@@ -33,10 +33,10 @@ export class ActivityHeatmap {
     return this._el.weeks;
   }
 
-  @Input() set weekStart(value: string) {
+  @Input() set weekStart(value: 'sunday' | 'monday') {
     this._el.weekStart = value;
   }
-  get weekStart(): string {
+  get weekStart(): 'sunday' | 'monday' {
     return this._el.weekStart;
   }
 

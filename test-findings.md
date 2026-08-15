@@ -666,8 +666,30 @@ express `false`.
   (`no-dots`, `no-border`) so the default is `false`. The converter is
   consistent with what already ships and needs no doc changes beyond the note
   `activity-heatmap` already carries.
-**A check now enforces this.** `scripts/checks/boolean-defaults.js` flags any
-`type: Boolean` prop that defaults to `true` without a converter, and runs in the
+**The check that enforced this has been rewritten to the end-state described
+below** (V4-PLAN 2.2, 2026-08-15). It no longer looks for "a true default
+without a converter" — it asserts that **every** boolean prop is declared
+through `flag()`, and names the only two reasons one may not be. Its BASELINE is
+gone rather than emptied, which is exactly what this entry predicted: *"it is
+rewritten to flag any `type: Boolean` not declared through `flag()`, which turns
+its BASELINE from a list of twenty into a list of one rule."*
+
+The two exemptions, each of which must carry a `// NOT flag(): <reason>` comment
+in the source rather than being inferred from a shape — a check that guesses at
+intent is one a component can satisfy by accident:
+
+- **`disabled` on a form-associated element** (27 controls). The platform owns
+  the attribute and no converter can win; see the note in `props.js`.
+- **A documented tri-state** (1 prop). `arc-clock.hour12` means 12-hour /
+  24-hour / *let the locale decide*, and `flag()` collapses a non-boolean onto
+  the declared default — which would delete the third state and make every
+  clock 24-hour everywhere. Found by the rewrite, not before it.
+
+Verified by fault injection rather than by reading: reverting `arc-uptime`'s
+`summary` to the old escape-hatch converter makes the check fail and name it.
+
+*The original description follows.* `scripts/checks/boolean-defaults.js` flagged
+any `type: Boolean` prop that defaulted to `true` without a converter, and runs in the
 "Assert sources" stage of `pnpm generate` alongside `doc-claims` and
 `event-conventions` — it reads only hand-written source, so it fails before the
 35s prism step rather than after it.

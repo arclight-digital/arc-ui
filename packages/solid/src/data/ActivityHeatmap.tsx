@@ -15,7 +15,7 @@ export interface ActivityHeatmapProps {
   data?: Array<{date: string, value: number, label?: string}>;
   endDate?: string;
   weeks?: number;
-  weekStart?: string;
+  weekStart?: 'sunday' | 'monday';
   max?: number;
   legend?: boolean;
   class?: string;
